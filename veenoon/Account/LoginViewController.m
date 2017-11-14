@@ -31,15 +31,11 @@
 
 @implementation LoginViewController
 
-- (void) viewWillAppear:(BOOL)animated
-{
-    if([[NetworkChecker sharedNetworkChecker] networkStatus] == NotReachable)
-    {
+- (void) viewWillAppear:(BOOL)animated {
+    if([[NetworkChecker sharedNetworkChecker] networkStatus] == NotReachable) {
         _networkStatus.text = @"没有连接网络...";
         _networkStatus.hidden = NO;
-    }
-    else
-    {
+    } else {
         _networkStatus.hidden = YES;
     }
 }
@@ -47,8 +43,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    self.view.backgroundColor = [UIColor blackColor];
     
     UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(50,
                                                                 80,
@@ -94,60 +88,92 @@
     ///在这里编写登录输入内容框 _inputPannel
     int top = 10;
     int left = 10;
-    int w = CGRectGetWidth(_inputPannel.frame)-20;
+    int w = CGRectGetWidth(_inputPannel.frame);
     UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(left, top, w, 50)];
     tL.text = @"国家/地区";
-    tL.textColor = [UIColor whiteColor];
+    tL.textColor = RGB(109, 210, 244);
     tL.font = [UIFont boldSystemFontOfSize:18];
     [_inputPannel addSubview:tL];
     
-    _country = [[UILabel alloc] initWithFrame:CGRectMake(left+130, top, w, 50)];
+    _country = [[UILabel alloc] initWithFrame:CGRectMake(left+120, top, w, 50)];
     _country.text = @"中国";
     _country.textColor = [UIColor whiteColor];
     _country.font = [UIFont boldSystemFontOfSize:18];
     [_inputPannel addSubview:_country];
     
     //选择箭头 pending....
+    UIButton *countrySelector = [UIButton buttonWithType:UIButtonTypeCustom];
+    int w2 = CGRectGetWidth(_inputPannel.frame)-20;
+    countrySelector.frame = CGRectMake(left+w2, top + 18, 8, 14);
+    [countrySelector setBackgroundImage:[UIImage imageNamed:@"login_right_arraw.png"] forState:UIControlStateNormal];
+    [_inputPannel addSubview:countrySelector];
+    
+    [countrySelector addTarget:self
+              action:@selector(countrySelectAction:)
+    forControlEvents:UIControlEventTouchUpInside];
     
     //包括click事件，弹出popview，选择国家地区
     
     top = CGRectGetMaxY(_country.frame);
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(left, top, w, 1)];
-    line.backgroundColor = THEME_COLOR_A(0.5);
+    line.backgroundColor = RGB(75, 163, 202);
+    [_inputPannel addSubview:line];
+    
+    line = [[UILabel alloc] initWithFrame:CGRectMake(left +80, top, 1, 50)];
+    line.backgroundColor = RGB(75, 163, 202);
     [_inputPannel addSubview:line];
     
     _countrycode = [[UILabel alloc] initWithFrame:CGRectMake(left, top, w, 50)];
     _countrycode.text = @"+86";
-    _countrycode.textColor = [UIColor whiteColor];
+    _countrycode.textColor = RGB(109, 210, 244);
     _countrycode.font = [UIFont boldSystemFontOfSize:18];
     [_inputPannel addSubview:_countrycode];
     
     ///手机号输入框 pending....
-    
+    _userName = [[UITextField alloc] initWithFrame:CGRectMake(left + 85, top+10, w-85, 30)];
+    _userName.delegate = self;
+    _userName.returnKeyType = UIReturnKeyDone;
+    _userName.placeholder = @"";
+    _userName.backgroundColor = [UIColor clearColor];
+    _userName.textColor = [UIColor whiteColor];
+    _userName.borderStyle = UITextBorderStyleNone;
+    [_inputPannel addSubview:_userName];
     ////
     
     top = CGRectGetMaxY(_countrycode.frame);
     
     line = [[UILabel alloc] initWithFrame:CGRectMake(left, top, w, 1)];
-    line.backgroundColor = THEME_COLOR_A(0.5);
+    line.backgroundColor = RGB(75, 163, 202);
     [_inputPannel addSubview:line];
     
     tL = [[UILabel alloc] initWithFrame:CGRectMake(left, top, w, 50)];
     tL.text = @"密码";
-    tL.textColor = [UIColor whiteColor];
+    tL.textColor = RGB(109, 210, 244);
     tL.font = [UIFont boldSystemFontOfSize:18];
     [_inputPannel addSubview:tL];
     
     //密码输入框 pending....
-    
+    _userPwd = [[UITextField alloc] initWithFrame:CGRectMake(left + 85, top+10, w-85, 30)];
+    _userPwd.delegate = self;
+    _userPwd.returnKeyType = UIReturnKeyDone;
+    _userPwd.placeholder = @"6-12位密码";
+    _userPwd.backgroundColor = [UIColor clearColor];
+    _userPwd.textColor = RGB(109, 210, 244);
+    _userPwd.borderStyle = UITextBorderStyleNone;
+    _userPwd.secureTextEntry = YES;
+    [_inputPannel addSubview:_userPwd];
     //////
     
     top = CGRectGetMaxY(tL.frame);
     
     line = [[UILabel alloc] initWithFrame:CGRectMake(left, top, w, 1)];
-    line.backgroundColor = THEME_COLOR_A(0.5);
+    line.backgroundColor = RGB(75, 163, 202);
     [_inputPannel addSubview:line];
+}
+
+- (void) countrySelectAction:(id)sender{
+    
 }
 
 - (void) cancelAction:(id)sender{
@@ -155,9 +181,141 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void) okAction:(id)sender{
+- (void) okAction:(UIButton*)btn {
+    NSString *userName = _userName.text;
+    NSString *userPwd = _userPwd.text;
     
-    //登录
+    if ([userName length] < 1) {
+        UIAlertView *alert  = [[UIAlertView alloc] initWithTitle:@""
+                                                         message:@"请输入登录名！"
+                                                        delegate:nil
+                                               cancelButtonTitle:@"确定"
+                                               otherButtonTitles:nil, nil];
+        [alert show];
+        return;
+    }
+    if ([userPwd length] < 1) {
+        UIAlertView *alert  = [[UIAlertView alloc] initWithTitle:@""
+                                                         message:@"请输入密码！"
+                                                        delegate:nil
+                                               cancelButtonTitle:@"确定"
+                                               otherButtonTitles:nil, nil];
+        [alert show];
+        return;
+    }
+    
+    if([[NetworkChecker sharedNetworkChecker] networkStatus] == NotReachable) {
+        //没有网络的情况下
+        
+        User *u = [UserDefaultsKV getUser];
+        if (u) {
+            if([_userName.text isEqualToString:u._userName] &&
+               [_userPwd.text isEqualToString:[UserDefaultsKV getUserPwd]])
+                
+                [self didLogin];
+            else{
+                UIAlertView *alert  = [[UIAlertView alloc] initWithTitle:nil
+                                                                 message:@"用户名或密码错误！"
+                                                                delegate:nil
+                                                       cancelButtonTitle:@"确定"
+                                                       otherButtonTitles:nil, nil];
+                [alert show];
+            }
+        } else {
+            UIAlertView *alert  = [[UIAlertView alloc] initWithTitle:nil
+                                                             message:@"没有离线登录的账号！"
+                                                            delegate:nil
+                                                   cancelButtonTitle:@"确定"
+                                                   otherButtonTitles:nil, nil];
+            [alert show];
+        }
+        
+        //返回
+        return;
+    }
+    
+    
+    if([_userName isFirstResponder])
+        [_userName resignFirstResponder];
+    
+    if([_userPwd isFirstResponder])
+        [_userPwd resignFirstResponder];
+    
+    
+    if(_autoClient == nil)
+        _autoClient = [[WebClient alloc] initWithDelegate:self];
+    
+    _autoClient._httpMethod = @"GET";
+    _autoClient._method = NEW_API_LOGIN;
+    
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setObject:_userName.text forKey:@"userName"];
+    [params setObject:_userPwd.text forKey:@"userPassword"];
+    
+    _autoClient._requestParam = params;
+    
+    IMP_BLOCK_SELF(LoginViewController);
+    
+    btn.enabled = NO;
+    
+    [_autoClient requestWithSusessBlock:^(id lParam, id rParam) {
+        
+        NSString *response = lParam;
+        //NSLog(@"%@", response);
+        
+        SBJson4ValueBlock block = ^(id v, BOOL *stop) {
+            
+            if ([v isKindOfClass:[NSDictionary class]]) {
+                NSString *status = [v objectForKey:@"status"];
+                if ([status isEqualToString:@"sucess"]) {
+                    NSString *token = [v objectForKey:@"token"];
+                    
+                    User *u = [[User alloc] initWithDicionary:v];
+                    u._userName = _userName.text;
+                    [UserDefaultsKV saveUserPwd:_userPwd.text];
+                    u._authtoken = token;
+                    
+                    [UserDefaultsKV saveUser:u];
+                    
+                    [block_self didLogin];
+                } else {
+                    btn.enabled = YES;
+                    
+                    NSString *message = [v objectForKey:@"loginInfor"];
+                    
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
+                                                                    message:message
+                                                                   delegate:nil
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil, nil];
+                    [alert show];
+                    
+                }
+                return;
+            }
+            
+        };
+        
+        SBJson4ErrorBlock eh = ^(NSError* err) {
+            NSLog(@"OOPS: %@", err);
+            
+        };
+        
+        id parser = [SBJson4Parser multiRootParserWithBlock:block
+                                               errorHandler:eh];
+        
+        id data = [response dataUsingEncoding:NSUTF8StringEncoding];
+        [parser parse:data];
+        
+        
+    } FailBlock:^(id lParam, id rParam) {
+        
+        NSString *response = lParam;
+        NSLog(@"%@", response);
+        
+        
+    }];
 }
 
 - (void) notifyNetworkStatusChanged:(NSNotification*)notify{
@@ -181,27 +339,9 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     
     
-    _inputBg.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2-220);
-    
-    
-    
-    _networkStatus.frame = CGRectMake(10,
-                                      CGRectGetMaxY(_inputBg.frame)+10,
-                                      DEFAULT_SCREEN_WIDTH-20, 20);
-    
-    
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField{
-    
-    
-    _inputBg.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2-60);
-    
-    
-    
-    _networkStatus.frame = CGRectMake(10,
-                                      CGRectGetMaxY(_inputBg.frame)+10,
-                                      DEFAULT_SCREEN_WIDTH-20, 20);
+- (void)  textFieldDidEndEditing:(UITextField *)textField{
     
     
 }
@@ -210,8 +350,7 @@
     
     [textField resignFirstResponder];
     
-    if(textField == _userName)
-    {
+    if(textField == _userName) {
         [_userPwd becomeFirstResponder];
     }
     
@@ -223,10 +362,9 @@
     
 }
 
-- (void) loginAction:(UIButton*)btn{
+- (void) loginAction:(UIButton*)btn {
     
-    if([_userName.text length] < 1)
-    {
+    if ([_userName.text length] < 1)  {
         UIAlertView *alert  = [[UIAlertView alloc] initWithTitle:@""
                                                          message:@"请输入登录名！"
                                                         delegate:nil
@@ -247,13 +385,11 @@
         return;
     }
     
-    if([[NetworkChecker sharedNetworkChecker] networkStatus] == NotReachable)
-    {
+    if([[NetworkChecker sharedNetworkChecker] networkStatus] == NotReachable) {
         //没有网络的情况下
         
         User *u = [UserDefaultsKV getUser];
-        if(u)
-        {
+        if (u) {
             if([_userName.text isEqualToString:u._userName] &&
                [_userPwd.text isEqualToString:[UserDefaultsKV getUserPwd]])
             
@@ -266,8 +402,7 @@
                                                        otherButtonTitles:nil, nil];
                 [alert show];
             }
-        }
-        else{
+        } else {
             UIAlertView *alert  = [[UIAlertView alloc] initWithTitle:nil
                                                              message:@"没有离线登录的账号！"
                                                             delegate:nil
@@ -373,8 +508,6 @@
 
 - (void) didLogin{
     
-    
-    
     [[AppDelegate shareAppDelegate] enterApp];
     
 }
@@ -385,15 +518,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 @end

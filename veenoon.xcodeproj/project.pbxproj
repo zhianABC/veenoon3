@@ -162,6 +162,7 @@
 		34686C9E1ED025CB001749A1 /* ConverUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 34686C9B1ED025CB001749A1 /* ConverUtil.m */; };
 		34686C9F1ED025CB001749A1 /* DesUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 34686C9D1ED025CB001749A1 /* DesUtil.m */; };
 		34928A9A1EC1BD330089F429 /* ReaderCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34928A991EC1BD330089F429 /* ReaderCodeViewController.m */; };
+		EB5D91FC1FBB2F78004ED38D /* login_right_arraw.png in Resources */ = {isa = PBXBuildFile; fileRef = EB5D91FB1FBB2F77004ED38D /* login_right_arraw.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -443,6 +444,7 @@
 		34686C9D1ED025CB001749A1 /* DesUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DesUtil.m; sourceTree = "<group>"; };
 		34928A981EC1BD330089F429 /* ReaderCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderCodeViewController.h; sourceTree = "<group>"; };
 		34928A991EC1BD330089F429 /* ReaderCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderCodeViewController.m; sourceTree = "<group>"; };
+		EB5D91FB1FBB2F77004ED38D /* login_right_arraw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_right_arraw.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -896,6 +898,7 @@
 		04DE1ECB1AD6B3BA00D49E2F /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
+				EB5D91FB1FBB2F77004ED38D /* login_right_arraw.png */,
 				3416718B1FBA9BD0001D33D0 /* wellcome@2x.png */,
 				341F0F431EC2E01D0027C800 /* warning.mp3 */,
 				341F0F411EC2DF6D0027C800 /* beep-beep.aiff */,
@@ -1089,6 +1092,7 @@
 				04C4B1191AF904FB003FD52B /* Icon@2x.png in Resources */,
 				049ECA751C8D4B8A00A611D8 /* zbar-samples.png in Resources */,
 				049BA6031AF7693200F17584 /* rank_icon@2x.png in Resources */,
+				EB5D91FC1FBB2F78004ED38D /* login_right_arraw.png in Resources */,
 				049ECA721C8D4B8A00A611D8 /* zbar-back.png in Resources */,
 				341F0F441EC2E01D0027C800 /* warning.mp3 in Resources */,
 				049ECA881C8D52A100A611D8 /* iconfont-llalbumflashon@2x.png in Resources */,

@@ -12,11 +12,10 @@
 
 #define POSTDataSeparator			@"----------sadkfjaskdjfkjsadfjj3234234"
 
-#define WEB_API_URL @"https://api.webexpotec.cn"
-
-#define   NEW_WEB_API_URL       @"https://api.webexpotec.cn"
+#define   WEB_API_URL           @"http://http://39.106.67.198:8080/veenopro/servelet/"
+#define   NEW_WEB_API_URL       @"http://http://39.106.67.198:8080/veenopro/servelet/"
 #define   NEW_API_U2P           @"/v1/utility/u2p"
-#define   NEW_API_LOGIN         @"/v1/auth/signin"
+#define   NEW_API_LOGIN         @"GetUserLoginInfoServelet"
 #define   NEW_API_SCAN_QR       @"/v1/qr/"
 #define   NEW_API_REG_ADM       @"/v1/admission/register"
 #define   NEW_API_EVENT_LIST    @"/v1/event/listing"

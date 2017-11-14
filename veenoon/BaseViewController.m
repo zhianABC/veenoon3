@@ -50,20 +50,15 @@
         
     }
     
-    self.view.backgroundColor = [UIColor whiteColor];
-    
-    _backgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background.png"]];
-    [self.view addSubview:_backgroundImageView];
-    
+    self.view.backgroundColor = self.view.backgroundColor = RGB(57, 137, 178);
     
 
     _http = [[WebClient alloc] initWithDelegate:self];
-    _http._httpMethod = @"POST";
+    _http._httpMethod = @"GET";
     
 }
 
-- (void) dealloc
-{
+- (void) dealloc {
     _http._successBlock = nil;
     _http._failBlock = nil;
     
