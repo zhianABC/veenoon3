@@ -1,0 +1,92 @@
+//
+//  Prefix header
+//
+//  The contents of this file are implicitly included at the beginning of every source file.
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_3_0
+#warning "This project uses features only available in iOS SDK 3.0 and later."
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+    #import <MediaPlayer/MediaPlayer.h>
+
+#endif
+
+#define COLOR_TEXT_A          [UIColor colorWithRed:50.0f/255.0f green:50.0f/255.0f blue:50.0f/255.0f alpha:1.0f]
+#define COLOR_TEXT_B          [UIColor colorWithRed:100.0f/255.0f green:100.0f/255.0f blue:100.0f/255.0f alpha:1.0f]
+#define COLOR_TEXT_C          [UIColor colorWithRed:150.0f/255.0f green:150.0f/255.0f blue:150.0f/255.0f alpha:1.0f]
+
+#define COLOR_WHITE [UIColor whiteColor]
+
+#define SCREEN_HEIGHT  ([[UIScreen mainScreen] bounds].size.height)
+#define SCREEN_WIDTH  ([[UIScreen mainScreen] bounds].size.width)
+
+
+#define CONTENT_HEIGHT   ([[UIScreen mainScreen] bounds].size.height - 64)
+
+#define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
+
+#define IOS7_OR_LATER   ( [[[UIDevice currentDevice] systemVersion] compare:@"7.0"] != NSOrderedAscending )
+#define IOS7_OR_BEFORE   ( [[[UIDevice currentDevice] systemVersion] compare:@"8.0"] == NSOrderedAscending)
+
+
+
+#define RGBA(r, g, b,a)        [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
+#define RGB(r, g, b)        [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1]
+
+#define LINE_COLOR              RGBA(200, 200, 200,0.5)
+
+#define THEME_COLOR             RGB(242, 157, 56)
+#define THEME_COLOR_A(a)        RGBA(242, 157, 56,a)
+#define THEME_RED_COLOR         RGB(0xe4, 0x2a, 0x21)
+#define ImageFromResource(x)    [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:x ofType:nil]]
+
+#define Menu_Notify_Msg  @"Menu_Notify_Msg"
+
+#define BMW_IPAD 0
+
+#define OFFSET_TOPBAR  77
+
+#define DLT_W   1400
+#define DLT_H   1050
+#define DEFAULT_SCREEN_WIDTH  1024
+#define DEFAULT_SCREEN_HEIGHT  768
+
+#if __has_feature(objc_arc)
+#define IMP_BLOCK_SELF(type) __weak type *block_self=self;
+#else
+#define IMP_BLOCK_SELF(type) __block type *block_self=self;
+#endif
+
+
+#define B_FONT(pt) [UIFont fontWithName:@"HYg2gj" size:pt]
+#define M_FONT(pt) [UIFont fontWithName:@"HYb1gj" size:pt]
+#define L_FONT(pt) [UIFont fontWithName:@"HYb2gj" size:pt]
+
+#define Notify_Msg_CHECKTAPVIDEOVIEW @"CHECKTAPVIDEOVIEW"
+
+#define Notify_Network_Status_Changed @"NOTIFY_NETWORK_STATUS_CHANGED"
+#define Key_jp_assets_timestamp @"Key_jp_assets_timestamp"
+#define Key_book_assets_timestamp @"Key_book_assets_timestamp"
+#define Key_news_assets_timestamp @"Key_news_assets_timestamp"
+#define Key_survey_assets_timestamp @"Key_survey_assets_timestamp"
+#define Key_logs_assets_timestamp @"Key_logs_assets_timestamp"
+
+
+#define KEY_VIDEOGALLERY @"video_gallery"
+
+#define EXPO_APP_KEY    @"1487846544"
+#define EXPO_APP_SEC    @"9eedc6568db9cdd1ad2dcd96b087244e"
+#define EXPO_EVENT_ID   @"1440859304"
+
+#define LT_EVENT_ID @"1440859047"
+
+#define CMD_LOCATION_VIDEO_PATH  [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents"]]
+
+
+
