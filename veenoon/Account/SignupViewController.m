@@ -9,7 +9,7 @@
 #import "SignupViewController.h"
 #import "AreaPickView.h"
 
-@interface SignupViewController () {
+@interface SignupViewController () <AreaPickViewDelegate>{
     //输入部分
     UIView *_inputPannel;
     UIButton *_countryBtn;
@@ -290,6 +290,15 @@
     [textField resignFirstResponder];
     
     return YES;
+}
+
+- (void) cancelAction:(id)sender{
+    NSLog(@"enter the method.");
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void) okAction:(id)sender{
+    NSLog(@"enter the method.");
 }
 
 - (void) registerNumberAction:(id)sender{

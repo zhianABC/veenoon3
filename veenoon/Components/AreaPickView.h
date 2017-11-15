@@ -7,7 +7,7 @@
 #import <UIKit/UIKit.h>
 
 @protocol  AreaPickViewDelegate <NSObject>
-- (void) updateAreaInfo:(NSDictionary *) dataDic;
+- (void) updateAreaInfo;
 @end
 
 @interface AreaPickView : UIView
