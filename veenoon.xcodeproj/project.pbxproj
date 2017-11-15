@@ -162,6 +162,8 @@
 		34686C9E1ED025CB001749A1 /* ConverUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 34686C9B1ED025CB001749A1 /* ConverUtil.m */; };
 		34686C9F1ED025CB001749A1 /* DesUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 34686C9D1ED025CB001749A1 /* DesUtil.m */; };
 		34928A9A1EC1BD330089F429 /* ReaderCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34928A991EC1BD330089F429 /* ReaderCodeViewController.m */; };
+		EB0808D71FBC7DF600FD0604 /* teslaria_title.png in Resources */ = {isa = PBXBuildFile; fileRef = EB0808D51FBC7DF500FD0604 /* teslaria_title.png */; };
+		EB0808D81FBC7DF600FD0604 /* botomo_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EB0808D61FBC7DF600FD0604 /* botomo_icon.png */; };
 		EB5D91FC1FBB2F78004ED38D /* login_right_arraw.png in Resources */ = {isa = PBXBuildFile; fileRef = EB5D91FB1FBB2F77004ED38D /* login_right_arraw.png */; };
 /* End PBXBuildFile section */
 
@@ -444,6 +446,8 @@
 		34686C9D1ED025CB001749A1 /* DesUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DesUtil.m; sourceTree = "<group>"; };
 		34928A981EC1BD330089F429 /* ReaderCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderCodeViewController.h; sourceTree = "<group>"; };
 		34928A991EC1BD330089F429 /* ReaderCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderCodeViewController.m; sourceTree = "<group>"; };
+		EB0808D51FBC7DF500FD0604 /* teslaria_title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = teslaria_title.png; sourceTree = "<group>"; };
+		EB0808D61FBC7DF600FD0604 /* botomo_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = botomo_icon.png; sourceTree = "<group>"; };
 		EB5D91FB1FBB2F77004ED38D /* login_right_arraw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_right_arraw.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -898,6 +902,8 @@
 		04DE1ECB1AD6B3BA00D49E2F /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
+				EB0808D61FBC7DF600FD0604 /* botomo_icon.png */,
+				EB0808D51FBC7DF500FD0604 /* teslaria_title.png */,
 				EB5D91FB1FBB2F77004ED38D /* login_right_arraw.png */,
 				3416718B1FBA9BD0001D33D0 /* wellcome@2x.png */,
 				341F0F431EC2E01D0027C800 /* warning.mp3 */,
@@ -1067,6 +1073,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				047934581DB0A4630066BABC /* camera.png in Resources */,
+				EB0808D71FBC7DF600FD0604 /* teslaria_title.png in Resources */,
 				049ECA731C8D4B8A00A611D8 /* zbar-help.html in Resources */,
 				0469CF3E1B03357E006B901E /* camera_photo@2x.png in Resources */,
 				04DE1FD11AD6B3BB00D49E2F /* shaixuan_anniu01@2x.png in Resources */,
@@ -1087,6 +1094,7 @@
 				049BA5FD1AF7665100F17584 /* Arrow_v2@2x.png in Resources */,
 				049ECA741C8D4B8A00A611D8 /* zbar-helpicons.png in Resources */,
 				04DE1F9B1AD6B3BB00D49E2F /* denglu_shurutiao@2x.png in Resources */,
+				EB0808D81FBC7DF600FD0604 /* botomo_icon.png in Resources */,
 				046D2F061DA90AD9006C6123 /* silk_card_bg@2x.png in Resources */,
 				04DE1DE31AD68C5E00D49E2F /* Images.xcassets in Resources */,
 				04C4B1191AF904FB003FD52B /* Icon@2x.png in Resources */,

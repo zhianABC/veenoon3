@@ -9,6 +9,7 @@
 #import "WellcomeViewController.h"
 #import "UIButton+Color.h"
 #import "LoginViewController.h"
+#import "SignupViewController.h"
 
 @interface WellcomeViewController ()
 
@@ -20,9 +21,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.view.backgroundColor = RGB(57, 137, 178);
+    self.view.backgroundColor = RGB(1, 138, 182);
     
-    UIImageView *icon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"wellcome.png"]];
+    UIImageView *icon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"teslaria_title.png"]];
     [self.view addSubview:icon];
     icon.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.5);
     
@@ -68,7 +69,8 @@
 }
 
 - (void) signupAction:(id)sender{
-    
+    SignupViewController *lctrl = [[SignupViewController alloc] init];
+    [self.navigationController pushViewController:lctrl animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
