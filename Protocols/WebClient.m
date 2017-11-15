@@ -113,35 +113,7 @@
         [dic setObject:source forKey:@"Source"];
     }
     
-    NSString *url = WEB_API_URL;
-    
-    
-    if(1)
-    {
-        int secs = [[NSDate date] timeIntervalSince1970];
-        NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleVersionKey];
-        [dic setObject:EXPO_APP_KEY forKey:@"app_key"];
-        [dic setObject:[NSString stringWithFormat:@"%d", secs] forKey:@"timestamp"];
-        [dic setObject:version forKey:@"app_ver"];
-        
-        NSString *deviceToken = [[UIDevice currentDevice].identifierForVendor UUIDString];
-        if(deviceToken == nil)
-            deviceToken = @"00000000-0000-0000-0000-000000000000";
-        [dic setObject:deviceToken forKey:@"app_uuid"];
-        
-        if(![dic objectForKey:@"i18n_lang"])
-        {
-            [dic setObject:@"zh-cn" forKey:@"i18n_lang"];
-        }
-        
-        
-        NSString *sign_txt = [NSString stringWithFormat:@"app_key=%@&app_secret=%@&timestamp=%d", EXPO_APP_KEY, EXPO_APP_SEC, secs];
-        NSString *signature = [SHA1 SHA1Digest:sign_txt];
-        
-        [dic setObject:signature forKey:@"signature"];
-        
-        url = [NSString stringWithFormat:@"%@%@",NEW_WEB_API_URL, _method];
-    }
+    NSString *url = [NSString stringWithFormat:@"%@%@",WEB_API_URL, _method];
     
     
 	NSString *baseUrl = [dic objectForKey:@"baseUrl"];
@@ -187,34 +159,7 @@
     
     NSString *url = WEB_API_URL;
     
-    
-    if(1)
-    {
-        int secs = [[NSDate date] timeIntervalSince1970];
-        NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleVersionKey];
-        [dic setObject:EXPO_APP_KEY forKey:@"app_key"];
-        [dic setObject:[NSString stringWithFormat:@"%d", secs] forKey:@"timestamp"];
-        [dic setObject:version forKey:@"app_ver"];
-        
-        NSString *deviceToken = [[UIDevice currentDevice].identifierForVendor UUIDString];
-        if(deviceToken == nil)
-            deviceToken = @"00000000-0000-0000-0000-000000000000";
-        [dic setObject:deviceToken forKey:@"app_uuid"];
-        
-        if(![dic objectForKey:@"i18n_lang"])
-        {
-            [dic setObject:@"zh-cn" forKey:@"i18n_lang"];
-        }
-        
-        
-        NSString *sign_txt = [NSString stringWithFormat:@"app_key=%@&app_secret=%@&timestamp=%d", EXPO_APP_KEY, EXPO_APP_SEC, secs];
-        NSString *signature = [SHA1 SHA1Digest:sign_txt];
-        
-        [dic setObject:signature forKey:@"signature"];
-        
-        url = [NSString stringWithFormat:@"%@%@",NEW_WEB_API_URL, _method];
-    }
-    
+    url = [NSString stringWithFormat:@"%@%@",WEB_API_URL, _method];
     
     NSString *baseUrl = [dic objectForKey:@"baseUrl"];
     if(baseUrl){
