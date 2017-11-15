@@ -165,6 +165,8 @@
 		EB0808D71FBC7DF600FD0604 /* teslaria_title.png in Resources */ = {isa = PBXBuildFile; fileRef = EB0808D51FBC7DF500FD0604 /* teslaria_title.png */; };
 		EB0808D81FBC7DF600FD0604 /* botomo_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EB0808D61FBC7DF600FD0604 /* botomo_icon.png */; };
 		EB5D91FC1FBB2F78004ED38D /* login_right_arraw.png in Resources */ = {isa = PBXBuildFile; fileRef = EB5D91FB1FBB2F77004ED38D /* login_right_arraw.png */; };
+		EBEA7C211FBCAF260028F0E8 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = EBEA7C1E1FBCAF260028F0E8 /* area.plist */; };
+		EBEA7C221FBCAF260028F0E8 /* AreaPickView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBEA7C201FBCAF260028F0E8 /* AreaPickView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -449,6 +451,9 @@
 		EB0808D51FBC7DF500FD0604 /* teslaria_title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = teslaria_title.png; sourceTree = "<group>"; };
 		EB0808D61FBC7DF600FD0604 /* botomo_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = botomo_icon.png; sourceTree = "<group>"; };
 		EB5D91FB1FBB2F77004ED38D /* login_right_arraw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_right_arraw.png; sourceTree = "<group>"; };
+		EBEA7C1E1FBCAF260028F0E8 /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
+		EBEA7C1F1FBCAF260028F0E8 /* AreaPickView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AreaPickView.h; sourceTree = "<group>"; };
+		EBEA7C201FBCAF260028F0E8 /* AreaPickView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AreaPickView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -636,6 +641,7 @@
 		04DE1DD41AD68C5E00D49E2F /* veenoon */ = {
 			isa = PBXGroup;
 			children = (
+				EBEA7C1D1FBCAF260028F0E8 /* Components */,
 				049BA65C1AF7B63F00F17584 /* Database */,
 				04DE1FE51AD6B52400D49E2F /* CMNavigationController.h */,
 				04DE1FE61AD6B52400D49E2F /* CMNavigationController.m */,
@@ -992,6 +998,16 @@
 			path = MainPages;
 			sourceTree = "<group>";
 		};
+		EBEA7C1D1FBCAF260028F0E8 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				EBEA7C1E1FBCAF260028F0E8 /* area.plist */,
+				EBEA7C1F1FBCAF260028F0E8 /* AreaPickView.h */,
+				EBEA7C201FBCAF260028F0E8 /* AreaPickView.m */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1135,6 +1151,7 @@
 				049BA6611AF7B64000F17584 /* zhucebao_db.sqlite in Resources */,
 				04D27A2F1AF8976600305E39 /* iconfont-dayinji1@2x.png in Resources */,
 				04DE1FCB1AD6B3BB00D49E2F /* progress_biankuang@2x.png in Resources */,
+				EBEA7C211FBCAF260028F0E8 /* area.plist in Resources */,
 				045850181B08CF42002BC23C /* BookCache.sqlite in Resources */,
 				049BA6071AF7694E00F17584 /* email_icon@2x.png in Resources */,
 				04DE1FAD1AD6B3BB00D49E2F /* jiantou@2x.png in Resources */,
@@ -1217,6 +1234,7 @@
 				04DE1EA01AD6AEE000D49E2F /* WebClient.m in Sources */,
 				04DE1EA81AD6AEE000D49E2F /* SBJson4StreamWriterState.m in Sources */,
 				341671881FBA97BD001D33D0 /* HomeViewController.m in Sources */,
+				EBEA7C221FBCAF260028F0E8 /* AreaPickView.m in Sources */,
 				04DE1E9F1AD6AEE000D49E2F /* iHttpAdmin.m in Sources */,
 				049ECAC21C8D694400A611D8 /* DataMatrix.mm in Sources */,
 				04DE1EB01AD6AEE000D49E2F /* SDWebImageDownloaderOperation.m in Sources */,
