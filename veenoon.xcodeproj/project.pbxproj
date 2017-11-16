@@ -164,12 +164,12 @@
 		34928A9A1EC1BD330089F429 /* ReaderCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34928A991EC1BD330089F429 /* ReaderCodeViewController.m */; };
 		EB03F52B1FBDC07200865541 /* InvitationCodeViewCotroller.m in Sources */ = {isa = PBXBuildFile; fileRef = EB03F5291FBDC07100865541 /* InvitationCodeViewCotroller.m */; };
 		EB03F52D1FBDC83100865541 /* home_background.png in Resources */ = {isa = PBXBuildFile; fileRef = EB03F52C1FBDC83000865541 /* home_background.png */; };
-		EB03F5341FBDDAB300865541 /* main_settings_n.png in Resources */ = {isa = PBXBuildFile; fileRef = EB03F52E1FBDDAB200865541 /* main_settings_n.png */; };
-		EB03F5351FBDDAB300865541 /* main_engineer_s.png in Resources */ = {isa = PBXBuildFile; fileRef = EB03F52F1FBDDAB200865541 /* main_engineer_s.png */; };
-		EB03F5361FBDDAB300865541 /* main_seetings_s.png in Resources */ = {isa = PBXBuildFile; fileRef = EB03F5301FBDDAB300865541 /* main_seetings_s.png */; };
+		EB03F5341FBDDAB300865541 /* main_settings_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB03F52E1FBDDAB200865541 /* main_settings_n@2x.png */; };
+		EB03F5351FBDDAB300865541 /* main_engineer_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB03F52F1FBDDAB200865541 /* main_engineer_s@2x.png */; };
+		EB03F5361FBDDAB300865541 /* main_settings_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB03F5301FBDDAB300865541 /* main_settings_s@2x.png */; };
 		EB03F5371FBDDAB300865541 /* main_user_log_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = EB03F5311FBDDAB300865541 /* main_user_log_normal.png */; };
 		EB03F5381FBDDAB300865541 /* main_user_login_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = EB03F5321FBDDAB300865541 /* main_user_login_selected.png */; };
-		EB03F5391FBDDAB300865541 /* main_engineer_n.png in Resources */ = {isa = PBXBuildFile; fileRef = EB03F5331FBDDAB300865541 /* main_engineer_n.png */; };
+		EB03F5391FBDDAB300865541 /* main_engineer_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB03F5331FBDDAB300865541 /* main_engineer_n@2x.png */; };
 		EB0808D71FBC7DF600FD0604 /* teslaria_title.png in Resources */ = {isa = PBXBuildFile; fileRef = EB0808D51FBC7DF500FD0604 /* teslaria_title.png */; };
 		EB0808D81FBC7DF600FD0604 /* botomo_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EB0808D61FBC7DF600FD0604 /* botomo_icon.png */; };
 		EB5D91FC1FBB2F78004ED38D /* login_right_arraw.png in Resources */ = {isa = PBXBuildFile; fileRef = EB5D91FB1FBB2F77004ED38D /* login_right_arraw.png */; };
@@ -459,12 +459,12 @@
 		EB03F5291FBDC07100865541 /* InvitationCodeViewCotroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvitationCodeViewCotroller.m; sourceTree = "<group>"; };
 		EB03F52A1FBDC07100865541 /* InvitationCodeViewCotroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvitationCodeViewCotroller.h; sourceTree = "<group>"; };
 		EB03F52C1FBDC83000865541 /* home_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home_background.png; sourceTree = "<group>"; };
-		EB03F52E1FBDDAB200865541 /* main_settings_n.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = main_settings_n.png; sourceTree = "<group>"; };
-		EB03F52F1FBDDAB200865541 /* main_engineer_s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = main_engineer_s.png; sourceTree = "<group>"; };
-		EB03F5301FBDDAB300865541 /* main_seetings_s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = main_seetings_s.png; sourceTree = "<group>"; };
+		EB03F52E1FBDDAB200865541 /* main_settings_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "main_settings_n@2x.png"; sourceTree = "<group>"; };
+		EB03F52F1FBDDAB200865541 /* main_engineer_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "main_engineer_s@2x.png"; sourceTree = "<group>"; };
+		EB03F5301FBDDAB300865541 /* main_settings_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "main_settings_s@2x.png"; sourceTree = "<group>"; };
 		EB03F5311FBDDAB300865541 /* main_user_log_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = main_user_log_normal.png; sourceTree = "<group>"; };
 		EB03F5321FBDDAB300865541 /* main_user_login_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = main_user_login_selected.png; sourceTree = "<group>"; };
-		EB03F5331FBDDAB300865541 /* main_engineer_n.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = main_engineer_n.png; sourceTree = "<group>"; };
+		EB03F5331FBDDAB300865541 /* main_engineer_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "main_engineer_n@2x.png"; sourceTree = "<group>"; };
 		EB0808D51FBC7DF500FD0604 /* teslaria_title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = teslaria_title.png; sourceTree = "<group>"; };
 		EB0808D61FBC7DF600FD0604 /* botomo_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = botomo_icon.png; sourceTree = "<group>"; };
 		EB5D91FB1FBB2F77004ED38D /* login_right_arraw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_right_arraw.png; sourceTree = "<group>"; };
@@ -925,10 +925,10 @@
 		04DE1ECB1AD6B3BA00D49E2F /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
-				EB03F5331FBDDAB300865541 /* main_engineer_n.png */,
-				EB03F52F1FBDDAB200865541 /* main_engineer_s.png */,
-				EB03F5301FBDDAB300865541 /* main_seetings_s.png */,
-				EB03F52E1FBDDAB200865541 /* main_settings_n.png */,
+				EB03F5331FBDDAB300865541 /* main_engineer_n@2x.png */,
+				EB03F52F1FBDDAB200865541 /* main_engineer_s@2x.png */,
+				EB03F5301FBDDAB300865541 /* main_settings_s@2x.png */,
+				EB03F52E1FBDDAB200865541 /* main_settings_n@2x.png */,
 				EB03F5311FBDDAB300865541 /* main_user_log_normal.png */,
 				EB03F5321FBDDAB300865541 /* main_user_login_selected.png */,
 				EB03F52C1FBDC83000865541 /* home_background.png */,
@@ -1116,14 +1116,14 @@
 			files = (
 				047934581DB0A4630066BABC /* camera.png in Resources */,
 				EB0808D71FBC7DF600FD0604 /* teslaria_title.png in Resources */,
-				EB03F5391FBDDAB300865541 /* main_engineer_n.png in Resources */,
+				EB03F5391FBDDAB300865541 /* main_engineer_n@2x.png in Resources */,
 				049ECA731C8D4B8A00A611D8 /* zbar-help.html in Resources */,
 				0469CF3E1B03357E006B901E /* camera_photo@2x.png in Resources */,
 				04DE1FD11AD6B3BB00D49E2F /* shaixuan_anniu01@2x.png in Resources */,
 				04DE1FCD1AD6B3BB00D49E2F /* radio_normal@2x.png in Resources */,
 				04DE1FAA1AD6B3BB00D49E2F /* icon_youjian_down@2x.png in Resources */,
-				EB03F5361FBDDAB300865541 /* main_seetings_s.png in Resources */,
-				EB03F5351FBDDAB300865541 /* main_engineer_s.png in Resources */,
+				EB03F5361FBDDAB300865541 /* main_settings_s@2x.png in Resources */,
+				EB03F5351FBDDAB300865541 /* main_engineer_s@2x.png in Resources */,
 				049ECA851C8D529400A611D8 /* iconfont-quxiao@2x.png in Resources */,
 				04DE1DE11AD68C5E00D49E2F /* Main.storyboard in Resources */,
 				04DE1DE61AD68C5E00D49E2F /* LaunchScreen.xib in Resources */,
@@ -1147,7 +1147,7 @@
 				049ECA751C8D4B8A00A611D8 /* zbar-samples.png in Resources */,
 				049BA6031AF7693200F17584 /* rank_icon@2x.png in Resources */,
 				EB5D91FC1FBB2F78004ED38D /* login_right_arraw.png in Resources */,
-				EB03F5341FBDDAB300865541 /* main_settings_n.png in Resources */,
+				EB03F5341FBDDAB300865541 /* main_settings_n@2x.png in Resources */,
 				049ECA721C8D4B8A00A611D8 /* zbar-back.png in Resources */,
 				341F0F441EC2E01D0027C800 /* warning.mp3 in Resources */,
 				049ECA881C8D52A100A611D8 /* iconfont-llalbumflashon@2x.png in Resources */,
