@@ -72,10 +72,11 @@
     }
 }
 
-- (void) enterApp{
+- (void) enterApp {
     
     HomeViewController *homeCtrl = [[HomeViewController alloc] init];
     _naviRoot = [[CMNavigationController alloc] initWithRootViewController:homeCtrl];
+    _naviRoot.navigationBarHidden = YES;
     self.window.rootViewController = _naviRoot;
 }
 

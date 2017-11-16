@@ -19,8 +19,7 @@
         [mStr appendString:[title substringWithRange:first]];
         [mStr appendString:@"…"];
         newTitle = mStr;
-    }
-    else {
+    } else {
         newTitle = title;
     }
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
@@ -41,7 +40,6 @@
 
 
 
-
 @implementation CMNavigationController
 
 - (id)initWithRootViewController:(UIViewController *)rootViewController{
@@ -56,14 +54,10 @@
 }
 
 #pragma mark - view lifecycle
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    
-     
-    
     //ios5->ios6 使用透明的navigationBar ios7以上使用默认的毛玻璃效果
-    UIImage *themeImg = [UIImage imageWithColor:THEME_COLOR andSize:CGSizeMake(1, 1)];
+    UIImage *themeImg = [UIImage imageWithColor:[UIColor blackColor] andSize:CGSizeMake(1, 1)];
     if ([self.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]) {
         [self.navigationBar setBackgroundImage:themeImg forBarMetrics:UIBarMetricsDefault];
         
@@ -73,8 +67,7 @@
     }
 }
 
-- (UIImage *)capture
-{
+- (UIImage *)capture {
     UIWindow *topWindow = [UIApplication sharedApplication].keyWindow;
     CGRect rect = [UIScreen mainScreen].bounds;
     UIGraphicsBeginImageContextWithOptions(rect.size, NO, [UIScreen mainScreen].scale);
