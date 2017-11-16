@@ -16,6 +16,7 @@
 #import "AppDelegate.h"
 #import "WaitDialog.h"
 #import "DataSync.h"
+#import "InvitationCodeViewCotroller.h"
 
 #define T7DaySecs (7*24*3600)
 
@@ -185,7 +186,12 @@
 - (void) okAction:(UIButton*)btn {
     NSString *userName = _userName.text;
     NSString *userPwd = _userPwd.text;
-    
+    // temp login
+    if (true) {
+        InvitationCodeViewCotroller *invitation = [[InvitationCodeViewCotroller alloc] init];
+        [self.navigationController pushViewController:invitation animated:YES];
+        return;
+    }
     if ([userName length] < 1) {
         UIAlertView *alert  = [[UIAlertView alloc] initWithTitle:@""
                                                          message:@"请输入登录名！"
@@ -211,10 +217,10 @@
         User *u = [UserDefaultsKV getUser];
         if (u) {
             if([_userName.text isEqualToString:u._userName] &&
-               [_userPwd.text isEqualToString:[UserDefaultsKV getUserPwd]])
-                
-                [self didLogin];
-            else{
+               [_userPwd.text isEqualToString:[UserDefaultsKV getUserPwd]]) {
+                InvitationCodeViewCotroller *invitation = [[InvitationCodeViewCotroller alloc] init];
+                [self.navigationController pushViewController:invitation animated:YES];
+            } else {
                 UIAlertView *alert  = [[UIAlertView alloc] initWithTitle:nil
                                                                  message:@"用户名或密码错误！"
                                                                 delegate:nil
@@ -256,8 +262,6 @@
     
     _autoClient._requestParam = params;
     
-    IMP_BLOCK_SELF(LoginViewController);
-    
     btn.enabled = NO;
     
     [_autoClient requestWithSusessBlock:^(id lParam, id rParam) {
@@ -279,7 +283,8 @@
                     
                     [UserDefaultsKV saveUser:u];
                     
-                    [block_self didLogin];
+                    InvitationCodeViewCotroller *invitation = [[InvitationCodeViewCotroller alloc] init];
+                    [self.navigationController pushViewController:invitation animated:YES];
                 } else {
                     btn.enabled = YES;
                     
@@ -357,19 +362,6 @@
     
     return YES;
 }
-
-- (void) enterAdminMode{
-    
-    
-}
-
-- (void) didLogin{
-    
-    [[AppDelegate shareAppDelegate] enterApp];
-    
-}
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -162,6 +162,7 @@
 		34686C9E1ED025CB001749A1 /* ConverUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 34686C9B1ED025CB001749A1 /* ConverUtil.m */; };
 		34686C9F1ED025CB001749A1 /* DesUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 34686C9D1ED025CB001749A1 /* DesUtil.m */; };
 		34928A9A1EC1BD330089F429 /* ReaderCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34928A991EC1BD330089F429 /* ReaderCodeViewController.m */; };
+		EB03F52B1FBDC07200865541 /* InvitationCodeViewCotroller.m in Sources */ = {isa = PBXBuildFile; fileRef = EB03F5291FBDC07100865541 /* InvitationCodeViewCotroller.m */; };
 		EB0808D71FBC7DF600FD0604 /* teslaria_title.png in Resources */ = {isa = PBXBuildFile; fileRef = EB0808D51FBC7DF500FD0604 /* teslaria_title.png */; };
 		EB0808D81FBC7DF600FD0604 /* botomo_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EB0808D61FBC7DF600FD0604 /* botomo_icon.png */; };
 		EB5D91FC1FBB2F78004ED38D /* login_right_arraw.png in Resources */ = {isa = PBXBuildFile; fileRef = EB5D91FB1FBB2F77004ED38D /* login_right_arraw.png */; };
@@ -448,6 +449,8 @@
 		34686C9D1ED025CB001749A1 /* DesUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DesUtil.m; sourceTree = "<group>"; };
 		34928A981EC1BD330089F429 /* ReaderCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderCodeViewController.h; sourceTree = "<group>"; };
 		34928A991EC1BD330089F429 /* ReaderCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderCodeViewController.m; sourceTree = "<group>"; };
+		EB03F5291FBDC07100865541 /* InvitationCodeViewCotroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvitationCodeViewCotroller.m; sourceTree = "<group>"; };
+		EB03F52A1FBDC07100865541 /* InvitationCodeViewCotroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvitationCodeViewCotroller.h; sourceTree = "<group>"; };
 		EB0808D51FBC7DF500FD0604 /* teslaria_title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = teslaria_title.png; sourceTree = "<group>"; };
 		EB0808D61FBC7DF600FD0604 /* botomo_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = botomo_icon.png; sourceTree = "<group>"; };
 		EB5D91FB1FBB2F77004ED38D /* login_right_arraw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = login_right_arraw.png; sourceTree = "<group>"; };
@@ -979,6 +982,8 @@
 		3416717E1FBA96CC001D33D0 /* Account */ = {
 			isa = PBXGroup;
 			children = (
+				EB03F52A1FBDC07100865541 /* InvitationCodeViewCotroller.h */,
+				EB03F5291FBDC07100865541 /* InvitationCodeViewCotroller.m */,
 				04DE1EC31AD6B21600D49E2F /* LoginViewController.h */,
 				04DE1EC41AD6B21600D49E2F /* LoginViewController.m */,
 				3416717F1FBA974C001D33D0 /* WellcomeViewController.h */,
@@ -1172,6 +1177,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB03F52B1FBDC07200865541 /* InvitationCodeViewCotroller.m in Sources */,
 				34928A9A1EC1BD330089F429 /* ReaderCodeViewController.m in Sources */,
 				04DE1E831AD6AEE000D49E2F /* ClassFactory.m in Sources */,
 				04DE1E991AD6AEE000D49E2F /* ASIHTTPRequest.m in Sources */,
