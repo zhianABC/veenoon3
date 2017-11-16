@@ -7,6 +7,7 @@
 //
 
 #import "HomeViewController.h"
+#import "SettingsViewController.h"
 
 @interface HomeViewController () {
     UIButton *_settingsBtn;
@@ -35,7 +36,7 @@
     [self.view addSubview:titleL];
     
     _settingsBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _settingsBtn.frame = CGRectMake(SCREEN_WIDTH - 90, SCREEN_HEIGHT - 80, 50, 50);
+    _settingsBtn.frame = CGRectMake(SCREEN_WIDTH - 70, SCREEN_HEIGHT - 60, 50, 50);
     [_settingsBtn setImage:[UIImage imageNamed:@"main_settings_n.png"] forState:UIControlStateNormal];
     [_settingsBtn setImage:[UIImage imageNamed:@"main_settings_s.png"] forState:UIControlStateHighlighted];
     [_settingsBtn addTarget:self action:@selector(settingsAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -43,7 +44,7 @@
     
     
     _engineerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _engineerBtn.frame = CGRectMake(CGRectGetMinX(_settingsBtn.frame)-110, SCREEN_HEIGHT - 80, 50, 50);
+    _engineerBtn.frame = CGRectMake(CGRectGetMinX(_settingsBtn.frame)-90, SCREEN_HEIGHT - 60, 50, 50);
     [_engineerBtn setImage:[UIImage imageNamed:@"main_engineer_n.png"] forState:UIControlStateNormal];
     [_engineerBtn setImage:[UIImage imageNamed:@"main_engineer_s.png"] forState:UIControlStateHighlighted];
     [_engineerBtn addTarget:self action:@selector(engineerAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -51,7 +52,7 @@
     
     
     _userBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _userBtn.frame = CGRectMake(SCREEN_WIDTH/2 - 200, SCREEN_HEIGHT - 80, 50, 50);
+    _userBtn.frame = CGRectMake(SCREEN_WIDTH/2 - 460, SCREEN_HEIGHT - 60, 50, 50);
     [_userBtn setImage:[UIImage imageNamed:@"main_user_log_normal.png"] forState:UIControlStateNormal];
     [_userBtn setImage:[UIImage imageNamed:@"main_user_login_selected.png"] forState:UIControlStateHighlighted];
     [_userBtn addTarget:self action:@selector(userLoginAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -59,7 +60,8 @@
 }
 
 - (void) settingsAction:(id)sender{
-    
+    SettingsViewController *lctrl = [[SettingsViewController alloc] init];
+    [self.navigationController pushViewController:lctrl animated:YES];
 }
 
 - (void) userLoginAction:(id)sender{
