@@ -171,6 +171,8 @@
 		EB03F5381FBDDAB300865541 /* main_user_login_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB03F5321FBDDAB300865541 /* main_user_login_selected@2x.png */; };
 		EB03F5391FBDDAB300865541 /* main_engineer_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB03F5331FBDDAB300865541 /* main_engineer_n@2x.png */; };
 		EB03F53F1FBDE8FB00865541 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB03F53E1FBDE8FB00865541 /* SettingsViewController.m */; };
+		EB03F5491FBDEB8900865541 /* EnginnerHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB03F5481FBDEB8900865541 /* EnginnerHomeViewController.m */; };
+		EB03F54D1FBDEC6000865541 /* UserHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB03F54C1FBDEC6000865541 /* UserHomeViewController.m */; };
 		EB0808D71FBC7DF600FD0604 /* teslaria_title@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB0808D51FBC7DF500FD0604 /* teslaria_title@2x.png */; };
 		EB0808D81FBC7DF600FD0604 /* botomo_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB0808D61FBC7DF600FD0604 /* botomo_icon@2x.png */; };
 		EB5D91FC1FBB2F78004ED38D /* login_right_arraw@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB5D91FB1FBB2F77004ED38D /* login_right_arraw@2x.png */; };
@@ -468,6 +470,10 @@
 		EB03F5331FBDDAB300865541 /* main_engineer_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "main_engineer_n@2x.png"; sourceTree = "<group>"; };
 		EB03F53E1FBDE8FB00865541 /* SettingsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		EB03F5411FBDE94300865541 /* SettingsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		EB03F5481FBDEB8900865541 /* EnginnerHomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EnginnerHomeViewController.m; sourceTree = "<group>"; };
+		EB03F54A1FBDEB9C00865541 /* EnginnerHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EnginnerHomeViewController.h; sourceTree = "<group>"; };
+		EB03F54C1FBDEC6000865541 /* UserHomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserHomeViewController.m; sourceTree = "<group>"; };
+		EB03F54E1FBDEC7400865541 /* UserHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserHomeViewController.h; sourceTree = "<group>"; };
 		EB0808D51FBC7DF500FD0604 /* teslaria_title@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "teslaria_title@2x.png"; sourceTree = "<group>"; };
 		EB0808D61FBC7DF600FD0604 /* botomo_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "botomo_icon@2x.png"; sourceTree = "<group>"; };
 		EB5D91FB1FBB2F77004ED38D /* login_right_arraw@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login_right_arraw@2x.png"; sourceTree = "<group>"; };
@@ -661,6 +667,8 @@
 		04DE1DD41AD68C5E00D49E2F /* veenoon */ = {
 			isa = PBXGroup;
 			children = (
+				EB03F54B1FBDEC3E00865541 /* User */,
+				EB03F5441FBDEB1200865541 /* Engineer */,
 				EB03F53D1FBDE8AE00865541 /* Settings */,
 				EBEA7C1D1FBCAF260028F0E8 /* Components */,
 				049BA65C1AF7B63F00F17584 /* Database */,
@@ -1037,6 +1045,24 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		EB03F5441FBDEB1200865541 /* Engineer */ = {
+			isa = PBXGroup;
+			children = (
+				EB03F5481FBDEB8900865541 /* EnginnerHomeViewController.m */,
+				EB03F54A1FBDEB9C00865541 /* EnginnerHomeViewController.h */,
+			);
+			path = Engineer;
+			sourceTree = "<group>";
+		};
+		EB03F54B1FBDEC3E00865541 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				EB03F54C1FBDEC6000865541 /* UserHomeViewController.m */,
+				EB03F54E1FBDEC7400865541 /* UserHomeViewController.h */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
 		EBEA7C1D1FBCAF260028F0E8 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -1286,6 +1312,7 @@
 				049ECAC21C8D694400A611D8 /* DataMatrix.mm in Sources */,
 				04DE1EB01AD6AEE000D49E2F /* SDWebImageDownloaderOperation.m in Sources */,
 				EB03F53F1FBDE8FB00865541 /* SettingsViewController.m in Sources */,
+				EB03F54D1FBDEC6000865541 /* UserHomeViewController.m in Sources */,
 				04DE1E951AD6AEE000D49E2F /* ASIDataCompressor.m in Sources */,
 				04DE1EAF1AD6AEE000D49E2F /* SDWebImageDownloader.m in Sources */,
 				04DE1EA41AD6AEE000D49E2F /* SBJson4StreamParser.m in Sources */,
@@ -1293,6 +1320,7 @@
 				04DE1EB51AD6AEE000D49E2F /* UIImageView+WebCache.m in Sources */,
 				04DE1E8E1AD6AEE000D49E2F /* UIButton+Color.m in Sources */,
 				341671841FBA9765001D33D0 /* SignupViewController.m in Sources */,
+				EB03F5491FBDEB8900865541 /* EnginnerHomeViewController.m in Sources */,
 				341671811FBA974C001D33D0 /* WellcomeViewController.m in Sources */,
 				04DE1E911AD6AEE000D49E2F /* UILabel+ContentSize.m in Sources */,
 				0477DC5B1DA9F4BA0077FA52 /* WaitDialog.m in Sources */,

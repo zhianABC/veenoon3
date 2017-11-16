@@ -8,6 +8,8 @@
 
 #import "HomeViewController.h"
 #import "SettingsViewController.h"
+#import "EnginnerHomeViewController.h"
+#import "UserHomeViewController.h"
 
 @interface HomeViewController () {
     UIButton *_settingsBtn;
@@ -65,11 +67,13 @@
 }
 
 - (void) userLoginAction:(id)sender{
-    
+    UserHomeViewController *lctrl = [[UserHomeViewController alloc] init];
+    [self.navigationController pushViewController:lctrl animated:YES];
 }
 
 - (void) engineerAction:(id)sender{
-    
+    EnginnerHomeViewController *lctrl = [[EnginnerHomeViewController alloc] init];
+    [self.navigationController pushViewController:lctrl animated:YES];
 }
 
 
