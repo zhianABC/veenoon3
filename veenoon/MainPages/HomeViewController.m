@@ -10,6 +10,7 @@
 #import "SettingsViewController.h"
 #import "EnginnerHomeViewController.h"
 #import "UserHomeViewController.h"
+#import "NSDate-Helper.h"
 
 @interface HomeViewController () {
     UIButton *_settingsBtn;
@@ -29,13 +30,10 @@
     imageView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     [self.view addSubview:imageView];
     
-    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(0,
-                                                                SCREEN_HEIGHT - 80,
-                                                                SCREEN_WIDTH, 80)];
-    UIColor *tintColor = [UIColor colorWithWhite:0 alpha:0.3];
-    [titleL setBackgroundColor:tintColor];
-    titleL.userInteractionEnabled =YES;
-    [self.view addSubview:titleL];
+    UIImageView *icon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_shadow.png"]];
+    icon.frame = CGRectMake(0, SCREEN_HEIGHT-250, SCREEN_WIDTH, 250);
+    icon.userInteractionEnabled = YES;
+    [self.view addSubview:icon];
     
     _settingsBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _settingsBtn.frame = CGRectMake(SCREEN_WIDTH - 70, SCREEN_HEIGHT - 60, 50, 50);
@@ -59,6 +57,52 @@
     [_userBtn setImage:[UIImage imageNamed:@"main_user_login_selected.png"] forState:UIControlStateHighlighted];
     [_userBtn addTarget:self action:@selector(userLoginAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_userBtn];
+    
+    UILabel* timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(70,
+                                                                SCREEN_HEIGHT - 240,
+                                                                SCREEN_WIDTH, 60)];
+    timeLabel.textColor = [UIColor whiteColor];
+    timeLabel.font = [UIFont systemFontOfSize:60];
+    timeLabel.userInteractionEnabled = YES;
+    
+    NSString *hourStr = [NSDate currentHour];
+    NSString *minuteStr = [NSDate currentMinute];
+    
+    timeLabel.text = [hourStr stringByAppendingString:minuteStr];
+    [self.view addSubview:timeLabel];
+    
+    
+    UILabel* dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(70,
+                                                                   SCREEN_HEIGHT - 180,
+                                                                   110, 40)];
+    dateLabel.textColor = [UIColor whiteColor];
+    dateLabel.font = [UIFont systemFontOfSize:24];
+    dateLabel.userInteractionEnabled = YES;
+    
+    NSString *dateStr = [NSDate currentDate];
+    
+    dateLabel.text = dateStr;
+    [self.view addSubview:dateLabel];
+    
+    
+    UILabel* weekdayLabel = [[UILabel alloc] initWithFrame:CGRectMake(180,
+                                                                   SCREEN_HEIGHT - 180,
+                                                                   120, 40)];
+    weekdayLabel.textColor = [UIColor whiteColor];
+    weekdayLabel.font = [UIFont systemFontOfSize:24];
+    weekdayLabel.userInteractionEnabled = YES;
+    
+    NSString *weekDayStr = [NSDate currentWeekday];
+    
+    weekdayLabel.text = weekDayStr;
+    [self.view addSubview:weekdayLabel];
+    
+    
+    UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
+    [self.view addSubview:titleIcon];
+    titleIcon.frame = CGRectMake(70, 50,
+                                 70, 10);
+     [self.view addSubview:titleIcon];
 }
 
 - (void) settingsAction:(id)sender{

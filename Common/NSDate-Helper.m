@@ -350,4 +350,51 @@
 	return [NSDate timestampFormatString];
 }
 
+// preserving for compatibility
++ (NSString *)currentHour {
+    NSDate *date = [NSDate date];
+    NSCalendar *cal = [NSCalendar currentCalendar];
+    NSDateComponents *components = [cal components:NSHourCalendarUnit fromDate:date];
+    
+    NSString *strHour = [NSString stringWithFormat:@"%d:", [components hour]];
+    return strHour;
+}
+
+// preserving for compatibility
++ (NSString *)currentMinute {
+    NSDate *date = [NSDate date];
+    NSCalendar *cal = [NSCalendar currentCalendar];
+    NSDateComponents *components = [cal components:NSMinuteCalendarUnit fromDate:date];
+    
+    NSString *strHour = [NSString stringWithFormat:@"%d", [components minute]];
+    return strHour;
+}
+
+// preserving for compatibility
++ (NSString *)currentWeekday {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSArray *weekdays = [NSArray arrayWithObjects:@"星期日", @"星期一", @"星期二", @"星期三", @"星期四", @"星期五", @"星期六", nil];
+    NSTimeZone *timeZone = [[NSTimeZone alloc] initWithName:@"Asia/Shanghai"];
+    [calendar setTimeZone: timeZone];
+    NSDate *date = [NSDate date];
+    NSCalendarUnit calendarUnit = NSWeekdayCalendarUnit;
+    NSDateComponents *theComponents = [calendar components:calendarUnit fromDate:date];
+    
+    NSString *weekDay = [weekdays objectAtIndex:theComponents.weekday - 1];
+    
+    return weekDay;
+}
+
+// preserving for compatibility
++ (NSString *)currentDate {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    unsigned unitFlags = NSYearCalendarUnit |NSMonthCalendarUnit |NSDayCalendarUnit;
+    NSDateComponents *components = [calendar components:unitFlags fromDate:[NSDate date]];
+    NSString *month = [NSString stringWithFormat:@"%ld", components.month];
+    NSString *date = [NSString stringWithFormat:@"%ld", components.day];
+    NSString *currentDate = [[[month stringByAppendingString:@"月"] stringByAppendingString:date] stringByAppendingString:@"日"];
+    
+    return currentDate;
+}
+
 @end

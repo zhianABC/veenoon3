@@ -75,10 +75,6 @@
 - (NSDate *)beginningOfWeek;
 
 
-
-
-
-
 //返回当前周的周末
 - (NSDate *)endOfWeek;
 + (NSString *)dateFormatString;
@@ -86,5 +82,10 @@
 + (NSString *)timestampFormatString;
 // preserving for compatibility
 + (NSString *)dbFormatString;
+
++ (NSString *) currentHour;
++ (NSString *) currentMinute;
++ (NSString *) currentWeekday;
++ (NSString *) currentDate;
 
 @end
