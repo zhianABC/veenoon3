@@ -59,6 +59,7 @@
     [bottomBar addSubview:cancelBtn];
     [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
     [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [cancelBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
     cancelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [cancelBtn addTarget:self
                   action:@selector(cancelAction:)
@@ -68,7 +69,8 @@
     okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 60);
     [bottomBar addSubview:okBtn];
     [okBtn setTitle:@"确认" forState:UIControlStateNormal];
-    [okBtn setTitleColor:THEME_COLOR forState:UIControlStateNormal];
+    [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
     okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [okBtn addTarget:self
               action:@selector(okAction:)
@@ -84,7 +86,7 @@
     int w = CGRectGetWidth(_inputPannel.frame);
     UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(left, top, 80, 50)];
     tL.text = @"国家/地区";
-    tL.textColor = RGB(109, 210, 244);
+    tL.textColor = RGB(70, 219, 254);
     tL.font = [UIFont boldSystemFontOfSize:18];
     [_inputPannel addSubview:tL];
     
@@ -106,7 +108,7 @@
     rightArraw.image = [UIImage imageNamed:@"login_right_arraw.png"];
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(left, top +50, w, 1)];
-    line.backgroundColor = RGB(75, 163, 202);
+    line.backgroundColor = RGB(70, 219, 254);
     [_inputPannel addSubview:line];
     
     ///手机号输入框 pending....
@@ -120,7 +122,7 @@
     [_inputPannel addSubview:_companyName];
     
     UILabel *line2 = [[UILabel alloc] initWithFrame:CGRectMake(left, top +96, w, 1)];
-    line2.backgroundColor = RGB(75, 163, 202);
+    line2.backgroundColor = RGB(70, 219, 254);
     [_inputPannel addSubview:line2];
     
     _regionBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -140,7 +142,7 @@
     rightArraw2.image = [UIImage imageNamed:@"login_right_arraw.png"];
     
     UILabel *line3 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+141, w, 1)];
-    line3.backgroundColor = RGB(75, 163, 202);
+    line3.backgroundColor = RGB(70, 219, 254);
     [_inputPannel addSubview:line3];
     
     _addressTextfield = [[UITextField alloc] initWithFrame:CGRectMake(left, top+145, w-85, 40)];
@@ -153,12 +155,12 @@
     [_inputPannel addSubview:_addressTextfield];
     
     UILabel *line4 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+186, w, 1)];
-    line4.backgroundColor = RGB(75, 163, 202);
+    line4.backgroundColor = RGB(70, 219, 254);
     [_inputPannel addSubview:line4];
     
     UILabel *tL2 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+190, 80, 40)];
     tL2.text = @"+86";
-    tL2.textColor = RGB(109, 210, 244);
+    tL2.textColor = RGB(70, 219, 254);
     tL2.font = [UIFont boldSystemFontOfSize:18];
     [_inputPannel addSubview:tL2];
     
@@ -173,7 +175,7 @@
     [_inputPannel addSubview:_cellphoneTextfield];
     
     UILabel *line5 = [[UILabel alloc] initWithFrame:CGRectMake(left+260, top+190, 1, 40)];
-    line5.backgroundColor = RGB(75, 163, 202);
+    line5.backgroundColor = RGB(70, 219, 254);
     [_inputPannel addSubview:line5];
     
     _registerNumberBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -188,12 +190,12 @@
           forControlEvents:UIControlEventTouchUpInside];
     
     UILabel *line6 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+231, w, 1)];
-    line6.backgroundColor = RGB(75, 163, 202);
+    line6.backgroundColor = RGB(70, 219, 254);
     [_inputPannel addSubview:line6];
     
     UILabel *tL3 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+235, 80, 40)];
     tL3.text = @"校验码";
-    tL3.textColor = RGB(109, 210, 244);
+    tL3.textColor = RGB(70, 219, 254);
     tL3.font = [UIFont boldSystemFontOfSize:18];
     [_inputPannel addSubview:tL3];
     
@@ -208,26 +210,26 @@
     [_inputPannel addSubview:_jiaoyanmaTextfield];
     
     UILabel *line7 = [[UILabel alloc] initWithFrame:CGRectMake(left+260, top+235, 1, 40)];
-    line7.backgroundColor = RGB(75, 163, 202);
+    line7.backgroundColor = RGB(70, 219, 254);
     [_inputPannel addSubview:line7];
     
     _timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(left+285, top+235, 100, 40)];
     _timerLabel.text = @"180s 有效";
-    _timerLabel.textColor = RGB(109, 210, 244);
+    _timerLabel.textColor = RGB(255, 180, 0);
     _timerLabel.font = [UIFont boldSystemFontOfSize:18];
     [_inputPannel addSubview:_timerLabel];
     
     UILabel *line8 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+276, w, 1)];
-    line8.backgroundColor = RGB(75, 163, 202);
+    line8.backgroundColor = RGB(70, 219, 254);
     [_inputPannel addSubview:line8];
     
     UILabel *line9 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+316, w, 1)];
-    line9.backgroundColor = RGB(75, 163, 202);
+    line9.backgroundColor = RGB(70, 219, 254);
     [_inputPannel addSubview:line9];
     
     UILabel *tL4 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+320, 80, 40)];
     tL4.text = @"设置密码";
-    tL4.textColor = RGB(109, 210, 244);
+    tL4.textColor = RGB(70, 219, 254);
     tL4.font = [UIFont boldSystemFontOfSize:18];
     [_inputPannel addSubview:tL4];
     
@@ -243,12 +245,12 @@
     [_inputPannel addSubview:_password];
     
     UILabel *line10 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+361, w, 1)];
-    line10.backgroundColor = RGB(75, 163, 202);
+    line10.backgroundColor = RGB(70, 219, 254);
     [_inputPannel addSubview:line10];
     
     UILabel *tL5 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+365, 80, 40)];
     tL5.text = @"确认密码";
-    tL5.textColor = RGB(109, 210, 244);
+    tL5.textColor = RGB(70, 219, 254);
     tL5.font = [UIFont boldSystemFontOfSize:18];
     [_inputPannel addSubview:tL5];
     
@@ -264,13 +266,13 @@
     [_inputPannel addSubview:_passwordAgain];
     
     UILabel *line11 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+406, w, 1)];
-    line11.backgroundColor = RGB(75, 163, 202);
+    line11.backgroundColor = RGB(70, 219, 254);
     [_inputPannel addSubview:line11];
     
     
     UILabel *tL6 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+506, w, 40)];
     tL6.text = @"*如果您已经使用过了 TESLARIA 服务， 则应返回以使用该账号登录。 *";
-    tL6.textColor = RGB(109, 210, 244);
+    tL6.textColor = RGB(70, 219, 254);
     tL6.font = [UIFont boldSystemFontOfSize:12];
     [_inputPannel addSubview:tL6];
 }

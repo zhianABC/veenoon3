@@ -65,6 +65,7 @@
     [bottomBar addSubview:cancelBtn];
     [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
     [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [cancelBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
     cancelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [cancelBtn addTarget:self
                   action:@selector(cancelAction:)
@@ -74,7 +75,8 @@
     okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 60);
     [bottomBar addSubview:okBtn];
     [okBtn setTitle:@"确认" forState:UIControlStateNormal];
-    [okBtn setTitleColor:THEME_COLOR forState:UIControlStateNormal];
+    [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
     okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [okBtn addTarget:self
                   action:@selector(okAction:)
@@ -114,99 +116,8 @@
 }
 
 - (void) okAction:(UIButton*) btn {
-
-    if(_autoClient == nil)
-        _autoClient = [[WebClient alloc] initWithDelegate:self];
-    
-    _autoClient._httpMethod = @"GET";
-    _autoClient._method = NEW_API_LOGIN;
-    
-    
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    
-    _autoClient._requestParam = params;
-    
-    IMP_BLOCK_SELF(InvitationCodeViewCotroller);
-    
-    // temp login.
-    [block_self didLogin];
-    
-    btn.enabled = NO;
-    
-    [_autoClient requestWithSusessBlock:^(id lParam, id rParam) {
-        
-        NSString *response = lParam;
-        //NSLog(@"%@", response);
-        
-        SBJson4ValueBlock block = ^(id v, BOOL *stop) {
-            
-            if ([v isKindOfClass:[NSDictionary class]]) {
-                NSString *status = [v objectForKey:@"status"];
-                if ([status isEqualToString:@"sucess"]) {
-                    NSString *token = [v objectForKey:@"token"];
-                    
-                    User *u = [[User alloc] initWithDicionary:v];
-                    u._authtoken = token;
-                    
-                    [UserDefaultsKV saveUser:u];
-                    
-                    [block_self didLogin];
-                } else {
-                    btn.enabled = YES;
-                    
-                    NSString *message = [v objectForKey:@"loginInfor"];
-                    
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
-                                                                    message:message
-                                                                   delegate:nil
-                                                          cancelButtonTitle:@"OK"
-                                                          otherButtonTitles:nil, nil];
-                    [alert show];
-                    
-                }
-                return;
-            }
-            
-        };
-        
-        SBJson4ErrorBlock eh = ^(NSError* err) {
-            NSLog(@"OOPS: %@", err);
-            
-        };
-        
-        id parser = [SBJson4Parser multiRootParserWithBlock:block
-                                               errorHandler:eh];
-        
-        id data = [response dataUsingEncoding:NSUTF8StringEncoding];
-        [parser parse:data];
-        
-        
-    } FailBlock:^(id lParam, id rParam) {
-        
-        NSString *response = lParam;
-        NSLog(@"%@", response);
-        
-        
-    }];
+    [self didLogin];
 }
-
-- (void) notifyNetworkStatusChanged:(NSNotification*)notify{
-    
-    NSDictionary *userinfo = [notify userInfo];
-    BOOL network = [[userinfo objectForKey:@"status"] boolValue];
-    if(!network)
-    {
-        _networkStatus.text = @"没有连接网络...";
-        _networkStatus.hidden = NO;
-    }
-    else
-    {
-        _networkStatus.hidden = YES;
-    }
-}
-
-
-
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     

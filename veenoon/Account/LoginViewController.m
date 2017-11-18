@@ -68,6 +68,7 @@
     [bottomBar addSubview:cancelBtn];
     [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
     [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [cancelBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
     cancelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [cancelBtn addTarget:self
                   action:@selector(cancelAction:)
@@ -77,7 +78,8 @@
     okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 60);
     [bottomBar addSubview:okBtn];
     [okBtn setTitle:@"确认" forState:UIControlStateNormal];
-    [okBtn setTitleColor:THEME_COLOR forState:UIControlStateNormal];
+    [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
     okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [okBtn addTarget:self
                   action:@selector(okAction:)
@@ -93,7 +95,7 @@
     int w = CGRectGetWidth(_inputPannel.frame);
     UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(left, top, w, 50)];
     tL.text = @"国家/地区";
-    tL.textColor = RGB(109, 210, 244);
+    tL.textColor = RGB(70, 219, 254);
     tL.font = [UIFont boldSystemFontOfSize:18];
     [_inputPannel addSubview:tL];
     
@@ -128,7 +130,7 @@
     
     _countrycode = [[UILabel alloc] initWithFrame:CGRectMake(left, top, w, 50)];
     _countrycode.text = @"+86";
-    _countrycode.textColor = RGB(109, 210, 244);
+    _countrycode.textColor = RGB(70, 219, 254);
     _countrycode.font = [UIFont boldSystemFontOfSize:18];
     [_inputPannel addSubview:_countrycode];
     
@@ -151,7 +153,7 @@
     
     tL = [[UILabel alloc] initWithFrame:CGRectMake(left, top, w, 50)];
     tL.text = @"密码";
-    tL.textColor = RGB(109, 210, 244);
+    tL.textColor = RGB(70, 219, 254);
     tL.font = [UIFont boldSystemFontOfSize:18];
     [_inputPannel addSubview:tL];
     
@@ -161,7 +163,7 @@
     _userPwd.returnKeyType = UIReturnKeyDone;
     _userPwd.placeholder = @"6-12位密码";
     _userPwd.backgroundColor = [UIColor clearColor];
-    _userPwd.textColor = RGB(109, 210, 244);
+    _userPwd.textColor = RGB(70, 219, 254);
     _userPwd.borderStyle = UITextBorderStyleNone;
     _userPwd.secureTextEntry = YES;
     [_inputPannel addSubview:_userPwd];
@@ -172,6 +174,12 @@
     line = [[UILabel alloc] initWithFrame:CGRectMake(left, top, w, 1)];
     line.backgroundColor = RGB(75, 163, 202);
     [_inputPannel addSubview:line];
+    
+    tL = [[UILabel alloc] initWithFrame:CGRectMake(left, top+160, w, 50)];
+    tL.text = @"         创建您的TESLARIA账户！";
+    tL.textColor = RGB(70, 219, 254);
+    tL.font = [UIFont boldSystemFontOfSize:14];
+    [_inputPannel addSubview:tL];
 }
 
 - (void) countrySelectAction:(id)sender{

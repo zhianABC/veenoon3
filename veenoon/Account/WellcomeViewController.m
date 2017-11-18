@@ -36,7 +36,7 @@
     [self.view addSubview:login];
     [login setTitle:@"登录" forState:UIControlStateNormal];
     [login setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [login setTitleColor:RGB(57, 137, 178) forState:UIControlStateHighlighted];
+    [login setTitleColor:RGB(1, 138, 182) forState:UIControlStateHighlighted];
     login.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     login.center = CGPointMake(SCREEN_WIDTH/2-150, CGRectGetMaxY(icon.frame)+140);
 
@@ -53,13 +53,24 @@
     [self.view addSubview:signup];
     [signup setTitle:@"注册" forState:UIControlStateNormal];
     [signup setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [signup setTitleColor:RGB(57, 137, 178) forState:UIControlStateHighlighted];
+    [signup setTitleColor:RGB(1, 138, 182) forState:UIControlStateHighlighted];
     signup.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     signup.center = CGPointMake(SCREEN_WIDTH/2+150, CGRectGetMaxY(icon.frame)+140);
 
     [signup addTarget:self
               action:@selector(signupAction:)
     forControlEvents:UIControlEventTouchUpInside];
+    
+    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(40,
+                                                                SCREEN_HEIGHT - 60,
+                                                                SCREEN_WIDTH, 20)];
+    titleL.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:titleL];
+    titleL.font = [UIFont systemFontOfSize:16];
+    titleL.textColor  = [UIColor whiteColor];
+    titleL.text = @"关于TESLSRIA";
+    
+    [self.view addSubview:titleL];
 }
 
 - (void) loginAction:(id)sender{
