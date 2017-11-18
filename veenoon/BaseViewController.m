@@ -31,8 +31,7 @@
     
 }
 
-- (BOOL)prefersStatusBarHidden
-{
+- (BOOL)prefersStatusBarHidden {
     
     return NO;
     

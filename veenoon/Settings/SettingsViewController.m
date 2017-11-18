@@ -7,8 +7,18 @@
 //
 
 #import "SettingsViewController.h"
+#import "SettingsUserView.h"
+#import "SettingsViewView.h"
+#import "SettingsAccountView.h"
 
 @interface SettingsViewController () {
+    UIButton *userSettingBtn;
+    UIButton *viewSettingBtn;
+    UIButton *accountSettingBtn;
+    
+    SettingsUserView *settingsUserView;
+    SettingsViewView *settingsViewView;
+    SettingsAccountView *settingsAccountView;
 }
 
 @end
@@ -16,5 +26,103 @@
 @implementation SettingsViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
+    [self.view addSubview:titleIcon];
+    titleIcon.frame = CGRectMake(70, 30, 70, 10);
+    [self.view addSubview:titleIcon];
+    
+    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 59, SCREEN_WIDTH, 1)];
+    line.backgroundColor = RGB(75, 163, 202);
+    [self.view addSubview:line];
+    
+    ///
+    UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-60, SCREEN_WIDTH, 60)];
+    [self.view addSubview:bottomBar];
+    
+    //缺切图，把切图贴上即可。
+    bottomBar.backgroundColor = [UIColor grayColor];
+    bottomBar.userInteractionEnabled = YES;
+    bottomBar.image = [UIImage imageNamed:@"botomo_icon.png"];
+    
+    UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    cancelBtn.frame = CGRectMake(10, 0,160, 60);
+    [bottomBar addSubview:cancelBtn];
+    [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
+    [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [cancelBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    cancelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [cancelBtn addTarget:self
+                  action:@selector(cancelAction:)
+        forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 60);
+    [bottomBar addSubview:okBtn];
+    [okBtn setTitle:@"确认" forState:UIControlStateNormal];
+    [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [okBtn addTarget:self
+              action:@selector(okAction:)
+    forControlEvents:UIControlEventTouchUpInside];
+    
+    userSettingBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    userSettingBtn.highlighted = YES;
+    userSettingBtn.frame = CGRectMake(SCREEN_WIDTH/3, CGRectGetMinY(bottomBar.frame) - 70, 50, 50);
+    [userSettingBtn setImage:[UIImage imageNamed:@"settings_user_n.png"] forState:UIControlStateNormal];
+    [userSettingBtn setImage:[UIImage imageNamed:@"settings_user_s.png"] forState:UIControlStateHighlighted];
+    [userSettingBtn addTarget:self action:@selector(userSettingAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:userSettingBtn];
+    
+    
+    viewSettingBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    viewSettingBtn.frame = CGRectMake(SCREEN_WIDTH/2, CGRectGetMinY(bottomBar.frame) - 70, 50, 50);
+    [viewSettingBtn setImage:[UIImage imageNamed:@"settings_view_n.png"] forState:UIControlStateNormal];
+    [viewSettingBtn setImage:[UIImage imageNamed:@"settings_view_s.png"] forState:UIControlStateHighlighted];
+    [viewSettingBtn addTarget:self action:@selector(viewSettingAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:viewSettingBtn];
+    
+    
+    accountSettingBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    accountSettingBtn.frame = CGRectMake(SCREEN_WIDTH*2/3, CGRectGetMinY(bottomBar.frame) - 70, 50, 50);
+    [accountSettingBtn setImage:[UIImage imageNamed:@"settings_account_n.png"] forState:UIControlStateNormal];
+    [accountSettingBtn setImage:[UIImage imageNamed:@"settings_account_s.png"] forState:UIControlStateHighlighted];
+    [accountSettingBtn addTarget:self action:@selector(accountSettingAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:accountSettingBtn];
+    
+    settingsUserView = [[SettingsUserView alloc]initWithFrame:CGRectMake(0, 60, SCREEN_WIDTH, SCREEN_HEIGHT-240)];
+    settingsUserView.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+//    settingsUserView.delegate = self;
+    settingsUserView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:settingsUserView];
 }
+                                      
+                                      
+- (void) userSettingAction:(id)sender{
+    userSettingBtn.highlighted = YES;
+    viewSettingBtn.highlighted = NO;
+    accountSettingBtn.highlighted = NO;
+}
+
+- (void) viewSettingAction:(id)sender{
+    userSettingBtn.highlighted = NO;
+    viewSettingBtn.highlighted = YES;
+    accountSettingBtn.highlighted = NO;
+}
+
+- (void) accountSettingAction:(id)sender{
+    userSettingBtn.highlighted = NO;
+    viewSettingBtn.highlighted = NO;
+    accountSettingBtn.highlighted = YES;
+}
+
+- (void) okAction:(id)sender{
+    
+}
+
+- (void) cancelAction:(id)sender{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 @end
