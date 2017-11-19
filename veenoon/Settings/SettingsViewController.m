@@ -103,18 +103,65 @@
     userSettingBtn.highlighted = YES;
     viewSettingBtn.highlighted = NO;
     accountSettingBtn.highlighted = NO;
+    
+    if (settingsViewView) {
+        settingsViewView.hidden = YES;
+    }
+    if (settingsUserView == nil) {
+        settingsUserView = [[SettingsUserView alloc]initWithFrame:CGRectMake(0, 60, SCREEN_WIDTH, SCREEN_HEIGHT-240)];
+        settingsUserView.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+        //    settingsUserView.delegate = self;
+        settingsUserView.backgroundColor = [UIColor clearColor];
+        [self.view addSubview:settingsUserView];
+    } else {
+        settingsUserView.hidden = NO;
+    }
+    if (settingsAccountView) {
+        settingsAccountView.hidden = YES;
+    }
 }
 
 - (void) viewSettingAction:(id)sender{
     userSettingBtn.highlighted = NO;
     viewSettingBtn.highlighted = YES;
     accountSettingBtn.highlighted = NO;
+    if (settingsUserView) {
+        settingsUserView.hidden = YES;
+    }
+    if (settingsViewView == nil) {
+        settingsViewView = [[SettingsViewView alloc]initWithFrame:CGRectMake(0, 60, SCREEN_WIDTH, SCREEN_HEIGHT-240)];
+        settingsViewView.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+        //    settingsUserView.delegate = self;
+        settingsViewView.backgroundColor = [UIColor clearColor];
+        [self.view addSubview:settingsViewView];
+    } else {
+        settingsViewView.hidden = NO;
+    }
+    if (settingsAccountView) {
+        settingsAccountView.hidden = YES;
+    }
 }
 
 - (void) accountSettingAction:(id)sender{
     userSettingBtn.highlighted = NO;
     viewSettingBtn.highlighted = NO;
     accountSettingBtn.highlighted = YES;
+    
+    if (settingsViewView) {
+        settingsViewView.hidden = YES;
+    }
+    if (settingsAccountView == nil) {
+        settingsAccountView = [[SettingsAccountView alloc]initWithFrame:CGRectMake(0, 60, SCREEN_WIDTH, SCREEN_HEIGHT-240)];
+        settingsAccountView.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+        //    settingsUserView.delegate = self;
+        settingsAccountView.backgroundColor = [UIColor clearColor];
+        [self.view addSubview:settingsAccountView];
+    } else {
+        settingsAccountView.hidden = NO;
+    }
+    if (settingsUserView) {
+        settingsUserView.hidden = YES;
+    }
 }
 
 - (void) okAction:(id)sender{
