@@ -19,6 +19,7 @@
     SettingsUserView *settingsUserView;
     SettingsViewView *settingsViewView;
     SettingsAccountView *settingsAccountView;
+    
 }
 
 @end
@@ -68,14 +69,13 @@
     forControlEvents:UIControlEventTouchUpInside];
     
     userSettingBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    userSettingBtn.highlighted = YES;
     userSettingBtn.frame = CGRectMake(SCREEN_WIDTH/3, CGRectGetMinY(bottomBar.frame) - 70, 50, 50);
-    [userSettingBtn setImage:[UIImage imageNamed:@"settings_user_n.png"] forState:UIControlStateNormal];
+    [userSettingBtn setImage:[UIImage imageNamed:@"settings_user_s.png"] forState:UIControlStateNormal];
     [userSettingBtn setImage:[UIImage imageNamed:@"settings_user_s.png"] forState:UIControlStateHighlighted];
     [userSettingBtn addTarget:self action:@selector(userSettingAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:userSettingBtn];
     
-    
+
     viewSettingBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     viewSettingBtn.frame = CGRectMake(SCREEN_WIDTH/2, CGRectGetMinY(bottomBar.frame) - 70, 50, 50);
     [viewSettingBtn setImage:[UIImage imageNamed:@"settings_view_n.png"] forState:UIControlStateNormal];
@@ -83,7 +83,7 @@
     [viewSettingBtn addTarget:self action:@selector(viewSettingAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:viewSettingBtn];
     
-    
+
     accountSettingBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     accountSettingBtn.frame = CGRectMake(SCREEN_WIDTH*2/3, CGRectGetMinY(bottomBar.frame) - 70, 50, 50);
     [accountSettingBtn setImage:[UIImage imageNamed:@"settings_account_n.png"] forState:UIControlStateNormal];
@@ -91,6 +91,7 @@
     [accountSettingBtn addTarget:self action:@selector(accountSettingAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:accountSettingBtn];
     
+
     settingsUserView = [[SettingsUserView alloc]initWithFrame:CGRectMake(0, 60, SCREEN_WIDTH, SCREEN_HEIGHT-240)];
     settingsUserView.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
 //    settingsUserView.delegate = self;
@@ -100,9 +101,10 @@
                                       
                                       
 - (void) userSettingAction:(id)sender{
-    userSettingBtn.highlighted = YES;
-    viewSettingBtn.highlighted = NO;
-    accountSettingBtn.highlighted = NO;
+    
+    [userSettingBtn setImage:[UIImage imageNamed:@"settings_user_s.png"] forState:UIControlStateNormal];
+    [viewSettingBtn setImage:[UIImage imageNamed:@"settings_view_n.png"] forState:UIControlStateNormal];
+   [accountSettingBtn setImage:[UIImage imageNamed:@"settings_account_n.png"] forState:UIControlStateNormal];
     
     if (settingsViewView) {
         settingsViewView.hidden = YES;
@@ -122,9 +124,11 @@
 }
 
 - (void) viewSettingAction:(id)sender{
-    userSettingBtn.highlighted = NO;
-    viewSettingBtn.highlighted = YES;
-    accountSettingBtn.highlighted = NO;
+    
+    [userSettingBtn setImage:[UIImage imageNamed:@"settings_user_n.png"] forState:UIControlStateNormal];
+    [viewSettingBtn setImage:[UIImage imageNamed:@"settings_view_s.png"] forState:UIControlStateNormal];
+    [accountSettingBtn setImage:[UIImage imageNamed:@"settings_account_n.png"] forState:UIControlStateNormal];
+    
     if (settingsUserView) {
         settingsUserView.hidden = YES;
     }
@@ -143,9 +147,10 @@
 }
 
 - (void) accountSettingAction:(id)sender{
-    userSettingBtn.highlighted = NO;
-    viewSettingBtn.highlighted = NO;
-    accountSettingBtn.highlighted = YES;
+    
+    [userSettingBtn setImage:[UIImage imageNamed:@"settings_user_n.png"] forState:UIControlStateNormal];
+    [viewSettingBtn setImage:[UIImage imageNamed:@"settings_view_n.png"] forState:UIControlStateNormal];
+    [accountSettingBtn setImage:[UIImage imageNamed:@"settings_account_s.png"] forState:UIControlStateNormal];
     
     if (settingsViewView) {
         settingsViewView.hidden = YES;
