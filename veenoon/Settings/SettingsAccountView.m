@@ -7,6 +7,7 @@
 //
 #import "SettingsAccountView.h"
 
+
 @interface SettingsAccountView () {
     UIButton *languageBtn;
     UIButton *updateVersionBtn;
@@ -227,7 +228,7 @@
 }
 
 - (void) outSystemAction:(id)sender{
-    
+    [self.delegate performSelector:@selector(enterOutSystem) withObject:nil];
 }
 
 @end

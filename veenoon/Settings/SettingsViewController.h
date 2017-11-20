@@ -6,8 +6,8 @@
 //  Copyright © 2017年 jack. All rights reserved.
 //
 #import "BaseViewController.h"
+#import "SettingsAccountView.h"
 
-
-@interface SettingsViewController : BaseViewController
+@interface SettingsViewController : BaseViewController <SettingsAccountViewDelegate>
 
 @end

@@ -10,8 +10,9 @@
 #import "SettingsUserView.h"
 #import "SettingsViewView.h"
 #import "SettingsAccountView.h"
+#import "OutSystemView.h"
 
-@interface SettingsViewController () {
+@interface SettingsViewController () <SettingsAccountViewDelegate> {
     UIButton *userSettingBtn;
     UIButton *viewSettingBtn;
     UIButton *accountSettingBtn;
@@ -160,6 +161,7 @@
         settingsAccountView.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
         //    settingsUserView.delegate = self;
         settingsAccountView.backgroundColor = [UIColor clearColor];
+        settingsAccountView.delegate = self;
         [self.view addSubview:settingsAccountView];
     } else {
         settingsAccountView.hidden = NO;
@@ -167,6 +169,17 @@
     if (settingsUserView) {
         settingsUserView.hidden = YES;
     }
+}
+
+- (void) enterOutSystem {
+    OutSystemView *outSystemView = [[OutSystemView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    [self.view addSubview:outSystemView];
+    
+    [UIView animateWithDuration:0.3f animations:^{
+        CGRect frame = outSystemView.frame;
+        frame.origin.y = 0.f;
+        [outSystemView setFrame:frame];
+    }];
 }
 
 - (void) okAction:(id)sender{

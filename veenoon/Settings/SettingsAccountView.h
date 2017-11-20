@@ -7,8 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol  SettingsAccountViewDelegate <NSObject>
+- (void) enterOutSystem;
+@end
 
 @interface SettingsAccountView : UIView
+@property(nonatomic, weak) id<SettingsAccountViewDelegate> delegate;
 
 @end
 
