@@ -103,6 +103,7 @@
     titleIcon.frame = CGRectMake(70, 50,
                                  70, 10);
      [self.view addSubview:titleIcon];
+    
 }
 
 - (void) settingsAction:(id)sender{

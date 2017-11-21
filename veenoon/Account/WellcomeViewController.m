@@ -11,6 +11,9 @@
 #import "LoginViewController.h"
 #import "SignupViewController.h"
 
+#import "CustomPickerView.h"
+#import "ColumnsView.h"
+
 @interface WellcomeViewController ()
 
 @end
@@ -71,6 +74,43 @@
     titleL.text = @"关于TESLSRIA";
     
     [self.view addSubview:titleL];
+    
+    
+
+    
+    ///测试组件 -- 需要提供背景切图
+    CustomPickerView *levelSetting = [[CustomPickerView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+    
+    levelSetting._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
+    
+    [self.view addSubview:levelSetting];
+    
+    levelSetting.center = CGPointMake(SCREEN_WIDTH/2, 80);
+    
+    [levelSetting selectRow:0 inComponent:0];
+    
+    IMP_BLOCK_SELF(WellcomeViewController);
+    levelSetting._selectionBlock = ^(NSDictionary *values)
+    {
+        //[block_self didPickerValue:values];
+    };
+    
+    
+    ColumnsView *col = [[ColumnsView alloc] initWithFrame:CGRectZero];
+    col.xStepPixel = 50;
+    col.yStepPixel = 50;
+    col.xStepValues = @[@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9"];
+    col.yStepValues = @[@"10",@"20",@"30",@"40",@"50",@"60",@"70",@"80",@"90"];
+    col._themeColor = [UIColor orangeColor];
+    [col initXY];
+    
+    col.maxColValue = 90;
+    col.colWidth = 30;
+    col.colValues = @[@"40",@"30",@"50",@"60",@"70",@"20"];
+    
+    [col draw];
+    
+    [self.view addSubview:col];
 }
 
 - (void) loginAction:(id)sender{

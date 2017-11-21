@@ -159,6 +159,8 @@
 		341F0F421EC2DF6D0027C800 /* beep-beep.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 341F0F411EC2DF6D0027C800 /* beep-beep.aiff */; };
 		341F0F441EC2E01D0027C800 /* warning.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 341F0F431EC2E01D0027C800 /* warning.mp3 */; };
 		341F0F471EC2FC500027C800 /* WSCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 341F0F461EC2FC500027C800 /* WSCode.m */; };
+		3421EA2D1FC4136600DC5378 /* CustomPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3421EA2B1FC4136600DC5378 /* CustomPickerView.m */; };
+		3421EA301FC4161300DC5378 /* ColumnsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3421EA2F1FC4161300DC5378 /* ColumnsView.m */; };
 		34686C9E1ED025CB001749A1 /* ConverUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 34686C9B1ED025CB001749A1 /* ConverUtil.m */; };
 		34686C9F1ED025CB001749A1 /* DesUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 34686C9D1ED025CB001749A1 /* DesUtil.m */; };
 		34928A9A1EC1BD330089F429 /* ReaderCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34928A991EC1BD330089F429 /* ReaderCodeViewController.m */; };
@@ -483,6 +485,10 @@
 		341F0F431EC2E01D0027C800 /* warning.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = warning.mp3; sourceTree = "<group>"; };
 		341F0F451EC2FC500027C800 /* WSCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSCode.h; sourceTree = "<group>"; };
 		341F0F461EC2FC500027C800 /* WSCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSCode.m; sourceTree = "<group>"; };
+		3421EA2B1FC4136600DC5378 /* CustomPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomPickerView.m; sourceTree = "<group>"; };
+		3421EA2C1FC4136600DC5378 /* CustomPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomPickerView.h; sourceTree = "<group>"; };
+		3421EA2E1FC4161300DC5378 /* ColumnsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColumnsView.h; sourceTree = "<group>"; };
+		3421EA2F1FC4161300DC5378 /* ColumnsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ColumnsView.m; sourceTree = "<group>"; };
 		34686C9A1ED025CB001749A1 /* ConverUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConverUtil.h; sourceTree = "<group>"; };
 		34686C9B1ED025CB001749A1 /* ConverUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConverUtil.m; sourceTree = "<group>"; };
 		34686C9C1ED025CB001749A1 /* DesUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DesUtil.h; sourceTree = "<group>"; };
@@ -1164,6 +1170,10 @@
 		EBEA7C1D1FBCAF260028F0E8 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				3421EA2C1FC4136600DC5378 /* CustomPickerView.h */,
+				3421EA2B1FC4136600DC5378 /* CustomPickerView.m */,
+				3421EA2E1FC4161300DC5378 /* ColumnsView.h */,
+				3421EA2F1FC4161300DC5378 /* ColumnsView.m */,
 				EBEA7C1E1FBCAF260028F0E8 /* area.plist */,
 				EBEA7C1F1FBCAF260028F0E8 /* AreaPickView.h */,
 				EBEA7C201FBCAF260028F0E8 /* AreaPickView.m */,
@@ -1423,6 +1433,7 @@
 				04DE1DD81AD68C5E00D49E2F /* main.m in Sources */,
 				04DE1EA11AD6AEE000D49E2F /* NetworkChecker.m in Sources */,
 				EB3685FD1FC07A5A009973A3 /* SettingsViewView.m in Sources */,
+				3421EA2D1FC4136600DC5378 /* CustomPickerView.m in Sources */,
 				04DE1E8B1AD6AEE000D49E2F /* Progress7View.m in Sources */,
 				04DE1EB41AD6AEE000D49E2F /* UIImage+GIF.m in Sources */,
 				04DE1EA21AD6AEE000D49E2F /* Reachability.m in Sources */,
@@ -1443,6 +1454,7 @@
 				04DE1E951AD6AEE000D49E2F /* ASIDataCompressor.m in Sources */,
 				04DE1EAF1AD6AEE000D49E2F /* SDWebImageDownloader.m in Sources */,
 				04DE1EA41AD6AEE000D49E2F /* SBJson4StreamParser.m in Sources */,
+				3421EA301FC4161300DC5378 /* ColumnsView.m in Sources */,
 				04DE1EA31AD6AEE000D49E2F /* SBJson4Parser.m in Sources */,
 				04DE1EB51AD6AEE000D49E2F /* UIImageView+WebCache.m in Sources */,
 				04DE1E8E1AD6AEE000D49E2F /* UIButton+Color.m in Sources */,
