@@ -10,12 +10,15 @@
 #import "UserMeetingRoomConfig.h"
 
 @interface UserHomeViewController () {
-    NSMutableArray *roomList;
+    
 }
+@property (nonatomic, strong) NSMutableArray *roomList;
 
 @end
 
 @implementation UserHomeViewController
+@synthesize roomList;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     if (roomList) {
@@ -45,7 +48,7 @@
         NSMutableDictionary *dic6 = [NSMutableDictionary dictionaryWithObjectsAndKeys:roomImage6, @"image",
                                      @"meeting_room6", @"roomname",
                                      nil];
-        roomList = [NSMutableArray arrayWithObjects:dic1, dic2, dic3, dic4, dic5, dic6, nil];
+        self.roomList = [NSMutableArray arrayWithObjects:dic1, dic2, dic3, dic4, dic5, dic6, nil];
     }
     
     UIScrollView *scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
