@@ -51,42 +51,42 @@
     titleL.text = [meetingRoomDic objectForKey:@"roomname"];
     
     _trainingBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _trainingBtn.frame = CGRectMake(SCREEN_WIDTH/2-481, 70, 481, 250);
+    _trainingBtn.frame = CGRectMake(SCREEN_WIDTH/2-451, 70, 481, 250);
     [_trainingBtn setImage:[UIImage imageNamed:@"user_training_n.png"] forState:UIControlStateNormal];
     [_trainingBtn setImage:[UIImage imageNamed:@"user_training_s.png"] forState:UIControlStateHighlighted];
     [_trainingBtn addTarget:self action:@selector(userTrainingAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_trainingBtn];
     
     _envirementControlBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _envirementControlBtn.frame = CGRectMake(SCREEN_WIDTH/2, 70, 481, 250);
+    _envirementControlBtn.frame = CGRectMake(SCREEN_WIDTH/2-30, 70, 481, 250);
     [_envirementControlBtn setImage:[UIImage imageNamed:@"envirement_control_n.png"] forState:UIControlStateNormal];
     [_envirementControlBtn setImage:[UIImage imageNamed:@"envirement_control_s.png"] forState:UIControlStateHighlighted];
     [_envirementControlBtn addTarget:self action:@selector(enviromentControlAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_envirementControlBtn];
     
     _guestBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _guestBtn.frame = CGRectMake(SCREEN_WIDTH/2-481, 70+260, 481, 250);
+    _guestBtn.frame = CGRectMake(SCREEN_WIDTH/2-451, 70+200, 481, 250);
     [_guestBtn setImage:[UIImage imageNamed:@"guest_reception_n.png"] forState:UIControlStateNormal];
     [_guestBtn setImage:[UIImage imageNamed:@"guest_reception_s.png"] forState:UIControlStateHighlighted];
     [_guestBtn addTarget:self action:@selector(gusetAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_guestBtn];
     
     _envirementLightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _envirementLightBtn.frame = CGRectMake(SCREEN_WIDTH/2, 70+260, 481, 250);
+    _envirementLightBtn.frame = CGRectMake(SCREEN_WIDTH/2-30, 70+200, 481, 250);
     [_envirementLightBtn setImage:[UIImage imageNamed:@"envirement_light_n.png"] forState:UIControlStateNormal];
     [_envirementLightBtn setImage:[UIImage imageNamed:@"envirement_light_s.png"] forState:UIControlStateHighlighted];
     [_envirementLightBtn addTarget:self action:@selector(envirementLightAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_envirementLightBtn];
     
     _discussionBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _discussionBtn.frame = CGRectMake(SCREEN_WIDTH/2, 70+260+260, 481, 250);
+    _discussionBtn.frame = CGRectMake(SCREEN_WIDTH/2-451, 70+200+200, 481, 250);
     [_discussionBtn setImage:[UIImage imageNamed:@"meeting_discuss_n.png"] forState:UIControlStateNormal];
-    [_discussionBtn setImage:[UIImage imageNamed:@"meeting_discuss_n.png"] forState:UIControlStateHighlighted];
+    [_discussionBtn setImage:[UIImage imageNamed:@"meeting_discuss_s.png"] forState:UIControlStateHighlighted];
     [_discussionBtn addTarget:self action:@selector(discussMeetingAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_discussionBtn];
     
     _leaveMeetingBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _leaveMeetingBtn.frame = CGRectMake(SCREEN_WIDTH/2+481, 70+260+260, 481, 250);
+    _leaveMeetingBtn.frame = CGRectMake(SCREEN_WIDTH/2-30, 70+200+200, 481, 250);
     [_leaveMeetingBtn setImage:[UIImage imageNamed:@"close_system_n.png"] forState:UIControlStateNormal];
     [_leaveMeetingBtn setImage:[UIImage imageNamed:@"close_system_s.png"] forState:UIControlStateHighlighted];
     [_leaveMeetingBtn addTarget:self action:@selector(leaveMeetingAction:) forControlEvents:UIControlEventTouchUpInside];
