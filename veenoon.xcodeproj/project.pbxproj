@@ -208,6 +208,16 @@
 		EB3685FD1FC07A5A009973A3 /* SettingsViewView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB3685FC1FC07A5A009973A3 /* SettingsViewView.m */; };
 		EB3686011FC07A9C009973A3 /* SettingsAccountView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB3686001FC07A9C009973A3 /* SettingsAccountView.m */; };
 		EB5D91FC1FBB2F78004ED38D /* login_right_arraw@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB5D91FB1FBB2F77004ED38D /* login_right_arraw@2x.png */; };
+		EBDF1BEC1FC5A2D000A756EA /* user_meeting_room_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1BEB1FC5A2D000A756EA /* user_meeting_room_1@2x.png */; };
+		EBDF1BF21FC5A9A200A756EA /* user_meeting_room_6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1BED1FC5A9A100A756EA /* user_meeting_room_6@2x.png */; };
+		EBDF1BF31FC5A9A200A756EA /* user_meeting_room_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1BEE1FC5A9A100A756EA /* user_meeting_room_2@2x.png */; };
+		EBDF1BF41FC5A9A200A756EA /* user_meeting_room_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1BEF1FC5A9A200A756EA /* user_meeting_room_3@2x.png */; };
+		EBDF1BF51FC5A9A200A756EA /* user_meeting_room_4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1BF01FC5A9A200A756EA /* user_meeting_room_4@2x.png */; };
+		EBDF1BF61FC5A9A200A756EA /* user_meeting_room_5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1BF11FC5A9A200A756EA /* user_meeting_room_5@2x.png */; };
+		EBDF1BF91FC5ABB500A756EA /* camera_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1BF71FC5ABB500A756EA /* camera_n@2x.png */; };
+		EBDF1BFA1FC5ABB500A756EA /* camera_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1BF81FC5ABB500A756EA /* camera_s@2x.png */; };
+		EBDF1BFC1FC5B12A00A756EA /* user_meeting_roome_b@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1BFB1FC5B12A00A756EA /* user_meeting_roome_b@2x.png */; };
+		EBDF1BFF1FC5BA0900A756EA /* UserMettingRoomConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = EBDF1BFE1FC5BA0900A756EA /* UserMettingRoomConfig.m */; };
 		EBEA7C211FBCAF260028F0E8 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = EBEA7C1E1FBCAF260028F0E8 /* area.plist */; };
 		EBEA7C221FBCAF260028F0E8 /* AreaPickView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBEA7C201FBCAF260028F0E8 /* AreaPickView.m */; };
 /* End PBXBuildFile section */
@@ -547,6 +557,17 @@
 		EB3685FF1FC07A85009973A3 /* SettingsAccountView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingsAccountView.h; sourceTree = "<group>"; };
 		EB3686001FC07A9C009973A3 /* SettingsAccountView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingsAccountView.m; sourceTree = "<group>"; };
 		EB5D91FB1FBB2F77004ED38D /* login_right_arraw@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login_right_arraw@2x.png"; sourceTree = "<group>"; };
+		EBDF1BEB1FC5A2D000A756EA /* user_meeting_room_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_meeting_room_1@2x.png"; sourceTree = "<group>"; };
+		EBDF1BED1FC5A9A100A756EA /* user_meeting_room_6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_meeting_room_6@2x.png"; sourceTree = "<group>"; };
+		EBDF1BEE1FC5A9A100A756EA /* user_meeting_room_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_meeting_room_2@2x.png"; sourceTree = "<group>"; };
+		EBDF1BEF1FC5A9A200A756EA /* user_meeting_room_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_meeting_room_3@2x.png"; sourceTree = "<group>"; };
+		EBDF1BF01FC5A9A200A756EA /* user_meeting_room_4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_meeting_room_4@2x.png"; sourceTree = "<group>"; };
+		EBDF1BF11FC5A9A200A756EA /* user_meeting_room_5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_meeting_room_5@2x.png"; sourceTree = "<group>"; };
+		EBDF1BF71FC5ABB500A756EA /* camera_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera_n@2x.png"; sourceTree = "<group>"; };
+		EBDF1BF81FC5ABB500A756EA /* camera_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera_s@2x.png"; sourceTree = "<group>"; };
+		EBDF1BFB1FC5B12A00A756EA /* user_meeting_roome_b@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_meeting_roome_b@2x.png"; sourceTree = "<group>"; };
+		EBDF1BFD1FC5B9F500A756EA /* UserMeetingRoomConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserMeetingRoomConfig.h; sourceTree = "<group>"; };
+		EBDF1BFE1FC5BA0900A756EA /* UserMettingRoomConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserMettingRoomConfig.m; sourceTree = "<group>"; };
 		EBEA7C1E1FBCAF260028F0E8 /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
 		EBEA7C1F1FBCAF260028F0E8 /* AreaPickView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AreaPickView.h; sourceTree = "<group>"; };
 		EBEA7C201FBCAF260028F0E8 /* AreaPickView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AreaPickView.m; sourceTree = "<group>"; };
@@ -1007,6 +1028,15 @@
 		04DE1ECB1AD6B3BA00D49E2F /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
+				EBDF1BFB1FC5B12A00A756EA /* user_meeting_roome_b@2x.png */,
+				EBDF1BF71FC5ABB500A756EA /* camera_n@2x.png */,
+				EBDF1BF81FC5ABB500A756EA /* camera_s@2x.png */,
+				EBDF1BEE1FC5A9A100A756EA /* user_meeting_room_2@2x.png */,
+				EBDF1BEF1FC5A9A200A756EA /* user_meeting_room_3@2x.png */,
+				EBDF1BF01FC5A9A200A756EA /* user_meeting_room_4@2x.png */,
+				EBDF1BF11FC5A9A200A756EA /* user_meeting_room_5@2x.png */,
+				EBDF1BED1FC5A9A100A756EA /* user_meeting_room_6@2x.png */,
+				EBDF1BEB1FC5A2D000A756EA /* user_meeting_room_1@2x.png */,
 				EB042A5D1FC3280300F7F73D /* out_system_bk_botom@2x.png */,
 				EB2E70831FC1D055009C477C /* down_arraw@2x.png */,
 				EB2E70691FC1B5B2009C477C /* settings_view_1@2x.png */,
@@ -1163,6 +1193,8 @@
 			children = (
 				EB03F54C1FBDEC6000865541 /* UserHomeViewController.m */,
 				EB03F54E1FBDEC7400865541 /* UserHomeViewController.h */,
+				EBDF1BFD1FC5B9F500A756EA /* UserMeetingRoomConfig.h */,
+				EBDF1BFE1FC5BA0900A756EA /* UserMettingRoomConfig.m */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -1261,9 +1293,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EBDF1BF51FC5A9A200A756EA /* user_meeting_room_4@2x.png in Resources */,
 				047934581DB0A4630066BABC /* camera.png in Resources */,
+				EBDF1BF31FC5A9A200A756EA /* user_meeting_room_2@2x.png in Resources */,
 				EB0808D71FBC7DF600FD0604 /* teslaria_title@2x.png in Resources */,
+				EBDF1BF91FC5ABB500A756EA /* camera_n@2x.png in Resources */,
 				EB2E70661FC1B3E1009C477C /* settings_view_top_line@2x.png in Resources */,
+				EBDF1BF41FC5A9A200A756EA /* user_meeting_room_3@2x.png in Resources */,
 				EB03F5391FBDDAB300865541 /* main_engineer_n@2x.png in Resources */,
 				049ECA731C8D4B8A00A611D8 /* zbar-help.html in Resources */,
 				0469CF3E1B03357E006B901E /* camera_photo@2x.png in Resources */,
@@ -1292,6 +1328,7 @@
 				049BA5FD1AF7665100F17584 /* Arrow_v2@2x.png in Resources */,
 				049ECA741C8D4B8A00A611D8 /* zbar-helpicons.png in Resources */,
 				04DE1F9B1AD6B3BB00D49E2F /* denglu_shurutiao@2x.png in Resources */,
+				EBDF1BFA1FC5ABB500A756EA /* camera_s@2x.png in Resources */,
 				EB0808D81FBC7DF600FD0604 /* botomo_icon@2x.png in Resources */,
 				046D2F061DA90AD9006C6123 /* silk_card_bg@2x.png in Resources */,
 				04DE1DE31AD68C5E00D49E2F /* Images.xcassets in Resources */,
@@ -1309,9 +1346,11 @@
 				3416718C1FBA9BD0001D33D0 /* wellcome@2x.png in Resources */,
 				049BA5FB1AF7612600F17584 /* time_icon@2x.png in Resources */,
 				EB2E70651FC1B3E1009C477C /* settings_view_botom_line@2x.png in Resources */,
+				EBDF1BFC1FC5B12A00A756EA /* user_meeting_roome_b@2x.png in Resources */,
 				04DE1FCC1AD6B3BB00D49E2F /* radio_checked@2x.png in Resources */,
 				EB3685F51FC0799A009973A3 /* settings_account_n@2x.png in Resources */,
 				049BA5FA1AF7612600F17584 /* home_assistance@2x.png in Resources */,
+				EBDF1BF21FC5A9A200A756EA /* user_meeting_room_6@2x.png in Resources */,
 				341F0F401EC2C83A0027C800 /* gmic_bg@2x.png in Resources */,
 				04DE1FD21AD6B3BB00D49E2F /* shaixuan_anniu02@2x.png in Resources */,
 				04DE1FCF1AD6B3BB00D49E2F /* scroll_fanhui@2x.png in Resources */,
@@ -1319,6 +1358,7 @@
 				EB042A5E1FC3280300F7F73D /* out_system_bk_botom@2x.png in Resources */,
 				049BA5FF1AF766DA00F17584 /* name_icon@2x.png in Resources */,
 				EB2E70821FC1B5B4009C477C /* settings_view_2@2x.png in Resources */,
+				EBDF1BF61FC5A9A200A756EA /* user_meeting_room_5@2x.png in Resources */,
 				049ECA8D1C8D609E00A611D8 /* card_bg@2x.png in Resources */,
 				049ECA891C8D52A100A611D8 /* iconfont-llalbumflashoff@2x.png in Resources */,
 				04C4B1181AF904FB003FD52B /* Icon.png in Resources */,
@@ -1337,6 +1377,7 @@
 				04DE1FD01AD6B3BB00D49E2F /* selector_pannel@2x.png in Resources */,
 				EB2E70761FC1B5B4009C477C /* settings_view_13@2x.png in Resources */,
 				EB2E707F1FC1B5B4009C477C /* settings_view_10@2x.png in Resources */,
+				EBDF1BEC1FC5A2D000A756EA /* user_meeting_room_1@2x.png in Resources */,
 				046D2F041DA90AD9006C6123 /* expo_logo@2x.png in Resources */,
 				04DE1F6A1AD6B3BB00D49E2F /* background@2x.png in Resources */,
 				EB3685F31FC0799A009973A3 /* settings_user_n@2x.png in Resources */,
@@ -1417,6 +1458,7 @@
 				341F0F471EC2FC500027C800 /* WSCode.m in Sources */,
 				04DE1EAD1AD6AEE000D49E2F /* SDWebImageCompat.m in Sources */,
 				04DE1EAC1AD6AEE000D49E2F /* SDImageCache.m in Sources */,
+				EBDF1BFF1FC5BA0900A756EA /* UserMettingRoomConfig.m in Sources */,
 				04D27A2A1AF8470100305E39 /* SelDataViewController.m in Sources */,
 				04D719881DADE7D4002153D7 /* ActivityViewController.m in Sources */,
 				04DE1E8A1AD6AEE000D49E2F /* MaskRender.m in Sources */,
