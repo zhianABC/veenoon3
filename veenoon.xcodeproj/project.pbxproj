@@ -179,6 +179,8 @@
 		EB042A5E1FC3280300F7F73D /* out_system_bk_botom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB042A5D1FC3280300F7F73D /* out_system_bk_botom@2x.png */; };
 		EB0808D71FBC7DF600FD0604 /* teslaria_title@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB0808D51FBC7DF500FD0604 /* teslaria_title@2x.png */; };
 		EB0808D81FBC7DF600FD0604 /* botomo_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB0808D61FBC7DF600FD0604 /* botomo_icon@2x.png */; };
+		EB1A045C1FC71372007CC1F2 /* user_config_back_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1A045A1FC71372007CC1F2 /* user_config_back_n@2x.png */; };
+		EB1A045D1FC71372007CC1F2 /* user_config_back_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1A045B1FC71372007CC1F2 /* user_config_back_s@2x.png */; };
 		EB2E70651FC1B3E1009C477C /* settings_view_botom_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB2E70631FC1B3E1009C477C /* settings_view_botom_line@2x.png */; };
 		EB2E70661FC1B3E1009C477C /* settings_view_top_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB2E70641FC1B3E1009C477C /* settings_view_top_line@2x.png */; };
 		EB2E70751FC1B5B4009C477C /* settings_view_4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB2E70671FC1B5B2009C477C /* settings_view_4@2x.png */; };
@@ -565,6 +567,8 @@
 		EB042A5D1FC3280300F7F73D /* out_system_bk_botom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "out_system_bk_botom@2x.png"; sourceTree = "<group>"; };
 		EB0808D51FBC7DF500FD0604 /* teslaria_title@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "teslaria_title@2x.png"; sourceTree = "<group>"; };
 		EB0808D61FBC7DF600FD0604 /* botomo_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "botomo_icon@2x.png"; sourceTree = "<group>"; };
+		EB1A045A1FC71372007CC1F2 /* user_config_back_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_config_back_n@2x.png"; sourceTree = "<group>"; };
+		EB1A045B1FC71372007CC1F2 /* user_config_back_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_config_back_s@2x.png"; sourceTree = "<group>"; };
 		EB2E70631FC1B3E1009C477C /* settings_view_botom_line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings_view_botom_line@2x.png"; sourceTree = "<group>"; };
 		EB2E70641FC1B3E1009C477C /* settings_view_top_line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings_view_top_line@2x.png"; sourceTree = "<group>"; };
 		EB2E70671FC1B5B2009C477C /* settings_view_4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings_view_4@2x.png"; sourceTree = "<group>"; };
@@ -1109,6 +1113,8 @@
 		04DE1ECB1AD6B3BA00D49E2F /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
+				EB1A045A1FC71372007CC1F2 /* user_config_back_n@2x.png */,
+				EB1A045B1FC71372007CC1F2 /* user_config_back_s@2x.png */,
 				EBDF1C2A1FC5D5CD00A756EA /* add_wet_sys_n@2x.png */,
 				EBDF1C2D1FC5D5CE00A756EA /* add_wet_sys_s@2x.png */,
 				EBDF1C261FC5D5CD00A756EA /* air_clean_sys_n@2x.png */,
@@ -1549,12 +1555,14 @@
 				04D7198B1DADFD70002153D7 /* check_error@2x.png in Resources */,
 				04D27A301AF8976600305E39 /* iconfont-dayinji@2x.png in Resources */,
 				EBDF1C3E1FC5D5CF00A756EA /* electric_auto_s@2x.png in Resources */,
+				EB1A045D1FC71372007CC1F2 /* user_config_back_s@2x.png in Resources */,
 				EBDF1C441FC5D5CF00A756EA /* floor_warm_s@2x.png in Resources */,
 				EB2E70781FC1B5B4009C477C /* settings_view_7@2x.png in Resources */,
 				EB2E707C1FC1B5B4009C477C /* settings_view_3@2x.png in Resources */,
 				049ECA8B1C8D538400A611D8 /* qrcode_scan_line@2x.png in Resources */,
 				049BA6091AF76C5E00F17584 /* camera_flip@2x.png in Resources */,
 				049BA6611AF7B64000F17584 /* zhucebao_db.sqlite in Resources */,
+				EB1A045C1FC71372007CC1F2 /* user_config_back_n@2x.png in Resources */,
 				04D27A2F1AF8976600305E39 /* iconfont-dayinji1@2x.png in Resources */,
 				04DE1FCB1AD6B3BB00D49E2F /* progress_biankuang@2x.png in Resources */,
 				EB3685F41FC0799A009973A3 /* settings_user_s@2x.png in Resources */,

@@ -33,6 +33,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    
     UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"user_training_bg.png"]];
     [self.view addSubview:titleIcon];
     titleIcon.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -220,6 +222,34 @@
     [_energyCollectBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_energyCollectBtn.titleLabel.bounds.size.height, 0)];
     [_energyCollectBtn addTarget:self action:@selector(energySysAction:) forControlEvents:UIControlEventTouchUpInside];
     [_botomView addSubview:_energyCollectBtn];
+    
+    
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    backBtn.frame = CGRectMake(60, 45, 60, 40);
+    [self.view addSubview:backBtn];
+    [backBtn setImage:[UIImage imageNamed:@"user_config_back_n.png"] forState:UIControlStateNormal];
+    [backBtn setImage:[UIImage imageNamed:@"user_config_back_s.png"] forState:UIControlStateHighlighted];
+    [backBtn addTarget:self
+                action:@selector(backAction:)
+      forControlEvents:UIControlEventTouchUpInside];
+    
+    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(60, SCREEN_HEIGHT-264, 200, 40)];
+    titleL.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:titleL];
+    titleL.font = [UIFont boldSystemFontOfSize:36];
+    titleL.textColor  = [UIColor whiteColor];
+    titleL.text = @"专业培训";
+    
+    UILabel* titleL2 = [[UILabel alloc] initWithFrame:CGRectMake(60, SCREEN_HEIGHT-209, 200, 40)];
+    titleL2.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:titleL2];
+    titleL2.font = [UIFont boldSystemFontOfSize:24];
+    titleL2.textColor  = RGB(242, 148, 20);
+    titleL2.text = @"Taining";
+}
+
+- (void) backAction:(id)sender{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void) energySysAction:(id)sender{
