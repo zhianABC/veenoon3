@@ -7,6 +7,8 @@
 //
 
 #import "UserScnarioConfigViewController.h"
+#import "UserAudioConfigViewController.h"
+
 
 @interface UserScnarioConfigViewController () {
     UIButton *_audioSysBtn;
@@ -301,7 +303,8 @@
 }
 
 - (void) audioSysAction:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
+    UserAudioConfigViewController *controller = [[UserAudioConfigViewController alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 @end
