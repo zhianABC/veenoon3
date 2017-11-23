@@ -6,9 +6,9 @@
 //  Copyright © 2017年 jack. All rights reserved.
 //
 
-#import "UserTrainingViewController.h"
+#import "UserScnarioConfigViewController.h"
 
-@interface UserTrainingViewController () {
+@interface UserScnarioConfigViewController () {
     UIButton *_audioSysBtn;
     UIButton *_videoSysBtn;
     UIButton *_lightSysBtn;
@@ -28,7 +28,7 @@
 
 @end
 
-@implementation UserTrainingViewController
+@implementation UserScnarioConfigViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

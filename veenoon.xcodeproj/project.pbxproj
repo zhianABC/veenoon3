@@ -230,7 +230,7 @@
 		EBDF1C151FC5C6C900A756EA /* envirement_control_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1C0B1FC5C6C900A756EA /* envirement_control_n@2x.png */; };
 		EBDF1C161FC5C6C900A756EA /* envirement_control_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1C0C1FC5C6C900A756EA /* envirement_control_s@2x.png */; };
 		EBDF1C171FC5C6C900A756EA /* guest_reception_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1C0D1FC5C6C900A756EA /* guest_reception_n@2x.png */; };
-		EBDF1C191FC5CCD700A756EA /* UserTrainingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBDF1C181FC5CCD700A756EA /* UserTrainingViewController.m */; };
+		EBDF1C191FC5CCD700A756EA /* UserScnarioConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EBDF1C181FC5CCD700A756EA /* UserScnarioConfigViewController.m */; };
 		EBDF1C361FC5D5CF00A756EA /* door_access_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1C1B1FC5D5CB00A756EA /* door_access_s@2x.png */; };
 		EBDF1C371FC5D5CF00A756EA /* energy_collect_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1C1C1FC5D5CB00A756EA /* energy_collect_n@2x.png */; };
 		EBDF1C381FC5D5CF00A756EA /* air_condition_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1C1D1FC5D5CC00A756EA /* air_condition_n@2x.png */; };
@@ -620,8 +620,8 @@
 		EBDF1C0B1FC5C6C900A756EA /* envirement_control_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "envirement_control_n@2x.png"; sourceTree = "<group>"; };
 		EBDF1C0C1FC5C6C900A756EA /* envirement_control_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "envirement_control_s@2x.png"; sourceTree = "<group>"; };
 		EBDF1C0D1FC5C6C900A756EA /* guest_reception_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "guest_reception_n@2x.png"; sourceTree = "<group>"; };
-		EBDF1C181FC5CCD700A756EA /* UserTrainingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserTrainingViewController.m; sourceTree = "<group>"; };
-		EBDF1C1A1FC5CCEF00A756EA /* UserTrainingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserTrainingViewController.h; sourceTree = "<group>"; };
+		EBDF1C181FC5CCD700A756EA /* UserScnarioConfigViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserScnarioConfigViewController.m; sourceTree = "<group>"; };
+		EBDF1C1A1FC5CCEF00A756EA /* UserScnarioConfigViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserScnarioConfigViewController.h; sourceTree = "<group>"; };
 		EBDF1C1B1FC5D5CB00A756EA /* door_access_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "door_access_s@2x.png"; sourceTree = "<group>"; };
 		EBDF1C1C1FC5D5CB00A756EA /* energy_collect_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "energy_collect_n@2x.png"; sourceTree = "<group>"; };
 		EBDF1C1D1FC5D5CC00A756EA /* air_condition_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "air_condition_n@2x.png"; sourceTree = "<group>"; };
@@ -1315,8 +1315,8 @@
 				EB03F54E1FBDEC7400865541 /* UserHomeViewController.h */,
 				EBDF1BFD1FC5B9F500A756EA /* UserMeetingRoomConfig.h */,
 				EBDF1BFE1FC5BA0900A756EA /* UserMettingRoomConfig.m */,
-				EBDF1C181FC5CCD700A756EA /* UserTrainingViewController.m */,
-				EBDF1C1A1FC5CCEF00A756EA /* UserTrainingViewController.h */,
+				EBDF1C181FC5CCD700A756EA /* UserScnarioConfigViewController.m */,
+				EBDF1C1A1FC5CCEF00A756EA /* UserScnarioConfigViewController.h */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -1613,7 +1613,7 @@
 				04DE1EAA1AD6AEE000D49E2F /* MKAnnotationView+WebCache.m in Sources */,
 				0479345B1DB0A7AA0066BABC /* JCShareView.m in Sources */,
 				04DE1E861AD6AEE000D49E2F /* ConfigureSetting.m in Sources */,
-				EBDF1C191FC5CCD700A756EA /* UserTrainingViewController.m in Sources */,
+				EBDF1C191FC5CCD700A756EA /* UserScnarioConfigViewController.m in Sources */,
 				04D719781DADD3A4002153D7 /* WSUser.m in Sources */,
 				04D9A0EB1DAF83E0008DF2E6 /* AudioPlayer.m in Sources */,
 				04DE1E971AD6AEE000D49E2F /* ASIDownloadCache.m in Sources */,

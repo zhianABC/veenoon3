@@ -7,7 +7,7 @@
 //
 
 #import "UserMeetingRoomConfig.h"
-#import "UserTrainingViewController.h"
+#import "UserScnarioConfigViewController.h"
 
 @interface UserMeetingRoomConfig () {
     NSMutableDictionary *meetingRoomDic;
@@ -112,7 +112,7 @@
 
 
 - (void) userTrainingAction:(id)sender{
-    UserTrainingViewController *invitation = [[UserTrainingViewController alloc] init];
+    UserScnarioConfigViewController *invitation = [[UserScnarioConfigViewController alloc] init];
     [self.navigationController pushViewController:invitation animated:YES];
 }
 
