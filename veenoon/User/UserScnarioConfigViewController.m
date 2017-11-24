@@ -40,7 +40,6 @@
     UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"user_training_bg.png"]];
     [self.view addSubview:titleIcon];
     titleIcon.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-    [self.view addSubview:titleIcon];
     
     UILabel *line2 = [[UILabel alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-134, SCREEN_WIDTH, 2)];
     line2.backgroundColor = RGB(120, 116, 114);

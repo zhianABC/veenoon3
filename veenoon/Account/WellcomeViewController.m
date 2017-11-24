@@ -75,9 +75,6 @@
     
     [self.view addSubview:titleL];
     
-    
-
-    
     ///测试组件 -- 需要提供背景切图
     CustomPickerView *levelSetting = [[CustomPickerView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
     

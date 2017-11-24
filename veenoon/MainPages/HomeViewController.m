@@ -100,9 +100,7 @@
     
     UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
     [self.view addSubview:titleIcon];
-    titleIcon.frame = CGRectMake(70, 50,
-                                 70, 10);
-     [self.view addSubview:titleIcon];
+    titleIcon.frame = CGRectMake(70, 50, 70, 10);
     
 }
 

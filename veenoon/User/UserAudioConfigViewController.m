@@ -6,6 +6,7 @@
 //  Copyright © 2017年 jack. All rights reserved.
 //
 #import "UserAudioConfigViewController.h"
+#import "UserAudioPlayerSettingsViewCtrl.h"
 
 @interface UserAudioConfigViewController () {
     UIButton *_cdPlayerBtn;
@@ -30,7 +31,6 @@
     UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
     [self.view addSubview:titleIcon];
     titleIcon.frame = CGRectMake(70, 30, 70, 10);
-    [self.view addSubview:titleIcon];
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 59, SCREEN_WIDTH, 1)];
     line.backgroundColor = RGB(83, 78, 75);
@@ -50,9 +50,9 @@
     [_cdPlayerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_cdPlayerBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _cdPlayerBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_cdPlayerBtn setTitleEdgeInsets:UIEdgeInsetsMake(_cdPlayerBtn.imageView.frame.size.height+10,-80,-20,-20)];
+    [_cdPlayerBtn setTitleEdgeInsets:UIEdgeInsetsMake(_cdPlayerBtn.imageView.frame.size.height+10,-80,-20,40)];
     [_cdPlayerBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_cdPlayerBtn.titleLabel.bounds.size.height, 0)];
-    [_cdPlayerBtn addTarget:self action:@selector(audioSysAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_cdPlayerBtn addTarget:self action:@selector(cdPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_cdPlayerBtn];
     
     
@@ -64,9 +64,9 @@
     [_sdPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_sdPlayersBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _sdPlayersBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_sdPlayersBtn setTitleEdgeInsets:UIEdgeInsetsMake(_sdPlayersBtn.imageView.frame.size.height+10,-80,-20,-20)];
+    [_sdPlayersBtn setTitleEdgeInsets:UIEdgeInsetsMake(_sdPlayersBtn.imageView.frame.size.height+10,-80,-20,40)];
     [_sdPlayersBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_sdPlayersBtn.titleLabel.bounds.size.height, 0)];
-    [_sdPlayersBtn addTarget:self action:@selector(videoSysAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_sdPlayersBtn addTarget:self action:@selector(sdPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_sdPlayersBtn];
     
     _usbPlayersBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -77,22 +77,22 @@
     [_usbPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_usbPlayersBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _usbPlayersBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_usbPlayersBtn setTitleEdgeInsets:UIEdgeInsetsMake(_usbPlayersBtn.imageView.frame.size.height+10,-90,-20,-20)];
+    [_usbPlayersBtn setTitleEdgeInsets:UIEdgeInsetsMake(_usbPlayersBtn.imageView.frame.size.height+10,-90,-20,25)];
     [_usbPlayersBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_usbPlayersBtn.titleLabel.bounds.size.height, 0)];
-    [_usbPlayersBtn addTarget:self action:@selector(lightSysAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_usbPlayersBtn addTarget:self action:@selector(usbPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_usbPlayersBtn];
     
     _wuxianPlayersBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _wuxianPlayersBtn.frame = CGRectMake(leftRight+rowGap*3, height, width, width);
+    _wuxianPlayersBtn.frame = CGRectMake(leftRight+rowGap*3+10, height, width, width);
     [_wuxianPlayersBtn setImage:[UIImage imageNamed:@"huatong_player_n.png"] forState:UIControlStateNormal];
     [_wuxianPlayersBtn setImage:[UIImage imageNamed:@"huatong_player_s.png"] forState:UIControlStateHighlighted];
     [_wuxianPlayersBtn setTitle:@"无线手持话筒" forState:UIControlStateNormal];
     [_wuxianPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_wuxianPlayersBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _wuxianPlayersBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_wuxianPlayersBtn setTitleEdgeInsets:UIEdgeInsetsMake(_wuxianPlayersBtn.imageView.frame.size.height+10,-90,-20,-20)];
+    [_wuxianPlayersBtn setTitleEdgeInsets:UIEdgeInsetsMake(_wuxianPlayersBtn.imageView.frame.size.height+10,-90,-20,25)];
     [_wuxianPlayersBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_wuxianPlayersBtn.titleLabel.bounds.size.height, 0)];
-    [_wuxianPlayersBtn addTarget:self action:@selector(airConditionSysAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_wuxianPlayersBtn addTarget:self action:@selector(wuxianPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_wuxianPlayersBtn];
     
     _hunyinPlayersBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -103,9 +103,9 @@
     [_hunyinPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_hunyinPlayersBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _hunyinPlayersBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_hunyinPlayersBtn setTitleEdgeInsets:UIEdgeInsetsMake(_hunyinPlayersBtn.imageView.frame.size.height+10,-80,-20,-20)];
+    [_hunyinPlayersBtn setTitleEdgeInsets:UIEdgeInsetsMake(_hunyinPlayersBtn.imageView.frame.size.height+10,-80,-20,30)];
     [_hunyinPlayersBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_hunyinPlayersBtn.titleLabel.bounds.size.height, 0)];
-    [_hunyinPlayersBtn addTarget:self action:@selector(electricSysAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_hunyinPlayersBtn addTarget:self action:@selector(hunyinPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_hunyinPlayersBtn];
     
     _youxianPlayer1Btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -116,9 +116,9 @@
     [_youxianPlayer1Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_youxianPlayer1Btn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _youxianPlayer1Btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_youxianPlayer1Btn setTitleEdgeInsets:UIEdgeInsetsMake(_youxianPlayer1Btn.imageView.frame.size.height+10,-90,-20,-20)];
+    [_youxianPlayer1Btn setTitleEdgeInsets:UIEdgeInsetsMake(_youxianPlayer1Btn.imageView.frame.size.height+10,-90,-20,20)];
     [_youxianPlayer1Btn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_youxianPlayer1Btn.titleLabel.bounds.size.height, 0)];
-    [_youxianPlayer1Btn addTarget:self action:@selector(newWindSysAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_youxianPlayer1Btn addTarget:self action:@selector(youxianPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_youxianPlayer1Btn];
     
     _youxianPlayer2Btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -129,9 +129,9 @@
     [_youxianPlayer2Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_youxianPlayer2Btn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _youxianPlayer2Btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_youxianPlayer2Btn setTitleEdgeInsets:UIEdgeInsetsMake(_youxianPlayer2Btn.imageView.frame.size.height+10,-90,-20,-20)];
+    [_youxianPlayer2Btn setTitleEdgeInsets:UIEdgeInsetsMake(_youxianPlayer2Btn.imageView.frame.size.height+10,-90,-20,20)];
     [_youxianPlayer2Btn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_youxianPlayer2Btn.titleLabel.bounds.size.height, 0)];
-    [_youxianPlayer2Btn addTarget:self action:@selector(newWindSysAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_youxianPlayer2Btn addTarget:self action:@selector(youxianPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_youxianPlayer2Btn];
     
     _youxianPlayer3Btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -142,42 +142,40 @@
     [_youxianPlayer3Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_youxianPlayer3Btn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _youxianPlayer3Btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_youxianPlayer3Btn setTitleEdgeInsets:UIEdgeInsetsMake(_youxianPlayer3Btn.imageView.frame.size.height+10,-90,-20,-20)];
+    [_youxianPlayer3Btn setTitleEdgeInsets:UIEdgeInsetsMake(_youxianPlayer3Btn.imageView.frame.size.height+10,-90,-20,20)];
     [_youxianPlayer3Btn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_youxianPlayer3Btn.titleLabel.bounds.size.height, 0)];
-    [_youxianPlayer3Btn addTarget:self action:@selector(newWindSysAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_youxianPlayer3Btn addTarget:self action:@selector(youxianPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_youxianPlayer3Btn];
 }
 
-- (void) airCleanSysAction:(id)sender{
+- (void) youxianPlayerAction:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void) floorWarmSysAction:(id)sender{
+- (void) hunyinPlayerAction:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void) newWindSysAction:(id)sender{
+- (void) wuxianPlayerAction:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void) electricSysAction:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
+- (void) usbPlayerAction:(id)sender{
+    UserAudioPlayerSettingsViewCtrl *controller = [[UserAudioPlayerSettingsViewCtrl alloc] init];
+    controller.playerState = USBPlaer;
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
-- (void) airConditionSysAction:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
+- (void) sdPlayerAction:(id)sender{
+    UserAudioPlayerSettingsViewCtrl *controller = [[UserAudioPlayerSettingsViewCtrl alloc] init];
+    controller.playerState = SDPlayer;
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
-- (void) lightSysAction:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void) videoSysAction:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void) audioSysAction:(id)sender{
-    
+- (void) cdPlayerAction:(id)sender{
+    UserAudioPlayerSettingsViewCtrl *controller = [[UserAudioPlayerSettingsViewCtrl alloc] init];
+    controller.playerState = CDPlayer;
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 @end

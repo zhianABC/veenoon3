@@ -32,7 +32,6 @@
     UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
     [self.view addSubview:titleIcon];
     titleIcon.frame = CGRectMake(70, 30, 70, 10);
-    [self.view addSubview:titleIcon];
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 59, SCREEN_WIDTH, 1)];
     line.backgroundColor = RGB(75, 163, 202);
