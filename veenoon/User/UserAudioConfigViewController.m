@@ -53,6 +53,8 @@
     [_cdPlayerBtn setTitleEdgeInsets:UIEdgeInsetsMake(_cdPlayerBtn.imageView.frame.size.height+10,-80,-20,40)];
     [_cdPlayerBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_cdPlayerBtn.titleLabel.bounds.size.height, 0)];
     [_cdPlayerBtn addTarget:self action:@selector(cdPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
+    UILongPressGestureRecognizer *longPress0 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed0:)];
+    [_cdPlayerBtn addGestureRecognizer:longPress0];
     [self.view addSubview:_cdPlayerBtn];
     
     
@@ -67,6 +69,8 @@
     [_sdPlayersBtn setTitleEdgeInsets:UIEdgeInsetsMake(_sdPlayersBtn.imageView.frame.size.height+10,-80,-20,40)];
     [_sdPlayersBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_sdPlayersBtn.titleLabel.bounds.size.height, 0)];
     [_sdPlayersBtn addTarget:self action:@selector(sdPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
+    UILongPressGestureRecognizer *longPress1 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed1:)];
+    [_sdPlayersBtn addGestureRecognizer:longPress1];
     [self.view addSubview:_sdPlayersBtn];
     
     _usbPlayersBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -80,6 +84,8 @@
     [_usbPlayersBtn setTitleEdgeInsets:UIEdgeInsetsMake(_usbPlayersBtn.imageView.frame.size.height+10,-90,-20,25)];
     [_usbPlayersBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_usbPlayersBtn.titleLabel.bounds.size.height, 0)];
     [_usbPlayersBtn addTarget:self action:@selector(usbPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
+    UILongPressGestureRecognizer *longPress2 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed2:)];
+    [_usbPlayersBtn addGestureRecognizer:longPress2];
     [self.view addSubview:_usbPlayersBtn];
     
     _wuxianPlayersBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -148,34 +154,73 @@
     [self.view addSubview:_youxianPlayer3Btn];
 }
 
+- (void) longPressed0:(id)sender{
+    
+    UILongPressGestureRecognizer *press = (UILongPressGestureRecognizer *)sender;
+    if (press.state == UIGestureRecognizerStateEnded) {
+        // no need anything here
+        return;
+    } else if (press.state == UIGestureRecognizerStateBegan) {
+        
+        UserAudioPlayerSettingsViewCtrl *controller = [[UserAudioPlayerSettingsViewCtrl alloc] init];
+        controller.playerState = CDPlayer;
+        [self.navigationController pushViewController:controller animated:YES];
+    }
+}
+
+- (void) longPressed1:(id)sender{
+    
+    UILongPressGestureRecognizer *press = (UILongPressGestureRecognizer *)sender;
+    if (press.state == UIGestureRecognizerStateEnded) {
+        // no need anything here
+        return;
+    } else if (press.state == UIGestureRecognizerStateBegan) {
+        
+        UserAudioPlayerSettingsViewCtrl *controller = [[UserAudioPlayerSettingsViewCtrl alloc] init];
+        controller.playerState = SDPlayer;
+        [self.navigationController pushViewController:controller animated:YES];
+    }
+}
+
+- (void) longPressed2:(id)sender{
+    
+    UILongPressGestureRecognizer *press = (UILongPressGestureRecognizer *)sender;
+    if (press.state == UIGestureRecognizerStateEnded) {
+        // no need anything here
+        return;
+    } else if (press.state == UIGestureRecognizerStateBegan) {
+        UserAudioPlayerSettingsViewCtrl *controller = [[UserAudioPlayerSettingsViewCtrl alloc] init];
+        controller.playerState = USBPlaer;
+        [self.navigationController pushViewController:controller animated:YES];
+    }
+}
+
 - (void) youxianPlayerAction:(id)sender{
+    [_cdPlayerBtn setImage:[UIImage imageNamed:@"cd_player_n.png"] forState:UIControlStateNormal];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void) hunyinPlayerAction:(id)sender{
+    [_cdPlayerBtn setImage:[UIImage imageNamed:@"cd_player_n.png"] forState:UIControlStateNormal];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void) wuxianPlayerAction:(id)sender{
+    [_cdPlayerBtn setImage:[UIImage imageNamed:@"cd_player_n.png"] forState:UIControlStateNormal];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void) usbPlayerAction:(id)sender{
-    UserAudioPlayerSettingsViewCtrl *controller = [[UserAudioPlayerSettingsViewCtrl alloc] init];
-    controller.playerState = USBPlaer;
-    [self.navigationController pushViewController:controller animated:YES];
+    [_cdPlayerBtn setImage:[UIImage imageNamed:@"cd_player_n.png"] forState:UIControlStateNormal];
 }
 
 - (void) sdPlayerAction:(id)sender{
-    UserAudioPlayerSettingsViewCtrl *controller = [[UserAudioPlayerSettingsViewCtrl alloc] init];
-    controller.playerState = SDPlayer;
-    [self.navigationController pushViewController:controller animated:YES];
+    [_cdPlayerBtn setImage:[UIImage imageNamed:@"cd_player_n.png"] forState:UIControlStateNormal];
+    
 }
 
 - (void) cdPlayerAction:(id)sender{
-    UserAudioPlayerSettingsViewCtrl *controller = [[UserAudioPlayerSettingsViewCtrl alloc] init];
-    controller.playerState = CDPlayer;
-    [self.navigationController pushViewController:controller animated:YES];
+    [_cdPlayerBtn setImage:[UIImage imageNamed:@"cd_player_s.png"] forState:UIControlStateNormal];
 }
 
 @end
