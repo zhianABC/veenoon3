@@ -161,6 +161,11 @@
 		341F0F471EC2FC500027C800 /* WSCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 341F0F461EC2FC500027C800 /* WSCode.m */; };
 		3421EA2D1FC4136600DC5378 /* CustomPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3421EA2B1FC4136600DC5378 /* CustomPickerView.m */; };
 		3421EA301FC4161300DC5378 /* ColumnsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3421EA2F1FC4161300DC5378 /* ColumnsView.m */; };
+		34615F091FC9BD7B002DFCE0 /* JSlideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34615F051FC9BD7B002DFCE0 /* JSlideView.m */; };
+		34615F0A1FC9BD7B002DFCE0 /* jslide_bk@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34615F061FC9BD7B002DFCE0 /* jslide_bk@2x.png */; };
+		34615F0B1FC9BD7B002DFCE0 /* jslide_thumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34615F071FC9BD7B002DFCE0 /* jslide_thumb@2x.png */; };
+		34615F0D1FC9BEC7002DFCE0 /* v_slider_bg_light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34615F0C1FC9BEC7002DFCE0 /* v_slider_bg_light@2x.png */; };
+		34615F0F1FC9C264002DFCE0 /* v_slider_road@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34615F0E1FC9C263002DFCE0 /* v_slider_road@2x.png */; };
 		34686C9E1ED025CB001749A1 /* ConverUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 34686C9B1ED025CB001749A1 /* ConverUtil.m */; };
 		34686C9F1ED025CB001749A1 /* DesUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 34686C9D1ED025CB001749A1 /* DesUtil.m */; };
 		34928A9A1EC1BD330089F429 /* ReaderCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34928A991EC1BD330089F429 /* ReaderCodeViewController.m */; };
@@ -567,6 +572,12 @@
 		3421EA2C1FC4136600DC5378 /* CustomPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomPickerView.h; sourceTree = "<group>"; };
 		3421EA2E1FC4161300DC5378 /* ColumnsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColumnsView.h; sourceTree = "<group>"; };
 		3421EA2F1FC4161300DC5378 /* ColumnsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ColumnsView.m; sourceTree = "<group>"; };
+		34615F051FC9BD7B002DFCE0 /* JSlideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSlideView.m; sourceTree = "<group>"; };
+		34615F061FC9BD7B002DFCE0 /* jslide_bk@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jslide_bk@2x.png"; sourceTree = "<group>"; };
+		34615F071FC9BD7B002DFCE0 /* jslide_thumb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jslide_thumb@2x.png"; sourceTree = "<group>"; };
+		34615F081FC9BD7B002DFCE0 /* JSlideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSlideView.h; sourceTree = "<group>"; };
+		34615F0C1FC9BEC7002DFCE0 /* v_slider_bg_light@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "v_slider_bg_light@2x.png"; sourceTree = "<group>"; };
+		34615F0E1FC9C263002DFCE0 /* v_slider_road@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "v_slider_road@2x.png"; sourceTree = "<group>"; };
 		34686C9A1ED025CB001749A1 /* ConverUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConverUtil.h; sourceTree = "<group>"; };
 		34686C9B1ED025CB001749A1 /* ConverUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConverUtil.m; sourceTree = "<group>"; };
 		34686C9C1ED025CB001749A1 /* DesUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DesUtil.h; sourceTree = "<group>"; };
@@ -1412,6 +1423,12 @@
 		EBEA7C1D1FBCAF260028F0E8 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				34615F061FC9BD7B002DFCE0 /* jslide_bk@2x.png */,
+				34615F071FC9BD7B002DFCE0 /* jslide_thumb@2x.png */,
+				34615F0C1FC9BEC7002DFCE0 /* v_slider_bg_light@2x.png */,
+				34615F0E1FC9C263002DFCE0 /* v_slider_road@2x.png */,
+				34615F081FC9BD7B002DFCE0 /* JSlideView.h */,
+				34615F051FC9BD7B002DFCE0 /* JSlideView.m */,
 				3421EA2C1FC4136600DC5378 /* CustomPickerView.h */,
 				3421EA2B1FC4136600DC5378 /* CustomPickerView.m */,
 				3421EA2E1FC4161300DC5378 /* ColumnsView.h */,
@@ -1571,14 +1588,17 @@
 				046D2F061DA90AD9006C6123 /* silk_card_bg@2x.png in Resources */,
 				04DE1DE31AD68C5E00D49E2F /* Images.xcassets in Resources */,
 				04C4B1191AF904FB003FD52B /* Icon@2x.png in Resources */,
+				34615F0D1FC9BEC7002DFCE0 /* v_slider_bg_light@2x.png in Resources */,
 				EBF6A73E1FC851E500260FF0 /* audio_layer_next_n@2x.png in Resources */,
 				049ECA751C8D4B8A00A611D8 /* zbar-samples.png in Resources */,
 				049BA6031AF7693200F17584 /* rank_icon@2x.png in Resources */,
+				34615F0F1FC9C264002DFCE0 /* v_slider_road@2x.png in Resources */,
 				EB3685F71FC0799A009973A3 /* settings_view_n@2x.png in Resources */,
 				EB5D91FC1FBB2F78004ED38D /* login_right_arraw@2x.png in Resources */,
 				EB03F5341FBDDAB300865541 /* main_settings_n@2x.png in Resources */,
 				049ECA721C8D4B8A00A611D8 /* zbar-back.png in Resources */,
 				EB2E70841FC1D056009C477C /* down_arraw@2x.png in Resources */,
+				34615F0A1FC9BD7B002DFCE0 /* jslide_bk@2x.png in Resources */,
 				EB2E70811FC1B5B4009C477C /* settings_view_9@2x.png in Resources */,
 				341F0F441EC2E01D0027C800 /* warning.mp3 in Resources */,
 				EBDF1C031FC5C69F00A756EA /* close_system_n@2x.png in Resources */,
@@ -1672,6 +1692,7 @@
 				EB3685F41FC0799A009973A3 /* settings_user_s@2x.png in Resources */,
 				EBEA7C211FBCAF260028F0E8 /* area.plist in Resources */,
 				045850181B08CF42002BC23C /* BookCache.sqlite in Resources */,
+				34615F0B1FC9BD7B002DFCE0 /* jslide_thumb@2x.png in Resources */,
 				EBF6A7421FC851E500260FF0 /* audio_player_play@2x.png in Resources */,
 				049BA6071AF7694E00F17584 /* email_icon@2x.png in Resources */,
 				04DE1FAD1AD6B3BB00D49E2F /* jiantou@2x.png in Resources */,
@@ -1697,6 +1718,7 @@
 				EB042A5B1FC2FFCD00F7F73D /* OutSystemView.m in Sources */,
 				EB03F52B1FBDC07200865541 /* InvitationCodeViewCotroller.m in Sources */,
 				34928A9A1EC1BD330089F429 /* ReaderCodeViewController.m in Sources */,
+				34615F091FC9BD7B002DFCE0 /* JSlideView.m in Sources */,
 				04DE1E831AD6AEE000D49E2F /* ClassFactory.m in Sources */,
 				04DE1E991AD6AEE000D49E2F /* ASIHTTPRequest.m in Sources */,
 				04DE1E921AD6AEE000D49E2F /* UserDefaultsKV.m in Sources */,

@@ -13,6 +13,7 @@
 
 #import "CustomPickerView.h"
 #import "ColumnsView.h"
+#import "JSlideView.h"
 
 @interface WellcomeViewController ()
 
@@ -108,6 +109,22 @@
     [col draw];
     
     [self.view addSubview:col];
+    
+    
+    JSlideView *slider = [[JSlideView alloc]
+                          initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light.png"]
+                          frame:CGRectZero];
+    [self.view addSubview:slider];
+    [slider setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
+    
+    slider.topEdge = 60;
+    slider.bottomEdge = 55;
+    slider.maxValue = 20;
+    slider.minValue = -20;
+    
+    [slider resetScale];
+    
+    slider.center = CGPointMake(600, 400);
 }
 
 - (void) loginAction:(id)sender{
