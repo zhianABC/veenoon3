@@ -14,6 +14,7 @@
 #import "CustomPickerView.h"
 #import "ColumnsView.h"
 #import "JSlideView.h"
+#import "SignalView.h"
 
 @interface WellcomeViewController ()
 
@@ -125,6 +126,13 @@
     [slider resetScale];
     
     slider.center = CGPointMake(600, 400);
+    
+    
+    SignalView *signal = [[SignalView alloc] initWithFrame:CGRectMake(800, 400, 60, 60)];
+    [self.view addSubview:signal];
+    [signal setLightColor:THEME_COLOR];//SINGAL_COLOR
+    [signal setGrayColor:[UIColor colorWithWhite:1.0 alpha:0.6]];
+    [signal setSignalValue:4];
 }
 
 - (void) loginAction:(id)sender{

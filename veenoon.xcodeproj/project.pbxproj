@@ -169,6 +169,7 @@
 		34686C9E1ED025CB001749A1 /* ConverUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 34686C9B1ED025CB001749A1 /* ConverUtil.m */; };
 		34686C9F1ED025CB001749A1 /* DesUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 34686C9D1ED025CB001749A1 /* DesUtil.m */; };
 		34928A9A1EC1BD330089F429 /* ReaderCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34928A991EC1BD330089F429 /* ReaderCodeViewController.m */; };
+		3496B75A1FCAF3C5005F4857 /* SignalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3496B7591FCAF3C5005F4857 /* SignalView.m */; };
 		EB03F52B1FBDC07200865541 /* InvitationCodeViewCotroller.m in Sources */ = {isa = PBXBuildFile; fileRef = EB03F5291FBDC07100865541 /* InvitationCodeViewCotroller.m */; };
 		EB03F52D1FBDC83100865541 /* home_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB03F52C1FBDC83000865541 /* home_background@2x.png */; };
 		EB03F5341FBDDAB300865541 /* main_settings_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB03F52E1FBDDAB200865541 /* main_settings_n@2x.png */; };
@@ -584,6 +585,8 @@
 		34686C9D1ED025CB001749A1 /* DesUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DesUtil.m; sourceTree = "<group>"; };
 		34928A981EC1BD330089F429 /* ReaderCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderCodeViewController.h; sourceTree = "<group>"; };
 		34928A991EC1BD330089F429 /* ReaderCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderCodeViewController.m; sourceTree = "<group>"; };
+		3496B7581FCAF3C5005F4857 /* SignalView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignalView.h; sourceTree = "<group>"; };
+		3496B7591FCAF3C5005F4857 /* SignalView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignalView.m; sourceTree = "<group>"; };
 		EB03F5291FBDC07100865541 /* InvitationCodeViewCotroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvitationCodeViewCotroller.m; sourceTree = "<group>"; };
 		EB03F52A1FBDC07100865541 /* InvitationCodeViewCotroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvitationCodeViewCotroller.h; sourceTree = "<group>"; };
 		EB03F52C1FBDC83000865541 /* home_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_background@2x.png"; sourceTree = "<group>"; };
@@ -1436,6 +1439,8 @@
 				EBEA7C1E1FBCAF260028F0E8 /* area.plist */,
 				EBEA7C1F1FBCAF260028F0E8 /* AreaPickView.h */,
 				EBEA7C201FBCAF260028F0E8 /* AreaPickView.m */,
+				3496B7581FCAF3C5005F4857 /* SignalView.h */,
+				3496B7591FCAF3C5005F4857 /* SignalView.m */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -1739,6 +1744,7 @@
 				04D719771DADD3A4002153D7 /* SSUser.m in Sources */,
 				04DE1FE71AD6B52400D49E2F /* CMNavigationController.m in Sources */,
 				04DE1DDB1AD68C5E00D49E2F /* AppDelegate.m in Sources */,
+				3496B75A1FCAF3C5005F4857 /* SignalView.m in Sources */,
 				04DE1E9E1AD6AEE000D49E2F /* HttpFileGetter.m in Sources */,
 				EB3686011FC07A9C009973A3 /* SettingsAccountView.m in Sources */,
 				04DE1EAE1AD6AEE000D49E2F /* SDWebImageDecoder.m in Sources */,
