@@ -92,6 +92,7 @@
         [_botomView addSubview:imageView];
         
         BatteryView *batter = [[BatteryView alloc] initWithFrame:CGRectZero];
+        batter.normalColor = SINGAL_COLOR;
         [imageView addSubview:batter];
         batter.center = CGPointMake(60, 18);
         
@@ -102,9 +103,19 @@
         
         SignalView *signal = [[SignalView alloc] initWithFrameAndStep:CGRectMake(70, 50, 30, 20) step:2];
         [imageView addSubview:signal];
-        [signal setLightColor:[UIColor greenColor]];//SINGAL_COLOR
+        [signal setLightColor:SINGAL_COLOR];//SINGAL_COLOR
         [signal setGrayColor:[UIColor colorWithWhite:1.0 alpha:0.6]];
-        [signal setSignalValue:4];
+        NSString *sinalString = [dic objectForKey:@"signal"];
+        int signalInt = [sinalString intValue];
+        [signal setSignalValue:signalInt];
+        
+        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, cellWidth-30, cellWidth, 20)];
+        titleL.backgroundColor = [UIColor clearColor];
+        [imageView addSubview:titleL];
+        titleL.font = [UIFont boldSystemFontOfSize:12];
+        titleL.textAlignment = NSTextAlignmentCenter;
+        titleL.textColor  = SINGAL_COLOR;
+        titleL.text = [dic objectForKey:@"huatongName"];
         
         index++;
     }
@@ -118,15 +129,15 @@
     }
     
     NSString *name = @"jack";
+    int signal = 1;
+    int dianliang = 20;
     for (int i = 0 ;i < 31;i++) {
-        int dianliang = 50;
         
         NSString *huatongType = @"huatong";
         if (i % 2 == 0) {
             huatongType = @"huabao";
         }
         
-        int signal = 1;
         NSString *huatongName = [name stringByAppendingString:[NSString stringWithFormat:@"%d",i]];
         NSString *dianliangStr = [NSString stringWithFormat:@"%d",dianliang];
         NSString *signalStr = [NSString stringWithFormat:@"%d",signal];
