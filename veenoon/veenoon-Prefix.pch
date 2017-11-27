@@ -41,6 +41,8 @@
 
 #define LINE_COLOR              RGBA(200, 200, 200,0.5)
 
+#define SINGAL_COLOR             RGB(3,251,211)
+
 #define THEME_COLOR             RGB(242, 157, 56)
 #define THEME_COLOR_A(a)        RGBA(242, 157, 56,a)
 #define THEME_RED_COLOR         RGB(0xe4, 0x2a, 0x21)
