@@ -8,6 +8,7 @@
 #import "UserAudioConfigViewController.h"
 #import "UserAudioPlayerSettingsViewCtrl.h"
 #import "UserWuXianHuaTongViewCtrl.h"
+#import "JSlideView.h"
 
 @interface UserAudioConfigViewController () {
     UIButton *_cdPlayerBtn;
@@ -18,6 +19,15 @@
     UIButton *_youxianPlayer1Btn;
     UIButton *_youxianPlayer2Btn;
     UIButton *_youxianPlayer3Btn;
+    
+    JSlideView *_cdPlayerSlider;
+    JSlideView *_sdPlayerSlider;
+    JSlideView *_usbPlayerSlider;
+    JSlideView *_wuxianPlayerSlider;
+    JSlideView *_hunyinPlayerSlider;
+    JSlideView *_youxianPlayerSlider;
+    JSlideView *_youxianPlayerSlider2;
+    JSlideView *_wuxianSysPlayerSlider;
 }
 
 @end
@@ -58,6 +68,21 @@
     [_cdPlayerBtn addGestureRecognizer:longPress0];
     [self.view addSubview:_cdPlayerBtn];
     
+    int sliderHeight = 550;
+    int sliderLeftRight = 100;
+    
+    _cdPlayerSlider = [[JSlideView alloc]
+               initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light.png"]
+               frame:CGRectZero];
+    [self.view addSubview:_cdPlayerSlider];
+    [_cdPlayerSlider setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
+    _cdPlayerSlider.topEdge = 60;
+    _cdPlayerSlider.bottomEdge = 55;
+    _cdPlayerSlider.maxValue = 20;
+    _cdPlayerSlider.minValue = -20;
+    [_cdPlayerSlider resetScale];
+    _cdPlayerSlider.center = CGPointMake(sliderLeftRight, sliderHeight);
+    
     
     _sdPlayersBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _sdPlayersBtn.frame = CGRectMake(leftRight+rowGap, height, width, width);
@@ -74,6 +99,18 @@
     [_sdPlayersBtn addGestureRecognizer:longPress1];
     [self.view addSubview:_sdPlayersBtn];
     
+    _sdPlayerSlider = [[JSlideView alloc]
+                       initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light.png"]
+                       frame:CGRectZero];
+    [self.view addSubview:_sdPlayerSlider];
+    [_sdPlayerSlider setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
+    _sdPlayerSlider.topEdge = 60;
+    _sdPlayerSlider.bottomEdge = 55;
+    _sdPlayerSlider.maxValue = 20;
+    _sdPlayerSlider.minValue = -20;
+    [_sdPlayerSlider resetScale];
+    _sdPlayerSlider.center = CGPointMake(sliderLeftRight+rowGap, sliderHeight);
+    
     _usbPlayersBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _usbPlayersBtn.frame = CGRectMake(leftRight+rowGap*2, height, width, width);
     [_usbPlayersBtn setImage:[UIImage imageNamed:@"usb_player_n.png"] forState:UIControlStateNormal];
@@ -88,6 +125,18 @@
     UILongPressGestureRecognizer *longPress2 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed2:)];
     [_usbPlayersBtn addGestureRecognizer:longPress2];
     [self.view addSubview:_usbPlayersBtn];
+    
+    _usbPlayerSlider = [[JSlideView alloc]
+                       initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light.png"]
+                       frame:CGRectZero];
+    [self.view addSubview:_usbPlayerSlider];
+    [_usbPlayerSlider setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
+    _usbPlayerSlider.topEdge = 60;
+    _usbPlayerSlider.bottomEdge = 55;
+    _usbPlayerSlider.maxValue = 20;
+    _usbPlayerSlider.minValue = -20;
+    [_usbPlayerSlider resetScale];
+    _usbPlayerSlider.center = CGPointMake(sliderLeftRight+rowGap*2, sliderHeight);
     
     _wuxianPlayersBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _wuxianPlayersBtn.frame = CGRectMake(leftRight+rowGap*3+10, height, width, width);
@@ -104,6 +153,18 @@
     [_wuxianPlayersBtn addGestureRecognizer:longPress3];
     [self.view addSubview:_wuxianPlayersBtn];
     
+    _wuxianPlayerSlider = [[JSlideView alloc]
+                        initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light.png"]
+                        frame:CGRectZero];
+    [self.view addSubview:_wuxianPlayerSlider];
+    [_wuxianPlayerSlider setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
+    _wuxianPlayerSlider.topEdge = 60;
+    _wuxianPlayerSlider.bottomEdge = 55;
+    _wuxianPlayerSlider.maxValue = 20;
+    _wuxianPlayerSlider.minValue = -20;
+    [_wuxianPlayerSlider resetScale];
+    _wuxianPlayerSlider.center = CGPointMake(sliderLeftRight+rowGap*3, sliderHeight);
+    
     _hunyinPlayersBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _hunyinPlayersBtn.frame = CGRectMake(leftRight+rowGap*4, height, width, width);
     [_hunyinPlayersBtn setImage:[UIImage imageNamed:@"huiyinhuiyi_player_n.png"] forState:UIControlStateNormal];
@@ -116,6 +177,18 @@
     [_hunyinPlayersBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_hunyinPlayersBtn.titleLabel.bounds.size.height, 0)];
     [_hunyinPlayersBtn addTarget:self action:@selector(hunyinPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_hunyinPlayersBtn];
+    
+    _hunyinPlayerSlider = [[JSlideView alloc]
+                           initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light.png"]
+                           frame:CGRectZero];
+    [self.view addSubview:_hunyinPlayerSlider];
+    [_hunyinPlayerSlider setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
+    _hunyinPlayerSlider.topEdge = 60;
+    _hunyinPlayerSlider.bottomEdge = 55;
+    _hunyinPlayerSlider.maxValue = 20;
+    _hunyinPlayerSlider.minValue = -20;
+    [_hunyinPlayerSlider resetScale];
+    _hunyinPlayerSlider.center = CGPointMake(sliderLeftRight+rowGap*4, sliderHeight);
     
     _youxianPlayer1Btn = [UIButton buttonWithType:UIButtonTypeCustom];
     _youxianPlayer1Btn.frame = CGRectMake(leftRight+rowGap*5, height, width, width);
@@ -130,6 +203,18 @@
     [_youxianPlayer1Btn addTarget:self action:@selector(youxianPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_youxianPlayer1Btn];
     
+    _youxianPlayerSlider = [[JSlideView alloc]
+                           initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light.png"]
+                           frame:CGRectZero];
+    [self.view addSubview:_youxianPlayerSlider];
+    [_youxianPlayerSlider setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
+    _youxianPlayerSlider.topEdge = 60;
+    _youxianPlayerSlider.bottomEdge = 55;
+    _youxianPlayerSlider.maxValue = 20;
+    _youxianPlayerSlider.minValue = -20;
+    [_youxianPlayerSlider resetScale];
+    _youxianPlayerSlider.center = CGPointMake(sliderLeftRight+rowGap*5, sliderHeight);
+    
     _youxianPlayer2Btn = [UIButton buttonWithType:UIButtonTypeCustom];
     _youxianPlayer2Btn.frame = CGRectMake(leftRight+rowGap*6, height, width, width);
     [_youxianPlayer2Btn setImage:[UIImage imageNamed:@"youxianxitong_player_n.png"] forState:UIControlStateNormal];
@@ -143,6 +228,18 @@
     [_youxianPlayer2Btn addTarget:self action:@selector(youxianPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_youxianPlayer2Btn];
     
+    _youxianPlayerSlider2 = [[JSlideView alloc]
+                            initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light.png"]
+                            frame:CGRectZero];
+    [self.view addSubview:_youxianPlayerSlider2];
+    [_youxianPlayerSlider2 setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
+    _youxianPlayerSlider2.topEdge = 60;
+    _youxianPlayerSlider2.bottomEdge = 55;
+    _youxianPlayerSlider2.maxValue = 20;
+    _youxianPlayerSlider2.minValue = -20;
+    [_youxianPlayerSlider2 resetScale];
+    _youxianPlayerSlider2.center = CGPointMake(sliderLeftRight+rowGap*6, sliderHeight);
+    
     _youxianPlayer3Btn = [UIButton buttonWithType:UIButtonTypeCustom];
     _youxianPlayer3Btn.frame = CGRectMake(leftRight+rowGap*7, height, width, width);
     [_youxianPlayer3Btn setImage:[UIImage imageNamed:@"youxianxitong_player_n.png"] forState:UIControlStateNormal];
@@ -155,6 +252,52 @@
     [_youxianPlayer3Btn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_youxianPlayer3Btn.titleLabel.bounds.size.height, 0)];
     [_youxianPlayer3Btn addTarget:self action:@selector(wuSysxianPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_youxianPlayer3Btn];
+    
+    _wuxianSysPlayerSlider = [[JSlideView alloc]
+                             initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light.png"]
+                             frame:CGRectZero];
+    [self.view addSubview:_wuxianSysPlayerSlider];
+    [_wuxianSysPlayerSlider setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
+    _wuxianSysPlayerSlider.topEdge = 60;
+    _wuxianSysPlayerSlider.bottomEdge = 55;
+    _wuxianSysPlayerSlider.maxValue = 20;
+    _wuxianSysPlayerSlider.minValue = -20;
+    [_wuxianSysPlayerSlider resetScale];
+    _wuxianSysPlayerSlider.center = CGPointMake(sliderLeftRight+rowGap*7, sliderHeight);
+    
+    UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-60, SCREEN_WIDTH, 60)];
+    [self.view addSubview:bottomBar];
+    
+    //缺切图，把切图贴上即可。
+    bottomBar.backgroundColor = [UIColor grayColor];
+    bottomBar.userInteractionEnabled = YES;
+    bottomBar.image = [UIImage imageNamed:@"user_botom_Line.png"];
+    
+    UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    cancelBtn.frame = CGRectMake(10, 0,160, 60);
+    [bottomBar addSubview:cancelBtn];
+    [cancelBtn setTitle:@"返回" forState:UIControlStateNormal];
+    [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [cancelBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    cancelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [cancelBtn addTarget:self
+                  action:@selector(cancelAction:)
+        forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 60);
+    [bottomBar addSubview:okBtn];
+    [okBtn setTitle:@"确认" forState:UIControlStateNormal];
+    [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [okBtn addTarget:self
+              action:@selector(okAction:)
+    forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void) cancelAction:(id)sender{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void) longPressed0:(id)sender{

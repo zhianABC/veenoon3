@@ -7,17 +7,22 @@
 //
 
 #import "UserWuXianHuaTongViewCtrl.h"
+#import "BatteryView.h"
+#import "SignalView.h"
 
 @interface UserWuXianHuaTongViewCtrl () {
     
 }
-
+@property (nonatomic, strong) NSMutableArray *wuxianhuatongArray;
 @end
 
 @implementation UserWuXianHuaTongViewCtrl
+@synthesize wuxianhuatongArray;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self initData];
     
     self.view.backgroundColor = RGB(63, 58, 55);
     
@@ -35,7 +40,7 @@
     //缺切图，把切图贴上即可。
     bottomBar.backgroundColor = [UIColor grayColor];
     bottomBar.userInteractionEnabled = YES;
-    bottomBar.image = [UIImage imageNamed:@"botomo_icon.png"];
+    bottomBar.image = [UIImage imageNamed:@"user_botom_Line.png"];
     
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     cancelBtn.frame = CGRectMake(10, 0,160, 60);
@@ -47,6 +52,102 @@
     [cancelBtn addTarget:self
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    
+    int cellWidth = 105;
+    int rowGap = 15;
+    int scrollHeight = 105*5 + rowGap*4;
+    
+    int left = (SCREEN_WIDTH - 105*6 - 5*rowGap)/2;
+    
+    UIScrollView *_botomView = [[UIScrollView alloc] initWithFrame:CGRectMake(left, SCREEN_HEIGHT-scrollHeight-60 -60, SCREEN_WIDTH-2*left, scrollHeight)];
+    int rowNumber = [wuxianhuatongArray count] / 6 + 1;
+    int sizeHeight = rowNumber * (105 + rowGap);
+    _botomView.contentSize =  CGSizeMake(SCREEN_WIDTH-2*left, sizeHeight);
+    _botomView.scrollEnabled=YES;
+    _botomView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:_botomView];
+    
+    int index = 0;
+    for (int i = 0; i < [wuxianhuatongArray count]; i++) {
+        int row = index/6;
+        int col = index%6;
+        int startX = col*cellWidth+col*rowGap;
+        int startY = row*cellWidth+rowGap*row;
+        
+        NSMutableDictionary *dic = [wuxianhuatongArray objectAtIndex:index];
+        NSString *huatongType = [dic objectForKey:@"huatongType"];
+        
+        UIImage *image;
+        if ([@"huatong" isEqualToString:huatongType]) {
+            image = [UIImage imageNamed:@"wuxianhuatong.png"];
+        } else {
+            image = [UIImage imageNamed:@"wuxianhuabao.png"];
+        }
+        
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+        imageView.frame = CGRectMake(startX, startY, cellWidth, cellWidth);
+        
+        [_botomView addSubview:imageView];
+        
+        BatteryView *batter = [[BatteryView alloc] initWithFrame:CGRectZero];
+        [imageView addSubview:batter];
+        batter.center = CGPointMake(80, 20);
+        
+        NSString *dianliangStr = [dic objectForKey:@"dianliang"];
+        int dianliang = [dianliangStr intValue];
+        double dianliangDouble = 1.0f * dianliang / 100;
+        [batter setBatteryValue:dianliangDouble];
+        
+        SignalView *signal = [[SignalView alloc] initWithFrame:CGRectMake(80, 60, 60, 50)];
+        [imageView addSubview:signal];
+        [signal setLightColor:[UIColor greenColor]];//SINGAL_COLOR
+        [signal setGrayColor:[UIColor colorWithWhite:1.0 alpha:0.6]];
+        [signal setSignalValue:4];
+        
+        index++;
+    }
+}
+
+- (void) initData {
+    if (wuxianhuatongArray) {
+        [wuxianhuatongArray removeAllObjects];
+    } else {
+        wuxianhuatongArray = [[NSMutableArray alloc] init];
+    }
+    
+    NSString *name = @"jack";
+    for (int i = 0 ;i < 31;i++) {
+        int dianliang = 50;
+        
+        NSString *huatongType = @"huatong";
+        if (i % 2 == 0) {
+            huatongType = @"huabao";
+        }
+        
+        int signal = 1;
+        NSString *huatongName = [name stringByAppendingString:[NSString stringWithFormat:@"%d",i]];
+        NSString *dianliangStr = [NSString stringWithFormat:@"%d",dianliang];
+        NSString *signalStr = [NSString stringWithFormat:@"%d",signal];
+        
+        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                    huatongName, @"huatongName",
+                                    signalStr, @"signal",
+                                    dianliangStr, @"dianliang",
+                                    huatongType, @"huatongType",
+                                     nil];
+        dianliang++;
+        signal++;
+        if (signal > 5) {
+            signal = 0;
+        }
+        
+        [wuxianhuatongArray addObject:dic];
+    }
+    NSArray *sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"huatongType" ascending:NO]];
+    [wuxianhuatongArray sortUsingDescriptors:sortDescriptors];
+    
 }
 
 - (void) cancelAction:(id)sender{
