@@ -13,6 +13,9 @@
 
 #import "CustomPickerView.h"
 #import "ColumnsView.h"
+#import "JSlideView.h"
+#import "SignalView.h"
+#import "BatteryView.h"
 
 @interface WellcomeViewController ()
 
@@ -75,6 +78,24 @@
     
     [self.view addSubview:titleL];
     
+    
+    
+    ColumnsView *col = [[ColumnsView alloc] initWithFrame:CGRectZero];
+    col.xStepPixel = 50;
+    col.yStepPixel = 50;
+    col.xStepValues = @[@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9"];
+    col.yStepValues = @[@"10",@"20",@"30",@"40",@"50",@"60",@"70",@"80",@"90"];
+    col._themeColor = [UIColor orangeColor];
+    [col initXY];
+    
+    col.maxColValue = 90;
+    col.colWidth = 30;
+    col.colValues = @[@"40",@"30",@"50",@"60",@"70",@"20",@"10",@"60"];
+    
+    [col draw];
+    
+    [self.view addSubview:col];
+    
     ///测试组件 -- 需要提供背景切图
     CustomPickerView *levelSetting = [[CustomPickerView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
     
@@ -93,21 +114,39 @@
     };
     
     
-    ColumnsView *col = [[ColumnsView alloc] initWithFrame:CGRectZero];
-    col.xStepPixel = 50;
-    col.yStepPixel = 50;
-    col.xStepValues = @[@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9"];
-    col.yStepValues = @[@"10",@"20",@"30",@"40",@"50",@"60",@"70",@"80",@"90"];
-    col._themeColor = [UIColor orangeColor];
-    [col initXY];
+    JSlideView *slider = [[JSlideView alloc]
+                          initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light.png"]
+                          frame:CGRectZero];
+    [self.view addSubview:slider];
+    [slider setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
     
-    col.maxColValue = 90;
-    col.colWidth = 30;
-    col.colValues = @[@"40",@"30",@"50",@"60",@"70",@"20"];
+    slider.topEdge = 60;
+    slider.bottomEdge = 55;
+    slider.maxValue = 20;
+    slider.minValue = -20;
     
-    [col draw];
+    [slider resetScale];
     
-    [self.view addSubview:col];
+    slider.center = CGPointMake(600, 400);
+    
+    
+    SignalView *signal = [[SignalView alloc] initWithFrame:CGRectMake(800, 400, 60, 50)];
+    [self.view addSubview:signal];
+    [signal setLightColor:[UIColor greenColor]];//SINGAL_COLOR
+    [signal setGrayColor:[UIColor colorWithWhite:1.0 alpha:0.6]];
+    [signal setSignalValue:4];
+    
+    BatteryView *batter = [[BatteryView alloc] initWithFrame:CGRectZero];
+    [self.view addSubview:batter];
+    batter.center = CGPointMake(900, 430);
+    
+    [batter setBatteryValue:0.5];
+    
+    BatteryView *batter1 = [[BatteryView alloc] initWithFrame:CGRectZero];
+    [self.view addSubview:batter1];
+    batter1.center = CGPointMake(950, 430);
+    
+    [batter1 setBatteryValue:0.18];
 }
 
 - (void) loginAction:(id)sender{

@@ -20,6 +20,8 @@
     
     NSInteger       _comSelected;
     NSInteger       _rowSelected;
+    
+    UIImageView  *_background;
 }
 
 @end
@@ -34,12 +36,18 @@
 - (id)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
         // Initialization code
-        self.backgroundColor = [UIColor redColor];
+        //self.backgroundColor = [UIColor redColor];
+        
+        _background = [[UIImageView alloc] initWithFrame:self.bounds];
+        _background.image = [UIImage imageNamed:@"gray_slide_bg.png"];
+        [self addSubview:_background];
+        _background.contentMode = UIViewContentModeScaleAspectFill;
         
         _myPickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0.0, 0, frame.size.width, frame.size.height)];
         _myPickerView.delegate = self;
         _myPickerView.dataSource = self;
         _myPickerView.showsSelectionIndicator = YES;
+
         [self addSubview:_myPickerView];
         
         
