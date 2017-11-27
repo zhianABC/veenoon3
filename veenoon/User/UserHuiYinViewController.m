@@ -103,13 +103,13 @@
     [_fayanrenshuBtn addTarget:self action:@selector(shedingzhuxiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_fayanrenshuBtn];
     
-    _peoplePicker = [[CustomPickerView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+    _peoplePicker = [[CustomPickerView alloc] initWithFrame:CGRectMake(0, 0, 100, 150)];
     _peoplePicker._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
     [self.view addSubview:_peoplePicker];
     _peoplePicker.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT - 260);
+    [_peoplePicker selectRow:0 inComponent:0];
     _peoplePicker._selectColor = RGB(230, 151, 50);
     _peoplePicker._rowNormalColor = SINGAL_COLOR;
-    [_peoplePicker selectRow:0 inComponent:0];
     IMP_BLOCK_SELF(UserHuiYinViewController);
     _peoplePicker._selectionBlock = ^(NSDictionary *values) {
         //[block_self didPickerValue:values];

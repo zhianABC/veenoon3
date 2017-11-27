@@ -31,7 +31,6 @@
 
 @implementation CustomPickerView
 @synthesize _pickerDataArray;
-@synthesize _pickerLabelArray;
 @synthesize delegate_;
 @synthesize _selectionBlock;
 @synthesize _selectColor;
@@ -43,8 +42,6 @@
     if (self = [super initWithFrame:frame]) {
         // Initialization code
         //self.backgroundColor = [UIColor redColor];
-        
-        _pickerLabelArray = [[NSMutableArray alloc] init];
         
         _background = [[UIImageView alloc] initWithFrame:self.bounds];
         _background.image = [UIImage imageNamed:@"gray_slide_bg.png"];
@@ -93,9 +90,6 @@
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     _rowSelected = row;
-    
-    UILabel *selectedLabel = [_pickerLabelArray objectAtIndex:component];
-    selectedLabel.textColor = _selectColor;
     
     NSDictionary *section = [_pickerDataArray objectAtIndex:component];
     NSArray *values = [section objectForKey:@"values"];
@@ -159,10 +153,13 @@
     }
     
     tL.textAlignment = NSTextAlignmentCenter;
-    tL.textColor = _rowNormalColor;
-    tL.font = [UIFont boldSystemFontOfSize:20];
     
-    [_pickerLabelArray addObject:tL];
+    if (_rowSelected == component) {
+        tL.textColor = _selectColor;
+    } else {
+        tL.textColor = _rowNormalColor;
+    }
+    tL.font = [UIFont boldSystemFontOfSize:20];
     
     return tL;
 }
