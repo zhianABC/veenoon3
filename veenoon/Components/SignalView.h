@@ -13,6 +13,8 @@
     
 }
 
+- (id) initWithFrameAndStep:(CGRect)frame step:(int)step;
+
 - (void) setLightColor:(UIColor *)color;
 - (void) setGrayColor:(UIColor *)color;
 // from 1 to 5

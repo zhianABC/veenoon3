@@ -93,14 +93,14 @@
         
         BatteryView *batter = [[BatteryView alloc] initWithFrame:CGRectZero];
         [imageView addSubview:batter];
-        batter.center = CGPointMake(80, 20);
+        batter.center = CGPointMake(60, 18);
         
         NSString *dianliangStr = [dic objectForKey:@"dianliang"];
         int dianliang = [dianliangStr intValue];
         double dianliangDouble = 1.0f * dianliang / 100;
         [batter setBatteryValue:dianliangDouble];
         
-        SignalView *signal = [[SignalView alloc] initWithFrame:CGRectMake(80, 60, 60, 50)];
+        SignalView *signal = [[SignalView alloc] initWithFrameAndStep:CGRectMake(70, 50, 30, 20) step:2];
         [imageView addSubview:signal];
         [signal setLightColor:[UIColor greenColor]];//SINGAL_COLOR
         [signal setGrayColor:[UIColor colorWithWhite:1.0 alpha:0.6]];

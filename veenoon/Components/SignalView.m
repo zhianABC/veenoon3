@@ -65,6 +65,46 @@
     return self;
 }
 
+- (id) initWithFrameAndStep:(CGRect)frame step:(int)step{
+    
+    if(self = [super initWithFrame:frame])
+    {
+        
+        int space = step;
+        int w = (frame.size.width - space*6)/5;
+        
+        int x = space;
+        
+        int h = frame.size.height*0.2;
+        _col1 = [[UIImageView alloc] initWithFrame:CGRectMake(x, frame.size.height - h, w, h)];
+        [self addSubview:_col1];
+        
+        x+=w;
+        x+=space;
+        h = frame.size.height*0.4;
+        _col2 = [[UIImageView alloc] initWithFrame:CGRectMake(x, frame.size.height - h, w, h)];
+        [self addSubview:_col2];
+        
+        x+=w;
+        x+=space;
+        h = frame.size.height*0.6;
+        _col3 = [[UIImageView alloc] initWithFrame:CGRectMake(x, frame.size.height - h, w, h)];
+        [self addSubview:_col3];
+        
+        x+=w;
+        x+=space;
+        h = frame.size.height*0.8;
+        _col4 = [[UIImageView alloc] initWithFrame:CGRectMake(x, frame.size.height - h, w, h)];
+        [self addSubview:_col4];
+        
+        x+=w;
+        x+=space;
+        _col5 = [[UIImageView alloc] initWithFrame:CGRectMake(x, 0, w, frame.size.height)];
+        [self addSubview:_col5];
+    }
+    return self;
+}
+
 - (void) setLightColor:(UIColor *)color{
     _col1.backgroundColor = color;
     _col2.backgroundColor = color;
