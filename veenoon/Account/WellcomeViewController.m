@@ -15,6 +15,7 @@
 #import "ColumnsView.h"
 #import "JSlideView.h"
 #import "SignalView.h"
+#import "BatteryView.h"
 
 @interface WellcomeViewController ()
 
@@ -133,6 +134,18 @@
     [signal setLightColor:THEME_COLOR];//SINGAL_COLOR
     [signal setGrayColor:[UIColor colorWithWhite:1.0 alpha:0.6]];
     [signal setSignalValue:4];
+    
+    BatteryView *batter = [[BatteryView alloc] initWithFrame:CGRectZero];
+    [self.view addSubview:batter];
+    batter.center = CGPointMake(900, 430);
+    
+    [batter setBatteryValue:0.5];
+    
+    BatteryView *batter1 = [[BatteryView alloc] initWithFrame:CGRectZero];
+    [self.view addSubview:batter1];
+    batter1.center = CGPointMake(950, 430);
+    
+    [batter1 setBatteryValue:0.18];
 }
 
 - (void) loginAction:(id)sender{
