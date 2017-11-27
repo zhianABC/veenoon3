@@ -15,6 +15,10 @@
     UIImageView *valueThumb;
     
     int ow;
+    
+    UILabel * percent;
+    
+    int left;
 }
 
 @end
@@ -38,9 +42,19 @@
               initWithImage:[UIImage imageNamed:@"battery.png"]];
         [self addSubview:bg];
         
-        self.frame = CGRectMake(0, 0, bg.frame.size.width, bg.frame.size.height);
+        left = 53;
         
-        valueThumb = [[UIImageView alloc] initWithFrame:CGRectMake(3.5,
+        bg.frame = CGRectMake(left, 0, bg.frame.size.width, bg.frame.size.height);
+        
+        
+        percent = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, left-3, bg.frame.size.height)];
+        [self addSubview:percent];
+        percent.textAlignment = NSTextAlignmentRight;
+        percent.font = [UIFont systemFontOfSize:9];
+        
+        self.frame = CGRectMake(0, 0, bg.frame.size.width+left, bg.frame.size.height);
+        
+        valueThumb = [[UIImageView alloc] initWithFrame:CGRectMake(left+3.5,
                                                                    2,
                                                                    bg.frame.size.width-5,
                                                                    bg.frame.size.height-4)];
@@ -57,28 +71,36 @@
     
     int w = value * CGRectGetWidth(valueThumb.frame);
     
-    valueThumb.frame = CGRectMake(3.5 + ow - w,
+    valueThumb.frame = CGRectMake(left + 3.5 + ow - w,
                                   2,
                                   w,
                                   bg.frame.size.height-4);
+    
+    percent.text = [NSString stringWithFormat:@"%0.0f%%", value*100.0];
     
     if(value < 0.21)
     {
         if(warningColor)
         {
             valueThumb.backgroundColor = warningColor;
+            percent.textColor = warningColor;
         }
-        else
+        else{
             valueThumb.backgroundColor = [UIColor redColor];
+            percent.textColor = [UIColor redColor];
+        }
     }
     else
     {
         if(normalColor)
         {
             valueThumb.backgroundColor = normalColor;
+            percent.textColor = normalColor;
         }
-        else
+        else{
             valueThumb.backgroundColor = [UIColor greenColor];
+            percent.textColor = [UIColor greenColor];
+        }
     }
     
 }
