@@ -130,7 +130,7 @@
     slider.center = CGPointMake(600, 400);
     
     
-    SignalView *signal = [[SignalView alloc] initWithFrame:CGRectMake(800, 400, 60, 50)];
+    SignalView *signal = [[SignalView alloc] initWithFrame:CGRectMake(800, 400, 30, 20)];
     [self.view addSubview:signal];
     [signal setLightColor:[UIColor greenColor]];//SINGAL_COLOR
     [signal setGrayColor:[UIColor colorWithWhite:1.0 alpha:0.6]];
