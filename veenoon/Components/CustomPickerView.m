@@ -89,7 +89,7 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    _rowSelected = row;
+    
     
     NSDictionary *section = [_pickerDataArray objectAtIndex:component];
     NSArray *values = [section objectForKey:@"values"];
@@ -97,11 +97,13 @@
     [_values setObject:[values objectAtIndex:row]
                 forKey:[NSNumber numberWithInteger:component]];
     
-    
     if(_selectionBlock)
     {
         _selectionBlock(_values);
     }
+    _rowSelected = row;
+    
+    [pickerView reloadComponent:component];
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
@@ -154,7 +156,7 @@
     
     tL.textAlignment = NSTextAlignmentCenter;
     
-    if (_rowSelected == component) {
+    if (_rowSelected == row) {
         tL.textColor = _selectColor;
     } else {
         tL.textColor = _rowNormalColor;
