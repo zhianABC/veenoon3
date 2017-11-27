@@ -22,10 +22,12 @@ typedef void(^CustomPickerSelectionBlock)(NSDictionary* values);
 @property (nonatomic, copy) CustomPickerSelectionBlock _selectionBlock;
 
 @property (nonatomic, strong) NSArray *_pickerDataArray;
+@property (nonatomic, strong) NSMutableArray *_pickerLabelArray;
 @property (nonatomic, weak) id  <CustomPickerViewDelegate> delegate_;
 
 @property (nonatomic, strong) NSString *_unitString;
-
+@property (nonatomic, strong) UIColor *_selectColor;
+@property (nonatomic, strong) UIColor *_rowNormalColor;
 - (void)selectRow:(NSInteger)row inComponent:(NSInteger)component;
 
 
