@@ -9,6 +9,8 @@
 #import "UserAudioPlayerSettingsViewCtrl.h"
 #import "UserWuXianHuaTongViewCtrl.h"
 #import "UserHuiYinViewController.h"
+#import "UserYouXianViewController.h"
+
 #import "JSlideView.h"
 
 @interface UserAudioConfigViewController () {
@@ -204,6 +206,8 @@
     [_youxianPlayer1Btn setTitleEdgeInsets:UIEdgeInsetsMake(_youxianPlayer1Btn.imageView.frame.size.height+10,-90,-20,20)];
     [_youxianPlayer1Btn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_youxianPlayer1Btn.titleLabel.bounds.size.height, 0)];
     [_youxianPlayer1Btn addTarget:self action:@selector(youxianPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
+    UILongPressGestureRecognizer *longPress5 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed5:)];
+    [_youxianPlayer1Btn addGestureRecognizer:longPress5];
     [self.view addSubview:_youxianPlayer1Btn];
     
     _youxianPlayerSlider = [[JSlideView alloc]
@@ -364,6 +368,18 @@
         return;
     } else if (press.state == UIGestureRecognizerStateBegan) {
         UserHuiYinViewController *controller = [[UserHuiYinViewController alloc] init];
+        [self.navigationController pushViewController:controller animated:YES];
+    }
+}
+
+- (void) longPressed5:(id)sender{
+    
+    UILongPressGestureRecognizer *press = (UILongPressGestureRecognizer *)sender;
+    if (press.state == UIGestureRecognizerStateEnded) {
+        // no need anything here
+        return;
+    } else if (press.state == UIGestureRecognizerStateBegan) {
+        UserYouXianViewController *controller = [[UserYouXianViewController alloc] init];
         [self.navigationController pushViewController:controller animated:YES];
     }
 }
