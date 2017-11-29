@@ -19,12 +19,16 @@
     UIImageView *outputArea;
 }
 
+@property (nonatomic, strong) NSMutableArray *_outputs;
+
 
 @end
 
 @implementation UserVideoConfigView
 @synthesize _inputDatas;
 @synthesize _outputDatas;
+@synthesize _result;
+@synthesize _outputs;
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -48,6 +52,8 @@
         outputArea.alpha = 0;
         outputArea.layer.cornerRadius = 10;
         outputArea.clipsToBounds = YES;
+        
+        self._result = [NSMutableDictionary dictionary];
     }
     
     return self;
@@ -87,6 +93,8 @@
     _outputFrame = CGRectMake(x, y-20, SCREEN_WIDTH-2*x, cellHeight+60);
     outputArea.frame = _outputFrame;
     
+    self._outputs = [NSMutableArray array];
+    
     for(int i = 0; i < [_outputDatas count]; i++)
     {
         NSDictionary *dic = [_outputDatas objectAtIndex:i];
@@ -104,6 +112,8 @@
         cell.textLabel.text = [dic objectForKey:@"name"];
         
         x+=cellWidth;
+        
+        [_outputs addObject:cell];
     }
     
 }
@@ -139,6 +149,26 @@
     if(CGRectContainsPoint(_outputFrame, pt))
     {
         layer._resetWhenEndDrag = NO;
+        
+        //输入源index
+        int index = (int)layer.tag;
+        
+        id inputD = [_inputDatas objectAtIndex:index];
+        
+        //找输出设备
+        for(StickerLayerView *st in _outputs)
+        {
+            if([st getIsSelected])
+            {
+                //保存结果
+                NSDictionary *outData = [_outputDatas objectAtIndex:st.tag];
+                [_result setObject:inputD
+                            forKey:[outData objectForKey:@"code"]];
+            }
+        }
+        
+        
+        
     }
     else
     {

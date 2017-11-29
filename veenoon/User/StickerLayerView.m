@@ -47,6 +47,10 @@
     textLabel.textColor = SINGAL_COLOR;
     
 }
+- (BOOL) getIsSelected{
+    
+    return _isSelected;
+}
 
 
 - (id)initWithFrame:(CGRect)frame

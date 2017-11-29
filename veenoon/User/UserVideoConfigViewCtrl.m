@@ -88,17 +88,23 @@
                              @"image_sel":@"user_video_camera_s.png"}];
     
     self._outputDevices = @[@{@"name":@"拼接屏",@"image":@"user_video_pinjieping_n.png",
-                              @"image_sel":@"user_video_pinjieping_s.png"},
+                              @"image_sel":@"user_video_pinjieping_s.png",
+                              @"code":@"1000"},
                             @{@"name":@"投影机",@"image":@"user_video_touying_n.png",
-                              @"image_sel":@"user_video_touying_s.png"},
+                              @"image_sel":@"user_video_touying_s.png",
+                              @"code":@"1001"},
                             @{@"name":@"液晶电视",@"image":@"user_video_yejing_n.png",
-                              @"image_sel":@"user_video_yejing_s.png"},
+                              @"image_sel":@"user_video_yejing_s.png",
+                              @"code":@"1002"},
                             @{@"name":@"液晶电视",@"image":@"user_video_yejing_n.png",
-                              @"image_sel":@"user_video_yejing_s.png"},
+                              @"image_sel":@"user_video_yejing_s.png",
+                              @"code":@"1003"},
                             @{@"name":@"录播机",@"image":@"user_video_lubo_n.png",
-                              @"image_sel":@"user_video_lubo_s.png"},
+                              @"image_sel":@"user_video_lubo_s.png",
+                              @"code":@"1004"},
                             @{@"name":@"远程视讯",@"image":@"user_video_remote_n.png",
-                              @"image_sel":@"user_video_remote_s.png"}];
+                              @"image_sel":@"user_video_remote_s.png",
+                              @"code":@"1005"}];
 
    
     UserVideoConfigView *uv = [[UserVideoConfigView alloc]

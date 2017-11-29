@@ -15,6 +15,8 @@
 @property (nonatomic, strong) NSArray *_inputDatas;
 @property (nonatomic, strong) NSArray *_outputDatas;
 
+@property (nonatomic, strong) NSMutableDictionary *_result;
+
 - (void) show;
 
 @end

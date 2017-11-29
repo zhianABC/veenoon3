@@ -51,6 +51,8 @@
 - (void) selected;
 - (void) unselected;
 
+- (BOOL) getIsSelected;
+
 - (void) setSticker:(NSString*)sticker;
 
 
