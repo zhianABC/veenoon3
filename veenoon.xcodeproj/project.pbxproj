@@ -159,6 +159,8 @@
 		341F0F421EC2DF6D0027C800 /* beep-beep.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 341F0F411EC2DF6D0027C800 /* beep-beep.aiff */; };
 		341F0F441EC2E01D0027C800 /* warning.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 341F0F431EC2E01D0027C800 /* warning.mp3 */; };
 		341F0F471EC2FC500027C800 /* WSCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 341F0F461EC2FC500027C800 /* WSCode.m */; };
+		34217A6F1FCE98200006701C /* UserVideoConfigView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34217A6E1FCE98200006701C /* UserVideoConfigView.m */; };
+		34217A721FCE9C160006701C /* StickerLayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34217A711FCE9C150006701C /* StickerLayerView.m */; };
 		3421EA2D1FC4136600DC5378 /* CustomPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3421EA2B1FC4136600DC5378 /* CustomPickerView.m */; };
 		3421EA301FC4161300DC5378 /* ColumnsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3421EA2F1FC4161300DC5378 /* ColumnsView.m */; };
 		3422A5B51FCC17AE00F6D3C2 /* battery@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3422A5B41FCC17AD00F6D3C2 /* battery@2x.png */; };
@@ -614,6 +616,10 @@
 		341F0F431EC2E01D0027C800 /* warning.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = warning.mp3; sourceTree = "<group>"; };
 		341F0F451EC2FC500027C800 /* WSCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSCode.h; sourceTree = "<group>"; };
 		341F0F461EC2FC500027C800 /* WSCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSCode.m; sourceTree = "<group>"; };
+		34217A6D1FCE98200006701C /* UserVideoConfigView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserVideoConfigView.h; sourceTree = "<group>"; };
+		34217A6E1FCE98200006701C /* UserVideoConfigView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserVideoConfigView.m; sourceTree = "<group>"; };
+		34217A701FCE9C150006701C /* StickerLayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StickerLayerView.h; sourceTree = "<group>"; };
+		34217A711FCE9C150006701C /* StickerLayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StickerLayerView.m; sourceTree = "<group>"; };
 		3421EA2B1FC4136600DC5378 /* CustomPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomPickerView.m; sourceTree = "<group>"; };
 		3421EA2C1FC4136600DC5378 /* CustomPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomPickerView.h; sourceTree = "<group>"; };
 		3421EA2E1FC4161300DC5378 /* ColumnsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColumnsView.h; sourceTree = "<group>"; };
@@ -1557,8 +1563,12 @@
 				EBF5D4321FCC59300014D5F0 /* UserHuiYinViewController.h */,
 				EB36AAB01FCD938E009A0FD8 /* UserYouXianViewController.h */,
 				EB36AAB11FCD939E009A0FD8 /* UserYouXianViewController.m */,
-				EB36AAC31FCD9E71009A0FD8 /* UserVideoConfigViewCtrl.m */,
 				EB36AAC51FCD9E7A009A0FD8 /* UserVideoConfigViewCtrl.h */,
+				EB36AAC31FCD9E71009A0FD8 /* UserVideoConfigViewCtrl.m */,
+				34217A6D1FCE98200006701C /* UserVideoConfigView.h */,
+				34217A6E1FCE98200006701C /* UserVideoConfigView.m */,
+				34217A701FCE9C150006701C /* StickerLayerView.h */,
+				34217A711FCE9C150006701C /* StickerLayerView.m */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -1976,6 +1986,7 @@
 				EB36AAB21FCD939E009A0FD8 /* UserYouXianViewController.m in Sources */,
 				04DE1E9A1AD6AEE000D49E2F /* ASIInputStream.m in Sources */,
 				04DE1EAB1AD6AEE000D49E2F /* NSData+GIF.m in Sources */,
+				34217A6F1FCE98200006701C /* UserVideoConfigView.m in Sources */,
 				04DE1E901AD6AEE000D49E2F /* UIImage+ImageEffects.m in Sources */,
 				04DE1EBF1AD6AF7900D49E2F /* User.m in Sources */,
 				04DE1EA01AD6AEE000D49E2F /* WebClient.m in Sources */,
@@ -1985,6 +1996,7 @@
 				04DE1E9F1AD6AEE000D49E2F /* iHttpAdmin.m in Sources */,
 				049ECAC21C8D694400A611D8 /* DataMatrix.mm in Sources */,
 				04DE1EB01AD6AEE000D49E2F /* SDWebImageDownloaderOperation.m in Sources */,
+				34217A721FCE9C160006701C /* StickerLayerView.m in Sources */,
 				EB03F53F1FBDE8FB00865541 /* SettingsViewController.m in Sources */,
 				EB03F54D1FBDEC6000865541 /* UserHomeViewController.m in Sources */,
 				04DE1E951AD6AEE000D49E2F /* ASIDataCompressor.m in Sources */,

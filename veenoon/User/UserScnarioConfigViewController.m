@@ -8,6 +8,7 @@
 
 #import "UserScnarioConfigViewController.h"
 #import "UserAudioConfigViewController.h"
+#import "UserVideoConfigViewCtrl.h"
 
 
 @interface UserScnarioConfigViewController () {
@@ -298,7 +299,9 @@
 }
 
 - (void) videoSysAction:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
+    UserVideoConfigViewCtrl *controller = [[UserVideoConfigViewCtrl alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
+   // [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void) audioSysAction:(id)sender{

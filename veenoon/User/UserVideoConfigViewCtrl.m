@@ -8,33 +8,25 @@
 
 #import "UserVideoConfigViewCtrl.h"
 #import "CustomPickerView.h"
+#import "UserVideoConfigView.h"
 
 @interface UserVideoConfigViewCtrl () {
-    UIImageView *_dvdPlayerView;
-    UIImageView *_diskPlayerView;
-    UIImageView *_desktopPlayerView;
-    UIImageView *_desktopPlayerView2;
-    UIImageView *_remotePlayerView;
-    UIImageView *_cameraPlayerView1;
-    UIImageView *_cameraPlayerView2;
-    UIImageView *_cameraPlayerView3;
-    
-    
-    UIImageView *_pinjiepingView;
-    UIImageView *_touyingjiView;
-    UIImageView *_yejingdianshiView;
-    UIImageView *_yejingdianshiView2;
-    UIImageView *_lubojiView;
-    UIImageView *_yuanchengView;
+   
 }
+@property (nonatomic, strong) NSArray *_inputDevices;
+
 @end
 
 @implementation UserVideoConfigViewCtrl
+@synthesize _inputDevices;
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.view.backgroundColor = RGB(63, 58, 55);
+    
+    
     
     UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
     [self.view addSubview:titleIcon];
@@ -74,15 +66,37 @@
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
-    int leftANdRight = 100;
-    int rowGap = 50;
-    int imageViewHeight = 100;
+   
     
-    int imageViewWidth = (SCREEN_WIDTH - leftANdRight*2 - rowGap*7)/8;
-    int firstImageViewHeight = SCREEN_HEIGHT - 600;
+    self._inputDevices = @[@{@"name":@"DVD播放器",@"image":@"user_video_dvd_n.png",
+                             @"image_sel":@"user_video_dvd_s.png"},
+                           @{@"name":@"硬盘播放器",@"image":@"user_video_disk_n.png",
+                             @"image_sel":@"user_video_disk_s.png"},
+                           @{@"name":@"桌面信息盒",@"image":@"user_video_desk_n.png",
+                             @"image_sel":@"user_video_desk_s.png"},
+                           @{@"name":@"桌面信息盒",@"image":@"user_video_desk_n.png",
+                             @"image_sel":@"user_video_desk_s.png"},
+                           @{@"name":@"远程视讯",@"image":@"user_video_remote_n.png",
+                             @"image_sel":@"user_video_remote_s.png"},
+                           @{@"name":@"摄像机1",@"image":@"user_video_camera_n.png",
+                             @"image_sel":@"user_video_camera_s.png"},
+                           @{@"name":@"摄像机2",@"image":@"user_video_camera_n.png",
+                             @"image_sel":@"user_video_camera_s.png"},
+                           @{@"name":@"摄像机3",@"image":@"user_video_camera_n.png",
+                             @"image_sel":@"user_video_camera_s.png"}];
+
+   
+    UserVideoConfigView *uv = [[UserVideoConfigView alloc]
+                               initWithFrame:CGRectMake(0, 0,
+                                                        SCREEN_WIDTH,
+                                                        SCREEN_HEIGHT-114)];
+    [self.view addSubview:uv];
     
+    uv._inputDatas = self._inputDevices;
+    [uv show];
     
 }
+
 
 - (void) okAction:(id)sender{
     
