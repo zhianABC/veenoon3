@@ -14,11 +14,13 @@
    
 }
 @property (nonatomic, strong) NSArray *_inputDevices;
+@property (nonatomic, strong) NSArray *_outputDevices;
 
 @end
 
 @implementation UserVideoConfigViewCtrl
 @synthesize _inputDevices;
+@synthesize _outputDevices;
 
 
 - (void)viewDidLoad {
@@ -84,6 +86,19 @@
                              @"image_sel":@"user_video_camera_s.png"},
                            @{@"name":@"摄像机3",@"image":@"user_video_camera_n.png",
                              @"image_sel":@"user_video_camera_s.png"}];
+    
+    self._outputDevices = @[@{@"name":@"拼接屏",@"image":@"user_video_pinjieping_n.png",
+                              @"image_sel":@"user_video_pinjieping_s.png"},
+                            @{@"name":@"投影机",@"image":@"user_video_touying_n.png",
+                              @"image_sel":@"user_video_touying_s.png"},
+                            @{@"name":@"液晶电视",@"image":@"user_video_yejing_n.png",
+                              @"image_sel":@"user_video_yejing_s.png"},
+                            @{@"name":@"液晶电视",@"image":@"user_video_yejing_n.png",
+                              @"image_sel":@"user_video_yejing_s.png"},
+                            @{@"name":@"录播机",@"image":@"user_video_lubo_n.png",
+                              @"image_sel":@"user_video_lubo_s.png"},
+                            @{@"name":@"远程视讯",@"image":@"user_video_remote_n.png",
+                              @"image_sel":@"user_video_remote_s.png"}];
 
    
     UserVideoConfigView *uv = [[UserVideoConfigView alloc]
@@ -93,6 +108,7 @@
     [self.view addSubview:uv];
     
     uv._inputDatas = self._inputDevices;
+    uv._outputDatas = self._outputDevices;
     [uv show];
     
 }

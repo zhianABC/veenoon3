@@ -12,7 +12,8 @@
 
 @optional
 - (void) didBeginTouchedStickerLayer:(id)layer;
-- (void) didEndTouchedStickerLayer:(id)layer;
+- (void) didMovedStickerLayer:(id)layer sticker:(id)sticker;
+- (void) didEndTouchedStickerLayer:(id)layer sticker:(id)sticker;
 
 - (void) didAnimationFinishedStickerLayer:(id)layer;
 - (void) didRemoveStickerLayer:(id)layer;
@@ -28,29 +29,29 @@
     UIImageView *_sticker;
     UIImageView *_stickerCopy;
  
-    BOOL isZooming;
     BOOL isMoving;
     
 
     CGPoint pt;
-    
-    BOOL isJumping;
-    
     float center_y;
-    
-    UIButton *closeBtn;
-    
+
     NSDictionary *_element;
     
+    BOOL _isSelected;
 }
 @property (nonatomic, weak) id <StickerLayerViewDelegate> delegate_;
 @property (nonatomic, strong) NSDictionary * _element;
 @property (nonatomic, strong) UIImage * selectedImg;
 @property (nonatomic, strong) UIImage * normalImg;
+@property (nonatomic, strong) UILabel * textLabel;
+@property (nonatomic, assign) BOOL _enableDrag;
+
+@property (nonatomic, assign) BOOL _resetWhenEndDrag;
 
 - (void) selected;
 - (void) unselected;
 
 - (void) setSticker:(NSString*)sticker;
+
 
 @end

@@ -13,6 +13,7 @@
     
 }
 @property (nonatomic, strong) NSArray *_inputDatas;
+@property (nonatomic, strong) NSArray *_outputDatas;
 
 - (void) show;
 

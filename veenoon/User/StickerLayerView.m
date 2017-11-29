@@ -16,7 +16,9 @@
 @synthesize _element;
 @synthesize selectedImg;
 @synthesize normalImg;
-
+@synthesize textLabel;
+@synthesize _enableDrag;
+@synthesize _resetWhenEndDrag;
 
 - (void)dealloc
 {
@@ -29,14 +31,20 @@
     
     _sticker.image = selectedImg;
     _stickerCopy.image = selectedImg;
+
+    textLabel.textColor = [UIColor orangeColor];
     
+    _isSelected = YES;
 
 }
 - (void) unselected{
     
+    _isSelected = NO;
+    
     _sticker.image = normalImg;
     _stickerCopy.image = normalImg;
     
+    textLabel.textColor = SINGAL_COLOR;
     
 }
 
@@ -62,6 +70,16 @@
         [self addSubview:_stickerCopy];
         _stickerCopy.layer.contentsGravity = kCAGravityCenter;
         _stickerCopy.alpha = 0;
+        
+        self.textLabel = [[UILabel alloc]
+                          initWithFrame:CGRectMake(0,
+                                                   frame.size.height-20,
+                                                   frame.size.width, 20)];
+        [self addSubview:textLabel];
+        textLabel.textAlignment = NSTextAlignmentCenter;
+        textLabel.font = [UIFont systemFontOfSize:15];
+        textLabel.textColor = SINGAL_COLOR;
+        
     }
     return self;
 }
@@ -124,7 +142,7 @@
 }
 
 -(void) touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event {
-    isZooming = NO;
+    
     isMoving = NO;
     
     [[self superview] bringSubviewToFront:self];
@@ -133,10 +151,22 @@
         [delegate_ didBeginTouchedStickerLayer:self];
     }
     
-    [self selected];
+    if(!_enableDrag)
+    {
+        if(_isSelected)
+            [self unselected];
+        else
+            [self selected];
+    }
+    else
+        [self selected];
+    
 }
 
 -(void) touchesMoved:(NSSet*)touches withEvent:(UIEvent*)event {
+    
+    if(!_enableDrag)
+        return;
     
     isMoving = YES;
     
@@ -160,7 +190,9 @@
                 _stickerCopy.center = CGPointMake(ncx, ncy);
                 
                 
-                
+                if([delegate_ respondsToSelector:@selector(didMovedStickerLayer:sticker:)]){
+                    [delegate_ didMovedStickerLayer:self sticker:_stickerCopy];
+                }
             }
             
 		}
@@ -170,11 +202,13 @@
 }
 
 -(void) touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event {
-	
-	isZooming = NO;
-	
-    if([delegate_ respondsToSelector:@selector(didEndTouchedStickerLayer:)]){
-        [delegate_ didEndTouchedStickerLayer:_stickerCopy];
+
+    if(!_enableDrag)
+        return;
+    
+    
+    if([delegate_ respondsToSelector:@selector(didEndTouchedStickerLayer:sticker:)]){
+        [delegate_ didEndTouchedStickerLayer:self sticker:_stickerCopy];
     }
     
     if(!isMoving)
@@ -185,12 +219,36 @@
     }
     
     
-    [UIView beginAnimations:nil context:nil];
-    _stickerCopy.center = _sticker.center;
-    [UIView commitAnimations];
- 
+    if(_resetWhenEndDrag)
+    {
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             
+                             _stickerCopy.alpha = 0;
+                             
+                             
+                         } completion:^(BOOL finished) {
+                            
+                             _stickerCopy.center = _sticker.center;
+                             
+                             [self unselected];
+                         }];
+    }
+    else
+    {
+    [UIView animateWithDuration:0.25
+                     animations:^{
+                         
+                         _stickerCopy.center = _sticker.center;
+                         
+                         
+                     } completion:^(BOOL finished) {
+                         _stickerCopy.alpha = 0;
+                         [self unselected];
+                     }];
+    }
     
-    [self unselected];
+   
 }
 
 
