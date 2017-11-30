@@ -342,6 +342,10 @@
 		EBF6A7451FC851E500260FF0 /* audio_player_next_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBF6A7391FC851E500260FF0 /* audio_player_next_n@2x.png */; };
 		EBF6A7481FC861D400260FF0 /* UserWuXianHuaTongViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF6A7471FC861D400260FF0 /* UserWuXianHuaTongViewCtrl.m */; };
 		EBF831E11FD02A260096E6EC /* UserMonitorListViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF831E01FD02A260096E6EC /* UserMonitorListViewCtrl.m */; };
+		EBF831E31FD03A110096E6EC /* UserVideoDVDDiskViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF831E21FD03A110096E6EC /* UserVideoDVDDiskViewCtrl.m */; };
+		EBF831E71FD03E4B0096E6EC /* UserVideoRemoteShiXunViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF831E61FD03E4B0096E6EC /* UserVideoRemoteShiXunViewCtrl.m */; };
+		EBF831E91FD03EC90096E6EC /* UserVideoCameraSettingsViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF831E81FD03EC90096E6EC /* UserVideoCameraSettingsViewCtrl.m */; };
+		EBF831ED1FD03EFA0096E6EC /* UserVideoLuBoJiViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF831EC1FD03EFA0096E6EC /* UserVideoLuBoJiViewCtrl.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -828,6 +832,14 @@
 		EBF6A7471FC861D400260FF0 /* UserWuXianHuaTongViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserWuXianHuaTongViewCtrl.m; sourceTree = "<group>"; };
 		EBF831DF1FD02A150096E6EC /* UserMonitorListViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserMonitorListViewCtrl.h; sourceTree = "<group>"; };
 		EBF831E01FD02A260096E6EC /* UserMonitorListViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserMonitorListViewCtrl.m; sourceTree = "<group>"; };
+		EBF831E21FD03A110096E6EC /* UserVideoDVDDiskViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserVideoDVDDiskViewCtrl.m; sourceTree = "<group>"; };
+		EBF831E41FD03A190096E6EC /* UserVideoDVDDiskViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserVideoDVDDiskViewCtrl.h; sourceTree = "<group>"; };
+		EBF831E51FD03E3B0096E6EC /* UserVideoRemoteShiXunViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserVideoRemoteShiXunViewCtrl.h; sourceTree = "<group>"; };
+		EBF831E61FD03E4B0096E6EC /* UserVideoRemoteShiXunViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserVideoRemoteShiXunViewCtrl.m; sourceTree = "<group>"; };
+		EBF831E81FD03EC90096E6EC /* UserVideoCameraSettingsViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserVideoCameraSettingsViewCtrl.m; sourceTree = "<group>"; };
+		EBF831EA1FD03ED30096E6EC /* UserVideoCameraSettingsViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserVideoCameraSettingsViewCtrl.h; sourceTree = "<group>"; };
+		EBF831EB1FD03EEF0096E6EC /* UserVideoLuBoJiViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserVideoLuBoJiViewCtrl.h; sourceTree = "<group>"; };
+		EBF831EC1FD03EFA0096E6EC /* UserVideoLuBoJiViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserVideoLuBoJiViewCtrl.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1574,6 +1586,14 @@
 				34217A711FCE9C150006701C /* StickerLayerView.m */,
 				EBF831DF1FD02A150096E6EC /* UserMonitorListViewCtrl.h */,
 				EBF831E01FD02A260096E6EC /* UserMonitorListViewCtrl.m */,
+				EBF831E21FD03A110096E6EC /* UserVideoDVDDiskViewCtrl.m */,
+				EBF831E41FD03A190096E6EC /* UserVideoDVDDiskViewCtrl.h */,
+				EBF831E51FD03E3B0096E6EC /* UserVideoRemoteShiXunViewCtrl.h */,
+				EBF831E61FD03E4B0096E6EC /* UserVideoRemoteShiXunViewCtrl.m */,
+				EBF831E81FD03EC90096E6EC /* UserVideoCameraSettingsViewCtrl.m */,
+				EBF831EA1FD03ED30096E6EC /* UserVideoCameraSettingsViewCtrl.h */,
+				EBF831EB1FD03EEF0096E6EC /* UserVideoLuBoJiViewCtrl.h */,
+				EBF831EC1FD03EFA0096E6EC /* UserVideoLuBoJiViewCtrl.m */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -1963,6 +1983,7 @@
 				04D719781DADD3A4002153D7 /* WSUser.m in Sources */,
 				04D9A0EB1DAF83E0008DF2E6 /* AudioPlayer.m in Sources */,
 				04DE1E971AD6AEE000D49E2F /* ASIDownloadCache.m in Sources */,
+				EBF831E31FD03A110096E6EC /* UserVideoDVDDiskViewCtrl.m in Sources */,
 				341F0F471EC2FC500027C800 /* WSCode.m in Sources */,
 				04DE1EAD1AD6AEE000D49E2F /* SDWebImageCompat.m in Sources */,
 				04DE1EAC1AD6AEE000D49E2F /* SDImageCache.m in Sources */,
@@ -1992,6 +2013,7 @@
 				EB36AAB21FCD939E009A0FD8 /* UserYouXianViewController.m in Sources */,
 				04DE1E9A1AD6AEE000D49E2F /* ASIInputStream.m in Sources */,
 				04DE1EAB1AD6AEE000D49E2F /* NSData+GIF.m in Sources */,
+				EBF831ED1FD03EFA0096E6EC /* UserVideoLuBoJiViewCtrl.m in Sources */,
 				34217A6F1FCE98200006701C /* UserVideoConfigView.m in Sources */,
 				04DE1E901AD6AEE000D49E2F /* UIImage+ImageEffects.m in Sources */,
 				04DE1EBF1AD6AF7900D49E2F /* User.m in Sources */,
@@ -2014,10 +2036,12 @@
 				04DE1E8E1AD6AEE000D49E2F /* UIButton+Color.m in Sources */,
 				341671841FBA9765001D33D0 /* SignupViewController.m in Sources */,
 				EB03F5491FBDEB8900865541 /* EnginnerHomeViewController.m in Sources */,
+				EBF831E91FD03EC90096E6EC /* UserVideoCameraSettingsViewCtrl.m in Sources */,
 				EB3685FB1FC07A42009973A3 /* SettingsUserView.m in Sources */,
 				EBF6A7481FC861D400260FF0 /* UserWuXianHuaTongViewCtrl.m in Sources */,
 				341671811FBA974C001D33D0 /* WellcomeViewController.m in Sources */,
 				04DE1E911AD6AEE000D49E2F /* UILabel+ContentSize.m in Sources */,
+				EBF831E71FD03E4B0096E6EC /* UserVideoRemoteShiXunViewCtrl.m in Sources */,
 				0477DC5B1DA9F4BA0077FA52 /* WaitDialog.m in Sources */,
 				EBF6A72C1FC8486000260FF0 /* UserAudioPlayerSettingsViewCtrl.m in Sources */,
 				04DE1E941AD6AEE000D49E2F /* ASIAuthenticationDialog.m in Sources */,

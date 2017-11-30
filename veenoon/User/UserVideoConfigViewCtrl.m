@@ -9,8 +9,12 @@
 #import "UserVideoConfigViewCtrl.h"
 #import "CustomPickerView.h"
 #import "UserVideoConfigView.h"
+#import "UserVideoDVDDiskViewCtrl.h"
+#import "UserVideoCameraSettingsViewCtrl.h"
+#import "UserVideoRemoteShiXunViewCtrl.h"
+#import "UserVideoLuBoJiViewCtrl.h"
 
-@interface UserVideoConfigViewCtrl () {
+@interface UserVideoConfigViewCtrl () <UserVideoConfigViewDelegate> {
    
 }
 @property (nonatomic, strong) NSArray *_inputDevices;
@@ -115,10 +119,34 @@
     
     uv._inputDatas = self._inputDevices;
     uv._outputDatas = self._outputDevices;
+    uv.delegate_ = self;
     [uv show];
     
 }
 
+- (void) didPupConfigView:(StickerLayerView*)sticker {
+    NSDictionary *dic = sticker._element;
+    
+    NSString *deviceName = [dic objectForKey:@"name"];
+    
+    if ([@"DVD播放器" isEqualToString:deviceName]
+            || [@"硬盘播放器" isEqualToString:deviceName]) {
+        UserVideoDVDDiskViewCtrl *ctrl = [[UserVideoDVDDiskViewCtrl alloc] init];
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+    if ([@"远程视讯" isEqualToString:deviceName]) {
+        UserVideoRemoteShiXunViewCtrl *ctrl = [[UserVideoRemoteShiXunViewCtrl alloc] init];
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+    if ([deviceName containsString:@"摄像机"]) {
+        UserVideoCameraSettingsViewCtrl *ctrl = [[UserVideoCameraSettingsViewCtrl alloc] init];
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+    if ([@"录播机" isEqualToString:deviceName]) {
+        UserVideoLuBoJiViewCtrl *ctrl = [[UserVideoLuBoJiViewCtrl alloc] init];
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+}
 
 - (void) okAction:(id)sender{
     

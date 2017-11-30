@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-@interface UserVideoConfigViewCtrl : UIViewController {
+#import "UserVideoConfigView.h"
+
+@interface UserVideoConfigViewCtrl : UIViewController<UserVideoConfigViewDelegate> {
     
 }
 

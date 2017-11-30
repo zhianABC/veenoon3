@@ -25,6 +25,7 @@
 @end
 
 @implementation UserVideoConfigView
+@synthesize delegate_;
 @synthesize _inputDatas;
 @synthesize _outputDatas;
 @synthesize _result;
@@ -74,7 +75,9 @@
         [self addSubview:cell];
         cell.tag = i;
         cell._enableDrag = YES;
+        [cell enableLongPressed];
         cell.delegate_ = self;
+        cell._element = dic;
         NSString *image = [dic objectForKey:@"image"];
         [cell setSticker:image];
         
@@ -101,6 +104,9 @@
         
         StickerLayerView *cell = [[StickerLayerView alloc]
                                   initWithFrame:CGRectMake(x, y, cellWidth, cellHeight)];
+        [cell enableLongPressed];
+        cell.delegate_ = self;
+        cell._element = dic;
         [self addSubview:cell];
         cell.tag = i;
         cell._enableDrag = NO;
@@ -114,6 +120,13 @@
         x+=cellWidth;
         
         [_outputs addObject:cell];
+    }
+    
+}
+
+- (void) longPressed:(StickerLayerView*)sticker {
+    if([delegate_ respondsToSelector:@selector(didPupConfigView:)]){
+        [delegate_ didPupConfigView:sticker];
     }
     
 }

@@ -88,6 +88,24 @@
     return self;
 }
 
+- (void) enableLongPressed {
+    UILongPressGestureRecognizer *longPress0 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed0:)];
+    [self addGestureRecognizer:longPress0];
+}
+
+- (void) longPressed0:(id)sender {
+    
+    UILongPressGestureRecognizer *press = (UILongPressGestureRecognizer *)sender;
+    if (press.state == UIGestureRecognizerStateEnded) {
+        // no need anything here
+        return;
+    } else if (press.state == UIGestureRecognizerStateBegan) {
+        if([delegate_ respondsToSelector:@selector(longPressed:)]){
+            [delegate_ longPressed:self];
+        }
+    }
+}
+
 - (void) removeSelf{
     
     //CGAffineTransform f1 = CGAffineTransformMakeRotation(M_PI);

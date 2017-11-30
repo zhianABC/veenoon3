@@ -20,6 +20,8 @@
 
 - (void) didTappedStickerLayer:(id)layer;
 
+- (void) longPressed:(id)sticker;
+
 @end
 
 
@@ -55,5 +57,6 @@
 
 - (void) setSticker:(NSString*)sticker;
 
+- (void) enableLongPressed;
 
 @end
