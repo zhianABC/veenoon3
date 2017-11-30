@@ -9,6 +9,7 @@
 #import "UserScnarioConfigViewController.h"
 #import "UserAudioConfigViewController.h"
 #import "UserVideoConfigViewCtrl.h"
+#import "UserMonitorListViewCtrl.h"
 
 
 @interface UserScnarioConfigViewController () {
@@ -259,7 +260,8 @@
 }
 
 - (void) monitorSysAction:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
+    UserMonitorListViewCtrl *controller = [[UserMonitorListViewCtrl alloc] init];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void) doorAccessSysAction:(id)sender{

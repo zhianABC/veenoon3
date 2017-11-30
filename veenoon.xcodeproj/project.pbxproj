@@ -341,6 +341,7 @@
 		EBF6A7441FC851E500260FF0 /* audio_player_last_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBF6A7381FC851E400260FF0 /* audio_player_last_n@2x.png */; };
 		EBF6A7451FC851E500260FF0 /* audio_player_next_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBF6A7391FC851E500260FF0 /* audio_player_next_n@2x.png */; };
 		EBF6A7481FC861D400260FF0 /* UserWuXianHuaTongViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF6A7471FC861D400260FF0 /* UserWuXianHuaTongViewCtrl.m */; };
+		EBF831E11FD02A260096E6EC /* UserMonitorListViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EBF831E01FD02A260096E6EC /* UserMonitorListViewCtrl.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -825,6 +826,8 @@
 		EBF6A7391FC851E500260FF0 /* audio_player_next_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio_player_next_n@2x.png"; sourceTree = "<group>"; };
 		EBF6A7461FC861CA00260FF0 /* UserWuXianHuaTongViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserWuXianHuaTongViewCtrl.h; sourceTree = "<group>"; };
 		EBF6A7471FC861D400260FF0 /* UserWuXianHuaTongViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserWuXianHuaTongViewCtrl.m; sourceTree = "<group>"; };
+		EBF831DF1FD02A150096E6EC /* UserMonitorListViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserMonitorListViewCtrl.h; sourceTree = "<group>"; };
+		EBF831E01FD02A260096E6EC /* UserMonitorListViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserMonitorListViewCtrl.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1569,6 +1572,8 @@
 				34217A6E1FCE98200006701C /* UserVideoConfigView.m */,
 				34217A701FCE9C150006701C /* StickerLayerView.h */,
 				34217A711FCE9C150006701C /* StickerLayerView.m */,
+				EBF831DF1FD02A150096E6EC /* UserMonitorListViewCtrl.h */,
+				EBF831E01FD02A260096E6EC /* UserMonitorListViewCtrl.m */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -1930,6 +1935,7 @@
 				04DE1E8F1AD6AEE000D49E2F /* UIImage+Color.m in Sources */,
 				04DE1E961AD6AEE000D49E2F /* ASIDataDecompressor.m in Sources */,
 				049ECAC31C8D694400A611D8 /* QR_Encode.cpp in Sources */,
+				EBF831E11FD02A260096E6EC /* UserMonitorListViewCtrl.m in Sources */,
 				3422A5B81FCC17C500F6D3C2 /* BatteryView.m in Sources */,
 				04DE1EC81AD6B22F00D49E2F /* BaseViewController.m in Sources */,
 				04DE1E891AD6AEE000D49E2F /* IconTextButton.m in Sources */,
