@@ -223,7 +223,7 @@
     }
     
     
-    if(_resetWhenEndDrag)
+    if(!_resetWhenEndDrag)
     {
         [UIView animateWithDuration:0.25
                          animations:^{

@@ -142,8 +142,8 @@
 
 - (void) didEndTouchedStickerLayer:(StickerLayerView*)layer sticker:(UIImageView*)sticker{
     
-    CGPoint pt = [self convertPoint:layer.center
-                           fromView:sticker];
+    CGPoint pt = [self convertPoint:sticker.center
+                           fromView:layer];
     
     
     if(CGRectContainsPoint(_outputFrame, pt))
