@@ -15,12 +15,43 @@
     
     UIButton *_backWorkdBtn;
 }
+@property (nonatomic, strong) NSMutableArray *_cameraArray;
+@property (nonatomic, strong) NSMutableArray *_cameraBtnArray;
 @end
 
 @implementation UserVideoRemoteShiXunViewCtrl
+@synthesize _cameraArray;
+@synthesize _cameraBtnArray;
 
+- (void) initData {
+    if (_cameraArray) {
+        [_cameraArray removeAllObjects];
+    } else {
+        
+        NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"name",
+                                    nil];
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"2", @"name",
+                                    nil];
+        NSMutableDictionary *dic3 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"3", @"name",
+                                    nil];
+        NSMutableDictionary *dic4 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"4", @"name",
+                                    nil];
+        NSMutableDictionary *dic5 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"5", @"name",
+                                     nil];
+        NSMutableDictionary *dic6 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"6", @"name",
+                                     nil];
+        self._cameraArray = [NSMutableArray arrayWithObjects:dic1, dic2, dic3, dic4, dic5, dic6, nil];
+    }
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self initData];
+    
+    if (_cameraBtnArray) {
+        [_cameraBtnArray removeAllObjects];
+    } else {
+        _cameraBtnArray = [[NSMutableArray alloc] init];
+    }
     
     self.view.backgroundColor = RGB(63, 58, 55);
     
@@ -63,7 +94,7 @@
     forControlEvents:UIControlEventTouchUpInside];
     
     int labelHeight = SCREEN_HEIGHT - 700;
-    int leftSpace = 300;
+    int leftSpace = 250;
     UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(leftSpace, labelHeight, 250, 33)];
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
@@ -72,11 +103,12 @@
     titleL.textAlignment=NSTextAlignmentCenter;
     titleL.text = @"拨号";
     
-    UILabel* titleL2 = [[UILabel alloc] initWithFrame:CGRectMake(leftSpace+250+250, labelHeight, 250, 33)];
+    UILabel* titleL2 = [[UILabel alloc] initWithFrame:CGRectMake(leftSpace+150+250, labelHeight, 255, 33)];
     titleL2.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL2];
     titleL2.font = [UIFont boldSystemFontOfSize:16];
     titleL2.textColor  = [UIColor whiteColor];
+    titleL2.textAlignment=NSTextAlignmentCenter;
     titleL2.text = @"摄像机";
     
     UIImageView *textBGView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"remote_video_filed_bg.png"]];
@@ -367,6 +399,147 @@
     [self.view addSubview:anniuBtn];
     [anniuBtn addTarget:self action:@selector(anniuAction:)
       forControlEvents:UIControlEventTouchUpInside];
+    
+    int cellHeight = 60;
+    int space = 5;
+    int leftRight = leftSpace+150+250;
+    
+    UIScrollView *scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(leftRight, labelHeight+40, 255, 70)];
+    scroolView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:scroolView];
+    int rowNumber = [_cameraArray count] / 4 + 1;
+    int sizeHeight = rowNumber * (60 + 5);
+    scroolView.contentSize = CGSizeMake(255, sizeHeight);
+    int index = 0;
+    for (id dic in _cameraArray) {
+        int row = index/4;
+        int col = index%4;
+        int startX = col*cellHeight+col*space;
+        int startY = row*cellHeight+space*row;
+        
+        UIButton *cameraBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
+        cameraBtn.frame = CGRectMake(startX, startY, cellHeight, cellHeight);
+        cameraBtn.layer.cornerRadius = 5;
+        cameraBtn.layer.borderWidth = 2;
+        cameraBtn.tag = index;
+        cameraBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+        cameraBtn.clipsToBounds = YES;
+        [cameraBtn setTitle:[dic objectForKey:@"name"] forState:UIControlStateNormal];
+        [cameraBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [cameraBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+        cameraBtn.titleLabel.font = [UIFont boldSystemFontOfSize:20];
+        [scroolView addSubview:cameraBtn];
+        [cameraBtn addTarget:self
+                      action:@selector(cameraBtnAction:)
+            forControlEvents:UIControlEventTouchUpInside];
+        [_cameraBtnArray addObject:cameraBtn];
+        
+        index++;
+    }
+    
+    int playerLeft = 425;
+    int playerHeight = 60;
+    
+    UIButton *lastVideoUpBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
+    lastVideoUpBtn.frame = CGRectMake(230+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
+    lastVideoUpBtn.layer.cornerRadius = 5;
+    lastVideoUpBtn.layer.borderWidth = 2;
+    lastVideoUpBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    lastVideoUpBtn.clipsToBounds = YES;
+    [lastVideoUpBtn setImage:[UIImage imageNamed:@"remote_video_left.png"] forState:UIControlStateNormal];
+    [lastVideoUpBtn setImage:[UIImage imageNamed:@"remote_video_left.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:lastVideoUpBtn];
+    
+    [lastVideoUpBtn addTarget:self
+                       action:@selector(lastVideoUpBtnAction:)
+             forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *okPlayerBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
+    okPlayerBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
+    okPlayerBtn.layer.cornerRadius = 5;
+    okPlayerBtn.layer.borderWidth = 2;
+    okPlayerBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    okPlayerBtn.clipsToBounds = YES;
+    [okPlayerBtn setTitle:@"ok" forState:UIControlStateNormal];
+    [okPlayerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [okPlayerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+    okPlayerBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [self.view addSubview:okPlayerBtn];
+    
+    [lastVideoUpBtn addTarget:self action:@selector(okPlayerAction:)
+             forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *volumnUpBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
+    volumnUpBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-585+playerHeight, 80, 80);
+    volumnUpBtn.layer.cornerRadius = 5;
+    volumnUpBtn.layer.borderWidth = 2;
+    volumnUpBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    volumnUpBtn.clipsToBounds = YES;
+    [volumnUpBtn setImage:[UIImage imageNamed:@"remote_video_up.png"] forState:UIControlStateNormal];
+    [volumnUpBtn setImage:[UIImage imageNamed:@"remote_video_up.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:volumnUpBtn];
+    
+    [volumnUpBtn addTarget:self
+                    action:@selector(volumnUpAction:)
+          forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *nextPlayBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
+    nextPlayBtn.frame = CGRectMake(400+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
+    nextPlayBtn.layer.cornerRadius = 5;
+    nextPlayBtn.layer.borderWidth = 2;
+    nextPlayBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    nextPlayBtn.clipsToBounds = YES;
+    [nextPlayBtn setImage:[UIImage imageNamed:@"remote_video_right.png"] forState:UIControlStateNormal];
+    [nextPlayBtn setImage:[UIImage imageNamed:@"remote_video_right.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:nextPlayBtn];
+    
+    [nextPlayBtn addTarget:self
+                    action:@selector(nextPlayBtnAction:)
+          forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *volumnDownBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
+    volumnDownBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-415+playerHeight, 80, 80);
+    volumnDownBtn.layer.cornerRadius = 5;
+    volumnDownBtn.layer.borderWidth = 2;
+    volumnDownBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    volumnDownBtn.clipsToBounds = YES;
+    [volumnDownBtn setImage:[UIImage imageNamed:@"remote_video_down.png"] forState:UIControlStateNormal];
+    [volumnDownBtn setImage:[UIImage imageNamed:@"remote_video_down.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:volumnDownBtn];
+    
+    [volumnDownBtn addTarget:self
+                      action:@selector(volumnDownAction:)
+            forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void) nextPlayBtnAction:(id)sender{
+    
+}
+- (void) volumnDownAction:(id)sender{
+    
+}
+- (void) volumnUpAction:(id)sender{
+    
+}
+- (void) okPlayerAction:(id)sender{
+    
+}
+
+- (void) lastVideoUpBtnAction:(id)sender{
+    
+}
+- (void) cameraBtnAction:(id) sender {
+    UIButton *btn = (UIButton*) sender;
+    int tag = btn.tag;
+    btn.selected = YES;
+    btn.highlighted = YES;
+    for (UIButton *button in self._cameraBtnArray) {
+        if (button.tag == tag) {
+            continue;
+        }
+        button.selected = NO;
+        button.highlighted = NO;
+    }
 }
 - (void) homeAction:(id)sender{
     
