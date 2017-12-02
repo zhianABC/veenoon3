@@ -11,7 +11,7 @@
 #import "UserVideoConfigViewCtrl.h"
 #import "UserMonitorListViewCtrl.h"
 #import "UserLightConfigViewCtrl.h"
-
+#import "UserElectronicAutoViewCtrl.h"
 
 @interface UserScnarioConfigViewController () {
     UIButton *_audioSysBtn;
@@ -290,7 +290,8 @@
 }
 
 - (void) electricSysAction:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
+    UserElectronicAutoViewCtrl *ctrl = [[UserElectronicAutoViewCtrl alloc] init];
+    [self.navigationController pushViewController:ctrl animated:YES];
 }
 
 - (void) airConditionSysAction:(id)sender{
