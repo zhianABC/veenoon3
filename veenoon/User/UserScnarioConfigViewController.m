@@ -10,6 +10,7 @@
 #import "UserAudioConfigViewController.h"
 #import "UserVideoConfigViewCtrl.h"
 #import "UserMonitorListViewCtrl.h"
+#import "UserLightConfigViewCtrl.h"
 
 
 @interface UserScnarioConfigViewController () {
@@ -297,13 +298,13 @@
 }
 
 - (void) lightSysAction:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
+    UserLightConfigViewCtrl *ctrl = [[UserLightConfigViewCtrl alloc] init];
+    [self.navigationController pushViewController:ctrl animated:YES];
 }
 
 - (void) videoSysAction:(id)sender{
     UserVideoConfigViewCtrl *controller = [[UserVideoConfigViewCtrl alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
-   // [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void) audioSysAction:(id)sender{

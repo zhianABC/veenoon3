@@ -97,7 +97,7 @@
     _sdPlayersBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     [_sdPlayersBtn setTitleEdgeInsets:UIEdgeInsetsMake(_sdPlayersBtn.imageView.frame.size.height+10,-80,-20,40)];
     [_sdPlayersBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_sdPlayersBtn.titleLabel.bounds.size.height, 0)];
-    [_sdPlayersBtn addTarget:self action:@selector(sdPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_sdPlayersBtn addTarget:self action:@selector(houpaibideng1Action:) forControlEvents:UIControlEventTouchUpInside];
     UILongPressGestureRecognizer *longPress1 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed1:)];
     [_sdPlayersBtn addGestureRecognizer:longPress1];
     [self.view addSubview:_sdPlayersBtn];
@@ -124,7 +124,7 @@
     _usbPlayersBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     [_usbPlayersBtn setTitleEdgeInsets:UIEdgeInsetsMake(_usbPlayersBtn.imageView.frame.size.height+10,-90,-20,25)];
     [_usbPlayersBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_usbPlayersBtn.titleLabel.bounds.size.height, 0)];
-    [_usbPlayersBtn addTarget:self action:@selector(usbPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_usbPlayersBtn addTarget:self action:@selector(houpaibideng2Action:) forControlEvents:UIControlEventTouchUpInside];
     UILongPressGestureRecognizer *longPress2 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed2:)];
     [_usbPlayersBtn addGestureRecognizer:longPress2];
     [self.view addSubview:_usbPlayersBtn];
@@ -151,7 +151,7 @@
     _wuxianPlayersBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     [_wuxianPlayersBtn setTitleEdgeInsets:UIEdgeInsetsMake(_wuxianPlayersBtn.imageView.frame.size.height+10,-90,-20,25)];
     [_wuxianPlayersBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_wuxianPlayersBtn.titleLabel.bounds.size.height, 0)];
-    [_wuxianPlayersBtn addTarget:self action:@selector(wuxianPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_wuxianPlayersBtn addTarget:self action:@selector(dingdengAction:) forControlEvents:UIControlEventTouchUpInside];
     UILongPressGestureRecognizer *longPress3 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed3:)];
     [_wuxianPlayersBtn addGestureRecognizer:longPress3];
     [self.view addSubview:_wuxianPlayersBtn];
@@ -178,7 +178,7 @@
     _hunyinPlayersBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     [_hunyinPlayersBtn setTitleEdgeInsets:UIEdgeInsetsMake(_hunyinPlayersBtn.imageView.frame.size.height+10,-80,-20,30)];
     [_hunyinPlayersBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_hunyinPlayersBtn.titleLabel.bounds.size.height, 0)];
-    [_hunyinPlayersBtn addTarget:self action:@selector(hunyinPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_hunyinPlayersBtn addTarget:self action:@selector(xiaoshedengAction:) forControlEvents:UIControlEventTouchUpInside];
     UILongPressGestureRecognizer *longPress4 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed4:)];
     [_hunyinPlayersBtn addGestureRecognizer:longPress4];
     [self.view addSubview:_hunyinPlayersBtn];
@@ -205,7 +205,7 @@
     _youxianPlayer1Btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     [_youxianPlayer1Btn setTitleEdgeInsets:UIEdgeInsetsMake(_youxianPlayer1Btn.imageView.frame.size.height+10,-90,-20,20)];
     [_youxianPlayer1Btn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_youxianPlayer1Btn.titleLabel.bounds.size.height, 0)];
-    [_youxianPlayer1Btn addTarget:self action:@selector(youxianPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_youxianPlayer1Btn addTarget:self action:@selector(bidengAction:) forControlEvents:UIControlEventTouchUpInside];
     UILongPressGestureRecognizer *longPress5 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed5:)];
     [_youxianPlayer1Btn addGestureRecognizer:longPress5];
     [self.view addSubview:_youxianPlayer1Btn];
@@ -232,7 +232,7 @@
     _youxianPlayer2Btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     [_youxianPlayer2Btn setTitleEdgeInsets:UIEdgeInsetsMake(_youxianPlayer2Btn.imageView.frame.size.height+10,-90,-20,20)];
     [_youxianPlayer2Btn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_youxianPlayer2Btn.titleLabel.bounds.size.height, 0)];
-    [_youxianPlayer2Btn addTarget:self action:@selector(youxianPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_youxianPlayer2Btn addTarget:self action:@selector(bidengAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_youxianPlayer2Btn];
     
     _youxianPlayerSlider2 = [[JSlideView alloc]
@@ -257,7 +257,7 @@
     _youxianPlayer3Btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     [_youxianPlayer3Btn setTitleEdgeInsets:UIEdgeInsetsMake(_youxianPlayer3Btn.imageView.frame.size.height+10,-90,-20,20)];
     [_youxianPlayer3Btn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_youxianPlayer3Btn.titleLabel.bounds.size.height, 0)];
-    [_youxianPlayer3Btn addTarget:self action:@selector(wuSysxianPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_youxianPlayer3Btn addTarget:self action:@selector(tongdengAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_youxianPlayer3Btn];
     
     _wuxianSysPlayerSlider = [[JSlideView alloc]
