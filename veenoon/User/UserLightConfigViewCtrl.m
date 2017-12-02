@@ -91,7 +91,7 @@
     _backBiDengBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     [_backBiDengBtn setTitleEdgeInsets:UIEdgeInsetsMake(_backBiDengBtn.imageView.frame.size.height+10,-80,-20,40)];
     [_backBiDengBtn setImageEdgeInsets:UIEdgeInsetsMake(-15,0.0,_backBiDengBtn.titleLabel.bounds.size.height, 0)];
-    [_backBiDengBtn addTarget:self action:@selector(houpaibideng1Action:) forControlEvents:UIControlEventTouchUpInside];
+    [_backBiDengBtn addTarget:self action:@selector(houpaibidengAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_backBiDengBtn];
     
     _houpaidengdai1Slider = [[JSlideView alloc]
@@ -131,7 +131,7 @@
     [_houpaidengdai2Slider resetScale];
     _houpaidengdai2Slider.center = CGPointMake(sliderLeftRight+rowGap*2, sliderHeight);
     
-    _dingdengBtn = _backBiDengBtn = [UIButton buttonWithColor:nil selColor:nil];
+    _dingdengBtn = [UIButton buttonWithColor:nil selColor:nil];
     _dingdengBtn.frame = CGRectMake(leftRight+rowGap*3+10, height, width, width);
     [_dingdengBtn setImage:[UIImage imageNamed:@"user_light_bg_n.png"] forState:UIControlStateNormal];
     [_dingdengBtn setImage:[UIImage imageNamed:@"user_light_bg_s.png"] forState:UIControlStateHighlighted];
@@ -156,7 +156,7 @@
     [_dingdengSlider resetScale];
     _dingdengSlider.center = CGPointMake(sliderLeftRight+rowGap*3, sliderHeight);
     
-    _xiaoshedengBtn = _backBiDengBtn = [UIButton buttonWithColor:nil selColor:nil];
+    _xiaoshedengBtn = [UIButton buttonWithColor:nil selColor:nil];
     _xiaoshedengBtn.frame = CGRectMake(leftRight+rowGap*4, height, width, width);
     [_xiaoshedengBtn setImage:[UIImage imageNamed:@"user_light_bg_n.png"] forState:UIControlStateNormal];
     [_xiaoshedengBtn setImage:[UIImage imageNamed:@"user_light_bg_s.png"] forState:UIControlStateHighlighted];
@@ -206,7 +206,7 @@
     [_bidengSlider resetScale];
     _bidengSlider.center = CGPointMake(sliderLeftRight+rowGap*5, sliderHeight);
     
-    _tongdengBtn = _backBiDengBtn = [UIButton buttonWithColor:nil selColor:nil];
+    _tongdengBtn = [UIButton buttonWithColor:nil selColor:nil];
     _tongdengBtn.frame = CGRectMake(leftRight+rowGap*6, height, width, width);
     [_tongdengBtn setImage:[UIImage imageNamed:@"user_light_bg_n.png"] forState:UIControlStateNormal];
     [_tongdengBtn setImage:[UIImage imageNamed:@"user_light_bg_s.png"] forState:UIControlStateHighlighted];
@@ -313,14 +313,14 @@
     [_tongdengBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
 }
 
-- (void) houpaibideng1Action:(id)sender{
+- (void) houpaibidengAction:(id)sender{
     [_backBiDengBtn setImage:[UIImage imageNamed:@"user_light_bg_s.png"] forState:UIControlStateNormal];
     [_houpaidengdai2Btn setImage:[UIImage imageNamed:@"user_light_bg_n.png"] forState:UIControlStateNormal];
     [_dingdengBtn setImage:[UIImage imageNamed:@"user_light_bg_n.png"] forState:UIControlStateNormal];
     [_xiaoshedengBtn setImage:[UIImage imageNamed:@"user_light_bg_n.png"] forState:UIControlStateNormal];
     [_bidengBtn setImage:[UIImage imageNamed:@"user_light_bg_n.png"] forState:UIControlStateNormal];
     [_tongdengBtn setImage:[UIImage imageNamed:@"user_light_bg_n.png"] forState:UIControlStateNormal];
-
+    
     [_backBiDengBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
     [_houpaidengdai2Btn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
     [_dingdengBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
