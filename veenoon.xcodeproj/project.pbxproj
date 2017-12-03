@@ -208,6 +208,15 @@
 		EB09C49D1FD3744000776540 /* user_electronic_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB09C49A1FD3743F00776540 /* user_electronic_down@2x.png */; };
 		EB09C49E1FD3744000776540 /* user_electronic_play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB09C49B1FD3744000776540 /* user_electronic_play@2x.png */; };
 		EB09C49F1FD3744000776540 /* user_electronic_up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB09C49C1FD3744000776540 /* user_electronic_up@2x.png */; };
+		EB09C4A21FD3A00200776540 /* UserAirConditionViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB09C4A11FD3A00200776540 /* UserAirConditionViewCtrl.m */; };
+		EB09C4A51FD3A6DF00776540 /* user_aircondition_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB09C4A31FD3A6DE00776540 /* user_aircondition_n@2x.png */; };
+		EB09C4A61FD3A6DF00776540 /* user_aircondition_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB09C4A41FD3A6DF00776540 /* user_aircondition_s@2x.png */; };
+		EB09C4A81FD3AA9200776540 /* user_aircon_cold_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB09C4A71FD3AA9200776540 /* user_aircon_cold_n@2x.png */; };
+		EB09C4AA1FD3AB0500776540 /* user_aircon_hot_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB09C4A91FD3AB0400776540 /* user_aircon_hot_n@2x.png */; };
+		EB09C4AC1FD3ABAD00776540 /* user_aircon_wind_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB09C4AB1FD3ABAC00776540 /* user_aircon_wind_n@2x.png */; };
+		EB09C4AE1FD3AC2700776540 /* user_aircon_fire_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB09C4AD1FD3AC2700776540 /* user_aircon_fire_n@2x.png */; };
+		EB09C4B11FD3B27200776540 /* MapMarkerLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = EB09C4B01FD3B27200776540 /* MapMarkerLayer.m */; };
+		EB09C4B31FD3C6D200776540 /* user_airecon_wendu_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB09C4B21FD3C6D200776540 /* user_airecon_wendu_n@2x.png */; };
 		EB1A045C1FC71372007CC1F2 /* user_config_back_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1A045A1FC71372007CC1F2 /* user_config_back_n@2x.png */; };
 		EB1A045D1FC71372007CC1F2 /* user_config_back_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1A045B1FC71372007CC1F2 /* user_config_back_s@2x.png */; };
 		EB1A04601FC7156C007CC1F2 /* UserAudioConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1A045F1FC7156C007CC1F2 /* UserAudioConfigViewController.m */; };
@@ -299,6 +308,8 @@
 		EB36AAE71FCDA432009A0FD8 /* user_video_disk_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB36AAD51FCDA431009A0FD8 /* user_video_disk_s@2x.png */; };
 		EB36AAE81FCDA432009A0FD8 /* user_video_lubo_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB36AAD61FCDA432009A0FD8 /* user_video_lubo_n@2x.png */; };
 		EB36AAE91FCDA432009A0FD8 /* user_video_lubo_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB36AAD71FCDA432009A0FD8 /* user_video_lubo_s@2x.png */; };
+		EB5CF03F1FD3DC92007958C9 /* UserNewWindViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5CF03E1FD3DC92007958C9 /* UserNewWindViewCtrl.m */; };
+		EB5CF0411FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5CF0401FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m */; };
 		EB5D91FC1FBB2F78004ED38D /* login_right_arraw@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB5D91FB1FBB2F77004ED38D /* login_right_arraw@2x.png */; };
 		EBDF1BEC1FC5A2D000A756EA /* user_meeting_room_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1BEB1FC5A2D000A756EA /* user_meeting_room_1@2x.png */; };
 		EBDF1BF21FC5A9A200A756EA /* user_meeting_room_6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1BED1FC5A9A100A756EA /* user_meeting_room_6@2x.png */; };
@@ -728,6 +739,17 @@
 		EB09C49A1FD3743F00776540 /* user_electronic_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_electronic_down@2x.png"; sourceTree = "<group>"; };
 		EB09C49B1FD3744000776540 /* user_electronic_play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_electronic_play@2x.png"; sourceTree = "<group>"; };
 		EB09C49C1FD3744000776540 /* user_electronic_up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_electronic_up@2x.png"; sourceTree = "<group>"; };
+		EB09C4A01FD39FF400776540 /* UserAirConditionViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserAirConditionViewCtrl.h; sourceTree = "<group>"; };
+		EB09C4A11FD3A00200776540 /* UserAirConditionViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserAirConditionViewCtrl.m; sourceTree = "<group>"; };
+		EB09C4A31FD3A6DE00776540 /* user_aircondition_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_aircondition_n@2x.png"; sourceTree = "<group>"; };
+		EB09C4A41FD3A6DF00776540 /* user_aircondition_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_aircondition_s@2x.png"; sourceTree = "<group>"; };
+		EB09C4A71FD3AA9200776540 /* user_aircon_cold_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_aircon_cold_n@2x.png"; sourceTree = "<group>"; };
+		EB09C4A91FD3AB0400776540 /* user_aircon_hot_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_aircon_hot_n@2x.png"; sourceTree = "<group>"; };
+		EB09C4AB1FD3ABAC00776540 /* user_aircon_wind_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_aircon_wind_n@2x.png"; sourceTree = "<group>"; };
+		EB09C4AD1FD3AC2700776540 /* user_aircon_fire_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_aircon_fire_n@2x.png"; sourceTree = "<group>"; };
+		EB09C4AF1FD3B27200776540 /* MapMarkerLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapMarkerLayer.h; sourceTree = "<group>"; };
+		EB09C4B01FD3B27200776540 /* MapMarkerLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapMarkerLayer.m; sourceTree = "<group>"; };
+		EB09C4B21FD3C6D200776540 /* user_airecon_wendu_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_airecon_wendu_n@2x.png"; sourceTree = "<group>"; };
 		EB1A045A1FC71372007CC1F2 /* user_config_back_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_config_back_n@2x.png"; sourceTree = "<group>"; };
 		EB1A045B1FC71372007CC1F2 /* user_config_back_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_config_back_s@2x.png"; sourceTree = "<group>"; };
 		EB1A045E1FC71564007CC1F2 /* UserAudioConfigViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserAudioConfigViewController.h; sourceTree = "<group>"; };
@@ -825,6 +847,10 @@
 		EB36AAD51FCDA431009A0FD8 /* user_video_disk_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_video_disk_s@2x.png"; sourceTree = "<group>"; };
 		EB36AAD61FCDA432009A0FD8 /* user_video_lubo_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_video_lubo_n@2x.png"; sourceTree = "<group>"; };
 		EB36AAD71FCDA432009A0FD8 /* user_video_lubo_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_video_lubo_s@2x.png"; sourceTree = "<group>"; };
+		EB5CF03D1FD3DC80007958C9 /* UserNewWindViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserNewWindViewCtrl.h; sourceTree = "<group>"; };
+		EB5CF03E1FD3DC92007958C9 /* UserNewWindViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserNewWindViewCtrl.m; sourceTree = "<group>"; };
+		EB5CF0401FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserInfoCollectViewCtrl.m; sourceTree = "<group>"; };
+		EB5CF0421FD3DDEE007958C9 /* UserInfoCollectViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserInfoCollectViewCtrl.h; sourceTree = "<group>"; };
 		EB5D91FB1FBB2F77004ED38D /* login_right_arraw@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login_right_arraw@2x.png"; sourceTree = "<group>"; };
 		EBDF1BEB1FC5A2D000A756EA /* user_meeting_room_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_meeting_room_1@2x.png"; sourceTree = "<group>"; };
 		EBDF1BED1FC5A9A100A756EA /* user_meeting_room_6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_meeting_room_6@2x.png"; sourceTree = "<group>"; };
@@ -1381,6 +1407,13 @@
 		04DE1ECB1AD6B3BA00D49E2F /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
+				EB09C4B21FD3C6D200776540 /* user_airecon_wendu_n@2x.png */,
+				EB09C4AD1FD3AC2700776540 /* user_aircon_fire_n@2x.png */,
+				EB09C4AB1FD3ABAC00776540 /* user_aircon_wind_n@2x.png */,
+				EB09C4A91FD3AB0400776540 /* user_aircon_hot_n@2x.png */,
+				EB09C4A71FD3AA9200776540 /* user_aircon_cold_n@2x.png */,
+				EB09C4A31FD3A6DE00776540 /* user_aircondition_n@2x.png */,
+				EB09C4A41FD3A6DF00776540 /* user_aircondition_s@2x.png */,
 				EB09C49A1FD3743F00776540 /* user_electronic_down@2x.png */,
 				EB09C49B1FD3744000776540 /* user_electronic_play@2x.png */,
 				EB09C49C1FD3744000776540 /* user_electronic_up@2x.png */,
@@ -1721,6 +1754,12 @@
 				EB09C47D1FD25B4E00776540 /* UserLightConfigViewCtrl.h */,
 				EB09C4831FD2A63E00776540 /* UserElectronicAutoViewCtrl.h */,
 				EB09C4841FD2A64A00776540 /* UserElectronicAutoViewCtrl.m */,
+				EB09C4A01FD39FF400776540 /* UserAirConditionViewCtrl.h */,
+				EB09C4A11FD3A00200776540 /* UserAirConditionViewCtrl.m */,
+				EB5CF03D1FD3DC80007958C9 /* UserNewWindViewCtrl.h */,
+				EB5CF03E1FD3DC92007958C9 /* UserNewWindViewCtrl.m */,
+				EB5CF0401FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m */,
+				EB5CF0421FD3DDEE007958C9 /* UserInfoCollectViewCtrl.h */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -1728,6 +1767,8 @@
 		EBEA7C1D1FBCAF260028F0E8 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				EB09C4AF1FD3B27200776540 /* MapMarkerLayer.h */,
+				EB09C4B01FD3B27200776540 /* MapMarkerLayer.m */,
 				3422A5B91FCC1B1000F6D3C2 /* gray_slide_bg@2x.png */,
 				3422A5BA1FCC1B1100F6D3C2 /* light_slide_bg@2x.png */,
 				34615F061FC9BD7B002DFCE0 /* jslide_bk@2x.png */,
@@ -1834,6 +1875,7 @@
 			files = (
 				EBDF1BF51FC5A9A200A756EA /* user_meeting_room_4@2x.png in Resources */,
 				EB1A04701FC71EEC007CC1F2 /* huiyinhuiyi_player_n@2x.png in Resources */,
+				EB09C4AA1FD3AB0500776540 /* user_aircon_hot_n@2x.png in Resources */,
 				EBDF1C141FC5C6C900A756EA /* guest_reception_s@2x.png in Resources */,
 				EBF5D4351FCC5CB50014D5F0 /* yuyinjili_n@2x.png in Resources */,
 				047934581DB0A4630066BABC /* camera.png in Resources */,
@@ -1931,6 +1973,7 @@
 				EB23AE961FD186C000D1570F /* remote_video_filed_bg@2x.png in Resources */,
 				04C4B1191AF904FB003FD52B /* Icon@2x.png in Resources */,
 				34615F0D1FC9BEC7002DFCE0 /* v_slider_bg_light@2x.png in Resources */,
+				EB09C4AE1FD3AC2700776540 /* user_aircon_fire_n@2x.png in Resources */,
 				EBF6A73E1FC851E500260FF0 /* audio_layer_next_n@2x.png in Resources */,
 				049ECA751C8D4B8A00A611D8 /* zbar-samples.png in Resources */,
 				049BA6031AF7693200F17584 /* rank_icon@2x.png in Resources */,
@@ -1948,6 +1991,7 @@
 				341F0F441EC2E01D0027C800 /* warning.mp3 in Resources */,
 				EBDF1C031FC5C69F00A756EA /* close_system_n@2x.png in Resources */,
 				049ECA881C8D52A100A611D8 /* iconfont-llalbumflashon@2x.png in Resources */,
+				EB09C4B31FD3C6D200776540 /* user_airecon_wendu_n@2x.png in Resources */,
 				EBDF1C161FC5C6C900A756EA /* envirement_control_s@2x.png in Resources */,
 				3416718C1FBA9BD0001D33D0 /* wellcome@2x.png in Resources */,
 				049BA5FB1AF7612600F17584 /* time_icon@2x.png in Resources */,
@@ -1990,6 +2034,7 @@
 				EBDF1C151FC5C6C900A756EA /* envirement_control_n@2x.png in Resources */,
 				EB36AADF1FCDA432009A0FD8 /* user_video_camera_n@2x.png in Resources */,
 				04DE1FAF1AD6B3BB00D49E2F /* jishucanshu_1@2x.png in Resources */,
+				EB09C4A61FD3A6DF00776540 /* user_aircondition_s@2x.png in Resources */,
 				EB23AEB01FD1972400D1570F /* luboji_bofang_s@2x.png in Resources */,
 				EBF6A73B1FC851E500260FF0 /* audio_player_title_s@2x.png in Resources */,
 				EBDF1C0E1FC5C6C900A756EA /* envirement_light_n@2x.png in Resources */,
@@ -2010,6 +2055,7 @@
 				EBDF1C021FC5C69F00A756EA /* close_system_s@2x.png in Resources */,
 				EB2E70771FC1B5B4009C477C /* settings_view_1@2x.png in Resources */,
 				EB3685F61FC0799A009973A3 /* settings_view_s@2x.png in Resources */,
+				EB09C4AC1FD3ABAD00776540 /* user_aircon_wind_n@2x.png in Resources */,
 				04D7198C1DADFD70002153D7 /* check_ok@2x.png in Resources */,
 				EB23AEAF1FD1972400D1570F /* luboji_luzhi_n@2x.png in Resources */,
 				EBDF1C131FC5C6C900A756EA /* user_training_n@2x.png in Resources */,
@@ -2031,11 +2077,13 @@
 				046D2F041DA90AD9006C6123 /* expo_logo@2x.png in Resources */,
 				EB36AABB1FCD952B009A0FD8 /* luntimoshi_n@2x.png in Resources */,
 				EBF5D43D1FCC601B0014D5F0 /* fayanrenshu_s@2x.png in Resources */,
+				EB09C4A51FD3A6DF00776540 /* user_aircondition_n@2x.png in Resources */,
 				EBDF1C391FC5D5CF00A756EA /* floor_warm_n@2x.png in Resources */,
 				04DE1F6A1AD6B3BB00D49E2F /* background@2x.png in Resources */,
 				EBDF1C431FC5D5CF00A756EA /* light_sys_s@2x.png in Resources */,
 				EBF6A73F1FC851E500260FF0 /* audio_player_minus_n@2x.png in Resources */,
 				EB3685F31FC0799A009973A3 /* settings_user_n@2x.png in Resources */,
+				EB09C4A81FD3AA9200776540 /* user_aircon_cold_n@2x.png in Resources */,
 				EBF831F11FD04BC40096E6EC /* user_video_play_up@2x.png in Resources */,
 				EBF5D42B1FCC35A90014D5F0 /* user_botom_Line@2x.png in Resources */,
 				04DE1F991AD6B3BB00D49E2F /* delete@2x.png in Resources */,
@@ -2150,13 +2198,16 @@
 				04D719781DADD3A4002153D7 /* WSUser.m in Sources */,
 				04D9A0EB1DAF83E0008DF2E6 /* AudioPlayer.m in Sources */,
 				04DE1E971AD6AEE000D49E2F /* ASIDownloadCache.m in Sources */,
+				EB09C4B11FD3B27200776540 /* MapMarkerLayer.m in Sources */,
 				EBF831E31FD03A110096E6EC /* UserVideoDVDDiskViewCtrl.m in Sources */,
+				EB09C4A21FD3A00200776540 /* UserAirConditionViewCtrl.m in Sources */,
 				341F0F471EC2FC500027C800 /* WSCode.m in Sources */,
 				04DE1EAD1AD6AEE000D49E2F /* SDWebImageCompat.m in Sources */,
 				04DE1EAC1AD6AEE000D49E2F /* SDImageCache.m in Sources */,
 				EBDF1BFF1FC5BA0900A756EA /* UserMettingRoomConfig.m in Sources */,
 				04D27A2A1AF8470100305E39 /* SelDataViewController.m in Sources */,
 				EB09C47C1FD25B4300776540 /* UserLightConfigViewCtrl.m in Sources */,
+				EB5CF0411FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m in Sources */,
 				04D719881DADE7D4002153D7 /* ActivityViewController.m in Sources */,
 				04DE1E8A1AD6AEE000D49E2F /* MaskRender.m in Sources */,
 				04DE1EB21AD6AEE000D49E2F /* SDWebImagePrefetcher.m in Sources */,
@@ -2211,6 +2262,7 @@
 				04DE1E911AD6AEE000D49E2F /* UILabel+ContentSize.m in Sources */,
 				EBF831E71FD03E4B0096E6EC /* UserVideoRemoteShiXunViewCtrl.m in Sources */,
 				0477DC5B1DA9F4BA0077FA52 /* WaitDialog.m in Sources */,
+				EB5CF03F1FD3DC92007958C9 /* UserNewWindViewCtrl.m in Sources */,
 				EBF6A72C1FC8486000260FF0 /* UserAudioPlayerSettingsViewCtrl.m in Sources */,
 				04DE1E941AD6AEE000D49E2F /* ASIAuthenticationDialog.m in Sources */,
 				049ECAC51C8D694400A611D8 /* QREncoder.mm in Sources */,

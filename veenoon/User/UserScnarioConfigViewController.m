@@ -12,6 +12,8 @@
 #import "UserMonitorListViewCtrl.h"
 #import "UserLightConfigViewCtrl.h"
 #import "UserElectronicAutoViewCtrl.h"
+#import "UserAirConditionViewCtrl.h"
+#import "UserNewWindViewCtrl.h"
 
 @interface UserScnarioConfigViewController () {
     UIButton *_audioSysBtn;
@@ -286,7 +288,8 @@
 }
 
 - (void) newWindSysAction:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
+    UserNewWindViewCtrl *ctrl = [[UserNewWindViewCtrl alloc] init];
+    [self.navigationController pushViewController:ctrl animated:YES];
 }
 
 - (void) electricSysAction:(id)sender{
@@ -295,7 +298,8 @@
 }
 
 - (void) airConditionSysAction:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
+    UserAirConditionViewCtrl *ctrl = [[UserAirConditionViewCtrl alloc] init];
+    [self.navigationController pushViewController:ctrl animated:YES];
 }
 
 - (void) lightSysAction:(id)sender{

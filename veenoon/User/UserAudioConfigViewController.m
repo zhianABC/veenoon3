@@ -257,7 +257,7 @@
     _youxianPlayer3Btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     [_youxianPlayer3Btn setTitleEdgeInsets:UIEdgeInsetsMake(_youxianPlayer3Btn.imageView.frame.size.height+10,-90,-20,20)];
     [_youxianPlayer3Btn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_youxianPlayer3Btn.titleLabel.bounds.size.height, 0)];
-    [_youxianPlayer3Btn addTarget:self action:@selector(tongdengAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_youxianPlayer3Btn addTarget:self action:@selector(airConditionAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_youxianPlayer3Btn];
     
     _wuxianSysPlayerSlider = [[JSlideView alloc]
