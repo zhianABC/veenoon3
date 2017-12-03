@@ -1,5 +1,5 @@
 //
-//  StickerLayerView.h
+//  DragCellView.h
 //  APoster
 //
 //  Created by chen jack on 12-10-28.
@@ -8,24 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol StickerLayerViewDelegate <NSObject>
+@protocol DragCellViewDelegate <NSObject>
 
 @optional
 - (void) didBeginTouchedStickerLayer:(id)layer;
 - (void) didMovedStickerLayer:(id)layer sticker:(id)sticker;
 - (void) didEndTouchedStickerLayer:(id)layer sticker:(id)sticker;
 
-- (void) didAnimationFinishedStickerLayer:(id)layer;
-- (void) didRemoveStickerLayer:(id)layer;
-
-- (void) didTappedStickerLayer:(id)layer;
-
-- (void) longPressed:(id)sticker;
-
 @end
 
 
-@interface StickerLayerView : UIView
+@interface DragCellView : UIView
 {
     
     UIImageView *_sticker;
@@ -41,9 +34,10 @@
     
     BOOL _isSelected;
     
-    UIImageView *_topIcon;
+    
+    
 }
-@property (nonatomic, weak) id <StickerLayerViewDelegate> delegate_;
+@property (nonatomic, weak) id <DragCellViewDelegate> delegate_;
 @property (nonatomic, strong) NSDictionary * _element;
 @property (nonatomic, strong) UIImage * selectedImg;
 @property (nonatomic, strong) UIImage * normalImg;
@@ -57,10 +51,7 @@
 
 - (BOOL) getIsSelected;
 
-- (void) setSticker:(NSString*)sticker;
-
-- (void) enableLongPressed;
-
-- (void) setTopIconImage:(UIImage*)icon;
+- (void) draw;
+- (void) setTitleTxt:(NSString*)txt;
 
 @end

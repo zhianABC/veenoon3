@@ -155,6 +155,8 @@
 		341671841FBA9765001D33D0 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 341671831FBA9765001D33D0 /* SignupViewController.m */; };
 		341671881FBA97BD001D33D0 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 341671871FBA97BD001D33D0 /* HomeViewController.m */; };
 		3416718C1FBA9BD0001D33D0 /* wellcome@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3416718B1FBA9BD0001D33D0 /* wellcome@2x.png */; };
+		3419283D1FD3CC760014695B /* DragCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3419283C1FD3CC760014695B /* DragCellView.m */; };
+		341928401FD3D6200014695B /* OutputScreenView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3419283F1FD3D6200014695B /* OutputScreenView.m */; };
 		341F0F401EC2C83A0027C800 /* gmic_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 341F0F3F1EC2C83A0027C800 /* gmic_bg@2x.png */; };
 		341F0F421EC2DF6D0027C800 /* beep-beep.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 341F0F411EC2DF6D0027C800 /* beep-beep.aiff */; };
 		341F0F441EC2E01D0027C800 /* warning.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 341F0F431EC2E01D0027C800 /* warning.mp3 */; };
@@ -668,6 +670,10 @@
 		341671861FBA97BD001D33D0 /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		341671871FBA97BD001D33D0 /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
 		3416718B1FBA9BD0001D33D0 /* wellcome@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wellcome@2x.png"; sourceTree = "<group>"; };
+		3419283B1FD3CC750014695B /* DragCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragCellView.h; sourceTree = "<group>"; };
+		3419283C1FD3CC760014695B /* DragCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DragCellView.m; sourceTree = "<group>"; };
+		3419283E1FD3D6200014695B /* OutputScreenView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OutputScreenView.h; sourceTree = "<group>"; };
+		3419283F1FD3D6200014695B /* OutputScreenView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OutputScreenView.m; sourceTree = "<group>"; };
 		341F0F3F1EC2C83A0027C800 /* gmic_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gmic_bg@2x.png"; sourceTree = "<group>"; };
 		341F0F411EC2DF6D0027C800 /* beep-beep.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "beep-beep.aiff"; sourceTree = "<group>"; };
 		341F0F431EC2E01D0027C800 /* warning.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = warning.mp3; sourceTree = "<group>"; };
@@ -1740,6 +1746,10 @@
 				34217A6E1FCE98200006701C /* UserVideoConfigView.m */,
 				34217A701FCE9C150006701C /* StickerLayerView.h */,
 				34217A711FCE9C150006701C /* StickerLayerView.m */,
+				3419283B1FD3CC750014695B /* DragCellView.h */,
+				3419283C1FD3CC760014695B /* DragCellView.m */,
+				3419283E1FD3D6200014695B /* OutputScreenView.h */,
+				3419283F1FD3D6200014695B /* OutputScreenView.m */,
 				EBF831DF1FD02A150096E6EC /* UserMonitorListViewCtrl.h */,
 				EBF831E01FD02A260096E6EC /* UserMonitorListViewCtrl.m */,
 				EBF831E21FD03A110096E6EC /* UserVideoDVDDiskViewCtrl.m */,
@@ -2199,6 +2209,7 @@
 				04D9A0EB1DAF83E0008DF2E6 /* AudioPlayer.m in Sources */,
 				04DE1E971AD6AEE000D49E2F /* ASIDownloadCache.m in Sources */,
 				EB09C4B11FD3B27200776540 /* MapMarkerLayer.m in Sources */,
+				3419283D1FD3CC760014695B /* DragCellView.m in Sources */,
 				EBF831E31FD03A110096E6EC /* UserVideoDVDDiskViewCtrl.m in Sources */,
 				EB09C4A21FD3A00200776540 /* UserAirConditionViewCtrl.m in Sources */,
 				341F0F471EC2FC500027C800 /* WSCode.m in Sources */,
@@ -2231,6 +2242,7 @@
 				04DE1EA91AD6AEE000D49E2F /* SBJson4Writer.m in Sources */,
 				EB36AAB21FCD939E009A0FD8 /* UserYouXianViewController.m in Sources */,
 				04DE1E9A1AD6AEE000D49E2F /* ASIInputStream.m in Sources */,
+				341928401FD3D6200014695B /* OutputScreenView.m in Sources */,
 				04DE1EAB1AD6AEE000D49E2F /* NSData+GIF.m in Sources */,
 				EBF831ED1FD03EFA0096E6EC /* UserVideoLuBoJiViewCtrl.m in Sources */,
 				34217A6F1FCE98200006701C /* UserVideoConfigView.m in Sources */,

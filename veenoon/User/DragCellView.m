@@ -1,17 +1,23 @@
 //
-//  StickerLayerView.m
+//  DragCellView.m
 //  APoster
 //
 //  Created by chen jack on 12-10-28.
 //  Copyright (c) 2012年 chen jack. All rights reserved.
 //
 
-#import "StickerLayerView.h"
+#import "DragCellView.h"
 #import <QuartzCore/QuartzCore.h>
 
 #define D_F_SIZE        40
 
-@implementation StickerLayerView
+@interface DragCellView ()
+{
+    UILabel *_cptxtLabel;
+}
+@end
+
+@implementation DragCellView
 @synthesize delegate_;
 @synthesize _element;
 @synthesize selectedImg;
@@ -32,7 +38,6 @@
     _sticker.image = selectedImg;
     _stickerCopy.image = selectedImg;
 
-    textLabel.textColor = [UIColor orangeColor];
     
     _isSelected = YES;
 
@@ -44,7 +49,6 @@
     _sticker.image = normalImg;
     _stickerCopy.image = normalImg;
     
-    textLabel.textColor = SINGAL_COLOR;
     
 }
 - (BOOL) getIsSelected{
@@ -65,56 +69,48 @@
                                                                  frame.size.height)];
 
         [self addSubview:_sticker];
-        _sticker.layer.contentsGravity = kCAGravityCenter;
+        _sticker.layer.contentsGravity = kCAGravityResizeAspectFill;
+        _sticker.clipsToBounds = YES;
+        
+        _sticker.layer.cornerRadius = 5;
         
         _stickerCopy = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0,
                                                                      frame.size.width,
                                                                      frame.size.height)];
         
         [self addSubview:_stickerCopy];
-        _stickerCopy.layer.contentsGravity = kCAGravityCenter;
+        _stickerCopy.layer.contentsGravity = kCAGravityResizeAspectFill;
         _stickerCopy.alpha = 0;
+        _stickerCopy.clipsToBounds = YES;
         
-        _topIcon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
-        [self addSubview:_topIcon];
-        _topIcon.center = CGPointMake(frame.size.width/2, 15);
-        _topIcon.layer.contentsGravity = kCAGravityResizeAspect;
+        _stickerCopy.layer.cornerRadius = 5;
         
-        self.textLabel = [[UILabel alloc]
+      self.textLabel = [[UILabel alloc]
                           initWithFrame:CGRectMake(0,
-                                                   frame.size.height-20,
-                                                   frame.size.width, 20)];
+                                                   0,
+                                                   frame.size.width, frame.size.height)];
         [self addSubview:textLabel];
         textLabel.textAlignment = NSTextAlignmentCenter;
         textLabel.font = [UIFont systemFontOfSize:15];
-        textLabel.textColor = SINGAL_COLOR;
+        textLabel.textColor = [UIColor whiteColor];
+        
+        _cptxtLabel = [[UILabel alloc]
+                       initWithFrame:CGRectMake(0,
+                                                0,
+                                                frame.size.width, frame.size.height)];
+        [_stickerCopy addSubview:_cptxtLabel];
+        _cptxtLabel.textAlignment = NSTextAlignmentCenter;
+        _cptxtLabel.font = [UIFont systemFontOfSize:15];
+        _cptxtLabel.textColor = [UIColor whiteColor];
         
     }
     return self;
 }
 
-- (void) setTopIconImage:(UIImage*)icon{
+- (void) setTitleTxt:(NSString*)txt{
     
-    _topIcon.image = icon;
-}
-
-
-- (void) enableLongPressed {
-    UILongPressGestureRecognizer *longPress0 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed0:)];
-    [self addGestureRecognizer:longPress0];
-}
-
-- (void) longPressed0:(id)sender {
-    
-    UILongPressGestureRecognizer *press = (UILongPressGestureRecognizer *)sender;
-    if (press.state == UIGestureRecognizerStateEnded) {
-        // no need anything here
-        return;
-    } else if (press.state == UIGestureRecognizerStateBegan) {
-        if([delegate_ respondsToSelector:@selector(longPressed:)]){
-            [delegate_ longPressed:self];
-        }
-    }
+    textLabel.text = txt;
+    _cptxtLabel.text = txt;
 }
 
 - (void) removeSelf{
@@ -132,9 +128,6 @@
         
         if(finished){
             
-            if([delegate_ respondsToSelector:@selector(didRemoveStickerLayer:)]){
-                [delegate_ didRemoveStickerLayer:self];
-            }
             [self removeFromSuperview];
             
             
@@ -220,6 +213,7 @@
                 float ncx= _stickerCopy.center.x+offset.x;
                 float ncy = _stickerCopy.center.y+offset.y;
                 
+                //NSLog(@"%f, %f", ncx, ncy);
                 _stickerCopy.center = CGPointMake(ncx, ncy);
                 
                 
@@ -242,13 +236,6 @@
     
     if([delegate_ respondsToSelector:@selector(didEndTouchedStickerLayer:sticker:)]){
         [delegate_ didEndTouchedStickerLayer:self sticker:_stickerCopy];
-    }
-    
-    if(!isMoving)
-    {
-        if([delegate_ respondsToSelector:@selector(didTappedStickerLayer:)]){
-            [delegate_ didTappedStickerLayer:self];
-        }
     }
     
     
@@ -286,16 +273,12 @@
 
 
 
-- (void) setSticker:(NSString*)sticker{
+- (void) draw{
     
-    UIImage *img = [UIImage imageNamed:sticker];
-    _sticker.image = img;
-    _sticker.frame  = self.bounds;
+
+    _sticker.image = normalImg;
+    _stickerCopy.image = selectedImg;
     
-    self.normalImg = img;
-    
-    _stickerCopy.image = img;
-     _stickerCopy.frame  = self.bounds;
 }
 
 

@@ -11,6 +11,7 @@
 #import "EnginnerHomeViewController.h"
 #import "UserHomeViewController.h"
 #import "NSDate-Helper.h"
+#import "UserVideoLuBoJiViewCtrl.h"
 
 @interface HomeViewController () {
     UIButton *_settingsBtn;
@@ -110,6 +111,7 @@
 }
 
 - (void) userLoginAction:(id)sender{
+    
     UserHomeViewController *lctrl = [[UserHomeViewController alloc] init];
     [self.navigationController pushViewController:lctrl animated:YES];
 }
