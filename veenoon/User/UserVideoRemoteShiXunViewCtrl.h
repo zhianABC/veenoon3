@@ -10,6 +10,5 @@
 @interface UserVideoRemoteShiXunViewCtrl : UIViewController {
     
 }
-
 @end
 
