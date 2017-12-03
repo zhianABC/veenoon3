@@ -158,6 +158,7 @@
     CGPoint pt = [self convertPoint:sticker.center
                            fromView:layer];
     
+    outputArea.alpha = 0.0;
     
     if(CGRectContainsPoint(_outputFrame, pt))
     {
