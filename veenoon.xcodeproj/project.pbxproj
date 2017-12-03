@@ -254,6 +254,9 @@
 		EB217FD41FD4275E003F5A8F /* user_add_wet_bt2_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB217FCF1FD4275E003F5A8F /* user_add_wet_bt2_n@2x.png */; };
 		EB217FD51FD4275E003F5A8F /* user_add_wet_bt3_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB217FD01FD4275E003F5A8F /* user_add_wet_bt3_n@2x.png */; };
 		EB217FD61FD4275E003F5A8F /* user_add_wet_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB217FD11FD4275E003F5A8F /* user_add_wet_n@2x.png */; };
+		EB217FD81FD429B4003F5A8F /* UserDoorAccessViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB217FD71FD429B4003F5A8F /* UserDoorAccessViewCtrl.m */; };
+		EB217FDC1FD42A77003F5A8F /* user_door_access_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB217FDA1FD42A77003F5A8F /* user_door_access_n@2x.png */; };
+		EB217FDD1FD42A77003F5A8F /* user_door_access_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB217FDB1FD42A77003F5A8F /* user_door_access_s@2x.png */; };
 		EB23AE961FD186C000D1570F /* remote_video_filed_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB23AE951FD186BF00D1570F /* remote_video_filed_bg@2x.png */; };
 		EB23AE991FD1896300D1570F /* remote_video_back_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB23AE971FD1896300D1570F /* remote_video_back_n@2x.png */; };
 		EB23AE9A1FD1896300D1570F /* remote_video_back_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB23AE981FD1896300D1570F /* remote_video_back_s@2x.png */; };
@@ -815,6 +818,10 @@
 		EB217FCF1FD4275E003F5A8F /* user_add_wet_bt2_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_add_wet_bt2_n@2x.png"; sourceTree = "<group>"; };
 		EB217FD01FD4275E003F5A8F /* user_add_wet_bt3_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_add_wet_bt3_n@2x.png"; sourceTree = "<group>"; };
 		EB217FD11FD4275E003F5A8F /* user_add_wet_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_add_wet_n@2x.png"; sourceTree = "<group>"; };
+		EB217FD71FD429B4003F5A8F /* UserDoorAccessViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserDoorAccessViewCtrl.m; sourceTree = "<group>"; };
+		EB217FD91FD429BE003F5A8F /* UserDoorAccessViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserDoorAccessViewCtrl.h; sourceTree = "<group>"; };
+		EB217FDA1FD42A77003F5A8F /* user_door_access_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_door_access_n@2x.png"; sourceTree = "<group>"; };
+		EB217FDB1FD42A77003F5A8F /* user_door_access_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_door_access_s@2x.png"; sourceTree = "<group>"; };
 		EB23AE951FD186BF00D1570F /* remote_video_filed_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "remote_video_filed_bg@2x.png"; sourceTree = "<group>"; };
 		EB23AE971FD1896300D1570F /* remote_video_back_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "remote_video_back_n@2x.png"; sourceTree = "<group>"; };
 		EB23AE981FD1896300D1570F /* remote_video_back_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "remote_video_back_s@2x.png"; sourceTree = "<group>"; };
@@ -1456,6 +1463,8 @@
 		04DE1ECB1AD6B3BA00D49E2F /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
+				EB217FDA1FD42A77003F5A8F /* user_door_access_n@2x.png */,
+				EB217FDB1FD42A77003F5A8F /* user_door_access_s@2x.png */,
 				EB217FCE1FD4275E003F5A8F /* user_add_wet_bt1_n@2x.png */,
 				EB217FCF1FD4275E003F5A8F /* user_add_wet_bt2_n@2x.png */,
 				EB217FD01FD4275E003F5A8F /* user_add_wet_bt3_n@2x.png */,
@@ -1836,6 +1845,8 @@
 				EB217FBF1FD423C2003F5A8F /* UserAirCleanViewCtrl.h */,
 				EB217FCA1FD42652003F5A8F /* UserAddWetViewCtrl.h */,
 				EB217FCB1FD42660003F5A8F /* UserAddWetViewCtrl.m */,
+				EB217FD71FD429B4003F5A8F /* UserDoorAccessViewCtrl.m */,
+				EB217FD91FD429BE003F5A8F /* UserDoorAccessViewCtrl.h */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -2044,6 +2055,7 @@
 				EB23AEA51FD1917E00D1570F /* remote_video_address@2x.png in Resources */,
 				EB36AABD1FCD952B009A0FD8 /* zhuximoshi_s@2x.png in Resources */,
 				EB36AAE81FCDA432009A0FD8 /* user_video_lubo_n@2x.png in Resources */,
+				EB217FDD1FD42A77003F5A8F /* user_door_access_s@2x.png in Resources */,
 				EBDF1BFA1FC5ABB500A756EA /* camera_s@2x.png in Resources */,
 				EBDF1C4E1FC5D5CF00A756EA /* door_access_n@2x.png in Resources */,
 				EB0808D81FBC7DF600FD0604 /* botomo_icon@2x.png in Resources */,
@@ -2171,6 +2183,7 @@
 				EBDF1C391FC5D5CF00A756EA /* floor_warm_n@2x.png in Resources */,
 				04DE1F6A1AD6B3BB00D49E2F /* background@2x.png in Resources */,
 				EBDF1C431FC5D5CF00A756EA /* light_sys_s@2x.png in Resources */,
+				EB217FDC1FD42A77003F5A8F /* user_door_access_n@2x.png in Resources */,
 				EBF6A73F1FC851E500260FF0 /* audio_player_minus_n@2x.png in Resources */,
 				EB3685F31FC0799A009973A3 /* settings_user_n@2x.png in Resources */,
 				EB217FB31FD41EC7003F5A8F /* user_newwind_h_n@2x.png in Resources */,
@@ -2247,6 +2260,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB217FD81FD429B4003F5A8F /* UserDoorAccessViewCtrl.m in Sources */,
 				EB042A5B1FC2FFCD00F7F73D /* OutSystemView.m in Sources */,
 				EB03F52B1FBDC07200865541 /* InvitationCodeViewCotroller.m in Sources */,
 				34928A9A1EC1BD330089F429 /* ReaderCodeViewController.m in Sources */,

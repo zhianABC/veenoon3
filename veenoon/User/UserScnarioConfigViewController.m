@@ -18,6 +18,7 @@
 #import "UserAirCleanViewCtrl.h"
 #import "UserAddWetViewCtrl.h"
 #import "UserInfoCollectViewCtrl.h"
+#import "UserDoorAccessViewCtrl.h"
 
 @interface UserScnarioConfigViewController () {
     UIButton *_audioSysBtn;
@@ -273,7 +274,8 @@
 }
 
 - (void) doorAccessSysAction:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
+    UserDoorAccessViewCtrl *ctrl = [[UserDoorAccessViewCtrl alloc] init];
+    [self.navigationController pushViewController:ctrl animated:YES];
 }
 
 - (void) addWetSysAction:(id)sender{
