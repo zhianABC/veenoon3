@@ -107,10 +107,8 @@
     
     int index = 0;
     for (id dic in _conditionRoomList) {
-        int row = index/6;
-        int col = index%6;
-        int startX = col*cellWidth+col*rowGap+10;
-        int startY = row*cellWidth+rowGap*row;
+        int startX = index*cellWidth+index*rowGap+10;
+        int startY = 5;
         
         UIButton *airConditionBtn = [UIButton buttonWithColor:nil selColor:nil];
         airConditionBtn.tag = index;
