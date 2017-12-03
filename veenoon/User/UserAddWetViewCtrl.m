@@ -6,22 +6,22 @@
 //  Copyright © 2017年 jack. All rights reserved.
 //
 
-#import "UserAirCleanViewCtrl.h"
+#import "UserAddWetViewCtrl.h"
 #import "UIButton+Color.h"
 
-@interface UserAirCleanViewCtrl () {
-    NSMutableArray *_airCleanRoomList;
-    NSMutableArray *_aireCleanBtnList;
+@interface UserAddWetViewCtrl() {
+    NSMutableArray *_addWetRoomList;
+    NSMutableArray *_addWetBtnList;
 }
-    @property (nonatomic, strong) NSMutableArray *_airCleanRoomList;
+    @property (nonatomic, strong) NSMutableArray *_addWetRoomList;
     @end
 
-@implementation UserAirCleanViewCtrl
-    @synthesize _airCleanRoomList;
+@implementation UserAddWetViewCtrl
+    @synthesize _addWetRoomList;
     
 - (void) initData {
-    if (_airCleanRoomList) {
-        [_airCleanRoomList removeAllObjects];
+    if (_addWetRoomList) {
+        [_addWetRoomList removeAllObjects];
     } else {
         NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"大会议室", @"name",
                                      nil];
@@ -37,7 +37,7 @@
                                      nil];
         NSMutableDictionary *dic7 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"大会议室", @"name",
                                      nil];
-        self._airCleanRoomList = [NSMutableArray arrayWithObjects:dic1, dic2, dic3, dic4, dic5, dic6, dic7, nil];
+        self._addWetRoomList = [NSMutableArray arrayWithObjects:dic1, dic2, dic3, dic4, dic5, dic6, dic7, nil];
     }
 }
     
@@ -46,10 +46,10 @@
     
     [self initData];
     
-    if (_aireCleanBtnList) {
-        [_aireCleanBtnList removeAllObjects];
+    if (_addWetBtnList) {
+        [_addWetBtnList removeAllObjects];
     } else {
-        _aireCleanBtnList = [[NSMutableArray alloc] init];
+        _addWetBtnList = [[NSMutableArray alloc] init];
     }
     
     self.view.backgroundColor = RGB(63, 58, 55);
@@ -96,7 +96,7 @@
     int scrollHeight = 600;
     int cellWidth = 100;
     int rowGap = 30;
-    int number = [self._airCleanRoomList count];
+    int number = [self._addWetRoomList count];
     int contentWidth = number * 100 + (number-1) * rowGap;
     UIScrollView *airCondtionView = [[UIScrollView alloc] initWithFrame:CGRectMake(leftGap, SCREEN_HEIGHT-scrollHeight, SCREEN_WIDTH - leftGap*2, cellWidth+10)];
     airCondtionView.contentSize =  CGSizeMake(contentWidth, cellWidth+10);
@@ -105,15 +105,15 @@
     [self.view addSubview:airCondtionView];
     
     int index = 0;
-    for (id dic in _airCleanRoomList) {
+    for (id dic in _addWetRoomList) {
         int startX = index*cellWidth+index*rowGap+10;
         int startY = 5;
         
         UIButton *airConditionBtn = [UIButton buttonWithColor:nil selColor:nil];
         airConditionBtn.tag = index;
         airConditionBtn.frame = CGRectMake(startX, startY, cellWidth, cellWidth);
-        [airConditionBtn setImage:[UIImage imageNamed:@"user_aireclean_n.png"] forState:UIControlStateNormal];
-        [airConditionBtn setImage:[UIImage imageNamed:@"user_aireclean_s.png"] forState:UIControlStateHighlighted];
+        [airConditionBtn setImage:[UIImage imageNamed:@"user_add_wet_n.png"] forState:UIControlStateNormal];
+        [airConditionBtn setImage:[UIImage imageNamed:@"user_add_wet_s.png"] forState:UIControlStateHighlighted];
         [airConditionBtn setTitle:[dic objectForKey:@"name"] forState:UIControlStateNormal];
         [airConditionBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
         [airConditionBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
@@ -125,7 +125,7 @@
         
         index++;
         
-        [_aireCleanBtnList addObject:airConditionBtn];
+        [_addWetBtnList addObject:airConditionBtn];
     }
     
     int btnLeftRight = 300;
@@ -136,10 +136,10 @@
     zhilengBtn.layer.borderWidth = 2;
     zhilengBtn.layer.borderColor = [UIColor clearColor].CGColor;;
     zhilengBtn.clipsToBounds = YES;
-    [zhilengBtn setImage:[UIImage imageNamed:@"user_aireclean_p_n.png"] forState:UIControlStateNormal];
-    [zhilengBtn setImage:[UIImage imageNamed:@"user_aireclean_p_n.png"] forState:UIControlStateHighlighted];
+    [zhilengBtn setImage:[UIImage imageNamed:@"user_add_wet_bt1_n.png"] forState:UIControlStateNormal];
+    [zhilengBtn setImage:[UIImage imageNamed:@"user_add_wet_bt1_n.png"] forState:UIControlStateHighlighted];
     [self.view addSubview:zhilengBtn];
-    [zhilengBtn addTarget:self action:@selector(aircleanPAction:)
+    [zhilengBtn addTarget:self action:@selector(addWet1Action:)
          forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *zhireBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
@@ -148,10 +148,10 @@
     zhireBtn.layer.borderWidth = 2;
     zhireBtn.layer.borderColor = [UIColor clearColor].CGColor;;
     zhireBtn.clipsToBounds = YES;
-    [zhireBtn setImage:[UIImage imageNamed:@"user_aireclean_f_n.png"] forState:UIControlStateNormal];
-    [zhireBtn setImage:[UIImage imageNamed:@"user_aireclean_f_n.png"] forState:UIControlStateHighlighted];
+    [zhireBtn setImage:[UIImage imageNamed:@"user_add_wet_bt2_n.png"] forState:UIControlStateNormal];
+    [zhireBtn setImage:[UIImage imageNamed:@"user_add_wet_bt2_n.png"] forState:UIControlStateHighlighted];
     [self.view addSubview:zhireBtn];
-    [zhireBtn addTarget:self action:@selector(aircleanFAction:)
+    [zhireBtn addTarget:self action:@selector(addWet2Action:)
        forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *aireWindBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
@@ -160,31 +160,31 @@
     aireWindBtn.layer.borderWidth = 2;
     aireWindBtn.layer.borderColor = [UIColor clearColor].CGColor;;
     aireWindBtn.clipsToBounds = YES;
-    [aireWindBtn setImage:[UIImage imageNamed:@"user_aireclean_a_n.png"] forState:UIControlStateNormal];
-    [aireWindBtn setImage:[UIImage imageNamed:@"user_aireclean_a_n.png"] forState:UIControlStateHighlighted];
+    [aireWindBtn setImage:[UIImage imageNamed:@"user_add_wet_bt3_n.png"] forState:UIControlStateNormal];
+    [aireWindBtn setImage:[UIImage imageNamed:@"user_add_wet_bt3_n.png"] forState:UIControlStateHighlighted];
     [self.view addSubview:aireWindBtn];
-    [aireWindBtn addTarget:self action:@selector(aircleanAAction:)
+    [aireWindBtn addTarget:self action:@selector(addWet3Action:)
           forControlEvents:UIControlEventTouchUpInside];
 }
-- (void) aircleanPAction:(id)sender{
+- (void) addWet1Action:(id)sender{
     
 }
-- (void) aircleanFAction:(id)sender{
+- (void) addWet2Action:(id)sender{
     
 }
-- (void) aircleanAAction:(id)sender{
+- (void) addWet3Action:(id)sender{
     
 }
 - (void) airConditionAction:(id)sender{
     UIButton *selectBtn = (UIButton*) sender;
     int selectTag = selectBtn.tag;
     
-    for (UIButton *btn in _aireCleanBtnList) {
+    for (UIButton *btn in _addWetBtnList) {
         if (btn.tag == selectTag) {
-            [btn setImage:[UIImage imageNamed:@"user_aireclean_s.png"] forState:UIControlStateNormal];
+            [btn setImage:[UIImage imageNamed:@"user_add_wet_s.png"] forState:UIControlStateNormal];
             [btn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
         } else {
-            [btn setImage:[UIImage imageNamed:@"user_aireclean_n.png"] forState:UIControlStateNormal];
+            [btn setImage:[UIImage imageNamed:@"user_add_wet_n.png"] forState:UIControlStateNormal];
             [btn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
         }
     }
@@ -199,4 +199,5 @@
 }
     
     @end
+
 

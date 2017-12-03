@@ -16,6 +16,8 @@
 #import "UserNewWindViewCtrl.h"
 #import "UserFloorWarmViewCtrl.h"
 #import "UserAirCleanViewCtrl.h"
+#import "UserAddWetViewCtrl.h"
+#import "UserInfoCollectViewCtrl.h"
 
 @interface UserScnarioConfigViewController () {
     UIButton *_audioSysBtn;
@@ -261,7 +263,8 @@
 }
 
 - (void) energySysAction:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
+    UserInfoCollectViewCtrl *ctrl = [[UserInfoCollectViewCtrl alloc] init];
+    [self.navigationController pushViewController:ctrl animated:YES];
 }
 
 - (void) monitorSysAction:(id)sender{
@@ -274,7 +277,8 @@
 }
 
 - (void) addWetSysAction:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
+    UserAddWetViewCtrl *ctrl = [[UserAddWetViewCtrl alloc] init];
+    [self.navigationController pushViewController:ctrl animated:YES];
 }
 
 - (void) warterCleanSysAction:(id)sender{

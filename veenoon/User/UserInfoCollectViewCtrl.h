@@ -6,8 +6,9 @@
 //  Copyright © 2017年 jack. All rights reserved.
 //
 
-#ifndef UserInfoCollectViewCtrl_h
-#define UserInfoCollectViewCtrl_h
-
-
-#endif /* UserInfoCollectViewCtrl_h */
+#import <UIKit/UIKit.h>
+@interface UserInfoCollectViewCtrl : UIViewController {
+    
+}
+    
+@end

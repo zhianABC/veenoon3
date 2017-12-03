@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-@interface UserAirCleanViewCtrl : UIViewController {
+@interface UserAddWetViewCtrl : UIViewController {
     
 }
     
-    @end
+@end
+
 
