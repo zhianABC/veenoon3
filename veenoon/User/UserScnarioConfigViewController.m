@@ -9,7 +9,6 @@
 #import "UserScnarioConfigViewController.h"
 #import "UserAudioConfigViewController.h"
 #import "UserVideoConfigViewCtrl.h"
-#import "UserMonitorListViewCtrl.h"
 #import "UserLightConfigViewCtrl.h"
 #import "UserElectronicAutoViewCtrl.h"
 #import "UserAirConditionViewCtrl.h"
@@ -20,6 +19,7 @@
 #import "UserInfoCollectViewCtrl.h"
 #import "UserDoorAccessViewCtrl.h"
 #import "UserWaterCleanViewCtrl.h"
+#import "UserMonitorSettingsViewCtrl.h"
 
 @interface UserScnarioConfigViewController () {
     UIButton *_audioSysBtn;
@@ -270,7 +270,7 @@
 }
 
 - (void) monitorSysAction:(id)sender{
-    UserMonitorListViewCtrl *controller = [[UserMonitorListViewCtrl alloc] init];
+    UserMonitorSettingsViewCtrl *controller = [[UserMonitorSettingsViewCtrl alloc] init];
     [self.navigationController pushViewController:controller animated:YES];
 }
 

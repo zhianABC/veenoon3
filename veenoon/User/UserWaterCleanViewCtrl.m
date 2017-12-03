@@ -10,20 +10,20 @@
 #import "UIButton+Color.h"
 
 @interface UserWaterCleanViewCtrl() {
-    NSMutableArray *_waterCleanRoomList;
+    NSMutableArray *_RoomList;
     NSMutableArray *_waterCleanBtnList;
     
     UILabel *_telephoneNumberL;
 }
-    @property (nonatomic, strong) NSMutableArray *_waterCleanRoomList;
+    @property (nonatomic, strong) NSMutableArray *_RoomList;
     @end
 
 @implementation UserWaterCleanViewCtrl
-    @synthesize _waterCleanRoomList;
+    @synthesize _RoomList;
     
 - (void) initData {
-    if (_waterCleanRoomList) {
-        [_waterCleanRoomList removeAllObjects];
+    if (_RoomList) {
+        [_RoomList removeAllObjects];
     } else {
         NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"大会议室", @"name",
                                      nil];
@@ -39,7 +39,7 @@
                                      nil];
         NSMutableDictionary *dic7 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"大会议室", @"name",
                                      nil];
-        self._waterCleanRoomList = [NSMutableArray arrayWithObjects:dic1, dic2, dic3, dic4, dic5, dic6, dic7, nil];
+        self._RoomList = [NSMutableArray arrayWithObjects:dic1, dic2, dic3, dic4, dic5, dic6, dic7, nil];
     }
 }
     
@@ -98,7 +98,7 @@
     int scrollHeight = 600;
     int cellWidth = 100;
     int rowGap = 40;
-    int number = [self._waterCleanRoomList count];
+    int number = [self._RoomList count];
     int contentWidth = number * 100 + (number-1) * rowGap-30;
     UIScrollView *airCondtionView = [[UIScrollView alloc] initWithFrame:CGRectMake(leftGap, SCREEN_HEIGHT-scrollHeight, SCREEN_WIDTH - leftGap*2, cellWidth+10)];
     airCondtionView.contentSize =  CGSizeMake(contentWidth, cellWidth+10);
@@ -107,7 +107,7 @@
     [self.view addSubview:airCondtionView];
     
     int index = 0;
-    for (id dic in _waterCleanRoomList) {
+    for (id dic in _RoomList) {
         int startX = index*cellWidth+index*rowGap+10;
         int startY = 5;
         
