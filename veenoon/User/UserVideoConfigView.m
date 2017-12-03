@@ -20,7 +20,7 @@
 }
 
 @property (nonatomic, strong) NSMutableArray *_outputs;
-
+@property (nonatomic, strong) NSMutableDictionary *_outputDmap;
 
 @end
 
@@ -30,6 +30,7 @@
 @synthesize _outputDatas;
 @synthesize _result;
 @synthesize _outputs;
+@synthesize _outputDmap;
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -55,6 +56,8 @@
         outputArea.clipsToBounds = YES;
         
         self._result = [NSMutableDictionary dictionary];
+        
+        self._outputDmap = [NSMutableDictionary dictionary];
     }
     
     return self;
@@ -108,6 +111,7 @@
         cell.delegate_ = self;
         cell._element = dic;
         [self addSubview:cell];
+        //cell.backgroundColor = [UIColor clearColor];
         cell.tag = i;
         cell._enableDrag = NO;
         NSString *image = [dic objectForKey:@"image"];
@@ -117,6 +121,9 @@
         cell.selectedImg = [UIImage imageNamed:sel];
         cell.textLabel.text = [dic objectForKey:@"name"];
         
+        [_outputDmap setObject:cell
+                 forKey:[dic objectForKey:@"code"]];
+        
         x+=cellWidth;
         
         [_outputs addObject:cell];
@@ -125,6 +132,7 @@
 }
 
 - (void) longPressed:(StickerLayerView*)sticker {
+    
     if([delegate_ respondsToSelector:@selector(didPupConfigView:)]){
         [delegate_ didPupConfigView:sticker];
     }
@@ -148,7 +156,6 @@
     else
     {
         outputArea.alpha = 0.0;
-        
         layer._resetWhenEndDrag = YES;
     }
 }
@@ -166,7 +173,6 @@
         
         //输入源index
         int index = (int)layer.tag;
-        
         id inputD = [_inputDatas objectAtIndex:index];
         
         //找输出设备
@@ -181,6 +187,15 @@
             }
         }
         
+        
+        for(id key in [_result allKeys])
+        {
+            StickerLayerView *outD = [_outputDmap objectForKey:key];
+            NSDictionary *inD = [_result objectForKey:key];
+            
+            NSString *imageN = [inD objectForKey:@"image_sel"];
+            [outD setTopIconImage:[UIImage imageNamed:imageN]];
+        }
         
         
     }
