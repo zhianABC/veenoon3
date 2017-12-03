@@ -19,6 +19,7 @@
 #import "UserAddWetViewCtrl.h"
 #import "UserInfoCollectViewCtrl.h"
 #import "UserDoorAccessViewCtrl.h"
+#import "UserWaterCleanViewCtrl.h"
 
 @interface UserScnarioConfigViewController () {
     UIButton *_audioSysBtn;
@@ -284,7 +285,8 @@
 }
 
 - (void) warterCleanSysAction:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
+    UserWaterCleanViewCtrl *ctrl = [[UserWaterCleanViewCtrl alloc] init];
+    [self.navigationController pushViewController:ctrl animated:YES];
 }
 
 - (void) airCleanSysAction:(id)sender{

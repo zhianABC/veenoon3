@@ -257,6 +257,9 @@
 		EB217FD81FD429B4003F5A8F /* UserDoorAccessViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB217FD71FD429B4003F5A8F /* UserDoorAccessViewCtrl.m */; };
 		EB217FDC1FD42A77003F5A8F /* user_door_access_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB217FDA1FD42A77003F5A8F /* user_door_access_n@2x.png */; };
 		EB217FDD1FD42A77003F5A8F /* user_door_access_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB217FDB1FD42A77003F5A8F /* user_door_access_s@2x.png */; };
+		EB217FE01FD42F37003F5A8F /* UserWaterCleanViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB217FDF1FD42F37003F5A8F /* UserWaterCleanViewCtrl.m */; };
+		EB217FE31FD43050003F5A8F /* user_water_clean_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB217FE11FD4304F003F5A8F /* user_water_clean_s@2x.png */; };
+		EB217FE41FD43050003F5A8F /* user_water_clean_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB217FE21FD4304F003F5A8F /* user_water_clean_n@2x.png */; };
 		EB23AE961FD186C000D1570F /* remote_video_filed_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB23AE951FD186BF00D1570F /* remote_video_filed_bg@2x.png */; };
 		EB23AE991FD1896300D1570F /* remote_video_back_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB23AE971FD1896300D1570F /* remote_video_back_n@2x.png */; };
 		EB23AE9A1FD1896300D1570F /* remote_video_back_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB23AE981FD1896300D1570F /* remote_video_back_s@2x.png */; };
@@ -822,6 +825,10 @@
 		EB217FD91FD429BE003F5A8F /* UserDoorAccessViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserDoorAccessViewCtrl.h; sourceTree = "<group>"; };
 		EB217FDA1FD42A77003F5A8F /* user_door_access_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_door_access_n@2x.png"; sourceTree = "<group>"; };
 		EB217FDB1FD42A77003F5A8F /* user_door_access_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_door_access_s@2x.png"; sourceTree = "<group>"; };
+		EB217FDE1FD42F2C003F5A8F /* UserWaterCleanViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserWaterCleanViewCtrl.h; sourceTree = "<group>"; };
+		EB217FDF1FD42F37003F5A8F /* UserWaterCleanViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserWaterCleanViewCtrl.m; sourceTree = "<group>"; };
+		EB217FE11FD4304F003F5A8F /* user_water_clean_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_water_clean_s@2x.png"; sourceTree = "<group>"; };
+		EB217FE21FD4304F003F5A8F /* user_water_clean_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_water_clean_n@2x.png"; sourceTree = "<group>"; };
 		EB23AE951FD186BF00D1570F /* remote_video_filed_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "remote_video_filed_bg@2x.png"; sourceTree = "<group>"; };
 		EB23AE971FD1896300D1570F /* remote_video_back_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "remote_video_back_n@2x.png"; sourceTree = "<group>"; };
 		EB23AE981FD1896300D1570F /* remote_video_back_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "remote_video_back_s@2x.png"; sourceTree = "<group>"; };
@@ -1463,6 +1470,8 @@
 		04DE1ECB1AD6B3BA00D49E2F /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
+				EB217FE21FD4304F003F5A8F /* user_water_clean_n@2x.png */,
+				EB217FE11FD4304F003F5A8F /* user_water_clean_s@2x.png */,
 				EB217FDA1FD42A77003F5A8F /* user_door_access_n@2x.png */,
 				EB217FDB1FD42A77003F5A8F /* user_door_access_s@2x.png */,
 				EB217FCE1FD4275E003F5A8F /* user_add_wet_bt1_n@2x.png */,
@@ -1847,6 +1856,8 @@
 				EB217FCB1FD42660003F5A8F /* UserAddWetViewCtrl.m */,
 				EB217FD71FD429B4003F5A8F /* UserDoorAccessViewCtrl.m */,
 				EB217FD91FD429BE003F5A8F /* UserDoorAccessViewCtrl.h */,
+				EB217FDE1FD42F2C003F5A8F /* UserWaterCleanViewCtrl.h */,
+				EB217FDF1FD42F37003F5A8F /* UserWaterCleanViewCtrl.m */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -2179,6 +2190,7 @@
 				046D2F041DA90AD9006C6123 /* expo_logo@2x.png in Resources */,
 				EB36AABB1FCD952B009A0FD8 /* luntimoshi_n@2x.png in Resources */,
 				EBF5D43D1FCC601B0014D5F0 /* fayanrenshu_s@2x.png in Resources */,
+				EB217FE31FD43050003F5A8F /* user_water_clean_s@2x.png in Resources */,
 				EB09C4A51FD3A6DF00776540 /* user_aircondition_n@2x.png in Resources */,
 				EBDF1C391FC5D5CF00A756EA /* floor_warm_n@2x.png in Resources */,
 				04DE1F6A1AD6B3BB00D49E2F /* background@2x.png in Resources */,
@@ -2205,6 +2217,7 @@
 				EB1A046F1FC71EEC007CC1F2 /* usb_player_n@2x.png in Resources */,
 				EB36AAE11FCDA432009A0FD8 /* user_video_camera_s@2x.png in Resources */,
 				EB23AEBA1FD1A98D00D1570F /* remote_video_down@2x.png in Resources */,
+				EB217FE41FD43050003F5A8F /* user_water_clean_n@2x.png in Resources */,
 				EB36AAE31FCDA432009A0FD8 /* user_video_dvd_s@2x.png in Resources */,
 				04D7198B1DADFD70002153D7 /* check_error@2x.png in Resources */,
 				04D27A301AF8976600305E39 /* iconfont-dayinji@2x.png in Resources */,
@@ -2276,6 +2289,7 @@
 				04DE1E8F1AD6AEE000D49E2F /* UIImage+Color.m in Sources */,
 				04DE1E961AD6AEE000D49E2F /* ASIDataDecompressor.m in Sources */,
 				049ECAC31C8D694400A611D8 /* QR_Encode.cpp in Sources */,
+				EB217FE01FD42F37003F5A8F /* UserWaterCleanViewCtrl.m in Sources */,
 				EBF831E11FD02A260096E6EC /* UserMonitorListViewCtrl.m in Sources */,
 				3422A5B81FCC17C500F6D3C2 /* BatteryView.m in Sources */,
 				04DE1EC81AD6B22F00D49E2F /* BaseViewController.m in Sources */,

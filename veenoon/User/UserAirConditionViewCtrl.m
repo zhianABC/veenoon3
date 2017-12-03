@@ -93,12 +93,12 @@
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
-    int leftGap = 160;
+    int leftGap = 165;
     int scrollHeight = 600;
     int cellWidth = 100;
-    int rowGap = 30;
+    int rowGap = 40;
     int number = [self._conditionRoomList count];
-    int contentWidth = number * 100 + (number-1) * rowGap;
+    int contentWidth = number * 100 + (number-1) * rowGap-30;
     UIScrollView *airCondtionView = [[UIScrollView alloc] initWithFrame:CGRectMake(leftGap, SCREEN_HEIGHT-scrollHeight, SCREEN_WIDTH - leftGap*2, cellWidth+10)];
     airCondtionView.contentSize =  CGSizeMake(contentWidth, cellWidth+10);
     airCondtionView.scrollEnabled=YES;
