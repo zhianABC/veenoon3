@@ -14,6 +14,7 @@
 #import "UserElectronicAutoViewCtrl.h"
 #import "UserAirConditionViewCtrl.h"
 #import "UserNewWindViewCtrl.h"
+#import "UserFloorWarmViewCtrl.h"
 
 @interface UserScnarioConfigViewController () {
     UIButton *_audioSysBtn;
@@ -284,7 +285,8 @@
 }
 
 - (void) floorWarmSysAction:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
+    UserFloorWarmViewCtrl *ctrl = [[UserFloorWarmViewCtrl alloc] init];
+    [self.navigationController pushViewController:ctrl animated:YES];
 }
 
 - (void) newWindSysAction:(id)sender{

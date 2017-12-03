@@ -239,6 +239,9 @@
 		EB217FB31FD41EC7003F5A8F /* user_newwind_h_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB217FB01FD41EC6003F5A8F /* user_newwind_h_n@2x.png */; };
 		EB217FB41FD41EC7003F5A8F /* user_newwind_l_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB217FB11FD41EC6003F5A8F /* user_newwind_l_n@2x.png */; };
 		EB217FB51FD41EC7003F5A8F /* user_newwind_m_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB217FB21FD41EC7003F5A8F /* user_newwind_m_n@2x.png */; };
+		EB217FB81FD42188003F5A8F /* UserFloorWarmViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB217FB71FD42188003F5A8F /* UserFloorWarmViewCtrl.m */; };
+		EB217FBB1FD42291003F5A8F /* user_floorwarm_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB217FB91FD42291003F5A8F /* user_floorwarm_s@2x.png */; };
+		EB217FBC1FD42291003F5A8F /* user_floorwarm_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB217FBA1FD42291003F5A8F /* user_floorwarm_n@2x.png */; };
 		EB23AE961FD186C000D1570F /* remote_video_filed_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB23AE951FD186BF00D1570F /* remote_video_filed_bg@2x.png */; };
 		EB23AE991FD1896300D1570F /* remote_video_back_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB23AE971FD1896300D1570F /* remote_video_back_n@2x.png */; };
 		EB23AE9A1FD1896300D1570F /* remote_video_back_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB23AE981FD1896300D1570F /* remote_video_back_s@2x.png */; };
@@ -782,6 +785,10 @@
 		EB217FB01FD41EC6003F5A8F /* user_newwind_h_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_newwind_h_n@2x.png"; sourceTree = "<group>"; };
 		EB217FB11FD41EC6003F5A8F /* user_newwind_l_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_newwind_l_n@2x.png"; sourceTree = "<group>"; };
 		EB217FB21FD41EC7003F5A8F /* user_newwind_m_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_newwind_m_n@2x.png"; sourceTree = "<group>"; };
+		EB217FB61FD4217E003F5A8F /* UserFloorWarmViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserFloorWarmViewCtrl.h; sourceTree = "<group>"; };
+		EB217FB71FD42188003F5A8F /* UserFloorWarmViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserFloorWarmViewCtrl.m; sourceTree = "<group>"; wrapsLines = 0; };
+		EB217FB91FD42291003F5A8F /* user_floorwarm_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_floorwarm_s@2x.png"; sourceTree = "<group>"; };
+		EB217FBA1FD42291003F5A8F /* user_floorwarm_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_floorwarm_n@2x.png"; sourceTree = "<group>"; };
 		EB23AE951FD186BF00D1570F /* remote_video_filed_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "remote_video_filed_bg@2x.png"; sourceTree = "<group>"; };
 		EB23AE971FD1896300D1570F /* remote_video_back_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "remote_video_back_n@2x.png"; sourceTree = "<group>"; };
 		EB23AE981FD1896300D1570F /* remote_video_back_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "remote_video_back_s@2x.png"; sourceTree = "<group>"; };
@@ -1423,6 +1430,8 @@
 		04DE1ECB1AD6B3BA00D49E2F /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
+				EB217FBA1FD42291003F5A8F /* user_floorwarm_n@2x.png */,
+				EB217FB91FD42291003F5A8F /* user_floorwarm_s@2x.png */,
 				EB217FB01FD41EC6003F5A8F /* user_newwind_h_n@2x.png */,
 				EB217FB11FD41EC6003F5A8F /* user_newwind_l_n@2x.png */,
 				EB217FB21FD41EC7003F5A8F /* user_newwind_m_n@2x.png */,
@@ -1785,6 +1794,8 @@
 				EB5CF03E1FD3DC92007958C9 /* UserNewWindViewCtrl.m */,
 				EB5CF0401FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m */,
 				EB5CF0421FD3DDEE007958C9 /* UserInfoCollectViewCtrl.h */,
+				EB217FB61FD4217E003F5A8F /* UserFloorWarmViewCtrl.h */,
+				EB217FB71FD42188003F5A8F /* UserFloorWarmViewCtrl.m */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -2092,6 +2103,7 @@
 				04DE1FB01AD6B3BB00D49E2F /* jishucanshu_2@2x.png in Resources */,
 				EB217FAE1FD41E45003F5A8F /* user_newwind_s@2x.png in Resources */,
 				EB1A04771FC71EEC007CC1F2 /* sd_player_n@2x.png in Resources */,
+				EB217FBC1FD42291003F5A8F /* user_floorwarm_n@2x.png in Resources */,
 				EB23AEB41FD1972400D1570F /* luboji_bofang_n@2x.png in Resources */,
 				EBF6A7401FC851E500260FF0 /* audio_player_last_s@2x.png in Resources */,
 				EB217FB51FD41EC7003F5A8F /* user_newwind_m_n@2x.png in Resources */,
@@ -2121,6 +2133,7 @@
 				EB36AAD81FCDA432009A0FD8 /* user_video_pinjieping_n@2x.png in Resources */,
 				EB3685F81FC0799A009973A3 /* settings_account_s@2x.png in Resources */,
 				341F0F421EC2DF6D0027C800 /* beep-beep.aiff in Resources */,
+				EB217FBB1FD42291003F5A8F /* user_floorwarm_s@2x.png in Resources */,
 				EBDF1C4A1FC5D5CF00A756EA /* new_wind_sys_s@2x.png in Resources */,
 				04DE1FAE1AD6B3BB00D49E2F /* jishucanshu_0@2x.png in Resources */,
 				EB2E707E1FC1B5B4009C477C /* settings_view_14@2x.png in Resources */,
@@ -2206,6 +2219,7 @@
 				04DE1E8C1AD6AEE000D49E2F /* RRScrollView.m in Sources */,
 				34686C9F1ED025CB001749A1 /* DesUtil.m in Sources */,
 				045850191B08CF42002BC23C /* BookCache.m in Sources */,
+				EB217FB81FD42188003F5A8F /* UserFloorWarmViewCtrl.m in Sources */,
 				0477DC531DA9F3CC0077FA52 /* SHA1.m in Sources */,
 				04DE1EB31AD6AEE000D49E2F /* UIButton+WebCache.m in Sources */,
 				04D719771DADD3A4002153D7 /* SSUser.m in Sources */,
