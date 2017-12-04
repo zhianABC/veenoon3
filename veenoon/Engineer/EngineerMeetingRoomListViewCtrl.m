@@ -7,6 +7,7 @@
 //
 
 #import "EngineerMeetingRoomListViewCtrl.h"
+#import "EngineerSysSelectViewCtrl.h"
 
 @interface EngineerMeetingRoomListViewCtrl () {
     NSMutableArray *_meetingRoomList;
@@ -167,6 +168,13 @@
 -(void)handleTapGesture:(UIGestureRecognizer*)gestureRecognizer{
     long index = gestureRecognizer.view.tag;
     NSMutableDictionary *dic = [_meetingRoomList objectAtIndex:index];
+    
+    EngineerSysSelectViewCtrl *ctrl = [[EngineerSysSelectViewCtrl alloc] init];
+    
+    ctrl._meetingRoomDic = dic;
+    
+    [self.navigationController pushViewController:ctrl animated:YES];
+    
 }
 - (void) cameraAction:(id)sender{
     
