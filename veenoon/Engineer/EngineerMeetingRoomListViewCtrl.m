@@ -22,7 +22,6 @@
         [_meetingRoomList removeAllObjects];
     } else {
         NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                     @"meeting_room1", @"roomname",
                                      nil];
         NSMutableDictionary *dic2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                      @"meeting_room2", @"roomname",
@@ -69,7 +68,7 @@
         NSMutableDictionary *dic612 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                      @"meeting_room612", @"roomname",
                                      nil];
-        self._meetingRoomList = [NSMutableArray arrayWithObjects:dic1, dic2, dic3, dic4, dic5,dic61, dic62, dic63, dic64, dic65, dic67,dic68, dic69, dic611, dic612, nil];
+        self._meetingRoomList = [NSMutableArray arrayWithObjects:dic1, dic2, dic3, dic4, dic5,dic61, dic62, dic63, dic64, dic65, dic66, dic67,dic68, dic69, dic611, dic612, nil];
     }
 }
 - (void)viewDidLoad {
@@ -95,15 +94,15 @@
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIScrollView *scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 50, SCREEN_WIDTH, SCREEN_HEIGHT-110)];
+    UIScrollView *scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 50, SCREEN_WIDTH, SCREEN_HEIGHT-130)];
     scroolView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:scroolView];
     
     int top = 10;
     int leftRight = 60;
-    int space = 10;
+    int space = 2;
     int cellWidth = (SCREEN_WIDTH - 2*leftRight - 2*space) / 3;
-    int cellHeight = 186;
+    int cellHeight = 176;
     
     int rowNumber = [_meetingRoomList count] / 3 + 1;
     int scrollHeight = rowNumber * cellHeight + (rowNumber-1)*space + top;
@@ -158,7 +157,11 @@
         [roomeImageView addSubview:titleL];
         titleL.font = [UIFont boldSystemFontOfSize:16];
         titleL.textColor  = [UIColor whiteColor];
-        titleL.text = [dic objectForKey:@"roomname"];
+        NSString *meetingRoomName = [dic objectForKey:@"roomname"];
+        if (meetingRoomName == nil) {
+            meetingRoomName = @"请点击命名";
+        }
+        titleL.text = meetingRoomName;
     }
 }
 -(void)handleTapGesture:(UIGestureRecognizer*)gestureRecognizer{
@@ -170,7 +173,7 @@
 }
 
 - (void) cancelAction:(id)sender{
-    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end
