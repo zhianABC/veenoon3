@@ -8,12 +8,16 @@
 
 #import "EngineerPortDNSViewCtrl.h"
 #import "UIButton+Color.h"
-
+#import "EngineerDNSSettingView.h"
+#import "EngineerPortSettingView.h"
 
 @interface EngineerPortDNSViewCtrl () {
     UILabel *_portDNSLabel;
     UIButton *_portSettingsBtn;
     UIButton *_dnsSettingsBtn;
+    
+    EngineerDNSSettingView *_dnsView;
+    EngineerPortSettingView *_portView;
 }
 @end
 
@@ -72,12 +76,32 @@
     [_dnsSettingsBtn setImage:[UIImage imageNamed:@"engineer_dns_s.png"] forState:UIControlStateHighlighted];
     [_dnsSettingsBtn addTarget:self action:@selector(dnsAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_dnsSettingsBtn];
+    
+    _portView = [[EngineerPortSettingView alloc]initWithFrame:CGRectMake(0, 30, SCREEN_WIDTH, SCREEN_HEIGHT-270)];
+    _portView.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+    //    settingsUserView.delegate = self;
+    [self.view addSubview:_portView];
+    
+    
+    _dnsView = [[EngineerDNSSettingView alloc]initWithFrame:CGRectMake(0, 30, SCREEN_WIDTH, SCREEN_HEIGHT-270)];
+    _dnsView.hidden = YES;
+    _dnsView.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+    //    settingsUserView.delegate = self;
+    [self.view addSubview:_dnsView];
 }
 - (void) portAction:(id)sender{
+    [_portSettingsBtn setImage:[UIImage imageNamed:@"engineer_port_s.png"] forState:UIControlStateNormal];
+    [_dnsSettingsBtn setImage:[UIImage imageNamed:@"engineer_dns_n.png"] forState:UIControlStateNormal];
     
+    _portView.hidden = NO;
+    _dnsView.hidden = YES;
 }
 - (void) dnsAction:(id)sender{
+    [_portSettingsBtn setImage:[UIImage imageNamed:@"engineer_port_n.png"] forState:UIControlStateNormal];
+    [_dnsSettingsBtn setImage:[UIImage imageNamed:@"engineer_dns_s.png"] forState:UIControlStateNormal];
     
+    _portView.hidden = YES;
+    _dnsView.hidden = NO;
 }
 - (void) okAction:(id)sender{
     

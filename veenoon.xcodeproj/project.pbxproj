@@ -354,6 +354,8 @@
 		EB5F7F901FD598ED00351888 /* engineer_port_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB5F7F8C1FD598EC00351888 /* engineer_port_n@2x.png */; };
 		EB5F7F911FD598ED00351888 /* engineer_dns_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB5F7F8D1FD598EC00351888 /* engineer_dns_s@2x.png */; };
 		EB5F7F921FD598ED00351888 /* engineer_port_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB5F7F8E1FD598ED00351888 /* engineer_port_s@2x.png */; };
+		EB5F7F951FD59D6B00351888 /* EngineerPortSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5F7F941FD59D6B00351888 /* EngineerPortSettingView.m */; };
+		EB5F7F981FD59D8400351888 /* EngineerDNSSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5F7F971FD59D8400351888 /* EngineerDNSSettingView.m */; };
 		EBCA834B1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCA834A1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m */; };
 		EBDF1BEC1FC5A2D000A756EA /* user_meeting_room_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1BEB1FC5A2D000A756EA /* user_meeting_room_1@2x.png */; };
 		EBDF1BF21FC5A9A200A756EA /* user_meeting_room_6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1BED1FC5A9A100A756EA /* user_meeting_room_6@2x.png */; };
@@ -950,6 +952,10 @@
 		EB5F7F8C1FD598EC00351888 /* engineer_port_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_port_n@2x.png"; sourceTree = "<group>"; };
 		EB5F7F8D1FD598EC00351888 /* engineer_dns_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_dns_s@2x.png"; sourceTree = "<group>"; };
 		EB5F7F8E1FD598ED00351888 /* engineer_port_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_port_s@2x.png"; sourceTree = "<group>"; };
+		EB5F7F931FD59D5C00351888 /* EngineerPortSettingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerPortSettingView.h; sourceTree = "<group>"; };
+		EB5F7F941FD59D6B00351888 /* EngineerPortSettingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerPortSettingView.m; sourceTree = "<group>"; };
+		EB5F7F961FD59D7B00351888 /* EngineerDNSSettingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerDNSSettingView.h; sourceTree = "<group>"; };
+		EB5F7F971FD59D8400351888 /* EngineerDNSSettingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerDNSSettingView.m; sourceTree = "<group>"; };
 		EBCA834A1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserMonitorSettingsViewCtrl.m; sourceTree = "<group>"; };
 		EBCA834C1FD434D1007DEB8E /* UserMonitorSettingsViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserMonitorSettingsViewCtrl.h; sourceTree = "<group>"; };
 		EBDF1BEB1FC5A2D000A756EA /* user_meeting_room_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_meeting_room_1@2x.png"; sourceTree = "<group>"; };
@@ -1850,6 +1856,10 @@
 				EB5F7F861FD593F800351888 /* EngineerSysSelectViewCtrl.m */,
 				EB5F7F881FD5971400351888 /* EngineerPortDNSViewCtrl.h */,
 				EB5F7F891FD5971E00351888 /* EngineerPortDNSViewCtrl.m */,
+				EB5F7F931FD59D5C00351888 /* EngineerPortSettingView.h */,
+				EB5F7F941FD59D6B00351888 /* EngineerPortSettingView.m */,
+				EB5F7F961FD59D7B00351888 /* EngineerDNSSettingView.h */,
+				EB5F7F971FD59D8400351888 /* EngineerDNSSettingView.m */,
 			);
 			path = Engineer;
 			sourceTree = "<group>";
@@ -2417,6 +2427,7 @@
 				04DE1E981AD6AEE000D49E2F /* ASIFormDataRequest.m in Sources */,
 				04DE1DD81AD68C5E00D49E2F /* main.m in Sources */,
 				04DE1EA11AD6AEE000D49E2F /* NetworkChecker.m in Sources */,
+				EB5F7F951FD59D6B00351888 /* EngineerPortSettingView.m in Sources */,
 				EB3685FD1FC07A5A009973A3 /* SettingsViewView.m in Sources */,
 				3421EA2D1FC4136600DC5378 /* CustomPickerView.m in Sources */,
 				04DE1E8B1AD6AEE000D49E2F /* Progress7View.m in Sources */,
@@ -2427,6 +2438,7 @@
 				04DE1E9A1AD6AEE000D49E2F /* ASIInputStream.m in Sources */,
 				341928401FD3D6200014695B /* OutputScreenView.m in Sources */,
 				04DE1EAB1AD6AEE000D49E2F /* NSData+GIF.m in Sources */,
+				EB5F7F981FD59D8400351888 /* EngineerDNSSettingView.m in Sources */,
 				EBF831ED1FD03EFA0096E6EC /* UserVideoLuBoJiViewCtrl.m in Sources */,
 				34217A6F1FCE98200006701C /* UserVideoConfigView.m in Sources */,
 				04DE1E901AD6AEE000D49E2F /* UIImage+ImageEffects.m in Sources */,
