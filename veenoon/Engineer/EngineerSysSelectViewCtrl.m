@@ -8,7 +8,7 @@
 
 #import "EngineerSysSelectViewCtrl.h"
 #import "UIButton+Color.h"
-
+#import "EngineerPortDNSViewCtrl.h"
 
 @interface EngineerSysSelectViewCtrl () {
 }
@@ -73,7 +73,9 @@
 }
 
 - (void) loginAction:(id)sender{
-    
+    EngineerPortDNSViewCtrl *ctrl = [[EngineerPortDNSViewCtrl alloc] init];
+    ctrl._meetingRoomDic = self._meetingRoomDic;
+    [self.navigationController pushViewController:ctrl animated:YES];
 }
 
 - (void) signupAction:(id)sender{
