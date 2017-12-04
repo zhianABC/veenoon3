@@ -8,6 +8,7 @@
 
 #import "EnginnerHomeViewController.h"
 #import "UIButton+Color.h"
+#import "EngineerMeetingRoomListViewCtrl.h"
 
 @interface EnginnerHomeViewController () {
     UITextField *_userNameField;
@@ -109,6 +110,8 @@
 }
 
 -(void) loginAction:(id) sender {
+    EngineerMeetingRoomListViewCtrl *ctrl = [[EngineerMeetingRoomListViewCtrl alloc] init];
     
+    [self.navigationController pushViewController:ctrl animated:YES];
 }
 @end
