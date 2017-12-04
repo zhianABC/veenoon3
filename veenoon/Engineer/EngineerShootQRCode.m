@@ -292,7 +292,6 @@ static EngineerShootQRCode* shootInstance = nil;
         _httpChecker = [[WebClient alloc] initWithDelegate:self];
     }
     
-    _httpChecker._method = [NSString stringWithFormat:@"%@%@", API_SCAN_QR, qrcode];
     _httpChecker._httpMethod = @"GET";
     
     User *u = [UserDefaultsKV getUser];
@@ -411,7 +410,6 @@ static EngineerShootQRCode* shootInstance = nil;
         _httpChecker = [[WebClient alloc] initWithDelegate:self];
     }
     
-    _httpChecker._method = API_INVITE_FRIEND;
     _httpChecker._httpMethod = @"POST";
     
     User *u = [UserDefaultsKV getUser];
