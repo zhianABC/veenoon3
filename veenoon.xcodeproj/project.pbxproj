@@ -178,6 +178,8 @@
 		34686C9F1ED025CB001749A1 /* DesUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 34686C9D1ED025CB001749A1 /* DesUtil.m */; };
 		34928A9A1EC1BD330089F429 /* ReaderCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34928A991EC1BD330089F429 /* ReaderCodeViewController.m */; };
 		3496B75A1FCAF3C5005F4857 /* SignalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3496B7591FCAF3C5005F4857 /* SignalView.m */; };
+		34DC473F1FD6984400ACB589 /* ColumnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DC473E1FD6984400ACB589 /* ColumnView.m */; };
+		34DC47421FD6DD9300ACB589 /* CircleProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DC47401FD6DD9300ACB589 /* CircleProgressView.m */; };
 		EB03F52B1FBDC07200865541 /* InvitationCodeViewCotroller.m in Sources */ = {isa = PBXBuildFile; fileRef = EB03F5291FBDC07100865541 /* InvitationCodeViewCotroller.m */; };
 		EB03F52D1FBDC83100865541 /* home_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB03F52C1FBDC83000865541 /* home_background@2x.png */; };
 		EB03F5341FBDDAB300865541 /* main_settings_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB03F52E1FBDDAB200865541 /* main_settings_n@2x.png */; };
@@ -749,6 +751,10 @@
 		34928A991EC1BD330089F429 /* ReaderCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderCodeViewController.m; sourceTree = "<group>"; };
 		3496B7581FCAF3C5005F4857 /* SignalView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignalView.h; sourceTree = "<group>"; };
 		3496B7591FCAF3C5005F4857 /* SignalView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignalView.m; sourceTree = "<group>"; };
+		34DC473D1FD6984400ACB589 /* ColumnView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColumnView.h; sourceTree = "<group>"; };
+		34DC473E1FD6984400ACB589 /* ColumnView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ColumnView.m; sourceTree = "<group>"; };
+		34DC47401FD6DD9300ACB589 /* CircleProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleProgressView.m; sourceTree = "<group>"; };
+		34DC47411FD6DD9300ACB589 /* CircleProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleProgressView.h; sourceTree = "<group>"; };
 		EB03F5291FBDC07100865541 /* InvitationCodeViewCotroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvitationCodeViewCotroller.m; sourceTree = "<group>"; };
 		EB03F52A1FBDC07100865541 /* InvitationCodeViewCotroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvitationCodeViewCotroller.h; sourceTree = "<group>"; };
 		EB03F52C1FBDC83000865541 /* home_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_background@2x.png"; sourceTree = "<group>"; };
@@ -1930,6 +1936,8 @@
 		EBEA7C1D1FBCAF260028F0E8 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				34DC47411FD6DD9300ACB589 /* CircleProgressView.h */,
+				34DC47401FD6DD9300ACB589 /* CircleProgressView.m */,
 				EB09C4AF1FD3B27200776540 /* MapMarkerLayer.h */,
 				EB09C4B01FD3B27200776540 /* MapMarkerLayer.m */,
 				3422A5B91FCC1B1000F6D3C2 /* gray_slide_bg@2x.png */,
@@ -1952,6 +1960,8 @@
 				3496B7591FCAF3C5005F4857 /* SignalView.m */,
 				3422A5B61FCC17C500F6D3C2 /* BatteryView.h */,
 				3422A5B71FCC17C500F6D3C2 /* BatteryView.m */,
+				34DC473D1FD6984400ACB589 /* ColumnView.h */,
+				34DC473E1FD6984400ACB589 /* ColumnView.m */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -2403,6 +2413,7 @@
 				EB09C4A21FD3A00200776540 /* UserAirConditionViewCtrl.m in Sources */,
 				341F0F471EC2FC500027C800 /* WSCode.m in Sources */,
 				04DE1EAD1AD6AEE000D49E2F /* SDWebImageCompat.m in Sources */,
+				34DC473F1FD6984400ACB589 /* ColumnView.m in Sources */,
 				EB5F7F871FD593F800351888 /* EngineerSysSelectViewCtrl.m in Sources */,
 				04DE1EAC1AD6AEE000D49E2F /* SDImageCache.m in Sources */,
 				EBDF1BFF1FC5BA0900A756EA /* UserMettingRoomConfig.m in Sources */,
@@ -2460,6 +2471,7 @@
 				04DE1EA31AD6AEE000D49E2F /* SBJson4Parser.m in Sources */,
 				EBCA834B1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m in Sources */,
 				04DE1EB51AD6AEE000D49E2F /* UIImageView+WebCache.m in Sources */,
+				34DC47421FD6DD9300ACB589 /* CircleProgressView.m in Sources */,
 				04DE1E8E1AD6AEE000D49E2F /* UIButton+Color.m in Sources */,
 				341671841FBA9765001D33D0 /* SignupViewController.m in Sources */,
 				EB03F5491FBDEB8900865541 /* EnginnerHomeViewController.m in Sources */,
