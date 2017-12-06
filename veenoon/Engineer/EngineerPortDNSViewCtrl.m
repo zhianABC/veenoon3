@@ -101,39 +101,45 @@
 }
 
 - (void)handleTapGesture:(UIGestureRecognizer*)gestureRecognizer {
-    if (_portView._selectedRow <= -1) {
-        return;
+    if (_portView && !_portView.isHidden) {
+        if (_portView._selectedRow <= -1) {
+            return;
+        }
+        NSMutableDictionary *dic = [_portView._portList objectAtIndex:_portView._selectedRow];
+        
+        if (_portView._checkPicker) {
+            [dic setObject:_portView._checkPicker._unitString forKey:@"checkPosition"];
+            [_portView._checkPicker removeFromSuperview];
+        }
+        if (_portView._portPicker) {
+            [dic setObject:_portView._portPicker._unitString forKey:@"portNumber"];
+            [_portView._portPicker removeFromSuperview];
+        }
+        if (_portView._portTypePicker) {
+            [dic setObject:_portView._portTypePicker._unitString forKey:@"portType"];
+            [_portView._portTypePicker removeFromSuperview];
+        }
+        if (_portView._portLvPicker) {
+            [dic setObject:_portView._portLvPicker._unitString forKey:@"portLv"];
+            [_portView._portLvPicker removeFromSuperview];
+        }
+        if (_portView._digitPicker) {
+            [dic setObject:_portView._digitPicker._unitString forKey:@"digitPosition"];
+            [_portView._digitPicker removeFromSuperview];
+        }
+        if (_portView._stopPicker) {
+            [dic setObject:_portView._stopPicker._unitString forKey:@"stopPosition"];
+            [_portView._stopPicker removeFromSuperview];
+        }
+        _portView._selectedRow = -1;
+        _portView._previousSelectedRow =-1;
+        
+        [_portView._tableView reloadData];
     }
-    NSMutableDictionary *dic = [_portView._portList objectAtIndex:_portView._selectedRow];
     
-    if (_portView._checkPicker) {
-        [dic setObject:_portView._checkPicker._unitString forKey:@"checkPosition"];
-        [_portView._checkPicker removeFromSuperview];
+    if (_dnsView && !_dnsView.isHidden) {
+        
     }
-    if (_portView._portPicker) {
-        [dic setObject:_portView._portPicker._unitString forKey:@"portNumber"];
-        [_portView._portPicker removeFromSuperview];
-    }
-    if (_portView._portTypePicker) {
-        [dic setObject:_portView._portTypePicker._unitString forKey:@"portType"];
-        [_portView._portTypePicker removeFromSuperview];
-    }
-    if (_portView._portLvPicker) {
-        [dic setObject:_portView._portLvPicker._unitString forKey:@"portLv"];
-        [_portView._portLvPicker removeFromSuperview];
-    }
-    if (_portView._digitPicker) {
-        [dic setObject:_portView._digitPicker._unitString forKey:@"digitPosition"];
-        [_portView._digitPicker removeFromSuperview];
-    }
-    if (_portView._stopPicker) {
-        [dic setObject:_portView._stopPicker._unitString forKey:@"stopPosition"];
-        [_portView._stopPicker removeFromSuperview];
-    }
-    _portView._selectedRow = -1;
-    _portView._previousSelectedRow =-1;
-    
-    [_portView._tableView reloadData];
 }
 
 - (void) portAction:(id)sender{
