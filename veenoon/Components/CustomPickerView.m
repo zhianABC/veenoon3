@@ -165,6 +165,7 @@
         tL.textColor = _rowNormalColor;
     }
     tL.font = [UIFont boldSystemFontOfSize:20];
+    _unitString = tL.text;
     
     return tL;
 }
