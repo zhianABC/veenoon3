@@ -29,6 +29,6 @@ typedef void(^CustomPickerSelectionBlock)(NSDictionary* values);
 @property (nonatomic, strong) UIColor *_selectColor;
 @property (nonatomic, strong) UIColor *_rowNormalColor;
 - (void)selectRow:(NSInteger)row inComponent:(NSInteger)component;
-
+- (id)initWithFrame:(CGRect)frame withGrayOrLight:(NSString*)grayOrLight;
 
 @end

@@ -10,8 +10,7 @@
 #import "UIButton+Color.h"
 
 
-@interface CustomPickerView ()
-{
+@interface CustomPickerView () {
     UIPickerView    *_myPickerView;
     
     NSMutableDictionary *_values;
@@ -38,13 +37,17 @@
 
 @synthesize _unitString;
 
-- (id)initWithFrame:(CGRect)frame{
+- (id)initWithFrame:(CGRect)frame withGrayOrLight:(NSString*)grayOrLight {
     if (self = [super initWithFrame:frame]) {
         // Initialization code
         //self.backgroundColor = [UIColor redColor];
         
         _background = [[UIImageView alloc] initWithFrame:self.bounds];
-        _background.image = [UIImage imageNamed:@"gray_slide_bg.png"];
+        if ([grayOrLight isEqualToString:@"gray"]) {
+            _background.image = [UIImage imageNamed:@"gray_slide_bg.png"];
+        } else {
+            _background.image = [UIImage imageNamed:@"light_slide_bg.png"];
+        }
         [self addSubview:_background];
         _background.contentMode = UIViewContentModeScaleAspectFill;
         

@@ -7,7 +7,6 @@
 //
 
 #import "UserVideoConfigViewCtrl.h"
-#import "CustomPickerView.h"
 #import "UserVideoConfigView.h"
 #import "UserVideoDVDDiskViewCtrl.h"
 #import "UserVideoCameraSettingsViewCtrl.h"

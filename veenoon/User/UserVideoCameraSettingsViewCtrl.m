@@ -7,7 +7,6 @@
 //
 
 #import "UserVideoCameraSettingsViewCtrl.h"
-#import "CustomPickerView.h"
 #import "UIButton+Color.h"
 
 @interface UserVideoCameraSettingsViewCtrl () {
