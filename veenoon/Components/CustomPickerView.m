@@ -144,7 +144,7 @@
     
     NSArray *values = [section objectForKey:@"values"];
     
-    UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, componentWidth, 50)];
+    UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, componentWidth, 30)];
     tL.backgroundColor = [UIColor clearColor];
     
     id valueRow = [values objectAtIndex:row];

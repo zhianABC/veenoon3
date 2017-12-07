@@ -78,7 +78,7 @@
     EngineerAudioDevicePluginViewCtrl *ctrl = [[EngineerAudioDevicePluginViewCtrl alloc] init];
     ctrl._meetingRoomDic = self._meetingRoomDic;
     
-    [ctrl.navigationController pushViewController:ctrl animated:YES];
+    [self.navigationController pushViewController:ctrl animated:YES];
 }
 
 - (void) cancelAction:(id)sender{
