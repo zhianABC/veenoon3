@@ -63,6 +63,16 @@
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
+    UIView *maskView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    maskView.backgroundColor = [UIColor clearColor];
+    maskView.userInteractionEnabled = YES;
+    [self.view addSubview:maskView];
+    
+    UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+    tapGesture.cancelsTouchesInView =  NO;
+    tapGesture.numberOfTapsRequired = 1;
+    [maskView addGestureRecognizer:tapGesture];
+    
     _portSettingsBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _portSettingsBtn.frame = CGRectMake(SCREEN_WIDTH/2-50, SCREEN_HEIGHT - 130, 50, 50);
     [_portSettingsBtn setImage:[UIImage imageNamed:@"engineer_port_n.png"] forState:UIControlStateNormal];
@@ -77,15 +87,7 @@
     [_dnsSettingsBtn addTarget:self action:@selector(dnsAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_dnsSettingsBtn];
     
-    UIView *maskView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-    maskView.backgroundColor = [UIColor clearColor];
-    maskView.userInteractionEnabled = YES;
-    [self.view addSubview:maskView];
     
-    UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
-    tapGesture.cancelsTouchesInView =  NO;
-    tapGesture.numberOfTapsRequired = 1;
-    [maskView addGestureRecognizer:tapGesture];
     
     _portView = [[EngineerPortSettingView alloc]initWithFrame:CGRectMake(0, 30, SCREEN_WIDTH, SCREEN_HEIGHT-270)];
     _portView.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
@@ -138,7 +140,43 @@
     }
     
     if (_dnsView && !_dnsView.isHidden) {
+        if (_dnsView._selectedRow <= -1) {
+            return;
+        }
+        NSMutableDictionary *dic = [_dnsView._portList objectAtIndex:_dnsView._selectedRow];
         
+        if (_dnsView._serialLabel) {
+            [_dnsView._serialLabel removeFromSuperview];
+        }
+        if (_dnsView._devicNameLabel) {
+            [_dnsView._devicNameLabel removeFromSuperview];
+        }
+        if (_dnsView._devicIPLabel) {
+            [_dnsView._devicIPLabel removeFromSuperview];
+        }
+        if (_dnsView._macAddressLabel) {
+            [_dnsView._macAddressLabel removeFromSuperview];
+        }
+        if (_dnsView._portLvPicker) {
+            [dic setObject:_dnsView._portLvPicker._unitString forKey:@"portLv"];
+            [_dnsView._portLvPicker removeFromSuperview];
+        }
+        if (_dnsView._checkPicker) {
+            [dic setObject:_dnsView._checkPicker._unitString forKey:@"portLv"];
+            [_dnsView._checkPicker removeFromSuperview];
+        }
+        if (_dnsView._digitPicker) {
+            [dic setObject:_dnsView._digitPicker._unitString forKey:@"digitPosition"];
+            [_dnsView._digitPicker removeFromSuperview];
+        }
+        if (_dnsView._stopPicker) {
+            [dic setObject:_dnsView._stopPicker._unitString forKey:@"stopPosition"];
+            [_dnsView._stopPicker removeFromSuperview];
+        }
+        _dnsView._selectedRow = -1;
+        _dnsView._previousSelectedRow =-1;
+        
+        [_dnsView._tableView reloadData];
     }
 }
 
