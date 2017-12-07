@@ -221,6 +221,7 @@
 		EB09C4AE1FD3AC2700776540 /* user_aircon_fire_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB09C4AD1FD3AC2700776540 /* user_aircon_fire_n@2x.png */; };
 		EB09C4B11FD3B27200776540 /* MapMarkerLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = EB09C4B01FD3B27200776540 /* MapMarkerLayer.m */; };
 		EB09C4B31FD3C6D200776540 /* user_airecon_wendu_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB09C4B21FD3C6D200776540 /* user_airecon_wendu_n@2x.png */; };
+		EB09EF2F1FD978C700C968CA /* EngineerToUseTeslariViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB09EF2E1FD978C700C968CA /* EngineerToUseTeslariViewCtrl.m */; };
 		EB1A045C1FC71372007CC1F2 /* user_config_back_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1A045A1FC71372007CC1F2 /* user_config_back_n@2x.png */; };
 		EB1A045D1FC71372007CC1F2 /* user_config_back_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1A045B1FC71372007CC1F2 /* user_config_back_s@2x.png */; };
 		EB1A04601FC7156C007CC1F2 /* UserAudioConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1A045F1FC7156C007CC1F2 /* UserAudioConfigViewController.m */; };
@@ -808,6 +809,8 @@
 		EB09C4AF1FD3B27200776540 /* MapMarkerLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapMarkerLayer.h; sourceTree = "<group>"; };
 		EB09C4B01FD3B27200776540 /* MapMarkerLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapMarkerLayer.m; sourceTree = "<group>"; };
 		EB09C4B21FD3C6D200776540 /* user_airecon_wendu_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_airecon_wendu_n@2x.png"; sourceTree = "<group>"; };
+		EB09EF2D1FD978BD00C968CA /* EngineerToUseTeslariViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerToUseTeslariViewCtrl.h; sourceTree = "<group>"; };
+		EB09EF2E1FD978C700C968CA /* EngineerToUseTeslariViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerToUseTeslariViewCtrl.m; sourceTree = "<group>"; };
 		EB1A045A1FC71372007CC1F2 /* user_config_back_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_config_back_n@2x.png"; sourceTree = "<group>"; };
 		EB1A045B1FC71372007CC1F2 /* user_config_back_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_config_back_s@2x.png"; sourceTree = "<group>"; };
 		EB1A045E1FC71564007CC1F2 /* UserAudioConfigViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserAudioConfigViewController.h; sourceTree = "<group>"; };
@@ -1875,6 +1878,8 @@
 				EB5F7F941FD59D6B00351888 /* EngineerPortSettingView.m */,
 				EB5F7F961FD59D7B00351888 /* EngineerDNSSettingView.h */,
 				EB5F7F971FD59D8400351888 /* EngineerDNSSettingView.m */,
+				EB09EF2D1FD978BD00C968CA /* EngineerToUseTeslariViewCtrl.h */,
+				EB09EF2E1FD978C700C968CA /* EngineerToUseTeslariViewCtrl.m */,
 			);
 			path = Engineer;
 			sourceTree = "<group>";
@@ -2438,6 +2443,7 @@
 				04DE1EB21AD6AEE000D49E2F /* SDWebImagePrefetcher.m in Sources */,
 				EB217FCC1FD42660003F5A8F /* UserAddWetViewCtrl.m in Sources */,
 				04D7197F1DADE098002153D7 /* NSDate-Helper.m in Sources */,
+				EB09EF2F1FD978C700C968CA /* EngineerToUseTeslariViewCtrl.m in Sources */,
 				34686C9E1ED025CB001749A1 /* ConverUtil.m in Sources */,
 				0477DC581DA9F4700077FA52 /* Base64.m in Sources */,
 				049BA6601AF7B64000F17584 /* DataBase.m in Sources */,

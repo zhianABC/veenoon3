@@ -10,6 +10,7 @@
 #import "UIButton+Color.h"
 #import "EngineerDNSSettingView.h"
 #import "EngineerPortSettingView.h"
+#import "EngineerToUseTeslariViewCtrl.h"
 
 @interface EngineerPortDNSViewCtrl () {
     UILabel *_portDNSLabel;
@@ -25,6 +26,16 @@
 @synthesize _meetingRoomDic;
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UIView *maskView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    maskView.backgroundColor = [UIColor clearColor];
+    maskView.userInteractionEnabled = YES;
+    [self.view addSubview:maskView];
+    
+    UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+    tapGesture.cancelsTouchesInView =  NO;
+    tapGesture.numberOfTapsRequired = 1;
+    [maskView addGestureRecognizer:tapGesture];
     
     _portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 50, SCREEN_WIDTH-80, 20)];
     _portDNSLabel.backgroundColor = [UIColor clearColor];
@@ -62,16 +73,6 @@
     [okBtn addTarget:self
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
-    
-    UIView *maskView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-    maskView.backgroundColor = [UIColor clearColor];
-    maskView.userInteractionEnabled = YES;
-    [self.view addSubview:maskView];
-    
-    UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
-    tapGesture.cancelsTouchesInView =  NO;
-    tapGesture.numberOfTapsRequired = 1;
-    [maskView addGestureRecognizer:tapGesture];
     
     _portSettingsBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _portSettingsBtn.frame = CGRectMake(SCREEN_WIDTH/2-50, SCREEN_HEIGHT - 130, 50, 50);
@@ -195,7 +196,10 @@
     _dnsView.hidden = NO;
 }
 - (void) okAction:(id)sender{
+    EngineerToUseTeslariViewCtrl *ctrl = [[EngineerToUseTeslariViewCtrl alloc] init];
+    ctrl._meetingRoomDic = self._meetingRoomDic;
     
+    [self.navigationController pushViewController:ctrl animated:YES];
 }
 
 - (void) cancelAction:(id)sender{
