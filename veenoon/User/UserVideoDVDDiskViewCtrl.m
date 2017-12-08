@@ -7,7 +7,6 @@
 //
 
 #import "UserVideoDVDDiskViewCtrl.h"
-#import "CustomPickerView.h"
 #import "UIButton+Color.h"
 
 @interface UserVideoDVDDiskViewCtrl () {

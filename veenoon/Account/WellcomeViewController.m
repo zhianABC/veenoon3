@@ -102,7 +102,7 @@
     [self.view addSubview:col];
     
     ///测试组件 -- 需要提供背景切图
-    CustomPickerView *levelSetting = [[CustomPickerView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+    CustomPickerView *levelSetting = [[CustomPickerView alloc] initWithFrame:CGRectMake(0, 0, 200, 200) withGrayOrLight:@"gray"];
     
     levelSetting._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
     

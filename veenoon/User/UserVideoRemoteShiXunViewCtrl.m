@@ -7,7 +7,6 @@
 //
 
 #import "UserVideoRemoteShiXunViewCtrl.h"
-#import "CustomPickerView.h"
 #import "UIButton+Color.h"
 
 @interface UserVideoRemoteShiXunViewCtrl () {

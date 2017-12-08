@@ -7,7 +7,6 @@
 //
 
 #import "UserVideoLuBoJiViewCtrl.h"
-#import "CustomPickerView.h"
 #import "UIButton+Color.h"
 #import "DragCellView.h"
 #import "UIImage+Color.h"

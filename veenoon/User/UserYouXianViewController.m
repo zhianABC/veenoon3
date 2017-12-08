@@ -90,7 +90,7 @@
     [_zhuximoshiBtn addTarget:self action:@selector(zhuxiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_zhuximoshiBtn];
     
-    _peoplePicker1 = [[CustomPickerView alloc] initWithFrame:CGRectMake(leftRight+pickerRowLeft, height+pickerHeight, 100, 120)];
+    _peoplePicker1 = [[CustomPickerView alloc] initWithFrame:CGRectMake(leftRight+pickerRowLeft, height+pickerHeight, 100, 120) withGrayOrLight:@"gray"];
     _peoplePicker1._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
     [self.view addSubview:_peoplePicker1];
     [_peoplePicker1 selectRow:0 inComponent:0];
@@ -110,7 +110,7 @@
     [_luntimoshiBtn addTarget:self action:@selector(luntiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_luntimoshiBtn];
     
-    _peoplePicker2 = [[CustomPickerView alloc] initWithFrame:CGRectMake(leftRight+rowGap+cellWidth+pickerRowLeft, height+pickerHeight, 100, 120)];
+    _peoplePicker2 = [[CustomPickerView alloc] initWithFrame:CGRectMake(leftRight+rowGap+cellWidth+pickerRowLeft, height+pickerHeight, 100, 120) withGrayOrLight:@"gray"];
     _peoplePicker2._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
     [self.view addSubview:_peoplePicker2];
     [_peoplePicker2 selectRow:0 inComponent:0];
@@ -130,7 +130,7 @@
     [_shenqingmoshiBtn addTarget:self action:@selector(shenqingAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_shenqingmoshiBtn];
     
-    _peoplePicker3 = [[CustomPickerView alloc] initWithFrame:CGRectMake(leftRight+rowGap*2+cellWidth*2+pickerRowLeft, height+pickerHeight, 100, 120)];
+    _peoplePicker3 = [[CustomPickerView alloc] initWithFrame:CGRectMake(leftRight+rowGap*2+cellWidth*2+pickerRowLeft, height+pickerHeight, 100, 120) withGrayOrLight:@"gray"];
     _peoplePicker3._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
     [self.view addSubview:_peoplePicker3];
     [_peoplePicker3 selectRow:0 inComponent:0];
@@ -150,7 +150,7 @@
     [_ziyoumoshiBtn addTarget:self action:@selector(ziyouAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_ziyoumoshiBtn];
     
-    _peoplePicker4 = [[CustomPickerView alloc] initWithFrame:CGRectMake(leftRight+rowGap*3+cellWidth*3+pickerRowLeft, height+pickerHeight, 100, 120)];
+    _peoplePicker4 = [[CustomPickerView alloc] initWithFrame:CGRectMake(leftRight+rowGap*3+cellWidth*3+pickerRowLeft, height+pickerHeight, 100, 120) withGrayOrLight:@"gray"];
     _peoplePicker4._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
     [self.view addSubview:_peoplePicker4];
     [_peoplePicker4 selectRow:0 inComponent:0];

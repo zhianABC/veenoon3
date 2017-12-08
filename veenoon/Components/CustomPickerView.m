@@ -10,8 +10,7 @@
 #import "UIButton+Color.h"
 
 
-@interface CustomPickerView ()
-{
+@interface CustomPickerView () {
     UIPickerView    *_myPickerView;
     
     NSMutableDictionary *_values;
@@ -38,7 +37,7 @@
 
 @synthesize _unitString;
 
-- (id)initWithFrame:(CGRect)frame{
+- (id)initWithFrame:(CGRect)frame withGrayOrLight:(NSString*)grayOrLight {
     if (self = [super initWithFrame:frame]) {
         // Initialization code
         //self.backgroundColor = [UIColor redColor];
@@ -149,7 +148,7 @@
     
     NSArray *values = [section objectForKey:@"values"];
     
-    UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, componentWidth, 50)];
+    UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, componentWidth, 30)];
     tL.backgroundColor = [UIColor clearColor];
     
     id valueRow = [values objectAtIndex:row];
@@ -170,6 +169,7 @@
         tL.textColor = _rowNormalColor;
     }
     tL.font = [UIFont boldSystemFontOfSize:20];
+    _unitString = tL.text;
     
     return tL;
 }
