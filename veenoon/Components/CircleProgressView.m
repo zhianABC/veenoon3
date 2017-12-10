@@ -25,7 +25,7 @@
 @end
 
 @implementation CircleProgressView
-
+@synthesize textL;
 
 #define SPEED_30 0.05
 
@@ -44,12 +44,12 @@
         self.progressColor = RGB(242, 148, 20);
         self.lineWidth = 10;
         
-        pL = [[UILabel alloc] initWithFrame:self.bounds];
-        pL.backgroundColor = [UIColor clearColor];
-        pL.font = [UIFont boldSystemFontOfSize:15];
-        pL.textColor = RGB(242, 148, 20);
-        pL.textAlignment = NSTextAlignmentCenter;
-        [self addSubview:pL];
+        textL = [[UILabel alloc] initWithFrame:self.bounds];
+        textL.backgroundColor = [UIColor clearColor];
+        textL.font = [UIFont systemFontOfSize:12];
+        textL.textColor = RGB(242, 148, 20);
+        textL.textAlignment = NSTextAlignmentCenter;
+        [self addSubview:textL];
         
         _startAngle = - M_PI - M_PI/6.0;
         _totalAngel = 2*M_PI - M_PI_2 - M_PI/6.0;
@@ -91,7 +91,7 @@
     
     _progress = progress;
     
-    pL.text = [NSString stringWithFormat:@"%d%%",(int)(_progress*100)];
+   // textL.text = [NSString stringWithFormat:@"%d%%",(int)(_progress*100)];
     
     self.currentProgress = _progress;
     [self setNeedsDisplay];
