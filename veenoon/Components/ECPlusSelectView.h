@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface ECPlusSelectView : UIView
-
+{
+    
+}
+@property (nonatomic, strong) NSArray *_data;
 @end

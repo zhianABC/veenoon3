@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>id</key>
+		<integer>1</integer>
+		<key>title</key>
+		<string>电源插件</string>
+		<key>items</key>
+		<array>
+			<dict>
+				<key>id</key>
+				<integer>101</integer>
+				<key>name</key>
+				<string>8路电源管理</string>
+				<key>type</key>
+				<string>系统管理插件</string>
+				<key>icon</key>
+				<string>engineer_dianyuanguanli_n.png</string>
+				<key>icon_sel</key>
+				<string>engineer_dianyuanguanli_s.png</string>
+			</dict>
+			<dict>
+				<key>id</key>
+				<integer>102</integer>
+				<key>name</key>
+				<string>16路电源管理</string>
+				<key>type</key>
+				<string>系统管理插件</string>
+				<key>icon</key>
+				<string>engineer_dianyuanguanli_n.png</string>
+				<key>icon_sel</key>
+				<string>engineer_dianyuanguanli_s.png</string>
+			</dict>
+		</array>
+	</dict>
+	<dict>
+		<key>id</key>
+		<integer>2</integer>
+		<key>title</key>
+		<string>音频插件</string>
+	</dict>
+	<dict>
+		<key>id</key>
+		<integer>3</integer>
+		<key>title</key>
+		<string>视频插件</string>
+	</dict>
+	<dict>
+		<key>id</key>
+		<integer>4</integer>
+		<key>title</key>
+		<string>环境插件</string>
+	</dict>
+</array>
+</plist>

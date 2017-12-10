@@ -18,6 +18,7 @@
 #import "BatteryView.h"
 #import "ColumnView.h"
 #import "CircleProgressView.h"
+#import "ECPlusSelectView.h"
 
 @interface WellcomeViewController ()
 
@@ -163,6 +164,13 @@
 //    batter1.center = CGPointMake(950, 430);
 //
 //    [batter1 setBatteryValue:0.18];
+    
+    
+    ECPlusSelectView *ecp = [[ECPlusSelectView alloc]
+                             initWithFrame:CGRectMake(SCREEN_WIDTH-300,
+                                                      64, 300, SCREEN_HEIGHT-114)];
+    [self.view addSubview:ecp];
+    
 }
 
 - (void) loginAction:(id)sender{
