@@ -17,21 +17,29 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
+    [self.view addSubview:titleIcon];
+    titleIcon.frame = CGRectMake(70, 30, 70, 10);
+    
+    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 59, SCREEN_WIDTH, 1)];
+    line.backgroundColor = RGB(75, 163, 202);
+    [self.view addSubview:line];
+    
     int startX=80;
     int startY = 120;
     
-    UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(startX, startY, SCREEN_WIDTH-80, 40)];
+    UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(startX, startY, SCREEN_WIDTH-80, 30)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont boldSystemFontOfSize:22];
+    portDNSLabel.font = [UIFont boldSystemFontOfSize:20];
     portDNSLabel.textColor  = [UIColor whiteColor];
     portDNSLabel.text = @"请配置您的环境管理系统";
     
-    portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(startX, startY+40, SCREEN_WIDTH-80, 40)];
+    portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(startX, CGRectGetMaxY(portDNSLabel.frame)+15, SCREEN_WIDTH-80, 20)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont systemFontOfSize:20];
-    portDNSLabel.textColor  = [UIColor whiteColor];
+    portDNSLabel.font = [UIFont systemFontOfSize:16];
+    portDNSLabel.textColor  = [UIColor colorWithWhite:1.0 alpha:0.9];
     portDNSLabel.text = @"选择您所需要设置的设备类型> 品牌 > 型号> 数量";
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-60, SCREEN_WIDTH, 60)];
