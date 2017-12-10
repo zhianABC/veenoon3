@@ -11,8 +11,9 @@
 @interface CircleProgressView : UIView
 {
     float _progress;
-    UILabel *pL;
+    UILabel *textL;
 }
+@property (nonatomic, readonly) UILabel *textL;
 
 
 - (void) setProgress:(float)progress;

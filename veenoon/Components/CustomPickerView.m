@@ -43,11 +43,7 @@
         //self.backgroundColor = [UIColor redColor];
         
         _background = [[UIImageView alloc] initWithFrame:self.bounds];
-        if ([grayOrLight isEqualToString:@"gray"]) {
-            _background.image = [UIImage imageNamed:@"gray_slide_bg.png"];
-        } else {
-            _background.image = [UIImage imageNamed:@"light_slide_bg.png"];
-        }
+        //_background.image = [UIImage imageNamed:@"gray_slide_bg.png"];
         [self addSubview:_background];
         _background.contentMode = UIViewContentModeScaleAspectFill;
         
@@ -58,6 +54,14 @@
 
         [self addSubview:_myPickerView];
         
+        
+        for(UIView *speartorView in _myPickerView.subviews)
+        {
+            if (speartorView.frame.size.height < 2)//取出分割线view
+            {
+                speartorView.backgroundColor = [UIColor redColor];//隐藏分割线
+            }
+        }
         
           _values = [[NSMutableDictionary alloc] init];
         

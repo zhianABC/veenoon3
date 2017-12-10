@@ -157,6 +157,7 @@
 		3416718C1FBA9BD0001D33D0 /* wellcome@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3416718B1FBA9BD0001D33D0 /* wellcome@2x.png */; };
 		3419283D1FD3CC760014695B /* DragCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3419283C1FD3CC760014695B /* DragCellView.m */; };
 		341928401FD3D6200014695B /* OutputScreenView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3419283F1FD3D6200014695B /* OutputScreenView.m */; };
+		341C60C41FDCF1EA003A5490 /* ECPlusSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 341C60C31FDCF1EA003A5490 /* ECPlusSelectView.m */; };
 		341F0F401EC2C83A0027C800 /* gmic_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 341F0F3F1EC2C83A0027C800 /* gmic_bg@2x.png */; };
 		341F0F421EC2DF6D0027C800 /* beep-beep.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 341F0F411EC2DF6D0027C800 /* beep-beep.aiff */; };
 		341F0F441EC2E01D0027C800 /* warning.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 341F0F431EC2E01D0027C800 /* warning.mp3 */; };
@@ -740,6 +741,8 @@
 		3419283C1FD3CC760014695B /* DragCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DragCellView.m; sourceTree = "<group>"; };
 		3419283E1FD3D6200014695B /* OutputScreenView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OutputScreenView.h; sourceTree = "<group>"; };
 		3419283F1FD3D6200014695B /* OutputScreenView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OutputScreenView.m; sourceTree = "<group>"; };
+		341C60C21FDCF1EA003A5490 /* ECPlusSelectView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ECPlusSelectView.h; sourceTree = "<group>"; };
+		341C60C31FDCF1EA003A5490 /* ECPlusSelectView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ECPlusSelectView.m; sourceTree = "<group>"; };
 		341F0F3F1EC2C83A0027C800 /* gmic_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gmic_bg@2x.png"; sourceTree = "<group>"; };
 		341F0F411EC2DF6D0027C800 /* beep-beep.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "beep-beep.aiff"; sourceTree = "<group>"; };
 		341F0F431EC2E01D0027C800 /* warning.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = warning.mp3; sourceTree = "<group>"; };
@@ -2033,6 +2036,8 @@
 				3422A5B71FCC17C500F6D3C2 /* BatteryView.m */,
 				34DC473D1FD6984400ACB589 /* ColumnView.h */,
 				34DC473E1FD6984400ACB589 /* ColumnView.m */,
+				341C60C21FDCF1EA003A5490 /* ECPlusSelectView.h */,
+				341C60C31FDCF1EA003A5490 /* ECPlusSelectView.m */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -2522,6 +2527,7 @@
 				049BA6661AF7B82700F17584 /* ChooseCountryViewController.m in Sources */,
 				04DE1E9D1AD6AEE000D49E2F /* DataCenter.m in Sources */,
 				04DE1EA51AD6AEE000D49E2F /* SBJson4StreamParserState.m in Sources */,
+				341C60C41FDCF1EA003A5490 /* ECPlusSelectView.m in Sources */,
 				EB29820F1FD5820D007B5C20 /* ReaderCodeViewController.m in Sources */,
 				04DE1E931AD6AEE000D49E2F /* Utilities.m in Sources */,
 				EB1A04601FC7156C007CC1F2 /* UserAudioConfigViewController.m in Sources */,

@@ -23,6 +23,9 @@
     UIButton *btnDay;
     
     UIScrollView *_content;
+    
+    CircleProgressView *circle;
+    CircleProgressView *circleA;
 }
 @end
 
@@ -103,6 +106,36 @@
                  action:@selector(dayAction:)
        forControlEvents:UIControlEventTouchUpInside];
     
+    circle = [[CircleProgressView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
+    [self.view addSubview:circle];
+    [circle setProgress:0.8];
+    circle.center = CGPointMake(SCREEN_WIDTH - 200, 120);
+    circle.textL.text = @"220V";
+    
+    UILabel* vL = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 30)];
+    vL.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:vL];
+    vL.font = [UIFont boldSystemFontOfSize:16];
+    vL.textColor  = [UIColor whiteColor];
+    vL.text = @"电压";
+    vL.center = CGPointMake(CGRectGetMinX(circle.frame)-20,
+                            CGRectGetMinY(circle.frame)+6);
+    
+    circleA = [[CircleProgressView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
+    [self.view addSubview:circleA];
+    [circleA setProgress:0.2];
+    circleA.center = CGPointMake(SCREEN_WIDTH - 80, 120);
+    circleA.textL.text = @"1.5A";
+    
+    UILabel* aL = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 30)];
+    aL.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:aL];
+    aL.font = [UIFont boldSystemFontOfSize:16];
+    aL.textColor  = [UIColor whiteColor];
+    aL.text = @"电流";
+    aL.center = CGPointMake(CGRectGetMinX(circleA.frame)-20,
+                            CGRectGetMinY(circleA.frame)+6);
+    
     
     [self yearAction:nil];
 }
@@ -142,16 +175,7 @@
     
     [_content addSubview:colYear];
     
-    CircleProgressView *circle = [[CircleProgressView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
-    [self.view addSubview:circle];
-    [circle setProgress:0.5];
-    circle.center = CGPointMake(SCREEN_WIDTH - 200, 120);
-
-    CircleProgressView *circleA = [[CircleProgressView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
-    [self.view addSubview:circleA];
-    [circleA setProgress:0.2];
-    circleA.center = CGPointMake(SCREEN_WIDTH - 80, 120);
-
+   
 }
 
 - (void) drawMonthGraphic
