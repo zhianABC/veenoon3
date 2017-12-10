@@ -8,9 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol ECPlusSelectViewDelegate <NSObject>
+
+@optional
+- (void) didEndDragingElecCell:(NSDictionary *)data pt:(CGPoint)pt;
+
+@end
+
 @interface ECPlusSelectView : UIView
 {
     
 }
 @property (nonatomic, strong) NSArray *_data;
+@property (nonatomic, weak) id <ECPlusSelectViewDelegate> delegate;
+
 @end

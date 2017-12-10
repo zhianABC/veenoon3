@@ -22,6 +22,7 @@ EPlusLayerViewDelegate>
 
 @implementation ECPlusSelectView
 @synthesize _data;
+@synthesize delegate;
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -115,9 +116,9 @@ EPlusLayerViewDelegate>
         NSDictionary *dic = [items objectAtIndex:indexPath.row];
         
         EPlusLayerView *rowCell = [[EPlusLayerView alloc]
-                                  initWithFrame:CGRectMake(15, 10,
+                                  initWithFrame:CGRectMake(0, 0,
                                                            self.
-                                                           frame.size.width-30, 60)];
+                                                           frame.size.width, 80)];
         [cell.contentView addSubview:rowCell];
         rowCell.tag = indexPath.section * 100 + indexPath.row;
         rowCell._enableDrag = YES;
@@ -129,6 +130,7 @@ EPlusLayerViewDelegate>
         NSString *sel = [dic objectForKey:@"icon_sel"];
         rowCell.selectedImg = [UIImage imageNamed:sel];
         rowCell.textLabel.text = [dic objectForKey:@"name"];
+        rowCell.detailLabel.text = [dic objectForKey:@"type"];
 
     }
     
@@ -159,20 +161,20 @@ EPlusLayerViewDelegate>
     
     NSDictionary *sec = [_data objectAtIndex:section];
     
-    UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, SCREEN_WIDTH, 20)];
+    UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(40, 10, SCREEN_WIDTH, 20)];
     tL.textColor = [UIColor whiteColor];
     tL.font = [UIFont systemFontOfSize:14];
     [header addSubview:tL];
     
     tL.text = [sec objectForKey:@"title"];
     
-    UIImageView *iconAdd = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"small_add_icon.png"]];
+    UIImageView *iconAdd = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"down_arraw.png"]];
     [header addSubview:iconAdd];
     iconAdd.center = CGPointMake(20, 20);
     
     if(_curIndex == section)
     {
-        
+        iconAdd.transform = CGAffineTransformMakeRotation(M_PI_2);
     }
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -186,7 +188,16 @@ EPlusLayerViewDelegate>
 
 - (void) extendAction:(UIButton*)sender{
     
-    _curIndex = (int)sender.tag;
+    int nextIndex = (int)sender.tag;
+    
+    if(_curIndex == nextIndex)
+    {
+        _curIndex = -1;
+    }
+    else
+    {
+        _curIndex = nextIndex;
+    }
     
     [_tableView reloadData];
 }
@@ -196,17 +207,30 @@ EPlusLayerViewDelegate>
     _tableView.scrollEnabled = NO;
     
     
-    EPlusLayerView *st = layer;
-    UIImageView *icon = sticker;
-    
-    CGPoint pt = [_tableView convertPoint:icon.center
-                           fromView:st];
-   
-    NSLog(@"%f - %f", pt.x, pt.y);
+//    EPlusLayerView *st = layer;
+//    UIImageView *icon = sticker;
+//
+//    CGPoint pt = [_tableView convertPoint:icon.center
+//                           fromView:st];
+//
+//    NSLog(@"%f - %f", pt.x, pt.y);
     
 }
 - (void) didMovedStickerLayer:(id)layer sticker:(id)sticker{
     
+    
+//    EPlusLayerView *st = layer;
+//    UIImageView *icon = sticker;
+//
+//    CGPoint pt = [_tableView convertPoint:icon.center
+//                                 fromView:st];
+//
+//    NSLog(@"%f - %f", pt.x, pt.y);
+    
+}
+- (void) didEndTouchedStickerLayer:(id)layer sticker:(id)sticker{
+   
+    _tableView.scrollEnabled = YES;
     
     EPlusLayerView *st = layer;
     UIImageView *icon = sticker;
@@ -214,13 +238,11 @@ EPlusLayerViewDelegate>
     CGPoint pt = [_tableView convertPoint:icon.center
                                  fromView:st];
     
-    NSLog(@"%f - %f", pt.x, pt.y);
     
-}
-- (void) didEndTouchedStickerLayer:(id)layer sticker:(id)sticker{
-   
-    _tableView.scrollEnabled = YES;
-    
+    if(delegate && [delegate respondsToSelector:@selector(didEndDragingElecCell:pt:)])
+    {
+        [delegate didEndDragingElecCell:st._element pt:pt];
+    }
     
 }
 

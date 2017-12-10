@@ -29,12 +29,15 @@
 
 - (void) selected{
     
-    
+    /*
     _sticker.image = selectedImg;
     _stickerCopy.image = selectedImg;
 
     textLabel.textColor = [UIColor orangeColor];
     detailLabel.textColor = [UIColor orangeColor];
+    */
+    
+    self.backgroundColor = RGBA(253, 180, 0, 0.5);
     
     _isSelected = YES;
 
@@ -43,12 +46,15 @@
     
     _isSelected = NO;
     
+    self.backgroundColor = [UIColor clearColor];
+    
+    /*
     _sticker.image = normalImg;
     _stickerCopy.image = normalImg;
     
     textLabel.textColor = [UIColor whiteColor];
     detailLabel.textColor = [UIColor whiteColor];
-    
+    */
 }
 - (BOOL) getIsSelected{
     
@@ -64,20 +70,14 @@
         
         self.backgroundColor = [UIColor clearColor];
         
-        _fr = [[UIImageView alloc] initWithFrame:CGRectMake(15, 10, 60, 60)];
-        _fr.layer.cornerRadius = 5;
-        _fr.clipsToBounds = YES;
-        _fr.backgroundColor = SINGAL_COLOR;
-        [self addSubview:_fr];
-        
-        _sticker = [[UIImageView alloc] initWithFrame:CGRectMake(15, 8, 30, 30)];
-        [_fr addSubview:_sticker];
+        _sticker = [[UIImageView alloc] initWithFrame:CGRectMake(15, 10, 60, 60)];
+        [self addSubview:_sticker];
         _sticker.layer.contentsGravity = kCAGravityResizeAspect;
         
         
-        _stickerCopy = [[UIImageView alloc] initWithFrame:CGRectMake(30, 18,
-                                                                     30,
-                                                                     30)];
+        _stickerCopy = [[UIImageView alloc] initWithFrame:CGRectMake(15, 10,
+                                                                     60,
+                                                                     60)];
         
         [self addSubview:_stickerCopy];
         _stickerCopy.layer.contentsGravity = kCAGravityResizeAspect;
@@ -85,24 +85,29 @@
         
         
         
-        int xx = CGRectGetMaxX(_fr.frame)+10;
+        int xx = CGRectGetMaxX(_sticker.frame)+10;
         self.textLabel = [[UILabel alloc]
                           initWithFrame:CGRectMake(xx,
-                                                   10,
+                                                   20,
                                                    frame.size.width-xx-10, 20)];
         [self addSubview:textLabel];
         textLabel.textAlignment = NSTextAlignmentLeft;
         textLabel.font = [UIFont systemFontOfSize:15];
         textLabel.textColor = [UIColor whiteColor];
         
+        self.detailLabel = [[UILabel alloc]
+                          initWithFrame:CGRectMake(xx,
+                                                   40,
+                                                   frame.size.width-xx-10, 20)];
+        [self addSubview:detailLabel];
+        detailLabel.textAlignment = NSTextAlignmentLeft;
+        detailLabel.font = [UIFont systemFontOfSize:15];
+        detailLabel.textColor = [UIColor whiteColor];
+        
     }
     return self;
 }
 
-- (void) setTopIconImage:(UIImage*)icon{
-    
-    _topIcon.image = icon;
-}
 
 
 - (void) enableLongPressed {

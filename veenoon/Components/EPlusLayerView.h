@@ -40,11 +40,7 @@
     NSDictionary *_element;
     
     BOOL _isSelected;
-    
-    UIImageView *_topIcon;
-    UIImageView *_fr;
-    UIImageView *_frBottom;
-    UIImageView *_frLine;
+
 }
 @property (nonatomic, weak) id <EPlusLayerViewDelegate> delegate_;
 @property (nonatomic, strong) NSDictionary * _element;
@@ -64,7 +60,5 @@
 - (void) setSticker:(NSString*)sticker;
 
 - (void) enableLongPressed;
-
-- (void) setTopIconImage:(UIImage*)icon;
 
 @end
