@@ -19,6 +19,8 @@
     UIButton *_yinpinchuliBtn;
     UIButton *_floorWarmBtn;
     
+    UIButton *_confirmButton;
+    
     CustomPickerView *_productTypePikcer;
     CustomPickerView *_brandPicker;
     CustomPickerView *_productCategoryPicker;
@@ -31,21 +33,29 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
+    [self.view addSubview:titleIcon];
+    titleIcon.frame = CGRectMake(70, 30, 70, 10);
+    
+    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 59, SCREEN_WIDTH, 1)];
+    line.backgroundColor = RGB(75, 163, 202);
+    [self.view addSubview:line];
+    
     int startX=80;
     int startY = 120;
     
-    UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(startX, startY, SCREEN_WIDTH-80, 40)];
+    UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(startX, startY-20, SCREEN_WIDTH-80, 30)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont boldSystemFontOfSize:22];
+    portDNSLabel.font = [UIFont boldSystemFontOfSize:20];
     portDNSLabel.textColor  = [UIColor whiteColor];
     portDNSLabel.text = @"请配置您的音频管理系统";
     
-    portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(startX, startY+40, SCREEN_WIDTH-80, 40)];
+    portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(startX, CGRectGetMaxY(portDNSLabel.frame)+15, SCREEN_WIDTH-80, 20)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont systemFontOfSize:20];
-    portDNSLabel.textColor  = [UIColor whiteColor];
+    portDNSLabel.font = [UIFont systemFontOfSize:16];
+    portDNSLabel.textColor  = [UIColor colorWithWhite:1.0 alpha:0.9];
     portDNSLabel.text = @"选择您所需要设置的设备类型> 品牌 > 型号> 数量";
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-60, SCREEN_WIDTH, 60)];
@@ -116,8 +126,8 @@
     [_wuxianhuatongBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_wuxianhuatongBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _wuxianhuatongBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_wuxianhuatongBtn setTitleEdgeInsets:UIEdgeInsetsMake(_wuxianhuatongBtn.imageView.frame.size.height+10,-90,-20,-20)];
-    [_wuxianhuatongBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_wuxianhuatongBtn.titleLabel.bounds.size.height, 0)];
+    [_wuxianhuatongBtn setTitleEdgeInsets:UIEdgeInsetsMake(_wuxianhuatongBtn.imageView.frame.size.height+10,-75,-20,-35)];
+    [_wuxianhuatongBtn setImageEdgeInsets:UIEdgeInsetsMake(-10,15,_wuxianhuatongBtn.titleLabel.bounds.size.height, -15)];
     [_wuxianhuatongBtn addTarget:self action:@selector(wuxianhuatongAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_wuxianhuatongBtn];
     
@@ -129,8 +139,8 @@
     [_huiyiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_huiyiBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _huiyiBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_huiyiBtn setTitleEdgeInsets:UIEdgeInsetsMake(_huiyiBtn.imageView.frame.size.height+10,-90,-20,-20)];
-    [_huiyiBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_huiyiBtn.titleLabel.bounds.size.height, 0)];
+    [_huiyiBtn setTitleEdgeInsets:UIEdgeInsetsMake(_huiyiBtn.imageView.frame.size.height+10,-55,-20,-5)];
+    [_huiyiBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,5.0,_huiyiBtn.titleLabel.bounds.size.height, -5)];
     [_huiyiBtn addTarget:self action:@selector(huiyiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_huiyiBtn];
     
@@ -176,23 +186,22 @@
     int labelStartX = 200;
     int labelStartY = 550;
     
-    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(labelStartX, labelStartY, 200, 30)];
+    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(labelStartX-55, labelStartY, 200, 30)];
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
-    titleL.font = [UIFont boldSystemFontOfSize:14];
+    titleL.font = [UIFont boldSystemFontOfSize:16];
     titleL.textAlignment = NSTextAlignmentCenter;
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"产品类型";
     
     _productTypePikcer = [[CustomPickerView alloc] initWithFrame:CGRectMake(labelStartX, labelStartY+50, 91, 150) withGrayOrLight:@"gray"];
-    _productTypePikcer.backgroundColor = [UIColor redColor];
     _productTypePikcer._pickerDataArray = @[@{@"values":@[@"a",@"z",@"l"]}];
     [_productTypePikcer selectRow:0 inComponent:0];
     _productTypePikcer._selectColor = RGB(253, 180, 0);
     _productTypePikcer._rowNormalColor = RGB(117, 165, 186);
     [self.view addSubview:_productTypePikcer];
     
-    titleL = [[UILabel alloc] initWithFrame:CGRectMake(labelStartX+200, labelStartY, 200, 30)];
+    titleL = [[UILabel alloc] initWithFrame:CGRectMake(labelStartX+140, labelStartY, 200, 30)];
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:16];
@@ -207,7 +216,7 @@
     _brandPicker._rowNormalColor = RGB(117, 165, 186);
     [self.view addSubview:_brandPicker];
     
-    titleL = [[UILabel alloc] initWithFrame:CGRectMake(labelStartX+400, labelStartY, 200, 30)];
+    titleL = [[UILabel alloc] initWithFrame:CGRectMake(labelStartX+340, labelStartY, 200, 30)];
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:16];
@@ -236,6 +245,17 @@
     _numberPicker._selectColor = RGB(253, 180, 0);
     _numberPicker._rowNormalColor = RGB(117, 165, 186);
     [self.view addSubview:_numberPicker];
+    
+    _confirmButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _confirmButton.frame = CGRectMake(labelStartX+600+125, labelStartY+50+55, 50, 50);
+    [_confirmButton setImage:[UIImage imageNamed:@"engineer_confirm_bt_n.png"] forState:UIControlStateNormal];
+    [_confirmButton setImage:[UIImage imageNamed:@"engineer_confirm_bt_s.png"] forState:UIControlStateHighlighted];
+    [_confirmButton addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_confirmButton];
+    
+}
+
+- (void) confirmAction:(id)sender{
     
 }
 

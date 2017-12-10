@@ -43,7 +43,8 @@
         //self.backgroundColor = [UIColor redColor];
         
         _background = [[UIImageView alloc] initWithFrame:self.bounds];
-        //_background.image = [UIImage imageNamed:@"gray_slide_bg.png"];
+        _background.image = [UIImage imageNamed:@"gray_slide_bg.png"];
+        
         [self addSubview:_background];
         _background.contentMode = UIViewContentModeScaleAspectFill;
         
