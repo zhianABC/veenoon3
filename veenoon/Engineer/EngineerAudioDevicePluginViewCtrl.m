@@ -19,6 +19,8 @@
     UIButton *_yinpinchuliBtn;
     UIButton *_floorWarmBtn;
     
+    UIButton *_confirmButton;
+    
     CustomPickerView *_productTypePikcer;
     CustomPickerView *_brandPicker;
     CustomPickerView *_productCategoryPicker;
@@ -243,6 +245,17 @@
     _numberPicker._selectColor = RGB(253, 180, 0);
     _numberPicker._rowNormalColor = RGB(117, 165, 186);
     [self.view addSubview:_numberPicker];
+    
+    _confirmButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _confirmButton.frame = CGRectMake(labelStartX+600+125, labelStartY+50+55, 50, 50);
+    [_confirmButton setImage:[UIImage imageNamed:@"engineer_confirm_bt_n.png"] forState:UIControlStateNormal];
+    [_confirmButton setImage:[UIImage imageNamed:@"engineer_confirm_bt_s.png"] forState:UIControlStateHighlighted];
+    [_confirmButton addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_confirmButton];
+    
+}
+
+- (void) confirmAction:(id)sender{
     
 }
 
