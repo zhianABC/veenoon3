@@ -22,6 +22,23 @@
     
     self.view.backgroundColor = RGB(1, 138, 182);
     
+    UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-60, SCREEN_WIDTH, 60)];
+    [self.view addSubview:bottomBar];
+    bottomBar.backgroundColor = [UIColor grayColor];
+    bottomBar.userInteractionEnabled = YES;
+    bottomBar.image = [UIImage imageNamed:@"botomo_icon.png"];
+    
+    UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    cancelBtn.frame = CGRectMake(10, 0,160, 60);
+    [bottomBar addSubview:cancelBtn];
+    [cancelBtn setTitle:@"返回" forState:UIControlStateNormal];
+    [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [cancelBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    cancelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [cancelBtn addTarget:self
+                  action:@selector(cancelAction:)
+        forControlEvents:UIControlEventTouchUpInside];
+    
     UIImageView *icon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"teslaria_title.png"]];
     [self.view addSubview:icon];
     icon.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.5-100);
@@ -71,7 +88,9 @@
     
     [self.view addSubview:titleL];
 }
-
+- (void) cancelAction:(id)sender{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 - (void) loginAction:(id)sender{
     EngineerPortDNSViewCtrl *ctrl = [[EngineerPortDNSViewCtrl alloc] init];
     ctrl._meetingRoomDic = self._meetingRoomDic;
