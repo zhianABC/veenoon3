@@ -9,6 +9,7 @@
 #import "EngineerScenarioListViewCtrl.h"
 #import "CustomPickerView.h"
 #import "UIButton+Color.h"
+#import "EngineerPresetScenarioViewCtrl.h"
 
 @interface EngineerScenarioListViewCtrl () {
     
@@ -154,7 +155,14 @@
 }
 
 - (void) scenarioAction:(id)sender{
-    
+    UIButton *btn = (UIButton*) sender;
+    int tag = btn.tag;
+    int count = [[self._meetingRoomDic objectForKey:@"scenarioArray"] count];
+    if (tag+1 == count) {
+        EngineerPresetScenarioViewCtrl *ctrl = [[EngineerPresetScenarioViewCtrl alloc] init];
+        ctrl._meetingRoomDic = self._meetingRoomDic;
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
 }
 
 -(void) initData {

@@ -11,7 +11,7 @@
 #import "CMNavigationController.h"
 #import "HomeViewController.h"
 #import "WellcomeViewController.h"
-#import "EngineerScenarioListViewCtrl.h"
+#import "EngineerPresetScenarioViewCtrl.h"
 
 @interface AppDelegate ()
 {
@@ -30,7 +30,7 @@
     [session setActive:YES error:nil];
     [session setCategory:AVAudioSessionCategoryPlayback error:nil];
     
-    EngineerScenarioListViewCtrl *wellcome = [[EngineerScenarioListViewCtrl alloc] init];
+    EngineerPresetScenarioViewCtrl *wellcome = [[EngineerPresetScenarioViewCtrl alloc] init];
     _naviRoot = [[CMNavigationController alloc] initWithRootViewController:wellcome];
     _naviRoot.navigationBarHidden = YES;
     self.window.rootViewController = _naviRoot;
