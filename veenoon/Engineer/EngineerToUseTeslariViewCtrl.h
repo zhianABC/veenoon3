@@ -10,7 +10,7 @@
 #import "BaseViewController.h"
 
 @interface EngineerToUseTeslariViewCtrl : BaseViewController {
-    NSMutableArray *_meetingRoomDic;
+    NSMutableDictionary *_meetingRoomDic;
 }
-@property (nonatomic,strong) NSMutableArray *_meetingRoomDic;
+@property (nonatomic,strong) NSMutableDictionary *_meetingRoomDic;
 @end

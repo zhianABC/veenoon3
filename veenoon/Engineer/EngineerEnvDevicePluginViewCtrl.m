@@ -8,6 +8,7 @@
 
 #import "EngineerEnvDevicePluginViewCtrl.h"
 #import "CustomPickerView.h"
+#import "EngineerScenarioListViewCtrl.h"
 
 @interface EngineerEnvDevicePluginViewCtrl () {
     UIButton *_zhaomingBtn;
@@ -346,6 +347,8 @@
     
 }
 - (void) confirmAction:(id)sender{
+    EngineerScenarioListViewCtrl *ctrl = [[EngineerScenarioListViewCtrl alloc] init];
+    [self.navigationController pushViewController:ctrl animated:YES];
     
 }
 - (void) cancelAction:(id)sender{
