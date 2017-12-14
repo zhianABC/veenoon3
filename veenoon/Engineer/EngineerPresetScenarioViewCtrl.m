@@ -7,6 +7,7 @@
 //
 #import "EngineerPresetScenarioViewCtrl.h"
 #import "ECPlusSelectView.h"
+#import "EngineerElectronicSysConfigViewCtrl.h"
 
 @interface EngineerPresetScenarioViewCtrl<ECPlusSelectViewDelegate> () {
     ECPlusSelectView *ecp;
@@ -18,6 +19,8 @@
     int audioStartX;
     int space;
     int audioStartY;
+    
+    NSString *_selectComName;
 }
 @end
 
@@ -115,13 +118,14 @@
     [self.view addSubview:_audioScroll];
     _audioScroll.backgroundColor = [UIColor clearColor];
     _audioScroll.frame = CGRectMake(startX+50, startY+130, SCREEN_WIDTH-(startX+50)-300, 160);
-    int audioCount = [[_curScenario objectForKey:@"audioArray"] count] + 1;
+    int audioCount = (int) [[_curScenario objectForKey:@"audioArray"] count] + 1;
     _audioScroll.contentSize = CGSizeMake(audioStartX + audioCount*(77+space), 160);
+    _audioScroll.userInteractionEnabled=YES;
     int index = 0;
     for (id audioDic in [_curScenario objectForKey:@"audioArray"]) {
         int audioX = audioStartX + index*(77+space);
         
-        NSString *imageStr = [audioDic objectForKey:@"icon"];
+        NSString *imageStr = (NSString*)[audioDic objectForKey:@"icon"];
         UIImage *roomImage = [UIImage imageNamed:imageStr];
         UIImageView *roomeImageView = [[UIImageView alloc] initWithImage:roomImage];
         roomeImageView.tag = index + 1000;
@@ -129,6 +133,12 @@
         roomeImageView.frame = CGRectMake(audioX, audioStartY, 77, 77);
         roomeImageView.userInteractionEnabled=YES;
         index++;
+        
+        UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+        tapGesture.cancelsTouchesInView =  NO;
+        tapGesture.numberOfTapsRequired = 1;
+        [tapGesture setValue:[audioDic objectForKey:@"name"] forKey:@"name"];
+        [roomeImageView addGestureRecognizer:tapGesture];
     }
     
     portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(startX+50, startY+300, SCREEN_WIDTH-80, 30)];
@@ -142,8 +152,8 @@
     [self.view addSubview:_videoScroll];
     _videoScroll.backgroundColor = [UIColor clearColor];
     _videoScroll.frame = CGRectMake(startX+50, startY+330, SCREEN_WIDTH-(startX+50)-300, 160);
-    
-    int videoCount = [[_curScenario objectForKey:@"videoArray"] count] + 1;
+    _videoScroll.userInteractionEnabled=YES;
+    int videoCount = (int)[[_curScenario objectForKey:@"videoArray"] count] + 1;
     _videoScroll.contentSize = CGSizeMake(audioStartX + videoCount*(77+space), 160);
     int index2 = 0;
     for (id videoDic in [_curScenario objectForKey:@"videoArray"]) {
@@ -157,6 +167,12 @@
         roomeImageView.frame = CGRectMake(audioX, audioStartY, 77, 77);
         roomeImageView.userInteractionEnabled=YES;
         index2++;
+        
+        UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+        tapGesture.cancelsTouchesInView =  NO;
+        tapGesture.numberOfTapsRequired = 1;
+        [tapGesture setValue:[videoDic objectForKey:@"name"] forKey:@"name"];
+        [roomeImageView addGestureRecognizer:tapGesture];
     }
     
     portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(startX+50, startY+500, SCREEN_WIDTH-80, 30)];
@@ -170,8 +186,8 @@
     [self.view addSubview:_envScroll];
     _envScroll.backgroundColor = [UIColor clearColor];
     _envScroll.frame = CGRectMake(startX+50, startY+530, SCREEN_WIDTH-(startX+50)-300, 160);
-    
-    int envCount = [[_curScenario objectForKey:@"envArray"] count] + 1;
+    _envScroll.userInteractionEnabled=YES;
+    int envCount = (int)[[_curScenario objectForKey:@"envArray"] count] + 1;
     _envScroll.contentSize = CGSizeMake(audioStartX + envCount*(77+space), 160);
     int index3 = 0;
     for (id envDic in [_curScenario objectForKey:@"audioArray"]) {
@@ -185,6 +201,12 @@
         roomeImageView.frame = CGRectMake(audioX, audioStartY, 77, 77);
         roomeImageView.userInteractionEnabled=YES;
         index3++;
+        
+        UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+        tapGesture.cancelsTouchesInView =  NO;
+        tapGesture.numberOfTapsRequired = 1;
+        [tapGesture setValue:[envDic objectForKey:@"name"] forKey:@"name"];
+        [roomeImageView addGestureRecognizer:tapGesture];
     }
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-60, SCREEN_WIDTH, 60)];
@@ -206,6 +228,50 @@
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
 }
+
+-(void)handleTapGesture:(UIGestureRecognizer*)gestureRecognizer{
+    NSString *name = [gestureRecognizer valueForKey:@"name"];
+    NSMutableArray *audioArray = [_curScenario objectForKey:@"audioArray"];
+    NSMutableArray *electronic8SysArray;
+    NSMutableArray *electronic16SysArray;
+    for (id audioSys in audioArray) {
+        if ([[audioSys objectForKey:@"name"] isEqualToString:@"electronic8Sys"]) {
+            electronic8SysArray = [audioSys objectForKey:@"value"];
+        }
+        if ([[audioSys objectForKey:@"name"] isEqualToString:@"electronic16Sys"]) {
+            electronic16SysArray = [audioSys objectForKey:@"value"];
+        }
+    }
+    if (electronic8SysArray == nil) {
+        electronic8SysArray = [[NSMutableArray alloc] init];
+        NSMutableDictionary *electronic8SysDic = [[NSMutableDictionary alloc] init];
+        [electronic8SysDic setObject:@"electronic8Sys" forKey:@"name"];
+        [electronic8SysDic setObject:electronic8SysArray forKey:@"value"];
+        
+        [audioArray addObject:electronic8SysDic];
+    }
+    if (electronic16SysArray == nil) {
+        electronic16SysArray = [[NSMutableArray alloc] init];
+        NSMutableDictionary *electronic16SysDic = [[NSMutableDictionary alloc] init];
+        [electronic16SysDic setObject:@"electronic16Sys" forKey:@"name"];
+        [electronic16SysDic setObject:electronic16SysArray forKey:@"value"];
+        
+        [audioArray addObject:electronic16SysDic];
+    }
+    
+    if ([name isEqualToString:@"8路电源管理"] || [name isEqualToString:@"16路电源管理"]) {
+        EngineerElectronicSysConfigViewCtrl *ctrl = [[EngineerElectronicSysConfigViewCtrl alloc] init];
+        if ([name isEqualToString:@"8路电源管理"]) {
+            ctrl._number = 8;
+            ctrl._electronicSysArray = electronic8SysArray;
+        } else {
+            ctrl._number = 16;
+            ctrl._electronicSysArray = electronic16SysArray;
+        }
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+}
+
 - (void) addComponentToEnd:(UIScrollView*) scrollView dataDic:(NSMutableDictionary*)dataDic {
     NSMutableArray *dataArray = nil;
     if (scrollView == _audioScroll) {
@@ -231,6 +297,12 @@
     scrollView.contentSize = CGSizeMake(audioStartX + (count+1)*(77+space), 160);
     
     [dataArray addObject:dataDic];
+    
+    UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+    tapGesture.cancelsTouchesInView =  NO;
+    tapGesture.numberOfTapsRequired = 1;
+    [tapGesture setValue:[dataDic objectForKey:@"name"] forKey:@"name"];
+    [roomeImageView addGestureRecognizer:tapGesture];
 }
 - (void) didEndDragingElecCell:(NSDictionary *)data pt:(CGPoint)pt {
     CGPoint viewPoint = [self.view convertPoint:pt fromView:ecp];

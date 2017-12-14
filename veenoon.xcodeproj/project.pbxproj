@@ -229,6 +229,9 @@
 		EB042A5E1FC3280300F7F73D /* out_system_bk_botom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB042A5D1FC3280300F7F73D /* out_system_bk_botom@2x.png */; };
 		EB0808D71FBC7DF600FD0604 /* teslaria_title@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB0808D51FBC7DF500FD0604 /* teslaria_title@2x.png */; };
 		EB0808D81FBC7DF600FD0604 /* botomo_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB0808D61FBC7DF600FD0604 /* botomo_icon@2x.png */; };
+		EB0968BF1FE2B4C900CF422F /* EngineerElectronicSysConfigViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB0968BE1FE2B4C900CF422F /* EngineerElectronicSysConfigViewCtrl.m */; };
+		EB0968C21FE2CCF900CF422F /* dianyuanshishiqi_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB0968C01FE2CCF800CF422F /* dianyuanshishiqi_n@2x.png */; };
+		EB0968C31FE2CCF900CF422F /* dianyuanshishiqi_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB0968C11FE2CCF800CF422F /* dianyuanshishiqi_s@2x.png */; };
 		EB09C47C1FD25B4300776540 /* UserLightConfigViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB09C47B1FD25B4300776540 /* UserLightConfigViewCtrl.m */; };
 		EB09C4811FD25FF900776540 /* user_light_bg_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB09C47F1FD25FF900776540 /* user_light_bg_s@2x.png */; };
 		EB09C4821FD25FF900776540 /* user_light_bg_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB09C4801FD25FF900776540 /* user_light_bg_n@2x.png */; };
@@ -911,6 +914,10 @@
 		EB042A5D1FC3280300F7F73D /* out_system_bk_botom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "out_system_bk_botom@2x.png"; sourceTree = "<group>"; };
 		EB0808D51FBC7DF500FD0604 /* teslaria_title@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "teslaria_title@2x.png"; sourceTree = "<group>"; };
 		EB0808D61FBC7DF600FD0604 /* botomo_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "botomo_icon@2x.png"; sourceTree = "<group>"; };
+		EB0968BD1FE2B4BE00CF422F /* EngineerElectronicSysConfigViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerElectronicSysConfigViewCtrl.h; sourceTree = "<group>"; };
+		EB0968BE1FE2B4C900CF422F /* EngineerElectronicSysConfigViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerElectronicSysConfigViewCtrl.m; sourceTree = "<group>"; };
+		EB0968C01FE2CCF800CF422F /* dianyuanshishiqi_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dianyuanshishiqi_n@2x.png"; sourceTree = "<group>"; };
+		EB0968C11FE2CCF800CF422F /* dianyuanshishiqi_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dianyuanshishiqi_s@2x.png"; sourceTree = "<group>"; };
 		EB09C47B1FD25B4300776540 /* UserLightConfigViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserLightConfigViewCtrl.m; sourceTree = "<group>"; };
 		EB09C47D1FD25B4E00776540 /* UserLightConfigViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserLightConfigViewCtrl.h; sourceTree = "<group>"; };
 		EB09C47F1FD25FF900776540 /* user_light_bg_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_light_bg_s@2x.png"; sourceTree = "<group>"; };
@@ -1726,6 +1733,8 @@
 		04DE1ECB1AD6B3BA00D49E2F /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
+				EB0968C01FE2CCF800CF422F /* dianyuanshishiqi_n@2x.png */,
+				EB0968C11FE2CCF800CF422F /* dianyuanshishiqi_s@2x.png */,
 				EBAE5BB81FE0002E00C10C4D /* engineer_scenario_add_n@2x.png */,
 				EBAE5B891FDD20BF00C10C4D /* engineer_env_diandongmada_n@2x.png */,
 				EBAE5B8C1FDD20C000C10C4D /* engineer_env_diandongmada_s@2x.png */,
@@ -2210,6 +2219,8 @@
 				EBAE5BB61FDFFBD700C10C4D /* EngineerScenarioListViewCtrl.m */,
 				EBAE5BBA1FE0070600C10C4D /* EngineerPresetScenarioViewCtrl.m */,
 				EBAE5BBC1FE0071C00C10C4D /* EngineerPresetScenarioViewCtrl.h */,
+				EB0968BD1FE2B4BE00CF422F /* EngineerElectronicSysConfigViewCtrl.h */,
+				EB0968BE1FE2B4C900CF422F /* EngineerElectronicSysConfigViewCtrl.m */,
 			);
 			path = Engineer;
 			sourceTree = "<group>";
@@ -2690,6 +2701,7 @@
 				341C61041FDD0DBF003A5490 /* a_wx_2@2x.png in Resources */,
 				EBDF1BEC1FC5A2D000A756EA /* user_meeting_room_1@2x.png in Resources */,
 				341C60F61FDD0DBF003A5490 /* v_icon_8@2x.png in Resources */,
+				EB0968C31FE2CCF900CF422F /* dianyuanshishiqi_s@2x.png in Resources */,
 				EB217FD21FD4275E003F5A8F /* user_add_wet_s@2x.png in Resources */,
 				341C60FF1FDD0DBF003A5490 /* hj_icon_6@2x.png in Resources */,
 				EBDF1C451FC5D5CF00A756EA /* add_wet_sys_n@2x.png in Resources */,
@@ -2704,6 +2716,7 @@
 				EBDF1C431FC5D5CF00A756EA /* light_sys_s@2x.png in Resources */,
 				EB217FDC1FD42A77003F5A8F /* user_door_access_n@2x.png in Resources */,
 				EBF6A73F1FC851E500260FF0 /* audio_player_minus_n@2x.png in Resources */,
+				EB0968C21FE2CCF900CF422F /* dianyuanshishiqi_n@2x.png in Resources */,
 				341C60C61FDCF878003A5490 /* ecplus.plist in Resources */,
 				EB3685F31FC0799A009973A3 /* settings_user_n@2x.png in Resources */,
 				EB217FB31FD41EC7003F5A8F /* user_newwind_h_n@2x.png in Resources */,
@@ -2837,6 +2850,7 @@
 				04DE1EA71AD6AEE000D49E2F /* SBJson4StreamWriter.m in Sources */,
 				EB217FBE1FD423B8003F5A8F /* UserAirCleanViewCtrl.m in Sources */,
 				341C60C91FDCFD7D003A5490 /* EPlusLayerView.m in Sources */,
+				EB0968BF1FE2B4C900CF422F /* EngineerElectronicSysConfigViewCtrl.m in Sources */,
 				04DE1E9B1AD6AEE000D49E2F /* ASINetworkQueue.m in Sources */,
 				04DE1EB11AD6AEE000D49E2F /* SDWebImageManager.m in Sources */,
 				04DE1EAA1AD6AEE000D49E2F /* MKAnnotationView+WebCache.m in Sources */,
