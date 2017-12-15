@@ -9,5 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface PowerSettingView : UIView
+{
+    
+}
+
+- (void) show8Labs;
+- (void) show16Labs;
 
 @end

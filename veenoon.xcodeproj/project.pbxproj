@@ -204,6 +204,7 @@
 		3422A5BB1FCC1B1100F6D3C2 /* gray_slide_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3422A5B91FCC1B1000F6D3C2 /* gray_slide_bg@2x.png */; };
 		3422A5BC1FCC1B1100F6D3C2 /* light_slide_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3422A5BA1FCC1B1100F6D3C2 /* light_slide_bg@2x.png */; };
 		342814231FE34BF100170D11 /* PowerSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 342814221FE34BF100170D11 /* PowerSettingView.m */; };
+		343733AE1FE402E80071C902 /* JHSlideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 343733AD1FE402E80071C902 /* JHSlideView.m */; };
 		34615F091FC9BD7B002DFCE0 /* JSlideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34615F051FC9BD7B002DFCE0 /* JSlideView.m */; };
 		34615F0A1FC9BD7B002DFCE0 /* jslide_bk@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34615F061FC9BD7B002DFCE0 /* jslide_bk@2x.png */; };
 		34615F0B1FC9BD7B002DFCE0 /* jslide_thumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34615F071FC9BD7B002DFCE0 /* jslide_thumb@2x.png */; };
@@ -879,6 +880,8 @@
 		3422A5BA1FCC1B1100F6D3C2 /* light_slide_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "light_slide_bg@2x.png"; sourceTree = "<group>"; };
 		342814211FE34BF100170D11 /* PowerSettingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PowerSettingView.h; sourceTree = "<group>"; };
 		342814221FE34BF100170D11 /* PowerSettingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PowerSettingView.m; sourceTree = "<group>"; };
+		343733AC1FE402E80071C902 /* JHSlideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHSlideView.h; sourceTree = "<group>"; };
+		343733AD1FE402E80071C902 /* JHSlideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHSlideView.m; sourceTree = "<group>"; };
 		34615F051FC9BD7B002DFCE0 /* JSlideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSlideView.m; sourceTree = "<group>"; };
 		34615F061FC9BD7B002DFCE0 /* jslide_bk@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jslide_bk@2x.png"; sourceTree = "<group>"; };
 		34615F071FC9BD7B002DFCE0 /* jslide_thumb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jslide_thumb@2x.png"; sourceTree = "<group>"; };
@@ -2309,6 +2312,8 @@
 				3422A5B41FCC17AD00F6D3C2 /* battery@2x.png */,
 				34615F081FC9BD7B002DFCE0 /* JSlideView.h */,
 				34615F051FC9BD7B002DFCE0 /* JSlideView.m */,
+				343733AC1FE402E80071C902 /* JHSlideView.h */,
+				343733AD1FE402E80071C902 /* JHSlideView.m */,
 				3421EA2C1FC4136600DC5378 /* CustomPickerView.h */,
 				3421EA2B1FC4136600DC5378 /* CustomPickerView.m */,
 				3421EA2E1FC4161300DC5378 /* ColumnsView.h */,
@@ -2942,6 +2947,7 @@
 				04DE1E8E1AD6AEE000D49E2F /* UIButton+Color.m in Sources */,
 				341671841FBA9765001D33D0 /* SignupViewController.m in Sources */,
 				EB03F5491FBDEB8900865541 /* EnginnerHomeViewController.m in Sources */,
+				343733AE1FE402E80071C902 /* JHSlideView.m in Sources */,
 				EBF831E91FD03EC90096E6EC /* UserVideoCameraSettingsViewCtrl.m in Sources */,
 				EB3685FB1FC07A42009973A3 /* SettingsUserView.m in Sources */,
 				EBF6A7481FC861D400260FF0 /* UserWuXianHuaTongViewCtrl.m in Sources */,

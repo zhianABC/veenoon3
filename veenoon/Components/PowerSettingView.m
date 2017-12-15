@@ -7,10 +7,13 @@
 //
 
 #import "PowerSettingView.h"
+#import "JHSlideView.h"
 
 @interface PowerSettingView ()
 {
     UILabel *_secs;
+    
+    UIScrollView *_sliders;
 }
 @end
 
@@ -58,8 +61,79 @@
         icon.alpha = 0.8;
         icon.layer.contentsGravity = kCAGravityResizeAspect;
         
+        
+        _sliders = [[UIScrollView alloc] initWithFrame:CGRectMake(0,
+                                                            100,
+                                                            frame.size.width,
+                                                            frame.size.height-100)];
+        [self addSubview:_sliders];
+        
     }
     return self;
+}
+
+- (void) show8Labs{
+    
+    [[_sliders subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+    int xx = 15;
+    int yy = 10;
+    for(int i = 0; i < 8; i++)
+    {
+        UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(xx, yy, 50, 50)];
+        tL.backgroundColor = [UIColor clearColor];
+        [_sliders addSubview:tL];
+        tL.font = [UIFont boldSystemFontOfSize:14];
+        tL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+        tL.text = [NSString stringWithFormat:@"%d", i+1];
+        
+        JHSlideView *slider = [[JHSlideView alloc] initWithSliderBg:nil
+                                                              frame:CGRectMake(xx+40,
+                                                                               yy,
+                                                                               230,
+                                                                               50)];
+        [_sliders addSubview:slider];
+        slider.minValue = 1;
+        slider.maxValue = 180;
+        [slider setScaleValue:1];
+        
+        yy+=50;
+        
+    }
+    
+    _sliders.contentSize = CGSizeMake(_sliders.frame.size.width, yy);
+}
+
+- (void) show16Labs{
+    
+    [[_sliders subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+    int xx = 15;
+    int yy = 10;
+    for(int i = 0; i < 16; i++)
+    {
+        UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(xx, yy, 50, 50)];
+        tL.backgroundColor = [UIColor clearColor];
+        [_sliders addSubview:tL];
+        tL.font = [UIFont boldSystemFontOfSize:14];
+        tL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+        tL.text = [NSString stringWithFormat:@"%d", i+1];
+        
+        JHSlideView *slider = [[JHSlideView alloc] initWithSliderBg:nil
+                                                              frame:CGRectMake(xx+40,
+                                                                               yy,
+                                                                               230,
+                                                                               50)];
+        [_sliders addSubview:slider];
+        slider.minValue = 1;
+        slider.maxValue = 180;
+        [slider setScaleValue:1];
+        
+        yy+=50;
+        
+    }
+    
+    _sliders.contentSize = CGSizeMake(_sliders.frame.size.width, yy);
 }
 
 @end

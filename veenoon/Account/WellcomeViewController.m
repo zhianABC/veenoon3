@@ -171,6 +171,7 @@
                                                       64, 300, SCREEN_HEIGHT-114)];
     [self.view addSubview:ecp];
     
+    [ecp show8Labs];
 }
 
 - (void) loginAction:(id)sender{
