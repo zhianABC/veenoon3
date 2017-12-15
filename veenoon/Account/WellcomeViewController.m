@@ -18,7 +18,7 @@
 #import "BatteryView.h"
 #import "ColumnView.h"
 #import "CircleProgressView.h"
-#import "ECPlusSelectView.h"
+#import "PowerSettingView.h"
 
 @interface WellcomeViewController ()
 
@@ -166,7 +166,7 @@
 //    [batter1 setBatteryValue:0.18];
     
     
-    ECPlusSelectView *ecp = [[ECPlusSelectView alloc]
+    PowerSettingView *ecp = [[PowerSettingView alloc]
                              initWithFrame:CGRectMake(SCREEN_WIDTH-300,
                                                       64, 300, SCREEN_HEIGHT-114)];
     [self.view addSubview:ecp];
