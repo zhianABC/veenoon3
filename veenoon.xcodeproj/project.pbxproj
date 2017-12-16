@@ -210,6 +210,9 @@
 		3425E9861FE56574003559F7 /* checkbox_sel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3425E9841FE56573003559F7 /* checkbox_sel@2x.png */; };
 		3425E9891FE5687C003559F7 /* CheckButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3425E9881FE5687C003559F7 /* CheckButton.m */; };
 		3425E98C1FE571CE003559F7 /* ComSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3425E98B1FE571CE003559F7 /* ComSettingView.m */; };
+		3425E98F1FE575A4003559F7 /* PlayerSettingsPannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3425E98E1FE575A4003559F7 /* PlayerSettingsPannel.m */; };
+		3425E9921FE5763B003559F7 /* WirlessHandleSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3425E9911FE5763B003559F7 /* WirlessHandleSettingsView.m */; };
+		3425E9951FE57675003559F7 /* MixVoiceSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3425E9941FE57675003559F7 /* MixVoiceSettingsView.m */; };
 		342814231FE34BF100170D11 /* PowerSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 342814221FE34BF100170D11 /* PowerSettingView.m */; };
 		343733AE1FE402E80071C902 /* JHSlideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 343733AD1FE402E80071C902 /* JHSlideView.m */; };
 		34615F091FC9BD7B002DFCE0 /* JSlideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34615F051FC9BD7B002DFCE0 /* JSlideView.m */; };
@@ -894,6 +897,12 @@
 		3425E9881FE5687C003559F7 /* CheckButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckButton.m; sourceTree = "<group>"; };
 		3425E98A1FE571CE003559F7 /* ComSettingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComSettingView.h; sourceTree = "<group>"; };
 		3425E98B1FE571CE003559F7 /* ComSettingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComSettingView.m; sourceTree = "<group>"; };
+		3425E98D1FE575A4003559F7 /* PlayerSettingsPannel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerSettingsPannel.h; sourceTree = "<group>"; };
+		3425E98E1FE575A4003559F7 /* PlayerSettingsPannel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayerSettingsPannel.m; sourceTree = "<group>"; };
+		3425E9901FE5763B003559F7 /* WirlessHandleSettingsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WirlessHandleSettingsView.h; sourceTree = "<group>"; };
+		3425E9911FE5763B003559F7 /* WirlessHandleSettingsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WirlessHandleSettingsView.m; sourceTree = "<group>"; };
+		3425E9931FE57675003559F7 /* MixVoiceSettingsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MixVoiceSettingsView.h; sourceTree = "<group>"; };
+		3425E9941FE57675003559F7 /* MixVoiceSettingsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MixVoiceSettingsView.m; sourceTree = "<group>"; };
 		342814211FE34BF100170D11 /* PowerSettingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PowerSettingView.h; sourceTree = "<group>"; };
 		342814221FE34BF100170D11 /* PowerSettingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PowerSettingView.m; sourceTree = "<group>"; };
 		343733AC1FE402E80071C902 /* JHSlideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHSlideView.h; sourceTree = "<group>"; };
@@ -2356,6 +2365,12 @@
 				342814221FE34BF100170D11 /* PowerSettingView.m */,
 				3425E98A1FE571CE003559F7 /* ComSettingView.h */,
 				3425E98B1FE571CE003559F7 /* ComSettingView.m */,
+				3425E98D1FE575A4003559F7 /* PlayerSettingsPannel.h */,
+				3425E98E1FE575A4003559F7 /* PlayerSettingsPannel.m */,
+				3425E9901FE5763B003559F7 /* WirlessHandleSettingsView.h */,
+				3425E9911FE5763B003559F7 /* WirlessHandleSettingsView.m */,
+				3425E9931FE57675003559F7 /* MixVoiceSettingsView.h */,
+				3425E9941FE57675003559F7 /* MixVoiceSettingsView.m */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -2852,6 +2867,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB217FD81FD429B4003F5A8F /* UserDoorAccessViewCtrl.m in Sources */,
+				3425E9951FE57675003559F7 /* MixVoiceSettingsView.m in Sources */,
 				EB042A5B1FC2FFCD00F7F73D /* OutSystemView.m in Sources */,
 				EB03F52B1FBDC07200865541 /* InvitationCodeViewCotroller.m in Sources */,
 				34928A9A1EC1BD330089F429 /* ReaderCodeViewController.m in Sources */,
@@ -2894,6 +2910,7 @@
 				EB0968BF1FE2B4C900CF422F /* EngineerElectronicSysConfigViewCtrl.m in Sources */,
 				04DE1E9B1AD6AEE000D49E2F /* ASINetworkQueue.m in Sources */,
 				04DE1EB11AD6AEE000D49E2F /* SDWebImageManager.m in Sources */,
+				3425E98F1FE575A4003559F7 /* PlayerSettingsPannel.m in Sources */,
 				04DE1EAA1AD6AEE000D49E2F /* MKAnnotationView+WebCache.m in Sources */,
 				0479345B1DB0A7AA0066BABC /* JCShareView.m in Sources */,
 				04DE1E861AD6AEE000D49E2F /* ConfigureSetting.m in Sources */,
@@ -2973,6 +2990,7 @@
 				04DE1EA41AD6AEE000D49E2F /* SBJson4StreamParser.m in Sources */,
 				3421EA301FC4161300DC5378 /* ColumnsView.m in Sources */,
 				04DE1EA31AD6AEE000D49E2F /* SBJson4Parser.m in Sources */,
+				3425E9921FE5763B003559F7 /* WirlessHandleSettingsView.m in Sources */,
 				EBCA834B1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m in Sources */,
 				04DE1EB51AD6AEE000D49E2F /* UIImageView+WebCache.m in Sources */,
 				34DC47421FD6DD9300ACB589 /* CircleProgressView.m in Sources */,
