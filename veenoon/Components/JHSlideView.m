@@ -20,20 +20,54 @@
         
         self.backgroundColor = [UIColor clearColor];
         
-        slider = [[UISlider alloc] initWithFrame:CGRectMake(0, frame.size.height/2-10+10,
-                                                            frame.size.width-40, 20)];
-        slider.minimumValue = 1;// 设置最小值
-        slider.maximumValue = 180;// 设置最大值
-        slider.continuous = YES;// 设置可连续变化
-        [self addSubview:slider];
-        [slider addTarget:self
-                   action:@selector(sliderValueChanged:)
-         forControlEvents:UIControlEventValueChanged];
         
-        if(sliderBg)
-        {
-            [slider setMaximumTrackImage:sliderBg forState:UIControlStateNormal];
-        }
+//        slider = [[UISlider alloc] initWithFrame:CGRectMake(0, frame.size.height/2-10+10,
+//                                                            frame.size.width-40, 20)];
+//        slider.minimumValue = 1;// 设置最小值
+//        slider.maximumValue = 180;// 设置最大值
+//        slider.continuous = YES;// 设置可连续变化
+//        [slider setThumbImage:[UIImage imageNamed:@"progress_thumb.png"]
+//                     forState:UIControlStateNormal];
+//        [slider setMinimumTrackImage:[UIImage imageNamed:@"process_light.png"]
+//                            forState:UIControlStateNormal];
+//
+//        [self addSubview:slider];
+//        [slider addTarget:self
+//                   action:@selector(sliderValueChanged:)
+//         forControlEvents:UIControlEventValueChanged];
+//
+//        if(sliderBg)
+//        {
+//            [slider setMaximumTrackImage:sliderBg forState:UIControlStateNormal];
+//        }
+        
+        
+        _sliderBg = [[UIImageView alloc] initWithFrame:CGRectMake(0,
+                                                            frame.size.height/2,
+                                                            frame.size.width-40,
+                                                            6)];
+        UIImage *img = [UIImage imageNamed:@"progress_bk.png"];
+        img = [img stretchableImageWithLeftCapWidth:20 topCapHeight:0];
+        _sliderBg.image = img;
+        //_sliderBg.layer.contentsGravity = kCAGravityCenter;
+        _sliderBg.clipsToBounds = YES;
+        [self addSubview:_sliderBg];
+        
+        _sliderFr = [[UIImageView alloc] initWithFrame:CGRectMake(0,
+                                                                  frame.size.height/2,
+                                                                  frame.size.width-40,
+                                                                  6)];
+        img = [UIImage imageNamed:@"process_light.png"];
+        img = [img stretchableImageWithLeftCapWidth:10 topCapHeight:0];
+        _sliderFr.image = img;
+        //_sliderFr.layer.contentsGravity = kCAGravityResizeAspect;
+        _sliderFr.center = CGPointMake(_sliderFr.center.x, _sliderBg.center.y);
+        [self addSubview:_sliderFr];
+        
+        _thumb = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"progress_thumb.png"]];
+        [self addSubview:_thumb];
+        _thumb.center = CGPointMake(0, _sliderFr.center.y);
+        
         
         valueLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 20)];
         [self addSubview:valueLabel];
@@ -57,60 +91,129 @@
 
 - (void) setRoadImage:(UIImage *)image{
     
-    [slider setMinimumTrackImage:image forState:UIControlStateNormal];
+   // [slider setMinimumTrackImage:image forState:UIControlStateNormal];
     
 }
 
 
-- (void) sliderValueChanged:(UISlider*)sender{
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     
-    UISlider *slider = (UISlider *)sender;
-    valueLabel.text = [NSString stringWithFormat:@"%.0fs", slider.value];
+    CGPoint p = [[touches anyObject] locationInView:self];
+    CGRect rc = CGRectMake(0, 0,
+                           self.frame.size.width-40,
+                           self.frame.size.height);
     
-    int v = [valueLabel.text intValue];
+    CGRect rc1 = CGRectMake(0, 0,
+                            self.frame.size.width-30,
+                            self.frame.size.height);
     
-    int ww = CGRectGetWidth(slider.frame) - 30;
-    int xx = 15+v*ww/(maxValue - minValue + 1);
     
-    NSLog(@"%d-%d", v, xx);
+    if (CGRectContainsPoint(rc1, p)) {
+        
+        CGPoint colorPoint = p;
+        colorPoint.y = _sliderFr.center.y;
+        if(colorPoint.x < 0)
+            colorPoint.x = 0;
+        if(colorPoint.x > rc.size.width - 0)
+            colorPoint.x = rc.size.width - 0;
+        _thumb.center = colorPoint;
+        
+        
+        int w = rc.size.width;
+        int subw = _thumb.center.x;
+        int value = (maxValue - minValue + 1)*(float)subw/w + minValue;
+        
+        if(value > maxValue)
+            value = maxValue;
+
+        // NSLog(@"value = %d", value);
+        
+        [self sliderValueChanged:value];
     
-    valueLabel.center  = CGPointMake(xx, valueLabel.center.y);
+    }
+}
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    
+    CGPoint p = [[touches anyObject] locationInView:self];
+    CGRect rc = CGRectMake(0, 0,
+                           self.frame.size.width-40,
+                           self.frame.size.height);
+    
+    CGRect rc1 = CGRectMake(0, 0,
+                           self.frame.size.width-30,
+                           self.frame.size.height);
+    
+    
+    if (CGRectContainsPoint(rc1, p)) {
+        
+        CGPoint colorPoint = p;
+        colorPoint.y = _sliderFr.center.y;
+        if(colorPoint.x < 0)
+            colorPoint.x = 0;
+        if(colorPoint.x > rc.size.width - 0)
+            colorPoint.x = rc.size.width - 0;
+        _thumb.center = colorPoint;
+        
+        
+        int w = rc.size.width;
+        int subw = _thumb.center.x;
+        int value = (maxValue - minValue + 1)*(float)subw/w + minValue;
+        
+        // NSLog(@"value = %d", value);
+        if(value > maxValue)
+            value = maxValue;
+
+        [self sliderValueChanged:value];
+    }
+    
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+    
+   
+    
+}
+
+- (void) sliderValueChanged:(int)value{
+    
+    valueLabel.text = [NSString stringWithFormat:@"%ds", value];
+
+    valueLabel.center  = CGPointMake(_thumb.center.x, valueLabel.center.y);
+    
+    
+    CGRect rc = _sliderFr.frame;
+    rc.size.width = _thumb.center.x;
+    _sliderFr.frame = rc;
     
 }
 
 
 - (int) getScaleValue{
    
-    int value = slider.value;
+    CGRect rc = CGRectMake(0, 0,
+                           self.frame.size.width-40,
+                           self.frame.size.height);
+    
+        int w = rc.size.width;
+        int subw = _thumb.center.x;
+        int value = (maxValue - minValue + 1)*(float)subw/w + minValue;
+
     return value;
 }
 
-- (void) resetScale{
-    
-    
-    int value = [self getScaleValue];
-    valueLabel.text = [NSString stringWithFormat:@"%ds", (value)];
-    
-    int ww = CGRectGetWidth(slider.frame) - 30;
-    int xx = 15+value*ww/(maxValue - minValue + 1);
-    
-    
-    valueLabel.center  = CGPointMake(xx, valueLabel.center.y);
-    
-}
 
 - (void) setScaleValue:(int)value{
     
+    CGRect rc = CGRectMake(0, 0,
+                           self.frame.size.width-40,
+                           self.frame.size.height);
     
-    [slider setValue:value];
+    int w = rc.size.width;
+    float subw = (value - minValue)*w/(maxValue - minValue + 1);
     
-    valueLabel.text = [NSString stringWithFormat:@"%ds", (value)];
+    _thumb.center = CGPointMake(subw, _thumb.center.y);
     
-    int ww = CGRectGetWidth(slider.frame) - 30;
-    int xx = 15+value*ww/(maxValue - minValue + 1);
-    
-    valueLabel.center  = CGPointMake(xx, valueLabel.center.y);
-  
+    [self sliderValueChanged:value];
 }
 
 

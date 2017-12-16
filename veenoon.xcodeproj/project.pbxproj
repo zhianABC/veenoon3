@@ -203,6 +203,13 @@
 		3422A5B81FCC17C500F6D3C2 /* BatteryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3422A5B71FCC17C500F6D3C2 /* BatteryView.m */; };
 		3422A5BB1FCC1B1100F6D3C2 /* gray_slide_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3422A5B91FCC1B1000F6D3C2 /* gray_slide_bg@2x.png */; };
 		3422A5BC1FCC1B1100F6D3C2 /* light_slide_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3422A5BA1FCC1B1100F6D3C2 /* light_slide_bg@2x.png */; };
+		3425E9801FE54C62003559F7 /* process_light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3425E97D1FE54C61003559F7 /* process_light@2x.png */; };
+		3425E9811FE54C62003559F7 /* progress_bk@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3425E97E1FE54C62003559F7 /* progress_bk@2x.png */; };
+		3425E9821FE54C62003559F7 /* progress_thumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3425E97F1FE54C62003559F7 /* progress_thumb@2x.png */; };
+		3425E9851FE56574003559F7 /* checkbox_nor@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3425E9831FE56573003559F7 /* checkbox_nor@2x.png */; };
+		3425E9861FE56574003559F7 /* checkbox_sel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3425E9841FE56573003559F7 /* checkbox_sel@2x.png */; };
+		3425E9891FE5687C003559F7 /* CheckButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3425E9881FE5687C003559F7 /* CheckButton.m */; };
+		3425E98C1FE571CE003559F7 /* ComSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3425E98B1FE571CE003559F7 /* ComSettingView.m */; };
 		342814231FE34BF100170D11 /* PowerSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 342814221FE34BF100170D11 /* PowerSettingView.m */; };
 		343733AE1FE402E80071C902 /* JHSlideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 343733AD1FE402E80071C902 /* JHSlideView.m */; };
 		34615F091FC9BD7B002DFCE0 /* JSlideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34615F051FC9BD7B002DFCE0 /* JSlideView.m */; };
@@ -878,6 +885,15 @@
 		3422A5B71FCC17C500F6D3C2 /* BatteryView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BatteryView.m; sourceTree = "<group>"; };
 		3422A5B91FCC1B1000F6D3C2 /* gray_slide_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gray_slide_bg@2x.png"; sourceTree = "<group>"; };
 		3422A5BA1FCC1B1100F6D3C2 /* light_slide_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "light_slide_bg@2x.png"; sourceTree = "<group>"; };
+		3425E97D1FE54C61003559F7 /* process_light@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "process_light@2x.png"; sourceTree = "<group>"; };
+		3425E97E1FE54C62003559F7 /* progress_bk@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "progress_bk@2x.png"; sourceTree = "<group>"; };
+		3425E97F1FE54C62003559F7 /* progress_thumb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "progress_thumb@2x.png"; sourceTree = "<group>"; };
+		3425E9831FE56573003559F7 /* checkbox_nor@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox_nor@2x.png"; sourceTree = "<group>"; };
+		3425E9841FE56573003559F7 /* checkbox_sel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkbox_sel@2x.png"; sourceTree = "<group>"; };
+		3425E9871FE5687C003559F7 /* CheckButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckButton.h; sourceTree = "<group>"; };
+		3425E9881FE5687C003559F7 /* CheckButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CheckButton.m; sourceTree = "<group>"; };
+		3425E98A1FE571CE003559F7 /* ComSettingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComSettingView.h; sourceTree = "<group>"; };
+		3425E98B1FE571CE003559F7 /* ComSettingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComSettingView.m; sourceTree = "<group>"; };
 		342814211FE34BF100170D11 /* PowerSettingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PowerSettingView.h; sourceTree = "<group>"; };
 		342814221FE34BF100170D11 /* PowerSettingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PowerSettingView.m; sourceTree = "<group>"; };
 		343733AC1FE402E80071C902 /* JHSlideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHSlideView.h; sourceTree = "<group>"; };
@@ -1739,6 +1755,11 @@
 		04DE1ECB1AD6B3BA00D49E2F /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
+				3425E9831FE56573003559F7 /* checkbox_nor@2x.png */,
+				3425E9841FE56573003559F7 /* checkbox_sel@2x.png */,
+				3425E97D1FE54C61003559F7 /* process_light@2x.png */,
+				3425E97E1FE54C62003559F7 /* progress_bk@2x.png */,
+				3425E97F1FE54C62003559F7 /* progress_thumb@2x.png */,
 				EB0968C01FE2CCF800CF422F /* dianyuanshishiqi_n@2x.png */,
 				EB0968C11FE2CCF800CF422F /* dianyuanshishiqi_s@2x.png */,
 				EBAE5BB81FE0002E00C10C4D /* engineer_scenario_add_n@2x.png */,
@@ -2314,6 +2335,8 @@
 				34615F051FC9BD7B002DFCE0 /* JSlideView.m */,
 				343733AC1FE402E80071C902 /* JHSlideView.h */,
 				343733AD1FE402E80071C902 /* JHSlideView.m */,
+				3425E9871FE5687C003559F7 /* CheckButton.h */,
+				3425E9881FE5687C003559F7 /* CheckButton.m */,
 				3421EA2C1FC4136600DC5378 /* CustomPickerView.h */,
 				3421EA2B1FC4136600DC5378 /* CustomPickerView.m */,
 				3421EA2E1FC4161300DC5378 /* ColumnsView.h */,
@@ -2331,6 +2354,8 @@
 				341C60C31FDCF1EA003A5490 /* ECPlusSelectView.m */,
 				342814211FE34BF100170D11 /* PowerSettingView.h */,
 				342814221FE34BF100170D11 /* PowerSettingView.m */,
+				3425E98A1FE571CE003559F7 /* ComSettingView.h */,
+				3425E98B1FE571CE003559F7 /* ComSettingView.m */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -2565,6 +2590,7 @@
 				049BA6031AF7693200F17584 /* rank_icon@2x.png in Resources */,
 				EBAE5BAA1FDD20C400C10C4D /* engineer_env_nenghao_s@2x.png in Resources */,
 				EBAE5B7F1FDD07BE00C10C4D /* engineer_video_dvd_s@2x.png in Resources */,
+				3425E9821FE54C62003559F7 /* progress_thumb@2x.png in Resources */,
 				34615F0F1FC9C264002DFCE0 /* v_slider_road@2x.png in Resources */,
 				EB3685F71FC0799A009973A3 /* settings_view_n@2x.png in Resources */,
 				341C60F01FDD0DBF003A5490 /* v_icon_5@2x.png in Resources */,
@@ -2638,11 +2664,13 @@
 				EB36AAE21FCDA432009A0FD8 /* user_video_touying_n@2x.png in Resources */,
 				EB09EF541FD9A9AE00C968CA /* engineer_gongfang_s@2x.png in Resources */,
 				EBAE5BB91FE0002F00C10C4D /* engineer_scenario_add_n@2x.png in Resources */,
+				3425E9801FE54C62003559F7 /* process_light@2x.png in Resources */,
 				EBF5D4411FCC60240014D5F0 /* shedingzhuxi_n@2x.png in Resources */,
 				EB5F7F901FD598ED00351888 /* engineer_port_n@2x.png in Resources */,
 				04C4B1181AF904FB003FD52B /* Icon.png in Resources */,
 				EBDF1C151FC5C6C900A756EA /* envirement_control_n@2x.png in Resources */,
 				341C60FE1FDD0DBF003A5490 /* hj_icon_12@2x.png in Resources */,
+				3425E9851FE56574003559F7 /* checkbox_nor@2x.png in Resources */,
 				341C60F31FDD0DBF003A5490 /* v_icon_3@2x.png in Resources */,
 				EB36AADF1FCDA432009A0FD8 /* user_video_camera_n@2x.png in Resources */,
 				04DE1FAF1AD6B3BB00D49E2F /* jishucanshu_1@2x.png in Resources */,
@@ -2654,6 +2682,7 @@
 				EBAE5B871FDD07BE00C10C4D /* engineer_video_yejingdianshi_s@2x.png in Resources */,
 				EB09C4931FD2AEAE00776540 /* user_diandongchuanglian_n@2x.png in Resources */,
 				EB36AAE51FCDA432009A0FD8 /* user_video_desk_s@2x.png in Resources */,
+				3425E9861FE56574003559F7 /* checkbox_sel@2x.png in Resources */,
 				046D2F051DA90AD9006C6123 /* showtime_img@2x.png in Resources */,
 				EB03F5381FBDDAB300865541 /* main_user_login_selected@2x.png in Resources */,
 				EB23AE9A1FD1896300D1570F /* remote_video_back_s@2x.png in Resources */,
@@ -2723,6 +2752,7 @@
 				EB09C4A51FD3A6DF00776540 /* user_aircondition_n@2x.png in Resources */,
 				EBDF1C391FC5D5CF00A756EA /* floor_warm_n@2x.png in Resources */,
 				04DE1F6A1AD6B3BB00D49E2F /* background@2x.png in Resources */,
+				3425E9811FE54C62003559F7 /* progress_bk@2x.png in Resources */,
 				EBDF1C431FC5D5CF00A756EA /* light_sys_s@2x.png in Resources */,
 				EB217FDC1FD42A77003F5A8F /* user_door_access_n@2x.png in Resources */,
 				EBF6A73F1FC851E500260FF0 /* audio_player_minus_n@2x.png in Resources */,
@@ -2859,6 +2889,7 @@
 				04DE1EA61AD6AEE000D49E2F /* SBJson4StreamTokeniser.m in Sources */,
 				04DE1EA71AD6AEE000D49E2F /* SBJson4StreamWriter.m in Sources */,
 				EB217FBE1FD423B8003F5A8F /* UserAirCleanViewCtrl.m in Sources */,
+				3425E9891FE5687C003559F7 /* CheckButton.m in Sources */,
 				341C60C91FDCFD7D003A5490 /* EPlusLayerView.m in Sources */,
 				EB0968BF1FE2B4C900CF422F /* EngineerElectronicSysConfigViewCtrl.m in Sources */,
 				04DE1E9B1AD6AEE000D49E2F /* ASINetworkQueue.m in Sources */,
@@ -2895,6 +2926,7 @@
 				04D7197F1DADE098002153D7 /* NSDate-Helper.m in Sources */,
 				EB09EF2F1FD978C700C968CA /* EngineerToUseTeslariViewCtrl.m in Sources */,
 				34686C9E1ED025CB001749A1 /* ConverUtil.m in Sources */,
+				3425E98C1FE571CE003559F7 /* ComSettingView.m in Sources */,
 				0477DC581DA9F4700077FA52 /* Base64.m in Sources */,
 				049BA6601AF7B64000F17584 /* DataBase.m in Sources */,
 				049BA6661AF7B82700F17584 /* ChooseCountryViewController.m in Sources */,

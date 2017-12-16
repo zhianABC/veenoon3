@@ -11,7 +11,9 @@
 
 @interface JHSlideView : UIView
 {
-    UISlider *slider;
+    UIImageView *_sliderBg;
+    UIImageView *_sliderFr;
+    UIImageView *_thumb;
     
     UILabel *valueLabel;
     UILabel *maxL;
@@ -21,9 +23,7 @@
 @property (nonatomic, assign) int minValue;
 
 - (id) initWithSliderBg:(UIImage*)sliderBg frame:(CGRect)frame;
-- (void) setRoadImage:(UIImage *)image;
 
-- (void) resetScale;
 - (void) setScaleValue:(int)value;
 
 - (int) getScaleValue;

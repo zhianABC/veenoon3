@@ -24,6 +24,8 @@
     
     UIColor *_selectColor;
     UIColor *_rowNormalColor;
+    
+    UIButton *btnSave;
 }
 
 @end
@@ -44,6 +46,7 @@
         
         _background = [[UIImageView alloc] initWithFrame:self.bounds];
         _background.image = [UIImage imageNamed:@"gray_slide_bg.png"];
+        
         
         [self addSubview:_background];
         _background.contentMode = UIViewContentModeScaleAspectFill;

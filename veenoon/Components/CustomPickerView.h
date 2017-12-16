@@ -8,7 +8,8 @@
 
 @protocol CustomPickerViewDelegate <NSObject>
 
-
+@optional
+- (void) didChangedPickerValue:(NSDictionary*)value;
 
 @end
 
