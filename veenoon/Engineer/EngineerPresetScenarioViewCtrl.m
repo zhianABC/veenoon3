@@ -8,6 +8,7 @@
 #import "EngineerPresetScenarioViewCtrl.h"
 #import "ECPlusSelectView.h"
 #import "EngineerElectronicSysConfigViewCtrl.h"
+#import "EngineerPlayerSettingsViewCtrl.h"
 
 @interface EngineerPresetScenarioViewCtrl<ECPlusSelectViewDelegate> () {
     ECPlusSelectView *ecp;
@@ -234,12 +235,16 @@
     NSMutableArray *audioArray = [_curScenario objectForKey:@"audioArray"];
     NSMutableArray *electronic8SysArray;
     NSMutableArray *electronic16SysArray;
+    NSMutableArray *playerSysArray;
     for (id audioSys in audioArray) {
         if ([[audioSys objectForKey:@"name"] isEqualToString:@"electronic8Sys"]) {
             electronic8SysArray = [audioSys objectForKey:@"value"];
         }
         if ([[audioSys objectForKey:@"name"] isEqualToString:@"electronic16Sys"]) {
             electronic16SysArray = [audioSys objectForKey:@"value"];
+        }
+        if ([[audioSys objectForKey:@"name"] isEqualToString:@"playerArray"]) {
+            playerSysArray = [audioSys objectForKey:@"value"];
         }
     }
     if (electronic8SysArray == nil) {
@@ -258,6 +263,14 @@
         
         [audioArray addObject:electronic16SysDic];
     }
+    if (playerSysArray == nil) {
+        playerSysArray = [[NSMutableArray alloc] init];
+        NSMutableDictionary *playerDic = [[NSMutableDictionary alloc] init];
+        [playerDic setObject:@"playerSys" forKey:@"name"];
+        [playerDic setObject:playerSysArray forKey:@"value"];
+        
+        [audioArray addObject:playerDic];
+    }
     
     if ([name isEqualToString:@"8路电源管理"] || [name isEqualToString:@"16路电源管理"]) {
         EngineerElectronicSysConfigViewCtrl *ctrl = [[EngineerElectronicSysConfigViewCtrl alloc] init];
@@ -268,6 +281,12 @@
             ctrl._number = 16;
             ctrl._electronicSysArray = electronic16SysArray;
         }
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+    // player array
+    if ([name isEqualToString:@"播放器"]) {
+        EngineerPlayerSettingsViewCtrl *ctrl = [[EngineerPlayerSettingsViewCtrl alloc] init];
+        ctrl._playerSysArray = playerSysArray;
         [self.navigationController pushViewController:ctrl animated:YES];
     }
 }
