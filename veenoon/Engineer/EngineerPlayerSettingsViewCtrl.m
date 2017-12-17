@@ -22,8 +22,6 @@
     UIButton *_nextSing;
     UIButton *_volumnAdd;
     
-    UIImageView *playerIndicator;
-    
     BOOL isplay;
     
     UIButton *_luboBtn;
@@ -131,11 +129,15 @@
     [_volumnAdd addTarget:self action:@selector(nextSingAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_volumnAdd];
     
-    playerIndicator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"audio_player_title_n.png"]];
+    UIImageView *playerIndicator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"audio_player_title_s.png"]];
     [self.view addSubview:playerIndicator];
     playerIndicator.frame = CGRectMake(0, 0, 96, 200);
     playerIndicator.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT - 500);
     
+    playerIndicator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"audio_player_title_n2.png"]];
+    [self.view addSubview:playerIndicator];
+    playerIndicator.frame = CGRectMake(0, 0, 15, 19);
+    playerIndicator.center = CGPointMake(SCREEN_WIDTH/2+48-8, SCREEN_HEIGHT - 500+100-10);
     
     _luboBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
     _luboBtn.frame = CGRectMake(70, SCREEN_HEIGHT-140, 60, 60);
@@ -206,11 +208,9 @@
 
 - (void) audioPlayHoldAction:(id)sender{
     if (isplay) {
-        [playerIndicator setImage:[UIImage imageNamed: @"audio_player_title_n.png"]];
-        [_playOrHold setImage:[UIImage imageNamed:@"audio_player_hold.png"] forState:UIControlStateNormal];
+        [_playOrHold setImage:[UIImage imageNamed:@"audio_player_r_hold.png"] forState:UIControlStateNormal];
         isplay = NO;
     } else {
-        [playerIndicator setImage:[UIImage imageNamed: @"audio_player_title_s.png"]];
         [_playOrHold setImage:[UIImage imageNamed:@"audio_player_play.png"] forState:UIControlStateNormal];
         isplay = YES;
     }
