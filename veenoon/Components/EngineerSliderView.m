@@ -6,9 +6,9 @@
 //  Copyright (c) 2013年 chen jack. All rights reserved.
 //
 
-#import "JSlideView.h"
+#import "EngineerSliderView.h"
 
-@implementation JSlideView
+@implementation EngineerSliderView
 @synthesize delegate;
 @synthesize topEdge;
 @synthesize bottomEdge;
@@ -44,23 +44,6 @@
     return self;
 }
 
-- (void) setRoadImage:(UIImage *)image{
-    
-    if(roadSlider == nil)
-    {
-        roadSlider = [[UIImageView alloc] initWithImage:image];
-    }
-    else
-    {
-        roadSlider.image = image;
-    }
-    
-    [self addSubview:roadSlider];
-    
-    roadSlider.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
-    
-    [self bringSubviewToFront:sliderThumb];
-}
 - (void) resetScalValue:(int) scalValue {
     valueLabel.text = [NSString stringWithFormat:@"%d", (scalValue)];
     if (scalValue == minValue) {
@@ -91,6 +74,26 @@
     [self bringSubviewToFront:sliderThumb];
 }
 
+- (void) setRoadImage:(UIImage *)image{
+    
+    if(roadSlider == nil)
+    {
+        roadSlider = [[UIImageView alloc] initWithImage:image];
+    }
+    else
+    {
+        roadSlider.image = image;
+    }
+    
+    [self addSubview:roadSlider];
+    
+    roadSlider.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
+    
+    [self bringSubviewToFront:sliderThumb];
+}
+
+
+
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     
     CGPoint p = [[touches anyObject] locationInView:self];
@@ -98,7 +101,7 @@
     
     rc = CGRectMake(rc.origin.x, rc.origin.y, rc.size.width, rc.size.height);
     
-	if (CGRectContainsPoint(rc, p)) {
+    if (CGRectContainsPoint(rc, p)) {
         
         CGPoint colorPoint = p;
         colorPoint.x = slider.center.x;
@@ -113,7 +116,7 @@
         int subh = (rc.size.height - bottomEdge) - sliderThumb.center.y;
         int value = (maxValue - minValue)*(float)subh/h + minValue;
         
-       // NSLog(@"value = %d", value);
+        // NSLog(@"value = %d", value);
         
 //        valueLabel.text = [NSString stringWithFormat:@"%d", (value)];
         [self resetScalValue:value];
@@ -125,13 +128,13 @@
     }
 }
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-	CGPoint p = [[touches anyObject] locationInView:self];
+    CGPoint p = [[touches anyObject] locationInView:self];
     
     CGRect rc = slider.frame;
     rc = CGRectMake(rc.origin.x, rc.origin.y, rc.size.width, rc.size.height);
     
-	if (CGRectContainsPoint(rc, p)) {
-		
+    if (CGRectContainsPoint(rc, p)) {
+        
         CGPoint colorPoint = p;
         colorPoint.x = slider.center.x;
         if(colorPoint.y < topEdge)
@@ -143,7 +146,7 @@
         
         int h = rc.size.height - topEdge - bottomEdge;
         int subh = (rc.size.height - bottomEdge) - sliderThumb.center.y;
-
+        
         int value = (maxValue - minValue)*(float)subh/h + minValue;
         
 //        valueLabel.text = [NSString stringWithFormat:@"%d", (value)];
@@ -156,8 +159,8 @@
             [delegate didSliderValueChanged:value object:self];
         }
         
-	}
-
+    }
+    
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
@@ -170,7 +173,7 @@
 }
 
 - (int) getScaleValue{
-   
+    
     CGRect rc = slider.frame;
     int h = rc.size.height - topEdge - bottomEdge;
     int subh = (rc.size.height - bottomEdge) - sliderThumb.center.y;
@@ -200,24 +203,24 @@
     sliderThumb.center = CGPointMake(slider.frame.origin.x+slider.bounds.size.width/2.0,
                                      cy);
     
-    valueLabel.text = [NSString stringWithFormat:@"%d", (value)];
+//    valueLabel.text = [NSString stringWithFormat:@"%d", (value)];
     [self resetScalValue:value];
 }
 
 
 - (void) dealloc
 {
-  
+    
 }
 
 
 /*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
+ // Only override drawRect: if you perform custom drawing.
+ // An empty implementation adversely affects performance during animation.
+ - (void)drawRect:(CGRect)rect
+ {
+ // Drawing code
+ }
+ */
 
 @end

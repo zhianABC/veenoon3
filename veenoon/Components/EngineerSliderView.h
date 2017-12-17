@@ -8,23 +8,23 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol JSlideViewDelegate <NSObject>
+@protocol EngineerSliderViewDelegate <NSObject>
 
 - (void) didSliderValueChanged:(int)value object:(id)object;
 - (void) didSliderEndChanged:(id)object;
 
 @end
 
-@interface JSlideView : UIView
+@interface EngineerSliderView : UIView
 {
     UIImageView *slider;
+    UIImageView *indicator;
     UIImageView *sliderThumb;
     UIImageView *roadSlider;
-    UIImageView *indicator;
     
     UILabel *valueLabel;
 }
-@property (nonatomic, weak) id  <JSlideViewDelegate> delegate;
+@property (nonatomic, weak) id  <EngineerSliderViewDelegate> delegate;
 @property (nonatomic, assign) int topEdge;
 @property (nonatomic, assign) int bottomEdge;
 
@@ -34,9 +34,11 @@
 - (id) initWithSliderBg:(UIImage*)sliderBg frame:(CGRect)frame;
 
 - (void) setRoadImage:(UIImage *)image;
+- (void) setIndicatorImage:(UIImage *)image;
 - (void) resetScale;
 - (void) setScaleValue:(int)value;
 
 - (int) getScaleValue;
 
 @end
+
