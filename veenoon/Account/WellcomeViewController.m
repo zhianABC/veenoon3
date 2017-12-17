@@ -18,7 +18,7 @@
 #import "BatteryView.h"
 #import "ColumnView.h"
 #import "CircleProgressView.h"
-#import "PowerSettingView.h"
+#import "PlayerSettingsPannel.h"
 #import "SlideButton.h"
 
 @interface WellcomeViewController ()
@@ -146,12 +146,12 @@
     CircleProgressView *circle = [[CircleProgressView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
     [self.view addSubview:circle];
     [circle setProgress:0.5];
-    circle.center = CGPointMake(900, 340);
+    circle.center = CGPointMake(600, 340);
     
     SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(0, 0, 120, 120)];
     
     [self.view addSubview:btn];
-    btn.center = CGPointMake(900, 540);
+    btn.center = CGPointMake(600, 540);
     
 //    SignalView *signal = [[SignalView alloc] initWithFrame:CGRectMake(800, 400, 30, 20)];
 //    [self.view addSubview:signal];
@@ -172,12 +172,10 @@
 //    [batter1 setBatteryValue:0.18];
     
     
-//    PowerSettingView *ecp = [[PowerSettingView alloc]
-//                             initWithFrame:CGRectMake(SCREEN_WIDTH-300,
-//                                                      64, 300, SCREEN_HEIGHT-114)];
-//    [self.view addSubview:ecp];
-//
-//    [ecp show8Labs];
+    PlayerSettingsPannel *ecp = [[PlayerSettingsPannel alloc]
+                             initWithFrame:CGRectMake(SCREEN_WIDTH-300,
+                                                      64, 300, SCREEN_HEIGHT-114)];
+    [self.view addSubview:ecp];
 }
 
 - (void) loginAction:(id)sender{

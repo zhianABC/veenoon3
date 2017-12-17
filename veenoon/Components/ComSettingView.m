@@ -11,7 +11,7 @@
 #import "CheckButton.h"
 #import "CustomPickerView.h"
 
-@interface ComSettingView ()
+@interface ComSettingView () <CustomPickerViewDelegate>
 {
     UILabel *_secs;
     UIButton *_btnSave;
@@ -20,7 +20,7 @@
 @end
 
 @implementation ComSettingView
-
+@synthesize _isAllowedClose;
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -43,6 +43,7 @@
         [self addSubview:_btnSave];
         [_btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _btnSave.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -30);
+        _btnSave.titleLabel.font = [UIFont systemFontOfSize:14];
         
         UILabel* line = [[UILabel alloc] initWithFrame:CGRectMake(0, 100, frame.size.width, 1)];
         line.backgroundColor = RGB(1, 138, 182);
@@ -95,6 +96,7 @@
         
         levelSetting._selectColor = [UIColor orangeColor];
         levelSetting._rowNormalColor = [UIColor whiteColor];
+        levelSetting.delegate_ = self;
         [_chooseBg addSubview:levelSetting];
         
         [levelSetting selectRow:0 inComponent:0];
@@ -118,11 +120,16 @@
         
         [self addGestureRecognizer:swip];
         
+        self._isAllowedClose = YES;
+        
     }
     return self;
 }
 
 - (void) closeComSetting{
+    
+    if(_isAllowedClose)
+    {
     
     CGRect rc = self.frame;
     rc.origin.y = 0-rc.size.height;
@@ -133,6 +140,7 @@
                      } completion:^(BOOL finished) {
                          [self removeFromSuperview];
                      }];
+    }
 }
 
 - (void) didPickerValue:(NSDictionary*)values{

@@ -12,7 +12,7 @@
 #import "CustomPickerView.h"
 #import "ComSettingView.h"
 
-@interface PowerSettingView ()
+@interface PowerSettingView () <CustomPickerViewDelegate>
 {
     UILabel *_secs;
     
@@ -55,6 +55,7 @@
         [self addSubview:_btnSave];
         [_btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _btnSave.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -30);
+        _btnSave.titleLabel.font = [UIFont systemFontOfSize:14];
         
         UILabel* line = [[UILabel alloc] initWithFrame:CGRectMake(0, 100, frame.size.width, 1)];
         line.backgroundColor = RGB(1, 138, 182);
@@ -132,7 +133,7 @@
         }
         
         levelSetting._pickerDataArray = @[@{@"values":arr}];
-        
+        levelSetting.delegate_ = self;
         
         levelSetting._selectColor = [UIColor orangeColor];
         levelSetting._rowNormalColor = [UIColor whiteColor];
