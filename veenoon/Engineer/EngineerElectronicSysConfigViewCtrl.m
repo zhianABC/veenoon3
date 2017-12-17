@@ -9,9 +9,14 @@
 #import "EngineerElectronicSysConfigViewCtrl.h"
 #import "UIButton+Color.h"
 #import "PowerSettingView.h"
+#import "CustomPickerView.h"
 
 @interface EngineerElectronicSysConfigViewCtrl () {
     PowerSettingView *_psv;
+    
+    UIButton *_selectSysBtn;
+    
+    CustomPickerView *_customPicker;
 }
 @end
 
@@ -58,6 +63,18 @@
     [okBtn addTarget:self
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
+    
+    _selectSysBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _selectSysBtn.frame = CGRectMake(70, 100, 200, 30);
+    [_selectSysBtn setImage:[UIImage imageNamed:@"engineer_sys_select_down_n.png"] forState:UIControlStateNormal];
+    [_selectSysBtn setTitle:@"电源实时器" forState:UIControlStateNormal];
+    [_selectSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_selectSysBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
+    _selectSysBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+    [_selectSysBtn setTitleEdgeInsets:UIEdgeInsetsMake(0,-30,0,_selectSysBtn.imageView.bounds.size.width+50)];
+    [_selectSysBtn setImageEdgeInsets:UIEdgeInsetsMake(0,_selectSysBtn.titleLabel.bounds.size.width,0,-100)];
+    [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_selectSysBtn];
     
     int index = 0;
     int top = 250;
@@ -163,6 +180,34 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.textAlignment = NSTextAlignmentCenter;
     titleL.text = @"Channel";
+}
+
+- (void) sysSelectAction:(id)sender{
+    _customPicker = [[CustomPickerView alloc]
+                                      initWithFrame:CGRectMake(_selectSysBtn.frame.origin.x, _selectSysBtn.frame.origin.y, _selectSysBtn.frame.size.width, 200) withGrayOrLight:@"gray"];
+    
+    
+    NSMutableArray *arr = [NSMutableArray array];
+    for(int i = 1; i< 2; i++)
+    {
+        [arr addObject:[NSString stringWithFormat:@"00%d", i]];
+    }
+    
+    _customPicker._pickerDataArray = @[@{@"values":arr}];
+    
+    
+    _customPicker._selectColor = [UIColor orangeColor];
+    _customPicker._rowNormalColor = [UIColor whiteColor];
+    [self.view addSubview:_customPicker];
+    _customPicker.delegate_ = self;
+}
+
+- (void) didConfirmPickerValue:(NSString*) pickerValue {
+    if (_customPicker) {
+        [_customPicker removeFromSuperview];
+    }
+    NSString *title =  [@"电源实时器" stringByAppendingString:pickerValue];
+    [_selectSysBtn setTitle:title forState:UIControlStateNormal];
 }
 
 - (void) scenarioAction:(id)sender{

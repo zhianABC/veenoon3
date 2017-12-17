@@ -10,7 +10,7 @@
 
 @optional
 - (void) didChangedPickerValue:(NSDictionary*)value;
-
+- (void) didConfirmPickerValue:(NSString*) pickerValue;
 @end
 
 typedef void(^CustomPickerSelectionBlock)(NSDictionary* values);

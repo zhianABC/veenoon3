@@ -69,12 +69,27 @@
         
           _values = [[NSMutableDictionary alloc] init];
         
+        btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
+        btnSave.frame = CGRectMake(frame.size.width-50, frame.size.height/2-25, 50, 50);
+        [btnSave setImage:[UIImage imageNamed:@"customer_view_confirm_n.png"] forState:UIControlStateNormal];
+        [btnSave setImage:[UIImage imageNamed:@"customer_view_confirm_s.png"] forState:UIControlStateHighlighted];
+        [btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [btnSave setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
+        btnSave.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+        [btnSave addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:btnSave];
+        
+        
     }
     return self;
 }
 
 
-
+- (void) confirmAction:(id) sender {
+    if([delegate_ respondsToSelector:@selector(didConfirmPickerValue:)]){
+        [delegate_ didConfirmPickerValue:_unitString];
+    }
+}
 
 
 - (void)selectRow:(NSInteger)row inComponent:(NSInteger)component {
