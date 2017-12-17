@@ -8,8 +8,10 @@
 
 #import "EngineerElectronicSysConfigViewCtrl.h"
 #import "UIButton+Color.h"
+#import "PowerSettingView.h"
+
 @interface EngineerElectronicSysConfigViewCtrl () {
-    
+    PowerSettingView *_psv;
 }
 @end
 
@@ -59,6 +61,10 @@
     
     int index = 0;
     int top = 250;
+    if (self._number == 8) {
+        top = 350;
+    }
+    
     int leftRight = 100;
     
     int cellWidth = 92;
@@ -176,7 +182,12 @@
 }
 
 - (void) okAction:(id)sender{
+    _psv = [[PowerSettingView alloc]
+                             initWithFrame:CGRectMake(SCREEN_WIDTH-300,
+                                                      64, 300, SCREEN_HEIGHT-114)];
+    [self.view addSubview:_psv];
     
+    [_psv show8Labs];
 }
 
 - (void) cancelAction:(id)sender{
