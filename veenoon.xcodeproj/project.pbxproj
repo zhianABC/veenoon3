@@ -430,6 +430,7 @@
 		EB3B73AC1FE621B7001941CF /* engineer_tanchu_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB3B73A81FE621B6001941CF /* engineer_tanchu_n@2x.png */; };
 		EB3B73AD1FE621B7001941CF /* engineer_lubo_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB3B73A91FE621B6001941CF /* engineer_lubo_n@2x.png */; };
 		EB3B73AF1FE6239F001941CF /* audio_player_title_n2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB3B73AE1FE6239E001941CF /* audio_player_title_n2@2x.png */; };
+		EB3B73B21FE6382F001941CF /* EngineerWirlessYaoBaoViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB3B73B11FE6382F001941CF /* EngineerWirlessYaoBaoViewCtrl.m */; };
 		EB5CF03F1FD3DC92007958C9 /* UserNewWindViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5CF03E1FD3DC92007958C9 /* UserNewWindViewCtrl.m */; };
 		EB5CF0411FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5CF0401FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m */; };
 		EB5D91FC1FBB2F78004ED38D /* login_right_arraw@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB5D91FB1FBB2F77004ED38D /* login_right_arraw@2x.png */; };
@@ -1172,6 +1173,8 @@
 		EB3B73A81FE621B6001941CF /* engineer_tanchu_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_tanchu_n@2x.png"; sourceTree = "<group>"; };
 		EB3B73A91FE621B6001941CF /* engineer_lubo_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_lubo_n@2x.png"; sourceTree = "<group>"; };
 		EB3B73AE1FE6239E001941CF /* audio_player_title_n2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio_player_title_n2@2x.png"; sourceTree = "<group>"; };
+		EB3B73B01FE63822001941CF /* EngineerWirlessYaoBaoViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerWirlessYaoBaoViewCtrl.h; sourceTree = "<group>"; };
+		EB3B73B11FE6382F001941CF /* EngineerWirlessYaoBaoViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerWirlessYaoBaoViewCtrl.m; sourceTree = "<group>"; };
 		EB5CF03D1FD3DC80007958C9 /* UserNewWindViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserNewWindViewCtrl.h; sourceTree = "<group>"; };
 		EB5CF03E1FD3DC92007958C9 /* UserNewWindViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserNewWindViewCtrl.m; sourceTree = "<group>"; };
 		EB5CF0401FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserInfoCollectViewCtrl.m; sourceTree = "<group>"; };
@@ -2299,6 +2302,8 @@
 				EB0968BE1FE2B4C900CF422F /* EngineerElectronicSysConfigViewCtrl.m */,
 				EB3B73991FE61B18001941CF /* EngineerPlayerSettingsViewCtrl.m */,
 				EB3B739B1FE61B2B001941CF /* EngineerPlayerSettingsViewCtrl.h */,
+				EB3B73B01FE63822001941CF /* EngineerWirlessYaoBaoViewCtrl.h */,
+				EB3B73B11FE6382F001941CF /* EngineerWirlessYaoBaoViewCtrl.m */,
 			);
 			path = Engineer;
 			sourceTree = "<group>";
@@ -2976,6 +2981,7 @@
 				04D719781DADD3A4002153D7 /* WSUser.m in Sources */,
 				04D9A0EB1DAF83E0008DF2E6 /* AudioPlayer.m in Sources */,
 				04DE1E971AD6AEE000D49E2F /* ASIDownloadCache.m in Sources */,
+				EB3B73B21FE6382F001941CF /* EngineerWirlessYaoBaoViewCtrl.m in Sources */,
 				EB09C4B11FD3B27200776540 /* MapMarkerLayer.m in Sources */,
 				3419283D1FD3CC760014695B /* DragCellView.m in Sources */,
 				EB2982151FD58699007B5C20 /* EngineerMeetingRoomListViewCtrl.m in Sources */,
