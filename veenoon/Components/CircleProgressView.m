@@ -15,6 +15,11 @@
     float _startAngle;
     
     float _totalAngel;
+    
+    UIImageView *_blackpoint;
+    UIImageView *_pointer;
+
+
 }
 @property (strong, nonatomic) UIColor *backColor;
 @property (strong, nonatomic) UIColor *progressColor;
@@ -26,6 +31,7 @@
 
 @implementation CircleProgressView
 @synthesize textL;
+@synthesize _isShowingPoint;
 
 #define SPEED_30 0.05
 
@@ -53,10 +59,32 @@
         
         _startAngle = - M_PI - M_PI/6.0;
         _totalAngel = 2*M_PI - M_PI_2 - M_PI/6.0;
+        
+        int ww = frame.size.width - 24;
+        _blackpoint = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"black_point.png"]];
+        
+        _pointer = [[UIImageView alloc] initWithFrame:CGRectMake(12,
+                                                                 frame.size.height/2-3,
+                                                                 ww, 6)];
+        [_pointer addSubview:_blackpoint];
+        _pointer.backgroundColor = [UIColor clearColor];
+        _blackpoint.center = CGPointMake(ww - CGRectGetMidX(_blackpoint.frame), 3);
+        //_pointer.layer.anchorPoint = CGPointMake(1, 0.5);
+        
+      
+        [self addSubview:_pointer];
+        
+        _pointer.transform = CGAffineTransformMakeRotation(_startAngle);
+        _pointer.hidden = YES;
     }
     return self;
 }
 
+
+- (void) setProgressBolder:(float)bolder{
+    
+    self.lineWidth = bolder;
+}
 
 
 - (void)drawRect:(CGRect)rect
@@ -73,15 +101,22 @@
     
     if (self.currentProgress != 0) {
         //draw progress circle
+        
+        float endangel = (CGFloat)(_startAngle + self.currentProgress * _totalAngel);
+        
         UIBezierPath *progressCircle = [UIBezierPath bezierPathWithArcCenter:
                                         CGPointMake(self.bounds.size.width / 2,self.bounds.size.height / 2)
                                                                       radius:self.bounds.size.width / 2 - self.lineWidth / 2
                                                                   startAngle:_startAngle
-                                                                    endAngle:(CGFloat)(_startAngle + self.currentProgress * _totalAngel)
+                                                                    endAngle:endangel
                                                                    clockwise:YES];
         [self.progressColor setStroke];
         progressCircle.lineWidth = self.lineWidth;
         [progressCircle stroke];
+        
+        
+        if(_isShowingPoint)
+            _pointer.transform = CGAffineTransformMakeRotation(endangel);
     }
 }
 
@@ -91,11 +126,28 @@
     
     _progress = progress;
     
+    _pointer.hidden = !_isShowingPoint;
+    
    // textL.text = [NSString stringWithFormat:@"%d%%",(int)(_progress*100)];
     
     self.currentProgress = _progress;
     [self setNeedsDisplay];
     
+}
+
+- (void) stepProgress:(float)step{
+    
+     self.currentProgress = _progress+step;
+    if(self.currentProgress < 0)
+        self.currentProgress = 0;
+    if(self.currentProgress > 1.0)
+        self.currentProgress = 1.0;
+    
+    [self setNeedsDisplay];
+}
+- (void) syncCurrentStepedValue{
+    
+    _progress = self.currentProgress;
 }
 
 - (void) updateOffest:(float)offset{

@@ -86,9 +86,18 @@
 
 
 - (void) confirmAction:(id) sender {
+    
+    
+    if(_selectionBlock)
+    {
+        _selectionBlock(_values);
+    }
+    
     if([delegate_ respondsToSelector:@selector(didConfirmPickerValue:)]){
         [delegate_ didConfirmPickerValue:_unitString];
     }
+    
+    
 }
 
 
@@ -123,10 +132,10 @@
     [_values setObject:[values objectAtIndex:row]
                 forKey:[NSNumber numberWithInteger:component]];
     
-    if(_selectionBlock)
-    {
-        _selectionBlock(_values);
-    }
+//    if(_selectionBlock)
+//    {
+//        _selectionBlock(_values);
+//    }
     _rowSelected = row;
     
     [pickerView reloadComponent:component];

@@ -19,6 +19,7 @@
 #import "ColumnView.h"
 #import "CircleProgressView.h"
 #import "PowerSettingView.h"
+#import "SlideButton.h"
 
 @interface WellcomeViewController ()
 
@@ -147,6 +148,11 @@
     [circle setProgress:0.5];
     circle.center = CGPointMake(900, 340);
     
+    SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(0, 0, 120, 120)];
+    
+    [self.view addSubview:btn];
+    btn.center = CGPointMake(900, 540);
+    
 //    SignalView *signal = [[SignalView alloc] initWithFrame:CGRectMake(800, 400, 30, 20)];
 //    [self.view addSubview:signal];
 //    [signal setLightColor:[UIColor greenColor]];//SINGAL_COLOR
@@ -166,12 +172,12 @@
 //    [batter1 setBatteryValue:0.18];
     
     
-    PowerSettingView *ecp = [[PowerSettingView alloc]
-                             initWithFrame:CGRectMake(SCREEN_WIDTH-300,
-                                                      64, 300, SCREEN_HEIGHT-114)];
-    [self.view addSubview:ecp];
-    
-    [ecp show8Labs];
+//    PowerSettingView *ecp = [[PowerSettingView alloc]
+//                             initWithFrame:CGRectMake(SCREEN_WIDTH-300,
+//                                                      64, 300, SCREEN_HEIGHT-114)];
+//    [self.view addSubview:ecp];
+//
+//    [ecp show8Labs];
 }
 
 - (void) loginAction:(id)sender{

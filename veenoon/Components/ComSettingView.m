@@ -156,6 +156,12 @@
     }
     
 }
-
+- (void) didConfirmPickerValue:(NSString*) pickerValue{
+    
+    if([_chooseBg superview])
+    {
+        [_chooseBg removeFromSuperview];
+    }
+}
 
 @end

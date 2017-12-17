@@ -14,10 +14,15 @@
     UILabel *textL;
 }
 @property (nonatomic, readonly) UILabel *textL;
-
+@property (nonatomic, assign) BOOL _isShowingPoint;
 
 - (void) setProgress:(float)progress;
 - (void) updateOffest:(float)offset;
 
+- (void) setProgressBolder:(float)bolder;
+
 - (void) smallRefreshMode;
+
+- (void) stepProgress:(float)step;
+- (void) syncCurrentStepedValue;
 @end
