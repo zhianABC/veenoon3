@@ -9,6 +9,7 @@
 #import "ECPlusSelectView.h"
 #import "EngineerElectronicSysConfigViewCtrl.h"
 #import "EngineerPlayerSettingsViewCtrl.h"
+#import "EngineerWirlessYaoBaoViewCtrl.h"
 
 @interface EngineerPresetScenarioViewCtrl<ECPlusSelectViewDelegate> () {
     ECPlusSelectView *ecp;
@@ -236,6 +237,7 @@
     NSMutableArray *electronic8SysArray;
     NSMutableArray *electronic16SysArray;
     NSMutableArray *playerSysArray;
+    NSMutableArray *wirelessYaobaoArray;
     for (id audioSys in audioArray) {
         if ([[audioSys objectForKey:@"name"] isEqualToString:@"electronic8Sys"]) {
             electronic8SysArray = [audioSys objectForKey:@"value"];
@@ -243,8 +245,11 @@
         if ([[audioSys objectForKey:@"name"] isEqualToString:@"electronic16Sys"]) {
             electronic16SysArray = [audioSys objectForKey:@"value"];
         }
-        if ([[audioSys objectForKey:@"name"] isEqualToString:@"playerArray"]) {
+        if ([[audioSys objectForKey:@"name"] isEqualToString:@"playerSys"]) {
             playerSysArray = [audioSys objectForKey:@"value"];
+        }
+        if ([[audioSys objectForKey:@"name"] isEqualToString:@"wirelessYaobaoSys"]) {
+            wirelessYaobaoArray = [audioSys objectForKey:@"value"];
         }
     }
     if (electronic8SysArray == nil) {
@@ -272,6 +277,15 @@
         [audioArray addObject:playerDic];
     }
     
+    if (wirelessYaobaoArray == nil) {
+        wirelessYaobaoArray = [[NSMutableArray alloc] init];
+        NSMutableDictionary *playerDic = [[NSMutableDictionary alloc] init];
+        [playerDic setObject:@"wirelessYaobaoSys" forKey:@"name"];
+        [playerDic setObject:wirelessYaobaoArray forKey:@"value"];
+        
+        [audioArray addObject:playerDic];
+    }
+    
     if ([name isEqualToString:@"8路电源管理"] || [name isEqualToString:@"16路电源管理"]) {
         EngineerElectronicSysConfigViewCtrl *ctrl = [[EngineerElectronicSysConfigViewCtrl alloc] init];
         if ([name isEqualToString:@"8路电源管理"]) {
@@ -287,6 +301,13 @@
     if ([name isEqualToString:@"播放器"]) {
         EngineerPlayerSettingsViewCtrl *ctrl = [[EngineerPlayerSettingsViewCtrl alloc] init];
         ctrl._playerSysArray = playerSysArray;
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+    
+    // wuxian array
+    if ([name isEqualToString:@"无线麦"]) {
+        EngineerWirlessYaoBaoViewCtrl *ctrl = [[EngineerWirlessYaoBaoViewCtrl alloc] init];
+        ctrl._wirelessYaoBaoSysArray = wirelessYaobaoArray;
         [self.navigationController pushViewController:ctrl animated:YES];
     }
 }
