@@ -61,8 +61,35 @@
     
     [self bringSubviewToFront:sliderThumb];
 }
-
-
+- (void) resetScalValue:(int) scalValue {
+    valueLabel.text = [NSString stringWithFormat:@"%d", (scalValue)];
+    if (scalValue == minValue) {
+        [self setIndicatorImage: [UIImage imageNamed:@"wireless_slide_n.png"]];
+        [self setRoadImage: [UIImage imageNamed:@"v_slider_road_n.png"]];
+        sliderThumb.image = [UIImage imageNamed:@"jslide_thumb_n.png"];
+    } else {
+        [self setIndicatorImage: [UIImage imageNamed:@"wireless_slide_s.png"]];
+        [self setRoadImage: [UIImage imageNamed:@"v_slider_road.png"]];
+        sliderThumb.image = [UIImage imageNamed:@"jslide_thumb.png"];
+    }
+}
+- (void) setIndicatorImage:(UIImage *)image{
+    
+    if(indicator == nil)
+    {
+        indicator = [[UIImageView alloc] initWithImage:image];
+    }
+    else
+    {
+        indicator.image = image;
+    }
+    
+    [self addSubview:indicator];
+    
+    indicator.center = CGPointMake(self.bounds.size.width/2, CGRectGetMaxY(self.bounds)-16);
+    
+    [self bringSubviewToFront:sliderThumb];
+}
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     
@@ -88,8 +115,8 @@
         
        // NSLog(@"value = %d", value);
         
-        valueLabel.text = [NSString stringWithFormat:@"%d", (value)];
-        
+//        valueLabel.text = [NSString stringWithFormat:@"%d", (value)];
+        [self resetScalValue:value];
         if(delegate && [delegate respondsToSelector:@selector(didSliderValueChanged:object:)])
         {
             
@@ -119,8 +146,8 @@
 
         int value = (maxValue - minValue)*(float)subh/h + minValue;
         
-        valueLabel.text = [NSString stringWithFormat:@"%d", (value)];
-        
+//        valueLabel.text = [NSString stringWithFormat:@"%d", (value)];
+        [self resetScalValue:value];
         //NSLog(@"value = %d", value);
         
         if(delegate && [delegate respondsToSelector:@selector(didSliderValueChanged:object:)])
@@ -159,7 +186,8 @@
                                      self.frame.size.height - bottomEdge);
     
     int value = [self getScaleValue];
-    valueLabel.text = [NSString stringWithFormat:@"%d", (value)];
+//    valueLabel.text = [NSString stringWithFormat:@"%d", (value)];
+    [self resetScalValue:value];
 }
 
 - (void) setScaleValue:(int)value{
@@ -173,6 +201,7 @@
                                      cy);
     
     valueLabel.text = [NSString stringWithFormat:@"%d", (value)];
+    [self resetScalValue:value];
 }
 
 
