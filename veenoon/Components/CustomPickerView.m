@@ -45,7 +45,7 @@
         //self.backgroundColor = [UIColor redColor];
         
         _background = [[UIImageView alloc] initWithFrame:self.bounds];
-        _background.layer.contentsGravity = kCAGravityResizeAspect;
+        _background.layer.contentsGravity = kCAGravityResize;
         _background.clipsToBounds = YES;
         if([grayOrLight isEqualToString:@"gray"])
             _background.image = [UIImage imageNamed:@"gray_slide_bg.png"];
@@ -112,12 +112,17 @@
     _comSelected = component;
     _rowSelected = row;
     
+    [_myPickerView reloadComponent:0];
     
     NSDictionary *section = [_pickerDataArray objectAtIndex:component];
     NSArray *values = [section objectForKey:@"values"];
     
     [_values setObject:[values objectAtIndex:row]
                 forKey:[NSNumber numberWithInteger:component]];
+    
+    [_values setObject:[NSNumber numberWithInteger:row]
+                forKey:@"row"];
+    
     
     [_myPickerView selectRow:row inComponent:component animated:YES];
 }
@@ -137,6 +142,10 @@
     
     [_values setObject:[values objectAtIndex:row]
                 forKey:[NSNumber numberWithInteger:component]];
+    
+    [_values setObject:[NSNumber numberWithInteger:row]
+                forKey:@"row"];
+    
     
 //    if(_selectionBlock)
 //    {
