@@ -48,11 +48,11 @@
     valueLabel.text = [NSString stringWithFormat:@"%d", (scalValue)];
     if (scalValue == minValue) {
         [self setIndicatorImage: [UIImage imageNamed:@"wireless_slide_n.png"]];
-        [self setRoadImage: [UIImage imageNamed:@"v_slider_road_n.png"]];
+        [self setRoadImage: [UIImage imageNamed:@"e_v_slider_road_n.png"]];
         sliderThumb.image = [UIImage imageNamed:@"jslide_thumb_n.png"];
     } else {
         [self setIndicatorImage: [UIImage imageNamed:@"wireless_slide_s.png"]];
-        [self setRoadImage: [UIImage imageNamed:@"v_slider_road.png"]];
+        [self setRoadImage: [UIImage imageNamed:@"e_v_slider_road.png"]];
         sliderThumb.image = [UIImage imageNamed:@"jslide_thumb.png"];
     }
 }

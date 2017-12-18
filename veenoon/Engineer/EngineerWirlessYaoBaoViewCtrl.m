@@ -36,6 +36,12 @@
     
     NSMutableArray *_imageViewArray;
     NSMutableArray *_buttonArray;
+    
+    NSMutableArray *_buttonSeideArray;
+    NSMutableArray *_buttonChannelArray;
+    NSMutableArray *_buttonNumberArray;
+    
+    NSMutableArray *_selectedBtnArray;
 }
 @end
 
@@ -48,21 +54,21 @@
     } else {
         _wirelessYaoBaoSysArray = [[NSMutableArray alloc] init];
     }
-    NSMutableDictionary *wuxianDic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"name", @"huangliurong"
-                                       @"status", @"off"
-                                       @"singnal", @"1"
-                                       @"type", @"huatong"
-                                       @"dianliang", @"100", nil];
-    NSMutableDictionary *wuxianDic2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"name", @"huangliurong"
-                                       @"status", @"off"
-                                       @"singnal", @"3"
-                                       @"type", @"yaobao"
-                                       @"dianliang", @"60", nil];
-    NSMutableDictionary *wuxianDic3 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"name", @"huangliurong"
-                                       @"status", @"off"
-                                       @"singnal", @"5"
-                                       @"type", @"huatong"
-                                       @"dianliang", @"60", nil];
+    NSMutableDictionary *wuxianDic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"huangliurong", @"name",
+                                       @"off", @"status",
+                                       @"1", @"singnal",
+                                       @"huatong", @"type",
+                                       @"100", @"dianliang", nil];
+  NSMutableDictionary *wuxianDic2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"huangliurong2", @"name",
+    @"off", @"status",
+    @"1", @"singnal",
+    @"yaobao", @"type",
+    @"100", @"dianliang", nil];
+  NSMutableDictionary *wuxianDic3 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"huangliurong3", @"name",
+    @"off", @"status",
+    @"1", @"singnal",
+    @"huatong", @"type",
+    @"90", @"dianliang", nil];
     
     NSMutableArray *array1 = [NSMutableArray arrayWithObjects:wuxianDic1, wuxianDic2, wuxianDic3, nil];
     NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -75,7 +81,10 @@
     
     _imageViewArray = [[NSMutableArray alloc] init];
     _buttonArray = [[NSMutableArray alloc] init];
-    
+    _buttonSeideArray = [[NSMutableArray alloc] init];
+    _buttonChannelArray = [[NSMutableArray alloc] init];
+    _buttonNumberArray = [[NSMutableArray alloc] init];
+    _selectedBtnArray = [[NSMutableArray alloc] init];
     [self inintData];
     
     UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
@@ -130,15 +139,16 @@
     
     
     _zengyiSlider = [[EngineerSliderView alloc]
-                       initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light.png"]
+                       initWithSliderBg:[UIImage imageNamed:@"engineer_slider_n.png"]
                        frame:CGRectZero];
     [self.view addSubview:_zengyiSlider];
-    [_zengyiSlider setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
+    [_zengyiSlider setRoadImage:[UIImage imageNamed:@"e_v_slider_road.png"]];
     [_zengyiSlider setIndicatorImage:[UIImage imageNamed:@"wireless_slide_s.png"]];
-    _zengyiSlider.topEdge = 60;
+    _zengyiSlider.topEdge = 90;
     _zengyiSlider.bottomEdge = 55;
     _zengyiSlider.maxValue = 20;
     _zengyiSlider.minValue = -20;
+    _zengyiSlider.delegate = self;
     [_zengyiSlider resetScale];
     _zengyiSlider.center = CGPointMake(SCREEN_WIDTH - 150, SCREEN_HEIGHT/2);
     
@@ -173,23 +183,32 @@
             int startY = row*cellHeight+space*row+top;
             
             SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(startX, startY, 120, 120)];
+            
+            UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+            tapGesture.cancelsTouchesInView =  NO;
+            tapGesture.numberOfTapsRequired = 1;
+            tapGesture.view.tag = i;
+            [btn addGestureRecognizer:tapGesture];
+            
             btn.tag = i;
             [self.view addSubview:btn];
             
-            UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width - 20, 0, 20, 20)];
+            UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width - 30, 20, 30, 20)];
             titleL.backgroundColor = [UIColor clearColor];
             [btn addSubview:titleL];
             titleL.font = [UIFont boldSystemFontOfSize:11];
             titleL.textColor  = [UIColor whiteColor];
-            titleL.text = [dataDic objectForKey:@"name"];
+            titleL.text = [NSString stringWithFormat:@"0%d",i+1];
+            [_buttonNumberArray addObject:titleL];
             
-            titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 -40, btn.frame.size.height - 20, 80, 20)];
+            titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 -40, btn.frame.size.height - 40, 80, 20)];
             titleL.backgroundColor = [UIColor clearColor];
             [btn addSubview:titleL];
             titleL.font = [UIFont boldSystemFontOfSize:12];
             titleL.textColor  = [UIColor whiteColor];
             titleL.textAlignment = NSTextAlignmentCenter;
             titleL.text = @"Channel";
+            [_buttonChannelArray addObject:titleL];
             
             UILongPressGestureRecognizer *longPress2 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed2:)];
             
@@ -199,20 +218,21 @@
             UIImage *image;
             NSString *huatongType = [dataDic objectForKey:@"type"];
             if ([@"huatong" isEqualToString:huatongType]) {
-                image = [UIImage imageNamed:@"wuxianhuatong.png"];
+                image = [UIImage imageNamed:@"huatong_yellow_n.png"];
             } else {
-                image = [UIImage imageNamed:@"wuxianhuabao.png"];
+                image = [UIImage imageNamed:@"yaobao_yellow_n.png"];
             }
             
             UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-            imageView.frame = CGRectMake(btn.frame.origin.x, btn.frame.origin.y, btn.frame.size.width, btn.frame.size.height);
+            imageView.backgroundColor = DARK_BLUE_COLOR;
+            imageView.frame = CGRectMake(btn.frame.origin.x+10, btn.frame.origin.y+10, 100, 100);
             imageView.tag = index;
             imageView.userInteractionEnabled=YES;
             imageView.layer.contentsGravity = kCAGravityCenter;
             [self.view addSubview:imageView];
             
             BatteryView *batter = [[BatteryView alloc] initWithFrame:CGRectZero];
-            batter.normalColor = SINGAL_COLOR;
+            batter.normalColor = YELLOW_COLOR;
             [imageView addSubview:batter];
             batter.center = CGPointMake(60, 18);
             
@@ -223,18 +243,18 @@
             
             SignalView *signal = [[SignalView alloc] initWithFrameAndStep:CGRectMake(70, 50, 30, 20) step:2];
             [imageView addSubview:signal];
-            [signal setLightColor:SINGAL_COLOR];//SINGAL_COLOR
+            [signal setLightColor:YELLOW_COLOR];//SINGAL_COLOR
             [signal setGrayColor:[UIColor colorWithWhite:1.0 alpha:0.6]];
             NSString *sinalString = [dataDic objectForKey:@"signal"];
             int signalInt = [sinalString intValue];
             [signal setSignalValue:signalInt];
             
-            titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, btn.frame.size.width-30, btn.frame.size.width, 20)];
+            titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, btn.frame.size.width-40, btn.frame.size.width-10, 20)];
             titleL.backgroundColor = [UIColor clearColor];
             [imageView addSubview:titleL];
             titleL.font = [UIFont boldSystemFontOfSize:12];
             titleL.textAlignment = NSTextAlignmentCenter;
-            titleL.textColor  = SINGAL_COLOR;
+            titleL.textColor  = YELLOW_COLOR;
             titleL.text = [dataDic objectForKey:@"name"];
             imageView.hidden = YES;
             
@@ -249,6 +269,42 @@
     }
 }
 
+- (void) didSliderValueChanged:(int)value object:(id)object {
+    float circleValue = (value +20.0f)/40.0f;
+    for (SlideButton *button in _selectedBtnArray) {
+        [button setCircleValue:circleValue];
+    }
+}
+
+-(void)handleTapGesture:(UIGestureRecognizer*)gestureRecognizer {
+    int tag = gestureRecognizer.view.tag;
+    
+    SlideButton *btn;
+    for (SlideButton *button in _selectedBtnArray) {
+        if (button.tag == tag) {
+            btn = button;
+            break;
+        }
+    }
+    // want to choose it
+    if (btn == nil) {
+        SlideButton *button = [_buttonArray objectAtIndex:tag];
+        [_selectedBtnArray addObject:button];
+        UILabel *chanelL = [_buttonChannelArray objectAtIndex:tag];
+        chanelL.textColor = YELLOW_COLOR;
+        
+        UILabel *numberL = [_buttonNumberArray objectAtIndex:tag];
+        numberL.textColor = YELLOW_COLOR;
+    } else {
+        // remove it
+        [_selectedBtnArray removeObject:btn];
+        UILabel *chanelL = [_buttonChannelArray objectAtIndex:tag];
+        chanelL.textColor = [UIColor whiteColor];
+        
+        UILabel *numberL = [_buttonNumberArray objectAtIndex:tag];
+        numberL.textColor = [UIColor whiteColor];;
+    }
+}
 - (void) longPressed3:(id)sender{
     
     UILongPressGestureRecognizer *press = (UILongPressGestureRecognizer *)sender;
