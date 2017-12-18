@@ -21,17 +21,6 @@
     
     CustomPickerView *_customPicker;
     
-    UIButton *_volumnMinus;
-    UIButton *_lastSing;
-    UIButton *_playOrHold;
-    UIButton *_nextSing;
-    UIButton *_volumnAdd;
-    
-    BOOL isplay;
-    
-    UIButton *_luboBtn;
-    UIButton *_tanchuBtn;
-    
     EngineerSliderView *_zengyiSlider;
     
     NSMutableArray *_imageViewArray;
