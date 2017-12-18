@@ -134,13 +134,7 @@ CustomPickerViewDelegate>
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [self addSubview:_tableView];
         
-        _footerView = [[UIView alloc] initWithFrame:CGRectMake(0,
-                                                               CGRectGetMaxY(_tableView.frame),
-                                                               frame.size.width,
-                                                               40)];
-        [self addSubview:_footerView];
-        _footerView.backgroundColor = M_GREEN_COLOR;
-        _footerView.hidden = YES;
+        [self createFooter];
         
         UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 1)];
         line.backgroundColor =  M_GREEN_LINE;
@@ -179,6 +173,64 @@ CustomPickerViewDelegate>
     }
     
     return self;
+}
+
+- (void)createFooter{
+    
+    _footerView = [[UIView alloc] initWithFrame:CGRectMake(0,
+                                                           CGRectGetMaxY(_tableView.frame),
+                                                           self.frame.size.width,
+                                                           40)];
+    [self addSubview:_footerView];
+    _footerView.backgroundColor = M_GREEN_COLOR;
+    _footerView.hidden = YES;
+    
+    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(70,
+                                                                10,
+                                                                CGRectGetWidth(self.frame)/2-70, 20)];
+    titleL.backgroundColor = [UIColor clearColor];
+    [_footerView addSubview:titleL];
+    titleL.font = [UIFont systemFontOfSize:13];
+    titleL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+    
+    UILabel* valueL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame)/2,
+                                                                10,
+                                                                CGRectGetWidth(self.frame)/2-70, 20)];
+    valueL.backgroundColor = [UIColor clearColor];
+    [_footerView addSubview:valueL];
+    valueL.font = [UIFont systemFontOfSize:13];
+    valueL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+    valueL.textAlignment = NSTextAlignmentRight;
+    
+    titleL.text = @"修改";
+    valueL.text = @"确定";
+    
+    UIButton *btnModify = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnModify.frame = CGRectMake(70, 0,
+                                 CGRectGetWidth(self.frame)/2-70,
+                                 40);
+    [_footerView addSubview:btnModify];
+    [btnModify addTarget:self
+                  action:@selector(reStudy:)
+        forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *btnOK = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnOK.frame = CGRectMake(CGRectGetWidth(self.frame)/2, 0,
+                                 CGRectGetWidth(self.frame)/2-70,
+                                 40);
+    [_footerView addSubview:btnOK];
+    [btnOK addTarget:self
+                  action:@selector(saveBrand:)
+        forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void) reStudy:(id)sender{
+    
+    
+}
+- (void) saveBrand:(id)sender{
+    
+    
 }
 
 - (void) initData{

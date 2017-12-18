@@ -30,7 +30,7 @@
     [session setActive:YES error:nil];
     [session setCategory:AVAudioSessionCategoryPlayback error:nil];
     
-    EngineerPresetScenarioViewCtrl *wellcome = [[EngineerPresetScenarioViewCtrl alloc] init];
+    WellcomeViewController *wellcome = [[WellcomeViewController alloc] init];
     _naviRoot = [[CMNavigationController alloc] initWithRootViewController:wellcome];
     _naviRoot.navigationBarHidden = YES;
     self.window.rootViewController = _naviRoot;
@@ -55,7 +55,7 @@
 
 +(AppDelegate*)shareAppDelegate{
     
-    AppDelegate* app = [[UIApplication sharedApplication] delegate];
+    AppDelegate* app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     
     return app;
 }
