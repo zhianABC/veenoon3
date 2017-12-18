@@ -10,6 +10,7 @@
 #import "UIButton+Color.h"
 #import "CustomPickerView.h"
 #import "EngineerSliderView.h"
+#import "EngineerWIrelessMeetingPlayViewCtrl.h"
 
 @interface EngineerWirelessMeetingViewCtrl () {
     
@@ -206,6 +207,9 @@
 }
 
 - (void) luboAction:(id)sender{
+    EngineerWIrelessMeetingPlayViewCtrl *ctrl = [[EngineerWIrelessMeetingPlayViewCtrl alloc] init];
+    
+    [self.navigationController pushViewController:ctrl animated:YES];
 }
 
 - (void) createBtnLabel:(UIButton*)sender dataDic:(NSMutableDictionary*) dataDic{
