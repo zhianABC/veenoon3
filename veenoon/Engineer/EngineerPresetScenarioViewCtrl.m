@@ -11,6 +11,7 @@
 #import "EngineerPlayerSettingsViewCtrl.h"
 #import "EngineerWirlessYaoBaoViewCtrl.h"
 #import "EngineerHunYinSysViewController.h"
+#import "EngineerHandtoHandViewCtrl.h"
 
 @interface EngineerPresetScenarioViewCtrl<ECPlusSelectViewDelegate> () {
     ECPlusSelectView *ecp;
@@ -240,6 +241,7 @@
     NSMutableArray *playerSysArray;
     NSMutableArray *wirelessYaobaoArray;
     NSMutableArray *hunyinSysArray;
+    NSMutableArray *handToHandSysArray;
     for (id audioSys in audioArray) {
         if ([[audioSys objectForKey:@"name"] isEqualToString:@"electronic8Sys"]) {
             electronic8SysArray = [audioSys objectForKey:@"value"];
@@ -254,6 +256,9 @@
             wirelessYaobaoArray = [audioSys objectForKey:@"value"];
         }
         if ([[audioSys objectForKey:@"name"] isEqualToString:@"hunyinSys"]) {
+            hunyinSysArray = [audioSys objectForKey:@"value"];
+        }
+        if ([[audioSys objectForKey:@"name"] isEqualToString:@"handToHandSys"]) {
             hunyinSysArray = [audioSys objectForKey:@"value"];
         }
     }
@@ -300,6 +305,15 @@
         [audioArray addObject:playerDic];
     }
     
+    if (handToHandSysArray == nil) {
+        handToHandSysArray = [[NSMutableArray alloc] init];
+        NSMutableDictionary *playerDic = [[NSMutableDictionary alloc] init];
+        [playerDic setObject:@"handToHandSys" forKey:@"name"];
+        [playerDic setObject:handToHandSysArray forKey:@"value"];
+        
+        [audioArray addObject:playerDic];
+    }
+    
     if ([name isEqualToString:@"8路电源管理"] || [name isEqualToString:@"16路电源管理"]) {
         EngineerElectronicSysConfigViewCtrl *ctrl = [[EngineerElectronicSysConfigViewCtrl alloc] init];
         if ([name isEqualToString:@"8路电源管理"]) {
@@ -328,6 +342,14 @@
     if ([name isEqualToString:@"混音系统"]) {
         EngineerHunYinSysViewController *ctrl = [[EngineerHunYinSysViewController alloc] init];
         ctrl._hunyinSysArray = hunyinSysArray;
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+    
+    // wuxian array
+    if ([name isEqualToString:@"有线会议麦"]) {
+        EngineerHandtoHandViewCtrl *ctrl = [[EngineerHandtoHandViewCtrl alloc] init];
+        ctrl._handToHandSysArray = handToHandSysArray;
+        ctrl._number = 12;
         [self.navigationController pushViewController:ctrl animated:YES];
     }
 }

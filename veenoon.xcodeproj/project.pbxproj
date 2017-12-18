@@ -451,6 +451,7 @@
 		EB4EC10F1FE7EC90000B3101 /* e_v_slider_road@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB4EC10D1FE7EC8F000B3101 /* e_v_slider_road@2x.png */; };
 		EB4EC1101FE7EC90000B3101 /* e_v_slider_road_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB4EC10E1FE7EC8F000B3101 /* e_v_slider_road_n@2x.png */; };
 		EB4EC11C1FE7F164000B3101 /* EngineerHunYinSysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4EC11B1FE7F164000B3101 /* EngineerHunYinSysViewController.m */; };
+		EB4EC11F1FE7F94B000B3101 /* EngineerHandtoHandViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4EC11E1FE7F94B000B3101 /* EngineerHandtoHandViewCtrl.m */; };
 		EB5CF03F1FD3DC92007958C9 /* UserNewWindViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5CF03E1FD3DC92007958C9 /* UserNewWindViewCtrl.m */; };
 		EB5CF0411FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5CF0401FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m */; };
 		EB5D91FC1FBB2F78004ED38D /* login_right_arraw@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB5D91FB1FBB2F77004ED38D /* login_right_arraw@2x.png */; };
@@ -1218,6 +1219,8 @@
 		EB4EC10E1FE7EC8F000B3101 /* e_v_slider_road_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "e_v_slider_road_n@2x.png"; sourceTree = "<group>"; };
 		EB4EC11A1FE7F164000B3101 /* EngineerHunYinSysViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerHunYinSysViewController.h; sourceTree = "<group>"; };
 		EB4EC11B1FE7F164000B3101 /* EngineerHunYinSysViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerHunYinSysViewController.m; sourceTree = "<group>"; };
+		EB4EC11D1FE7F94B000B3101 /* EngineerHandtoHandViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerHandtoHandViewCtrl.h; sourceTree = "<group>"; };
+		EB4EC11E1FE7F94B000B3101 /* EngineerHandtoHandViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerHandtoHandViewCtrl.m; sourceTree = "<group>"; };
 		EB5CF03D1FD3DC80007958C9 /* UserNewWindViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserNewWindViewCtrl.h; sourceTree = "<group>"; };
 		EB5CF03E1FD3DC92007958C9 /* UserNewWindViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserNewWindViewCtrl.m; sourceTree = "<group>"; };
 		EB5CF0401FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserInfoCollectViewCtrl.m; sourceTree = "<group>"; };
@@ -2359,6 +2362,8 @@
 				EB3B73B11FE6382F001941CF /* EngineerWirlessYaoBaoViewCtrl.m */,
 				EB4EC11A1FE7F164000B3101 /* EngineerHunYinSysViewController.h */,
 				EB4EC11B1FE7F164000B3101 /* EngineerHunYinSysViewController.m */,
+				EB4EC11D1FE7F94B000B3101 /* EngineerHandtoHandViewCtrl.h */,
+				EB4EC11E1FE7F94B000B3101 /* EngineerHandtoHandViewCtrl.m */,
 			);
 			path = Engineer;
 			sourceTree = "<group>";
@@ -3020,6 +3025,7 @@
 				EB36AAC41FCD9E71009A0FD8 /* UserVideoConfigViewCtrl.m in Sources */,
 				04DE1E831AD6AEE000D49E2F /* ClassFactory.m in Sources */,
 				04DE1E991AD6AEE000D49E2F /* ASIHTTPRequest.m in Sources */,
+				EB4EC11F1FE7F94B000B3101 /* EngineerHandtoHandViewCtrl.m in Sources */,
 				04DE1E921AD6AEE000D49E2F /* UserDefaultsKV.m in Sources */,
 				0469CF3C1B033162006B901E /* CustomImagePickerCtrlor.m in Sources */,
 				04D719851DADE2D8002153D7 /* DataSync.m in Sources */,
