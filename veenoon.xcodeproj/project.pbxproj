@@ -452,6 +452,9 @@
 		EB4EC1101FE7EC90000B3101 /* e_v_slider_road_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB4EC10E1FE7EC8F000B3101 /* e_v_slider_road_n@2x.png */; };
 		EB4EC11C1FE7F164000B3101 /* EngineerHunYinSysViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4EC11B1FE7F164000B3101 /* EngineerHunYinSysViewController.m */; };
 		EB4EC11F1FE7F94B000B3101 /* EngineerHandtoHandViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4EC11E1FE7F94B000B3101 /* EngineerHandtoHandViewCtrl.m */; };
+		EB4EC1221FE7FC3B000B3101 /* EngineerWirelessMeetingViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4EC1211FE7FC3B000B3101 /* EngineerWirelessMeetingViewCtrl.m */; };
+		EB4EC1251FE7FE3A000B3101 /* wireless_usb_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB4EC1231FE7FE39000B3101 /* wireless_usb_n@2x.png */; };
+		EB4EC1261FE7FE3A000B3101 /* wireless_usb_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB4EC1241FE7FE3A000B3101 /* wireless_usb_s@2x.png */; };
 		EB5CF03F1FD3DC92007958C9 /* UserNewWindViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5CF03E1FD3DC92007958C9 /* UserNewWindViewCtrl.m */; };
 		EB5CF0411FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5CF0401FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m */; };
 		EB5D91FC1FBB2F78004ED38D /* login_right_arraw@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB5D91FB1FBB2F77004ED38D /* login_right_arraw@2x.png */; };
@@ -1221,6 +1224,10 @@
 		EB4EC11B1FE7F164000B3101 /* EngineerHunYinSysViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerHunYinSysViewController.m; sourceTree = "<group>"; };
 		EB4EC11D1FE7F94B000B3101 /* EngineerHandtoHandViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerHandtoHandViewCtrl.h; sourceTree = "<group>"; };
 		EB4EC11E1FE7F94B000B3101 /* EngineerHandtoHandViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerHandtoHandViewCtrl.m; sourceTree = "<group>"; };
+		EB4EC1201FE7FC3B000B3101 /* EngineerWirelessMeetingViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerWirelessMeetingViewCtrl.h; sourceTree = "<group>"; };
+		EB4EC1211FE7FC3B000B3101 /* EngineerWirelessMeetingViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerWirelessMeetingViewCtrl.m; sourceTree = "<group>"; };
+		EB4EC1231FE7FE39000B3101 /* wireless_usb_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wireless_usb_n@2x.png"; sourceTree = "<group>"; };
+		EB4EC1241FE7FE3A000B3101 /* wireless_usb_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wireless_usb_s@2x.png"; sourceTree = "<group>"; };
 		EB5CF03D1FD3DC80007958C9 /* UserNewWindViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserNewWindViewCtrl.h; sourceTree = "<group>"; };
 		EB5CF03E1FD3DC92007958C9 /* UserNewWindViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserNewWindViewCtrl.m; sourceTree = "<group>"; };
 		EB5CF0401FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserInfoCollectViewCtrl.m; sourceTree = "<group>"; };
@@ -1842,6 +1849,8 @@
 		04DE1ECB1AD6B3BA00D49E2F /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
+				EB4EC1231FE7FE39000B3101 /* wireless_usb_n@2x.png */,
+				EB4EC1241FE7FE3A000B3101 /* wireless_usb_s@2x.png */,
 				EB4EC1081FE7E177000B3101 /* huatong_yellow_n@2x.png */,
 				EB4EC1071FE7E177000B3101 /* yaobao_yellow_n@2x.png */,
 				345493091FE65AA200793E2E /* picker_player@2x.png */,
@@ -2364,6 +2373,8 @@
 				EB4EC11B1FE7F164000B3101 /* EngineerHunYinSysViewController.m */,
 				EB4EC11D1FE7F94B000B3101 /* EngineerHandtoHandViewCtrl.h */,
 				EB4EC11E1FE7F94B000B3101 /* EngineerHandtoHandViewCtrl.m */,
+				EB4EC1201FE7FC3B000B3101 /* EngineerWirelessMeetingViewCtrl.h */,
+				EB4EC1211FE7FC3B000B3101 /* EngineerWirelessMeetingViewCtrl.m */,
 			);
 			path = Engineer;
 			sourceTree = "<group>";
@@ -2974,6 +2985,7 @@
 				EB3B73A21FE61F13001941CF /* audio_player_r_last_n@2x.png in Resources */,
 				EB1A045C1FC71372007CC1F2 /* user_config_back_n@2x.png in Resources */,
 				EB1A04781FC71EEC007CC1F2 /* sd_player_s@2x.png in Resources */,
+				EB4EC1251FE7FE3A000B3101 /* wireless_usb_n@2x.png in Resources */,
 				04D27A2F1AF8976600305E39 /* iconfont-dayinji1@2x.png in Resources */,
 				EBAE5B781FDD07BE00C10C4D /* engineer_video_touyingji_n@2x.png in Resources */,
 				04DE1FCB1AD6B3BB00D49E2F /* progress_biankuang@2x.png in Resources */,
@@ -2981,6 +2993,7 @@
 				EB3685F41FC0799A009973A3 /* settings_user_s@2x.png in Resources */,
 				EB36AAE71FCDA432009A0FD8 /* user_video_disk_s@2x.png in Resources */,
 				EB09C4971FD2AEAE00776540 /* user_touyingmu_n@2x.png in Resources */,
+				EB4EC1261FE7FE3A000B3101 /* wireless_usb_s@2x.png in Resources */,
 				EBAE5BAE1FDD20C400C10C4D /* engineer_env_zhaoming_n@2x.png in Resources */,
 				EBEA7C211FBCAF260028F0E8 /* area.plist in Resources */,
 				341C60FA1FDD0DBF003A5490 /* hj_icon_9@2x.png in Resources */,
@@ -3129,6 +3142,7 @@
 				34217A6F1FCE98200006701C /* UserVideoConfigView.m in Sources */,
 				04DE1E901AD6AEE000D49E2F /* UIImage+ImageEffects.m in Sources */,
 				04DE1EBF1AD6AF7900D49E2F /* User.m in Sources */,
+				EB4EC1221FE7FC3B000B3101 /* EngineerWirelessMeetingViewCtrl.m in Sources */,
 				04DE1EA01AD6AEE000D49E2F /* WebClient.m in Sources */,
 				04DE1EA81AD6AEE000D49E2F /* SBJson4StreamWriterState.m in Sources */,
 				341671881FBA97BD001D33D0 /* HomeViewController.m in Sources */,

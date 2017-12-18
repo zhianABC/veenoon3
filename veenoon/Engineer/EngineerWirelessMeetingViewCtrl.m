@@ -6,23 +6,25 @@
 //  Copyright © 2017年 jack. All rights reserved.
 //
 
-#import "EngineerHandtoHandViewCtrl.h"
+#import "EngineerWirelessMeetingViewCtrl.h"
 #import "UIButton+Color.h"
 #import "CustomPickerView.h"
 #import "EngineerSliderView.h"
 
-@interface EngineerHandtoHandViewCtrl () {
+@interface EngineerWirelessMeetingViewCtrl () {
     
     UIButton *_selectSysBtn;
     
     CustomPickerView *_customPicker;
     
+    UIButton *_luboBtn;
+    
     EngineerSliderView *_zengyiSlider;
 }
 @end
 
-@implementation EngineerHandtoHandViewCtrl
-@synthesize _handToHandSysArray;
+@implementation EngineerWirelessMeetingViewCtrl
+@synthesize _wirelessMeetingArray;
 @synthesize _number;
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -68,7 +70,7 @@
     _selectSysBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _selectSysBtn.frame = CGRectMake(70, 100, 200, 30);
     [_selectSysBtn setImage:[UIImage imageNamed:@"engineer_sys_select_down_n.png"] forState:UIControlStateNormal];
-    [_selectSysBtn setTitle:@"手拉手会议系统" forState:UIControlStateNormal];
+    [_selectSysBtn setTitle:@"无线会议系统" forState:UIControlStateNormal];
     [_selectSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_selectSysBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _selectSysBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
@@ -90,7 +92,7 @@
     int colNumber = 8;
     int space = (SCREEN_WIDTH - colNumber*cellWidth-leftRight*2)/(colNumber-1);
     
-    if ([self._handToHandSysArray count] == 0) {
+    if ([self._wirelessMeetingArray count] == 0) {
         int nameStart = 1;
         for (int i = 0; i < self._number; i++) {
             NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
@@ -108,7 +110,7 @@
             [dic setObject:@"OFF" forKey:@"status"];
             
             nameStart++;
-            [self._handToHandSysArray addObject:dic];
+            [self._wirelessMeetingArray addObject:dic];
             
             int row = index/colNumber;
             int col = index%colNumber;
@@ -134,7 +136,7 @@
         }
     } else {
         for (int i = 0; i < self._number; i++) {
-            NSMutableDictionary *dic = [self._handToHandSysArray objectAtIndex:i];
+            NSMutableDictionary *dic = [self._wirelessMeetingArray objectAtIndex:i];
             
             int row = index/colNumber;
             int col = index%colNumber;
@@ -165,6 +167,21 @@
             index++;
         }
     }
+    
+    _luboBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+    _luboBtn.frame = CGRectMake(70, SCREEN_HEIGHT-140, 60, 60);
+    _luboBtn.layer.cornerRadius = 5;
+    _luboBtn.layer.borderWidth = 2;
+    _luboBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    _luboBtn.clipsToBounds = YES;
+    [_luboBtn setImage:[UIImage imageNamed:@"wireless_usb_n.png"] forState:UIControlStateNormal];
+    [_luboBtn setImage:[UIImage imageNamed:@"wireless_usb_s.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:_luboBtn];
+    
+    [_luboBtn addTarget:self
+                 action:@selector(luboAction:)
+       forControlEvents:UIControlEventTouchUpInside];
+    
     _zengyiSlider = [[EngineerSliderView alloc]
                      initWithSliderBg:[UIImage imageNamed:@"engineer_slider_n.png"]
                      frame:CGRectZero];
@@ -187,6 +204,10 @@
 - (void) didSliderEndChanged:(id)object {
     
 }
+
+- (void) luboAction:(id)sender{
+}
+
 - (void) createBtnLabel:(UIButton*)sender dataDic:(NSMutableDictionary*) dataDic{
     UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(sender.frame.size.width - 20, 0, 20, 20)];
     titleL.backgroundColor = [UIColor clearColor];
@@ -228,7 +249,7 @@
     if (_customPicker) {
         [_customPicker removeFromSuperview];
     }
-    NSString *title =  [@"手拉手会议系统" stringByAppendingString:pickerValue];
+    NSString *title =  [@"无线会议系统" stringByAppendingString:pickerValue];
     [_selectSysBtn setTitle:title forState:UIControlStateNormal];
 }
 
@@ -236,7 +257,7 @@
     UIButton *btn = (UIButton*) sender;
     int index = (int) btn.tag;
     
-    NSMutableDictionary *dic = [self._handToHandSysArray objectAtIndex:index];
+    NSMutableDictionary *dic = [self._wirelessMeetingArray objectAtIndex:index];
     
     NSString *status = [dic objectForKey:@"status"];
     if ([status isEqualToString:@"ON"]) {
@@ -257,4 +278,5 @@
 }
 
 @end
+
 

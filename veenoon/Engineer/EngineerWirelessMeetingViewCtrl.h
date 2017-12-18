@@ -1,5 +1,5 @@
 //
-//  EngineerHandtoHandViewCtrl.h
+//  EngineerWirelessMeetingViewCtrl.h
 //  veenoon
 //
 //  Created by 安志良 on 2017/12/18.
@@ -11,11 +11,12 @@
 #import "CustomPickerView.h"
 #import "EngineerSliderView.h"
 
-@interface EngineerHandtoHandViewCtrl<CustomPickerViewDelegate, EngineerSliderViewDelegate> : BaseViewController {
-    NSMutableArray *_handToHandSysArray;
+@interface EngineerWirelessMeetingViewCtrl<CustomPickerViewDelegate, EngineerSliderViewDelegate> : BaseViewController {
+    NSMutableArray *_wirelessMeetingArray;
     
     int _number;
 }
-@property (nonatomic,strong) NSMutableArray *_handToHandSysArray;
+@property (nonatomic,strong) NSMutableArray *_wirelessMeetingArray;
 @property (nonatomic,assign) int _number;
 @end
+
