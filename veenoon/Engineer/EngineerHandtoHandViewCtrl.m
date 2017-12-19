@@ -166,14 +166,14 @@
         }
     }
     _zengyiSlider = [[EngineerSliderView alloc]
-                     initWithSliderBg:[UIImage imageNamed:@"engineer_slider_n.png"]
+                     initWithSliderBg:[UIImage imageNamed:@"engineer_zengyi2_n.png"]
                      frame:CGRectZero];
     [self.view addSubview:_zengyiSlider];
     [_zengyiSlider setRoadImage:[UIImage imageNamed:@"e_v_slider_road.png"]];
     [_zengyiSlider setIndicatorImage:[UIImage imageNamed:@"wireless_slide_s.png"]];
     _zengyiSlider.topEdge = 90;
     _zengyiSlider.bottomEdge = 55;
-    _zengyiSlider.maxValue = 70;
+    _zengyiSlider.maxValue = 100;
     _zengyiSlider.minValue = 0;
     _zengyiSlider.delegate = self;
     [_zengyiSlider resetScale];

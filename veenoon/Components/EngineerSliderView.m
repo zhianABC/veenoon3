@@ -34,11 +34,18 @@
         sliderThumb = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jslide_thumb.png"]];
         [self addSubview:sliderThumb];
         
-        valueLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 30)];
+        valueLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 45, frame.size.width, 30)];
         [self addSubview:valueLabel];
         valueLabel.textColor = [UIColor whiteColor];
         valueLabel.font = [UIFont systemFontOfSize:14];
         valueLabel.textAlignment = NSTextAlignmentCenter;
+        
+        UILabel *zengyiLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, frame.size.width, 30)];
+        [self addSubview:zengyiLabel];
+        zengyiLabel.text=@"增益";
+        zengyiLabel.textColor = [UIColor whiteColor];
+        zengyiLabel.font = [UIFont systemFontOfSize:14];
+        zengyiLabel.textAlignment = NSTextAlignmentCenter;
     }
     
     return self;
