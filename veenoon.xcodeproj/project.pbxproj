@@ -2351,52 +2351,8 @@
 		EB03F5441FBDEB1200865541 /* Engineer */ = {
 			isa = PBXGroup;
 			children = (
-				EB2982131FD58699007B5C20 /* EngineerMeetingRoomListViewCtrl.h */,
-				EB2982141FD58699007B5C20 /* EngineerMeetingRoomListViewCtrl.m */,
-				EB29820D1FD5820D007B5C20 /* ReaderCodeViewController.h */,
-				EB29820E1FD5820D007B5C20 /* ReaderCodeViewController.m */,
-				EB29820A1FD57FC1007B5C20 /* EngineerShootQRCode.h */,
-				EB29820B1FD57FC2007B5C20 /* EngineerShootQRCode.m */,
-				EB03F5481FBDEB8900865541 /* EnginnerHomeViewController.m */,
-				EB03F54A1FBDEB9C00865541 /* EnginnerHomeViewController.h */,
-				EB5F7F851FD593EE00351888 /* EngineerSysSelectViewCtrl.h */,
-				EB5F7F861FD593F800351888 /* EngineerSysSelectViewCtrl.m */,
-				EB5F7F881FD5971400351888 /* EngineerPortDNSViewCtrl.h */,
-				EB5F7F891FD5971E00351888 /* EngineerPortDNSViewCtrl.m */,
-				EB5F7F931FD59D5C00351888 /* EngineerPortSettingView.h */,
-				EB5F7F941FD59D6B00351888 /* EngineerPortSettingView.m */,
-				EB5F7F961FD59D7B00351888 /* EngineerDNSSettingView.h */,
-				EB5F7F971FD59D8400351888 /* EngineerDNSSettingView.m */,
-				EB09EF2D1FD978BD00C968CA /* EngineerToUseTeslariViewCtrl.h */,
-				EB09EF2E1FD978C700C968CA /* EngineerToUseTeslariViewCtrl.m */,
-				EB09EF301FD97CB500C968CA /* EngineerAudioDevicePluginViewCtrl.m */,
-				EB09EF321FD97CBE00C968CA /* EngineerAudioDevicePluginViewCtrl.h */,
-				EB09EF331FD97FF900C968CA /* EngineerVedioDevicePluginViewCtrl.h */,
-				EB09EF341FD9800300C968CA /* EngineerVedioDevicePluginViewCtrl.m */,
-				EB09EF361FD9801400C968CA /* EngineerEnvDevicePluginViewCtrl.m */,
-				EB09EF381FD9801D00C968CA /* EngineerEnvDevicePluginViewCtrl.h */,
-				EBAE5BB51FDFFBCD00C10C4D /* EngineerScenarioListViewCtrl.h */,
-				EBAE5BB61FDFFBD700C10C4D /* EngineerScenarioListViewCtrl.m */,
-				EBAE5BBA1FE0070600C10C4D /* EngineerPresetScenarioViewCtrl.m */,
-				EBAE5BBC1FE0071C00C10C4D /* EngineerPresetScenarioViewCtrl.h */,
-				EB0968BD1FE2B4BE00CF422F /* EngineerElectronicSysConfigViewCtrl.h */,
-				EB0968BE1FE2B4C900CF422F /* EngineerElectronicSysConfigViewCtrl.m */,
-				EB3B73991FE61B18001941CF /* EngineerPlayerSettingsViewCtrl.m */,
-				EB3B739B1FE61B2B001941CF /* EngineerPlayerSettingsViewCtrl.h */,
-				EB3B73B01FE63822001941CF /* EngineerWirlessYaoBaoViewCtrl.h */,
-				EB3B73B11FE6382F001941CF /* EngineerWirlessYaoBaoViewCtrl.m */,
-				EB4EC11A1FE7F164000B3101 /* EngineerHunYinSysViewController.h */,
-				EB4EC11B1FE7F164000B3101 /* EngineerHunYinSysViewController.m */,
-				EB4EC11D1FE7F94B000B3101 /* EngineerHandtoHandViewCtrl.h */,
-				EB4EC11E1FE7F94B000B3101 /* EngineerHandtoHandViewCtrl.m */,
-				EB4EC1201FE7FC3B000B3101 /* EngineerWirelessMeetingViewCtrl.h */,
-				EB4EC1211FE7FC3B000B3101 /* EngineerWirelessMeetingViewCtrl.m */,
-				EB1A55B91FE801CF000B18E6 /* EngineerWIrelessMeetingPlayViewCtrl.h */,
-				EB1A55BA1FE801CF000B18E6 /* EngineerWIrelessMeetingPlayViewCtrl.m */,
-				EB1A55C01FE93CD4000B18E6 /* EngineerAudioProcessViewCtrl.h */,
-				EB1A55C11FE93CD4000B18E6 /* EngineerAudioProcessViewCtrl.m */,
-				EB1A55C51FEA919C000B18E6 /* EngineerPVExpendViewCtrl.h */,
-				EB1A55C61FEA919C000B18E6 /* EngineerPVExpendViewCtrl.m */,
+				EB1A55CE1FEA9E2A000B18E6 /* Audio */,
+				EB1A55CD1FEA9E21000B18E6 /* Basic */,
 			);
 			path = Engineer;
 			sourceTree = "<group>";
@@ -2462,6 +2418,66 @@
 				EBCA834C1FD434D1007DEB8E /* UserMonitorSettingsViewCtrl.h */,
 			);
 			path = User;
+			sourceTree = "<group>";
+		};
+		EB1A55CD1FEA9E21000B18E6 /* Basic */ = {
+			isa = PBXGroup;
+			children = (
+				EB29820D1FD5820D007B5C20 /* ReaderCodeViewController.h */,
+				EB29820E1FD5820D007B5C20 /* ReaderCodeViewController.m */,
+				EB2982131FD58699007B5C20 /* EngineerMeetingRoomListViewCtrl.h */,
+				EB2982141FD58699007B5C20 /* EngineerMeetingRoomListViewCtrl.m */,
+				EB29820A1FD57FC1007B5C20 /* EngineerShootQRCode.h */,
+				EB29820B1FD57FC2007B5C20 /* EngineerShootQRCode.m */,
+				EB03F5481FBDEB8900865541 /* EnginnerHomeViewController.m */,
+				EB03F54A1FBDEB9C00865541 /* EnginnerHomeViewController.h */,
+				EB5F7F851FD593EE00351888 /* EngineerSysSelectViewCtrl.h */,
+				EB5F7F861FD593F800351888 /* EngineerSysSelectViewCtrl.m */,
+				EB5F7F881FD5971400351888 /* EngineerPortDNSViewCtrl.h */,
+				EB5F7F891FD5971E00351888 /* EngineerPortDNSViewCtrl.m */,
+				EB5F7F931FD59D5C00351888 /* EngineerPortSettingView.h */,
+				EB5F7F941FD59D6B00351888 /* EngineerPortSettingView.m */,
+				EB5F7F961FD59D7B00351888 /* EngineerDNSSettingView.h */,
+				EB5F7F971FD59D8400351888 /* EngineerDNSSettingView.m */,
+				EB09EF2D1FD978BD00C968CA /* EngineerToUseTeslariViewCtrl.h */,
+				EB09EF2E1FD978C700C968CA /* EngineerToUseTeslariViewCtrl.m */,
+				EB09EF301FD97CB500C968CA /* EngineerAudioDevicePluginViewCtrl.m */,
+				EB09EF321FD97CBE00C968CA /* EngineerAudioDevicePluginViewCtrl.h */,
+				EB09EF331FD97FF900C968CA /* EngineerVedioDevicePluginViewCtrl.h */,
+				EB09EF341FD9800300C968CA /* EngineerVedioDevicePluginViewCtrl.m */,
+				EB09EF361FD9801400C968CA /* EngineerEnvDevicePluginViewCtrl.m */,
+				EB09EF381FD9801D00C968CA /* EngineerEnvDevicePluginViewCtrl.h */,
+				EBAE5BB51FDFFBCD00C10C4D /* EngineerScenarioListViewCtrl.h */,
+				EBAE5BB61FDFFBD700C10C4D /* EngineerScenarioListViewCtrl.m */,
+				EBAE5BBA1FE0070600C10C4D /* EngineerPresetScenarioViewCtrl.m */,
+				EBAE5BBC1FE0071C00C10C4D /* EngineerPresetScenarioViewCtrl.h */,
+			);
+			path = Basic;
+			sourceTree = "<group>";
+		};
+		EB1A55CE1FEA9E2A000B18E6 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				EB0968BD1FE2B4BE00CF422F /* EngineerElectronicSysConfigViewCtrl.h */,
+				EB0968BE1FE2B4C900CF422F /* EngineerElectronicSysConfigViewCtrl.m */,
+				EB3B73991FE61B18001941CF /* EngineerPlayerSettingsViewCtrl.m */,
+				EB3B739B1FE61B2B001941CF /* EngineerPlayerSettingsViewCtrl.h */,
+				EB3B73B01FE63822001941CF /* EngineerWirlessYaoBaoViewCtrl.h */,
+				EB3B73B11FE6382F001941CF /* EngineerWirlessYaoBaoViewCtrl.m */,
+				EB4EC11A1FE7F164000B3101 /* EngineerHunYinSysViewController.h */,
+				EB4EC11B1FE7F164000B3101 /* EngineerHunYinSysViewController.m */,
+				EB4EC11D1FE7F94B000B3101 /* EngineerHandtoHandViewCtrl.h */,
+				EB4EC11E1FE7F94B000B3101 /* EngineerHandtoHandViewCtrl.m */,
+				EB4EC1201FE7FC3B000B3101 /* EngineerWirelessMeetingViewCtrl.h */,
+				EB4EC1211FE7FC3B000B3101 /* EngineerWirelessMeetingViewCtrl.m */,
+				EB1A55B91FE801CF000B18E6 /* EngineerWIrelessMeetingPlayViewCtrl.h */,
+				EB1A55BA1FE801CF000B18E6 /* EngineerWIrelessMeetingPlayViewCtrl.m */,
+				EB1A55C01FE93CD4000B18E6 /* EngineerAudioProcessViewCtrl.h */,
+				EB1A55C11FE93CD4000B18E6 /* EngineerAudioProcessViewCtrl.m */,
+				EB1A55C51FEA919C000B18E6 /* EngineerPVExpendViewCtrl.h */,
+				EB1A55C61FEA919C000B18E6 /* EngineerPVExpendViewCtrl.m */,
+			);
+			path = Audio;
 			sourceTree = "<group>";
 		};
 		EBEA7C1D1FBCAF260028F0E8 /* Components */ = {
