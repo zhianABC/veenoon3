@@ -13,6 +13,8 @@
 #import "EngineerHunYinSysViewController.h"
 #import "EngineerHandtoHandViewCtrl.h"
 #import "EngineerWirelessMeetingViewCtrl.h"
+#import "EngineerAudioProcessViewCtrl.h"
+#import "EngineerPVExpendViewCtrl.h"
 
 @interface EngineerPresetScenarioViewCtrl<ECPlusSelectViewDelegate> () {
     ECPlusSelectView *ecp;
@@ -244,6 +246,8 @@
     NSMutableArray *hunyinSysArray;
     NSMutableArray *handToHandSysArray;
     NSMutableArray *wirelessMeetingArray;
+    NSMutableArray *audioProcessArray;
+    NSMutableArray *pvExpendArray;
     for (id audioSys in audioArray) {
         if ([[audioSys objectForKey:@"name"] isEqualToString:@"electronic8Sys"]) {
             electronic8SysArray = [audioSys objectForKey:@"value"];
@@ -261,10 +265,16 @@
             hunyinSysArray = [audioSys objectForKey:@"value"];
         }
         if ([[audioSys objectForKey:@"name"] isEqualToString:@"handToHandSys"]) {
-            hunyinSysArray = [audioSys objectForKey:@"value"];
+            handToHandSysArray = [audioSys objectForKey:@"value"];
         }
         if ([[audioSys objectForKey:@"name"] isEqualToString:@"wirelessMeetingSys"]) {
-            hunyinSysArray = [audioSys objectForKey:@"value"];
+            wirelessMeetingArray = [audioSys objectForKey:@"value"];
+        }
+        if ([[audioSys objectForKey:@"name"] isEqualToString:@"audioProcessSys"]) {
+            audioProcessArray = [audioSys objectForKey:@"value"];
+        }
+        if ([[audioSys objectForKey:@"name"] isEqualToString:@"pvExpendSys"]) {
+            pvExpendArray = [audioSys objectForKey:@"value"];
         }
     }
     if (electronic8SysArray == nil) {
@@ -327,6 +337,22 @@
         
         [audioArray addObject:playerDic];
     }
+    if (audioProcessArray == nil) {
+        audioProcessArray = [[NSMutableArray alloc] init];
+        NSMutableDictionary *playerDic = [[NSMutableDictionary alloc] init];
+        [playerDic setObject:@"audioProcessSys" forKey:@"name"];
+        [playerDic setObject:audioProcessArray forKey:@"value"];
+        
+        [audioArray addObject:playerDic];
+    }
+    if (pvExpendArray == nil) {
+        pvExpendArray = [[NSMutableArray alloc] init];
+        NSMutableDictionary *playerDic = [[NSMutableDictionary alloc] init];
+        [playerDic setObject:@"pvExpendSys" forKey:@"name"];
+        [playerDic setObject:pvExpendArray forKey:@"value"];
+        
+        [audioArray addObject:playerDic];
+    }
     
     if ([name isEqualToString:@"8路电源管理"] || [name isEqualToString:@"16路电源管理"]) {
         EngineerElectronicSysConfigViewCtrl *ctrl = [[EngineerElectronicSysConfigViewCtrl alloc] init];
@@ -372,6 +398,21 @@
         EngineerWirelessMeetingViewCtrl *ctrl = [[EngineerWirelessMeetingViewCtrl alloc] init];
         ctrl._wirelessMeetingArray = wirelessMeetingArray;
         ctrl._number = 12;
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+    // wuxian array
+    if ([name isEqualToString:@"音频处理"]) {
+        EngineerAudioProcessViewCtrl *ctrl = [[EngineerAudioProcessViewCtrl alloc] init];
+        ctrl._audioProcessArray = audioProcessArray;
+        ctrl._inputNumber=16;
+        ctrl._outputNumber=16;
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+    // wuxian array
+    if ([name isEqualToString:@"功放"]) {
+        EngineerPVExpendViewCtrl *ctrl = [[EngineerPVExpendViewCtrl alloc] init];
+        ctrl._pvExpendArray = pvExpendArray;
+        ctrl._number=16;
         [self.navigationController pushViewController:ctrl animated:YES];
     }
 }
