@@ -1,20 +1,22 @@
 //
-//  EngineerDVDViewController.m
+//  EngineerCameraViewController.m
 //  veenoon
 //
-//  Created by 安志良 on 2017/12/20.
+//  Created by 安志良 on 2017/12/24.
 //  Copyright © 2017年 jack. All rights reserved.
 //
 
-#import "EngineerDVDViewController.h"
+#import "EngineerCameraViewController.h"
 #import "UIButton+Color.h"
 #import "CustomPickerView.h"
 
-@interface EngineerDVDViewController () {
+@interface EngineerCameraViewController () {
     
     UIButton *_selectSysBtn;
     
     CustomPickerView *_customPicker;
+    
+    UIButton *_numberBtn;
     
     UIButton *_volumnMinus;
     UIButton *_lastSing;
@@ -23,15 +25,11 @@
     UIButton *_volumnAdd;
     
     BOOL isplay;
-    
-    UIButton *_luboBtn;
-    UIButton *_tanchuBtn;
-    UIButton *_addressBtn;
 }
 @end
 
-@implementation EngineerDVDViewController
-@synthesize _dvdSysArray;
+@implementation EngineerCameraViewController
+@synthesize _cameraSysArray;
 @synthesize _number;
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -76,7 +74,7 @@
     _selectSysBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _selectSysBtn.frame = CGRectMake(70, 100, 200, 30);
     [_selectSysBtn setImage:[UIImage imageNamed:@"engineer_sys_select_down_n.png"] forState:UIControlStateNormal];
-    [_selectSysBtn setTitle:@"DVD播放器" forState:UIControlStateNormal];
+    [_selectSysBtn setTitle:@"摄像机" forState:UIControlStateNormal];
     [_selectSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_selectSysBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _selectSysBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
@@ -85,96 +83,97 @@
     [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_selectSysBtn];
     
-    int height = SCREEN_HEIGHT - 200;
-    int width = 80;
-    
-    _volumnMinus = [UIButton buttonWithType:UIButtonTypeCustom];
-    _volumnMinus.frame = CGRectMake(0, 0, width, width);
-    _volumnMinus.center = CGPointMake(SCREEN_WIDTH/2 - 200, height);
-    [_volumnMinus setImage:[UIImage imageNamed:@"audio_player_r_minus_n.png"] forState:UIControlStateNormal];
-    [_volumnMinus setImage:[UIImage imageNamed:@"audio_player_minus_s.png"] forState:UIControlStateHighlighted];
-    [_volumnMinus addTarget:self action:@selector(volumnMinusAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_volumnMinus];
-    
-    _lastSing = [UIButton buttonWithType:UIButtonTypeCustom];
-    _lastSing.frame = CGRectMake(0, 0, width, width);
-    _lastSing.center = CGPointMake(SCREEN_WIDTH/2 - 100, height);
-    [_lastSing setImage:[UIImage imageNamed:@"audio_player_r_last_n.png"] forState:UIControlStateNormal];
-    [_lastSing setImage:[UIImage imageNamed:@"audio_player_last_s.png"] forState:UIControlStateHighlighted];
-    [_lastSing addTarget:self action:@selector(lastSingAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_lastSing];
-    
-    isplay = NO;
-    _playOrHold = [UIButton buttonWithType:UIButtonTypeCustom];
-    _playOrHold.frame = CGRectMake(0, 0, width, width);
-    _playOrHold.center = CGPointMake(SCREEN_WIDTH/2, height);
-    [_playOrHold setImage:[UIImage imageNamed:@"audio_player_r_hold.png"] forState:UIControlStateNormal];
-    [_playOrHold setImage:[UIImage imageNamed:@"audio_player_play.png"] forState:UIControlStateHighlighted];
-    [_playOrHold addTarget:self action:@selector(audioPlayHoldAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_playOrHold];
-    
-    _nextSing = [UIButton buttonWithType:UIButtonTypeCustom];
-    _nextSing.frame = CGRectMake(0, 0, width, width);
-    _nextSing.center = CGPointMake(SCREEN_WIDTH/2 + 100, height);
-    [_nextSing setImage:[UIImage imageNamed:@"audio_player_r_next_n.png"] forState:UIControlStateNormal];
-    [_nextSing setImage:[UIImage imageNamed:@"audio_player_next_s.png"] forState:UIControlStateHighlighted];
-    [_nextSing addTarget:self action:@selector(nextSingAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_nextSing];
-    
-    _volumnAdd = [UIButton buttonWithType:UIButtonTypeCustom];
-    _volumnAdd.frame = CGRectMake(0, 0, width, width);
-    _volumnAdd.center = CGPointMake(SCREEN_WIDTH/2 + 200, height);
-    [_volumnAdd setImage:[UIImage imageNamed:@"audio_layer_r_next_n.png"] forState:UIControlStateNormal];
-    [_volumnAdd setImage:[UIImage imageNamed:@"audio_layer_next_s.png"] forState:UIControlStateHighlighted];
-    [_volumnAdd addTarget:self action:@selector(volumnAddAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_volumnAdd];
-    
-    
-    _luboBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
-    _luboBtn.frame = CGRectMake(70, SCREEN_HEIGHT-140, 60, 60);
-    _luboBtn.layer.cornerRadius = 5;
-    _luboBtn.layer.borderWidth = 2;
-    _luboBtn.layer.borderColor = [UIColor clearColor].CGColor;;
-    _luboBtn.clipsToBounds = YES;
-    [_luboBtn setImage:[UIImage imageNamed:@"engineer_lubo_n.png"] forState:UIControlStateNormal];
-    [_luboBtn setImage:[UIImage imageNamed:@"engineer_lubo_s.png"] forState:UIControlStateHighlighted];
-    [self.view addSubview:_luboBtn];
-    
-    [_luboBtn addTarget:self
-                 action:@selector(luboAction:)
-       forControlEvents:UIControlEventTouchUpInside];
-    
-    
-    _tanchuBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
-    _tanchuBtn.frame = CGRectMake(150, SCREEN_HEIGHT-140, 60, 60);
-    _tanchuBtn.layer.cornerRadius = 5;
-    _tanchuBtn.layer.borderWidth = 2;
-    _tanchuBtn.layer.borderColor = [UIColor clearColor].CGColor;;
-    _tanchuBtn.clipsToBounds = YES;
-    [_tanchuBtn setImage:[UIImage imageNamed:@"engineer_tanchu_n.png"] forState:UIControlStateNormal];
-    [_tanchuBtn setImage:[UIImage imageNamed:@"engineer_tanchu_s.png"] forState:UIControlStateHighlighted];
-    [self.view addSubview:_tanchuBtn];
-    
-    [_tanchuBtn addTarget:self
-                   action:@selector(tanchuAction:)
-         forControlEvents:UIControlEventTouchUpInside];
-    
-    _addressBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
-    _addressBtn.frame = CGRectMake(230, SCREEN_HEIGHT-140, 60, 60);
-    _addressBtn.layer.cornerRadius = 5;
-    _addressBtn.layer.borderWidth = 2;
-    _addressBtn.layer.borderColor = [UIColor clearColor].CGColor;;
-    _addressBtn.clipsToBounds = YES;
-    [_addressBtn setImage:[UIImage imageNamed:@"engineer_address_n.png"] forState:UIControlStateNormal];
-    [_addressBtn setImage:[UIImage imageNamed:@"engineer_address_s.png"] forState:UIControlStateHighlighted];
-    [self.view addSubview:_addressBtn];
-    
-    [_addressBtn addTarget:self
-                   action:@selector(addressAction:)
-         forControlEvents:UIControlEventTouchUpInside];
-    
-    int playerLeft = 200;
+    int playerLeft = 0;
     int playerHeight = 10;
+    
+    UIButton *minusBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    minusBtn.frame = CGRectMake(230+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
+    minusBtn.layer.cornerRadius = 5;
+    minusBtn.layer.borderWidth = 2;
+    minusBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    minusBtn.clipsToBounds = YES;
+    [minusBtn setTitle:@"-" forState:UIControlStateNormal];
+    [minusBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [minusBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [self.view addSubview:minusBtn];
+    
+    [minusBtn addTarget:self
+                       action:@selector(minusAction:)
+             forControlEvents:UIControlEventTouchUpInside];
+    
+    _numberBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    _numberBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
+    _numberBtn.layer.cornerRadius = 5;
+    _numberBtn.layer.borderWidth = 2;
+    _numberBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    _numberBtn.clipsToBounds = YES;
+    [_numberBtn setTitle:@"0" forState:UIControlStateNormal];
+    [_numberBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateNormal];
+    [_numberBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    _numberBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [self.view addSubview:_numberBtn];
+    
+    UIButton *invokeBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    invokeBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-585+playerHeight, 80, 80);
+    invokeBtn.layer.cornerRadius = 5;
+    invokeBtn.layer.borderWidth = 2;
+    invokeBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    invokeBtn.clipsToBounds = YES;
+    [invokeBtn setTitle:@"调用" forState:UIControlStateNormal];
+    [invokeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [invokeBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [self.view addSubview:invokeBtn];
+    
+    [invokeBtn addTarget:self
+                    action:@selector(invokeAction:)
+          forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *addBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    addBtn.frame = CGRectMake(400+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
+    addBtn.layer.cornerRadius = 5;
+    addBtn.layer.borderWidth = 2;
+    addBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    addBtn.clipsToBounds = YES;
+    [addBtn setTitle:@"+" forState:UIControlStateNormal];
+    [addBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [addBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [self.view addSubview:addBtn];
+    
+    [addBtn addTarget:self
+                    action:@selector(addAction:)
+          forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *storeBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    storeBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-415+playerHeight, 80, 80);
+    storeBtn.layer.cornerRadius = 5;
+    storeBtn.layer.borderWidth = 2;
+    storeBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    storeBtn.clipsToBounds = YES;
+    [storeBtn setTitle:@"存储" forState:UIControlStateNormal];
+    [storeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [storeBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [self.view addSubview:storeBtn];
+    
+    [storeBtn addTarget:self
+                      action:@selector(storeAction:)
+            forControlEvents:UIControlEventTouchUpInside];
+    
+    playerLeft = 450;
+    
+    UIButton *tBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    tBtn.frame = CGRectMake(230+playerLeft, SCREEN_HEIGHT-500+playerHeight-85, 80, 80);
+    tBtn.layer.cornerRadius = 5;
+    tBtn.layer.borderWidth = 2;
+    tBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    tBtn.clipsToBounds = YES;
+    [tBtn setTitle:@"T" forState:UIControlStateNormal];
+    [tBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [tBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [self.view addSubview:tBtn];
+    
+    [tBtn addTarget:self
+                       action:@selector(tAction:)
+             forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *lastVideoUpBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
     lastVideoUpBtn.frame = CGRectMake(230+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
@@ -203,7 +202,22 @@
     [self.view addSubview:okPlayerBtn];
     
     [okPlayerBtn addTarget:self action:@selector(audioPlayHoldAction:)
-             forControlEvents:UIControlEventTouchUpInside];
+          forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *wBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    wBtn.frame = CGRectMake(315+playerLeft+85, SCREEN_HEIGHT-585+playerHeight, 80, 80);
+    wBtn.layer.cornerRadius = 5;
+    wBtn.layer.borderWidth = 2;
+    wBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    wBtn.clipsToBounds = YES;
+    [wBtn setTitle:@"W" forState:UIControlStateNormal];
+    [wBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [wBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [self.view addSubview:wBtn];
+    
+    [wBtn addTarget:self
+             action:@selector(wAction:)
+   forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *volumnUpBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
     volumnUpBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-585+playerHeight, 80, 80);
@@ -219,6 +233,20 @@
                     action:@selector(volumnAddAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
+    UIButton *zoomMinusBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    zoomMinusBtn.frame = CGRectMake(315+playerLeft+85, SCREEN_HEIGHT-415+playerHeight, 80, 80);
+    zoomMinusBtn.layer.cornerRadius = 5;
+    zoomMinusBtn.layer.borderWidth = 2;
+    zoomMinusBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    zoomMinusBtn.clipsToBounds = YES;
+    [zoomMinusBtn setImage:[UIImage imageNamed:@"engineer_zoom_minus_n.png"] forState:UIControlStateNormal];
+    [zoomMinusBtn setImage:[UIImage imageNamed:@"engineer_zoom_minus_s.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:zoomMinusBtn];
+    
+    [zoomMinusBtn addTarget:self
+                   action:@selector(zoomMinusAction:)
+         forControlEvents:UIControlEventTouchUpInside];
+    
     UIButton *nextPlayBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
     nextPlayBtn.frame = CGRectMake(400+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
     nextPlayBtn.layer.cornerRadius = 5;
@@ -233,6 +261,20 @@
                     action:@selector(nextSingAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
+    UIButton *zoomAddBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    zoomAddBtn.frame = CGRectMake(315+playerLeft-85, SCREEN_HEIGHT-415+playerHeight, 80, 80);
+    zoomAddBtn.layer.cornerRadius = 5;
+    zoomAddBtn.layer.borderWidth = 2;
+    zoomAddBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    zoomAddBtn.clipsToBounds = YES;
+    [zoomAddBtn setImage:[UIImage imageNamed:@"engineer_zoom_add_n.png"] forState:UIControlStateNormal];
+    [zoomAddBtn setImage:[UIImage imageNamed:@"engineer_zoom_add_s.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:zoomAddBtn];
+    
+    [zoomAddBtn addTarget:self
+                   action:@selector(zoomAddAction:)
+         forControlEvents:UIControlEventTouchUpInside];
+    
     UIButton *volumnDownBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
     volumnDownBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-415+playerHeight, 80, 80);
     volumnDownBtn.layer.cornerRadius = 5;
@@ -246,16 +288,21 @@
     [volumnDownBtn addTarget:self
                       action:@selector(volumnMinusAction:)
             forControlEvents:UIControlEventTouchUpInside];
+    
 }
-- (void) luboAction:(id)sender{
+- (void) zoomMinusAction:(id)sender{
+    
+}
+- (void) zoomAddAction:(id)sender{
+    
+}
+- (void) wAction:(id)sender{
+    
+}
+- (void) tAction:(id)sender{
+    
 }
 
-- (void) tanchuAction:(id)sender{
-    
-}
-- (void) addressAction:(id)sender{
-    
-}
 - (void) nextSingAction:(id)sender{
     
 }
@@ -281,7 +328,31 @@
 - (void) volumnAddAction:(id)sender{
     
 }
+- (void) addAction:(id)sender{
+    NSString *currentValue = _numberBtn.titleLabel.text;
+    int value = [currentValue intValue];
+    
+    value++;
+    
+    [_numberBtn setTitle:[NSString stringWithFormat:@"%d", value] forState:UIControlStateNormal];
+}
 
+- (void) minusAction:(id)sender{
+    NSString *currentValue = _numberBtn.titleLabel.text;
+    int value = [currentValue intValue];
+    
+    value--;
+    
+    [_numberBtn setTitle:[NSString stringWithFormat:@"%d", value] forState:UIControlStateNormal];
+}
+
+- (void) storeAction:(id)sender{
+    
+}
+
+- (void) invokeAction:(id)sender{
+    
+}
 - (void) sysSelectAction:(id)sender{
     _customPicker = [[CustomPickerView alloc]
                      initWithFrame:CGRectMake(_selectSysBtn.frame.origin.x, _selectSysBtn.frame.origin.y, _selectSysBtn.frame.size.width, 200) withGrayOrLight:@"gray"];
@@ -306,7 +377,7 @@
     if (_customPicker) {
         [_customPicker removeFromSuperview];
     }
-    NSString *title =  [@"DVD播放器" stringByAppendingString:pickerValue];
+    NSString *title =  [@"摄像机" stringByAppendingString:pickerValue];
     [_selectSysBtn setTitle:title forState:UIControlStateNormal];
 }
 - (void) okAction:(id)sender{
