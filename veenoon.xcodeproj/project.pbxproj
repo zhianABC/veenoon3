@@ -351,6 +351,7 @@
 		EB1A56111FEF876F000B18E6 /* engineer_hangphone_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1A560F1FEF876E000B18E6 /* engineer_hangphone_s@2x.png */; };
 		EB1A56121FEF876F000B18E6 /* engineer_hangphone_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1A56101FEF876F000B18E6 /* engineer_hangphone_n@2x.png */; };
 		EB1A56151FEF8F29000B18E6 /* EngineerVideoProcessViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1A56141FEF8F29000B18E6 /* EngineerVideoProcessViewCtrl.m */; };
+		EB1A56181FEF9626000B18E6 /* EngineerVideoPinJieViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1A56171FEF9626000B18E6 /* EngineerVideoPinJieViewCtrl.m */; };
 		EB1F9F101FD818E9007132A1 /* user_info_collect_d@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1F9F0D1FD818E8007132A1 /* user_info_collect_d@2x.png */; };
 		EB1F9F111FD818E9007132A1 /* user_info_collect_y@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1F9F0E1FD818E9007132A1 /* user_info_collect_y@2x.png */; };
 		EB1F9F121FD818E9007132A1 /* user_info_collect_m@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1F9F0F1FD818E9007132A1 /* user_info_collect_m@2x.png */; };
@@ -1151,6 +1152,8 @@
 		EB1A56101FEF876F000B18E6 /* engineer_hangphone_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_hangphone_n@2x.png"; sourceTree = "<group>"; };
 		EB1A56131FEF8F29000B18E6 /* EngineerVideoProcessViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerVideoProcessViewCtrl.h; sourceTree = "<group>"; };
 		EB1A56141FEF8F29000B18E6 /* EngineerVideoProcessViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerVideoProcessViewCtrl.m; sourceTree = "<group>"; };
+		EB1A56161FEF9626000B18E6 /* EngineerVideoPinJieViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerVideoPinJieViewCtrl.h; sourceTree = "<group>"; };
+		EB1A56171FEF9626000B18E6 /* EngineerVideoPinJieViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerVideoPinJieViewCtrl.m; sourceTree = "<group>"; };
 		EB1F9F0D1FD818E8007132A1 /* user_info_collect_d@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_info_collect_d@2x.png"; sourceTree = "<group>"; };
 		EB1F9F0E1FD818E9007132A1 /* user_info_collect_y@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_info_collect_y@2x.png"; sourceTree = "<group>"; };
 		EB1F9F0F1FD818E9007132A1 /* user_info_collect_m@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_info_collect_m@2x.png"; sourceTree = "<group>"; };
@@ -2591,6 +2594,8 @@
 				EB1A55F31FEF80D7000B18E6 /* EngineerRemoteVideoViewCtrl.m */,
 				EB1A56131FEF8F29000B18E6 /* EngineerVideoProcessViewCtrl.h */,
 				EB1A56141FEF8F29000B18E6 /* EngineerVideoProcessViewCtrl.m */,
+				EB1A56161FEF9626000B18E6 /* EngineerVideoPinJieViewCtrl.h */,
+				EB1A56171FEF9626000B18E6 /* EngineerVideoPinJieViewCtrl.m */,
 			);
 			path = Video;
 			sourceTree = "<group>";
@@ -3216,6 +3221,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB1A56181FEF9626000B18E6 /* EngineerVideoPinJieViewCtrl.m in Sources */,
 				EB217FD81FD429B4003F5A8F /* UserDoorAccessViewCtrl.m in Sources */,
 				3425E9951FE57675003559F7 /* MixVoiceSettingsView.m in Sources */,
 				EB042A5B1FC2FFCD00F7F73D /* OutSystemView.m in Sources */,

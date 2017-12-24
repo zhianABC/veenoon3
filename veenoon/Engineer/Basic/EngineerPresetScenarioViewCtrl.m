@@ -19,6 +19,7 @@
 #import "EngineerCameraViewController.h"
 #import "EngineerRemoteVideoViewCtrl.h"
 #import "EngineerVideoProcessViewCtrl.h"
+#import "EngineerVideoPinJieViewCtrl.h"
 
 @interface EngineerPresetScenarioViewCtrl<ECPlusSelectViewDelegate> () {
     ECPlusSelectView *ecp;
@@ -249,6 +250,7 @@
     NSMutableArray *remoteVideoSysArray;
     NSMutableArray *videoInSysArray;
     NSMutableArray *videoOutSysArray;
+    NSMutableArray *pinjieSysArray;
     for (id videoSys in videoArray) {
         if ([[videoSys objectForKey:@"name"] isEqualToString:@"dvdSys"]) {
             dvdSysArray = [videoSys objectForKey:@"value"];
@@ -264,6 +266,9 @@
         }
         if ([[videoSys objectForKey:@"name"] isEqualToString:@"videoOutSys"]) {
             videoOutSysArray = [videoSys objectForKey:@"value"];
+        }
+        if ([[videoSys objectForKey:@"name"] isEqualToString:@"pinjieSys"]) {
+            pinjieSysArray = [videoSys objectForKey:@"value"];
         }
     }
     if (dvdSysArray == nil) {
@@ -306,6 +311,14 @@
         
         [videoArray addObject:playerDic];
     }
+    if (pinjieSysArray == nil) {
+        pinjieSysArray = [[NSMutableArray alloc] init];
+        NSMutableDictionary *playerDic = [[NSMutableDictionary alloc] init];
+        [playerDic setObject:@"pinjieSys" forKey:@"name"];
+        [playerDic setObject:pinjieSysArray forKey:@"value"];
+        
+        [videoArray addObject:playerDic];
+    }
     // wuxian array
     if ([name isEqualToString:@"视频播放器"]) {
         EngineerDVDViewController *ctrl = [[EngineerDVDViewController alloc] init];
@@ -334,6 +347,15 @@
         ctrl._outNumber=14;
         ctrl._videoProcessInArray = videoInSysArray;
         ctrl._videoProcessOutArray = videoOutSysArray;
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+    
+    // wuxian array
+    if ([name isEqualToString:@"拼接屏"]) {
+        EngineerVideoPinJieViewCtrl *ctrl = [[EngineerVideoPinJieViewCtrl alloc] init];
+        ctrl._rowNumber=6;
+        ctrl._colNumber=8;
+        ctrl._pinjieSysArray = pinjieSysArray;
         [self.navigationController pushViewController:ctrl animated:YES];
     }
     
