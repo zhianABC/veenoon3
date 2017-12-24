@@ -15,6 +15,7 @@
 #import "EngineerWirelessMeetingViewCtrl.h"
 #import "EngineerAudioProcessViewCtrl.h"
 #import "EngineerPVExpendViewCtrl.h"
+#import "EngineerDVDViewController.h"
 
 @interface EngineerPresetScenarioViewCtrl<ECPlusSelectViewDelegate> () {
     ECPlusSelectView *ecp;
@@ -239,6 +240,7 @@
 -(void)handleTapGesture:(UIGestureRecognizer*)gestureRecognizer{
     NSString *name = [gestureRecognizer valueForKey:@"name"];
     NSMutableArray *audioArray = [_curScenario objectForKey:@"audioArray"];
+    NSMutableArray *videoArray = [_curScenario objectForKey:@"videoArray"];
     NSMutableArray *electronic8SysArray;
     NSMutableArray *electronic16SysArray;
     NSMutableArray *playerSysArray;
@@ -248,6 +250,27 @@
     NSMutableArray *wirelessMeetingArray;
     NSMutableArray *audioProcessArray;
     NSMutableArray *pvExpendArray;
+    NSMutableArray *dvdSysArray;
+    for (id videoSys in videoArray) {
+        if ([[videoSys objectForKey:@"name"] isEqualToString:@"dvdSys"]) {
+            dvdSysArray = [videoSys objectForKey:@"value"];
+        }
+    }
+    if (dvdSysArray == nil) {
+        dvdSysArray = [[NSMutableArray alloc] init];
+        NSMutableDictionary *playerDic = [[NSMutableDictionary alloc] init];
+        [playerDic setObject:@"dvdSys" forKey:@"name"];
+        [playerDic setObject:dvdSysArray forKey:@"value"];
+        
+        [videoArray addObject:playerDic];
+    }
+    // wuxian array
+    if ([name isEqualToString:@"视频播放器"]) {
+        EngineerDVDViewController *ctrl = [[EngineerDVDViewController alloc] init];
+        ctrl._dvdSysArray = dvdSysArray;
+        ctrl._number=16;
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
     for (id audioSys in audioArray) {
         if ([[audioSys objectForKey:@"name"] isEqualToString:@"electronic8Sys"]) {
             electronic8SysArray = [audioSys objectForKey:@"value"];

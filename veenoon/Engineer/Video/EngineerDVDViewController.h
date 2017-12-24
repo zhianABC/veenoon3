@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
+#import "CustomPickerView.h"
 
-@interface EngineerDVDViewController : UIViewController
-
+@interface EngineerDVDViewController<CustomPickerViewDelegate> : BaseViewController {
+    NSMutableArray *_dvdSysArray;
+    
+    int _number;
+}
+@property (nonatomic,strong) NSMutableArray *_dvdSysArray;
+@property (nonatomic,assign) int _number;
 @end

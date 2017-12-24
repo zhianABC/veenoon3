@@ -465,7 +465,7 @@
     okPlayerBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [self.view addSubview:okPlayerBtn];
     
-    [lastVideoUpBtn addTarget:self action:@selector(okPlayerAction:)
+    [okPlayerBtn addTarget:self action:@selector(okPlayerAction:)
              forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *volumnUpBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];

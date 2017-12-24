@@ -7,31 +7,313 @@
 //
 
 #import "EngineerDVDViewController.h"
+#import "UIButton+Color.h"
+#import "CustomPickerView.h"
 
-@interface EngineerDVDViewController ()
-
+@interface EngineerDVDViewController () {
+    
+    UIButton *_selectSysBtn;
+    
+    CustomPickerView *_customPicker;
+    
+    UIButton *_volumnMinus;
+    UIButton *_lastSing;
+    UIButton *_playOrHold;
+    UIButton *_nextSing;
+    UIButton *_volumnAdd;
+    
+    BOOL isplay;
+    
+    UIButton *_luboBtn;
+    UIButton *_tanchuBtn;
+    UIButton *_addressBtn;
+}
 @end
 
 @implementation EngineerDVDViewController
-
+@synthesize _dvdSysArray;
+@synthesize _number;
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
+    [self.view addSubview:titleIcon];
+    titleIcon.frame = CGRectMake(70, 30, 70, 10);
+    
+    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 59, SCREEN_WIDTH, 1)];
+    line.backgroundColor = RGB(75, 163, 202);
+    [self.view addSubview:line];
+    
+    UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-60, SCREEN_WIDTH, 60)];
+    [self.view addSubview:bottomBar];
+    
+    //缺切图，把切图贴上即可。
+    bottomBar.backgroundColor = [UIColor grayColor];
+    bottomBar.userInteractionEnabled = YES;
+    bottomBar.image = [UIImage imageNamed:@"botomo_icon.png"];
+    
+    UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    cancelBtn.frame = CGRectMake(10, 0,160, 60);
+    [bottomBar addSubview:cancelBtn];
+    [cancelBtn setTitle:@"返回" forState:UIControlStateNormal];
+    [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [cancelBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    cancelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [cancelBtn addTarget:self
+                  action:@selector(cancelAction:)
+        forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 60);
+    [bottomBar addSubview:okBtn];
+    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+    [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [okBtn addTarget:self
+              action:@selector(okAction:)
+    forControlEvents:UIControlEventTouchUpInside];
+    
+    _selectSysBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _selectSysBtn.frame = CGRectMake(70, 100, 200, 30);
+    [_selectSysBtn setImage:[UIImage imageNamed:@"engineer_sys_select_down_n.png"] forState:UIControlStateNormal];
+    [_selectSysBtn setTitle:@"DVD播放器" forState:UIControlStateNormal];
+    [_selectSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_selectSysBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
+    _selectSysBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+    [_selectSysBtn setTitleEdgeInsets:UIEdgeInsetsMake(0,-30,0,_selectSysBtn.imageView.bounds.size.width+50)];
+    [_selectSysBtn setImageEdgeInsets:UIEdgeInsetsMake(0,_selectSysBtn.titleLabel.bounds.size.width,0,-100)];
+    [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_selectSysBtn];
+    
+    int height = SCREEN_HEIGHT - 200;
+    int width = 80;
+    
+    _volumnMinus = [UIButton buttonWithType:UIButtonTypeCustom];
+    _volumnMinus.frame = CGRectMake(0, 0, width, width);
+    _volumnMinus.center = CGPointMake(SCREEN_WIDTH/2 - 200, height);
+    [_volumnMinus setImage:[UIImage imageNamed:@"audio_player_r_minus_n.png"] forState:UIControlStateNormal];
+    [_volumnMinus setImage:[UIImage imageNamed:@"audio_player_minus_s.png"] forState:UIControlStateHighlighted];
+    [_volumnMinus addTarget:self action:@selector(volumnMinusAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_volumnMinus];
+    
+    _lastSing = [UIButton buttonWithType:UIButtonTypeCustom];
+    _lastSing.frame = CGRectMake(0, 0, width, width);
+    _lastSing.center = CGPointMake(SCREEN_WIDTH/2 - 100, height);
+    [_lastSing setImage:[UIImage imageNamed:@"audio_player_r_last_n.png"] forState:UIControlStateNormal];
+    [_lastSing setImage:[UIImage imageNamed:@"audio_player_last_s.png"] forState:UIControlStateHighlighted];
+    [_lastSing addTarget:self action:@selector(lastSingAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_lastSing];
+    
+    isplay = NO;
+    _playOrHold = [UIButton buttonWithType:UIButtonTypeCustom];
+    _playOrHold.frame = CGRectMake(0, 0, width, width);
+    _playOrHold.center = CGPointMake(SCREEN_WIDTH/2, height);
+    [_playOrHold setImage:[UIImage imageNamed:@"audio_player_r_hold.png"] forState:UIControlStateNormal];
+    [_playOrHold setImage:[UIImage imageNamed:@"audio_player_play.png"] forState:UIControlStateHighlighted];
+    [_playOrHold addTarget:self action:@selector(audioPlayHoldAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_playOrHold];
+    
+    _nextSing = [UIButton buttonWithType:UIButtonTypeCustom];
+    _nextSing.frame = CGRectMake(0, 0, width, width);
+    _nextSing.center = CGPointMake(SCREEN_WIDTH/2 + 100, height);
+    [_nextSing setImage:[UIImage imageNamed:@"audio_player_r_next_n.png"] forState:UIControlStateNormal];
+    [_nextSing setImage:[UIImage imageNamed:@"audio_player_next_s.png"] forState:UIControlStateHighlighted];
+    [_nextSing addTarget:self action:@selector(nextSingAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_nextSing];
+    
+    _volumnAdd = [UIButton buttonWithType:UIButtonTypeCustom];
+    _volumnAdd.frame = CGRectMake(0, 0, width, width);
+    _volumnAdd.center = CGPointMake(SCREEN_WIDTH/2 + 200, height);
+    [_volumnAdd setImage:[UIImage imageNamed:@"audio_layer_r_next_n.png"] forState:UIControlStateNormal];
+    [_volumnAdd setImage:[UIImage imageNamed:@"audio_layer_next_s.png"] forState:UIControlStateHighlighted];
+    [_volumnAdd addTarget:self action:@selector(volumnAddAction:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_volumnAdd];
+    
+    
+    _luboBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+    _luboBtn.frame = CGRectMake(70, SCREEN_HEIGHT-140, 60, 60);
+    _luboBtn.layer.cornerRadius = 5;
+    _luboBtn.layer.borderWidth = 2;
+    _luboBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    _luboBtn.clipsToBounds = YES;
+    [_luboBtn setImage:[UIImage imageNamed:@"engineer_lubo_n.png"] forState:UIControlStateNormal];
+    [_luboBtn setImage:[UIImage imageNamed:@"engineer_lubo_s.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:_luboBtn];
+    
+    [_luboBtn addTarget:self
+                 action:@selector(luboAction:)
+       forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    _tanchuBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+    _tanchuBtn.frame = CGRectMake(150, SCREEN_HEIGHT-140, 60, 60);
+    _tanchuBtn.layer.cornerRadius = 5;
+    _tanchuBtn.layer.borderWidth = 2;
+    _tanchuBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    _tanchuBtn.clipsToBounds = YES;
+    [_tanchuBtn setImage:[UIImage imageNamed:@"engineer_tanchu_n.png"] forState:UIControlStateNormal];
+    [_tanchuBtn setImage:[UIImage imageNamed:@"engineer_tanchu_s.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:_tanchuBtn];
+    
+    [_tanchuBtn addTarget:self
+                   action:@selector(tanchuAction:)
+         forControlEvents:UIControlEventTouchUpInside];
+    
+    _addressBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+    _addressBtn.frame = CGRectMake(230, SCREEN_HEIGHT-140, 60, 60);
+    _addressBtn.layer.cornerRadius = 5;
+    _addressBtn.layer.borderWidth = 2;
+    _addressBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    _addressBtn.clipsToBounds = YES;
+    [_addressBtn setImage:[UIImage imageNamed:@"engineer_address_n.png"] forState:UIControlStateNormal];
+    [_addressBtn setImage:[UIImage imageNamed:@"engineer_address_s.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:_addressBtn];
+    
+    [_addressBtn addTarget:self
+                   action:@selector(addressAction:)
+         forControlEvents:UIControlEventTouchUpInside];
+    
+    int playerLeft = 200;
+    int playerHeight = 10;
+    
+    UIButton *lastVideoUpBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(255, 180, 0)];
+    lastVideoUpBtn.frame = CGRectMake(230+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
+    lastVideoUpBtn.layer.cornerRadius = 5;
+    lastVideoUpBtn.layer.borderWidth = 2;
+    lastVideoUpBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    lastVideoUpBtn.clipsToBounds = YES;
+    [lastVideoUpBtn setImage:[UIImage imageNamed:@"remote_video_left.png"] forState:UIControlStateNormal];
+    [lastVideoUpBtn setImage:[UIImage imageNamed:@"remote_video_left.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:lastVideoUpBtn];
+    
+    [lastVideoUpBtn addTarget:self
+                       action:@selector(lastSingAction:)
+             forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *okPlayerBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(255, 180, 0)];
+    okPlayerBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
+    okPlayerBtn.layer.cornerRadius = 5;
+    okPlayerBtn.layer.borderWidth = 2;
+    okPlayerBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    okPlayerBtn.clipsToBounds = YES;
+    [okPlayerBtn setTitle:@"ok" forState:UIControlStateNormal];
+    [okPlayerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [okPlayerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+    okPlayerBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [self.view addSubview:okPlayerBtn];
+    
+    [okPlayerBtn addTarget:self action:@selector(audioPlayHoldAction:)
+             forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *volumnUpBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(255, 180, 0)];
+    volumnUpBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-585+playerHeight, 80, 80);
+    volumnUpBtn.layer.cornerRadius = 5;
+    volumnUpBtn.layer.borderWidth = 2;
+    volumnUpBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    volumnUpBtn.clipsToBounds = YES;
+    [volumnUpBtn setImage:[UIImage imageNamed:@"remote_video_up.png"] forState:UIControlStateNormal];
+    [volumnUpBtn setImage:[UIImage imageNamed:@"remote_video_up.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:volumnUpBtn];
+    
+    [volumnUpBtn addTarget:self
+                    action:@selector(volumnAddAction:)
+          forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *nextPlayBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(255, 180, 0)];
+    nextPlayBtn.frame = CGRectMake(400+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
+    nextPlayBtn.layer.cornerRadius = 5;
+    nextPlayBtn.layer.borderWidth = 2;
+    nextPlayBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    nextPlayBtn.clipsToBounds = YES;
+    [nextPlayBtn setImage:[UIImage imageNamed:@"remote_video_right.png"] forState:UIControlStateNormal];
+    [nextPlayBtn setImage:[UIImage imageNamed:@"remote_video_right.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:nextPlayBtn];
+    
+    [nextPlayBtn addTarget:self
+                    action:@selector(nextSingAction:)
+          forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *volumnDownBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(255, 180, 0)];
+    volumnDownBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-415+playerHeight, 80, 80);
+    volumnDownBtn.layer.cornerRadius = 5;
+    volumnDownBtn.layer.borderWidth = 2;
+    volumnDownBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    volumnDownBtn.clipsToBounds = YES;
+    [volumnDownBtn setImage:[UIImage imageNamed:@"remote_video_down.png"] forState:UIControlStateNormal];
+    [volumnDownBtn setImage:[UIImage imageNamed:@"remote_video_down.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:volumnDownBtn];
+    
+    [volumnDownBtn addTarget:self
+                      action:@selector(volumnMinusAction:)
+            forControlEvents:UIControlEventTouchUpInside];
+}
+- (void) luboAction:(id)sender{
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void) tanchuAction:(id)sender{
+    
+}
+- (void) addressAction:(id)sender{
+    
+}
+- (void) nextSingAction:(id)sender{
+    
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void) audioPlayHoldAction:(id)sender{
+    if (isplay) {
+        [_playOrHold setImage:[UIImage imageNamed:@"audio_player_r_hold.png"] forState:UIControlStateNormal];
+        isplay = NO;
+    } else {
+        [_playOrHold setImage:[UIImage imageNamed:@"audio_player_play.png"] forState:UIControlStateNormal];
+        isplay = YES;
+    }
 }
-*/
 
+- (void) lastSingAction:(id)sender{
+    
+}
+
+- (void) volumnMinusAction:(id)sender{
+    
+}
+
+- (void) volumnAddAction:(id)sender{
+    
+}
+
+- (void) sysSelectAction:(id)sender{
+    _customPicker = [[CustomPickerView alloc]
+                     initWithFrame:CGRectMake(_selectSysBtn.frame.origin.x, _selectSysBtn.frame.origin.y, _selectSysBtn.frame.size.width, 200) withGrayOrLight:@"gray"];
+    
+    
+    NSMutableArray *arr = [NSMutableArray array];
+    for(int i = 1; i< 2; i++)
+    {
+        [arr addObject:[NSString stringWithFormat:@"00%d", i]];
+    }
+    
+    _customPicker._pickerDataArray = @[@{@"values":arr}];
+    
+    
+    _customPicker._selectColor = [UIColor orangeColor];
+    _customPicker._rowNormalColor = [UIColor whiteColor];
+    [self.view addSubview:_customPicker];
+    _customPicker.delegate_ = self;
+}
+
+- (void) didConfirmPickerValue:(NSString*) pickerValue {
+    if (_customPicker) {
+        [_customPicker removeFromSuperview];
+    }
+    NSString *title =  [@"DVD播放器" stringByAppendingString:pickerValue];
+    [_selectSysBtn setTitle:title forState:UIControlStateNormal];
+}
+- (void) okAction:(id)sender{
+    
+}
+
+- (void) cancelAction:(id)sender{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 @end

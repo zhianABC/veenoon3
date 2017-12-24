@@ -319,6 +319,8 @@
 		EB1A55C41FEA85EF000B18E6 /* engineer_zengyi3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1A55C31FEA85EF000B18E6 /* engineer_zengyi3@2x.png */; };
 		EB1A55C71FEA919C000B18E6 /* EngineerPVExpendViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1A55C61FEA919C000B18E6 /* EngineerPVExpendViewCtrl.m */; };
 		EB1A55D21FEAA10E000B18E6 /* EngineerDVDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1A55D11FEAA10E000B18E6 /* EngineerDVDViewController.m */; };
+		EB1A55D51FEF49FC000B18E6 /* engineer_address_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1A55D31FEF49FB000B18E6 /* engineer_address_s@2x.png */; };
+		EB1A55D61FEF49FC000B18E6 /* engineer_address_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1A55D41FEF49FC000B18E6 /* engineer_address_n@2x.png */; };
 		EB1F9F101FD818E9007132A1 /* user_info_collect_d@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1F9F0D1FD818E8007132A1 /* user_info_collect_d@2x.png */; };
 		EB1F9F111FD818E9007132A1 /* user_info_collect_y@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1F9F0E1FD818E9007132A1 /* user_info_collect_y@2x.png */; };
 		EB1F9F121FD818E9007132A1 /* user_info_collect_m@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1F9F0F1FD818E9007132A1 /* user_info_collect_m@2x.png */; };
@@ -1084,6 +1086,8 @@
 		EB1A55C61FEA919C000B18E6 /* EngineerPVExpendViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerPVExpendViewCtrl.m; sourceTree = "<group>"; };
 		EB1A55D01FEAA10E000B18E6 /* EngineerDVDViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerDVDViewController.h; sourceTree = "<group>"; };
 		EB1A55D11FEAA10E000B18E6 /* EngineerDVDViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerDVDViewController.m; sourceTree = "<group>"; };
+		EB1A55D31FEF49FB000B18E6 /* engineer_address_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_address_s@2x.png"; sourceTree = "<group>"; };
+		EB1A55D41FEF49FC000B18E6 /* engineer_address_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_address_n@2x.png"; sourceTree = "<group>"; };
 		EB1F9F0D1FD818E8007132A1 /* user_info_collect_d@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_info_collect_d@2x.png"; sourceTree = "<group>"; };
 		EB1F9F0E1FD818E9007132A1 /* user_info_collect_y@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_info_collect_y@2x.png"; sourceTree = "<group>"; };
 		EB1F9F0F1FD818E9007132A1 /* user_info_collect_m@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_info_collect_m@2x.png"; sourceTree = "<group>"; };
@@ -1867,6 +1871,8 @@
 		04DE1ECB1AD6B3BA00D49E2F /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
+				EB1A55D41FEF49FC000B18E6 /* engineer_address_n@2x.png */,
+				EB1A55D31FEF49FB000B18E6 /* engineer_address_s@2x.png */,
 				EB1A55BE1FE93C36000B18E6 /* engineer_zengyi2_n@2x.png */,
 				EB4EC1231FE7FE39000B3101 /* wireless_usb_n@2x.png */,
 				EB4EC1241FE7FE3A000B3101 /* wireless_usb_s@2x.png */,
@@ -2709,6 +2715,7 @@
 				EBDF1C501FC5D5CF00A756EA /* clean_warter_s@2x.png in Resources */,
 				EB38BAB31FD43C8B00E672CA /* user_monitor_zoomout_n@2x.png in Resources */,
 				EBF5D42F1FCC45350014D5F0 /* wuxianhuatong@2x.png in Resources */,
+				EB1A55D51FEF49FC000B18E6 /* engineer_address_s@2x.png in Resources */,
 				EB1A046E1FC71EEC007CC1F2 /* usb_player_s@2x.png in Resources */,
 				EB03F5351FBDDAB300865541 /* main_engineer_s@2x.png in Resources */,
 				EBF5D43A1FCC5D860014D5F0 /* biaozhunmoshi_s@2x.png in Resources */,
@@ -2830,6 +2837,7 @@
 				EBF5D4421FCC60240014D5F0 /* shedingzhuxi_s@2x.png in Resources */,
 				EBDF1BFC1FC5B12A00A756EA /* user_meeting_roome_b@2x.png in Resources */,
 				EB36AABF1FCD952B009A0FD8 /* luntimoshi_s@2x.png in Resources */,
+				EB1A55D61FEF49FC000B18E6 /* engineer_address_n@2x.png in Resources */,
 				EBAE5B821FDD07BE00C10C4D /* engineer_video_shipinchuli_n@2x.png in Resources */,
 				EB1A55C41FEA85EF000B18E6 /* engineer_zengyi3@2x.png in Resources */,
 				04DE1FCC1AD6B3BB00D49E2F /* radio_checked@2x.png in Resources */,
