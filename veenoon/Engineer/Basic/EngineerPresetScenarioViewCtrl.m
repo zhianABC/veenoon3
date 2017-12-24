@@ -17,6 +17,7 @@
 #import "EngineerPVExpendViewCtrl.h"
 #import "EngineerDVDViewController.h"
 #import "EngineerCameraViewController.h"
+#import "EngineerRemoteVideoViewCtrl.h"
 
 @interface EngineerPresetScenarioViewCtrl<ECPlusSelectViewDelegate> () {
     ECPlusSelectView *ecp;
@@ -244,12 +245,16 @@
     NSMutableArray *videoArray = [_curScenario objectForKey:@"videoArray"];
     NSMutableArray *dvdSysArray;
     NSMutableArray *cameraSysArray;
+    NSMutableArray *remoteVideoSysArray;
     for (id videoSys in videoArray) {
         if ([[videoSys objectForKey:@"name"] isEqualToString:@"dvdSys"]) {
             dvdSysArray = [videoSys objectForKey:@"value"];
         }
         if ([[videoSys objectForKey:@"name"] isEqualToString:@"cameraSys"]) {
             cameraSysArray = [videoSys objectForKey:@"value"];
+        }
+        if ([[videoSys objectForKey:@"name"] isEqualToString:@"remoteVideoSys"]) {
+            remoteVideoSysArray = [videoSys objectForKey:@"value"];
         }
     }
     if (dvdSysArray == nil) {
@@ -268,6 +273,14 @@
         
         [videoArray addObject:playerDic];
     }
+    if (remoteVideoSysArray == nil) {
+        remoteVideoSysArray = [[NSMutableArray alloc] init];
+        NSMutableDictionary *playerDic = [[NSMutableDictionary alloc] init];
+        [playerDic setObject:@"remoteVideoSys" forKey:@"name"];
+        [playerDic setObject:remoteVideoSysArray forKey:@"value"];
+        
+        [videoArray addObject:playerDic];
+    }
     // wuxian array
     if ([name isEqualToString:@"视频播放器"]) {
         EngineerDVDViewController *ctrl = [[EngineerDVDViewController alloc] init];
@@ -279,6 +292,13 @@
     if ([name isEqualToString:@"摄像机"]) {
         EngineerCameraViewController *ctrl = [[EngineerCameraViewController alloc] init];
         ctrl._cameraSysArray = cameraSysArray;
+        ctrl._number=16;
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+    // wuxian array
+    if ([name isEqualToString:@"远程视讯"]) {
+        EngineerRemoteVideoViewCtrl *ctrl = [[EngineerRemoteVideoViewCtrl alloc] init];
+        ctrl._remoteVideoArray = remoteVideoSysArray;
         ctrl._number=16;
         [self.navigationController pushViewController:ctrl animated:YES];
     }
