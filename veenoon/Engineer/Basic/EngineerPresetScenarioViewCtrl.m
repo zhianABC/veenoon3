@@ -18,6 +18,7 @@
 #import "EngineerDVDViewController.h"
 #import "EngineerCameraViewController.h"
 #import "EngineerRemoteVideoViewCtrl.h"
+#import "EngineerVideoProcessViewCtrl.h"
 
 @interface EngineerPresetScenarioViewCtrl<ECPlusSelectViewDelegate> () {
     ECPlusSelectView *ecp;
@@ -246,6 +247,8 @@
     NSMutableArray *dvdSysArray;
     NSMutableArray *cameraSysArray;
     NSMutableArray *remoteVideoSysArray;
+    NSMutableArray *videoInSysArray;
+    NSMutableArray *videoOutSysArray;
     for (id videoSys in videoArray) {
         if ([[videoSys objectForKey:@"name"] isEqualToString:@"dvdSys"]) {
             dvdSysArray = [videoSys objectForKey:@"value"];
@@ -255,6 +258,12 @@
         }
         if ([[videoSys objectForKey:@"name"] isEqualToString:@"remoteVideoSys"]) {
             remoteVideoSysArray = [videoSys objectForKey:@"value"];
+        }
+        if ([[videoSys objectForKey:@"name"] isEqualToString:@"videoInSys"]) {
+            videoInSysArray = [videoSys objectForKey:@"value"];
+        }
+        if ([[videoSys objectForKey:@"name"] isEqualToString:@"videoOutSys"]) {
+            videoOutSysArray = [videoSys objectForKey:@"value"];
         }
     }
     if (dvdSysArray == nil) {
@@ -281,6 +290,22 @@
         
         [videoArray addObject:playerDic];
     }
+    if (videoInSysArray == nil) {
+        videoInSysArray = [[NSMutableArray alloc] init];
+        NSMutableDictionary *playerDic = [[NSMutableDictionary alloc] init];
+        [playerDic setObject:@"videoInSys" forKey:@"name"];
+        [playerDic setObject:videoInSysArray forKey:@"value"];
+        
+        [videoArray addObject:playerDic];
+    }
+    if (videoOutSysArray == nil) {
+        videoOutSysArray = [[NSMutableArray alloc] init];
+        NSMutableDictionary *playerDic = [[NSMutableDictionary alloc] init];
+        [playerDic setObject:@"videoOutSys" forKey:@"name"];
+        [playerDic setObject:videoOutSysArray forKey:@"value"];
+        
+        [videoArray addObject:playerDic];
+    }
     // wuxian array
     if ([name isEqualToString:@"视频播放器"]) {
         EngineerDVDViewController *ctrl = [[EngineerDVDViewController alloc] init];
@@ -300,6 +325,15 @@
         EngineerRemoteVideoViewCtrl *ctrl = [[EngineerRemoteVideoViewCtrl alloc] init];
         ctrl._remoteVideoArray = remoteVideoSysArray;
         ctrl._number=16;
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+    // wuxian array
+    if ([name isEqualToString:@"视频处理"]) {
+        EngineerVideoProcessViewCtrl *ctrl = [[EngineerVideoProcessViewCtrl alloc] init];
+        ctrl._inNumber=18;
+        ctrl._outNumber=14;
+        ctrl._videoProcessInArray = videoInSysArray;
+        ctrl._videoProcessOutArray = videoOutSysArray;
         [self.navigationController pushViewController:ctrl animated:YES];
     }
     
