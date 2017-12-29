@@ -24,6 +24,17 @@
 #import "EngineerLuBoJiViewController.h"
 #import "EngineerTouYingJiViewCtrl.h"
 #import "EngineerLightViewController.h"
+#import "EngineerAireConditionViewCtrl.h"
+#import "EngineerElectronicAutoViewCtrl.h"
+#import "EngineerNewWindViewCtrl.h"
+#import "EngineerFloorWarmViewCtrl.h"
+#import "EngineerAirCleanViewCtrl.h"
+#import "EngineerCleanWaterViewCtrl.h"
+#import "EngineerAddWetViewCtrl.h"
+#import "EngineerDoorAccessViewCtrl.h"
+#import "EngineerMonitorViewCtrl.h"
+#import "EngineerInfoCollectViewCtrl.h"
+#import "EngineerScenarioSettingsViewCtrl.h"
 
 @interface EngineerPresetScenarioViewCtrl<ECPlusSelectViewDelegate> () {
     ECPlusSelectView *ecp;
@@ -250,10 +261,50 @@
     
     NSMutableArray *envArray = [_curScenario objectForKey:@"envArray"];
     NSMutableArray *lightArray;
+    NSMutableArray *airConditionArray;
+    NSMutableArray *electronicAutoArray;
+    NSMutableArray *newWindArray;
+    NSMutableArray *floorWarmArray;
+    NSMutableArray *airCleanArray;
+    NSMutableArray *cleanWarterArray;
+    NSMutableArray *addWetArray;
+    NSMutableArray *doorAccessArray;
+    NSMutableArray *monitorArray;
+    NSMutableArray *inforCollectArray;
     
     for (id envSys in envArray) {
         if ([[envSys objectForKey:@"name"] isEqualToString:@"lightSys"]) {
             lightArray = [envSys objectForKey:@"value"];
+        }
+        if ([[envSys objectForKey:@"name"] isEqualToString:@"airConditionSys"]) {
+            airConditionArray = [envSys objectForKey:@"value"];
+        }
+        if ([[envSys objectForKey:@"name"] isEqualToString:@"electronicAutoSys"]) {
+            electronicAutoArray = [envSys objectForKey:@"value"];
+        }
+        if ([[envSys objectForKey:@"name"] isEqualToString:@"newWindSys"]) {
+            newWindArray = [envSys objectForKey:@"value"];
+        }
+        if ([[envSys objectForKey:@"name"] isEqualToString:@"floorWarmSys"]) {
+            floorWarmArray = [envSys objectForKey:@"value"];
+        }
+        if ([[envSys objectForKey:@"name"] isEqualToString:@"airCleanSys"]) {
+            airCleanArray = [envSys objectForKey:@"value"];
+        }
+        if ([[envSys objectForKey:@"name"] isEqualToString:@"cleanWarterSys"]) {
+            cleanWarterArray = [envSys objectForKey:@"value"];
+        }
+        if ([[envSys objectForKey:@"name"] isEqualToString:@"addWetSys"]) {
+            addWetArray = [envSys objectForKey:@"value"];
+        }
+        if ([[envSys objectForKey:@"name"] isEqualToString:@"doorAccessSys"]) {
+            doorAccessArray = [envSys objectForKey:@"value"];
+        }
+        if ([[envSys objectForKey:@"name"] isEqualToString:@"monitorSys"]) {
+            monitorArray = [envSys objectForKey:@"value"];
+        }
+        if ([[envSys objectForKey:@"name"] isEqualToString:@"infoCollectSys"]) {
+            inforCollectArray = [envSys objectForKey:@"value"];
         }
     }
     
@@ -265,11 +316,160 @@
         
         [envArray addObject:playerDic];
     }
+    if (airConditionArray == nil) {
+        airConditionArray = [[NSMutableArray alloc] init];
+        NSMutableDictionary *playerDic = [[NSMutableDictionary alloc] init];
+        [playerDic setObject:@"airConditionSys" forKey:@"name"];
+        [playerDic setObject:airConditionArray forKey:@"value"];
+        
+        [envArray addObject:playerDic];
+    }
+    if (electronicAutoArray == nil) {
+        electronicAutoArray = [[NSMutableArray alloc] init];
+        NSMutableDictionary *playerDic = [[NSMutableDictionary alloc] init];
+        [playerDic setObject:@"electronicAutoSys" forKey:@"name"];
+        [playerDic setObject:electronicAutoArray forKey:@"value"];
+        
+        [envArray addObject:playerDic];
+    }
+    if (newWindArray == nil) {
+        newWindArray = [[NSMutableArray alloc] init];
+        NSMutableDictionary *playerDic = [[NSMutableDictionary alloc] init];
+        [playerDic setObject:@"newWindSys" forKey:@"name"];
+        [playerDic setObject:newWindArray forKey:@"value"];
+        
+        [envArray addObject:playerDic];
+    }
+    if (floorWarmArray == nil) {
+        floorWarmArray = [[NSMutableArray alloc] init];
+        NSMutableDictionary *playerDic = [[NSMutableDictionary alloc] init];
+        [playerDic setObject:@"floorWarmSys" forKey:@"name"];
+        [playerDic setObject:floorWarmArray forKey:@"value"];
+        
+        [envArray addObject:playerDic];
+    }
+    if (airCleanArray == nil) {
+        airCleanArray = [[NSMutableArray alloc] init];
+        NSMutableDictionary *playerDic = [[NSMutableDictionary alloc] init];
+        [playerDic setObject:@"airCleanSys" forKey:@"name"];
+        [playerDic setObject:airCleanArray forKey:@"value"];
+        
+        [envArray addObject:playerDic];
+    }
+    if (cleanWarterArray == nil) {
+        cleanWarterArray = [[NSMutableArray alloc] init];
+        NSMutableDictionary *playerDic = [[NSMutableDictionary alloc] init];
+        [playerDic setObject:@"cleanWarterSys" forKey:@"name"];
+        [playerDic setObject:cleanWarterArray forKey:@"value"];
+        
+        [envArray addObject:playerDic];
+    }
+    if (addWetArray == nil) {
+        addWetArray = [[NSMutableArray alloc] init];
+        NSMutableDictionary *playerDic = [[NSMutableDictionary alloc] init];
+        [playerDic setObject:@"addWetSys" forKey:@"name"];
+        [playerDic setObject:addWetArray forKey:@"value"];
+        
+        [envArray addObject:playerDic];
+    }
+    if (doorAccessArray == nil) {
+        doorAccessArray = [[NSMutableArray alloc] init];
+        NSMutableDictionary *playerDic = [[NSMutableDictionary alloc] init];
+        [playerDic setObject:@"doorAccessSys" forKey:@"name"];
+        [playerDic setObject:doorAccessArray forKey:@"value"];
+        
+        [envArray addObject:playerDic];
+    }
+    if (monitorArray == nil) {
+        monitorArray = [[NSMutableArray alloc] init];
+        NSMutableDictionary *playerDic = [[NSMutableDictionary alloc] init];
+        [playerDic setObject:@"monitorSys" forKey:@"name"];
+        [playerDic setObject:monitorArray forKey:@"value"];
+        
+        [envArray addObject:playerDic];
+    }
+    if (inforCollectArray == nil) {
+        inforCollectArray = [[NSMutableArray alloc] init];
+        NSMutableDictionary *playerDic = [[NSMutableDictionary alloc] init];
+        [playerDic setObject:@"infoCollectSys" forKey:@"name"];
+        [playerDic setObject:inforCollectArray forKey:@"value"];
+        
+        [envArray addObject:playerDic];
+    }
+    
     // wuxian array
     if ([name isEqualToString:@"照明"]) {
         EngineerLightViewController *ctrl = [[EngineerLightViewController alloc] init];
         ctrl._lightSysArray= lightArray;
         ctrl._number=8;
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+    // wuxian array
+    if ([name isEqualToString:@"空调"]) {
+        EngineerAireConditionViewCtrl *ctrl = [[EngineerAireConditionViewCtrl alloc] init];
+        ctrl._airSysArray= airConditionArray;
+        ctrl._number=8;
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+    // wuxian array
+    if ([name isEqualToString:@"电动马达"]) {
+        EngineerElectronicAutoViewCtrl *ctrl = [[EngineerElectronicAutoViewCtrl alloc] init];
+        ctrl._electronicSysArray= electronicAutoArray;
+        ctrl._number=8;
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+    // wuxian array
+    if ([name isEqualToString:@"新风"]) {
+        EngineerNewWindViewCtrl *ctrl = [[EngineerNewWindViewCtrl alloc] init];
+        ctrl._windSysArray= newWindArray;
+        ctrl._number=8;
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+    // wuxian array
+    if ([name isEqualToString:@"地热"]) {
+        EngineerFloorWarmViewCtrl *ctrl = [[EngineerFloorWarmViewCtrl alloc] init];
+        ctrl._floorWarmSysArray= floorWarmArray;
+        ctrl._number=8;
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+    // wuxian array
+    if ([name isEqualToString:@"空气净化"]) {
+        EngineerAirCleanViewCtrl *ctrl = [[EngineerAirCleanViewCtrl alloc] init];
+        ctrl._airCleanSysArray= airCleanArray;
+        ctrl._number=8;
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+    // wuxian array
+    if ([name isEqualToString:@"净水"]) {
+        EngineerCleanWaterViewCtrl *ctrl = [[EngineerCleanWaterViewCtrl alloc] init];
+        ctrl._cleanWaterSysArray= cleanWarterArray;
+        ctrl._number=8;
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+    // wuxian array
+    if ([name isEqualToString:@"加湿"]) {
+        EngineerAddWetViewCtrl *ctrl = [[EngineerAddWetViewCtrl alloc] init];
+        ctrl._addWetSysArray= addWetArray;
+        ctrl._number=8;
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+    // wuxian array
+    if ([name isEqualToString:@"门禁"]) {
+        EngineerDoorAccessViewCtrl *ctrl = [[EngineerDoorAccessViewCtrl alloc] init];
+        ctrl._doorAccessSysArray = doorAccessArray;
+        ctrl._number=8;
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+    // wuxian array
+    if ([name isEqualToString:@"监控"]) {
+        EngineerMonitorViewCtrl *ctrl = [[EngineerMonitorViewCtrl alloc] init];
+        ctrl._monitorSysArray = monitorArray;
+        ctrl._number=8;
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+    // wuxian array
+    if ([name isEqualToString:@"能耗统计"]) {
+        EngineerInfoCollectViewCtrl *ctrl = [[EngineerInfoCollectViewCtrl alloc] init];
         [self.navigationController pushViewController:ctrl animated:YES];
     }
     
