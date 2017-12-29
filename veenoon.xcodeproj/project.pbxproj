@@ -297,6 +297,7 @@
 		EB09EF501FD9A94C00C968CA /* engineer_yinpinchuli_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB09EF4E1FD9A94B00C968CA /* engineer_yinpinchuli_n@2x.png */; };
 		EB09EF531FD9A9AE00C968CA /* engineer_gongfang_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB09EF511FD9A9AD00C968CA /* engineer_gongfang_n@2x.png */; };
 		EB09EF541FD9A9AE00C968CA /* engineer_gongfang_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB09EF521FD9A9AD00C968CA /* engineer_gongfang_s@2x.png */; };
+		EB17178D1FF5DF6B00CBDB81 /* EngineerTVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB17178C1FF5DF6B00CBDB81 /* EngineerTVViewController.m */; };
 		EB1A045C1FC71372007CC1F2 /* user_config_back_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1A045A1FC71372007CC1F2 /* user_config_back_n@2x.png */; };
 		EB1A045D1FC71372007CC1F2 /* user_config_back_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1A045B1FC71372007CC1F2 /* user_config_back_s@2x.png */; };
 		EB1A04601FC7156C007CC1F2 /* UserAudioConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1A045F1FC7156C007CC1F2 /* UserAudioConfigViewController.m */; };
@@ -1090,6 +1091,8 @@
 		EB09EF4E1FD9A94B00C968CA /* engineer_yinpinchuli_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_yinpinchuli_n@2x.png"; sourceTree = "<group>"; };
 		EB09EF511FD9A9AD00C968CA /* engineer_gongfang_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_gongfang_n@2x.png"; sourceTree = "<group>"; };
 		EB09EF521FD9A9AD00C968CA /* engineer_gongfang_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_gongfang_s@2x.png"; sourceTree = "<group>"; };
+		EB17178B1FF5DF6B00CBDB81 /* EngineerTVViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerTVViewController.h; sourceTree = "<group>"; };
+		EB17178C1FF5DF6B00CBDB81 /* EngineerTVViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerTVViewController.m; sourceTree = "<group>"; };
 		EB1A045A1FC71372007CC1F2 /* user_config_back_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_config_back_n@2x.png"; sourceTree = "<group>"; };
 		EB1A045B1FC71372007CC1F2 /* user_config_back_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_config_back_s@2x.png"; sourceTree = "<group>"; };
 		EB1A045E1FC71564007CC1F2 /* UserAudioConfigViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserAudioConfigViewController.h; sourceTree = "<group>"; };
@@ -2596,6 +2599,8 @@
 				EB1A56141FEF8F29000B18E6 /* EngineerVideoProcessViewCtrl.m */,
 				EB1A56161FEF9626000B18E6 /* EngineerVideoPinJieViewCtrl.h */,
 				EB1A56171FEF9626000B18E6 /* EngineerVideoPinJieViewCtrl.m */,
+				EB17178B1FF5DF6B00CBDB81 /* EngineerTVViewController.h */,
+				EB17178C1FF5DF6B00CBDB81 /* EngineerTVViewController.m */,
 			);
 			path = Video;
 			sourceTree = "<group>";
@@ -3328,6 +3333,7 @@
 				04DE1EB41AD6AEE000D49E2F /* UIImage+GIF.m in Sources */,
 				EB3B73B51FE6395C001941CF /* EngineerSliderView.m in Sources */,
 				04DE1EA21AD6AEE000D49E2F /* Reachability.m in Sources */,
+				EB17178D1FF5DF6B00CBDB81 /* EngineerTVViewController.m in Sources */,
 				04DE1EA91AD6AEE000D49E2F /* SBJson4Writer.m in Sources */,
 				EB36AAB21FCD939E009A0FD8 /* UserYouXianViewController.m in Sources */,
 				EBAE5BBB1FE0070600C10C4D /* EngineerPresetScenarioViewCtrl.m in Sources */,

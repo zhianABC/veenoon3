@@ -20,6 +20,7 @@
 #import "EngineerRemoteVideoViewCtrl.h"
 #import "EngineerVideoProcessViewCtrl.h"
 #import "EngineerVideoPinJieViewCtrl.h"
+#import "EngineerTVViewController.h"
 
 @interface EngineerPresetScenarioViewCtrl<ECPlusSelectViewDelegate> () {
     ECPlusSelectView *ecp;
@@ -251,6 +252,7 @@
     NSMutableArray *videoInSysArray;
     NSMutableArray *videoOutSysArray;
     NSMutableArray *pinjieSysArray;
+    NSMutableArray *tvSysArray;
     for (id videoSys in videoArray) {
         if ([[videoSys objectForKey:@"name"] isEqualToString:@"dvdSys"]) {
             dvdSysArray = [videoSys objectForKey:@"value"];
@@ -269,6 +271,9 @@
         }
         if ([[videoSys objectForKey:@"name"] isEqualToString:@"pinjieSys"]) {
             pinjieSysArray = [videoSys objectForKey:@"value"];
+        }
+        if ([[videoSys objectForKey:@"name"] isEqualToString:@"tvSys"]) {
+            tvSysArray = [videoSys objectForKey:@"value"];
         }
     }
     if (dvdSysArray == nil) {
@@ -319,6 +324,14 @@
         
         [videoArray addObject:playerDic];
     }
+    if (tvSysArray == nil) {
+        tvSysArray = [[NSMutableArray alloc] init];
+        NSMutableDictionary *playerDic = [[NSMutableDictionary alloc] init];
+        [playerDic setObject:@"tvSys" forKey:@"name"];
+        [playerDic setObject:tvSysArray forKey:@"value"];
+        
+        [videoArray addObject:playerDic];
+    }
     // wuxian array
     if ([name isEqualToString:@"视频播放器"]) {
         EngineerDVDViewController *ctrl = [[EngineerDVDViewController alloc] init];
@@ -356,6 +369,12 @@
         ctrl._rowNumber=6;
         ctrl._colNumber=8;
         ctrl._pinjieSysArray = pinjieSysArray;
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+    // wuxian array
+    if ([name isEqualToString:@"液晶电视"]) {
+        EngineerTVViewController *ctrl = [[EngineerTVViewController alloc] init];
+        ctrl._videoTVArray = tvSysArray;
         [self.navigationController pushViewController:ctrl animated:YES];
     }
     
