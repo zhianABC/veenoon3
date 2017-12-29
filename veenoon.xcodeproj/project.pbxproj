@@ -215,9 +215,6 @@
 		3425E9951FE57675003559F7 /* MixVoiceSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3425E9941FE57675003559F7 /* MixVoiceSettingsView.m */; };
 		342814231FE34BF100170D11 /* PowerSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 342814221FE34BF100170D11 /* PowerSettingView.m */; };
 		343733AE1FE402E80071C902 /* JHSlideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 343733AD1FE402E80071C902 /* JHSlideView.m */; };
-		344F0FBD1FF5F38100FAA4E0 /* qrcode_scan_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 344F0FBC1FF5F38100FAA4E0 /* qrcode_scan_line@2x.png */; };
-		344F0FC11FF5F3AC00FAA4E0 /* iconfont-quxiao@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 344F0FC01FF5F3AB00FAA4E0 /* iconfont-quxiao@2x.png */; };
-		344F0FC31FF5F3BE00FAA4E0 /* camera_flip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 344F0FC21FF5F3BE00FAA4E0 /* camera_flip@2x.png */; };
 		345492F91FE6383A00793E2E /* slide_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 345492F81FE6383900793E2E /* slide_btn@2x.png */; };
 		345492FC1FE638F300793E2E /* SlideButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 345492FB1FE638F300793E2E /* SlideButton.m */; };
 		345492FE1FE6425700793E2E /* black_point@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 345492FD1FE6425700793E2E /* black_point@2x.png */; };
@@ -1003,9 +1000,6 @@
 		342814221FE34BF100170D11 /* PowerSettingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PowerSettingView.m; sourceTree = "<group>"; };
 		343733AC1FE402E80071C902 /* JHSlideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHSlideView.h; sourceTree = "<group>"; };
 		343733AD1FE402E80071C902 /* JHSlideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHSlideView.m; sourceTree = "<group>"; };
-		344F0FBC1FF5F38100FAA4E0 /* qrcode_scan_line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "qrcode_scan_line@2x.png"; path = "../../../work/DogForiPad/ImageAssets/qrcode_scan_line@2x.png"; sourceTree = "<group>"; };
-		344F0FC01FF5F3AB00FAA4E0 /* iconfont-quxiao@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iconfont-quxiao@2x.png"; path = "../../../work/DogForiPad/ImageAssets/iconfont-quxiao@2x.png"; sourceTree = "<group>"; };
-		344F0FC21FF5F3BE00FAA4E0 /* camera_flip@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "camera_flip@2x.png"; path = "../../../work/DogForiPad/ImageAssets/camera_flip@2x.png"; sourceTree = "<group>"; };
 		345492F81FE6383900793E2E /* slide_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slide_btn@2x.png"; sourceTree = "<group>"; };
 		345492FA1FE638F300793E2E /* SlideButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SlideButton.h; sourceTree = "<group>"; };
 		345492FB1FE638F300793E2E /* SlideButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SlideButton.m; sourceTree = "<group>"; };
@@ -1985,9 +1979,6 @@
 		04DE1ECB1AD6B3BA00D49E2F /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
-				344F0FC21FF5F3BE00FAA4E0 /* camera_flip@2x.png */,
-				344F0FC01FF5F3AB00FAA4E0 /* iconfont-quxiao@2x.png */,
-				344F0FBC1FF5F38100FAA4E0 /* qrcode_scan_line@2x.png */,
 				EB1A56101FEF876F000B18E6 /* engineer_hangphone_n@2x.png */,
 				EB1A560F1FEF876E000B18E6 /* engineer_hangphone_s@2x.png */,
 				EB1A560C1FEF873F000B18E6 /* engineer_mute_n@2x.png */,
@@ -3004,12 +2995,10 @@
 				3425E9821FE54C62003559F7 /* progress_thumb@2x.png in Resources */,
 				34615F0F1FC9C264002DFCE0 /* v_slider_road@2x.png in Resources */,
 				345493041FE64B2200793E2E /* com_icon_sel@2x.png in Resources */,
-				344F0FC31FF5F3BE00FAA4E0 /* camera_flip@2x.png in Resources */,
 				EB3685F71FC0799A009973A3 /* settings_view_n@2x.png in Resources */,
 				341C60F01FDD0DBF003A5490 /* v_icon_5@2x.png in Resources */,
 				341C60F21FDD0DBF003A5490 /* v_icon_1@2x.png in Resources */,
 				EB09C4961FD2AEAE00776540 /* user_diandongmes_@2x.png in Resources */,
-				344F0FC11FF5F3AC00FAA4E0 /* iconfont-quxiao@2x.png in Resources */,
 				EB1A55EF1FEF594C000B18E6 /* engineer_down_s@2x.png in Resources */,
 				EB5D91FC1FBB2F78004ED38D /* login_right_arraw@2x.png in Resources */,
 				EB03F5341FBDDAB300865541 /* main_settings_n@2x.png in Resources */,
@@ -3220,7 +3209,6 @@
 				04DE1FAE1AD6B3BB00D49E2F /* jishucanshu_0@2x.png in Resources */,
 				EB2E707E1FC1B5B4009C477C /* settings_view_14@2x.png in Resources */,
 				EB5F7F921FD598ED00351888 /* engineer_port_s@2x.png in Resources */,
-				344F0FBD1FF5F38100FAA4E0 /* qrcode_scan_line@2x.png in Resources */,
 				04DE1F9A1AD6B3BB00D49E2F /* denglu_biankuang@2x.png in Resources */,
 				EBDF1C4F1FC5D5CF00A756EA /* new_wind_sys_n@2x.png in Resources */,
 				EB09C4991FD2AEAE00776540 /* user_diandongmen_@2x.png in Resources */,
