@@ -13,7 +13,6 @@
 {
     AVCaptureSession * session;//输入输出的中间桥梁
     AVCaptureVideoPreviewLayer * cameraLayer;
-    
 
 }
 @property (nonatomic, strong) AVCaptureDeviceInput *_input;
@@ -191,10 +190,6 @@
         _output.metadataObjectTypes = [NSArray arrayWithObject:AVMetadataObjectTypeQRCode];
     }
     
-     
-    
-    
-    
     cameraLayer = [AVCaptureVideoPreviewLayer layerWithSession:session];
     cameraLayer.videoGravity=AVLayerVideoGravityResizeAspectFill;
     cameraLayer.frame = self.view.layer.bounds;
@@ -206,8 +201,7 @@
     self.postion = pos;
     
     [session stopRunning];
-    
-    
+
     AVCaptureDevice * device = nil;
     //获取摄像设备
     if(postion == 0)
