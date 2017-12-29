@@ -21,6 +21,9 @@
 #import "EngineerVideoProcessViewCtrl.h"
 #import "EngineerVideoPinJieViewCtrl.h"
 #import "EngineerTVViewController.h"
+#import "EngineerLuBoJiViewController.h"
+#import "EngineerTouYingJiViewCtrl.h"
+#import "EngineerLightViewController.h"
 
 @interface EngineerPresetScenarioViewCtrl<ECPlusSelectViewDelegate> () {
     ECPlusSelectView *ecp;
@@ -245,6 +248,31 @@
 -(void)handleTapGesture:(UIGestureRecognizer*)gestureRecognizer{
     NSString *name = [gestureRecognizer valueForKey:@"name"];
     
+    NSMutableArray *envArray = [_curScenario objectForKey:@"envArray"];
+    NSMutableArray *lightArray;
+    
+    for (id envSys in envArray) {
+        if ([[envSys objectForKey:@"name"] isEqualToString:@"lightSys"]) {
+            lightArray = [envSys objectForKey:@"value"];
+        }
+    }
+    
+    if (lightArray == nil) {
+        lightArray = [[NSMutableArray alloc] init];
+        NSMutableDictionary *playerDic = [[NSMutableDictionary alloc] init];
+        [playerDic setObject:@"lightSys" forKey:@"name"];
+        [playerDic setObject:lightArray forKey:@"value"];
+        
+        [envArray addObject:playerDic];
+    }
+    // wuxian array
+    if ([name isEqualToString:@"照明"]) {
+        EngineerLightViewController *ctrl = [[EngineerLightViewController alloc] init];
+        ctrl._lightSysArray= lightArray;
+        ctrl._number=8;
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+    
     NSMutableArray *videoArray = [_curScenario objectForKey:@"videoArray"];
     NSMutableArray *dvdSysArray;
     NSMutableArray *cameraSysArray;
@@ -253,6 +281,8 @@
     NSMutableArray *videoOutSysArray;
     NSMutableArray *pinjieSysArray;
     NSMutableArray *tvSysArray;
+    NSMutableArray *lubojiSysArray;
+    NSMutableArray *touyingjiSysArray;
     for (id videoSys in videoArray) {
         if ([[videoSys objectForKey:@"name"] isEqualToString:@"dvdSys"]) {
             dvdSysArray = [videoSys objectForKey:@"value"];
@@ -274,6 +304,12 @@
         }
         if ([[videoSys objectForKey:@"name"] isEqualToString:@"tvSys"]) {
             tvSysArray = [videoSys objectForKey:@"value"];
+        }
+        if ([[videoSys objectForKey:@"name"] isEqualToString:@"lubojiSys"]) {
+            lubojiSysArray = [videoSys objectForKey:@"value"];
+        }
+        if ([[videoSys objectForKey:@"name"] isEqualToString:@"touyingjiSys"]) {
+            touyingjiSysArray = [videoSys objectForKey:@"value"];
         }
     }
     if (dvdSysArray == nil) {
@@ -332,6 +368,22 @@
         
         [videoArray addObject:playerDic];
     }
+    if (lubojiSysArray == nil) {
+        lubojiSysArray = [[NSMutableArray alloc] init];
+        NSMutableDictionary *playerDic = [[NSMutableDictionary alloc] init];
+        [playerDic setObject:@"lubojiSys" forKey:@"name"];
+        [playerDic setObject:lubojiSysArray forKey:@"value"];
+        
+        [videoArray addObject:playerDic];
+    }
+    if (touyingjiSysArray == nil) {
+        touyingjiSysArray = [[NSMutableArray alloc] init];
+        NSMutableDictionary *playerDic = [[NSMutableDictionary alloc] init];
+        [playerDic setObject:@"touyingjiSys" forKey:@"name"];
+        [playerDic setObject:touyingjiSysArray forKey:@"value"];
+        
+        [videoArray addObject:playerDic];
+    }
     // wuxian array
     if ([name isEqualToString:@"视频播放器"]) {
         EngineerDVDViewController *ctrl = [[EngineerDVDViewController alloc] init];
@@ -375,6 +427,18 @@
     if ([name isEqualToString:@"液晶电视"]) {
         EngineerTVViewController *ctrl = [[EngineerTVViewController alloc] init];
         ctrl._videoTVArray = tvSysArray;
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+    // wuxian array
+    if ([name isEqualToString:@"录播机"]) {
+        EngineerLuBoJiViewController *ctrl = [[EngineerLuBoJiViewController alloc] init];
+        ctrl._lubojiArray = lubojiSysArray;
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+    // wuxian array
+    if ([name isEqualToString:@"投影仪"]) {
+        EngineerTouYingJiViewCtrl *ctrl = [[EngineerTouYingJiViewCtrl alloc] init];
+        ctrl._touyingjiArray = touyingjiSysArray;
         [self.navigationController pushViewController:ctrl animated:YES];
     }
     
