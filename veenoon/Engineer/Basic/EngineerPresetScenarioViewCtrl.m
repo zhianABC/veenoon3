@@ -21,6 +21,8 @@
 #import "EngineerVideoProcessViewCtrl.h"
 #import "EngineerVideoPinJieViewCtrl.h"
 #import "EngineerTVViewController.h"
+#import "EngineerLuBoJiViewController.h"
+#import "EngineerTouYingJiViewCtrl.h"
 
 @interface EngineerPresetScenarioViewCtrl<ECPlusSelectViewDelegate> () {
     ECPlusSelectView *ecp;
@@ -253,6 +255,8 @@
     NSMutableArray *videoOutSysArray;
     NSMutableArray *pinjieSysArray;
     NSMutableArray *tvSysArray;
+    NSMutableArray *lubojiSysArray;
+    NSMutableArray *touyingjiSysArray;
     for (id videoSys in videoArray) {
         if ([[videoSys objectForKey:@"name"] isEqualToString:@"dvdSys"]) {
             dvdSysArray = [videoSys objectForKey:@"value"];
@@ -274,6 +278,12 @@
         }
         if ([[videoSys objectForKey:@"name"] isEqualToString:@"tvSys"]) {
             tvSysArray = [videoSys objectForKey:@"value"];
+        }
+        if ([[videoSys objectForKey:@"name"] isEqualToString:@"lubojiSys"]) {
+            lubojiSysArray = [videoSys objectForKey:@"value"];
+        }
+        if ([[videoSys objectForKey:@"name"] isEqualToString:@"touyingjiSys"]) {
+            touyingjiSysArray = [videoSys objectForKey:@"value"];
         }
     }
     if (dvdSysArray == nil) {
@@ -332,6 +342,22 @@
         
         [videoArray addObject:playerDic];
     }
+    if (lubojiSysArray == nil) {
+        lubojiSysArray = [[NSMutableArray alloc] init];
+        NSMutableDictionary *playerDic = [[NSMutableDictionary alloc] init];
+        [playerDic setObject:@"lubojiSys" forKey:@"name"];
+        [playerDic setObject:lubojiSysArray forKey:@"value"];
+        
+        [videoArray addObject:playerDic];
+    }
+    if (touyingjiSysArray == nil) {
+        touyingjiSysArray = [[NSMutableArray alloc] init];
+        NSMutableDictionary *playerDic = [[NSMutableDictionary alloc] init];
+        [playerDic setObject:@"touyingjiSys" forKey:@"name"];
+        [playerDic setObject:touyingjiSysArray forKey:@"value"];
+        
+        [videoArray addObject:playerDic];
+    }
     // wuxian array
     if ([name isEqualToString:@"视频播放器"]) {
         EngineerDVDViewController *ctrl = [[EngineerDVDViewController alloc] init];
@@ -375,6 +401,18 @@
     if ([name isEqualToString:@"液晶电视"]) {
         EngineerTVViewController *ctrl = [[EngineerTVViewController alloc] init];
         ctrl._videoTVArray = tvSysArray;
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+    // wuxian array
+    if ([name isEqualToString:@"录播机"]) {
+        EngineerLuBoJiViewController *ctrl = [[EngineerLuBoJiViewController alloc] init];
+        ctrl._lubojiArray = lubojiSysArray;
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+    // wuxian array
+    if ([name isEqualToString:@"投影仪"]) {
+        EngineerTouYingJiViewCtrl *ctrl = [[EngineerTouYingJiViewCtrl alloc] init];
+        ctrl._touyingjiArray = touyingjiSysArray;
         [self.navigationController pushViewController:ctrl animated:YES];
     }
     
