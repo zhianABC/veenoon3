@@ -206,6 +206,8 @@ EPlusLayerViewDelegate>
     
     _tableView.scrollEnabled = NO;
     
+    //NSLog(@"1");
+    
     
 //    EPlusLayerView *st = layer;
 //    UIImageView *icon = sticker;
@@ -218,7 +220,7 @@ EPlusLayerViewDelegate>
 }
 - (void) didMovedStickerLayer:(id)layer sticker:(id)sticker{
     
-    
+    //
 //    EPlusLayerView *st = layer;
 //    UIImageView *icon = sticker;
 //
@@ -231,6 +233,8 @@ EPlusLayerViewDelegate>
 - (void) didEndTouchedStickerLayer:(id)layer sticker:(id)sticker{
    
     _tableView.scrollEnabled = YES;
+    
+    //NSLog(@"-1");
     
     EPlusLayerView *st = layer;
     UIImageView *icon = sticker;

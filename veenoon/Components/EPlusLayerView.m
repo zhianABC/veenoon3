@@ -185,11 +185,25 @@
     
 }
 
+- (BOOL) testClickedArea:(CGPoint )pt{
+    
+    CGRect rc = CGRectMake(0, 0,
+                           self.frame.size.width*0.6,
+                           self.frame.size.height);
+    
+    if(CGRectContainsPoint(rc, pt))
+    {
+        return YES;
+    }
+    return NO;
+}
+
 -(void) touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event {
+    
     
     isMoving = NO;
     
-    [[self superview] bringSubviewToFront:self];
+    //[[self superview] bringSubviewToFront:self];
     
     if([delegate_ respondsToSelector:@selector(didBeginTouchedStickerLayer:sticker:)]){
         [delegate_ didBeginTouchedStickerLayer:self sticker:_sticker];
@@ -209,17 +223,19 @@
 
 -(void) touchesMoved:(NSSet*)touches withEvent:(UIEvent*)event {
     
+    NSSet *allTouches = [event allTouches];
+    UITouch* touch = [touches anyObject];
+    
     if(!_enableDrag)
         return;
     
     isMoving = YES;
     
-	NSSet *allTouches = [event allTouches];
     switch ([allTouches count])
     {
         case 1:
         {
-			UITouch* touch = [touches anyObject];
+			
 			CGPoint previous = [touch previousLocationInView:self.superview];
 			CGPoint current = [touch locationInView:self.superview];
             CGPoint offset = CGPointMake(current.x - previous.x, current.y - previous.y);
@@ -247,6 +263,8 @@
 
 -(void) touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event {
 
+    
+    
     if(!_enableDrag)
         return;
     
@@ -294,8 +312,6 @@
     
    
 }
-
-
 
 - (void) setSticker:(NSString*)sticker{
     
