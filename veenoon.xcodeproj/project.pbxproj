@@ -304,6 +304,17 @@
 		EB1717901FF5E44B00CBDB81 /* EngineerLuBoJiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB17178F1FF5E44B00CBDB81 /* EngineerLuBoJiViewController.m */; };
 		EB1717931FF5E6B600CBDB81 /* EngineerTouYingJiViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1717921FF5E6B600CBDB81 /* EngineerTouYingJiViewCtrl.m */; };
 		EB1717971FF5F5AB00CBDB81 /* EngineerLightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1717961FF5F5AB00CBDB81 /* EngineerLightViewController.m */; };
+		EB17179A1FF60C2600CBDB81 /* EngineerAireConditionViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1717991FF60C2600CBDB81 /* EngineerAireConditionViewCtrl.m */; };
+		EB17179D1FF60C6900CBDB81 /* EngineerElectronicAutoViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB17179C1FF60C6900CBDB81 /* EngineerElectronicAutoViewCtrl.m */; };
+		EB1717A01FF613EC00CBDB81 /* EngineerNewWindViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB17179F1FF613EC00CBDB81 /* EngineerNewWindViewCtrl.m */; };
+		EB1717A31FF6141A00CBDB81 /* EngineerFloorWarmViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1717A21FF6141A00CBDB81 /* EngineerFloorWarmViewCtrl.m */; };
+		EB1717A61FF6143600CBDB81 /* EngineerAirCleanViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1717A51FF6143600CBDB81 /* EngineerAirCleanViewCtrl.m */; };
+		EB1717A91FF6145100CBDB81 /* EngineerCleanWaterViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1717A81FF6145100CBDB81 /* EngineerCleanWaterViewCtrl.m */; };
+		EB1717AC1FF6147200CBDB81 /* EngineerAddWetViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1717AB1FF6147200CBDB81 /* EngineerAddWetViewCtrl.m */; };
+		EB1717AF1FF6149C00CBDB81 /* EngineerDoorAccessViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1717AE1FF6149C00CBDB81 /* EngineerDoorAccessViewCtrl.m */; };
+		EB1717B21FF614BB00CBDB81 /* EngineerMonitorViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1717B11FF614BB00CBDB81 /* EngineerMonitorViewCtrl.m */; };
+		EB1717B51FF614DB00CBDB81 /* EngineerInfoCollectViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1717B41FF614DB00CBDB81 /* EngineerInfoCollectViewCtrl.m */; };
+		EB1717B81FF6150400CBDB81 /* EngineerScenarioSettingsViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1717B71FF6150400CBDB81 /* EngineerScenarioSettingsViewCtrl.m */; };
 		EB1A045C1FC71372007CC1F2 /* user_config_back_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1A045A1FC71372007CC1F2 /* user_config_back_n@2x.png */; };
 		EB1A045D1FC71372007CC1F2 /* user_config_back_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1A045B1FC71372007CC1F2 /* user_config_back_s@2x.png */; };
 		EB1A04601FC7156C007CC1F2 /* UserAudioConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1A045F1FC7156C007CC1F2 /* UserAudioConfigViewController.m */; };
@@ -1107,6 +1118,28 @@
 		EB1717921FF5E6B600CBDB81 /* EngineerTouYingJiViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerTouYingJiViewCtrl.m; sourceTree = "<group>"; };
 		EB1717951FF5F5AB00CBDB81 /* EngineerLightViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerLightViewController.h; sourceTree = "<group>"; };
 		EB1717961FF5F5AB00CBDB81 /* EngineerLightViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerLightViewController.m; sourceTree = "<group>"; };
+		EB1717981FF60C2600CBDB81 /* EngineerAireConditionViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerAireConditionViewCtrl.h; sourceTree = "<group>"; };
+		EB1717991FF60C2600CBDB81 /* EngineerAireConditionViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerAireConditionViewCtrl.m; sourceTree = "<group>"; };
+		EB17179B1FF60C6900CBDB81 /* EngineerElectronicAutoViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerElectronicAutoViewCtrl.h; sourceTree = "<group>"; };
+		EB17179C1FF60C6900CBDB81 /* EngineerElectronicAutoViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerElectronicAutoViewCtrl.m; sourceTree = "<group>"; };
+		EB17179E1FF613EC00CBDB81 /* EngineerNewWindViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerNewWindViewCtrl.h; sourceTree = "<group>"; };
+		EB17179F1FF613EC00CBDB81 /* EngineerNewWindViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerNewWindViewCtrl.m; sourceTree = "<group>"; };
+		EB1717A11FF6141A00CBDB81 /* EngineerFloorWarmViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerFloorWarmViewCtrl.h; sourceTree = "<group>"; };
+		EB1717A21FF6141A00CBDB81 /* EngineerFloorWarmViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerFloorWarmViewCtrl.m; sourceTree = "<group>"; };
+		EB1717A41FF6143600CBDB81 /* EngineerAirCleanViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerAirCleanViewCtrl.h; sourceTree = "<group>"; };
+		EB1717A51FF6143600CBDB81 /* EngineerAirCleanViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerAirCleanViewCtrl.m; sourceTree = "<group>"; };
+		EB1717A71FF6145100CBDB81 /* EngineerCleanWaterViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerCleanWaterViewCtrl.h; sourceTree = "<group>"; };
+		EB1717A81FF6145100CBDB81 /* EngineerCleanWaterViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerCleanWaterViewCtrl.m; sourceTree = "<group>"; };
+		EB1717AA1FF6147200CBDB81 /* EngineerAddWetViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerAddWetViewCtrl.h; sourceTree = "<group>"; };
+		EB1717AB1FF6147200CBDB81 /* EngineerAddWetViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerAddWetViewCtrl.m; sourceTree = "<group>"; };
+		EB1717AD1FF6149C00CBDB81 /* EngineerDoorAccessViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerDoorAccessViewCtrl.h; sourceTree = "<group>"; };
+		EB1717AE1FF6149C00CBDB81 /* EngineerDoorAccessViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerDoorAccessViewCtrl.m; sourceTree = "<group>"; };
+		EB1717B01FF614BB00CBDB81 /* EngineerMonitorViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerMonitorViewCtrl.h; sourceTree = "<group>"; };
+		EB1717B11FF614BB00CBDB81 /* EngineerMonitorViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerMonitorViewCtrl.m; sourceTree = "<group>"; };
+		EB1717B31FF614DB00CBDB81 /* EngineerInfoCollectViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerInfoCollectViewCtrl.h; sourceTree = "<group>"; };
+		EB1717B41FF614DB00CBDB81 /* EngineerInfoCollectViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerInfoCollectViewCtrl.m; sourceTree = "<group>"; };
+		EB1717B61FF6150400CBDB81 /* EngineerScenarioSettingsViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerScenarioSettingsViewCtrl.h; sourceTree = "<group>"; };
+		EB1717B71FF6150400CBDB81 /* EngineerScenarioSettingsViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerScenarioSettingsViewCtrl.m; sourceTree = "<group>"; };
 		EB1A045A1FC71372007CC1F2 /* user_config_back_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_config_back_n@2x.png"; sourceTree = "<group>"; };
 		EB1A045B1FC71372007CC1F2 /* user_config_back_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_config_back_s@2x.png"; sourceTree = "<group>"; };
 		EB1A045E1FC71564007CC1F2 /* UserAudioConfigViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserAudioConfigViewController.h; sourceTree = "<group>"; };
@@ -2547,6 +2580,28 @@
 			children = (
 				EB1717951FF5F5AB00CBDB81 /* EngineerLightViewController.h */,
 				EB1717961FF5F5AB00CBDB81 /* EngineerLightViewController.m */,
+				EB1717981FF60C2600CBDB81 /* EngineerAireConditionViewCtrl.h */,
+				EB1717991FF60C2600CBDB81 /* EngineerAireConditionViewCtrl.m */,
+				EB17179B1FF60C6900CBDB81 /* EngineerElectronicAutoViewCtrl.h */,
+				EB17179C1FF60C6900CBDB81 /* EngineerElectronicAutoViewCtrl.m */,
+				EB17179E1FF613EC00CBDB81 /* EngineerNewWindViewCtrl.h */,
+				EB17179F1FF613EC00CBDB81 /* EngineerNewWindViewCtrl.m */,
+				EB1717A11FF6141A00CBDB81 /* EngineerFloorWarmViewCtrl.h */,
+				EB1717A21FF6141A00CBDB81 /* EngineerFloorWarmViewCtrl.m */,
+				EB1717A41FF6143600CBDB81 /* EngineerAirCleanViewCtrl.h */,
+				EB1717A51FF6143600CBDB81 /* EngineerAirCleanViewCtrl.m */,
+				EB1717A71FF6145100CBDB81 /* EngineerCleanWaterViewCtrl.h */,
+				EB1717A81FF6145100CBDB81 /* EngineerCleanWaterViewCtrl.m */,
+				EB1717AA1FF6147200CBDB81 /* EngineerAddWetViewCtrl.h */,
+				EB1717AB1FF6147200CBDB81 /* EngineerAddWetViewCtrl.m */,
+				EB1717AD1FF6149C00CBDB81 /* EngineerDoorAccessViewCtrl.h */,
+				EB1717AE1FF6149C00CBDB81 /* EngineerDoorAccessViewCtrl.m */,
+				EB1717B01FF614BB00CBDB81 /* EngineerMonitorViewCtrl.h */,
+				EB1717B11FF614BB00CBDB81 /* EngineerMonitorViewCtrl.m */,
+				EB1717B31FF614DB00CBDB81 /* EngineerInfoCollectViewCtrl.h */,
+				EB1717B41FF614DB00CBDB81 /* EngineerInfoCollectViewCtrl.m */,
+				EB1717B61FF6150400CBDB81 /* EngineerScenarioSettingsViewCtrl.h */,
+				EB1717B71FF6150400CBDB81 /* EngineerScenarioSettingsViewCtrl.m */,
 			);
 			path = Env;
 			sourceTree = "<group>";
@@ -3287,6 +3342,7 @@
 				EB217FB81FD42188003F5A8F /* UserFloorWarmViewCtrl.m in Sources */,
 				0477DC531DA9F3CC0077FA52 /* SHA1.m in Sources */,
 				04DE1EB31AD6AEE000D49E2F /* UIButton+WebCache.m in Sources */,
+				EB1717B21FF614BB00CBDB81 /* EngineerMonitorViewCtrl.m in Sources */,
 				04D719771DADD3A4002153D7 /* SSUser.m in Sources */,
 				04DE1FE71AD6B52400D49E2F /* CMNavigationController.m in Sources */,
 				04DE1DDB1AD68C5E00D49E2F /* AppDelegate.m in Sources */,
@@ -3298,6 +3354,7 @@
 				04DE1EA61AD6AEE000D49E2F /* SBJson4StreamTokeniser.m in Sources */,
 				04DE1EA71AD6AEE000D49E2F /* SBJson4StreamWriter.m in Sources */,
 				EB217FBE1FD423B8003F5A8F /* UserAirCleanViewCtrl.m in Sources */,
+				EB17179D1FF60C6900CBDB81 /* EngineerElectronicAutoViewCtrl.m in Sources */,
 				3425E9891FE5687C003559F7 /* CheckButton.m in Sources */,
 				341C60C91FDCFD7D003A5490 /* EPlusLayerView.m in Sources */,
 				EB0968BF1FE2B4C900CF422F /* EngineerElectronicSysConfigViewCtrl.m in Sources */,
@@ -3305,10 +3362,13 @@
 				04DE1EB11AD6AEE000D49E2F /* SDWebImageManager.m in Sources */,
 				3425E98F1FE575A4003559F7 /* PlayerSettingsPannel.m in Sources */,
 				04DE1EAA1AD6AEE000D49E2F /* MKAnnotationView+WebCache.m in Sources */,
+				EB1717A91FF6145100CBDB81 /* EngineerCleanWaterViewCtrl.m in Sources */,
 				0479345B1DB0A7AA0066BABC /* JCShareView.m in Sources */,
 				04DE1E861AD6AEE000D49E2F /* ConfigureSetting.m in Sources */,
 				EB1A55D91FEF4E0D000B18E6 /* EngineerCameraViewController.m in Sources */,
 				EB09C4851FD2A64A00776540 /* UserElectronicAutoViewCtrl.m in Sources */,
+				EB1717A61FF6143600CBDB81 /* EngineerAirCleanViewCtrl.m in Sources */,
+				EB1717AC1FF6147200CBDB81 /* EngineerAddWetViewCtrl.m in Sources */,
 				EBDF1C191FC5CCD700A756EA /* UserScnarioConfigViewController.m in Sources */,
 				04D719781DADD3A4002153D7 /* WSUser.m in Sources */,
 				04D9A0EB1DAF83E0008DF2E6 /* AudioPlayer.m in Sources */,
@@ -3317,6 +3377,7 @@
 				EB09C4B11FD3B27200776540 /* MapMarkerLayer.m in Sources */,
 				3419283D1FD3CC760014695B /* DragCellView.m in Sources */,
 				EB2982151FD58699007B5C20 /* EngineerMeetingRoomListViewCtrl.m in Sources */,
+				EB1717A31FF6141A00CBDB81 /* EngineerFloorWarmViewCtrl.m in Sources */,
 				EBF831E31FD03A110096E6EC /* UserVideoDVDDiskViewCtrl.m in Sources */,
 				EB09C4A21FD3A00200776540 /* UserAirConditionViewCtrl.m in Sources */,
 				EB1717931FF5E6B600CBDB81 /* EngineerTouYingJiViewCtrl.m in Sources */,
@@ -3336,6 +3397,7 @@
 				EB5CF0411FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m in Sources */,
 				EB1A56151FEF8F29000B18E6 /* EngineerVideoProcessViewCtrl.m in Sources */,
 				04D719881DADE7D4002153D7 /* ActivityViewController.m in Sources */,
+				EB17179A1FF60C2600CBDB81 /* EngineerAireConditionViewCtrl.m in Sources */,
 				04DE1E8A1AD6AEE000D49E2F /* MaskRender.m in Sources */,
 				04DE1EB21AD6AEE000D49E2F /* SDWebImagePrefetcher.m in Sources */,
 				EB217FCC1FD42660003F5A8F /* UserAddWetViewCtrl.m in Sources */,
@@ -3356,8 +3418,10 @@
 				04DE1DD81AD68C5E00D49E2F /* main.m in Sources */,
 				04DE1EA11AD6AEE000D49E2F /* NetworkChecker.m in Sources */,
 				EB1717901FF5E44B00CBDB81 /* EngineerLuBoJiViewController.m in Sources */,
+				EB1717AF1FF6149C00CBDB81 /* EngineerDoorAccessViewCtrl.m in Sources */,
 				EB5F7F951FD59D6B00351888 /* EngineerPortSettingView.m in Sources */,
 				EB3685FD1FC07A5A009973A3 /* SettingsViewView.m in Sources */,
+				EB1717B81FF6150400CBDB81 /* EngineerScenarioSettingsViewCtrl.m in Sources */,
 				3421EA2D1FC4136600DC5378 /* CustomPickerView.m in Sources */,
 				04DE1E8B1AD6AEE000D49E2F /* Progress7View.m in Sources */,
 				EB09EF311FD97CB500C968CA /* EngineerAudioDevicePluginViewCtrl.m in Sources */,
@@ -3377,6 +3441,7 @@
 				34217A6F1FCE98200006701C /* UserVideoConfigView.m in Sources */,
 				04DE1E901AD6AEE000D49E2F /* UIImage+ImageEffects.m in Sources */,
 				04DE1EBF1AD6AF7900D49E2F /* User.m in Sources */,
+				EB1717A01FF613EC00CBDB81 /* EngineerNewWindViewCtrl.m in Sources */,
 				EB4EC1221FE7FC3B000B3101 /* EngineerWirelessMeetingViewCtrl.m in Sources */,
 				04DE1EA01AD6AEE000D49E2F /* WebClient.m in Sources */,
 				EB1A55C21FE93CD4000B18E6 /* EngineerAudioProcessViewCtrl.m in Sources */,
@@ -3418,6 +3483,7 @@
 				EBF6A72C1FC8486000260FF0 /* UserAudioPlayerSettingsViewCtrl.m in Sources */,
 				04DE1E941AD6AEE000D49E2F /* ASIAuthenticationDialog.m in Sources */,
 				049ECAC51C8D694400A611D8 /* QREncoder.mm in Sources */,
+				EB1717B51FF614DB00CBDB81 /* EngineerInfoCollectViewCtrl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
