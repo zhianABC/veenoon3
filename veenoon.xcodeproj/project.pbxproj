@@ -300,6 +300,7 @@
 		EB17178D1FF5DF6B00CBDB81 /* EngineerTVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB17178C1FF5DF6B00CBDB81 /* EngineerTVViewController.m */; };
 		EB1717901FF5E44B00CBDB81 /* EngineerLuBoJiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB17178F1FF5E44B00CBDB81 /* EngineerLuBoJiViewController.m */; };
 		EB1717931FF5E6B600CBDB81 /* EngineerTouYingJiViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1717921FF5E6B600CBDB81 /* EngineerTouYingJiViewCtrl.m */; };
+		EB1717971FF5F5AB00CBDB81 /* EngineerLightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1717961FF5F5AB00CBDB81 /* EngineerLightViewController.m */; };
 		EB1A045C1FC71372007CC1F2 /* user_config_back_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1A045A1FC71372007CC1F2 /* user_config_back_n@2x.png */; };
 		EB1A045D1FC71372007CC1F2 /* user_config_back_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1A045B1FC71372007CC1F2 /* user_config_back_s@2x.png */; };
 		EB1A04601FC7156C007CC1F2 /* UserAudioConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1A045F1FC7156C007CC1F2 /* UserAudioConfigViewController.m */; };
@@ -1099,6 +1100,8 @@
 		EB17178F1FF5E44B00CBDB81 /* EngineerLuBoJiViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerLuBoJiViewController.m; sourceTree = "<group>"; };
 		EB1717911FF5E6B600CBDB81 /* EngineerTouYingJiViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerTouYingJiViewCtrl.h; sourceTree = "<group>"; };
 		EB1717921FF5E6B600CBDB81 /* EngineerTouYingJiViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerTouYingJiViewCtrl.m; sourceTree = "<group>"; };
+		EB1717951FF5F5AB00CBDB81 /* EngineerLightViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerLightViewController.h; sourceTree = "<group>"; };
+		EB1717961FF5F5AB00CBDB81 /* EngineerLightViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerLightViewController.m; sourceTree = "<group>"; };
 		EB1A045A1FC71372007CC1F2 /* user_config_back_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_config_back_n@2x.png"; sourceTree = "<group>"; };
 		EB1A045B1FC71372007CC1F2 /* user_config_back_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_config_back_s@2x.png"; sourceTree = "<group>"; };
 		EB1A045E1FC71564007CC1F2 /* UserAudioConfigViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserAudioConfigViewController.h; sourceTree = "<group>"; };
@@ -2536,6 +2539,8 @@
 		EB1717941FF5F34900CBDB81 /* Env */ = {
 			isa = PBXGroup;
 			children = (
+				EB1717951FF5F5AB00CBDB81 /* EngineerLightViewController.h */,
+				EB1717961FF5F5AB00CBDB81 /* EngineerLightViewController.m */,
 			);
 			path = Env;
 			sourceTree = "<group>";
@@ -3353,6 +3358,7 @@
 				04DE1EB41AD6AEE000D49E2F /* UIImage+GIF.m in Sources */,
 				EB3B73B51FE6395C001941CF /* EngineerSliderView.m in Sources */,
 				04DE1EA21AD6AEE000D49E2F /* Reachability.m in Sources */,
+				EB1717971FF5F5AB00CBDB81 /* EngineerLightViewController.m in Sources */,
 				EB17178D1FF5DF6B00CBDB81 /* EngineerTVViewController.m in Sources */,
 				04DE1EA91AD6AEE000D49E2F /* SBJson4Writer.m in Sources */,
 				EB36AAB21FCD939E009A0FD8 /* UserYouXianViewController.m in Sources */,

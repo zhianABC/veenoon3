@@ -23,6 +23,7 @@
 #import "EngineerTVViewController.h"
 #import "EngineerLuBoJiViewController.h"
 #import "EngineerTouYingJiViewCtrl.h"
+#import "EngineerLightViewController.h"
 
 @interface EngineerPresetScenarioViewCtrl<ECPlusSelectViewDelegate> () {
     ECPlusSelectView *ecp;
@@ -246,6 +247,31 @@
 
 -(void)handleTapGesture:(UIGestureRecognizer*)gestureRecognizer{
     NSString *name = [gestureRecognizer valueForKey:@"name"];
+    
+    NSMutableArray *envArray = [_curScenario objectForKey:@"envArray"];
+    NSMutableArray *lightArray;
+    
+    for (id envSys in envArray) {
+        if ([[envSys objectForKey:@"name"] isEqualToString:@"lightSys"]) {
+            lightArray = [envSys objectForKey:@"value"];
+        }
+    }
+    
+    if (lightArray == nil) {
+        lightArray = [[NSMutableArray alloc] init];
+        NSMutableDictionary *playerDic = [[NSMutableDictionary alloc] init];
+        [playerDic setObject:@"lightSys" forKey:@"name"];
+        [playerDic setObject:lightArray forKey:@"value"];
+        
+        [envArray addObject:playerDic];
+    }
+    // wuxian array
+    if ([name isEqualToString:@"照明"]) {
+        EngineerLightViewController *ctrl = [[EngineerLightViewController alloc] init];
+        ctrl._lightSysArray= lightArray;
+        ctrl._number=8;
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
     
     NSMutableArray *videoArray = [_curScenario objectForKey:@"videoArray"];
     NSMutableArray *dvdSysArray;
