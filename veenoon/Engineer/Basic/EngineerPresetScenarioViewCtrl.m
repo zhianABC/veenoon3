@@ -447,7 +447,7 @@
         [self.navigationController pushViewController:ctrl animated:YES];
     }
     // wuxian array
-    if ([name isEqualToString:@"加湿"]) {
+    if ([name isEqualToString:@"加湿器"]) {
         EngineerAddWetViewCtrl *ctrl = [[EngineerAddWetViewCtrl alloc] init];
         ctrl._addWetSysArray= addWetArray;
         ctrl._number=8;
