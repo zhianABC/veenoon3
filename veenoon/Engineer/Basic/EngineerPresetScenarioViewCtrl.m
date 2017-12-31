@@ -426,7 +426,7 @@
         [self.navigationController pushViewController:ctrl animated:YES];
     }
     // wuxian array
-    if ([name isEqualToString:@"地热"]) {
+    if ([name isEqualToString:@"地暖"]) {
         EngineerFloorWarmViewCtrl *ctrl = [[EngineerFloorWarmViewCtrl alloc] init];
         ctrl._floorWarmSysArray= floorWarmArray;
         ctrl._number=8;
