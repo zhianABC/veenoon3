@@ -22,10 +22,12 @@
 @synthesize _airSysArray;
 @synthesize _number;
 - (void)viewDidLoad {
+    
+    [super viewDidLoad];
+    
     if (_airSysArray == nil) {
         _airSysArray = [[NSMutableArray alloc] init];
     }
-    [super viewDidLoad];
     for (int i = 0; i < self._number; i++) {
         NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
         [_airSysArray addObject:dic];
