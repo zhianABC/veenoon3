@@ -463,7 +463,7 @@
     // wuxian array
     if ([name isEqualToString:@"监控"]) {
         EngineerMonitorViewCtrl *ctrl = [[EngineerMonitorViewCtrl alloc] init];
-        ctrl._monitorSysArray = monitorArray;
+        ctrl._monitorRoomList = monitorArray;
         ctrl._number=8;
         [self.navigationController pushViewController:ctrl animated:YES];
     }
