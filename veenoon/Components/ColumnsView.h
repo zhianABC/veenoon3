@@ -20,6 +20,7 @@
 @property (nonatomic, strong) NSString *xName;
 @property (nonatomic, strong) UIColor *_themeColor;
 @property (nonatomic, assign) int colWidth;
+@property (nonatomic, strong) UIColor *_lineColor;
 
 @property (nonatomic, assign) float maxColValue;
 @property (nonatomic, strong) NSArray* colValues;

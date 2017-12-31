@@ -37,6 +37,7 @@
 @synthesize colValues;
 @synthesize colWidth;
 @synthesize maxColValue;
+@synthesize _lineColor;
 
 - (void) initXY{
     
@@ -52,11 +53,11 @@
     
     
     yLine = [[UILabel alloc] initWithFrame:CGRectMake(leftEdage, 0, 1, h-bottomEdage)];
-    yLine.backgroundColor = _themeColor;
+    yLine.backgroundColor = _lineColor;
     [self addSubview:yLine];
     
     xLine = [[UILabel alloc] initWithFrame:CGRectMake(leftEdage, h-40, w-leftEdage, 1)];
-    xLine.backgroundColor = _themeColor;
+    xLine.backgroundColor = _lineColor;
     [self addSubview:xLine];
     
     int topForX = h - bottomEdage;
