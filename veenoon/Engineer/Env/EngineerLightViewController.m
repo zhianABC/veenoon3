@@ -10,8 +10,9 @@
 #import "UIButton+Color.h"
 #import "CustomPickerView.h"
 #import "SlideButton.h"
+#import "EngineerSliderView.h"
 
-@interface EngineerLightViewController () <CustomPickerViewDelegate>{
+@interface EngineerLightViewController () <CustomPickerViewDelegate, EngineerSliderViewDelegate>{
     
     UIButton *_selectSysBtn;
     
@@ -24,6 +25,8 @@
     NSMutableArray *_buttonNumberArray;
     
     NSMutableArray *_selectedBtnArray;
+    
+    EngineerSliderView *_zengyiSlider;
 }
 @end
 
@@ -142,8 +145,31 @@
         
         index++;
     }
+    
+    _zengyiSlider = [[EngineerSliderView alloc]
+                     initWithSliderBg:[UIImage imageNamed:@"engineer_zengyi2_n.png"]
+                     frame:CGRectZero];
+    [self.view addSubview:_zengyiSlider];
+    [_zengyiSlider setRoadImage:[UIImage imageNamed:@"e_v_slider_road.png"]];
+    [_zengyiSlider setIndicatorImage:[UIImage imageNamed:@"wireless_slide_s.png"]];
+    _zengyiSlider.topEdge = 90;
+    _zengyiSlider.bottomEdge = 55;
+    _zengyiSlider.maxValue = 100;
+    _zengyiSlider.minValue = 0;
+    _zengyiSlider.delegate = self;
+    [_zengyiSlider resetScale];
+    _zengyiSlider.center = CGPointMake(SCREEN_WIDTH - 150, SCREEN_HEIGHT/2);
+}
+- (void) didSliderValueChanged:(int)value object:(id)object {
+    float circleValue = (value +0.0f)/100.0f;
+    for (SlideButton *button in _selectedBtnArray) {
+        [button setCircleValue:circleValue];
+    }
 }
 
+- (void) didSliderEndChanged:(id)object {
+    
+}
 -(void)handleTapGesture:(UIGestureRecognizer*)gestureRecognizer {
     int tag = (int) gestureRecognizer.view.tag;
     
