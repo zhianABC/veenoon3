@@ -9,12 +9,21 @@
 #import "EngineerLightViewController.h"
 #import "UIButton+Color.h"
 #import "CustomPickerView.h"
+#import "SlideButton.h"
 
 @interface EngineerLightViewController () <CustomPickerViewDelegate>{
     
     UIButton *_selectSysBtn;
     
     CustomPickerView *_customPicker;
+    
+    NSMutableArray *_buttonArray;
+    
+    NSMutableArray *_buttonSeideArray;
+    NSMutableArray *_buttonChannelArray;
+    NSMutableArray *_buttonNumberArray;
+    
+    NSMutableArray *_selectedBtnArray;
 }
 @end
 
@@ -23,6 +32,14 @@
 @synthesize _number;
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    _buttonArray = [[NSMutableArray alloc] init];
+    _buttonSeideArray = [[NSMutableArray alloc] init];
+    _buttonChannelArray = [[NSMutableArray alloc] init];
+    _buttonNumberArray = [[NSMutableArray alloc] init];
+    _selectedBtnArray = [[NSMutableArray alloc] init];
+    
+    
     UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
     [self.view addSubview:titleIcon];
     titleIcon.frame = CGRectMake(70, 30, 70, 10);
@@ -72,6 +89,89 @@
     [_selectSysBtn setImageEdgeInsets:UIEdgeInsetsMake(0,_selectSysBtn.titleLabel.bounds.size.width,0,-100)];
     [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_selectSysBtn];
+    
+    int index = 0;
+    int top = 250;
+    if (self._number >= 10) {
+        top = 350;
+    }
+    
+    int leftRight = 200;
+    
+    int cellWidth = 92;
+    int cellHeight = 92;
+    int colNumber = 7;
+    int space = (SCREEN_WIDTH - colNumber*cellWidth-leftRight*2)/(colNumber-1);
+    
+    for (int i = 0; i < self._number; i++) {
+        
+        int row = index/colNumber;
+        int col = index%colNumber;
+        int startX = col*cellWidth+col*space+leftRight-100;
+        int startY = row*cellHeight+space*row+top;
+        
+        SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(startX, startY, 120, 120)];
+        
+        UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+        tapGesture.cancelsTouchesInView =  NO;
+        tapGesture.numberOfTapsRequired = 1;
+        tapGesture.view.tag = i;
+        [btn addGestureRecognizer:tapGesture];
+        
+        btn.tag = i;
+        [self.view addSubview:btn];
+        
+        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width - 30, 20, 30, 20)];
+        titleL.backgroundColor = [UIColor clearColor];
+        [btn addSubview:titleL];
+        titleL.font = [UIFont boldSystemFontOfSize:11];
+        titleL.textColor  = [UIColor whiteColor];
+        titleL.text = [NSString stringWithFormat:@"0%d",i+1];
+        [_buttonNumberArray addObject:titleL];
+        
+        titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 -40, btn.frame.size.height - 40, 80, 20)];
+        titleL.backgroundColor = [UIColor clearColor];
+        [btn addSubview:titleL];
+        titleL.font = [UIFont boldSystemFontOfSize:12];
+        titleL.textColor  = [UIColor whiteColor];
+        titleL.textAlignment = NSTextAlignmentCenter;
+        titleL.text = @"Channel";
+        [_buttonChannelArray addObject:titleL];
+        
+        [_buttonArray addObject:btn];
+        
+        index++;
+    }
+}
+
+-(void)handleTapGesture:(UIGestureRecognizer*)gestureRecognizer {
+    int tag = (int) gestureRecognizer.view.tag;
+    
+    SlideButton *btn;
+    for (SlideButton *button in _selectedBtnArray) {
+        if (button.tag == tag) {
+            btn = button;
+            break;
+        }
+    }
+    // want to choose it
+    if (btn == nil) {
+        SlideButton *button = [_buttonArray objectAtIndex:tag];
+        [_selectedBtnArray addObject:button];
+        UILabel *chanelL = [_buttonChannelArray objectAtIndex:tag];
+        chanelL.textColor = YELLOW_COLOR;
+        
+        UILabel *numberL = [_buttonNumberArray objectAtIndex:tag];
+        numberL.textColor = YELLOW_COLOR;
+    } else {
+        // remove it
+        [_selectedBtnArray removeObject:btn];
+        UILabel *chanelL = [_buttonChannelArray objectAtIndex:tag];
+        chanelL.textColor = [UIColor whiteColor];
+        
+        UILabel *numberL = [_buttonNumberArray objectAtIndex:tag];
+        numberL.textColor = [UIColor whiteColor];;
+    }
 }
 
 - (void) sysSelectAction:(id)sender{
