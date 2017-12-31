@@ -15,6 +15,9 @@
     UIButton *_selectSysBtn;
     
     CustomPickerView *_customPicker;
+    
+    NSMutableArray *_nameLabelArray;
+    NSMutableArray *_channelArray;
 }
 @end
 
@@ -31,7 +34,8 @@
         NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
         [_electronicSysArray addObject:dic];
     }
-    
+    _nameLabelArray = [[NSMutableArray alloc] init];
+    _channelArray = [[NSMutableArray alloc] init];
     UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
     [self.view addSubview:titleIcon];
     titleIcon.frame = CGRectMake(70, 30, 70, 10);
@@ -81,6 +85,8 @@
     [_selectSysBtn setImageEdgeInsets:UIEdgeInsetsMake(0,_selectSysBtn.titleLabel.bounds.size.width,0,-100)];
     [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_selectSysBtn];
+    
+    
     int index = 0;
     int top = 250;
     if (self._number == 8) {
@@ -133,12 +139,19 @@
     NSMutableDictionary *dic = [self._electronicSysArray objectAtIndex:index];
     
     NSString *status = [dic objectForKey:@"status"];
+    
+    UILabel *nameLabel = [_nameLabelArray objectAtIndex:index];
+    UILabel *channelLabel = [_channelArray objectAtIndex:index];
     if ([status isEqualToString:@"ON"]) {
         [btn setImage:[UIImage imageNamed:@"dianyuanshishiqi_n.png"] forState:UIControlStateNormal];
         [dic setObject:@"OFF" forKey:@"status"];
+        nameLabel.textColor  = [UIColor whiteColor];
+        channelLabel.textColor  = [UIColor whiteColor];
     } else {
         [btn setImage:[UIImage imageNamed:@"dianyuanshishiqi_s.png"] forState:UIControlStateNormal];
         [dic setObject:@"ON" forKey:@"status"];
+        nameLabel.textColor  = RGB(230, 151, 50);
+        channelLabel.textColor  = RGB(230, 151, 50);
     }
 }
 - (void) createBtnLabel:(UIButton*)sender dataDic:(NSMutableDictionary*) dataDic{
@@ -148,6 +161,7 @@
     titleL.font = [UIFont boldSystemFontOfSize:11];
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = [dataDic objectForKey:@"name"];
+    [_nameLabelArray addObject:titleL];
     
     titleL = [[UILabel alloc] initWithFrame:CGRectMake(sender.frame.size.width/2 -40, sender.frame.size.height - 20, 80, 20)];
     titleL.backgroundColor = [UIColor clearColor];
@@ -156,6 +170,7 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.textAlignment = NSTextAlignmentCenter;
     titleL.text = @"Channel";
+    [_channelArray addObject:titleL];
 }
 - (void) sysSelectAction:(id)sender{
     _customPicker = [[CustomPickerView alloc]
