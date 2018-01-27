@@ -146,11 +146,6 @@
     [_values setObject:[NSNumber numberWithInteger:row]
                 forKey:@"row"];
     
-    
-//    if(_selectionBlock)
-//    {
-//        _selectionBlock(_values);
-//    }
     _rowSelected = row;
     
     [pickerView reloadComponent:component];

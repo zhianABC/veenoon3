@@ -20,6 +20,7 @@
 #import "CircleProgressView.h"
 #import "PlayerSettingsPannel.h"
 #import "SlideButton.h"
+#import "WirlessHandleSettingsView.h"
 
 @interface WellcomeViewController ()
 
@@ -172,7 +173,7 @@
 //    [batter1 setBatteryValue:0.18];
     
     
-    PlayerSettingsPannel *ecp = [[PlayerSettingsPannel alloc]
+    WirlessHandleSettingsView *ecp = [[WirlessHandleSettingsView alloc]
                              initWithFrame:CGRectMake(SCREEN_WIDTH-300,
                                                       64, 300, SCREEN_HEIGHT-114)];
     [self.view addSubview:ecp];

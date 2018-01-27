@@ -9,5 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface WirlessHandleSettingsView : UIView
+{
+    
+}
+@property (nonatomic, assign) int _numOfChannel;
+
+- (void) layoutFooter;
 
 @end
