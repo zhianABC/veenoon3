@@ -15,6 +15,9 @@
     UIButton *_selectSysBtn;
     
     CustomPickerView *_customPicker;
+    
+    NSMutableArray *_nameLabelArray;
+    NSMutableArray *_channelArray;
 }
 @end
 
@@ -22,7 +25,18 @@
 @synthesize _airCleanSysArray;
 @synthesize _number;
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
+    
+    if (_airCleanSysArray == nil) {
+        _airCleanSysArray = [[NSMutableArray alloc] init];
+    }
+    _nameLabelArray = [[NSMutableArray alloc] init];
+    _channelArray = [[NSMutableArray alloc] init];
+    for (int i = 0; i < self._number; i++) {
+        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+        [_airCleanSysArray addObject:dic];
+    }
     UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
     [self.view addSubview:titleIcon];
     titleIcon.frame = CGRectMake(70, 30, 70, 10);
@@ -72,6 +86,91 @@
     [_selectSysBtn setImageEdgeInsets:UIEdgeInsetsMake(0,_selectSysBtn.titleLabel.bounds.size.width,0,-100)];
     [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_selectSysBtn];
+    
+    int index = 0;
+    int top = 250;
+    if (self._number == 8) {
+        top = 350;
+    }
+    
+    int leftRight = 200;
+    
+    int cellWidth = 92;
+    int cellHeight = 92;
+    int colNumber = 7;
+    int space = (SCREEN_WIDTH - colNumber*cellWidth-leftRight*2)/(colNumber-1);
+    
+    for (int i = 0; i < self._number; i++) {
+        NSMutableDictionary *dic = [self._airCleanSysArray objectAtIndex:i];
+        
+        int row = index/colNumber;
+        int col = index%colNumber;
+        int startX = col*cellWidth+col*space+leftRight-100;
+        int startY = row*cellHeight+space*row+top;
+        
+        UIButton *scenarioBtn = [UIButton buttonWithColor:nil selColor:RGB(0, 89, 118)];
+        scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
+        scenarioBtn.clipsToBounds = YES;
+        scenarioBtn.layer.cornerRadius = 5;
+        scenarioBtn.layer.borderWidth = 2;
+        scenarioBtn.layer.borderColor = [UIColor clearColor].CGColor;
+        NSString *status = [dic objectForKey:@"status"];
+        
+        [scenarioBtn setImage:[UIImage imageNamed:@"dianyuanshishiqi_n.png"] forState:UIControlStateNormal];
+        [scenarioBtn setImage:[UIImage imageNamed:@"dianyuanshishiqi_s.png"] forState:UIControlStateHighlighted];
+        
+        if ([status isEqualToString:@"ON"]) {
+            [scenarioBtn setImage:[UIImage imageNamed:@"dianyuanshishiqi_s.png"] forState:UIControlStateNormal];
+        }
+        scenarioBtn.tag = index;
+        [self.view addSubview:scenarioBtn];
+        
+        [scenarioBtn addTarget:self
+                        action:@selector(scenarioAction:)
+              forControlEvents:UIControlEventTouchUpInside];
+        [self createBtnLabel:scenarioBtn dataDic:dic];
+        index++;
+    }
+}
+- (void) scenarioAction:(id)sender{
+    UIButton *btn = (UIButton*) sender;
+    int index = (int) btn.tag;
+    
+    NSMutableDictionary *dic = [self._airCleanSysArray objectAtIndex:index];
+    
+    NSString *status = [dic objectForKey:@"status"];
+    
+    UILabel *nameLabel = [_nameLabelArray objectAtIndex:index];
+    UILabel *channelLabel = [_channelArray objectAtIndex:index];
+    if ([status isEqualToString:@"ON"]) {
+        [btn setImage:[UIImage imageNamed:@"dianyuanshishiqi_n.png"] forState:UIControlStateNormal];
+        [dic setObject:@"OFF" forKey:@"status"];
+        nameLabel.textColor  = [UIColor whiteColor];
+        channelLabel.textColor  = [UIColor whiteColor];
+    } else {
+        [btn setImage:[UIImage imageNamed:@"dianyuanshishiqi_s.png"] forState:UIControlStateNormal];
+        [dic setObject:@"ON" forKey:@"status"];
+        nameLabel.textColor  = RGB(230, 151, 50);
+        channelLabel.textColor  = RGB(230, 151, 50);
+    }
+}
+- (void) createBtnLabel:(UIButton*)sender dataDic:(NSMutableDictionary*) dataDic{
+    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(sender.frame.size.width - 20, 0, 20, 20)];
+    titleL.backgroundColor = [UIColor clearColor];
+    [sender addSubview:titleL];
+    titleL.font = [UIFont boldSystemFontOfSize:11];
+    titleL.textColor  = [UIColor whiteColor];
+    titleL.text = [dataDic objectForKey:@"name"];
+    [_nameLabelArray addObject:titleL];
+    
+    titleL = [[UILabel alloc] initWithFrame:CGRectMake(sender.frame.size.width/2 -40, sender.frame.size.height - 20, 80, 20)];
+    titleL.backgroundColor = [UIColor clearColor];
+    [sender addSubview:titleL];
+    titleL.font = [UIFont boldSystemFontOfSize:12];
+    titleL.textColor  = [UIColor whiteColor];
+    titleL.textAlignment = NSTextAlignmentCenter;
+    titleL.text = @"Channel";
+    [_channelArray addObject:titleL];
 }
 
 - (void) sysSelectAction:(id)sender{
@@ -109,8 +208,4 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 @end
-
-
-
-
 

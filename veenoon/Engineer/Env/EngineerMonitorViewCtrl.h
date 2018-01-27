@@ -11,11 +11,11 @@
 #import "CustomPickerView.h"
 
 @interface EngineerMonitorViewCtrl<CustomPickerViewDelegate> : BaseViewController {
-    NSMutableArray *_monitorSysArray;
+    NSMutableArray *_monitorRoomList;
     
     int _number;
 }
-@property (nonatomic,strong) NSMutableArray *_monitorSysArray;
+@property (nonatomic,strong) NSMutableArray *_monitorRoomList;
 @property (nonatomic,assign) int _number;
 @end
 

@@ -426,7 +426,7 @@
         [self.navigationController pushViewController:ctrl animated:YES];
     }
     // wuxian array
-    if ([name isEqualToString:@"地热"]) {
+    if ([name isEqualToString:@"地暖"]) {
         EngineerFloorWarmViewCtrl *ctrl = [[EngineerFloorWarmViewCtrl alloc] init];
         ctrl._floorWarmSysArray= floorWarmArray;
         ctrl._number=8;
@@ -447,7 +447,7 @@
         [self.navigationController pushViewController:ctrl animated:YES];
     }
     // wuxian array
-    if ([name isEqualToString:@"加湿"]) {
+    if ([name isEqualToString:@"加湿器"]) {
         EngineerAddWetViewCtrl *ctrl = [[EngineerAddWetViewCtrl alloc] init];
         ctrl._addWetSysArray= addWetArray;
         ctrl._number=8;
@@ -463,7 +463,7 @@
     // wuxian array
     if ([name isEqualToString:@"监控"]) {
         EngineerMonitorViewCtrl *ctrl = [[EngineerMonitorViewCtrl alloc] init];
-        ctrl._monitorSysArray = monitorArray;
+        ctrl._monitorRoomList = monitorArray;
         ctrl._number=8;
         [self.navigationController pushViewController:ctrl animated:YES];
     }
