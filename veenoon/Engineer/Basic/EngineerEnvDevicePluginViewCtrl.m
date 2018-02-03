@@ -345,6 +345,9 @@
 
 - (void) okAction:(id)sender{
     
+    EngineerScenarioListViewCtrl *ctrl = [[EngineerScenarioListViewCtrl alloc] init];
+    [self.navigationController pushViewController:ctrl animated:YES];
+    
 }
 - (void) confirmAction:(id)sender{
     EngineerScenarioListViewCtrl *ctrl = [[EngineerScenarioListViewCtrl alloc] init];

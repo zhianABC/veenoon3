@@ -122,8 +122,13 @@
 
 -(void) loginAction:(id) sender {
     
-    [self scanQRCode:nil];
     
+    EngineerMeetingRoomListViewCtrl *ctrl = [[EngineerMeetingRoomListViewCtrl alloc] init];
+    [self.navigationController pushViewController:ctrl animated:YES];
+
+    /*
+    [self scanQRCode:nil];
+   */
    
 }
 
