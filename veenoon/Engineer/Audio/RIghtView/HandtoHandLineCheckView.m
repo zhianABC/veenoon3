@@ -16,8 +16,6 @@
     UIButton *_btnSave;
 }
 @property (nonatomic, strong) NSMutableArray *_rows;
-@property (nonatomic, strong) NSMutableDictionary *_map;
-
 @property (nonatomic, strong) NSMutableArray *_btns;
 
 @end
@@ -25,7 +23,6 @@
 @implementation HandtoHandLineCheckView
 @synthesize _rows;
 @synthesize _btns;
-@synthesize _numOfChannel;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -56,8 +53,6 @@
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [self addSubview:_tableView];
         
-        _numOfChannel = 8;
-        
         [self initData];
         
     }
@@ -68,22 +63,15 @@
 - (void) initData{
     
     self._rows = [NSMutableArray array];
-    self._map = [NSMutableDictionary dictionary];
     
-    NSMutableArray *dbs = [NSMutableArray array];
-    for(int i = 0; i < 80; i++)
-    {
-        [dbs addObject:[NSString stringWithFormat:@"+%d", i]];
-    }
-    
-    [_rows addObject:@{@"title":@"1",@"values":@[@"在线"]}];
-    [_rows addObject:@{@"title":@"2",@"values":@[@"在线"]}];
-    [_rows addObject:@{@"title":@"3",@"values":@[@"在线"]}];
-    [_rows addObject:@{@"title":@"4",@"values":@[@"在线"]}];
-    [_rows addObject:@{@"title":@"5",@"values":@[@"在线"]}];
-    [_rows addObject:@{@"title":@"6",@"values":@[@"在线"]}];
-    [_rows addObject:@{@"title":@"7",@"values":@[@"在线"]}];
-    [_rows addObject:@{@"title":@"8",@"values":@[@"在线"]}];
+    [_rows addObject:@{@"title":@"1",@"values":@"在线"}];
+    [_rows addObject:@{@"title":@"2",@"values":@"在线"}];
+    [_rows addObject:@{@"title":@"3",@"values":@"在线"}];
+    [_rows addObject:@{@"title":@"4",@"values":@"在线"}];
+    [_rows addObject:@{@"title":@"5",@"values":@"在线"}];
+    [_rows addObject:@{@"title":@"6",@"values":@"在线"}];
+    [_rows addObject:@{@"title":@"7",@"values":@"在线"}];
+    [_rows addObject:@{@"title":@"8",@"values":@"在线"}];
     
     
     [_tableView reloadData];
@@ -127,7 +115,7 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return [_rows count];
+    return [_rows count] + 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -156,8 +144,39 @@
     [[cell.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     cell.backgroundColor = [UIColor clearColor];
     
+    if (indexPath.row == 0) {
+        UIButton *btnBack = [UIButton buttonWithType:UIButtonTypeCustom];
+        btnBack.frame = CGRectMake(2,
+                                    2,
+                                    40, 40);
+        [btnBack setTitle:@"返回" forState:UIControlStateNormal];
+        [self addSubview:btnBack];
+        [btnBack setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [btnBack setTitleColor:YELLOW_COLOR forState:UIControlStateHighlighted];
+        btnBack.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -30);
+        btnBack.titleLabel.font = [UIFont systemFontOfSize:14];
+        
+        UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 43, self.frame.size.width, 1)];
+        line.backgroundColor =  M_GREEN_LINE;
+        [cell.contentView addSubview:line];
+        
+        UILabel* valueL = [[UILabel alloc] initWithFrame:CGRectMake(10,
+                                                                    12,
+                                                                    CGRectGetWidth(self.frame)-35, 20)];
+        valueL.backgroundColor = [UIColor clearColor];
+        [cell.contentView addSubview:valueL];
+        valueL.font = [UIFont systemFontOfSize:13];
+        valueL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+        valueL.textAlignment = NSTextAlignmentRight;
+        valueL.text = @"线路检查";
+        
+        [btnBack addTarget:self action:@selector(backAction:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.contentView addSubview:btnBack];
+        
+        return cell;
+    }
     
-    NSDictionary *data = [_rows objectAtIndex:indexPath.row];
+    NSDictionary *data = [_rows objectAtIndex:indexPath.row - 1];
     
     UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(10,
                                                                 12,
@@ -175,16 +194,11 @@
     valueL.font = [UIFont systemFontOfSize:13];
     valueL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
     valueL.textAlignment = NSTextAlignmentRight;
+    valueL.text = [data objectForKey:@"values"];
     
-    if(indexPath.row != 2)
-    {
-        UIImageView *icon = [[UIImageView alloc]
-                             initWithFrame:CGRectMake(CGRectGetMaxX(valueL.frame)+5, 17, 10, 10)];
-        icon.image = [UIImage imageNamed:@"remote_video_down.png"];
-        [cell.contentView addSubview:icon];
-        icon.alpha = 0.8;
-        icon.layer.contentsGravity = kCAGravityResizeAspect;
-    }
+    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 43, self.frame.size.width, 1)];
+    line.backgroundColor =  M_GREEN_LINE;
+    [cell.contentView addSubview:line];
     
     titleL.text = [data objectForKey:@"title"];
     
@@ -208,6 +222,10 @@
         [_tableView reloadData];
     }
     
+}
+
+- (void) backAction:(id)object {
+    [self removeFromSuperview];
 }
 
 /*

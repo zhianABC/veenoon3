@@ -18,8 +18,6 @@
     
     CustomPickerView *_picker;
     
-    UIView *_footerView;
-    
 }
 @property (nonatomic, strong) NSMutableArray *_rows;
 @property (nonatomic, strong) NSMutableDictionary *_map;
@@ -30,9 +28,8 @@
 @end
 
 @implementation HandtoHandSettingsView
-@synthesize _map;
 @synthesize _rows;
-@synthesize _groupValues;
+@synthesize _map;
 @synthesize _btns;
 @synthesize _numOfChannel;
 
@@ -78,15 +75,7 @@
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [self addSubview:_tableView];
         
-        _footerView = [[UIView alloc] initWithFrame:CGRectMake(0,
-                                                               CGRectGetMaxY(_tableView.frame),
-                                                               self.frame.size.width,
-                                                               160)];
-        [self addSubview:_footerView];
-        _footerView.backgroundColor = M_GREEN_COLOR;
-        
         _numOfChannel = 8;
-//        [self layoutFooter];
         
         [self initData];
         
@@ -100,78 +89,20 @@
     self._rows = [NSMutableArray array];
     self._map = [NSMutableDictionary dictionary];
     
-    NSMutableArray *dbs = [NSMutableArray array];
-    for(int i = 0; i < 80; i++)
-    {
-        [dbs addObject:[NSString stringWithFormat:@"+%d", i]];
-    }
-    
-    self._groupValues = [NSMutableDictionary dictionary];
-    [_groupValues setObject:@[@"01",@"02",@"03"] forKey:@"A"];
-    [_groupValues setObject:@[@"04",@"05",@"06"] forKey:@"B"];
-    [_groupValues setObject:@[@"10",@"20",@"30"] forKey:@"C"];
-    
     [_rows addObject:@{@"title":@"线路检查",@"values":@[@"D1",@"D2",@"D3"]}];
-    [_rows addObject:@{@"title":@"发言模式",@"values":@[@"X1",@"X2",@"X3"]}];
-    [_rows addObject:@{@"title":@"发言人数",@"values":@[@"扫描"]}];
-    [_rows addObject:@{@"title":@"主席数量",@"values":@[@"720MHz",@"600MHz"]}];
-    [_rows addObject:@{@"title":@"设备ID",@"values":[_groupValues allKeys]}];
-    [_rows addObject:@{@"title":@"摄像机ID",@"values":dbs}];
-    [_rows addObject:@{@"title":@"摄像机协议",@"values":@[@"1",@"2",@"3"]}];
-    [_rows addObject:@{@"title":@"波特率",@"values":@[@"1",@"2",@"3"]}];
-    
-    [_map setObject:@"扫描" forKey:@2];
+    [_rows addObject:@{@"title":@"发言模式",@"values":@[@"先进先出"]}];
+    [_rows addObject:@{@"title":@"发言人数",@"values":@[@"1"]}];
+    [_rows addObject:@{@"title":@"主席数量",@"values":@[@"1",@"2"]}];
+    [_rows addObject:@{@"title":@"设备ID",@"values":@[@"1",@"2"]}];
+    [_rows addObject:@{@"title":@"摄像机ID",@"values":@[@"1",@"2"]}];
+    [_rows addObject:@{@"title":@"摄像机协议",@"values":@[@"VISCA",@"VISCB",@"VISCC"]}];
+    [_rows addObject:@{@"title":@"波特率",@"values":@[@"115200",@"2400",@"4800"]}];
     
     
     [_tableView reloadData];
-    
-    
 }
 
-- (void)layoutFooter{
-    
-    [[_footerView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    
-    UIColor *rectColor = RGB(0, 146, 174);
-    
-    self._btns = [NSMutableArray array];
-    
-    int w = 50;
-    int sp = 8;
-    int y = (160 - w*2 - sp)/2;
-    int x = (self.frame.size.width - 4*w - 3*sp)/2;
-    for(int i = 0; i < _numOfChannel; i++)
-    {
-        int col = i%4;
-        int xx = x + col*w + col*sp;
-        
-        if(i && i%4 == 0)
-        {
-            y+=w;
-            y+=sp;
-        }
-        
-        UIButton *btn = [UIButton buttonWithColor:rectColor selColor:nil];
-        btn.frame = CGRectMake(xx, y, w, w);
-        [_footerView addSubview:btn];
-        btn.layer.cornerRadius = 5;
-        btn.clipsToBounds = YES;
-        [btn setTitle:[NSString stringWithFormat:@"%d", i+1]
-             forState:UIControlStateNormal];
-        btn.tag = i;
-        [btn setTitleColor:[UIColor whiteColor]
-                  forState:UIControlStateNormal];
-        btn.titleLabel.font = [UIFont systemFontOfSize:14];
-        [btn addTarget:self
-                action:@selector(buttonAction:)
-      forControlEvents:UIControlEventTouchUpInside];
-        
-        [_btns addObject:btn];
-    }
-    
-    [self chooseChannelAtTagIndex:0];
-    
-}
+
 
 - (void) buttonAction:(UIButton*)btn{
     
@@ -201,8 +132,6 @@
     
     NSString *obj = [values objectForKey:@0];
     [_map setObject:obj forKey:key];
-    
-    
     
     [_tableView reloadData];
     
@@ -305,30 +234,24 @@
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 43, self.frame.size.width, 1)];
     line.backgroundColor =  M_GREEN_LINE;
     [cell.contentView addSubview:line];
-    if(_curIndex == indexPath.row)
-    {
+    if(_curIndex == indexPath.row) {
         line.frame = CGRectMake(0, 143, self.frame.size.width, 1);
         
-        if(_curIndex != 2)
-        {
-            _picker.tag = _curIndex;
-            _picker._pickerDataArray = @[@{@"values":[data objectForKey:@"values"]}];
-            
-            [cell.contentView addSubview:_picker];
-            [_picker selectRow:0 inComponent:0];
-        }
+        _picker.tag = _curIndex;
+        _picker._pickerDataArray = @[@{@"values":[data objectForKey:@"values"]}];
+        
+        [cell.contentView addSubview:_picker];
+        [_picker selectRow:0 inComponent:0];
         
     }
-    
-    
     
     return cell;
 }
 
 - (void)toHandtoHandCheckView {
     HandtoHandLineCheckView *ecp = [[HandtoHandLineCheckView alloc]
-                                   initWithFrame:CGRectMake(SCREEN_WIDTH-300,
-                                                            64, 300, SCREEN_HEIGHT-114)];
+                                   initWithFrame:CGRectMake(0,
+                                                            0, self.frame.size.width, self.frame.size.height)];
     [self addSubview:ecp];
 }
 
@@ -344,29 +267,14 @@
         [self toHandtoHandCheckView];
         return;
     }
-    if(targetIndx != 2)
-    {
-        if(_curIndex == targetIndx)
-        {
-            _curIndex = -1;
-        }
-        else
-            _curIndex = targetIndx;
-        
-        [_tableView reloadData];
+    if (_curIndex == targetIndx) {
+        _curIndex = -1;
+    } else {
+        _curIndex = targetIndx;
     }
+    
+    [_tableView reloadData];
 }
-
-/*
- // Only override drawRect: if you perform custom drawing.
- // An empty implementation adversely affects performance during animation.
- - (void)drawRect:(CGRect)rect {
- // Drawing code
- }
- */
-
-
-
 
 @end
 
