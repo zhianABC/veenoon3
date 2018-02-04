@@ -1,16 +1,15 @@
 //
-//  WirlessHandleSettingsView.m
 //  veenoon
 //
 //  Created by chen jack on 2017/12/16.
 //  Copyright © 2017年 jack. All rights reserved.
 //
 
-#import "WirlessHandleSettingsView.h"
+#import "HandtoHandSettingsView.h"
 #import "CustomPickerView.h"
 #import "UIButton+Color.h"
 
-@interface WirlessHandleSettingsView () <UITableViewDelegate, UITableViewDataSource, CustomPickerViewDelegate>
+@interface HandtoHandSettingsView () <UITableViewDelegate, UITableViewDataSource, CustomPickerViewDelegate>
 {
     UITableView *_tableView;
     int _curIndex;
@@ -19,7 +18,7 @@
     CustomPickerView *_picker;
     
     UIView *_footerView;
-
+    
 }
 @property (nonatomic, strong) NSMutableArray *_rows;
 @property (nonatomic, strong) NSMutableDictionary *_map;
@@ -29,7 +28,7 @@
 
 @end
 
-@implementation WirlessHandleSettingsView
+@implementation HandtoHandSettingsView
 @synthesize _map;
 @synthesize _rows;
 @synthesize _groupValues;
@@ -42,7 +41,7 @@
     if(self = [super initWithFrame:frame])
     {
         self.backgroundColor = RGB(0, 89, 118);
-
+        
         _btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
         _btnSave.frame = CGRectMake(frame.size.width-90,
                                     20,
@@ -57,12 +56,12 @@
         
         _picker = [[CustomPickerView alloc]
                    initWithFrame:CGRectMake(frame.size.width/2-100, 43, 200, 100) withGrayOrLight:@"picker_player.png"];
-
+        
         
         _picker._selectColor = YELLOW_COLOR;
         _picker._rowNormalColor = [UIColor whiteColor];
         _picker.delegate_ = self;
-        IMP_BLOCK_SELF(WirlessHandleSettingsView);
+        IMP_BLOCK_SELF(HandtoHandSettingsView);
         _picker._selectionBlock = ^(NSDictionary *values)
         {
             [block_self didPickerValue:values];
@@ -124,7 +123,7 @@
     
     
     [_tableView reloadData];
- 
+    
     
 }
 
@@ -145,11 +144,11 @@
         int col = i%4;
         int xx = x + col*w + col*sp;
         
-         if(i && i%4 == 0)
-         {
-             y+=w;
-             y+=sp;
-         }
+        if(i && i%4 == 0)
+        {
+            y+=w;
+            y+=sp;
+        }
         
         UIButton *btn = [UIButton buttonWithColor:rectColor selColor:nil];
         btn.frame = CGRectMake(xx, y, w, w);
@@ -162,15 +161,15 @@
         [btn setTitleColor:[UIColor whiteColor]
                   forState:UIControlStateNormal];
         btn.titleLabel.font = [UIFont systemFontOfSize:14];
-       [btn addTarget:self
-               action:@selector(buttonAction:)
-     forControlEvents:UIControlEventTouchUpInside];
+        [btn addTarget:self
+                action:@selector(buttonAction:)
+      forControlEvents:UIControlEventTouchUpInside];
         
         [_btns addObject:btn];
     }
     
     [self chooseChannelAtTagIndex:0];
-  
+    
 }
 
 - (void) buttonAction:(UIButton*)btn{
@@ -209,7 +208,7 @@
 }
 
 - (void) didConfirmPickerValue:(NSString*) pickerValue{
-
+    
     _curIndex = -1;
     _tableView.scrollEnabled = YES;
     [_tableView reloadData];
@@ -219,7 +218,7 @@
 #pragma mark Table View DataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-
+    
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -275,12 +274,12 @@
     
     if(indexPath.row != 2)
     {
-    UIImageView *icon = [[UIImageView alloc]
-                         initWithFrame:CGRectMake(CGRectGetMaxX(valueL.frame)+5, 17, 10, 10)];
-    icon.image = [UIImage imageNamed:@"remote_video_down.png"];
-    [cell.contentView addSubview:icon];
-    icon.alpha = 0.8;
-    icon.layer.contentsGravity = kCAGravityResizeAspect;
+        UIImageView *icon = [[UIImageView alloc]
+                             initWithFrame:CGRectMake(CGRectGetMaxX(valueL.frame)+5, 17, 10, 10)];
+        icon.image = [UIImage imageNamed:@"remote_video_down.png"];
+        [cell.contentView addSubview:icon];
+        icon.alpha = 0.8;
+        icon.layer.contentsGravity = kCAGravityResizeAspect;
     }
     
     titleL.text = [data objectForKey:@"title"];
@@ -306,13 +305,13 @@
         {
             _picker.tag = _curIndex;
             _picker._pickerDataArray = @[@{@"values":[data objectForKey:@"values"]}];
-           
+            
             [cell.contentView addSubview:_picker];
             [_picker selectRow:0 inComponent:0];
         }
         
     }
-
+    
     
     
     return cell;
@@ -339,14 +338,15 @@
 }
 
 /*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
+ // Only override drawRect: if you perform custom drawing.
+ // An empty implementation adversely affects performance during animation.
+ - (void)drawRect:(CGRect)rect {
+ // Drawing code
+ }
+ */
 
 
 
 
 @end
+

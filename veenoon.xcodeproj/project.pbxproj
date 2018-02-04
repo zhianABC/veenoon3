@@ -212,7 +212,7 @@
 		3425E9891FE5687C003559F7 /* CheckButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3425E9881FE5687C003559F7 /* CheckButton.m */; };
 		3425E98C1FE571CE003559F7 /* ComSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3425E98B1FE571CE003559F7 /* ComSettingView.m */; };
 		3425E98F1FE575A4003559F7 /* PlayerSettingsPannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3425E98E1FE575A4003559F7 /* PlayerSettingsPannel.m */; };
-		3425E9921FE5763B003559F7 /* WirlessHandleSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3425E9911FE5763B003559F7 /* WirlessHandleSettingsView.m */; };
+		3425E9921FE5763B003559F7 /* WirlessYaoBaoViewSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3425E9911FE5763B003559F7 /* WirlessYaoBaoViewSettingsView.m */; };
 		3425E9951FE57675003559F7 /* MixVoiceSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3425E9941FE57675003559F7 /* MixVoiceSettingsView.m */; };
 		342814231FE34BF100170D11 /* PowerSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 342814221FE34BF100170D11 /* PowerSettingView.m */; };
 		343733AE1FE402E80071C902 /* JHSlideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 343733AD1FE402E80071C902 /* JHSlideView.m */; };
@@ -500,6 +500,7 @@
 		EB3B73B91FE63F10001941CF /* wireless_slide_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB3B73B71FE63F10001941CF /* wireless_slide_s@2x.png */; };
 		EB3B73BB1FE6428C001941CF /* jslide_thumb_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB3B73BA1FE6428C001941CF /* jslide_thumb_n@2x.png */; };
 		EB3B73BD1FE642FA001941CF /* v_slider_road_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB3B73BC1FE642F9001941CF /* v_slider_road_n@2x.png */; };
+		EB4E39E320273F6100533575 /* HandtoHandSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4E39E220273F6100533575 /* HandtoHandSettingsView.m */; };
 		EB4EC1091FE7E178000B3101 /* yaobao_yellow_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB4EC1071FE7E177000B3101 /* yaobao_yellow_n@2x.png */; };
 		EB4EC10A1FE7E178000B3101 /* huatong_yellow_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB4EC1081FE7E177000B3101 /* huatong_yellow_n@2x.png */; };
 		EB4EC10C1FE7EA00000B3101 /* engineer_slider_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB4EC10B1FE7EA00000B3101 /* engineer_slider_n@2x.png */; };
@@ -1000,8 +1001,8 @@
 		3425E98B1FE571CE003559F7 /* ComSettingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComSettingView.m; sourceTree = "<group>"; };
 		3425E98D1FE575A4003559F7 /* PlayerSettingsPannel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerSettingsPannel.h; sourceTree = "<group>"; };
 		3425E98E1FE575A4003559F7 /* PlayerSettingsPannel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayerSettingsPannel.m; sourceTree = "<group>"; };
-		3425E9901FE5763B003559F7 /* WirlessHandleSettingsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WirlessHandleSettingsView.h; sourceTree = "<group>"; };
-		3425E9911FE5763B003559F7 /* WirlessHandleSettingsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WirlessHandleSettingsView.m; sourceTree = "<group>"; };
+		3425E9901FE5763B003559F7 /* WirlessYaoBaoViewSettingsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WirlessYaoBaoViewSettingsView.h; sourceTree = "<group>"; };
+		3425E9911FE5763B003559F7 /* WirlessYaoBaoViewSettingsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WirlessYaoBaoViewSettingsView.m; sourceTree = "<group>"; };
 		3425E9931FE57675003559F7 /* MixVoiceSettingsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MixVoiceSettingsView.h; sourceTree = "<group>"; };
 		3425E9941FE57675003559F7 /* MixVoiceSettingsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MixVoiceSettingsView.m; sourceTree = "<group>"; };
 		342814211FE34BF100170D11 /* PowerSettingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PowerSettingView.h; sourceTree = "<group>"; };
@@ -1353,6 +1354,8 @@
 		EB3B73B71FE63F10001941CF /* wireless_slide_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wireless_slide_s@2x.png"; sourceTree = "<group>"; };
 		EB3B73BA1FE6428C001941CF /* jslide_thumb_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jslide_thumb_n@2x.png"; sourceTree = "<group>"; };
 		EB3B73BC1FE642F9001941CF /* v_slider_road_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "v_slider_road_n@2x.png"; sourceTree = "<group>"; };
+		EB4E39E120273F6100533575 /* HandtoHandSettingsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HandtoHandSettingsView.h; sourceTree = "<group>"; };
+		EB4E39E220273F6100533575 /* HandtoHandSettingsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HandtoHandSettingsView.m; sourceTree = "<group>"; };
 		EB4EC1071FE7E177000B3101 /* yaobao_yellow_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yaobao_yellow_n@2x.png"; sourceTree = "<group>"; };
 		EB4EC1081FE7E177000B3101 /* huatong_yellow_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "huatong_yellow_n@2x.png"; sourceTree = "<group>"; };
 		EB4EC10B1FE7EA00000B3101 /* engineer_slider_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_slider_n@2x.png"; sourceTree = "<group>"; };
@@ -2589,6 +2592,7 @@
 		EB1717941FF5F34900CBDB81 /* Env */ = {
 			isa = PBXGroup;
 			children = (
+				EB4E39E020273CAE00533575 /* RightView */,
 				EB1717951FF5F5AB00CBDB81 /* EngineerLightViewController.h */,
 				EB1717961FF5F5AB00CBDB81 /* EngineerLightViewController.m */,
 				EB1717981FF60C2600CBDB81 /* EngineerAireConditionViewCtrl.h */,
@@ -2651,6 +2655,7 @@
 		EB1A55CE1FEA9E2A000B18E6 /* Audio */ = {
 			isa = PBXGroup;
 			children = (
+				EB4E39DE20273B9000533575 /* RIghtView */,
 				EB0968BD1FE2B4BE00CF422F /* EngineerElectronicSysConfigViewCtrl.h */,
 				EB0968BE1FE2B4C900CF422F /* EngineerElectronicSysConfigViewCtrl.m */,
 				EB3B73991FE61B18001941CF /* EngineerPlayerSettingsViewCtrl.m */,
@@ -2676,6 +2681,7 @@
 		EB1A55CF1FEAA0F4000B18E6 /* Video */ = {
 			isa = PBXGroup;
 			children = (
+				EB4E39DF20273C9D00533575 /* RightView */,
 				EB1A55D01FEAA10E000B18E6 /* EngineerDVDViewController.h */,
 				EB1A55D11FEAA10E000B18E6 /* EngineerDVDViewController.m */,
 				EB1A55D71FEF4E0D000B18E6 /* EngineerCameraViewController.h */,
@@ -2694,6 +2700,31 @@
 				EB1717921FF5E6B600CBDB81 /* EngineerTouYingJiViewCtrl.m */,
 			);
 			path = Video;
+			sourceTree = "<group>";
+		};
+		EB4E39DE20273B9000533575 /* RIghtView */ = {
+			isa = PBXGroup;
+			children = (
+				3425E9901FE5763B003559F7 /* WirlessYaoBaoViewSettingsView.h */,
+				3425E9911FE5763B003559F7 /* WirlessYaoBaoViewSettingsView.m */,
+				EB4E39E120273F6100533575 /* HandtoHandSettingsView.h */,
+				EB4E39E220273F6100533575 /* HandtoHandSettingsView.m */,
+			);
+			path = RIghtView;
+			sourceTree = "<group>";
+		};
+		EB4E39DF20273C9D00533575 /* RightView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = RightView;
+			sourceTree = "<group>";
+		};
+		EB4E39E020273CAE00533575 /* RightView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = RightView;
 			sourceTree = "<group>";
 		};
 		EBEA7C1D1FBCAF260028F0E8 /* Components */ = {
@@ -2750,8 +2781,6 @@
 				3425E98B1FE571CE003559F7 /* ComSettingView.m */,
 				3425E98D1FE575A4003559F7 /* PlayerSettingsPannel.h */,
 				3425E98E1FE575A4003559F7 /* PlayerSettingsPannel.m */,
-				3425E9901FE5763B003559F7 /* WirlessHandleSettingsView.h */,
-				3425E9911FE5763B003559F7 /* WirlessHandleSettingsView.m */,
 				3425E9931FE57675003559F7 /* MixVoiceSettingsView.h */,
 				3425E9941FE57675003559F7 /* MixVoiceSettingsView.m */,
 				345492FA1FE638F300793E2E /* SlideButton.h */,
@@ -3455,6 +3484,7 @@
 				04DE1EBF1AD6AF7900D49E2F /* User.m in Sources */,
 				EB1717A01FF613EC00CBDB81 /* EngineerNewWindViewCtrl.m in Sources */,
 				EB4EC1221FE7FC3B000B3101 /* EngineerWirelessMeetingViewCtrl.m in Sources */,
+				EB4E39E320273F6100533575 /* HandtoHandSettingsView.m in Sources */,
 				04DE1EA01AD6AEE000D49E2F /* WebClient.m in Sources */,
 				EB1A55C21FE93CD4000B18E6 /* EngineerAudioProcessViewCtrl.m in Sources */,
 				04DE1EA81AD6AEE000D49E2F /* SBJson4StreamWriterState.m in Sources */,
@@ -3473,7 +3503,7 @@
 				04DE1EA41AD6AEE000D49E2F /* SBJson4StreamParser.m in Sources */,
 				3421EA301FC4161300DC5378 /* ColumnsView.m in Sources */,
 				04DE1EA31AD6AEE000D49E2F /* SBJson4Parser.m in Sources */,
-				3425E9921FE5763B003559F7 /* WirlessHandleSettingsView.m in Sources */,
+				3425E9921FE5763B003559F7 /* WirlessYaoBaoViewSettingsView.m in Sources */,
 				EB1A55C71FEA919C000B18E6 /* EngineerPVExpendViewCtrl.m in Sources */,
 				EBCA834B1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m in Sources */,
 				04DE1EB51AD6AEE000D49E2F /* UIImageView+WebCache.m in Sources */,

@@ -13,7 +13,7 @@
 #import "SlideButton.h"
 #import "BatteryView.h"
 #import "SignalView.h"
-#import "WirlessHandleSettingsView.h"
+#import "WirlessYaoBaoViewSettingsView.h"
 
 
 @interface EngineerWirlessYaoBaoViewCtrl () {
@@ -368,7 +368,7 @@
 
 - (void) okAction:(id)sender{
  
-    WirlessHandleSettingsView *ecp = [[WirlessHandleSettingsView alloc]
+    WirlessYaoBaoViewSettingsView *ecp = [[WirlessYaoBaoViewSettingsView alloc]
                                       initWithFrame:CGRectMake(SCREEN_WIDTH-300,
                                                                64, 300, SCREEN_HEIGHT-114)];
     [self.view addSubview:ecp];
