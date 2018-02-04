@@ -10,9 +10,9 @@
 #import "BaseViewController.h"
 
 @interface EngineerScenarioSettingsViewCtrl<CustomPickerViewDelegate> : BaseViewController {
-    
+    NSMutableArray *_scenarioArray;
 }
-
+@property(nonatomic, strong) NSMutableArray *_scenarioArray;
 @end
 
 

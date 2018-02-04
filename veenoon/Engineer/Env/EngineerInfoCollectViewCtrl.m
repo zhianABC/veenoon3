@@ -12,6 +12,7 @@
 #import "NSDate-Helper.h"
 #import "CircleProgressView.h"
 #import "CustomPickerView.h"
+#import "EngineerScenarioSettingsViewCtrl.h"
 
 @interface EngineerInfoCollectViewCtrl () <CustomPickerViewDelegate>{
     
@@ -67,7 +68,7 @@
     UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 60);
     [bottomBar addSubview:okBtn];
-    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+    [okBtn setTitle:@"保存" forState:UIControlStateNormal];
     [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
     okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
@@ -270,7 +271,9 @@
     
 }
 - (void) okAction:(id)sender{
+    EngineerScenarioSettingsViewCtrl *ctrl = [[EngineerScenarioSettingsViewCtrl alloc] init];
     
+    [self.navigationController pushViewController:ctrl animated:YES];
 }
 
 - (void) cancelAction:(id)sender{
