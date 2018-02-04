@@ -1,187 +1,328 @@
 //
-//  EngineerMeetingRoomListViewCtrl.m
+//  UserHomeViewController.m
 //  veenoon
 //
-//  Created by 安志良 on 2017/12/4.
+//  Created by 安志良 on 2017/11/16.
 //  Copyright © 2017年 jack. All rights reserved.
 //
 
 #import "EngineerMeetingRoomListViewCtrl.h"
 #import "EngineerSysSelectViewCtrl.h"
+#import "JCActionView.h"
+#import "AppDelegate.h"
 
-@interface EngineerMeetingRoomListViewCtrl () {
-    NSMutableArray *_meetingRoomList;
+@interface EngineerMeetingRoomListViewCtrl () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, JCActionViewDelegate>{
+    NSMutableArray *lableArray;
+    NSMutableArray *roomImageArray;
+    
+    int selectedRoomIndex;
+    
+    UIImagePickerController *_imagePicker;
 }
-@property (nonatomic, strong) NSMutableArray *_meetingRoomList;
+@property (nonatomic, strong) NSMutableArray *roomList;
+
 @end
 
 @implementation EngineerMeetingRoomListViewCtrl
-@synthesize _meetingRoomList;
+@synthesize roomList;
 
-- (void) initData {
-    if (_meetingRoomList) {
-        [_meetingRoomList removeAllObjects];
-    } else {
-        NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                     nil];
-        NSMutableDictionary *dic2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                     @"meeting_room2", @"roomname",
-                                     nil];
-        NSMutableDictionary *dic3 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                     @"meeting_room3", @"roomname",
-                                     nil];
-        NSMutableDictionary *dic4 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                     @"meeting_room4", @"roomname",
-                                     nil];
-        NSMutableDictionary *dic5 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                     @"meeting_room5", @"roomname",
-                                     nil];
-        NSMutableDictionary *dic61 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                     @"meeting_room61", @"roomname",
-                                     nil];
-        NSMutableDictionary *dic62 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                     @"meeting_room62", @"roomname",
-                                     nil];
-        NSMutableDictionary *dic63 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                     @"meeting_room63", @"roomname",
-                                     nil];
-        NSMutableDictionary *dic64 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                     @"meeting_room64", @"roomname",
-                                     nil];
-        NSMutableDictionary *dic65 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                     @"meeting_room65", @"roomname",
-                                     nil];
-        NSMutableDictionary *dic66 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                     @"meeting_room66", @"roomname",
-                                     nil];
-        NSMutableDictionary *dic67 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                     @"meeting_room67", @"roomname",
-                                     nil];
-        NSMutableDictionary *dic68 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                     @"meeting_room68", @"roomname",
-                                     nil];
-        NSMutableDictionary *dic69 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                     @"meeting_room69", @"roomname",
-                                     nil];
-        NSMutableDictionary *dic611 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                     @"meeting_room611", @"roomname",
-                                     nil];
-        NSMutableDictionary *dic612 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                     @"meeting_room612", @"roomname",
-                                     nil];
-        self._meetingRoomList = [NSMutableArray arrayWithObjects:dic1, dic2, dic3, dic4, dic5,dic61, dic62, dic63, dic64, dic65, dic66, dic67,dic68, dic69, dic611, dic612, nil];
-    }
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self initData];
-    ///
-    UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
-    [self.view addSubview:bottomBar];
     
-    //缺切图，把切图贴上即可。
-    bottomBar.backgroundColor = [UIColor grayColor];
-    bottomBar.userInteractionEnabled = YES;
-    bottomBar.image = [UIImage imageNamed:@"botomo_icon.png"];
+    lableArray = [[NSMutableArray alloc] init];
+    roomImageArray = [[NSMutableArray alloc] init];
+    selectedRoomIndex = -1;
     
-    UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    cancelBtn.frame = CGRectMake(10, 0,160, 50);
-    [bottomBar addSubview:cancelBtn];
-    [cancelBtn setTitle:@"返回" forState:UIControlStateNormal];
-    [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [cancelBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
-    cancelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-    [cancelBtn addTarget:self
-                  action:@selector(cancelAction:)
-        forControlEvents:UIControlEventTouchUpInside];
+    if (roomList) {
+        [roomList removeAllObjects];
+    } else {
+        UIImage *roomImage1 = [UIImage imageNamed:@"user_meeting_room_1.png"];
+        UIImage *roomImage2 = [UIImage imageNamed:@"user_meeting_room_2.png"];
+        UIImage *roomImage3 = [UIImage imageNamed:@"user_meeting_room_3.png"];
+        UIImage *roomImage4 = [UIImage imageNamed:@"user_meeting_room_4.png"];
+        UIImage *roomImage5 = [UIImage imageNamed:@"user_meeting_room_5.png"];
+        UIImage *roomImage6 = [UIImage imageNamed:@"user_meeting_room_6.png"];
+        NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:roomImage1, @"image",
+                                     @"meeting_room1", @"roomname",
+                                     nil];
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:roomImage2, @"image",
+                                     @"meeting_room2", @"roomname",
+                                     nil];
+        NSMutableDictionary *dic3 = [NSMutableDictionary dictionaryWithObjectsAndKeys:roomImage3, @"image",
+                                     @"meeting_room3", @"roomname",
+                                     nil];
+        NSMutableDictionary *dic4 = [NSMutableDictionary dictionaryWithObjectsAndKeys:roomImage4, @"image",
+                                     @"meeting_room4", @"roomname",
+                                     nil];
+        NSMutableDictionary *dic5 = [NSMutableDictionary dictionaryWithObjectsAndKeys:roomImage5, @"image",
+                                     @"meeting_room5", @"roomname",
+                                     nil];
+        NSMutableDictionary *dic6 = [NSMutableDictionary dictionaryWithObjectsAndKeys:roomImage6, @"image",
+                                     @"meeting_room6", @"roomname",
+                                     nil];
+        self.roomList = [NSMutableArray arrayWithObjects:dic1, dic2, dic3, dic4, dic5, dic6, nil];
+    }
     
-    UIScrollView *scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 50, SCREEN_WIDTH, SCREEN_HEIGHT-130)];
+    UIScrollView *scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     scroolView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:scroolView];
     
-    int top = 10;
+    int top = 50;
     int leftRight = 60;
-    int space = 2;
-    int cellWidth = (SCREEN_WIDTH - 2*leftRight - 2*space) / 3;
-    int cellHeight = 176;
+    int space = 10;
     
-    int rowNumber = [_meetingRoomList count] / 3 + 1;
-    int scrollHeight = rowNumber * cellHeight + (rowNumber-1)*space + top;
-    scroolView.contentSize = CGSizeMake(SCREEN_WIDTH - 2*leftRight, scrollHeight);
-    
-    
+    int cellWidth = 312;
+    int cellHeight = 186;
     int index = 0;
-    for (id dic in _meetingRoomList) {
+    for (id dic in roomList) {
         int row = index/3;
         int col = index%3;
         int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+top;
         
-        NSString *roomImageName = [dic objectForKey:@"image"];
-        if (roomImageName == nil) {
-            roomImageName = @"engineer_meetingroom_default_n.png";
-        }
-        UIImage *roomImage = [UIImage imageNamed:roomImageName];
-        
+        UIImage *roomImage = [dic objectForKey:@"image"];
         UIImageView *roomeImageView = [[UIImageView alloc] initWithImage:roomImage];
+        roomeImageView.userInteractionEnabled=YES;
+        roomeImageView.contentMode = UIViewContentModeScaleAspectFit;
+        roomeImageView.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
+        
+        UIView *view = [[UIView alloc] init];
+        view.frame = CGRectMake(0, 0, cellWidth, cellHeight);
+        view.tag = index;
+        [roomeImageView addSubview:view];
+        
+        [roomImageArray addObject:roomeImageView];
         roomeImageView.tag = index;
         [scroolView addSubview:roomeImageView];
-        roomeImageView.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
-        roomeImageView.userInteractionEnabled=YES;
+        
+        UILongPressGestureRecognizer *longPress0 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed0:)];
+        [view addGestureRecognizer:longPress0];
         
         UIImageView *roomeBotomImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"user_meeting_roome_b.png"]];
         [roomeImageView addSubview:roomeBotomImageView];
-        roomeBotomImageView.frame = CGRectMake(18, roomeImageView.frame.size.height-48, roomeImageView.frame.size.width-36, 30);
+        roomeBotomImageView.frame = CGRectMake(0, CGRectGetHeight(roomeImageView.frame)-30, roomeImageView.frame.size.width, 30);
         roomeBotomImageView.userInteractionEnabled=YES;
         
         index++;
         
         UIButton *cameraBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         
-        cameraBtn.frame = CGRectMake(CGRectGetMaxX(roomeImageView.frame)-60, CGRectGetMaxY(roomeImageView.frame) - 55, 50, 50);
+        cameraBtn.frame = CGRectMake(CGRectGetWidth(roomeImageView.frame)-40, CGRectGetHeight(roomeImageView.frame)-40, 40, 40);
         cameraBtn.tag = index;
         [cameraBtn setImage:[UIImage imageNamed:@"camera_n.png"] forState:UIControlStateNormal];
         [cameraBtn setImage:[UIImage imageNamed:@"camera_s.png"] forState:UIControlStateHighlighted];
         [cameraBtn addTarget:self action:@selector(cameraAction:) forControlEvents:UIControlEventTouchUpInside];
-        [scroolView addSubview:cameraBtn];
+        [roomeImageView addSubview:cameraBtn];
         
         
         UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
         tapGesture.cancelsTouchesInView =  NO;
         tapGesture.numberOfTapsRequired = 1;
         tapGesture.view.tag = index;
-        [roomeImageView addGestureRecognizer:tapGesture];
+        [view addGestureRecognizer:tapGesture];
         
         
-        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(40, roomeImageView.frame.size.height-45, 200, 30)];
+        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(roomeImageView.frame)-30, 200, 30)];
         titleL.backgroundColor = [UIColor clearColor];
         [roomeImageView addSubview:titleL];
         titleL.font = [UIFont boldSystemFontOfSize:16];
         titleL.textColor  = [UIColor whiteColor];
-        NSString *meetingRoomName = [dic objectForKey:@"roomname"];
-        if (meetingRoomName == nil) {
-            meetingRoomName = @"请点击命名";
-        }
-        titleL.text = meetingRoomName;
+        titleL.text = [dic objectForKey:@"roomname"];
+        
+        [lableArray addObject:titleL];
     }
-}
--(void)handleTapGesture:(UIGestureRecognizer*)gestureRecognizer{
-    long index = gestureRecognizer.view.tag;
-    NSMutableDictionary *dic = [_meetingRoomList objectAtIndex:index];
     
-    EngineerSysSelectViewCtrl *ctrl = [[EngineerSysSelectViewCtrl alloc] init];
+    UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
+    [self.view addSubview:bottomBar];
+    bottomBar.backgroundColor = [UIColor grayColor];
+    bottomBar.userInteractionEnabled = YES;
+    bottomBar.image = [UIImage imageNamed:@"botomo_icon.png"];
     
-    ctrl._meetingRoomDic = dic;
-    
-    [self.navigationController pushViewController:ctrl animated:YES];
-    
-}
-- (void) cameraAction:(id)sender{
-    
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    backBtn.frame = CGRectMake(60, SCREEN_HEIGHT -45, 60, 40);
+    [self.view addSubview:backBtn];
+    [backBtn setTitle:@"返回" forState:UIControlStateNormal];
+    [backBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [backBtn setTitleColor:RGB(242, 148, 20) forState:UIControlStateHighlighted];
+    backBtn.titleLabel.font = [UIFont boldSystemFontOfSize:20];
+    [backBtn addTarget:self
+                action:@selector(backAction:)
+      forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void) cancelAction:(id)sender{
+- (void) longPressed0:(id)sender{
+    
+    UILongPressGestureRecognizer *press = (UILongPressGestureRecognizer *)sender;
+    if (press.state == UIGestureRecognizerStateEnded) {
+        // no need anything here
+        return;
+    } else if (press.state == UIGestureRecognizerStateBegan) {
+        UILongPressGestureRecognizer *viewRecognizer = (UILongPressGestureRecognizer*) sender;
+        int index = (int)viewRecognizer.view.tag;
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"请输入会议室名称" preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.placeholder = @"会议室名称";
+        }];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            UITextField *envirnmentNameTextField = alertController.textFields.firstObject;
+            NSString *scenarioName = envirnmentNameTextField.text;
+            if (scenarioName && [scenarioName length] > 0) {
+                NSMutableDictionary *meetingDic = [self.roomList objectAtIndex:index];
+                UILabel *scenarioLabel = [lableArray objectAtIndex:index];
+                
+                [meetingDic setObject:scenarioName forKey:@"roomname"];
+                scenarioLabel.text =scenarioName;
+            }
+        }]];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+        
+        [self presentViewController:alertController animated:true completion:nil];
+    }
+}
+
+- (void) backAction:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+-(void)handleTapGesture:(UIGestureRecognizer*)gestureRecognizer{
+    long index = gestureRecognizer.view.tag;
+    NSMutableDictionary *dic = [roomList objectAtIndex:index];
+    
+    EngineerSysSelectViewCtrl *lctrl = [[EngineerSysSelectViewCtrl alloc] init];
+    lctrl._meetingRoomDic = dic;
+    
+    [self.navigationController pushViewController:lctrl animated:YES];
+}
+
+- (void) cameraAction:(id)sender {
+    UIButton *cameraBtn = (UIButton*) sender;
+    selectedRoomIndex = (int) cameraBtn.tag;
+    if(_imagePicker == nil)
+    {
+        _imagePicker = [[UIImagePickerController alloc] init];
+        _imagePicker.delegate = self;
+        _imagePicker.allowsEditing = YES;
+        
+    }
+    
+    [[UINavigationBar appearance] setTintColor:THEME_COLOR];
+    
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+    {
+        JCActionView *jcAction = [[JCActionView alloc] initWithTitles:@[@"直接拍照", @"从相册中选取"]
+                                                                frame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        jcAction.delegate_ = self;
+        jcAction.tag = 2017;
+        
+        AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+        [app.window addSubview:jcAction];
+        [jcAction animatedShow];
+        
+    }
+    else
+    {
+        _imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        [self presentViewController:_imagePicker animated:YES
+                         completion:^{
+                             
+                         }];
+    }
+    
+}
+
+- (void) didJCActionButtonIndex:(int)index actionView:(UIView*)actionView{
+    
+    if(index == 0)
+    {
+        _imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self presentViewController:_imagePicker animated:YES
+                         completion:^{
+                         }];
+    }
+    else if(index == 1)
+    {
+        _imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        [self presentViewController:_imagePicker animated:YES
+                         completion:^{
+                             
+                         }];
+    }
+    
+}
+
+
+/**** Image Picker Delegates ******/
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
+    if(image)
+    {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            // 耗时的操作
+            
+            UIImage *img = [self imageWithImage:image scaledToSize:CGSizeMake(800, 800)];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // 更新界面
+                UIImageView *roomImageView = [roomImageArray objectAtIndex:selectedRoomIndex];
+                roomImageView.image = img;
+                ///////图从这儿穿出去
+                
+                NSMutableDictionary *roomDic = [self.roomList objectAtIndex:selectedRoomIndex];
+                [roomDic setObject:img forKey:@"image"];
+                
+            });
+        });
+    }
+    
+    
+    [_imagePicker dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [_imagePicker dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize
+{
+    if(image==nil)return nil;
+    
+    float width = image.size.width;
+    float height = image.size.height;
+    float x, x1, y1;
+    
+    if(width > height)
+    {
+        x1 = width / newSize.height;
+        y1 = height / newSize.width;
+    }
+    else
+    {
+        x1 = width / newSize.width;
+        y1 = height / newSize.height;
+    }
+    
+    x = (x1 > y1) ? x1:y1;
+    
+    if(x < 1.0)return image;
+    
+    if(fabs(x-1.0) < 0.0001)return image;
+    
+    CGSize s = CGSizeMake(width/x,height/x);
+    
+    
+    UIGraphicsBeginImageContext(s);
+    [image drawInRect:CGRectMake(0,0,s.width,s.height)];
+    
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+}
+
 @end
+

@@ -87,7 +87,7 @@
         roomeImageView.contentMode = UIViewContentModeScaleAspectFit;
         roomeImageView.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
         UIView *view = [[UIView alloc] init];
-        view.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
+        view.frame = CGRectMake(0, 0, cellWidth, cellHeight);
         view.tag = index;
         [roomeImageView addSubview:view];
         

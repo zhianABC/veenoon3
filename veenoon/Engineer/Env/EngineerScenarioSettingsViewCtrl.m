@@ -41,7 +41,7 @@
     
     UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
     [self.view addSubview:titleIcon];
-    titleIcon.frame = CGRectMake(70, 40, 70, 10);
+    titleIcon.frame = CGRectMake(60, 40, 70, 10);
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 63, SCREEN_WIDTH, 1)];
     line.backgroundColor = RGB(75, 163, 202);
@@ -56,7 +56,7 @@
     bottomBar.image = [UIImage imageNamed:@"botomo_icon.png"];
     
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    cancelBtn.frame = CGRectMake(10, 0,160, 50);
+    cancelBtn.frame = CGRectMake(0, 0,160, 50);
     [bottomBar addSubview:cancelBtn];
     [cancelBtn setTitle:@"修改" forState:UIControlStateNormal];
     [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -66,21 +66,17 @@
                   action:@selector(okAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    
-    int startX=80;
-    int startY = 120;
-    
-    UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(startX, startY, SCREEN_WIDTH-80, 30)];
+    UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, ENGINEER_VIEW_TOP, SCREEN_WIDTH-80, 30)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont boldSystemFontOfSize:20];
+    portDNSLabel.font = [UIFont boldSystemFontOfSize:22];
     portDNSLabel.textColor  = [UIColor whiteColor];
     portDNSLabel.text = @"设置场景";
     
-    portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(startX, CGRectGetMaxY(portDNSLabel.frame)+15, SCREEN_WIDTH-80, 20)];
+    portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, CGRectGetMaxY(portDNSLabel.frame)+20, SCREEN_WIDTH-80, 20)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont systemFontOfSize:16];
+    portDNSLabel.font = [UIFont systemFontOfSize:20];
     portDNSLabel.textColor  = [UIColor colorWithWhite:1.0 alpha:0.9];
     portDNSLabel.text = @"在场景内，可选择您所需要配置的设备";
     
@@ -88,7 +84,7 @@
     int scenarioSize = (int)[_scenarioArray count] + 1;
     
     int col = 10;
-    int leftRightSpace = 100;
+    int leftRightSpace = ENGINEER_VIEW_LEFT;
     int colGap = 10;
     
     int rowNumber = scenarioSize/col + 1;
@@ -97,19 +93,18 @@
     int cellHeight = 100;
     int top = 5;
     
-    UIScrollView *scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 200, SCREEN_WIDTH, SCREEN_HEIGHT-260)];
-    scroolView.backgroundColor = [UIColor clearColor];
+    UIScrollView *scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(leftRightSpace, CGRectGetMaxY(portDNSLabel.frame)+20, SCREEN_WIDTH-leftRightSpace*2, SCREEN_HEIGHT-240)];
     [self.view addSubview:scroolView];
     
     int scrollHeight = rowNumber*cellHeight + (rowNumber-1)*colGap+10;
     
-    scroolView.contentSize = CGSizeMake(SCREEN_WIDTH, scrollHeight);
+    scroolView.contentSize = CGSizeMake(SCREEN_WIDTH-leftRightSpace*2, scrollHeight);
     
     int index = 0;
     for (int i = 0; i < scenarioSize; i++) {
         int rowN = index/col;
         int colN = index%col;
-        int startX = colN*cellWidth+colN*colGap+leftRightSpace;
+        int startX = colN*cellWidth+colN*colGap;
         int startY = rowN*cellHeight+colGap*rowN+top;
         
         UIView *scenarioView = [[UIView alloc] init];

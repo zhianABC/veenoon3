@@ -1,38 +1,34 @@
 //
-//  WirlessHandleSettingsView.m
-//  veenoon 无线手持腰包系统
+//  veenoon
 //
 //  Created by chen jack on 2017/12/16.
 //  Copyright © 2017年 jack. All rights reserved.
 //
 
-#import "WirlessHandleSettingsView.h"
+#import "HandtoHandSettingsView.h"
 #import "CustomPickerView.h"
-#import "Groups2PickerView.h"
 #import "UIButton+Color.h"
 
-
-@interface WirlessHandleSettingsView () <UITableViewDelegate, UITableViewDataSource, CustomPickerViewDelegate>
+@interface HandtoHandSettingsView () <UITableViewDelegate, UITableViewDataSource, CustomPickerViewDelegate>
 {
     UITableView *_tableView;
     int _curIndex;
     UIButton *_btnSave;
     
     CustomPickerView *_picker;
-    Groups2PickerView *_tpicker;
     
     UIView *_footerView;
-
+    
 }
 @property (nonatomic, strong) NSMutableArray *_rows;
 @property (nonatomic, strong) NSMutableDictionary *_map;
-@property (nonatomic, strong) NSMutableArray *_groupValues;
+@property (nonatomic, strong) NSMutableDictionary *_groupValues;
 
 @property (nonatomic, strong) NSMutableArray *_btns;
 
 @end
 
-@implementation WirlessHandleSettingsView
+@implementation HandtoHandSettingsView
 @synthesize _map;
 @synthesize _rows;
 @synthesize _groupValues;
@@ -45,7 +41,7 @@
     if(self = [super initWithFrame:frame])
     {
         self.backgroundColor = RGB(0, 89, 118);
-
+        
         _btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
         _btnSave.frame = CGRectMake(frame.size.width-90,
                                     20,
@@ -60,26 +56,13 @@
         
         _picker = [[CustomPickerView alloc]
                    initWithFrame:CGRectMake(frame.size.width/2-100, 43, 200, 100) withGrayOrLight:@"picker_player.png"];
-
+        
         
         _picker._selectColor = YELLOW_COLOR;
         _picker._rowNormalColor = [UIColor whiteColor];
         _picker.delegate_ = self;
-        IMP_BLOCK_SELF(WirlessHandleSettingsView);
+        IMP_BLOCK_SELF(HandtoHandSettingsView);
         _picker._selectionBlock = ^(NSDictionary *values)
-        {
-            [block_self didPickerValue:values];
-        };
-        
-        _tpicker = [[Groups2PickerView alloc]
-                    initWithFrame:CGRectMake(frame.size.width/2-100, 43, 200, 100) withGrayOrLight:@"picker_player.png"];
-        
-        
-        _tpicker._selectColor = YELLOW_COLOR;
-        _tpicker._rowNormalColor = [UIColor whiteColor];
-        //_tpicker.delegate_ = self;
-        //IMP_BLOCK_SELF(WirlessHandleSettingsView);
-        _tpicker._selectionBlock = ^(NSDictionary *values)
         {
             [block_self didPickerValue:values];
         };
@@ -106,32 +89,9 @@
         
         [self initData];
         
-        
-        UISwipeGestureRecognizer *swip = [[UISwipeGestureRecognizer alloc] initWithTarget:self
-                                                                                   action:@selector(closeSetting)];
-        swip.direction = UISwipeGestureRecognizerDirectionRight;
-        
-        
-        [self addGestureRecognizer:swip];
-        
-        
     }
     
     return self;
-}
-
-- (void) closeSetting{
-    
-    [UIView animateWithDuration:0.25
-                     animations:^{
-                         
-                         self.frame = CGRectMake(SCREEN_WIDTH,
-                                                 64, 300, SCREEN_HEIGHT-114);
-                         
-                     } completion:^(BOOL finished) {
-                         
-                         [self removeFromSuperview];
-                     }];
 }
 
 - (void) initData{
@@ -145,16 +105,16 @@
         [dbs addObject:[NSString stringWithFormat:@"+%d", i]];
     }
     
-    self._groupValues = [NSMutableArray array];
-    [_groupValues addObject:@{@"name":@"A", @"subs":@[@"01",@"02",@"03"]}];
-    [_groupValues addObject:@{@"name":@"B", @"subs":@[@"04",@"05",@"06"]}];
-    [_groupValues addObject:@{@"name":@"C", @"subs":@[@"10",@"20",@"30"]}];
+    self._groupValues = [NSMutableDictionary dictionary];
+    [_groupValues setObject:@[@"01",@"02",@"03"] forKey:@"A"];
+    [_groupValues setObject:@[@"04",@"05",@"06"] forKey:@"B"];
+    [_groupValues setObject:@[@"10",@"20",@"30"] forKey:@"C"];
     
     [_rows addObject:@{@"title":@"设备名称",@"values":@[@"D1",@"D2",@"D3"]}];
     [_rows addObject:@{@"title":@"型号规格",@"values":@[@"X1",@"X2",@"X3"]}];
     [_rows addObject:@{@"title":@"自动对频",@"values":@[@"扫描"]}];
     [_rows addObject:@{@"title":@"频率",@"values":@[@"720MHz",@"600MHz"]}];
-    [_rows addObject:@{@"title":@"组-通道",@"values":_groupValues}];
+    [_rows addObject:@{@"title":@"组-通道",@"values":[_groupValues allKeys]}];
     [_rows addObject:@{@"title":@"增益",@"values":dbs}];
     [_rows addObject:@{@"title":@"SQ",@"values":@[@"1",@"2",@"3"]}];
     
@@ -163,7 +123,7 @@
     
     
     [_tableView reloadData];
- 
+    
     
 }
 
@@ -184,11 +144,11 @@
         int col = i%4;
         int xx = x + col*w + col*sp;
         
-         if(i && i%4 == 0)
-         {
-             y+=w;
-             y+=sp;
-         }
+        if(i && i%4 == 0)
+        {
+            y+=w;
+            y+=sp;
+        }
         
         UIButton *btn = [UIButton buttonWithColor:rectColor selColor:nil];
         btn.frame = CGRectMake(xx, y, w, w);
@@ -201,15 +161,15 @@
         [btn setTitleColor:[UIColor whiteColor]
                   forState:UIControlStateNormal];
         btn.titleLabel.font = [UIFont systemFontOfSize:14];
-       [btn addTarget:self
-               action:@selector(buttonAction:)
-     forControlEvents:UIControlEventTouchUpInside];
+        [btn addTarget:self
+                action:@selector(buttonAction:)
+      forControlEvents:UIControlEventTouchUpInside];
         
         [_btns addObject:btn];
     }
     
     [self chooseChannelAtTagIndex:0];
-  
+    
 }
 
 - (void) buttonAction:(UIButton*)btn{
@@ -248,7 +208,7 @@
 }
 
 - (void) didConfirmPickerValue:(NSString*) pickerValue{
-
+    
     _curIndex = -1;
     _tableView.scrollEnabled = YES;
     [_tableView reloadData];
@@ -258,7 +218,7 @@
 #pragma mark Table View DataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-
+    
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -314,12 +274,12 @@
     
     if(indexPath.row != 2)
     {
-    UIImageView *icon = [[UIImageView alloc]
-                         initWithFrame:CGRectMake(CGRectGetMaxX(valueL.frame)+5, 17, 10, 10)];
-    icon.image = [UIImage imageNamed:@"remote_video_down.png"];
-    [cell.contentView addSubview:icon];
-    icon.alpha = 0.8;
-    icon.layer.contentsGravity = kCAGravityResizeAspect;
+        UIImageView *icon = [[UIImageView alloc]
+                             initWithFrame:CGRectMake(CGRectGetMaxX(valueL.frame)+5, 17, 10, 10)];
+        icon.image = [UIImage imageNamed:@"remote_video_down.png"];
+        [cell.contentView addSubview:icon];
+        icon.alpha = 0.8;
+        icon.layer.contentsGravity = kCAGravityResizeAspect;
     }
     
     titleL.text = [data objectForKey:@"title"];
@@ -341,25 +301,17 @@
     {
         line.frame = CGRectMake(0, 143, self.frame.size.width, 1);
         
-        if(_curIndex == 4)
-        {
-            _tpicker.tag = _curIndex;
-            _tpicker._datas = @[@{@"values":[data objectForKey:@"values"]}];
-            
-            [cell.contentView addSubview:_tpicker];
-            [_tpicker selectRow:0 inComponent:0];
-        }
-        else if(_curIndex != 2)
+        if(_curIndex != 2)
         {
             _picker.tag = _curIndex;
             _picker._pickerDataArray = @[@{@"values":[data objectForKey:@"values"]}];
-           
+            
             [cell.contentView addSubview:_picker];
             [_picker selectRow:0 inComponent:0];
         }
         
     }
-
+    
     
     
     return cell;
@@ -386,14 +338,15 @@
 }
 
 /*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
+ // Only override drawRect: if you perform custom drawing.
+ // An empty implementation adversely affects performance during animation.
+ - (void)drawRect:(CGRect)rect {
+ // Drawing code
+ }
+ */
 
 
 
 
 @end
+

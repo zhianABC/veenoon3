@@ -25,32 +25,29 @@
     
     UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
     [self.view addSubview:titleIcon];
-    titleIcon.frame = CGRectMake(70, 40, 70, 10);
+    titleIcon.frame = CGRectMake(60, 40, 70, 10);
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 63, SCREEN_WIDTH, 1)];
     line.backgroundColor = RGB(75, 163, 202);
     [self.view addSubview:line];
     
-    int startX=60;
-    int startY = 70;
-    
-    UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(startX, startY, SCREEN_WIDTH-80, 30)];
+    UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, ENGINEER_VIEW_TOP, SCREEN_WIDTH-80, 30)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont boldSystemFontOfSize:20];
+    portDNSLabel.font = [UIFont boldSystemFontOfSize:22];
     portDNSLabel.textColor  = [UIColor whiteColor];
     portDNSLabel.text = @"设置场景";
     
-    portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(startX, CGRectGetMaxY(portDNSLabel.frame) + 15, SCREEN_WIDTH-80, 30)];
+    portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, CGRectGetMaxY(portDNSLabel.frame) + 20, SCREEN_WIDTH-80, 30)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont boldSystemFontOfSize:16];
+    portDNSLabel.font = [UIFont boldSystemFontOfSize:22];
     portDNSLabel.textColor  = [UIColor colorWithWhite:1.0 alpha:0.9];
     portDNSLabel.text = @"在场景内，可选择你需要配置的设备";
     
     NSMutableArray *scenarioArray = [_meetingRoomDic objectForKey:@"scenarioArray"];
     
-    UIScrollView *scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 150, SCREEN_WIDTH, SCREEN_HEIGHT-210)];
+    UIScrollView *scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(portDNSLabel.frame) + 20, SCREEN_WIDTH, SCREEN_HEIGHT-(CGRectGetMaxY(portDNSLabel.frame) + 20))];
     scroolView.userInteractionEnabled=YES;
     scroolView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:scroolView];
@@ -127,7 +124,7 @@
     bottomBar.image = [UIImage imageNamed:@"botomo_icon.png"];
     
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    cancelBtn.frame = CGRectMake(10, 0,160, 50);
+    cancelBtn.frame = CGRectMake(0, 0,160, 50);
     [bottomBar addSubview:cancelBtn];
     [cancelBtn setTitle:@"返回" forState:UIControlStateNormal];
     [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
