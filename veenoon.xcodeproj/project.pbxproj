@@ -203,6 +203,7 @@
 		3422A5B81FCC17C500F6D3C2 /* BatteryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3422A5B71FCC17C500F6D3C2 /* BatteryView.m */; };
 		3422A5BB1FCC1B1100F6D3C2 /* gray_slide_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3422A5B91FCC1B1000F6D3C2 /* gray_slide_bg@2x.png */; };
 		3422A5BC1FCC1B1100F6D3C2 /* light_slide_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3422A5BA1FCC1B1100F6D3C2 /* light_slide_bg@2x.png */; };
+		342389B02026D93500885405 /* JCActionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 342389AF2026D93500885405 /* JCActionView.m */; };
 		3425E9801FE54C62003559F7 /* process_light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3425E97D1FE54C61003559F7 /* process_light@2x.png */; };
 		3425E9811FE54C62003559F7 /* progress_bk@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3425E97E1FE54C62003559F7 /* progress_bk@2x.png */; };
 		3425E9821FE54C62003559F7 /* progress_thumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3425E97F1FE54C62003559F7 /* progress_thumb@2x.png */; };
@@ -987,6 +988,8 @@
 		3422A5B71FCC17C500F6D3C2 /* BatteryView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BatteryView.m; sourceTree = "<group>"; };
 		3422A5B91FCC1B1000F6D3C2 /* gray_slide_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gray_slide_bg@2x.png"; sourceTree = "<group>"; };
 		3422A5BA1FCC1B1100F6D3C2 /* light_slide_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "light_slide_bg@2x.png"; sourceTree = "<group>"; };
+		342389AE2026D93300885405 /* JCActionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCActionView.h; sourceTree = "<group>"; };
+		342389AF2026D93500885405 /* JCActionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCActionView.m; sourceTree = "<group>"; };
 		3425E97D1FE54C61003559F7 /* process_light@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "process_light@2x.png"; sourceTree = "<group>"; };
 		3425E97E1FE54C62003559F7 /* progress_bk@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "progress_bk@2x.png"; sourceTree = "<group>"; };
 		3425E97F1FE54C62003559F7 /* progress_thumb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "progress_thumb@2x.png"; sourceTree = "<group>"; };
@@ -1721,6 +1724,8 @@
 		04DE1DD41AD68C5E00D49E2F /* veenoon */ = {
 			isa = PBXGroup;
 			children = (
+				342389AE2026D93300885405 /* JCActionView.h */,
+				342389AF2026D93500885405 /* JCActionView.m */,
 				EB03F54B1FBDEC3E00865541 /* User */,
 				EB03F5441FBDEB1200865541 /* Engineer */,
 				EB03F53D1FBDE8AE00865541 /* Settings */,
@@ -3340,6 +3345,7 @@
 				04D719851DADE2D8002153D7 /* DataSync.m in Sources */,
 				04DE1EC51AD6B21600D49E2F /* LoginViewController.m in Sources */,
 				04D719821DADE0A9002153D7 /* WSEvent.m in Sources */,
+				342389B02026D93500885405 /* JCActionView.m in Sources */,
 				04DE1E8F1AD6AEE000D49E2F /* UIImage+Color.m in Sources */,
 				04DE1E961AD6AEE000D49E2F /* ASIDataDecompressor.m in Sources */,
 				049ECAC31C8D694400A611D8 /* QR_Encode.cpp in Sources */,

@@ -8,12 +8,16 @@
 
 #import "UserHomeViewController.h"
 #import "UserMeetingRoomConfig.h"
+#import "JCActionView.h"
+#import "AppDelegate.h"
 
-@interface UserHomeViewController () {
+@interface UserHomeViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, JCActionViewDelegate>{
     NSMutableArray *lableArray;
     NSMutableArray *roomImageArray;
     
     int selectedRoomIndex;
+    
+    UIImagePickerController *_imagePicker;
 }
 @property (nonatomic, strong) NSMutableArray *roomList;
 
@@ -192,5 +196,126 @@
 
 - (void) cameraAction:(id)sender {
     UIButton *cameraBtn = (UIButton*) sender;
+        
+        if(_imagePicker == nil)
+        {
+            _imagePicker = [[UIImagePickerController alloc] init];
+            _imagePicker.delegate = self;
+            _imagePicker.allowsEditing = YES;
+            
+        }
+        
+        [[UINavigationBar appearance] setTintColor:THEME_COLOR];
+        
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+        {
+            JCActionView *jcAction = [[JCActionView alloc] initWithTitles:@[@"直接拍照", @"从相册中选取"]
+                                                                    frame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+            jcAction.delegate_ = self;
+            jcAction.tag = 2017;
+            
+            AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+            [app.window addSubview:jcAction];
+            [jcAction animatedShow];
+            
+        }
+        else
+        {
+            _imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            [self presentViewController:_imagePicker animated:YES
+                             completion:^{
+                                 
+                             }];
+        }
+    
 }
+    
+- (void) didJCActionButtonIndex:(int)index actionView:(UIView*)actionView{
+    
+    if(index == 0)
+    {
+        _imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self presentViewController:_imagePicker animated:YES
+                         completion:^{
+                         }];
+    }
+    else if(index == 1)
+    {
+        _imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        [self presentViewController:_imagePicker animated:YES
+                         completion:^{
+                             
+                         }];
+    }
+    
+}
+
+
+/**** Image Picker Delegates ******/
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
+    if(image)
+    {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            // 耗时的操作
+            
+            UIImage *img = [self imageWithImage:image scaledToSize:CGSizeMake(800, 800)];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // 更新界面
+                
+                ///////图从这儿穿出去
+                
+            });
+        });
+    }
+    
+    
+    [_imagePicker dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [_imagePicker dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize
+{
+    if(image==nil)return nil;
+    
+    float width = image.size.width;
+    float height = image.size.height;
+    float x, x1, y1;
+    
+    if(width > height)
+    {
+        x1 = width / newSize.height;
+        y1 = height / newSize.width;
+    }
+    else
+    {
+        x1 = width / newSize.width;
+        y1 = height / newSize.height;
+    }
+    
+    x = (x1 > y1) ? x1:y1;
+    
+    if(x < 1.0)return image;
+    
+    if(fabs(x-1.0) < 0.0001)return image;
+    
+    CGSize s = CGSizeMake(width/x,height/x);
+    
+    
+    UIGraphicsBeginImageContext(s);
+    [image drawInRect:CGRectMake(0,0,s.width,s.height)];
+    
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+}
+
 @end
