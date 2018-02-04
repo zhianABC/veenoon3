@@ -60,10 +60,10 @@
     
     int cellWidth = 100;
     int cellHeight = 100;
-    int colNumber = 9;
+    int colNumber = 8;
     int space = (SCREEN_WIDTH - colNumber*cellWidth-leftRight*2)/(colNumber-1);
     
-    int rowNumber = [scenarioArray count] / colNumber + 1;
+    int rowNumber = (int)[scenarioArray count] / colNumber + 1;
     int scrollHeight = rowNumber * cellHeight + (rowNumber-1)*space + top;
     scroolView.contentSize = CGSizeMake(SCREEN_WIDTH - 2*leftRight, scrollHeight);
     
@@ -72,13 +72,16 @@
     [scenarioArray addObject:newScenarioDic];
     
     int index = 0;
-    int arraySize = [scenarioArray count];
+    int arraySize = (int)[scenarioArray count];
     
     for (id dic in scenarioArray) {
+        
         int row = index/colNumber;
         int col = index%colNumber;
-        int startX = col*cellWidth+col*space+leftRight;
+        
+        int startX = col*cellWidth + col*space + leftRight;
         int startY = row*cellHeight+space*row+top;
+        
         if (arraySize == index+1) {
             UIButton *scenarioBtn = [UIButton buttonWithColor:nil selColor:RGB(0, 89, 118)];
             scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
@@ -92,7 +95,7 @@
             [scroolView addSubview:scenarioBtn];
             
             [scenarioBtn addTarget:self
-                            action:@selector(scenarioAction:)
+                            action:@selector(addAction:)
                   forControlEvents:UIControlEventTouchUpInside];
         } else {
             UIButton *scenarioBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(242, 148, 20)];
@@ -152,6 +155,14 @@
 
 - (void) cancelAction:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void) addAction:(id)sender{
+    
+    EngineerPresetScenarioViewCtrl *ctrl = [[EngineerPresetScenarioViewCtrl alloc] init];
+    ctrl._meetingRoomDic = self._meetingRoomDic;
+    [self.navigationController pushViewController:ctrl animated:YES];
+
 }
 
 - (void) scenarioAction:(id)sender{

@@ -116,13 +116,17 @@
     
     [self.view addSubview:ecp];
     
+    UIView *topbar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 64)];
+    topbar.backgroundColor = THEME_COLOR;
+    [self.view addSubview:topbar];
+    
     UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
-    [self.view addSubview:titleIcon];
+    [topbar addSubview:titleIcon];
     titleIcon.frame = CGRectMake(70, 40, 70, 10);
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 63, SCREEN_WIDTH, 1)];
     line.backgroundColor = RGB(75, 163, 202);
-    [self.view addSubview:line];
+    [topbar addSubview:line];
     
     int startX=50;
     int startY = 70;
@@ -148,25 +152,9 @@
     int audioCount = (int) [[_curScenario objectForKey:@"audioArray"] count] + 1;
     _audioScroll.contentSize = CGSizeMake(audioStartX + audioCount*(77+space), 160);
     _audioScroll.userInteractionEnabled=YES;
-    int index = 0;
-    for (id audioDic in [_curScenario objectForKey:@"audioArray"]) {
-        int audioX = audioStartX + index*(77+space);
-        
-        NSString *imageStr = (NSString*)[audioDic objectForKey:@"icon"];
-        UIImage *roomImage = [UIImage imageNamed:imageStr];
-        UIImageView *roomeImageView = [[UIImageView alloc] initWithImage:roomImage];
-        roomeImageView.tag = index + 1000;
-        [_audioScroll addSubview:roomeImageView];
-        roomeImageView.frame = CGRectMake(audioX, audioStartY, 77, 77);
-        roomeImageView.userInteractionEnabled=YES;
-        index++;
-        
-        UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
-        tapGesture.cancelsTouchesInView =  NO;
-        tapGesture.numberOfTapsRequired = 1;
-        [tapGesture setValue:[audioDic objectForKey:@"name"] forKey:@"name"];
-        [roomeImageView addGestureRecognizer:tapGesture];
-    }
+    
+    [self addComponentToEnd:_audioScroll dataDic:nil];
+    
     
     portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(startX+50, startY+300, SCREEN_WIDTH-80, 30)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
@@ -182,25 +170,7 @@
     _videoScroll.userInteractionEnabled=YES;
     int videoCount = (int)[[_curScenario objectForKey:@"videoArray"] count] + 1;
     _videoScroll.contentSize = CGSizeMake(audioStartX + videoCount*(77+space), 160);
-    int index2 = 0;
-    for (id videoDic in [_curScenario objectForKey:@"videoArray"]) {
-        int audioX = audioStartX + index2*(77+space);
-        
-        NSString *imageStr = [videoDic objectForKey:@"icon"];
-        UIImage *roomImage = [UIImage imageNamed:imageStr];
-        UIImageView *roomeImageView = [[UIImageView alloc] initWithImage:roomImage];
-        roomeImageView.tag = index2 + 2000;
-        [_videoScroll addSubview:roomeImageView];
-        roomeImageView.frame = CGRectMake(audioX, audioStartY, 77, 77);
-        roomeImageView.userInteractionEnabled=YES;
-        index2++;
-        
-        UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
-        tapGesture.cancelsTouchesInView =  NO;
-        tapGesture.numberOfTapsRequired = 1;
-        [tapGesture setValue:[videoDic objectForKey:@"name"] forKey:@"name"];
-        [roomeImageView addGestureRecognizer:tapGesture];
-    }
+    [self addComponentToEnd:_videoScroll dataDic:nil];
     
     portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(startX+50, startY+500, SCREEN_WIDTH-80, 30)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
@@ -216,25 +186,7 @@
     _envScroll.userInteractionEnabled=YES;
     int envCount = (int)[[_curScenario objectForKey:@"envArray"] count] + 1;
     _envScroll.contentSize = CGSizeMake(audioStartX + envCount*(77+space), 160);
-    int index3 = 0;
-    for (id envDic in [_curScenario objectForKey:@"audioArray"]) {
-        int audioX = audioStartX + index3*(77+space);
-        
-        NSString *imageStr = [envDic objectForKey:@"icon"];
-        UIImage *roomImage = [UIImage imageNamed:imageStr];
-        UIImageView *roomeImageView = [[UIImageView alloc] initWithImage:roomImage];
-        roomeImageView.tag = index + 3000;
-        [_envScroll addSubview:roomeImageView];
-        roomeImageView.frame = CGRectMake(audioX, audioStartY, 77, 77);
-        roomeImageView.userInteractionEnabled=YES;
-        index3++;
-        
-        UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
-        tapGesture.cancelsTouchesInView =  NO;
-        tapGesture.numberOfTapsRequired = 1;
-        [tapGesture setValue:[envDic objectForKey:@"name"] forKey:@"name"];
-        [roomeImageView addGestureRecognizer:tapGesture];
-    }
+    [self addComponentToEnd:_envScroll dataDic:nil];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
@@ -314,7 +266,7 @@
         [playerDic setObject:@"lightSys" forKey:@"name"];
         [playerDic setObject:lightArray forKey:@"value"];
         
-        [envArray addObject:playerDic];
+        //[envArray addObject:playerDic];
     }
     if (airConditionArray == nil) {
         airConditionArray = [[NSMutableArray alloc] init];
@@ -322,7 +274,7 @@
         [playerDic setObject:@"airConditionSys" forKey:@"name"];
         [playerDic setObject:airConditionArray forKey:@"value"];
         
-        [envArray addObject:playerDic];
+        //[envArray addObject:playerDic];
     }
     if (electronicAutoArray == nil) {
         electronicAutoArray = [[NSMutableArray alloc] init];
@@ -330,7 +282,7 @@
         [playerDic setObject:@"electronicAutoSys" forKey:@"name"];
         [playerDic setObject:electronicAutoArray forKey:@"value"];
         
-        [envArray addObject:playerDic];
+        //[envArray addObject:playerDic];
     }
     if (newWindArray == nil) {
         newWindArray = [[NSMutableArray alloc] init];
@@ -338,7 +290,7 @@
         [playerDic setObject:@"newWindSys" forKey:@"name"];
         [playerDic setObject:newWindArray forKey:@"value"];
         
-        [envArray addObject:playerDic];
+        //[envArray addObject:playerDic];
     }
     if (floorWarmArray == nil) {
         floorWarmArray = [[NSMutableArray alloc] init];
@@ -346,7 +298,7 @@
         [playerDic setObject:@"floorWarmSys" forKey:@"name"];
         [playerDic setObject:floorWarmArray forKey:@"value"];
         
-        [envArray addObject:playerDic];
+        //[envArray addObject:playerDic];
     }
     if (airCleanArray == nil) {
         airCleanArray = [[NSMutableArray alloc] init];
@@ -354,7 +306,7 @@
         [playerDic setObject:@"airCleanSys" forKey:@"name"];
         [playerDic setObject:airCleanArray forKey:@"value"];
         
-        [envArray addObject:playerDic];
+        //[envArray addObject:playerDic];
     }
     if (cleanWarterArray == nil) {
         cleanWarterArray = [[NSMutableArray alloc] init];
@@ -362,7 +314,7 @@
         [playerDic setObject:@"cleanWarterSys" forKey:@"name"];
         [playerDic setObject:cleanWarterArray forKey:@"value"];
         
-        [envArray addObject:playerDic];
+        //[envArray addObject:playerDic];
     }
     if (addWetArray == nil) {
         addWetArray = [[NSMutableArray alloc] init];
@@ -370,7 +322,7 @@
         [playerDic setObject:@"addWetSys" forKey:@"name"];
         [playerDic setObject:addWetArray forKey:@"value"];
         
-        [envArray addObject:playerDic];
+        //[envArray addObject:playerDic];
     }
     if (doorAccessArray == nil) {
         doorAccessArray = [[NSMutableArray alloc] init];
@@ -378,7 +330,7 @@
         [playerDic setObject:@"doorAccessSys" forKey:@"name"];
         [playerDic setObject:doorAccessArray forKey:@"value"];
         
-        [envArray addObject:playerDic];
+        //[envArray addObject:playerDic];
     }
     if (monitorArray == nil) {
         monitorArray = [[NSMutableArray alloc] init];
@@ -386,7 +338,7 @@
         [playerDic setObject:@"monitorSys" forKey:@"name"];
         [playerDic setObject:monitorArray forKey:@"value"];
         
-        [envArray addObject:playerDic];
+        //[envArray addObject:playerDic];
     }
     if (inforCollectArray == nil) {
         inforCollectArray = [[NSMutableArray alloc] init];
@@ -394,7 +346,7 @@
         [playerDic setObject:@"infoCollectSys" forKey:@"name"];
         [playerDic setObject:inforCollectArray forKey:@"value"];
         
-        [envArray addObject:playerDic];
+        //[envArray addObject:playerDic];
     }
     
     // wuxian array
@@ -518,7 +470,7 @@
         [playerDic setObject:@"dvdSys" forKey:@"name"];
         [playerDic setObject:dvdSysArray forKey:@"value"];
         
-        [videoArray addObject:playerDic];
+        //[videoArray addObject:playerDic];
     }
     if (cameraSysArray == nil) {
         cameraSysArray = [[NSMutableArray alloc] init];
@@ -526,7 +478,7 @@
         [playerDic setObject:@"cameraSys" forKey:@"name"];
         [playerDic setObject:cameraSysArray forKey:@"value"];
         
-        [videoArray addObject:playerDic];
+        //[videoArray addObject:playerDic];
     }
     if (remoteVideoSysArray == nil) {
         remoteVideoSysArray = [[NSMutableArray alloc] init];
@@ -534,7 +486,7 @@
         [playerDic setObject:@"remoteVideoSys" forKey:@"name"];
         [playerDic setObject:remoteVideoSysArray forKey:@"value"];
         
-        [videoArray addObject:playerDic];
+        //[videoArray addObject:playerDic];
     }
     if (videoInSysArray == nil) {
         videoInSysArray = [[NSMutableArray alloc] init];
@@ -542,7 +494,7 @@
         [playerDic setObject:@"videoInSys" forKey:@"name"];
         [playerDic setObject:videoInSysArray forKey:@"value"];
         
-        [videoArray addObject:playerDic];
+        //[videoArray addObject:playerDic];
     }
     if (videoOutSysArray == nil) {
         videoOutSysArray = [[NSMutableArray alloc] init];
@@ -550,7 +502,7 @@
         [playerDic setObject:@"videoOutSys" forKey:@"name"];
         [playerDic setObject:videoOutSysArray forKey:@"value"];
         
-        [videoArray addObject:playerDic];
+        //[videoArray addObject:playerDic];
     }
     if (pinjieSysArray == nil) {
         pinjieSysArray = [[NSMutableArray alloc] init];
@@ -558,7 +510,7 @@
         [playerDic setObject:@"pinjieSys" forKey:@"name"];
         [playerDic setObject:pinjieSysArray forKey:@"value"];
         
-        [videoArray addObject:playerDic];
+        //[videoArray addObject:playerDic];
     }
     if (tvSysArray == nil) {
         tvSysArray = [[NSMutableArray alloc] init];
@@ -566,7 +518,7 @@
         [playerDic setObject:@"tvSys" forKey:@"name"];
         [playerDic setObject:tvSysArray forKey:@"value"];
         
-        [videoArray addObject:playerDic];
+        //[videoArray addObject:playerDic];
     }
     if (lubojiSysArray == nil) {
         lubojiSysArray = [[NSMutableArray alloc] init];
@@ -574,7 +526,7 @@
         [playerDic setObject:@"lubojiSys" forKey:@"name"];
         [playerDic setObject:lubojiSysArray forKey:@"value"];
         
-        [videoArray addObject:playerDic];
+        //[videoArray addObject:playerDic];
     }
     if (touyingjiSysArray == nil) {
         touyingjiSysArray = [[NSMutableArray alloc] init];
@@ -582,7 +534,7 @@
         [playerDic setObject:@"touyingjiSys" forKey:@"name"];
         [playerDic setObject:touyingjiSysArray forKey:@"value"];
         
-        [videoArray addObject:playerDic];
+        //[videoArray addObject:playerDic];
     }
     // wuxian array
     if ([name isEqualToString:@"视频播放器"]) {
@@ -687,7 +639,7 @@
         [electronic8SysDic setObject:@"electronic8Sys" forKey:@"name"];
         [electronic8SysDic setObject:electronic8SysArray forKey:@"value"];
         
-        [audioArray addObject:electronic8SysDic];
+        //[audioArray addObject:electronic8SysDic];
     }
     if (electronic16SysArray == nil) {
         electronic16SysArray = [[NSMutableArray alloc] init];
@@ -695,7 +647,7 @@
         [electronic16SysDic setObject:@"electronic16Sys" forKey:@"name"];
         [electronic16SysDic setObject:electronic16SysArray forKey:@"value"];
         
-        [audioArray addObject:electronic16SysDic];
+        //[audioArray addObject:electronic16SysDic];
     }
     if (playerSysArray == nil) {
         playerSysArray = [[NSMutableArray alloc] init];
@@ -703,7 +655,7 @@
         [playerDic setObject:@"playerSys" forKey:@"name"];
         [playerDic setObject:playerSysArray forKey:@"value"];
         
-        [audioArray addObject:playerDic];
+        //[audioArray addObject:playerDic];
     }
     
     if (wirelessYaobaoArray == nil) {
@@ -712,7 +664,7 @@
         [playerDic setObject:@"wirelessYaobaoSys" forKey:@"name"];
         [playerDic setObject:wirelessYaobaoArray forKey:@"value"];
         
-        [audioArray addObject:playerDic];
+        //[audioArray addObject:playerDic];
     }
     
     if (hunyinSysArray == nil) {
@@ -721,7 +673,7 @@
         [playerDic setObject:@"hunyinSys" forKey:@"name"];
         [playerDic setObject:hunyinSysArray forKey:@"value"];
         
-        [audioArray addObject:playerDic];
+        //[audioArray addObject:playerDic];
     }
     
     if (handToHandSysArray == nil) {
@@ -730,7 +682,7 @@
         [playerDic setObject:@"handToHandSys" forKey:@"name"];
         [playerDic setObject:handToHandSysArray forKey:@"value"];
         
-        [audioArray addObject:playerDic];
+        //[audioArray addObject:playerDic];
     }
     
     if (wirelessMeetingArray == nil) {
@@ -739,7 +691,7 @@
         [playerDic setObject:@"wirelessMeetingSys" forKey:@"name"];
         [playerDic setObject:wirelessMeetingArray forKey:@"value"];
         
-        [audioArray addObject:playerDic];
+        //[audioArray addObject:playerDic];
     }
     if (audioProcessArray == nil) {
         audioProcessArray = [[NSMutableArray alloc] init];
@@ -747,7 +699,7 @@
         [playerDic setObject:@"audioProcessSys" forKey:@"name"];
         [playerDic setObject:audioProcessArray forKey:@"value"];
         
-        [audioArray addObject:playerDic];
+        //[audioArray addObject:playerDic];
     }
     if (pvExpendArray == nil) {
         pvExpendArray = [[NSMutableArray alloc] init];
@@ -755,7 +707,7 @@
         [playerDic setObject:@"pvExpendSys" forKey:@"name"];
         [playerDic setObject:pvExpendArray forKey:@"value"];
         
-        [audioArray addObject:playerDic];
+        //[audioArray addObject:playerDic];
     }
     
     if ([name isEqualToString:@"8路电源管理"] || [name isEqualToString:@"16路电源管理"]) {
@@ -821,7 +773,9 @@
     }
 }
 
-- (void) addComponentToEnd:(UIScrollView*) scrollView dataDic:(NSMutableDictionary*)dataDic {
+// if dataDic == nil, refresh scroll view
+- (void) addComponentToEnd:(UIScrollView*) scrollView dataDic:(NSDictionary*)dataDic {
+    
     NSMutableArray *dataArray = nil;
     if (scrollView == _audioScroll) {
         dataArray = [_curScenario objectForKey:@"audioArray"];
@@ -831,34 +785,46 @@
         dataArray = [_curScenario objectForKey:@"envArray"];
     }
     
-    int count = (int) [dataArray count];
+    if(dataDic)
+        [dataArray addObject:dataDic];
     
-    int audioX = audioStartX + count*(77+space);
+    [[scrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
-    NSString *imageStr = [dataDic objectForKey:@"icon"];
-    UIImage *roomImage = [UIImage imageNamed:imageStr];
-    UIImageView *roomeImageView = [[UIImageView alloc] initWithImage:roomImage];
-    roomeImageView.tag = count;
-    [scrollView addSubview:roomeImageView];
-    roomeImageView.frame = CGRectMake(audioX, audioStartY, 77, 77);
-    roomeImageView.userInteractionEnabled=YES;
+    int x = audioStartX;
+    for(int i = 0; i < [dataArray count]; i++)
+    {
+        NSDictionary *dic = [dataArray objectAtIndex:i];
+        
+        NSString *imageStr = [dic objectForKey:@"icon"];
+        UIImage *roomImage = [UIImage imageNamed:imageStr];
+        UIImageView *roomeImageView = [[UIImageView alloc] initWithImage:roomImage];
+        roomeImageView.tag = i;
+        [scrollView addSubview:roomeImageView];
+        roomeImageView.frame = CGRectMake(x, audioStartY, 77, 77);
+        roomeImageView.userInteractionEnabled=YES;
+
+        x+=77;
+        x+=space;
+        
+        UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+        tapGesture.cancelsTouchesInView =  NO;
+        tapGesture.numberOfTapsRequired = 1;
+        [tapGesture setValue:[dic objectForKey:@"name"] forKey:@"name"];
+        [roomeImageView addGestureRecognizer:tapGesture];
+
+    }
     
-    scrollView.contentSize = CGSizeMake(audioStartX + (count+1)*(77+space), 160);
+    scrollView.contentSize = CGSizeMake(x+50, 160);
     
-    [dataArray addObject:dataDic];
-    
-    UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
-    tapGesture.cancelsTouchesInView =  NO;
-    tapGesture.numberOfTapsRequired = 1;
-    [tapGesture setValue:[dataDic objectForKey:@"name"] forKey:@"name"];
-    [roomeImageView addGestureRecognizer:tapGesture];
 }
 - (void) didEndDragingElecCell:(NSDictionary *)data pt:(CGPoint)pt {
+    
     CGPoint viewPoint = [self.view convertPoint:pt fromView:ecp];
     NSString *type = [data objectForKey:@"type"];
     BOOL isInAudio = CGRectContainsPoint(_audioScroll.frame, viewPoint);
     BOOL isInVideo = CGRectContainsPoint(_videoScroll.frame, viewPoint);
     BOOL isInEnv = CGRectContainsPoint(_envScroll.frame, viewPoint);
+    
     if (([type isEqualToString:@"音频插件"] || [type isEqualToString:@"电源插件"]) && isInAudio) {
         [self addComponentToEnd:_audioScroll dataDic:data];
     } else if (([type isEqualToString:@"视频插件"] || [type isEqualToString:@"电源插件"]) && isInVideo) {
