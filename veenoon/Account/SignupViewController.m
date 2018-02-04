@@ -278,13 +278,19 @@
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
-    
-    
+    if (textField == _jiaoyanmaTextfield) {
+        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 20);
+    }
+    if (textField == _password) {
+        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 60);
+    }
+    if (textField == _passwordAgain) {
+        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 110);
+    }
 }
 
 - (void)  textFieldDidEndEditing:(UITextField *)textField{
-    
-    
+    _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
