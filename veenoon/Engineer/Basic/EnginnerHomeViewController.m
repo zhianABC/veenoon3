@@ -19,6 +19,8 @@
     UIImageView *_scanLineImageView;
     BOOL _is_Animation;
     UIImageView* shoot_image;
+    
+    UIView *_inputPannel;
 }
 @property (nonatomic, strong) ReaderCodeViewController *reader_;
 @property (nonatomic, strong) NSString *barcode_;
@@ -34,7 +36,7 @@
     int leftRight = 250;
     int width = SCREEN_WIDTH - leftRight*2;
     int height = width * 2 / 3;
-    UIView *_inputPannel = [[UIView alloc] initWithFrame:CGRectMake(leftRight, 150, width, height)];
+    _inputPannel = [[UIView alloc] initWithFrame:CGRectMake(leftRight, 150, width, height)];
     [self.view addSubview:_inputPannel];
     _inputPannel.backgroundColor = RGB(0, 89, 118);
     _inputPannel.userInteractionEnabled=YES;
@@ -101,11 +103,21 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     
-    
+    if (textField == _userPwdField) {
+        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 120);
+    }
+    if (textField == _userNameField) {
+        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 80);
+    }
 }
 
 - (void)  textFieldDidEndEditing:(UITextField *)textField{
-    
+    if (textField == _userPwdField) {
+        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 70);
+    }
+    if (textField == _userNameField) {
+        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 20);
+    }
     
 }
 

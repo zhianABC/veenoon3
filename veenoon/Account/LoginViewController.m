@@ -139,6 +139,7 @@
     _userName.delegate = self;
     _userName.returnKeyType = UIReturnKeyDone;
     _userName.placeholder = @"";
+    _userName.keyboardType = UIKeyboardTypePhonePad;
     _userName.backgroundColor = [UIColor clearColor];
     _userName.textColor = [UIColor whiteColor];
     _userName.borderStyle = UITextBorderStyleNone;
@@ -351,13 +352,16 @@
 
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
-    
-    
+    if (textField == _userPwd) {
+         _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 70);
+    }
+    if (textField == _userName) {
+        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 20);
+    }
 }
 
 - (void)  textFieldDidEndEditing:(UITextField *)textField{
-    
-    
+    _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
