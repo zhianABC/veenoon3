@@ -1,6 +1,6 @@
 //
 //  WirlessHandleSettingsView.m
-//  veenoon
+//  veenoon 无线手持腰包系统
 //
 //  Created by chen jack on 2017/12/16.
 //  Copyright © 2017年 jack. All rights reserved.
@@ -8,7 +8,9 @@
 
 #import "WirlessHandleSettingsView.h"
 #import "CustomPickerView.h"
+#import "Groups2PickerView.h"
 #import "UIButton+Color.h"
+
 
 @interface WirlessHandleSettingsView () <UITableViewDelegate, UITableViewDataSource, CustomPickerViewDelegate>
 {
@@ -17,13 +19,14 @@
     UIButton *_btnSave;
     
     CustomPickerView *_picker;
+    Groups2PickerView *_tpicker;
     
     UIView *_footerView;
 
 }
 @property (nonatomic, strong) NSMutableArray *_rows;
 @property (nonatomic, strong) NSMutableDictionary *_map;
-@property (nonatomic, strong) NSMutableDictionary *_groupValues;
+@property (nonatomic, strong) NSMutableArray *_groupValues;
 
 @property (nonatomic, strong) NSMutableArray *_btns;
 
@@ -68,6 +71,19 @@
             [block_self didPickerValue:values];
         };
         
+        _tpicker = [[Groups2PickerView alloc]
+                    initWithFrame:CGRectMake(frame.size.width/2-100, 43, 200, 100) withGrayOrLight:@"picker_player.png"];
+        
+        
+        _tpicker._selectColor = YELLOW_COLOR;
+        _tpicker._rowNormalColor = [UIColor whiteColor];
+        //_tpicker.delegate_ = self;
+        //IMP_BLOCK_SELF(WirlessHandleSettingsView);
+        _tpicker._selectionBlock = ^(NSDictionary *values)
+        {
+            [block_self didPickerValue:values];
+        };
+        
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,
                                                                    60,
                                                                    frame.size.width,
@@ -90,9 +106,32 @@
         
         [self initData];
         
+        
+        UISwipeGestureRecognizer *swip = [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                                                   action:@selector(closeSetting)];
+        swip.direction = UISwipeGestureRecognizerDirectionRight;
+        
+        
+        [self addGestureRecognizer:swip];
+        
+        
     }
     
     return self;
+}
+
+- (void) closeSetting{
+    
+    [UIView animateWithDuration:0.25
+                     animations:^{
+                         
+                         self.frame = CGRectMake(SCREEN_WIDTH,
+                                                 64, 300, SCREEN_HEIGHT-114);
+                         
+                     } completion:^(BOOL finished) {
+                         
+                         [self removeFromSuperview];
+                     }];
 }
 
 - (void) initData{
@@ -106,16 +145,16 @@
         [dbs addObject:[NSString stringWithFormat:@"+%d", i]];
     }
     
-    self._groupValues = [NSMutableDictionary dictionary];
-    [_groupValues setObject:@[@"01",@"02",@"03"] forKey:@"A"];
-    [_groupValues setObject:@[@"04",@"05",@"06"] forKey:@"B"];
-    [_groupValues setObject:@[@"10",@"20",@"30"] forKey:@"C"];
+    self._groupValues = [NSMutableArray array];
+    [_groupValues addObject:@{@"name":@"A", @"subs":@[@"01",@"02",@"03"]}];
+    [_groupValues addObject:@{@"name":@"B", @"subs":@[@"04",@"05",@"06"]}];
+    [_groupValues addObject:@{@"name":@"C", @"subs":@[@"10",@"20",@"30"]}];
     
     [_rows addObject:@{@"title":@"设备名称",@"values":@[@"D1",@"D2",@"D3"]}];
     [_rows addObject:@{@"title":@"型号规格",@"values":@[@"X1",@"X2",@"X3"]}];
     [_rows addObject:@{@"title":@"自动对频",@"values":@[@"扫描"]}];
     [_rows addObject:@{@"title":@"频率",@"values":@[@"720MHz",@"600MHz"]}];
-    [_rows addObject:@{@"title":@"组-通道",@"values":[_groupValues allKeys]}];
+    [_rows addObject:@{@"title":@"组-通道",@"values":_groupValues}];
     [_rows addObject:@{@"title":@"增益",@"values":dbs}];
     [_rows addObject:@{@"title":@"SQ",@"values":@[@"1",@"2",@"3"]}];
     
@@ -302,7 +341,15 @@
     {
         line.frame = CGRectMake(0, 143, self.frame.size.width, 1);
         
-        if(_curIndex != 2)
+        if(_curIndex == 4)
+        {
+            _tpicker.tag = _curIndex;
+            _tpicker._datas = @[@{@"values":[data objectForKey:@"values"]}];
+            
+            [cell.contentView addSubview:_tpicker];
+            [_tpicker selectRow:0 inComponent:0];
+        }
+        else if(_curIndex != 2)
         {
             _picker.tag = _curIndex;
             _picker._pickerDataArray = @[@{@"values":[data objectForKey:@"values"]}];
