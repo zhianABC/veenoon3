@@ -51,7 +51,7 @@
     portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, CGRectGetMaxY(portDNSLabel.frame)+20, SCREEN_WIDTH-80, 20)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont systemFontOfSize:20];
+    portDNSLabel.font = [UIFont systemFontOfSize:18];
     portDNSLabel.textColor  = [UIColor colorWithWhite:1.0 alpha:0.9];
     portDNSLabel.text = @"选择您所需要设置的设备类型> 品牌 > 型号> 数量";
     
@@ -85,9 +85,9 @@
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
-    int left = 120;
+    int left = 100;
     int rowGap = (SCREEN_WIDTH - left * 2)/5 - 10;
-    int height = 250;
+    int height = 200;
     _electronicSysBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _electronicSysBtn.frame = CGRectMake(left, height, 80, 132);
     [_electronicSysBtn setImage:[UIImage imageNamed:@"engineer_dianyuanguanli_n.png"] forState:UIControlStateNormal];
@@ -180,8 +180,8 @@
     [_floorWarmBtn addTarget:self action:@selector(gongfangAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_floorWarmBtn];
     
-    int labelStartX = 120;
-    int labelStartY = 550;
+    int labelStartX = 100;
+    int labelStartY = 500;
     
     UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(labelStartX-55, labelStartY, 200, 30)];
     titleL.backgroundColor = [UIColor clearColor];

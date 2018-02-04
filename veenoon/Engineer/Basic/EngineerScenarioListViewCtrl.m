@@ -41,7 +41,7 @@
     portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, CGRectGetMaxY(portDNSLabel.frame) + 20, SCREEN_WIDTH-80, 30)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont boldSystemFontOfSize:22];
+    portDNSLabel.font = [UIFont boldSystemFontOfSize:18];
     portDNSLabel.textColor  = [UIColor colorWithWhite:1.0 alpha:0.9];
     portDNSLabel.text = @"在场景内，可选择你需要配置的设备";
     

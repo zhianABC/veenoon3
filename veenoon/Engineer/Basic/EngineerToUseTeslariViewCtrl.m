@@ -28,16 +28,16 @@
     portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, CGRectGetMaxY(portDNSLabel.frame) + 20, SCREEN_WIDTH-80, 40)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont systemFontOfSize:20];
+    portDNSLabel.font = [UIFont systemFontOfSize:18];
     portDNSLabel.textColor  = [UIColor whiteColor];
     portDNSLabel.text = @"TESLARIA将引导您完成整个系统的设置过程";
     
     portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, CGRectGetMaxY(portDNSLabel.frame) + 10, SCREEN_WIDTH-80, 40)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont systemFontOfSize:20];
+    portDNSLabel.font = [UIFont systemFontOfSize:18];
     portDNSLabel.textColor  = [UIColor whiteColor];
-    portDNSLabel.text = @"音频>视频>环境";
+    portDNSLabel.text = @"音频> 视频> 环境";
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
