@@ -18,24 +18,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    int startX=80;
-    int startY = 120;
-    
-    UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(startX, startY, SCREEN_WIDTH-80, 40)];
+    UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, ENGINEER_VIEW_TOP, SCREEN_WIDTH-80, 40)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
     portDNSLabel.font = [UIFont boldSystemFontOfSize:22];
     portDNSLabel.textColor  = [UIColor whiteColor];
     portDNSLabel.text = @"欢迎使用TESLARIA";
     
-    portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(startX, startY+40, SCREEN_WIDTH-80, 40)];
+    portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, CGRectGetMaxY(portDNSLabel.frame) + 20, SCREEN_WIDTH-80, 40)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
     portDNSLabel.font = [UIFont systemFontOfSize:20];
     portDNSLabel.textColor  = [UIColor whiteColor];
     portDNSLabel.text = @"TESLARIA将引导您完成整个系统的设置过程";
     
-    portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(startX, startY+40*2, SCREEN_WIDTH-80, 40)];
+    portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, CGRectGetMaxY(portDNSLabel.frame) + 10, SCREEN_WIDTH-80, 40)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
     portDNSLabel.font = [UIFont systemFontOfSize:20];
@@ -51,7 +48,7 @@
     bottomBar.image = [UIImage imageNamed:@"botomo_icon.png"];
     
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    cancelBtn.frame = CGRectMake(10, 0,160, 50);
+    cancelBtn.frame = CGRectMake(0, 0, 160, 50);
     [bottomBar addSubview:cancelBtn];
     [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
     [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

@@ -38,7 +38,7 @@
     _channelArray = [[NSMutableArray alloc] init];
     UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
     [self.view addSubview:titleIcon];
-    titleIcon.frame = CGRectMake(70, 40, 70, 10);
+    titleIcon.frame = CGRectMake(60, 40, 70, 10);
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 63, SCREEN_WIDTH, 1)];
     line.backgroundColor = RGB(75, 163, 202);
@@ -53,7 +53,7 @@
     bottomBar.image = [UIImage imageNamed:@"botomo_icon.png"];
     
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    cancelBtn.frame = CGRectMake(10, 0,160, 50);
+    cancelBtn.frame = CGRectMake(0, 0,160, 50);
     [bottomBar addSubview:cancelBtn];
     [cancelBtn setTitle:@"返回" forState:UIControlStateNormal];
     [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

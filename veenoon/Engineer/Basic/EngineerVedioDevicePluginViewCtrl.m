@@ -38,26 +38,23 @@
     
     UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
     [self.view addSubview:titleIcon];
-    titleIcon.frame = CGRectMake(70, 40, 70, 10);
+    titleIcon.frame = CGRectMake(60, 40, 70, 10);
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 63, SCREEN_WIDTH, 1)];
     line.backgroundColor = RGB(75, 163, 202);
     [self.view addSubview:line];
     
-    int startX=80;
-    int startY = 120;
-    
-    UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(startX, startY, SCREEN_WIDTH-80, 30)];
+    UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, ENGINEER_VIEW_TOP, SCREEN_WIDTH-80, 30)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont boldSystemFontOfSize:20];
+    portDNSLabel.font = [UIFont boldSystemFontOfSize:22];
     portDNSLabel.textColor  = [UIColor whiteColor];
     portDNSLabel.text = @"请配置您的视频管理系统";
     
-    portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(startX, CGRectGetMaxY(portDNSLabel.frame)+15, SCREEN_WIDTH-80, 20)];
+    portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, CGRectGetMaxY(portDNSLabel.frame)+20, SCREEN_WIDTH-80, 20)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont systemFontOfSize:16];
+    portDNSLabel.font = [UIFont systemFontOfSize:20];
     portDNSLabel.textColor  = [UIColor colorWithWhite:1.0 alpha:0.9];
     portDNSLabel.text = @"选择您所需要设置的设备类型> 品牌 > 型号> 数量";
     
@@ -70,7 +67,7 @@
     bottomBar.image = [UIImage imageNamed:@"botomo_icon.png"];
     
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    cancelBtn.frame = CGRectMake(10, 0,160, 50);
+    cancelBtn.frame = CGRectMake(0, 0,160, 50);
     [bottomBar addSubview:cancelBtn];
     [cancelBtn setTitle:@"< 上一步" forState:UIControlStateNormal];
     [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -91,8 +88,8 @@
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
-    int left = 210;
-    int rowGap = (SCREEN_WIDTH - left * 2)/5;
+    int left = 120;
+    int rowGap = (SCREEN_WIDTH - left * 2)/5 - 10;
     int height = 250;
     _dianyuanguanliBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _dianyuanguanliBtn.frame = CGRectMake(left, height, 80, 132);
@@ -225,7 +222,7 @@
     [_touyingjiBtn addTarget:self action:@selector(touyingjiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_touyingjiBtn];
     
-    int labelStartX = 200;
+    int labelStartX = 120;
     int labelStartY = 550;
     
     UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(labelStartX-55, labelStartY, 200, 30)];
