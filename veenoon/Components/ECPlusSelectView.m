@@ -242,10 +242,13 @@ EPlusLayerViewDelegate>
     CGPoint pt = [_tableView convertPoint:icon.center
                                  fromView:st];
     
+    CGPoint ptNew = pt;
+    ptNew.y = pt.y - _tableView.contentOffset.y;
+    
     
     if(delegate && [delegate respondsToSelector:@selector(didEndDragingElecCell:pt:)])
     {
-        [delegate didEndDragingElecCell:st._element pt:pt];
+        [delegate didEndDragingElecCell:st._element pt:ptNew];
     }
     
 }
