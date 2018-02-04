@@ -515,7 +515,6 @@
 		EB5D91FC1FBB2F78004ED38D /* login_right_arraw@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB5D91FB1FBB2F77004ED38D /* login_right_arraw@2x.png */; };
 		EB5F7F841FD5902D00351888 /* engineer_meetingroom_default_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB5F7F831FD5902C00351888 /* engineer_meetingroom_default_n@2x.png */; };
 		EB5F7F871FD593F800351888 /* EngineerSysSelectViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5F7F861FD593F800351888 /* EngineerSysSelectViewCtrl.m */; };
-		EB5F7F8A1FD5971E00351888 /* EngineerPortDNSViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5F7F891FD5971E00351888 /* EngineerPortDNSViewCtrl.m */; };
 		EB5F7F8F1FD598ED00351888 /* engineer_dns_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB5F7F8B1FD598EC00351888 /* engineer_dns_n@2x.png */; };
 		EB5F7F901FD598ED00351888 /* engineer_port_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB5F7F8C1FD598EC00351888 /* engineer_port_n@2x.png */; };
 		EB5F7F911FD598ED00351888 /* engineer_dns_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB5F7F8D1FD598EC00351888 /* engineer_dns_s@2x.png */; };
@@ -1375,8 +1374,6 @@
 		EB5F7F831FD5902C00351888 /* engineer_meetingroom_default_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_meetingroom_default_n@2x.png"; sourceTree = "<group>"; };
 		EB5F7F851FD593EE00351888 /* EngineerSysSelectViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerSysSelectViewCtrl.h; sourceTree = "<group>"; };
 		EB5F7F861FD593F800351888 /* EngineerSysSelectViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerSysSelectViewCtrl.m; sourceTree = "<group>"; };
-		EB5F7F881FD5971400351888 /* EngineerPortDNSViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerPortDNSViewCtrl.h; sourceTree = "<group>"; };
-		EB5F7F891FD5971E00351888 /* EngineerPortDNSViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerPortDNSViewCtrl.m; sourceTree = "<group>"; };
 		EB5F7F8B1FD598EC00351888 /* engineer_dns_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_dns_n@2x.png"; sourceTree = "<group>"; };
 		EB5F7F8C1FD598EC00351888 /* engineer_port_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_port_n@2x.png"; sourceTree = "<group>"; };
 		EB5F7F8D1FD598EC00351888 /* engineer_dns_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_dns_s@2x.png"; sourceTree = "<group>"; };
@@ -2631,8 +2628,6 @@
 				EB03F54A1FBDEB9C00865541 /* EnginnerHomeViewController.h */,
 				EB5F7F851FD593EE00351888 /* EngineerSysSelectViewCtrl.h */,
 				EB5F7F861FD593F800351888 /* EngineerSysSelectViewCtrl.m */,
-				EB5F7F881FD5971400351888 /* EngineerPortDNSViewCtrl.h */,
-				EB5F7F891FD5971E00351888 /* EngineerPortDNSViewCtrl.m */,
 				EB5F7F931FD59D5C00351888 /* EngineerPortSettingView.h */,
 				EB5F7F941FD59D6B00351888 /* EngineerPortSettingView.m */,
 				EB5F7F961FD59D7B00351888 /* EngineerDNSSettingView.h */,
@@ -3356,7 +3351,6 @@
 				04DE1E8C1AD6AEE000D49E2F /* RRScrollView.m in Sources */,
 				34686C9F1ED025CB001749A1 /* DesUtil.m in Sources */,
 				045850191B08CF42002BC23C /* BookCache.m in Sources */,
-				EB5F7F8A1FD5971E00351888 /* EngineerPortDNSViewCtrl.m in Sources */,
 				EB217FB81FD42188003F5A8F /* UserFloorWarmViewCtrl.m in Sources */,
 				0477DC531DA9F3CC0077FA52 /* SHA1.m in Sources */,
 				04DE1EB31AD6AEE000D49E2F /* UIButton+WebCache.m in Sources */,

@@ -43,9 +43,13 @@
 
 #define SINGAL_COLOR             RGB(3,251,211)
 
-#define THEME_COLOR             RGB(59, 137, 178)
+#define THEME_COLOR             RGB(1, 138, 182)
 #define THEME_COLOR_A(a)        RGBA(242, 157, 56,a)
 #define THEME_RED_COLOR         RGB(0xe4, 0x2a, 0x21)
+
+#define ENGINEER_VIEW_LEFT  60
+
+#define ENGINEER_PORT_VIEW_HEIGHT  100
 
 #define YELLOW_COLOR            RGB(255, 180, 0)
 #define DARK_BLUE_COLOR         RGB(0, 89, 118)

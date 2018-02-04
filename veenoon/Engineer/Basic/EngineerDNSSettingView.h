@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "CustomPickerView.h"
+
+@protocol  EngineerDNSSettingViewDelegate <NSObject>
+- (void) dnsViewPortAction;
+- (void) dnsViewdnsAction;
+- (void) dnsViewHandleTapGesture;
+@end
+
 @interface EngineerDNSSettingView <UITableViewDelegate,UITableViewDataSource> : UIView {
     UILabel *_serialLabel;
     UILabel *_devicNameLabel;
@@ -38,7 +45,7 @@
 @property (nonatomic, strong) UITableView *_tableView;
 @property (nonatomic, assign) int _selectedRow;
 @property (nonatomic, assign) int _previousSelectedRow;
-
+@property(nonatomic, weak) id<EngineerDNSSettingViewDelegate> delegate;
 @property (nonatomic, strong) NSMutableArray *_portList;
 @end
 
