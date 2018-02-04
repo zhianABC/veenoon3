@@ -179,7 +179,7 @@
         maskRight.backgroundColor = RGBA(0, 0, 0, 0.2);
         [maskView addSubview:maskRight];
         
-        UILabel *maskCover = [[UILabel alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-60, SCREEN_WIDTH, 60)];
+        UILabel *maskCover = [[UILabel alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
         maskCover.backgroundColor = THEME_COLOR;
         maskCover.alpha = 0.8;
         [maskView addSubview:maskCover];
