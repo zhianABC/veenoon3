@@ -353,10 +353,10 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     if (textField == _userPwd) {
-         _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 70);
+         _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 120);
     }
     if (textField == _userName) {
-        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 20);
+        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 70);
     }
 }
 
