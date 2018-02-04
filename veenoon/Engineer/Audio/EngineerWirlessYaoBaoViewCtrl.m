@@ -33,7 +33,7 @@
     
     NSMutableArray *_selectedBtnArray;
     
-    WirlessHandleSettingsView *_rightSetView;
+    WirlessYaoBaoViewSettingsView *_rightSetView;
 }
 @end
 
@@ -371,7 +371,7 @@
 - (void) okAction:(id)sender{
  
     if(_rightSetView == nil){
-    _rightSetView = [[WirlessHandleSettingsView alloc]
+    _rightSetView = [[WirlessYaoBaoViewSettingsView alloc]
                                       initWithFrame:CGRectMake(SCREEN_WIDTH-300,
                                                                64, 300, SCREEN_HEIGHT-114)];
     }

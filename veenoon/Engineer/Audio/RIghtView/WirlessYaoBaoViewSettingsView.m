@@ -12,7 +12,7 @@
 #import "UIButton+Color.h"
 
 
-@interface WirlessHandleSettingsView () <UITableViewDelegate, UITableViewDataSource, CustomPickerViewDelegate>
+@interface WirlessYaoBaoViewSettingsView () <UITableViewDelegate, UITableViewDataSource, CustomPickerViewDelegate>
 {
     UITableView *_tableView;
     int _curIndex;

@@ -17,16 +17,13 @@
 }
 @property (nonatomic, strong) NSMutableArray *_rows;
 @property (nonatomic, strong) NSMutableDictionary *_map;
-@property (nonatomic, strong) NSMutableDictionary *_groupValues;
 
 @property (nonatomic, strong) NSMutableArray *_btns;
 
 @end
 
 @implementation HandtoHandLineCheckView
-@synthesize _map;
 @synthesize _rows;
-@synthesize _groupValues;
 @synthesize _btns;
 @synthesize _numOfChannel;
 
@@ -79,11 +76,6 @@
         [dbs addObject:[NSString stringWithFormat:@"+%d", i]];
     }
     
-    self._groupValues = [NSMutableDictionary dictionary];
-    [_groupValues setObject:@[@"01",@"02",@"03"] forKey:@"A"];
-    [_groupValues setObject:@[@"04",@"05",@"06"] forKey:@"B"];
-    [_groupValues setObject:@[@"10",@"20",@"30"] forKey:@"C"];
-    
     [_rows addObject:@{@"title":@"1",@"values":@[@"在线"]}];
     [_rows addObject:@{@"title":@"2",@"values":@[@"在线"]}];
     [_rows addObject:@{@"title":@"3",@"values":@[@"在线"]}];
@@ -93,12 +85,8 @@
     [_rows addObject:@{@"title":@"7",@"values":@[@"在线"]}];
     [_rows addObject:@{@"title":@"8",@"values":@[@"在线"]}];
     
-    [_map setObject:@"扫描" forKey:@2];
-    
     
     [_tableView reloadData];
-    
-    
 }
 
 - (void) buttonAction:(UIButton*)btn{
@@ -200,23 +188,6 @@
     
     titleL.text = [data objectForKey:@"title"];
     
-    id v = [_map objectForKey:[NSNumber numberWithInt:(int)indexPath.row]];
-    if([v isKindOfClass:[NSString class]])
-    {
-        valueL.text = v;
-    }
-    else
-    {
-        valueL.text = [v objectForKey:@"title"];
-    }
-    
-    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 43, self.frame.size.width, 1)];
-    line.backgroundColor =  M_GREEN_LINE;
-    [cell.contentView addSubview:line];
-    if(_curIndex == indexPath.row)
-    
-    
-    
     return cell;
 }
 
@@ -236,7 +207,6 @@
         
         [_tableView reloadData];
     }
-    
     
 }
 
