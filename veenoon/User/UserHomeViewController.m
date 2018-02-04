@@ -10,7 +10,10 @@
 #import "UserMeetingRoomConfig.h"
 
 @interface UserHomeViewController () {
+    NSMutableArray *lableArray;
+    NSMutableArray *roomImageArray;
     
+    int selectedRoomIndex;
 }
 @property (nonatomic, strong) NSMutableArray *roomList;
 
@@ -18,9 +21,15 @@
 
 @implementation UserHomeViewController
 @synthesize roomList;
+@synthesize actionSheet;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    lableArray = [[NSMutableArray alloc] init];
+    roomImageArray = [[NSMutableArray alloc] init];
+    selectedRoomIndex = -1;
+    
     if (roomList) {
         [roomList removeAllObjects];
     } else {
@@ -59,7 +68,7 @@
     int leftRight = 60;
     int space = 10;
     
-    int cellWidth = (SCREEN_WIDTH - 2*leftRight - 2*space) / 3;
+    int cellWidth = 312;
     int cellHeight = 186;
     int index = 0;
     for (id dic in roomList) {
@@ -70,41 +79,52 @@
         
         UIImage *roomImage = [dic objectForKey:@"image"];
         UIImageView *roomeImageView = [[UIImageView alloc] initWithImage:roomImage];
+        roomeImageView.userInteractionEnabled=YES;
+        roomeImageView.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
+        UIView *view = [[UIView alloc] init];
+        view.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
+        view.tag = index;
+        [roomeImageView addSubview:view];
+        
+        [roomImageArray addObject:roomeImageView];
         roomeImageView.tag = index;
         [scroolView addSubview:roomeImageView];
-        roomeImageView.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
-        roomeImageView.userInteractionEnabled=YES;
+        
+        UILongPressGestureRecognizer *longPress0 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed0:)];
+        [view addGestureRecognizer:longPress0];
         
         UIImageView *roomeBotomImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"user_meeting_roome_b.png"]];
         [roomeImageView addSubview:roomeBotomImageView];
-        roomeBotomImageView.frame = CGRectMake(18, roomeImageView.frame.size.height-48, roomeImageView.frame.size.width-36, 30);
+        roomeBotomImageView.frame = CGRectMake(0, CGRectGetHeight(roomeImageView.frame)-30, roomeImageView.frame.size.width, 30);
         roomeBotomImageView.userInteractionEnabled=YES;
         
         index++;
         
         UIButton *cameraBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         
-        cameraBtn.frame = CGRectMake(CGRectGetMaxX(roomeImageView.frame)-60, CGRectGetMaxY(roomeImageView.frame) - 55, 50, 50);
+        cameraBtn.frame = CGRectMake(CGRectGetWidth(roomeImageView.frame)-40, CGRectGetHeight(roomeImageView.frame)-40, 40, 40);
         cameraBtn.tag = index;
         [cameraBtn setImage:[UIImage imageNamed:@"camera_n.png"] forState:UIControlStateNormal];
         [cameraBtn setImage:[UIImage imageNamed:@"camera_s.png"] forState:UIControlStateHighlighted];
         [cameraBtn addTarget:self action:@selector(cameraAction:) forControlEvents:UIControlEventTouchUpInside];
-        [scroolView addSubview:cameraBtn];
+        [roomeImageView addSubview:cameraBtn];
         
         
         UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
         tapGesture.cancelsTouchesInView =  NO;
         tapGesture.numberOfTapsRequired = 1;
         tapGesture.view.tag = index;
-        [roomeImageView addGestureRecognizer:tapGesture];
+        [view addGestureRecognizer:tapGesture];
         
         
-        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(40, roomeImageView.frame.size.height-45, 200, 30)];
+        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(roomeImageView.frame)-30, 200, 30)];
         titleL.backgroundColor = [UIColor clearColor];
         [roomeImageView addSubview:titleL];
         titleL.font = [UIFont boldSystemFontOfSize:16];
         titleL.textColor  = [UIColor whiteColor];
         titleL.text = [dic objectForKey:@"roomname"];
+        
+        [lableArray addObject:titleL];
     }
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
@@ -123,6 +143,39 @@
         forControlEvents:UIControlEventTouchUpInside];
 }
 
+- (void) longPressed0:(id)sender{
+    
+    UILongPressGestureRecognizer *press = (UILongPressGestureRecognizer *)sender;
+    if (press.state == UIGestureRecognizerStateEnded) {
+        // no need anything here
+        return;
+    } else if (press.state == UIGestureRecognizerStateBegan) {
+        UILongPressGestureRecognizer *viewRecognizer = (UILongPressGestureRecognizer*) sender;
+        int index = (int)viewRecognizer.view.tag;
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"请输入会议室名称" preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.placeholder = @"会议室名称";
+        }];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            UITextField *envirnmentNameTextField = alertController.textFields.firstObject;
+            NSString *scenarioName = envirnmentNameTextField.text;
+            if (scenarioName && [scenarioName length] > 0) {
+                NSMutableDictionary *meetingDic = [self.roomList objectAtIndex:index];
+                UILabel *scenarioLabel = [lableArray objectAtIndex:index];
+                
+                [meetingDic setObject:scenarioName forKey:@"roomname"];
+                scenarioLabel.text =scenarioName;
+            }
+        }]];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+        
+        [self presentViewController:alertController animated:true completion:nil];
+    }
+}
+
 - (void) backAction:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -137,7 +190,7 @@
     [self.navigationController pushViewController:lctrl animated:YES];
 }
 
-- (void) cameraAction:(id)sender{
-    
+- (void) cameraAction:(id)sender {
+    UIButton *cameraBtn = (UIButton*) sender;
 }
 @end
