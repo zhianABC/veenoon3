@@ -5,21 +5,15 @@
 //  Copyright © 2017年 jack. All rights reserved.
 //
 
-#import "HandtoHandSettingsView.h"
+#import "HandtoHandLineCheckView.h"
 #import "CustomPickerView.h"
 #import "UIButton+Color.h"
-#import "HandtoHandLineCheckView.h"
 
-@interface HandtoHandSettingsView () <UITableViewDelegate, UITableViewDataSource, CustomPickerViewDelegate>
+@interface HandtoHandLineCheckView () <UITableViewDelegate, UITableViewDataSource, CustomPickerViewDelegate>
 {
     UITableView *_tableView;
     int _curIndex;
     UIButton *_btnSave;
-    
-    CustomPickerView *_picker;
-    
-    UIView *_footerView;
-    
 }
 @property (nonatomic, strong) NSMutableArray *_rows;
 @property (nonatomic, strong) NSMutableDictionary *_map;
@@ -29,7 +23,7 @@
 
 @end
 
-@implementation HandtoHandSettingsView
+@implementation HandtoHandLineCheckView
 @synthesize _map;
 @synthesize _rows;
 @synthesize _groupValues;
@@ -55,19 +49,6 @@
         
         _curIndex = -1;
         
-        _picker = [[CustomPickerView alloc]
-                   initWithFrame:CGRectMake(frame.size.width/2-100, 43, 200, 100) withGrayOrLight:@"picker_player.png"];
-        
-        
-        _picker._selectColor = YELLOW_COLOR;
-        _picker._rowNormalColor = [UIColor whiteColor];
-        _picker.delegate_ = self;
-        IMP_BLOCK_SELF(HandtoHandSettingsView);
-        _picker._selectionBlock = ^(NSDictionary *values)
-        {
-            [block_self didPickerValue:values];
-        };
-        
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,
                                                                    60,
                                                                    frame.size.width,
@@ -78,15 +59,7 @@
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [self addSubview:_tableView];
         
-        _footerView = [[UIView alloc] initWithFrame:CGRectMake(0,
-                                                               CGRectGetMaxY(_tableView.frame),
-                                                               self.frame.size.width,
-                                                               160)];
-        [self addSubview:_footerView];
-        _footerView.backgroundColor = M_GREEN_COLOR;
-        
         _numOfChannel = 8;
-//        [self layoutFooter];
         
         [self initData];
         
@@ -111,65 +84,20 @@
     [_groupValues setObject:@[@"04",@"05",@"06"] forKey:@"B"];
     [_groupValues setObject:@[@"10",@"20",@"30"] forKey:@"C"];
     
-    [_rows addObject:@{@"title":@"线路检查",@"values":@[@"D1",@"D2",@"D3"]}];
-    [_rows addObject:@{@"title":@"发言模式",@"values":@[@"X1",@"X2",@"X3"]}];
-    [_rows addObject:@{@"title":@"发言人数",@"values":@[@"扫描"]}];
-    [_rows addObject:@{@"title":@"主席数量",@"values":@[@"720MHz",@"600MHz"]}];
-    [_rows addObject:@{@"title":@"设备ID",@"values":[_groupValues allKeys]}];
-    [_rows addObject:@{@"title":@"摄像机ID",@"values":dbs}];
-    [_rows addObject:@{@"title":@"摄像机协议",@"values":@[@"1",@"2",@"3"]}];
-    [_rows addObject:@{@"title":@"波特率",@"values":@[@"1",@"2",@"3"]}];
+    [_rows addObject:@{@"title":@"1",@"values":@[@"在线"]}];
+    [_rows addObject:@{@"title":@"2",@"values":@[@"在线"]}];
+    [_rows addObject:@{@"title":@"3",@"values":@[@"在线"]}];
+    [_rows addObject:@{@"title":@"4",@"values":@[@"在线"]}];
+    [_rows addObject:@{@"title":@"5",@"values":@[@"在线"]}];
+    [_rows addObject:@{@"title":@"6",@"values":@[@"在线"]}];
+    [_rows addObject:@{@"title":@"7",@"values":@[@"在线"]}];
+    [_rows addObject:@{@"title":@"8",@"values":@[@"在线"]}];
     
     [_map setObject:@"扫描" forKey:@2];
     
     
     [_tableView reloadData];
     
-    
-}
-
-- (void)layoutFooter{
-    
-    [[_footerView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    
-    UIColor *rectColor = RGB(0, 146, 174);
-    
-    self._btns = [NSMutableArray array];
-    
-    int w = 50;
-    int sp = 8;
-    int y = (160 - w*2 - sp)/2;
-    int x = (self.frame.size.width - 4*w - 3*sp)/2;
-    for(int i = 0; i < _numOfChannel; i++)
-    {
-        int col = i%4;
-        int xx = x + col*w + col*sp;
-        
-        if(i && i%4 == 0)
-        {
-            y+=w;
-            y+=sp;
-        }
-        
-        UIButton *btn = [UIButton buttonWithColor:rectColor selColor:nil];
-        btn.frame = CGRectMake(xx, y, w, w);
-        [_footerView addSubview:btn];
-        btn.layer.cornerRadius = 5;
-        btn.clipsToBounds = YES;
-        [btn setTitle:[NSString stringWithFormat:@"%d", i+1]
-             forState:UIControlStateNormal];
-        btn.tag = i;
-        [btn setTitleColor:[UIColor whiteColor]
-                  forState:UIControlStateNormal];
-        btn.titleLabel.font = [UIFont systemFontOfSize:14];
-        [btn addTarget:self
-                action:@selector(buttonAction:)
-      forControlEvents:UIControlEventTouchUpInside];
-        
-        [_btns addObject:btn];
-    }
-    
-    [self chooseChannelAtTagIndex:0];
     
 }
 
@@ -193,19 +121,6 @@
                       forState:UIControlStateNormal];
         }
     }
-}
-
-- (void) didPickerValue:(NSDictionary *)values{
-    
-    id key = [NSNumber numberWithInt:(int)_picker.tag];
-    
-    NSString *obj = [values objectForKey:@0];
-    [_map setObject:obj forKey:key];
-    
-    
-    
-    [_tableView reloadData];
-    
 }
 
 - (void) didConfirmPickerValue:(NSString*) pickerValue{
@@ -273,18 +188,11 @@
     valueL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
     valueL.textAlignment = NSTextAlignmentRight;
     
-    if(indexPath.row != 0)
+    if(indexPath.row != 2)
     {
         UIImageView *icon = [[UIImageView alloc]
                              initWithFrame:CGRectMake(CGRectGetMaxX(valueL.frame)+5, 17, 10, 10)];
         icon.image = [UIImage imageNamed:@"remote_video_down.png"];
-        [cell.contentView addSubview:icon];
-        icon.alpha = 0.8;
-        icon.layer.contentsGravity = kCAGravityResizeAspect;
-    } else {
-        UIImageView *icon = [[UIImageView alloc]
-                             initWithFrame:CGRectMake(CGRectGetMaxX(valueL.frame)+5, 17, 10, 10)];
-        icon.image = [UIImage imageNamed:@"remote_video_right.png"];
         [cell.contentView addSubview:icon];
         icon.alpha = 0.8;
         icon.layer.contentsGravity = kCAGravityResizeAspect;
@@ -306,44 +214,17 @@
     line.backgroundColor =  M_GREEN_LINE;
     [cell.contentView addSubview:line];
     if(_curIndex == indexPath.row)
-    {
-        line.frame = CGRectMake(0, 143, self.frame.size.width, 1);
-        
-        if(_curIndex != 2)
-        {
-            _picker.tag = _curIndex;
-            _picker._pickerDataArray = @[@{@"values":[data objectForKey:@"values"]}];
-            
-            [cell.contentView addSubview:_picker];
-            [_picker selectRow:0 inComponent:0];
-        }
-        
-    }
     
     
     
     return cell;
 }
 
-- (void)toHandtoHandCheckView {
-    HandtoHandLineCheckView *ecp = [[HandtoHandLineCheckView alloc]
-                                   initWithFrame:CGRectMake(SCREEN_WIDTH-300,
-                                                            64, 300, SCREEN_HEIGHT-114)];
-    [self addSubview:ecp];
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
-    
-    
     int targetIndx = (int)indexPath.row;
-    
-    if (targetIndx == 0) {
-        [self toHandtoHandCheckView];
-        return;
-    }
     if(targetIndx != 2)
     {
         if(_curIndex == targetIndx)
@@ -355,6 +236,8 @@
         
         [_tableView reloadData];
     }
+    
+    
 }
 
 /*
@@ -369,4 +252,5 @@
 
 
 @end
+
 

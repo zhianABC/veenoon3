@@ -10,6 +10,7 @@
 #import "UIButton+Color.h"
 #import "CustomPickerView.h"
 #import "EngineerSliderView.h"
+#import "HandtoHandSettingsView.h"
 
 @interface EngineerHandtoHandViewCtrl () {
     
@@ -249,7 +250,10 @@
 }
 
 - (void) okAction:(id)sender{
-    
+    HandtoHandSettingsView *ecp = [[HandtoHandSettingsView alloc]
+                                          initWithFrame:CGRectMake(SCREEN_WIDTH-300,
+                                                                   64, 300, SCREEN_HEIGHT-114)];
+    [self.view addSubview:ecp];
 }
 
 - (void) cancelAction:(id)sender{
