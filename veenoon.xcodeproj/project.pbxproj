@@ -204,6 +204,7 @@
 		3422A5BB1FCC1B1100F6D3C2 /* gray_slide_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3422A5B91FCC1B1000F6D3C2 /* gray_slide_bg@2x.png */; };
 		3422A5BC1FCC1B1100F6D3C2 /* light_slide_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3422A5BA1FCC1B1100F6D3C2 /* light_slide_bg@2x.png */; };
 		342389B02026D93500885405 /* JCActionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 342389AF2026D93500885405 /* JCActionView.m */; };
+		342389B32026F48700885405 /* Groups2PickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 342389B12026F48500885405 /* Groups2PickerView.m */; };
 		3425E9801FE54C62003559F7 /* process_light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3425E97D1FE54C61003559F7 /* process_light@2x.png */; };
 		3425E9811FE54C62003559F7 /* progress_bk@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3425E97E1FE54C62003559F7 /* progress_bk@2x.png */; };
 		3425E9821FE54C62003559F7 /* progress_thumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3425E97F1FE54C62003559F7 /* progress_thumb@2x.png */; };
@@ -991,6 +992,8 @@
 		3422A5BA1FCC1B1100F6D3C2 /* light_slide_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "light_slide_bg@2x.png"; sourceTree = "<group>"; };
 		342389AE2026D93300885405 /* JCActionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCActionView.h; sourceTree = "<group>"; };
 		342389AF2026D93500885405 /* JCActionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCActionView.m; sourceTree = "<group>"; };
+		342389B12026F48500885405 /* Groups2PickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Groups2PickerView.m; sourceTree = "<group>"; };
+		342389B22026F48700885405 /* Groups2PickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Groups2PickerView.h; sourceTree = "<group>"; };
 		3425E97D1FE54C61003559F7 /* process_light@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "process_light@2x.png"; sourceTree = "<group>"; };
 		3425E97E1FE54C62003559F7 /* progress_bk@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "progress_bk@2x.png"; sourceTree = "<group>"; };
 		3425E97F1FE54C62003559F7 /* progress_thumb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "progress_thumb@2x.png"; sourceTree = "<group>"; };
@@ -2767,6 +2770,8 @@
 				3425E9881FE5687C003559F7 /* CheckButton.m */,
 				3421EA2C1FC4136600DC5378 /* CustomPickerView.h */,
 				3421EA2B1FC4136600DC5378 /* CustomPickerView.m */,
+				342389B22026F48700885405 /* Groups2PickerView.h */,
+				342389B12026F48500885405 /* Groups2PickerView.m */,
 				3421EA2E1FC4161300DC5378 /* ColumnsView.h */,
 				3421EA2F1FC4161300DC5378 /* ColumnsView.m */,
 				EBEA7C1E1FBCAF260028F0E8 /* area.plist */,
@@ -3401,6 +3406,7 @@
 				04DE1EA71AD6AEE000D49E2F /* SBJson4StreamWriter.m in Sources */,
 				EB217FBE1FD423B8003F5A8F /* UserAirCleanViewCtrl.m in Sources */,
 				EB17179D1FF60C6900CBDB81 /* EngineerElectronicAutoViewCtrl.m in Sources */,
+				342389B32026F48700885405 /* Groups2PickerView.m in Sources */,
 				3425E9891FE5687C003559F7 /* CheckButton.m in Sources */,
 				341C60C91FDCFD7D003A5490 /* EPlusLayerView.m in Sources */,
 				EB4E39E62027423D00533575 /* HandtoHandLineCheckView.m in Sources */,

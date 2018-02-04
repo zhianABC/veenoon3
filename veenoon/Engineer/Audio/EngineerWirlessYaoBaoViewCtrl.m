@@ -16,7 +16,7 @@
 #import "WirlessYaoBaoViewSettingsView.h"
 
 
-@interface EngineerWirlessYaoBaoViewCtrl () {
+@interface EngineerWirlessYaoBaoViewCtrl () <CustomPickerViewDelegate> {
     
     UIButton *_selectSysBtn;
     
@@ -32,6 +32,8 @@
     NSMutableArray *_buttonNumberArray;
     
     NSMutableArray *_selectedBtnArray;
+    
+    WirlessHandleSettingsView *_rightSetView;
 }
 @end
 
@@ -368,10 +370,20 @@
 
 - (void) okAction:(id)sender{
  
-    WirlessYaoBaoViewSettingsView *ecp = [[WirlessYaoBaoViewSettingsView alloc]
+    if(_rightSetView == nil){
+    _rightSetView = [[WirlessHandleSettingsView alloc]
                                       initWithFrame:CGRectMake(SCREEN_WIDTH-300,
                                                                64, 300, SCREEN_HEIGHT-114)];
-    [self.view addSubview:ecp];
+    }
+    else
+    {
+        [UIView beginAnimations:nil context:nil];
+        _rightSetView.frame  = CGRectMake(SCREEN_WIDTH-300,
+                                         64, 300, SCREEN_HEIGHT-114);
+        [UIView commitAnimations];
+    }
+    
+    [self.view addSubview:_rightSetView];
 }
 
 - (void) cancelAction:(id)sender{
