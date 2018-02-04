@@ -84,6 +84,7 @@
         UIImage *roomImage = [dic objectForKey:@"image"];
         UIImageView *roomeImageView = [[UIImageView alloc] initWithImage:roomImage];
         roomeImageView.userInteractionEnabled=YES;
+        roomeImageView.contentMode = UIViewContentModeScaleAspectFit;
         roomeImageView.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
         UIView *view = [[UIView alloc] init];
         view.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
