@@ -197,7 +197,7 @@
 
 - (void) cameraAction:(id)sender {
     UIButton *cameraBtn = (UIButton*) sender;
-        
+    selectedRoomIndex = (int) cameraBtn.tag;
         if(_imagePicker == nil)
         {
             _imagePicker = [[UIImagePickerController alloc] init];
@@ -253,8 +253,7 @@
 
 
 /**** Image Picker Delegates ******/
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
     if(image)
     {
@@ -265,8 +264,12 @@
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 // 更新界面
-                
+                UIImageView *roomImageView = [roomImageArray objectAtIndex:selectedRoomIndex];
+                roomImageView.image = img;
                 ///////图从这儿穿出去
+                
+                NSMutableDictionary *roomDic = [self.roomList objectAtIndex:selectedRoomIndex];
+                [roomDic setObject:img forKey:@"image"];
                 
             });
         });
