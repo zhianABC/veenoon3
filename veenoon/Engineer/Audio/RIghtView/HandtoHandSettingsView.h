@@ -13,7 +13,5 @@
 }
 @property (nonatomic, assign) int _numOfChannel;
 
-- (void) layoutFooter;
-
 @end
 

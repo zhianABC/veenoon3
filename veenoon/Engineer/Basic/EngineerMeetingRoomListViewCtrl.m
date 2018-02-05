@@ -103,7 +103,7 @@
         roomeBotomImageView.frame = CGRectMake(0, CGRectGetHeight(roomeImageView.frame)-30, roomeImageView.frame.size.width, 30);
         roomeBotomImageView.userInteractionEnabled=YES;
         
-        index++;
+        
         
         UIButton *cameraBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         
@@ -130,6 +130,8 @@
         titleL.text = [dic objectForKey:@"roomname"];
         
         [lableArray addObject:titleL];
+        
+        index++;
     }
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];

@@ -279,13 +279,13 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     if (textField == _jiaoyanmaTextfield) {
-        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 20);
+        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 70);
     }
     if (textField == _password) {
-        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 60);
+        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 110);
     }
     if (textField == _passwordAgain) {
-        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 110);
+        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 160);
     }
 }
 
