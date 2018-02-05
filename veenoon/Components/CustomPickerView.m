@@ -26,6 +26,8 @@
     UIColor *_rowNormalColor;
     
     UIButton *btnSave;
+    
+    int _cellWidth;
 }
 
 @end
@@ -61,8 +63,11 @@
         [self addSubview:_background];
         //_background.contentMode = UIViewContentModeScaleAspectFill;
         
+        _cellWidth = frame.size.width-50;
+        
         _myPickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0.0, 0,
-                                                                       frame.size.width, frame.size.height)];
+                                                                       frame.size.width,
+                                                                       frame.size.height)];
         _myPickerView.delegate = self;
         _myPickerView.dataSource = self;
         _myPickerView.showsSelectionIndicator = YES;
@@ -163,7 +168,7 @@
     float width = [[section objectForKey:@"width"] floatValue];
     if(width <= 0)
     {
-        width = self.frame.size.width;
+        width = _cellWidth;
     }
     
     return width;
@@ -188,6 +193,11 @@
     NSDictionary *section = [_pickerDataArray objectAtIndex:component];
     
     CGFloat componentWidth = [[section objectForKey:@"width"] floatValue];
+    if(componentWidth <= 0)
+    {
+        componentWidth = _cellWidth;
+    }
+    
     
     NSArray *values = [section objectForKey:@"values"];
     

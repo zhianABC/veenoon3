@@ -24,6 +24,11 @@
     NSInteger       _rowAndCom2Selected;
     
     UIImageView  *_background;
+    
+    int          _cellWidth;
+    int          _spacex;
+    
+    UIButton *btnSave;
 }
 
 @end
@@ -35,13 +40,19 @@
 @synthesize _selectColor;
 @synthesize _rowNormalColor;
 
+@synthesize delegate_;
+
 - (id)initWithFrame:(CGRect)frame withGrayOrLight:(NSString*)grayOrLight {
     if (self = [super initWithFrame:frame])
     {
         // Initialization code
         self.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
     
-        _background = [[UIImageView alloc] initWithFrame:self.bounds];
+        _cellWidth = frame.size.width - 50;
+        CGRect rc = self.bounds;
+        rc.size.width = _cellWidth;
+        
+        _background = [[UIImageView alloc] initWithFrame:rc];
         _background.layer.contentsGravity = kCAGravityResize;
         _background.clipsToBounds = YES;
         if([grayOrLight isEqualToString:@"gray"])
@@ -52,14 +63,23 @@
         }
         
         [self addSubview:_background];
-        
-        _myPickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0.0, 0,
-                                                                       frame.size.width,
-                                                                       frame.size.height)];
+    
+        _myPickerView = [[UIPickerView alloc] initWithFrame:rc];
         _myPickerView.delegate = self;
         _myPickerView.dataSource = self;
         _myPickerView.showsSelectionIndicator = YES;
         [self addSubview:_myPickerView];
+        
+        
+        btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
+        btnSave.frame = CGRectMake(frame.size.width-50, frame.size.height/2-25, 50, 50);
+        [btnSave setImage:[UIImage imageNamed:@"customer_view_confirm_n.png"] forState:UIControlStateNormal];
+        [btnSave setImage:[UIImage imageNamed:@"customer_view_confirm_s.png"] forState:UIControlStateHighlighted];
+        [btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [btnSave setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
+        btnSave.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+        [btnSave addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:btnSave];
         
         
 //        UIButton *btnOK = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -87,6 +107,33 @@
         
     }
     return self;
+}
+
+- (void) confirmAction:(id) sender {
+    
+    
+    if(_selectionBlock)
+    {
+        _selectionBlock(_values);
+    }
+    
+    NSString *_unitString = nil;
+    
+    NSDictionary *v1 = [_values objectForKey:[NSNumber numberWithInteger:0]];
+    NSDictionary *v2 = [_values objectForKey:[NSNumber numberWithInteger:1]];
+    
+    if(v1 && v2)
+    {
+        _unitString = [NSString stringWithFormat:@"%@ - %@",
+                       [v1 objectForKey:@"name"],
+                       [v2 objectForKey:@"name"]];
+    }
+    
+    if([delegate_ respondsToSelector:@selector(didConfirmPickerValue:)]){
+        [delegate_ didConfirmPickerValue:_unitString];
+    }
+    
+    
 }
 
 - (void) tappedAction:(id)sender{
@@ -146,19 +193,14 @@
     _rowAndCom2Selected = 0;
     
     NSDictionary *pro = [_datas objectAtIndex:_rowAndCom1Selected];
-    NSArray *values = [pro objectForKey:@"cities"];
+    NSArray *values = [pro objectForKey:@"subs"];
     
     if([values count])
     {
         NSDictionary *city = [values objectAtIndex:0];
-    [_values setObject:city
-                forKey:[NSNumber numberWithInteger:1]];
+        [_values setObject:city
+                    forKey:[NSNumber numberWithInteger:1]];
         
-        NSArray *areas = [city objectForKey:@"areas"];
-        
-        if([areas count])
-        [_values setObject:[areas objectAtIndex:0]
-                    forKey:[NSNumber numberWithInteger:2]];
     }
 }
 
@@ -181,6 +223,7 @@
         
         [pickerView reloadAllComponents];
         [pickerView selectRow:0 inComponent:1 animated:NO];
+        
     }
     else if(component == 1)
     {
@@ -192,13 +235,14 @@
         [_values setObject:[values objectAtIndex:row]
                     forKey:[NSNumber numberWithInteger:component]];
         
+        [pickerView reloadComponent:1];
     }
    
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
 {
-    int width = SCREEN_WIDTH/2;
+    int width = _cellWidth/2;
 
     return width;
 }
@@ -231,7 +275,7 @@
     UILabel *tL  = nil;
     if(component == 0)
     {
-        CGFloat componentWidth = SCREEN_WIDTH/3;
+        CGFloat componentWidth = _cellWidth/2;
         tL = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, componentWidth, 50)];
         tL.backgroundColor = [UIColor clearColor];
         
@@ -252,7 +296,7 @@
     }
     else if(component == 1)
     {
-        CGFloat componentWidth = SCREEN_WIDTH/2;
+        CGFloat componentWidth = _cellWidth/2;
         tL = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, componentWidth, 50)];
         tL.backgroundColor = [UIColor clearColor];
         

@@ -12,7 +12,7 @@
 #import "UIButton+Color.h"
 
 
-@interface WirlessYaoBaoViewSettingsView () <UITableViewDelegate, UITableViewDataSource, CustomPickerViewDelegate>
+@interface WirlessYaoBaoViewSettingsView () <UITableViewDelegate, UITableViewDataSource, CustomPickerViewDelegate, Groups2PickerViewDelegate>
 {
     UITableView *_tableView;
     int _curIndex;
@@ -72,16 +72,16 @@
         };
         
         _tpicker = [[Groups2PickerView alloc]
-                    initWithFrame:CGRectMake(frame.size.width/2-100, 43, 200, 100) withGrayOrLight:@"picker_player.png"];
+                    initWithFrame:CGRectMake(frame.size.width/2-125, 43, 250, 100) withGrayOrLight:@"picker_player.png"];
         
         
         _tpicker._selectColor = YELLOW_COLOR;
         _tpicker._rowNormalColor = [UIColor whiteColor];
-        //_tpicker.delegate_ = self;
+        _tpicker.delegate_ = self;
         //IMP_BLOCK_SELF(WirlessHandleSettingsView);
         _tpicker._selectionBlock = ^(NSDictionary *values)
         {
-            [block_self didPickerValue:values];
+            [block_self didG2PickerValue:values];
         };
         
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,
@@ -146,9 +146,9 @@
     }
     
     self._groupValues = [NSMutableArray array];
-    [_groupValues addObject:@{@"name":@"A", @"subs":@[@"01",@"02",@"03"]}];
-    [_groupValues addObject:@{@"name":@"B", @"subs":@[@"04",@"05",@"06"]}];
-    [_groupValues addObject:@{@"name":@"C", @"subs":@[@"10",@"20",@"30"]}];
+    [_groupValues addObject:@{@"name":@"A", @"subs":@[@{@"name":@"01"},@{@"name":@"02"},@{@"name":@"03"}]}];
+    [_groupValues addObject:@{@"name":@"B", @"subs":@[@{@"name":@"04"},@{@"name":@"05"},@{@"name":@"06"}]}];
+    [_groupValues addObject:@{@"name":@"C", @"subs":@[@{@"name":@"10"},@{@"name":@"20"},@{@"name":@"30"}]}];
     
     [_rows addObject:@{@"title":@"设备名称",@"values":@[@"D1",@"D2",@"D3"]}];
     [_rows addObject:@{@"title":@"型号规格",@"values":@[@"X1",@"X2",@"X3"]}];
@@ -247,12 +247,25 @@
     
 }
 
+- (void) didG2PickerValue:(NSDictionary *)values{
+    
+    id key = [NSNumber numberWithInt:(int)_tpicker.tag];
+    
+    NSString *obj = [values objectForKey:@0];
+    [_map setObject:obj forKey:key];
+
+    [_tableView reloadData];
+    
+}
+
+
 - (void) didConfirmPickerValue:(NSString*) pickerValue{
 
     _curIndex = -1;
     _tableView.scrollEnabled = YES;
     [_tableView reloadData];
 }
+
 
 #pragma mark -
 #pragma mark Table View DataSource
@@ -344,7 +357,7 @@
         if(_curIndex == 4)
         {
             _tpicker.tag = _curIndex;
-            _tpicker._datas = @[@{@"values":[data objectForKey:@"values"]}];
+            _tpicker._datas = [data objectForKey:@"values"];
             
             [cell.contentView addSubview:_tpicker];
             [_tpicker selectRow:0 inComponent:0];

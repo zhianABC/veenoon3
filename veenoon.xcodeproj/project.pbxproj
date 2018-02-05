@@ -2717,6 +2717,8 @@
 				EB4E39E220273F6100533575 /* HandtoHandSettingsView.m */,
 				EB4E39E42027423D00533575 /* HandtoHandLineCheckView.h */,
 				EB4E39E52027423D00533575 /* HandtoHandLineCheckView.m */,
+				3425E9931FE57675003559F7 /* MixVoiceSettingsView.h */,
+				3425E9941FE57675003559F7 /* MixVoiceSettingsView.m */,
 			);
 			path = RIghtView;
 			sourceTree = "<group>";
@@ -2791,8 +2793,6 @@
 				3425E98B1FE571CE003559F7 /* ComSettingView.m */,
 				3425E98D1FE575A4003559F7 /* PlayerSettingsPannel.h */,
 				3425E98E1FE575A4003559F7 /* PlayerSettingsPannel.m */,
-				3425E9931FE57675003559F7 /* MixVoiceSettingsView.h */,
-				3425E9941FE57675003559F7 /* MixVoiceSettingsView.m */,
 				345492FA1FE638F300793E2E /* SlideButton.h */,
 				345492FB1FE638F300793E2E /* SlideButton.m */,
 				EB3B73B31FE6395C001941CF /* EngineerSliderView.h */,

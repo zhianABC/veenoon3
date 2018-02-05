@@ -9,6 +9,13 @@
 
 typedef void(^Groups2PickerSelectionBlock)(NSDictionary* values);
 
+@protocol Groups2PickerViewDelegate <NSObject>
+
+@optional
+- (void) didConfirmPickerValue:(NSString*) pickerValue;
+
+
+@end
 
 @interface Groups2PickerView : UIView <UIPickerViewDelegate, UIPickerViewDataSource> {
     
@@ -20,6 +27,8 @@ typedef void(^Groups2PickerSelectionBlock)(NSDictionary* values);
 
 @property (nonatomic, strong) UIColor *_selectColor;
 @property (nonatomic, strong) UIColor *_rowNormalColor;
+
+@property (nonatomic, weak) id  <Groups2PickerViewDelegate> delegate_;
 
 - (id)initWithFrame:(CGRect)frame withGrayOrLight:(NSString*)grayOrLight;
 

@@ -98,7 +98,7 @@
     [self.view addSubview:backBtn];
     [backBtn addTarget:self
                 action:@selector(backAction:)
-      forControlEvents:UIControlEventTouchUpInside];
+      forControlEvents:UIControlEventTouchDown];
     
     _portView = [[EngineerPortSettingView alloc]initWithFrame:CGRectMake(-SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     //    settingsUserView.delegate = self;
