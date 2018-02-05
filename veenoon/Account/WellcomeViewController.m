@@ -20,7 +20,7 @@
 #import "CircleProgressView.h"
 #import "PlayerSettingsPannel.h"
 #import "SlideButton.h"
-#import "WirlessYaoBaoViewSettingsView.h"
+#import "MixVoiceSettingsView.h"
 
 @interface WellcomeViewController ()
 
@@ -173,7 +173,7 @@
 //    [batter1 setBatteryValue:0.18];
     
     
-    WirlessYaoBaoViewSettingsView *ecp = [[WirlessYaoBaoViewSettingsView alloc]
+    MixVoiceSettingsView *ecp = [[MixVoiceSettingsView alloc]
                              initWithFrame:CGRectMake(SCREEN_WIDTH-300,
                                                       64, 300, SCREEN_HEIGHT-114)];
     [self.view addSubview:ecp];
