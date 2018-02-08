@@ -94,8 +94,8 @@
     
     [self addSubview:roadSlider];
     
-    roadSlider.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
-    
+    roadSlider.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));;
+   
     [self bringSubviewToFront:sliderThumb];
 }
 

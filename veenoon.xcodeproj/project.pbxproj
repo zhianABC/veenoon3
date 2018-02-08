@@ -2850,6 +2850,7 @@
 				TargetAttributes = {
 					04DE1DD11AD68C5E00D49E2F = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 9FDG53LV84;
 					};
 					04DE1DEA1AD68C5E00D49E2F = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -3617,7 +3618,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "d5f77f8b-2bdc-44af-8eae-937ee49729c7";
+				PROVISIONING_PROFILE = "a541cb78-affc-487e-9b13-2700b44a0eff";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 			};
@@ -3654,7 +3655,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "d5f77f8b-2bdc-44af-8eae-937ee49729c7";
+				PROVISIONING_PROFILE = "a541cb78-affc-487e-9b13-2700b44a0eff";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
@@ -3668,6 +3669,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: AS-CN (Beijing) Co., Ltd.";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: AS-CN (Beijing) Co., Ltd.";
+				DEVELOPMENT_TEAM = 9FDG53LV84;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3686,7 +3688,8 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sz.veenoon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d5f77f8b-2bdc-44af-8eae-937ee49729c7";
+				PROVISIONING_PROFILE = "a541cb78-affc-487e-9b13-2700b44a0eff";
+				PROVISIONING_PROFILE_SPECIFIER = veenoon;
 			};
 			name = Debug;
 		};
@@ -3697,6 +3700,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: AS-CN (Beijing) Co., Ltd.";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: AS-CN (Beijing) Co., Ltd.";
+				DEVELOPMENT_TEAM = 9FDG53LV84;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3715,7 +3719,8 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sz.veenoon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d5f77f8b-2bdc-44af-8eae-937ee49729c7";
+				PROVISIONING_PROFILE = "a541cb78-affc-487e-9b13-2700b44a0eff";
+				PROVISIONING_PROFILE_SPECIFIER = veenoon;
 			};
 			name = Release;
 		};

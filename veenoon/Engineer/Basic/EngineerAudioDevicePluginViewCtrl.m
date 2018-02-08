@@ -44,7 +44,7 @@
     UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, ENGINEER_VIEW_TOP, SCREEN_WIDTH-80, 30)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont boldSystemFontOfSize:22];
+    portDNSLabel.font = [UIFont boldSystemFontOfSize:24];
     portDNSLabel.textColor  = [UIColor whiteColor];
     portDNSLabel.text = @"请配置您的音频管理系统";
     

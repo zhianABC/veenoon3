@@ -84,7 +84,7 @@
     [self.view addSubview:titleL];
     
     
-    
+    /*
     ColumnsView *col = [[ColumnsView alloc] initWithFrame:CGRectZero];
     col.xStepPixel = 50;
     col.yStepPixel = 50;
@@ -177,6 +177,7 @@
                              initWithFrame:CGRectMake(SCREEN_WIDTH-300,
                                                       64, 300, SCREEN_HEIGHT-114)];
     [self.view addSubview:ecp];
+     */
 }
 
 - (void) loginAction:(id)sender{
