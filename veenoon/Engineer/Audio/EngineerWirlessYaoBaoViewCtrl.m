@@ -34,6 +34,9 @@
     NSMutableArray *_selectedBtnArray;
     
     WirlessYaoBaoViewSettingsView *_rightSetView;
+    
+    BOOL isSettings;
+    UIButton *okBtn;
 }
 @end
 
@@ -71,6 +74,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    isSettings = NO;
+    
     _imageViewArray = [[NSMutableArray alloc] init];
     _buttonArray = [[NSMutableArray alloc] init];
     _buttonSeideArray = [[NSMutableArray alloc] init];
@@ -106,7 +111,7 @@
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
     [bottomBar addSubview:okBtn];
     [okBtn setTitle:@"设置" forState:UIControlStateNormal];
@@ -369,21 +374,29 @@
 }
 
 - (void) okAction:(id)sender{
- 
-    if(_rightSetView == nil){
-    _rightSetView = [[WirlessYaoBaoViewSettingsView alloc]
-                                      initWithFrame:CGRectMake(SCREEN_WIDTH-300,
-                                                               64, 300, SCREEN_HEIGHT-114)];
+    if (!isSettings) {
+        if (_rightSetView == nil) {
+            _rightSetView = [[WirlessYaoBaoViewSettingsView alloc]
+                             initWithFrame:CGRectMake(SCREEN_WIDTH-300,
+                                                      64, 300, SCREEN_HEIGHT-114)];
+        } else {
+            [UIView beginAnimations:nil context:nil];
+            _rightSetView.frame  = CGRectMake(SCREEN_WIDTH-300,
+                                              64, 300, SCREEN_HEIGHT-114);
+            [UIView commitAnimations];
+        }
+        
+        [self.view addSubview:_rightSetView];
+        [okBtn setTitle:@"保存" forState:UIControlStateNormal];
+        
+        isSettings = YES;
+    } else {
+        if (_rightSetView) {
+            [_rightSetView removeFromSuperview];
+        }
+        [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+        isSettings = NO;
     }
-    else
-    {
-        [UIView beginAnimations:nil context:nil];
-        _rightSetView.frame  = CGRectMake(SCREEN_WIDTH-300,
-                                         64, 300, SCREEN_HEIGHT-114);
-        [UIView commitAnimations];
-    }
-    
-    [self.view addSubview:_rightSetView];
 }
 
 - (void) cancelAction:(id)sender{

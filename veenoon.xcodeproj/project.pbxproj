@@ -2711,6 +2711,12 @@
 		EB4E39DE20273B9000533575 /* RIghtView */ = {
 			isa = PBXGroup;
 			children = (
+				3425E98A1FE571CE003559F7 /* ComSettingView.h */,
+				3425E98B1FE571CE003559F7 /* ComSettingView.m */,
+				3425E98D1FE575A4003559F7 /* PlayerSettingsPannel.h */,
+				3425E98E1FE575A4003559F7 /* PlayerSettingsPannel.m */,
+				342814211FE34BF100170D11 /* PowerSettingView.h */,
+				342814221FE34BF100170D11 /* PowerSettingView.m */,
 				3425E9901FE5763B003559F7 /* WirlessYaoBaoViewSettingsView.h */,
 				3425E9911FE5763B003559F7 /* WirlessYaoBaoViewSettingsView.m */,
 				EB4E39E120273F6100533575 /* HandtoHandSettingsView.h */,
@@ -2787,12 +2793,6 @@
 				34DC473E1FD6984400ACB589 /* ColumnView.m */,
 				341C60C21FDCF1EA003A5490 /* ECPlusSelectView.h */,
 				341C60C31FDCF1EA003A5490 /* ECPlusSelectView.m */,
-				342814211FE34BF100170D11 /* PowerSettingView.h */,
-				342814221FE34BF100170D11 /* PowerSettingView.m */,
-				3425E98A1FE571CE003559F7 /* ComSettingView.h */,
-				3425E98B1FE571CE003559F7 /* ComSettingView.m */,
-				3425E98D1FE575A4003559F7 /* PlayerSettingsPannel.h */,
-				3425E98E1FE575A4003559F7 /* PlayerSettingsPannel.m */,
 				345492FA1FE638F300793E2E /* SlideButton.h */,
 				345492FB1FE638F300793E2E /* SlideButton.m */,
 				EB3B73B31FE6395C001941CF /* EngineerSliderView.h */,

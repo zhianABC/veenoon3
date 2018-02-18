@@ -9,6 +9,7 @@
 #import "EngineerPlayerSettingsViewCtrl.h"
 #import "UIButton+Color.h"
 #import "CustomPickerView.h"
+#import "PlayerSettingsPannel.h"
 
 @interface EngineerPlayerSettingsViewCtrl () {
     
@@ -26,6 +27,11 @@
     
     UIButton *_luboBtn;
     UIButton *_tanchuBtn;
+    
+    BOOL isSettings;
+    
+    PlayerSettingsPannel *_psv;
+    UIButton *okBtn;
 }
 @end
 
@@ -34,6 +40,8 @@
 @synthesize _number;
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    isSettings = NO;
     
     UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
     [self.view addSubview:titleIcon];
@@ -62,7 +70,7 @@
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
     [bottomBar addSubview:okBtn];
     [okBtn setTitle:@"设置" forState:UIControlStateNormal];
@@ -225,7 +233,22 @@
 }
 
 - (void) okAction:(id)sender{
-    
+    if (!isSettings) {
+        _psv = [[PlayerSettingsPannel alloc]
+                initWithFrame:CGRectMake(SCREEN_WIDTH-300,
+                                         64, 300, SCREEN_HEIGHT-114)];
+        [self.view addSubview:_psv];
+        
+        [okBtn setTitle:@"保存" forState:UIControlStateNormal];
+        
+        isSettings = YES;
+    } else {
+        if (_psv) {
+            [_psv removeFromSuperview];
+        }
+        [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+        isSettings = NO;
+    }
 }
 
 - (void) cancelAction:(id)sender{
