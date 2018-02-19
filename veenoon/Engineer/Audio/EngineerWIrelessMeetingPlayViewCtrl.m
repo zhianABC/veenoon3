@@ -10,7 +10,7 @@
 #import "UIButton+Color.h"
 #import "CustomPickerView.h"
 
-@interface EngineerWIrelessMeetingPlayViewCtrl () {
+@interface EngineerWIrelessMeetingPlayViewCtrl () <CustomPickerViewDelegate>{
     
     UIButton *_selectSysBtn;
     

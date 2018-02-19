@@ -10,7 +10,7 @@
 #import "UIButton+Color.h"
 #import "CustomPickerView.h"
 
-@interface EngineerVideoPinJieViewCtrl () {
+@interface EngineerVideoPinJieViewCtrl ()<CustomPickerViewDelegate> {
     UIButton *_selectSysBtn;
     
     CustomPickerView *_customPicker;

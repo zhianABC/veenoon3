@@ -577,6 +577,7 @@
 		EBAE5BB71FDFFBD700C10C4D /* EngineerScenarioListViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EBAE5BB61FDFFBD700C10C4D /* EngineerScenarioListViewCtrl.m */; };
 		EBAE5BB91FE0002F00C10C4D /* engineer_scenario_add_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBAE5BB81FE0002E00C10C4D /* engineer_scenario_add_n@2x.png */; };
 		EBAE5BBB1FE0070600C10C4D /* EngineerPresetScenarioViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EBAE5BBA1FE0070600C10C4D /* EngineerPresetScenarioViewCtrl.m */; };
+		EBC71AFF203AF4EE00DD0A98 /* DVDRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71AFE203AF4EE00DD0A98 /* DVDRightView.m */; };
 		EBCA834B1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCA834A1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m */; };
 		EBDF1BEC1FC5A2D000A756EA /* user_meeting_room_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1BEB1FC5A2D000A756EA /* user_meeting_room_1@2x.png */; };
 		EBDF1BF21FC5A9A200A756EA /* user_meeting_room_6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1BED1FC5A9A100A756EA /* user_meeting_room_6@2x.png */; };
@@ -1450,6 +1451,8 @@
 		EBAE5BB81FE0002E00C10C4D /* engineer_scenario_add_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_scenario_add_n@2x.png"; sourceTree = "<group>"; };
 		EBAE5BBA1FE0070600C10C4D /* EngineerPresetScenarioViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerPresetScenarioViewCtrl.m; sourceTree = "<group>"; };
 		EBAE5BBC1FE0071C00C10C4D /* EngineerPresetScenarioViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerPresetScenarioViewCtrl.h; sourceTree = "<group>"; };
+		EBC71AFD203AF4EE00DD0A98 /* DVDRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVDRightView.h; sourceTree = "<group>"; };
+		EBC71AFE203AF4EE00DD0A98 /* DVDRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DVDRightView.m; sourceTree = "<group>"; };
 		EBCA834A1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserMonitorSettingsViewCtrl.m; sourceTree = "<group>"; };
 		EBCA834C1FD434D1007DEB8E /* UserMonitorSettingsViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserMonitorSettingsViewCtrl.h; sourceTree = "<group>"; };
 		EBDF1BEB1FC5A2D000A756EA /* user_meeting_room_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_meeting_room_1@2x.png"; sourceTree = "<group>"; };
@@ -2742,6 +2745,8 @@
 		EB4E39DF20273C9D00533575 /* RightView */ = {
 			isa = PBXGroup;
 			children = (
+				EBC71AFD203AF4EE00DD0A98 /* DVDRightView.h */,
+				EBC71AFE203AF4EE00DD0A98 /* DVDRightView.m */,
 			);
 			path = RightView;
 			sourceTree = "<group>";
@@ -3411,6 +3416,7 @@
 				3496B75A1FCAF3C5005F4857 /* SignalView.m in Sources */,
 				EBF5D4311FCC591A0014D5F0 /* UserHuiYinViewController.m in Sources */,
 				04DE1E9E1AD6AEE000D49E2F /* HttpFileGetter.m in Sources */,
+				EBC71AFF203AF4EE00DD0A98 /* DVDRightView.m in Sources */,
 				EB3686011FC07A9C009973A3 /* SettingsAccountView.m in Sources */,
 				04DE1EAE1AD6AEE000D49E2F /* SDWebImageDecoder.m in Sources */,
 				04DE1EA61AD6AEE000D49E2F /* SBJson4StreamTokeniser.m in Sources */,
