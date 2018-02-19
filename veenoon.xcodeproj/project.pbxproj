@@ -578,6 +578,11 @@
 		EBAE5BB91FE0002F00C10C4D /* engineer_scenario_add_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBAE5BB81FE0002E00C10C4D /* engineer_scenario_add_n@2x.png */; };
 		EBAE5BBB1FE0070600C10C4D /* EngineerPresetScenarioViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EBAE5BBA1FE0070600C10C4D /* EngineerPresetScenarioViewCtrl.m */; };
 		EBC71AFF203AF4EE00DD0A98 /* DVDRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71AFE203AF4EE00DD0A98 /* DVDRightView.m */; };
+		EBC71B05203AF72D00DD0A98 /* CameraRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B04203AF72D00DD0A98 /* CameraRightView.m */; };
+		EBC71B08203AF74100DD0A98 /* RemoteVideoRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B07203AF74100DD0A98 /* RemoteVideoRightView.m */; };
+		EBC71B0B203AF90700DD0A98 /* VideoProcessRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B0A203AF90700DD0A98 /* VideoProcessRightView.m */; };
+		EBC71B0F203AFF6600DD0A98 /* icon.plist in Resources */ = {isa = PBXBuildFile; fileRef = EBC71B0E203AFF6600DD0A98 /* icon.plist */; };
+		EBC71B11203B01BB00DD0A98 /* v_icon_22@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC71B10203B01BB00DD0A98 /* v_icon_22@2x.png */; };
 		EBCA834B1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCA834A1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m */; };
 		EBDF1BEC1FC5A2D000A756EA /* user_meeting_room_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1BEB1FC5A2D000A756EA /* user_meeting_room_1@2x.png */; };
 		EBDF1BF21FC5A9A200A756EA /* user_meeting_room_6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1BED1FC5A9A100A756EA /* user_meeting_room_6@2x.png */; };
@@ -1453,6 +1458,14 @@
 		EBAE5BBC1FE0071C00C10C4D /* EngineerPresetScenarioViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerPresetScenarioViewCtrl.h; sourceTree = "<group>"; };
 		EBC71AFD203AF4EE00DD0A98 /* DVDRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVDRightView.h; sourceTree = "<group>"; };
 		EBC71AFE203AF4EE00DD0A98 /* DVDRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DVDRightView.m; sourceTree = "<group>"; };
+		EBC71B03203AF72D00DD0A98 /* CameraRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraRightView.h; sourceTree = "<group>"; };
+		EBC71B04203AF72D00DD0A98 /* CameraRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraRightView.m; sourceTree = "<group>"; };
+		EBC71B06203AF74100DD0A98 /* RemoteVideoRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemoteVideoRightView.h; sourceTree = "<group>"; };
+		EBC71B07203AF74100DD0A98 /* RemoteVideoRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemoteVideoRightView.m; sourceTree = "<group>"; };
+		EBC71B09203AF90700DD0A98 /* VideoProcessRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoProcessRightView.h; sourceTree = "<group>"; };
+		EBC71B0A203AF90700DD0A98 /* VideoProcessRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoProcessRightView.m; sourceTree = "<group>"; };
+		EBC71B0E203AFF6600DD0A98 /* icon.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = icon.plist; sourceTree = "<group>"; };
+		EBC71B10203B01BB00DD0A98 /* v_icon_22@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "v_icon_22@2x.png"; sourceTree = "<group>"; };
 		EBCA834A1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserMonitorSettingsViewCtrl.m; sourceTree = "<group>"; };
 		EBCA834C1FD434D1007DEB8E /* UserMonitorSettingsViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserMonitorSettingsViewCtrl.h; sourceTree = "<group>"; };
 		EBDF1BEB1FC5A2D000A756EA /* user_meeting_room_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_meeting_room_1@2x.png"; sourceTree = "<group>"; };
@@ -1598,6 +1611,7 @@
 		049BA65C1AF7B63F00F17584 /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				EBC71B0E203AFF6600DD0A98 /* icon.plist */,
 				341C60C51FDCF878003A5490 /* ecplus.plist */,
 				045850151B08CF42002BC23C /* BookCache.sqlite */,
 				045850161B08CF42002BC23C /* BookCache.h */,
@@ -2466,6 +2480,7 @@
 		341C60CE1FDD0DBF003A5490 /* video */ = {
 			isa = PBXGroup;
 			children = (
+				EBC71B10203B01BB00DD0A98 /* v_icon_22@2x.png */,
 				341C60CF1FDD0DBF003A5490 /* v_icon_7@2x.png */,
 				341C60D01FDD0DBF003A5490 /* v_icon_5@2x.png */,
 				341C60D11FDD0DBF003A5490 /* v_icon_9@2x.png */,
@@ -2533,6 +2548,8 @@
 		EB03F5441FBDEB1200865541 /* Engineer */ = {
 			isa = PBXGroup;
 			children = (
+				3425E98A1FE571CE003559F7 /* ComSettingView.h */,
+				3425E98B1FE571CE003559F7 /* ComSettingView.m */,
 				EB1717941FF5F34900CBDB81 /* Env */,
 				EB1A55CF1FEAA0F4000B18E6 /* Video */,
 				EB1A55CE1FEA9E2A000B18E6 /* Audio */,
@@ -2720,8 +2737,6 @@
 		EB4E39DE20273B9000533575 /* RIghtView */ = {
 			isa = PBXGroup;
 			children = (
-				3425E98A1FE571CE003559F7 /* ComSettingView.h */,
-				3425E98B1FE571CE003559F7 /* ComSettingView.m */,
 				3425E98D1FE575A4003559F7 /* PlayerSettingsPannel.h */,
 				3425E98E1FE575A4003559F7 /* PlayerSettingsPannel.m */,
 				342814211FE34BF100170D11 /* PowerSettingView.h */,
@@ -2747,6 +2762,12 @@
 			children = (
 				EBC71AFD203AF4EE00DD0A98 /* DVDRightView.h */,
 				EBC71AFE203AF4EE00DD0A98 /* DVDRightView.m */,
+				EBC71B03203AF72D00DD0A98 /* CameraRightView.h */,
+				EBC71B04203AF72D00DD0A98 /* CameraRightView.m */,
+				EBC71B06203AF74100DD0A98 /* RemoteVideoRightView.h */,
+				EBC71B07203AF74100DD0A98 /* RemoteVideoRightView.m */,
+				EBC71B09203AF90700DD0A98 /* VideoProcessRightView.h */,
+				EBC71B0A203AF90700DD0A98 /* VideoProcessRightView.m */,
 			);
 			path = RightView;
 			sourceTree = "<group>";
@@ -3157,6 +3178,7 @@
 				EB09C4911FD2AEAE00776540 /* user_diandongchuanglian_s@2x.png in Resources */,
 				EB36AAE21FCDA432009A0FD8 /* user_video_touying_n@2x.png in Resources */,
 				EB09EF541FD9A9AE00C968CA /* engineer_gongfang_s@2x.png in Resources */,
+				EBC71B11203B01BB00DD0A98 /* v_icon_22@2x.png in Resources */,
 				EBAE5BB91FE0002F00C10C4D /* engineer_scenario_add_n@2x.png in Resources */,
 				3425E9801FE54C62003559F7 /* process_light@2x.png in Resources */,
 				EBF5D4411FCC60240014D5F0 /* shedingzhuxi_n@2x.png in Resources */,
@@ -3351,6 +3373,7 @@
 				EB09EF431FD9A82600C968CA /* engineer_wuxianhuatong_n@2x.png in Resources */,
 				EBF6A7421FC851E500260FF0 /* audio_player_play@2x.png in Resources */,
 				EB23AE9F1FD18C9300D1570F /* remote_video_mutephone@2x.png in Resources */,
+				EBC71B0F203AFF6600DD0A98 /* icon.plist in Resources */,
 				EB3B73BB1FE6428C001941CF /* jslide_thumb_n@2x.png in Resources */,
 				EB38BAB41FD43C8B00E672CA /* user_monitor_default_n@2x.png in Resources */,
 				EB1A55EB1FEF594B000B18E6 /* engineer_next_n@2x.png in Resources */,
@@ -3405,6 +3428,7 @@
 				04DE1E891AD6AEE000D49E2F /* IconTextButton.m in Sources */,
 				04DE1E8C1AD6AEE000D49E2F /* RRScrollView.m in Sources */,
 				34686C9F1ED025CB001749A1 /* DesUtil.m in Sources */,
+				EBC71B08203AF74100DD0A98 /* RemoteVideoRightView.m in Sources */,
 				045850191B08CF42002BC23C /* BookCache.m in Sources */,
 				EB217FB81FD42188003F5A8F /* UserFloorWarmViewCtrl.m in Sources */,
 				0477DC531DA9F3CC0077FA52 /* SHA1.m in Sources */,
@@ -3470,6 +3494,7 @@
 				04D719881DADE7D4002153D7 /* ActivityViewController.m in Sources */,
 				EB17179A1FF60C2600CBDB81 /* EngineerAireConditionViewCtrl.m in Sources */,
 				04DE1E8A1AD6AEE000D49E2F /* MaskRender.m in Sources */,
+				EBC71B0B203AF90700DD0A98 /* VideoProcessRightView.m in Sources */,
 				04DE1EB21AD6AEE000D49E2F /* SDWebImagePrefetcher.m in Sources */,
 				EB217FCC1FD42660003F5A8F /* UserAddWetViewCtrl.m in Sources */,
 				04D7197F1DADE098002153D7 /* NSDate-Helper.m in Sources */,
@@ -3497,6 +3522,7 @@
 				04DE1E8B1AD6AEE000D49E2F /* Progress7View.m in Sources */,
 				EB09EF311FD97CB500C968CA /* EngineerAudioDevicePluginViewCtrl.m in Sources */,
 				04DE1EB41AD6AEE000D49E2F /* UIImage+GIF.m in Sources */,
+				EBC71B05203AF72D00DD0A98 /* CameraRightView.m in Sources */,
 				EB3B73B51FE6395C001941CF /* EngineerSliderView.m in Sources */,
 				04DE1EA21AD6AEE000D49E2F /* Reachability.m in Sources */,
 				EB1717971FF5F5AB00CBDB81 /* EngineerLightViewController.m in Sources */,

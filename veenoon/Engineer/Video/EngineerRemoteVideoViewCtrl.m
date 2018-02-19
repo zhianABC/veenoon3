@@ -8,8 +8,9 @@
 
 #import "EngineerRemoteVideoViewCtrl.h"
 #import "UIButton+Color.h"
+#import "RemoteVideoRightView.h"
 
-@interface EngineerRemoteVideoViewCtrl () {
+@interface EngineerRemoteVideoViewCtrl () <CustomPickerViewDelegate>{
     UIButton *_selectSysBtn;
     
     CustomPickerView *_customPicker;
@@ -23,6 +24,10 @@
     
     UIButton *_backWorkdBtn;
     NSMutableArray *_cameraBtnArray;
+    
+    RemoteVideoRightView *_rightView;
+    BOOL isSettings;
+    UIButton *okBtn;
 }
 
 @end
@@ -95,7 +100,7 @@
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
     [bottomBar addSubview:okBtn];
     [okBtn setTitle:@"设置" forState:UIControlStateNormal];
@@ -710,7 +715,22 @@
     [_selectSysBtn setTitle:title forState:UIControlStateNormal];
 }
 - (void) okAction:(id)sender{
-    
+    if (!isSettings) {
+        _rightView = [[RemoteVideoRightView alloc]
+                      initWithFrame:CGRectMake(SCREEN_WIDTH-300,
+                                               64, 300, SCREEN_HEIGHT-114)];
+        [self.view addSubview:_rightView];
+        
+        [okBtn setTitle:@"保存" forState:UIControlStateNormal];
+        
+        isSettings = YES;
+    } else {
+        if (_rightView) {
+            [_rightView removeFromSuperview];
+        }
+        [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+        isSettings = NO;
+    }
 }
 
 - (void) cancelAction:(id)sender{

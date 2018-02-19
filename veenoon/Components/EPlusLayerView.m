@@ -108,7 +108,11 @@
     return self;
 }
 
-
+- (void) moveTitleToLeft {
+    textLabel.frame = CGRectMake(15,
+                                 40,
+                                 self.frame.size.width-15-10, 20);
+}
 
 - (void) enableLongPressed {
     UILongPressGestureRecognizer *longPress0 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed0:)];

@@ -9,14 +9,23 @@
 #import "EngineerVideoProcessViewCtrl.h"
 #import "UIButton+Color.h"
 #import "CustomPickerView.h"
+#import "VideoProcessRightView.h"
 
-@interface EngineerVideoProcessViewCtrl () {
+@interface EngineerVideoProcessViewCtrl () <CustomPickerViewDelegate, VideoProcessRightViewDelegate>{
     UIButton *_selectSysBtn;
     
     CustomPickerView *_customPicker;
     
     NSMutableArray *_inPutBtnArray;
     NSMutableArray *_outPutBtnArray;
+    
+    UIButton *okBtn;
+    BOOL isSettings;
+    VideoProcessRightView *_rightView;
+    
+    UIView *_topView;
+    UIView *_bottomView;
+    UIImageView *bottomBar;
 }
 
 @end
@@ -28,6 +37,8 @@
 @synthesize _outNumber;
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    isSettings = NO;
     
     _inPutBtnArray = [[NSMutableArray alloc] init];
     _outPutBtnArray = [[NSMutableArray alloc] init];
@@ -41,7 +52,7 @@
     line.backgroundColor = RGB(75, 163, 202);
     [self.view addSubview:line];
     
-    UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
+    bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
     
     //缺切图，把切图贴上即可。
@@ -60,7 +71,7 @@
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
     [bottomBar addSubview:okBtn];
     [okBtn setTitle:@"设置" forState:UIControlStateNormal];
@@ -196,8 +207,75 @@
     NSString *title =  [@"视频处理器" stringByAppendingString:pickerValue];
     [_selectSysBtn setTitle:title forState:UIControlStateNormal];
 }
-- (void) okAction:(id)sender{
+- (void) saveAction:(id)sender{
+    if (_rightView) {
+        [_rightView removeFromSuperview];
+    }
+    if (_topView) {
+        [_topView removeFromSuperview];
+    }
+    if (_bottomView) {
+        [_bottomView removeFromSuperview];
+    }
     
+    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+    isSettings = NO;
+}
+- (void) okAction:(id)sender{
+    if (!isSettings) {
+        _rightView = [[VideoProcessRightView alloc]
+                      initWithFrame:CGRectMake(SCREEN_WIDTH-300,
+                                               64, 300, SCREEN_HEIGHT-114)];
+        _rightView.delegate = self;
+        [self.view addSubview:_rightView];
+        
+        _topView = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-300, 0, 300, 64)];
+        _topView.backgroundColor = THEME_COLOR;
+        [self.view addSubview:_topView];
+        
+        _bottomView = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-300, SCREEN_HEIGHT-50, 300, 50)];
+        _bottomView.backgroundColor = THEME_COLOR;
+        [self.view addSubview:_bottomView];
+        
+        UIButton *saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        saveBtn.frame = CGRectMake(_bottomView.frame.size.width -170, 0,160, 50);
+        [_bottomView addSubview:saveBtn];
+        [saveBtn setTitle:@"保存" forState:UIControlStateNormal];
+        [saveBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [saveBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+        saveBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+        [saveBtn addTarget:self
+                  action:@selector(saveAction:)
+        forControlEvents:UIControlEventTouchUpInside];
+        
+        isSettings = YES;
+    }
+}
+
+- (void) didEndDragingElecCell:(NSDictionary *)data pt:(CGPoint)pt {
+    CGPoint viewPoint = [self.view convertPoint:pt fromView:_rightView];
+    
+    NSNumber *number = [data objectForKey:@"id"];
+    int numberInt = [number intValue];
+    UIImage *image = [data objectForKey:@"icon"];
+    if (301 <= numberInt && numberInt <= 305) {
+        for (UIButton *button in _inPutBtnArray) {
+            CGRect rect = [self.view convertRect:button.frame fromView:button.superview];
+            if (CGRectContainsPoint(rect, viewPoint)) {
+//                [button setImage:image forState:UIControlStateNormal];
+            }
+        }
+    } else {
+        for (UIButton *button in _outPutBtnArray) {
+            if (CGRectContainsPoint(button.frame, viewPoint)) {
+//                [button setImage:image forState:UIControlStateNormal];
+            }
+        }
+    }
+    
+    
+    
+    NSLog(@"ssss");
 }
 
 - (void) cancelAction:(id)sender{

@@ -61,4 +61,6 @@
 
 - (void) enableLongPressed;
 
+- (void) moveTitleToLeft;
+
 @end
