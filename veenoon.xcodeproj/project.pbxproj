@@ -300,6 +300,7 @@
 		EB09EF531FD9A9AE00C968CA /* engineer_gongfang_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB09EF511FD9A9AD00C968CA /* engineer_gongfang_n@2x.png */; };
 		EB09EF541FD9A9AE00C968CA /* engineer_gongfang_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB09EF521FD9A9AD00C968CA /* engineer_gongfang_s@2x.png */; };
 		EB164747203AC95D00E71483 /* WirelessMeetingView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB164746203AC95D00E71483 /* WirelessMeetingView.m */; };
+		EB16474A203ACD6300E71483 /* GongLvFangDaQiView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB164749203ACD6300E71483 /* GongLvFangDaQiView.m */; };
 		EB17178D1FF5DF6B00CBDB81 /* EngineerTVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB17178C1FF5DF6B00CBDB81 /* EngineerTVViewController.m */; };
 		EB1717901FF5E44B00CBDB81 /* EngineerLuBoJiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB17178F1FF5E44B00CBDB81 /* EngineerLuBoJiViewController.m */; };
 		EB1717931FF5E6B600CBDB81 /* EngineerTouYingJiViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1717921FF5E6B600CBDB81 /* EngineerTouYingJiViewCtrl.m */; };
@@ -1120,6 +1121,8 @@
 		EB09EF521FD9A9AD00C968CA /* engineer_gongfang_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_gongfang_s@2x.png"; sourceTree = "<group>"; };
 		EB164745203AC95D00E71483 /* WirelessMeetingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WirelessMeetingView.h; sourceTree = "<group>"; };
 		EB164746203AC95D00E71483 /* WirelessMeetingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WirelessMeetingView.m; sourceTree = "<group>"; };
+		EB164748203ACD6300E71483 /* GongLvFangDaQiView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GongLvFangDaQiView.h; sourceTree = "<group>"; };
+		EB164749203ACD6300E71483 /* GongLvFangDaQiView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GongLvFangDaQiView.m; sourceTree = "<group>"; };
 		EB17178B1FF5DF6B00CBDB81 /* EngineerTVViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerTVViewController.h; sourceTree = "<group>"; };
 		EB17178C1FF5DF6B00CBDB81 /* EngineerTVViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerTVViewController.m; sourceTree = "<group>"; };
 		EB17178E1FF5E44B00CBDB81 /* EngineerLuBoJiViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerLuBoJiViewController.h; sourceTree = "<group>"; };
@@ -2730,6 +2733,8 @@
 				3425E9941FE57675003559F7 /* MixVoiceSettingsView.m */,
 				EB164745203AC95D00E71483 /* WirelessMeetingView.h */,
 				EB164746203AC95D00E71483 /* WirelessMeetingView.m */,
+				EB164748203ACD6300E71483 /* GongLvFangDaQiView.h */,
+				EB164749203ACD6300E71483 /* GongLvFangDaQiView.m */,
 			);
 			path = RIghtView;
 			sourceTree = "<group>";
@@ -3452,6 +3457,7 @@
 				EB29820C1FD57FC2007B5C20 /* EngineerShootQRCode.m in Sources */,
 				EB09C47C1FD25B4300776540 /* UserLightConfigViewCtrl.m in Sources */,
 				345492FC1FE638F300793E2E /* SlideButton.m in Sources */,
+				EB16474A203ACD6300E71483 /* GongLvFangDaQiView.m in Sources */,
 				EB1A55F41FEF80D7000B18E6 /* EngineerRemoteVideoViewCtrl.m in Sources */,
 				EB5CF0411FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m in Sources */,
 				EB1A56151FEF8F29000B18E6 /* EngineerVideoProcessViewCtrl.m in Sources */,
