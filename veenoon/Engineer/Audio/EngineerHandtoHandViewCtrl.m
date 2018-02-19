@@ -12,13 +12,17 @@
 #import "EngineerSliderView.h"
 #import "HandtoHandSettingsView.h"
 
-@interface EngineerHandtoHandViewCtrl () {
+@interface EngineerHandtoHandViewCtrl () <CustomPickerViewDelegate, EngineerSliderViewDelegate> {
     
     UIButton *_selectSysBtn;
     
     CustomPickerView *_customPicker;
     
     EngineerSliderView *_zengyiSlider;
+    UIButton *okBtn;
+    
+    HandtoHandSettingsView *_rightView;
+    BOOL isSettings;
 }
 @end
 
@@ -27,6 +31,8 @@
 @synthesize _number;
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    isSettings = NO;
     
     UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
     [self.view addSubview:titleIcon];
@@ -55,7 +61,7 @@
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
     [bottomBar addSubview:okBtn];
     [okBtn setTitle:@"设置" forState:UIControlStateNormal];
@@ -250,10 +256,29 @@
 }
 
 - (void) okAction:(id)sender{
-    HandtoHandSettingsView *ecp = [[HandtoHandSettingsView alloc]
-                                          initWithFrame:CGRectMake(SCREEN_WIDTH-300,
-                                                                   64, 300, SCREEN_HEIGHT-114)];
-    [self.view addSubview:ecp];
+    if (!isSettings) {
+        if (_rightView == nil) {
+            _rightView = [[HandtoHandSettingsView alloc]
+                          initWithFrame:CGRectMake(SCREEN_WIDTH-300,
+                                                   64, 300, SCREEN_HEIGHT-114)];
+        } else {
+            [UIView beginAnimations:nil context:nil];
+            _rightView.frame  = CGRectMake(SCREEN_WIDTH-300,
+                                           64, 300, SCREEN_HEIGHT-114);
+            [UIView commitAnimations];
+        }
+        
+        [self.view addSubview:_rightView];
+        [okBtn setTitle:@"保存" forState:UIControlStateNormal];
+        
+        isSettings = YES;
+    } else {
+        if (_rightView) {
+            [_rightView removeFromSuperview];
+        }
+        [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+        isSettings = NO;
+    }
 }
 
 - (void) cancelAction:(id)sender{

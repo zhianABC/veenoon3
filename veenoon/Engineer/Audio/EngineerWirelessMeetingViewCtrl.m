@@ -11,8 +11,9 @@
 #import "CustomPickerView.h"
 #import "EngineerSliderView.h"
 #import "EngineerWIrelessMeetingPlayViewCtrl.h"
+#import "WirelessMeetingView.h"
 
-@interface EngineerWirelessMeetingViewCtrl () {
+@interface EngineerWirelessMeetingViewCtrl () <EngineerSliderViewDelegate, CustomPickerViewDelegate> {
     
     UIButton *_selectSysBtn;
     
@@ -21,6 +22,10 @@
     UIButton *_luboBtn;
     
     EngineerSliderView *_zengyiSlider;
+    BOOL isSettings;
+    
+    WirelessMeetingView *_rightView;
+    UIButton *okBtn;
 }
 @end
 
@@ -29,6 +34,7 @@
 @synthesize _number;
 - (void)viewDidLoad {
     [super viewDidLoad];
+    isSettings = NO;
     
     UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
     [self.view addSubview:titleIcon];
@@ -57,7 +63,7 @@
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
     [bottomBar addSubview:okBtn];
     [okBtn setTitle:@"设置" forState:UIControlStateNormal];
@@ -274,7 +280,29 @@
 }
 
 - (void) okAction:(id)sender{
-    
+    if (!isSettings) {
+        if (_rightView == nil) {
+            _rightView = [[WirelessMeetingView alloc]
+                          initWithFrame:CGRectMake(SCREEN_WIDTH-300,
+                                                   64, 300, SCREEN_HEIGHT-114)];
+        } else {
+            [UIView beginAnimations:nil context:nil];
+            _rightView.frame  = CGRectMake(SCREEN_WIDTH-300,
+                                           64, 300, SCREEN_HEIGHT-114);
+            [UIView commitAnimations];
+        }
+        
+        [self.view addSubview:_rightView];
+        [okBtn setTitle:@"保存" forState:UIControlStateNormal];
+        
+        isSettings = YES;
+    } else {
+        if (_rightView) {
+            [_rightView removeFromSuperview];
+        }
+        [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+        isSettings = NO;
+    }
 }
 
 - (void) cancelAction:(id)sender{
