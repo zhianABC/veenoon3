@@ -9,6 +9,8 @@
 #import "CustomPickerView.h"
 #import "UIButton+Color.h"
 #import "HandtoHandLineCheckView.h"
+#import "ComSettingView.h"
+
 
 @interface HandtoHandSettingsView () <UITableViewDelegate, UITableViewDataSource, CustomPickerViewDelegate>
 {
@@ -17,7 +19,7 @@
     UIButton *_btnSave;
     
     CustomPickerView *_picker;
-    
+    ComSettingView *_com;
 }
 @property (nonatomic, strong) NSMutableArray *_rows;
 @property (nonatomic, strong) NSMutableDictionary *_map;
@@ -79,9 +81,41 @@
         
         [self initData];
         
+        UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 100)];
+        [self addSubview:headView];
+        
+        UISwipeGestureRecognizer *swip = [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                                                   action:@selector(switchComSetting)];
+        swip.direction = UISwipeGestureRecognizerDirectionDown;
+        
+        
+        [headView addGestureRecognizer:swip];
+        
+        _com = [[ComSettingView alloc] initWithFrame:self.bounds];
     }
     
     return self;
+}
+
+- (void) switchComSetting{
+    
+    if([_com superview])
+        return;
+    
+    CGRect rc = _com.frame;
+    rc.origin.y = 0-rc.size.height;
+    
+    _com.frame = rc;
+    [self addSubview:_com];
+    [UIView animateWithDuration:0.25
+                     animations:^{
+                         
+                         _com.frame = self.bounds;
+                         
+                     } completion:^(BOOL finished) {
+                         
+                     }];
+    
 }
 
 - (void) initData{
