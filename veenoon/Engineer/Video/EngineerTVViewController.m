@@ -9,8 +9,9 @@
 #import "EngineerTVViewController.h"
 #import "UIButton+Color.h"
 #import "CustomPickerView.h"
+#import "TVViewRightView.h"
 
-@interface EngineerTVViewController () {
+@interface EngineerTVViewController () <CustomPickerViewDelegate>{
     UIButton *_selectSysBtn;
     
     CustomPickerView *_customPicker;
@@ -18,6 +19,10 @@
     NSMutableArray *_inPutBtnArray;
     
     UIButton *_tanchuBtn;
+    
+    BOOL isSettings;
+    TVViewRightView *_rightView;
+    UIButton *okBtn;
 }
 @end
 
@@ -53,7 +58,7 @@
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
     [bottomBar addSubview:okBtn];
     [okBtn setTitle:@"设置" forState:UIControlStateNormal];
@@ -217,7 +222,22 @@
     [_selectSysBtn setTitle:title forState:UIControlStateNormal];
 }
 - (void) okAction:(id)sender{
-    
+    if (!isSettings) {
+        _rightView = [[TVViewRightView alloc]
+                      initWithFrame:CGRectMake(SCREEN_WIDTH-300,
+                                               64, 300, SCREEN_HEIGHT-114)];
+        [self.view addSubview:_rightView];
+        
+        [okBtn setTitle:@"保存" forState:UIControlStateNormal];
+        
+        isSettings = YES;
+    } else {
+        if (_rightView) {
+            [_rightView removeFromSuperview];
+        }
+        [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+        isSettings = NO;
+    }
 }
 
 - (void) cancelAction:(id)sender{
