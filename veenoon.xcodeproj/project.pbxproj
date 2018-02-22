@@ -587,6 +587,7 @@
 		EBC71B17203C487000DD0A98 /* TVViewRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B16203C487000DD0A98 /* TVViewRightView.m */; };
 		EBC71B1A203C496500DD0A98 /* LuBoJiRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B19203C496500DD0A98 /* LuBoJiRightView.m */; };
 		EBC71B1D203C497500DD0A98 /* TouYingJiRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B1C203C497500DD0A98 /* TouYingJiRightView.m */; };
+		EBC71B20203EEB8600DD0A98 /* LightRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B1F203EEB8600DD0A98 /* LightRightView.m */; };
 		EBCA834B1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCA834A1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m */; };
 		EBDF1BEC1FC5A2D000A756EA /* user_meeting_room_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1BEB1FC5A2D000A756EA /* user_meeting_room_1@2x.png */; };
 		EBDF1BF21FC5A9A200A756EA /* user_meeting_room_6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1BED1FC5A9A100A756EA /* user_meeting_room_6@2x.png */; };
@@ -1478,6 +1479,8 @@
 		EBC71B19203C496500DD0A98 /* LuBoJiRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LuBoJiRightView.m; sourceTree = "<group>"; };
 		EBC71B1B203C497500DD0A98 /* TouYingJiRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TouYingJiRightView.h; sourceTree = "<group>"; };
 		EBC71B1C203C497500DD0A98 /* TouYingJiRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TouYingJiRightView.m; sourceTree = "<group>"; };
+		EBC71B1E203EEB8600DD0A98 /* LightRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LightRightView.h; sourceTree = "<group>"; };
+		EBC71B1F203EEB8600DD0A98 /* LightRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LightRightView.m; sourceTree = "<group>"; };
 		EBCA834A1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserMonitorSettingsViewCtrl.m; sourceTree = "<group>"; };
 		EBCA834C1FD434D1007DEB8E /* UserMonitorSettingsViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserMonitorSettingsViewCtrl.h; sourceTree = "<group>"; };
 		EBDF1BEB1FC5A2D000A756EA /* user_meeting_room_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_meeting_room_1@2x.png"; sourceTree = "<group>"; };
@@ -2560,8 +2563,6 @@
 		EB03F5441FBDEB1200865541 /* Engineer */ = {
 			isa = PBXGroup;
 			children = (
-				3425E98A1FE571CE003559F7 /* ComSettingView.h */,
-				3425E98B1FE571CE003559F7 /* ComSettingView.m */,
 				EB1717941FF5F34900CBDB81 /* Env */,
 				EB1A55CF1FEAA0F4000B18E6 /* Video */,
 				EB1A55CE1FEA9E2A000B18E6 /* Audio */,
@@ -2668,6 +2669,8 @@
 		EB1A55CD1FEA9E21000B18E6 /* Basic */ = {
 			isa = PBXGroup;
 			children = (
+				3425E98A1FE571CE003559F7 /* ComSettingView.h */,
+				3425E98B1FE571CE003559F7 /* ComSettingView.m */,
 				EB2982131FD58699007B5C20 /* EngineerMeetingRoomListViewCtrl.h */,
 				EB2982141FD58699007B5C20 /* EngineerMeetingRoomListViewCtrl.m */,
 				EB29820A1FD57FC1007B5C20 /* EngineerShootQRCode.h */,
@@ -2795,6 +2798,8 @@
 		EB4E39E020273CAE00533575 /* RightView */ = {
 			isa = PBXGroup;
 			children = (
+				EBC71B1E203EEB8600DD0A98 /* LightRightView.h */,
+				EBC71B1F203EEB8600DD0A98 /* LightRightView.m */,
 			);
 			path = RightView;
 			sourceTree = "<group>";
@@ -3537,6 +3542,7 @@
 				EB1717901FF5E44B00CBDB81 /* EngineerLuBoJiViewController.m in Sources */,
 				EB1717AF1FF6149C00CBDB81 /* EngineerDoorAccessViewCtrl.m in Sources */,
 				EB5F7F951FD59D6B00351888 /* EngineerPortSettingView.m in Sources */,
+				EBC71B20203EEB8600DD0A98 /* LightRightView.m in Sources */,
 				EB3685FD1FC07A5A009973A3 /* SettingsViewView.m in Sources */,
 				EB1717B81FF6150400CBDB81 /* EngineerScenarioSettingsViewCtrl.m in Sources */,
 				3421EA2D1FC4136600DC5378 /* CustomPickerView.m in Sources */,
