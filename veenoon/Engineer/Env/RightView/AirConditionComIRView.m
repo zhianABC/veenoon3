@@ -6,14 +6,17 @@
 //  Copyright © 2017年 jack. All rights reserved.
 //
 
-#import "LightRightView.h"
+#import "AirConditionComIRView.h"
 #import "ComSettingView.h"
 #import "CustomPickerView.h"
 #import "UIButton+Color.h"
 
-@interface LightRightView () <UITableViewDelegate,
+@interface AirConditionComIRView () <UITableViewDelegate,
 UITableViewDataSource, UITextFieldDelegate,
-CustomPickerViewDelegate> {
+CustomPickerViewDelegate>
+{
+    UIButton *btnCom;
+    UIButton *btnIR;
     
     ComSettingView *_com;
     
@@ -22,6 +25,8 @@ CustomPickerViewDelegate> {
     int _curIndex;
     BOOL _isAdding;
     BOOL _isStudying;
+    
+    UIButton *_btnSave;
     
     CustomPickerView *_picker;
     
@@ -34,11 +39,8 @@ CustomPickerViewDelegate> {
     
     UIView *_footerView;
     
-    NSMutableArray *_btns;
-    
 }
 @property (nonatomic, strong) NSMutableArray *_studyItems;
-@property (nonatomic, strong) NSMutableArray *_bianzuArrays;
 @property (nonatomic, strong) NSMutableDictionary *_value;
 
 @property (nonatomic, strong) NSMutableArray *_coms;
@@ -50,9 +52,8 @@ CustomPickerViewDelegate> {
 @end
 
 
-@implementation LightRightView
+@implementation AirConditionComIRView
 @synthesize _studyItems;
-@synthesize _bianzuArrays;
 @synthesize _value;
 @synthesize _brands;
 @synthesize _map;
@@ -69,34 +70,64 @@ CustomPickerViewDelegate> {
  }
  */
 
-- (id)initWithFrame:(CGRect)frame {
+- (id)initWithFrame:(CGRect)frame
+{
     
-    if(self = [super initWithFrame:frame]) {
+    if(self = [super initWithFrame:frame])
+    {
         self.backgroundColor = RGB(0, 89, 118);
         
         self._value = [NSMutableDictionary dictionary];
         
-        _btns = [[NSMutableArray alloc] init];
+        UIImageView *header = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tb_header_bg.png"]];
+        [self addSubview:header];
         
-        UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 100)];
-        [self addSubview:headView];
+        CGRect rc = header.frame;
+        rc.size.width = frame.size.width;
+        header.frame = rc;
         
-        UISwipeGestureRecognizer *swip = [[UISwipeGestureRecognizer alloc] initWithTarget:self
-                                                                                   action:@selector(switchComSetting)];
-        swip.direction = UISwipeGestureRecognizerDirectionDown;
+        btnCom = [UIButton buttonWithType:UIButtonTypeCustom];
+        btnCom.frame = CGRectMake(0, 0, 60, rc.size.height);
+        [btnCom setImage:[UIImage imageNamed:@"com_icon_sel.png"]
+                forState:UIControlStateNormal];
+        [self addSubview:btnCom];
         
+        btnIR = [UIButton buttonWithType:UIButtonTypeCustom];
+        btnIR.frame = CGRectMake(0, 0, 60, rc.size.height);
+        [btnIR setImage:[UIImage imageNamed:@"ir_icon_nor.png"]
+               forState:UIControlStateNormal];
+        [self addSubview:btnIR];
         
-        [headView addGestureRecognizer:swip];
+        btnCom.center = CGPointMake(CGRectGetMidX(rc)-40, btnCom.center.y);
+        btnIR.center = CGPointMake(CGRectGetMidX(rc)+40, btnCom.center.y);
         
-        _com = [[ComSettingView alloc] initWithFrame:self.bounds];
+        [btnCom addTarget:self
+                   action:@selector(comAction:)
+         forControlEvents:UIControlEventTouchUpInside];
         
+        [btnIR addTarget:self
+                  action:@selector(irAction:)
+        forControlEvents:UIControlEventTouchUpInside];
+        
+        CGRect vRc  = CGRectMake(0,
+                                 CGRectGetMaxY(header.frame),
+                                 frame.size.width,
+                                 frame.size.height - CGRectGetMaxY(header.frame));
+        
+        _btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
+        _btnSave.frame = CGRectMake(frame.size.width-90, 20+CGRectGetMaxY(header.frame), 70, 40);
+        [_btnSave setTitle:@"保存" forState:UIControlStateNormal];
+        [self addSubview:_btnSave];
+        [_btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        _btnSave.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -30);
+        _btnSave.titleLabel.font = [UIFont systemFontOfSize:14];
         
         _curIndex = -1;
         
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,
-                                                                   60,
+                                                                   60+CGRectGetMaxY(header.frame),
                                                                    frame.size.width,
-                                                                   frame.size.height-60-180)];
+                                                                   frame.size.height-60-CGRectGetMaxY(header.frame)-40)];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.backgroundColor = [UIColor clearColor];
@@ -104,6 +135,16 @@ CustomPickerViewDelegate> {
         [self addSubview:_tableView];
         
         [self createFooter];
+        
+        UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 1)];
+        line.backgroundColor =  M_GREEN_LINE;
+        [_footerView addSubview:line];
+        
+        _com = [[ComSettingView alloc]
+                initWithFrame:vRc];
+        [self addSubview:_com];
+        _com._isAllowedClose = NO;
+        
         
         _picker = [[CustomPickerView alloc]
                    initWithFrame:CGRectMake(frame.size.width/2-100, 43, 200, 100) withGrayOrLight:@"picker_player.png"];
@@ -116,7 +157,7 @@ CustomPickerViewDelegate> {
         _picker._rowNormalColor = [UIColor whiteColor];
         _picker.delegate_ = self;
         [_picker selectRow:0 inComponent:0];
-        IMP_BLOCK_SELF(LightRightView);
+        IMP_BLOCK_SELF(AirConditionComIRView);
         _picker._selectionBlock = ^(NSDictionary *values)
         {
             [block_self didPickerValue:values];
@@ -134,71 +175,62 @@ CustomPickerViewDelegate> {
     return self;
 }
 
-- (void) switchComSetting{
-    
-    if([_com superview])
-        return;
-    
-    CGRect rc = _com.frame;
-    rc.origin.y = 0-rc.size.height;
-    
-    _com.frame = rc;
-    [self addSubview:_com];
-    [UIView animateWithDuration:0.25
-                     animations:^{
-                         
-                         _com.frame = self.bounds;
-                         
-                     } completion:^(BOOL finished) {
-                         
-                     }];
-    
-}
-
 - (void)createFooter{
     
     _footerView = [[UIView alloc] initWithFrame:CGRectMake(0,
                                                            CGRectGetMaxY(_tableView.frame),
                                                            self.frame.size.width,
-                                                           180)];
+                                                           40)];
     [self addSubview:_footerView];
     _footerView.backgroundColor = M_GREEN_COLOR;
+    _footerView.hidden = YES;
     
-    int colNumber = 4;
-    int space = 5;
-    int cellWidth = 115/2;
-    int cellHeight = 115/2;
-    int leftRight = (self.frame.size.width - 4*cellWidth - 3*5)/2;
-    UIColor *rectColor = RGB(0, 146, 174);
+    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(70,
+                                                                10,
+                                                                CGRectGetWidth(self.frame)/2-70, 20)];
+    titleL.backgroundColor = [UIColor clearColor];
+    [_footerView addSubview:titleL];
+    titleL.font = [UIFont systemFontOfSize:13];
+    titleL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
     
-    int top = 40;
+    UILabel* valueL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame)/2,
+                                                                10,
+                                                                CGRectGetWidth(self.frame)/2-70, 20)];
+    valueL.backgroundColor = [UIColor clearColor];
+    [_footerView addSubview:valueL];
+    valueL.font = [UIFont systemFontOfSize:13];
+    valueL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+    valueL.textAlignment = NSTextAlignmentRight;
     
-    for (int index = 0; index < 7; index++) {
-        int row = index/colNumber;
-        int col = index%colNumber;
-        int startX = col*cellWidth+col*space+leftRight;
-        int startY = row*cellHeight+space*row+top;
-        
-        UIButton *scenarioBtn = [UIButton buttonWithColor:rectColor selColor:nil];
-        scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
-        scenarioBtn.clipsToBounds = YES;
-        scenarioBtn.layer.cornerRadius = 5;
-        scenarioBtn.tag = index;
-        [_footerView addSubview:scenarioBtn];
-        int titleInt = index + 1;
-        NSString *string;
-        if (index == 6) {
-            string = @"全部";
-        } else {
-            string = [NSString stringWithFormat:@"%d",titleInt];
-        }
-        
-        [scenarioBtn setTitle:string forState:UIControlStateNormal];
-        [scenarioBtn addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
-        scenarioBtn.titleLabel.font = [UIFont systemFontOfSize:15];
-        
-        [_btns addObject:scenarioBtn];
-    }
+    titleL.text = @"修改";
+    valueL.text = @"确定";
+    
+    UIButton *btnModify = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnModify.frame = CGRectMake(70, 0,
+                                 CGRectGetWidth(self.frame)/2-70,
+                                 40);
+    [_footerView addSubview:btnModify];
+    [btnModify addTarget:self
+                  action:@selector(reStudy:)
+        forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *btnOK = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnOK.frame = CGRectMake(CGRectGetWidth(self.frame)/2, 0,
+                             CGRectGetWidth(self.frame)/2-70,
+                             40);
+    [_footerView addSubview:btnOK];
+    [btnOK addTarget:self
+              action:@selector(saveBrand:)
+    forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void) reStudy:(id)sender{
+    
+    
+}
+- (void) saveBrand:(id)sender{
+    
+    
 }
 
 - (void) initData{
@@ -312,6 +344,24 @@ CustomPickerViewDelegate> {
     [_tableView reloadData];
 }
 
+- (void) comAction:(id)sender{
+    
+    _com.hidden = NO;
+    [btnCom setImage:[UIImage imageNamed:@"com_icon_sel.png"]
+            forState:UIControlStateNormal];
+    [btnIR setImage:[UIImage imageNamed:@"ir_icon_nor.png"]
+           forState:UIControlStateNormal];
+}
+
+- (void) irAction:(id)sender{
+    
+    _com.hidden = YES;
+    [btnCom setImage:[UIImage imageNamed:@"com_icon_nor.png"]
+            forState:UIControlStateNormal];
+    [btnIR setImage:[UIImage imageNamed:@"ir_icon_sel.png"]
+           forState:UIControlStateNormal];
+}
+
 
 
 #pragma mark -
@@ -326,12 +376,12 @@ CustomPickerViewDelegate> {
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    if (section == 1)
+    if(section == 0)
         return 4;
     
-    if(section == 0)
+    if(_isStudying)
     {
-        return [self._bianzuArrays count] + 1;
+        return [_studyItems count];
     }
     
     return 0;
@@ -394,8 +444,37 @@ CustomPickerViewDelegate> {
         icon.alpha = 0.8;
         icon.layer.contentsGravity = kCAGravityResizeAspect;
         
-        if (indexPath.row == 0) {
-            titleL.text = @"编组";
+        if(indexPath.row == 0)
+        {
+            titleL.text = @"红外端口";
+            
+            if([_coms count])
+                valueL.text = [_coms objectAtIndex:_selRow1];
+            
+        }
+        else if(indexPath.row == 1)
+        {
+            titleL.text = @"选择品牌";
+            valueL.text = @"PHILIPS";
+            
+            if(_selectedBrand)
+            {
+                valueL.text  = [_selectedBrand objectForKey:@"title"];
+            }
+        }
+        else if(indexPath.row == 2)
+        {
+            titleL.text = @"选择型号";
+            valueL.text = @"XXXXX";
+            
+            if(_selectedType)
+            {
+                valueL.text  = [_selectedType objectForKey:@"title"];
+            }
+        }
+        else if(indexPath.row == 3)
+        {
+            titleL.text = @"添加";
             icon.frame = CGRectMake(CGRectGetMaxX(valueL.frame)-20, 11, 20, 20);
             icon.image = [UIImage imageNamed:@"add_brand_icon.png"];
             
@@ -437,80 +516,34 @@ CustomPickerViewDelegate> {
     }
     else if(indexPath.section == 1)
     {
-        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(10,
-                                                                    12,
-                                                                    CGRectGetWidth(self.frame)-20, 20)];
+        cell.backgroundColor = M_GREEN_COLOR;
+        
+        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(70,
+                                                                    7,
+                                                                    CGRectGetWidth(self.frame)/2-70, 20)];
         titleL.backgroundColor = [UIColor clearColor];
         [cell.contentView addSubview:titleL];
         titleL.font = [UIFont systemFontOfSize:13];
         titleL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
         
-        UILabel* valueL = [[UILabel alloc] initWithFrame:CGRectMake(10,
-                                                                    12,
-                                                                    CGRectGetWidth(self.frame)-35, 20)];
+        UILabel* valueL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame)/2,
+                                                                    7,
+                                                                    CGRectGetWidth(self.frame)/2-70, 20)];
         valueL.backgroundColor = [UIColor clearColor];
         [cell.contentView addSubview:valueL];
         valueL.font = [UIFont systemFontOfSize:13];
         valueL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
         valueL.textAlignment = NSTextAlignmentRight;
         
-        if(indexPath.row == 1)
-        {
-            titleL.text = @"电源";
-            valueL.text = @"PHILIPS";
-            
-            if(_selectedBrand)
-            {
-                valueL.text  = [_selectedBrand objectForKey:@"title"];
-            }
-        }
-        else if(indexPath.row == 2)
-        {
-            titleL.text = @"选择型号";
-            valueL.text = @"XXXXX";
-            
-            if(_selectedType)
-            {
-                valueL.text  = [_selectedType objectForKey:@"title"];
-            }
-        }
-        else if(indexPath.row == 3)
-        {
-            titleL.text = @"红外端口";
-            
-            if([_coms count])
-                valueL.text = [_coms objectAtIndex:_selRow1];
-            
-        }
-        
-        cell.backgroundColor = M_GREEN_COLOR;
-        
-        UILabel* titleL2 = [[UILabel alloc] initWithFrame:CGRectMake(70,
-                                                                    7,
-                                                                    CGRectGetWidth(self.frame)/2-70, 20)];
-        titleL2.backgroundColor = [UIColor clearColor];
-        [cell.contentView addSubview:titleL2];
-        titleL2.font = [UIFont systemFontOfSize:13];
-        titleL2.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
-        
-        UILabel* valueL2 = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame)/2,
-                                                                    7,
-                                                                    CGRectGetWidth(self.frame)/2-70, 20)];
-        valueL2.backgroundColor = [UIColor clearColor];
-        [cell.contentView addSubview:valueL2];
-        valueL2.font = [UIFont systemFontOfSize:13];
-        valueL2.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
-        valueL2.textAlignment = NSTextAlignmentRight;
-        
         
         NSDictionary *dic = [_studyItems objectAtIndex:indexPath.row];
-        titleL2.text = [dic objectForKey:@"name"];
-        valueL2.text = [dic objectForKey:@"state"];
-        valueL2.textColor = YELLOW_COLOR;
+        titleL.text = [dic objectForKey:@"name"];
+        valueL.text = [dic objectForKey:@"state"];
+        valueL.textColor = YELLOW_COLOR;
         
-        UILabel *line2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 1)];
-        line2.backgroundColor =  M_GREEN_LINE;
-        [cell.contentView addSubview:line2];
+        UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 1)];
+        line.backgroundColor =  M_GREEN_LINE;
+        [cell.contentView addSubview:line];
     }
     
     
@@ -520,8 +553,9 @@ CustomPickerViewDelegate> {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    if (indexPath.section == 0) {
-        if(indexPath.row == 0)
+    if(indexPath.section == 0)
+    {
+        if(indexPath.row == 3)
         {
             _curIndex = -1;
             
@@ -543,6 +577,9 @@ CustomPickerViewDelegate> {
         }
         [_tableView reloadData];
     }
+    
+    
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -694,3 +731,4 @@ CustomPickerViewDelegate> {
 }
 
 @end
+

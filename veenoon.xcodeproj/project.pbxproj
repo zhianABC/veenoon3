@@ -588,6 +588,8 @@
 		EBC71B1A203C496500DD0A98 /* LuBoJiRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B19203C496500DD0A98 /* LuBoJiRightView.m */; };
 		EBC71B1D203C497500DD0A98 /* TouYingJiRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B1C203C497500DD0A98 /* TouYingJiRightView.m */; };
 		EBC71B20203EEB8600DD0A98 /* LightRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B1F203EEB8600DD0A98 /* LightRightView.m */; };
+		EBC71B23203F011E00DD0A98 /* AirConditionRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B22203F011E00DD0A98 /* AirConditionRightView.m */; };
+		EBC71B26203F058100DD0A98 /* AirConditionComIRView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B25203F058100DD0A98 /* AirConditionComIRView.m */; };
 		EBCA834B1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCA834A1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m */; };
 		EBDF1BEC1FC5A2D000A756EA /* user_meeting_room_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1BEB1FC5A2D000A756EA /* user_meeting_room_1@2x.png */; };
 		EBDF1BF21FC5A9A200A756EA /* user_meeting_room_6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1BED1FC5A9A100A756EA /* user_meeting_room_6@2x.png */; };
@@ -1481,6 +1483,10 @@
 		EBC71B1C203C497500DD0A98 /* TouYingJiRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TouYingJiRightView.m; sourceTree = "<group>"; };
 		EBC71B1E203EEB8600DD0A98 /* LightRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LightRightView.h; sourceTree = "<group>"; };
 		EBC71B1F203EEB8600DD0A98 /* LightRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LightRightView.m; sourceTree = "<group>"; };
+		EBC71B21203F011E00DD0A98 /* AirConditionRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirConditionRightView.h; sourceTree = "<group>"; };
+		EBC71B22203F011E00DD0A98 /* AirConditionRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AirConditionRightView.m; sourceTree = "<group>"; };
+		EBC71B24203F058100DD0A98 /* AirConditionComIRView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirConditionComIRView.h; sourceTree = "<group>"; };
+		EBC71B25203F058100DD0A98 /* AirConditionComIRView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AirConditionComIRView.m; sourceTree = "<group>"; };
 		EBCA834A1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserMonitorSettingsViewCtrl.m; sourceTree = "<group>"; };
 		EBCA834C1FD434D1007DEB8E /* UserMonitorSettingsViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserMonitorSettingsViewCtrl.h; sourceTree = "<group>"; };
 		EBDF1BEB1FC5A2D000A756EA /* user_meeting_room_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_meeting_room_1@2x.png"; sourceTree = "<group>"; };
@@ -2800,6 +2806,10 @@
 			children = (
 				EBC71B1E203EEB8600DD0A98 /* LightRightView.h */,
 				EBC71B1F203EEB8600DD0A98 /* LightRightView.m */,
+				EBC71B21203F011E00DD0A98 /* AirConditionRightView.h */,
+				EBC71B22203F011E00DD0A98 /* AirConditionRightView.m */,
+				EBC71B24203F058100DD0A98 /* AirConditionComIRView.h */,
+				EBC71B25203F058100DD0A98 /* AirConditionComIRView.m */,
 			);
 			path = RightView;
 			sourceTree = "<group>";
@@ -3500,6 +3510,7 @@
 				EBF831E31FD03A110096E6EC /* UserVideoDVDDiskViewCtrl.m in Sources */,
 				EB09C4A21FD3A00200776540 /* UserAirConditionViewCtrl.m in Sources */,
 				EB1717931FF5E6B600CBDB81 /* EngineerTouYingJiViewCtrl.m in Sources */,
+				EBC71B23203F011E00DD0A98 /* AirConditionRightView.m in Sources */,
 				341F0F471EC2FC500027C800 /* WSCode.m in Sources */,
 				04DE1EAD1AD6AEE000D49E2F /* SDWebImageCompat.m in Sources */,
 				34DC473F1FD6984400ACB589 /* ColumnView.m in Sources */,
@@ -3541,6 +3552,7 @@
 				EBC71B1D203C497500DD0A98 /* TouYingJiRightView.m in Sources */,
 				EB1717901FF5E44B00CBDB81 /* EngineerLuBoJiViewController.m in Sources */,
 				EB1717AF1FF6149C00CBDB81 /* EngineerDoorAccessViewCtrl.m in Sources */,
+				EBC71B26203F058100DD0A98 /* AirConditionComIRView.m in Sources */,
 				EB5F7F951FD59D6B00351888 /* EngineerPortSettingView.m in Sources */,
 				EBC71B20203EEB8600DD0A98 /* LightRightView.m in Sources */,
 				EB3685FD1FC07A5A009973A3 /* SettingsViewView.m in Sources */,
