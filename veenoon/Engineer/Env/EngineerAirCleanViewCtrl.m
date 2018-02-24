@@ -9,6 +9,7 @@
 #import "EngineerAirCleanViewCtrl.h"
 #import "UIButton+Color.h"
 #import "CustomPickerView.h"
+#import "AirCleanRightView.h"
 
 @interface EngineerAirCleanViewCtrl () <CustomPickerViewDelegate>{
     
@@ -18,6 +19,10 @@
     
     NSMutableArray *_nameLabelArray;
     NSMutableArray *_channelArray;
+    
+    BOOL isSettings;
+    AirCleanRightView *_rightView;
+    UIButton *okBtn;
 }
 @end
 
@@ -27,6 +32,8 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    isSettings = NO;
     
     if (_airCleanSysArray == nil) {
         _airCleanSysArray = [[NSMutableArray alloc] init];
@@ -64,7 +71,7 @@
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
     [bottomBar addSubview:okBtn];
     [okBtn setTitle:@"设置" forState:UIControlStateNormal];
@@ -201,7 +208,22 @@
     [_selectSysBtn setTitle:title forState:UIControlStateNormal];
 }
 - (void) okAction:(id)sender{
-    
+    if (!isSettings) {
+        _rightView = [[AirCleanRightView alloc]
+                      initWithFrame:CGRectMake(SCREEN_WIDTH-300,
+                                               64, 300, SCREEN_HEIGHT-114)];
+        [self.view addSubview:_rightView];
+        
+        [okBtn setTitle:@"保存" forState:UIControlStateNormal];
+        
+        isSettings = YES;
+    } else {
+        if (_rightView) {
+            [_rightView removeFromSuperview];
+        }
+        [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+        isSettings = NO;
+    }
 }
 
 - (void) cancelAction:(id)sender{

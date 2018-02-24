@@ -528,6 +528,12 @@
 		EB5F7F951FD59D6B00351888 /* EngineerPortSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5F7F941FD59D6B00351888 /* EngineerPortSettingView.m */; };
 		EB5F7F981FD59D8400351888 /* EngineerDNSSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5F7F971FD59D8400351888 /* EngineerDNSSettingView.m */; };
 		EB7333F1204102DF00AE60B8 /* FloorWarmRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333F0204102DF00AE60B8 /* FloorWarmRightView.m */; };
+		EB7333F42041046400AE60B8 /* AirCleanRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333F32041046400AE60B8 /* AirCleanRightView.m */; };
+		EB7333F72041071D00AE60B8 /* CleanWaterRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333F62041071D00AE60B8 /* CleanWaterRightView.m */; };
+		EB7333FA204108B000AE60B8 /* AddWetRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333F9204108B000AE60B8 /* AddWetRightView.m */; };
+		EB7333FD20410A7E00AE60B8 /* MonitorRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333FC20410A7E00AE60B8 /* MonitorRightView.m */; };
+		EB73340020410B5100AE60B8 /* DoorAccessRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333FF20410B5100AE60B8 /* DoorAccessRightView.m */; };
+		EB733402204112C500AE60B8 /* remote_video_filled_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB733401204112C500AE60B8 /* remote_video_filled_s@2x.png */; };
 		EB7E81581FF8C4C90053E5A7 /* info_day_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB7E81521FF8C4C80053E5A7 /* info_day_n@2x.png */; };
 		EB7E81591FF8C4C90053E5A7 /* info_month_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB7E81531FF8C4C80053E5A7 /* info_month_n@2x.png */; };
 		EB7E815A1FF8C4C90053E5A7 /* info_day_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB7E81541FF8C4C90053E5A7 /* info_day_s@2x.png */; };
@@ -1418,6 +1424,17 @@
 		EB5F7F971FD59D8400351888 /* EngineerDNSSettingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerDNSSettingView.m; sourceTree = "<group>"; };
 		EB7333EF204102DF00AE60B8 /* FloorWarmRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FloorWarmRightView.h; sourceTree = "<group>"; };
 		EB7333F0204102DF00AE60B8 /* FloorWarmRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FloorWarmRightView.m; sourceTree = "<group>"; };
+		EB7333F22041046400AE60B8 /* AirCleanRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirCleanRightView.h; sourceTree = "<group>"; };
+		EB7333F32041046400AE60B8 /* AirCleanRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AirCleanRightView.m; sourceTree = "<group>"; };
+		EB7333F52041071D00AE60B8 /* CleanWaterRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CleanWaterRightView.h; sourceTree = "<group>"; };
+		EB7333F62041071D00AE60B8 /* CleanWaterRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CleanWaterRightView.m; sourceTree = "<group>"; };
+		EB7333F8204108B000AE60B8 /* AddWetRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddWetRightView.h; sourceTree = "<group>"; };
+		EB7333F9204108B000AE60B8 /* AddWetRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddWetRightView.m; sourceTree = "<group>"; };
+		EB7333FB20410A7E00AE60B8 /* MonitorRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MonitorRightView.h; sourceTree = "<group>"; };
+		EB7333FC20410A7E00AE60B8 /* MonitorRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MonitorRightView.m; sourceTree = "<group>"; };
+		EB7333FE20410B5100AE60B8 /* DoorAccessRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DoorAccessRightView.h; sourceTree = "<group>"; };
+		EB7333FF20410B5100AE60B8 /* DoorAccessRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DoorAccessRightView.m; sourceTree = "<group>"; };
+		EB733401204112C500AE60B8 /* remote_video_filled_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "remote_video_filled_s@2x.png"; sourceTree = "<group>"; };
 		EB7E81521FF8C4C80053E5A7 /* info_day_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info_day_n@2x.png"; sourceTree = "<group>"; };
 		EB7E81531FF8C4C80053E5A7 /* info_month_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info_month_n@2x.png"; sourceTree = "<group>"; };
 		EB7E81541FF8C4C90053E5A7 /* info_day_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info_day_s@2x.png"; sourceTree = "<group>"; };
@@ -2058,6 +2075,7 @@
 		04DE1ECB1AD6B3BA00D49E2F /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
+				EB733401204112C500AE60B8 /* remote_video_filled_s@2x.png */,
 				EB7E81521FF8C4C80053E5A7 /* info_day_n@2x.png */,
 				EB7E81541FF8C4C90053E5A7 /* info_day_s@2x.png */,
 				EB7E81531FF8C4C80053E5A7 /* info_month_n@2x.png */,
@@ -2828,6 +2846,16 @@
 				EBC71B2B204100DD00DD0A98 /* NewWindRightView.m */,
 				EB7333EF204102DF00AE60B8 /* FloorWarmRightView.h */,
 				EB7333F0204102DF00AE60B8 /* FloorWarmRightView.m */,
+				EB7333F22041046400AE60B8 /* AirCleanRightView.h */,
+				EB7333F32041046400AE60B8 /* AirCleanRightView.m */,
+				EB7333F52041071D00AE60B8 /* CleanWaterRightView.h */,
+				EB7333F62041071D00AE60B8 /* CleanWaterRightView.m */,
+				EB7333F8204108B000AE60B8 /* AddWetRightView.h */,
+				EB7333F9204108B000AE60B8 /* AddWetRightView.m */,
+				EB7333FE20410B5100AE60B8 /* DoorAccessRightView.h */,
+				EB7333FF20410B5100AE60B8 /* DoorAccessRightView.m */,
+				EB7333FB20410A7E00AE60B8 /* MonitorRightView.h */,
+				EB7333FC20410A7E00AE60B8 /* MonitorRightView.m */,
 			);
 			path = RightView;
 			sourceTree = "<group>";
@@ -3288,6 +3316,7 @@
 				341C60FB1FDD0DBF003A5490 /* hj_icon_5@2x.png in Resources */,
 				EB09C4AC1FD3ABAD00776540 /* user_aircon_wind_n@2x.png in Resources */,
 				04D7198C1DADFD70002153D7 /* check_ok@2x.png in Resources */,
+				EB733402204112C500AE60B8 /* remote_video_filled_s@2x.png in Resources */,
 				EB23AEAF1FD1972400D1570F /* luboji_luzhi_n@2x.png in Resources */,
 				EB3B73B91FE63F10001941CF /* wireless_slide_s@2x.png in Resources */,
 				EBAE5BA11FDD20C400C10C4D /* engineer_env_jingshui_s@2x.png in Resources */,
@@ -3551,6 +3580,7 @@
 				EB5CF0411FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m in Sources */,
 				EB1A56151FEF8F29000B18E6 /* EngineerVideoProcessViewCtrl.m in Sources */,
 				04D719881DADE7D4002153D7 /* ActivityViewController.m in Sources */,
+				EB7333FD20410A7E00AE60B8 /* MonitorRightView.m in Sources */,
 				EB17179A1FF60C2600CBDB81 /* EngineerAireConditionViewCtrl.m in Sources */,
 				04DE1E8A1AD6AEE000D49E2F /* MaskRender.m in Sources */,
 				EBC71B0B203AF90700DD0A98 /* VideoProcessRightView.m in Sources */,
@@ -3570,6 +3600,7 @@
 				04DE1E931AD6AEE000D49E2F /* Utilities.m in Sources */,
 				EB1A04601FC7156C007CC1F2 /* UserAudioConfigViewController.m in Sources */,
 				04DE1E981AD6AEE000D49E2F /* ASIFormDataRequest.m in Sources */,
+				EB7333FA204108B000AE60B8 /* AddWetRightView.m in Sources */,
 				04DE1DD81AD68C5E00D49E2F /* main.m in Sources */,
 				04DE1EA11AD6AEE000D49E2F /* NetworkChecker.m in Sources */,
 				EBC71B1D203C497500DD0A98 /* TouYingJiRightView.m in Sources */,
@@ -3604,6 +3635,8 @@
 				04DE1EBF1AD6AF7900D49E2F /* User.m in Sources */,
 				EBC71B17203C487000DD0A98 /* TVViewRightView.m in Sources */,
 				EB1717A01FF613EC00CBDB81 /* EngineerNewWindViewCtrl.m in Sources */,
+				EB7333F72041071D00AE60B8 /* CleanWaterRightView.m in Sources */,
+				EB73340020410B5100AE60B8 /* DoorAccessRightView.m in Sources */,
 				EB4EC1221FE7FC3B000B3101 /* EngineerWirelessMeetingViewCtrl.m in Sources */,
 				EB4E39E320273F6100533575 /* HandtoHandSettingsView.m in Sources */,
 				04DE1EA01AD6AEE000D49E2F /* WebClient.m in Sources */,
@@ -3645,6 +3678,7 @@
 				EB1A55D21FEAA10E000B18E6 /* EngineerDVDViewController.m in Sources */,
 				EB09EF351FD9800300C968CA /* EngineerVedioDevicePluginViewCtrl.m in Sources */,
 				EB5CF03F1FD3DC92007958C9 /* UserNewWindViewCtrl.m in Sources */,
+				EB7333F42041046400AE60B8 /* AirCleanRightView.m in Sources */,
 				EBF6A72C1FC8486000260FF0 /* UserAudioPlayerSettingsViewCtrl.m in Sources */,
 				04DE1E941AD6AEE000D49E2F /* ASIAuthenticationDialog.m in Sources */,
 				049ECAC51C8D694400A611D8 /* QREncoder.mm in Sources */,

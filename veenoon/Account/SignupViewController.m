@@ -8,6 +8,7 @@
 
 #import "SignupViewController.h"
 #import "AreaPickView.h"
+#import "LoginViewController.h"
 
 @interface SignupViewController () <AreaPickViewDelegate>{
     //输入部分
@@ -307,6 +308,23 @@
 
 - (void) okAction:(id)sender{
     NSLog(@"enter the method.");
+    UIAlertView *alert  = [[UIAlertView alloc] initWithTitle:@""
+                                                     message:@"注册成功，将转入登陆界面"
+                                                    delegate:nil
+                                           cancelButtonTitle:@"确定"
+                                           otherButtonTitles:@"取消", nil];
+    [alert show];
+    alert.delegate = self;
+    
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (alertView.cancelButtonIndex == buttonIndex) {
+        LoginViewController *lctrl = [[LoginViewController alloc] init];
+        [self.navigationController pushViewController:lctrl animated:YES];
+    }
 }
 
 - (void) registerNumberAction:(id)sender{
