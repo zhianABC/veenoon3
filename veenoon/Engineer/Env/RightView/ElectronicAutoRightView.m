@@ -10,7 +10,6 @@
 #import "ComSettingView.h"
 #import "CustomPickerView.h"
 #import "UIButton+Color.h"
-#import "JHSlideView.h"
 
 @interface ElectronicAutoRightView () <UITableViewDelegate,
 UITableViewDataSource, UITextFieldDelegate,
@@ -260,9 +259,7 @@ CustomPickerViewDelegate> {
         [_ips addObject:@"192.168.1.11"];
         [_ips addObject:@"192.168.1.12"];
         
-        
     }
-    
     
 }
 
@@ -534,33 +531,7 @@ CustomPickerViewDelegate> {
 
 - (void) buttonAction:(id)sender{
     
-    /*
-     NSString *brand = _fieldBrand.text;
-     NSString *type = _fieldType.text;
-     
-     if([_fieldBrand isFirstResponder])
-     [_fieldBrand resignFirstResponder];
-     
-     if([_fieldType isFirstResponder])
-     [_fieldType resignFirstResponder];
-     
-     if([brand length] && [type length])
-     {
-     _isStudying = YES;
-     _footerView.hidden = NO;
-     
-     [_tableView reloadData];
-     }
-     else
-     {
-     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-     message:@"请输入品牌和型号"
-     delegate:nil
-     cancelButtonTitle:@"OK"
-     otherButtonTitles:nil, nil];
-     [alert show];
-     }
-     */
+    
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
