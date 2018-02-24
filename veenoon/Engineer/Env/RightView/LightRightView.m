@@ -291,7 +291,6 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
 
 - (void) addGroup:(id)sender{
     
-    _curIndex = -1;
     
     int i = (int)[_bianzuArrays count] + 1;
     
@@ -310,6 +309,8 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
     f.textAlignment = NSTextAlignmentLeft;
     f.font = [UIFont systemFontOfSize:13];
     f.clearButtonMode = UITextFieldViewModeWhileEditing;
+    
+    f.tag = i-1;
     
     [_bianzuArrays addObject:@{@"title":f,@"value":@""}];
     
@@ -392,6 +393,11 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
         
         valueL.text = [dic objectForKey:@"value"];
         
+        if(_curIndex == indexPath.row)
+        {
+            cell.backgroundColor = RGBA(255, 180, 0, 0.5);
+        }
+        
     }
     
     return cell;
@@ -401,6 +407,9 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
     
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
+    _curIndex = (int)indexPath.row;
+    
+    [_tableView reloadData];
     
 }
 
@@ -629,6 +638,15 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
     */
 }
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    
+    _curIndex = (int)textField.tag;
+    
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    
+}
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     
