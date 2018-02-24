@@ -590,6 +590,8 @@
 		EBC71B20203EEB8600DD0A98 /* LightRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B1F203EEB8600DD0A98 /* LightRightView.m */; };
 		EBC71B23203F011E00DD0A98 /* AirConditionRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B22203F011E00DD0A98 /* AirConditionRightView.m */; };
 		EBC71B26203F058100DD0A98 /* AirConditionComIRView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B25203F058100DD0A98 /* AirConditionComIRView.m */; };
+		EBC71B29204100A200DD0A98 /* ElectronicAutoRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B28204100A200DD0A98 /* ElectronicAutoRightView.m */; };
+		EBC71B2C204100DD00DD0A98 /* NewWindRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B2B204100DD00DD0A98 /* NewWindRightView.m */; };
 		EBCA834B1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCA834A1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m */; };
 		EBDF1BEC1FC5A2D000A756EA /* user_meeting_room_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1BEB1FC5A2D000A756EA /* user_meeting_room_1@2x.png */; };
 		EBDF1BF21FC5A9A200A756EA /* user_meeting_room_6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1BED1FC5A9A100A756EA /* user_meeting_room_6@2x.png */; };
@@ -1487,6 +1489,10 @@
 		EBC71B22203F011E00DD0A98 /* AirConditionRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AirConditionRightView.m; sourceTree = "<group>"; };
 		EBC71B24203F058100DD0A98 /* AirConditionComIRView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirConditionComIRView.h; sourceTree = "<group>"; };
 		EBC71B25203F058100DD0A98 /* AirConditionComIRView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AirConditionComIRView.m; sourceTree = "<group>"; };
+		EBC71B27204100A200DD0A98 /* ElectronicAutoRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElectronicAutoRightView.h; sourceTree = "<group>"; };
+		EBC71B28204100A200DD0A98 /* ElectronicAutoRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElectronicAutoRightView.m; sourceTree = "<group>"; };
+		EBC71B2A204100DD00DD0A98 /* NewWindRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewWindRightView.h; sourceTree = "<group>"; };
+		EBC71B2B204100DD00DD0A98 /* NewWindRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewWindRightView.m; sourceTree = "<group>"; };
 		EBCA834A1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserMonitorSettingsViewCtrl.m; sourceTree = "<group>"; };
 		EBCA834C1FD434D1007DEB8E /* UserMonitorSettingsViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserMonitorSettingsViewCtrl.h; sourceTree = "<group>"; };
 		EBDF1BEB1FC5A2D000A756EA /* user_meeting_room_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_meeting_room_1@2x.png"; sourceTree = "<group>"; };
@@ -2810,6 +2816,10 @@
 				EBC71B22203F011E00DD0A98 /* AirConditionRightView.m */,
 				EBC71B24203F058100DD0A98 /* AirConditionComIRView.h */,
 				EBC71B25203F058100DD0A98 /* AirConditionComIRView.m */,
+				EBC71B27204100A200DD0A98 /* ElectronicAutoRightView.h */,
+				EBC71B28204100A200DD0A98 /* ElectronicAutoRightView.m */,
+				EBC71B2A204100DD00DD0A98 /* NewWindRightView.h */,
+				EBC71B2B204100DD00DD0A98 /* NewWindRightView.m */,
 			);
 			path = RightView;
 			sourceTree = "<group>";
@@ -3494,6 +3504,7 @@
 				EB1717A91FF6145100CBDB81 /* EngineerCleanWaterViewCtrl.m in Sources */,
 				0479345B1DB0A7AA0066BABC /* JCShareView.m in Sources */,
 				04DE1E861AD6AEE000D49E2F /* ConfigureSetting.m in Sources */,
+				EBC71B29204100A200DD0A98 /* ElectronicAutoRightView.m in Sources */,
 				EB1A55D91FEF4E0D000B18E6 /* EngineerCameraViewController.m in Sources */,
 				EB09C4851FD2A64A00776540 /* UserElectronicAutoViewCtrl.m in Sources */,
 				EB1717A61FF6143600CBDB81 /* EngineerAirCleanViewCtrl.m in Sources */,
@@ -3587,6 +3598,7 @@
 				EB1A55C21FE93CD4000B18E6 /* EngineerAudioProcessViewCtrl.m in Sources */,
 				04DE1EA81AD6AEE000D49E2F /* SBJson4StreamWriterState.m in Sources */,
 				341671881FBA97BD001D33D0 /* HomeViewController.m in Sources */,
+				EBC71B2C204100DD00DD0A98 /* NewWindRightView.m in Sources */,
 				342814231FE34BF100170D11 /* PowerSettingView.m in Sources */,
 				EBEA7C221FBCAF260028F0E8 /* AreaPickView.m in Sources */,
 				04DE1E9F1AD6AEE000D49E2F /* iHttpAdmin.m in Sources */,
