@@ -52,7 +52,7 @@
         // Initialization code
         self.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
     
-        _cellWidth = frame.size.width - 50;
+        _cellWidth = frame.size.width - 30;
         CGRect rc = self.bounds;
         rc.size.width = _cellWidth;
         
@@ -78,7 +78,7 @@
         
         
         btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
-        btnSave.frame = CGRectMake(frame.size.width-50, frame.size.height/2-25, 50, 50);
+        btnSave.frame = CGRectMake(frame.size.width-45, frame.size.height/2-25, 50, 50);
         [btnSave setImage:[UIImage imageNamed:@"customer_view_confirm_n.png"] forState:UIControlStateNormal];
         [btnSave setImage:[UIImage imageNamed:@"customer_view_confirm_s.png"] forState:UIControlStateHighlighted];
         [btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -216,7 +216,7 @@
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
 {
-    int width = _cellWidth/colCount;
+    int width = (_cellWidth-20)/colCount;
 
     return width;
 }
