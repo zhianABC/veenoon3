@@ -11,6 +11,8 @@
 @implementation JHSlideView
 @synthesize maxValue;
 @synthesize minValue;
+@synthesize maxL;
+@synthesize _isShowValue;
 
 - (id) initWithSliderBg:(UIImage*)sliderBg frame:(CGRect)frame{
     
@@ -20,27 +22,7 @@
         
         self.backgroundColor = [UIColor clearColor];
         
-        
-//        slider = [[UISlider alloc] initWithFrame:CGRectMake(0, frame.size.height/2-10+10,
-//                                                            frame.size.width-40, 20)];
-//        slider.minimumValue = 1;// 设置最小值
-//        slider.maximumValue = 180;// 设置最大值
-//        slider.continuous = YES;// 设置可连续变化
-//        [slider setThumbImage:[UIImage imageNamed:@"progress_thumb.png"]
-//                     forState:UIControlStateNormal];
-//        [slider setMinimumTrackImage:[UIImage imageNamed:@"process_light.png"]
-//                            forState:UIControlStateNormal];
-//
-//        [self addSubview:slider];
-//        [slider addTarget:self
-//                   action:@selector(sliderValueChanged:)
-//         forControlEvents:UIControlEventValueChanged];
-//
-//        if(sliderBg)
-//        {
-//            [slider setMaximumTrackImage:sliderBg forState:UIControlStateNormal];
-//        }
-        
+        _isShowValue = YES;
         
         _sliderBg = [[UIImageView alloc] initWithFrame:CGRectMake(0,
                                                             frame.size.height/2,
@@ -176,10 +158,11 @@
 
 - (void) sliderValueChanged:(int)value{
     
-    valueLabel.text = [NSString stringWithFormat:@"%ds", value];
-
-    valueLabel.center  = CGPointMake(_thumb.center.x, valueLabel.center.y);
-    
+    if(_isShowValue)
+    {
+        valueLabel.text = [NSString stringWithFormat:@"%ds", value];
+        valueLabel.center  = CGPointMake(_thumb.center.x, valueLabel.center.y);
+    }
     
     CGRect rc = _sliderFr.frame;
     rc.size.width = _thumb.center.x;

@@ -110,7 +110,7 @@
     
     int cellWidth = 92;
     int cellHeight = 92;
-    int colNumber = 7;
+    int colNumber = 6;
     int space = (SCREEN_WIDTH - colNumber*cellWidth-leftRight*2)/(colNumber-1);
     
     for (int i = 0; i < self._number; i++) {

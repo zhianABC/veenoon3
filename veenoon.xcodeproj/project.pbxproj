@@ -216,6 +216,7 @@
 		3425E9921FE5763B003559F7 /* WirlessYaoBaoViewSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3425E9911FE5763B003559F7 /* WirlessYaoBaoViewSettingsView.m */; };
 		3425E9951FE57675003559F7 /* MixVoiceSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3425E9941FE57675003559F7 /* MixVoiceSettingsView.m */; };
 		342814231FE34BF100170D11 /* PowerSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 342814221FE34BF100170D11 /* PowerSettingView.m */; };
+		342A2F4020411B6900BE4071 /* GroupsPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 342A2F3F20411B6900BE4071 /* GroupsPickerView.m */; };
 		343733AE1FE402E80071C902 /* JHSlideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 343733AD1FE402E80071C902 /* JHSlideView.m */; };
 		345492F91FE6383A00793E2E /* slide_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 345492F81FE6383900793E2E /* slide_btn@2x.png */; };
 		345492FC1FE638F300793E2E /* SlideButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 345492FB1FE638F300793E2E /* SlideButton.m */; };
@@ -1029,6 +1030,8 @@
 		3425E9941FE57675003559F7 /* MixVoiceSettingsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MixVoiceSettingsView.m; sourceTree = "<group>"; };
 		342814211FE34BF100170D11 /* PowerSettingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PowerSettingView.h; sourceTree = "<group>"; };
 		342814221FE34BF100170D11 /* PowerSettingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PowerSettingView.m; sourceTree = "<group>"; };
+		342A2F3E20411B6800BE4071 /* GroupsPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupsPickerView.h; sourceTree = "<group>"; };
+		342A2F3F20411B6900BE4071 /* GroupsPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupsPickerView.m; sourceTree = "<group>"; };
 		343733AC1FE402E80071C902 /* JHSlideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHSlideView.h; sourceTree = "<group>"; };
 		343733AD1FE402E80071C902 /* JHSlideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHSlideView.m; sourceTree = "<group>"; };
 		345492F81FE6383900793E2E /* slide_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slide_btn@2x.png"; sourceTree = "<group>"; };
@@ -2866,6 +2869,8 @@
 				3421EA2B1FC4136600DC5378 /* CustomPickerView.m */,
 				342389B22026F48700885405 /* Groups2PickerView.h */,
 				342389B12026F48500885405 /* Groups2PickerView.m */,
+				342A2F3E20411B6800BE4071 /* GroupsPickerView.h */,
+				342A2F3F20411B6900BE4071 /* GroupsPickerView.m */,
 				3421EA2E1FC4161300DC5378 /* ColumnsView.h */,
 				3421EA2F1FC4161300DC5378 /* ColumnsView.m */,
 				EBEA7C1E1FBCAF260028F0E8 /* area.plist */,
@@ -3476,6 +3481,7 @@
 				3422A5B81FCC17C500F6D3C2 /* BatteryView.m in Sources */,
 				04DE1EC81AD6B22F00D49E2F /* BaseViewController.m in Sources */,
 				04DE1E891AD6AEE000D49E2F /* IconTextButton.m in Sources */,
+				342A2F4020411B6900BE4071 /* GroupsPickerView.m in Sources */,
 				04DE1E8C1AD6AEE000D49E2F /* RRScrollView.m in Sources */,
 				34686C9F1ED025CB001749A1 /* DesUtil.m in Sources */,
 				EBC71B08203AF74100DD0A98 /* RemoteVideoRightView.m in Sources */,

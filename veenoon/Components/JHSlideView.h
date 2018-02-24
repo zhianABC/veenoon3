@@ -21,6 +21,8 @@
 }
 @property (nonatomic, assign) int maxValue;
 @property (nonatomic, assign) int minValue;
+@property (nonatomic, readonly) UILabel *maxL;
+@property (nonatomic, assign) BOOL _isShowValue;
 
 - (id) initWithSliderBg:(UIImage*)sliderBg frame:(CGRect)frame;
 
