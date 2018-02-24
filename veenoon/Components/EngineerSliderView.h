@@ -20,7 +20,6 @@
     UIImageView *slider;
     UIImageView *indicator;
     UIImageView *sliderThumb;
-    UIImageView *roadSlider;
     
     UILabel *valueLabel;
 }

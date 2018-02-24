@@ -157,7 +157,7 @@
                      initWithSliderBg:[UIImage imageNamed:@"engineer_zengyi2_n.png"]
                      frame:CGRectZero];
     [self.view addSubview:_zengyiSlider];
-    [_zengyiSlider setRoadImage:[UIImage imageNamed:@"e_v_slider_road.png"]];
+    //[_zengyiSlider setRoadImage:[UIImage imageNamed:@"e_v_slider_road.png"]];
     [_zengyiSlider setIndicatorImage:[UIImage imageNamed:@"wireless_slide_s.png"]];
     _zengyiSlider.topEdge = 90;
     _zengyiSlider.bottomEdge = 55;
