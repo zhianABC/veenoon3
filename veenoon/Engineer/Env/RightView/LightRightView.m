@@ -195,7 +195,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
     _footerView.backgroundColor = M_GREEN_COLOR;
     
     int colNumber = 4;
-    int space = LIGHT_MAX_NUM-1;
+    int space = 5;
     int cellWidth = 115/2;
     int cellHeight = 115/2;
     int leftRight = (self.frame.size.width - 4*cellWidth - 3*space)/2;
