@@ -98,6 +98,17 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate>
     
 }
 
+- (void) scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    float fy = scrollView.contentOffset.y;
+    
+    if(fy < -20)
+    {
+        [self switchComSetting];
+    }
+    
+}
+
 #pragma mark -
 #pragma mark Table View DataSource
 

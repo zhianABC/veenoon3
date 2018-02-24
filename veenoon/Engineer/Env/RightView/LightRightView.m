@@ -218,7 +218,6 @@ CustomPickerViewDelegate> {
         [_brands addObject:@{@"title":@"Brand 1"}];
         
         
-        
         [_map setObject:@[@{@"title":@"pxx1"},@{@"title":@"pxx2"},@{@"title":@"pxx3"}]
                  forKey:@"PHILIPS"];
         [_map setObject:@[@{@"title":@"paxx1"},@{@"title":@"paxx2"},@{@"title":@"paxx3"}]
@@ -395,6 +394,7 @@ CustomPickerViewDelegate> {
         icon.layer.contentsGravity = kCAGravityResizeAspect;
         
         if (indexPath.row == 0) {
+            
             titleL.text = @"编组";
             icon.frame = CGRectMake(CGRectGetMaxX(valueL.frame)-20, 11, 20, 20);
             icon.image = [UIImage imageNamed:@"add_brand_icon.png"];
@@ -671,6 +671,7 @@ CustomPickerViewDelegate> {
     {
         _isStudying = YES;
         _footerView.hidden = NO;
+        
         [_tableView reloadData];
     }
     else

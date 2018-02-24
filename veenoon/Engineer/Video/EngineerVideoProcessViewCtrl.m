@@ -53,7 +53,7 @@
     [self.view addSubview:line];
     
     bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
-    [self.view addSubview:bottomBar];
+    
     
     //缺切图，把切图贴上即可。
     bottomBar.backgroundColor = [UIColor grayColor];
@@ -175,6 +175,9 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.textAlignment=NSTextAlignmentCenter;
     titleL.text = @"输出";
+    
+    
+    [self.view addSubview:bottomBar];
 }
 - (void) inputBtnAction:(id)sender{
 }
@@ -218,6 +221,7 @@
         [_bottomView removeFromSuperview];
     }
     
+    okBtn.hidden = NO;
     [okBtn setTitle:@"设置" forState:UIControlStateNormal];
     isSettings = NO;
 }
@@ -227,14 +231,14 @@
                       initWithFrame:CGRectMake(SCREEN_WIDTH-300,
                                                64, 300, SCREEN_HEIGHT-114)];
         _rightView.delegate = self;
-        [self.view addSubview:_rightView];
+        [self.view insertSubview:_rightView belowSubview:bottomBar];
         
         _topView = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-300, 0, 300, 64)];
         _topView.backgroundColor = THEME_COLOR;
         [self.view addSubview:_topView];
         
         _bottomView = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-300, SCREEN_HEIGHT-50, 300, 50)];
-        _bottomView.backgroundColor = THEME_COLOR;
+        _bottomView.backgroundColor = [UIColor clearColor];
         [self.view addSubview:_bottomView];
         
         UIButton *saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -247,6 +251,8 @@
         [saveBtn addTarget:self
                   action:@selector(saveAction:)
         forControlEvents:UIControlEventTouchUpInside];
+        
+        okBtn.hidden = YES;
         
         isSettings = YES;
     }
