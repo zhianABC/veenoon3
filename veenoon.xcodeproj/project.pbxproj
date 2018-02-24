@@ -529,6 +529,7 @@
 		EB7333F1204102DF00AE60B8 /* FloorWarmRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333F0204102DF00AE60B8 /* FloorWarmRightView.m */; };
 		EB7333F42041046400AE60B8 /* AirCleanRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333F32041046400AE60B8 /* AirCleanRightView.m */; };
 		EB7333F72041071D00AE60B8 /* CleanWaterRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333F62041071D00AE60B8 /* CleanWaterRightView.m */; };
+		EB7333FA204108B000AE60B8 /* AddWetRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333F9204108B000AE60B8 /* AddWetRightView.m */; };
 		EB7E81581FF8C4C90053E5A7 /* info_day_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB7E81521FF8C4C80053E5A7 /* info_day_n@2x.png */; };
 		EB7E81591FF8C4C90053E5A7 /* info_month_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB7E81531FF8C4C80053E5A7 /* info_month_n@2x.png */; };
 		EB7E815A1FF8C4C90053E5A7 /* info_day_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB7E81541FF8C4C90053E5A7 /* info_day_s@2x.png */; };
@@ -1421,6 +1422,8 @@
 		EB7333F32041046400AE60B8 /* AirCleanRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AirCleanRightView.m; sourceTree = "<group>"; };
 		EB7333F52041071D00AE60B8 /* CleanWaterRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CleanWaterRightView.h; sourceTree = "<group>"; };
 		EB7333F62041071D00AE60B8 /* CleanWaterRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CleanWaterRightView.m; sourceTree = "<group>"; };
+		EB7333F8204108B000AE60B8 /* AddWetRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddWetRightView.h; sourceTree = "<group>"; };
+		EB7333F9204108B000AE60B8 /* AddWetRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddWetRightView.m; sourceTree = "<group>"; };
 		EB7E81521FF8C4C80053E5A7 /* info_day_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info_day_n@2x.png"; sourceTree = "<group>"; };
 		EB7E81531FF8C4C80053E5A7 /* info_month_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info_month_n@2x.png"; sourceTree = "<group>"; };
 		EB7E81541FF8C4C90053E5A7 /* info_day_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info_day_s@2x.png"; sourceTree = "<group>"; };
@@ -2835,6 +2838,8 @@
 				EB7333F32041046400AE60B8 /* AirCleanRightView.m */,
 				EB7333F52041071D00AE60B8 /* CleanWaterRightView.h */,
 				EB7333F62041071D00AE60B8 /* CleanWaterRightView.m */,
+				EB7333F8204108B000AE60B8 /* AddWetRightView.h */,
+				EB7333F9204108B000AE60B8 /* AddWetRightView.m */,
 			);
 			path = RightView;
 			sourceTree = "<group>";
@@ -3574,6 +3579,7 @@
 				04DE1E931AD6AEE000D49E2F /* Utilities.m in Sources */,
 				EB1A04601FC7156C007CC1F2 /* UserAudioConfigViewController.m in Sources */,
 				04DE1E981AD6AEE000D49E2F /* ASIFormDataRequest.m in Sources */,
+				EB7333FA204108B000AE60B8 /* AddWetRightView.m in Sources */,
 				04DE1DD81AD68C5E00D49E2F /* main.m in Sources */,
 				04DE1EA11AD6AEE000D49E2F /* NetworkChecker.m in Sources */,
 				EBC71B1D203C497500DD0A98 /* TouYingJiRightView.m in Sources */,
