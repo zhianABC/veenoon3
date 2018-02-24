@@ -12,6 +12,9 @@
 #import "UIButton+Color.h"
 #import "GroupsPickerView.h"
 #import "JHSlideView.h"
+#import "UIImage+Color.h"
+
+#define LIGHT_MAX_NUM   6
 
 @interface LightRightView () <UITableViewDelegate,
 UITableViewDataSource, UITextFieldDelegate,
@@ -192,15 +195,15 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
     _footerView.backgroundColor = M_GREEN_COLOR;
     
     int colNumber = 4;
-    int space = 5;
+    int space = LIGHT_MAX_NUM-1;
     int cellWidth = 115/2;
     int cellHeight = 115/2;
-    int leftRight = (self.frame.size.width - 4*cellWidth - 3*5)/2;
+    int leftRight = (self.frame.size.width - 4*cellWidth - 3*space)/2;
     UIColor *rectColor = RGB(0, 146, 174);
     
     int top = 40;
     
-    for (int index = 0; index < 7; index++) {
+    for (int index = 0; index <= LIGHT_MAX_NUM; index++) {
         int row = index/colNumber;
         int col = index%colNumber;
         int startX = col*cellWidth+col*space+leftRight;
@@ -214,8 +217,9 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
         [_footerView addSubview:scenarioBtn];
         int titleInt = index + 1;
         NSString *string;
-        if (index == 6) {
+        if (index == LIGHT_MAX_NUM) {
             string = @"全部";
+            scenarioBtn.tag = 100;
         } else {
             string = [NSString stringWithFormat:@"%d",titleInt];
         }
@@ -312,9 +316,18 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
     
     f.tag = i-1;
     
-    [_bianzuArrays addObject:@{@"title":f,@"value":@""}];
+    NSMutableArray *values = [NSMutableArray array];
+    NSMutableDictionary *rowv = [NSMutableDictionary dictionary];
+    [rowv setObject:f forKey:@"title"];
+    [rowv setObject:@"" forKey:@"value"];
+    [rowv setObject:values forKey:@"values"];
+    [_bianzuArrays addObject:rowv];
     
     _isAdding = YES;
+    
+    _curIndex = (int)[_bianzuArrays count] - 1;
+    
+    [self refreshFooterButtonsState];
     
     [_tableView reloadData];
     
@@ -408,6 +421,8 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
     _curIndex = (int)indexPath.row;
+    
+    [self refreshFooterButtonsState];
     
     [_tableView reloadData];
     
@@ -607,7 +622,81 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
     
 }
 
-- (void) buttonAction:(id)sender{
+- (void) buttonAction:(UIButton*)sender{
+    
+    int idx = (int)sender.tag + 1;
+
+    
+    if(_curIndex >= 0 && _curIndex < [_bianzuArrays count])
+    {
+        NSMutableDictionary *mdic = [_bianzuArrays objectAtIndex:_curIndex];
+        
+        NSMutableArray *values = [mdic objectForKey:@"values"];
+        
+        if(idx == 101)
+        {
+            //全部
+            
+            for(int i = 0; i < LIGHT_MAX_NUM; i++)
+            {
+                id obj = [NSNumber numberWithInt:i+1];
+                if(![values containsObject:obj])
+                {
+                    [values addObject:obj];
+                }
+            }
+        }
+        else
+        {
+            id obj = [NSNumber numberWithInt:idx];
+            if(![values containsObject:obj])
+            {
+                [values addObject:obj];
+            }
+            else
+            {
+                [values removeObject:obj];
+            }
+        }
+        
+        
+        NSArray *sa = [values sortedArrayUsingSelector:@selector(compare:)];
+        NSString *value = @"";
+        for(id iv in sa)
+        {
+            if([value length] == 0)
+                value = [NSString stringWithFormat:@"%d", [iv intValue]];
+            else
+                value = [NSString stringWithFormat:@"%@, %d", value, [iv intValue]];
+        }
+        
+        [mdic setObject:value forKey:@"value"];
+        
+        
+        UIImage *imgNor = [UIImage imageWithColor:RGB(0, 146, 174) andSize:CGSizeMake(1, 1)];
+        UIImage *imgSel = [UIImage imageWithColor:RGB(0, 113, 140) andSize:CGSizeMake(1, 1)];
+
+        for(UIButton *btn in _btns)
+        {
+            int tidx = (int)btn.tag + 1;
+            id obj = [NSNumber numberWithInt:tidx];
+            
+            if([values containsObject:obj])
+            {
+                [btn setBackgroundImage:imgSel forState:UIControlStateNormal];
+                [btn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+            }
+            else
+            {
+                [btn setBackgroundImage:imgNor forState:UIControlStateNormal];
+                [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            }
+        }
+    }
+    
+    
+    
+    [_tableView reloadData];
     
     /*
     NSString *brand = _fieldBrand.text;
@@ -638,9 +727,37 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
     */
 }
 
+- (void) refreshFooterButtonsState{
+    
+    if(_curIndex >= 0 && _curIndex < [_bianzuArrays count])
+    {
+        NSMutableDictionary *mdic = [_bianzuArrays objectAtIndex:_curIndex];
+        
+        UIImage *imgNor = [UIImage imageWithColor:RGB(0, 146, 174) andSize:CGSizeMake(1, 1)];
+        UIImage *imgSel = [UIImage imageWithColor:RGB(0, 113, 140) andSize:CGSizeMake(1, 1)];
+        NSMutableArray *values = [mdic objectForKey:@"values"];
+        for(UIButton *btn in _btns)
+        {
+            int tidx = (int)btn.tag + 1;
+            id obj = [NSNumber numberWithInt:tidx];
+            
+            if([values containsObject:obj])
+            {
+                [btn setBackgroundImage:imgSel forState:UIControlStateNormal];
+                [btn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+            }
+            else
+            {
+                [btn setBackgroundImage:imgNor forState:UIControlStateNormal];
+                [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            }
+        }
+    }
+}
+
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     
-    _curIndex = (int)textField.tag;
+    //_curIndex = (int)textField.tag;
     
 }
 
