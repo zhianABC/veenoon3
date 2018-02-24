@@ -9,12 +9,17 @@
 #import "EngineerMonitorViewCtrl.h"
 #import "UIButton+Color.h"
 #import "CustomPickerView.h"
+#import "MonitorRightView.h"
 
 @interface EngineerMonitorViewCtrl () <CustomPickerViewDelegate>{
     
     UIButton *_selectSysBtn;
     
     CustomPickerView *_customPicker;
+    
+    BOOL isSettings;
+    MonitorRightView *_rightView;
+    UIButton *okBtn;
 }
 @end
 
@@ -23,6 +28,8 @@
 @synthesize _number;
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    isSettings = NO;
     
     if (_monitorRoomList) {
         [_monitorRoomList removeAllObjects];
@@ -79,7 +86,7 @@
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
     [bottomBar addSubview:okBtn];
     [okBtn setTitle:@"设置" forState:UIControlStateNormal];
@@ -108,7 +115,7 @@
     int uiviewWidth = (SCREEN_WIDTH - leftRight*2 -rowGap*2)/3;
     int cellHeight = uiviewWidth -100;
     
-    int rowNUmber = [_monitorRoomList count] / 3 + 1;
+    int rowNUmber = (int) [_monitorRoomList count] / 3 + 1;
     
     UIScrollView *_botomView = [[UIScrollView alloc] initWithFrame:CGRectMake(leftRight, 100, SCREEN_WIDTH-2*leftRight, SCREEN_HEIGHT - 200)];
     _botomView.contentSize =  CGSizeMake(SCREEN_WIDTH-2*leftRight, rowNUmber * (cellHeight + rowGap) +10);
@@ -199,7 +206,22 @@
     [_selectSysBtn setTitle:title forState:UIControlStateNormal];
 }
 - (void) okAction:(id)sender{
-    
+    if (!isSettings) {
+        _rightView = [[MonitorRightView alloc]
+                      initWithFrame:CGRectMake(SCREEN_WIDTH-300,
+                                               64, 300, SCREEN_HEIGHT-114)];
+        [self.view addSubview:_rightView];
+        
+        [okBtn setTitle:@"保存" forState:UIControlStateNormal];
+        
+        isSettings = YES;
+    } else {
+        if (_rightView) {
+            [_rightView removeFromSuperview];
+        }
+        [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+        isSettings = NO;
+    }
 }
 
 - (void) cancelAction:(id)sender{
