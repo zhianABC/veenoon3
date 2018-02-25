@@ -36,6 +36,9 @@
     
     AudioIconSettingView *_inconView;
     BOOL isIcon;
+    
+    UIImageView *bottomBar;
+    UIView *topbar;
 }
 
 @end
@@ -56,15 +59,19 @@
     _buttonNumberArray = [[NSMutableArray alloc] init];
     _selectedBtnArray = [[NSMutableArray alloc] init];
     
+    topbar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 64)];
+    topbar.backgroundColor = THEME_COLOR;
+    [self.view addSubview:topbar];
+    
     UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
-    [self.view addSubview:titleIcon];
+    [topbar addSubview:titleIcon];
     titleIcon.frame = CGRectMake(60, 40, 70, 10);
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 63, SCREEN_WIDTH, 1)];
     line.backgroundColor = RGB(75, 163, 202);
-    [self.view addSubview:line];
-    
-    UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
+    [topbar addSubview:line];
+
+    bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
     
     //缺切图，把切图贴上即可。
@@ -83,7 +90,7 @@
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
     [bottomBar addSubview:okBtn];
     [okBtn setTitle:@"设置" forState:UIControlStateNormal];
@@ -233,6 +240,11 @@
         
         index++;
     }
+    
+    
+    
+    [self.view bringSubviewToFront:bottomBar];
+    [self.view bringSubviewToFront:topbar];
 }
 - (void) didSliderEndChanged:(id)object {
     
@@ -368,7 +380,7 @@
                 [UIView commitAnimations];
             }
             
-            [self.view addSubview:_inconView];
+            [self.view insertSubview:_inconView belowSubview:bottomBar];
             [okBtn setTitle:@"保存" forState:UIControlStateNormal];
         }
     }
