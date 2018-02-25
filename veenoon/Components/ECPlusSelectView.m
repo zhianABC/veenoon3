@@ -245,7 +245,7 @@ EPlusLayerViewDelegate>
     CGPoint ptNew = pt;
     ptNew.y = pt.y - _tableView.contentOffset.y;
     
-    NSLog(@"%f - %f", ptNew.x, ptNew.y);
+    //NSLog(@"%f - %f", ptNew.x, ptNew.y);
     
     if(delegate && [delegate respondsToSelector:@selector(didEndDragingElecCell:pt:)])
     {

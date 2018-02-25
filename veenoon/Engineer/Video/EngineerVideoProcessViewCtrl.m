@@ -26,6 +26,9 @@
     UIView *_topView;
     UIView *_bottomView;
     UIImageView *bottomBar;
+    
+    UIScrollView *scroolViewIn;
+    UIScrollView *scroolViewOut;
 }
 
 @end
@@ -108,10 +111,10 @@
     int cellWidth = 80;
     int space = 5;
     
-    UIScrollView *scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(200, labelHeight+40, SCREEN_WIDTH - 200*2, 70)];
+    scroolViewIn = [[UIScrollView alloc] initWithFrame:CGRectMake(200, labelHeight+40, SCREEN_WIDTH - 200*2, 70)];
     int viewWidth = self._inNumber * 85;
-    scroolView.contentSize = CGSizeMake(viewWidth, 70);
-    [self.view addSubview:scroolView];
+    scroolViewIn.contentSize = CGSizeMake(viewWidth, 70);
+    [self.view addSubview:scroolViewIn];
     
     for (int i = 0 ; i < self._inNumber; i++) {
         int startX = index*cellWidth+index*space;
@@ -127,7 +130,7 @@
         [cameraBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [cameraBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
         cameraBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
-        [scroolView addSubview:cameraBtn];
+        [scroolViewIn addSubview:cameraBtn];
         [cameraBtn addTarget:self
                       action:@selector(inputBtnAction:)
             forControlEvents:UIControlEventTouchUpInside];
@@ -136,11 +139,11 @@
         index++;
     }
     
-    UIScrollView *scroolView2 = [[UIScrollView alloc] initWithFrame:CGRectMake(200, labelHeight+240, SCREEN_WIDTH - 200*2, 70)];
+    scroolViewOut = [[UIScrollView alloc] initWithFrame:CGRectMake(200, labelHeight+240, SCREEN_WIDTH - 200*2, 70)];
     int viewWidth2 = self._outNumber * 85;
-    scroolView2.contentSize = CGSizeMake(viewWidth2, 70);
+    scroolViewOut.contentSize = CGSizeMake(viewWidth2, 70);
     
-    [self.view addSubview:scroolView2];
+    [self.view addSubview:scroolViewOut];
     
     
     int index2 =0;
@@ -159,7 +162,7 @@
         [cameraBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [cameraBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
         cameraBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
-        [scroolView2 addSubview:cameraBtn];
+        [scroolViewOut addSubview:cameraBtn];
         [cameraBtn addTarget:self
                       action:@selector(outputBtnAction:)
             forControlEvents:UIControlEventTouchUpInside];
@@ -261,23 +264,31 @@
 - (void) didEndDragingElecCell:(NSDictionary *)data pt:(CGPoint)pt {
     CGPoint viewPoint = [self.view convertPoint:pt fromView:_rightView];
     
+    //NSLog(@"%f - %f", viewPoint.x, viewPoint.y);
+    
     NSNumber *number = [data objectForKey:@"id"];
     int numberInt = [number intValue];
-    UIImage *image = [data objectForKey:@"icon"];
-    if (301 <= numberInt && numberInt <= 305) {
-        for (UIButton *button in _inPutBtnArray) {
-            CGRect rect = [self.view convertRect:button.frame fromView:button.superview];
-            if (CGRectContainsPoint(rect, viewPoint)) {
-//                [button setImage:image forState:UIControlStateNormal];
-            }
-        }
-    } else {
-        for (UIButton *button in _outPutBtnArray) {
-            if (CGRectContainsPoint(button.frame, viewPoint)) {
-//                [button setImage:image forState:UIControlStateNormal];
-            }
-        }
-    }
+    NSString *imageName = [data objectForKey:@"icon"];
+    UIImage *img = [UIImage imageNamed:imageName];
+     if(img)
+     {
+         if (301 <= numberInt && numberInt <= 305) {
+             for (UIButton *button in _inPutBtnArray) {
+                 CGRect rect = [self.view convertRect:button.frame fromView:button.superview];
+                 if (CGRectContainsPoint(rect, viewPoint)) {
+                     
+                     [button setImage:img forState:UIControlStateNormal];
+                 }
+             }
+         } else {
+             for (UIButton *button in _outPutBtnArray) {
+                 CGRect rect = [self.view convertRect:button.frame fromView:button.superview];
+                 if (CGRectContainsPoint(rect, viewPoint)) {
+                     [button setImage:img forState:UIControlStateNormal];
+                 }
+             }
+         }
+     }
     
     
     
