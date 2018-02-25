@@ -37,7 +37,7 @@ UITableViewDataSource,AudioIconSettingViewDelegate, EPlusLayerViewDelegate> {
 - (void) initData{
     
     NSBundle *bundle = [NSBundle mainBundle];
-    NSString *plistPath = [bundle pathForResource:@"icon" ofType:@"plist"];
+    NSString *plistPath = [bundle pathForResource:@"audio_icon" ofType:@"plist"];
     self._data = [[NSArray alloc] initWithContentsOfFile:plistPath];
 }
 

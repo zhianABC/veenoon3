@@ -367,9 +367,8 @@
                                                64, 300, SCREEN_HEIGHT-114);
                 [UIView commitAnimations];
             }
-            
-            [self.view addSubview:_inconView];
             [okBtn setTitle:@"保存" forState:UIControlStateNormal];
+            [self.view addSubview:_inconView];
         }
     }
 }
