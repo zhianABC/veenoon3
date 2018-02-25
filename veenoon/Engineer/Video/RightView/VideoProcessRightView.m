@@ -102,7 +102,7 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate>
 {
     float fy = scrollView.contentOffset.y;
     
-    if(fy < -20)
+    if(fy < -40)
     {
         [self switchComSetting];
     }
