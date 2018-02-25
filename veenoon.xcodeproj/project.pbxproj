@@ -539,6 +539,16 @@
 		EB795B482042DD6F005D1F47 /* AudioOutputSettingViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB795B472042DD6F005D1F47 /* AudioOutputSettingViewCtrl.m */; };
 		EB795B4B2042DE5E005D1F47 /* AudioIconSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB795B4A2042DE5E005D1F47 /* AudioIconSettingView.m */; };
 		EB795B4E2042DEDE005D1F47 /* AudioMatrixSettingViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB795B4D2042DEDE005D1F47 /* AudioMatrixSettingViewCtrl.m */; };
+		EB795B532042E81F005D1F47 /* ZengYi_UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB795B522042E81F005D1F47 /* ZengYi_UIView.m */; };
+		EB795B562042E838005D1F47 /* ZaoShengMen_UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB795B552042E838005D1F47 /* ZaoShengMen_UIView.m */; };
+		EB795B592042E84B005D1F47 /* LvBoJunHeng_UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB795B582042E84B005D1F47 /* LvBoJunHeng_UIView.m */; };
+		EB795B5C2042E861005D1F47 /* YaXianQi_UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB795B5B2042E861005D1F47 /* YaXianQi_UIView.m */; };
+		EB795B5F2042E87C005D1F47 /* YanShiQi_UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB795B5E2042E87C005D1F47 /* YanShiQi_UIView.m */; };
+		EB795B622042E890005D1F47 /* HuiShengXiaoChu_UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB795B612042E890005D1F47 /* HuiShengXiaoChu_UIView.m */; };
+		EB795B652042E8A1005D1F47 /* ZiDongHunYin_UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB795B642042E8A1005D1F47 /* ZiDongHunYin_UIView.m */; };
+		EB795B682042E8C1005D1F47 /* XinHaoFaShengQi_UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB795B672042E8C1005D1F47 /* XinHaoFaShengQi_UIView.m */; };
+		EB795B6B2042E8D3005D1F47 /* DianPing_UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB795B6A2042E8D3005D1F47 /* DianPing_UIView.m */; };
+		EB795B6E2042E905005D1F47 /* JuZhenLuYou_UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB795B6D2042E905005D1F47 /* JuZhenLuYou_UIView.m */; };
 		EB7E81581FF8C4C90053E5A7 /* info_day_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB7E81521FF8C4C80053E5A7 /* info_day_n@2x.png */; };
 		EB7E81591FF8C4C90053E5A7 /* info_month_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB7E81531FF8C4C80053E5A7 /* info_month_n@2x.png */; };
 		EB7E815A1FF8C4C90053E5A7 /* info_day_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB7E81541FF8C4C90053E5A7 /* info_day_s@2x.png */; };
@@ -1450,6 +1460,26 @@
 		EB795B4A2042DE5E005D1F47 /* AudioIconSettingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioIconSettingView.m; sourceTree = "<group>"; };
 		EB795B4C2042DEDE005D1F47 /* AudioMatrixSettingViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioMatrixSettingViewCtrl.h; sourceTree = "<group>"; };
 		EB795B4D2042DEDE005D1F47 /* AudioMatrixSettingViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioMatrixSettingViewCtrl.m; sourceTree = "<group>"; };
+		EB795B512042E81F005D1F47 /* ZengYi_UIView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZengYi_UIView.h; sourceTree = "<group>"; };
+		EB795B522042E81F005D1F47 /* ZengYi_UIView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZengYi_UIView.m; sourceTree = "<group>"; };
+		EB795B542042E838005D1F47 /* ZaoShengMen_UIView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZaoShengMen_UIView.h; sourceTree = "<group>"; };
+		EB795B552042E838005D1F47 /* ZaoShengMen_UIView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZaoShengMen_UIView.m; sourceTree = "<group>"; };
+		EB795B572042E84B005D1F47 /* LvBoJunHeng_UIView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LvBoJunHeng_UIView.h; sourceTree = "<group>"; };
+		EB795B582042E84B005D1F47 /* LvBoJunHeng_UIView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LvBoJunHeng_UIView.m; sourceTree = "<group>"; };
+		EB795B5A2042E861005D1F47 /* YaXianQi_UIView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YaXianQi_UIView.h; sourceTree = "<group>"; };
+		EB795B5B2042E861005D1F47 /* YaXianQi_UIView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YaXianQi_UIView.m; sourceTree = "<group>"; };
+		EB795B5D2042E87C005D1F47 /* YanShiQi_UIView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YanShiQi_UIView.h; sourceTree = "<group>"; };
+		EB795B5E2042E87C005D1F47 /* YanShiQi_UIView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YanShiQi_UIView.m; sourceTree = "<group>"; };
+		EB795B602042E890005D1F47 /* HuiShengXiaoChu_UIView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HuiShengXiaoChu_UIView.h; sourceTree = "<group>"; };
+		EB795B612042E890005D1F47 /* HuiShengXiaoChu_UIView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HuiShengXiaoChu_UIView.m; sourceTree = "<group>"; };
+		EB795B632042E8A1005D1F47 /* ZiDongHunYin_UIView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZiDongHunYin_UIView.h; sourceTree = "<group>"; };
+		EB795B642042E8A1005D1F47 /* ZiDongHunYin_UIView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZiDongHunYin_UIView.m; sourceTree = "<group>"; };
+		EB795B662042E8C1005D1F47 /* XinHaoFaShengQi_UIView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XinHaoFaShengQi_UIView.h; sourceTree = "<group>"; };
+		EB795B672042E8C1005D1F47 /* XinHaoFaShengQi_UIView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XinHaoFaShengQi_UIView.m; sourceTree = "<group>"; };
+		EB795B692042E8D3005D1F47 /* DianPing_UIView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DianPing_UIView.h; sourceTree = "<group>"; };
+		EB795B6A2042E8D3005D1F47 /* DianPing_UIView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DianPing_UIView.m; sourceTree = "<group>"; };
+		EB795B6C2042E905005D1F47 /* JuZhenLuYou_UIView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JuZhenLuYou_UIView.h; sourceTree = "<group>"; };
+		EB795B6D2042E905005D1F47 /* JuZhenLuYou_UIView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JuZhenLuYou_UIView.m; sourceTree = "<group>"; };
 		EB7E81521FF8C4C80053E5A7 /* info_day_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info_day_n@2x.png"; sourceTree = "<group>"; };
 		EB7E81531FF8C4C80053E5A7 /* info_month_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info_month_n@2x.png"; sourceTree = "<group>"; };
 		EB7E81541FF8C4C90053E5A7 /* info_day_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info_day_s@2x.png"; sourceTree = "<group>"; };
@@ -2803,6 +2833,7 @@
 		EB4E39DE20273B9000533575 /* RIghtView */ = {
 			isa = PBXGroup;
 			children = (
+				EB795B502042E7E7005D1F47 /* AudioProcess */,
 				3425E98D1FE575A4003559F7 /* PlayerSettingsPannel.h */,
 				3425E98E1FE575A4003559F7 /* PlayerSettingsPannel.m */,
 				342814211FE34BF100170D11 /* PowerSettingView.h */,
@@ -2883,6 +2914,33 @@
 				EB7333FC20410A7E00AE60B8 /* MonitorRightView.m */,
 			);
 			path = RightView;
+			sourceTree = "<group>";
+		};
+		EB795B502042E7E7005D1F47 /* AudioProcess */ = {
+			isa = PBXGroup;
+			children = (
+				EB795B512042E81F005D1F47 /* ZengYi_UIView.h */,
+				EB795B522042E81F005D1F47 /* ZengYi_UIView.m */,
+				EB795B542042E838005D1F47 /* ZaoShengMen_UIView.h */,
+				EB795B552042E838005D1F47 /* ZaoShengMen_UIView.m */,
+				EB795B572042E84B005D1F47 /* LvBoJunHeng_UIView.h */,
+				EB795B582042E84B005D1F47 /* LvBoJunHeng_UIView.m */,
+				EB795B5A2042E861005D1F47 /* YaXianQi_UIView.h */,
+				EB795B5B2042E861005D1F47 /* YaXianQi_UIView.m */,
+				EB795B5D2042E87C005D1F47 /* YanShiQi_UIView.h */,
+				EB795B5E2042E87C005D1F47 /* YanShiQi_UIView.m */,
+				EB795B602042E890005D1F47 /* HuiShengXiaoChu_UIView.h */,
+				EB795B612042E890005D1F47 /* HuiShengXiaoChu_UIView.m */,
+				EB795B632042E8A1005D1F47 /* ZiDongHunYin_UIView.h */,
+				EB795B642042E8A1005D1F47 /* ZiDongHunYin_UIView.m */,
+				EB795B662042E8C1005D1F47 /* XinHaoFaShengQi_UIView.h */,
+				EB795B672042E8C1005D1F47 /* XinHaoFaShengQi_UIView.m */,
+				EB795B692042E8D3005D1F47 /* DianPing_UIView.h */,
+				EB795B6A2042E8D3005D1F47 /* DianPing_UIView.m */,
+				EB795B6C2042E905005D1F47 /* JuZhenLuYou_UIView.h */,
+				EB795B6D2042E905005D1F47 /* JuZhenLuYou_UIView.m */,
+			);
+			path = AudioProcess;
 			sourceTree = "<group>";
 		};
 		EBEA7C1D1FBCAF260028F0E8 /* Components */ = {
@@ -3527,6 +3585,7 @@
 				04D719851DADE2D8002153D7 /* DataSync.m in Sources */,
 				EB795B422042DA33005D1F47 /* AudioProcessRightView.m in Sources */,
 				04DE1EC51AD6B21600D49E2F /* LoginViewController.m in Sources */,
+				EB795B592042E84B005D1F47 /* LvBoJunHeng_UIView.m in Sources */,
 				04D719821DADE0A9002153D7 /* WSEvent.m in Sources */,
 				342389B02026D93500885405 /* JCActionView.m in Sources */,
 				04DE1E8F1AD6AEE000D49E2F /* UIImage+Color.m in Sources */,
@@ -3580,18 +3639,22 @@
 				EB1717AC1FF6147200CBDB81 /* EngineerAddWetViewCtrl.m in Sources */,
 				EBDF1C191FC5CCD700A756EA /* UserScnarioConfigViewController.m in Sources */,
 				04D719781DADD3A4002153D7 /* WSUser.m in Sources */,
+				EB795B682042E8C1005D1F47 /* XinHaoFaShengQi_UIView.m in Sources */,
 				04D9A0EB1DAF83E0008DF2E6 /* AudioPlayer.m in Sources */,
 				04DE1E971AD6AEE000D49E2F /* ASIDownloadCache.m in Sources */,
 				EB3B73B21FE6382F001941CF /* EngineerWirlessYaoBaoViewCtrl.m in Sources */,
 				EB09C4B11FD3B27200776540 /* MapMarkerLayer.m in Sources */,
 				3419283D1FD3CC760014695B /* DragCellView.m in Sources */,
 				EB2982151FD58699007B5C20 /* EngineerMeetingRoomListViewCtrl.m in Sources */,
+				EB795B562042E838005D1F47 /* ZaoShengMen_UIView.m in Sources */,
 				EB1717A31FF6141A00CBDB81 /* EngineerFloorWarmViewCtrl.m in Sources */,
 				EBF831E31FD03A110096E6EC /* UserVideoDVDDiskViewCtrl.m in Sources */,
+				EB795B652042E8A1005D1F47 /* ZiDongHunYin_UIView.m in Sources */,
 				EB09C4A21FD3A00200776540 /* UserAirConditionViewCtrl.m in Sources */,
 				EB1717931FF5E6B600CBDB81 /* EngineerTouYingJiViewCtrl.m in Sources */,
 				EBC71B23203F011E00DD0A98 /* AirConditionRightView.m in Sources */,
 				341F0F471EC2FC500027C800 /* WSCode.m in Sources */,
+				EB795B6E2042E905005D1F47 /* JuZhenLuYou_UIView.m in Sources */,
 				04DE1EAD1AD6AEE000D49E2F /* SDWebImageCompat.m in Sources */,
 				34DC473F1FD6984400ACB589 /* ColumnView.m in Sources */,
 				EBAE5BB71FDFFBD700C10C4D /* EngineerScenarioListViewCtrl.m in Sources */,
@@ -3604,6 +3667,7 @@
 				EB09C47C1FD25B4300776540 /* UserLightConfigViewCtrl.m in Sources */,
 				345492FC1FE638F300793E2E /* SlideButton.m in Sources */,
 				EB16474A203ACD6300E71483 /* GongLvFangDaQiView.m in Sources */,
+				EB795B622042E890005D1F47 /* HuiShengXiaoChu_UIView.m in Sources */,
 				EB1A55F41FEF80D7000B18E6 /* EngineerRemoteVideoViewCtrl.m in Sources */,
 				EB5CF0411FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m in Sources */,
 				EB1A56151FEF8F29000B18E6 /* EngineerVideoProcessViewCtrl.m in Sources */,
@@ -3622,6 +3686,7 @@
 				EB3B739A1FE61B18001941CF /* EngineerPlayerSettingsViewCtrl.m in Sources */,
 				0477DC581DA9F4700077FA52 /* Base64.m in Sources */,
 				049BA6601AF7B64000F17584 /* DataBase.m in Sources */,
+				EB795B532042E81F005D1F47 /* ZengYi_UIView.m in Sources */,
 				049BA6661AF7B82700F17584 /* ChooseCountryViewController.m in Sources */,
 				04DE1E9D1AD6AEE000D49E2F /* DataCenter.m in Sources */,
 				04DE1EA51AD6AEE000D49E2F /* SBJson4StreamParserState.m in Sources */,
@@ -3638,6 +3703,7 @@
 				EBC71B26203F058100DD0A98 /* AirConditionComIRView.m in Sources */,
 				EB5F7F951FD59D6B00351888 /* EngineerPortSettingView.m in Sources */,
 				EBC71B20203EEB8600DD0A98 /* LightRightView.m in Sources */,
+				EB795B6B2042E8D3005D1F47 /* DianPing_UIView.m in Sources */,
 				EB3685FD1FC07A5A009973A3 /* SettingsViewView.m in Sources */,
 				EB1717B81FF6150400CBDB81 /* EngineerScenarioSettingsViewCtrl.m in Sources */,
 				3421EA2D1FC4136600DC5378 /* CustomPickerView.m in Sources */,
@@ -3661,6 +3727,7 @@
 				EBF831ED1FD03EFA0096E6EC /* UserVideoLuBoJiViewCtrl.m in Sources */,
 				34217A6F1FCE98200006701C /* UserVideoConfigView.m in Sources */,
 				04DE1E901AD6AEE000D49E2F /* UIImage+ImageEffects.m in Sources */,
+				EB795B5F2042E87C005D1F47 /* YanShiQi_UIView.m in Sources */,
 				04DE1EBF1AD6AF7900D49E2F /* User.m in Sources */,
 				EBC71B17203C487000DD0A98 /* TVViewRightView.m in Sources */,
 				EB1717A01FF613EC00CBDB81 /* EngineerNewWindViewCtrl.m in Sources */,
@@ -3694,6 +3761,7 @@
 				04DE1EB51AD6AEE000D49E2F /* UIImageView+WebCache.m in Sources */,
 				34DC47421FD6DD9300ACB589 /* CircleProgressView.m in Sources */,
 				04DE1E8E1AD6AEE000D49E2F /* UIButton+Color.m in Sources */,
+				EB795B5C2042E861005D1F47 /* YaXianQi_UIView.m in Sources */,
 				341671841FBA9765001D33D0 /* SignupViewController.m in Sources */,
 				EB03F5491FBDEB8900865541 /* EnginnerHomeViewController.m in Sources */,
 				343733AE1FE402E80071C902 /* JHSlideView.m in Sources */,
