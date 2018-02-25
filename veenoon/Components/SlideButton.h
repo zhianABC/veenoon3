@@ -13,4 +13,6 @@
 - (void) setCircleValue:(float) value;
 - (void) changeButtonBackgroundImage:(UIImage *)image;
 
+- (void) changToIcon:(UIImage*)iconImg;
+
 @end

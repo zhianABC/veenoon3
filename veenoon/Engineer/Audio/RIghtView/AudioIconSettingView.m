@@ -168,11 +168,6 @@ UITableViewDataSource,AudioIconSettingViewDelegate, EPlusLayerViewDelegate> {
         rowCell.selectedImg = [UIImage imageNamed:sel];
         rowCell.textLabel.text = [dic objectForKey:@"name"];
         rowCell.detailLabel.text = [dic objectForKey:@"type"];
-        
-        if (indexPath.row == 0 || indexPath.row == 6) {
-            cell.userInteractionEnabled=NO;
-            [rowCell moveTitleToLeft];
-        }
     }
     
     

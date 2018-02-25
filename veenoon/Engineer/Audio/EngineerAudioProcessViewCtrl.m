@@ -15,7 +15,7 @@
 #import "AudioMatrixSettingViewCtrl.h"
 #import "AudioIconSettingView.h"
 
-@interface EngineerAudioProcessViewCtrl () <EngineerSliderViewDelegate, CustomPickerViewDelegate, AudioProcessRightViewDelegate> {
+@interface EngineerAudioProcessViewCtrl () <EngineerSliderViewDelegate, CustomPickerViewDelegate, AudioProcessRightViewDelegate, AudioIconSettingViewDelegate> {
     UIButton *_selectSysBtn;
     
     CustomPickerView *_customPicker;
@@ -26,7 +26,7 @@
     
     NSMutableArray *_buttonChannelArray;
     NSMutableArray *_buttonNumberArray;
-    
+    NSMutableArray *_inputBtnArray;
     NSMutableArray *_selectedBtnArray;
     
     
@@ -58,6 +58,7 @@
     _buttonChannelArray = [[NSMutableArray alloc] init];
     _buttonNumberArray = [[NSMutableArray alloc] init];
     _selectedBtnArray = [[NSMutableArray alloc] init];
+    _inputBtnArray = [[NSMutableArray alloc] init];
     
     topbar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 64)];
     topbar.backgroundColor = THEME_COLOR;
@@ -193,6 +194,7 @@
         [btn addGestureRecognizer:longPress2];
         
         [_buttonArray addObject:btn];
+        [_inputBtnArray addObject:btn];
         
         index++;
     }
@@ -355,6 +357,26 @@
     }
 }
 
+- (void) didEndDragingElecCell:(NSDictionary *)data pt:(CGPoint)pt {
+    CGPoint viewPoint = [self.view convertPoint:pt fromView:_rightView];
+    
+    //NSLog(@"%f - %f", viewPoint.x, viewPoint.y);
+    
+    NSString *imageName = [data objectForKey:@"icon"];
+    UIImage *img = [UIImage imageNamed:imageName];
+    if(img) {
+        for (SlideButton *button in _inputBtnArray) {
+            CGRect rect = [self.view convertRect:button.frame fromView:button.superview];
+            if (CGRectContainsPoint(rect, viewPoint)) {
+                
+                [button changToIcon:img];
+            }
+        }
+    }
+    
+    NSLog(@"ssss");
+}
+
 - (void) didSelectButtonAction:(NSString*)value {
     if ([@"输入设置" isEqualToString:value]) {
         AudioInputSettingViewCtrl *ctrl = [[AudioInputSettingViewCtrl alloc] init];
@@ -373,14 +395,16 @@
                 _inconView = [[AudioIconSettingView alloc]
                               initWithFrame:CGRectMake(SCREEN_WIDTH-300,
                                                        64, 300, SCREEN_HEIGHT-114)];
+                _inconView.delegate = self;
             } else {
                 [UIView beginAnimations:nil context:nil];
                 _inconView.frame  = CGRectMake(SCREEN_WIDTH-300,
                                                64, 300, SCREEN_HEIGHT-114);
                 [UIView commitAnimations];
             }
+            
+            [self.view insertSubview:_inconView belowSubview:bottomBar];
             [okBtn setTitle:@"保存" forState:UIControlStateNormal];
-            [self.view addSubview:_inconView];
         }
     }
 }

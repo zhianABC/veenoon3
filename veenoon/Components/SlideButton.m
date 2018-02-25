@@ -12,6 +12,7 @@
 @interface SlideButton ()
 {
     UIImageView *_radioImgV;
+    UIImageView *_iconImgV;
     CircleProgressView *progress;
     
     CGPoint _beginPoint;
@@ -55,6 +56,30 @@
     return self;
 }
 
+- (void) changToIcon:(UIImage*)iconImg{
+    
+    if(iconImg == nil)
+    {
+        if(_iconImgV)
+            [_iconImgV removeFromSuperview];
+        
+        _radioImgV.hidden = NO;
+        progress.hidden = NO;
+        return;
+    }
+    
+    if(_iconImgV == nil){
+        _iconImgV = [[UIImageView alloc] initWithFrame:self.bounds];
+        _iconImgV.layer.contentsGravity = kCAGravityResizeAspectFill;
+    }
+    [self addSubview:_iconImgV];
+    _iconImgV.image = iconImg;
+    
+    _radioImgV.hidden = YES;
+    progress.hidden = YES;
+    
+}
+
 - (void) changeButtonBackgroundImage:(UIImage *)image{
     
     _radioImgV.image = image;
@@ -68,6 +93,9 @@
 
 -(void) touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event {
     
+    if(progress.hidden)
+        return;
+    
     CGPoint p = [[touches anyObject] locationInView:self];
     
     _beginPoint = p;
@@ -75,6 +103,9 @@
 }
 
 -(void) touchesMoved:(NSSet*)touches withEvent:(UIEvent*)event {
+    
+    if(progress.hidden)
+        return;
     
     NSSet *allTouches = [event allTouches];
     switch ([allTouches count])
@@ -95,6 +126,9 @@
 }
 
 -(void) touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event {
+    
+    if(progress.hidden)
+        return;
     
     [progress syncCurrentStepedValue];
     
