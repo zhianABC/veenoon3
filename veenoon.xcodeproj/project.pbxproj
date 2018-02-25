@@ -2856,10 +2856,10 @@
 				EB795B442042DD2B005D1F47 /* AudioInputSettingViewCtrl.m */,
 				EB795B462042DD6F005D1F47 /* AudioOutputSettingViewCtrl.h */,
 				EB795B472042DD6F005D1F47 /* AudioOutputSettingViewCtrl.m */,
-				EB795B492042DE5E005D1F47 /* AudioIconSettingView.h */,
-				EB795B4A2042DE5E005D1F47 /* AudioIconSettingView.m */,
 				EB795B4C2042DEDE005D1F47 /* AudioMatrixSettingViewCtrl.h */,
 				EB795B4D2042DEDE005D1F47 /* AudioMatrixSettingViewCtrl.m */,
+				EB795B492042DE5E005D1F47 /* AudioIconSettingView.h */,
+				EB795B4A2042DE5E005D1F47 /* AudioIconSettingView.m */,
 			);
 			path = RIghtView;
 			sourceTree = "<group>";

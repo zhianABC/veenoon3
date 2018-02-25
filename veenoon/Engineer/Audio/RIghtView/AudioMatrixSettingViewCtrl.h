@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
-@interface AudioMatrixSettingViewCtrl : UIViewController
+@interface AudioMatrixSettingViewCtrl : BaseViewController
 
 @end
