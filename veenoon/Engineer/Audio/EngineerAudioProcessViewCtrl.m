@@ -9,8 +9,13 @@
 #import "EngineerAudioProcessViewCtrl.h"
 #import "UIButton+Color.h"
 #import "SlideButton.h"
+#import "AudioProcessRightView.h"
+#import "AudioInputSettingViewCtrl.h"
+#import "AudioOutputSettingViewCtrl.h"
+#import "AudioMatrixSettingViewCtrl.h"
+#import "AudioIconSettingView.h"
 
-@interface EngineerAudioProcessViewCtrl () {
+@interface EngineerAudioProcessViewCtrl () <EngineerSliderViewDelegate, CustomPickerViewDelegate, AudioProcessRightViewDelegate> {
     UIButton *_selectSysBtn;
     
     CustomPickerView *_customPicker;
@@ -23,6 +28,14 @@
     NSMutableArray *_buttonNumberArray;
     
     NSMutableArray *_selectedBtnArray;
+    
+    
+    AudioProcessRightView *_rightView;
+    BOOL isSettings;
+    UIButton *okBtn;
+    
+    AudioIconSettingView *_inconView;
+    BOOL isIcon;
 }
 
 @end
@@ -31,8 +44,12 @@
 @synthesize _audioProcessArray;
 @synthesize _inputNumber;
 @synthesize _outputNumber;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    isIcon = NO;
+    isSettings = NO;
     _buttonArray = [[NSMutableArray alloc] init];
     
     _buttonChannelArray = [[NSMutableArray alloc] init];
@@ -217,16 +234,18 @@
         index++;
     }
 }
-
+- (void) didSliderEndChanged:(id)object {
+    
+}
 - (void) didSliderValueChanged:(int)value object:(id)object {
-    float circleValue = (value+70.0f)/82.0f;
+    float circleValue = (float) (value+70.0f)/82.0f;
     for (SlideButton *button in _selectedBtnArray) {
         [button setCircleValue:circleValue];
     }
 }
 
 -(void)handleTapGesture:(UIGestureRecognizer*)gestureRecognizer {
-    int tag = gestureRecognizer.view.tag;
+    int tag = (int)gestureRecognizer.view.tag;
     
     SlideButton *btn;
     for (SlideButton *button in _selectedBtnArray) {
@@ -295,7 +314,64 @@
 }
 
 - (void) okAction:(id)sender{
-    
+    if (_inconView) {
+        [_inconView removeFromSuperview];
+    }
+    if (!isSettings) {
+        if (_rightView == nil) {
+            _rightView = [[AudioProcessRightView alloc]
+                          initWithFrame:CGRectMake(SCREEN_WIDTH-300,
+                                                   64, 300, SCREEN_HEIGHT-114)];
+            _rightView.delegate_ = self;
+        } else {
+            [UIView beginAnimations:nil context:nil];
+            _rightView.frame  = CGRectMake(SCREEN_WIDTH-300,
+                                           64, 300, SCREEN_HEIGHT-114);
+            [UIView commitAnimations];
+        }
+        
+        [self.view addSubview:_rightView];
+        [okBtn setTitle:@"保存" forState:UIControlStateNormal];
+        
+        isSettings = YES;
+    } else {
+        if (_rightView) {
+            [_rightView removeFromSuperview];
+        }
+        [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+        isSettings = NO;
+    }
+}
+
+- (void) didSelectButtonAction:(NSString*)value {
+    if ([@"输入设置" isEqualToString:value]) {
+        AudioInputSettingViewCtrl *ctrl = [[AudioInputSettingViewCtrl alloc] init];
+        [self.navigationController pushViewController:ctrl animated:YES];
+    } else if ([@"输出设置" isEqualToString:value]) {
+        AudioOutputSettingViewCtrl *ctrl = [[AudioOutputSettingViewCtrl alloc] init];
+        [self.navigationController pushViewController:ctrl animated:YES];
+    } else if ([@"矩阵路由" isEqualToString:value]) {
+        AudioMatrixSettingViewCtrl *ctrl = [[AudioMatrixSettingViewCtrl alloc] init];
+        [self.navigationController pushViewController:ctrl animated:YES];
+    } else {
+        if (_rightView) {
+            [_rightView removeFromSuperview];
+            
+            if (_inconView == nil) {
+                _inconView = [[AudioIconSettingView alloc]
+                              initWithFrame:CGRectMake(SCREEN_WIDTH-300,
+                                                       64, 300, SCREEN_HEIGHT-114)];
+            } else {
+                [UIView beginAnimations:nil context:nil];
+                _inconView.frame  = CGRectMake(SCREEN_WIDTH-300,
+                                               64, 300, SCREEN_HEIGHT-114);
+                [UIView commitAnimations];
+            }
+            
+            [self.view addSubview:_inconView];
+            [okBtn setTitle:@"保存" forState:UIControlStateNormal];
+        }
+    }
 }
 
 - (void) cancelAction:(id)sender{

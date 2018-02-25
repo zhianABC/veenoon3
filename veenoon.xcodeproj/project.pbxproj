@@ -534,6 +534,11 @@
 		EB7333FD20410A7E00AE60B8 /* MonitorRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333FC20410A7E00AE60B8 /* MonitorRightView.m */; };
 		EB73340020410B5100AE60B8 /* DoorAccessRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333FF20410B5100AE60B8 /* DoorAccessRightView.m */; };
 		EB733402204112C500AE60B8 /* remote_video_filled_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB733401204112C500AE60B8 /* remote_video_filled_s@2x.png */; };
+		EB795B422042DA33005D1F47 /* AudioProcessRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB795B412042DA33005D1F47 /* AudioProcessRightView.m */; };
+		EB795B452042DD2B005D1F47 /* AudioInputSettingViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB795B442042DD2B005D1F47 /* AudioInputSettingViewCtrl.m */; };
+		EB795B482042DD6F005D1F47 /* AudioOutputSettingViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB795B472042DD6F005D1F47 /* AudioOutputSettingViewCtrl.m */; };
+		EB795B4B2042DE5E005D1F47 /* AudioIconSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB795B4A2042DE5E005D1F47 /* AudioIconSettingView.m */; };
+		EB795B4E2042DEDE005D1F47 /* AudioMatrixSettingViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB795B4D2042DEDE005D1F47 /* AudioMatrixSettingViewCtrl.m */; };
 		EB7E81581FF8C4C90053E5A7 /* info_day_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB7E81521FF8C4C80053E5A7 /* info_day_n@2x.png */; };
 		EB7E81591FF8C4C90053E5A7 /* info_month_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB7E81531FF8C4C80053E5A7 /* info_month_n@2x.png */; };
 		EB7E815A1FF8C4C90053E5A7 /* info_day_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB7E81541FF8C4C90053E5A7 /* info_day_s@2x.png */; };
@@ -1435,6 +1440,16 @@
 		EB7333FE20410B5100AE60B8 /* DoorAccessRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DoorAccessRightView.h; sourceTree = "<group>"; };
 		EB7333FF20410B5100AE60B8 /* DoorAccessRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DoorAccessRightView.m; sourceTree = "<group>"; };
 		EB733401204112C500AE60B8 /* remote_video_filled_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "remote_video_filled_s@2x.png"; sourceTree = "<group>"; };
+		EB795B402042DA33005D1F47 /* AudioProcessRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioProcessRightView.h; sourceTree = "<group>"; };
+		EB795B412042DA33005D1F47 /* AudioProcessRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioProcessRightView.m; sourceTree = "<group>"; };
+		EB795B432042DD2B005D1F47 /* AudioInputSettingViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioInputSettingViewCtrl.h; sourceTree = "<group>"; };
+		EB795B442042DD2B005D1F47 /* AudioInputSettingViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioInputSettingViewCtrl.m; sourceTree = "<group>"; };
+		EB795B462042DD6F005D1F47 /* AudioOutputSettingViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioOutputSettingViewCtrl.h; sourceTree = "<group>"; };
+		EB795B472042DD6F005D1F47 /* AudioOutputSettingViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioOutputSettingViewCtrl.m; sourceTree = "<group>"; };
+		EB795B492042DE5E005D1F47 /* AudioIconSettingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioIconSettingView.h; sourceTree = "<group>"; };
+		EB795B4A2042DE5E005D1F47 /* AudioIconSettingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioIconSettingView.m; sourceTree = "<group>"; };
+		EB795B4C2042DEDE005D1F47 /* AudioMatrixSettingViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioMatrixSettingViewCtrl.h; sourceTree = "<group>"; };
+		EB795B4D2042DEDE005D1F47 /* AudioMatrixSettingViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioMatrixSettingViewCtrl.m; sourceTree = "<group>"; };
 		EB7E81521FF8C4C80053E5A7 /* info_day_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info_day_n@2x.png"; sourceTree = "<group>"; };
 		EB7E81531FF8C4C80053E5A7 /* info_month_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info_month_n@2x.png"; sourceTree = "<group>"; };
 		EB7E81541FF8C4C90053E5A7 /* info_day_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info_day_s@2x.png"; sourceTree = "<group>"; };
@@ -2804,6 +2819,16 @@
 				EB164746203AC95D00E71483 /* WirelessMeetingView.m */,
 				EB164748203ACD6300E71483 /* GongLvFangDaQiView.h */,
 				EB164749203ACD6300E71483 /* GongLvFangDaQiView.m */,
+				EB795B402042DA33005D1F47 /* AudioProcessRightView.h */,
+				EB795B412042DA33005D1F47 /* AudioProcessRightView.m */,
+				EB795B432042DD2B005D1F47 /* AudioInputSettingViewCtrl.h */,
+				EB795B442042DD2B005D1F47 /* AudioInputSettingViewCtrl.m */,
+				EB795B462042DD6F005D1F47 /* AudioOutputSettingViewCtrl.h */,
+				EB795B472042DD6F005D1F47 /* AudioOutputSettingViewCtrl.m */,
+				EB795B492042DE5E005D1F47 /* AudioIconSettingView.h */,
+				EB795B4A2042DE5E005D1F47 /* AudioIconSettingView.m */,
+				EB795B4C2042DEDE005D1F47 /* AudioMatrixSettingViewCtrl.h */,
+				EB795B4D2042DEDE005D1F47 /* AudioMatrixSettingViewCtrl.m */,
 			);
 			path = RIghtView;
 			sourceTree = "<group>";
@@ -3500,6 +3525,7 @@
 				04DE1E921AD6AEE000D49E2F /* UserDefaultsKV.m in Sources */,
 				0469CF3C1B033162006B901E /* CustomImagePickerCtrlor.m in Sources */,
 				04D719851DADE2D8002153D7 /* DataSync.m in Sources */,
+				EB795B422042DA33005D1F47 /* AudioProcessRightView.m in Sources */,
 				04DE1EC51AD6B21600D49E2F /* LoginViewController.m in Sources */,
 				04D719821DADE0A9002153D7 /* WSEvent.m in Sources */,
 				342389B02026D93500885405 /* JCActionView.m in Sources */,
@@ -3509,6 +3535,7 @@
 				EB217FE01FD42F37003F5A8F /* UserWaterCleanViewCtrl.m in Sources */,
 				3422A5B81FCC17C500F6D3C2 /* BatteryView.m in Sources */,
 				04DE1EC81AD6B22F00D49E2F /* BaseViewController.m in Sources */,
+				EB795B4B2042DE5E005D1F47 /* AudioIconSettingView.m in Sources */,
 				04DE1E891AD6AEE000D49E2F /* IconTextButton.m in Sources */,
 				342A2F4020411B6900BE4071 /* GroupsPickerView.m in Sources */,
 				04DE1E8C1AD6AEE000D49E2F /* RRScrollView.m in Sources */,
@@ -3547,6 +3574,7 @@
 				04DE1E861AD6AEE000D49E2F /* ConfigureSetting.m in Sources */,
 				EBC71B29204100A200DD0A98 /* ElectronicAutoRightView.m in Sources */,
 				EB1A55D91FEF4E0D000B18E6 /* EngineerCameraViewController.m in Sources */,
+				EB795B4E2042DEDE005D1F47 /* AudioMatrixSettingViewCtrl.m in Sources */,
 				EB09C4851FD2A64A00776540 /* UserElectronicAutoViewCtrl.m in Sources */,
 				EB1717A61FF6143600CBDB81 /* EngineerAirCleanViewCtrl.m in Sources */,
 				EB1717AC1FF6147200CBDB81 /* EngineerAddWetViewCtrl.m in Sources */,
@@ -3589,6 +3617,7 @@
 				04D7197F1DADE098002153D7 /* NSDate-Helper.m in Sources */,
 				EB09EF2F1FD978C700C968CA /* EngineerToUseTeslariViewCtrl.m in Sources */,
 				34686C9E1ED025CB001749A1 /* ConverUtil.m in Sources */,
+				EB795B482042DD6F005D1F47 /* AudioOutputSettingViewCtrl.m in Sources */,
 				3425E98C1FE571CE003559F7 /* ComSettingView.m in Sources */,
 				EB3B739A1FE61B18001941CF /* EngineerPlayerSettingsViewCtrl.m in Sources */,
 				0477DC581DA9F4700077FA52 /* Base64.m in Sources */,
@@ -3682,6 +3711,7 @@
 				EBF6A72C1FC8486000260FF0 /* UserAudioPlayerSettingsViewCtrl.m in Sources */,
 				04DE1E941AD6AEE000D49E2F /* ASIAuthenticationDialog.m in Sources */,
 				049ECAC51C8D694400A611D8 /* QREncoder.mm in Sources */,
+				EB795B452042DD2B005D1F47 /* AudioInputSettingViewCtrl.m in Sources */,
 				EB1717B51FF614DB00CBDB81 /* EngineerInfoCollectViewCtrl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
