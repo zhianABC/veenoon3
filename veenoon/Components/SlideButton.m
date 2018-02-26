@@ -69,7 +69,7 @@
     }
     
     if(_iconImgV == nil){
-        _iconImgV = [[UIImageView alloc] initWithFrame:self.bounds];
+        _iconImgV = [[UIImageView alloc] initWithFrame:_radioImgV.frame];
         _iconImgV.layer.contentsGravity = kCAGravityResizeAspectFill;
     }
     [self addSubview:_iconImgV];
