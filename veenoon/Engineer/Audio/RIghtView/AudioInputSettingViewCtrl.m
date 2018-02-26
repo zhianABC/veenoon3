@@ -10,14 +10,17 @@
 #import "UIButton+Color.h"
 #import "YaXianQi_UIView.h"
 #import "ZengYi_UIView.h"
+#import "ZaoShengMen_UIView.h"
 
 @interface AudioInputSettingViewCtrl ()
 {
     YaXianQi_UIView *yxq;
     ZengYi_UIView *zengyiView;
+    ZaoShengMen_UIView *zaoshengView;
     
     UIButton *zengyiBtn;
     UIButton *yaxianBtn;
+    UIButton *zaoshengmenBtn;
 }
 @end
 
@@ -86,7 +89,7 @@
           forControlEvents:UIControlEventTouchUpInside];
     
     
-    UIButton *zaoshengmenBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+    zaoshengmenBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
     zaoshengmenBtn.frame = CGRectMake(CGRectGetMaxX(zengyiBtn.frame) + gap, startY, bw, bh);
     zaoshengmenBtn.clipsToBounds = YES;
     zaoshengmenBtn.layer.cornerRadius = 5;
@@ -186,6 +189,10 @@
     zengyiView = [[ZengYi_UIView alloc] initWithFrame:vrc];
     [self.view addSubview:zengyiView];
     zengyiView.hidden = NO;
+    
+    zaoshengView = [[ZaoShengMen_UIView alloc] initWithFrame:vrc];
+    [self.view addSubview:zaoshengView];
+    zaoshengView.hidden = YES;
 }
 - (void) zidonghunyinAction:(id)sender{
     zengyiView.hidden = NO;
@@ -199,24 +206,34 @@
 }
 - (void) yaxianqiAction:(id)sender{
     [zengyiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [zaoshengmenBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [yaxianBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
     
     zengyiView.hidden = YES;
     yxq.hidden = NO;
+    zaoshengView.hidden = YES;
     
 }
 - (void) lvbojunhengAction:(id)sender{
     
 }
 - (void) zaoshengmenAction:(id)sender{
+    [zaoshengmenBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+    [yaxianBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [zengyiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
+    zengyiView.hidden = YES;
+    yxq.hidden = YES;
+    zaoshengView.hidden = NO;
 }
 - (void) zengyiAction:(id)sender{
     [zengyiBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
     [yaxianBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [zaoshengmenBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     zengyiView.hidden = NO;
     yxq.hidden = YES;
+    zaoshengView.hidden = YES;
 }
 
 - (void) okAction:(id)sender{
