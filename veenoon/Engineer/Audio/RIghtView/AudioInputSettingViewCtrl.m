@@ -9,10 +9,15 @@
 #import "AudioInputSettingViewCtrl.h"
 #import "UIButton+Color.h"
 #import "YaXianQi_UIView.h"
+#import "ZengYi_UIView.h"
 
 @interface AudioInputSettingViewCtrl ()
 {
     YaXianQi_UIView *yxq;
+    ZengYi_UIView *zengyiView;
+    
+    UIButton *zengyiBtn;
+    UIButton *yaxianBtn;
 }
 @end
 
@@ -65,7 +70,7 @@
     int bw = 80;
     int bh = 30;
     
-    UIButton *zengyiBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+    zengyiBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
     zengyiBtn.frame = CGRectMake(startX, startY, bw, bh);
     zengyiBtn.clipsToBounds = YES;
     zengyiBtn.layer.cornerRadius = 5;
@@ -73,7 +78,7 @@
     zengyiBtn.layer.borderColor = [UIColor clearColor].CGColor;
     zengyiBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [zengyiBtn setTitle:@"增益" forState:UIControlStateNormal];
-    [zengyiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [zengyiBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
     [zengyiBtn setTitleColor:YELLOW_COLOR forState:UIControlStateHighlighted];
     [self.view addSubview:zengyiBtn];
     [zengyiBtn addTarget:self
@@ -111,7 +116,7 @@
                        action:@selector(lvbojunhengAction:)
              forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *yaxianBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+    yaxianBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
     yaxianBtn.frame = CGRectMake(CGRectGetMaxX(lvbojunhengBtn.frame) + gap, startY, bw, bh);
     yaxianBtn.clipsToBounds = YES;
     yaxianBtn.layer.cornerRadius = 5;
@@ -177,9 +182,14 @@
     yxq = [[YaXianQi_UIView alloc] initWithFrame:vrc];
     [self.view addSubview:yxq];
     yxq.hidden = YES;
+    
+    zengyiView = [[ZengYi_UIView alloc] initWithFrame:vrc];
+    [self.view addSubview:zengyiView];
+    zengyiView.hidden = NO;
 }
 - (void) zidonghunyinAction:(id)sender{
-    
+    zengyiView.hidden = NO;
+    yxq.hidden = YES;
 }
 - (void) huishengxiaochuAction:(id)sender{
     
@@ -188,7 +198,10 @@
     
 }
 - (void) yaxianqiAction:(id)sender{
+    [zengyiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [yaxianBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
     
+    zengyiView.hidden = YES;
     yxq.hidden = NO;
     
 }
@@ -199,7 +212,11 @@
     
 }
 - (void) zengyiAction:(id)sender{
+    [zengyiBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+    [yaxianBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
+    zengyiView.hidden = NO;
+    yxq.hidden = YES;
 }
 
 - (void) okAction:(id)sender{
