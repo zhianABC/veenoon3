@@ -8,9 +8,12 @@
 
 #import "AudioInputSettingViewCtrl.h"
 #import "UIButton+Color.h"
+#import "YaXianQi_UIView.h"
 
 @interface AudioInputSettingViewCtrl ()
-
+{
+    YaXianQi_UIView *yxq;
+}
 @end
 
 @implementation AudioInputSettingViewCtrl
@@ -167,6 +170,13 @@
     [zidonghunyinBtn addTarget:self
                        action:@selector(zidonghunyinAction:)
              forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    CGRect vrc = CGRectMake(60, 140, SCREEN_WIDTH-120, SCREEN_HEIGHT-140-60);
+    
+    yxq = [[YaXianQi_UIView alloc] initWithFrame:vrc];
+    [self.view addSubview:yxq];
+    yxq.hidden = YES;
 }
 - (void) zidonghunyinAction:(id)sender{
     
@@ -178,6 +188,8 @@
     
 }
 - (void) yaxianqiAction:(id)sender{
+    
+    yxq.hidden = NO;
     
 }
 - (void) lvbojunhengAction:(id)sender{

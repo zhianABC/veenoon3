@@ -22,6 +22,8 @@
 #import "SlideButton.h"
 #import "MixVoiceSettingsView.h"
 
+#import "YaXianQi_UIView.h"
+
 @interface WellcomeViewController ()
 
 @end
@@ -178,6 +180,9 @@
                                                       64, 300, SCREEN_HEIGHT-114)];
     [self.view addSubview:ecp];
      */
+    
+    
+    
 }
 
 - (void) loginAction:(id)sender{
