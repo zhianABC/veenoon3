@@ -49,7 +49,7 @@
         
     }
     
-    self.view.backgroundColor = self.view.backgroundColor = RGB(1, 138, 182);
+    self.view.backgroundColor = RGB(1, 138, 182);
     
 
     _http = [[WebClient alloc] initWithDelegate:self];

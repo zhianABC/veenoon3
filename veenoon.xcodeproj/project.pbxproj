@@ -184,6 +184,7 @@
 		34686C9F1ED025CB001749A1 /* DesUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 34686C9D1ED025CB001749A1 /* DesUtil.m */; };
 		34928A9A1EC1BD330089F429 /* ReaderCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34928A991EC1BD330089F429 /* ReaderCodeViewController.m */; };
 		3496B75A1FCAF3C5005F4857 /* SignalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3496B7591FCAF3C5005F4857 /* SignalView.m */; };
+		34A8965320443184007934E1 /* GradeLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A8965220443184007934E1 /* GradeLineView.m */; };
 		34DC473F1FD6984400ACB589 /* ColumnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DC473E1FD6984400ACB589 /* ColumnView.m */; };
 		34DC47421FD6DD9300ACB589 /* CircleProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DC47401FD6DD9300ACB589 /* CircleProgressView.m */; };
 		EB03F52B1FBDC07200865541 /* InvitationCodeViewCotroller.m in Sources */ = {isa = PBXBuildFile; fileRef = EB03F5291FBDC07100865541 /* InvitationCodeViewCotroller.m */; };
@@ -976,6 +977,8 @@
 		34928A991EC1BD330089F429 /* ReaderCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderCodeViewController.m; sourceTree = "<group>"; };
 		3496B7581FCAF3C5005F4857 /* SignalView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignalView.h; sourceTree = "<group>"; };
 		3496B7591FCAF3C5005F4857 /* SignalView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignalView.m; sourceTree = "<group>"; };
+		34A8965120443184007934E1 /* GradeLineView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GradeLineView.h; sourceTree = "<group>"; };
+		34A8965220443184007934E1 /* GradeLineView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GradeLineView.m; sourceTree = "<group>"; };
 		34DC473D1FD6984400ACB589 /* ColumnView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColumnView.h; sourceTree = "<group>"; };
 		34DC473E1FD6984400ACB589 /* ColumnView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ColumnView.m; sourceTree = "<group>"; };
 		34DC47401FD6DD9300ACB589 /* CircleProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleProgressView.m; sourceTree = "<group>"; };
@@ -2846,6 +2849,8 @@
 				345492FB1FE638F300793E2E /* SlideButton.m */,
 				EB3B73B31FE6395C001941CF /* EngineerSliderView.h */,
 				EB3B73B41FE6395C001941CF /* EngineerSliderView.m */,
+				34A8965120443184007934E1 /* GradeLineView.h */,
+				34A8965220443184007934E1 /* GradeLineView.m */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -3572,6 +3577,7 @@
 				EB09EF351FD9800300C968CA /* EngineerVedioDevicePluginViewCtrl.m in Sources */,
 				EB5CF03F1FD3DC92007958C9 /* UserNewWindViewCtrl.m in Sources */,
 				EB7333F42041046400AE60B8 /* AirCleanRightView.m in Sources */,
+				34A8965320443184007934E1 /* GradeLineView.m in Sources */,
 				EBF6A72C1FC8486000260FF0 /* UserAudioPlayerSettingsViewCtrl.m in Sources */,
 				04DE1E941AD6AEE000D49E2F /* ASIAuthenticationDialog.m in Sources */,
 				049ECAC51C8D694400A611D8 /* QREncoder.mm in Sources */,
