@@ -9,12 +9,27 @@
 #import "AudioOutputSettingViewCtrl.h"
 #import "UIButton+Color.h"
 #import "XinHaoFaShengQi_UIView.h"
+#import "DianPing_UIView.h"
+#import "LvBoJunHeng_UIView.h"
+#import "YaXianQi_UIView.h"
+#import "YanShiQi_UIView.h"
 
 @interface AudioOutputSettingViewCtrl () {
     
     XinHaoFaShengQi_UIView *xinhaoView;
     UIButton *xinhaofashengqiBtn;
     
+    DianPing_UIView *dianpingView;
+    UIButton *dianpingBtn;
+    
+    LvBoJunHeng_UIView *lvbojunhengView;
+    UIButton *lvbojunhengBtn;
+    
+    YaXianQi_UIView *yaxianView;
+    UIButton *yaxianBtn;
+    
+    YanShiQi_UIView *yanshiView;
+    UIButton *yanshiqiBtn;
 }
 
 @end
@@ -84,7 +99,7 @@
         forControlEvents:UIControlEventTouchUpInside];
     
     
-    UIButton *dianpingBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+    dianpingBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
     dianpingBtn.frame = CGRectMake(CGRectGetMaxX(xinhaofashengqiBtn.frame) + gap, startY, bw, bh);
     dianpingBtn.clipsToBounds = YES;
     dianpingBtn.layer.cornerRadius = 5;
@@ -100,7 +115,7 @@
              forControlEvents:UIControlEventTouchUpInside];
     
     
-    UIButton *lvbojunhengBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+    lvbojunhengBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
     lvbojunhengBtn.frame = CGRectMake(CGRectGetMaxX(dianpingBtn.frame) + gap, startY, bw, bh);
     lvbojunhengBtn.clipsToBounds = YES;
     lvbojunhengBtn.layer.cornerRadius = 5;
@@ -115,7 +130,7 @@
                        action:@selector(lvbojunhengAction:)
              forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *yaxianBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+    yaxianBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
     yaxianBtn.frame = CGRectMake(CGRectGetMaxX(lvbojunhengBtn.frame) + gap, startY, bw, bh);
     yaxianBtn.clipsToBounds = YES;
     yaxianBtn.layer.cornerRadius = 5;
@@ -130,7 +145,7 @@
                   action:@selector(yaxianqiAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *yanshiqiBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+    yanshiqiBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
     yanshiqiBtn.frame = CGRectMake(CGRectGetMaxX(yaxianBtn.frame) + gap, startY, bw, bh);
     yanshiqiBtn.clipsToBounds = YES;
     yanshiqiBtn.layer.cornerRadius = 5;
@@ -150,23 +165,86 @@
     [self.view addSubview:xinhaoView];
     xinhaoView.hidden = NO;
     
+    dianpingView = [[DianPing_UIView alloc] initWithFrame:vrc];
+    [self.view addSubview:dianpingView];
+    dianpingView.hidden = YES;
+    
+    lvbojunhengView = [[LvBoJunHeng_UIView alloc] initWithFrame:vrc];
+    [self.view addSubview:lvbojunhengView];
+    lvbojunhengView.hidden = YES;
+    
+    yaxianView = [[YaXianQi_UIView alloc] initWithFrame:vrc];
+    [self.view addSubview:yaxianView];
+    yaxianView.hidden = YES;
+    
+    yanshiView = [[YanShiQi_UIView alloc] initWithFrame:vrc];
+    [self.view addSubview:yanshiView];
+    yanshiView.hidden = YES;
 }
 - (void) yanshiqiAction:(id)sender{
+    [xinhaofashengqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [yanshiqiBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+    [yaxianBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [lvbojunhengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [dianpingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
+    xinhaoView.hidden=YES;
+    yanshiView.hidden = NO;
+    yaxianView.hidden = YES;
+    lvbojunhengView.hidden = YES;
+    dianpingView.hidden = YES;
 }
 - (void) yaxianqiAction:(id)sender{
+    [xinhaofashengqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [yanshiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [yaxianBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+    [lvbojunhengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [dianpingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
+    xinhaoView.hidden=YES;
+    yanshiView.hidden = YES;
+    yaxianView.hidden = NO;
+    lvbojunhengView.hidden = YES;
+    dianpingView.hidden = YES;
 }
 - (void) lvbojunhengAction:(id)sender{
+    [xinhaofashengqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [yanshiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [yaxianBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [lvbojunhengBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+    [dianpingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
+    xinhaoView.hidden=YES;
+    yanshiView.hidden = YES;
+    yaxianView.hidden = YES;
+    lvbojunhengView.hidden = NO;
+    dianpingView.hidden = YES;
 }
 - (void) dianpingAction:(id)sender{
+    [xinhaofashengqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [yanshiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [yaxianBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [lvbojunhengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [dianpingBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
     
+    xinhaoView.hidden=YES;
+    yanshiView.hidden = YES;
+    yaxianView.hidden = YES;
+    lvbojunhengView.hidden = YES;
+    dianpingView.hidden = NO;
 }
 - (void) xinhaofashengqiAction:(id)sender{
     [xinhaofashengqiBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+    [yanshiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [yaxianBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [lvbojunhengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [dianpingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     xinhaoView.hidden=NO;
+    yanshiView.hidden = YES;
+    yaxianView.hidden = YES;
+    lvbojunhengView.hidden = YES;
+    dianpingView.hidden = YES;
 }
 
 - (void) okAction:(id)sender{
