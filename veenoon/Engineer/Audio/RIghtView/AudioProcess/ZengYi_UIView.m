@@ -128,7 +128,7 @@
     addLabel.text = @"增益 (db)";
     addLabel.font = [UIFont systemFontOfSize: 13];
     addLabel.textColor = [UIColor whiteColor];
-    addLabel.frame = CGRectMake(735, 120, 120, 20);
+    addLabel.frame = CGRectMake(730, 120, 120, 20);
     [contentView addSubview:addLabel];
     
     SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(700, 135, 120, 120)];

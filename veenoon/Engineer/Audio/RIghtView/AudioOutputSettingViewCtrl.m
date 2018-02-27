@@ -8,8 +8,14 @@
 
 #import "AudioOutputSettingViewCtrl.h"
 #import "UIButton+Color.h"
+#import "XinHaoFaShengQi_UIView.h"
 
-@interface AudioOutputSettingViewCtrl ()
+@interface AudioOutputSettingViewCtrl () {
+    
+    XinHaoFaShengQi_UIView *xinhaoView;
+    UIButton *xinhaofashengqiBtn;
+    
+}
 
 @end
 
@@ -62,7 +68,7 @@
     int bw = 80;
     int bh = 30;
     
-    UIButton *xinhaofashengqiBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+    xinhaofashengqiBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
     xinhaofashengqiBtn.frame = CGRectMake(startX, startY, bw, bh);
     xinhaofashengqiBtn.clipsToBounds = YES;
     xinhaofashengqiBtn.layer.cornerRadius = 5;
@@ -70,7 +76,7 @@
     xinhaofashengqiBtn.layer.borderColor = [UIColor clearColor].CGColor;
     xinhaofashengqiBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [xinhaofashengqiBtn setTitle:@"信号发生器" forState:UIControlStateNormal];
-    [xinhaofashengqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [xinhaofashengqiBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
     [xinhaofashengqiBtn setTitleColor:YELLOW_COLOR forState:UIControlStateHighlighted];
     [self.view addSubview:xinhaofashengqiBtn];
     [xinhaofashengqiBtn addTarget:self
@@ -139,6 +145,11 @@
                     action:@selector(yanshiqiAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
+    CGRect vrc = CGRectMake(60, 140, SCREEN_WIDTH-120, SCREEN_HEIGHT-140-60);
+    xinhaoView = [[XinHaoFaShengQi_UIView alloc] initWithFrame:vrc];
+    [self.view addSubview:xinhaoView];
+    xinhaoView.hidden = NO;
+    
 }
 - (void) yanshiqiAction:(id)sender{
     
@@ -153,7 +164,9 @@
     
 }
 - (void) xinhaofashengqiAction:(id)sender{
+    [xinhaofashengqiBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
     
+    xinhaoView.hidden=NO;
 }
 
 - (void) okAction:(id)sender{
