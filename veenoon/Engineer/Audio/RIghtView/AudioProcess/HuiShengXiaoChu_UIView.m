@@ -128,7 +128,22 @@
     roomeImageView.contentMode = UIViewContentModeScaleAspectFit;
     roomeImageView.frame = CGRectMake(100, 25, contentView.frame.size.width-200, contentView.frame.size.height-50);
     
-    [contentView addSubview:roomeImageView];
+    [contentView addSubview:roomeImageView];UIButton *zhitongBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    zhitongBtn.frame = CGRectMake(contentView.frame.size.width/2 - 25, contentView.frame.size.height - 40, 50, 30);
+    zhitongBtn.layer.cornerRadius = 5;
+    zhitongBtn.layer.borderWidth = 2;
+    zhitongBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    zhitongBtn.clipsToBounds = YES;
+    [zhitongBtn setTitle:@"直通" forState:UIControlStateNormal];
+    zhitongBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    [zhitongBtn addTarget:self
+                   action:@selector(zhitongBtnAction:)
+         forControlEvents:UIControlEventTouchUpInside];
+    [contentView addSubview:zhitongBtn];
+}
+
+- (void) zhitongBtnAction:(id) sender {
+    
 }
 
 @end
