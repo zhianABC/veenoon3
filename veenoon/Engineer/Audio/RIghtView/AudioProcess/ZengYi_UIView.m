@@ -45,7 +45,7 @@
         [self addSubview:channelBtn];
         
         int y = CGRectGetMaxY(channelBtn.frame)+20;
-        contentView = [[UIView alloc] initWithFrame:CGRectMake(0, y, frame.size.width, 360)];
+        contentView = [[UIView alloc] initWithFrame:CGRectMake(0, y, frame.size.width, 340)];
         [self addSubview:contentView];
         contentView.layer.cornerRadius = 5;
         contentView.clipsToBounds = YES;
@@ -128,7 +128,7 @@
     addLabel.text = @"增益 (db)";
     addLabel.font = [UIFont systemFontOfSize: 13];
     addLabel.textColor = [UIColor whiteColor];
-    addLabel.frame = CGRectMake(735, 120, 120, 20);
+    addLabel.frame = CGRectMake(730, 120, 120, 20);
     [contentView addSubview:addLabel];
     
     SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(700, 135, 120, 120)];
@@ -186,7 +186,12 @@
     zerodbBtn.alpha = 0.8;
     zerodbBtn.enabled = NO;
     zerodbBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [zerodbBtn addSubview:icon];
+    UIImageView *icon2 = [[UIImageView alloc]
+                         initWithFrame:CGRectMake(zerodbBtn.frame.size.width - 20, 10, 10, 10)];
+    icon2.image = [UIImage imageNamed:@"remote_video_down.png"];
+    [zerodbBtn addSubview:icon2];
+    icon2.alpha = 0.8;
+    icon2.layer.contentsGravity = kCAGravityResizeAspect;
     [contentView addSubview:zerodbBtn];
     
     UIButton *foureivBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
@@ -200,7 +205,6 @@
     foureivBtn.alpha = 0.8;
     foureivBtn.enabled = NO;
     foureivBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [foureivBtn addSubview:icon];
     [contentView addSubview:foureivBtn];
     
     
@@ -213,7 +217,12 @@
     [bianzuBtn setTitle:@"  编组" forState:UIControlStateNormal];
     bianzuBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     bianzuBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [bianzuBtn addSubview:icon];
+    UIImageView *icon3 = [[UIImageView alloc]
+                         initWithFrame:CGRectMake(bianzuBtn.frame.size.width - 20, 10, 10, 10)];
+    icon3.image = [UIImage imageNamed:@"remote_video_down.png"];
+    [bianzuBtn addSubview:icon3];
+    icon3.alpha = 0.8;
+    icon3.layer.contentsGravity = kCAGravityResizeAspect;
     [bianzuBtn addTarget:self
                 action:@selector(bianzuAction:)
       forControlEvents:UIControlEventTouchUpInside];

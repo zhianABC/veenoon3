@@ -48,7 +48,7 @@
         [self addSubview:channelBtn];
         
         int y = CGRectGetMaxY(channelBtn.frame)+20;
-        contentView = [[UIView alloc] initWithFrame:CGRectMake(0, y, frame.size.width, 360)];
+        contentView = [[UIView alloc] initWithFrame:CGRectMake(0, y, frame.size.width, 340)];
         [self addSubview:contentView];
         contentView.layer.cornerRadius = 5;
         contentView.clipsToBounds = YES;
