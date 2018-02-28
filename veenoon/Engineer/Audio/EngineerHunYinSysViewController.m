@@ -14,9 +14,10 @@
 #import "BatteryView.h"
 #import "SignalView.h"
 #import "MixVoiceSettingsView.h"
+#import "HunyinYinpinchuliViewCtrl.h"
 
 
-@interface EngineerHunYinSysViewController () {
+@interface EngineerHunYinSysViewController () <CustomPickerViewDelegate, EngineerSliderViewDelegate, MixVoiceSettingsViewDelegate>{
     
     UIButton *_selectSysBtn;
     
@@ -182,10 +183,6 @@
     
 }
 
-- (void) scenarioAction:(id)sender{
-    
-}
-
 - (void) sysSelectAction:(id)sender{
     _customPicker = [[CustomPickerView alloc]
                      initWithFrame:CGRectMake(_selectSysBtn.frame.origin.x, _selectSysBtn.frame.origin.y, _selectSysBtn.frame.size.width, 200) withGrayOrLight:@"gray"];
@@ -220,6 +217,7 @@
             _rightView = [[MixVoiceSettingsView alloc]
                              initWithFrame:CGRectMake(SCREEN_WIDTH-300,
                                                       64, 300, SCREEN_HEIGHT-114)];
+            _rightView.delegate_=self;
         } else {
             [UIView beginAnimations:nil context:nil];
             _rightView.frame  = CGRectMake(SCREEN_WIDTH-300,
@@ -238,6 +236,11 @@
         [okBtn setTitle:@"设置" forState:UIControlStateNormal];
         isSettings = NO;
     }
+}
+- (void) didSelectButtonAction:(NSString*)value {
+    HunyinYinpinchuliViewCtrl *ctrl = [[HunyinYinpinchuliViewCtrl alloc] init];
+    [self.navigationController pushViewController:ctrl animated:YES];
+    
 }
 
 - (void) cancelAction:(id)sender{

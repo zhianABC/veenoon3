@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol MixVoiceSettingsViewDelegate <NSObject>
 
+@optional
+- (void) didSelectButtonAction:(NSString*)value;
+@end
 @interface MixVoiceSettingsView : UIView
-
+@property (nonatomic, weak) id  <MixVoiceSettingsViewDelegate> delegate_;
 @end

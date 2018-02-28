@@ -36,7 +36,7 @@
 @end
 
 @implementation MixVoiceSettingsView
-
+@synthesize delegate_;
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -184,6 +184,10 @@
     [btn1 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [btn2 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [btn4 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    if([delegate_ respondsToSelector:@selector(didSelectButtonAction:)]){
+        [delegate_ didSelectButtonAction:btn3.titleLabel.text];
+    }
 }
 - (void) shexiangzhuizongAction:(id)sender{
     [btn4 setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];

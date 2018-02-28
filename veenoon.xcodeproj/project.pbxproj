@@ -322,6 +322,7 @@
 		EB1A56121FEF876F000B18E6 /* engineer_hangphone_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1A56101FEF876F000B18E6 /* engineer_hangphone_n@2x.png */; };
 		EB1A56151FEF8F29000B18E6 /* EngineerVideoProcessViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1A56141FEF8F29000B18E6 /* EngineerVideoProcessViewCtrl.m */; };
 		EB1A56181FEF9626000B18E6 /* EngineerVideoPinJieViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1A56171FEF9626000B18E6 /* EngineerVideoPinJieViewCtrl.m */; };
+		EB1B90FE2046E6B00076EEEC /* HunyinYinpinchuliViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1B90FD2046E6B00076EEEC /* HunyinYinpinchuliViewCtrl.m */; };
 		EB1F9F101FD818E9007132A1 /* user_info_collect_d@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1F9F0D1FD818E8007132A1 /* user_info_collect_d@2x.png */; };
 		EB1F9F111FD818E9007132A1 /* user_info_collect_y@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1F9F0E1FD818E9007132A1 /* user_info_collect_y@2x.png */; };
 		EB1F9F121FD818E9007132A1 /* user_info_collect_m@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1F9F0F1FD818E9007132A1 /* user_info_collect_m@2x.png */; };
@@ -508,6 +509,9 @@
 		EB7E815B1FF8C4C90053E5A7 /* info_month_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB7E81551FF8C4C90053E5A7 /* info_month_s@2x.png */; };
 		EB7E815C1FF8C4C90053E5A7 /* info_year_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB7E81561FF8C4C90053E5A7 /* info_year_n@2x.png */; };
 		EB7E815D1FF8C4C90053E5A7 /* info_year_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB7E81571FF8C4C90053E5A7 /* info_year_s@2x.png */; };
+		EBA16C5F2046EA4F00FC6E1F /* Fenpinqi_UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBA16C5E2046EA4F00FC6E1F /* Fenpinqi_UIView.m */; };
+		EBA16C622046EA6700FC6E1F /* JunHengQi_UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBA16C612046EA6700FC6E1F /* JunHengQi_UIView.m */; };
+		EBA16C652046EA8800FC6E1F /* ZaoShengYaXian_UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBA16C642046EA8800FC6E1F /* ZaoShengYaXian_UIView.m */; };
 		EBAE5B631FDD046A00C10C4D /* engineer_confirm_bt_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBAE5B611FDD046A00C10C4D /* engineer_confirm_bt_n@2x.png */; };
 		EBAE5B641FDD046A00C10C4D /* engineer_confirm_bt_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBAE5B621FDD046A00C10C4D /* engineer_confirm_bt_s@2x.png */; };
 		EBAE5B771FDD07BE00C10C4D /* engineer_video_xinxihe_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBAE5B651FDD07BA00C10C4D /* engineer_video_xinxihe_n@2x.png */; };
@@ -1163,6 +1167,8 @@
 		EB1A56141FEF8F29000B18E6 /* EngineerVideoProcessViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerVideoProcessViewCtrl.m; sourceTree = "<group>"; };
 		EB1A56161FEF9626000B18E6 /* EngineerVideoPinJieViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerVideoPinJieViewCtrl.h; sourceTree = "<group>"; };
 		EB1A56171FEF9626000B18E6 /* EngineerVideoPinJieViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerVideoPinJieViewCtrl.m; sourceTree = "<group>"; };
+		EB1B90FC2046E6B00076EEEC /* HunyinYinpinchuliViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HunyinYinpinchuliViewCtrl.h; sourceTree = "<group>"; };
+		EB1B90FD2046E6B00076EEEC /* HunyinYinpinchuliViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HunyinYinpinchuliViewCtrl.m; sourceTree = "<group>"; };
 		EB1F9F0D1FD818E8007132A1 /* user_info_collect_d@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_info_collect_d@2x.png"; sourceTree = "<group>"; };
 		EB1F9F0E1FD818E9007132A1 /* user_info_collect_y@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_info_collect_y@2x.png"; sourceTree = "<group>"; };
 		EB1F9F0F1FD818E9007132A1 /* user_info_collect_m@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_info_collect_m@2x.png"; sourceTree = "<group>"; };
@@ -1395,6 +1401,12 @@
 		EB7E81551FF8C4C90053E5A7 /* info_month_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info_month_s@2x.png"; sourceTree = "<group>"; };
 		EB7E81561FF8C4C90053E5A7 /* info_year_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info_year_n@2x.png"; sourceTree = "<group>"; };
 		EB7E81571FF8C4C90053E5A7 /* info_year_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info_year_s@2x.png"; sourceTree = "<group>"; };
+		EBA16C5D2046EA4F00FC6E1F /* Fenpinqi_UIView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Fenpinqi_UIView.h; sourceTree = "<group>"; };
+		EBA16C5E2046EA4F00FC6E1F /* Fenpinqi_UIView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Fenpinqi_UIView.m; sourceTree = "<group>"; };
+		EBA16C602046EA6700FC6E1F /* JunHengQi_UIView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JunHengQi_UIView.h; sourceTree = "<group>"; };
+		EBA16C612046EA6700FC6E1F /* JunHengQi_UIView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JunHengQi_UIView.m; sourceTree = "<group>"; };
+		EBA16C632046EA8800FC6E1F /* ZaoShengYaXian_UIView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZaoShengYaXian_UIView.h; sourceTree = "<group>"; };
+		EBA16C642046EA8800FC6E1F /* ZaoShengYaXian_UIView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZaoShengYaXian_UIView.m; sourceTree = "<group>"; };
 		EBAE5B611FDD046A00C10C4D /* engineer_confirm_bt_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_confirm_bt_n@2x.png"; sourceTree = "<group>"; };
 		EBAE5B621FDD046A00C10C4D /* engineer_confirm_bt_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_confirm_bt_s@2x.png"; sourceTree = "<group>"; };
 		EBAE5B651FDD07BA00C10C4D /* engineer_video_xinxihe_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_video_xinxihe_n@2x.png"; sourceTree = "<group>"; };
@@ -2721,6 +2733,8 @@
 				EB795B4D2042DEDE005D1F47 /* AudioMatrixSettingViewCtrl.m */,
 				EB795B492042DE5E005D1F47 /* AudioIconSettingView.h */,
 				EB795B4A2042DE5E005D1F47 /* AudioIconSettingView.m */,
+				EB1B90FC2046E6B00076EEEC /* HunyinYinpinchuliViewCtrl.h */,
+				EB1B90FD2046E6B00076EEEC /* HunyinYinpinchuliViewCtrl.m */,
 			);
 			path = RIghtView;
 			sourceTree = "<group>";
@@ -2803,6 +2817,12 @@
 				3454276D2046DED100E1A436 /* FilterGraphView.swift */,
 				3454276F2046DEE800E1A436 /* LimiterView.swift */,
 				3454276C2046DED000E1A436 /* veenoon-Bridging-Header.h */,
+				EBA16C5D2046EA4F00FC6E1F /* Fenpinqi_UIView.h */,
+				EBA16C5E2046EA4F00FC6E1F /* Fenpinqi_UIView.m */,
+				EBA16C602046EA6700FC6E1F /* JunHengQi_UIView.h */,
+				EBA16C612046EA6700FC6E1F /* JunHengQi_UIView.m */,
+				EBA16C632046EA8800FC6E1F /* ZaoShengYaXian_UIView.h */,
+				EBA16C642046EA8800FC6E1F /* ZaoShengYaXian_UIView.m */,
 			);
 			path = AudioProcess;
 			sourceTree = "<group>";
@@ -3393,6 +3413,7 @@
 				EB03F52B1FBDC07200865541 /* InvitationCodeViewCotroller.m in Sources */,
 				345427702046DEE800E1A436 /* LimiterView.swift in Sources */,
 				34928A9A1EC1BD330089F429 /* ReaderCodeViewController.m in Sources */,
+				EBA16C652046EA8800FC6E1F /* ZaoShengYaXian_UIView.m in Sources */,
 				34615F091FC9BD7B002DFCE0 /* JSlideView.m in Sources */,
 				EB36AAC41FCD9E71009A0FD8 /* UserVideoConfigViewCtrl.m in Sources */,
 				04DE1E831AD6AEE000D49E2F /* ClassFactory.m in Sources */,
@@ -3414,6 +3435,7 @@
 				3422A5B81FCC17C500F6D3C2 /* BatteryView.m in Sources */,
 				04DE1EC81AD6B22F00D49E2F /* BaseViewController.m in Sources */,
 				EB795B4B2042DE5E005D1F47 /* AudioIconSettingView.m in Sources */,
+				EBA16C5F2046EA4F00FC6E1F /* Fenpinqi_UIView.m in Sources */,
 				04DE1E891AD6AEE000D49E2F /* IconTextButton.m in Sources */,
 				342A2F4020411B6900BE4071 /* GroupsPickerView.m in Sources */,
 				04DE1E8C1AD6AEE000D49E2F /* RRScrollView.m in Sources */,
@@ -3556,6 +3578,7 @@
 				EB4EC1221FE7FC3B000B3101 /* EngineerWirelessMeetingViewCtrl.m in Sources */,
 				EB4E39E320273F6100533575 /* HandtoHandSettingsView.m in Sources */,
 				04DE1EA01AD6AEE000D49E2F /* WebClient.m in Sources */,
+				EB1B90FE2046E6B00076EEEC /* HunyinYinpinchuliViewCtrl.m in Sources */,
 				EB1A55C21FE93CD4000B18E6 /* EngineerAudioProcessViewCtrl.m in Sources */,
 				04DE1EA81AD6AEE000D49E2F /* SBJson4StreamWriterState.m in Sources */,
 				341671881FBA97BD001D33D0 /* HomeViewController.m in Sources */,
@@ -3576,6 +3599,7 @@
 				3421EA301FC4161300DC5378 /* ColumnsView.m in Sources */,
 				04DE1EA31AD6AEE000D49E2F /* SBJson4Parser.m in Sources */,
 				3425E9921FE5763B003559F7 /* WirlessYaoBaoViewSettingsView.m in Sources */,
+				EBA16C622046EA6700FC6E1F /* JunHengQi_UIView.m in Sources */,
 				EB1A55C71FEA919C000B18E6 /* EngineerPVExpendViewCtrl.m in Sources */,
 				EBCA834B1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m in Sources */,
 				04DE1EB51AD6AEE000D49E2F /* UIImageView+WebCache.m in Sources */,
