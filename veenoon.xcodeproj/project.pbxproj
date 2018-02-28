@@ -166,6 +166,8 @@
 		342814231FE34BF100170D11 /* PowerSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 342814221FE34BF100170D11 /* PowerSettingView.m */; };
 		342A2F4020411B6900BE4071 /* GroupsPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 342A2F3F20411B6900BE4071 /* GroupsPickerView.m */; };
 		343733AE1FE402E80071C902 /* JHSlideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 343733AD1FE402E80071C902 /* JHSlideView.m */; };
+		3454276E2046DED100E1A436 /* FilterGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3454276D2046DED100E1A436 /* FilterGraphView.swift */; };
+		345427702046DEE800E1A436 /* LimiterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3454276F2046DEE800E1A436 /* LimiterView.swift */; };
 		345492F91FE6383A00793E2E /* slide_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 345492F81FE6383900793E2E /* slide_btn@2x.png */; };
 		345492FC1FE638F300793E2E /* SlideButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 345492FB1FE638F300793E2E /* SlideButton.m */; };
 		345492FE1FE6425700793E2E /* black_point@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 345492FD1FE6425700793E2E /* black_point@2x.png */; };
@@ -954,6 +956,9 @@
 		342A2F3F20411B6900BE4071 /* GroupsPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupsPickerView.m; sourceTree = "<group>"; };
 		343733AC1FE402E80071C902 /* JHSlideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHSlideView.h; sourceTree = "<group>"; };
 		343733AD1FE402E80071C902 /* JHSlideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHSlideView.m; sourceTree = "<group>"; };
+		3454276C2046DED000E1A436 /* veenoon-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "veenoon-Bridging-Header.h"; sourceTree = "<group>"; };
+		3454276D2046DED100E1A436 /* FilterGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterGraphView.swift; sourceTree = "<group>"; };
+		3454276F2046DEE800E1A436 /* LimiterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimiterView.swift; sourceTree = "<group>"; };
 		345492F81FE6383900793E2E /* slide_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slide_btn@2x.png"; sourceTree = "<group>"; };
 		345492FA1FE638F300793E2E /* SlideButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SlideButton.h; sourceTree = "<group>"; };
 		345492FB1FE638F300793E2E /* SlideButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SlideButton.m; sourceTree = "<group>"; };
@@ -2792,6 +2797,9 @@
 				EB795B6A2042E8D3005D1F47 /* DianPing_UIView.m */,
 				EB795B6C2042E905005D1F47 /* JuZhenLuYou_UIView.h */,
 				EB795B6D2042E905005D1F47 /* JuZhenLuYou_UIView.m */,
+				3454276D2046DED100E1A436 /* FilterGraphView.swift */,
+				3454276F2046DEE800E1A436 /* LimiterView.swift */,
+				3454276C2046DED000E1A436 /* veenoon-Bridging-Header.h */,
 			);
 			path = AudioProcess;
 			sourceTree = "<group>";
@@ -2908,6 +2916,7 @@
 					04DE1DD11AD68C5E00D49E2F = {
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = 9FDG53LV84;
+						LastSwiftMigration = 0920;
 					};
 					04DE1DEA1AD68C5E00D49E2F = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -3378,6 +3387,7 @@
 				3425E9951FE57675003559F7 /* MixVoiceSettingsView.m in Sources */,
 				EB042A5B1FC2FFCD00F7F73D /* OutSystemView.m in Sources */,
 				EB03F52B1FBDC07200865541 /* InvitationCodeViewCotroller.m in Sources */,
+				345427702046DEE800E1A436 /* LimiterView.swift in Sources */,
 				34928A9A1EC1BD330089F429 /* ReaderCodeViewController.m in Sources */,
 				34615F091FC9BD7B002DFCE0 /* JSlideView.m in Sources */,
 				EB36AAC41FCD9E71009A0FD8 /* UserVideoConfigViewCtrl.m in Sources */,
@@ -3435,6 +3445,7 @@
 				04DE1EAA1AD6AEE000D49E2F /* MKAnnotationView+WebCache.m in Sources */,
 				EB1717A91FF6145100CBDB81 /* EngineerCleanWaterViewCtrl.m in Sources */,
 				0479345B1DB0A7AA0066BABC /* JCShareView.m in Sources */,
+				3454276E2046DED100E1A436 /* FilterGraphView.swift in Sources */,
 				04DE1E861AD6AEE000D49E2F /* ConfigureSetting.m in Sources */,
 				EBC71B29204100A200DD0A98 /* ElectronicAutoRightView.m in Sources */,
 				EB1A55D91FEF4E0D000B18E6 /* EngineerCameraViewController.m in Sources */,
@@ -3715,6 +3726,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: AS-CN (Beijing) Co., Ltd.";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: AS-CN (Beijing) Co., Ltd.";
 				DEVELOPMENT_TEAM = 9FDG53LV84;
@@ -3738,6 +3750,9 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "a541cb78-affc-487e-9b13-2700b44a0eff";
 				PROVISIONING_PROFILE_SPECIFIER = veenoon;
+				SWIFT_OBJC_BRIDGING_HEADER = "veenoon/Engineer/Audio/RIghtView/AudioProcess/veenoon-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -3746,6 +3761,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: AS-CN (Beijing) Co., Ltd.";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: AS-CN (Beijing) Co., Ltd.";
 				DEVELOPMENT_TEAM = 9FDG53LV84;
@@ -3769,12 +3785,15 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "a541cb78-affc-487e-9b13-2700b44a0eff";
 				PROVISIONING_PROFILE_SPECIFIER = veenoon;
+				SWIFT_OBJC_BRIDGING_HEADER = "veenoon/Engineer/Audio/RIghtView/AudioProcess/veenoon-Bridging-Header.h";
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
 		04DE1DF91AD68C5E00D49E2F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -3794,6 +3813,7 @@
 		04DE1DFA1AD68C5E00D49E2F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
