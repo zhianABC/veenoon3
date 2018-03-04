@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "APBaseView.h"
+
 @protocol HuiShengXiaoChu_UIViewDelegate <NSObject>
 
 @optional
@@ -15,5 +16,6 @@
 @end
 
 @interface HuiShengXiaoChu_UIView : APBaseView
+
 @property (nonatomic, weak) id  <HuiShengXiaoChu_UIViewDelegate> delegate_;
 @end

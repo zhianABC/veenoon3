@@ -14,7 +14,7 @@
     
     UIButton *channelBtn;
     
-    UIView   *contentView;
+    //UIView   *contentView;
     
     UIButton *aecButton;
 }
