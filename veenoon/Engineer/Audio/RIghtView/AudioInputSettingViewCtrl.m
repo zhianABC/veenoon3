@@ -226,14 +226,16 @@
     [zengyiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [zaoshengmenBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [yaxianBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [yanshiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [huishengxiaochuBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+    [yanshiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [lvbojunhengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     zengyiView.hidden = YES;
     yxq.hidden = YES;
     zaoshengView.hidden = YES;
+    huishengView.hidden = NO;
     yanshiView.hidden = YES;
-    huishengView.hidden=NO;
+    lvbo.hidden=YES;
 }
 - (void) yanshiqiAction:(id)sender{
     [zengyiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -241,70 +243,75 @@
     [yaxianBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [huishengxiaochuBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [yanshiqiBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+    [lvbojunhengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     zengyiView.hidden = YES;
     yxq.hidden = YES;
     zaoshengView.hidden = YES;
     huishengView.hidden = YES;
     yanshiView.hidden = NO;
+    lvbo.hidden=YES;
 }
 - (void) yaxianqiAction:(id)sender{
     [zengyiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [zaoshengmenBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [yaxianBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-    [yanshiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [huishengxiaochuBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [yanshiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [lvbojunhengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     zengyiView.hidden = YES;
     yxq.hidden = NO;
     zaoshengView.hidden = YES;
-    yanshiView.hidden=YES;
-    huishengView.hidden=YES;
-    lvbo.hidden = YES;
+    huishengView.hidden = YES;
+    yanshiView.hidden = YES;
+    lvbo.hidden=YES;
     
 }
 - (void) lvbojunhengAction:(id)sender{
-    
+    [zengyiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [zaoshengmenBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [yaxianBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [zengyiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [huishengxiaochuBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [yanshiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [lvbojunhengBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
     
     zengyiView.hidden = YES;
     yxq.hidden = YES;
     zaoshengView.hidden = YES;
-    lvbo.hidden = NO;
+    huishengView.hidden = YES;
+    yanshiView.hidden = YES;
+    lvbo.hidden=NO;
 }
 - (void) zaoshengmenAction:(id)sender{
+    [zengyiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [zaoshengmenBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
     [yaxianBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [zengyiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [yanshiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [huishengxiaochuBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [yanshiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [lvbojunhengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     zengyiView.hidden = YES;
     yxq.hidden = YES;
     zaoshengView.hidden = NO;
-    yanshiView.hidden=YES;
-    huishengView.hidden=YES;
-    lvbo.hidden = YES;
+    huishengView.hidden = YES;
+    yanshiView.hidden = YES;
+    lvbo.hidden=YES;
 }
 - (void) zengyiAction:(id)sender{
     [zengyiBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-    [yaxianBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [zaoshengmenBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [yanshiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [yaxianBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [huishengxiaochuBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [yanshiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [lvbojunhengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     zengyiView.hidden = NO;
     yxq.hidden = YES;
     zaoshengView.hidden = YES;
-    yanshiView.hidden = YES;
     huishengView.hidden = YES;
-    lvbo.hidden = YES;
+    yanshiView.hidden = YES;
+    lvbo.hidden=YES;
 }
 - (void) didAecButtonAction {
     YinPinProcessCodeUIView *uiView = [[YinPinProcessCodeUIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
