@@ -100,8 +100,78 @@
         x+=spx;
         
         [_channelBtns addObject:btn];
+        
+        
+        UILongPressGestureRecognizer *longPress0 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed0:)];
+        [btn addGestureRecognizer:longPress0];
+        
     }
     
+}
+
+- (void) longPressed0:(UILongPressGestureRecognizer*)sender{
+    
+    UIView* view = sender.view;
+    
+    if([view isKindOfClass:[UIButton class]])
+    {
+        [self becomeFirstResponder];
+        CGRect rect = [self convertRect:view.frame fromView:view.superview];
+        
+        UIMenuController *menu = [UIMenuController sharedMenuController];
+        
+        //初始化menu
+        [menu setMenuItems:[self getLongTouchMessageCellMenuList]];
+        [menu setTargetRect:rect inView:self];
+        [menu setMenuVisible:YES animated:YES];
+
+    }
+    
+}
+
+- (NSArray<UIMenuItem *> *)getLongTouchMessageCellMenuList {
+    UIMenuItem *copyItem = [[UIMenuItem alloc] initWithTitle:@"复制"
+                                                      action:@selector(onCopyData:)];
+    UIMenuItem *pasteItem =
+    [[UIMenuItem alloc] initWithTitle:@"粘贴"
+                               action:@selector(onPasteData:)];
+    
+    UIMenuItem *deleteItem =
+    [[UIMenuItem alloc] initWithTitle:@"复位"
+                               action:@selector(onClearData:)];
+    
+    
+    
+    return [NSArray arrayWithObjects:copyItem,pasteItem,deleteItem, nil];
+}
+
+// 用于UIMenuController显示，缺一不可
+-(BOOL)canBecomeFirstResponder{
+
+    return YES;
+    
+}
+// 用于UIMenuController显示，缺一不可
+-(BOOL)canPerformAction:(SEL)action withSender:(id)sender{
+    
+    //NSLog(@"%@", action);
+    
+    if (action ==@selector(onCopyData:)
+        || action ==@selector(onPasteData:)
+        || action ==@selector(onClearData:)){
+        
+        return YES;
+        
+    }
+    
+    return NO;//隐藏系统默认的菜单项
+}
+
+- (void) onCopyData:(id)sender{
+}
+- (void) onPasteData:(id)sender{
+}
+- (void) onClearData:(id)sender{
 }
 
 - (void) channelBtnAction:(UIButton*)sender{
