@@ -14,9 +14,9 @@
 #import "YanShiQi_UIView.h"
 #import "HuiShengXiaoChu_UIView.h"
 #import "LvBoJunHeng_UIView.h"
+#import "YinPinProcessCodeUIView.h"
 
-@interface AudioInputSettingViewCtrl ()
-{
+@interface AudioInputSettingViewCtrl () <HuiShengXiaoChu_UIViewDelegate> {
     YaXianQi_UIView *yxq;
     ZengYi_UIView *zengyiView;
     ZaoShengMen_UIView *zaoshengView;
@@ -212,6 +212,7 @@
     lvbo.hidden = YES;
     
     huishengView = [[HuiShengXiaoChu_UIView alloc] initWithFrame:vrc];
+    huishengView.delegate_ = self;
     [self.view addSubview:huishengView];
     huishengView.hidden = YES;
     
@@ -305,8 +306,12 @@
     huishengView.hidden = YES;
     lvbo.hidden = YES;
 }
-
-- (void) okAction:(id)sender{
+- (void) didAecButtonAction {
+    YinPinProcessCodeUIView *uiView = [[YinPinProcessCodeUIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    
+    [self.view addSubview:uiView];
+}
+- (void) okAction:(id)sender {
     
 }
 

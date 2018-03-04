@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol HuiShengXiaoChu_UIViewDelegate <NSObject>
+
+@optional
+- (void) didAecButtonAction;
+@end
 
 @interface HuiShengXiaoChu_UIView : UIView
-
+@property (nonatomic, weak) id  <HuiShengXiaoChu_UIViewDelegate> delegate_;
 @end
