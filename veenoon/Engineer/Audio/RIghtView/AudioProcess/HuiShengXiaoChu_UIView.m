@@ -15,6 +15,8 @@
     UIButton *channelBtn;
     
     UIView   *contentView;
+    
+    UIButton *aecButton;
 }
 @property (nonatomic, strong) NSMutableArray *_channelBtns;
 
@@ -23,6 +25,7 @@
 
 @implementation HuiShengXiaoChu_UIView
 @synthesize _channelBtns;
+@synthesize delegate_;
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.
@@ -140,8 +143,21 @@
                    action:@selector(zhitongBtnAction:)
          forControlEvents:UIControlEventTouchUpInside];
     [contentView addSubview:zhitongBtn];
+    
+    aecButton = [UIButton buttonWithColor:nil selColor:nil];
+    aecButton.frame = CGRectMake(350, 150, 50, 75);
+    aecButton.clipsToBounds = YES;
+    aecButton.layer.cornerRadius = 5;
+    [aecButton addTarget:self
+                   action:@selector(aceBtnAction:)
+         forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:aecButton];
 }
-
+- (void) aceBtnAction:(id) sender {
+    if(delegate_ && [delegate_ respondsToSelector:@selector(didAecButtonAction)]) {
+        [delegate_ didAecButtonAction];
+    }
+}
 - (void) zhitongBtnAction:(id) sender {
     
 }
