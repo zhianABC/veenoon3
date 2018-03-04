@@ -8,7 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol SlideButtonDelegate <NSObject>
+
+@optional
+- (void) didSlideButtonValueChanged:(float)value;
+    
+@end
+
 @interface SlideButton : UIView
+{
+    
+}
+@property (nonatomic, weak) id <SlideButtonDelegate> delegate;
 
 - (void) setCircleValue:(float) value;
 - (void) changeButtonBackgroundImage:(UIImage *)image;

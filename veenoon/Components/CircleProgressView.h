@@ -25,4 +25,7 @@
 
 - (void) stepProgress:(float)step;
 - (void) syncCurrentStepedValue;
+
+- (float) pgvalue;
+
 @end

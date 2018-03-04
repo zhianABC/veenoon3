@@ -102,6 +102,7 @@
 		04DE1EC81AD6B22F00D49E2F /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DE1EC71AD6B22F00D49E2F /* BaseViewController.m */; };
 		04DE1ECA1AD6B33300D49E2F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04DE1EC91AD6B33300D49E2F /* AVFoundation.framework */; };
 		04DE1FE71AD6B52400D49E2F /* CMNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DE1FE61AD6B52400D49E2F /* CMNavigationController.m */; };
+		34141699204BC3D5002E0B00 /* AudioMatrixView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34141698204BC3D5002E0B00 /* AudioMatrixView.m */; };
 		341651E41ED8067100B16E91 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 341651E31ED8067100B16E91 /* MessageUI.framework */; };
 		341671811FBA974C001D33D0 /* WellcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 341671801FBA974C001D33D0 /* WellcomeViewController.m */; };
 		341671841FBA9765001D33D0 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 341671831FBA9765001D33D0 /* SignupViewController.m */; };
@@ -874,6 +875,8 @@
 		04DE1EC91AD6B33300D49E2F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		04DE1FE51AD6B52400D49E2F /* CMNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMNavigationController.h; sourceTree = "<group>"; };
 		04DE1FE61AD6B52400D49E2F /* CMNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMNavigationController.m; sourceTree = "<group>"; };
+		34141697204BC3D5002E0B00 /* AudioMatrixView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioMatrixView.h; sourceTree = "<group>"; };
+		34141698204BC3D5002E0B00 /* AudioMatrixView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioMatrixView.m; sourceTree = "<group>"; };
 		341651E31ED8067100B16E91 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		3416717F1FBA974C001D33D0 /* WellcomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WellcomeViewController.h; sourceTree = "<group>"; };
 		341671801FBA974C001D33D0 /* WellcomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WellcomeViewController.m; sourceTree = "<group>"; };
@@ -2731,6 +2734,8 @@
 				EB795B472042DD6F005D1F47 /* AudioOutputSettingViewCtrl.m */,
 				EB795B4C2042DEDE005D1F47 /* AudioMatrixSettingViewCtrl.h */,
 				EB795B4D2042DEDE005D1F47 /* AudioMatrixSettingViewCtrl.m */,
+				34141697204BC3D5002E0B00 /* AudioMatrixView.h */,
+				34141698204BC3D5002E0B00 /* AudioMatrixView.m */,
 				EB795B492042DE5E005D1F47 /* AudioIconSettingView.h */,
 				EB795B4A2042DE5E005D1F47 /* AudioIconSettingView.m */,
 				EB1B90FC2046E6B00076EEEC /* HunyinYinpinchuliViewCtrl.h */,
@@ -3524,6 +3529,7 @@
 				EB09EF2F1FD978C700C968CA /* EngineerToUseTeslariViewCtrl.m in Sources */,
 				34686C9E1ED025CB001749A1 /* ConverUtil.m in Sources */,
 				EB795B482042DD6F005D1F47 /* AudioOutputSettingViewCtrl.m in Sources */,
+				34141699204BC3D5002E0B00 /* AudioMatrixView.m in Sources */,
 				3425E98C1FE571CE003559F7 /* ComSettingView.m in Sources */,
 				EB3B739A1FE61B18001941CF /* EngineerPlayerSettingsViewCtrl.m in Sources */,
 				0477DC581DA9F4700077FA52 /* Base64.m in Sources */,

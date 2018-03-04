@@ -22,6 +22,7 @@
 @end
 
 @implementation SlideButton
+@synthesize delegate;
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -65,6 +66,7 @@
         
         _radioImgV.hidden = NO;
         progress.hidden = NO;
+        
         return;
     }
     
@@ -123,6 +125,10 @@
             break;
     }
     
+    if(delegate && [delegate respondsToSelector:@selector(didSlideButtonValueChanged:)])
+    {
+        [delegate didSlideButtonValueChanged:[progress pgvalue]];
+    }
 }
 
 -(void) touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event {
@@ -131,6 +137,11 @@
         return;
     
     [progress syncCurrentStepedValue];
+    
+    if(delegate && [delegate respondsToSelector:@selector(didSlideButtonValueChanged:)])
+    {
+        [delegate didSlideButtonValueChanged:[progress pgvalue]];
+    }
     
 }
 

@@ -164,6 +164,11 @@
     
 }
 
+- (float) pgvalue{
+
+    return self.currentProgress;
+}
+
 - (void) dealloc
 {
 
