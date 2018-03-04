@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "APBaseView.h"
 
-@interface LvBoJunHeng_UIView : UIView
+
+@interface LvBoJunHeng_UIView : APBaseView
 
 @end

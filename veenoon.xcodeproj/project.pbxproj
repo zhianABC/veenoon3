@@ -170,6 +170,7 @@
 		3454276E2046DED100E1A436 /* FilterGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3454276D2046DED100E1A436 /* FilterGraphView.swift */; };
 		345427702046DEE800E1A436 /* LimiterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3454276F2046DEE800E1A436 /* LimiterView.swift */; };
 		345487C5204BE3910068126B /* yinpinchuli_anniu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 345487C4204BE3910068126B /* yinpinchuli_anniu@2x.png */; };
+		345487C8204BE4F60068126B /* APBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 345487C7204BE4F60068126B /* APBaseView.m */; };
 		345492F91FE6383A00793E2E /* slide_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 345492F81FE6383900793E2E /* slide_btn@2x.png */; };
 		345492FC1FE638F300793E2E /* SlideButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 345492FB1FE638F300793E2E /* SlideButton.m */; };
 		345492FE1FE6425700793E2E /* black_point@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 345492FD1FE6425700793E2E /* black_point@2x.png */; };
@@ -970,6 +971,8 @@
 		3454276D2046DED100E1A436 /* FilterGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterGraphView.swift; sourceTree = "<group>"; };
 		3454276F2046DEE800E1A436 /* LimiterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimiterView.swift; sourceTree = "<group>"; };
 		345487C4204BE3910068126B /* yinpinchuli_anniu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yinpinchuli_anniu@2x.png"; sourceTree = "<group>"; };
+		345487C6204BE4F60068126B /* APBaseView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APBaseView.h; sourceTree = "<group>"; };
+		345487C7204BE4F60068126B /* APBaseView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APBaseView.m; sourceTree = "<group>"; };
 		345492F81FE6383900793E2E /* slide_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slide_btn@2x.png"; sourceTree = "<group>"; };
 		345492FA1FE638F300793E2E /* SlideButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SlideButton.h; sourceTree = "<group>"; };
 		345492FB1FE638F300793E2E /* SlideButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SlideButton.m; sourceTree = "<group>"; };
@@ -2805,6 +2808,8 @@
 		EB795B502042E7E7005D1F47 /* AudioProcess */ = {
 			isa = PBXGroup;
 			children = (
+				345487C6204BE4F60068126B /* APBaseView.h */,
+				345487C7204BE4F60068126B /* APBaseView.m */,
 				EB795B512042E81F005D1F47 /* ZengYi_UIView.h */,
 				EB795B522042E81F005D1F47 /* ZengYi_UIView.m */,
 				EB795B542042E838005D1F47 /* ZaoShengMen_UIView.h */,
@@ -3524,6 +3529,7 @@
 				345492FC1FE638F300793E2E /* SlideButton.m in Sources */,
 				EB16474A203ACD6300E71483 /* GongLvFangDaQiView.m in Sources */,
 				EB795B622042E890005D1F47 /* HuiShengXiaoChu_UIView.m in Sources */,
+				345487C8204BE4F60068126B /* APBaseView.m in Sources */,
 				EB1A55F41FEF80D7000B18E6 /* EngineerRemoteVideoViewCtrl.m in Sources */,
 				EB5CF0411FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m in Sources */,
 				EB1A56151FEF8F29000B18E6 /* EngineerVideoProcessViewCtrl.m in Sources */,

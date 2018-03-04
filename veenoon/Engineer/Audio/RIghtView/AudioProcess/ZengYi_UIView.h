@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "APBaseView.h"
 
-@interface ZengYi_UIView : UIView
+@interface ZengYi_UIView : APBaseView
 
 @end

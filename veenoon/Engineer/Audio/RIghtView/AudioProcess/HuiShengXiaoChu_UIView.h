@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "APBaseView.h"
 @protocol HuiShengXiaoChu_UIViewDelegate <NSObject>
 
 @optional
 - (void) didAecButtonAction;
 @end
 
-@interface HuiShengXiaoChu_UIView : UIView
+@interface HuiShengXiaoChu_UIView : APBaseView
 @property (nonatomic, weak) id  <HuiShengXiaoChu_UIViewDelegate> delegate_;
 @end

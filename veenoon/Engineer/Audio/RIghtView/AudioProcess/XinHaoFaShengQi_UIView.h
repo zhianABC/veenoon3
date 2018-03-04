@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "APBaseView.h"
 
-@interface XinHaoFaShengQi_UIView : UIView
+@interface XinHaoFaShengQi_UIView : APBaseView
 
 @end

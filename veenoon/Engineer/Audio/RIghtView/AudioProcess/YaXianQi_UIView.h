@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "APBaseView.h"
 
-@interface YaXianQi_UIView : UIView
+@interface YaXianQi_UIView : APBaseView
 
 @end

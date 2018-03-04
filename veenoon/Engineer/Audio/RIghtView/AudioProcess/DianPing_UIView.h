@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "APBaseView.h"
 
-@interface DianPing_UIView : UIView
+@interface DianPing_UIView : APBaseView
 
 @end

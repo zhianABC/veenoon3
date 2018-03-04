@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "APBaseView.h"
 
-@interface ZaoShengMen_UIView : UIView
+@interface ZaoShengMen_UIView : APBaseView
 
 @end

@@ -14,18 +14,16 @@
     
     UIButton *channelBtn;
     
-    UIView   *contentView;
     SlideButton *fazhi;
     SlideButton *qidongshijian;
     SlideButton *huifushijian;
 }
-@property (nonatomic, strong) NSMutableArray *_channelBtns;
 
 @end
 
 
 @implementation ZaoShengMen_UIView
-@synthesize _channelBtns;
+
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.
@@ -48,61 +46,13 @@
         [self addSubview:channelBtn];
         
         int y = CGRectGetMaxY(channelBtn.frame)+20;
-        contentView = [[UIView alloc] initWithFrame:CGRectMake(0, y, frame.size.width, 340)];
-        [self addSubview:contentView];
-        contentView.layer.cornerRadius = 5;
-        contentView.clipsToBounds = YES;
-        contentView.backgroundColor = RGB(0, 89, 118);
+        contentView.frame = CGRectMake(0, y, frame.size.width, 340);
         
-        [self layoutChannelBtns:16];
+
         [self contentViewComps];
     }
     
     return self;
-}
-
-- (void) layoutChannelBtns:(int)num{
-    
-    self._channelBtns = [NSMutableArray array];
-    
-    float x = 0;
-    int y = CGRectGetHeight(self.frame)-60;
-    
-    float spx = (CGRectGetWidth(self.frame) - num*50.0)/(num-1);
-    if(spx > 10)
-        spx = 10;
-    for(int i = 0; i < num; i++)
-    {
-        UIButton *btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
-        btn.frame = CGRectMake(x, y, 50, 50);
-        btn.clipsToBounds = YES;
-        btn.layer.cornerRadius = 5;
-        btn.titleLabel.font = [UIFont systemFontOfSize:15];
-        [btn setTitle:[NSString stringWithFormat:@"%d", i+1] forState:UIControlStateNormal];
-        btn.tag = i;
-        [self addSubview:btn];
-        
-        if(i == 0)
-        {
-            [btn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-            [btn setTitleColor:YELLOW_COLOR forState:UIControlStateHighlighted];
-        }
-        else
-        {
-            [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            [btn setTitleColor:YELLOW_COLOR forState:UIControlStateHighlighted];
-        }
-        
-        [btn addTarget:self
-                action:@selector(channelBtnAction:)
-      forControlEvents:UIControlEventTouchUpInside];
-        
-        x+=50;
-        x+=spx;
-        
-        [_channelBtns addObject:btn];
-    }
-    
 }
 
 - (void) channelBtnAction:(UIButton*)sender{
