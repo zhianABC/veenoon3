@@ -17,17 +17,22 @@
 #import "WaitDialog.h"
 #import "DataSync.h"
 #import "InvitationCodeViewCotroller.h"
+#import "XDPickView.h"
+#import "wsDB.h"
 
 #define T7DaySecs (7*24*3600)
 
 
-@interface LoginViewController ()
+@interface LoginViewController () <XDPickerDelegate>
 {
     //输入部分
     UIView *_inputPannel;
     UILabel *_country;
     UILabel *_countrycode;
+    
+    XDPickView *pick;
 }
+
 @end
 
 @implementation LoginViewController
@@ -44,7 +49,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
     UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(50,
                                                                 80,
                                                                 SCREEN_WIDTH, 20)];
@@ -109,7 +113,7 @@
     UIButton *countrySelector = [UIButton buttonWithType:UIButtonTypeCustom];
     int w2 = CGRectGetWidth(_inputPannel.frame)-20;
     countrySelector.frame = CGRectMake(left+w2, top + 18, 8, 14);
-    [countrySelector setBackgroundImage:[UIImage imageNamed:@"login_right_arraw.png"] forState:UIControlStateNormal];
+    [countrySelector setBackgroundImage:[UIImage imageNamed:@"down_arraw.png"] forState:UIControlStateNormal];
     [_inputPannel addSubview:countrySelector];
     
     [countrySelector addTarget:self
@@ -185,8 +189,45 @@
 
 - (void) countrySelectAction:(id)sender{
     
+    NSArray *counrtryArray = [[wsDB sharedDBInstance] queryAllCountryCodes];
+    
+    NSMutableArray *countiesName = [NSMutableArray arrayWithCapacity:[counrtryArray count]];
+    for (NSDictionary *dic in counrtryArray) {
+        NSString *name = [dic objectForKey:@"name"];
+        
+        [countiesName addObject:name];
+    }
+    
+    pick = [[XDPickView alloc] initWithFrame:CGRectMake(0, 0, 600, 300)];
+    pick.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+    pick.pickViewTextArray = countiesName;//设置数据
+    pick.backgroundColor = [UIColor whiteColor];
+    pick.contentTextColor = [UIColor blackColor];
+    pick.LieWidth = 200;
+    pick.delegate = self;
+    
+    [self.view addSubview:pick];
+    
 }
-
+                                                        
+- (void)PickerSelectorIndixString:(NSString *)str {
+    _country.text = str;
+    
+    NSArray *counrtryArray = [[wsDB sharedDBInstance] queryAllCountryCodes];
+    
+    for (NSDictionary *dic in counrtryArray) {
+        NSString *name = [dic objectForKey:@"name"];
+        
+        if ([name isEqualToString:str]) {
+            NSString *code = [dic objectForKey:@"telcode"];
+            code = [@"+" stringByAppendingString:code];
+            _countrycode.text = code;
+        }
+    }
+    
+    [pick removeFromSuperview];
+}
+                                                        
 - (void) cancelAction:(id)sender{
     
     [self.navigationController popViewControllerAnimated:YES];

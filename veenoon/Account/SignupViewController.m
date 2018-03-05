@@ -10,6 +10,7 @@
 #import "AreaPickView.h"
 #import "LoginViewController.h"
 
+
 @interface SignupViewController () <AreaPickViewDelegate>{
     //输入部分
     UIView *_inputPannel;
@@ -28,6 +29,8 @@
     UITextField *_passwordAgain;
     
     AreaPickView *areaPick;
+    
+    UIButton *loginBtn;
 }
 @end
 
@@ -271,11 +274,27 @@
     [_inputPannel addSubview:line11];
     
     
-    UILabel *tL6 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+506, w, 40)];
-    tL6.text = @"*如果您已经使用过了 TESLARIA 服务， 则应返回以使用该账号登录。 *";
-    tL6.textColor = RGB(70, 219, 254);
-    tL6.font = [UIFont boldSystemFontOfSize:12];
-    [_inputPannel addSubview:tL6];
+    loginBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    loginBtn.frame = CGRectMake(left-20, top+480, w+60, 40);
+    [loginBtn setTitle:@"* 如果您已经使用过了TESLARIA服务，则应返回以使用该账号登录。*" forState:UIControlStateNormal];
+    [loginBtn setTitleColor:RGB(70, 219, 254) forState:UIControlStateNormal];
+    loginBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    loginBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+    [_inputPannel addSubview:loginBtn];
+    [loginBtn addTarget:self
+                    action:@selector(loginBtnAction:)
+          forControlEvents:UIControlEventTouchUpInside];
+    
+//    UILabel *tL6 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+506, w, 40)];
+//    tL6.text = @"*如果您已经使用过了 TESLARIA 服务， 则应返回以使用该账号登录。 *";
+//    tL6.textColor = RGB(70, 219, 254);
+//    tL6.font = [UIFont boldSystemFontOfSize:12];
+//    [_inputPannel addSubview:tL6];
+}
+- (void) loginBtnAction:(id) sender {
+    LoginViewController *ctrl = [[LoginViewController alloc] init];
+    
+    [self.navigationController pushViewController:ctrl animated:YES];
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
