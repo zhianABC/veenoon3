@@ -59,6 +59,7 @@
         SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(startX-33, startH+30, 120, 120)];
         UIImage *image = [UIImage imageNamed:@"yinpinchuli_anniu.png"];
         [btn changeButtonBackgroundImage:image];
+        
         [self addSubview:btn];
         
         gaotongL = [[UILabel alloc] init];
@@ -92,6 +93,8 @@
         [self addSubview:addLabel2];
         
         SlideButton *btn2 = [[SlideButton alloc] initWithFrame:CGRectMake(startX-33+gap, startH+30, 120, 120)];
+        UIImage *image2 = [UIImage imageNamed:@"yinpinchuli_anniu.png"];
+        [btn2 changeButtonBackgroundImage:image2];
         [self addSubview:btn2];
         
         gaotongL2 = [[UILabel alloc] init];

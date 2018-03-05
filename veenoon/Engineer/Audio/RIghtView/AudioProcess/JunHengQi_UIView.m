@@ -53,6 +53,8 @@
         [self addSubview:addLabel];
         
         SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(startX-33, startH+30, 120, 120)];
+        UIImage *image = [UIImage imageNamed:@"yinpinchuli_anniu.png"];
+        [btn changeButtonBackgroundImage:image];
         [self addSubview:btn];
         
         gaotongL = [[UILabel alloc] init];
