@@ -502,7 +502,6 @@
 		EB795B652042E8A1005D1F47 /* ZiDongHunYin_UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB795B642042E8A1005D1F47 /* ZiDongHunYin_UIView.m */; };
 		EB795B682042E8C1005D1F47 /* XinHaoFaShengQi_UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB795B672042E8C1005D1F47 /* XinHaoFaShengQi_UIView.m */; };
 		EB795B6B2042E8D3005D1F47 /* DianPing_UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB795B6A2042E8D3005D1F47 /* DianPing_UIView.m */; };
-		EB795B6E2042E905005D1F47 /* JuZhenLuYou_UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB795B6D2042E905005D1F47 /* JuZhenLuYou_UIView.m */; };
 		EB795B702042F1E0005D1F47 /* audio_icon.plist in Resources */ = {isa = PBXBuildFile; fileRef = EB795B6F2042F1DF005D1F47 /* audio_icon.plist */; };
 		EB795B722042F574005D1F47 /* a_usb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB795B712042F574005D1F47 /* a_usb@2x.png */; };
 		EB795B742042F5E4005D1F47 /* a_sd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB795B732042F5E4005D1F47 /* a_sd@2x.png */; };
@@ -1399,8 +1398,6 @@
 		EB795B672042E8C1005D1F47 /* XinHaoFaShengQi_UIView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XinHaoFaShengQi_UIView.m; sourceTree = "<group>"; };
 		EB795B692042E8D3005D1F47 /* DianPing_UIView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DianPing_UIView.h; sourceTree = "<group>"; };
 		EB795B6A2042E8D3005D1F47 /* DianPing_UIView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DianPing_UIView.m; sourceTree = "<group>"; };
-		EB795B6C2042E905005D1F47 /* JuZhenLuYou_UIView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JuZhenLuYou_UIView.h; sourceTree = "<group>"; };
-		EB795B6D2042E905005D1F47 /* JuZhenLuYou_UIView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JuZhenLuYou_UIView.m; sourceTree = "<group>"; };
 		EB795B6F2042F1DF005D1F47 /* audio_icon.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = audio_icon.plist; sourceTree = "<group>"; };
 		EB795B712042F574005D1F47 /* a_usb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "a_usb@2x.png"; sourceTree = "<group>"; };
 		EB795B732042F5E4005D1F47 /* a_sd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "a_sd@2x.png"; sourceTree = "<group>"; };
@@ -2828,8 +2825,6 @@
 				EB795B672042E8C1005D1F47 /* XinHaoFaShengQi_UIView.m */,
 				EB795B692042E8D3005D1F47 /* DianPing_UIView.h */,
 				EB795B6A2042E8D3005D1F47 /* DianPing_UIView.m */,
-				EB795B6C2042E905005D1F47 /* JuZhenLuYou_UIView.h */,
-				EB795B6D2042E905005D1F47 /* JuZhenLuYou_UIView.m */,
 				3454276D2046DED100E1A436 /* FilterGraphView.swift */,
 				3454276F2046DEE800E1A436 /* LimiterView.swift */,
 				3454276C2046DED000E1A436 /* veenoon-Bridging-Header.h */,
@@ -3515,7 +3510,6 @@
 				EB1717931FF5E6B600CBDB81 /* EngineerTouYingJiViewCtrl.m in Sources */,
 				EBC71B23203F011E00DD0A98 /* AirConditionRightView.m in Sources */,
 				341F0F471EC2FC500027C800 /* WSCode.m in Sources */,
-				EB795B6E2042E905005D1F47 /* JuZhenLuYou_UIView.m in Sources */,
 				04DE1EAD1AD6AEE000D49E2F /* SDWebImageCompat.m in Sources */,
 				34DC473F1FD6984400ACB589 /* ColumnView.m in Sources */,
 				EBAE5BB71FDFFBD700C10C4D /* EngineerScenarioListViewCtrl.m in Sources */,
