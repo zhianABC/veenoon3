@@ -8,7 +8,7 @@
 #import "UserYouXianViewController.h"
 #import "CustomPickerView.h"
 
-@interface UserYouXianViewController () {
+@interface UserYouXianViewController ()<CustomPickerViewDelegate> {
     UIButton *_zhuximoshiBtn;
     UIButton *_luntimoshiBtn;
     UIButton *_shenqingmoshiBtn;
@@ -85,8 +85,8 @@
     [_zhuximoshiBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
     [_zhuximoshiBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _zhuximoshiBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_zhuximoshiBtn setTitleEdgeInsets:UIEdgeInsetsMake(_zhuximoshiBtn.imageView.frame.size.height+50,-80,-20,10)];
-    [_zhuximoshiBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_zhuximoshiBtn.titleLabel.bounds.size.height, 0)];
+    [_zhuximoshiBtn setTitleEdgeInsets:UIEdgeInsetsMake(_zhuximoshiBtn.imageView.frame.size.height+50,-90,-20,-20)];
+    [_zhuximoshiBtn setImageEdgeInsets:UIEdgeInsetsMake(-35.0,0.0,_zhuximoshiBtn.titleLabel.bounds.size.height, 0)];
     [_zhuximoshiBtn addTarget:self action:@selector(zhuxiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_zhuximoshiBtn];
     
@@ -96,6 +96,8 @@
     [_peoplePicker1 selectRow:0 inComponent:0];
     _peoplePicker1._selectColor = RGB(230, 151, 50);
     _peoplePicker1._rowNormalColor = SINGAL_COLOR;
+    _peoplePicker1.hidden=YES;
+    _peoplePicker1.delegate_=self;
     
     _luntimoshiBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _luntimoshiBtn.frame = CGRectMake(leftRight+rowGap+cellWidth, height, cellWidth, cellHeight);
@@ -105,7 +107,7 @@
     [_luntimoshiBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
     [_luntimoshiBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _luntimoshiBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_luntimoshiBtn setTitleEdgeInsets:UIEdgeInsetsMake(_luntimoshiBtn.imageView.frame.size.height+50,-75,-20,5)];
+    [_luntimoshiBtn setTitleEdgeInsets:UIEdgeInsetsMake(_luntimoshiBtn.imageView.frame.size.height+50,-70,-20,-5)];
     [_luntimoshiBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_luntimoshiBtn.titleLabel.bounds.size.height, 0)];
     [_luntimoshiBtn addTarget:self action:@selector(luntiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_luntimoshiBtn];
@@ -116,6 +118,8 @@
     [_peoplePicker2 selectRow:0 inComponent:0];
     _peoplePicker2._selectColor = RGB(230, 151, 50);
     _peoplePicker2._rowNormalColor = SINGAL_COLOR;
+    _peoplePicker2.hidden=YES;
+    _peoplePicker2.delegate_=self;
     
     _shenqingmoshiBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _shenqingmoshiBtn.frame = CGRectMake(leftRight+rowGap*2+cellWidth*2, height, cellWidth, cellHeight);
@@ -125,7 +129,7 @@
     [_shenqingmoshiBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
     [_shenqingmoshiBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _shenqingmoshiBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_shenqingmoshiBtn setTitleEdgeInsets:UIEdgeInsetsMake(_shenqingmoshiBtn.imageView.frame.size.height+50,-75,-20,5)];
+    [_shenqingmoshiBtn setTitleEdgeInsets:UIEdgeInsetsMake(_shenqingmoshiBtn.imageView.frame.size.height+50,-70,-20,-5)];
     [_shenqingmoshiBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_shenqingmoshiBtn.titleLabel.bounds.size.height, 0)];
     [_shenqingmoshiBtn addTarget:self action:@selector(shenqingAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_shenqingmoshiBtn];
@@ -136,6 +140,8 @@
     [_peoplePicker3 selectRow:0 inComponent:0];
     _peoplePicker3._selectColor = RGB(230, 151, 50);
     _peoplePicker3._rowNormalColor = SINGAL_COLOR;
+    _peoplePicker3.hidden=YES;
+    _peoplePicker3.delegate_=self;
     
     _ziyoumoshiBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _ziyoumoshiBtn.frame = CGRectMake(leftRight+rowGap*3+cellWidth*3, height, cellWidth, cellHeight);
@@ -145,42 +151,97 @@
     [_ziyoumoshiBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
     [_ziyoumoshiBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _ziyoumoshiBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_ziyoumoshiBtn setTitleEdgeInsets:UIEdgeInsetsMake(_ziyoumoshiBtn.imageView.frame.size.height+50,-75,-20,5)];
+    [_ziyoumoshiBtn setTitleEdgeInsets:UIEdgeInsetsMake(_ziyoumoshiBtn.imageView.frame.size.height+50,-70,-20,-5)];
     [_ziyoumoshiBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_ziyoumoshiBtn.titleLabel.bounds.size.height, 0)];
     [_ziyoumoshiBtn addTarget:self action:@selector(ziyouAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_ziyoumoshiBtn];
     
     _peoplePicker4 = [[CustomPickerView alloc] initWithFrame:CGRectMake(leftRight+rowGap*3+cellWidth*3+pickerRowLeft, height+pickerHeight, 100, 120) withGrayOrLight:@"gray"];
-    _peoplePicker4._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
+    _peoplePicker4._pickerDataArray = @[@{@"values":@[@"   12  ",@"  10  ",@"  09  "]}];
     [self.view addSubview:_peoplePicker4];
     [_peoplePicker4 selectRow:0 inComponent:0];
     _peoplePicker4._selectColor = RGB(230, 151, 50);
     _peoplePicker4._rowNormalColor = SINGAL_COLOR;
+    _peoplePicker4.hidden=YES;
+    _peoplePicker4.delegate_=self;
 }
 
 - (void) zhuxiAction:(id)sender{
+    [_zhuximoshiBtn setImage:[UIImage imageNamed:@"zhuximoshi_s.png"] forState:UIControlStateNormal];
+    [_zhuximoshiBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
+    [_luntimoshiBtn setImage:[UIImage imageNamed:@"luntimoshi_n.png"] forState:UIControlStateNormal];
+    [_luntimoshiBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
+    [_shenqingmoshiBtn setImage:[UIImage imageNamed:@"shenqingmoshi_n.png"] forState:UIControlStateNormal];
+    [_shenqingmoshiBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
+    [_ziyoumoshiBtn setImage:[UIImage imageNamed:@"ziyoumoshi_n.png"] forState:UIControlStateNormal];
+    [_ziyoumoshiBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
     
+    _peoplePicker1.hidden=NO;
+    _peoplePicker2.hidden=YES;
+    _peoplePicker3.hidden=YES;
+    _peoplePicker4.hidden=YES;
 }
 
 - (void) luntiAction:(id)sender{
+    [_zhuximoshiBtn setImage:[UIImage imageNamed:@"zhuximoshi_n.png"] forState:UIControlStateNormal];
+    [_zhuximoshiBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
+    [_luntimoshiBtn setImage:[UIImage imageNamed:@"luntimoshi_s.png"] forState:UIControlStateNormal];
+    [_luntimoshiBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
+    [_shenqingmoshiBtn setImage:[UIImage imageNamed:@"shenqingmoshi_n.png"] forState:UIControlStateNormal];
+    [_shenqingmoshiBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
+    [_ziyoumoshiBtn setImage:[UIImage imageNamed:@"ziyoumoshi_n.png"] forState:UIControlStateNormal];
+    [_ziyoumoshiBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
     
+    _peoplePicker1.hidden=YES;
+    _peoplePicker2.hidden=NO;
+    _peoplePicker3.hidden=YES;
+    _peoplePicker4.hidden=YES;
 }
 
 - (void) shenqingAction:(id)sender{
+    [_zhuximoshiBtn setImage:[UIImage imageNamed:@"zhuximoshi_n.png"] forState:UIControlStateNormal];
+    [_zhuximoshiBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
+    [_luntimoshiBtn setImage:[UIImage imageNamed:@"luntimoshi_n.png"] forState:UIControlStateNormal];
+    [_luntimoshiBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
+    [_shenqingmoshiBtn setImage:[UIImage imageNamed:@"shenqingmoshi_s.png"] forState:UIControlStateNormal];
+    [_shenqingmoshiBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
+    [_ziyoumoshiBtn setImage:[UIImage imageNamed:@"ziyoumoshi_n.png"] forState:UIControlStateNormal];
+    [_ziyoumoshiBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
     
+    _peoplePicker1.hidden=YES;
+    _peoplePicker2.hidden=YES;
+    _peoplePicker3.hidden=NO;
+    _peoplePicker4.hidden=YES;
 }
 
 - (void) ziyouAction:(id)sender{
+    [_zhuximoshiBtn setImage:[UIImage imageNamed:@"zhuximoshi_n.png"] forState:UIControlStateNormal];
+    [_zhuximoshiBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
+    [_luntimoshiBtn setImage:[UIImage imageNamed:@"luntimoshi_n.png"] forState:UIControlStateNormal];
+    [_luntimoshiBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
+    [_shenqingmoshiBtn setImage:[UIImage imageNamed:@"shenqingmoshi_n.png"] forState:UIControlStateNormal];
+    [_shenqingmoshiBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
+    [_ziyoumoshiBtn setImage:[UIImage imageNamed:@"ziyoumoshi_s.png"] forState:UIControlStateNormal];
+    [_ziyoumoshiBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
     
+    _peoplePicker1.hidden=YES;
+    _peoplePicker2.hidden=YES;
+    _peoplePicker3.hidden=YES;
+    _peoplePicker4.hidden=NO;
 }
 
 - (void) okAction:(id)sender{
-    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void) cancelAction:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
+- (void) didConfirmPickerValue:(NSString*) pickerValue {
+    _peoplePicker1.hidden=YES;
+    _peoplePicker2.hidden=YES;
+    _peoplePicker3.hidden=YES;
+    _peoplePicker4.hidden=YES;
+}
 @end

@@ -112,7 +112,7 @@
     
     
     UIButton *zhitongBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
-    zhitongBtn.frame = CGRectMake(CGRectGetMaxX(qidongshijian.frame) - 85, CGRectGetMaxY(qidongshijian.frame) + 35, 50, 30);
+    zhitongBtn.frame = CGRectMake(contentView.frame.size.width/2 - 25, contentView.frame.size.height - 40, 50, 30);
     zhitongBtn.layer.cornerRadius = 5;
     zhitongBtn.layer.borderWidth = 2;
     zhitongBtn.layer.borderColor = [UIColor clearColor].CGColor;;

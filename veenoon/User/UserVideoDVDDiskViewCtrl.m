@@ -67,7 +67,7 @@
     
     
     UIButton *lastVideoUpBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
-    lastVideoUpBtn.frame = CGRectMake(430, SCREEN_HEIGHT-500, 80, 80);
+    lastVideoUpBtn.frame = CGRectMake(390, SCREEN_HEIGHT-500, 80, 80);
     lastVideoUpBtn.layer.cornerRadius = 5;
     lastVideoUpBtn.layer.borderWidth = 2;
     lastVideoUpBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -81,7 +81,7 @@
      forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *okPlayerBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
-    okPlayerBtn.frame = CGRectMake(515, SCREEN_HEIGHT-500, 80, 80);
+    okPlayerBtn.frame = CGRectMake(475, SCREEN_HEIGHT-500, 80, 80);
     okPlayerBtn.layer.cornerRadius = 5;
     okPlayerBtn.layer.borderWidth = 2;
     okPlayerBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -96,7 +96,7 @@
              forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *volumnUpBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
-    volumnUpBtn.frame = CGRectMake(515, SCREEN_HEIGHT-585, 80, 80);
+    volumnUpBtn.frame = CGRectMake(475, SCREEN_HEIGHT-585, 80, 80);
     volumnUpBtn.layer.cornerRadius = 5;
     volumnUpBtn.layer.borderWidth = 2;
     volumnUpBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -110,7 +110,7 @@
              forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *nextPlayBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
-    nextPlayBtn.frame = CGRectMake(600, SCREEN_HEIGHT-500, 80, 80);
+    nextPlayBtn.frame = CGRectMake(560, SCREEN_HEIGHT-500, 80, 80);
     nextPlayBtn.layer.cornerRadius = 5;
     nextPlayBtn.layer.borderWidth = 2;
     nextPlayBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -124,7 +124,7 @@
           forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *volumnDownBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
-    volumnDownBtn.frame = CGRectMake(515, SCREEN_HEIGHT-415, 80, 80);
+    volumnDownBtn.frame = CGRectMake(475, SCREEN_HEIGHT-415, 80, 80);
     volumnDownBtn.layer.cornerRadius = 5;
     volumnDownBtn.layer.borderWidth = 2;
     volumnDownBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -191,7 +191,17 @@
     
 }
 - (void) okPlayerAction:(id)sender{
+    if (isplay) {
+        isplay = NO;
+    } else {
+        isplay = YES;
+    }
     
+    if (isplay) {
+        [_playOrHold setImage:[UIImage imageNamed:@"audio_player_play.png"] forState:UIControlStateNormal];
+    } else {
+        [_playOrHold setImage:[UIImage imageNamed:@"audio_player_hold.png"] forState:UIControlStateNormal];
+    }
 }
 
 - (void) lastVideoUpBtnAction:(id)sender{

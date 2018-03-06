@@ -51,7 +51,7 @@
     bottomBar.image = [UIImage imageNamed:@"user_botom_Line.png"];
     
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    
+    cancelBtn.frame = CGRectMake(0, 0,160, 50);
     [bottomBar addSubview:cancelBtn];
     [cancelBtn setTitle:@"返回" forState:UIControlStateNormal];
     [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -532,7 +532,7 @@
 
 
 - (void) okAction:(id)sender{
-    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void) cancelAction:(id)sender{

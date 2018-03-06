@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "APBaseView.h"
 
-@interface ZiDongHunYin_UIView : UIView
+@interface ZiDongHunYin_UIView : APBaseView
 
 @end

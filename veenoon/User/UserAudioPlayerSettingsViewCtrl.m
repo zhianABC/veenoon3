@@ -99,7 +99,7 @@
     _nextSing.center = CGPointMake(SCREEN_WIDTH/2 + 100, height);
     [_nextSing setImage:[UIImage imageNamed:@"audio_player_next_n.png"] forState:UIControlStateNormal];
     [_nextSing setImage:[UIImage imageNamed:@"audio_player_next_s.png"] forState:UIControlStateHighlighted];
-    [_nextSing addTarget:self action:@selector(addAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_nextSing addTarget:self action:@selector(nextSingAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_nextSing];
     
     _volumnAdd = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -107,7 +107,7 @@
     _volumnAdd.center = CGPointMake(SCREEN_WIDTH/2 + 200, height);
     [_volumnAdd setImage:[UIImage imageNamed:@"audio_layer_next_n.png"] forState:UIControlStateNormal];
     [_volumnAdd setImage:[UIImage imageNamed:@"audio_layer_next_s.png"] forState:UIControlStateHighlighted];
-    [_volumnAdd addTarget:self action:@selector(addAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_volumnAdd addTarget:self action:@selector(volumnAddAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_volumnAdd];
     
     playerIndicator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"audio_player_title_n.png"]];
@@ -141,8 +141,12 @@
     
 }
 
-- (void) okAction:(id)sender{
+- (void) volumnAddAction:(id)sender{
     
+}
+
+- (void) okAction:(id)sender{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void) cancelAction:(id)sender{

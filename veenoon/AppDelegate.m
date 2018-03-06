@@ -11,7 +11,7 @@
 #import "CMNavigationController.h"
 #import "WellcomeViewController.h"
 #import "HomeViewController.h"
-#import "EngineerPresetScenarioViewCtrl.h"
+#import "WellcomeViewController.h"
 
 @interface AppDelegate ()
 {

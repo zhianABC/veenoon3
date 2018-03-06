@@ -51,7 +51,7 @@
     [login setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [login setTitleColor:RGB(1, 138, 182) forState:UIControlStateHighlighted];
     login.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-    login.center = CGPointMake(SCREEN_WIDTH/2-150, CGRectGetMaxY(icon.frame)+140);
+    login.center = CGPointMake(SCREEN_WIDTH/2-150, CGRectGetMaxY(icon.frame)+20);
 
     [login addTarget:self
               action:@selector(loginAction:)
@@ -68,7 +68,7 @@
     [signup setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [signup setTitleColor:RGB(1, 138, 182) forState:UIControlStateHighlighted];
     signup.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-    signup.center = CGPointMake(SCREEN_WIDTH/2+150, CGRectGetMaxY(icon.frame)+140);
+    signup.center = CGPointMake(SCREEN_WIDTH/2+150, CGRectGetMaxY(icon.frame)+20);
 
     [signup addTarget:self
               action:@selector(signupAction:)
