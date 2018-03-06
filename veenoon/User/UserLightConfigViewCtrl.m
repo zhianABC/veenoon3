@@ -101,8 +101,8 @@
     [_houpaidengdai1Slider setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
     _houpaidengdai1Slider.topEdge = 60;
     _houpaidengdai1Slider.bottomEdge = 55;
-    _houpaidengdai1Slider.maxValue = 20;
-    _houpaidengdai1Slider.minValue = -20;
+    _houpaidengdai1Slider.maxValue = 100;
+    _houpaidengdai1Slider.minValue = 0;
     [_houpaidengdai1Slider resetScale];
     _houpaidengdai1Slider.center = CGPointMake(sliderLeftRight+rowGap, sliderHeight);
     
@@ -126,8 +126,8 @@
     [_houpaidengdai2Slider setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
     _houpaidengdai2Slider.topEdge = 60;
     _houpaidengdai2Slider.bottomEdge = 55;
-    _houpaidengdai2Slider.maxValue = 20;
-    _houpaidengdai2Slider.minValue = -20;
+    _houpaidengdai2Slider.maxValue = 100;
+    _houpaidengdai2Slider.minValue = 0;
     [_houpaidengdai2Slider resetScale];
     _houpaidengdai2Slider.center = CGPointMake(sliderLeftRight+rowGap*2, sliderHeight);
     
@@ -151,8 +151,8 @@
     [_dingdengSlider setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
     _dingdengSlider.topEdge = 60;
     _dingdengSlider.bottomEdge = 55;
-    _dingdengSlider.maxValue = 20;
-    _dingdengSlider.minValue = -20;
+    _dingdengSlider.maxValue = 100;
+    _dingdengSlider.minValue = 0;
     [_dingdengSlider resetScale];
     _dingdengSlider.center = CGPointMake(sliderLeftRight+rowGap*3, sliderHeight);
     
@@ -176,8 +176,8 @@
     [_xiaoshengdengSlider setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
     _xiaoshengdengSlider.topEdge = 60;
     _xiaoshengdengSlider.bottomEdge = 55;
-    _xiaoshengdengSlider.maxValue = 20;
-    _xiaoshengdengSlider.minValue = -20;
+    _xiaoshengdengSlider.maxValue = 100;
+    _xiaoshengdengSlider.minValue = 0;
     [_xiaoshengdengSlider resetScale];
     _xiaoshengdengSlider.center = CGPointMake(sliderLeftRight+rowGap*4, sliderHeight);
     
@@ -201,8 +201,8 @@
     [_bidengSlider setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
     _bidengSlider.topEdge = 60;
     _bidengSlider.bottomEdge = 55;
-    _bidengSlider.maxValue = 20;
-    _bidengSlider.minValue = -20;
+    _bidengSlider.maxValue = 100;
+    _bidengSlider.minValue = 0;
     [_bidengSlider resetScale];
     _bidengSlider.center = CGPointMake(sliderLeftRight+rowGap*5, sliderHeight);
     
@@ -226,8 +226,8 @@
     [_tongdengSlider setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
     _tongdengSlider.topEdge = 60;
     _tongdengSlider.bottomEdge = 55;
-    _tongdengSlider.maxValue = 20;
-    _tongdengSlider.minValue = -20;
+    _tongdengSlider.maxValue = 100;
+    _tongdengSlider.minValue = 0;
     [_tongdengSlider resetScale];
     _tongdengSlider.center = CGPointMake(sliderLeftRight+rowGap*6, sliderHeight);
 }
@@ -330,7 +330,7 @@
 }
 
 - (void) okAction:(id)sender{
-    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void) cancelAction:(id)sender{

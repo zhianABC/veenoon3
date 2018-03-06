@@ -35,11 +35,7 @@
                                     nil];
         NSMutableDictionary *dic4 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"4", @"name",
                                     nil];
-        NSMutableDictionary *dic5 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"5", @"name",
-                                     nil];
-        NSMutableDictionary *dic6 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"6", @"name",
-                                     nil];
-        self._cameraArray = [NSMutableArray arrayWithObjects:dic1, dic2, dic3, dic4, dic5, dic6, nil];
+        self._cameraArray = [NSMutableArray arrayWithObjects:dic1, dic2, dic3, dic4, nil];
     }
 }
 - (void)viewDidLoad {
@@ -406,9 +402,7 @@
     UIScrollView *scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(leftRight, labelHeight+40, 255, 70)];
     scroolView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:scroolView];
-    int rowNumber = [_cameraArray count] / 4 + 1;
-    int sizeHeight = rowNumber * (60 + 5);
-    scroolView.contentSize = CGSizeMake(255, sizeHeight);
+    scroolView.contentSize = CGSizeMake(255, 70);
     int index = 0;
     for (id dic in _cameraArray) {
         int row = index/4;
@@ -529,7 +523,7 @@
 }
 - (void) cameraBtnAction:(id) sender {
     UIButton *btn = (UIButton*) sender;
-    int tag = btn.tag;
+    int tag = (int) btn.tag;
     btn.selected = YES;
     btn.highlighted = YES;
     for (UIButton *button in self._cameraBtnArray) {

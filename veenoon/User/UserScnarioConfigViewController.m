@@ -87,7 +87,7 @@
     [_videoSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_videoSysBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _videoSysBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_videoSysBtn setTitleEdgeInsets:UIEdgeInsetsMake(_videoSysBtn.imageView.frame.size.height+10,-80,-20,-20)];
+    [_videoSysBtn setTitleEdgeInsets:UIEdgeInsetsMake(_videoSysBtn.imageView.frame.size.height+10,-90,-20,-20)];
     [_videoSysBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_videoSysBtn.titleLabel.bounds.size.height, 0)];
     [_videoSysBtn addTarget:self action:@selector(videoSysAction:) forControlEvents:UIControlEventTouchUpInside];
     [_botomView addSubview:_videoSysBtn];
