@@ -10,18 +10,32 @@
 #import "CustomPickerView.h"
 #import "UIButton+Color.h"
 #import "EngineerPresetScenarioViewCtrl.h"
+#import "SIconSelectView.h"
 
-@interface EngineerScenarioListViewCtrl () {
+@interface EngineerScenarioListViewCtrl () <SIconSelectViewDelegate>
+{
     
+    UIScrollView *scroolView;
+    SIconSelectView *_settingview;
 }
+@property (nonatomic, strong) NSMutableArray *_sBtns;
+@property (nonatomic, strong) NSMutableDictionary *_map;
+
 @end
 
 @implementation EngineerScenarioListViewCtrl
 @synthesize _meetingRoomDic;
+@synthesize _sBtns;
+@synthesize _map;
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self initData];
+    
+    self._sBtns = [NSMutableArray array];
+    self._map = [NSMutableDictionary dictionary];
     
     UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
     [self.view addSubview:titleIcon];
@@ -47,7 +61,10 @@
     
     NSMutableArray *scenarioArray = [_meetingRoomDic objectForKey:@"scenarioArray"];
     
-    UIScrollView *scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(portDNSLabel.frame) + 20, SCREEN_WIDTH, SCREEN_HEIGHT-(CGRectGetMaxY(portDNSLabel.frame) + 20))];
+    scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,
+                                                                CGRectGetMaxY(portDNSLabel.frame) + 20,
+                                                                SCREEN_WIDTH,
+                                                                SCREEN_HEIGHT-(CGRectGetMaxY(portDNSLabel.frame) + 20))];
     scroolView.userInteractionEnabled=YES;
     scroolView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:scroolView];
@@ -80,6 +97,7 @@
         int startY = row*cellHeight+space*row+top;
         
         if (arraySize == index+1) {
+            
             UIButton *scenarioBtn = [UIButton buttonWithColor:nil selColor:RGB(0, 89, 118)];
             scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
             scenarioBtn.layer.cornerRadius = 5;
@@ -95,6 +113,7 @@
                             action:@selector(addAction:)
                   forControlEvents:UIControlEventTouchUpInside];
         } else {
+            
             UIButton *scenarioBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(242, 148, 20)];
             scenarioBtn.tag = index;
             scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
@@ -105,6 +124,8 @@
             [scenarioBtn setTitle:[dic objectForKey:@"scenarioName"] forState:UIControlStateNormal];
             [scenarioBtn setTitle:[dic objectForKey:@"scenarioName"] forState:UIControlStateHighlighted];
             [scroolView addSubview:scenarioBtn];
+            
+            [_sBtns addObject:scenarioBtn];
             
             [scenarioBtn addTarget:self
                             action:@selector(scenarioAction:)
@@ -144,9 +165,19 @@
     [okBtn addTarget:self
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
+    
+    _settingview = [[SIconSelectView alloc]
+           initWithFrame:CGRectMake(SCREEN_WIDTH-310,
+                                    64, 310, SCREEN_HEIGHT-114)];
+    _settingview.delegate = self;
+    
+    
+    
 }
 
 - (void) okAction:(id)sender{
+    
+    [self.view addSubview:_settingview];
     
 }
 
@@ -164,13 +195,56 @@
 
 - (void) scenarioAction:(id)sender{
     UIButton *btn = (UIButton*) sender;
-    int tag = btn.tag;
-    int count = [[self._meetingRoomDic objectForKey:@"scenarioArray"] count];
+    int tag = (int)btn.tag;
+    int count = (int)[[self._meetingRoomDic objectForKey:@"scenarioArray"] count];
     if (tag+1 == count) {
         EngineerPresetScenarioViewCtrl *ctrl = [[EngineerPresetScenarioViewCtrl alloc] init];
         ctrl._meetingRoomDic = self._meetingRoomDic;
         [self.navigationController pushViewController:ctrl animated:YES];
     }
+}
+
+- (void) didMoveDragingElecCell:(NSDictionary *)data pt:(CGPoint)pt{
+    
+ //   CGPoint viewPoint = [self.view convertPoint:pt fromView:_settingview];
+    
+//    CGRect rc = _settingview.frame;
+//
+//    if(viewPoint.x < rc.origin.x && !_settingview.hidden )
+//    {
+//
+//        //rc.origin.x = SCREEN_WIDTH;
+//        [UIView beginAnimations:nil context:nil];
+//        //_settingview.hidden = YES;
+//        [UIView commitAnimations];
+//    }
+    
+}
+
+- (void) didEndDragingElecCell:(NSDictionary *)data pt:(CGPoint)pt{
+    
+    CGPoint viewPoint = [self.view convertPoint:pt fromView:_settingview];
+    
+//    viewPoint.x -= CGRectGetMinX(scroolView.frame);
+//    viewPoint.y -= CGRectGetMinY(scroolView.frame);
+//
+    NSString *imageName = [data objectForKey:@"iconbig"];
+    UIImage *img = [UIImage imageNamed:imageName];
+    if(img) {
+        for (UIButton *button in _sBtns) {
+            
+            CGRect rect = [self.view convertRect:button.frame fromView:scroolView];
+            if (CGRectContainsPoint(rect, viewPoint)) {
+                
+                [_map setObject:data forKey:[NSNumber numberWithInteger:button.tag]];
+                
+                [button setBackgroundImage:img
+                                  forState:UIControlStateNormal];
+                [button setTitle:@"" forState:UIControlStateNormal];
+            }
+        }
+    }
+    
 }
 
 -(void) initData {
