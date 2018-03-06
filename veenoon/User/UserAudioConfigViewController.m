@@ -50,10 +50,10 @@
     line.backgroundColor = RGB(83, 78, 75);
     [self.view addSubview:line];
     
-    int leftRight = 70;
+    int leftRight = 80;
     int number = 8;
-    int height = 200;
-    int rowGap = 130;
+    int height = 150;
+    int rowGap = 115;
     int width = (SCREEN_WIDTH - leftRight*2) / number;
     
     _cdPlayerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -61,18 +61,19 @@
     [_cdPlayerBtn setImage:[UIImage imageNamed:@"cd_player_n.png"] forState:UIControlStateNormal];
     [_cdPlayerBtn setImage:[UIImage imageNamed:@"cd_player_s.png"] forState:UIControlStateHighlighted];
     [_cdPlayerBtn setTitle:@"CD播放器" forState:UIControlStateNormal];
+    _cdPlayerBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [_cdPlayerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_cdPlayerBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _cdPlayerBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_cdPlayerBtn setTitleEdgeInsets:UIEdgeInsetsMake(_cdPlayerBtn.imageView.frame.size.height+10,-80,-20,40)];
+    [_cdPlayerBtn setTitleEdgeInsets:UIEdgeInsetsMake(_cdPlayerBtn.imageView.frame.size.height+10,-75,-20, 30)];
     [_cdPlayerBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_cdPlayerBtn.titleLabel.bounds.size.height, 0)];
     [_cdPlayerBtn addTarget:self action:@selector(cdPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
     UILongPressGestureRecognizer *longPress0 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed0:)];
     [_cdPlayerBtn addGestureRecognizer:longPress0];
     [self.view addSubview:_cdPlayerBtn];
     
-    int sliderHeight = 550;
-    int sliderLeftRight = 100;
+    int sliderHeight = 475;
+    int sliderLeftRight = 105;
     
     _cdPlayerSlider = [[JSlideView alloc]
                initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light.png"]
@@ -92,12 +93,13 @@
     [_sdPlayersBtn setImage:[UIImage imageNamed:@"sd_player_n.png"] forState:UIControlStateNormal];
     [_sdPlayersBtn setImage:[UIImage imageNamed:@"sd_player_s.png"] forState:UIControlStateHighlighted];
     [_sdPlayersBtn setTitle:@"SD播放器" forState:UIControlStateNormal];
+    _sdPlayersBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [_sdPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_sdPlayersBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _sdPlayersBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_sdPlayersBtn setTitleEdgeInsets:UIEdgeInsetsMake(_sdPlayersBtn.imageView.frame.size.height+10,-80,-20,40)];
+    [_sdPlayersBtn setTitleEdgeInsets:UIEdgeInsetsMake(_sdPlayersBtn.imageView.frame.size.height+10,-75,-20, 30)];
     [_sdPlayersBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_sdPlayersBtn.titleLabel.bounds.size.height, 0)];
-    [_sdPlayersBtn addTarget:self action:@selector(houpaibideng1Action:) forControlEvents:UIControlEventTouchUpInside];
+    [_sdPlayersBtn addTarget:self action:@selector(sdPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
     UILongPressGestureRecognizer *longPress1 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed1:)];
     [_sdPlayersBtn addGestureRecognizer:longPress1];
     [self.view addSubview:_sdPlayersBtn];
@@ -119,12 +121,13 @@
     [_usbPlayersBtn setImage:[UIImage imageNamed:@"usb_player_n.png"] forState:UIControlStateNormal];
     [_usbPlayersBtn setImage:[UIImage imageNamed:@"usb_player_s.png"] forState:UIControlStateHighlighted];
     [_usbPlayersBtn setTitle:@"USB播放器" forState:UIControlStateNormal];
+    _usbPlayersBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [_usbPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_usbPlayersBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _usbPlayersBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_usbPlayersBtn setTitleEdgeInsets:UIEdgeInsetsMake(_usbPlayersBtn.imageView.frame.size.height+10,-90,-20,25)];
+    [_usbPlayersBtn setTitleEdgeInsets:UIEdgeInsetsMake(_usbPlayersBtn.imageView.frame.size.height+10,-60,-20,30)];
     [_usbPlayersBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_usbPlayersBtn.titleLabel.bounds.size.height, 0)];
-    [_usbPlayersBtn addTarget:self action:@selector(houpaibideng2Action:) forControlEvents:UIControlEventTouchUpInside];
+    [_usbPlayersBtn addTarget:self action:@selector(usbPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
     UILongPressGestureRecognizer *longPress2 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed2:)];
     [_usbPlayersBtn addGestureRecognizer:longPress2];
     [self.view addSubview:_usbPlayersBtn];
@@ -146,12 +149,13 @@
     [_wuxianPlayersBtn setImage:[UIImage imageNamed:@"huatong_player_n.png"] forState:UIControlStateNormal];
     [_wuxianPlayersBtn setImage:[UIImage imageNamed:@"huatong_player_s.png"] forState:UIControlStateHighlighted];
     [_wuxianPlayersBtn setTitle:@"无线手持话筒" forState:UIControlStateNormal];
+    _wuxianPlayersBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [_wuxianPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_wuxianPlayersBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _wuxianPlayersBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_wuxianPlayersBtn setTitleEdgeInsets:UIEdgeInsetsMake(_wuxianPlayersBtn.imageView.frame.size.height+10,-90,-20,25)];
+    [_wuxianPlayersBtn setTitleEdgeInsets:UIEdgeInsetsMake(_wuxianPlayersBtn.imageView.frame.size.height+10,-60,-20,30)];
     [_wuxianPlayersBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_wuxianPlayersBtn.titleLabel.bounds.size.height, 0)];
-    [_wuxianPlayersBtn addTarget:self action:@selector(dingdengAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_wuxianPlayersBtn addTarget:self action:@selector(wuxianPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
     UILongPressGestureRecognizer *longPress3 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed3:)];
     [_wuxianPlayersBtn addGestureRecognizer:longPress3];
     [self.view addSubview:_wuxianPlayersBtn];
@@ -173,12 +177,13 @@
     [_hunyinPlayersBtn setImage:[UIImage imageNamed:@"huiyinhuiyi_player_n.png"] forState:UIControlStateNormal];
     [_hunyinPlayersBtn setImage:[UIImage imageNamed:@"huiyinhuiyi_player_s.png"] forState:UIControlStateHighlighted];
     [_hunyinPlayersBtn setTitle:@"混音会议" forState:UIControlStateNormal];
+    _hunyinPlayersBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [_hunyinPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_hunyinPlayersBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _hunyinPlayersBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_hunyinPlayersBtn setTitleEdgeInsets:UIEdgeInsetsMake(_hunyinPlayersBtn.imageView.frame.size.height+10,-80,-20,30)];
+    [_hunyinPlayersBtn setTitleEdgeInsets:UIEdgeInsetsMake(_hunyinPlayersBtn.imageView.frame.size.height+5,-70,-20,30)];
     [_hunyinPlayersBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_hunyinPlayersBtn.titleLabel.bounds.size.height, 0)];
-    [_hunyinPlayersBtn addTarget:self action:@selector(xiaoshedengAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_hunyinPlayersBtn addTarget:self action:@selector(hunyinPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
     UILongPressGestureRecognizer *longPress4 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed4:)];
     [_hunyinPlayersBtn addGestureRecognizer:longPress4];
     [self.view addSubview:_hunyinPlayersBtn];
@@ -200,12 +205,13 @@
     [_youxianPlayer1Btn setImage:[UIImage imageNamed:@"youxianxitong_player_n.png"] forState:UIControlStateNormal];
     [_youxianPlayer1Btn setImage:[UIImage imageNamed:@"youxianxitong_player_s.png"] forState:UIControlStateHighlighted];
     [_youxianPlayer1Btn setTitle:@"有线系统" forState:UIControlStateNormal];
+    _youxianPlayer1Btn.titleLabel.font = [UIFont systemFontOfSize:15];
     [_youxianPlayer1Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_youxianPlayer1Btn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _youxianPlayer1Btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_youxianPlayer1Btn setTitleEdgeInsets:UIEdgeInsetsMake(_youxianPlayer1Btn.imageView.frame.size.height+10,-90,-20,20)];
+    [_youxianPlayer1Btn setTitleEdgeInsets:UIEdgeInsetsMake(_youxianPlayer1Btn.imageView.frame.size.height+5,-60,-20,30)];
     [_youxianPlayer1Btn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_youxianPlayer1Btn.titleLabel.bounds.size.height, 0)];
-    [_youxianPlayer1Btn addTarget:self action:@selector(bidengAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_youxianPlayer1Btn addTarget:self action:@selector(youxianPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
     UILongPressGestureRecognizer *longPress5 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed5:)];
     [_youxianPlayer1Btn addGestureRecognizer:longPress5];
     [self.view addSubview:_youxianPlayer1Btn];
@@ -227,12 +233,13 @@
     [_youxianPlayer2Btn setImage:[UIImage imageNamed:@"youxianxitong_player_n.png"] forState:UIControlStateNormal];
     [_youxianPlayer2Btn setImage:[UIImage imageNamed:@"youxianxitong_player_s.png"] forState:UIControlStateHighlighted];
     [_youxianPlayer2Btn setTitle:@"有线系统" forState:UIControlStateNormal];
+    _youxianPlayer2Btn.titleLabel.font = [UIFont systemFontOfSize:15];
     [_youxianPlayer2Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_youxianPlayer2Btn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _youxianPlayer2Btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_youxianPlayer2Btn setTitleEdgeInsets:UIEdgeInsetsMake(_youxianPlayer2Btn.imageView.frame.size.height+10,-90,-20,20)];
+    [_youxianPlayer2Btn setTitleEdgeInsets:UIEdgeInsetsMake(_youxianPlayer2Btn.imageView.frame.size.height+5,-60,-20,30)];
     [_youxianPlayer2Btn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_youxianPlayer2Btn.titleLabel.bounds.size.height, 0)];
-    [_youxianPlayer2Btn addTarget:self action:@selector(bidengAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_youxianPlayer2Btn addTarget:self action:@selector(youxianPlayer2Action:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_youxianPlayer2Btn];
     
     _youxianPlayerSlider2 = [[JSlideView alloc]
@@ -251,13 +258,14 @@
     _youxianPlayer3Btn.frame = CGRectMake(leftRight+rowGap*7, height, width, width);
     [_youxianPlayer3Btn setImage:[UIImage imageNamed:@"youxianxitong_player_n.png"] forState:UIControlStateNormal];
     [_youxianPlayer3Btn setImage:[UIImage imageNamed:@"youxianxitong_player_s.png"] forState:UIControlStateHighlighted];
-    [_youxianPlayer3Btn setTitle:@"无线系统" forState:UIControlStateNormal];
+    [_youxianPlayer3Btn setTitle:@"有线系统" forState:UIControlStateNormal];
+    _youxianPlayer3Btn.titleLabel.font = [UIFont systemFontOfSize:15];
     [_youxianPlayer3Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_youxianPlayer3Btn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _youxianPlayer3Btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_youxianPlayer3Btn setTitleEdgeInsets:UIEdgeInsetsMake(_youxianPlayer3Btn.imageView.frame.size.height+10,-90,-20,20)];
+    [_youxianPlayer3Btn setTitleEdgeInsets:UIEdgeInsetsMake(_youxianPlayer3Btn.imageView.frame.size.height+5,-60,-20,30)];
     [_youxianPlayer3Btn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_youxianPlayer3Btn.titleLabel.bounds.size.height, 0)];
-    [_youxianPlayer3Btn addTarget:self action:@selector(airConditionAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_youxianPlayer3Btn addTarget:self action:@selector(youxianPlayer3Action:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_youxianPlayer3Btn];
     
     _wuxianSysPlayerSlider = [[JSlideView alloc]
@@ -301,6 +309,10 @@
     [okBtn addTarget:self
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void) okAction:(id)sender {
+    
 }
 
 - (void) cancelAction:(id)sender{
@@ -383,62 +395,156 @@
         [self.navigationController pushViewController:controller animated:YES];
     }
 }
-
-- (void) wuSysxianPlayerAction:(id)sender{
+- (void) youxianPlayer3Action:(id)sender{
     [_cdPlayerBtn setImage:[UIImage imageNamed:@"cd_player_n.png"] forState:UIControlStateNormal];
+    [_cdPlayerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_sdPlayersBtn setImage:[UIImage imageNamed:@"sd_player_n.png"] forState:UIControlStateNormal];
+    [_sdPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_usbPlayersBtn setImage:[UIImage imageNamed:@"usb_player_n.png"] forState:UIControlStateNormal];
+    [_usbPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_wuxianPlayersBtn setImage:[UIImage imageNamed:@"huatong_player_n.png"] forState:UIControlStateNormal];
+    [_wuxianPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_hunyinPlayersBtn setImage:[UIImage imageNamed:@"huiyinhuiyi_player_n.png"] forState:UIControlStateNormal];
+    [_hunyinPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_youxianPlayer3Btn setImage:[UIImage imageNamed:@"youxianxitong_player_s.png"] forState:UIControlStateNormal];
+    [_youxianPlayer3Btn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
+    [_youxianPlayer1Btn setImage:[UIImage imageNamed:@"youxianxitong_player_n.png"] forState:UIControlStateNormal];
+    [_youxianPlayer1Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_youxianPlayer2Btn setImage:[UIImage imageNamed:@"youxianxitong_player_n.png"] forState:UIControlStateNormal];
+    [_youxianPlayer2Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+}
+- (void) youxianPlayer2Action:(id)sender{
+    [_cdPlayerBtn setImage:[UIImage imageNamed:@"cd_player_n.png"] forState:UIControlStateNormal];
+    [_cdPlayerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_sdPlayersBtn setImage:[UIImage imageNamed:@"sd_player_n.png"] forState:UIControlStateNormal];
+    [_sdPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_usbPlayersBtn setImage:[UIImage imageNamed:@"usb_player_n.png"] forState:UIControlStateNormal];
+    [_usbPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_wuxianPlayersBtn setImage:[UIImage imageNamed:@"huatong_player_n.png"] forState:UIControlStateNormal];
+    [_wuxianPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_hunyinPlayersBtn setImage:[UIImage imageNamed:@"huiyinhuiyi_player_n.png"] forState:UIControlStateNormal];
+    [_hunyinPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_youxianPlayer2Btn setImage:[UIImage imageNamed:@"youxianxitong_player_s.png"] forState:UIControlStateNormal];
+    [_youxianPlayer2Btn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
+    [_youxianPlayer1Btn setImage:[UIImage imageNamed:@"youxianxitong_player_n.png"] forState:UIControlStateNormal];
+    [_youxianPlayer1Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_youxianPlayer3Btn setImage:[UIImage imageNamed:@"youxianxitong_player_n.png"] forState:UIControlStateNormal];
+    [_youxianPlayer3Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 }
 
 - (void) youxianPlayerAction:(id)sender{
     [_cdPlayerBtn setImage:[UIImage imageNamed:@"cd_player_n.png"] forState:UIControlStateNormal];
+    [_cdPlayerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_sdPlayersBtn setImage:[UIImage imageNamed:@"sd_player_n.png"] forState:UIControlStateNormal];
+    [_sdPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_usbPlayersBtn setImage:[UIImage imageNamed:@"usb_player_n.png"] forState:UIControlStateNormal];
+    [_usbPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_wuxianPlayersBtn setImage:[UIImage imageNamed:@"huatong_player_n.png"] forState:UIControlStateNormal];
+    [_wuxianPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_hunyinPlayersBtn setImage:[UIImage imageNamed:@"huiyinhuiyi_player_n.png"] forState:UIControlStateNormal];
+    [_hunyinPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_youxianPlayer1Btn setImage:[UIImage imageNamed:@"youxianxitong_player_s.png"] forState:UIControlStateNormal];
+    [_youxianPlayer1Btn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
+    [_youxianPlayer2Btn setImage:[UIImage imageNamed:@"youxianxitong_player_n.png"] forState:UIControlStateNormal];
+    [_youxianPlayer2Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_youxianPlayer3Btn setImage:[UIImage imageNamed:@"youxianxitong_player_n.png"] forState:UIControlStateNormal];
+    [_youxianPlayer3Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 }
 
 - (void) hunyinPlayerAction:(id)sender{
     [_cdPlayerBtn setImage:[UIImage imageNamed:@"cd_player_n.png"] forState:UIControlStateNormal];
+    [_cdPlayerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_sdPlayersBtn setImage:[UIImage imageNamed:@"sd_player_n.png"] forState:UIControlStateNormal];
+    [_sdPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_usbPlayersBtn setImage:[UIImage imageNamed:@"usb_player_n.png"] forState:UIControlStateNormal];
+    [_usbPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_wuxianPlayersBtn setImage:[UIImage imageNamed:@"huatong_player_n.png"] forState:UIControlStateNormal];
+    [_wuxianPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_hunyinPlayersBtn setImage:[UIImage imageNamed:@"huiyinhuiyi_player_s.png"] forState:UIControlStateNormal];
+    [_hunyinPlayersBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
+    [_youxianPlayer1Btn setImage:[UIImage imageNamed:@"youxianxitong_player_n.png"] forState:UIControlStateNormal];
+    [_youxianPlayer1Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_youxianPlayer2Btn setImage:[UIImage imageNamed:@"youxianxitong_player_n.png"] forState:UIControlStateNormal];
+    [_youxianPlayer2Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_youxianPlayer3Btn setImage:[UIImage imageNamed:@"youxianxitong_player_n.png"] forState:UIControlStateNormal];
+    [_youxianPlayer3Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 }
 
 - (void) wuxianPlayerAction:(id)sender{
     [_cdPlayerBtn setImage:[UIImage imageNamed:@"cd_player_n.png"] forState:UIControlStateNormal];
+    [_cdPlayerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_sdPlayersBtn setImage:[UIImage imageNamed:@"sd_player_n.png"] forState:UIControlStateNormal];
+    [_sdPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_usbPlayersBtn setImage:[UIImage imageNamed:@"usb_player_n.png"] forState:UIControlStateNormal];
+    [_usbPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_wuxianPlayersBtn setImage:[UIImage imageNamed:@"huatong_player_s.png"] forState:UIControlStateNormal];
+    [_wuxianPlayersBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
     [_hunyinPlayersBtn setImage:[UIImage imageNamed:@"huiyinhuiyi_player_n.png"] forState:UIControlStateNormal];
+    [_hunyinPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_youxianPlayer1Btn setImage:[UIImage imageNamed:@"youxianxitong_player_n.png"] forState:UIControlStateNormal];
+    [_youxianPlayer1Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_youxianPlayer2Btn setImage:[UIImage imageNamed:@"youxianxitong_player_n.png"] forState:UIControlStateNormal];
+    [_youxianPlayer2Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_youxianPlayer3Btn setImage:[UIImage imageNamed:@"youxianxitong_player_n.png"] forState:UIControlStateNormal];
+    [_youxianPlayer3Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 }
 
 - (void) usbPlayerAction:(id)sender{
     [_cdPlayerBtn setImage:[UIImage imageNamed:@"cd_player_n.png"] forState:UIControlStateNormal];
+    [_cdPlayerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_sdPlayersBtn setImage:[UIImage imageNamed:@"sd_player_n.png"] forState:UIControlStateNormal];
+    [_sdPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_usbPlayersBtn setImage:[UIImage imageNamed:@"usb_player_s.png"] forState:UIControlStateNormal];
+    [_usbPlayersBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
     [_wuxianPlayersBtn setImage:[UIImage imageNamed:@"huatong_player_n.png"] forState:UIControlStateNormal];
+    [_wuxianPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_hunyinPlayersBtn setImage:[UIImage imageNamed:@"huiyinhuiyi_player_n.png"] forState:UIControlStateNormal];
+    [_hunyinPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_youxianPlayer1Btn setImage:[UIImage imageNamed:@"youxianxitong_player_n.png"] forState:UIControlStateNormal];
+    [_youxianPlayer1Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_youxianPlayer2Btn setImage:[UIImage imageNamed:@"youxianxitong_player_n.png"] forState:UIControlStateNormal];
+    [_youxianPlayer2Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_youxianPlayer3Btn setImage:[UIImage imageNamed:@"youxianxitong_player_n.png"] forState:UIControlStateNormal];
+    [_youxianPlayer3Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 }
 
 - (void) sdPlayerAction:(id)sender{
     [_cdPlayerBtn setImage:[UIImage imageNamed:@"cd_player_n.png"] forState:UIControlStateNormal];
+    [_cdPlayerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_sdPlayersBtn setImage:[UIImage imageNamed:@"sd_player_s.png"] forState:UIControlStateNormal];
+    [_sdPlayersBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
     [_usbPlayersBtn setImage:[UIImage imageNamed:@"usb_player_n.png"] forState:UIControlStateNormal];
+    [_usbPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_wuxianPlayersBtn setImage:[UIImage imageNamed:@"huatong_player_n.png"] forState:UIControlStateNormal];
+    [_wuxianPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_hunyinPlayersBtn setImage:[UIImage imageNamed:@"huiyinhuiyi_player_n.png"] forState:UIControlStateNormal];
+    [_hunyinPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_youxianPlayer1Btn setImage:[UIImage imageNamed:@"youxianxitong_player_n.png"] forState:UIControlStateNormal];
+    [_youxianPlayer1Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_youxianPlayer2Btn setImage:[UIImage imageNamed:@"youxianxitong_player_n.png"] forState:UIControlStateNormal];
+    [_youxianPlayer2Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_youxianPlayer3Btn setImage:[UIImage imageNamed:@"youxianxitong_player_n.png"] forState:UIControlStateNormal];
+    [_youxianPlayer3Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
 }
 
 - (void) cdPlayerAction:(id)sender{
     [_cdPlayerBtn setImage:[UIImage imageNamed:@"cd_player_s.png"] forState:UIControlStateNormal];
+    [_cdPlayerBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
     [_sdPlayersBtn setImage:[UIImage imageNamed:@"sd_player_n.png"] forState:UIControlStateNormal];
+    [_sdPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_usbPlayersBtn setImage:[UIImage imageNamed:@"usb_player_n.png"] forState:UIControlStateNormal];
+    [_usbPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_wuxianPlayersBtn setImage:[UIImage imageNamed:@"huatong_player_n.png"] forState:UIControlStateNormal];
+    [_wuxianPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_hunyinPlayersBtn setImage:[UIImage imageNamed:@"huiyinhuiyi_player_n.png"] forState:UIControlStateNormal];
+    [_hunyinPlayersBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_youxianPlayer1Btn setImage:[UIImage imageNamed:@"youxianxitong_player_n.png"] forState:UIControlStateNormal];
+    [_youxianPlayer1Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_youxianPlayer2Btn setImage:[UIImage imageNamed:@"youxianxitong_player_n.png"] forState:UIControlStateNormal];
+    [_youxianPlayer2Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_youxianPlayer3Btn setImage:[UIImage imageNamed:@"youxianxitong_player_n.png"] forState:UIControlStateNormal];
+    [_youxianPlayer3Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 }
 
 @end
