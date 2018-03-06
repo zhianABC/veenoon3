@@ -515,6 +515,10 @@
 		EB7E815B1FF8C4C90053E5A7 /* info_month_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB7E81551FF8C4C90053E5A7 /* info_month_s@2x.png */; };
 		EB7E815C1FF8C4C90053E5A7 /* info_year_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB7E81561FF8C4C90053E5A7 /* info_year_n@2x.png */; };
 		EB7E815D1FF8C4C90053E5A7 /* info_year_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB7E81571FF8C4C90053E5A7 /* info_year_s@2x.png */; };
+		EB948A49204EE3550018C80A /* JLightSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB948A48204EE3550018C80A /* JLightSliderView.m */; };
+		EB948A4D204EE4660018C80A /* wireless_slide_light_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB948A4A204EE4660018C80A /* wireless_slide_light_n@2x.png */; };
+		EB948A4E204EE4660018C80A /* wireless_slide_light_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB948A4B204EE4660018C80A /* wireless_slide_light_s@2x.png */; };
+		EB948A4F204EE4660018C80A /* v_slider_bg_light2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB948A4C204EE4660018C80A /* v_slider_bg_light2@2x.png */; };
 		EBA16C5F2046EA4F00FC6E1F /* Fenpinqi_UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBA16C5E2046EA4F00FC6E1F /* Fenpinqi_UIView.m */; };
 		EBA16C622046EA6700FC6E1F /* JunHengQi_UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBA16C612046EA6700FC6E1F /* JunHengQi_UIView.m */; };
 		EBA16C652046EA8800FC6E1F /* ZaoShengYaXian_UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBA16C642046EA8800FC6E1F /* ZaoShengYaXian_UIView.m */; };
@@ -1416,6 +1420,11 @@
 		EB7E81551FF8C4C90053E5A7 /* info_month_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info_month_s@2x.png"; sourceTree = "<group>"; };
 		EB7E81561FF8C4C90053E5A7 /* info_year_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info_year_n@2x.png"; sourceTree = "<group>"; };
 		EB7E81571FF8C4C90053E5A7 /* info_year_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info_year_s@2x.png"; sourceTree = "<group>"; };
+		EB948A47204EE3550018C80A /* JLightSliderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JLightSliderView.h; sourceTree = "<group>"; };
+		EB948A48204EE3550018C80A /* JLightSliderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JLightSliderView.m; sourceTree = "<group>"; };
+		EB948A4A204EE4660018C80A /* wireless_slide_light_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wireless_slide_light_n@2x.png"; sourceTree = "<group>"; };
+		EB948A4B204EE4660018C80A /* wireless_slide_light_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wireless_slide_light_s@2x.png"; sourceTree = "<group>"; };
+		EB948A4C204EE4660018C80A /* v_slider_bg_light2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "v_slider_bg_light2@2x.png"; sourceTree = "<group>"; };
 		EBA16C5D2046EA4F00FC6E1F /* Fenpinqi_UIView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Fenpinqi_UIView.h; sourceTree = "<group>"; };
 		EBA16C5E2046EA4F00FC6E1F /* Fenpinqi_UIView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Fenpinqi_UIView.m; sourceTree = "<group>"; };
 		EBA16C602046EA6700FC6E1F /* JunHengQi_UIView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JunHengQi_UIView.h; sourceTree = "<group>"; };
@@ -2854,6 +2863,9 @@
 		EBEA7C1D1FBCAF260028F0E8 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				EB948A4C204EE4660018C80A /* v_slider_bg_light2@2x.png */,
+				EB948A4A204EE4660018C80A /* wireless_slide_light_n@2x.png */,
+				EB948A4B204EE4660018C80A /* wireless_slide_light_s@2x.png */,
 				EB235010204D9648008F6CA2 /* XDPickView.h */,
 				EB23500F204D9647008F6CA2 /* XDPickView.m */,
 				EB1A55C31FEA85EF000B18E6 /* engineer_zengyi3@2x.png */,
@@ -2911,6 +2923,8 @@
 				EB3B73B41FE6395C001941CF /* EngineerSliderView.m */,
 				34A8965120443184007934E1 /* GradeLineView.h */,
 				34A8965220443184007934E1 /* GradeLineView.m */,
+				EB948A47204EE3550018C80A /* JLightSliderView.h */,
+				EB948A48204EE3550018C80A /* JLightSliderView.m */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -3073,6 +3087,7 @@
 				EB03F5351FBDDAB300865541 /* main_engineer_s@2x.png in Resources */,
 				EBF5D43A1FCC5D860014D5F0 /* biaozhunmoshi_s@2x.png in Resources */,
 				341C61091FDD0DBF003A5490 /* a_room_5@2x.png in Resources */,
+				EB948A4D204EE4660018C80A /* wireless_slide_light_n@2x.png in Resources */,
 				EB217FAF1FD41E45003F5A8F /* user_newwind_n@2x.png in Resources */,
 				341C60F71FDD0DBF003A5490 /* v_icon_2@2x.png in Resources */,
 				EBDF1C4B1FC5D5CF00A756EA /* air_clean_sys_s@2x.png in Resources */,
@@ -3133,6 +3148,7 @@
 				EB217FDD1FD42A77003F5A8F /* user_door_access_s@2x.png in Resources */,
 				EBDF1BFA1FC5ABB500A756EA /* camera_s@2x.png in Resources */,
 				EBDF1C4E1FC5D5CF00A756EA /* door_access_n@2x.png in Resources */,
+				EB948A4E204EE4660018C80A /* wireless_slide_light_s@2x.png in Resources */,
 				EB0808D81FBC7DF600FD0604 /* botomo_icon@2x.png in Resources */,
 				EB4EC10F1FE7EC90000B3101 /* e_v_slider_road@2x.png in Resources */,
 				EB36AAE61FCDA432009A0FD8 /* user_video_yejing_n@2x.png in Resources */,
@@ -3338,6 +3354,7 @@
 				EB217FB31FD41EC7003F5A8F /* user_newwind_h_n@2x.png in Resources */,
 				EB09C4A81FD3AA9200776540 /* user_aircon_cold_n@2x.png in Resources */,
 				EBF831F11FD04BC40096E6EC /* user_video_play_up@2x.png in Resources */,
+				EB948A4F204EE4660018C80A /* v_slider_bg_light2@2x.png in Resources */,
 				EBF5D42B1FCC35A90014D5F0 /* user_botom_Line@2x.png in Resources */,
 				EBAE5BB01FDD20C400C10C4D /* engineer_env_jiashi_s@2x.png in Resources */,
 				EBDF1C3D1FC5D5CF00A756EA /* energy_collect_s@2x.png in Resources */,
@@ -3517,6 +3534,7 @@
 				3419283D1FD3CC760014695B /* DragCellView.m in Sources */,
 				EB2982151FD58699007B5C20 /* EngineerMeetingRoomListViewCtrl.m in Sources */,
 				EB795B562042E838005D1F47 /* ZaoShengMen_UIView.m in Sources */,
+				EB948A49204EE3550018C80A /* JLightSliderView.m in Sources */,
 				EB1717A31FF6141A00CBDB81 /* EngineerFloorWarmViewCtrl.m in Sources */,
 				EBF831E31FD03A110096E6EC /* UserVideoDVDDiskViewCtrl.m in Sources */,
 				EB795B652042E8A1005D1F47 /* ZiDongHunYin_UIView.m in Sources */,

@@ -7,7 +7,7 @@
 //
 
 #import "UserLightConfigViewCtrl.h"
-#import "JSlideView.h"
+#import "JLightSliderView.h"
 #import "UIButton+Color.h"
 
 @interface UserLightConfigViewCtrl () {
@@ -18,12 +18,12 @@
     UIButton *_bidengBtn;
     UIButton *_tongdengBtn;
     
-    JSlideView *_houpaidengdai1Slider;
-    JSlideView *_houpaidengdai2Slider;
-    JSlideView *_dingdengSlider;
-    JSlideView *_xiaoshengdengSlider;
-    JSlideView *_bidengSlider;
-    JSlideView *_tongdengSlider;
+    JLightSliderView *_houpaidengdai1Slider;
+    JLightSliderView *_houpaidengdai2Slider;
+    JLightSliderView *_dingdengSlider;
+    JLightSliderView *_xiaoshengdengSlider;
+    JLightSliderView *_bidengSlider;
+    JLightSliderView *_tongdengSlider;
 }
 @end
 
@@ -74,11 +74,11 @@
     
     int leftRight = 70;
     int number = 8;
-    int height = 200;
-    int rowGap = 130;
+    int height = 125;
+    int rowGap = 125;
     int width = (SCREEN_WIDTH - leftRight*2) / number;
     
-    int sliderHeight = 550;
+    int sliderHeight = 450;
     int sliderLeftRight = 100;
     
     _backBiDengBtn = [UIButton buttonWithColor:nil selColor:nil];
@@ -89,13 +89,13 @@
     [_backBiDengBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
     [_backBiDengBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _backBiDengBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_backBiDengBtn setTitleEdgeInsets:UIEdgeInsetsMake(_backBiDengBtn.imageView.frame.size.height+10,-80,-20,40)];
+    [_backBiDengBtn setTitleEdgeInsets:UIEdgeInsetsMake(_backBiDengBtn.imageView.frame.size.height+10,-75,-20,40)];
     [_backBiDengBtn setImageEdgeInsets:UIEdgeInsetsMake(-15,0.0,_backBiDengBtn.titleLabel.bounds.size.height, 0)];
     [_backBiDengBtn addTarget:self action:@selector(houpaibidengAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_backBiDengBtn];
     
-    _houpaidengdai1Slider = [[JSlideView alloc]
-                       initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light.png"]
+    _houpaidengdai1Slider = [[JLightSliderView alloc]
+                       initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light2.png"]
                        frame:CGRectZero];
     [self.view addSubview:_houpaidengdai1Slider];
     [_houpaidengdai1Slider setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
@@ -114,13 +114,13 @@
     [_houpaidengdai2Btn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
     [_houpaidengdai2Btn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _houpaidengdai2Btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_houpaidengdai2Btn setTitleEdgeInsets:UIEdgeInsetsMake(_houpaidengdai2Btn.imageView.frame.size.height+10,-90,-20,25)];
+    [_houpaidengdai2Btn setTitleEdgeInsets:UIEdgeInsetsMake(_houpaidengdai2Btn.imageView.frame.size.height+10,-85,-20,25)];
     [_houpaidengdai2Btn setImageEdgeInsets:UIEdgeInsetsMake(-15,0.0,_houpaidengdai2Btn.titleLabel.bounds.size.height, 0)];
     [_houpaidengdai2Btn addTarget:self action:@selector(houpaibideng2Action:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_houpaidengdai2Btn];
     
-    _houpaidengdai2Slider = [[JSlideView alloc]
-                        initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light.png"]
+    _houpaidengdai2Slider = [[JLightSliderView alloc]
+                        initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light2.png"]
                         frame:CGRectZero];
     [self.view addSubview:_houpaidengdai2Slider];
     [_houpaidengdai2Slider setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
@@ -139,13 +139,13 @@
     [_dingdengBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
     [_dingdengBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _dingdengBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_dingdengBtn setTitleEdgeInsets:UIEdgeInsetsMake(_dingdengBtn.imageView.frame.size.height+10,-105,-20,25)];
+    [_dingdengBtn setTitleEdgeInsets:UIEdgeInsetsMake(_dingdengBtn.imageView.frame.size.height+10,-95,-20,25)];
     [_dingdengBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,-30,_dingdengBtn.titleLabel.bounds.size.height, 0)];
     [_dingdengBtn addTarget:self action:@selector(dingdengAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_dingdengBtn];
     
-    _dingdengSlider = [[JSlideView alloc]
-                           initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light.png"]
+    _dingdengSlider = [[JLightSliderView alloc]
+                           initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light2.png"]
                            frame:CGRectZero];
     [self.view addSubview:_dingdengSlider];
     [_dingdengSlider setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
@@ -169,8 +169,8 @@
     [_xiaoshedengBtn addTarget:self action:@selector(xiaoshedengAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_xiaoshedengBtn];
     
-    _xiaoshengdengSlider = [[JSlideView alloc]
-                           initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light.png"]
+    _xiaoshengdengSlider = [[JLightSliderView alloc]
+                           initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light2.png"]
                            frame:CGRectZero];
     [self.view addSubview:_xiaoshengdengSlider];
     [_xiaoshengdengSlider setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
@@ -189,13 +189,13 @@
     [_bidengBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
     [_bidengBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _bidengBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_bidengBtn setTitleEdgeInsets:UIEdgeInsetsMake(_bidengBtn.imageView.frame.size.height+10,-90,-20,20)];
+    [_bidengBtn setTitleEdgeInsets:UIEdgeInsetsMake(_bidengBtn.imageView.frame.size.height+10,-85,-20,20)];
     [_bidengBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,-15,_bidengBtn.titleLabel.bounds.size.height, 0)];
     [_bidengBtn addTarget:self action:@selector(bidengAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_bidengBtn];
     
-    _bidengSlider = [[JSlideView alloc]
-                            initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light.png"]
+    _bidengSlider = [[JLightSliderView alloc]
+                            initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light2.png"]
                             frame:CGRectZero];
     [self.view addSubview:_bidengSlider];
     [_bidengSlider setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
@@ -214,13 +214,13 @@
     [_tongdengBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
     [_tongdengBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _tongdengBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_tongdengBtn setTitleEdgeInsets:UIEdgeInsetsMake(_tongdengBtn.imageView.frame.size.height+10,-90,-20,20)];
+    [_tongdengBtn setTitleEdgeInsets:UIEdgeInsetsMake(_tongdengBtn.imageView.frame.size.height+10,-85,-20,20)];
     [_tongdengBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,-15,_tongdengBtn.titleLabel.bounds.size.height, 0)];
     [_tongdengBtn addTarget:self action:@selector(tongdengAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_tongdengBtn];
     
-    _tongdengSlider = [[JSlideView alloc]
-                             initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light.png"]
+    _tongdengSlider = [[JLightSliderView alloc]
+                             initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light2.png"]
                              frame:CGRectZero];
     [self.view addSubview:_tongdengSlider];
     [_tongdengSlider setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
