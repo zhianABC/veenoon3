@@ -240,6 +240,7 @@
     [_youxianPlayer2Btn setTitleEdgeInsets:UIEdgeInsetsMake(_youxianPlayer2Btn.imageView.frame.size.height+5,-60,-20,30)];
     [_youxianPlayer2Btn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_youxianPlayer2Btn.titleLabel.bounds.size.height, 0)];
     [_youxianPlayer2Btn addTarget:self action:@selector(youxianPlayer2Action:) forControlEvents:UIControlEventTouchUpInside];
+    [_youxianPlayer2Btn addGestureRecognizer:longPress5];
     [self.view addSubview:_youxianPlayer2Btn];
     
     _youxianPlayerSlider2 = [[JSlideView alloc]
@@ -258,7 +259,7 @@
     _youxianPlayer3Btn.frame = CGRectMake(leftRight+rowGap*7, height, width, width);
     [_youxianPlayer3Btn setImage:[UIImage imageNamed:@"youxianxitong_player_n.png"] forState:UIControlStateNormal];
     [_youxianPlayer3Btn setImage:[UIImage imageNamed:@"youxianxitong_player_s.png"] forState:UIControlStateHighlighted];
-    [_youxianPlayer3Btn setTitle:@"有线系统" forState:UIControlStateNormal];
+    [_youxianPlayer3Btn setTitle:@"无线系统" forState:UIControlStateNormal];
     _youxianPlayer3Btn.titleLabel.font = [UIFont systemFontOfSize:15];
     [_youxianPlayer3Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_youxianPlayer3Btn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
@@ -266,6 +267,7 @@
     [_youxianPlayer3Btn setTitleEdgeInsets:UIEdgeInsetsMake(_youxianPlayer3Btn.imageView.frame.size.height+5,-60,-20,30)];
     [_youxianPlayer3Btn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_youxianPlayer3Btn.titleLabel.bounds.size.height, 0)];
     [_youxianPlayer3Btn addTarget:self action:@selector(youxianPlayer3Action:) forControlEvents:UIControlEventTouchUpInside];
+    [_youxianPlayer3Btn addGestureRecognizer:longPress5];
     [self.view addSubview:_youxianPlayer3Btn];
     
     _wuxianSysPlayerSlider = [[JSlideView alloc]
@@ -312,7 +314,7 @@
 }
 
 - (void) okAction:(id)sender {
-    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void) cancelAction:(id)sender{

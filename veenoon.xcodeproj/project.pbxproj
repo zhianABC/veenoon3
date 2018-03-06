@@ -358,6 +358,7 @@
 		EB235011204D9648008F6CA2 /* XDPickView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB23500F204D9647008F6CA2 /* XDPickView.m */; };
 		EB235015204D9BB2008F6CA2 /* wsDB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = EB235012204D9BB2008F6CA2 /* wsDB.sqlite */; };
 		EB235016204D9BB2008F6CA2 /* wsDB.m in Sources */ = {isa = PBXBuildFile; fileRef = EB235014204D9BB2008F6CA2 /* wsDB.m */; };
+		EB23501A204ED441008F6CA2 /* user_meeting_room_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB235019204ED441008F6CA2 /* user_meeting_room_3@2x.png */; };
 		EB23AE961FD186C000D1570F /* remote_video_filed_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB23AE951FD186BF00D1570F /* remote_video_filed_bg@2x.png */; };
 		EB23AE991FD1896300D1570F /* remote_video_back_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB23AE971FD1896300D1570F /* remote_video_back_n@2x.png */; };
 		EB23AE9A1FD1896300D1570F /* remote_video_back_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB23AE981FD1896300D1570F /* remote_video_back_s@2x.png */; };
@@ -582,7 +583,6 @@
 		EBDF1BEC1FC5A2D000A756EA /* user_meeting_room_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1BEB1FC5A2D000A756EA /* user_meeting_room_1@2x.png */; };
 		EBDF1BF21FC5A9A200A756EA /* user_meeting_room_6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1BED1FC5A9A100A756EA /* user_meeting_room_6@2x.png */; };
 		EBDF1BF31FC5A9A200A756EA /* user_meeting_room_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1BEE1FC5A9A100A756EA /* user_meeting_room_2@2x.png */; };
-		EBDF1BF41FC5A9A200A756EA /* user_meeting_room_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1BEF1FC5A9A200A756EA /* user_meeting_room_3@2x.png */; };
 		EBDF1BF51FC5A9A200A756EA /* user_meeting_room_4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1BF01FC5A9A200A756EA /* user_meeting_room_4@2x.png */; };
 		EBDF1BF61FC5A9A200A756EA /* user_meeting_room_5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1BF11FC5A9A200A756EA /* user_meeting_room_5@2x.png */; };
 		EBDF1BF91FC5ABB500A756EA /* camera_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1BF71FC5ABB500A756EA /* camera_n@2x.png */; };
@@ -1219,6 +1219,7 @@
 		EB235012204D9BB2008F6CA2 /* wsDB.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = wsDB.sqlite; sourceTree = "<group>"; };
 		EB235013204D9BB2008F6CA2 /* wsDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wsDB.h; sourceTree = "<group>"; };
 		EB235014204D9BB2008F6CA2 /* wsDB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = wsDB.m; sourceTree = "<group>"; };
+		EB235019204ED441008F6CA2 /* user_meeting_room_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_meeting_room_3@2x.png"; sourceTree = "<group>"; };
 		EB23AE951FD186BF00D1570F /* remote_video_filed_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "remote_video_filed_bg@2x.png"; sourceTree = "<group>"; };
 		EB23AE971FD1896300D1570F /* remote_video_back_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "remote_video_back_n@2x.png"; sourceTree = "<group>"; };
 		EB23AE981FD1896300D1570F /* remote_video_back_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "remote_video_back_s@2x.png"; sourceTree = "<group>"; };
@@ -1503,7 +1504,6 @@
 		EBDF1BEB1FC5A2D000A756EA /* user_meeting_room_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_meeting_room_1@2x.png"; sourceTree = "<group>"; };
 		EBDF1BED1FC5A9A100A756EA /* user_meeting_room_6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_meeting_room_6@2x.png"; sourceTree = "<group>"; };
 		EBDF1BEE1FC5A9A100A756EA /* user_meeting_room_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_meeting_room_2@2x.png"; sourceTree = "<group>"; };
-		EBDF1BEF1FC5A9A200A756EA /* user_meeting_room_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_meeting_room_3@2x.png"; sourceTree = "<group>"; };
 		EBDF1BF01FC5A9A200A756EA /* user_meeting_room_4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_meeting_room_4@2x.png"; sourceTree = "<group>"; };
 		EBDF1BF11FC5A9A200A756EA /* user_meeting_room_5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_meeting_room_5@2x.png"; sourceTree = "<group>"; };
 		EBDF1BF71FC5ABB500A756EA /* camera_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera_n@2x.png"; sourceTree = "<group>"; };
@@ -2062,6 +2062,7 @@
 		04DE1ECB1AD6B3BA00D49E2F /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
+				EB235019204ED441008F6CA2 /* user_meeting_room_3@2x.png */,
 				345487C4204BE3910068126B /* yinpinchuli_anniu@2x.png */,
 				EBF57AB32045846D0023F138 /* huishengxiaochu@2x.png */,
 				EB31164A20444405001F06CF /* copy_past_reset@2x.png */,
@@ -2401,7 +2402,6 @@
 				EB1A045B1FC71372007CC1F2 /* user_config_back_s@2x.png */,
 				EBDF1BEB1FC5A2D000A756EA /* user_meeting_room_1@2x.png */,
 				EBDF1BEE1FC5A9A100A756EA /* user_meeting_room_2@2x.png */,
-				EBDF1BEF1FC5A9A200A756EA /* user_meeting_room_3@2x.png */,
 				EBDF1BF01FC5A9A200A756EA /* user_meeting_room_4@2x.png */,
 				EBDF1BF11FC5A9A200A756EA /* user_meeting_room_5@2x.png */,
 				EBDF1BED1FC5A9A100A756EA /* user_meeting_room_6@2x.png */,
@@ -3029,7 +3029,6 @@
 				EBAE5B7B1FDD07BE00C10C4D /* engineer_video_pinjieping_n@2x.png in Resources */,
 				EB2E70661FC1B3E1009C477C /* settings_view_top_line@2x.png in Resources */,
 				EB1A04741FC71EEC007CC1F2 /* huiyinhuiyi_player_s@2x.png in Resources */,
-				EBDF1BF41FC5A9A200A756EA /* user_meeting_room_3@2x.png in Resources */,
 				EB03F5391FBDDAB300865541 /* main_engineer_n@2x.png in Resources */,
 				049ECA731C8D4B8A00A611D8 /* zbar-help.html in Resources */,
 				EBF5D43E1FCC601B0014D5F0 /* fayanrenshu_n@2x.png in Resources */,
@@ -3386,6 +3385,7 @@
 				EB2E707C1FC1B5B4009C477C /* settings_view_3@2x.png in Resources */,
 				049BA6091AF76C5E00F17584 /* camera_flip@2x.png in Resources */,
 				049BA6611AF7B64000F17584 /* zhucebao_db.sqlite in Resources */,
+				EB23501A204ED441008F6CA2 /* user_meeting_room_3@2x.png in Resources */,
 				EBAE5B811FDD07BE00C10C4D /* engineer_video_yuanchengshixun_s@2x.png in Resources */,
 				EB3B73A21FE61F13001941CF /* audio_player_r_last_n@2x.png in Resources */,
 				EB1A045C1FC71372007CC1F2 /* user_config_back_n@2x.png in Resources */,
