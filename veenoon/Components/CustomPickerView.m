@@ -232,6 +232,10 @@
     return [_pickerDataArray count];
 }
 
+- (void)removeArray {
+    btnSave.hidden = YES;
+}
+
 - (void)dealloc {
     
     
