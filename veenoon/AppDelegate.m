@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import <AVFoundation/AVFoundation.h>
 #import "CMNavigationController.h"
+#import "WellcomeViewController.h"
 #import "HomeViewController.h"
 #import "WellcomeViewController.h"
 

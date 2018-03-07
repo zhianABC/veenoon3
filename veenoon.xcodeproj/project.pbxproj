@@ -1,10 +1,10 @@
 // !$*UTF8*$!
 {
-	archiveVersion = 1;
-	classes = {
-	};
-	objectVersion = 46;
-	objects = {
+    archiveVersion = 1;
+    classes = {
+    };
+    objectVersion = 46;
+    objects = {
 
 /* Begin PBXBuildFile section */
 		045850181B08CF42002BC23C /* BookCache.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 045850151B08CF42002BC23C /* BookCache.sqlite */; };
@@ -676,13 +676,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		04DE1DEC1AD68C5E00D49E2F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 04DE1DCA1AD68C5E00D49E2F /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 04DE1DD11AD68C5E00D49E2F;
-			remoteInfo = ExasForiPad;
-		};
+        04DE1DEC1AD68C5E00D49E2F /* PBXContainerItemProxy */ = {
+            isa = PBXContainerItemProxy;
+            containerPortal = 04DE1DCA1AD68C5E00D49E2F /* Project object */;
+            proxyType = 1;
+            remoteGlobalIDString = 04DE1DD11AD68C5E00D49E2F;
+            remoteInfo = ExasForiPad;
+        };
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -1615,34 +1615,34 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		04DE1DCF1AD68C5E00D49E2F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				341651E41ED8067100B16E91 /* MessageUI.framework in Frameworks */,
-				049ECA811C8D4EAC00A611D8 /* libz.1.2.5.tbd in Frameworks */,
-				049ECA7F1C8D4EA500A611D8 /* libsqlite3.0.tbd in Frameworks */,
-				049ECA7D1C8D4E9C00A611D8 /* libicucore.tbd in Frameworks */,
-				049ECA7B1C8D4E9100A611D8 /* libz.tbd in Frameworks */,
-				049ECA791C8D4E8C00A611D8 /* libiconv.tbd in Frameworks */,
-				049ECA771C8D4E8200A611D8 /* libstdc++.6.0.9.tbd in Frameworks */,
-				04D27A3B1AF8A1E600305E39 /* libstdc++.6.0.9.dylib in Frameworks */,
-				04D27A351AF8A0B600305E39 /* libicucore.dylib in Frameworks */,
-				049BA6631AF7B73400F17584 /* libsqlite3.0.dylib in Frameworks */,
-				04DE1ECA1AD6B33300D49E2F /* AVFoundation.framework in Frameworks */,
-				04DE1EC11AD6B1A600D49E2F /* libz.1.2.5.dylib in Frameworks */,
-				049ECA711C8D4B8A00A611D8 /* libzbar.a in Frameworks */,
-				04DE1EB61AD6AEE100D49E2F /* libMobClickLibrary.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		04DE1DE81AD68C5E00D49E2F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
+        04DE1DCF1AD68C5E00D49E2F /* Frameworks */ = {
+            isa = PBXFrameworksBuildPhase;
+            buildActionMask = 2147483647;
+            files = (
+                341651E41ED8067100B16E91 /* MessageUI.framework in Frameworks */,
+                049ECA811C8D4EAC00A611D8 /* libz.1.2.5.tbd in Frameworks */,
+                049ECA7F1C8D4EA500A611D8 /* libsqlite3.0.tbd in Frameworks */,
+                049ECA7D1C8D4E9C00A611D8 /* libicucore.tbd in Frameworks */,
+                049ECA7B1C8D4E9100A611D8 /* libz.tbd in Frameworks */,
+                049ECA791C8D4E8C00A611D8 /* libiconv.tbd in Frameworks */,
+                049ECA771C8D4E8200A611D8 /* libstdc++.6.0.9.tbd in Frameworks */,
+                04D27A3B1AF8A1E600305E39 /* libstdc++.6.0.9.dylib in Frameworks */,
+                04D27A351AF8A0B600305E39 /* libicucore.dylib in Frameworks */,
+                049BA6631AF7B73400F17584 /* libsqlite3.0.dylib in Frameworks */,
+                04DE1ECA1AD6B33300D49E2F /* AVFoundation.framework in Frameworks */,
+                04DE1EC11AD6B1A600D49E2F /* libz.1.2.5.dylib in Frameworks */,
+                049ECA711C8D4B8A00A611D8 /* libzbar.a in Frameworks */,
+                04DE1EB61AD6AEE100D49E2F /* libMobClickLibrary.a in Frameworks */,
+            );
+            runOnlyForDeploymentPostprocessing = 0;
+        };
+        04DE1DE81AD68C5E00D49E2F /* Frameworks */ = {
+            isa = PBXFrameworksBuildPhase;
+            buildActionMask = 2147483647;
+            files = (
+            );
+            runOnlyForDeploymentPostprocessing = 0;
+        };
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -2941,78 +2941,78 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		04DE1DD11AD68C5E00D49E2F /* veenoon */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 04DE1DF51AD68C5E00D49E2F /* Build configuration list for PBXNativeTarget "veenoon" */;
-			buildPhases = (
-				04DE1DCE1AD68C5E00D49E2F /* Sources */,
-				04DE1DCF1AD68C5E00D49E2F /* Frameworks */,
-				04DE1DD01AD68C5E00D49E2F /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = veenoon;
-			productName = ExasForiPad;
-			productReference = 04DE1DD21AD68C5E00D49E2F /* veenoon.app */;
-			productType = "com.apple.product-type.application";
-		};
-		04DE1DEA1AD68C5E00D49E2F /* veenoonTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 04DE1DF81AD68C5E00D49E2F /* Build configuration list for PBXNativeTarget "veenoonTests" */;
-			buildPhases = (
-				04DE1DE71AD68C5E00D49E2F /* Sources */,
-				04DE1DE81AD68C5E00D49E2F /* Frameworks */,
-				04DE1DE91AD68C5E00D49E2F /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				04DE1DED1AD68C5E00D49E2F /* PBXTargetDependency */,
-			);
-			name = veenoonTests;
-			productName = ExasForiPadTests;
-			productReference = 04DE1DEB1AD68C5E00D49E2F /* veenoonTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
+        04DE1DD11AD68C5E00D49E2F /* veenoon */ = {
+            isa = PBXNativeTarget;
+            buildConfigurationList = 04DE1DF51AD68C5E00D49E2F /* Build configuration list for PBXNativeTarget "veenoon" */;
+            buildPhases = (
+                04DE1DCE1AD68C5E00D49E2F /* Sources */,
+                04DE1DCF1AD68C5E00D49E2F /* Frameworks */,
+                04DE1DD01AD68C5E00D49E2F /* Resources */,
+            );
+            buildRules = (
+            );
+            dependencies = (
+            );
+            name = veenoon;
+            productName = ExasForiPad;
+            productReference = 04DE1DD21AD68C5E00D49E2F /* veenoon.app */;
+            productType = "com.apple.product-type.application";
+        };
+        04DE1DEA1AD68C5E00D49E2F /* veenoonTests */ = {
+            isa = PBXNativeTarget;
+            buildConfigurationList = 04DE1DF81AD68C5E00D49E2F /* Build configuration list for PBXNativeTarget "veenoonTests" */;
+            buildPhases = (
+                04DE1DE71AD68C5E00D49E2F /* Sources */,
+                04DE1DE81AD68C5E00D49E2F /* Frameworks */,
+                04DE1DE91AD68C5E00D49E2F /* Resources */,
+            );
+            buildRules = (
+            );
+            dependencies = (
+                04DE1DED1AD68C5E00D49E2F /* PBXTargetDependency */,
+            );
+            name = veenoonTests;
+            productName = ExasForiPadTests;
+            productReference = 04DE1DEB1AD68C5E00D49E2F /* veenoonTests.xctest */;
+            productType = "com.apple.product-type.bundle.unit-test";
+        };
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		04DE1DCA1AD68C5E00D49E2F /* Project object */ = {
-			isa = PBXProject;
-			attributes = {
-				LastUpgradeCheck = 0610;
-				ORGANIZATIONNAME = jack;
-				TargetAttributes = {
-					04DE1DD11AD68C5E00D49E2F = {
-						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 9FDG53LV84;
-						LastSwiftMigration = 0920;
-					};
-					04DE1DEA1AD68C5E00D49E2F = {
-						CreatedOnToolsVersion = 6.1.1;
-						TestTargetID = 04DE1DD11AD68C5E00D49E2F;
-					};
-				};
-			};
-			buildConfigurationList = 04DE1DCD1AD68C5E00D49E2F /* Build configuration list for PBXProject "veenoon" */;
-			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
-			hasScannedForEncodings = 0;
-			knownRegions = (
-				en,
-				Base,
-			);
-			mainGroup = 04DE1DC91AD68C5E00D49E2F;
-			productRefGroup = 04DE1DD31AD68C5E00D49E2F /* Products */;
-			projectDirPath = "";
-			projectRoot = "";
-			targets = (
-				04DE1DD11AD68C5E00D49E2F /* veenoon */,
-				04DE1DEA1AD68C5E00D49E2F /* veenoonTests */,
-			);
-		};
+        04DE1DCA1AD68C5E00D49E2F /* Project object */ = {
+            isa = PBXProject;
+            attributes = {
+                LastUpgradeCheck = 0610;
+                ORGANIZATIONNAME = jack;
+                TargetAttributes = {
+                    04DE1DD11AD68C5E00D49E2F = {
+                        CreatedOnToolsVersion = 6.1.1;
+                        DevelopmentTeam = 9FDG53LV84;
+                        LastSwiftMigration = 0920;
+                    };
+                    04DE1DEA1AD68C5E00D49E2F = {
+                        CreatedOnToolsVersion = 6.1.1;
+                        TestTargetID = 04DE1DD11AD68C5E00D49E2F;
+                    };
+                };
+            };
+            buildConfigurationList = 04DE1DCD1AD68C5E00D49E2F /* Build configuration list for PBXProject "veenoon" */;
+            compatibilityVersion = "Xcode 3.2";
+            developmentRegion = English;
+            hasScannedForEncodings = 0;
+            knownRegions = (
+                en,
+                Base,
+            );
+            mainGroup = 04DE1DC91AD68C5E00D49E2F;
+            productRefGroup = 04DE1DD31AD68C5E00D49E2F /* Products */;
+            projectDirPath = "";
+            projectRoot = "";
+            targets = (
+                04DE1DD11AD68C5E00D49E2F /* veenoon */,
+                04DE1DEA1AD68C5E00D49E2F /* veenoonTests */,
+            );
+        };
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -3459,494 +3459,496 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		04DE1DCE1AD68C5E00D49E2F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				EB1A56181FEF9626000B18E6 /* EngineerVideoPinJieViewCtrl.m in Sources */,
-				EB217FD81FD429B4003F5A8F /* UserDoorAccessViewCtrl.m in Sources */,
-				3425E9951FE57675003559F7 /* MixVoiceSettingsView.m in Sources */,
-				EB042A5B1FC2FFCD00F7F73D /* OutSystemView.m in Sources */,
-				EB03F52B1FBDC07200865541 /* InvitationCodeViewCotroller.m in Sources */,
-				345427702046DEE800E1A436 /* LimiterView.swift in Sources */,
-				34928A9A1EC1BD330089F429 /* ReaderCodeViewController.m in Sources */,
-				EBA16C652046EA8800FC6E1F /* ZaoShengYaXian_UIView.m in Sources */,
-				34615F091FC9BD7B002DFCE0 /* JSlideView.m in Sources */,
-				EB36AAC41FCD9E71009A0FD8 /* UserVideoConfigViewCtrl.m in Sources */,
-				04DE1E831AD6AEE000D49E2F /* ClassFactory.m in Sources */,
-				04DE1E991AD6AEE000D49E2F /* ASIHTTPRequest.m in Sources */,
-				EB4EC11F1FE7F94B000B3101 /* EngineerHandtoHandViewCtrl.m in Sources */,
-				EB1A55BB1FE801CF000B18E6 /* EngineerWIrelessMeetingPlayViewCtrl.m in Sources */,
-				04DE1E921AD6AEE000D49E2F /* UserDefaultsKV.m in Sources */,
-				0469CF3C1B033162006B901E /* CustomImagePickerCtrlor.m in Sources */,
-				04D719851DADE2D8002153D7 /* DataSync.m in Sources */,
-				EB795B422042DA33005D1F47 /* AudioProcessRightView.m in Sources */,
-				04DE1EC51AD6B21600D49E2F /* LoginViewController.m in Sources */,
-				EB795B592042E84B005D1F47 /* LvBoJunHeng_UIView.m in Sources */,
-				04D719821DADE0A9002153D7 /* WSEvent.m in Sources */,
-				342389B02026D93500885405 /* JCActionView.m in Sources */,
-				04DE1E8F1AD6AEE000D49E2F /* UIImage+Color.m in Sources */,
-				04DE1E961AD6AEE000D49E2F /* ASIDataDecompressor.m in Sources */,
-				049ECAC31C8D694400A611D8 /* QR_Encode.cpp in Sources */,
-				EB217FE01FD42F37003F5A8F /* UserWaterCleanViewCtrl.m in Sources */,
-				3422A5B81FCC17C500F6D3C2 /* BatteryView.m in Sources */,
-				04DE1EC81AD6B22F00D49E2F /* BaseViewController.m in Sources */,
-				EB795B4B2042DE5E005D1F47 /* AudioIconSettingView.m in Sources */,
-				EBA16C5F2046EA4F00FC6E1F /* Fenpinqi_UIView.m in Sources */,
-				04DE1E891AD6AEE000D49E2F /* IconTextButton.m in Sources */,
-				342A2F4020411B6900BE4071 /* GroupsPickerView.m in Sources */,
-				04DE1E8C1AD6AEE000D49E2F /* RRScrollView.m in Sources */,
-				34686C9F1ED025CB001749A1 /* DesUtil.m in Sources */,
-				EBC71B08203AF74100DD0A98 /* RemoteVideoRightView.m in Sources */,
-				045850191B08CF42002BC23C /* BookCache.m in Sources */,
-				EB217FB81FD42188003F5A8F /* UserFloorWarmViewCtrl.m in Sources */,
-				0477DC531DA9F3CC0077FA52 /* SHA1.m in Sources */,
-				04DE1EB31AD6AEE000D49E2F /* UIButton+WebCache.m in Sources */,
-				EB1717B21FF614BB00CBDB81 /* EngineerMonitorViewCtrl.m in Sources */,
-				EB7333F1204102DF00AE60B8 /* FloorWarmRightView.m in Sources */,
-				04D719771DADD3A4002153D7 /* SSUser.m in Sources */,
-				04DE1FE71AD6B52400D49E2F /* CMNavigationController.m in Sources */,
-				04DE1DDB1AD68C5E00D49E2F /* AppDelegate.m in Sources */,
-				3496B75A1FCAF3C5005F4857 /* SignalView.m in Sources */,
-				EBF5D4311FCC591A0014D5F0 /* UserHuiYinViewController.m in Sources */,
-				04DE1E9E1AD6AEE000D49E2F /* HttpFileGetter.m in Sources */,
-				EBC71AFF203AF4EE00DD0A98 /* DVDRightView.m in Sources */,
-				EB3686011FC07A9C009973A3 /* SettingsAccountView.m in Sources */,
-				04DE1EAE1AD6AEE000D49E2F /* SDWebImageDecoder.m in Sources */,
-				04DE1EA61AD6AEE000D49E2F /* SBJson4StreamTokeniser.m in Sources */,
-				04DE1EA71AD6AEE000D49E2F /* SBJson4StreamWriter.m in Sources */,
-				EB217FBE1FD423B8003F5A8F /* UserAirCleanViewCtrl.m in Sources */,
-				EB17179D1FF60C6900CBDB81 /* EngineerElectronicAutoViewCtrl.m in Sources */,
-				342389B32026F48700885405 /* Groups2PickerView.m in Sources */,
-				3425E9891FE5687C003559F7 /* CheckButton.m in Sources */,
-				341C60C91FDCFD7D003A5490 /* EPlusLayerView.m in Sources */,
-				EB4E39E62027423D00533575 /* HandtoHandLineCheckView.m in Sources */,
-				EB0968BF1FE2B4C900CF422F /* EngineerElectronicSysConfigViewCtrl.m in Sources */,
-				04DE1E9B1AD6AEE000D49E2F /* ASINetworkQueue.m in Sources */,
-				04DE1EB11AD6AEE000D49E2F /* SDWebImageManager.m in Sources */,
-				3425E98F1FE575A4003559F7 /* PlayerSettingsPannel.m in Sources */,
-				04DE1EAA1AD6AEE000D49E2F /* MKAnnotationView+WebCache.m in Sources */,
-				EB1717A91FF6145100CBDB81 /* EngineerCleanWaterViewCtrl.m in Sources */,
-				0479345B1DB0A7AA0066BABC /* JCShareView.m in Sources */,
-				3454276E2046DED100E1A436 /* FilterGraphView.swift in Sources */,
-				04DE1E861AD6AEE000D49E2F /* ConfigureSetting.m in Sources */,
-				EBC71B29204100A200DD0A98 /* ElectronicAutoRightView.m in Sources */,
-				EB1A55D91FEF4E0D000B18E6 /* EngineerCameraViewController.m in Sources */,
-				EB795B4E2042DEDE005D1F47 /* AudioMatrixSettingViewCtrl.m in Sources */,
-				EB09C4851FD2A64A00776540 /* UserElectronicAutoViewCtrl.m in Sources */,
-				EB1717A61FF6143600CBDB81 /* EngineerAirCleanViewCtrl.m in Sources */,
-				EB1717AC1FF6147200CBDB81 /* EngineerAddWetViewCtrl.m in Sources */,
-				EBDF1C191FC5CCD700A756EA /* UserScnarioConfigViewController.m in Sources */,
-				04D719781DADD3A4002153D7 /* WSUser.m in Sources */,
-				EB795B682042E8C1005D1F47 /* XinHaoFaShengQi_UIView.m in Sources */,
-				04D9A0EB1DAF83E0008DF2E6 /* AudioPlayer.m in Sources */,
-				04DE1E971AD6AEE000D49E2F /* ASIDownloadCache.m in Sources */,
-				EB3B73B21FE6382F001941CF /* EngineerWirlessYaoBaoViewCtrl.m in Sources */,
-				EB09C4B11FD3B27200776540 /* MapMarkerLayer.m in Sources */,
-				3419283D1FD3CC760014695B /* DragCellView.m in Sources */,
-				EB2982151FD58699007B5C20 /* EngineerMeetingRoomListViewCtrl.m in Sources */,
-				EB795B562042E838005D1F47 /* ZaoShengMen_UIView.m in Sources */,
-				EB948A49204EE3550018C80A /* JLightSliderView.m in Sources */,
-				EB1717A31FF6141A00CBDB81 /* EngineerFloorWarmViewCtrl.m in Sources */,
-				EBF831E31FD03A110096E6EC /* UserVideoDVDDiskViewCtrl.m in Sources */,
-				EB795B652042E8A1005D1F47 /* ZiDongHunYin_UIView.m in Sources */,
-				EB09C4A21FD3A00200776540 /* UserAirConditionViewCtrl.m in Sources */,
-				EB1717931FF5E6B600CBDB81 /* EngineerTouYingJiViewCtrl.m in Sources */,
-				EBC71B23203F011E00DD0A98 /* AirConditionRightView.m in Sources */,
-				341F0F471EC2FC500027C800 /* WSCode.m in Sources */,
-				04DE1EAD1AD6AEE000D49E2F /* SDWebImageCompat.m in Sources */,
-				34DC473F1FD6984400ACB589 /* ColumnView.m in Sources */,
-				EBAE5BB71FDFFBD700C10C4D /* EngineerScenarioListViewCtrl.m in Sources */,
-				EB5F7F871FD593F800351888 /* EngineerSysSelectViewCtrl.m in Sources */,
-				04DE1EAC1AD6AEE000D49E2F /* SDImageCache.m in Sources */,
-				EBDF1BFF1FC5BA0900A756EA /* UserMettingRoomConfig.m in Sources */,
-				EB09EF371FD9801400C968CA /* EngineerEnvDevicePluginViewCtrl.m in Sources */,
-				04D27A2A1AF8470100305E39 /* SelDataViewController.m in Sources */,
-				EB29820C1FD57FC2007B5C20 /* EngineerShootQRCode.m in Sources */,
-				EB09C47C1FD25B4300776540 /* UserLightConfigViewCtrl.m in Sources */,
-				345492FC1FE638F300793E2E /* SlideButton.m in Sources */,
-				EB16474A203ACD6300E71483 /* GongLvFangDaQiView.m in Sources */,
-				EB795B622042E890005D1F47 /* HuiShengXiaoChu_UIView.m in Sources */,
-				345487C8204BE4F60068126B /* APBaseView.m in Sources */,
-				EB1A55F41FEF80D7000B18E6 /* EngineerRemoteVideoViewCtrl.m in Sources */,
-				EB5CF0411FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m in Sources */,
-				EB1A56151FEF8F29000B18E6 /* EngineerVideoProcessViewCtrl.m in Sources */,
-				04D719881DADE7D4002153D7 /* ActivityViewController.m in Sources */,
-				EB7333FD20410A7E00AE60B8 /* MonitorRightView.m in Sources */,
-				EB17179A1FF60C2600CBDB81 /* EngineerAireConditionViewCtrl.m in Sources */,
-				04DE1E8A1AD6AEE000D49E2F /* MaskRender.m in Sources */,
-				EBC71B0B203AF90700DD0A98 /* VideoProcessRightView.m in Sources */,
-				04DE1EB21AD6AEE000D49E2F /* SDWebImagePrefetcher.m in Sources */,
-				EB217FCC1FD42660003F5A8F /* UserAddWetViewCtrl.m in Sources */,
-				04D7197F1DADE098002153D7 /* NSDate-Helper.m in Sources */,
-				EB09EF2F1FD978C700C968CA /* EngineerToUseTeslariViewCtrl.m in Sources */,
-				34686C9E1ED025CB001749A1 /* ConverUtil.m in Sources */,
-				EB235011204D9648008F6CA2 /* XDPickView.m in Sources */,
-				EB795B482042DD6F005D1F47 /* AudioOutputSettingViewCtrl.m in Sources */,
-				34141699204BC3D5002E0B00 /* AudioMatrixView.m in Sources */,
-				3425E98C1FE571CE003559F7 /* ComSettingView.m in Sources */,
-				EB3B739A1FE61B18001941CF /* EngineerPlayerSettingsViewCtrl.m in Sources */,
-				0477DC581DA9F4700077FA52 /* Base64.m in Sources */,
-				049BA6601AF7B64000F17584 /* DataBase.m in Sources */,
-				EB795B532042E81F005D1F47 /* ZengYi_UIView.m in Sources */,
-				049BA6661AF7B82700F17584 /* ChooseCountryViewController.m in Sources */,
-				04DE1E9D1AD6AEE000D49E2F /* DataCenter.m in Sources */,
-				04DE1EA51AD6AEE000D49E2F /* SBJson4StreamParserState.m in Sources */,
-				341C60C41FDCF1EA003A5490 /* ECPlusSelectView.m in Sources */,
-				04DE1E931AD6AEE000D49E2F /* Utilities.m in Sources */,
-				EB1A04601FC7156C007CC1F2 /* UserAudioConfigViewController.m in Sources */,
-				04DE1E981AD6AEE000D49E2F /* ASIFormDataRequest.m in Sources */,
-				EB7333FA204108B000AE60B8 /* AddWetRightView.m in Sources */,
-				04DE1DD81AD68C5E00D49E2F /* main.m in Sources */,
-				04DE1EA11AD6AEE000D49E2F /* NetworkChecker.m in Sources */,
-				EBC71B1D203C497500DD0A98 /* TouYingJiRightView.m in Sources */,
-				EB1717901FF5E44B00CBDB81 /* EngineerLuBoJiViewController.m in Sources */,
-				EB1717AF1FF6149C00CBDB81 /* EngineerDoorAccessViewCtrl.m in Sources */,
-				EBC71B26203F058100DD0A98 /* AirConditionComIRView.m in Sources */,
-				EB5F7F951FD59D6B00351888 /* EngineerPortSettingView.m in Sources */,
-				EBC71B20203EEB8600DD0A98 /* LightRightView.m in Sources */,
-				EB795B6B2042E8D3005D1F47 /* DianPing_UIView.m in Sources */,
-				EB3685FD1FC07A5A009973A3 /* SettingsViewView.m in Sources */,
-				EB1717B81FF6150400CBDB81 /* EngineerScenarioSettingsViewCtrl.m in Sources */,
-				3421EA2D1FC4136600DC5378 /* CustomPickerView.m in Sources */,
-				04DE1E8B1AD6AEE000D49E2F /* Progress7View.m in Sources */,
-				EB09EF311FD97CB500C968CA /* EngineerAudioDevicePluginViewCtrl.m in Sources */,
-				04DE1EB41AD6AEE000D49E2F /* UIImage+GIF.m in Sources */,
-				EBC71B05203AF72D00DD0A98 /* CameraRightView.m in Sources */,
-				EB3B73B51FE6395C001941CF /* EngineerSliderView.m in Sources */,
-				04DE1EA21AD6AEE000D49E2F /* Reachability.m in Sources */,
-				EB1717971FF5F5AB00CBDB81 /* EngineerLightViewController.m in Sources */,
-				EB17178D1FF5DF6B00CBDB81 /* EngineerTVViewController.m in Sources */,
-				04DE1EA91AD6AEE000D49E2F /* SBJson4Writer.m in Sources */,
-				EBC71B1A203C496500DD0A98 /* LuBoJiRightView.m in Sources */,
-				EBD79C0F204BBC2400FD534C /* YinPinProcessCodeUIView.m in Sources */,
-				EB36AAB21FCD939E009A0FD8 /* UserYouXianViewController.m in Sources */,
-				EBAE5BBB1FE0070600C10C4D /* EngineerPresetScenarioViewCtrl.m in Sources */,
-				04DE1E9A1AD6AEE000D49E2F /* ASIInputStream.m in Sources */,
-				341928401FD3D6200014695B /* OutputScreenView.m in Sources */,
-				04DE1EAB1AD6AEE000D49E2F /* NSData+GIF.m in Sources */,
-				EB5F7F981FD59D8400351888 /* EngineerDNSSettingView.m in Sources */,
-				EB164747203AC95D00E71483 /* WirelessMeetingView.m in Sources */,
-				EBF831ED1FD03EFA0096E6EC /* UserVideoLuBoJiViewCtrl.m in Sources */,
-				34217A6F1FCE98200006701C /* UserVideoConfigView.m in Sources */,
-				04DE1E901AD6AEE000D49E2F /* UIImage+ImageEffects.m in Sources */,
-				EB795B5F2042E87C005D1F47 /* YanShiQi_UIView.m in Sources */,
-				04DE1EBF1AD6AF7900D49E2F /* User.m in Sources */,
-				EBC71B17203C487000DD0A98 /* TVViewRightView.m in Sources */,
-				EB1717A01FF613EC00CBDB81 /* EngineerNewWindViewCtrl.m in Sources */,
-				EB7333F72041071D00AE60B8 /* CleanWaterRightView.m in Sources */,
-				EB73340020410B5100AE60B8 /* DoorAccessRightView.m in Sources */,
-				EB4EC1221FE7FC3B000B3101 /* EngineerWirelessMeetingViewCtrl.m in Sources */,
-				EB4E39E320273F6100533575 /* HandtoHandSettingsView.m in Sources */,
-				04DE1EA01AD6AEE000D49E2F /* WebClient.m in Sources */,
-				EB1B90FE2046E6B00076EEEC /* HunyinYinpinchuliViewCtrl.m in Sources */,
-				EB1A55C21FE93CD4000B18E6 /* EngineerAudioProcessViewCtrl.m in Sources */,
-				04DE1EA81AD6AEE000D49E2F /* SBJson4StreamWriterState.m in Sources */,
-				341671881FBA97BD001D33D0 /* HomeViewController.m in Sources */,
-				EBC71B2C204100DD00DD0A98 /* NewWindRightView.m in Sources */,
-				342814231FE34BF100170D11 /* PowerSettingView.m in Sources */,
-				EBEA7C221FBCAF260028F0E8 /* AreaPickView.m in Sources */,
-				04DE1E9F1AD6AEE000D49E2F /* iHttpAdmin.m in Sources */,
-				049ECAC21C8D694400A611D8 /* DataMatrix.mm in Sources */,
-				EB4EC11C1FE7F164000B3101 /* EngineerHunYinSysViewController.m in Sources */,
-				04DE1EB01AD6AEE000D49E2F /* SDWebImageDownloaderOperation.m in Sources */,
-				34217A721FCE9C160006701C /* StickerLayerView.m in Sources */,
-				EB03F53F1FBDE8FB00865541 /* SettingsViewController.m in Sources */,
-				EB03F54D1FBDEC6000865541 /* UserHomeViewController.m in Sources */,
-				04DE1E951AD6AEE000D49E2F /* ASIDataCompressor.m in Sources */,
-				04DE1EAF1AD6AEE000D49E2F /* SDWebImageDownloader.m in Sources */,
-				EBC71B14203C3A3200DD0A98 /* PinJiePingRightView.m in Sources */,
-				04DE1EA41AD6AEE000D49E2F /* SBJson4StreamParser.m in Sources */,
-				3421EA301FC4161300DC5378 /* ColumnsView.m in Sources */,
-				04DE1EA31AD6AEE000D49E2F /* SBJson4Parser.m in Sources */,
-				3425E9921FE5763B003559F7 /* WirlessYaoBaoViewSettingsView.m in Sources */,
-				EBA16C622046EA6700FC6E1F /* JunHengQi_UIView.m in Sources */,
-				EB1A55C71FEA919C000B18E6 /* EngineerPVExpendViewCtrl.m in Sources */,
-				EBCA834B1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m in Sources */,
-				04DE1EB51AD6AEE000D49E2F /* UIImageView+WebCache.m in Sources */,
-				34DC47421FD6DD9300ACB589 /* CircleProgressView.m in Sources */,
-				04DE1E8E1AD6AEE000D49E2F /* UIButton+Color.m in Sources */,
-				EB795B5C2042E861005D1F47 /* YaXianQi_UIView.m in Sources */,
-				341671841FBA9765001D33D0 /* SignupViewController.m in Sources */,
-				EB03F5491FBDEB8900865541 /* EnginnerHomeViewController.m in Sources */,
-				343733AE1FE402E80071C902 /* JHSlideView.m in Sources */,
-				EBF831E91FD03EC90096E6EC /* UserVideoCameraSettingsViewCtrl.m in Sources */,
-				EB3685FB1FC07A42009973A3 /* SettingsUserView.m in Sources */,
-				EBF6A7481FC861D400260FF0 /* UserWuXianHuaTongViewCtrl.m in Sources */,
-				EB235016204D9BB2008F6CA2 /* wsDB.m in Sources */,
-				341671811FBA974C001D33D0 /* WellcomeViewController.m in Sources */,
-				04DE1E911AD6AEE000D49E2F /* UILabel+ContentSize.m in Sources */,
-				EBF831E71FD03E4B0096E6EC /* UserVideoRemoteShiXunViewCtrl.m in Sources */,
-				0477DC5B1DA9F4BA0077FA52 /* WaitDialog.m in Sources */,
-				EB1A55D21FEAA10E000B18E6 /* EngineerDVDViewController.m in Sources */,
-				EB09EF351FD9800300C968CA /* EngineerVedioDevicePluginViewCtrl.m in Sources */,
-				EB5CF03F1FD3DC92007958C9 /* UserNewWindViewCtrl.m in Sources */,
-				EB7333F42041046400AE60B8 /* AirCleanRightView.m in Sources */,
-				34A8965320443184007934E1 /* GradeLineView.m in Sources */,
-				EBF6A72C1FC8486000260FF0 /* UserAudioPlayerSettingsViewCtrl.m in Sources */,
-				04DE1E941AD6AEE000D49E2F /* ASIAuthenticationDialog.m in Sources */,
-				049ECAC51C8D694400A611D8 /* QREncoder.mm in Sources */,
-				EB795B452042DD2B005D1F47 /* AudioInputSettingViewCtrl.m in Sources */,
-				EB1717B51FF614DB00CBDB81 /* EngineerInfoCollectViewCtrl.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		04DE1DE71AD68C5E00D49E2F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				04DE1DF21AD68C5E00D49E2F /* ExasForiPadTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
+        04DE1DCE1AD68C5E00D49E2F /* Sources */ = {
+            isa = PBXSourcesBuildPhase;
+            buildActionMask = 2147483647;
+            files = (
+                EB1A56181FEF9626000B18E6 /* EngineerVideoPinJieViewCtrl.m in Sources */,
+                EB217FD81FD429B4003F5A8F /* UserDoorAccessViewCtrl.m in Sources */,
+                3425E9951FE57675003559F7 /* MixVoiceSettingsView.m in Sources */,
+                EB042A5B1FC2FFCD00F7F73D /* OutSystemView.m in Sources */,
+                EB03F52B1FBDC07200865541 /* InvitationCodeViewCotroller.m in Sources */,
+                345427702046DEE800E1A436 /* LimiterView.swift in Sources */,
+                34928A9A1EC1BD330089F429 /* ReaderCodeViewController.m in Sources */,
+                EBA16C652046EA8800FC6E1F /* ZaoShengYaXian_UIView.m in Sources */,
+                34615F091FC9BD7B002DFCE0 /* JSlideView.m in Sources */,
+                EB36AAC41FCD9E71009A0FD8 /* UserVideoConfigViewCtrl.m in Sources */,
+                04DE1E831AD6AEE000D49E2F /* ClassFactory.m in Sources */,
+                04DE1E991AD6AEE000D49E2F /* ASIHTTPRequest.m in Sources */,
+                EB4EC11F1FE7F94B000B3101 /* EngineerHandtoHandViewCtrl.m in Sources */,
+                EB1A55BB1FE801CF000B18E6 /* EngineerWIrelessMeetingPlayViewCtrl.m in Sources */,
+                04DE1E921AD6AEE000D49E2F /* UserDefaultsKV.m in Sources */,
+                0469CF3C1B033162006B901E /* CustomImagePickerCtrlor.m in Sources */,
+                04D719851DADE2D8002153D7 /* DataSync.m in Sources */,
+                EB795B422042DA33005D1F47 /* AudioProcessRightView.m in Sources */,
+                04DE1EC51AD6B21600D49E2F /* LoginViewController.m in Sources */,
+                EB795B592042E84B005D1F47 /* LvBoJunHeng_UIView.m in Sources */,
+                04D719821DADE0A9002153D7 /* WSEvent.m in Sources */,
+                342389B02026D93500885405 /* JCActionView.m in Sources */,
+                04DE1E8F1AD6AEE000D49E2F /* UIImage+Color.m in Sources */,
+                04DE1E961AD6AEE000D49E2F /* ASIDataDecompressor.m in Sources */,
+                049ECAC31C8D694400A611D8 /* QR_Encode.cpp in Sources */,
+                EB217FE01FD42F37003F5A8F /* UserWaterCleanViewCtrl.m in Sources */,
+                3422A5B81FCC17C500F6D3C2 /* BatteryView.m in Sources */,
+                04DE1EC81AD6B22F00D49E2F /* BaseViewController.m in Sources */,
+                EB795B4B2042DE5E005D1F47 /* AudioIconSettingView.m in Sources */,
+                EBA16C5F2046EA4F00FC6E1F /* Fenpinqi_UIView.m in Sources */,
+                04DE1E891AD6AEE000D49E2F /* IconTextButton.m in Sources */,
+                342A2F4020411B6900BE4071 /* GroupsPickerView.m in Sources */,
+                04DE1E8C1AD6AEE000D49E2F /* RRScrollView.m in Sources */,
+                34686C9F1ED025CB001749A1 /* DesUtil.m in Sources */,
+                EBC71B08203AF74100DD0A98 /* RemoteVideoRightView.m in Sources */,
+                045850191B08CF42002BC23C /* BookCache.m in Sources */,
+                EB217FB81FD42188003F5A8F /* UserFloorWarmViewCtrl.m in Sources */,
+                0477DC531DA9F3CC0077FA52 /* SHA1.m in Sources */,
+                04DE1EB31AD6AEE000D49E2F /* UIButton+WebCache.m in Sources */,
+                EB1717B21FF614BB00CBDB81 /* EngineerMonitorViewCtrl.m in Sources */,
+                EB7333F1204102DF00AE60B8 /* FloorWarmRightView.m in Sources */,
+                04D719771DADD3A4002153D7 /* SSUser.m in Sources */,
+                04DE1FE71AD6B52400D49E2F /* CMNavigationController.m in Sources */,
+                04DE1DDB1AD68C5E00D49E2F /* AppDelegate.m in Sources */,
+                3496B75A1FCAF3C5005F4857 /* SignalView.m in Sources */,
+                EBF5D4311FCC591A0014D5F0 /* UserHuiYinViewController.m in Sources */,
+                04DE1E9E1AD6AEE000D49E2F /* HttpFileGetter.m in Sources */,
+                EBC71AFF203AF4EE00DD0A98 /* DVDRightView.m in Sources */,
+                EB3686011FC07A9C009973A3 /* SettingsAccountView.m in Sources */,
+                04DE1EAE1AD6AEE000D49E2F /* SDWebImageDecoder.m in Sources */,
+                04DE1EA61AD6AEE000D49E2F /* SBJson4StreamTokeniser.m in Sources */,
+                04DE1EA71AD6AEE000D49E2F /* SBJson4StreamWriter.m in Sources */,
+                EB217FBE1FD423B8003F5A8F /* UserAirCleanViewCtrl.m in Sources */,
+                EB17179D1FF60C6900CBDB81 /* EngineerElectronicAutoViewCtrl.m in Sources */,
+                342389B32026F48700885405 /* Groups2PickerView.m in Sources */,
+                3425E9891FE5687C003559F7 /* CheckButton.m in Sources */,
+                341C60C91FDCFD7D003A5490 /* EPlusLayerView.m in Sources */,
+                EB4E39E62027423D00533575 /* HandtoHandLineCheckView.m in Sources */,
+                EB0968BF1FE2B4C900CF422F /* EngineerElectronicSysConfigViewCtrl.m in Sources */,
+                04DE1E9B1AD6AEE000D49E2F /* ASINetworkQueue.m in Sources */,
+                04DE1EB11AD6AEE000D49E2F /* SDWebImageManager.m in Sources */,
+                3425E98F1FE575A4003559F7 /* PlayerSettingsPannel.m in Sources */,
+                04DE1EAA1AD6AEE000D49E2F /* MKAnnotationView+WebCache.m in Sources */,
+                EB1717A91FF6145100CBDB81 /* EngineerCleanWaterViewCtrl.m in Sources */,
+                0479345B1DB0A7AA0066BABC /* JCShareView.m in Sources */,
+                3454276E2046DED100E1A436 /* FilterGraphView.swift in Sources */,
+                04DE1E861AD6AEE000D49E2F /* ConfigureSetting.m in Sources */,
+                EBC71B29204100A200DD0A98 /* ElectronicAutoRightView.m in Sources */,
+                EB1A55D91FEF4E0D000B18E6 /* EngineerCameraViewController.m in Sources */,
+                EB795B4E2042DEDE005D1F47 /* AudioMatrixSettingViewCtrl.m in Sources */,
+                EB09C4851FD2A64A00776540 /* UserElectronicAutoViewCtrl.m in Sources */,
+                EB1717A61FF6143600CBDB81 /* EngineerAirCleanViewCtrl.m in Sources */,
+                34C5A0D5204EDD510024C06B /* IconLayerView.m in Sources */,
+                EB1717AC1FF6147200CBDB81 /* EngineerAddWetViewCtrl.m in Sources */,
+                EBDF1C191FC5CCD700A756EA /* UserScnarioConfigViewController.m in Sources */,
+                04D719781DADD3A4002153D7 /* WSUser.m in Sources */,
+                EB795B682042E8C1005D1F47 /* XinHaoFaShengQi_UIView.m in Sources */,
+                04D9A0EB1DAF83E0008DF2E6 /* AudioPlayer.m in Sources */,
+                04DE1E971AD6AEE000D49E2F /* ASIDownloadCache.m in Sources */,
+                EB3B73B21FE6382F001941CF /* EngineerWirlessYaoBaoViewCtrl.m in Sources */,
+                EB09C4B11FD3B27200776540 /* MapMarkerLayer.m in Sources */,
+                3419283D1FD3CC760014695B /* DragCellView.m in Sources */,
+                EB2982151FD58699007B5C20 /* EngineerMeetingRoomListViewCtrl.m in Sources */,
+                EB795B562042E838005D1F47 /* ZaoShengMen_UIView.m in Sources */,
+                EB948A49204EE3550018C80A /* JLightSliderView.m in Sources */,
+                EB1717A31FF6141A00CBDB81 /* EngineerFloorWarmViewCtrl.m in Sources */,
+                EBF831E31FD03A110096E6EC /* UserVideoDVDDiskViewCtrl.m in Sources */,
+                EB795B652042E8A1005D1F47 /* ZiDongHunYin_UIView.m in Sources */,
+                EB09C4A21FD3A00200776540 /* UserAirConditionViewCtrl.m in Sources */,
+                EB1717931FF5E6B600CBDB81 /* EngineerTouYingJiViewCtrl.m in Sources */,
+                EBC71B23203F011E00DD0A98 /* AirConditionRightView.m in Sources */,
+                341F0F471EC2FC500027C800 /* WSCode.m in Sources */,
+                04DE1EAD1AD6AEE000D49E2F /* SDWebImageCompat.m in Sources */,
+                34DC473F1FD6984400ACB589 /* ColumnView.m in Sources */,
+                EBAE5BB71FDFFBD700C10C4D /* EngineerScenarioListViewCtrl.m in Sources */,
+                EB5F7F871FD593F800351888 /* EngineerSysSelectViewCtrl.m in Sources */,
+                04DE1EAC1AD6AEE000D49E2F /* SDImageCache.m in Sources */,
+                EBDF1BFF1FC5BA0900A756EA /* UserMettingRoomConfig.m in Sources */,
+                EB09EF371FD9801400C968CA /* EngineerEnvDevicePluginViewCtrl.m in Sources */,
+                04D27A2A1AF8470100305E39 /* SelDataViewController.m in Sources */,
+                3426F25E204EC6CE0078AFE7 /* SIconSelectView.m in Sources */,
+                EB29820C1FD57FC2007B5C20 /* EngineerShootQRCode.m in Sources */,
+                EB09C47C1FD25B4300776540 /* UserLightConfigViewCtrl.m in Sources */,
+                345492FC1FE638F300793E2E /* SlideButton.m in Sources */,
+                EB16474A203ACD6300E71483 /* GongLvFangDaQiView.m in Sources */,
+                EB795B622042E890005D1F47 /* HuiShengXiaoChu_UIView.m in Sources */,
+                345487C8204BE4F60068126B /* APBaseView.m in Sources */,
+                EB1A55F41FEF80D7000B18E6 /* EngineerRemoteVideoViewCtrl.m in Sources */,
+                EB5CF0411FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m in Sources */,
+                EB1A56151FEF8F29000B18E6 /* EngineerVideoProcessViewCtrl.m in Sources */,
+                04D719881DADE7D4002153D7 /* ActivityViewController.m in Sources */,
+                EB7333FD20410A7E00AE60B8 /* MonitorRightView.m in Sources */,
+                EB17179A1FF60C2600CBDB81 /* EngineerAireConditionViewCtrl.m in Sources */,
+                04DE1E8A1AD6AEE000D49E2F /* MaskRender.m in Sources */,
+                EBC71B0B203AF90700DD0A98 /* VideoProcessRightView.m in Sources */,
+                04DE1EB21AD6AEE000D49E2F /* SDWebImagePrefetcher.m in Sources */,
+                EB217FCC1FD42660003F5A8F /* UserAddWetViewCtrl.m in Sources */,
+                04D7197F1DADE098002153D7 /* NSDate-Helper.m in Sources */,
+                EB09EF2F1FD978C700C968CA /* EngineerToUseTeslariViewCtrl.m in Sources */,
+                34686C9E1ED025CB001749A1 /* ConverUtil.m in Sources */,
+                EB235011204D9648008F6CA2 /* XDPickView.m in Sources */,
+                EB795B482042DD6F005D1F47 /* AudioOutputSettingViewCtrl.m in Sources */,
+                34141699204BC3D5002E0B00 /* AudioMatrixView.m in Sources */,
+                3425E98C1FE571CE003559F7 /* ComSettingView.m in Sources */,
+                EB3B739A1FE61B18001941CF /* EngineerPlayerSettingsViewCtrl.m in Sources */,
+                0477DC581DA9F4700077FA52 /* Base64.m in Sources */,
+                049BA6601AF7B64000F17584 /* DataBase.m in Sources */,
+                EB795B532042E81F005D1F47 /* ZengYi_UIView.m in Sources */,
+                049BA6661AF7B82700F17584 /* ChooseCountryViewController.m in Sources */,
+                04DE1E9D1AD6AEE000D49E2F /* DataCenter.m in Sources */,
+                04DE1EA51AD6AEE000D49E2F /* SBJson4StreamParserState.m in Sources */,
+                341C60C41FDCF1EA003A5490 /* ECPlusSelectView.m in Sources */,
+                04DE1E931AD6AEE000D49E2F /* Utilities.m in Sources */,
+                EB1A04601FC7156C007CC1F2 /* UserAudioConfigViewController.m in Sources */,
+                04DE1E981AD6AEE000D49E2F /* ASIFormDataRequest.m in Sources */,
+                EB7333FA204108B000AE60B8 /* AddWetRightView.m in Sources */,
+                04DE1DD81AD68C5E00D49E2F /* main.m in Sources */,
+                04DE1EA11AD6AEE000D49E2F /* NetworkChecker.m in Sources */,
+                EBC71B1D203C497500DD0A98 /* TouYingJiRightView.m in Sources */,
+                EB1717901FF5E44B00CBDB81 /* EngineerLuBoJiViewController.m in Sources */,
+                EB1717AF1FF6149C00CBDB81 /* EngineerDoorAccessViewCtrl.m in Sources */,
+                EBC71B26203F058100DD0A98 /* AirConditionComIRView.m in Sources */,
+                EB5F7F951FD59D6B00351888 /* EngineerPortSettingView.m in Sources */,
+                EBC71B20203EEB8600DD0A98 /* LightRightView.m in Sources */,
+                EB795B6B2042E8D3005D1F47 /* DianPing_UIView.m in Sources */,
+                EB3685FD1FC07A5A009973A3 /* SettingsViewView.m in Sources */,
+                EB1717B81FF6150400CBDB81 /* EngineerScenarioSettingsViewCtrl.m in Sources */,
+                3421EA2D1FC4136600DC5378 /* CustomPickerView.m in Sources */,
+                04DE1E8B1AD6AEE000D49E2F /* Progress7View.m in Sources */,
+                EB09EF311FD97CB500C968CA /* EngineerAudioDevicePluginViewCtrl.m in Sources */,
+                04DE1EB41AD6AEE000D49E2F /* UIImage+GIF.m in Sources */,
+                EBC71B05203AF72D00DD0A98 /* CameraRightView.m in Sources */,
+                EB3B73B51FE6395C001941CF /* EngineerSliderView.m in Sources */,
+                04DE1EA21AD6AEE000D49E2F /* Reachability.m in Sources */,
+                EB1717971FF5F5AB00CBDB81 /* EngineerLightViewController.m in Sources */,
+                EB17178D1FF5DF6B00CBDB81 /* EngineerTVViewController.m in Sources */,
+                04DE1EA91AD6AEE000D49E2F /* SBJson4Writer.m in Sources */,
+                EBC71B1A203C496500DD0A98 /* LuBoJiRightView.m in Sources */,
+                EBD79C0F204BBC2400FD534C /* YinPinProcessCodeUIView.m in Sources */,
+                EB36AAB21FCD939E009A0FD8 /* UserYouXianViewController.m in Sources */,
+                EBAE5BBB1FE0070600C10C4D /* EngineerPresetScenarioViewCtrl.m in Sources */,
+                04DE1E9A1AD6AEE000D49E2F /* ASIInputStream.m in Sources */,
+                341928401FD3D6200014695B /* OutputScreenView.m in Sources */,
+                04DE1EAB1AD6AEE000D49E2F /* NSData+GIF.m in Sources */,
+                EB5F7F981FD59D8400351888 /* EngineerDNSSettingView.m in Sources */,
+                EB164747203AC95D00E71483 /* WirelessMeetingView.m in Sources */,
+                EBF831ED1FD03EFA0096E6EC /* UserVideoLuBoJiViewCtrl.m in Sources */,
+                34217A6F1FCE98200006701C /* UserVideoConfigView.m in Sources */,
+                04DE1E901AD6AEE000D49E2F /* UIImage+ImageEffects.m in Sources */,
+                EB795B5F2042E87C005D1F47 /* YanShiQi_UIView.m in Sources */,
+                04DE1EBF1AD6AF7900D49E2F /* User.m in Sources */,
+                EBC71B17203C487000DD0A98 /* TVViewRightView.m in Sources */,
+                EB1717A01FF613EC00CBDB81 /* EngineerNewWindViewCtrl.m in Sources */,
+                EB7333F72041071D00AE60B8 /* CleanWaterRightView.m in Sources */,
+                EB73340020410B5100AE60B8 /* DoorAccessRightView.m in Sources */,
+                EB4EC1221FE7FC3B000B3101 /* EngineerWirelessMeetingViewCtrl.m in Sources */,
+                EB4E39E320273F6100533575 /* HandtoHandSettingsView.m in Sources */,
+                04DE1EA01AD6AEE000D49E2F /* WebClient.m in Sources */,
+                EB1B90FE2046E6B00076EEEC /* HunyinYinpinchuliViewCtrl.m in Sources */,
+                EB1A55C21FE93CD4000B18E6 /* EngineerAudioProcessViewCtrl.m in Sources */,
+                04DE1EA81AD6AEE000D49E2F /* SBJson4StreamWriterState.m in Sources */,
+                341671881FBA97BD001D33D0 /* HomeViewController.m in Sources */,
+                EBC71B2C204100DD00DD0A98 /* NewWindRightView.m in Sources */,
+                342814231FE34BF100170D11 /* PowerSettingView.m in Sources */,
+                EBEA7C221FBCAF260028F0E8 /* AreaPickView.m in Sources */,
+                04DE1E9F1AD6AEE000D49E2F /* iHttpAdmin.m in Sources */,
+                049ECAC21C8D694400A611D8 /* DataMatrix.mm in Sources */,
+                EB4EC11C1FE7F164000B3101 /* EngineerHunYinSysViewController.m in Sources */,
+                04DE1EB01AD6AEE000D49E2F /* SDWebImageDownloaderOperation.m in Sources */,
+                34217A721FCE9C160006701C /* StickerLayerView.m in Sources */,
+                EB03F53F1FBDE8FB00865541 /* SettingsViewController.m in Sources */,
+                EB03F54D1FBDEC6000865541 /* UserHomeViewController.m in Sources */,
+                04DE1E951AD6AEE000D49E2F /* ASIDataCompressor.m in Sources */,
+                04DE1EAF1AD6AEE000D49E2F /* SDWebImageDownloader.m in Sources */,
+                EBC71B14203C3A3200DD0A98 /* PinJiePingRightView.m in Sources */,
+                04DE1EA41AD6AEE000D49E2F /* SBJson4StreamParser.m in Sources */,
+                3421EA301FC4161300DC5378 /* ColumnsView.m in Sources */,
+                04DE1EA31AD6AEE000D49E2F /* SBJson4Parser.m in Sources */,
+                3425E9921FE5763B003559F7 /* WirlessYaoBaoViewSettingsView.m in Sources */,
+                EBA16C622046EA6700FC6E1F /* JunHengQi_UIView.m in Sources */,
+                EB1A55C71FEA919C000B18E6 /* EngineerPVExpendViewCtrl.m in Sources */,
+                EBCA834B1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m in Sources */,
+                04DE1EB51AD6AEE000D49E2F /* UIImageView+WebCache.m in Sources */,
+                34DC47421FD6DD9300ACB589 /* CircleProgressView.m in Sources */,
+                04DE1E8E1AD6AEE000D49E2F /* UIButton+Color.m in Sources */,
+                EB795B5C2042E861005D1F47 /* YaXianQi_UIView.m in Sources */,
+                341671841FBA9765001D33D0 /* SignupViewController.m in Sources */,
+                EB03F5491FBDEB8900865541 /* EnginnerHomeViewController.m in Sources */,
+                343733AE1FE402E80071C902 /* JHSlideView.m in Sources */,
+                EBF831E91FD03EC90096E6EC /* UserVideoCameraSettingsViewCtrl.m in Sources */,
+                EB3685FB1FC07A42009973A3 /* SettingsUserView.m in Sources */,
+                EBF6A7481FC861D400260FF0 /* UserWuXianHuaTongViewCtrl.m in Sources */,
+                EB235016204D9BB2008F6CA2 /* wsDB.m in Sources */,
+                341671811FBA974C001D33D0 /* WellcomeViewController.m in Sources */,
+                04DE1E911AD6AEE000D49E2F /* UILabel+ContentSize.m in Sources */,
+                EBF831E71FD03E4B0096E6EC /* UserVideoRemoteShiXunViewCtrl.m in Sources */,
+                0477DC5B1DA9F4BA0077FA52 /* WaitDialog.m in Sources */,
+                EB1A55D21FEAA10E000B18E6 /* EngineerDVDViewController.m in Sources */,
+                EB09EF351FD9800300C968CA /* EngineerVedioDevicePluginViewCtrl.m in Sources */,
+                EB5CF03F1FD3DC92007958C9 /* UserNewWindViewCtrl.m in Sources */,
+                EB7333F42041046400AE60B8 /* AirCleanRightView.m in Sources */,
+                34A8965320443184007934E1 /* GradeLineView.m in Sources */,
+                EBF6A72C1FC8486000260FF0 /* UserAudioPlayerSettingsViewCtrl.m in Sources */,
+                04DE1E941AD6AEE000D49E2F /* ASIAuthenticationDialog.m in Sources */,
+                049ECAC51C8D694400A611D8 /* QREncoder.mm in Sources */,
+                EB795B452042DD2B005D1F47 /* AudioInputSettingViewCtrl.m in Sources */,
+                EB1717B51FF614DB00CBDB81 /* EngineerInfoCollectViewCtrl.m in Sources */,
+            );
+            runOnlyForDeploymentPostprocessing = 0;
+        };
+        04DE1DE71AD68C5E00D49E2F /* Sources */ = {
+            isa = PBXSourcesBuildPhase;
+            buildActionMask = 2147483647;
+            files = (
+                04DE1DF21AD68C5E00D49E2F /* ExasForiPadTests.m in Sources */,
+            );
+            runOnlyForDeploymentPostprocessing = 0;
+        };
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		04DE1DED1AD68C5E00D49E2F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 04DE1DD11AD68C5E00D49E2F /* veenoon */;
-			targetProxy = 04DE1DEC1AD68C5E00D49E2F /* PBXContainerItemProxy */;
-		};
+        04DE1DED1AD68C5E00D49E2F /* PBXTargetDependency */ = {
+            isa = PBXTargetDependency;
+            target = 04DE1DD11AD68C5E00D49E2F /* veenoon */;
+            targetProxy = 04DE1DEC1AD68C5E00D49E2F /* PBXContainerItemProxy */;
+        };
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		04DE1DDF1AD68C5E00D49E2F /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				04DE1DE01AD68C5E00D49E2F /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		04DE1DE41AD68C5E00D49E2F /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				04DE1DE51AD68C5E00D49E2F /* Base */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
+        04DE1DDF1AD68C5E00D49E2F /* Main.storyboard */ = {
+            isa = PBXVariantGroup;
+            children = (
+                04DE1DE01AD68C5E00D49E2F /* Base */,
+            );
+            name = Main.storyboard;
+            sourceTree = "<group>";
+        };
+        04DE1DE41AD68C5E00D49E2F /* LaunchScreen.xib */ = {
+            isa = PBXVariantGroup;
+            children = (
+                04DE1DE51AD68C5E00D49E2F /* Base */,
+            );
+            name = LaunchScreen.xib;
+            sourceTree = "<group>";
+        };
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		04DE1DF31AD68C5E00D49E2F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: AS-CN (Beijing) Co., Ltd.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: AS-CN (Beijing) Co., Ltd.";
-				COPY_PHASE_STRIP = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "a541cb78-affc-487e-9b13-2700b44a0eff";
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = 2;
-			};
-			name = Debug;
-		};
-		04DE1DF41AD68C5E00D49E2F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: AS-CN (Beijing) Co., Ltd.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: AS-CN (Beijing) Co., Ltd.";
-				COPY_PHASE_STRIP = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "a541cb78-affc-487e-9b13-2700b44a0eff";
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = 2;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		04DE1DF61AD68C5E00D49E2F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: AS-CN (Beijing) Co., Ltd.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: AS-CN (Beijing) Co., Ltd.";
-				DEVELOPMENT_TEAM = 9FDG53LV84;
-				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/SupportAddons/cssp-ios-sdk",
-					"$(PROJECT_DIR)/SupportAddons/cssp-ios-sdk/Third-Party",
-				);
-				GCC_PREFIX_HEADER = "veenoon/veenoon-Prefix.pch";
-				INFOPLIST_FILE = "$(SRCROOT)/veenoon/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/SupportAddons/UMAnalytics_Sdk_3.1.8",
-					"$(PROJECT_DIR)/SupportAddons/Face++/FaceppLocalDetectorSDK",
-					"$(PROJECT_DIR)/SupportAddons/ZBarSDK",
-				);
-				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sz.veenoon;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a541cb78-affc-487e-9b13-2700b44a0eff";
-				PROVISIONING_PROFILE_SPECIFIER = veenoon;
-				SWIFT_OBJC_BRIDGING_HEADER = "veenoon/Engineer/Audio/RIghtView/AudioProcess/veenoon-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
-			};
-			name = Debug;
-		};
-		04DE1DF71AD68C5E00D49E2F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: AS-CN (Beijing) Co., Ltd.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: AS-CN (Beijing) Co., Ltd.";
-				DEVELOPMENT_TEAM = 9FDG53LV84;
-				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/SupportAddons/cssp-ios-sdk",
-					"$(PROJECT_DIR)/SupportAddons/cssp-ios-sdk/Third-Party",
-				);
-				GCC_PREFIX_HEADER = "veenoon/veenoon-Prefix.pch";
-				INFOPLIST_FILE = "$(SRCROOT)/veenoon/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/SupportAddons/UMAnalytics_Sdk_3.1.8",
-					"$(PROJECT_DIR)/SupportAddons/Face++/FaceppLocalDetectorSDK",
-					"$(PROJECT_DIR)/SupportAddons/ZBarSDK",
-				);
-				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sz.veenoon;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a541cb78-affc-487e-9b13-2700b44a0eff";
-				PROVISIONING_PROFILE_SPECIFIER = veenoon;
-				SWIFT_OBJC_BRIDGING_HEADER = "veenoon/Engineer/Audio/RIghtView/AudioProcess/veenoon-Bridging-Header.h";
-				SWIFT_VERSION = 4.0;
-			};
-			name = Release;
-		};
-		04DE1DF91AD68C5E00D49E2F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = ExasForiPadTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/veenoon.app/veenoon";
-			};
-			name = Debug;
-		};
-		04DE1DFA1AD68C5E00D49E2F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = ExasForiPadTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/veenoon.app/veenoon";
-			};
-			name = Release;
-		};
+        04DE1DF31AD68C5E00D49E2F /* Debug */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                ALWAYS_SEARCH_USER_PATHS = NO;
+                CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+                CLANG_CXX_LIBRARY = "libc++";
+                CLANG_ENABLE_MODULES = YES;
+                CLANG_ENABLE_OBJC_ARC = YES;
+                CLANG_WARN_BOOL_CONVERSION = YES;
+                CLANG_WARN_CONSTANT_CONVERSION = YES;
+                CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+                CLANG_WARN_EMPTY_BODY = YES;
+                CLANG_WARN_ENUM_CONVERSION = YES;
+                CLANG_WARN_INT_CONVERSION = YES;
+                CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+                CLANG_WARN_UNREACHABLE_CODE = YES;
+                CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+                CODE_SIGN_IDENTITY = "iPhone Distribution: AS-CN (Beijing) Co., Ltd.";
+                "CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: AS-CN (Beijing) Co., Ltd.";
+                COPY_PHASE_STRIP = NO;
+                ENABLE_STRICT_OBJC_MSGSEND = YES;
+                GCC_C_LANGUAGE_STANDARD = gnu99;
+                GCC_DYNAMIC_NO_PIC = NO;
+                GCC_OPTIMIZATION_LEVEL = 0;
+                GCC_PREPROCESSOR_DEFINITIONS = (
+                    "DEBUG=1",
+                    "$(inherited)",
+                );
+                GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+                GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+                GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+                GCC_WARN_UNDECLARED_SELECTOR = YES;
+                GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+                GCC_WARN_UNUSED_FUNCTION = YES;
+                GCC_WARN_UNUSED_VARIABLE = YES;
+                IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+                MTL_ENABLE_DEBUG_INFO = YES;
+                ONLY_ACTIVE_ARCH = YES;
+                PROVISIONING_PROFILE = "a541cb78-affc-487e-9b13-2700b44a0eff";
+                SDKROOT = iphoneos;
+                TARGETED_DEVICE_FAMILY = 2;
+            };
+            name = Debug;
+        };
+        04DE1DF41AD68C5E00D49E2F /* Release */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                ALWAYS_SEARCH_USER_PATHS = NO;
+                CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+                CLANG_CXX_LIBRARY = "libc++";
+                CLANG_ENABLE_MODULES = YES;
+                CLANG_ENABLE_OBJC_ARC = YES;
+                CLANG_WARN_BOOL_CONVERSION = YES;
+                CLANG_WARN_CONSTANT_CONVERSION = YES;
+                CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+                CLANG_WARN_EMPTY_BODY = YES;
+                CLANG_WARN_ENUM_CONVERSION = YES;
+                CLANG_WARN_INT_CONVERSION = YES;
+                CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+                CLANG_WARN_UNREACHABLE_CODE = YES;
+                CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+                CODE_SIGN_IDENTITY = "iPhone Distribution: AS-CN (Beijing) Co., Ltd.";
+                "CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: AS-CN (Beijing) Co., Ltd.";
+                COPY_PHASE_STRIP = YES;
+                ENABLE_NS_ASSERTIONS = NO;
+                ENABLE_STRICT_OBJC_MSGSEND = YES;
+                GCC_C_LANGUAGE_STANDARD = gnu99;
+                GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+                GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+                GCC_WARN_UNDECLARED_SELECTOR = YES;
+                GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+                GCC_WARN_UNUSED_FUNCTION = YES;
+                GCC_WARN_UNUSED_VARIABLE = YES;
+                IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+                MTL_ENABLE_DEBUG_INFO = NO;
+                PROVISIONING_PROFILE = "a541cb78-affc-487e-9b13-2700b44a0eff";
+                SDKROOT = iphoneos;
+                TARGETED_DEVICE_FAMILY = 2;
+                VALIDATE_PRODUCT = YES;
+            };
+            name = Release;
+        };
+        04DE1DF61AD68C5E00D49E2F /* Debug */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+                ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+                CLANG_ENABLE_MODULES = YES;
+                CODE_SIGN_IDENTITY = "iPhone Distribution: AS-CN (Beijing) Co., Ltd.";
+                "CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: AS-CN (Beijing) Co., Ltd.";
+                DEVELOPMENT_TEAM = 9FDG53LV84;
+                ENABLE_BITCODE = NO;
+                FRAMEWORK_SEARCH_PATHS = (
+                    "$(inherited)",
+                    "$(PROJECT_DIR)/SupportAddons/cssp-ios-sdk",
+                    "$(PROJECT_DIR)/SupportAddons/cssp-ios-sdk/Third-Party",
+                );
+                GCC_PREFIX_HEADER = "veenoon/veenoon-Prefix.pch";
+                INFOPLIST_FILE = "$(SRCROOT)/veenoon/Info.plist";
+                LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+                LIBRARY_SEARCH_PATHS = (
+                    "$(inherited)",
+                    "$(PROJECT_DIR)/SupportAddons/UMAnalytics_Sdk_3.1.8",
+                    "$(PROJECT_DIR)/SupportAddons/Face++/FaceppLocalDetectorSDK",
+                    "$(PROJECT_DIR)/SupportAddons/ZBarSDK",
+                );
+                OTHER_LDFLAGS = "";
+                PRODUCT_BUNDLE_IDENTIFIER = com.sz.veenoon;
+                PRODUCT_NAME = "$(TARGET_NAME)";
+                PROVISIONING_PROFILE = "a541cb78-affc-487e-9b13-2700b44a0eff";
+                PROVISIONING_PROFILE_SPECIFIER = veenoon;
+                SWIFT_OBJC_BRIDGING_HEADER = "veenoon/Engineer/Audio/RIghtView/AudioProcess/veenoon-Bridging-Header.h";
+                SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+                SWIFT_VERSION = 4.0;
+            };
+            name = Debug;
+        };
+        04DE1DF71AD68C5E00D49E2F /* Release */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+                ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+                CLANG_ENABLE_MODULES = YES;
+                CODE_SIGN_IDENTITY = "iPhone Distribution: AS-CN (Beijing) Co., Ltd.";
+                "CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: AS-CN (Beijing) Co., Ltd.";
+                DEVELOPMENT_TEAM = 9FDG53LV84;
+                ENABLE_BITCODE = NO;
+                FRAMEWORK_SEARCH_PATHS = (
+                    "$(inherited)",
+                    "$(PROJECT_DIR)/SupportAddons/cssp-ios-sdk",
+                    "$(PROJECT_DIR)/SupportAddons/cssp-ios-sdk/Third-Party",
+                );
+                GCC_PREFIX_HEADER = "veenoon/veenoon-Prefix.pch";
+                INFOPLIST_FILE = "$(SRCROOT)/veenoon/Info.plist";
+                LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+                LIBRARY_SEARCH_PATHS = (
+                    "$(inherited)",
+                    "$(PROJECT_DIR)/SupportAddons/UMAnalytics_Sdk_3.1.8",
+                    "$(PROJECT_DIR)/SupportAddons/Face++/FaceppLocalDetectorSDK",
+                    "$(PROJECT_DIR)/SupportAddons/ZBarSDK",
+                );
+                OTHER_LDFLAGS = "";
+                PRODUCT_BUNDLE_IDENTIFIER = com.sz.veenoon;
+                PRODUCT_NAME = "$(TARGET_NAME)";
+                PROVISIONING_PROFILE = "a541cb78-affc-487e-9b13-2700b44a0eff";
+                PROVISIONING_PROFILE_SPECIFIER = veenoon;
+                SWIFT_OBJC_BRIDGING_HEADER = "veenoon/Engineer/Audio/RIghtView/AudioProcess/veenoon-Bridging-Header.h";
+                SWIFT_VERSION = 4.0;
+            };
+            name = Release;
+        };
+        04DE1DF91AD68C5E00D49E2F /* Debug */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+                BUNDLE_LOADER = "$(TEST_HOST)";
+                FRAMEWORK_SEARCH_PATHS = (
+                    "$(SDKROOT)/Developer/Library/Frameworks",
+                    "$(inherited)",
+                );
+                GCC_PREPROCESSOR_DEFINITIONS = (
+                    "DEBUG=1",
+                    "$(inherited)",
+                );
+                INFOPLIST_FILE = ExasForiPadTests/Info.plist;
+                LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+                PRODUCT_NAME = "$(TARGET_NAME)";
+                TEST_HOST = "$(BUILT_PRODUCTS_DIR)/veenoon.app/veenoon";
+            };
+            name = Debug;
+        };
+        04DE1DFA1AD68C5E00D49E2F /* Release */ = {
+            isa = XCBuildConfiguration;
+            buildSettings = {
+                ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+                BUNDLE_LOADER = "$(TEST_HOST)";
+                FRAMEWORK_SEARCH_PATHS = (
+                    "$(SDKROOT)/Developer/Library/Frameworks",
+                    "$(inherited)",
+                );
+                INFOPLIST_FILE = ExasForiPadTests/Info.plist;
+                LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+                PRODUCT_NAME = "$(TARGET_NAME)";
+                TEST_HOST = "$(BUILT_PRODUCTS_DIR)/veenoon.app/veenoon";
+            };
+            name = Release;
+        };
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		04DE1DCD1AD68C5E00D49E2F /* Build configuration list for PBXProject "veenoon" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				04DE1DF31AD68C5E00D49E2F /* Debug */,
-				04DE1DF41AD68C5E00D49E2F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		04DE1DF51AD68C5E00D49E2F /* Build configuration list for PBXNativeTarget "veenoon" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				04DE1DF61AD68C5E00D49E2F /* Debug */,
-				04DE1DF71AD68C5E00D49E2F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		04DE1DF81AD68C5E00D49E2F /* Build configuration list for PBXNativeTarget "veenoonTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				04DE1DF91AD68C5E00D49E2F /* Debug */,
-				04DE1DFA1AD68C5E00D49E2F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
+        04DE1DCD1AD68C5E00D49E2F /* Build configuration list for PBXProject "veenoon" */ = {
+            isa = XCConfigurationList;
+            buildConfigurations = (
+                04DE1DF31AD68C5E00D49E2F /* Debug */,
+                04DE1DF41AD68C5E00D49E2F /* Release */,
+            );
+            defaultConfigurationIsVisible = 0;
+            defaultConfigurationName = Release;
+        };
+        04DE1DF51AD68C5E00D49E2F /* Build configuration list for PBXNativeTarget "veenoon" */ = {
+            isa = XCConfigurationList;
+            buildConfigurations = (
+                04DE1DF61AD68C5E00D49E2F /* Debug */,
+                04DE1DF71AD68C5E00D49E2F /* Release */,
+            );
+            defaultConfigurationIsVisible = 0;
+            defaultConfigurationName = Release;
+        };
+        04DE1DF81AD68C5E00D49E2F /* Build configuration list for PBXNativeTarget "veenoonTests" */ = {
+            isa = XCConfigurationList;
+            buildConfigurations = (
+                04DE1DF91AD68C5E00D49E2F /* Debug */,
+                04DE1DFA1AD68C5E00D49E2F /* Release */,
+            );
+            defaultConfigurationIsVisible = 0;
+            defaultConfigurationName = Release;
+        };
 /* End XCConfigurationList section */
-	};
-	rootObject = 04DE1DCA1AD68C5E00D49E2F /* Project object */;
+    };
+    rootObject = 04DE1DCA1AD68C5E00D49E2F /* Project object */;
 }

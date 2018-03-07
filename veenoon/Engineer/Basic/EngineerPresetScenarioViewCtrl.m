@@ -36,7 +36,7 @@
 #import "EngineerInfoCollectViewCtrl.h"
 #import "EngineerScenarioSettingsViewCtrl.h"
 
-@interface EngineerPresetScenarioViewCtrl<ECPlusSelectViewDelegate> () {
+@interface EngineerPresetScenarioViewCtrl()  <ECPlusSelectViewDelegate>{
     ECPlusSelectView *ecp;
     
     UIScrollView *_audioScroll;

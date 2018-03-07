@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-#import "ECPlusSelectView.h"
 
-@interface EngineerPresetScenarioViewCtrl<ECPlusSelectViewDelegate> : BaseViewController {
+
+@interface EngineerPresetScenarioViewCtrl : BaseViewController {
     NSMutableDictionary *_meetingRoomDic;
     NSString *_scenarioName;
     
