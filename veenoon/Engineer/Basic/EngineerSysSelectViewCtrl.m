@@ -137,7 +137,7 @@
         [_dnsView._portLvPicker removeFromSuperview];
     }
     if (_dnsView._checkPicker) {
-        [dic setObject:_dnsView._checkPicker._unitString forKey:@"portLv"];
+        [dic setObject:_dnsView._checkPicker._unitString forKey:@"checkPosition"];
         [_dnsView._checkPicker removeFromSuperview];
     }
     if (_dnsView._digitPicker) {
@@ -269,7 +269,7 @@
 }
 
 - (void) signupAction:(id)sender{
-    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -14,7 +14,7 @@
 - (void) portViewHandleTapGesture;
 @end
 
-@interface EngineerPortSettingView <UITableViewDelegate,UITableViewDataSource> : UIView {
+@interface EngineerPortSettingView <UITableViewDelegate,UITableViewDataSource, CustomPickerViewDelegate> : UIView {
     CustomPickerView *_digitPicker;
     CustomPickerView *_portPicker;
     CustomPickerView *_portTypePicker;

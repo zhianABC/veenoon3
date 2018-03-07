@@ -9,7 +9,7 @@
 #import "EngineerPortSettingView.h"
 #import "CustomPickerView.h"
 
-@interface EngineerPortSettingView () <UITableViewDelegate,UITableViewDataSource> {
+@interface EngineerPortSettingView () <UITableViewDelegate,UITableViewDataSource, CustomPickerViewDelegate> {
     int startX;
     int rowGap;
 }
@@ -70,8 +70,8 @@
         self.clipsToBounds = YES;
         _selectedRow = -1;
         _previousSelectedRow=-1;
-        startX = 80;
-        rowGap = (SCREEN_WIDTH - startX)/5;
+        startX = 40;
+        rowGap = (SCREEN_WIDTH - startX)/6;
         
         UILabel *_portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, ENGINEER_PORT_VIEW_HEIGHT, SCREEN_WIDTH-80, 20)];
         _portDNSLabel.backgroundColor = [UIColor clearColor];
@@ -183,8 +183,6 @@
         [_dnsSettingsBtn addTarget:self action:@selector(dnsAction:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:_dnsSettingsBtn];
         
-        
-        
     }
     return self;
 }
@@ -210,7 +208,12 @@
 }
 
 - (void) okAction:(id)sender{
+    CGRect rc = self.frame;
+    rc.origin.x = -SCREEN_WIDTH;
     
+    [UIView beginAnimations:nil context:nil];
+    self.frame = rc;
+    [UIView commitAnimations];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -219,7 +222,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == _selectedRow) {
-        return 150;
+        return 180;
     }
     return 50;
 }
@@ -232,7 +235,10 @@
         cell.backgroundColor = [UIColor clearColor];
     }
     if (_selectedRow == indexPath.row) {
+        _tableView.scrollEnabled=NO;
         return cell;
+    } else if (_selectedRow == -1) {
+        _tableView.scrollEnabled=YES;
     }
     
     NSMutableDictionary *dic = [self._portList objectAtIndex:indexPath.row];
@@ -314,59 +320,73 @@
     }
     if (_portPicker == nil) {
         _portPicker = [[CustomPickerView alloc] initWithFrame:CGRectMake(startX, 5, 100, 150) withGrayOrLight:@"light"];
+        [_portPicker removeArray];
         _portPicker._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
         [_portPicker selectRow:0 inComponent:0];
         _portPicker._selectColor = RGB(253, 180, 0);
         _portPicker._rowNormalColor = RGB(117, 165, 186);
+        _portPicker.delegate_=self;
     }
     [cell.contentView addSubview:_portPicker];
     
     if (_portTypePicker == nil) {
         _portTypePicker = [[CustomPickerView alloc] initWithFrame:CGRectMake(startX+rowGap, 5, 100, 150) withGrayOrLight:@"light"];
+        [_portTypePicker removeArray];
         _portTypePicker._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
         [_portTypePicker selectRow:0 inComponent:0];
         _portTypePicker._selectColor = RGB(253, 180, 0);
         _portTypePicker._rowNormalColor = RGB(117, 165, 186);
+        _portTypePicker.delegate_=self;
     }
     [cell.contentView addSubview:_portTypePicker];
     if (_portLvPicker == nil) {
         _portLvPicker = [[CustomPickerView alloc] initWithFrame:CGRectMake(startX+rowGap*2, 5, 100, 150) withGrayOrLight:@"light"];
+        [_portLvPicker removeArray];
         _portLvPicker._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
         [_portLvPicker selectRow:0 inComponent:0];
         _portLvPicker._selectColor = RGB(253, 180, 0);
         _portLvPicker._rowNormalColor = RGB(117, 165, 186);
+        _portLvPicker.delegate_=self;
     }
     [cell.contentView addSubview:_portLvPicker];
     if (_digitPicker == nil) {
         _digitPicker = [[CustomPickerView alloc] initWithFrame:CGRectMake(startX+rowGap*3, 5, 100, 150) withGrayOrLight:@"light"];
+        [_digitPicker removeArray];
         _digitPicker._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
         [_digitPicker selectRow:0 inComponent:0];
         _digitPicker._selectColor = RGB(253, 180, 0);
         _digitPicker._rowNormalColor = RGB(117, 165, 186);
+        _digitPicker.delegate_=self;
     }
     [cell.contentView addSubview:_digitPicker];
     if (_checkPicker==nil) {
         _checkPicker = [[CustomPickerView alloc] initWithFrame:CGRectMake(startX+rowGap*4, 5, 100, 150) withGrayOrLight:@"light"];
+        [_checkPicker removeArray];
         _checkPicker._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
         [_checkPicker selectRow:0 inComponent:0];
         _checkPicker._selectColor = RGB(253, 180, 0);
         _checkPicker._rowNormalColor = RGB(117, 165, 186);
-        
+        _checkPicker.delegate_=self;
     }
         
     [cell.contentView addSubview:_checkPicker];
     if (_stopPicker == nil) {
         _stopPicker = [[CustomPickerView alloc] initWithFrame:CGRectMake(startX+rowGap*5, 5, 100, 150) withGrayOrLight:@"light"];
         _stopPicker._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
-        
+        [_stopPicker removeArray];
         [_stopPicker selectRow:0 inComponent:0];
         _stopPicker._selectColor = RGB(253, 180, 0);
         _stopPicker._rowNormalColor = RGB(117, 165, 186);
+        _stopPicker.delegate_=self;
     }
     [cell.contentView addSubview:_stopPicker];
     
     [_tableView reloadData];
     
     _previousSelectedRow = (int)indexPath.row;
+}
+
+- (void) didConfirmPickerValue:(NSString*) pickerValue {
+    [_tableView reloadData];
 }
 @end
