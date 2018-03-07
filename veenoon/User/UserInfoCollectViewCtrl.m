@@ -84,16 +84,19 @@
     [self drawMonthGraphic];
     [self drawDaysGraphic];
     
-    btnYear = [UIButton buttonWithColor:THEME_COLOR selColor:nil];
+    btnYear = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
     btnYear.frame  = CGRectMake(60, SCREEN_HEIGHT - 150, 50, 50);
+    [btnYear setImage:[UIImage imageNamed:@"info_collect_y.png"] forState:UIControlStateNormal];
     [self.view addSubview:btnYear];
     
-    btnMonth = [UIButton buttonWithColor:THEME_COLOR selColor:nil];
+    btnMonth = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
     btnMonth.frame  = CGRectMake(CGRectGetMaxX(btnYear.frame)+10, SCREEN_HEIGHT - 150, 50, 50);
+    [btnMonth setImage:[UIImage imageNamed:@"info_collect_m.png"] forState:UIControlStateNormal];
     [self.view addSubview:btnMonth];
     
-    btnDay = [UIButton buttonWithColor:THEME_COLOR selColor:nil];
+    btnDay = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
     btnDay.frame  = CGRectMake(CGRectGetMaxX(btnMonth.frame)+10, SCREEN_HEIGHT - 150, 50, 50);
+    [btnDay setImage:[UIImage imageNamed:@"info_collect_d.png"] forState:UIControlStateNormal];
     [self.view addSubview:btnDay];
     
     [btnYear addTarget:self
@@ -157,7 +160,7 @@
 - (void) drawYearGraphic{
     
     colYear = [[ColumnsView alloc] initWithFrame:CGRectZero];
-    colYear.xStepPixel = 75;
+    colYear.xStepPixel = 72;
     colYear.yStepPixel = 30;
     colYear.xStepValues = @[@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10",@"11",@"12"];
     colYear.yStepValues = @[@"0",@"5",@"10",@"15",@"20",@"25",@"30",@"35",@"40",@"45",@"50"];
@@ -196,7 +199,7 @@
     }
     
     colMonth = [[ColumnsView alloc] initWithFrame:CGRectZero];
-    colMonth.xStepPixel = 30;
+    colMonth.xStepPixel = 28;
     colMonth.yStepPixel = 30;
     colMonth.xStepValues = days;
     colMonth.yStepValues = @[@"0",@"5",@"10",@"15",@"20",@"25",@"30",@"35",@"40",@"45",@"50"];
@@ -226,7 +229,7 @@
     }
     
     colDay = [[ColumnsView alloc] initWithFrame:CGRectZero];
-    colDay.xStepPixel = 40;
+    colDay.xStepPixel = 38;
     colDay.yStepPixel = 30;
     colDay.xStepValues = hours;
     colDay.yStepValues = @[@"0",@"5",@"10",@"15",@"20",@"25",@"30",@"35",@"40",@"45",@"50"];
