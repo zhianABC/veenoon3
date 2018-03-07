@@ -153,7 +153,9 @@ EPlusLayerViewDelegate>
 
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
-    UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
+    UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0,
+                                                              self.frame.size.width,
+                                                              40)];
     
     UIImageView *bg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tb_header_bg.png"]];
     [header addSubview:bg];
@@ -161,7 +163,10 @@ EPlusLayerViewDelegate>
     
     NSDictionary *sec = [_data objectAtIndex:section];
     
-    UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(40, 10, SCREEN_WIDTH, 20)];
+    UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(40,
+                                                            10,
+                                                            self.frame.size.width,
+                                                            20)];
     tL.textColor = [UIColor whiteColor];
     tL.font = [UIFont systemFontOfSize:14];
     [header addSubview:tL];
@@ -178,7 +183,7 @@ EPlusLayerViewDelegate>
     }
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = CGRectMake(0, 0, SCREEN_WIDTH, 40);
+    btn.frame = CGRectMake(0, 0, self.frame.size.width, 40);
     [btn addTarget:self action:@selector(extendAction:) forControlEvents:UIControlEventTouchUpInside];
     [header addSubview:btn];
     btn.tag = section;
