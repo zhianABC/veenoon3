@@ -20,11 +20,14 @@ IconLayerViewDelegate>
     
     int _cellHeight;
 }
+@property (nonatomic, strong) NSMutableArray *_autoDatas;
+
 @end
 
 @implementation SIconSelectView
 @synthesize _icondata;
 @synthesize delegate;
+@synthesize _autoDatas;
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -36,6 +39,8 @@ IconLayerViewDelegate>
 
 
 - (void) initData{
+    
+    self._autoDatas = [NSMutableArray array];
     
     self._icondata = @[@{@"title":@"环境照明",@"icon":@"ce_l_01.png",@"iconbig":@"ce_l_01_big.png"},
                        @{@"title":@"环境控制",@"icon":@"ce_l_02.png",@"iconbig":@"ce_l_02_big.png"},
@@ -125,6 +130,8 @@ IconLayerViewDelegate>
     {
        if(section == 0)
            return 1;
+        if(section == 1)
+            return [_autoDatas count];
     }
     
     return 0;
@@ -132,6 +139,8 @@ IconLayerViewDelegate>
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    if(indexPath.section == 1)
+        return 34;
     return _cellHeight;
 }
 
@@ -155,6 +164,26 @@ IconLayerViewDelegate>
         [cell.contentView addSubview:_maskView];
 
     }
+    else if(indexPath.section == 1)
+    {
+        cell.backgroundColor = M_GREEN_COLOR;
+        
+        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(20,
+                                                                    7,
+                                                                    CGRectGetWidth(self.frame)-30, 20)];
+        titleL.backgroundColor = [UIColor clearColor];
+        [cell.contentView addSubview:titleL];
+        titleL.font = [UIFont systemFontOfSize:13];
+        titleL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+        
+        
+        NSDictionary *dic = [_autoDatas objectAtIndex:indexPath.row];
+        titleL.text = [dic objectForKey:@"title"];
+        
+        UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 1)];
+        line.backgroundColor =  M_GREEN_LINE;
+        [cell.contentView addSubview:line];
+    }
     
     
     return cell;
@@ -169,28 +198,81 @@ IconLayerViewDelegate>
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     
-    return 44;
+    if(section == 0)
+        return 40;
+    
+    return 40+100;
 }
 
 
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
-    UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
-    
-    UIImageView *bg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tb_header_bg.png"]];
-    [header addSubview:bg];
-    bg.frame = header.bounds;
-    
-
-    UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(40, 10, SCREEN_WIDTH, 20)];
-    tL.textColor = [UIColor whiteColor];
-    tL.font = [UIFont systemFontOfSize:14];
-    [header addSubview:tL];
+    UIView *header = nil;
     
     if(section == 0)
-        tL.text = @"图标";
+    {
+        header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 40)];
+        
+        UIImageView *bg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tb_header_bg.png"]];
+        [header addSubview:bg];
+        bg.frame = header.bounds;
+        
+        UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(40, 10, self.frame.size.width, 20)];
+        tL.textColor = [UIColor whiteColor];
+        tL.font = [UIFont systemFontOfSize:14];
+        [header addSubview:tL];
+        
+        if(section == 0)
+            tL.text = @"图标";
+    }
     else
+    {
+        header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 140)];
+        
+        UIImageView *bg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tb_header_bg.png"]];
+        [header addSubview:bg];
+        bg.frame = CGRectMake(0, 0, self.frame.size.width, 40);
+        
+        UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(40, 10, self.frame.size.width, 20)];
+        tL.textColor = [UIColor whiteColor];
+        tL.font = [UIFont systemFontOfSize:14];
+        [header addSubview:tL];
         tL.text = @"自动化";
+        
+        UIButton* btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
+        btnSave.frame = CGRectMake(self.frame.size.width-60,
+                                  50, 50, 40);
+        [btnSave setTitle:@"保存" forState:UIControlStateNormal];
+        [header addSubview:btnSave];
+        [btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        btnSave.titleLabel.font = [UIFont boldSystemFontOfSize:15];
+        
+        UILabel *aL = [[UILabel alloc] initWithFrame:CGRectMake(20,
+                                                                100,
+                                                                self.frame.size.width,
+                                                                40)];
+        aL.textColor = [UIColor whiteColor];
+        aL.font = [UIFont systemFontOfSize:14];
+        [header addSubview:aL];
+        
+        
+        aL.text = @"自动化";
+        
+        UIImageView *icon = [[UIImageView alloc]
+                             initWithFrame:CGRectMake(self.frame.size.width-40, 110, 20, 20)];
+        icon.image = [UIImage imageNamed:@"remote_video_down.png"];
+        [header addSubview:icon];
+        icon.layer.contentsGravity = kCAGravityResizeAspect;
+        icon.image = [UIImage imageNamed:@"add_brand_icon.png"];
+        
+        UIButton *btnAdd = [UIButton buttonWithType:UIButtonTypeCustom];
+        btnAdd.frame = CGRectMake(0, 100, self.frame.size.width, 40);
+        [header addSubview:btnAdd];
+        [btnAdd addTarget:self
+                   action:@selector(addAutoChannel:)
+         forControlEvents:UIControlEventTouchUpInside];
+        
+    }
     
     UIImageView *iconAdd = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"down_arraw.png"]];
     [header addSubview:iconAdd];
@@ -202,12 +284,22 @@ IconLayerViewDelegate>
     }
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = CGRectMake(0, 0, SCREEN_WIDTH, 40);
+    btn.frame = CGRectMake(0, 0, self.frame.size.width, 40);
     [btn addTarget:self action:@selector(extendAction:) forControlEvents:UIControlEventTouchUpInside];
     [header addSubview:btn];
     btn.tag = section;
     
     return header;
+}
+
+- (void) addAutoChannel:(id)sender{
+    
+    int c = (int)[_autoDatas count] + 1;
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setObject:[NSString stringWithFormat:@"自动化%d", c] forKey:@"title"];
+    [_autoDatas addObject:dic];
+    
+    [_tableView reloadData];
 }
 
 - (void) extendAction:(UIButton*)sender{

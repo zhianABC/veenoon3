@@ -137,7 +137,7 @@
     }
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
-    [self.view addSubview:bottomBar];
+    
     
     //缺切图，把切图贴上即可。
     bottomBar.backgroundColor = [UIColor grayColor];
@@ -172,7 +172,7 @@
     _settingview.delegate = self;
     
     
-    
+    [self.view addSubview:bottomBar];
 }
 
 - (void) okAction:(id)sender{

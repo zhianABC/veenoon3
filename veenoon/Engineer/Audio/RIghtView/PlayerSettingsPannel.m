@@ -609,10 +609,12 @@ CustomPickerViewDelegate>
         height = 44*4;
     }
     
-    UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, height)];
+    UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0,
+                                                              self.frame.size.width, height)];
     header.backgroundColor = M_GREEN_COLOR;
     
-    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 43, self.frame.size.width, 1)];
+    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 43,
+                                                              self.frame.size.width, 1)];
     line.backgroundColor =  M_GREEN_LINE;
     [header addSubview:line];
     
