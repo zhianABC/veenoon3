@@ -11,6 +11,7 @@
 @optional
 - (void) didChangedPickerValue:(NSDictionary*)value;
 - (void) didConfirmPickerValue:(NSString*) pickerValue;
+- (void) didScrollPickerValue:(NSString*) pickerValue;
 @end
 
 typedef void(^CustomPickerSelectionBlock)(NSDictionary* values);
@@ -25,7 +26,7 @@ typedef void(^CustomPickerSelectionBlock)(NSDictionary* values);
 @property (nonatomic, strong) NSArray *_pickerDataArray;
 @property (nonatomic, strong) NSMutableArray *_pickerLabelArray;
 @property (nonatomic, weak) id  <CustomPickerViewDelegate> delegate_;
-
+@property (nonatomic) float fontSize;
 @property (nonatomic, strong) NSString *_unitString;
 @property (nonatomic, strong) UIColor *_selectColor;
 @property (nonatomic, strong) UIColor *_rowNormalColor;
