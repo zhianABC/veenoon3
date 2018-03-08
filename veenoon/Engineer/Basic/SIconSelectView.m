@@ -8,10 +8,12 @@
 
 #import "SIconSelectView.h"
 #import "IconLayerView.h"
+#import "CustomPickerView.h"
+#import "YearDatePickerView.h"
 
 @interface SIconSelectView () <UITableViewDelegate,
 UITableViewDataSource,
-IconLayerViewDelegate>
+IconLayerViewDelegate, CustomPickerViewDelegate>
 {
     UITableView *_tableView;
     UIView     *_maskView;
@@ -22,6 +24,9 @@ IconLayerViewDelegate>
     
     int _row;
     int _section;
+    
+    CustomPickerView *_picker;
+    YearDatePickerView *_ydPicker;
 }
 @property (nonatomic, strong) NSMutableArray *_autoDatas;
 
@@ -83,11 +88,7 @@ IconLayerViewDelegate>
         _maskView = [[UIView alloc] initWithFrame:CGRectMake(0, 0,
                                                              frame.size.width,
                                                              _cellHeight)];
-        
-        
-    
-        
-        
+
         int x = 20;
         int y = 20;
         for(int i = 0; i < [_icondata count]; i++)
@@ -114,12 +115,88 @@ IconLayerViewDelegate>
             rowCell.selectedImg = [UIImage imageNamed:sel];
             rowCell.textLabel.text = [dic objectForKey:@"name"];
             rowCell.detailLabel.text = [dic objectForKey:@"type"];
-
-            
+  
         }
         
+        _picker = [[CustomPickerView alloc]
+                   initWithFrame:CGRectMake(0, 43, frame.size.width, 160)
+                   withGrayOrLight:@"picker_player.png"];
+        
+        
+        _picker._pickerDataArray = @[@{@"values":@[@"1", @"2", @"3"]}];
+        
+        
+        _picker._selectColor = YELLOW_COLOR;
+        _picker._rowNormalColor = [UIColor whiteColor];
+        _picker.delegate_ = self;
+        [_picker selectRow:0 inComponent:0];
+        IMP_BLOCK_SELF(SIconSelectView);
+        _picker._selectionBlock = ^(NSDictionary *values)
+        {
+            [block_self didPickerValue:values];
+        };
+        
+        
+        _ydPicker = [[YearDatePickerView alloc]
+                     initWithFrame:CGRectMake(0, 43, frame.size.width, 160)
+                     withGrayOrLight:@"picker_player.png"];
+        
+        _ydPicker._selectionBlock = ^(NSDictionary *values)
+        {
+            [block_self didPickerDateValue:values];
+        };
     }
     return self;
+}
+
+- (void) didPickerDateValue:(NSDictionary*)values{
+    
+    NSDate *date = [values objectForKey:@"date"];
+    
+    NSDateFormatter *fm = [[NSDateFormatter alloc] init];
+    [fm setDateFormat:@"yyyy-MM-dd HH:mm"];
+    NSString *sOpen = [fm stringFromDate:date];
+    
+    if(_curIndex > 1)
+    {
+        NSMutableDictionary *dic = [_autoDatas objectAtIndex:_curIndex-2];
+        NSArray *datas = [dic objectForKey:@"datas"];
+        
+        if(_ydPicker.tag < [datas count])
+        {
+            NSMutableDictionary *mdic = [datas objectAtIndex:_ydPicker.tag];
+            
+            [mdic setObject:date forKey:@"value_obj"];
+            [mdic setObject:sOpen forKey:@"value"];
+        }
+    }
+    
+    //_curIndex = -1;
+    _row = -1;
+    [_tableView reloadData];
+}
+
+- (void) didPickerValue:(NSDictionary*)values{
+    
+    NSString *v = [values objectForKey:@0];
+    id row = [values objectForKey:@"row"];
+    if(_curIndex > 1)
+    {
+        NSMutableDictionary *dic = [_autoDatas objectAtIndex:_curIndex-2];
+        NSArray *datas = [dic objectForKey:@"datas"];
+        
+        if(_picker.tag < [datas count])
+        {
+            NSMutableDictionary *mdic = [datas objectAtIndex:_picker.tag];
+            
+            [mdic setObject:row forKey:@"value_obj"];
+            [mdic setObject:v forKey:@"value"];
+        }
+    }
+    
+    //_curIndex = -1;
+    _row = -1;
+    [_tableView reloadData];
 }
 
 #pragma mark -
@@ -215,6 +292,54 @@ IconLayerViewDelegate>
             [cell.contentView addSubview:icon];
             icon.alpha = 0.8;
             icon.layer.contentsGravity = kCAGravityResizeAspect;
+            
+            if(_row == indexPath.row)
+            {
+                if (_row == 0) {
+                    
+                    _ydPicker.tag = 0;
+                    [cell.contentView addSubview:_ydPicker];
+                }
+                else if(_row == 1)
+                {
+                    int sIdx = [[data objectForKey:@"idx"] intValue];
+                    [cell.contentView addSubview:_picker];
+                    _picker.tag = 1;
+                    NSArray *options = [data objectForKey:@"options"];
+                    if(options){
+                        _picker._pickerDataArray = @[@{@"values":options}];
+                        [_picker selectRow:sIdx inComponent:0];
+                    }
+                }
+                else if (_row == 2) {
+
+                    _ydPicker.tag = 2;
+                    [cell.contentView addSubview:_ydPicker];
+                    
+                }
+                else if(_row == 3)
+                {
+                    int sIdx = [[data objectForKey:@"idx"] intValue];
+                    [cell.contentView addSubview:_picker];
+                    _picker.tag = 3;
+                    NSArray *options = [data objectForKey:@"options"];
+                    if(options){
+                        _picker._pickerDataArray = @[@{@"values":options}];
+                        [_picker selectRow:sIdx inComponent:0];
+                    }
+                }
+                else if(_row == 4)
+                {
+                    int sIdx = [[data objectForKey:@"idx"] intValue];
+                    [cell.contentView addSubview:_picker];
+                    _picker.tag = 4;
+                    NSArray *options = [data objectForKey:@"options"];
+                    if(options){
+                        _picker._pickerDataArray = @[@{@"values":options}];
+                        [_picker selectRow:sIdx inComponent:0];
+                    }
+                }
+            }
             
         }
         
@@ -388,6 +513,10 @@ IconLayerViewDelegate>
     dic = [NSMutableDictionary dictionary];
     [dic setObject:@"执行场景" forKey:@"name"];
     [dic setObject:@"" forKey:@"value"];
+    
+    [dic setObject:@[@"宾客接待",@"培训会议",@"离开会场"]
+            forKey:@"options"];
+    
     [datas addObject:dic];
     
     dic = [NSMutableDictionary dictionary];
@@ -398,11 +527,19 @@ IconLayerViewDelegate>
     dic = [NSMutableDictionary dictionary];
     [dic setObject:@"执行场景" forKey:@"name"];
     [dic setObject:@"" forKey:@"value"];
+    
+    [dic setObject:@[@"宾客接待",@"培训会议",@"离开会场"]
+            forKey:@"options"];
+    
     [datas addObject:dic];
     
     dic = [NSMutableDictionary dictionary];
     [dic setObject:@"执行标准" forKey:@"name"];
     [dic setObject:@"" forKey:@"value"];
+    
+    [dic setObject:@[@"每天",@"工作日",@"周六、周日"]
+            forKey:@"options"];
+    
     [datas addObject:dic];
     
     [secDic setObject:datas forKey:@"datas"];

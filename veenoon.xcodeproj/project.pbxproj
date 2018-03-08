@@ -214,6 +214,7 @@
 		34F27A62205121EF0045D765 /* ce_l_10@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34F27A4E205121EF0045D765 /* ce_l_10@2x.png */; };
 		34F27A63205121EF0045D765 /* ce_l_02@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34F27A4F205121EF0045D765 /* ce_l_02@2x.png */; };
 		34F27A64205121EF0045D765 /* ce_l_03_big.png in Resources */ = {isa = PBXBuildFile; fileRef = 34F27A50205121EF0045D765 /* ce_l_03_big.png */; };
+		34F27A67205168570045D765 /* YearDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F27A66205168560045D765 /* YearDatePickerView.m */; };
 		EB03F52B1FBDC07200865541 /* InvitationCodeViewCotroller.m in Sources */ = {isa = PBXBuildFile; fileRef = EB03F5291FBDC07100865541 /* InvitationCodeViewCotroller.m */; };
 		EB03F52D1FBDC83100865541 /* home_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB03F52C1FBDC83000865541 /* home_background@2x.png */; };
 		EB03F5341FBDDAB300865541 /* main_settings_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB03F52E1FBDDAB200865541 /* main_settings_n@2x.png */; };
@@ -1058,6 +1059,8 @@
 		34F27A4E205121EF0045D765 /* ce_l_10@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ce_l_10@2x.png"; sourceTree = "<group>"; };
 		34F27A4F205121EF0045D765 /* ce_l_02@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ce_l_02@2x.png"; sourceTree = "<group>"; };
 		34F27A50205121EF0045D765 /* ce_l_03_big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ce_l_03_big.png; sourceTree = "<group>"; };
+		34F27A65205168560045D765 /* YearDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YearDatePickerView.h; sourceTree = "<group>"; };
+		34F27A66205168560045D765 /* YearDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YearDatePickerView.m; sourceTree = "<group>"; };
 		EB03F5291FBDC07100865541 /* InvitationCodeViewCotroller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InvitationCodeViewCotroller.m; sourceTree = "<group>"; };
 		EB03F52A1FBDC07100865541 /* InvitationCodeViewCotroller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InvitationCodeViewCotroller.h; sourceTree = "<group>"; };
 		EB03F52C1FBDC83000865541 /* home_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_background@2x.png"; sourceTree = "<group>"; };
@@ -2983,6 +2986,8 @@
 				343733AD1FE402E80071C902 /* JHSlideView.m */,
 				3425E9871FE5687C003559F7 /* CheckButton.h */,
 				3425E9881FE5687C003559F7 /* CheckButton.m */,
+				34F27A65205168560045D765 /* YearDatePickerView.h */,
+				34F27A66205168560045D765 /* YearDatePickerView.m */,
 				3421EA2C1FC4136600DC5378 /* CustomPickerView.h */,
 				3421EA2B1FC4136600DC5378 /* CustomPickerView.m */,
 				342389B22026F48700885405 /* Groups2PickerView.h */,
@@ -3756,6 +3761,7 @@
 				04DE1E951AD6AEE000D49E2F /* ASIDataCompressor.m in Sources */,
 				04DE1EAF1AD6AEE000D49E2F /* SDWebImageDownloader.m in Sources */,
 				EBC71B14203C3A3200DD0A98 /* PinJiePingRightView.m in Sources */,
+				34F27A67205168570045D765 /* YearDatePickerView.m in Sources */,
 				04DE1EA41AD6AEE000D49E2F /* SBJson4StreamParser.m in Sources */,
 				3421EA301FC4161300DC5378 /* ColumnsView.m in Sources */,
 				04DE1EA31AD6AEE000D49E2F /* SBJson4Parser.m in Sources */,
