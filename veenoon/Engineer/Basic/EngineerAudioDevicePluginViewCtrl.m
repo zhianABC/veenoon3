@@ -10,7 +10,7 @@
 #import "EngineerVedioDevicePluginViewCtrl.h"
 #import "CustomPickerView.h"
 
-@interface EngineerAudioDevicePluginViewCtrl () {
+@interface EngineerAudioDevicePluginViewCtrl () <CustomPickerViewDelegate>{
     UIButton *_electronicSysBtn;
     UIButton *_musicPlayBtn;
     UIButton *_wuxianhuatongBtn;
@@ -183,7 +183,7 @@
     int labelStartX = 100;
     int labelStartY = 500;
     
-    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(labelStartX-55, labelStartY, 200, 30)];
+    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(labelStartX-35, labelStartY, 200, 30)];
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:16];
@@ -191,14 +191,18 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"产品类型";
     
-    _productTypePikcer = [[CustomPickerView alloc] initWithFrame:CGRectMake(labelStartX, labelStartY+50, 91, 150) withGrayOrLight:@"gray"];
-    _productTypePikcer._pickerDataArray = @[@{@"values":@[@"a",@"z",@"l"]}];
+    _productTypePikcer = [[CustomPickerView alloc] initWithFrame:CGRectMake(labelStartX, labelStartY+30, 120, 150) withGrayOrLight:@"light"];
+    [_productTypePikcer removeArray];
+    _productTypePikcer.delegate_=self;
+    _productTypePikcer.tag = 101;
+    _productTypePikcer.fontSize=14;
+    _productTypePikcer._pickerDataArray = @[@{@"values":@[@"电源管理",@"音乐播放",@"无线话筒",@"会议",@"反馈抑制",@"音频处理",@"功放"]}];
     [_productTypePikcer selectRow:0 inComponent:0];
     _productTypePikcer._selectColor = RGB(253, 180, 0);
     _productTypePikcer._rowNormalColor = RGB(117, 165, 186);
     [self.view addSubview:_productTypePikcer];
     
-    titleL = [[UILabel alloc] initWithFrame:CGRectMake(labelStartX+140, labelStartY, 200, 30)];
+    titleL = [[UILabel alloc] initWithFrame:CGRectMake(labelStartX+145, labelStartY, 200, 30)];
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:16];
@@ -206,14 +210,16 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"品牌";
     
-    _brandPicker = [[CustomPickerView alloc] initWithFrame:CGRectMake(labelStartX+200, labelStartY+50, 91, 150) withGrayOrLight:@"light"];
+    _brandPicker = [[CustomPickerView alloc] initWithFrame:CGRectMake(labelStartX+200, labelStartY+30, 91, 150) withGrayOrLight:@"light"];
+    _brandPicker.tag=102;
+    [_brandPicker  removeArray];
     _brandPicker._pickerDataArray = @[@{@"values":@[@"f",@"e",@"a"]}];
     [_brandPicker selectRow:0 inComponent:0];
     _brandPicker._selectColor = RGB(253, 180, 0);
     _brandPicker._rowNormalColor = RGB(117, 165, 186);
     [self.view addSubview:_brandPicker];
     
-    titleL = [[UILabel alloc] initWithFrame:CGRectMake(labelStartX+340, labelStartY, 200, 30)];
+    titleL = [[UILabel alloc] initWithFrame:CGRectMake(labelStartX+345, labelStartY, 200, 30)];
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:16];
@@ -221,14 +227,17 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"型号";
     
-    _productCategoryPicker = [[CustomPickerView alloc] initWithFrame:CGRectMake(labelStartX+400, labelStartY+50, 91, 150) withGrayOrLight:@"light"];
+    _productCategoryPicker = [[CustomPickerView alloc] initWithFrame:CGRectMake(labelStartX+400, labelStartY+30, 91, 150) withGrayOrLight:@"light"];
+    _productCategoryPicker.tag=103;
+    _productCategoryPicker.delegate_=self;
+    [_productCategoryPicker removeArray];
     _productCategoryPicker._pickerDataArray = @[@{@"values":@[@"c",@"v",@"b"]}];
     [_productCategoryPicker selectRow:0 inComponent:0];
     _productCategoryPicker._selectColor = RGB(253, 180, 0);
     _productCategoryPicker._rowNormalColor = RGB(117, 165, 186);
     [self.view addSubview:_productCategoryPicker];
     
-    titleL = [[UILabel alloc] initWithFrame:CGRectMake(labelStartX+600, labelStartY, 100, 30)];
+    titleL = [[UILabel alloc] initWithFrame:CGRectMake(labelStartX+595, labelStartY, 100, 30)];
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:16];
@@ -236,7 +245,9 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"数量";
     
-    _numberPicker = [[CustomPickerView alloc] initWithFrame:CGRectMake(labelStartX+600, labelStartY+50, 91, 150) withGrayOrLight:@"light"];
+    _numberPicker = [[CustomPickerView alloc] initWithFrame:CGRectMake(labelStartX+600, labelStartY+30, 91, 150) withGrayOrLight:@"light"];
+    _numberPicker.tag=104;
+    [_numberPicker removeArray];
     _numberPicker._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
     [_numberPicker selectRow:0 inComponent:0];
     _numberPicker._selectColor = RGB(253, 180, 0);
@@ -244,7 +255,7 @@
     [self.view addSubview:_numberPicker];
     
     _confirmButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _confirmButton.frame = CGRectMake(labelStartX+600+125, labelStartY+50+55, 50, 50);
+    _confirmButton.frame = CGRectMake(labelStartX+600+125, labelStartY+50+25, 50, 50);
     [_confirmButton setImage:[UIImage imageNamed:@"engineer_confirm_bt_n.png"] forState:UIControlStateNormal];
     [_confirmButton setImage:[UIImage imageNamed:@"engineer_confirm_bt_s.png"] forState:UIControlStateHighlighted];
     [_confirmButton addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -257,31 +268,184 @@
 }
 
 - (void) gongfangAction:(id)sender{
+    [_electronicSysBtn setImage:[UIImage imageNamed:@"engineer_dianyuanguanli_n.png"] forState:UIControlStateNormal];
+    [_electronicSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_musicPlayBtn setImage:[UIImage imageNamed:@"engineer_music_play_n.png"] forState:UIControlStateNormal];
+    [_musicPlayBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_wuxianhuatongBtn setImage:[UIImage imageNamed:@"engineer_wuxianhuatong_n.png"] forState:UIControlStateNormal];
+    [_wuxianhuatongBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_huiyiBtn setImage:[UIImage imageNamed:@"engineer_huiyi_n.png"] forState:UIControlStateNormal];
+    [_huiyiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_fankuiyizhiBtn setImage:[UIImage imageNamed:@"enginner_fankuiyizhi_n.png"] forState:UIControlStateNormal];
+    [_fankuiyizhiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_yinpinchuliBtn setImage:[UIImage imageNamed:@"engineer_yinpinchuli_n.png"] forState:UIControlStateNormal];
+    [_yinpinchuliBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_floorWarmBtn setImage:[UIImage imageNamed:@"engineer_gongfang_s.png"] forState:UIControlStateNormal];
+    [_floorWarmBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
     
+    UIButton *btn = (UIButton*) sender;
+    NSString *btnText = btn.titleLabel.text;
+    [self setBrandValue:btnText];
 }
 
 - (void) yinpinchuliAction:(id)sender{
+    [_electronicSysBtn setImage:[UIImage imageNamed:@"engineer_dianyuanguanli_n.png"] forState:UIControlStateNormal];
+    [_electronicSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_musicPlayBtn setImage:[UIImage imageNamed:@"engineer_music_play_n.png"] forState:UIControlStateNormal];
+    [_musicPlayBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_wuxianhuatongBtn setImage:[UIImage imageNamed:@"engineer_wuxianhuatong_n.png"] forState:UIControlStateNormal];
+    [_wuxianhuatongBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_huiyiBtn setImage:[UIImage imageNamed:@"engineer_huiyi_n.png"] forState:UIControlStateNormal];
+    [_huiyiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_fankuiyizhiBtn setImage:[UIImage imageNamed:@"enginner_fankuiyizhi_n.png"] forState:UIControlStateNormal];
+    [_fankuiyizhiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_yinpinchuliBtn setImage:[UIImage imageNamed:@"engineer_yinpinchuli_s.png"] forState:UIControlStateNormal];
+    [_yinpinchuliBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
+    [_floorWarmBtn setImage:[UIImage imageNamed:@"engineer_gongfang_n.png"] forState:UIControlStateNormal];
+    [_floorWarmBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
+    UIButton *btn = (UIButton*) sender;
+    NSString *btnText = btn.titleLabel.text;
+    [self setBrandValue:btnText];
 }
 
 - (void) fankuiyizhiAction:(id)sender{
+    [_electronicSysBtn setImage:[UIImage imageNamed:@"engineer_dianyuanguanli_n.png"] forState:UIControlStateNormal];
+    [_electronicSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_musicPlayBtn setImage:[UIImage imageNamed:@"engineer_music_play_n.png"] forState:UIControlStateNormal];
+    [_musicPlayBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_wuxianhuatongBtn setImage:[UIImage imageNamed:@"engineer_wuxianhuatong_n.png"] forState:UIControlStateNormal];
+    [_wuxianhuatongBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_huiyiBtn setImage:[UIImage imageNamed:@"engineer_huiyi_n.png"] forState:UIControlStateNormal];
+    [_huiyiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_fankuiyizhiBtn setImage:[UIImage imageNamed:@"enginner_fankuiyizhi_s.png"] forState:UIControlStateNormal];
+    [_fankuiyizhiBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
+    [_yinpinchuliBtn setImage:[UIImage imageNamed:@"engineer_yinpinchuli_n.png"] forState:UIControlStateNormal];
+    [_yinpinchuliBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_floorWarmBtn setImage:[UIImage imageNamed:@"engineer_gongfang_n.png"] forState:UIControlStateNormal];
+    [_floorWarmBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
+    UIButton *btn = (UIButton*) sender;
+    NSString *btnText = btn.titleLabel.text;
+    [self setBrandValue:btnText];
 }
 
 - (void) huiyiAction:(id)sender{
+    [_electronicSysBtn setImage:[UIImage imageNamed:@"engineer_dianyuanguanli_n.png"] forState:UIControlStateNormal];
+    [_electronicSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_musicPlayBtn setImage:[UIImage imageNamed:@"engineer_music_play_n.png"] forState:UIControlStateNormal];
+    [_musicPlayBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_wuxianhuatongBtn setImage:[UIImage imageNamed:@"engineer_wuxianhuatong_n.png"] forState:UIControlStateNormal];
+    [_wuxianhuatongBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_huiyiBtn setImage:[UIImage imageNamed:@"engineer_huiyi_s.png"] forState:UIControlStateNormal];
+    [_huiyiBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
+    [_fankuiyizhiBtn setImage:[UIImage imageNamed:@"enginner_fankuiyizhi_n.png"] forState:UIControlStateNormal];
+    [_fankuiyizhiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_yinpinchuliBtn setImage:[UIImage imageNamed:@"engineer_yinpinchuli_n.png"] forState:UIControlStateNormal];
+    [_yinpinchuliBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_floorWarmBtn setImage:[UIImage imageNamed:@"engineer_gongfang_n.png"] forState:UIControlStateNormal];
+    [_floorWarmBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
+    UIButton *btn = (UIButton*) sender;
+    NSString *btnText = btn.titleLabel.text;
+    [self setBrandValue:btnText];
 }
 
 - (void) wuxianhuatongAction:(id)sender{
+    [_electronicSysBtn setImage:[UIImage imageNamed:@"engineer_dianyuanguanli_n.png"] forState:UIControlStateNormal];
+    [_electronicSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_musicPlayBtn setImage:[UIImage imageNamed:@"engineer_music_play_n.png"] forState:UIControlStateNormal];
+    [_musicPlayBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_wuxianhuatongBtn setImage:[UIImage imageNamed:@"engineer_wuxianhuatong_s.png"] forState:UIControlStateNormal];
+    [_wuxianhuatongBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
+    [_huiyiBtn setImage:[UIImage imageNamed:@"engineer_huiyi_n.png"] forState:UIControlStateNormal];
+    [_huiyiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_fankuiyizhiBtn setImage:[UIImage imageNamed:@"enginner_fankuiyizhi_n.png"] forState:UIControlStateNormal];
+    [_fankuiyizhiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_yinpinchuliBtn setImage:[UIImage imageNamed:@"engineer_yinpinchuli_n.png"] forState:UIControlStateNormal];
+    [_yinpinchuliBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_floorWarmBtn setImage:[UIImage imageNamed:@"engineer_gongfang_n.png"] forState:UIControlStateNormal];
+    [_floorWarmBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
+    UIButton *btn = (UIButton*) sender;
+    NSString *btnText = btn.titleLabel.text;
+    [self setBrandValue:btnText];
 }
 
 - (void) musicPlayAction:(id)sender{
+    [_electronicSysBtn setImage:[UIImage imageNamed:@"engineer_dianyuanguanli_n.png"] forState:UIControlStateNormal];
+    [_electronicSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_musicPlayBtn setImage:[UIImage imageNamed:@"engineer_music_play_s.png"] forState:UIControlStateNormal];
+    [_musicPlayBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
+    [_wuxianhuatongBtn setImage:[UIImage imageNamed:@"engineer_wuxianhuatong_n.png"] forState:UIControlStateNormal];
+    [_wuxianhuatongBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_huiyiBtn setImage:[UIImage imageNamed:@"engineer_huiyi_n.png"] forState:UIControlStateNormal];
+    [_huiyiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_fankuiyizhiBtn setImage:[UIImage imageNamed:@"enginner_fankuiyizhi_n.png"] forState:UIControlStateNormal];
+    [_fankuiyizhiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_yinpinchuliBtn setImage:[UIImage imageNamed:@"engineer_yinpinchuli_n.png"] forState:UIControlStateNormal];
+    [_yinpinchuliBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_floorWarmBtn setImage:[UIImage imageNamed:@"engineer_gongfang_n.png"] forState:UIControlStateNormal];
+    [_floorWarmBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
+    UIButton *btn = (UIButton*) sender;
+    NSString *btnText = btn.titleLabel.text;
+    [self setBrandValue:btnText];
 }
 
 - (void) electronicSysAction:(id)sender{
+    [_electronicSysBtn setImage:[UIImage imageNamed:@"engineer_dianyuanguanli_s.png"] forState:UIControlStateNormal];
+    [_electronicSysBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
+    [_musicPlayBtn setImage:[UIImage imageNamed:@"engineer_music_play_n.png"] forState:UIControlStateNormal];
+    [_musicPlayBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_wuxianhuatongBtn setImage:[UIImage imageNamed:@"engineer_wuxianhuatong_n.png"] forState:UIControlStateNormal];
+    [_wuxianhuatongBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_huiyiBtn setImage:[UIImage imageNamed:@"engineer_huiyi_n.png"] forState:UIControlStateNormal];
+    [_huiyiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_fankuiyizhiBtn setImage:[UIImage imageNamed:@"enginner_fankuiyizhi_n.png"] forState:UIControlStateNormal];
+    [_fankuiyizhiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_yinpinchuliBtn setImage:[UIImage imageNamed:@"engineer_yinpinchuli_n.png"] forState:UIControlStateNormal];
+    [_yinpinchuliBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_floorWarmBtn setImage:[UIImage imageNamed:@"engineer_gongfang_n.png"] forState:UIControlStateNormal];
+    [_floorWarmBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
+    UIButton *btn = (UIButton*) sender;
+    NSString *btnText = btn.titleLabel.text;
+    [self setBrandValue:btnText];
+}
+-(void) didScrollPickerValue:(NSString*)brand {
+    if ([@"电源管理" isEqualToString:brand]) {
+        [self electronicSysAction:_electronicSysBtn];
+    } else if ([@"音乐播放" isEqualToString:brand]) {
+        [self musicPlayAction:_musicPlayBtn];
+    } else if ([@"无线话筒" isEqualToString:brand]) {
+        [self wuxianhuatongAction:_wuxianhuatongBtn];
+    } else if ([@"会议" isEqualToString:brand]) {
+        [self huiyiAction:_huiyiBtn];
+    } else if ([@"反馈抑制" isEqualToString:brand]) {
+        [self fankuiyizhiAction:_fankuiyizhiBtn];
+    } else if ([@"音频处理" isEqualToString:brand]) {
+        [self yinpinchuliAction:_yinpinchuliBtn];
+    } else {
+        [self gongfangAction:_floorWarmBtn];
+    }
+}
+-(void) setBrandValue:(NSString*)brand {
+    if (brand == nil) {
+        return;
+    }
+    NSArray *array = _productTypePikcer._pickerDataArray;
+    int index = 0;
+    for (NSDictionary *dic in array) {
+        NSArray *valueArray = [dic objectForKey:@"values"];
+        for (NSString * str in valueArray) {
+            if ([str isEqualToString:brand]) {
+                break;
+            }
+            index++;
+        }
+    }
+    [_productTypePikcer selectRow:index inComponent:0];
 }
 
 - (void) okAction:(id)sender{

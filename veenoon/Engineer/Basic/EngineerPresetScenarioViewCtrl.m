@@ -128,14 +128,14 @@
     line.backgroundColor = RGB(75, 163, 202);
     [topbar addSubview:line];
     
-    UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, ENGINEER_VIEW_TOP+5, SCREEN_WIDTH-80, 30)];
+    UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, ENGINEER_VIEW_TOP+20, SCREEN_WIDTH-80, 30)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
     portDNSLabel.font = [UIFont boldSystemFontOfSize:20];
     portDNSLabel.textColor  = [UIColor whiteColor];
     portDNSLabel.text = @"设置场景";
     
-    portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT+50, ENGINEER_VIEW_TOP+100, SCREEN_WIDTH-80, 30)];
+    portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT+50, ENGINEER_VIEW_TOP+70, SCREEN_WIDTH-80, 30)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
     portDNSLabel.font = [UIFont boldSystemFontOfSize:16];
@@ -145,7 +145,7 @@
     _audioScroll = [[UIScrollView alloc] init];
     [self.view addSubview:_audioScroll];
     _audioScroll.backgroundColor = [UIColor clearColor];
-    _audioScroll.frame = CGRectMake(ENGINEER_VIEW_LEFT+50, ENGINEER_VIEW_TOP+130, SCREEN_WIDTH-(ENGINEER_VIEW_LEFT+50)-300, 160);
+    _audioScroll.frame = CGRectMake(ENGINEER_VIEW_LEFT+50, ENGINEER_VIEW_TOP+100, SCREEN_WIDTH-(ENGINEER_VIEW_LEFT+50)-300, 150);
     int audioCount = (int) [[_curScenario objectForKey:@"audioArray"] count] + 1;
     _audioScroll.contentSize = CGSizeMake(audioStartX + audioCount*(77+space), 160);
     _audioScroll.userInteractionEnabled=YES;
@@ -153,7 +153,7 @@
     [self addComponentToEnd:_audioScroll dataDic:nil];
     
     
-    portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT+50, ENGINEER_VIEW_TOP+300, SCREEN_WIDTH-80, 30)];
+    portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT+50, ENGINEER_VIEW_TOP+255, SCREEN_WIDTH-80, 30)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
     portDNSLabel.font = [UIFont boldSystemFontOfSize:16];
@@ -163,13 +163,13 @@
     _videoScroll = [[UIScrollView alloc] init];
     [self.view addSubview:_videoScroll];
     _videoScroll.backgroundColor = [UIColor clearColor];
-    _videoScroll.frame = CGRectMake(ENGINEER_VIEW_LEFT+50, ENGINEER_VIEW_TOP+330, SCREEN_WIDTH-(ENGINEER_VIEW_LEFT+50)-300, 160);
+    _videoScroll.frame = CGRectMake(ENGINEER_VIEW_LEFT+50, ENGINEER_VIEW_TOP+285, SCREEN_WIDTH-(ENGINEER_VIEW_LEFT+50)-300, 150);
     _videoScroll.userInteractionEnabled=YES;
     int videoCount = (int)[[_curScenario objectForKey:@"videoArray"] count] + 1;
     _videoScroll.contentSize = CGSizeMake(audioStartX + videoCount*(77+space), 160);
     [self addComponentToEnd:_videoScroll dataDic:nil];
     
-    portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT+50, ENGINEER_VIEW_TOP+500, SCREEN_WIDTH-80, 30)];
+    portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT+50, ENGINEER_VIEW_TOP+440, SCREEN_WIDTH-80, 30)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
     portDNSLabel.font = [UIFont boldSystemFontOfSize:16];
@@ -179,7 +179,7 @@
     _envScroll = [[UIScrollView alloc] init];
     [self.view addSubview:_envScroll];
     _envScroll.backgroundColor = [UIColor clearColor];
-    _envScroll.frame = CGRectMake(ENGINEER_VIEW_LEFT+50, ENGINEER_VIEW_TOP+530, SCREEN_WIDTH-(ENGINEER_VIEW_LEFT+50)-300, 160);
+    _envScroll.frame = CGRectMake(ENGINEER_VIEW_LEFT+50, ENGINEER_VIEW_TOP+470, SCREEN_WIDTH-(ENGINEER_VIEW_LEFT+50)-300, 150);
     _envScroll.userInteractionEnabled=YES;
     int envCount = (int)[[_curScenario objectForKey:@"envArray"] count] + 1;
     _envScroll.contentSize = CGSizeMake(audioStartX + envCount*(77+space), 160);

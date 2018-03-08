@@ -48,7 +48,7 @@
 #define THEME_RED_COLOR         RGB(0xe4, 0x2a, 0x21)
 
 #define ENGINEER_VIEW_LEFT  60
-#define ENGINEER_VIEW_TOP  95
+#define ENGINEER_VIEW_TOP  65
 
 #define ENGINEER_PORT_VIEW_HEIGHT  100
 

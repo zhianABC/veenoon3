@@ -38,7 +38,7 @@
 @synthesize _selectionBlock;
 @synthesize _selectColor;
 @synthesize _rowNormalColor;
-
+@synthesize fontSize;
 @synthesize _unitString;
 
 - (id)initWithFrame:(CGRect)frame withGrayOrLight:(NSString*)grayOrLight {
@@ -159,6 +159,12 @@
     _rowSelected = row;
     
     [pickerView reloadComponent:component];
+    
+    NSString *value = [values objectAtIndex:row];
+    
+    if ([self.delegate_ respondsToSelector:@selector(didScrollPickerValue:)]) {
+        [self.delegate_ didScrollPickerValue:value];
+    }
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
@@ -221,7 +227,12 @@
     } else {
         tL.textColor = _rowNormalColor;
     }
-    tL.font = [UIFont boldSystemFontOfSize:20];
+    if (fontSize > 1) {
+        tL.font = [UIFont boldSystemFontOfSize:fontSize];
+    } else {
+        
+    }
+    
     _unitString = tL.text;
     
     return tL;
@@ -234,6 +245,9 @@
 
 - (void)removeArray {
     btnSave.hidden = YES;
+}
+- (void)changeFontSize:(float)fontSize {
+    
 }
 
 - (void)dealloc {
