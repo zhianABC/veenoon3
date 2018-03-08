@@ -126,14 +126,15 @@
     forControlEvents:UIControlEventTouchUpInside];
     
     _selectSysBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _selectSysBtn.frame = CGRectMake(70, 100, 250, 30);
+    _selectSysBtn.frame = CGRectMake(80, 100, 250, 30);
     [_selectSysBtn setImage:[UIImage imageNamed:@"engineer_sys_select_down_n.png"] forState:UIControlStateNormal];
-    [_selectSysBtn setTitle:@"净水" forState:UIControlStateNormal];
+    [_selectSysBtn setTitle:@"净水 " forState:UIControlStateNormal];
+    _selectSysBtn.titleLabel.font = [UIFont systemFontOfSize:14];
     [_selectSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_selectSysBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _selectSysBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+    _selectSysBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [_selectSysBtn setTitleEdgeInsets:UIEdgeInsetsMake(0,-50,0,_selectSysBtn.imageView.bounds.size.width+50)];
-    [_selectSysBtn setImageEdgeInsets:UIEdgeInsetsMake(0,_selectSysBtn.titleLabel.bounds.size.width,0,-130)];
+    [_selectSysBtn setImageEdgeInsets:UIEdgeInsetsMake(0,_selectSysBtn.titleLabel.bounds.size.width,0,-100)];
     [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_selectSysBtn];
     

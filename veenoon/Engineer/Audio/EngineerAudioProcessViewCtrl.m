@@ -103,14 +103,15 @@
     forControlEvents:UIControlEventTouchUpInside];
     
     _selectSysBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _selectSysBtn.frame = CGRectMake(70, 100, 250, 30);
+    _selectSysBtn.frame = CGRectMake(40, 100, 140, 30);
     [_selectSysBtn setImage:[UIImage imageNamed:@"engineer_sys_select_down_n.png"] forState:UIControlStateNormal];
-    [_selectSysBtn setTitle:@"音频处理器" forState:UIControlStateNormal];
+    [_selectSysBtn setTitle:@"音频处理器 " forState:UIControlStateNormal];
+    _selectSysBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     [_selectSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_selectSysBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _selectSysBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_selectSysBtn setTitleEdgeInsets:UIEdgeInsetsMake(0,-50,0,_selectSysBtn.imageView.bounds.size.width+50)];
-    [_selectSysBtn setImageEdgeInsets:UIEdgeInsetsMake(0,_selectSysBtn.titleLabel.bounds.size.width,0,-130)];
+    _selectSysBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [_selectSysBtn setTitleEdgeInsets:UIEdgeInsetsMake(0,0,0,_selectSysBtn.imageView.bounds.size.width)];
+    [_selectSysBtn setImageEdgeInsets:UIEdgeInsetsMake(0,_selectSysBtn.titleLabel.bounds.size.width+50,0,0)];
     [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_selectSysBtn];
     
@@ -133,14 +134,14 @@
     int inputOutGap = 230;
     
     
-    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(100, height, 100, 30)];
+    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(60, height, 100, 30)];
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:16];
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"InPuts";
     
-    titleL = [[UILabel alloc] initWithFrame:CGRectMake(100, height+inputOutGap, 100, 30)];
+    titleL = [[UILabel alloc] initWithFrame:CGRectMake(60, height+inputOutGap, 100, 30)];
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:16];
@@ -151,14 +152,14 @@
     int index = 0;
     int cellWidth = 92;
     int cellHeight = 92;
-    int leftRight = 150;
-    int space = (SCREEN_WIDTH - colNumber*cellWidth-leftRight*2)/(colNumber-1);
+    int leftRight = 40;
+    int space = 8;
     
     for (int i = 0; i < self._inputNumber; i++) {
         
         int row = index/colNumber;
         int col = index%colNumber;
-        int startX = col*cellWidth+col*space+leftRight-80;
+        int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+height+20;
         
         SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(startX, startY, 120, 120)];
@@ -203,7 +204,7 @@
         
         int row = i/colNumber;
         int col = i%colNumber;
-        int startX = col*cellWidth+col*space+leftRight-80;
+        int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+height+20+inputOutGap;
         
         SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(startX, startY, 120, 120)];
@@ -301,7 +302,7 @@
 }
 - (void) sysSelectAction:(id)sender{
     _customPicker = [[CustomPickerView alloc]
-                     initWithFrame:CGRectMake(_selectSysBtn.frame.origin.x, _selectSysBtn.frame.origin.y, _selectSysBtn.frame.size.width, 200) withGrayOrLight:@"gray"];
+                     initWithFrame:CGRectMake(_selectSysBtn.frame.origin.x, _selectSysBtn.frame.origin.y, _selectSysBtn.frame.size.width, 140) withGrayOrLight:@"gray"];
     
     
     NSMutableArray *arr = [NSMutableArray array];
@@ -323,7 +324,7 @@
     if (_customPicker) {
         [_customPicker removeFromSuperview];
     }
-    NSString *title =  [@"音频处理器" stringByAppendingString:pickerValue];
+    NSString *title =  [@"音频处理器 " stringByAppendingString:pickerValue];
     [_selectSysBtn setTitle:title forState:UIControlStateNormal];
 }
 
