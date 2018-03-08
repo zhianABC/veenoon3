@@ -73,7 +73,7 @@
     _selectSysBtn.frame = CGRectMake(100, 100, 140, 30);
     [_selectSysBtn setImage:[UIImage imageNamed:@"engineer_sys_select_down_n.png"] forState:UIControlStateNormal];
     [_selectSysBtn setTitle:@"电源实时器 " forState:UIControlStateNormal];
-    _selectSysBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+    _selectSysBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     [_selectSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_selectSysBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _selectSysBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -84,16 +84,13 @@
     
     int index = 0;
     int top = 250;
-    if (self._number == 8) {
-        top = 350;
-    }
     
     int leftRight = 100;
     
     int cellWidth = 92;
     int cellHeight = 92;
-    int colNumber = 8;
-    int space = (SCREEN_WIDTH - colNumber*cellWidth-leftRight*2)/(colNumber-1);
+    int colNumber = 6;
+    int space = 10;
     
     if ([self._electronicSysArray count] == 0) {
         int nameStart = 1;
