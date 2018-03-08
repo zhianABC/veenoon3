@@ -77,19 +77,20 @@
     forControlEvents:UIControlEventTouchUpInside];
     
     _selectSysBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _selectSysBtn.frame = CGRectMake(70, 100, 200, 30);
+    _selectSysBtn.frame = CGRectMake(100, 100, 140, 30);
     [_selectSysBtn setImage:[UIImage imageNamed:@"engineer_sys_select_down_n.png"] forState:UIControlStateNormal];
-    [_selectSysBtn setTitle:@"摄像机" forState:UIControlStateNormal];
+    [_selectSysBtn setTitle:@"摄像机 " forState:UIControlStateNormal];
+    _selectSysBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     [_selectSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_selectSysBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _selectSysBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_selectSysBtn setTitleEdgeInsets:UIEdgeInsetsMake(0,-30,0,_selectSysBtn.imageView.bounds.size.width+50)];
-    [_selectSysBtn setImageEdgeInsets:UIEdgeInsetsMake(0,_selectSysBtn.titleLabel.bounds.size.width,0,-100)];
+    _selectSysBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [_selectSysBtn setTitleEdgeInsets:UIEdgeInsetsMake(0,0,0,_selectSysBtn.imageView.bounds.size.width)];
+    [_selectSysBtn setImageEdgeInsets:UIEdgeInsetsMake(0,_selectSysBtn.titleLabel.bounds.size.width+50,0,0)];
     [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_selectSysBtn];
     
-    int playerLeft = 0;
-    int playerHeight = 10;
+    int playerLeft = -60;
+    int playerHeight = 50;
     
     UIButton *minusBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
     minusBtn.frame = CGRectMake(230+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
@@ -163,7 +164,7 @@
                       action:@selector(storeAction:)
             forControlEvents:UIControlEventTouchUpInside];
     
-    playerLeft = 450;
+    playerLeft = 320;
     
     UIButton *tBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
     tBtn.frame = CGRectMake(230+playerLeft, SCREEN_HEIGHT-500+playerHeight-85, 80, 80);
@@ -345,7 +346,9 @@
 - (void) minusAction:(id)sender{
     NSString *currentValue = _numberBtn.titleLabel.text;
     int value = [currentValue intValue];
-    
+    if (value == 0) {
+        return;
+    }
     value--;
     
     [_numberBtn setTitle:[NSString stringWithFormat:@"%d", value] forState:UIControlStateNormal];
@@ -360,7 +363,7 @@
 }
 - (void) sysSelectAction:(id)sender{
     _customPicker = [[CustomPickerView alloc]
-                     initWithFrame:CGRectMake(_selectSysBtn.frame.origin.x, _selectSysBtn.frame.origin.y, _selectSysBtn.frame.size.width, 200) withGrayOrLight:@"gray"];
+                     initWithFrame:CGRectMake(_selectSysBtn.frame.origin.x, _selectSysBtn.frame.origin.y, _selectSysBtn.frame.size.width, 140) withGrayOrLight:@"gray"];
     
     
     NSMutableArray *arr = [NSMutableArray array];
@@ -381,7 +384,7 @@
     if (_customPicker) {
         [_customPicker removeFromSuperview];
     }
-    NSString *title =  [@"摄像机" stringByAppendingString:pickerValue];
+    NSString *title =  [@"摄像机 " stringByAppendingString:pickerValue];
     [_selectSysBtn setTitle:title forState:UIControlStateNormal];
 }
 - (void) okAction:(id)sender{
