@@ -19,6 +19,9 @@ IconLayerViewDelegate>
     int _curIndex;
     
     int _cellHeight;
+    
+    int _row;
+    int _section;
 }
 @property (nonatomic, strong) NSMutableArray *_autoDatas;
 
@@ -59,6 +62,8 @@ IconLayerViewDelegate>
     if(self = [super initWithFrame:frame])
     {
         _curIndex = 0;
+        _row = -1;
+
         
         [self initData];
         
@@ -122,16 +127,16 @@ IconLayerViewDelegate>
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    return 2;
+    return 2+[_autoDatas count];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
    
-    if(_curIndex == section)
+    if(_curIndex == 0)
+        return 1;
+    if(_curIndex > 1)
     {
-       if(section == 0)
-           return 1;
-        if(section == 1)
-            return [_autoDatas count];
+        if(_curIndex == section)
+            return 5;
     }
     
     return 0;
@@ -139,8 +144,18 @@ IconLayerViewDelegate>
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if(indexPath.section == 1)
-        return 34;
+    if(indexPath.section > 1)
+    {
+        if(_row == indexPath.row)
+        {
+            return 44*5;
+        }
+        return 44;
+    }
+    else if(indexPath.section == 1)
+    {
+        return 0;
+    }
     return _cellHeight;
 }
 
@@ -164,26 +179,47 @@ IconLayerViewDelegate>
         [cell.contentView addSubview:_maskView];
 
     }
-    else if(indexPath.section == 1)
+    else if(indexPath.section > 1)
     {
         cell.backgroundColor = M_GREEN_COLOR;
+        NSDictionary *dic = [_autoDatas objectAtIndex:indexPath.section - 2];
+        NSArray *datas = [dic objectForKey:@"datas"];
+        if(indexPath.row < [datas count])
+        {
+            NSDictionary *data = [datas objectAtIndex:indexPath.row];
+            
+            int wd = self.frame.size.width;
+            
+            UILabel* tL = [[UILabel alloc] initWithFrame:CGRectMake(10,
+                                                                    0,
+                                                                    100, 44)];
+            tL.backgroundColor = [UIColor clearColor];
+            [cell.contentView addSubview:tL];
+            tL.font = [UIFont systemFontOfSize:13];
+            tL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+            tL.text = [data objectForKey:@"name"];
+            
+            UILabel* vL = [[UILabel alloc] initWithFrame:CGRectMake(110,
+                                                                    0,
+                                                                    wd-140, 44)];
+            vL.backgroundColor = [UIColor clearColor];
+            [cell.contentView addSubview:vL];
+            vL.font = [UIFont systemFontOfSize:13];
+            vL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+            vL.textAlignment = NSTextAlignmentRight;
+            vL.text = [data objectForKey:@"value"];
+            
+            UIImageView *icon = [[UIImageView alloc]
+                                 initWithFrame:CGRectMake(wd - 20, 17, 10, 10)];
+            icon.image = [UIImage imageNamed:@"remote_video_down.png"];
+            [cell.contentView addSubview:icon];
+            icon.alpha = 0.8;
+            icon.layer.contentsGravity = kCAGravityResizeAspect;
+            
+        }
         
-        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(20,
-                                                                    7,
-                                                                    CGRectGetWidth(self.frame)-30, 20)];
-        titleL.backgroundColor = [UIColor clearColor];
-        [cell.contentView addSubview:titleL];
-        titleL.font = [UIFont systemFontOfSize:13];
-        titleL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
-        
-        
-        NSDictionary *dic = [_autoDatas objectAtIndex:indexPath.row];
-        titleL.text = [dic objectForKey:@"title"];
-        
-        UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 1)];
-        line.backgroundColor =  M_GREEN_LINE;
-        [cell.contentView addSubview:line];
     }
+
     
     
     return cell;
@@ -192,13 +228,24 @@ IconLayerViewDelegate>
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
+ 
+    int crow = (int)indexPath.row;
     
+    if(crow == _row)
+        _row = -1;
+    else
+        _row = crow;
+    
+    [_tableView reloadData];
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     
     if(section == 0)
+        return 40;
+    
+    if(section > 1)
         return 40;
     
     return 40+100;
@@ -225,7 +272,7 @@ IconLayerViewDelegate>
         if(section == 0)
             tL.text = @"图标";
     }
-    else
+    else if(section == 1)
     {
         header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 140)];
         
@@ -247,7 +294,7 @@ IconLayerViewDelegate>
         [btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         btnSave.titleLabel.font = [UIFont boldSystemFontOfSize:15];
         
-        UILabel *aL = [[UILabel alloc] initWithFrame:CGRectMake(20,
+        UILabel *aL = [[UILabel alloc] initWithFrame:CGRectMake(10,
                                                                 100,
                                                                 self.frame.size.width,
                                                                 40)];
@@ -273,16 +320,49 @@ IconLayerViewDelegate>
          forControlEvents:UIControlEventTouchUpInside];
         
     }
-    
-    UIImageView *iconAdd = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"down_arraw.png"]];
-    [header addSubview:iconAdd];
-    iconAdd.center = CGPointMake(20, 20);
-    
-    if(_curIndex == section)
+    else
     {
-        iconAdd.transform = CGAffineTransformMakeRotation(M_PI_2);
+        header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 40)];
+        
+        header.backgroundColor = M_GREEN_COLOR;
+        
+        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(10,
+                                                                    0,
+                                                                    CGRectGetWidth(self.frame)-30, 40)];
+        titleL.backgroundColor = [UIColor clearColor];
+        [header addSubview:titleL];
+        titleL.font = [UIFont systemFontOfSize:13];
+        titleL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+        
+        
+        NSDictionary *dic = [_autoDatas objectAtIndex:section-2];
+        titleL.text = [dic objectForKey:@"title"];
+        
+        UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), 1)];
+        line.backgroundColor =  M_GREEN_LINE;
+        [header addSubview:line];
+        
+        if(_curIndex == section)
+        {
+            line = [[UILabel alloc] initWithFrame:CGRectMake(10, 43, CGRectGetWidth(self.frame)-10, 1)];
+            line.backgroundColor =  M_GREEN_LINE;
+            [header addSubview:line];
+        }
+        
     }
     
+    if(section < 2)
+    {
+    
+        UIImageView *iconAdd = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"down_arraw.png"]];
+        [header addSubview:iconAdd];
+        iconAdd.center = CGPointMake(20, 20);
+        
+        if(_curIndex == section || _curIndex > 1)
+        {
+            iconAdd.transform = CGAffineTransformMakeRotation(M_PI_2);
+        }
+    }
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(0, 0, self.frame.size.width, 40);
     [btn addTarget:self action:@selector(extendAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -295,9 +375,39 @@ IconLayerViewDelegate>
 - (void) addAutoChannel:(id)sender{
     
     int c = (int)[_autoDatas count] + 1;
-    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [dic setObject:[NSString stringWithFormat:@"自动化%d", c] forKey:@"title"];
-    [_autoDatas addObject:dic];
+    NSMutableDictionary *secDic = [NSMutableDictionary dictionary];
+    [secDic setObject:[NSString stringWithFormat:@"自动化 %d", c] forKey:@"title"];
+    
+    NSMutableArray *datas = [NSMutableArray array];
+    
+    NSMutableDictionary* dic = [NSMutableDictionary dictionary];
+    [dic setObject:@"开始日期时间" forKey:@"name"];
+    [dic setObject:@"" forKey:@"value"];
+    [datas addObject:dic];
+    
+    dic = [NSMutableDictionary dictionary];
+    [dic setObject:@"执行场景" forKey:@"name"];
+    [dic setObject:@"" forKey:@"value"];
+    [datas addObject:dic];
+    
+    dic = [NSMutableDictionary dictionary];
+    [dic setObject:@"结束日期时间" forKey:@"name"];
+    [dic setObject:@"" forKey:@"value"];
+    [datas addObject:dic];
+    
+    dic = [NSMutableDictionary dictionary];
+    [dic setObject:@"执行场景" forKey:@"name"];
+    [dic setObject:@"" forKey:@"value"];
+    [datas addObject:dic];
+    
+    dic = [NSMutableDictionary dictionary];
+    [dic setObject:@"执行标准" forKey:@"name"];
+    [dic setObject:@"" forKey:@"value"];
+    [datas addObject:dic];
+    
+    [secDic setObject:datas forKey:@"datas"];
+    
+    [_autoDatas addObject:secDic];
     
     [_tableView reloadData];
 }
