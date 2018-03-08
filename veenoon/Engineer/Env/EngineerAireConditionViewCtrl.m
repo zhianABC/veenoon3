@@ -83,37 +83,34 @@
     forControlEvents:UIControlEventTouchUpInside];
     
     _selectSysBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _selectSysBtn.frame = CGRectMake(80, 100, 250, 30);
+    _selectSysBtn.frame = CGRectMake(100, 100, 140, 30);
     [_selectSysBtn setImage:[UIImage imageNamed:@"engineer_sys_select_down_n.png"] forState:UIControlStateNormal];
     [_selectSysBtn setTitle:@"空调 " forState:UIControlStateNormal];
-    _selectSysBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+    _selectSysBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     [_selectSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_selectSysBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _selectSysBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [_selectSysBtn setTitleEdgeInsets:UIEdgeInsetsMake(0,-50,0,_selectSysBtn.imageView.bounds.size.width+50)];
-    [_selectSysBtn setImageEdgeInsets:UIEdgeInsetsMake(0,_selectSysBtn.titleLabel.bounds.size.width,0,-100)];
+    [_selectSysBtn setTitleEdgeInsets:UIEdgeInsetsMake(0,0,0,_selectSysBtn.imageView.bounds.size.width)];
+    [_selectSysBtn setImageEdgeInsets:UIEdgeInsetsMake(0,_selectSysBtn.titleLabel.bounds.size.width+50,0,0)];
     [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_selectSysBtn];
     
     int index = 0;
     int top = 250;
-    if (self._number == 8) {
-        top = 350;
-    }
     
-    int leftRight = 200;
+    int leftRight = 100;
     
     int cellWidth = 92;
     int cellHeight = 92;
-    int colNumber = 7;
-    int space = (SCREEN_WIDTH - colNumber*cellWidth-leftRight*2)/(colNumber-1);
+    int colNumber = 6;
+    int space = 10;
     
     for (int i = 0; i < self._number; i++) {
         NSMutableDictionary *dic = [self._airSysArray objectAtIndex:i];
         
         int row = index/colNumber;
         int col = index%colNumber;
-        int startX = col*cellWidth+col*space+leftRight-100;
+        int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+top;
         
         UIButton *scenarioBtn = [UIButton buttonWithColor:nil selColor:RGB(0, 89, 118)];
@@ -183,11 +180,11 @@
 
 - (void) sysSelectAction:(id)sender{
     _customPicker = [[CustomPickerView alloc]
-                     initWithFrame:CGRectMake(_selectSysBtn.frame.origin.x, _selectSysBtn.frame.origin.y, _selectSysBtn.frame.size.width, 200) withGrayOrLight:@"gray"];
+                     initWithFrame:CGRectMake(_selectSysBtn.frame.origin.x, _selectSysBtn.frame.origin.y, _selectSysBtn.frame.size.width, 140) withGrayOrLight:@"gray"];
     
     
     NSMutableArray *arr = [NSMutableArray array];
-    for(int i = 1; i< 2; i++)
+    for(int i = 1; i< 9; i++)
     {
         [arr addObject:[NSString stringWithFormat:@"00%d", i]];
     }
@@ -205,7 +202,7 @@
     if (_customPicker) {
         [_customPicker removeFromSuperview];
     }
-    NSString *title =  [@"空调" stringByAppendingString:pickerValue];
+    NSString *title =  [@"空调 " stringByAppendingString:pickerValue];
     [_selectSysBtn setTitle:title forState:UIControlStateNormal];
 }
 - (void) okAction:(id)sender{
