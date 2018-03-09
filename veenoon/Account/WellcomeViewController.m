@@ -38,20 +38,20 @@
     
     UIImageView *icon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"teslaria_title.png"]];
     [self.view addSubview:icon];
-    icon.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.5);
+    icon.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.5-80);
     
-    UIButton *login = [UIButton buttonWithColor:nil selColor:[UIColor whiteColor]];
+    UIButton *login = [UIButton buttonWithColor:[UIColor whiteColor] selColor:[UIColor whiteColor]];
     login.frame = CGRectMake(0, 0,260, 50);
-    login.layer.cornerRadius = 5;
+    login.layer.cornerRadius = 10;
     login.layer.borderWidth = 2;
-    login.layer.borderColor = [UIColor whiteColor].CGColor;
+    login.layer.borderColor = RGB(1, 138, 182).CGColor;
     login.clipsToBounds = YES;
     [self.view addSubview:login];
     [login setTitle:@"登录" forState:UIControlStateNormal];
-    [login setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [login setTitleColor:RGB(1, 138, 182) forState:UIControlStateNormal];
     [login setTitleColor:RGB(1, 138, 182) forState:UIControlStateHighlighted];
     login.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-    login.center = CGPointMake(SCREEN_WIDTH/2-150, CGRectGetMaxY(icon.frame)+20);
+    login.center = CGPointMake(SCREEN_WIDTH/2-150, CGRectGetMaxY(icon.frame)+80);
 
     [login addTarget:self
               action:@selector(loginAction:)
@@ -59,7 +59,7 @@
     
     UIButton *signup = [UIButton buttonWithColor:nil selColor:[UIColor whiteColor]];
     signup.frame = CGRectMake(0, 0,260, 50);
-    signup.layer.cornerRadius = 5;
+    signup.layer.cornerRadius = 10;
     signup.layer.borderWidth = 2;
     signup.layer.borderColor = [UIColor whiteColor].CGColor;
     signup.clipsToBounds = YES;
@@ -68,7 +68,7 @@
     [signup setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [signup setTitleColor:RGB(1, 138, 182) forState:UIControlStateHighlighted];
     signup.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-    signup.center = CGPointMake(SCREEN_WIDTH/2+150, CGRectGetMaxY(icon.frame)+20);
+    signup.center = CGPointMake(SCREEN_WIDTH/2+150, CGRectGetMaxY(icon.frame)+80);
 
     [signup addTarget:self
               action:@selector(signupAction:)

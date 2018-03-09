@@ -593,6 +593,7 @@
 		EBAE5BB71FDFFBD700C10C4D /* EngineerScenarioListViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EBAE5BB61FDFFBD700C10C4D /* EngineerScenarioListViewCtrl.m */; };
 		EBAE5BB91FE0002F00C10C4D /* engineer_scenario_add_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBAE5BB81FE0002E00C10C4D /* engineer_scenario_add_n@2x.png */; };
 		EBAE5BBB1FE0070600C10C4D /* EngineerPresetScenarioViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EBAE5BBA1FE0070600C10C4D /* EngineerPresetScenarioViewCtrl.m */; };
+		EBB4F7722052A9F90012AC8D /* teslaria_title@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBB4F7712052A9F80012AC8D /* teslaria_title@2x.png */; };
 		EBC71AFF203AF4EE00DD0A98 /* DVDRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71AFE203AF4EE00DD0A98 /* DVDRightView.m */; };
 		EBC71B05203AF72D00DD0A98 /* CameraRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B04203AF72D00DD0A98 /* CameraRightView.m */; };
 		EBC71B08203AF74100DD0A98 /* RemoteVideoRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B07203AF74100DD0A98 /* RemoteVideoRightView.m */; };
@@ -1533,6 +1534,7 @@
 		EBAE5BB81FE0002E00C10C4D /* engineer_scenario_add_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_scenario_add_n@2x.png"; sourceTree = "<group>"; };
 		EBAE5BBA1FE0070600C10C4D /* EngineerPresetScenarioViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerPresetScenarioViewCtrl.m; sourceTree = "<group>"; };
 		EBAE5BBC1FE0071C00C10C4D /* EngineerPresetScenarioViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerPresetScenarioViewCtrl.h; sourceTree = "<group>"; };
+		EBB4F7712052A9F80012AC8D /* teslaria_title@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "teslaria_title@2x.png"; sourceTree = "<group>"; };
 		EBC71AFD203AF4EE00DD0A98 /* DVDRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVDRightView.h; sourceTree = "<group>"; };
 		EBC71AFE203AF4EE00DD0A98 /* DVDRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DVDRightView.m; sourceTree = "<group>"; };
 		EBC71B03203AF72D00DD0A98 /* CameraRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraRightView.h; sourceTree = "<group>"; };
@@ -2126,6 +2128,7 @@
 		04DE1ECB1AD6B3BA00D49E2F /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
+				EBB4F7712052A9F80012AC8D /* teslaria_title@2x.png */,
 				34F27A3C205121EF0045D765 /* sen */,
 				EB05FFA0205012D90099B9FE /* info_collect_d@2x.png */,
 				EB05FFA1205012D90099B9FE /* info_collect_m@2x.png */,
@@ -3164,6 +3167,7 @@
 				EB5F7F841FD5902D00351888 /* engineer_meetingroom_default_n@2x.png in Resources */,
 				EB3685EB1FC0714C009973A3 /* main_view_shadow@2x.png in Resources */,
 				EB09C49F1FD3744000776540 /* user_electronic_up@2x.png in Resources */,
+				EBB4F7722052A9F90012AC8D /* teslaria_title@2x.png in Resources */,
 				EB1A55E11FEF5691000B18E6 /* engineer_zoom_minus_n@2x.png in Resources */,
 				EB1A04751FC71EEC007CC1F2 /* cd_player_s@2x.png in Resources */,
 				341C60F81FDD0DBF003A5490 /* hj_icon_7@2x.png in Resources */,
