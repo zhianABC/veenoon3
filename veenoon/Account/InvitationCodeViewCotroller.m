@@ -88,8 +88,8 @@
     
     ///在这里编写登录输入内容框 _inputPannel
     int top = 10;
-    int left = 10;
-    int w = CGRectGetWidth(_inputPannel.frame);
+    int left = -10;
+    int w = CGRectGetWidth(_inputPannel.frame) - 30;
     UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(left, top, w, 50)];
     tL.text = @"注册号";
     tL.textColor = RGB(70, 219, 254);

@@ -9,6 +9,7 @@
 #import "SignupViewController.h"
 #import "AreaPickView.h"
 #import "LoginViewController.h"
+#import "InvitationCodeViewCotroller.h"
 
 
 @interface SignupViewController () <AreaPickViewDelegate>{
@@ -328,7 +329,7 @@
 - (void) okAction:(id)sender{
     NSLog(@"enter the method.");
     UIAlertView *alert  = [[UIAlertView alloc] initWithTitle:@""
-                                                     message:@"注册成功，将转入登陆界面"
+                                                     message:@"注册成功，将转入验证注册码界面"
                                                     delegate:nil
                                            cancelButtonTitle:@"确定"
                                            otherButtonTitles:@"取消", nil];
@@ -341,8 +342,8 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     
     if (alertView.cancelButtonIndex == buttonIndex) {
-        LoginViewController *lctrl = [[LoginViewController alloc] init];
-        [self.navigationController pushViewController:lctrl animated:YES];
+        InvitationCodeViewCotroller *ctrl = [[InvitationCodeViewCotroller alloc] init];
+        [self.navigationController pushViewController:ctrl animated:YES];
     }
 }
 
