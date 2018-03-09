@@ -36,7 +36,7 @@
     int leftRight = 250;
     int width = SCREEN_WIDTH - leftRight*2;
     int height = width * 2 / 3;
-    _inputPannel = [[UIView alloc] initWithFrame:CGRectMake(leftRight, 150, width, height)];
+    _inputPannel = [[UIView alloc] initWithFrame:CGRectMake(leftRight, SCREEN_HEIGHT/2-250, width, height)];
     [self.view addSubview:_inputPannel];
     _inputPannel.backgroundColor = RGB(0, 89, 118);
     _inputPannel.userInteractionEnabled=YES;
@@ -64,7 +64,7 @@
     roomeImageView.frame = CGRectMake(width/2-69, 80, 138, 109);
     roomeImageView.userInteractionEnabled=YES;
     
-    UIView *_inputPannel2 = [[UIView alloc] initWithFrame:CGRectMake(leftRight, 100+height, width, 150)];
+    UIView *_inputPannel2 = [[UIView alloc] initWithFrame:CGRectMake(leftRight, SCREEN_HEIGHT/2-250+height, width, 150)];
     [self.view addSubview:_inputPannel2];
     _inputPannel2.backgroundColor = [UIColor whiteColor];
     _inputPannel2.userInteractionEnabled=YES;
@@ -124,20 +124,26 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     
+    
     if (textField == _userPwdField) {
-        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 170);
+        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2-140);
     }
     if (textField == _userNameField) {
-        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 130);
+        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2-120);
     }
 }
 
 - (void)  textFieldDidEndEditing:(UITextField *)textField{
+    int leftRight = 250;
+    int width = SCREEN_WIDTH - leftRight*2;
+    int height = width * 2 / 3;
+    int center = SCREEN_HEIGHT/2-250 + height/2;
+    
     if (textField == _userPwdField) {
-        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 70);
+        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, center);
     }
     if (textField == _userNameField) {
-        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 20);
+        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, center);
     }
     
 }
