@@ -9,6 +9,7 @@
 #import "EngineerVedioDevicePluginViewCtrl.h"
 #import "EngineerEnvDevicePluginViewCtrl.h"
 #import "CustomPickerView.h"
+#import "UIButton+Color.h"
 
 @interface EngineerVedioDevicePluginViewCtrl ()<CustomPickerViewDelegate> {
     UIButton *_dianyuanguanliBtn;

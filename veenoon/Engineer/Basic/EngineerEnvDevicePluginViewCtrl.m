@@ -9,6 +9,7 @@
 #import "EngineerEnvDevicePluginViewCtrl.h"
 #import "CustomPickerView.h"
 #import "EngineerScenarioListViewCtrl.h"
+#import "UIButton+Color.h"
 
 @interface EngineerEnvDevicePluginViewCtrl () <CustomPickerViewDelegate> {
     UIButton *_zhaomingBtn;
