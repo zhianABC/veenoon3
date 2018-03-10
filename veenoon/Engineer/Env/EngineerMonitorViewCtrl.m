@@ -98,14 +98,15 @@
     forControlEvents:UIControlEventTouchUpInside];
     
     _selectSysBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _selectSysBtn.frame = CGRectMake(70, 100, 200, 30);
+    _selectSysBtn.frame = CGRectMake(50, 100, 120, 30);
     [_selectSysBtn setImage:[UIImage imageNamed:@"engineer_sys_select_down_n.png"] forState:UIControlStateNormal];
-    [_selectSysBtn setTitle:@"监控" forState:UIControlStateNormal];
+    [_selectSysBtn setTitle:@"监控 " forState:UIControlStateNormal];
+    _selectSysBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     [_selectSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_selectSysBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _selectSysBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_selectSysBtn setTitleEdgeInsets:UIEdgeInsetsMake(0,-30,0,_selectSysBtn.imageView.bounds.size.width+50)];
-    [_selectSysBtn setImageEdgeInsets:UIEdgeInsetsMake(0,_selectSysBtn.titleLabel.bounds.size.width,0,-100)];
+    _selectSysBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [_selectSysBtn setTitleEdgeInsets:UIEdgeInsetsMake(0,0,0,_selectSysBtn.imageView.bounds.size.width)];
+    [_selectSysBtn setImageEdgeInsets:UIEdgeInsetsMake(0,_selectSysBtn.titleLabel.bounds.size.width+50,0,0)];
     [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_selectSysBtn];
     
@@ -117,7 +118,7 @@
     
     int rowNUmber = (int) [_monitorRoomList count] / 3 + 1;
     
-    UIScrollView *_botomView = [[UIScrollView alloc] initWithFrame:CGRectMake(leftRight, 100, SCREEN_WIDTH-2*leftRight, SCREEN_HEIGHT - 200)];
+    UIScrollView *_botomView = [[UIScrollView alloc] initWithFrame:CGRectMake(leftRight, 150, SCREEN_WIDTH-2*leftRight, SCREEN_HEIGHT - 200)];
     _botomView.contentSize =  CGSizeMake(SCREEN_WIDTH-2*leftRight, rowNUmber * (cellHeight + rowGap) +10);
     _botomView.scrollEnabled=YES;
     _botomView.backgroundColor = [UIColor clearColor];
@@ -180,11 +181,11 @@
 
 - (void) sysSelectAction:(id)sender{
     _customPicker = [[CustomPickerView alloc]
-                     initWithFrame:CGRectMake(_selectSysBtn.frame.origin.x, _selectSysBtn.frame.origin.y, _selectSysBtn.frame.size.width, 200) withGrayOrLight:@"gray"];
+                     initWithFrame:CGRectMake(_selectSysBtn.frame.origin.x, _selectSysBtn.frame.origin.y, _selectSysBtn.frame.size.width, 100) withGrayOrLight:@"gray"];
     
     
     NSMutableArray *arr = [NSMutableArray array];
-    for(int i = 1; i< 2; i++)
+    for(int i = 1; i< 7; i++)
     {
         [arr addObject:[NSString stringWithFormat:@"00%d", i]];
     }
@@ -202,7 +203,7 @@
     if (_customPicker) {
         [_customPicker removeFromSuperview];
     }
-    NSString *title =  [@"监控" stringByAppendingString:pickerValue];
+    NSString *title =  [@"监控 " stringByAppendingString:pickerValue];
     [_selectSysBtn setTitle:title forState:UIControlStateNormal];
 }
 - (void) okAction:(id)sender{

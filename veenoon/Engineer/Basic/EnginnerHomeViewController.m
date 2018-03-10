@@ -36,10 +36,27 @@
     int leftRight = 250;
     int width = SCREEN_WIDTH - leftRight*2;
     int height = width * 2 / 3;
-    _inputPannel = [[UIView alloc] initWithFrame:CGRectMake(leftRight, 150, width, height)];
+    _inputPannel = [[UIView alloc] initWithFrame:CGRectMake(leftRight, SCREEN_HEIGHT/2-250, width, height)];
     [self.view addSubview:_inputPannel];
     _inputPannel.backgroundColor = RGB(0, 89, 118);
     _inputPannel.userInteractionEnabled=YES;
+    
+    UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
+    [self.view addSubview:bottomBar];
+    bottomBar.backgroundColor = [UIColor grayColor];
+    bottomBar.userInteractionEnabled = YES;
+    bottomBar.image = [UIImage imageNamed:@"botomo_icon.png"];
+    
+    UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    cancelBtn.frame = CGRectMake(0, 0,160, 50);
+    [bottomBar addSubview:cancelBtn];
+    [cancelBtn setTitle:@"返回" forState:UIControlStateNormal];
+    [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [cancelBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    cancelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [cancelBtn addTarget:self
+                  action:@selector(cancelAction:)
+        forControlEvents:UIControlEventTouchUpInside];
     
     UIImage *roomImage = [UIImage imageNamed:@"engineer_login_icon.png"];
     UIImageView *roomeImageView = [[UIImageView alloc] initWithImage:roomImage];
@@ -47,7 +64,7 @@
     roomeImageView.frame = CGRectMake(width/2-69, 80, 138, 109);
     roomeImageView.userInteractionEnabled=YES;
     
-    UIView *_inputPannel2 = [[UIView alloc] initWithFrame:CGRectMake(leftRight, 100+height, width, 150)];
+    UIView *_inputPannel2 = [[UIView alloc] initWithFrame:CGRectMake(leftRight, SCREEN_HEIGHT/2-250+height, width, 150)];
     [self.view addSubview:_inputPannel2];
     _inputPannel2.backgroundColor = [UIColor whiteColor];
     _inputPannel2.userInteractionEnabled=YES;
@@ -101,22 +118,32 @@
     [userImageView2 addSubview:_userPwdField];
 }
 
+- (void)cancelAction:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     
+    
     if (textField == _userPwdField) {
-        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 170);
+        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2-140);
     }
     if (textField == _userNameField) {
-        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 130);
+        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2-120);
     }
 }
 
 - (void)  textFieldDidEndEditing:(UITextField *)textField{
+    int leftRight = 250;
+    int width = SCREEN_WIDTH - leftRight*2;
+    int height = width * 2 / 3;
+    int center = SCREEN_HEIGHT/2-250 + height/2;
+    
     if (textField == _userPwdField) {
-        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 70);
+        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, center);
     }
     if (textField == _userNameField) {
-        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 20);
+        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, center);
     }
     
 }

@@ -88,53 +88,22 @@
     int index = 0;
     int arraySize = (int)[scenarioArray count];
     
-    for (id dic in scenarioArray) {
-        
-        int row = index/colNumber;
-        int col = index%colNumber;
-        
-        int startX = col*cellWidth + col*space + leftRight;
-        int startY = row*cellHeight+space*row+top;
-        
-        if (arraySize == index+1) {
-            
-            UIButton *scenarioBtn = [UIButton buttonWithColor:nil selColor:RGB(0, 89, 118)];
-            scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
-            scenarioBtn.layer.cornerRadius = 5;
-            scenarioBtn.layer.borderWidth = 2;
-            scenarioBtn.layer.borderColor = [UIColor whiteColor].CGColor;;
-            scenarioBtn.clipsToBounds = YES;
-            [scenarioBtn setImage:[UIImage imageNamed:@"engineer_scenario_add_n.png"] forState:UIControlStateNormal];
-            [scenarioBtn setImage:[UIImage imageNamed:@"engineer_scenario_add_n.png"] forState:UIControlStateHighlighted];
-            scenarioBtn.tag = index;
-            [scroolView addSubview:scenarioBtn];
-            
-            [scenarioBtn addTarget:self
-                            action:@selector(addAction:)
-                  forControlEvents:UIControlEventTouchUpInside];
-        } else {
-            
-            UIButton *scenarioBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(242, 148, 20)];
-            scenarioBtn.tag = index;
-            scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
-            scenarioBtn.layer.cornerRadius = 5;
-            scenarioBtn.layer.borderWidth = 2;
-            scenarioBtn.layer.borderColor = RGB(0, 89, 118).CGColor;;
-            scenarioBtn.clipsToBounds = YES;
-            [scenarioBtn setTitle:[dic objectForKey:@"scenarioName"] forState:UIControlStateNormal];
-            [scenarioBtn setTitle:[dic objectForKey:@"scenarioName"] forState:UIControlStateHighlighted];
-            [scroolView addSubview:scenarioBtn];
-            
-            [_sBtns addObject:scenarioBtn];
-            
-            [scenarioBtn addTarget:self
-                            action:@selector(scenarioAction:)
-                  forControlEvents:UIControlEventTouchUpInside];
-        }
-        
-        
-        index++;
-    }
+    int startX = 100;
+    int startY = 20;
+    UIButton *scenarioBtn = [UIButton buttonWithColor:nil selColor:RGB(0, 89, 118)];
+    scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
+    scenarioBtn.layer.cornerRadius = 5;
+    scenarioBtn.layer.borderWidth = 2;
+    scenarioBtn.layer.borderColor = [UIColor whiteColor].CGColor;;
+    scenarioBtn.clipsToBounds = YES;
+    [scenarioBtn setImage:[UIImage imageNamed:@"engineer_scenario_add_n.png"] forState:UIControlStateNormal];
+    [scenarioBtn setImage:[UIImage imageNamed:@"engineer_scenario_add_n.png"] forState:UIControlStateHighlighted];
+    scenarioBtn.tag = index;
+    [scroolView addSubview:scenarioBtn];
+    
+    [scenarioBtn addTarget:self
+                    action:@selector(addAction:)
+          forControlEvents:UIControlEventTouchUpInside];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     

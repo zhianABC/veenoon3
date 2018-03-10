@@ -107,7 +107,7 @@
         
         UIButton *cameraBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         
-        cameraBtn.frame = CGRectMake(CGRectGetWidth(roomeImageView.frame)-40, CGRectGetHeight(roomeImageView.frame)-40, 40, 40);
+        cameraBtn.frame = CGRectMake(CGRectGetWidth(roomeImageView.frame)-40, CGRectGetHeight(roomeImageView.frame)-35, 40, 40);
         cameraBtn.tag = index;
         [cameraBtn setImage:[UIImage imageNamed:@"camera_n.png"] forState:UIControlStateNormal];
         [cameraBtn setImage:[UIImage imageNamed:@"camera_s.png"] forState:UIControlStateHighlighted];
@@ -122,7 +122,7 @@
         [view addGestureRecognizer:tapGesture];
         
         
-        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(roomeImageView.frame)-30, 200, 30)];
+        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetHeight(roomeImageView.frame)-30, 190, 30)];
         titleL.backgroundColor = [UIColor clearColor];
         [roomeImageView addSubview:titleL];
         titleL.font = [UIFont boldSystemFontOfSize:16];
