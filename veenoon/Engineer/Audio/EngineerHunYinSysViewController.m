@@ -158,9 +158,9 @@
             UIImage *image = [UIImage imageNamed:@"slide_btn.png"];
             
             UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-            imageView.backgroundColor = DARK_BLUE_COLOR;
+            imageView.backgroundColor = [UIColor clearColor];
             imageView.layer.cornerRadius = 10;
-            imageView.layer.borderWidth = 1;
+            imageView.layer.borderWidth = 0;
             imageView.layer.borderColor = DARK_BLUE_COLOR.CGColor;
             imageView.clipsToBounds = YES;
             
