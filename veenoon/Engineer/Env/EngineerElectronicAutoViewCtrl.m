@@ -98,7 +98,7 @@
     int cellWidth = 92;
     int cellHeight = 92;
     int colNumber = 6;
-    int space = 10;
+    int space = 25;
     
     for (int i = 0; i < self._number; i++) {
         NSMutableDictionary *dic = [self._electronicSysArray objectAtIndex:i];
@@ -156,6 +156,7 @@
 }
 - (void) createBtnLabel:(UIButton*)sender dataDic:(NSMutableDictionary*) dataDic{
     UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(sender.frame.size.width - 20, 0, 20, 20)];
+    titleL.textAlignment = NSTextAlignmentCenter;
     titleL.backgroundColor = [UIColor clearColor];
     [sender addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:11];
@@ -164,6 +165,7 @@
     [_nameLabelArray addObject:titleL];
     
     titleL = [[UILabel alloc] initWithFrame:CGRectMake(sender.frame.size.width/2 -40, sender.frame.size.height - 20, 80, 20)];
+    titleL.textAlignment = NSTextAlignmentCenter;
     titleL.backgroundColor = [UIColor clearColor];
     [sender addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:12];

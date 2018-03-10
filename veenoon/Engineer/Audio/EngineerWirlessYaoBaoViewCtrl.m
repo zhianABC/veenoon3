@@ -155,7 +155,7 @@
     int cellWidth = 92;
     int cellHeight = 92;
     int colNumber = 6;
-    int space = 10;
+    int space = 25;
     
     NSMutableDictionary *dataDic = [_wirelessYaoBaoSysArray objectAtIndex:0];
     NSMutableArray *dataArray = [dataDic objectForKey:@"value"];

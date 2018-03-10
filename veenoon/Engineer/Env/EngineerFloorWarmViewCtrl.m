@@ -100,7 +100,7 @@
     int cellWidth = 92;
     int cellHeight = 92;
     int colNumber = 6;
-    int space = 10;
+    int space = 25;
     
     for (int i = 0; i < self._number; i++) {
         

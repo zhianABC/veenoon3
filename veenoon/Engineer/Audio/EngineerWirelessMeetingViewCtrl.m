@@ -89,7 +89,7 @@
     int cellWidth = 92;
     int cellHeight = 92;
     int colNumber = 6;
-    int space = 10;
+    int space = 25;
     
     if ([self._wirelessMeetingArray count] == 0) {
         int nameStart = 1;
@@ -144,6 +144,7 @@
             
             UIButton *scenarioBtn = [UIButton buttonWithColor:nil selColor:RGB(0, 89, 118)];
             scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
+            scenarioBtn.backgroundColor = [UIColor clearColor];
             scenarioBtn.clipsToBounds = YES;
             scenarioBtn.layer.cornerRadius = 5;
             scenarioBtn.layer.borderWidth = 2;
@@ -211,7 +212,8 @@
 }
 
 - (void) createBtnLabel:(UIButton*)sender dataDic:(NSMutableDictionary*) dataDic{
-    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(sender.frame.size.width - 20, 0, 20, 20)];
+    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(sender.frame.size.width/2 - 40, 0, 80, 20)];
+    titleL.textAlignment = NSTextAlignmentCenter;
     titleL.backgroundColor = [UIColor clearColor];
     [sender addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:11];
@@ -219,6 +221,7 @@
     titleL.text = [dataDic objectForKey:@"name"];
     
     titleL = [[UILabel alloc] initWithFrame:CGRectMake(sender.frame.size.width/2 -40, sender.frame.size.height - 20, 80, 20)];
+    titleL.textAlignment = NSTextAlignmentCenter;
     titleL.backgroundColor = [UIColor clearColor];
     [sender addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:12];
