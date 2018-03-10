@@ -33,4 +33,7 @@
 
 - (void) enableValueSet:(BOOL)enabled;
 
+-(void) setTitle:(NSString*)title;
+-(void) setvalueTitle:(NSString*)title;
+
 @end

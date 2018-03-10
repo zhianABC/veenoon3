@@ -185,7 +185,8 @@
             btn.tag = i;
             [self.view addSubview:btn];
             
-            UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width - 30, 20, 30, 20)];
+            UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 - 30, 0, 60, 20)];
+            titleL.textAlignment = NSTextAlignmentCenter;
             titleL.backgroundColor = [UIColor clearColor];
             [btn addSubview:titleL];
             titleL.font = [UIFont boldSystemFontOfSize:11];
@@ -193,7 +194,8 @@
             titleL.text = [NSString stringWithFormat:@"0%d",i+1];
             [_buttonNumberArray addObject:titleL];
             
-            titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 -40, btn.frame.size.height - 40, 80, 20)];
+            titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 -50, btn.frame.size.height - 20, 100, 20)];
+            titleL.textAlignment = NSTextAlignmentCenter;
             titleL.backgroundColor = [UIColor clearColor];
             [btn addSubview:titleL];
             titleL.font = [UIFont boldSystemFontOfSize:12];
@@ -287,6 +289,7 @@
     if (btn == nil) {
         SlideButton *button = [_buttonArray objectAtIndex:tag];
         [_selectedBtnArray addObject:button];
+        [button enableValueSet:YES];
         UILabel *chanelL = [_buttonChannelArray objectAtIndex:tag];
         chanelL.textColor = YELLOW_COLOR;
         
@@ -295,6 +298,7 @@
     } else {
         // remove it
         [_selectedBtnArray removeObject:btn];
+        [btn enableValueSet:NO];
         UILabel *chanelL = [_buttonChannelArray objectAtIndex:tag];
         chanelL.textColor = [UIColor whiteColor];
         

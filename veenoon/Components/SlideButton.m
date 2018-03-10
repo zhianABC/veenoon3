@@ -79,11 +79,16 @@
         _valueLabel.font = [UIFont boldSystemFontOfSize:11];
         _valueLabel.textColor  = [UIColor whiteColor];
         _valueLabel.textAlignment = NSTextAlignmentCenter;
-        _valueLabel.text = @"0.0";
         
     }
     
     return self;
+}
+-(void) setTitle:(NSString*)title {
+    _titleLabel.text = title;
+}
+-(void) setvalueTitle:(NSString*)title {
+    _valueLabel.text = title;
 }
 
 - (void) enableValueSet:(BOOL)enabled{
