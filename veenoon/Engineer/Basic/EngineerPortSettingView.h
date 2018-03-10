@@ -7,20 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CustomPickerView.h"
+#import "CenterCustomerPickerView.h"
 @protocol  EngineerPortSettingViewDelegate <NSObject>
 - (void) portViewPortAction;
 - (void) portViewdnsAction;
 - (void) portViewHandleTapGesture;
 @end
 
-@interface EngineerPortSettingView <UITableViewDelegate,UITableViewDataSource, CustomPickerViewDelegate> : UIView {
-    CustomPickerView *_digitPicker;
-    CustomPickerView *_portPicker;
-    CustomPickerView *_portTypePicker;
-    CustomPickerView *_portLvPicker;
-    CustomPickerView *_checkPicker;
-    CustomPickerView *_stopPicker;
+@interface EngineerPortSettingView <UITableViewDelegate,UITableViewDataSource, CenterCustomerPickerViewDelegate> : UIView {
+    CenterCustomerPickerView *_digitPicker;
+    CenterCustomerPickerView *_portPicker;
+    CenterCustomerPickerView *_portTypePicker;
+    CenterCustomerPickerView *_portLvPicker;
+    CenterCustomerPickerView *_checkPicker;
+    CenterCustomerPickerView *_stopPicker;
     
     UITableView *_tableView;
     
@@ -29,12 +29,12 @@
     
     NSMutableArray *_portList;
 }
-@property (nonatomic, strong) CustomPickerView *_portPicker;
-@property (nonatomic, strong) CustomPickerView *_portTypePicker;
-@property (nonatomic, strong) CustomPickerView *_portLvPicker;
-@property (nonatomic, strong) CustomPickerView *_checkPicker;
-@property (nonatomic, strong) CustomPickerView *_digitPicker;
-@property (nonatomic, strong) CustomPickerView *_stopPicker;
+@property (nonatomic, strong) CenterCustomerPickerView *_portPicker;
+@property (nonatomic, strong) CenterCustomerPickerView *_portTypePicker;
+@property (nonatomic, strong) CenterCustomerPickerView *_portLvPicker;
+@property (nonatomic, strong) CenterCustomerPickerView *_checkPicker;
+@property (nonatomic, strong) CenterCustomerPickerView *_digitPicker;
+@property (nonatomic, strong) CenterCustomerPickerView *_stopPicker;
 @property (nonatomic, strong) UITableView *_tableView;
 @property (nonatomic, assign) int _selectedRow;
 @property (nonatomic, assign) int _previousSelectedRow;

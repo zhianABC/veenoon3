@@ -664,6 +664,7 @@
 		EBDF1C501FC5D5CF00A756EA /* clean_warter_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDF1C351FC5D5CF00A756EA /* clean_warter_s@2x.png */; };
 		EBEA7C211FBCAF260028F0E8 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = EBEA7C1E1FBCAF260028F0E8 /* area.plist */; };
 		EBEA7C221FBCAF260028F0E8 /* AreaPickView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBEA7C201FBCAF260028F0E8 /* AreaPickView.m */; };
+		EBECD4542053AF5000F5474D /* CenterCustomerPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBECD4532053AF5000F5474D /* CenterCustomerPickerView.m */; };
 		EBF57AB42045846D0023F138 /* huishengxiaochu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBF57AB32045846D0023F138 /* huishengxiaochu@2x.png */; };
 		EBF5D42B1FCC35A90014D5F0 /* user_botom_Line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBF5D42A1FCC35A90014D5F0 /* user_botom_Line@2x.png */; };
 		EBF5D42E1FCC45350014D5F0 /* wuxianhuabao@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBF5D42C1FCC45340014D5F0 /* wuxianhuabao@2x.png */; };
@@ -1625,6 +1626,8 @@
 		EBEA7C1E1FBCAF260028F0E8 /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
 		EBEA7C1F1FBCAF260028F0E8 /* AreaPickView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AreaPickView.h; sourceTree = "<group>"; };
 		EBEA7C201FBCAF260028F0E8 /* AreaPickView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AreaPickView.m; sourceTree = "<group>"; };
+		EBECD4522053AF5000F5474D /* CenterCustomerPickerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CenterCustomerPickerView.h; sourceTree = "<group>"; };
+		EBECD4532053AF5000F5474D /* CenterCustomerPickerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CenterCustomerPickerView.m; sourceTree = "<group>"; };
 		EBF57AB32045846D0023F138 /* huishengxiaochu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "huishengxiaochu@2x.png"; sourceTree = "<group>"; };
 		EBF5D42A1FCC35A90014D5F0 /* user_botom_Line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_botom_Line@2x.png"; sourceTree = "<group>"; };
 		EBF5D42C1FCC45340014D5F0 /* wuxianhuabao@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wuxianhuabao@2x.png"; sourceTree = "<group>"; };
@@ -3026,6 +3029,8 @@
 				34A8965220443184007934E1 /* GradeLineView.m */,
 				EB948A47204EE3550018C80A /* JLightSliderView.h */,
 				EB948A48204EE3550018C80A /* JLightSliderView.m */,
+				EBECD4522053AF5000F5474D /* CenterCustomerPickerView.h */,
+				EBECD4532053AF5000F5474D /* CenterCustomerPickerView.m */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -3717,6 +3722,7 @@
 				04DE1EA11AD6AEE000D49E2F /* NetworkChecker.m in Sources */,
 				EBC71B1D203C497500DD0A98 /* TouYingJiRightView.m in Sources */,
 				EB1717901FF5E44B00CBDB81 /* EngineerLuBoJiViewController.m in Sources */,
+				EBECD4542053AF5000F5474D /* CenterCustomerPickerView.m in Sources */,
 				EB1717AF1FF6149C00CBDB81 /* EngineerDoorAccessViewCtrl.m in Sources */,
 				EBC71B26203F058100DD0A98 /* AirConditionComIRView.m in Sources */,
 				EB5F7F951FD59D6B00351888 /* EngineerPortSettingView.m in Sources */,
