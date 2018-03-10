@@ -218,6 +218,11 @@
             UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
             imageView.backgroundColor = DARK_BLUE_COLOR;
             imageView.frame = CGRectMake(btn.frame.origin.x+10, btn.frame.origin.y+10, 100, 100);
+            imageView.layer.cornerRadius = 10;
+            imageView.layer.borderWidth = 2;
+            imageView.layer.borderColor = RGB(0, 89, 118).CGColor;
+            imageView.clipsToBounds = YES;
+            
             imageView.tag = index;
             imageView.userInteractionEnabled=YES;
             imageView.layer.contentsGravity = kCAGravityCenter;
