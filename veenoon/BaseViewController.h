@@ -17,8 +17,12 @@
     
     UIImageView     *_backgroundImageView;
 
+    UIImageView *titleIcon;
+    UILabel *titleLabel;
+    UILabel *centerTitleLabel;
 }
 
 - (CGSize )lengthString:(NSString *)text  withFont:(UIFont *)font; //根据字符串、字体计算长度
-
+- (void) setTitleAndImage:(NSString*)imageName withTitle:(NSString*)title;
+- (void) setCenterTitle:(NSString*)centerTitle;
 @end

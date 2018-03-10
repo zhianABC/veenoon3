@@ -63,7 +63,7 @@
         [self addSubview:_background];
         //_background.contentMode = UIViewContentModeScaleAspectFill;
         
-        _cellWidth = frame.size.width-50;
+        _cellWidth = frame.size.width-25;
         
         _myPickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0.0, 0,
                                                                        frame.size.width,
@@ -86,7 +86,7 @@
           _values = [[NSMutableDictionary alloc] init];
         
         btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
-        btnSave.frame = CGRectMake(frame.size.width-50, frame.size.height/2-25, 50, 50);
+        btnSave.frame = CGRectMake(frame.size.width-25, frame.size.height/2-13, 25, 25);
         [btnSave setImage:[UIImage imageNamed:@"customer_view_confirm_n.png"] forState:UIControlStateNormal];
         [btnSave setImage:[UIImage imageNamed:@"customer_view_confirm_s.png"] forState:UIControlStateHighlighted];
         [btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -207,8 +207,9 @@
     
     NSArray *values = [section objectForKey:@"values"];
     
-    UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, componentWidth, 30)];
+    UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, componentWidth-10, 30)];
     tL.backgroundColor = [UIColor clearColor];
+    tL.textAlignment = NSTextAlignmentLeft;
     
     id valueRow = [values objectAtIndex:row];
     if([valueRow isKindOfClass:[NSString class]])
@@ -220,7 +221,7 @@
         tL.text = [valueRow objectForKey:@"title"];
     }
     
-    tL.textAlignment = NSTextAlignmentCenter;
+    tL.textAlignment = NSTextAlignmentLeft;
     
     if (_rowSelected == row) {
         tL.textColor = _selectColor;

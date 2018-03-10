@@ -51,10 +51,41 @@
     
     self.view.backgroundColor = RGB(1, 138, 182);
     
+    titleIcon = [[UIImageView alloc] init];
+    [self.view addSubview:titleIcon];
+    titleIcon.frame = CGRectMake(55, 25, 32, 32);
+    
+    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(97, 35, 300, 20)];
+    titleLabel.textColor = [UIColor whiteColor];
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.textAlignment = NSTextAlignmentLeft;
+    [self.view addSubview:titleLabel];
+    
+    centerTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-100, 25, 200, 30)];
+    centerTitleLabel.textColor = [UIColor whiteColor];
+    centerTitleLabel.backgroundColor = [UIColor clearColor];
+    centerTitleLabel.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:centerTitleLabel];
+    
+    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 63, SCREEN_WIDTH, 1)];
+    line.backgroundColor = RGB(75, 163, 202);
+    [self.view addSubview:line];
+    
 
     _http = [[WebClient alloc] initWithDelegate:self];
     _http._httpMethod = @"GET";
     
+}
+
+- (void) setCenterTitle:(NSString*)centerTitle {
+    centerTitleLabel.text = centerTitle;
+}
+
+- (void) setTitleAndImage:(NSString*)imageName withTitle:(NSString*)title {
+    UIImage *image = [UIImage imageNamed:imageName];
+    titleIcon.image = image;
+    
+    titleLabel.text = title;
 }
 
 - (void) dealloc {
