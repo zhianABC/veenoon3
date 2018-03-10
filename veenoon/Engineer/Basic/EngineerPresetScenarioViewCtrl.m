@@ -36,6 +36,8 @@
 #import "EngineerInfoCollectViewCtrl.h"
 #import "EngineerScenarioSettingsViewCtrl.h"
 
+#import "EngineerScenarioSettingsViewCtrl.h"
+
 @interface EngineerPresetScenarioViewCtrl()  <ECPlusSelectViewDelegate>{
     ECPlusSelectView *ecp;
     
@@ -199,6 +201,23 @@
     [cancelBtn addTarget:self
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
+    [bottomBar addSubview:okBtn];
+    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+    [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [okBtn addTarget:self
+              action:@selector(okAction:)
+    forControlEvents:UIControlEventTouchUpInside];
+}
+
+-(void) okAction:(id)sender {
+    EngineerScenarioSettingsViewCtrl *ctrl = [[EngineerScenarioSettingsViewCtrl alloc] init];
+    
+    [self.navigationController pushViewController:ctrl animated:YES];
 }
 
 -(void)handleTapGesture:(UIGestureRecognizer*)gestureRecognizer{
