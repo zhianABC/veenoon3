@@ -37,18 +37,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
-    [self.view addSubview:titleIcon];
-    titleIcon.frame = CGRectMake(60, 40, 70, 10);
-    
-    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 63, SCREEN_WIDTH, 1)];
-    line.backgroundColor = RGB(75, 163, 202);
-    [self.view addSubview:line];
-    
-    UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, ENGINEER_VIEW_TOP, SCREEN_WIDTH-80, 30)];
+    UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, ENGINEER_VIEW_TOP+10, SCREEN_WIDTH-80, 30)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont boldSystemFontOfSize:24];
+    portDNSLabel.font = [UIFont boldSystemFontOfSize:20];
     portDNSLabel.textColor  = [UIColor whiteColor];
     portDNSLabel.text = @"请配置您的环境管理系统";
     
@@ -89,7 +81,7 @@
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
-    int left = 100;
+    int left = 150;
     int rowGap = (SCREEN_WIDTH - left * 2)/5 -10;
     int height = 200;
     _zhaomingBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -171,21 +163,8 @@
     [_kongqijinghuaBtn addTarget:self action:@selector(kongqijinghuaAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_kongqijinghuaBtn];
     
-    _jingshuiBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _jingshuiBtn.frame = CGRectMake(left, height+132, 80, 132);
-    [_jingshuiBtn setImage:[UIImage imageNamed:@"engineer_env_jingshui_n.png"] forState:UIControlStateNormal];
-    [_jingshuiBtn setImage:[UIImage imageNamed:@"engineer_env_jingshui_s.png"] forState:UIControlStateHighlighted];
-    [_jingshuiBtn setTitle:@"净水" forState:UIControlStateNormal];
-    [_jingshuiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_jingshuiBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _jingshuiBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_jingshuiBtn setTitleEdgeInsets:UIEdgeInsetsMake(_jingshuiBtn.imageView.frame.size.height+10,-65,-20,0)];
-    [_jingshuiBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0,_jingshuiBtn.titleLabel.bounds.size.height, 0)];
-    [_jingshuiBtn addTarget:self action:@selector(jingshuiAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_jingshuiBtn];
-    
     _jiashiqiBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _jiashiqiBtn.frame = CGRectMake(left+rowGap, height+132, 80, 132);
+    _jiashiqiBtn.frame = CGRectMake(left, height+132, 80, 132);
     [_jiashiqiBtn setImage:[UIImage imageNamed:@"engineer_env_jiashi_n.png"] forState:UIControlStateNormal];
     [_jiashiqiBtn setImage:[UIImage imageNamed:@"engineer_env_jiashi_s.png"] forState:UIControlStateHighlighted];
     [_jiashiqiBtn setTitle:@"加湿器" forState:UIControlStateNormal];
@@ -197,21 +176,8 @@
     [_jiashiqiBtn addTarget:self action:@selector(jiashiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_jiashiqiBtn];
     
-    _menjinBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _menjinBtn.frame = CGRectMake(left+rowGap*2, height+132, 80, 132);
-    [_menjinBtn setImage:[UIImage imageNamed:@"engineer_env_menjin_n.png"] forState:UIControlStateNormal];
-    [_menjinBtn setImage:[UIImage imageNamed:@"engineer_env_menjin_s.png"] forState:UIControlStateHighlighted];
-    [_menjinBtn setTitle:@"门禁" forState:UIControlStateNormal];
-    [_menjinBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_menjinBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _menjinBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_menjinBtn setTitleEdgeInsets:UIEdgeInsetsMake(_menjinBtn.imageView.frame.size.height+10,-60,-20,0)];
-    [_menjinBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0,_menjinBtn.titleLabel.bounds.size.height, 0)];
-    [_menjinBtn addTarget:self action:@selector(menjinAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_menjinBtn];
-    
     _jiankongBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _jiankongBtn.frame = CGRectMake(left+rowGap*3, height+132, 80, 132);
+    _jiankongBtn.frame = CGRectMake(left+rowGap, height+132, 80, 132);
     [_jiankongBtn setImage:[UIImage imageNamed:@"engineer_env_jiankong_n.png"] forState:UIControlStateNormal];
     [_jiankongBtn setImage:[UIImage imageNamed:@"engineer_env_jiankong_s.png"] forState:UIControlStateHighlighted];
     [_jiankongBtn setTitle:@"监控" forState:UIControlStateNormal];
@@ -224,7 +190,7 @@
     [self.view addSubview:_jiankongBtn];
     
     _nenghaotongjiBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _nenghaotongjiBtn.frame = CGRectMake(left+rowGap*4, height+132, 80, 132);
+    _nenghaotongjiBtn.frame = CGRectMake(left+rowGap*2, height+132, 80, 132);
     [_nenghaotongjiBtn setImage:[UIImage imageNamed:@"engineer_env_nenghao_n.png"] forState:UIControlStateNormal];
     [_nenghaotongjiBtn setImage:[UIImage imageNamed:@"engineer_env_nenghao_s.png"] forState:UIControlStateHighlighted];
     [_nenghaotongjiBtn setTitle:@"能耗统计" forState:UIControlStateNormal];
@@ -236,7 +202,7 @@
     [_nenghaotongjiBtn addTarget:self action:@selector(nenghaotongjiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_nenghaotongjiBtn];
     
-    int labelStartX = 100;
+    int labelStartX = 170;
     int labelStartY = 500;
     
     UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(labelStartX-40, labelStartY, 200, 30)];
@@ -305,10 +271,17 @@
     _numberPicker._rowNormalColor = RGB(117, 165, 186);
     [self.view addSubview:_numberPicker];
     
-    _confirmButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _confirmButton.frame = CGRectMake(labelStartX+600+125, labelStartY+50+25, 50, 50);
-    [_confirmButton setImage:[UIImage imageNamed:@"engineer_confirm_bt_n.png"] forState:UIControlStateNormal];
-    [_confirmButton setImage:[UIImage imageNamed:@"engineer_confirm_bt_s.png"] forState:UIControlStateHighlighted];
+    UIButton *signup = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:YELLOW_COLOR];
+    signup.frame = CGRectMake(SCREEN_WIDTH/2-50, labelStartY+120+25, 100, 40);
+    signup.layer.cornerRadius = 5;
+    signup.layer.borderWidth = 2;
+    signup.layer.borderColor = RGB(0, 89, 118).CGColor;
+    signup.clipsToBounds = YES;
+    [self.view addSubview:signup];
+    [signup setTitle:@"确认" forState:UIControlStateNormal];
+    [signup setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [signup setTitleColor:RGB(1, 138, 182) forState:UIControlStateHighlighted];
+    signup.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [_confirmButton addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_confirmButton];
 }
