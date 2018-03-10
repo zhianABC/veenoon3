@@ -7,11 +7,11 @@
 //
 
 #import "EngineerEnvDevicePluginViewCtrl.h"
-#import "CustomPickerView.h"
+#import "CenterCustomerPickerView.h"
 #import "EngineerScenarioListViewCtrl.h"
 #import "UIButton+Color.h"
 
-@interface EngineerEnvDevicePluginViewCtrl () <CustomPickerViewDelegate> {
+@interface EngineerEnvDevicePluginViewCtrl () <CenterCustomerPickerViewDelegate> {
     UIButton *_zhaomingBtn;
     UIButton *_kongtiaoBtn;
     UIButton *_diandongmadaBtn;
@@ -26,10 +26,10 @@
     
     UIButton *_confirmButton;
     
-    CustomPickerView *_productTypePikcer;
-    CustomPickerView *_brandPicker;
-    CustomPickerView *_productCategoryPicker;
-    CustomPickerView *_numberPicker;
+    CenterCustomerPickerView *_productTypePikcer;
+    CenterCustomerPickerView *_brandPicker;
+    CenterCustomerPickerView *_productCategoryPicker;
+    CenterCustomerPickerView *_numberPicker;
 }
 @end
 
@@ -214,7 +214,7 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"产品类型";
     
-    _productTypePikcer = [[CustomPickerView alloc] initWithFrame:CGRectMake(labelStartX, labelStartY+30, 120, 150) withGrayOrLight:@"light"];
+    _productTypePikcer = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(labelStartX, labelStartY+30, 120, 150) withGrayOrLight:@"light"];
     [_productTypePikcer removeArray];
     _productTypePikcer.delegate_=self;
     _productTypePikcer.fontSize=14;
@@ -232,7 +232,7 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"品牌";
     
-    _brandPicker = [[CustomPickerView alloc] initWithFrame:CGRectMake(labelStartX+200, labelStartY+30, 91, 150) withGrayOrLight:@"light"];
+    _brandPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(labelStartX+200, labelStartY+30, 91, 150) withGrayOrLight:@"light"];
     [_brandPicker removeArray];
     _brandPicker._pickerDataArray = @[@{@"values":@[@"f",@"e",@"a"]}];
     [_brandPicker selectRow:0 inComponent:0];
@@ -248,7 +248,7 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"型号";
     
-    _productCategoryPicker = [[CustomPickerView alloc] initWithFrame:CGRectMake(labelStartX+400, labelStartY+30, 91, 150) withGrayOrLight:@"light"];
+    _productCategoryPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(labelStartX+400, labelStartY+30, 91, 150) withGrayOrLight:@"light"];
     [_productCategoryPicker removeArray];
     _productCategoryPicker._pickerDataArray = @[@{@"values":@[@"c",@"v",@"b"]}];
     [_productCategoryPicker selectRow:0 inComponent:0];
@@ -264,7 +264,7 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"数量";
     
-    _numberPicker = [[CustomPickerView alloc] initWithFrame:CGRectMake(labelStartX+600, labelStartY+30, 91, 150) withGrayOrLight:@"light"];
+    _numberPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(labelStartX+600, labelStartY+30, 91, 150) withGrayOrLight:@"light"];
     [_numberPicker removeArray];
     _numberPicker._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
     [_numberPicker selectRow:0 inComponent:0];
