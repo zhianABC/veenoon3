@@ -46,7 +46,7 @@
         _progress = 0;
         self.currentProgress = 0;
          
-        self.backColor = RGB(46, 105, 106);
+        self.backColor = [UIColor colorWithWhite:1.0 alpha:0.7];  //RGB(46, 105, 106);
         self.progressColor = RGB(242, 148, 20);
         self.lineWidth = 10;
         
@@ -57,13 +57,13 @@
         textL.textAlignment = NSTextAlignmentCenter;
         [self addSubview:textL];
         
-        _startAngle = - M_PI - M_PI/6.0;
-        _totalAngel = 2*M_PI - M_PI_2 - M_PI/6.0;
+        _startAngle = - M_PI - 2*M_PI/6.0;
+        _totalAngel = 2*M_PI - M_PI_2 + M_PI/6.0;
         
-        int ww = frame.size.width - 24;
+        int ww = frame.size.width - 18;
         _blackpoint = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"black_point.png"]];
         
-        _pointer = [[UIImageView alloc] initWithFrame:CGRectMake(12,
+        _pointer = [[UIImageView alloc] initWithFrame:CGRectMake(9,
                                                                  frame.size.height/2-3,
                                                                  ww, 6)];
         [_pointer addSubview:_blackpoint];
@@ -97,6 +97,7 @@
                                                            clockwise:YES];
     [self.backColor setStroke];
     backCircle.lineWidth = self.lineWidth;
+    backCircle.lineCapStyle =  kCGLineCapRound;
     [backCircle stroke];
     
     if (self.currentProgress != 0) {
@@ -112,6 +113,7 @@
                                                                    clockwise:YES];
         [self.progressColor setStroke];
         progressCircle.lineWidth = self.lineWidth;
+        progressCircle.lineCapStyle =  kCGLineCapRound;
         [progressCircle stroke];
         
         

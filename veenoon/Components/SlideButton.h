@@ -8,11 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class SlideButton;
+
 @protocol SlideButtonDelegate <NSObject>
 
 @optional
-- (void) didSlideButtonValueChanged:(float)value;
-    
+- (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn;
+- (void) didTappedMSelf:(SlideButton*)slbtn;
+
 @end
 
 @interface SlideButton : UIView
@@ -20,10 +23,14 @@
     
 }
 @property (nonatomic, weak) id <SlideButtonDelegate> delegate;
+@property (nonatomic, readonly) UILabel *_titleLabel;
+@property (nonatomic, readonly) UILabel *_valueLabel;
 
 - (void) setCircleValue:(float) value;
 - (void) changeButtonBackgroundImage:(UIImage *)image;
 
 - (void) changToIcon:(UIImage*)iconImg;
+
+- (void) enableValueSet:(BOOL)enabled;
 
 @end

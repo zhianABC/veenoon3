@@ -18,11 +18,20 @@
     CGPoint _beginPoint;
     
     float _vheight;
+    
+    BOOL _enabledTouchMove;
+
+    BOOL _isMoved;
+    
+    UILabel *_titleLabel;
+    UILabel *_valueLabel;
 }
 @end
 
 @implementation SlideButton
 @synthesize delegate;
+@synthesize _titleLabel;
+@synthesize _valueLabel;
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -37,24 +46,60 @@
     
     if(self = [super initWithFrame:frame])
     {
-        _radioImgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"slide_btn.png"]];
+        _radioImgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"slide_btn_gray.png"]];
         [self addSubview:_radioImgV];
         _radioImgV.center = CGPointMake(CGRectGetWidth(frame)/2, CGRectGetHeight(frame)/2);
      
         
-        progress = [[CircleProgressView alloc] initWithFrame:CGRectMake(0, 0, 57, 57)];
+        progress = [[CircleProgressView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
         [self addSubview:progress];
         [progress setProgressBolder:4];
         
         progress._isShowingPoint = YES;
-        [progress setProgress:0.1];
-        progress.center = CGPointMake(CGRectGetWidth(frame)/2, 52);
+        [progress setProgress:0];
+        progress.center = CGPointMake(CGRectGetWidth(frame)/2, CGRectGetHeight(frame)/2);
         
         _vheight = frame.size.height;
+        
+        _enabledTouchMove = NO;
+        
+        
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(frame), 20)];
+        _titleLabel.backgroundColor = [UIColor clearColor];
+        [self addSubview:_titleLabel];
+        _titleLabel.font = [UIFont boldSystemFontOfSize:11];
+        _titleLabel.textColor  = [UIColor whiteColor];
+        _titleLabel.textAlignment = NSTextAlignmentCenter;
+        
+        _valueLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth(frame)/2-30,
+                                                                CGRectGetHeight(frame)-20,
+                                                                60, 20)];
+        _valueLabel.backgroundColor = [UIColor clearColor];
+        [self addSubview:_valueLabel];
+        _valueLabel.font = [UIFont boldSystemFontOfSize:11];
+        _valueLabel.textColor  = [UIColor whiteColor];
+        _valueLabel.textAlignment = NSTextAlignmentCenter;
+        _valueLabel.text = @"0.0";
         
     }
     
     return self;
+}
+
+- (void) enableValueSet:(BOOL)enabled{
+    
+    if(enabled)
+    {
+        _enabledTouchMove = YES;
+        _titleLabel.textColor = YELLOW_COLOR;
+        _radioImgV.image = [UIImage imageNamed:@"slide_btn_light.png"];
+    }
+    else
+    {
+        _enabledTouchMove = NO;
+        _titleLabel.textColor = [UIColor whiteColor];
+        _radioImgV.image = [UIImage imageNamed:@"slide_btn_gray.png"];
+    }
 }
 
 - (void) changToIcon:(UIImage*)iconImg{
@@ -95,7 +140,12 @@
 
 -(void) touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event {
     
+    _isMoved = NO;
+    
     if(progress.hidden)
+        return;
+    
+    if(!_enabledTouchMove)
         return;
     
     CGPoint p = [[touches anyObject] locationInView:self];
@@ -106,7 +156,12 @@
 
 -(void) touchesMoved:(NSSet*)touches withEvent:(UIEvent*)event {
     
+    _isMoved = YES;
+    
     if(progress.hidden)
+        return;
+    
+    if(!_enabledTouchMove)
         return;
     
     NSSet *allTouches = [event allTouches];
@@ -125,22 +180,33 @@
             break;
     }
     
-    if(delegate && [delegate respondsToSelector:@selector(didSlideButtonValueChanged:)])
+    if(delegate && [delegate respondsToSelector:@selector(didSlideButtonValueChanged:slbtn:)])
     {
-        [delegate didSlideButtonValueChanged:[progress pgvalue]];
+        [delegate didSlideButtonValueChanged:[progress pgvalue] slbtn:self];
     }
 }
 
 -(void) touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event {
     
+    if(!_isMoved)
+    {
+        if(delegate && [delegate respondsToSelector:@selector(didTappedMSelf:)])
+        {
+            [delegate didTappedMSelf:self];
+        }
+    }
+    
     if(progress.hidden)
+        return;
+    
+    if(!_enabledTouchMove)
         return;
     
     [progress syncCurrentStepedValue];
     
-    if(delegate && [delegate respondsToSelector:@selector(didSlideButtonValueChanged:)])
+    if(delegate && [delegate respondsToSelector:@selector(didSlideButtonValueChanged:slbtn:)])
     {
-        [delegate didSlideButtonValueChanged:[progress pgvalue]];
+        [delegate didSlideButtonValueChanged:[progress pgvalue] slbtn:self];
     }
     
 }

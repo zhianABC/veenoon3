@@ -15,7 +15,7 @@
 #import "AudioMatrixSettingViewCtrl.h"
 #import "AudioIconSettingView.h"
 
-@interface EngineerAudioProcessViewCtrl () <EngineerSliderViewDelegate, CustomPickerViewDelegate, AudioProcessRightViewDelegate, AudioIconSettingViewDelegate> {
+@interface EngineerAudioProcessViewCtrl () <EngineerSliderViewDelegate, CustomPickerViewDelegate, AudioProcessRightViewDelegate, AudioIconSettingViewDelegate, SlideButtonDelegate> {
     UIButton *_selectSysBtn;
     
     CustomPickerView *_customPicker;
@@ -24,8 +24,6 @@
     
     NSMutableArray *_buttonArray;
     
-    NSMutableArray *_buttonChannelArray;
-    NSMutableArray *_buttonNumberArray;
     NSMutableArray *_inputBtnArray;
     NSMutableArray *_selectedBtnArray;
     
@@ -55,8 +53,7 @@
     isSettings = NO;
     _buttonArray = [[NSMutableArray alloc] init];
     
-    _buttonChannelArray = [[NSMutableArray alloc] init];
-    _buttonNumberArray = [[NSMutableArray alloc] init];
+    
     _selectedBtnArray = [[NSMutableArray alloc] init];
     _inputBtnArray = [[NSMutableArray alloc] init];
     
@@ -64,13 +61,20 @@
     topbar.backgroundColor = THEME_COLOR;
     [self.view addSubview:topbar];
     
-    UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
-    [topbar addSubview:titleIcon];
-    titleIcon.frame = CGRectMake(60, 40, 70, 10);
+//    UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
+//    [topbar addSubview:titleIcon];
+//    titleIcon.frame = CGRectMake(60, 40, 70, 10);
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 63, SCREEN_WIDTH, 1)];
     line.backgroundColor = RGB(75, 163, 202);
     [topbar addSubview:line];
+    
+    UILabel *titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, 44)];
+    titleL.textColor = [UIColor whiteColor];
+    titleL.text = @"音频处理器";
+    titleL.font = [UIFont boldSystemFontOfSize:18];
+    titleL.textAlignment = NSTextAlignmentCenter;
+    [topbar addSubview:titleL];
 
     bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
@@ -103,7 +107,7 @@
     forControlEvents:UIControlEventTouchUpInside];
     
     _selectSysBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _selectSysBtn.frame = CGRectMake(40, 100, 140, 30);
+    _selectSysBtn.frame = CGRectMake(40, 90, 140, 30);
     [_selectSysBtn setImage:[UIImage imageNamed:@"engineer_sys_select_down_n.png"] forState:UIControlStateNormal];
     [_selectSysBtn setTitle:@"音频处理器 " forState:UIControlStateNormal];
     _selectSysBtn.titleLabel.font = [UIFont systemFontOfSize:16];
@@ -128,31 +132,30 @@
     _zengyiSlider.minValue = -70;
     _zengyiSlider.delegate = self;
     [_zengyiSlider resetScale];
-    _zengyiSlider.center = CGPointMake(SCREEN_WIDTH - 120, SCREEN_HEIGHT/2);
+    _zengyiSlider.center = CGPointMake(SCREEN_WIDTH - 110, SCREEN_HEIGHT/2+50);
     
-    int height = 180;
-    int inputOutGap = 230;
+    int height = 150;
+    int inputOutGap = 282;
     
+    UILabel* subTL = [[UILabel alloc] initWithFrame:CGRectMake(50, height-5, 100, 20)];
+    subTL.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:subTL];
+    subTL.font = [UIFont boldSystemFontOfSize:16];
+    subTL.textColor  = [UIColor whiteColor];
+    subTL.text = @"InPuts";
     
-    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(60, height, 100, 30)];
-    titleL.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:titleL];
-    titleL.font = [UIFont boldSystemFontOfSize:16];
-    titleL.textColor  = [UIColor whiteColor];
-    titleL.text = @"InPuts";
-    
-    titleL = [[UILabel alloc] initWithFrame:CGRectMake(60, height+inputOutGap, 100, 30)];
-    titleL.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:titleL];
-    titleL.font = [UIFont boldSystemFontOfSize:16];
-    titleL.textColor  = [UIColor whiteColor];
-    titleL.text = @"OutPuts";
+    subTL = [[UILabel alloc] initWithFrame:CGRectMake(50, height+inputOutGap-5, 100, 20)];
+    subTL.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:subTL];
+    subTL.font = [UIFont boldSystemFontOfSize:16];
+    subTL.textColor  = [UIColor whiteColor];
+    subTL.text = @"OutPuts";
     
     int colNumber = 8;
     int index = 0;
     int cellWidth = 92;
-    int cellHeight = 92;
-    int leftRight = 40;
+    int cellHeight = 120;
+    int leftRight = 50;
     int space = 8;
     
     for (int i = 0; i < self._inputNumber; i++) {
@@ -162,37 +165,12 @@
         int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+height+20;
         
-        SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(startX, startY, 120, 120)];
-        
-        UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
-        tapGesture.cancelsTouchesInView =  NO;
-        tapGesture.numberOfTapsRequired = 1;
-        tapGesture.view.tag = index;
-        [btn addGestureRecognizer:tapGesture];
-        
+        SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(startX, startY, cellWidth, cellHeight)];
+        btn.delegate = self;
         btn.tag = index;
         [self.view addSubview:btn];
         
-        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width - 30, 20, 30, 20)];
-        titleL.backgroundColor = [UIColor clearColor];
-        [btn addSubview:titleL];
-        titleL.font = [UIFont boldSystemFontOfSize:11];
-        titleL.textColor  = [UIColor whiteColor];
-        titleL.text = [NSString stringWithFormat:@"0%d",i+1];
-        [_buttonNumberArray addObject:titleL];
-        
-        titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 -40, btn.frame.size.height - 40, 80, 20)];
-        titleL.backgroundColor = [UIColor clearColor];
-        [btn addSubview:titleL];
-        titleL.font = [UIFont boldSystemFontOfSize:12];
-        titleL.textColor  = [UIColor whiteColor];
-        titleL.textAlignment = NSTextAlignmentCenter;
-        titleL.text = @"Channel";
-        [_buttonChannelArray addObject:titleL];
-        
-        UILongPressGestureRecognizer *longPress2 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed2:)];
-        
-        [btn addGestureRecognizer:longPress2];
+        btn._titleLabel.text = [NSString stringWithFormat:@"Channel %02d",i+1];
         
         [_buttonArray addObject:btn];
         [_inputBtnArray addObject:btn];
@@ -207,38 +185,13 @@
         int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+height+20+inputOutGap;
         
-        SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(startX, startY, 120, 120)];
-        
-        UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
-        tapGesture.cancelsTouchesInView =  NO;
-        tapGesture.numberOfTapsRequired = 1;
-        tapGesture.view.tag = index;
-        [btn addGestureRecognizer:tapGesture];
-        
+        SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(startX, startY, cellWidth, cellHeight)];
         btn.tag = index;
+        btn.delegate = self;
         [self.view addSubview:btn];
+        btn._titleLabel.text = [NSString stringWithFormat:@"Channel %02d",i+1];
         
-        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width - 30, 20, 30, 20)];
-        titleL.backgroundColor = [UIColor clearColor];
-        [btn addSubview:titleL];
-        titleL.font = [UIFont boldSystemFontOfSize:11];
-        titleL.textColor  = [UIColor whiteColor];
-        titleL.text = [NSString stringWithFormat:@"0%d",i+1];
-        [_buttonNumberArray addObject:titleL];
-        
-        titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 -40, btn.frame.size.height - 40, 80, 20)];
-        titleL.backgroundColor = [UIColor clearColor];
-        [btn addSubview:titleL];
-        titleL.font = [UIFont boldSystemFontOfSize:12];
-        titleL.textColor  = [UIColor whiteColor];
-        titleL.textAlignment = NSTextAlignmentCenter;
-        titleL.text = @"Channel";
-        [_buttonChannelArray addObject:titleL];
-        
-        UILongPressGestureRecognizer *longPress2 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed2:)];
-        
-        [btn addGestureRecognizer:longPress2];
-        
+
         [_buttonArray addObject:btn];
         
         index++;
@@ -252,17 +205,28 @@
 - (void) didSliderEndChanged:(id)object {
     
 }
+
+//value = 0....1
+- (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
+    
+    float circleValue = -70 + (value * 82);
+    slbtn._valueLabel.text = [NSString stringWithFormat:@"%0.1f db", circleValue];
+}
 - (void) didSliderValueChanged:(int)value object:(id)object {
-    float circleValue = (float) (value+70.0f)/82.0f;
+    
+    float circleValue = value;
     for (SlideButton *button in _selectedBtnArray) {
-        [button setCircleValue:circleValue];
+        
+        button._valueLabel.text = [NSString stringWithFormat:@"%0.1f db", circleValue];
+        [button setCircleValue:fabs((value+70)/82.0)];
     }
 }
 
--(void)handleTapGesture:(UIGestureRecognizer*)gestureRecognizer {
-    int tag = (int)gestureRecognizer.view.tag;
+- (void) didTappedMSelf:(SlideButton*)slbtn{
     
-    SlideButton *btn;
+    int tag = (int)slbtn.tag;
+    
+    SlideButton *btn = nil;
     for (SlideButton *button in _selectedBtnArray) {
         if (button.tag == tag) {
             btn = button;
@@ -273,33 +237,19 @@
     if (btn == nil) {
         SlideButton *button = [_buttonArray objectAtIndex:tag];
         [_selectedBtnArray addObject:button];
-        UILabel *chanelL = [_buttonChannelArray objectAtIndex:tag];
-        chanelL.textColor = YELLOW_COLOR;
         
-        UILabel *numberL = [_buttonNumberArray objectAtIndex:tag];
-        numberL.textColor = YELLOW_COLOR;
+        [button enableValueSet:YES];
+
     } else {
         // remove it
         [_selectedBtnArray removeObject:btn];
-        UILabel *chanelL = [_buttonChannelArray objectAtIndex:tag];
-        chanelL.textColor = [UIColor whiteColor];
         
-        UILabel *numberL = [_buttonNumberArray objectAtIndex:tag];
-        numberL.textColor = [UIColor whiteColor];;
+        [btn enableValueSet:NO];
+
     }
 }
 
 
-- (void) longPressed2:(id)sender{
-    
-    UILongPressGestureRecognizer *press = (UILongPressGestureRecognizer *)sender;
-    if (press.state == UIGestureRecognizerStateEnded) {
-        // no need anything here
-        return;
-    } else if (press.state == UIGestureRecognizerStateBegan) {
-        
-    }
-}
 - (void) sysSelectAction:(id)sender{
     _customPicker = [[CustomPickerView alloc]
                      initWithFrame:CGRectMake(_selectSysBtn.frame.origin.x, _selectSysBtn.frame.origin.y, _selectSysBtn.frame.size.width, 140) withGrayOrLight:@"gray"];

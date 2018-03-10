@@ -169,6 +169,8 @@
 		342814231FE34BF100170D11 /* PowerSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 342814221FE34BF100170D11 /* PowerSettingView.m */; };
 		342A2F4020411B6900BE4071 /* GroupsPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 342A2F3F20411B6900BE4071 /* GroupsPickerView.m */; };
 		343733AE1FE402E80071C902 /* JHSlideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 343733AD1FE402E80071C902 /* JHSlideView.m */; };
+		3451A53B2052DCC600AE02B4 /* slide_btn_light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3451A5392052DCC500AE02B4 /* slide_btn_light@2x.png */; };
+		3451A53C2052DCC600AE02B4 /* slide_btn_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3451A53A2052DCC600AE02B4 /* slide_btn_gray@2x.png */; };
 		3454276E2046DED100E1A436 /* FilterGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3454276D2046DED100E1A436 /* FilterGraphView.swift */; };
 		345427702046DEE800E1A436 /* LimiterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3454276F2046DEE800E1A436 /* LimiterView.swift */; };
 		345487C5204BE3910068126B /* yinpinchuli_anniu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 345487C4204BE3910068126B /* yinpinchuli_anniu@2x.png */; };
@@ -1003,6 +1005,8 @@
 		342A2F3F20411B6900BE4071 /* GroupsPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupsPickerView.m; sourceTree = "<group>"; };
 		343733AC1FE402E80071C902 /* JHSlideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHSlideView.h; sourceTree = "<group>"; };
 		343733AD1FE402E80071C902 /* JHSlideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHSlideView.m; sourceTree = "<group>"; };
+		3451A5392052DCC500AE02B4 /* slide_btn_light@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "slide_btn_light@2x.png"; path = "ImageAssets/slide_btn_light@2x.png"; sourceTree = SOURCE_ROOT; };
+		3451A53A2052DCC600AE02B4 /* slide_btn_gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "slide_btn_gray@2x.png"; path = "ImageAssets/slide_btn_gray@2x.png"; sourceTree = SOURCE_ROOT; };
 		3454276C2046DED000E1A436 /* veenoon-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "veenoon-Bridging-Header.h"; sourceTree = "<group>"; };
 		3454276D2046DED100E1A436 /* FilterGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterGraphView.swift; sourceTree = "<group>"; };
 		3454276F2046DEE800E1A436 /* LimiterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimiterView.swift; sourceTree = "<group>"; };
@@ -2951,6 +2955,8 @@
 		EBEA7C1D1FBCAF260028F0E8 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				3451A53A2052DCC600AE02B4 /* slide_btn_gray@2x.png */,
+				3451A5392052DCC500AE02B4 /* slide_btn_light@2x.png */,
 				EB948A4C204EE4660018C80A /* v_slider_bg_light2@2x.png */,
 				EB948A4A204EE4660018C80A /* wireless_slide_light_n@2x.png */,
 				EB948A4B204EE4660018C80A /* wireless_slide_light_s@2x.png */,
@@ -3196,6 +3202,7 @@
 				341C61081FDD0DBF003A5490 /* a_icon_8@2x.png in Resources */,
 				EBF831EF1FD047D90096E6EC /* user_video_play_left@2x.png in Resources */,
 				EB03F52D1FBDC83100865541 /* home_background@2x.png in Resources */,
+				3451A53B2052DCC600AE02B4 /* slide_btn_light@2x.png in Resources */,
 				EBAE5B631FDD046A00C10C4D /* engineer_confirm_bt_n@2x.png in Resources */,
 				EBAE5B851FDD07BE00C10C4D /* engineer_video_touyingji_s@2x.png in Resources */,
 				EB3B73B81FE63F10001941CF /* wireless_slide_n@2x.png in Resources */,
@@ -3222,6 +3229,7 @@
 				34F27A54205121EF0045D765 /* ce_l_07@2x.png in Resources */,
 				EB1F9F121FD818E9007132A1 /* user_info_collect_m@2x.png in Resources */,
 				34F27A64205121EF0045D765 /* ce_l_03_big.png in Resources */,
+				3451A53C2052DCC600AE02B4 /* slide_btn_gray@2x.png in Resources */,
 				EBDF1C0F1FC5C6C900A756EA /* user_training_s@2x.png in Resources */,
 				EBAE5BAD1FDD20C400C10C4D /* engineer_env_jingshui_n@2x.png in Resources */,
 				EBF6A73C1FC851E500260FF0 /* audio_player_hold@2x.png in Resources */,
