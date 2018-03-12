@@ -6,18 +6,17 @@
 //  Copyright © 2017年 jack. All rights reserved.
 //
 #import "UserYouXianViewController.h"
-#import "CustomPickerView.h"
+#import "CenterCustomerPickerView.h"
 
-@interface UserYouXianViewController ()<CustomPickerViewDelegate> {
+@interface UserYouXianViewController ()<CenterCustomerPickerViewDelegate> {
     UIButton *_zhuximoshiBtn;
     UIButton *_luntimoshiBtn;
     UIButton *_shenqingmoshiBtn;
     UIButton *_ziyoumoshiBtn;
     
-    CustomPickerView *_peoplePicker1;
-    CustomPickerView *_peoplePicker2;
-    CustomPickerView *_peoplePicker3;
-    CustomPickerView *_peoplePicker4;
+    CenterCustomerPickerView *_peoplePicker1;
+    CenterCustomerPickerView *_peoplePicker2;
+    CenterCustomerPickerView *_peoplePicker3;
 }
 @end
 
@@ -90,7 +89,9 @@
     [_zhuximoshiBtn addTarget:self action:@selector(zhuxiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_zhuximoshiBtn];
     
-    _peoplePicker1 = [[CustomPickerView alloc] initWithFrame:CGRectMake(leftRight+pickerRowLeft, height+pickerHeight, 100, 120) withGrayOrLight:@"gray"];
+    _peoplePicker1 = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(leftRight+pickerRowLeft, height+pickerHeight, 100, 120) withGrayOrLight:@"gray"];
+    [_peoplePicker1 removeArray];
+    
     _peoplePicker1._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
     [self.view addSubview:_peoplePicker1];
     [_peoplePicker1 selectRow:0 inComponent:0];
@@ -112,7 +113,8 @@
     [_luntimoshiBtn addTarget:self action:@selector(luntiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_luntimoshiBtn];
     
-    _peoplePicker2 = [[CustomPickerView alloc] initWithFrame:CGRectMake(leftRight+rowGap+cellWidth+pickerRowLeft, height+pickerHeight, 100, 120) withGrayOrLight:@"gray"];
+    _peoplePicker2 = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(leftRight+rowGap+cellWidth+pickerRowLeft, height+pickerHeight, 100, 120) withGrayOrLight:@"gray"];
+    [_peoplePicker2 removeArray];
     _peoplePicker2._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
     [self.view addSubview:_peoplePicker2];
     [_peoplePicker2 selectRow:0 inComponent:0];
@@ -134,7 +136,8 @@
     [_shenqingmoshiBtn addTarget:self action:@selector(shenqingAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_shenqingmoshiBtn];
     
-    _peoplePicker3 = [[CustomPickerView alloc] initWithFrame:CGRectMake(leftRight+rowGap*2+cellWidth*2+pickerRowLeft, height+pickerHeight, 100, 120) withGrayOrLight:@"gray"];
+    _peoplePicker3 = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(leftRight+rowGap*2+cellWidth*2+pickerRowLeft, height+pickerHeight, 100, 120) withGrayOrLight:@"gray"];
+    [_peoplePicker3 removeArray];
     _peoplePicker3._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
     [self.view addSubview:_peoplePicker3];
     [_peoplePicker3 selectRow:0 inComponent:0];
@@ -155,15 +158,6 @@
     [_ziyoumoshiBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_ziyoumoshiBtn.titleLabel.bounds.size.height, 0)];
     [_ziyoumoshiBtn addTarget:self action:@selector(ziyouAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_ziyoumoshiBtn];
-    
-    _peoplePicker4 = [[CustomPickerView alloc] initWithFrame:CGRectMake(leftRight+rowGap*3+cellWidth*3+pickerRowLeft, height+pickerHeight, 100, 120) withGrayOrLight:@"gray"];
-    _peoplePicker4._pickerDataArray = @[@{@"values":@[@"   12  ",@"  10  ",@"  09  "]}];
-    [self.view addSubview:_peoplePicker4];
-    [_peoplePicker4 selectRow:0 inComponent:0];
-    _peoplePicker4._selectColor = RGB(230, 151, 50);
-    _peoplePicker4._rowNormalColor = SINGAL_COLOR;
-    _peoplePicker4.hidden=YES;
-    _peoplePicker4.delegate_=self;
 }
 
 - (void) zhuxiAction:(id)sender{
@@ -179,7 +173,6 @@
     _peoplePicker1.hidden=NO;
     _peoplePicker2.hidden=YES;
     _peoplePicker3.hidden=YES;
-    _peoplePicker4.hidden=YES;
 }
 
 - (void) luntiAction:(id)sender{
@@ -195,7 +188,6 @@
     _peoplePicker1.hidden=YES;
     _peoplePicker2.hidden=NO;
     _peoplePicker3.hidden=YES;
-    _peoplePicker4.hidden=YES;
 }
 
 - (void) shenqingAction:(id)sender{
@@ -211,7 +203,6 @@
     _peoplePicker1.hidden=YES;
     _peoplePicker2.hidden=YES;
     _peoplePicker3.hidden=NO;
-    _peoplePicker4.hidden=YES;
 }
 
 - (void) ziyouAction:(id)sender{
@@ -227,10 +218,13 @@
     _peoplePicker1.hidden=YES;
     _peoplePicker2.hidden=YES;
     _peoplePicker3.hidden=YES;
-    _peoplePicker4.hidden=NO;
 }
 
 - (void) okAction:(id)sender{
+    _peoplePicker1.hidden=YES;
+    _peoplePicker2.hidden=YES;
+    _peoplePicker3.hidden=YES;
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -242,6 +236,5 @@
     _peoplePicker1.hidden=YES;
     _peoplePicker2.hidden=YES;
     _peoplePicker3.hidden=YES;
-    _peoplePicker4.hidden=YES;
 }
 @end
