@@ -44,13 +44,8 @@
         NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
         [_addWetSysArray addObject:dic];
     }
-    UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
-    [self.view addSubview:titleIcon];
-    titleIcon.frame = CGRectMake(60, 40, 70, 10);
     
-    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 63, SCREEN_WIDTH, 1)];
-    line.backgroundColor = RGB(75, 163, 202);
-    [self.view addSubview:line];
+    [super setTitleAndImage:@"info_day_s.png" withTitle:@"加湿"];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
@@ -83,15 +78,15 @@
     forControlEvents:UIControlEventTouchUpInside];
     
     _selectSysBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _selectSysBtn.frame = CGRectMake(100, 100, 140, 30);
+    _selectSysBtn.frame = CGRectMake(50, 100, 80, 30);
     [_selectSysBtn setImage:[UIImage imageNamed:@"engineer_sys_select_down_n.png"] forState:UIControlStateNormal];
-    [_selectSysBtn setTitle:@"加湿 " forState:UIControlStateNormal];
+    [_selectSysBtn setTitle:@"001" forState:UIControlStateNormal];
     _selectSysBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     [_selectSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_selectSysBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _selectSysBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [_selectSysBtn setTitleEdgeInsets:UIEdgeInsetsMake(0,0,0,_selectSysBtn.imageView.bounds.size.width)];
-    [_selectSysBtn setImageEdgeInsets:UIEdgeInsetsMake(0,_selectSysBtn.titleLabel.bounds.size.width+50,0,0)];
+    [_selectSysBtn setImageEdgeInsets:UIEdgeInsetsMake(0,_selectSysBtn.titleLabel.bounds.size.width+35,0,0)];
     [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_selectSysBtn];
     
@@ -103,7 +98,7 @@
     int cellWidth = 92;
     int cellHeight = 92;
     int colNumber = 6;
-    int space = 10;
+    int space = 25;
     
     for (int i = 0; i < self._number; i++) {
         NSMutableDictionary *dic = [self._addWetSysArray objectAtIndex:i];
@@ -161,6 +156,7 @@
 }
 - (void) createBtnLabel:(UIButton*)sender dataDic:(NSMutableDictionary*) dataDic{
     UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(sender.frame.size.width - 20, 0, 20, 20)];
+    titleL.textAlignment = NSTextAlignmentCenter;
     titleL.backgroundColor = [UIColor clearColor];
     [sender addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:11];
@@ -169,6 +165,7 @@
     [_nameLabelArray addObject:titleL];
     
     titleL = [[UILabel alloc] initWithFrame:CGRectMake(sender.frame.size.width/2 -40, sender.frame.size.height - 20, 80, 20)];
+    titleL.textAlignment = NSTextAlignmentCenter;
     titleL.backgroundColor = [UIColor clearColor];
     [sender addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:12];
@@ -180,7 +177,7 @@
 
 - (void) sysSelectAction:(id)sender{
     _customPicker = [[CustomPickerView alloc]
-                     initWithFrame:CGRectMake(_selectSysBtn.frame.origin.x, _selectSysBtn.frame.origin.y, _selectSysBtn.frame.size.width, 140) withGrayOrLight:@"gray"];
+                     initWithFrame:CGRectMake(_selectSysBtn.frame.origin.x, _selectSysBtn.frame.origin.y, _selectSysBtn.frame.size.width, 100) withGrayOrLight:@"gray"];
     
     
     NSMutableArray *arr = [NSMutableArray array];
@@ -202,7 +199,7 @@
     if (_customPicker) {
         [_customPicker removeFromSuperview];
     }
-    NSString *title =  [@"加湿 " stringByAppendingString:pickerValue];
+    NSString *title =  [@"" stringByAppendingString:pickerValue];
     [_selectSysBtn setTitle:title forState:UIControlStateNormal];
 }
 - (void) okAction:(id)sender{

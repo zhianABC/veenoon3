@@ -69,7 +69,7 @@
     
     int top = 50;
     int leftRight = 60;
-    int space = 10;
+    int space = 25;
     
     int cellWidth = 312;
     int cellHeight = 186;

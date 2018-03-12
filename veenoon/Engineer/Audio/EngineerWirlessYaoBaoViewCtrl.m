@@ -84,13 +84,7 @@
     _selectedBtnArray = [[NSMutableArray alloc] init];
     [self inintData];
     
-    UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
-    [self.view addSubview:titleIcon];
-    titleIcon.frame = CGRectMake(60, 40, 70, 10);
-    
-    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 63, SCREEN_WIDTH, 1)];
-    line.backgroundColor = RGB(75, 163, 202);
-    [self.view addSubview:line];
+    [super setTitleAndImage:@"info_day_s.png" withTitle:@"无线手持腰包系统"];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
@@ -123,15 +117,15 @@
     forControlEvents:UIControlEventTouchUpInside];
     
     _selectSysBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _selectSysBtn.frame = CGRectMake(100, 100, 180, 30);
+    _selectSysBtn.frame = CGRectMake(50, 100, 80, 30);
     [_selectSysBtn setImage:[UIImage imageNamed:@"engineer_sys_select_down_n.png"] forState:UIControlStateNormal];
-    [_selectSysBtn setTitle:@"无线手持腰包系统 " forState:UIControlStateNormal];
+    [_selectSysBtn setTitle:@"001" forState:UIControlStateNormal];
     _selectSysBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     [_selectSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_selectSysBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _selectSysBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [_selectSysBtn setTitleEdgeInsets:UIEdgeInsetsMake(0,0,0,_selectSysBtn.imageView.bounds.size.width)];
-    [_selectSysBtn setImageEdgeInsets:UIEdgeInsetsMake(0,_selectSysBtn.titleLabel.bounds.size.width+50,0,0)];
+    [_selectSysBtn setImageEdgeInsets:UIEdgeInsetsMake(0,_selectSysBtn.titleLabel.bounds.size.width+35,0,0)];
     [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_selectSysBtn];
     
@@ -161,7 +155,7 @@
     int cellWidth = 92;
     int cellHeight = 92;
     int colNumber = 6;
-    int space = 10;
+    int space = 25;
     
     NSMutableDictionary *dataDic = [_wirelessYaoBaoSysArray objectAtIndex:0];
     NSMutableArray *dataArray = [dataDic objectForKey:@"value"];
@@ -191,7 +185,8 @@
             btn.tag = i;
             [self.view addSubview:btn];
             
-            UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width - 30, 20, 30, 20)];
+            UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 - 30, 0, 60, 20)];
+            titleL.textAlignment = NSTextAlignmentCenter;
             titleL.backgroundColor = [UIColor clearColor];
             [btn addSubview:titleL];
             titleL.font = [UIFont boldSystemFontOfSize:11];
@@ -199,7 +194,8 @@
             titleL.text = [NSString stringWithFormat:@"0%d",i+1];
             [_buttonNumberArray addObject:titleL];
             
-            titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 -40, btn.frame.size.height - 40, 80, 20)];
+            titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 -50, btn.frame.size.height - 20, 100, 20)];
+            titleL.textAlignment = NSTextAlignmentCenter;
             titleL.backgroundColor = [UIColor clearColor];
             [btn addSubview:titleL];
             titleL.font = [UIFont boldSystemFontOfSize:12];
@@ -224,6 +220,11 @@
             UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
             imageView.backgroundColor = DARK_BLUE_COLOR;
             imageView.frame = CGRectMake(btn.frame.origin.x+10, btn.frame.origin.y+10, 100, 100);
+            imageView.layer.cornerRadius = 10;
+            imageView.layer.borderWidth = 2;
+            imageView.layer.borderColor = RGB(0, 89, 118).CGColor;
+            imageView.clipsToBounds = YES;
+            
             imageView.tag = index;
             imageView.userInteractionEnabled=YES;
             imageView.layer.contentsGravity = kCAGravityCenter;
@@ -288,6 +289,7 @@
     if (btn == nil) {
         SlideButton *button = [_buttonArray objectAtIndex:tag];
         [_selectedBtnArray addObject:button];
+        [button enableValueSet:YES];
         UILabel *chanelL = [_buttonChannelArray objectAtIndex:tag];
         chanelL.textColor = YELLOW_COLOR;
         
@@ -296,6 +298,7 @@
     } else {
         // remove it
         [_selectedBtnArray removeObject:btn];
+        [btn enableValueSet:NO];
         UILabel *chanelL = [_buttonChannelArray objectAtIndex:tag];
         chanelL.textColor = [UIColor whiteColor];
         
@@ -348,7 +351,7 @@
 
 - (void) sysSelectAction:(id)sender{
     _customPicker = [[CustomPickerView alloc]
-                     initWithFrame:CGRectMake(_selectSysBtn.frame.origin.x, _selectSysBtn.frame.origin.y, _selectSysBtn.frame.size.width, 120) withGrayOrLight:@"gray"];
+                     initWithFrame:CGRectMake(_selectSysBtn.frame.origin.x, _selectSysBtn.frame.origin.y, _selectSysBtn.frame.size.width, 100) withGrayOrLight:@"gray"];
     
     
     NSMutableArray *arr = [NSMutableArray array];
@@ -370,7 +373,7 @@
     if (_customPicker) {
         [_customPicker removeFromSuperview];
     }
-    NSString *title =  [@"无线手持腰包系统 " stringByAppendingString:pickerValue];
+    NSString *title =  [@"" stringByAppendingString:pickerValue];
     [_selectSysBtn setTitle:title forState:UIControlStateNormal];
 }
 

@@ -6,11 +6,11 @@
 //  Copyright 2009 Steven Sun. All rights reserved.
 //
 
-#import "CustomPickerView.h"
+#import "CenterCustomerPickerView.h"
 #import "UIButton+Color.h"
 
 
-@interface CustomPickerView () {
+@interface CenterCustomerPickerView () {
     UIPickerView    *_myPickerView;
     
     NSMutableDictionary *_values;
@@ -32,7 +32,7 @@
 
 @end
 
-@implementation CustomPickerView
+@implementation CenterCustomerPickerView
 @synthesize _pickerDataArray;
 @synthesize delegate_;
 @synthesize _selectionBlock;
@@ -63,7 +63,7 @@
         [self addSubview:_background];
         //_background.contentMode = UIViewContentModeScaleAspectFill;
         
-        _cellWidth = frame.size.width-25;
+        _cellWidth = frame.size.width;
         
         _myPickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0.0, 0,
                                                                        frame.size.width,
@@ -71,7 +71,7 @@
         _myPickerView.delegate = self;
         _myPickerView.dataSource = self;
         _myPickerView.showsSelectionIndicator = YES;
-
+        
         [self addSubview:_myPickerView];
         
         
@@ -83,10 +83,10 @@
             }
         }
         
-          _values = [[NSMutableDictionary alloc] init];
+        _values = [[NSMutableDictionary alloc] init];
         
         btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
-        btnSave.frame = CGRectMake(frame.size.width-25, frame.size.height/2-13, 25, 25);
+        btnSave.frame = CGRectMake(frame.size.width-50, frame.size.height/2-25, 50, 50);
         [btnSave setImage:[UIImage imageNamed:@"customer_view_confirm_n.png"] forState:UIControlStateNormal];
         [btnSave setImage:[UIImage imageNamed:@"customer_view_confirm_s.png"] forState:UIControlStateHighlighted];
         [btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -207,9 +207,9 @@
     
     NSArray *values = [section objectForKey:@"values"];
     
-    UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, componentWidth-10, 30)];
+    UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, componentWidth, 30)];
     tL.backgroundColor = [UIColor clearColor];
-    tL.textAlignment = NSTextAlignmentLeft;
+    tL.textAlignment = NSTextAlignmentCenter;
     
     id valueRow = [values objectAtIndex:row];
     if([valueRow isKindOfClass:[NSString class]])
@@ -220,8 +220,6 @@
     {
         tL.text = [valueRow objectForKey:@"title"];
     }
-    
-    tL.textAlignment = NSTextAlignmentLeft;
     
     if (_rowSelected == row) {
         tL.textColor = _selectColor;
@@ -259,3 +257,4 @@
 
 
 @end
+

@@ -8,9 +8,10 @@
 
 #import "EngineerVedioDevicePluginViewCtrl.h"
 #import "EngineerEnvDevicePluginViewCtrl.h"
-#import "CustomPickerView.h"
+#import "CenterCustomerPickerView.h"
+#import "UIButton+Color.h"
 
-@interface EngineerVedioDevicePluginViewCtrl ()<CustomPickerViewDelegate> {
+@interface EngineerVedioDevicePluginViewCtrl ()<CenterCustomerPickerViewDelegate> {
     UIButton *_dianyuanguanliBtn;
     UIButton *_shipinbofangBtn;
     UIButton *_shexiangjiBtn;
@@ -24,10 +25,10 @@
     
     UIButton *_confirmButton;
     
-    CustomPickerView *_productTypePikcer;
-    CustomPickerView *_brandPicker;
-    CustomPickerView *_productCategoryPicker;
-    CustomPickerView *_numberPicker;
+    CenterCustomerPickerView *_productTypePikcer;
+    CenterCustomerPickerView *_brandPicker;
+    CenterCustomerPickerView *_productCategoryPicker;
+    CenterCustomerPickerView *_numberPicker;
 }
 @end
 
@@ -36,18 +37,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
-    [self.view addSubview:titleIcon];
-    titleIcon.frame = CGRectMake(60, 40, 70, 10);
-    
-    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 63, SCREEN_WIDTH, 1)];
-    line.backgroundColor = RGB(75, 163, 202);
-    [self.view addSubview:line];
-    
-    UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, ENGINEER_VIEW_TOP, SCREEN_WIDTH-80, 30)];
+    UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, ENGINEER_VIEW_TOP+10, SCREEN_WIDTH-80, 30)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont boldSystemFontOfSize:24];
+    portDNSLabel.font = [UIFont boldSystemFontOfSize:20];
     portDNSLabel.textColor  = [UIColor whiteColor];
     portDNSLabel.text = @"请配置您的视频管理系统";
     
@@ -88,7 +81,7 @@
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
-    int left = 100;
+    int left = 150;
     int rowGap = (SCREEN_WIDTH - left * 2)/5 - 10;
     int height = 200;
     _dianyuanguanliBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -222,7 +215,7 @@
     [_touyingjiBtn addTarget:self action:@selector(touyingjiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_touyingjiBtn];
     
-    int labelStartX = 100;
+    int labelStartX = 170;
     int labelStartY = 500;
     
     UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(labelStartX-40, labelStartY, 200, 30)];
@@ -233,7 +226,7 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"产品类型";
     
-    _productTypePikcer = [[CustomPickerView alloc] initWithFrame:CGRectMake(labelStartX, labelStartY+30, 120, 150) withGrayOrLight:@"light"];
+    _productTypePikcer = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(labelStartX, labelStartY+30, 120, 150) withGrayOrLight:@"light"];
     [_productTypePikcer removeArray];
     _productTypePikcer.delegate_=self;
     _productTypePikcer.fontSize = 14;
@@ -251,7 +244,7 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"品牌";
     
-    _brandPicker = [[CustomPickerView alloc] initWithFrame:CGRectMake(labelStartX+200, labelStartY+30, 91, 150) withGrayOrLight:@"light"];
+    _brandPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(labelStartX+200, labelStartY+30, 91, 150) withGrayOrLight:@"light"];
     [_brandPicker removeArray];
     _brandPicker._pickerDataArray = @[@{@"values":@[@"f",@"e",@"a"]}];
     [_brandPicker selectRow:0 inComponent:0];
@@ -267,7 +260,7 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"型号";
     
-    _productCategoryPicker = [[CustomPickerView alloc] initWithFrame:CGRectMake(labelStartX+400, labelStartY+30, 91, 150) withGrayOrLight:@"light"];
+    _productCategoryPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(labelStartX+400, labelStartY+30, 91, 150) withGrayOrLight:@"light"];
     [_productCategoryPicker removeArray];
     _productCategoryPicker._pickerDataArray = @[@{@"values":@[@"c",@"v",@"b"]}];
     [_productCategoryPicker selectRow:0 inComponent:0];
@@ -283,7 +276,7 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"数量";
     
-    _numberPicker = [[CustomPickerView alloc] initWithFrame:CGRectMake(labelStartX+600, labelStartY+30, 91, 150) withGrayOrLight:@"light"];
+    _numberPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(labelStartX+600, labelStartY+30, 91, 150) withGrayOrLight:@"light"];
     [_numberPicker removeArray];
     _numberPicker._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
     [_numberPicker selectRow:0 inComponent:0];
@@ -291,10 +284,17 @@
     _numberPicker._rowNormalColor = RGB(117, 165, 186);
     [self.view addSubview:_numberPicker];
     
-    _confirmButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _confirmButton.frame = CGRectMake(labelStartX+600+125, labelStartY+50+25, 50, 50);
-    [_confirmButton setImage:[UIImage imageNamed:@"engineer_confirm_bt_n.png"] forState:UIControlStateNormal];
-    [_confirmButton setImage:[UIImage imageNamed:@"engineer_confirm_bt_s.png"] forState:UIControlStateHighlighted];
+    UIButton *signup = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:YELLOW_COLOR];
+    signup.frame = CGRectMake(SCREEN_WIDTH/2-50, labelStartY+120+25, 100, 40);
+    signup.layer.cornerRadius = 5;
+    signup.layer.borderWidth = 2;
+    signup.layer.borderColor = RGB(0, 89, 118).CGColor;
+    signup.clipsToBounds = YES;
+    [self.view addSubview:signup];
+    [signup setTitle:@"确认" forState:UIControlStateNormal];
+    [signup setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [signup setTitleColor:RGB(1, 138, 182) forState:UIControlStateHighlighted];
+    signup.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [_confirmButton addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_confirmButton];
 }

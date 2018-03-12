@@ -31,13 +31,7 @@
     [super viewDidLoad];
     isSettings = NO;
     
-    UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
-    [self.view addSubview:titleIcon];
-    titleIcon.frame = CGRectMake(60, 40, 70, 10);
-    
-    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 63, SCREEN_WIDTH, 1)];
-    line.backgroundColor = RGB(75, 163, 202);
-    [self.view addSubview:line];
+    [super setTitleAndImage:@"info_day_s.png" withTitle:@"电源实时器"];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
@@ -70,15 +64,15 @@
     forControlEvents:UIControlEventTouchUpInside];
     
     _selectSysBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _selectSysBtn.frame = CGRectMake(100, 100, 140, 30);
+    _selectSysBtn.frame = CGRectMake(50, 100, 80, 30);
     [_selectSysBtn setImage:[UIImage imageNamed:@"engineer_sys_select_down_n.png"] forState:UIControlStateNormal];
-    [_selectSysBtn setTitle:@"电源实时器 " forState:UIControlStateNormal];
+    [_selectSysBtn setTitle:@"001" forState:UIControlStateNormal];
     _selectSysBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     [_selectSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_selectSysBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _selectSysBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [_selectSysBtn setTitleEdgeInsets:UIEdgeInsetsMake(0,0,0,_selectSysBtn.imageView.bounds.size.width)];
-    [_selectSysBtn setImageEdgeInsets:UIEdgeInsetsMake(0,_selectSysBtn.titleLabel.bounds.size.width+50,0,0)];
+    [_selectSysBtn setImageEdgeInsets:UIEdgeInsetsMake(0,_selectSysBtn.titleLabel.bounds.size.width+35,0,0)];
     [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_selectSysBtn];
     
@@ -90,7 +84,7 @@
     int cellWidth = 92;
     int cellHeight = 92;
     int colNumber = 6;
-    int space = 10;
+    int space = 25;
     
     if ([self._electronicSysArray count] == 0) {
         int nameStart = 1;
@@ -170,6 +164,7 @@
 }
 - (void) createBtnLabel:(UIButton*)sender dataDic:(NSMutableDictionary*) dataDic{
     UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(sender.frame.size.width - 20, 0, 20, 20)];
+    titleL.textAlignment = NSTextAlignmentCenter;
     titleL.backgroundColor = [UIColor clearColor];
     [sender addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:11];
@@ -177,17 +172,19 @@
     titleL.text = [dataDic objectForKey:@"name"];
     
     titleL = [[UILabel alloc] initWithFrame:CGRectMake(sender.frame.size.width/2 -40, sender.frame.size.height - 20, 80, 20)];
+    titleL.textAlignment = NSTextAlignmentCenter;
     titleL.backgroundColor = [UIColor clearColor];
     [sender addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:12];
     titleL.textColor  = [UIColor whiteColor];
     titleL.textAlignment = NSTextAlignmentCenter;
     titleL.text = @"Channel";
+    
 }
 
 - (void) sysSelectAction:(id)sender{
     _customPicker = [[CustomPickerView alloc]
-                                      initWithFrame:CGRectMake(100, _selectSysBtn.frame.origin.y, _selectSysBtn.frame.size.width, 140) withGrayOrLight:@"gray"];
+                                      initWithFrame:CGRectMake(50, _selectSysBtn.frame.origin.y, _selectSysBtn.frame.size.width, 100) withGrayOrLight:@"gray"];
     
     NSMutableArray *arr = [NSMutableArray array];
     for(int i = 1; i<5; i++)
@@ -208,7 +205,7 @@
     if (_customPicker) {
         [_customPicker removeFromSuperview];
     }
-    NSString *title =  [@"电源实时器 " stringByAppendingString:pickerValue];
+    NSString *title =  [@"" stringByAppendingString:pickerValue];
     [_selectSysBtn setTitle:title forState:UIControlStateNormal];
 }
 

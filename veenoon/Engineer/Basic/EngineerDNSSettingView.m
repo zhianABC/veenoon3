@@ -7,9 +7,9 @@
 //
 
 #import "EngineerDNSSettingView.h"
-#import "CustomPickerView.h"
+#import "CenterCustomerPickerView.h"
 
-@interface EngineerDNSSettingView () <UITableViewDelegate,UITableViewDataSource> {
+@interface EngineerDNSSettingView () <UITableViewDelegate,UITableViewDataSource, CenterCustomerPickerViewDelegate> {
     int startX;
     int rowGap;
 }
@@ -402,7 +402,7 @@
     [cell.contentView addSubview:_macAddressLabel];
     
     if (_portLvPicker == nil) {
-        _portLvPicker = [[CustomPickerView alloc] initWithFrame:CGRectMake(startX+rowGap*4, 5, 100, 150) withGrayOrLight:@"light"];
+        _portLvPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(startX+rowGap*4, 5, 100, 150) withGrayOrLight:@"light"];
         [_portLvPicker removeArray];
         _portLvPicker._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
         [_portLvPicker selectRow:0 inComponent:0];
@@ -411,7 +411,7 @@
     }
     [cell.contentView addSubview:_portLvPicker];
     if (_digitPicker == nil) {
-        _digitPicker = [[CustomPickerView alloc] initWithFrame:CGRectMake(startX+rowGap*5, 5, 100, 150) withGrayOrLight:@"light"];
+        _digitPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(startX+rowGap*5, 5, 100, 150) withGrayOrLight:@"light"];
         [_digitPicker removeArray];
         _digitPicker._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
         [_digitPicker selectRow:0 inComponent:0];
@@ -420,18 +420,17 @@
     }
     [cell.contentView addSubview:_digitPicker];
     if (_checkPicker==nil) {
-        _checkPicker = [[CustomPickerView alloc] initWithFrame:CGRectMake(startX+rowGap*6, 5, 100, 150) withGrayOrLight:@"light"];
+        _checkPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(startX+rowGap*6, 5, 100, 150) withGrayOrLight:@"light"];
         [_checkPicker removeArray];
         _checkPicker._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
         [_checkPicker selectRow:0 inComponent:0];
         _checkPicker._selectColor = RGB(253, 180, 0);
         _checkPicker._rowNormalColor = RGB(117, 165, 186);
-        
     }
     
     [cell.contentView addSubview:_checkPicker];
     if (_stopPicker == nil) {
-        _stopPicker = [[CustomPickerView alloc] initWithFrame:CGRectMake(startX+rowGap*7, 5, 100, 150) withGrayOrLight:@"light"];
+        _stopPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(startX+rowGap*7, 5, 100, 150) withGrayOrLight:@"light"];
         [_stopPicker removeArray];
         _stopPicker._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
         [_stopPicker selectRow:0 inComponent:0];

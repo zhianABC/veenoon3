@@ -36,6 +36,9 @@
     int leftRight = 250;
     int width = SCREEN_WIDTH - leftRight*2;
     int height = width * 2 / 3;
+    
+    [super setCenterTitle:@"工程师登录"];
+    
     _inputPannel = [[UIView alloc] initWithFrame:CGRectMake(leftRight, SCREEN_HEIGHT/2-250, width, height)];
     [self.view addSubview:_inputPannel];
     _inputPannel.backgroundColor = RGB(0, 89, 118);
