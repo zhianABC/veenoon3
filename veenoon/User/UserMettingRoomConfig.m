@@ -105,20 +105,31 @@
         [self.view addSubview:btn];
         btn.tag = i;
         
-        
+        UILongPressGestureRecognizer *longPress0 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed0:)];
+        [btn addGestureRecognizer:longPress0];
     }
-    
-
 }
 
+- (void) longPressed0:(id)sender{
+    
+    UILongPressGestureRecognizer *press = (UILongPressGestureRecognizer *)sender;
+    if (press.state == UIGestureRecognizerStateEnded) {
+        // no need anything here
+        return;
+    } else if (press.state == UIGestureRecognizerStateBegan) {
+        UILongPressGestureRecognizer *viewRecognizer = (UILongPressGestureRecognizer*) sender;
+        int index = (int)viewRecognizer.view.tag;
+        
+        NSDictionary *scen = [scens objectAtIndex:index];
+        
+        UserScnarioConfigViewController *invitation = [[UserScnarioConfigViewController alloc] init];
+        invitation._data = scen;
+        [self.navigationController pushViewController:invitation animated:YES];
+    }
+}
 
 - (void) userTrainingAction:(UIButton*)sender{
     
-    NSDictionary *scen = [scens objectAtIndex:sender.tag];
-
-    UserScnarioConfigViewController *invitation = [[UserScnarioConfigViewController alloc] init];
-    invitation._data = scen;
-    [self.navigationController pushViewController:invitation animated:YES];
 }
 
 
