@@ -42,6 +42,8 @@
 @end
 
 @implementation UserScnarioConfigViewController
+@synthesize _data;
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -250,14 +252,14 @@
     [self.view addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:36];
     titleL.textColor  = [UIColor whiteColor];
-    titleL.text = @"专业培训";
+    titleL.text = [_data objectForKey:@"title"];
     
     UILabel* titleL2 = [[UILabel alloc] initWithFrame:CGRectMake(60, SCREEN_HEIGHT-209, 200, 40)];
     titleL2.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL2];
     titleL2.font = [UIFont boldSystemFontOfSize:24];
     titleL2.textColor  = RGB(242, 148, 20);
-    titleL2.text = @"Taining";
+    titleL2.text = [_data objectForKey:@"title_en"];
 }
 
 - (void) backAction:(id)sender{

@@ -18,18 +18,23 @@
     UIButton *_envirementLightBtn;
     UIButton *_discussionBtn;
     UIButton *_leaveMeetingBtn;
+    
+    UIScrollView *_content;
 }
+@property (nonatomic, strong) NSArray *scens;
 
 @end
 
 @implementation UserMeetingRoomConfig
 @synthesize meetingRoomDic;
+@synthesize scens;
 
 - (void)viewDidLoad {
    
     [super viewDidLoad];
     
     self.view.backgroundColor = RGB(63, 58, 55);
+    
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     line.backgroundColor = RGB(83, 78, 75);
@@ -52,74 +57,71 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = [meetingRoomDic objectForKey:@"roomname"];
     
-    _trainingBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _trainingBtn.frame = CGRectMake(SCREEN_WIDTH/2-451, 70, 481, 250);
-    [_trainingBtn setImage:[UIImage imageNamed:@"user_training_n.png"] forState:UIControlStateNormal];
-    [_trainingBtn setImage:[UIImage imageNamed:@"user_training_s.png"] forState:UIControlStateHighlighted];
-    [_trainingBtn addTarget:self action:@selector(userTrainingAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_trainingBtn];
     
-    _envirementControlBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _envirementControlBtn.frame = CGRectMake(SCREEN_WIDTH/2-30, 70, 481, 250);
-    [_envirementControlBtn setImage:[UIImage imageNamed:@"envirement_control_n.png"] forState:UIControlStateNormal];
-    [_envirementControlBtn setImage:[UIImage imageNamed:@"envirement_control_s.png"] forState:UIControlStateHighlighted];
-    [_envirementControlBtn addTarget:self action:@selector(enviromentControlAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_envirementControlBtn];
-    
-    _guestBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _guestBtn.frame = CGRectMake(SCREEN_WIDTH/2-451, 70+200, 481, 250);
-    [_guestBtn setImage:[UIImage imageNamed:@"guest_reception_n.png"] forState:UIControlStateNormal];
-    [_guestBtn setImage:[UIImage imageNamed:@"guest_reception_s.png"] forState:UIControlStateHighlighted];
-    [_guestBtn addTarget:self action:@selector(gusetAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_guestBtn];
-    
-    _envirementLightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _envirementLightBtn.frame = CGRectMake(SCREEN_WIDTH/2-30, 70+200, 481, 250);
-    [_envirementLightBtn setImage:[UIImage imageNamed:@"envirement_light_n.png"] forState:UIControlStateNormal];
-    [_envirementLightBtn setImage:[UIImage imageNamed:@"envirement_light_s.png"] forState:UIControlStateHighlighted];
-    [_envirementLightBtn addTarget:self action:@selector(envirementLightAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_envirementLightBtn];
-    
-    _discussionBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _discussionBtn.frame = CGRectMake(SCREEN_WIDTH/2-451, 70+200+200, 481, 250);
-    [_discussionBtn setImage:[UIImage imageNamed:@"meeting_discuss_n.png"] forState:UIControlStateNormal];
-    [_discussionBtn setImage:[UIImage imageNamed:@"meeting_discuss_s.png"] forState:UIControlStateHighlighted];
-    [_discussionBtn addTarget:self action:@selector(discussMeetingAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_discussionBtn];
-    
-    _leaveMeetingBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _leaveMeetingBtn.frame = CGRectMake(SCREEN_WIDTH/2-30, 70+200+200, 481, 250);
-    [_leaveMeetingBtn setImage:[UIImage imageNamed:@"close_system_n.png"] forState:UIControlStateNormal];
-    [_leaveMeetingBtn setImage:[UIImage imageNamed:@"close_system_s.png"] forState:UIControlStateHighlighted];
-    [_leaveMeetingBtn addTarget:self action:@selector(leaveMeetingAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_leaveMeetingBtn];
+    _content = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 80,
+                                                              SCREEN_WIDTH,
+                                                              SCREEN_HEIGHT-80-40)];
+    [self.view addSubview:_content];
     
     
-}
-- (void) leaveMeetingAction:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
-}
+    self.scens = @[@{@"icon_nor":@"user_training_n.png",@"icon_sel":@"user_training_s.png",
+                         @"title":@"专业培训",@"title_en":@"Training"},
+                       @{@"icon_nor":@"envirement_control_n.png",@"icon_sel":@"envirement_control_s.png",
+                         @"title":@"环境控制",@"title_en":@"Environmental control"},
+                       @{@"icon_nor":@"guest_reception_n.png",@"icon_sel":@"guest_reception_s.png",
+                         @"title":@"宾客接待",@"title_en":@"Guests reception"},
+                       @{@"icon_nor":@"envirement_light_n.png",@"icon_sel":@"envirement_light_s.png",
+                         @"title":@"环境照明",@"title_en":@"Ambient lighting"},
+                       @{@"icon_nor":@"meeting_discuss_n.png",@"icon_sel":@"meeting_discuss_s.png",
+                         @"title":@"讨论会议",@"title_en":@"Meeting"},
+                       @{@"icon_nor":@"close_system_n.png",@"icon_sel":@"close_system_s.png",
+                         @"title":@"离开会场",@"title_en":@"Close system"}];
+    
+    
+    
+    int ox = (SCREEN_WIDTH - 420*2 - 20)/2 - 20;
+    int y = 70;
+    int x = ox;
+    for(int i = 0; i < [scens count]; i++)
+    {
+        
+        if(i%2==0 && i > 0){
+            y+=200;
+            y+=5;
+            x = ox;
+        }
+        if(i%2 != 0 ){
+            x = ox+420;
+            x+=10;
+        }
+        
+        NSDictionary *scen = [scens objectAtIndex:i];
+        
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+        btn.frame = CGRectMake(x, y, 481, 250);
+        [btn setImage:[UIImage imageNamed:[scen objectForKey:@"icon_nor"]] forState:UIControlStateNormal];
+        [btn setImage:[UIImage imageNamed:[scen objectForKey:@"icon_sel"]] forState:UIControlStateHighlighted];
+        [btn addTarget:self action:@selector(userTrainingAction:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:btn];
+        btn.tag = i;
+        
+        
+    }
+    
 
-- (void) discussMeetingAction:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void) envirementLightAction:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-- (void) gusetAction:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
-- (void) userTrainingAction:(id)sender{
+- (void) userTrainingAction:(UIButton*)sender{
+    
+    NSDictionary *scen = [scens objectAtIndex:sender.tag];
+
     UserScnarioConfigViewController *invitation = [[UserScnarioConfigViewController alloc] init];
+    invitation._data = scen;
     [self.navigationController pushViewController:invitation animated:YES];
 }
 
-- (void) enviromentControlAction:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
-}
+
 
 - (void) backAction:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];

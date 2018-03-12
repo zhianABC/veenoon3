@@ -18,6 +18,10 @@
     UIView *_outputScreenView;
     
     int showType;
+    
+    UIButton *btnstop;
+    UIButton *btnplay;
+    UIButton *btnpause;
 }
 @property (nonatomic, strong) NSArray *_inputs;
 @property (nonatomic, strong) NSMutableArray *_outputs;
@@ -79,7 +83,7 @@
     _outputScreenView.clipsToBounds = YES;
     [self.view addSubview:_outputScreenView];
     
-    _outputScreenView.center = CGPointMake(SCREEN_WIDTH/2+60, 320);
+    _outputScreenView.center = CGPointMake(SCREEN_WIDTH/2+60, 280);
     
     
     int dragW = 70;
@@ -114,8 +118,8 @@
         
     }
     
-    int bw = 100;
-    int bh = 100;
+    int bw = 90;
+    int bh = 90;
     
     int x = (SCREEN_WIDTH - (bw * 9 + 80))/2;
     int y = CGRectGetMaxY(_outputScreenView.frame)+60;
@@ -128,7 +132,7 @@
                                          selColor:RGB(242, 148, 20)];
         btn.frame = CGRectMake(x, y, bw, bh);
         [self.view addSubview:btn];
-        btn.layer.cornerRadius = 3;
+        btn.layer.cornerRadius = 10;
         btn.clipsToBounds = YES;
         
         [_ctrls addObject:btn];
@@ -138,7 +142,7 @@
                 action:@selector(buttonAction:)
       forControlEvents:UIControlEventTouchUpInside];
         
-        [self drawSplice:btn w:100 h:100 type:i spacex:15 spacey:15];
+        [self drawSplice:btn w:bw h:bh type:i spacex:15 spacey:15];
         
         x+=bw;
         x+=10;
@@ -153,6 +157,38 @@
     
     int w = 400;
     int h = 300;
+    
+    
+    btnstop = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btnstop setImage:[UIImage imageNamed:@"luboji_luzhi_n.png"]
+             forState:UIControlStateNormal];
+    [btnstop setImage:[UIImage imageNamed:@"luboji_luzhi_s.png"]
+             forState:UIControlStateHighlighted];
+    btnstop.frame = CGRectMake(0, 0, 80, 80);
+    [self.view addSubview:btnstop];
+    
+    btnplay = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btnplay setImage:[UIImage imageNamed:@"luboji_bofang_n.png"]
+             forState:UIControlStateNormal];
+    [btnplay setImage:[UIImage imageNamed:@"luboji_bofang_s.png"]
+             forState:UIControlStateHighlighted];
+    btnplay.frame = CGRectMake(0, 0, 80, 80);
+    [self.view addSubview:btnplay];
+    
+    btnpause = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btnpause setImage:[UIImage imageNamed:@"luboji_stop_n.png"]
+             forState:UIControlStateNormal];
+    [btnpause setImage:[UIImage imageNamed:@"luboji_stop_s.png"]
+              forState:UIControlStateHighlighted];
+    btnpause.frame = CGRectMake(0, 0, 80, 80);
+    [self.view addSubview:btnpause];
+    
+    btnplay.center = CGPointMake(SCREEN_WIDTH/2,
+                                 CGRectGetMaxY(_outputScreenView.frame)+60+bh+60);
+    btnstop.center = CGPointMake(SCREEN_WIDTH/2-70,
+                                 CGRectGetMaxY(_outputScreenView.frame)+60+bh+60);
+    btnpause.center = CGPointMake(SCREEN_WIDTH/2+70,
+                                 CGRectGetMaxY(_outputScreenView.frame)+60+bh+60);
     
     
     self._outputs = [NSMutableArray array];
@@ -218,7 +254,7 @@
     
     int fontSize = 60;
     if(w <= 100)
-        fontSize = 26;
+        fontSize = 20;
     
     if(_outputScreenView == container)
     {

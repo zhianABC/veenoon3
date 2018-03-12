@@ -7,5 +7,8 @@
 //
 #import <UIKit/UIKit.h>
 @interface UserScnarioConfigViewController : UIViewController
-
+{
+    
+}
+@property (nonatomic, strong) NSDictionary *_data;
 @end

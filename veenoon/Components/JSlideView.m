@@ -130,7 +130,7 @@
     CGRect rc = slider.frame;
     rc = CGRectMake(rc.origin.x, rc.origin.y, rc.size.width, rc.size.height);
     
-	if (CGRectContainsPoint(rc, p)) {
+	if (1) {
 		
         CGPoint colorPoint = p;
         colorPoint.x = slider.center.x;
