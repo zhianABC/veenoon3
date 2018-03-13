@@ -52,19 +52,7 @@
                                      nil];
         NSMutableDictionary *dic4 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"4", @"name",
                                      nil];
-        NSMutableDictionary *dic5 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"5", @"name",
-                                     nil];
-        NSMutableDictionary *dic6 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"6", @"name",
-                                     nil];
-        NSMutableDictionary *dic7 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"7", @"name",
-                                     nil];
-        NSMutableDictionary *dic8 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"8", @"name",
-                                     nil];
-        NSMutableDictionary *dic9 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"9", @"name",
-                                     nil];
-        NSMutableDictionary *dic10 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"10", @"name",
-                                     nil];
-        self._cameraArray = [NSMutableArray arrayWithObjects:dic1, dic2, dic3, dic4, dic5, dic6,dic7,dic8,dic9, dic10,nil];
+        self._cameraArray = [NSMutableArray arrayWithObjects:dic1, dic2, dic3, dic4,nil];
     }
 }
 
@@ -445,7 +433,7 @@
     int space = 5;
     int leftRight = leftSpace+150+250;
     
-    UIScrollView *scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(leftRight, labelHeight+40, 255+135, 70)];
+    UIScrollView *scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(leftRight+50, labelHeight+40, 255+135, 70)];
     scroolView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:scroolView];
     int viewWidth = [self._cameraArray count] * 65;
