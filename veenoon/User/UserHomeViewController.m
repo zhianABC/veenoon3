@@ -268,6 +268,7 @@
                 // 更新界面
                 UIImageView *roomImageView = [roomImageArray objectAtIndex:selectedRoomIndex];
                 roomImageView.image = img;
+
                 ///////图从这儿穿出去
                 
                 NSMutableDictionary *roomDic = [self.roomList objectAtIndex:selectedRoomIndex];

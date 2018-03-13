@@ -247,14 +247,14 @@
                 action:@selector(backAction:)
       forControlEvents:UIControlEventTouchUpInside];
     
-    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(60, SCREEN_HEIGHT-264, 200, 40)];
+    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(60, SCREEN_HEIGHT-264, SCREEN_WIDTH, 40)];
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:36];
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = [_data objectForKey:@"title"];
     
-    UILabel* titleL2 = [[UILabel alloc] initWithFrame:CGRectMake(60, SCREEN_HEIGHT-209, 200, 40)];
+    UILabel* titleL2 = [[UILabel alloc] initWithFrame:CGRectMake(60, SCREEN_HEIGHT-209, SCREEN_WIDTH, 40)];
     titleL2.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL2];
     titleL2.font = [UIFont boldSystemFontOfSize:24];
