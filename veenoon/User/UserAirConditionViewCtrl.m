@@ -293,28 +293,28 @@
     [markerLayer setNeedsDisplay];
 }
 - (void) airFireAction:(id)sender{
-    [aireFireBtn setImage:[UIImage imageNamed:@"user_aircon_fire_s.png"] forState:UIControlStateNormal];
-    [aireWindBtn setImage:[UIImage imageNamed:@"user_aircon_wind_n.png"] forState:UIControlStateNormal];
-    [zhireBtn setImage:[UIImage imageNamed:@"user_aircon_hot_n.png"] forState:UIControlStateNormal];
-    [zhilengBtn setImage:[UIImage imageNamed:@"user_aircon_cold_n.png"] forState:UIControlStateNormal];
+    [aireFireBtn setSelected:YES];
+    [aireWindBtn setSelected:NO];
+    [zhireBtn setSelected:NO];
+    [zhilengBtn setSelected:NO];
 }
 - (void) airWindAction:(id)sender{
-    [aireFireBtn setImage:[UIImage imageNamed:@"user_aircon_fire_n.png"] forState:UIControlStateNormal];
-    [aireWindBtn setImage:[UIImage imageNamed:@"user_aircon_wind_s.png"] forState:UIControlStateNormal];
-    [zhireBtn setImage:[UIImage imageNamed:@"user_aircon_hot_n.png"] forState:UIControlStateNormal];
-    [zhilengBtn setImage:[UIImage imageNamed:@"user_aircon_cold_n.png"] forState:UIControlStateNormal];
+    [aireFireBtn setSelected:NO];
+    [aireWindBtn setSelected:YES];
+    [zhireBtn setSelected:NO];
+    [zhilengBtn setSelected:NO];
 }
 - (void) zhireAction:(id)sender{
-    [aireFireBtn setImage:[UIImage imageNamed:@"user_aircon_fire_n.png"] forState:UIControlStateNormal];
-    [aireWindBtn setImage:[UIImage imageNamed:@"user_aircon_wind_n.png"] forState:UIControlStateNormal];
-    [zhireBtn setImage:[UIImage imageNamed:@"user_aircon_hot_s.png"] forState:UIControlStateNormal];
-    [zhilengBtn setImage:[UIImage imageNamed:@"user_aircon_cold_n.png"] forState:UIControlStateNormal];
+    [aireFireBtn setSelected:NO];
+    [aireWindBtn setSelected:NO];
+    [zhireBtn setSelected:YES];
+    [zhilengBtn setSelected:NO];
 }
 - (void) zhilengAction:(id)sender{
-    [aireFireBtn setImage:[UIImage imageNamed:@"user_aircon_fire_n.png"] forState:UIControlStateNormal];
-    [aireWindBtn setImage:[UIImage imageNamed:@"user_aircon_wind_n.png"] forState:UIControlStateNormal];
-    [zhireBtn setImage:[UIImage imageNamed:@"user_aircon_hot_n.png"] forState:UIControlStateNormal];
-    [zhilengBtn setImage:[UIImage imageNamed:@"user_aircon_cold_s.png"] forState:UIControlStateNormal];
+    [aireFireBtn setSelected:NO];
+    [aireWindBtn setSelected:NO];
+    [zhireBtn setSelected:NO];
+    [zhilengBtn setSelected:YES];
 }
 - (void) airConditionAction:(id)sender{
     UIButton *selectBtn = (UIButton*) sender;
