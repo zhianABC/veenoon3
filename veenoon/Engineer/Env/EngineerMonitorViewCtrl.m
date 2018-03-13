@@ -20,6 +20,8 @@
     BOOL isSettings;
     MonitorRightView *_rightView;
     UIButton *okBtn;
+    
+    NSMutableArray *cityBtnArray;
 }
 @end
 
@@ -36,6 +38,9 @@
     } else {
         _monitorRoomList = [[NSMutableArray alloc] init];
     }
+    
+    cityBtnArray = [[NSMutableArray alloc] init];
+    
     NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"北京", @"name",
                                  nil];
     NSMutableDictionary *dic2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"上海", @"name",
@@ -126,8 +131,12 @@
         int startY = row*cellHeight+rowGap*row+top;
         
         UIView *inputPannel = [[UIView alloc] initWithFrame:CGRectMake(startX, startY, uiviewWidth, cellHeight)];
+        inputPannel.tag = index;
         inputPannel.userInteractionEnabled=YES;
         [_botomView addSubview:inputPannel];
+        
+        UILongPressGestureRecognizer *longPress0 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed0:)];
+        [inputPannel addGestureRecognizer:longPress0];
         
         UIButton *cityBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
         cityBtn.frame = CGRectMake(0, 5, 100, 35);
@@ -141,6 +150,7 @@
         cityBtn.tag = index;
         [cityBtn addTarget:self action:@selector(cityBtnAction:)
           forControlEvents:UIControlEventTouchUpInside];
+        [cityBtnArray addObject:cityBtn];
         
         UIImage *roomImage = [dic objectForKey:@"image"];
         if (roomImage == nil) {
@@ -164,6 +174,35 @@
         
         index++;
     }
+}
+
+- (void) longPressed0:(id)sender {
+    UILongPressGestureRecognizer *viewRecognizer = (UILongPressGestureRecognizer*) sender;
+    int index = (int)viewRecognizer.view.tag;
+    if (index == [self._monitorRoomList count]) {
+        return;
+    }
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"请输入监控地名称" preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"监控地名称";
+    }];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UITextField *envirnmentNameTextField = alertController.textFields.firstObject;
+        NSString *scenarioName = envirnmentNameTextField.text;
+        if (scenarioName && [scenarioName length] > 0) {
+            NSMutableDictionary *scenarioDic = [self._monitorRoomList objectAtIndex:index];
+            UIButton *scenarioLabel = [cityBtnArray objectAtIndex:index];
+            
+            [scenarioDic setObject:scenarioName forKey:@"name"];
+            [scenarioLabel setTitle:scenarioName forState:UIControlStateNormal];
+        }
+    }]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
+    [self presentViewController:alertController animated:true completion:nil];
 }
 
 - (void) zoomoutAction:(id)sender{
