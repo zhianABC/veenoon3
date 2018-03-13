@@ -77,7 +77,7 @@
     UIImage *roomImage = [UIImage imageNamed:@"huishengxiaochu.png"];
     UIImageView *roomeImageView = [[UIImageView alloc] initWithImage:roomImage];
     roomeImageView.userInteractionEnabled=YES;
-    roomeImageView.contentMode = UIViewContentModeScaleAspectFit;
+    roomeImageView.contentMode = UIViewContentModeScaleAspectFill;
     roomeImageView.frame = CGRectMake(100, 25, contentView.frame.size.width-200, contentView.frame.size.height-50);
     
     [contentView addSubview:roomeImageView];UIButton *zhitongBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];

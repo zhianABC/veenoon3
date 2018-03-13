@@ -13,7 +13,6 @@
 {
     UITableView *_tableView;
     int _curIndex;
-    UIButton *_btnSave;
 }
 @property (nonatomic, strong) NSMutableArray *_rows;
 @property (nonatomic, strong) NSMutableArray *_btns;
@@ -30,16 +29,6 @@
     if(self = [super initWithFrame:frame])
     {
         self.backgroundColor = RGB(0, 89, 118);
-        
-        _btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
-        _btnSave.frame = CGRectMake(frame.size.width-90,
-                                    20,
-                                    70, 40);
-        [_btnSave setTitle:@"保存" forState:UIControlStateNormal];
-        [self addSubview:_btnSave];
-        [_btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        _btnSave.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -30);
-        _btnSave.titleLabel.font = [UIFont systemFontOfSize:14];
         
         _curIndex = -1;
         
@@ -124,7 +113,7 @@
     {
         if(_curIndex == indexPath.row)
         {
-            return 144;
+            return 44;
         }
     }
     return 44;

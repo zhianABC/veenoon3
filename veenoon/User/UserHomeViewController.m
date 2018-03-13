@@ -84,7 +84,7 @@
         UIImage *roomImage = [dic objectForKey:@"image"];
         UIImageView *roomeImageView = [[UIImageView alloc] initWithImage:roomImage];
         roomeImageView.userInteractionEnabled=YES;
-        roomeImageView.contentMode = UIViewContentModeScaleAspectFit;
+        roomeImageView.contentMode = UIViewContentModeScaleAspectFill;
         roomeImageView.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
         UIView *view = [[UIView alloc] init];
         view.frame = CGRectMake(0, 0, cellWidth, cellHeight);
@@ -204,7 +204,7 @@
         {
             _imagePicker = [[UIImagePickerController alloc] init];
             _imagePicker.delegate = self;
-            _imagePicker.allowsEditing = YES;
+            _imagePicker.allowsEditing = NO;
             
         }
         

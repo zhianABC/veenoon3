@@ -641,7 +641,7 @@
     }
 }
 - (void) okAction:(id)sender{
-    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void) cancelAction:(id)sender{

@@ -180,13 +180,6 @@
 
 - (void) buttonAction:(id)sender{
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                    message:@"请输入品牌和型号"
-                                                   delegate:nil
-                                          cancelButtonTitle:@"OK"
-                                          otherButtonTitles:nil, nil];
-    [alert show];
-    
 }
 - (void) switchComSetting{
     

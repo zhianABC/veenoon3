@@ -11,7 +11,7 @@
 #import "CustomPickerView.h"
 #import "ComSettingView.h"
 
-@interface MixVoiceSettingsView () <CustomPickerViewDelegate>
+@interface MixVoiceSettingsView () <UITableViewDelegate, UITableViewDataSource,CustomPickerViewDelegate>
 {
     UIButton *btn1;
     UIButton *btn2;
@@ -32,6 +32,8 @@
     int fayanrenshuNumber;
     
     ComSettingView *_com;
+    
+    UITableView *_tableView;
 }
 @end
 
@@ -55,66 +57,17 @@
         shedingzhuxiNumber = 12;
         fayanrenshuNumber = 5;
         
-        int bw = 120;
-        int x = (frame.size.width - bw)/2;
-        int top = (frame.size.height/2 - 40*4 - 5*3)/2;
-        btn1 = [UIButton buttonWithColor:RGB(0, 146, 174) selColor:nil];
-        btn1.frame = CGRectMake(x, top, bw, 40);
-        btn1.clipsToBounds = YES;
-        btn1.layer.cornerRadius = 5;
-        [self addSubview:btn1];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,
+                                                                   60,
+                                                                   frame.size.width,
+                                                                   frame.size.height-400)];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        _tableView.backgroundColor = [UIColor clearColor];
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        [self addSubview:_tableView];
         
-        [btn1 setTitle:@"语音激励" forState:UIControlStateNormal];
-        [btn1 addTarget:self action:@selector(yuyinjiliAction:) forControlEvents:UIControlEventTouchUpInside];
-        btn1.titleLabel.font = [UIFont systemFontOfSize:15];
-        
-        top+=40;
-        top+=5;
-        
-        btn2 = [UIButton buttonWithColor:RGB(0, 146, 174) selColor:nil];
-        btn2.frame = CGRectMake(x, top, bw, 40);
-        btn2.clipsToBounds = YES;
-        btn2.layer.cornerRadius = 5;
-        [self addSubview:btn2];
-        
-        [btn2 setTitle:@"标准发言" forState:UIControlStateNormal];
-        [btn2 addTarget:self action:@selector(biaozhunfayanAction:) forControlEvents:UIControlEventTouchUpInside];
-        btn2.titleLabel.font = [UIFont systemFontOfSize:15];
-        
-        top+=40;
-        top+=5;
-        
-        btn3 = [UIButton buttonWithColor:RGB(0, 146, 174) selColor:nil];
-        btn3.frame = CGRectMake(x, top, bw, 40);
-        btn3.clipsToBounds = YES;
-        btn3.layer.cornerRadius = 5;
-        [self addSubview:btn3];
-        
-        [btn3 setTitle:@"音频处理" forState:UIControlStateNormal];
-        [btn3 addTarget:self action:@selector(yinpinchuliAction:) forControlEvents:UIControlEventTouchUpInside];
-        btn3.titleLabel.font = [UIFont systemFontOfSize:15];
-        
-        top+=40;
-        top+=5;
-        
-        btn4 = [UIButton buttonWithColor:RGB(0, 146, 174) selColor:nil];
-        btn4.frame = CGRectMake(x, top, bw, 40);
-        btn4.clipsToBounds = YES;
-        btn4.layer.cornerRadius = 5;
-        [self addSubview:btn4];
-        
-        [btn4 setTitle:@"摄像追踪" forState:UIControlStateNormal];
-        [btn4 addTarget:self action:@selector(shexiangzhuizongAction:) forControlEvents:UIControlEventTouchUpInside];
-        btn4.titleLabel.font = [UIFont systemFontOfSize:15];
-
-        
-        UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, frame.size.height/2,
-                                                                  self.frame.size.width, 1)];
-        line.backgroundColor =  M_GREEN_LINE;
-        [self addSubview:line];
-        
-        
-        UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 100)];
+        UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 60)];
         [self addSubview:headView];
         
         UISwipeGestureRecognizer *swip = [[UISwipeGestureRecognizer alloc] initWithTarget:self
@@ -125,9 +78,90 @@
         [headView addGestureRecognizer:swip];
         
         _com = [[ComSettingView alloc] initWithFrame:self.bounds];
+        
+        [self createYuYinJiLiView];
+        [self createBiaoZhunFaYanView];
+        [self createShexiangzhuizongView];
     }
     
     return self;
+}
+
+#pragma mark -
+#pragma mark Table View DataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    
+    return 1;
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    return 4;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 44;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    static NSString *kCellID = @"listCell";
+    
+    UITableViewCell *cell = (UITableViewCell*)[tableView dequeueReusableCellWithIdentifier:kCellID];
+    if(cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kCellID];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        //cell.editing = NO;
+    }
+    [[cell.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    cell.backgroundColor = [UIColor clearColor];
+    
+    
+    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(10,
+                                                                12,
+                                                                CGRectGetWidth(self.frame)-30, 20)];
+    titleL.backgroundColor = [UIColor clearColor];
+    [cell.contentView addSubview:titleL];
+    titleL.font = [UIFont systemFontOfSize:13];
+    titleL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+    if (indexPath.row == 0) {
+        titleL.text = @"语音激励";
+    } else if (indexPath.row == 1) {
+        titleL.text = @"标准发言";
+    } else if (indexPath.row == 2) {
+        titleL.text = @"音频处理";
+    } else {
+        titleL.text = @"摄像追踪";
+    }
+    
+    UIImageView *icon = [[UIImageView alloc]
+                         initWithFrame:CGRectMake(CGRectGetMaxX(titleL.frame)+5, 17, 10, 10)];
+    icon.image = [UIImage imageNamed:@"remote_video_right.png"];
+    [cell.contentView addSubview:icon];
+    icon.alpha = 0.8;
+    icon.layer.contentsGravity = kCAGravityResizeAspect;
+    
+    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 43, self.frame.size.width, 1)];
+    line.backgroundColor =  M_GREEN_LINE;
+    [cell.contentView addSubview:line];
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    int targetIndx = (int)indexPath.row;
+    
+    if (targetIndx == 0) {
+        [self yuyinjiliAction:nil];
+    } else if (targetIndx == 1) {
+        [self biaozhunfayanAction:nil];
+    } else if (targetIndx == 2) {
+        [self yinpinchuliAction:nil];
+    } else {
+        [self shexiangzhuizongAction:nil];
+    }
 }
 
 - (void) switchComSetting{
@@ -151,56 +185,25 @@
     
 }
 - (void) yuyinjiliAction:(id)sender{
-    [btn1 setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-    [btn2 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [btn3 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [btn4 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    if (_biaozhunfayanView) {
-        [_biaozhunfayanView removeFromSuperview];
-    }
-    if (_shexiangzhuizongView) {
-        [_shexiangzhuizongView removeFromSuperview];
-    }
-    [self createYuYinJiLiView];
+    _shexiangzhuizongView.hidden=YES;
+    _biaozhunfayanView.hidden=YES;
+    _yuyinjiliView.hidden=NO;
 }
 - (void) biaozhunfayanAction:(id)sender{
-    [btn2 setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-    [btn1 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [btn3 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [btn4 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    if (_yuyinjiliView) {
-        [_yuyinjiliView removeFromSuperview];
-    }
-    if (_shexiangzhuizongView) {
-        [_shexiangzhuizongView removeFromSuperview];
-    }
-    
-    [self createBiaoZhunFaYanView];
+    _shexiangzhuizongView.hidden=YES;
+    _yuyinjiliView.hidden=YES;
+    _biaozhunfayanView.hidden=NO;
 }
 - (void) yinpinchuliAction:(id)sender{
-    [btn3 setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-    [btn1 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [btn2 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [btn4 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     if([delegate_ respondsToSelector:@selector(didSelectButtonAction:)]){
         [delegate_ didSelectButtonAction:btn3.titleLabel.text];
     }
 }
 - (void) shexiangzhuizongAction:(id)sender{
-    [btn4 setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-    [btn1 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [btn2 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [btn3 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    if (_biaozhunfayanView) {
-        [_biaozhunfayanView removeFromSuperview];
-    }
-    if (_yuyinjiliView) {
-        [_yuyinjiliView removeFromSuperview];
-    }
-    [self createShexiangzhuizongView];
+    _biaozhunfayanView.hidden=YES;
+    _yuyinjiliView.hidden=YES;
+    _shexiangzhuizongView.hidden=NO;
 }
 
 - (void) createShexiangzhuizongView {
@@ -243,6 +246,7 @@
     levelSetting._rowNormalColor = [UIColor whiteColor];
     [_shexiangzhuizongView addSubview:levelSetting];
     levelSetting.hidden = YES;
+    _shexiangzhuizongView.hidden=YES;
 }
 -(void) shexiangxieyiAction:(id)sender {
     if (levelSetting.hidden) {
@@ -259,15 +263,6 @@
 }
 
 - (void) createYuYinJiLiView {
-    if (_biaozhunfayanView) {
-        [_biaozhunfayanView removeFromSuperview];
-    }
-    if (_yinpinchuliView) {
-        [_yinpinchuliView removeFromSuperview];
-    }
-    if (_shexiangzhuizongView) {
-        [_shexiangzhuizongView removeFromSuperview];
-    }
     _yuyinjiliView = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height/2+1, self.frame.size.width, self.frame.size.height/2-1)];
     
     [self addSubview:_yuyinjiliView];
@@ -276,7 +271,7 @@
     int top = 40;
     int gap = 5;
     int x = self.frame.size.width/2 - gap/2 - bw;
-    _shedingzhuxiBtn = [UIButton buttonWithColor:RGB(0, 146, 174) selColor:nil];
+    _shedingzhuxiBtn = [UIButton buttonWithColor:RGB(0, 146, 174) selColor:YELLOW_COLOR];
     _shedingzhuxiBtn.frame = CGRectMake(x, top, bw, 25);
     _shedingzhuxiBtn.clipsToBounds = YES;
     _shedingzhuxiBtn.layer.cornerRadius = 5;
@@ -286,7 +281,7 @@
     _shedingzhuxiBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     
     x = self.frame.size.width/2 + gap/2;
-    _fayanrenshuBtn = [UIButton buttonWithColor:RGB(0, 146, 174) selColor:nil];
+    _fayanrenshuBtn = [UIButton buttonWithColor:RGB(0, 146, 174) selColor:YELLOW_COLOR];
     _fayanrenshuBtn.frame = CGRectMake(x, top, bw, 25);
     _fayanrenshuBtn.clipsToBounds = YES;
     _fayanrenshuBtn.layer.cornerRadius = 5;
@@ -294,6 +289,7 @@
     [_fayanrenshuBtn setTitle:@"发言人数" forState:UIControlStateNormal];
     [_fayanrenshuBtn addTarget:self action:@selector(fayanrenshuAction:) forControlEvents:UIControlEventTouchUpInside];
     _fayanrenshuBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    _yuyinjiliView.hidden = YES;
 }
 
 - (void) createBiaoZhunFaYanView {
@@ -307,11 +303,12 @@
     titleL.text = @"所有话筒均可打开或关闭";
     titleL.textColor = [UIColor whiteColor];
     [_biaozhunfayanView addSubview:titleL];
+    _biaozhunfayanView.hidden=YES;
 }
 
 - (void) shedingzhuxiAction:(id)sender {
-    [_shedingzhuxiBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-    _fayanrenshuBtn.hidden=YES;
+    [_shedingzhuxiBtn setSelected:YES];
+    [_fayanrenshuBtn setSelected:NO];
     
     int colNumber = 4;
     int space = 5;
@@ -338,8 +335,8 @@
     }
 }
 - (void) fayanrenshuAction:(id)sender{
-    [_fayanrenshuBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-    _shedingzhuxiBtn.hidden=YES;
+    [_shedingzhuxiBtn setSelected:NO];
+    [_fayanrenshuBtn setSelected:YES];
     
     int colNumber = 4;
     int space = 5;

@@ -44,7 +44,7 @@
     _nameLabelArray = [[NSMutableArray alloc] init];
     _channelArray = [[NSMutableArray alloc] init];
     
-    [super setTitleAndImage:@"info_day_s.png" withTitle:@"电动马达"];
+    [super setTitleAndImage:@"env_corner_diandongmada.png" withTitle:@"电动马达"];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
