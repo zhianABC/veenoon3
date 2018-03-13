@@ -262,7 +262,6 @@
 		EB09C4AC1FD3ABAD00776540 /* user_aircon_wind_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB09C4AB1FD3ABAC00776540 /* user_aircon_wind_n@2x.png */; };
 		EB09C4AE1FD3AC2700776540 /* user_aircon_fire_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB09C4AD1FD3AC2700776540 /* user_aircon_fire_n@2x.png */; };
 		EB09C4B11FD3B27200776540 /* MapMarkerLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = EB09C4B01FD3B27200776540 /* MapMarkerLayer.m */; };
-		EB09C4B31FD3C6D200776540 /* user_airecon_wendu_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB09C4B21FD3C6D200776540 /* user_airecon_wendu_n@2x.png */; };
 		EB09EF2F1FD978C700C968CA /* EngineerToUseTeslariViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB09EF2E1FD978C700C968CA /* EngineerToUseTeslariViewCtrl.m */; };
 		EB09EF311FD97CB500C968CA /* EngineerAudioDevicePluginViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB09EF301FD97CB500C968CA /* EngineerAudioDevicePluginViewCtrl.m */; };
 		EB09EF351FD9800300C968CA /* EngineerVedioDevicePluginViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB09EF341FD9800300C968CA /* EngineerVedioDevicePluginViewCtrl.m */; };
@@ -1122,7 +1121,6 @@
 		EB09C4AD1FD3AC2700776540 /* user_aircon_fire_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_aircon_fire_n@2x.png"; sourceTree = "<group>"; };
 		EB09C4AF1FD3B27200776540 /* MapMarkerLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapMarkerLayer.h; sourceTree = "<group>"; };
 		EB09C4B01FD3B27200776540 /* MapMarkerLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapMarkerLayer.m; sourceTree = "<group>"; };
-		EB09C4B21FD3C6D200776540 /* user_airecon_wendu_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_airecon_wendu_n@2x.png"; sourceTree = "<group>"; };
 		EB09EF2D1FD978BD00C968CA /* EngineerToUseTeslariViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerToUseTeslariViewCtrl.h; sourceTree = "<group>"; };
 		EB09EF2E1FD978C700C968CA /* EngineerToUseTeslariViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerToUseTeslariViewCtrl.m; sourceTree = "<group>"; };
 		EB09EF301FD97CB500C968CA /* EngineerAudioDevicePluginViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerAudioDevicePluginViewCtrl.m; sourceTree = "<group>"; };
@@ -2304,7 +2302,6 @@
 				EB217FB21FD41EC7003F5A8F /* user_newwind_m_n@2x.png */,
 				EB217FAD1FD41E45003F5A8F /* user_newwind_n@2x.png */,
 				EB217FAC1FD41E45003F5A8F /* user_newwind_s@2x.png */,
-				EB09C4B21FD3C6D200776540 /* user_airecon_wendu_n@2x.png */,
 				EB09C4AD1FD3AC2700776540 /* user_aircon_fire_n@2x.png */,
 				EB09C4AB1FD3ABAC00776540 /* user_aircon_wind_n@2x.png */,
 				EB09C4A91FD3AB0400776540 /* user_aircon_hot_n@2x.png */,
@@ -3306,7 +3303,6 @@
 				EB1A55BD1FE9399F000B18E6 /* engineer_zengyi_n@2x.png in Resources */,
 				EB2E70811FC1B5B4009C477C /* settings_view_9@2x.png in Resources */,
 				EBDF1C031FC5C69F00A756EA /* close_system_n@2x.png in Resources */,
-				EB09C4B31FD3C6D200776540 /* user_airecon_wendu_n@2x.png in Resources */,
 				EBDF1C161FC5C6C900A756EA /* envirement_control_s@2x.png in Resources */,
 				EB217FC71FD424F9003F5A8F /* user_aireclean_a_n@2x.png in Resources */,
 				EB217FC31FD42450003F5A8F /* user_aireclean_s@2x.png in Resources */,

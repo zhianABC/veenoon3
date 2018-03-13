@@ -13,6 +13,13 @@
     NSMutableArray *_conditionRoomList;
     NSMutableArray *_conditionBtnList;
     MapMarkerLayer *markerLayer;
+    
+    UIButton *zhilengBtn;
+    UIButton *zhireBtn;
+    UIButton *aireWindBtn;
+    UIButton *aireFireBtn;
+    
+    UILabel *wenduL;
 }
 @property (nonatomic, strong) NSMutableArray *_conditionRoomList;
 @end
@@ -93,12 +100,12 @@
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
-    int leftGap = 165;
+    int leftGap = 155;
     int scrollHeight = 600;
     int cellWidth = 100;
-    int rowGap = 40;
+    int rowGap = 20;
     int number = [self._conditionRoomList count];
-    int contentWidth = number * 100 + (number-1) * rowGap-30;
+    int contentWidth = number * 100 + (number-1) * rowGap;
     UIScrollView *airCondtionView = [[UIScrollView alloc] initWithFrame:CGRectMake(leftGap, SCREEN_HEIGHT-scrollHeight, SCREEN_WIDTH - leftGap*2, cellWidth+10)];
     airCondtionView.contentSize =  CGSizeMake(contentWidth, cellWidth+10);
     airCondtionView.scrollEnabled=YES;
@@ -129,9 +136,9 @@
         [_conditionBtnList addObject:airConditionBtn];
     }
     
-    int btnLeftRight = 200;
+    int btnLeftRight = 180;
     
-    UIButton *zhilengBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
+    zhilengBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
     zhilengBtn.frame = CGRectMake(btnLeftRight, SCREEN_HEIGHT-350, 100, 100);
     zhilengBtn.layer.cornerRadius = 5;
     zhilengBtn.layer.borderWidth = 2;
@@ -143,7 +150,7 @@
     [zhilengBtn addTarget:self action:@selector(zhilengAction:)
        forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *zhireBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
+    zhireBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
     zhireBtn.frame = CGRectMake(btnLeftRight+140, SCREEN_HEIGHT-350, 100, 100);
     zhireBtn.layer.cornerRadius = 5;
     zhireBtn.layer.borderWidth = 2;
@@ -214,9 +221,11 @@
     
     markerLayer.selectedColor = [UIColor blackColor];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"user_airecon_wendu_n.png"] ];
-    imageView.frame = CGRectMake(41, 19, 18, 12);
-    [markerLayer addSubview:imageView];
+    wenduL = [[UILabel alloc] init];
+    wenduL.text = @"26";
+    wenduL.textColor = [UIColor whiteColor];
+    wenduL.frame = CGRectMake(41, 12, 25, 12);
+    [markerLayer addSubview:wenduL];
     
     UILabel *addLabel = [[UILabel alloc] init];
     addLabel.text = @"+";
@@ -233,7 +242,7 @@
     [self.view addSubview:markerLayer];
     markerLayer.delegate_ = self;
     
-    UIButton *aireWindBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
+    aireWindBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
     aireWindBtn.frame = CGRectMake(btnLeftRight+420, SCREEN_HEIGHT-350, 100, 100);
     aireWindBtn.layer.cornerRadius = 5;
     aireWindBtn.layer.borderWidth = 2;
@@ -246,7 +255,7 @@
        forControlEvents:UIControlEventTouchUpInside];
     
     
-    UIButton *aireFireBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
+    aireFireBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
     aireFireBtn.frame = CGRectMake(btnLeftRight+560, SCREEN_HEIGHT-350, 100, 100);
     aireFireBtn.layer.cornerRadius = 5;
     aireFireBtn.layer.borderWidth = 2;
@@ -262,22 +271,50 @@
 - (void) didSelectView:(int) path {
     markerLayer.isSelected = path;
     [markerLayer setNeedsDisplay];
+    
+    if (path == 2) {
+        NSString *wenduStr = wenduL.text;
+        int value = [wenduStr intValue];
+        value++;
+        
+        NSString *wenduStr2 = [NSString stringWithFormat:@"%d", value];
+        wenduL.text = wenduStr2;
+    } else if (path == 3) {
+        NSString *wenduStr = wenduL.text;
+        int value = [wenduStr intValue];
+        value--;
+        
+        NSString *wenduStr2 = [NSString stringWithFormat:@"%d", value];
+        wenduL.text = wenduStr2;
+    }
 }
 - (void) didUnSelectView:(int) path {
     markerLayer.isSelected = 0;
     [markerLayer setNeedsDisplay];
 }
 - (void) airFireAction:(id)sender{
-    
+    [aireFireBtn setImage:[UIImage imageNamed:@"user_aircon_fire_s.png"] forState:UIControlStateNormal];
+    [aireWindBtn setImage:[UIImage imageNamed:@"user_aircon_wind_n.png"] forState:UIControlStateNormal];
+    [zhireBtn setImage:[UIImage imageNamed:@"user_aircon_hot_n.png"] forState:UIControlStateNormal];
+    [zhilengBtn setImage:[UIImage imageNamed:@"user_aircon_cold_n.png"] forState:UIControlStateNormal];
 }
 - (void) airWindAction:(id)sender{
-    
+    [aireFireBtn setImage:[UIImage imageNamed:@"user_aircon_fire_n.png"] forState:UIControlStateNormal];
+    [aireWindBtn setImage:[UIImage imageNamed:@"user_aircon_wind_s.png"] forState:UIControlStateNormal];
+    [zhireBtn setImage:[UIImage imageNamed:@"user_aircon_hot_n.png"] forState:UIControlStateNormal];
+    [zhilengBtn setImage:[UIImage imageNamed:@"user_aircon_cold_n.png"] forState:UIControlStateNormal];
 }
 - (void) zhireAction:(id)sender{
-    
+    [aireFireBtn setImage:[UIImage imageNamed:@"user_aircon_fire_n.png"] forState:UIControlStateNormal];
+    [aireWindBtn setImage:[UIImage imageNamed:@"user_aircon_wind_n.png"] forState:UIControlStateNormal];
+    [zhireBtn setImage:[UIImage imageNamed:@"user_aircon_hot_s.png"] forState:UIControlStateNormal];
+    [zhilengBtn setImage:[UIImage imageNamed:@"user_aircon_cold_n.png"] forState:UIControlStateNormal];
 }
 - (void) zhilengAction:(id)sender{
-    
+    [aireFireBtn setImage:[UIImage imageNamed:@"user_aircon_fire_n.png"] forState:UIControlStateNormal];
+    [aireWindBtn setImage:[UIImage imageNamed:@"user_aircon_wind_n.png"] forState:UIControlStateNormal];
+    [zhireBtn setImage:[UIImage imageNamed:@"user_aircon_hot_n.png"] forState:UIControlStateNormal];
+    [zhilengBtn setImage:[UIImage imageNamed:@"user_aircon_cold_s.png"] forState:UIControlStateNormal];
 }
 - (void) airConditionAction:(id)sender{
     UIButton *selectBtn = (UIButton*) sender;
