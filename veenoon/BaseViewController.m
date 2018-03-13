@@ -53,9 +53,9 @@
     
     titleIcon = [[UIImageView alloc] init];
     [self.view addSubview:titleIcon];
-    titleIcon.frame = CGRectMake(55, 25, 32, 32);
+    titleIcon.frame = CGRectMake(55, 35, 16, 19);
     
-    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(97, 35, 300, 20)];
+    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 35, 300, 20)];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.textAlignment = NSTextAlignmentLeft;

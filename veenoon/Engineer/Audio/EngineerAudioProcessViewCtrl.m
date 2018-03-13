@@ -57,7 +57,7 @@
     _selectedBtnArray = [[NSMutableArray alloc] init];
     _inputBtnArray = [[NSMutableArray alloc] init];
     
-    [super setTitleAndImage:@"info_day_s.png" withTitle:@"音频处理器"];
+    [super setTitleAndImage:@"audio_corner_yinpinchuli.png" withTitle:@"音频处理器"];
 
     bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];

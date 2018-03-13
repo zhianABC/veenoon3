@@ -34,7 +34,7 @@
     
     _inPutBtnArray = [[NSMutableArray alloc] init];
     
-    [super setTitleAndImage:@"info_day_s.png" withTitle:@"拼接屏"];
+    [super setTitleAndImage:@"video_corner_pinjieping.png" withTitle:@"拼接屏"];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];

@@ -67,7 +67,7 @@
     
     isSettings = NO;
     
-    [super setTitleAndImage:@"info_day_s.png" withTitle:@"混音会议系统"];
+    [super setTitleAndImage:@"audio_corner_hunyin.png" withTitle:@"混音会议系统"];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];

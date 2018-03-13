@@ -64,7 +64,7 @@
     [_monitorRoomList addObject:dic6];
     [_monitorRoomList addObject:dic7];
     
-    [super setTitleAndImage:@"info_day_s.png" withTitle:@"监控"];
+    [super setTitleAndImage:@"env_corner_jiankong.png" withTitle:@"监控"];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];

@@ -44,7 +44,7 @@
         NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
         [_doorAccessSysArray addObject:dic];
     }
-    [super setTitleAndImage:@"info_day_s.png" withTitle:@"门禁"];
+    [super setTitleAndImage:@"env_corner_airclean.png" withTitle:@"门禁"];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
