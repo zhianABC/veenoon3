@@ -6,7 +6,7 @@
 //  Copyright © 2017年 jack. All rights reserved.
 //
 #import "UserHuiYinViewController.h"
-#import "CustomPickerView.h"
+#import "CenterCustomerPickerView.h"
 #import "UIButton+Color.h"
 
 @interface UserHuiYinViewController () {
@@ -15,7 +15,7 @@
     UIButton *_biaozhunmoshiBtn;
     UIButton *_fayanrenshuBtn;
     
-    CustomPickerView *_peoplePicker;
+    CenterCustomerPickerView *_peoplePicker;
 }
 @end
 
@@ -106,9 +106,10 @@
     [_fayanrenshuBtn addTarget:self action:@selector(fayanrenshuAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_fayanrenshuBtn];
     
-    _peoplePicker = [[CustomPickerView alloc] initWithFrame:CGRectMake(0, 0, 100, 150) withGrayOrLight:@"gray"];
+    _peoplePicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(0, 0, 100, 150) withGrayOrLight:@"gray"];
     _peoplePicker._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
     _peoplePicker.hidden=YES;
+    [_peoplePicker removeArray];
     [self.view addSubview:_peoplePicker];
     _peoplePicker.center = CGPointMake(SCREEN_WIDTH/2+50, SCREEN_HEIGHT - 200);
     [_peoplePicker selectRow:0 inComponent:0];
@@ -121,9 +122,15 @@
 }
 - (void) fayanrenshuAction:(id)sender{
     _peoplePicker.hidden=NO;
+    
+    [_shedingzhuxiBtn setSelected:NO];
+    [_fayanrenshuBtn setSelected:YES];
 }
 - (void) shedingzhuxiAction:(id)sender{
     _peoplePicker.hidden=NO;
+    
+    [_shedingzhuxiBtn setSelected:YES];
+    [_fayanrenshuBtn setSelected:NO];
 }
 
 - (void) biaozhunmoshiAction:(id)sender{
@@ -132,7 +139,7 @@
     [_biaozhunmoshiBtn setImage:[UIImage imageNamed:@"biaozhunmoshi_s.png"] forState:UIControlStateNormal];
     [_biaozhunmoshiBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
     _shedingzhuxiBtn.hidden=YES;
-    _fayanrenshuBtn.hidden=NO;
+    _fayanrenshuBtn.hidden=YES;
     
     _peoplePicker.hidden=YES;
 }
@@ -144,7 +151,7 @@
     [_biaozhunmoshiBtn setImage:[UIImage imageNamed:@"biaozhunmoshi_n.png"] forState:UIControlStateNormal];
     [_biaozhunmoshiBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
     _shedingzhuxiBtn.hidden=NO;
-    _fayanrenshuBtn.hidden=YES;
+    _fayanrenshuBtn.hidden=NO;
     
     _peoplePicker.hidden=YES;
 }
