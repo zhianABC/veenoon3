@@ -10,6 +10,7 @@
 #import "UIButton+Color.h"
 
 @interface UserVideoCameraSettingsViewCtrl () {
+    UIButton *twovelBtn;
 }
 @end
 
@@ -161,21 +162,18 @@
                   action:@selector(minusAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *twovelBtn = [UIButton buttonWithColor:nil selColor:RGB(242, 148, 20)];
+    twovelBtn = [UIButton buttonWithColor:nil selColor:RGB(242, 148, 20)];
     twovelBtn.frame = CGRectMake(715, SCREEN_HEIGHT-500, 80, 80);
     twovelBtn.layer.cornerRadius = 5;
     twovelBtn.layer.borderWidth = 2;
+    twovelBtn.userInteractionEnabled=NO;
     twovelBtn.layer.borderColor = RGB(242, 148, 20).CGColor;;
     twovelBtn.clipsToBounds = YES;
-    [twovelBtn setTitle:@"12" forState:UIControlStateNormal];
+    [twovelBtn setTitle:@"1" forState:UIControlStateNormal];
     [twovelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [twovelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     twovelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:20];
     [self.view addSubview:twovelBtn];
-    
-    [twovelBtn addTarget:self
-                 action:@selector(twovelAction:)
-       forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *addBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
     addBtn.frame = CGRectMake(800, SCREEN_HEIGHT-500, 80, 80);
@@ -235,15 +233,24 @@
 }
 
 - (void) addAction:(id)sender{
+    NSString *number = twovelBtn.titleLabel.text;
+    int value = [number intValue];
+    value++;
     
-}
-
-- (void) twovelAction:(id)sender{
-    
+    NSString *text = [NSString stringWithFormat:@"%d", value];
+    [twovelBtn setTitle:text forState:UIControlStateNormal];
 }
 
 - (void) minusAction:(id)sender{
+    NSString *number = twovelBtn.titleLabel.text;
+    int value = [number intValue];
+    if (value <= 1) {
+        return;
+    }
+    value--;
     
+    NSString *text = [NSString stringWithFormat:@"%d", value];
+    [twovelBtn setTitle:text forState:UIControlStateNormal];
 }
 
 - (void) invokeAction:(id)sender{
