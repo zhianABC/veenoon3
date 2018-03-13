@@ -92,7 +92,7 @@
     okPlayerBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [self.view addSubview:okPlayerBtn];
     
-    [lastVideoUpBtn addTarget:self action:@selector(okPlayerAction:)
+    [okPlayerBtn addTarget:self action:@selector(okBtnAction:)
              forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *volumnUpBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
@@ -190,6 +190,13 @@
 - (void) volumnUpAction:(id)sender{
     
 }
+- (void) lastVideoUpBtnAction:(id)sender{
+    
+}
+
+- (void) okBtnAction:(id)sender{
+    
+}
 - (void) okPlayerAction:(id)sender{
     if (isplay) {
         isplay = NO;
@@ -202,10 +209,6 @@
     } else {
         [_playOrHold setImage:[UIImage imageNamed:@"audio_player_hold.png"] forState:UIControlStateNormal];
     }
-}
-
-- (void) lastVideoUpBtnAction:(id)sender{
-    
 }
 
 - (void) okAction:(id)sender{
