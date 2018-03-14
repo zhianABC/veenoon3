@@ -57,8 +57,9 @@
         [self addSubview:addLabel];
         
         SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(startX-33, startH+30, 120, 120)];
-        UIImage *image = [UIImage imageNamed:@"slide_btn_light.png"];
-        [btn changeButtonBackgroundImage:image];
+        btn._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+        btn._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+        [btn enableValueSet:YES];
         
         [self addSubview:btn];
         

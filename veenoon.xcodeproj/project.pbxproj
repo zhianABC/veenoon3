@@ -146,6 +146,8 @@
 		341C784A2050184300DD1677 /* SIconSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 341C78492050184200DD1677 /* SIconSelectView.m */; };
 		341C784D2050185200DD1677 /* IconLayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 341C784B2050185200DD1677 /* IconLayerView.m */; };
 		341F0F471EC2FC500027C800 /* WSCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 341F0F461EC2FC500027C800 /* WSCode.m */; };
+		3421561820597293005205D6 /* slide_btn_light_nokd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3421561620597292005205D6 /* slide_btn_light_nokd@2x.png */; };
+		3421561920597293005205D6 /* slide_btn_gray_nokd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3421561720597292005205D6 /* slide_btn_gray_nokd@2x.png */; };
 		34217A6F1FCE98200006701C /* UserVideoConfigView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34217A6E1FCE98200006701C /* UserVideoConfigView.m */; };
 		34217A721FCE9C160006701C /* StickerLayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34217A711FCE9C150006701C /* StickerLayerView.m */; };
 		3421EA2D1FC4136600DC5378 /* CustomPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3421EA2B1FC4136600DC5378 /* CustomPickerView.m */; };
@@ -991,6 +993,8 @@
 		341C784C2050185200DD1677 /* IconLayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconLayerView.h; sourceTree = "<group>"; };
 		341F0F451EC2FC500027C800 /* WSCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSCode.h; sourceTree = "<group>"; };
 		341F0F461EC2FC500027C800 /* WSCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSCode.m; sourceTree = "<group>"; };
+		3421561620597292005205D6 /* slide_btn_light_nokd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slide_btn_light_nokd@2x.png"; sourceTree = "<group>"; };
+		3421561720597292005205D6 /* slide_btn_gray_nokd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slide_btn_gray_nokd@2x.png"; sourceTree = "<group>"; };
 		34217A6D1FCE98200006701C /* UserVideoConfigView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserVideoConfigView.h; sourceTree = "<group>"; };
 		34217A6E1FCE98200006701C /* UserVideoConfigView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserVideoConfigView.m; sourceTree = "<group>"; };
 		34217A701FCE9C150006701C /* StickerLayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StickerLayerView.h; sourceTree = "<group>"; };
@@ -2179,6 +2183,8 @@
 		04DE1ECB1AD6B3BA00D49E2F /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
+				3421561720597292005205D6 /* slide_btn_gray_nokd@2x.png */,
+				3421561620597292005205D6 /* slide_btn_light_nokd@2x.png */,
 				EB19B65420581D2B003F1546 /* corner */,
 				EBB4F7712052A9F80012AC8D /* teslaria_title@2x.png */,
 				34F27A3C205121EF0045D765 /* sen */,
@@ -3321,6 +3327,7 @@
 				3451A53C2052DCC600AE02B4 /* slide_btn_gray@2x.png in Resources */,
 				EBDF1C0F1FC5C6C900A756EA /* user_training_s@2x.png in Resources */,
 				EB19B67920581D2C003F1546 /* env_corner_light@2x.png in Resources */,
+				3421561920597293005205D6 /* slide_btn_gray_nokd@2x.png in Resources */,
 				EBAE5BAD1FDD20C400C10C4D /* engineer_env_jingshui_n@2x.png in Resources */,
 				EBF6A73C1FC851E500260FF0 /* audio_player_hold@2x.png in Resources */,
 				3422A5BC1FCC1B1100F6D3C2 /* light_slide_bg@2x.png in Resources */,
@@ -3453,6 +3460,7 @@
 				EB36AAE21FCDA432009A0FD8 /* user_video_touying_n@2x.png in Resources */,
 				EB09EF541FD9A9AE00C968CA /* engineer_gongfang_s@2x.png in Resources */,
 				EBC71B11203B01BB00DD0A98 /* v_icon_22@2x.png in Resources */,
+				3421561820597293005205D6 /* slide_btn_light_nokd@2x.png in Resources */,
 				34F27A61205121EF0045D765 /* ce_l_02_big.png in Resources */,
 				EBAE5BB91FE0002F00C10C4D /* engineer_scenario_add_n@2x.png in Resources */,
 				3425E9801FE54C62003559F7 /* process_light@2x.png in Resources */,
