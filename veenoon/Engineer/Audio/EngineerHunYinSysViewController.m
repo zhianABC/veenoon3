@@ -129,15 +129,12 @@
     
     int index = 0;
     int top = 250;
-    if ([_hunyinSysArray count] >= 6) {
-        top = 350;
-    }
     
     int leftRight = 100;
     
     int cellWidth = 92;
     int cellHeight = 92;
-    int colNumber = 6;
+    int colNumber = ENGINEER_VIEW_COLUMN_N;
     int space = 25;
     
     NSMutableDictionary *dataDic = [_hunyinSysArray objectAtIndex:0];

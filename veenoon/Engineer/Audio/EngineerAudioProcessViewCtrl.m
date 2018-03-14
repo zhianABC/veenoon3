@@ -134,7 +134,7 @@
     subTL.textColor  = [UIColor whiteColor];
     subTL.text = @"OutPuts";
     
-    int colNumber = 8;
+    int colNumber = ENGINEER_VIEW_COLUMN_N;
     int index = 0;
     int cellWidth = 92;
     int cellHeight = 120;

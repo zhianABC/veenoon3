@@ -139,7 +139,7 @@
     
     int cellWidth = 100;
     int cellHeight = 100;
-    int colNumber = 6;
+    int colNumber = ENGINEER_VIEW_COLUMN_N;
     int space = 25;
     
     NSMutableDictionary *dataDic = [_cleanWaterSysArray objectAtIndex:0];

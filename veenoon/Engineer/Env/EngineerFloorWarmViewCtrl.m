@@ -99,7 +99,7 @@
     
     int cellWidth = 92;
     int cellHeight = 92;
-    int colNumber = 6;
+    int colNumber = ENGINEER_VIEW_COLUMN_N;
     int space = 25;
     
     for (int i = 0; i < self._number; i++) {
