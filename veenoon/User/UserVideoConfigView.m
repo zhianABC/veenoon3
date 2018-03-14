@@ -22,6 +22,10 @@
 @property (nonatomic, strong) NSMutableArray *_outputs;
 @property (nonatomic, strong) NSMutableDictionary *_outputDmap;
 
+@property (nonatomic, strong) NSMutableArray *_inputCells;
+
+@property (nonatomic, strong) StickerLayerView *_curSelectInput;
+
 @end
 
 @implementation UserVideoConfigView
@@ -31,6 +35,10 @@
 @synthesize _result;
 @synthesize _outputs;
 @synthesize _outputDmap;
+
+@synthesize _inputCells;
+
+@synthesize _curSelectInput;
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -58,12 +66,74 @@
         self._result = [NSMutableDictionary dictionary];
         
         self._outputDmap = [NSMutableDictionary dictionary];
+        
+        self._inputCells = [NSMutableArray array];
     }
     
     return self;
     
 }
 
+- (void) updateSelectedStatus:(BOOL)isSelected layer:(id)layer{
+    
+    StickerLayerView *obj = layer;
+    
+    if(obj.tag < 100)//输入
+    {
+        if(isSelected)
+        {
+            self._curSelectInput = layer;
+            
+            for(StickerLayerView *cell in _inputCells)
+            {
+                if(cell == layer)
+                    continue;
+                else{
+                    
+                    cell.delegate_ = nil;
+                    [cell unselected];
+                    cell.delegate_ = self;
+                }
+            }
+        }
+        else
+            self._curSelectInput = nil;
+        
+    }
+    else
+    {
+        StickerLayerView *output = layer;
+        //输出设备
+        NSDictionary *outData = output._element;
+        
+        
+        if(isSelected)
+        {
+            
+            if(_curSelectInput)
+            {
+            //输入源
+            NSDictionary* inputD = _curSelectInput._element;
+            
+            
+            [_result setObject:inputD
+                        forKey:[outData objectForKey:@"code"]];
+            
+            
+            NSString *imageN = [inputD objectForKey:@"image_sel"];
+            [output setTopIconImage:[UIImage imageNamed:imageN]];
+            }
+        }
+        else
+        {
+
+            [_result removeObjectForKey:[outData objectForKey:@"code"]];
+            [output setTopIconImage:nil];
+            
+        }
+    }
+
+}
 
 - (void) show{
     
@@ -77,7 +147,7 @@
                              initWithFrame:CGRectMake(x, y, cellWidth, cellHeight)];
         [self addSubview:cell];
         cell.tag = i;
-        cell._enableDrag = YES;
+        cell._enableDrag = NO;
         [cell enableLongPressed];
         cell.delegate_ = self;
         cell._element = dic;
@@ -89,6 +159,10 @@
         cell.textLabel.text = [dic objectForKey:@"name"];
         
         x+=cellWidth;
+        
+        
+        [_inputCells addObject:cell];
+        
     }
     
     
@@ -111,8 +185,8 @@
         cell.delegate_ = self;
         cell._element = dic;
         [self addSubview:cell];
-        //cell.backgroundColor = [UIColor clearColor];
-        cell.tag = i;
+
+        cell.tag = 100+i;
         cell._enableDrag = NO;
         NSString *image = [dic objectForKey:@"image"];
         [cell setSticker:image];
@@ -141,6 +215,7 @@
 
 - (void) didMovedStickerLayer:(StickerLayerView*)layer sticker:(UIImageView*)sticker{
 
+    /*
     CGPoint pt = [self convertPoint:sticker.center
                            fromView:layer];
     
@@ -158,10 +233,12 @@
         outputArea.alpha = 0.0;
         layer._resetWhenEndDrag = YES;
     }
+     */
 }
 
 - (void) didEndTouchedStickerLayer:(StickerLayerView*)layer sticker:(UIImageView*)sticker{
     
+    /*
     CGPoint pt = [self convertPoint:sticker.center
                            fromView:layer];
     
@@ -206,7 +283,7 @@
     
     
     NSLog(@"%f - %f", pt.x, pt.y);
-    
+    */
 }
 
 @end

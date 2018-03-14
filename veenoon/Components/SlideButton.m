@@ -33,6 +33,9 @@
 @synthesize _titleLabel;
 @synthesize _valueLabel;
 
+@synthesize _grayBackgroundImage;
+@synthesize _lightBackgroundImage;
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -80,6 +83,10 @@
         _valueLabel.textColor  = [UIColor whiteColor];
         _valueLabel.textAlignment = NSTextAlignmentCenter;
         
+        
+        self._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray.png"];
+        self._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light.png"];
+        
     }
     
     return self;
@@ -97,13 +104,13 @@
     {
         _enabledTouchMove = YES;
         _titleLabel.textColor = YELLOW_COLOR;
-        _radioImgV.image = [UIImage imageNamed:@"slide_btn_light.png"];
+        _radioImgV.image = _lightBackgroundImage;
     }
     else
     {
         _enabledTouchMove = NO;
         _titleLabel.textColor = [UIColor whiteColor];
-        _radioImgV.image = [UIImage imageNamed:@"slide_btn_gray.png"];
+        _radioImgV.image = _grayBackgroundImage;
     }
 }
 

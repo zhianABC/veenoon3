@@ -8,12 +8,28 @@
 
 #import "JSlideView.h"
 
+@interface JSlideView ()
+{
+    UIImageView *roadSlider;
+    
+    UIImageView *roadSliderHighlight;
+    
+    CGPoint beginPoint;
+    
+    float curValue;
+    
+    BOOL mute;
+}
+
+@end
+
 @implementation JSlideView
 @synthesize delegate;
 @synthesize topEdge;
 @synthesize bottomEdge;
 @synthesize maxValue;
 @synthesize minValue;
+@synthesize stepValue;
 
 - (id) initWithSliderBg:(UIImage*)sliderBg frame:(CGRect)frame{
     
@@ -31,14 +47,33 @@
         
         self.frame = frame;
         
+        roadSlider = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"v_slider_road.png"]];
+        [self addSubview:roadSlider];
+        roadSlider.image = [UIImage imageNamed:@"v_slider_road_n.png"];
+        roadSlider.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds)+2);;
+        roadSlider.clipsToBounds = YES;
+        
+        roadSliderHighlight = [[UIImageView alloc] initWithFrame:roadSlider.frame];
+        [self addSubview:roadSliderHighlight];
+        UIImageView *imv = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"v_slider_road.png"]];
+        [roadSliderHighlight addSubview:imv];
+        roadSliderHighlight.clipsToBounds = YES;
+
+        
         sliderThumb = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jslide_thumb.png"]];
         [self addSubview:sliderThumb];
         
         valueLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 30)];
         [self addSubview:valueLabel];
         valueLabel.textColor = [UIColor whiteColor];
-        valueLabel.font = [UIFont systemFontOfSize:14];
+        valueLabel.font = [UIFont systemFontOfSize:13];
         valueLabel.textAlignment = NSTextAlignmentCenter;
+        
+        stepValue = 0.1;
+        
+        mute = NO;
+        
+        [self setIndicatorImage: [UIImage imageNamed:@"wireless_slide_n.png"]];
     }
     
     return self;
@@ -46,33 +81,33 @@
 
 - (void) setRoadImage:(UIImage *)image{
     
-    if(roadSlider == nil)
-    {
-        roadSlider = [[UIImageView alloc] initWithImage:image];
-    }
-    else
-    {
-        roadSlider.image = image;
-    }
     
-    [self addSubview:roadSlider];
-    
-    roadSlider.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds));
-    
-    [self bringSubviewToFront:sliderThumb];
 }
-- (void) resetScalValue:(int) scalValue {
-    valueLabel.text = [NSString stringWithFormat:@"%d", (scalValue)];
+
+- (void) resetScalValue:(float) scalValue {
+    
+    valueLabel.text = [NSString stringWithFormat:@"%0.1f", (scalValue)];
+    curValue = scalValue;
+    
     if (scalValue == minValue) {
-        [self setIndicatorImage: [UIImage imageNamed:@"wireless_slide_n.png"]];
-        [self setRoadImage: [UIImage imageNamed:@"v_slider_road_n.png"]];
+        
         sliderThumb.image = [UIImage imageNamed:@"jslide_thumb_n.png"];
+        
     } else {
-        [self setIndicatorImage: [UIImage imageNamed:@"wireless_slide_s.png"]];
-        [self setRoadImage: [UIImage imageNamed:@"v_slider_road.png"]];
+        
         sliderThumb.image = [UIImage imageNamed:@"jslide_thumb.png"];
+        
     }
+    
+    
+    CGRect rc = roadSliderHighlight.frame;
+    rc.origin.y = CGRectGetMidY(sliderThumb.frame);
+    float offset = CGRectGetMinY(roadSlider.frame);
+    rc.size.height = CGRectGetHeight(roadSlider.frame) - rc.origin.y + offset;
+    roadSliderHighlight.frame = rc;
+    
 }
+
 - (void) setIndicatorImage:(UIImage *)image{
     
     if(indicator == nil)
@@ -89,10 +124,48 @@
     indicator.center = CGPointMake(self.bounds.size.width/2, CGRectGetMaxY(self.bounds)-16);
     
     [self bringSubviewToFront:sliderThumb];
+    
+    UIButton *btnMute = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnMute.frame = CGRectMake(0, 0, self.bounds.size.width, 40);
+    btnMute.center = indicator.center;
+    [self addSubview:btnMute];
+    [btnMute addTarget:self
+                action:@selector(muteAction:)
+      forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void) muteAction:(id)sender{
+    
+    if(mute)
+    {
+        mute = NO;
+        indicator.alpha = 1;
+        
+        
+    }
+    else
+    {
+        mute = YES;
+        indicator.alpha = 0.3;
+        
+        
+    }
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     
+    CGPoint p = [[touches anyObject] locationInView:self];
+    beginPoint = p;
+    
+    if(beginPoint.y < CGRectGetMinY(roadSlider.frame))
+    {
+        beginPoint.y = CGRectGetMinY(roadSlider.frame);
+    }
+    if(beginPoint.y > CGRectGetMaxY(roadSlider.frame))
+    {
+        beginPoint.y = CGRectGetMaxY(roadSlider.frame);
+    }
+    /*
     CGPoint p = [[touches anyObject] locationInView:self];
     CGRect rc = slider.frame;
     
@@ -111,21 +184,59 @@
         
         int h = rc.size.height - topEdge - bottomEdge;
         int subh = (rc.size.height - bottomEdge) - sliderThumb.center.y;
-        int value = (maxValue - minValue)*(float)subh/h + minValue;
+        float value = (maxValue - minValue)*(float)subh/h + minValue;
         
-       // NSLog(@"value = %d", value);
-        
-//        valueLabel.text = [NSString stringWithFormat:@"%d", (value)];
+       
         [self resetScalValue:value];
+        
         if(delegate && [delegate respondsToSelector:@selector(didSliderValueChanged:object:)])
         {
             
             [delegate didSliderValueChanged:value object:self];
         }
     }
+     */
 }
+
+- (void) moveToBeginPoint{
+    
+    CGRect rc = slider.frame;
+    
+    rc = CGRectMake(rc.origin.x, rc.origin.y, rc.size.width, rc.size.height);
+    
+    if (CGRectContainsPoint(rc, beginPoint)) {
+        
+        CGPoint colorPoint = beginPoint;
+        colorPoint.x = slider.center.x;
+        if(colorPoint.y < topEdge)
+            colorPoint.y = topEdge;
+        if(colorPoint.y > rc.size.height - bottomEdge)
+            colorPoint.y = rc.size.height - bottomEdge;
+        sliderThumb.center = colorPoint;
+        
+        float h = rc.size.height - topEdge - bottomEdge;
+        float subh = (rc.size.height - bottomEdge) - sliderThumb.center.y;
+        float value = (maxValue - minValue)*(float)subh/h + minValue;
+        
+        [self resetScalValue:value];
+        
+        if(delegate && [delegate respondsToSelector:@selector(didSliderValueChanged:object:)])
+        {
+            [delegate didSliderValueChanged:value object:self];
+        }
+    }
+    
+}
+
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-	CGPoint p = [[touches anyObject] locationInView:self];
+	
+    if(!CGPointEqualToPoint(beginPoint, CGPointZero))
+    {
+        [self moveToBeginPoint];
+        beginPoint = CGPointZero;
+    }
+    
+    CGPoint p = [[touches anyObject] locationInView:self];
     
     CGRect rc = slider.frame;
     rc = CGRectMake(rc.origin.x, rc.origin.y, rc.size.width, rc.size.height);
@@ -141,10 +252,10 @@
         sliderThumb.center = colorPoint;
         
         
-        int h = rc.size.height - topEdge - bottomEdge;
-        int subh = (rc.size.height - bottomEdge) - sliderThumb.center.y;
+        float h = rc.size.height - topEdge - bottomEdge;
+        float subh = (rc.size.height - bottomEdge) - sliderThumb.center.y;
 
-        int value = (maxValue - minValue)*(float)subh/h + minValue;
+        float value = (maxValue - minValue)*(float)subh/h + minValue;
         
 //        valueLabel.text = [NSString stringWithFormat:@"%d", (value)];
         [self resetScalValue:value];
@@ -162,6 +273,24 @@
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
     
+    if(!CGPointEqualToPoint(beginPoint, CGPointZero))
+    {
+        if(beginPoint.y < sliderThumb.center.y)
+        {
+            //向上增加
+            curValue+=stepValue;
+        }
+        else if(beginPoint.y > sliderThumb.center.y)
+        {
+            curValue-=stepValue;
+        }
+        
+        
+        [self setScaleValue:curValue];
+        
+        beginPoint = CGPointZero;
+    }
+    
     if(delegate && [delegate respondsToSelector:@selector(didSliderEndChanged:)])
     {
         [delegate didSliderEndChanged:self];
@@ -169,13 +298,13 @@
     
 }
 
-- (int) getScaleValue{
+- (float) getScaleValue{
    
     CGRect rc = slider.frame;
-    int h = rc.size.height - topEdge - bottomEdge;
-    int subh = (rc.size.height - bottomEdge) - sliderThumb.center.y;
+    float h = rc.size.height - topEdge - bottomEdge;
+    float subh = (rc.size.height - bottomEdge) - sliderThumb.center.y;
     
-    int value = (maxValue - minValue)*(float)subh/h + minValue;
+    float value = (maxValue - minValue)*(float)subh/h + minValue;
     
     return value;
 }
@@ -185,22 +314,22 @@
     sliderThumb.center = CGPointMake(slider.frame.origin.x+slider.bounds.size.width/2.0,
                                      self.frame.size.height - bottomEdge);
     
-    int value = [self getScaleValue];
+    float value = [self getScaleValue];
 //    valueLabel.text = [NSString stringWithFormat:@"%d", (value)];
     [self resetScalValue:value];
 }
 
-- (void) setScaleValue:(int)value{
+- (void) setScaleValue:(float)value{
     
     CGRect rc = slider.frame;
-    int h = rc.size.height - topEdge - bottomEdge;
-    int subh = ((float)(value - minValue)*h)/(maxValue - minValue);
-    int cy = (rc.size.height - bottomEdge) - subh;
+    float h = rc.size.height - topEdge - bottomEdge;
+    float subh = ((float)(value - minValue)*h)/(maxValue - minValue);
+    float cy = (rc.size.height - bottomEdge) - subh;
     
     sliderThumb.center = CGPointMake(slider.frame.origin.x+slider.bounds.size.width/2.0,
                                      cy);
     
-    valueLabel.text = [NSString stringWithFormat:@"%d", (value)];
+    valueLabel.text = [NSString stringWithFormat:@"%0.1f", (value)];
     [self resetScalValue:value];
 }
 

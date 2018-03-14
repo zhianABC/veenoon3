@@ -19,7 +19,6 @@
 {
     UIImageView *slider;
     UIImageView *sliderThumb;
-    UIImageView *roadSlider;
     UIImageView *indicator;
     
     UILabel *valueLabel;
@@ -30,13 +29,14 @@
 
 @property (nonatomic, assign) int maxValue;
 @property (nonatomic, assign) int minValue;
+@property (nonatomic, assign) float stepValue;
 
 - (id) initWithSliderBg:(UIImage*)sliderBg frame:(CGRect)frame;
 
 - (void) setRoadImage:(UIImage *)image;
 - (void) resetScale;
-- (void) setScaleValue:(int)value;
+- (void) setScaleValue:(float)value;
 
-- (int) getScaleValue;
+- (float) getScaleValue;
 
 @end

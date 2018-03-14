@@ -27,6 +27,7 @@
 @synthesize bottomEdge;
 @synthesize maxValue;
 @synthesize minValue;
+@synthesize stepValue;
 
 - (id) initWithSliderBg:(UIImage*)sliderBg frame:(CGRect)frame{
     
@@ -72,6 +73,8 @@
         zengyiLabel.textColor = [UIColor whiteColor];
         zengyiLabel.font = [UIFont systemFontOfSize:14];
         zengyiLabel.textAlignment = NSTextAlignmentCenter;
+        
+        stepValue = 1;
     }
     
     return self;
@@ -160,9 +163,16 @@
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     
     CGPoint p = [[touches anyObject] locationInView:self];
-    
     beginPoint = p;
     
+    if(beginPoint.y < CGRectGetMinY(roadSlider.frame))
+    {
+        beginPoint.y = CGRectGetMinY(roadSlider.frame);
+    }
+    if(beginPoint.y > CGRectGetMaxY(roadSlider.frame))
+    {
+        beginPoint.y = CGRectGetMaxY(roadSlider.frame);
+    }
     
 }
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -178,7 +188,7 @@
     CGRect rc = slider.frame;
     rc = CGRectMake(rc.origin.x, rc.origin.y, rc.size.width, rc.size.height);
     
-    if (CGRectContainsPoint(rc, p)) {
+    if (p.y > CGRectGetMinY(roadSlider.frame) && p.y < CGRectGetMaxY(roadSlider.frame)) {
         
         CGPoint colorPoint = p;
         colorPoint.x = slider.center.x;
@@ -213,11 +223,11 @@
         if(beginPoint.y < sliderThumb.center.y)
         {
             //向上增加
-            curValue++;
+            curValue+=stepValue;
         }
         else if(beginPoint.y > sliderThumb.center.y)
         {
-            curValue--;
+            curValue-=stepValue;
         }
         
         

@@ -26,6 +26,9 @@
 @property (nonatomic, readonly) UILabel *_titleLabel;
 @property (nonatomic, readonly) UILabel *_valueLabel;
 
+@property (nonatomic, strong) UIImage *_grayBackgroundImage;
+@property (nonatomic, strong) UIImage *_lightBackgroundImage;
+
 - (void) setCircleValue:(float) value;
 - (void) changeButtonBackgroundImage:(UIImage *)image;
 

@@ -29,6 +29,7 @@
 
 @property (nonatomic, assign) int maxValue;
 @property (nonatomic, assign) int minValue;
+@property (nonatomic, assign) int stepValue;
 
 - (id) initWithSliderBg:(UIImage*)sliderBg frame:(CGRect)frame;
 
