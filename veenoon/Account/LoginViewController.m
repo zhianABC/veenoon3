@@ -19,6 +19,7 @@
 #import "InvitationCodeViewCotroller.h"
 #import "XDPickView.h"
 #import "wsDB.h"
+#import "SignupViewController.h"
 
 #define T7DaySecs (7*24*3600)
 
@@ -90,6 +91,7 @@
         forControlEvents:UIControlEventTouchUpInside];
     
     _inputPannel = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 180)];
+    _inputPannel.userInteractionEnabled = YES;
     [self.view addSubview:_inputPannel];
     _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
     
@@ -180,11 +182,21 @@
     line.backgroundColor = RGB(75, 163, 202);
     [_inputPannel addSubview:line];
     
-    tL = [[UILabel alloc] initWithFrame:CGRectMake(left, top+160, w, 50)];
-    tL.text = @"         创建您的TESLARIA账户！";
-    tL.textColor = RGB(70, 219, 254);
-    tL.font = [UIFont boldSystemFontOfSize:14];
-    [_inputPannel addSubview:tL];
+    UIButton *registerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    registerBtn.frame = CGRectMake(SCREEN_WIDTH/2 - w/2, CGRectGetMaxY(_inputPannel.frame)+60, w, 50);
+    [registerBtn setTitle:@"创建您的TESLARIA账户！" forState:UIControlStateNormal];
+    [registerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [registerBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    registerBtn.titleLabel.font = [UIFont boldSystemFontOfSize:16];
+    [registerBtn addTarget:self
+                  action:@selector(registerAction:)
+        forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:registerBtn];
+}
+
+- (void) registerAction:(id)sender {
+    SignupViewController *ctrl = [[SignupViewController alloc] init];
+    [self.navigationController pushViewController:ctrl animated:YES];
 }
 
 - (void) countrySelectAction:(id)sender{
