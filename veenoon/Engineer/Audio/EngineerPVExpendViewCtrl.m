@@ -110,12 +110,12 @@
     [_zengyiSlider resetScale];
     _zengyiSlider.center = CGPointMake(SCREEN_WIDTH - 120, SCREEN_HEIGHT/2);
     
-    int leftRight = 100;
+    int leftRight = ENGINEER_VIEW_LEFT;
     
     int cellWidth = 92;
     int cellHeight = 92;
     int colNumber = ENGINEER_VIEW_COLUMN_N;
-    int space = 25;
+    int space = ENGINEER_VIEW_COLUMN_GAP;
     
     int index = 0;
     int top = 250;

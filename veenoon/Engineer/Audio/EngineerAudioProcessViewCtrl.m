@@ -138,7 +138,7 @@
     int index = 0;
     int cellWidth = 92;
     int cellHeight = 120;
-    int leftRight = 50;
+    int leftRight = ENGINEER_VIEW_LEFT;
     int space = 8;
     
     for (int i = 0; i < self._inputNumber; i++) {

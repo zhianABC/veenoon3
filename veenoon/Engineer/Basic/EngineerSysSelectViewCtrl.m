@@ -85,7 +85,7 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"关于TESLSRIA";
     
-    [self.view addSubview:titleL];
+//    [self.view addSubview:titleL];
     
     UIButton *backBtn = [UIButton buttonWithColor:[UIColor whiteColor] selColor:RGB(242, 148, 20)];
     backBtn.frame = CGRectMake(0, 60, 30, 60);

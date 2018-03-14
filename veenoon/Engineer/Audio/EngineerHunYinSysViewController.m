@@ -130,12 +130,12 @@
     int index = 0;
     int top = 250;
     
-    int leftRight = 100;
+    int leftRight = ENGINEER_VIEW_LEFT;
     
     int cellWidth = 92;
     int cellHeight = 92;
     int colNumber = ENGINEER_VIEW_COLUMN_N;
-    int space = 25;
+    int space = ENGINEER_VIEW_COLUMN_GAP;
     
     NSMutableDictionary *dataDic = [_hunyinSysArray objectAtIndex:0];
     NSMutableArray *dataArray = [dataDic objectForKey:@"value"];
