@@ -92,10 +92,6 @@
     int startY = 20;
     UIButton *scenarioBtn = [UIButton buttonWithColor:nil selColor:RGB(0, 89, 118)];
     scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
-    scenarioBtn.layer.cornerRadius = 5;
-    scenarioBtn.layer.borderWidth = 2;
-    scenarioBtn.layer.borderColor = [UIColor whiteColor].CGColor;;
-    scenarioBtn.clipsToBounds = YES;
     [scenarioBtn setImage:[UIImage imageNamed:@"engineer_scenario_add_n.png"] forState:UIControlStateNormal];
     [scenarioBtn setImage:[UIImage imageNamed:@"engineer_scenario_add_n.png"] forState:UIControlStateHighlighted];
     scenarioBtn.tag = index;

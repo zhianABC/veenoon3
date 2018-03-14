@@ -111,7 +111,7 @@
     
     UIImageView *playerIndicator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"audio_player_title_s.png"]];
     [self.view addSubview:playerIndicator];
-    playerIndicator.frame = CGRectMake(0, 0, 96, 200);
+    playerIndicator.frame = CGRectMake(0, 0, 322, 322);
     playerIndicator.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT - 500);
     
     playerIndicator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"audio_player_title_n2.png"]];
