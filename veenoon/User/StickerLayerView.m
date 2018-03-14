@@ -35,6 +35,12 @@
     textLabel.textColor = [UIColor orangeColor];
     
     _isSelected = YES;
+    
+    
+    if(delegate_ && [delegate_ respondsToSelector:@selector(updateSelectedStatus:layer:)])
+    {
+        [delegate_ updateSelectedStatus:_isSelected layer:self];
+    }
 
 }
 - (void) unselected{
@@ -45,6 +51,11 @@
     _stickerCopy.image = normalImg;
     
     textLabel.textColor = SINGAL_COLOR;
+    
+    if(delegate_ && [delegate_ respondsToSelector:@selector(updateSelectedStatus:layer:)])
+    {
+        [delegate_ updateSelectedStatus:_isSelected layer:self];
+    }
     
 }
 - (BOOL) getIsSelected{
@@ -96,6 +107,17 @@
 - (void) setTopIconImage:(UIImage*)icon{
     
     _topIcon.image = icon;
+    _topIcon.alpha = 0;
+    
+    
+    [UIView animateWithDuration:0.25
+                     animations:^{
+                         
+                         _topIcon.alpha = 1.0;
+                         
+                     } completion:^(BOOL finished) {
+                         
+                     }];
 }
 
 

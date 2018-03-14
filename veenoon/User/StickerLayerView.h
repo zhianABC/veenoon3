@@ -22,6 +22,8 @@
 
 - (void) longPressed:(id)sticker;
 
+- (void) updateSelectedStatus:(BOOL)isSelected layer:(id)layer;
+
 @end
 
 
