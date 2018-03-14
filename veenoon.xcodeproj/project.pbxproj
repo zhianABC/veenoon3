@@ -567,6 +567,7 @@
 		EB7E815B1FF8C4C90053E5A7 /* info_month_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB7E81551FF8C4C90053E5A7 /* info_month_s@2x.png */; };
 		EB7E815C1FF8C4C90053E5A7 /* info_year_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB7E81561FF8C4C90053E5A7 /* info_year_n@2x.png */; };
 		EB7E815D1FF8C4C90053E5A7 /* info_year_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB7E81571FF8C4C90053E5A7 /* info_year_s@2x.png */; };
+		EB9343C02059797D0098171E /* image_backgroud@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB9343BF2059797D0098171E /* image_backgroud@2x.png */; };
 		EB948A49204EE3550018C80A /* JLightSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB948A48204EE3550018C80A /* JLightSliderView.m */; };
 		EB948A4D204EE4660018C80A /* wireless_slide_light_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB948A4A204EE4660018C80A /* wireless_slide_light_n@2x.png */; };
 		EB948A4E204EE4660018C80A /* wireless_slide_light_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB948A4B204EE4660018C80A /* wireless_slide_light_s@2x.png */; };
@@ -1529,6 +1530,7 @@
 		EB7E81551FF8C4C90053E5A7 /* info_month_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info_month_s@2x.png"; sourceTree = "<group>"; };
 		EB7E81561FF8C4C90053E5A7 /* info_year_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info_year_n@2x.png"; sourceTree = "<group>"; };
 		EB7E81571FF8C4C90053E5A7 /* info_year_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info_year_s@2x.png"; sourceTree = "<group>"; };
+		EB9343BF2059797D0098171E /* image_backgroud@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "image_backgroud@2x.png"; sourceTree = "<group>"; };
 		EB948A47204EE3550018C80A /* JLightSliderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JLightSliderView.h; sourceTree = "<group>"; };
 		EB948A48204EE3550018C80A /* JLightSliderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JLightSliderView.m; sourceTree = "<group>"; };
 		EB948A4A204EE4660018C80A /* wireless_slide_light_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wireless_slide_light_n@2x.png"; sourceTree = "<group>"; };
@@ -2183,6 +2185,7 @@
 		04DE1ECB1AD6B3BA00D49E2F /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
+				EB9343BF2059797D0098171E /* image_backgroud@2x.png */,
 				3421561720597292005205D6 /* slide_btn_gray_nokd@2x.png */,
 				3421561620597292005205D6 /* slide_btn_light_nokd@2x.png */,
 				EB19B65420581D2B003F1546 /* corner */,
@@ -3562,6 +3565,7 @@
 				EB19B66F20581D2C003F1546 /* audio_corner_huatong@2x.png in Resources */,
 				EBDF1C451FC5D5CF00A756EA /* add_wet_sys_n@2x.png in Resources */,
 				EB1A560A1FEF8708000B18E6 /* engineer_dial_phone_n@2x.png in Resources */,
+				EB9343C02059797D0098171E /* image_backgroud@2x.png in Resources */,
 				EB36AABB1FCD952B009A0FD8 /* luntimoshi_n@2x.png in Resources */,
 				EBF5D43D1FCC601B0014D5F0 /* fayanrenshu_s@2x.png in Resources */,
 				EB217FE31FD43050003F5A8F /* user_water_clean_s@2x.png in Resources */,

@@ -67,9 +67,9 @@
     scroolView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:scroolView];
     
-    int top = 50;
-    int leftRight = 60;
-    int space = 25;
+    int top = 80;
+    int leftRight = 30;
+    int space = 15;
     
     int cellWidth = 312;
     int cellHeight = 186;
@@ -79,6 +79,12 @@
         int col = index%3;
         int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+top;
+        
+        UIImage *roomImageBG = [UIImage imageNamed:@"image_backgroud.png"];
+        UIImageView *roomeImageBGView = [[UIImageView alloc] initWithImage:roomImageBG];
+        roomeImageBGView.frame = CGRectMake(startX-21, startY-21, 354, 228);
+        [scroolView addSubview:roomeImageBGView];
+        
         
         UIImage *roomImage = [dic objectForKey:@"image"];
         UIImageView *roomeImageView = [[UIImageView alloc] initWithImage:roomImage];

@@ -68,9 +68,9 @@
     scroolView.backgroundColor = RGB(63, 58, 55);
     [self.view addSubview:scroolView];
     
-    int top = 50;
-    int leftRight = 60;
-    int space = 10;
+    int top = 80;
+    int leftRight = 30;
+    int space = 15;
     
     int cellWidth = 312;
     int cellHeight = 186;
@@ -80,6 +80,11 @@
         int col = index%3;
         int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+top;
+        
+        UIImage *roomImageBG = [UIImage imageNamed:@"image_backgroud.png"];
+        UIImageView *roomeImageBGView = [[UIImageView alloc] initWithImage:roomImageBG];
+        roomeImageBGView.frame = CGRectMake(startX-21, startY-21, 354, 228);
+        [scroolView addSubview:roomeImageBGView];
         
         UIImage *roomImage = [dic objectForKey:@"image"];
         UIImageView *roomeImageView = [[UIImageView alloc] initWithImage:roomImage];
@@ -107,7 +112,7 @@
         
         UIButton *cameraBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         
-        cameraBtn.frame = CGRectMake(CGRectGetWidth(roomeImageView.frame)-40, CGRectGetHeight(roomeImageView.frame)-40, 40, 40);
+        cameraBtn.frame = CGRectMake(CGRectGetWidth(roomeImageView.frame)-40, CGRectGetHeight(roomeImageView.frame)-30, 40, 30);
         cameraBtn.tag = index;
         [cameraBtn setImage:[UIImage imageNamed:@"camera_n.png"] forState:UIControlStateNormal];
         [cameraBtn setImage:[UIImage imageNamed:@"camera_s.png"] forState:UIControlStateHighlighted];
