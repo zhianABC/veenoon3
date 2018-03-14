@@ -79,12 +79,14 @@
     int index = 0;
     int top = 250;
     
-    int leftRight = 100;
+    self._number = 16;
+    
+    int leftRight = ENGINEER_VIEW_LEFT;
     
     int cellWidth = 92;
     int cellHeight = 92;
-    int colNumber = 6;
-    int space = 25;
+    int colNumber = ENGINEER_VIEW_COLUMN_N;
+    int space = ENGINEER_VIEW_COLUMN_GAP;
     
     if ([self._electronicSysArray count] == 0) {
         int nameStart = 1;
@@ -163,7 +165,7 @@
     }
 }
 - (void) createBtnLabel:(UIButton*)sender dataDic:(NSMutableDictionary*) dataDic{
-    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(sender.frame.size.width - 20, 0, 20, 20)];
+    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(sender.frame.size.width/2 - 20, 0, 40, 20)];
     titleL.textAlignment = NSTextAlignmentCenter;
     titleL.backgroundColor = [UIColor clearColor];
     [sender addSubview:titleL];

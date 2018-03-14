@@ -40,16 +40,16 @@
     [self.view addSubview:icon];
     icon.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.5-80);
     
-    UIButton *login = [UIButton buttonWithColor:[UIColor whiteColor] selColor:[UIColor whiteColor]];
+    UIButton *login = [UIButton buttonWithColor:[UIColor whiteColor] selColor:RGB(1, 138, 182)];
     login.frame = CGRectMake(0, 0,260, 50);
     login.layer.cornerRadius = 10;
     login.layer.borderWidth = 2;
-    login.layer.borderColor = RGB(1, 138, 182).CGColor;
+    login.layer.borderColor = [UIColor whiteColor].CGColor;
     login.clipsToBounds = YES;
     [self.view addSubview:login];
     [login setTitle:@"登录" forState:UIControlStateNormal];
     [login setTitleColor:RGB(1, 138, 182) forState:UIControlStateNormal];
-    [login setTitleColor:RGB(1, 138, 182) forState:UIControlStateHighlighted];
+    [login setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     login.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     login.center = CGPointMake(SCREEN_WIDTH/2-150, CGRectGetMaxY(icon.frame)+80);
 

@@ -134,11 +134,11 @@
     subTL.textColor  = [UIColor whiteColor];
     subTL.text = @"OutPuts";
     
-    int colNumber = 8;
+    int colNumber = ENGINEER_VIEW_COLUMN_N;
     int index = 0;
     int cellWidth = 92;
     int cellHeight = 120;
-    int leftRight = 50;
+    int leftRight = ENGINEER_VIEW_LEFT;
     int space = 8;
     
     for (int i = 0; i < self._inputNumber; i++) {
