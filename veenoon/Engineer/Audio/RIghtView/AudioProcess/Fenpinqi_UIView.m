@@ -9,9 +9,14 @@
 #import "Fenpinqi_UIView.h"
 #import "veenoon-Swift.h"
 #import "SlideButton.h"
-@interface Fenpinqi_UIView () {
+
+
+@interface Fenpinqi_UIView ()<SlideButtonDelegate> {
     UILabel *gaotongL;
     UILabel *gaotongL2;
+    
+    SlideButton *btnHight;
+    SlideButton *btnLow;
 }
 @end
 
@@ -42,33 +47,28 @@
         addLabel.frame = CGRectMake(startX, startH+15, 120, 20);
         [self addSubview:addLabel];
         
-        addLabel = [[UILabel alloc] init];
-        addLabel.text = @"50Hz";
-        addLabel.font = [UIFont systemFontOfSize: 13];
-        addLabel.textColor = [UIColor whiteColor];
-        addLabel.frame = CGRectMake(startX-60, startH+115, 120, 20);
-        [self addSubview:addLabel];
-        
-        addLabel = [[UILabel alloc] init];
-        addLabel.text = @"250Hz";
-        addLabel.font = [UIFont systemFontOfSize: 13];
-        addLabel.textColor = [UIColor whiteColor];
-        addLabel.frame = CGRectMake(startX+80, startH+115, 120, 20);
-        [self addSubview:addLabel];
-        
-        SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(startX-33, startH+30, 120, 120)];
-        btn._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
-        btn._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
-        [btn enableValueSet:YES];
-        
-        [self addSubview:btn];
+
+        //50 - 250
+        btnHight = [[SlideButton alloc] initWithFrame:CGRectMake(startX-33,
+                                                                 CGRectGetMaxY(addLabel.frame),
+                                                                 120, 120)];
+        btnHight._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+        btnHight._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+        [btnHight enableValueSet:YES];
+        btnHight.delegate = self;
+        [self addSubview:btnHight];
         
         gaotongL = [[UILabel alloc] init];
-        gaotongL.text = @"100Hz";
+        gaotongL.text = @"50KHz";
         gaotongL.font = [UIFont systemFontOfSize: 13];
         gaotongL.textColor = [UIColor whiteColor];
-        gaotongL.frame = CGRectMake(startX+10, startH+75, 50, 20);
+        gaotongL.frame = CGRectMake(0, CGRectGetMaxY(btnHight.frame), 60, 20);
         [self addSubview:gaotongL];
+        gaotongL.textAlignment = NSTextAlignmentCenter;
+        gaotongL.layer.cornerRadius = 5;
+        gaotongL.backgroundColor = RGB(0, 89, 118);
+        gaotongL.center = CGPointMake(btnHight.center.x, gaotongL.center.y);
+        gaotongL.clipsToBounds = YES;
         
         int gap = 450;
         
@@ -79,34 +79,48 @@
         addLabel2.frame = CGRectMake(startX+gap, startH+15, 120, 20);
         [self addSubview:addLabel2];
         
-        addLabel2 = [[UILabel alloc] init];
-        addLabel2.text = @"50Hz";
-        addLabel2.font = [UIFont systemFontOfSize: 13];
-        addLabel2.textColor = [UIColor whiteColor];
-        addLabel2.frame = CGRectMake(startX-60+gap, startH+115, 120, 20);
-        [self addSubview:addLabel2];
-        
-        addLabel2 = [[UILabel alloc] init];
-        addLabel2.text = @"250Hz";
-        addLabel2.font = [UIFont systemFontOfSize: 13];
-        addLabel2.textColor = [UIColor whiteColor];
-        addLabel2.frame = CGRectMake(startX+80+gap, startH+115, 120, 20);
-        [self addSubview:addLabel2];
-        
-        SlideButton *btn2 = [[SlideButton alloc] initWithFrame:CGRectMake(startX-33+gap, startH+30, 120, 120)];
-        UIImage *image2 = [UIImage imageNamed:@"yinpinchuli_anniu.png"];
-        [btn2 changeButtonBackgroundImage:image2];
-        [self addSubview:btn2];
+      
+        //8 - 20
+        btnLow = [[SlideButton alloc] initWithFrame:CGRectMake(startX-33+gap,
+                                                               CGRectGetMaxY(addLabel2.frame),
+                                                               120, 120)];
+        btnLow._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+        btnLow._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+        [btnLow enableValueSet:YES];
+        [self addSubview:btnLow];
+        btnLow.delegate = self;
         
         gaotongL2 = [[UILabel alloc] init];
-        gaotongL2.text = @"100Hz";
+        gaotongL2.text = @"8KHz";
         gaotongL2.font = [UIFont systemFontOfSize: 13];
         gaotongL2.textColor = [UIColor whiteColor];
-        gaotongL2.frame = CGRectMake(startX+10+gap, startH+75, 50, 20);
+        gaotongL2.frame = CGRectMake(0, CGRectGetMaxY(btnLow.frame), 60, 20);
         [self addSubview:gaotongL2];
+        gaotongL2.textAlignment = NSTextAlignmentCenter;
+        gaotongL2.layer.cornerRadius = 5;
+        gaotongL2.backgroundColor = RGB(0, 89, 118);
+        gaotongL2.center = CGPointMake(btnLow.center.x, gaotongL2.center.y);
+        gaotongL2.clipsToBounds = YES;
+        
+        
     }
     
     return self;
+}
+
+- (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
+    
+    if(slbtn == btnHight)
+    {
+        int k = (value *(250-50))+50;
+        gaotongL.text = [NSString stringWithFormat:@"%dKHz", k];
+    }
+    else
+        if(slbtn == btnLow)
+        {
+            int k = (value *(20-8))+8;
+            gaotongL2.text = [NSString stringWithFormat:@"%dKHz", k];
+        }
 }
 
 @end

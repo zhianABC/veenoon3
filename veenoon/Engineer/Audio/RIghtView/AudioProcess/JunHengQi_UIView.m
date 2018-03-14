@@ -10,9 +10,11 @@
 #import "veenoon-Swift.h"
 #import "SlideButton.h"
 
-@interface JunHengQi_UIView () {
+@interface JunHengQi_UIView ()<SlideButtonDelegate> {
     UILabel *gaotongL;
     UILabel *gaotongL2;
+    
+    SlideButton *btnJH;
 }
 @end
 
@@ -35,37 +37,56 @@
         lm.backgroundColor = [UIColor clearColor];
         [self addSubview:lm];
         
-        int startH = CGRectGetMaxY(lm.frame) + 30;
+        int startH = CGRectGetMaxY(lm.frame);
         int startX = 420;
         
-        UILabel *addLabel = [[UILabel alloc] init];
-        addLabel.text = @"-12dB";
-        addLabel.font = [UIFont systemFontOfSize: 13];
-        addLabel.textColor = [UIColor whiteColor];
-        addLabel.frame = CGRectMake(startX-60, startH+115, 120, 20);
-        [self addSubview:addLabel];
+//        UILabel *addLabel = [[UILabel alloc] init];
+//        addLabel.text = @"-12dB";
+//        addLabel.font = [UIFont systemFontOfSize: 13];
+//        addLabel.textColor = [UIColor whiteColor];
+//        addLabel.frame = CGRectMake(startX-60, startH+115, 120, 20);
+//        [self addSubview:addLabel];
+//
+//        addLabel = [[UILabel alloc] init];
+//        addLabel.text = @"12dB";
+//        addLabel.font = [UIFont systemFontOfSize: 13];
+//        addLabel.textColor = [UIColor whiteColor];
+//        addLabel.frame = CGRectMake(startX+80, startH+115, 120, 20);
+//        [self addSubview:addLabel];
         
-        addLabel = [[UILabel alloc] init];
-        addLabel.text = @"12dB";
-        addLabel.font = [UIFont systemFontOfSize: 13];
-        addLabel.textColor = [UIColor whiteColor];
-        addLabel.frame = CGRectMake(startX+80, startH+115, 120, 20);
-        [self addSubview:addLabel];
-        
-        SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(startX-33, startH+30, 120, 120)];
-        UIImage *image = [UIImage imageNamed:@"yinpinchuli_anniu.png"];
-        [btn changeButtonBackgroundImage:image];
-        [self addSubview:btn];
+        btnJH = [[SlideButton alloc] initWithFrame:CGRectMake(startX-33,
+                                                                 startH+30,
+                                                                 120, 120)];
+        btnJH._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+        btnJH._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+        [btnJH enableValueSet:YES];
+        btnJH.delegate = self;
+        [self addSubview:btnJH];
         
         gaotongL = [[UILabel alloc] init];
-        gaotongL.text = @"10dB";
+        gaotongL.text = @"-12dB";
         gaotongL.font = [UIFont systemFontOfSize: 13];
         gaotongL.textColor = [UIColor whiteColor];
-        gaotongL.frame = CGRectMake(startX+10, startH+75, 50, 20);
+        gaotongL.frame = CGRectMake(0, CGRectGetMaxY(btnJH.frame), 60, 20);
         [self addSubview:gaotongL];
+        gaotongL.textAlignment = NSTextAlignmentCenter;
+        gaotongL.layer.cornerRadius = 5;
+        gaotongL.backgroundColor = RGB(0, 89, 118);
+        gaotongL.center = CGPointMake(btnJH.center.x, gaotongL.center.y);
+        gaotongL.clipsToBounds = YES;
+        
     }
     
     return self;
 }
+
+- (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
+    
+    int k = (value *24)-12;
+    gaotongL.text = [NSString stringWithFormat:@"%dB", k];
+    
+}
+
+
 
 @end
