@@ -70,8 +70,6 @@
         icon.layer.contentsGravity = kCAGravityResizeAspect;
         
         
-        
-        
         _chooseBg = [[UIView alloc] initWithFrame:CGRectMake(0, 101, frame.size.width, 220)];
         _chooseBg.backgroundColor = self.backgroundColor;
         

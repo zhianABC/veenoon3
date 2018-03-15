@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PlayerSettingsPannel : UIView
-
+@interface PlayerSettingsPannel : UIView {
+    
+}
+@property (nonatomic, assign) BOOL _isAllowedClose;
 @end

@@ -49,14 +49,14 @@
         UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 100)];
         [self addSubview:headView];
         
-        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(15, 30, 40, 30)];
+        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(15, 25, 40, 30)];
         titleL.backgroundColor = [UIColor clearColor];
         [self addSubview:titleL];
         titleL.font = [UIFont systemFontOfSize:13];
         titleL.textColor  = [UIColor colorWithWhite:1.0 alpha:0.8];
         titleL.text = @"IP地址";
         
-        ipTextField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(titleL.frame)+30, 30, self.bounds.size.width - 35 - CGRectGetMaxX(titleL.frame), 30)];
+        ipTextField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(titleL.frame)+30, 25, self.bounds.size.width - 35 - CGRectGetMaxX(titleL.frame), 30)];
         ipTextField.delegate = self;
         ipTextField.backgroundColor = [UIColor clearColor];
         ipTextField.returnKeyType = UIReturnKeyDone;
@@ -68,10 +68,13 @@
         ipTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
         [self addSubview:ipTextField];
         
-        UILabel* line = [[UILabel alloc] initWithFrame:CGRectMake(0, 100, frame.size.width, 1)];
+        UILabel* line = [[UILabel alloc] initWithFrame:CGRectMake(0, 60, frame.size.width, 1)];
         line.backgroundColor = RGB(1, 138, 182);
         [self addSubview:line];
         
+        line = [[UILabel alloc] initWithFrame:CGRectMake(0, 100, frame.size.width, 1)];
+        line.backgroundColor = RGB(1, 138, 182);
+        [self addSubview:line];
         
         
         titleL = [[UILabel alloc] initWithFrame:CGRectMake(40, 70, frame.size.width, 20)];
