@@ -4,9 +4,9 @@
 <array>
 	<dict>
 		<key>id</key>
-		<integer>1</integer>
+		<integer>2</integer>
 		<key>title</key>
-		<string>电源插件</string>
+		<string>音频插件</string>
 		<key>items</key>
 		<array>
 			<dict>
@@ -33,15 +33,6 @@
 				<key>icon_sel</key>
 				<string>dy_06.png</string>
 			</dict>
-		</array>
-	</dict>
-	<dict>
-		<key>id</key>
-		<integer>2</integer>
-		<key>title</key>
-		<string>音频插件</string>
-		<key>items</key>
-		<array>
 			<dict>
 				<key>id</key>
 				<integer>201</integer>
@@ -147,6 +138,30 @@
 		<string>视频插件</string>
 		<key>items</key>
 		<array>
+			<dict>
+				<key>id</key>
+				<integer>101</integer>
+				<key>name</key>
+				<string>8路电源管理</string>
+				<key>type</key>
+				<string>电源插件</string>
+				<key>icon</key>
+				<string>dy_06.png</string>
+				<key>icon_sel</key>
+				<string>dy_06.png</string>
+			</dict>
+			<dict>
+				<key>id</key>
+				<integer>102</integer>
+				<key>name</key>
+				<string>16路电源管理</string>
+				<key>type</key>
+				<string>电源插件</string>
+				<key>icon</key>
+				<string>dy_06.png</string>
+				<key>icon_sel</key>
+				<string>dy_06.png</string>
+			</dict>
 			<dict>
 				<key>id</key>
 				<integer>301</integer>
@@ -338,18 +353,6 @@
 			</dict>
 			<dict>
 				<key>id</key>
-				<integer>407</integer>
-				<key>name</key>
-				<string>净水</string>
-				<key>type</key>
-				<string>环境插件</string>
-				<key>icon</key>
-				<string>hj_icon_8.png</string>
-				<key>icon_sel</key>
-				<string>hj_icon_8.png</string>
-			</dict>
-			<dict>
-				<key>id</key>
 				<integer>408</integer>
 				<key>name</key>
 				<string>加湿器</string>
@@ -359,18 +362,6 @@
 				<string>hj_icon_9.png</string>
 				<key>icon_sel</key>
 				<string>hj_icon_9.png</string>
-			</dict>
-			<dict>
-				<key>id</key>
-				<integer>409</integer>
-				<key>name</key>
-				<string>门禁</string>
-				<key>type</key>
-				<string>环境插件</string>
-				<key>icon</key>
-				<string>hj_icon_10.png</string>
-				<key>icon_sel</key>
-				<string>hj_icon_10.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
