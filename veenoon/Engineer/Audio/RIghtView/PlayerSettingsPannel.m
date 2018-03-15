@@ -8,12 +8,12 @@
 
 #import "PlayerSettingsPannel.h"
 #import "ComSettingView.h"
-#import "CustomPickerView.h"
+#import "CenterCustomerPickerView.h"
 #import "UIButton+Color.h"
 
 @interface PlayerSettingsPannel () <UITableViewDelegate,
 UITableViewDataSource, UITextFieldDelegate,
-CustomPickerViewDelegate>
+CenterCustomerPickerViewDelegate>
 {
     UIButton *btnCom;
     UIButton *btnIR;
@@ -28,7 +28,7 @@ CustomPickerViewDelegate>
     
     UIButton *_btnSave;
     
-    CustomPickerView *_picker;
+    CenterCustomerPickerView *_picker;
     
     int _selRow1;
     int _selRow2;
@@ -61,7 +61,7 @@ CustomPickerViewDelegate>
 
 @synthesize _selectedBrand;
 @synthesize _selectedType;
-
+@synthesize _isAllowedClose;
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -114,14 +114,6 @@ CustomPickerViewDelegate>
                                 frame.size.width,
                                 frame.size.height - CGRectGetMaxY(header.frame));
         
-        _btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
-        _btnSave.frame = CGRectMake(frame.size.width-90, 20+CGRectGetMaxY(header.frame), 70, 40);
-        [_btnSave setTitle:@"保存" forState:UIControlStateNormal];
-        [self addSubview:_btnSave];
-        [_btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        _btnSave.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -30);
-        _btnSave.titleLabel.font = [UIFont systemFontOfSize:14];
-        
         _curIndex = -1;
         
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,
@@ -146,10 +138,10 @@ CustomPickerViewDelegate>
         _com._isAllowedClose = NO;
         
         
-        _picker = [[CustomPickerView alloc]
-                                          initWithFrame:CGRectMake(frame.size.width/2-100, 43, 200, 100) withGrayOrLight:@"picker_player.png"];
+        _picker = [[CenterCustomerPickerView alloc]
+                                          initWithFrame:CGRectMake(frame.size.width/2-100, 43, 200, 100) withGrayOrLight:@"light"];
         
-        
+        [_picker removeArray];
         _picker._pickerDataArray = @[@{@"values":@[@"1", @"2", @"3"]}];
         
         
@@ -170,9 +162,35 @@ CustomPickerViewDelegate>
         
         [self initData];
         
+        UISwipeGestureRecognizer *swip = [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                                                   action:@selector(closeComSetting)];
+        swip.direction = UISwipeGestureRecognizerDirectionUp;
+        
+        
+        [self addGestureRecognizer:swip];
+        
+        self._isAllowedClose = YES;
+        
     }
     
     return self;
+}
+
+- (void) closeComSetting{
+    
+    if(_isAllowedClose)
+    {
+        
+        CGRect rc = self.frame;
+        rc.origin.y = 0-rc.size.height;
+        
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             self.frame = rc;
+                         } completion:^(BOOL finished) {
+                             [self removeFromSuperview];
+                         }];
+    }
 }
 
 - (void)createFooter{
@@ -337,8 +355,6 @@ CustomPickerViewDelegate>
 }
 
 - (void) didConfirmPickerValue:(NSString*) pickerValue{
-    
-    
     
     _curIndex = -1;
     

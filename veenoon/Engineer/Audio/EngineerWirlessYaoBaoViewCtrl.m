@@ -37,6 +37,8 @@
     
     BOOL isSettings;
     UIButton *okBtn;
+    
+    NSMutableArray *signalArray;
 }
 @end
 
@@ -82,6 +84,8 @@
     _buttonChannelArray = [[NSMutableArray alloc] init];
     _buttonNumberArray = [[NSMutableArray alloc] init];
     _selectedBtnArray = [[NSMutableArray alloc] init];
+    signalArray = [[NSMutableArray alloc] init];
+    
     [self inintData];
     
     [super setTitleAndImage:@"audio_corner_huatong.png" withTitle:@"无线手持腰包系统"];
@@ -145,15 +149,12 @@
     _zengyiSlider.center = CGPointMake(SCREEN_WIDTH - 150, SCREEN_HEIGHT/2);
     
     int index = 0;
-    int top = 250;
-    if (self._number == 8) {
-        top = 350;
-    }
+    int top = 200;
     
     int leftRight = ENGINEER_VIEW_LEFT;
     
-    int cellWidth = 92;
-    int cellHeight = 92;
+    int cellWidth = 120;
+    int cellHeight = 240;
     int colNumber = ENGINEER_VIEW_COLUMN_N;
     int space = ENGINEER_VIEW_COLUMN_GAP;
     
@@ -174,7 +175,14 @@
             int startX = col*cellWidth+col*space+leftRight;
             int startY = row*cellHeight+space*row+top;
             
-            SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(startX, startY, 120, 120)];
+            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(startX, startY, 120, 240)];
+            view.userInteractionEnabled = YES;
+            view.backgroundColor = [UIColor clearColor];
+            [self.view addSubview:view];
+            
+            SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(0, 0, 120, 120)];
+            [view addSubview:btn];
+            
             
             UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
             tapGesture.cancelsTouchesInView =  NO;
@@ -183,12 +191,11 @@
             [btn addGestureRecognizer:tapGesture];
             
             btn.tag = i;
-            [self.view addSubview:btn];
             
             UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 - 30, 0, 60, 20)];
             titleL.textAlignment = NSTextAlignmentCenter;
             titleL.backgroundColor = [UIColor clearColor];
-            [btn addSubview:titleL];
+            [view addSubview:titleL];
             titleL.font = [UIFont boldSystemFontOfSize:11];
             titleL.textColor  = [UIColor whiteColor];
             titleL.text = [NSString stringWithFormat:@"0%d",i+1];
@@ -197,17 +204,17 @@
             titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 -50, btn.frame.size.height - 20, 100, 20)];
             titleL.textAlignment = NSTextAlignmentCenter;
             titleL.backgroundColor = [UIColor clearColor];
-            [btn addSubview:titleL];
+            [view addSubview:titleL];
             titleL.font = [UIFont boldSystemFontOfSize:12];
             titleL.textColor  = [UIColor whiteColor];
             titleL.textAlignment = NSTextAlignmentCenter;
             titleL.text = @"Channel";
             [_buttonChannelArray addObject:titleL];
             
-            UILongPressGestureRecognizer *longPress2 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed2:)];
-            
-            [btn addGestureRecognizer:longPress2];
-            
+            UIView *signalView = [[UIView alloc] initWithFrame:CGRectMake(0, 120, 120, 120)];
+            [view addSubview:signalView];
+            signalView.alpha=0.8;
+            [signalArray addObject:signalView];
             
             UIImage *image;
             NSString *huatongType = [dataDic objectForKey:@"type"];
@@ -218,47 +225,42 @@
             }
             
             UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-            imageView.backgroundColor = DARK_BLUE_COLOR;
-            imageView.frame = CGRectMake(btn.frame.origin.x+10, btn.frame.origin.y+10, 100, 100);
-            imageView.layer.cornerRadius = 10;
-            imageView.layer.borderWidth = 2;
-            imageView.layer.borderColor = RGB(0, 89, 118).CGColor;
-            imageView.clipsToBounds = YES;
+            imageView.center = CGPointMake(40, 40);
+            [signalView addSubview:imageView];
             
-            imageView.tag = index;
-            imageView.userInteractionEnabled=YES;
-            imageView.layer.contentsGravity = kCAGravityCenter;
-            [self.view addSubview:imageView];
             
             BatteryView *batter = [[BatteryView alloc] initWithFrame:CGRectZero];
-            batter.normalColor = YELLOW_COLOR;
-            [imageView addSubview:batter];
-            batter.center = CGPointMake(60, 18);
+            batter.normalColor = [UIColor whiteColor];
+            [signalView addSubview:batter];
+            batter.center = CGPointMake(60, 20);
             
             NSString *dianliangStr = [dataDic objectForKey:@"dianliang"];
             int dianliang = [dianliangStr intValue];
             double dianliangDouble = 1.0f * dianliang / 100;
             [batter setBatteryValue:dianliangDouble];
             
-            SignalView *signal = [[SignalView alloc] initWithFrameAndStep:CGRectMake(70, 50, 30, 20) step:2];
-            [imageView addSubview:signal];
-            [signal setLightColor:YELLOW_COLOR];//SINGAL_COLOR
+            SignalView *signal = [[SignalView alloc] initWithFrameAndStep:CGRectMake(70, 40, 30, 20) step:2];
+            [signalView addSubview:signal];
+            [signal setLightColor:[UIColor whiteColor]];//
             [signal setGrayColor:[UIColor colorWithWhite:1.0 alpha:0.6]];
             NSString *sinalString = [dataDic objectForKey:@"signal"];
             int signalInt = [sinalString intValue];
             [signal setSignalValue:signalInt];
             
-            titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, btn.frame.size.width-40, btn.frame.size.width-10, 20)];
+            titleL = [[UILabel alloc] initWithFrame:CGRectMake(50, 45, 20, 20)];
             titleL.backgroundColor = [UIColor clearColor];
-            [imageView addSubview:titleL];
+            [signalView addSubview:titleL];
             titleL.font = [UIFont boldSystemFontOfSize:12];
+            titleL.textColor  = [UIColor whiteColor];
             titleL.textAlignment = NSTextAlignmentCenter;
-            titleL.textColor  = YELLOW_COLOR;
-            titleL.text = [dataDic objectForKey:@"name"];
-            imageView.hidden = YES;
+            NSString *title = @"优";
+            if (3 <= signalInt < 5) {
+                title = @"良";
+            } else if (signalInt < 3) {
+                title = @"差";
+            }
             
-            UILongPressGestureRecognizer *longPress3 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed3:)];
-            [imageView addGestureRecognizer:longPress3];
+            titleL.text = title;
             
             [_imageViewArray addObject:imageView];
             [_buttonArray addObject:btn];
@@ -276,7 +278,7 @@
 }
 
 -(void)handleTapGesture:(UIGestureRecognizer*)gestureRecognizer {
-    int tag = gestureRecognizer.view.tag;
+    int tag = (int) gestureRecognizer.view.tag;
     
     SlideButton *btn;
     for (SlideButton *button in _selectedBtnArray) {
@@ -295,6 +297,9 @@
         
         UILabel *numberL = [_buttonNumberArray objectAtIndex:tag];
         numberL.textColor = YELLOW_COLOR;
+        
+        UIView *signalView = [signalArray objectAtIndex:tag];
+        [signalView setAlpha:1];
     } else {
         // remove it
         [_selectedBtnArray removeObject:btn];
@@ -303,48 +308,13 @@
         chanelL.textColor = [UIColor whiteColor];
         
         UILabel *numberL = [_buttonNumberArray objectAtIndex:tag];
-        numberL.textColor = [UIColor whiteColor];;
-    }
-}
-- (void) longPressed3:(id)sender{
-    
-    UILongPressGestureRecognizer *press = (UILongPressGestureRecognizer *)sender;
-    if (press.state == UIGestureRecognizerStateEnded) {
-        // no need anything here
-        return;
-    } else if (press.state == UIGestureRecognizerStateBegan) {
-        int index = (int) press.view.tag;
-        UIButton *button = [_buttonArray objectAtIndex:index];
-        UIImageView *imageView = [_imageViewArray objectAtIndex:index];
-        if (button.isHidden) {
-            button.hidden = NO;
-            imageView.hidden = YES;
-        } else {
-            button.hidden = YES;
-            imageView.hidden = NO;
-        }
+        numberL.textColor = [UIColor whiteColor];
+        
+        UIView *signalView = [signalArray objectAtIndex:tag];
+        [signalView setAlpha:0.8];
     }
 }
 
-- (void) longPressed2:(id)sender{
-    
-    UILongPressGestureRecognizer *press = (UILongPressGestureRecognizer *)sender;
-    if (press.state == UIGestureRecognizerStateEnded) {
-        // no need anything here
-        return;
-    } else if (press.state == UIGestureRecognizerStateBegan) {
-        int index = (int) press.view.tag;
-        UIButton *button = [_buttonArray objectAtIndex:index];
-        UIImageView *imageView = [_imageViewArray objectAtIndex:index];
-        if (button.isHidden) {
-            button.hidden = NO;
-            imageView.hidden = YES;
-        } else {
-            button.hidden = YES;
-            imageView.hidden = NO;
-        }
-    }
-}
 - (void) scenarioAction:(id)sender{
     
 }

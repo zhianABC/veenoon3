@@ -13,8 +13,6 @@
 @interface CenterCustomerPickerView () {
     UIPickerView    *_myPickerView;
     
-    NSMutableDictionary *_values;
-    
     BOOL            _isShowing;
     
     NSInteger       _comSelected;
@@ -40,6 +38,7 @@
 @synthesize _rowNormalColor;
 @synthesize fontSize;
 @synthesize _unitString;
+@synthesize _values;
 
 - (id)initWithFrame:(CGRect)frame withGrayOrLight:(NSString*)grayOrLight {
     if (self = [super initWithFrame:frame]) {

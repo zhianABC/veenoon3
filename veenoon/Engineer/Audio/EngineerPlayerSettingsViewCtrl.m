@@ -9,7 +9,7 @@
 #import "EngineerPlayerSettingsViewCtrl.h"
 #import "UIButton+Color.h"
 #import "CustomPickerView.h"
-#import "PlayerSettingsPannel.h"
+#import "PlayerRightView.h"
 
 @interface EngineerPlayerSettingsViewCtrl () <CustomPickerViewDelegate>{
     
@@ -30,7 +30,7 @@
     
     BOOL isSettings;
     
-    PlayerSettingsPannel *_psv;
+    PlayerRightView *_psv;
     UIButton *okBtn;
 }
 @end
@@ -229,7 +229,7 @@
 
 - (void) okAction:(id)sender{
     if (!isSettings) {
-        _psv = [[PlayerSettingsPannel alloc]
+        _psv = [[PlayerRightView alloc]
                 initWithFrame:CGRectMake(SCREEN_WIDTH-300,
                                          64, 300, SCREEN_HEIGHT-114)];
         [self.view addSubview:_psv];

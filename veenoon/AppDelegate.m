@@ -30,7 +30,7 @@
     [session setActive:YES error:nil];
     [session setCategory:AVAudioSessionCategoryPlayback error:nil];
     
-     WellcomeViewController *wellcome = [[WellcomeViewController alloc] init];
+     EngineerPresetScenarioViewCtrl *wellcome = [[EngineerPresetScenarioViewCtrl alloc] init];
     _naviRoot = [[CMNavigationController alloc] initWithRootViewController:wellcome];
     _naviRoot.navigationBarHidden = YES;
     self.window.rootViewController = _naviRoot;
