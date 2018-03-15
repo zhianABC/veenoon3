@@ -7,24 +7,25 @@
 //
 
 #import "WirlessYaoBaoViewSettingsView.h"
-#import "CustomPickerView.h"
+#import "CenterCustomerPickerView.h"
 #import "Groups2PickerView.h"
 #import "UIButton+Color.h"
 #import "ComSettingView.h"
 
 
-@interface WirlessYaoBaoViewSettingsView () <UITableViewDelegate, UITableViewDataSource, CustomPickerViewDelegate, Groups2PickerViewDelegate>
+@interface WirlessYaoBaoViewSettingsView () <UITableViewDelegate, UITableViewDataSource, CenterCustomerPickerViewDelegate, Groups2PickerViewDelegate, UITextFieldDelegate>
 {
     UITableView *_tableView;
     int _curIndex;
     UIButton *_btnSave;
     
-    CustomPickerView *_picker;
+    CenterCustomerPickerView *_picker;
     Groups2PickerView *_tpicker;
     
     UIView *_footerView;
     ComSettingView *_com;
 
+    UITextField *ipTextField;
 }
 @property (nonatomic, strong) NSMutableArray *_rows;
 @property (nonatomic, strong) NSMutableDictionary *_map;
@@ -48,22 +49,35 @@
     {
         self.backgroundColor = RGB(0, 89, 118);
 
-        _btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
-        _btnSave.frame = CGRectMake(frame.size.width-90,
-                                    20,
-                                    70, 40);
-        [_btnSave setTitle:@"保存" forState:UIControlStateNormal];
-        [self addSubview:_btnSave];
-        [_btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        _btnSave.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -30);
-        _btnSave.titleLabel.font = [UIFont systemFontOfSize:14];
+        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(15, 25, 40, 30)];
+        titleL.backgroundColor = [UIColor clearColor];
+        [self addSubview:titleL];
+        titleL.font = [UIFont systemFontOfSize:13];
+        titleL.textColor  = [UIColor colorWithWhite:1.0 alpha:0.8];
+        titleL.text = @"IP地址";
+        
+        ipTextField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(titleL.frame)+30, 25, self.bounds.size.width - 35 - CGRectGetMaxX(titleL.frame), 30)];
+        ipTextField.delegate = self;
+        ipTextField.backgroundColor = [UIColor clearColor];
+        ipTextField.returnKeyType = UIReturnKeyDone;
+        ipTextField.text = @"192.168.1.100";
+        ipTextField.textColor = [UIColor whiteColor];
+        ipTextField.borderStyle = UITextBorderStyleRoundedRect;
+        ipTextField.textAlignment = NSTextAlignmentRight;
+        ipTextField.font = [UIFont systemFontOfSize:13];
+        ipTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        [self addSubview:ipTextField];
+        
+        UILabel* line = [[UILabel alloc] initWithFrame:CGRectMake(0, 60, frame.size.width, 1)];
+        line.backgroundColor = RGB(1, 138, 182);
+        [self addSubview:line];
         
         _curIndex = -1;
         
-        _picker = [[CustomPickerView alloc]
+        _picker = [[CenterCustomerPickerView alloc]
                    initWithFrame:CGRectMake(frame.size.width/2-100, 43, 200, 100) withGrayOrLight:@"picker_player.png"];
 
-        
+        [_picker removeArray];
         _picker._selectColor = YELLOW_COLOR;
         _picker._rowNormalColor = [UIColor whiteColor];
         _picker.delegate_ = self;
@@ -109,7 +123,7 @@
         [self initData];
         
         
-        UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 100)];
+        UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 30)];
         [self addSubview:headView];
         
         UISwipeGestureRecognizer *swip = [[UISwipeGestureRecognizer alloc] initWithTarget:self
@@ -410,15 +424,21 @@
     
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    
+    //_curIndex = (int)textField.tag;
+    
 }
-*/
 
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    
+}
 
-
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    
+    [textField resignFirstResponder];
+    
+    return YES;
+}
 
 @end

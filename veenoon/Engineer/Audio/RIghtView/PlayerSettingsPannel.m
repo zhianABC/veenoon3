@@ -354,28 +354,6 @@ CenterCustomerPickerViewDelegate>
     
 }
 
-- (void) didScrollPickerValue:(NSString*) pickerValue {
-    if(_picker.tag == 1)
-    {
-        _selRow1 = [[_picker._values objectForKey:@"row"] intValue];
-    }
-    else if(_picker.tag == 2)
-    {
-        _selRow2 = [[_picker._values objectForKey:@"row"] intValue];
-        _selRow3 = 0;
-        self._selectedBrand = [_picker._values objectForKey:@0];
-    }
-    else if(_picker.tag == 3)
-    {
-        _selRow3 = [[_picker._values objectForKey:@"row"] intValue];
-        self._selectedType = [_picker._values objectForKey:@0];
-    }
-    _curIndex = -1;
-    
-    _tableView.scrollEnabled = YES;
-    [_tableView reloadData];
-}
-
 - (void) didConfirmPickerValue:(NSString*) pickerValue{
     
     _curIndex = -1;

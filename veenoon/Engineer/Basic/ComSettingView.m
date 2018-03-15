@@ -135,15 +135,6 @@
     _secs.text = v;
 }
 
-- (void) didScrollPickerValue:(NSString *)pickerValue {
-     _secs.text = pickerValue;
-    
-    if([_chooseBg superview])
-    {
-        [_chooseBg removeFromSuperview];
-    }
-}
-
 - (void) chooseSecs:(UIButton*)sender{
     
     if([_chooseBg superview])

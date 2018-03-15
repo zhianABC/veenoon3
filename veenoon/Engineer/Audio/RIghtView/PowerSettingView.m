@@ -200,15 +200,6 @@
                      }];
     
 }
-- (void) didScrollPickerValue:(NSString *)pickerValue {
-    
-    _secs.text = pickerValue;
-    
-    if([_chooseBg superview])
-    {
-        [_chooseBg removeFromSuperview];
-    }
-}
     
 - (void) didPickerValue:(NSDictionary*)values{
     
