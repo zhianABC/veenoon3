@@ -9,21 +9,22 @@
 #import "PowerSettingView.h"
 #import "JHSlideView.h"
 #import "CheckButton.h"
-#import "CustomPickerView.h"
+#import "CenterCustomerPickerView.h"
 #import "ComSettingView.h"
 
-@interface PowerSettingView () <CustomPickerViewDelegate>
+@interface PowerSettingView () <CenterCustomerPickerViewDelegate, UITextFieldDelegate>
 {
     UILabel *_secs;
     
     UIScrollView *_sliders;
     
-    UIButton *_btnSave;
     CheckButton *_btnCheck;
     
     UIView *_chooseBg;
     
     ComSettingView *_com;
+    
+    UITextField *ipTextField;
 }
 @end
 
@@ -48,27 +49,37 @@
         UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 100)];
         [self addSubview:headView];
         
+        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(15, 30, 40, 30)];
+        titleL.backgroundColor = [UIColor clearColor];
+        [self addSubview:titleL];
+        titleL.font = [UIFont systemFontOfSize:13];
+        titleL.textColor  = [UIColor colorWithWhite:1.0 alpha:0.8];
+        titleL.text = @"IP地址";
         
-        _btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
-        _btnSave.frame = CGRectMake(frame.size.width-90, 20, 70, 40);
-        [_btnSave setTitle:@"保存" forState:UIControlStateNormal];
-        [self addSubview:_btnSave];
-        [_btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        _btnSave.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -30);
-        _btnSave.titleLabel.font = [UIFont systemFontOfSize:14];
+        ipTextField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(titleL.frame)+30, 30, self.bounds.size.width - 35 - CGRectGetMaxX(titleL.frame), 30)];
+        ipTextField.delegate = self;
+        ipTextField.backgroundColor = [UIColor clearColor];
+        ipTextField.returnKeyType = UIReturnKeyDone;
+        ipTextField.text = @"192.168.1.100";
+        ipTextField.textColor = [UIColor whiteColor];
+        ipTextField.borderStyle = UITextBorderStyleRoundedRect;
+        ipTextField.textAlignment = NSTextAlignmentRight;
+        ipTextField.font = [UIFont systemFontOfSize:13];
+        ipTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        [self addSubview:ipTextField];
         
         UILabel* line = [[UILabel alloc] initWithFrame:CGRectMake(0, 100, frame.size.width, 1)];
         line.backgroundColor = RGB(1, 138, 182);
         [self addSubview:line];
         
-        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(40, 70, frame.size.width, 20)];
+        
+        
+        titleL = [[UILabel alloc] initWithFrame:CGRectMake(40, 70, frame.size.width, 20)];
         titleL.backgroundColor = [UIColor clearColor];
         [self addSubview:titleL];
         titleL.font = [UIFont systemFontOfSize:13];
         titleL.textColor  = [UIColor colorWithWhite:1.0 alpha:0.8];
         titleL.text = @"开机通道切换时间";
-        
-        
         
         
         _secs = [[UILabel alloc] initWithFrame:CGRectMake(15, 70, frame.size.width-50, 20)];
@@ -122,9 +133,9 @@
         _chooseBg = [[UIView alloc] initWithFrame:CGRectMake(0, 101, frame.size.width, 220)];
         _chooseBg.backgroundColor = self.backgroundColor;
         
-        CustomPickerView *levelSetting = [[CustomPickerView alloc]
-                                          initWithFrame:CGRectMake(0, 0, self.frame.size.width, 200) withGrayOrLight:@"gray"];
-        
+        CenterCustomerPickerView *levelSetting = [[CenterCustomerPickerView alloc]
+                                          initWithFrame:CGRectMake(0, 0, self.frame.size.width, 200) withGrayOrLight:@"light"];
+        [levelSetting removeArray];
         
         NSMutableArray *arr = [NSMutableArray array];
         for(int i = 1; i< 181; i++)
@@ -186,11 +197,19 @@
                      }];
     
 }
-
+- (void) didScrollPickerValue:(NSString *)pickerValue {
+    
+    _secs.text = pickerValue;
+    
+    if([_chooseBg superview])
+    {
+        [_chooseBg removeFromSuperview];
+    }
+}
+    
 - (void) didPickerValue:(NSDictionary*)values{
     
-    NSString *v = [values objectForKey:@0];
-    _secs.text = v;
+    
 }
 
 - (void) chooseSecs:(UIButton*)sender{
@@ -293,6 +312,23 @@
     }
     
     _sliders.contentSize = CGSizeMake(_sliders.frame.size.width, yy);
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    
+    //_curIndex = (int)textField.tag;
+    
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    
+    [textField resignFirstResponder];
+    
+    return YES;
 }
 
 @end

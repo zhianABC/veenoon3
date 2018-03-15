@@ -21,6 +21,8 @@
     UIButton *okBtn;
     
     BOOL isSettings;
+    
+    NSMutableArray *lableArray;
 }
 @end
 
@@ -30,6 +32,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     isSettings = NO;
+    
+    lableArray = [[NSMutableArray alloc] init];
     
     [super setTitleAndImage:@"audio_corner_dianyuanguanli.png" withTitle:@"电源实时器"];
     
@@ -77,7 +81,7 @@
     [self.view addSubview:_selectSysBtn];
     
     int index = 0;
-    int top = 250;
+    int top = ENGINEER_VIEW_COMPONENT_TOP;
     
     self._number = 16;
     
@@ -86,7 +90,7 @@
     int cellWidth = 92;
     int cellHeight = 92;
     int colNumber = ENGINEER_VIEW_COLUMN_N;
-    int space = ENGINEER_VIEW_COLUMN_GAP;
+    int space = ENGINEER_VIEW_COLUMN_GAP*3;
     
     if ([self._electronicSysArray count] == 0) {
         int nameStart = 1;
@@ -165,23 +169,17 @@
     }
 }
 - (void) createBtnLabel:(UIButton*)sender dataDic:(NSMutableDictionary*) dataDic{
-    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(sender.frame.size.width/2 - 20, 0, 40, 20)];
+    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, sender.frame.size.width, 20)];
     titleL.textAlignment = NSTextAlignmentCenter;
     titleL.backgroundColor = [UIColor clearColor];
     [sender addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:11];
     titleL.textColor  = [UIColor whiteColor];
-    titleL.text = [dataDic objectForKey:@"name"];
     
-    titleL = [[UILabel alloc] initWithFrame:CGRectMake(sender.frame.size.width/2 -40, sender.frame.size.height - 20, 80, 20)];
-    titleL.textAlignment = NSTextAlignmentCenter;
-    titleL.backgroundColor = [UIColor clearColor];
-    [sender addSubview:titleL];
-    titleL.font = [UIFont boldSystemFontOfSize:12];
-    titleL.textColor  = [UIColor whiteColor];
-    titleL.textAlignment = NSTextAlignmentCenter;
-    titleL.text = @"Channel";
+    NSString *title = [@"Channel  " stringByAppendingString: [dataDic objectForKey:@"name"]];
+    titleL.text = title;
     
+    [lableArray addObject:titleL];
 }
 
 - (void) sysSelectAction:(id)sender{
@@ -215,15 +213,20 @@
     UIButton *btn = (UIButton*) sender;
     int index = (int) btn.tag;
     
+    UILabel *titleL = [lableArray objectAtIndex:index];
+    
     NSMutableDictionary *dic = [self._electronicSysArray objectAtIndex:index];
     
     NSString *status = [dic objectForKey:@"status"];
     if ([status isEqualToString:@"ON"]) {
         [btn setImage:[UIImage imageNamed:@"dianyuanshishiqi_n.png"] forState:UIControlStateNormal];
         [dic setObject:@"OFF" forKey:@"status"];
+        [titleL setTextColor:[UIColor whiteColor]];
     } else {
         [btn setImage:[UIImage imageNamed:@"dianyuanshishiqi_s.png"] forState:UIControlStateNormal];
         [dic setObject:@"ON" forKey:@"status"];
+        
+        [titleL setTextColor:YELLOW_COLOR];
     }
 }
 

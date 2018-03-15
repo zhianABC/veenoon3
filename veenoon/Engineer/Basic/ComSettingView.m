@@ -9,12 +9,11 @@
 #import "ComSettingView.h"
 #import "JHSlideView.h"
 #import "CheckButton.h"
-#import "CustomPickerView.h"
+#import "CenterCustomerPickerView.h"
 
-@interface ComSettingView () <CustomPickerViewDelegate>
+@interface ComSettingView () <CenterCustomerPickerViewDelegate>
 {
     UILabel *_secs;
-    UIButton *_btnSave;
     UIView *_chooseBg;
 }
 @end
@@ -37,14 +36,6 @@
         self.backgroundColor = RGB(0, 89, 118);
         self.clipsToBounds = YES;
         
-        _btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
-        _btnSave.frame = CGRectMake(frame.size.width-90, 20, 70, 40);
-        [_btnSave setTitle:@"保存" forState:UIControlStateNormal];
-        [self addSubview:_btnSave];
-        [_btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        _btnSave.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -30);
-        _btnSave.titleLabel.font = [UIFont systemFontOfSize:14];
-        
         UILabel* line = [[UILabel alloc] initWithFrame:CGRectMake(0, 100, frame.size.width, 1)];
         line.backgroundColor = RGB(1, 138, 182);
         [self addSubview:line];
@@ -55,9 +46,6 @@
         titleL.font = [UIFont systemFontOfSize:13];
         titleL.textColor  = [UIColor colorWithWhite:1.0 alpha:0.8];
         titleL.text = @"串口号";
-        
-        
-        
         
         _secs = [[UILabel alloc] initWithFrame:CGRectMake(15, 70, frame.size.width-50, 20)];
         _secs.backgroundColor = [UIColor clearColor];
@@ -87,9 +75,9 @@
         _chooseBg = [[UIView alloc] initWithFrame:CGRectMake(0, 101, frame.size.width, 220)];
         _chooseBg.backgroundColor = self.backgroundColor;
         
-        CustomPickerView *levelSetting = [[CustomPickerView alloc]
-                                          initWithFrame:CGRectMake(0, 0, self.frame.size.width, 200) withGrayOrLight:@"gray"];
-        
+        CenterCustomerPickerView *levelSetting = [[CenterCustomerPickerView alloc]
+                                          initWithFrame:CGRectMake(0, 0, self.frame.size.width, 200) withGrayOrLight:@"light"];
+        [levelSetting removeArray];
         
         levelSetting._pickerDataArray = @[@{@"values":@[@"Com 1", @"Com 2", @"Com 3"]}];
         
@@ -147,6 +135,15 @@
     
     NSString *v = [values objectForKey:@0];
     _secs.text = v;
+}
+
+- (void) didScrollPickerValue:(NSString *)pickerValue {
+     _secs.text = pickerValue;
+    
+    if([_chooseBg superview])
+    {
+        [_chooseBg removeFromSuperview];
+    }
 }
 
 - (void) chooseSecs:(UIButton*)sender{
