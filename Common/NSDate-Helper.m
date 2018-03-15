@@ -364,9 +364,10 @@
 + (NSString *)currentMinute {
     NSDate *date = [NSDate date];
     NSCalendar *cal = [NSCalendar currentCalendar];
-    NSDateComponents *components = [cal components:NSMinuteCalendarUnit fromDate:date];
+    NSDateComponents *components = [cal components:NSCalendarUnitMinute fromDate:date];
     
-    NSString *strHour = [NSString stringWithFormat:@"%d", [components minute]];
+    NSString *strHour = [NSString stringWithFormat:@"%02d",
+                         (int)[components minute]];
     return strHour;
 }
 

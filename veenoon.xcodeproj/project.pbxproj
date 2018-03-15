@@ -169,6 +169,7 @@
 		3425E9921FE5763B003559F7 /* WirlessYaoBaoViewSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3425E9911FE5763B003559F7 /* WirlessYaoBaoViewSettingsView.m */; };
 		3425E9951FE57675003559F7 /* MixVoiceSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3425E9941FE57675003559F7 /* MixVoiceSettingsView.m */; };
 		342814231FE34BF100170D11 /* PowerSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 342814221FE34BF100170D11 /* PowerSettingView.m */; };
+		3429E2B5205AAAFD00F87AC3 /* VNSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3429E2B4205AAAFD00F87AC3 /* VNSettingsView.m */; };
 		342A2F4020411B6900BE4071 /* GroupsPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 342A2F3F20411B6900BE4071 /* GroupsPickerView.m */; };
 		343733AE1FE402E80071C902 /* JHSlideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 343733AD1FE402E80071C902 /* JHSlideView.m */; };
 		3451A53B2052DCC600AE02B4 /* slide_btn_light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3451A5392052DCC500AE02B4 /* slide_btn_light@2x.png */; };
@@ -1030,6 +1031,8 @@
 		3425E9941FE57675003559F7 /* MixVoiceSettingsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MixVoiceSettingsView.m; sourceTree = "<group>"; };
 		342814211FE34BF100170D11 /* PowerSettingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PowerSettingView.h; sourceTree = "<group>"; };
 		342814221FE34BF100170D11 /* PowerSettingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PowerSettingView.m; sourceTree = "<group>"; };
+		3429E2B3205AAAFD00F87AC3 /* VNSettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VNSettingsView.h; sourceTree = "<group>"; };
+		3429E2B4205AAAFD00F87AC3 /* VNSettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VNSettingsView.m; sourceTree = "<group>"; };
 		342A2F3E20411B6800BE4071 /* GroupsPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupsPickerView.h; sourceTree = "<group>"; };
 		342A2F3F20411B6900BE4071 /* GroupsPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupsPickerView.m; sourceTree = "<group>"; };
 		343733AC1FE402E80071C902 /* JHSlideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHSlideView.h; sourceTree = "<group>"; };
@@ -2578,8 +2581,8 @@
 		341671851FBA97A4001D33D0 /* MainPages */ = {
 			isa = PBXGroup;
 			children = (
-				341671871FBA97BD001D33D0 /* HomeViewController.m */,
 				341671861FBA97BD001D33D0 /* HomeViewController.h */,
+				341671871FBA97BD001D33D0 /* HomeViewController.m */,
 			);
 			path = MainPages;
 			sourceTree = "<group>";
@@ -2678,8 +2681,10 @@
 		EB03F53D1FBDE8AE00865541 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				EB03F53E1FBDE8FB00865541 /* SettingsViewController.m */,
+				3429E2B3205AAAFD00F87AC3 /* VNSettingsView.h */,
+				3429E2B4205AAAFD00F87AC3 /* VNSettingsView.m */,
 				EB03F5411FBDE94300865541 /* SettingsViewController.h */,
+				EB03F53E1FBDE8FB00865541 /* SettingsViewController.m */,
 				EB3685F91FC07A2F009973A3 /* SettingsUserView.h */,
 				EB3685FA1FC07A42009973A3 /* SettingsUserView.m */,
 				EB3685FC1FC07A5A009973A3 /* SettingsViewView.m */,
@@ -3850,6 +3855,7 @@
 				04DE1EA91AD6AEE000D49E2F /* SBJson4Writer.m in Sources */,
 				EBC71B1A203C496500DD0A98 /* LuBoJiRightView.m in Sources */,
 				EBD79C0F204BBC2400FD534C /* YinPinProcessCodeUIView.m in Sources */,
+				3429E2B5205AAAFD00F87AC3 /* VNSettingsView.m in Sources */,
 				EB36AAB21FCD939E009A0FD8 /* UserYouXianViewController.m in Sources */,
 				EBAE5BBB1FE0070600C10C4D /* EngineerPresetScenarioViewCtrl.m in Sources */,
 				04DE1E9A1AD6AEE000D49E2F /* ASIInputStream.m in Sources */,
