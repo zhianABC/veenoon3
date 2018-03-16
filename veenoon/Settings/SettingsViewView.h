@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface SettingsViewView : UIView
-
+{
+    
+}
+@property (nonatomic, weak) UIViewController *_ctrl;
 @end

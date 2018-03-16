@@ -12,9 +12,15 @@
 #import "EngineerDNSSettingView.h"
 #import "EngineerToUseTeslariViewCtrl.h"
 
-@interface EngineerSysSelectViewCtrl ()<EngineerPortSettingViewDelegate, EngineerDNSSettingViewDelegate> {
+@interface EngineerSysSelectViewCtrl () {
     EngineerDNSSettingView *_dnsView;
     EngineerPortSettingView *_portView;
+    
+    UIView       *_container;
+    UIScrollView *_switchContent;
+    
+    UIButton *_portSettingsBtn;
+    UIButton *_dnsSettingsBtn;
 }
 @end
 
@@ -44,16 +50,16 @@
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *login = [UIButton buttonWithColor:nil selColor:[UIColor whiteColor]];
-    login.frame = CGRectMake(SCREEN_WIDTH/2 - 130, SCREEN_HEIGHT/2 - 80, 260, 50);
-    login.layer.cornerRadius = 5;
-    login.layer.borderWidth = 2;
+    UIButton *login = [UIButton buttonWithColor:[UIColor whiteColor]
+                                       selColor:LINE_COLOR];
+    login.frame = CGRectMake(SCREEN_WIDTH/2 - 180, SCREEN_HEIGHT/2 - 80, 360, 44);
+    login.layer.cornerRadius = 8;
+    login.layer.borderWidth = 1;
     login.layer.borderColor = [UIColor whiteColor].CGColor;
     login.clipsToBounds = YES;
     [self.view addSubview:login];
     [login setTitle:@"设置新的系统" forState:UIControlStateNormal];
-    [login setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [login setTitleColor:RGB(1, 138, 182) forState:UIControlStateHighlighted];
+    [login setTitleColor:RGB(1, 138, 182) forState:UIControlStateNormal];
     login.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     
     [login addTarget:self
@@ -61,9 +67,9 @@
     forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *signup = [UIButton buttonWithColor:nil selColor:[UIColor whiteColor]];
-    signup.frame = CGRectMake(SCREEN_WIDTH/2 - 130, SCREEN_HEIGHT/2 +20, 260, 50);
-    signup.layer.cornerRadius = 5;
-    signup.layer.borderWidth = 2;
+    signup.frame = CGRectMake(SCREEN_WIDTH/2 - 180, SCREEN_HEIGHT/2 +20, 360, 44);
+    signup.layer.cornerRadius = 8;
+    signup.layer.borderWidth = 1;
     signup.layer.borderColor = [UIColor whiteColor].CGColor;
     signup.clipsToBounds = YES;
     [self.view addSubview:signup];
@@ -76,186 +82,163 @@
                action:@selector(signupAction:)
      forControlEvents:UIControlEventTouchUpInside];
     
-    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT,
-                                                                SCREEN_HEIGHT - 100,
-                                                                SCREEN_WIDTH, 20)];
-    titleL.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:titleL];
-    titleL.font = [UIFont systemFontOfSize:16];
-    titleL.textColor  = [UIColor whiteColor];
-    titleL.text = @"关于TESLSRIA";
     
+//    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT,
+//                                                                SCREEN_HEIGHT - 100,
+//                                                                SCREEN_WIDTH, 20)];
+//    titleL.backgroundColor = [UIColor clearColor];
 //    [self.view addSubview:titleL];
-    
-    UIButton *backBtn = [UIButton buttonWithColor:[UIColor whiteColor] selColor:RGB(242, 148, 20)];
-    backBtn.frame = CGRectMake(0, 60, 30, 60);
-    [self.view addSubview:backBtn];
-    [backBtn addTarget:self
-                action:@selector(backAction:)
-      forControlEvents:UIControlEventTouchDown];
-    
-    _portView = [[EngineerPortSettingView alloc]initWithFrame:CGRectMake(-SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-    //    settingsUserView.delegate = self;
-    _portView.delegate = self;
-    [self.view addSubview:_portView];
+//    titleL.font = [UIFont systemFontOfSize:16];
+//    titleL.textColor  = [UIColor whiteColor];
+//    titleL.text = @"关于TESLSRIA";
+//
+  
+    UIView *touchView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 500)];
+    [self.view addSubview:touchView];
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPress:)];
+    [touchView addGestureRecognizer:longPress];
     
     
-    _dnsView = [[EngineerDNSSettingView alloc]initWithFrame:CGRectMake(-SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-    //    settingsUserView.delegate = self;
-    _dnsView.delegate = self;
-    [self.view addSubview:_dnsView];
+    _container = [[UIView alloc] initWithFrame:CGRectMake(-SCREEN_WIDTH,
+                                                          0,
+                                                          SCREEN_WIDTH,
+                                                          SCREEN_HEIGHT)];
+    
+    [self.view addSubview:_container];
+    _container.backgroundColor = self.view.backgroundColor;
+    
+    _switchContent = [[UIScrollView alloc] initWithFrame:CGRectMake(0,
+                                                                    0,
+                                                                    SCREEN_WIDTH,
+                                                                    SCREEN_HEIGHT)];
+    [_container addSubview:_switchContent];
+    _switchContent.pagingEnabled = YES;
+    [_switchContent setContentSize:CGSizeMake(SCREEN_WIDTH*2, SCREEN_HEIGHT)];
     
     
+    _portView = [[EngineerPortSettingView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    [_switchContent addSubview:_portView];
+    
+    
+    _dnsView = [[EngineerDNSSettingView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    [_switchContent addSubview:_dnsView];
+    
+    
+    [self containerView];
+}
+
+- (void) containerView{
+    
+    UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
+    [_container addSubview:bottomBar];
+    _container.alpha = 0.0;
+    
+    //缺切图，把切图贴上即可。
+    bottomBar.backgroundColor = [UIColor grayColor];
+    bottomBar.userInteractionEnabled = YES;
+    bottomBar.image = [UIImage imageNamed:@"botomo_icon.png"];
+    
+    UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    cancelBtn.frame = CGRectMake(0, 0,160, 50);
+    [bottomBar addSubview:cancelBtn];
+    [cancelBtn setTitle:@"返回" forState:UIControlStateNormal];
+    [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [cancelBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    cancelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [cancelBtn addTarget:self
+                  action:@selector(c_cancelAction:)
+        forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
+    [bottomBar addSubview:okBtn];
+    [okBtn setTitle:@"确认" forState:UIControlStateNormal];
+    [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [okBtn addTarget:self
+              action:@selector(c_okAction:)
+    forControlEvents:UIControlEventTouchUpInside];
+    
+    _portSettingsBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _portSettingsBtn.frame = CGRectMake(SCREEN_WIDTH/2-50, SCREEN_HEIGHT - 130, 50, 50);
+    [_portSettingsBtn setImage:[UIImage imageNamed:@"engineer_port_s.png"] forState:UIControlStateNormal];
+    [_portSettingsBtn setImage:[UIImage imageNamed:@"engineer_port_s.png"] forState:UIControlStateHighlighted];
+    [_portSettingsBtn addTarget:self action:@selector(portAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_container addSubview:_portSettingsBtn];
+    
+    _dnsSettingsBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _dnsSettingsBtn.frame = CGRectMake(SCREEN_WIDTH/2, SCREEN_HEIGHT - 130, 50, 50);
+    [_dnsSettingsBtn setImage:[UIImage imageNamed:@"engineer_dns_n.png"] forState:UIControlStateNormal];
+    [_dnsSettingsBtn setImage:[UIImage imageNamed:@"engineer_dns_s.png"] forState:UIControlStateHighlighted];
+    [_dnsSettingsBtn addTarget:self action:@selector(dnsAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_container addSubview:_dnsSettingsBtn];
+
+}
+
+- (void) c_cancelAction:(id)sender{
+    
+    CGRect rc = _container.frame;
+    rc.origin.x = -SCREEN_WIDTH;
+    
+    [UIView animateWithDuration:0.45
+                     animations:^{
+                         
+                         _container.frame = rc;
+                     } completion:^(BOOL finished) {
+                         _container.alpha = 0;
+                     }];
+}
+- (void) c_okAction:(id)sender{
+    CGRect rc = _container.frame;
+    rc.origin.x = -SCREEN_WIDTH;
+    
+    [UIView animateWithDuration:0.45
+                     animations:^{
+                         
+                         _container.frame = rc;
+                     } completion:^(BOOL finished) {
+                         _container.alpha = 0;
+                     }];
+}
+
+- (void) portAction:(id)sender{
+    
+    [_portSettingsBtn setImage:[UIImage imageNamed:@"engineer_port_s.png"] forState:UIControlStateNormal];
+    [_dnsSettingsBtn setImage:[UIImage imageNamed:@"engineer_dns_n.png"] forState:UIControlStateNormal];
+    
+    [_switchContent setContentOffset:CGPointMake(0, 0) animated:YES];
+}
+- (void) dnsAction:(id)sender{
+    [_portSettingsBtn setImage:[UIImage imageNamed:@"engineer_port_n.png"] forState:UIControlStateNormal];
+    [_dnsSettingsBtn setImage:[UIImage imageNamed:@"engineer_dns_s.png"] forState:UIControlStateNormal];
+
+    [_switchContent setContentOffset:CGPointMake(SCREEN_WIDTH, 0) animated:YES];
+}
+- (void) longPress:(id)sender{
+    
+    [self showContainer:nil];
+}
+
+- (void) showContainer:(id)sender{
+    CGRect rc = _container.frame;
+    rc.origin.x = 0;
+    
+    [UIView animateWithDuration:0.45
+                     animations:^{
+                         _container.alpha = 1.0;
+                         _container.frame = rc;
+                     } completion:^(BOOL finished) {
+                         
+                     }];
     
 }
-- (void) dnsViewHandleTapGesture {
-    if (_dnsView._selectedRow <= -1) {
-        return;
-    }
-    NSMutableDictionary *dic = [_dnsView._portList objectAtIndex:_dnsView._selectedRow];
-    
-    if (_dnsView._serialLabel) {
-        [_dnsView._serialLabel removeFromSuperview];
-    }
-    if (_dnsView._devicNameLabel) {
-        [_dnsView._devicNameLabel removeFromSuperview];
-    }
-    if (_dnsView._devicIPLabel) {
-        [_dnsView._devicIPLabel removeFromSuperview];
-    }
-    if (_dnsView._macAddressLabel) {
-        [_dnsView._macAddressLabel removeFromSuperview];
-    }
-    if (_dnsView._portLvPicker) {
-        [dic setObject:_dnsView._portLvPicker._unitString forKey:@"portLv"];
-        [_dnsView._portLvPicker removeFromSuperview];
-    }
-    if (_dnsView._checkPicker) {
-        [dic setObject:_dnsView._checkPicker._unitString forKey:@"checkPosition"];
-        [_dnsView._checkPicker removeFromSuperview];
-    }
-    if (_dnsView._digitPicker) {
-        [dic setObject:_dnsView._digitPicker._unitString forKey:@"digitPosition"];
-        [_dnsView._digitPicker removeFromSuperview];
-    }
-    if (_dnsView._stopPicker) {
-        [dic setObject:_dnsView._stopPicker._unitString forKey:@"stopPosition"];
-        [_dnsView._stopPicker removeFromSuperview];
-    }
-    _dnsView._selectedRow = -1;
-    _dnsView._previousSelectedRow =-1;
-    
-    [_dnsView._tableView reloadData];
-}
-- (void) portViewHandleTapGesture {
-    if (_portView._selectedRow <= -1) {
-        return;
-    }
-    NSMutableDictionary *dic = [_portView._portList objectAtIndex:_portView._selectedRow];
-    
-    if (_portView._checkPicker) {
-        [dic setObject:_portView._checkPicker._unitString forKey:@"checkPosition"];
-        [_portView._checkPicker removeFromSuperview];
-    }
-    if (_portView._portPicker) {
-        [dic setObject:_portView._portPicker._unitString forKey:@"portNumber"];
-        [_portView._portPicker removeFromSuperview];
-    }
-    if (_portView._portTypePicker) {
-        [dic setObject:_portView._portTypePicker._unitString forKey:@"portType"];
-        [_portView._portTypePicker removeFromSuperview];
-    }
-    if (_portView._portLvPicker) {
-        [dic setObject:_portView._portLvPicker._unitString forKey:@"portLv"];
-        [_portView._portLvPicker removeFromSuperview];
-    }
-    if (_portView._digitPicker) {
-        [dic setObject:_portView._digitPicker._unitString forKey:@"digitPosition"];
-        [_portView._digitPicker removeFromSuperview];
-    }
-    if (_portView._stopPicker) {
-        [dic setObject:_portView._stopPicker._unitString forKey:@"stopPosition"];
-        [_portView._stopPicker removeFromSuperview];
-    }
-    _portView._selectedRow = -1;
-    _portView._previousSelectedRow =-1;
-    
-    [_portView._tableView reloadData];
-}
+
 - (void) loginAction:(id)sender{
     EngineerToUseTeslariViewCtrl *ctrl = [[EngineerToUseTeslariViewCtrl alloc] init];
     ctrl._meetingRoomDic = self._meetingRoomDic;
     
     [self.navigationController pushViewController:ctrl animated:YES];
-}
-
-- (void) dnsViewdnsAction {
-    CGRect rc = _dnsView.frame;
-    rc.origin.x = 0;
-    
-    [UIView beginAnimations:nil context:nil];
-    _dnsView.frame = rc;
-    [UIView commitAnimations];
-    
-    CGRect rc2 = _portView.frame;
-    rc2.origin.x = -SCREEN_WIDTH;
-    
-    [UIView beginAnimations:nil context:nil];
-    _portView.frame = rc2;
-    [UIView commitAnimations];
-}
-- (void) dnsViewPortAction {
-    CGRect rc = _portView.frame;
-    rc.origin.x = 0;
-    
-    [UIView beginAnimations:nil context:nil];
-    _portView.frame = rc;
-    [UIView commitAnimations];
-    
-    CGRect rc2 = _dnsView.frame;
-    rc2.origin.x = -SCREEN_WIDTH;
-    
-    [UIView beginAnimations:nil context:nil];
-    _dnsView.frame = rc2;
-    [UIView commitAnimations];
-}
-- (void) portViewPortAction {
-    CGRect rc = _portView.frame;
-    rc.origin.x = 0;
-    
-    [UIView beginAnimations:nil context:nil];
-    _portView.frame = rc;
-    [UIView commitAnimations];
-    
-    CGRect rc2 = _dnsView.frame;
-    rc2.origin.x = -SCREEN_WIDTH;
-    
-    [UIView beginAnimations:nil context:nil];
-    _dnsView.frame = rc2;
-    [UIView commitAnimations];
-}
-- (void) portViewdnsAction {
-    CGRect rc = _dnsView.frame;
-    rc.origin.x = 0;
-    
-    [UIView beginAnimations:nil context:nil];
-    _dnsView.frame = rc;
-    [UIView commitAnimations];
-    
-    CGRect rc2 = _portView.frame;
-    rc2.origin.x = -SCREEN_WIDTH;
-    
-    [UIView beginAnimations:nil context:nil];
-    _portView.frame = rc2;
-    [UIView commitAnimations];
-}
-- (void) backAction:(id)sender{
-    CGRect rc = _portView.frame;
-    rc.origin.x = 0;
-    
-    [UIView beginAnimations:nil context:nil];
-    _portView.frame = rc;
-    [UIView commitAnimations];
 }
 
 - (void) cancelAction:(id)sender{

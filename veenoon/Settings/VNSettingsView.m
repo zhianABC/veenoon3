@@ -17,6 +17,8 @@
     SettingsUserView *settingsUserView;
     UIScrollView *_content;
     UIPageControl *_pageCtrl1;
+    
+    SettingsViewView *_imgSetting;
 }
 
 @end
@@ -30,7 +32,8 @@
         self.backgroundColor = RGB(1, 138, 182);
         
         
-        UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"down_arraw.png"]];
+        UIImageView *titleIcon = [[UIImageView alloc]
+                                  initWithImage:[UIImage imageNamed:@"back_white_ico.png"]];
         [self addSubview:titleIcon];
         titleIcon.center = CGPointMake(50, 20+22);
         
@@ -71,8 +74,8 @@
         settingsUserView.backgroundColor = [UIColor clearColor];
         [_content addSubview:settingsUserView];
         
-        SettingsViewView *s = [[SettingsViewView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64-50)];
-        [_content addSubview:s];
+        _imgSetting = [[SettingsViewView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64-50)];
+        [_content addSubview:_imgSetting];
         
         
         _pageCtrl1 = [[UIPageControl alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50-30, 120, 20)];
@@ -83,10 +86,29 @@
         _pageCtrl1.numberOfPages = 2;
         _pageCtrl1.center = CGPointMake(SCREEN_WIDTH/2,
                                         _pageCtrl1.center.y);
+        
+        UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        backBtn.frame = CGRectMake(0, 0, 60, 50);
+        [self addSubview:backBtn];
+        backBtn.center = titleIcon.center;
+        [backBtn addTarget:self
+                    action:@selector(backAction:)
+          forControlEvents:UIControlEventTouchUpInside];
 
     }
     
     return self;
+}
+
+- (void) backAction:(id)sender{
+    
+    UIScrollView *cnt = (UIScrollView*)[self superview];
+    [cnt setContentOffset:CGPointMake(0, 0) animated:YES];
+}
+
+- (void) setViewCtrl:(UIViewController *)ctrl{
+    
+    _imgSetting._ctrl = ctrl;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{

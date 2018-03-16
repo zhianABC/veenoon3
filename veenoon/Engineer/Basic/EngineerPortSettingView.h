@@ -8,11 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "CenterCustomerPickerView.h"
-@protocol  EngineerPortSettingViewDelegate <NSObject>
-- (void) portViewPortAction;
-- (void) portViewdnsAction;
-- (void) portViewHandleTapGesture;
-@end
+
 
 @interface EngineerPortSettingView <UITableViewDelegate,UITableViewDataSource, CenterCustomerPickerViewDelegate> : UIView {
     CenterCustomerPickerView *_digitPicker;
@@ -38,6 +34,5 @@
 @property (nonatomic, strong) UITableView *_tableView;
 @property (nonatomic, assign) int _selectedRow;
 @property (nonatomic, assign) int _previousSelectedRow;
-@property(nonatomic, weak) id<EngineerPortSettingViewDelegate> delegate;
 @property (nonatomic, strong) NSMutableArray *_portList;
 @end

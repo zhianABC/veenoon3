@@ -75,7 +75,7 @@
     [self createHomeView];
     
     _vnsetView = [[VNSettingsView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-    
+    [_vnsetView setViewCtrl:self];
     
     _content = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     _content.bounces = NO;

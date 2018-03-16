@@ -66,11 +66,7 @@
         maskView.userInteractionEnabled = YES;
         [self addSubview:maskView];
         
-        UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
-        tapGesture.cancelsTouchesInView =  NO;
-        tapGesture.numberOfTapsRequired = 1;
-        [maskView addGestureRecognizer:tapGesture];
-        
+    
         [self initDat];
         self.backgroundColor = THEME_COLOR;
         self.clipsToBounds = YES;
@@ -161,82 +157,10 @@
         _tableView.tableFooterView = [UIView new];
         _tableView.backgroundColor = [UIColor clearColor];
         [self addSubview:_tableView];
-        UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
-        [self addSubview:bottomBar];
-        
-        //缺切图，把切图贴上即可。
-        bottomBar.backgroundColor = [UIColor grayColor];
-        bottomBar.userInteractionEnabled = YES;
-        bottomBar.image = [UIImage imageNamed:@"botomo_icon.png"];
-        
-        UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        cancelBtn.frame = CGRectMake(0, 0,160, 50);
-        [bottomBar addSubview:cancelBtn];
-        [cancelBtn setTitle:@"返回" forState:UIControlStateNormal];
-        [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [cancelBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
-        cancelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-        [cancelBtn addTarget:self
-                      action:@selector(cancelAction:)
-            forControlEvents:UIControlEventTouchUpInside];
-        
-        UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
-        [bottomBar addSubview:okBtn];
-        [okBtn setTitle:@"确认" forState:UIControlStateNormal];
-        [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
-        okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-        [okBtn addTarget:self
-                  action:@selector(okAction:)
-        forControlEvents:UIControlEventTouchUpInside];
-        
-        UIButton *_portSettingsBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _portSettingsBtn.frame = CGRectMake(SCREEN_WIDTH/2-50, SCREEN_HEIGHT - 130, 50, 50);
-        [_portSettingsBtn setImage:[UIImage imageNamed:@"engineer_port_n.png"] forState:UIControlStateNormal];
-        [_portSettingsBtn setImage:[UIImage imageNamed:@"engineer_port_s.png"] forState:UIControlStateHighlighted];
-        [_portSettingsBtn addTarget:self action:@selector(portAction:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:_portSettingsBtn];
-        
-        UIButton *_dnsSettingsBtn= [UIButton buttonWithType:UIButtonTypeCustom];
-        _dnsSettingsBtn.frame = CGRectMake(SCREEN_WIDTH/2, SCREEN_HEIGHT - 130, 50, 50);
-        [_dnsSettingsBtn setImage:[UIImage imageNamed:@"engineer_dns_s.png"] forState:UIControlStateNormal];
-        [_dnsSettingsBtn setImage:[UIImage imageNamed:@"engineer_dns_s.png"] forState:UIControlStateHighlighted];
-        [_dnsSettingsBtn addTarget:self action:@selector(dnsAction:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:_dnsSettingsBtn];
         
         
     }
     return self;
-}
-- (void) cancelAction:(id)sender{
-    CGRect rc = self.frame;
-    rc.origin.x = -SCREEN_WIDTH;
-    
-    [UIView beginAnimations:nil context:nil];
-    self.frame = rc;
-    [UIView commitAnimations];
-}
-
-- (void)handleTapGesture:(UIGestureRecognizer*)gestureRecognizer {
-    [self.delegate performSelector:@selector(dnsViewHandleTapGesture) withObject:nil];
-}
-
-- (void) okAction:(id)sender{
-    CGRect rc = self.frame;
-    rc.origin.x = -SCREEN_WIDTH;
-    
-    [UIView beginAnimations:nil context:nil];
-    self.frame = rc;
-    [UIView commitAnimations];
-}
-
-- (void) portAction:(id)sender{
-    [self.delegate performSelector:@selector(dnsViewPortAction) withObject:nil];
-}
-
-- (void) dnsAction:(id)sender{
-    [self.delegate performSelector:@selector(dnsViewdnsAction) withObject:nil];
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [_portList count];

@@ -45,12 +45,14 @@
     line.backgroundColor = RGB(75, 163, 202);
     [self.view addSubview:line];
     
-    UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, ENGINEER_VIEW_TOP, SCREEN_WIDTH-80, 30)];
+    UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT,
+                                                                      ENGINEER_VIEW_TOP+10,
+                                                                      SCREEN_WIDTH-80, 30)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
     portDNSLabel.font = [UIFont boldSystemFontOfSize:22];
     portDNSLabel.textColor  = [UIColor whiteColor];
-    portDNSLabel.text = @"设置场景";
+    portDNSLabel.text = @"新建场景";
     
     portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, CGRectGetMaxY(portDNSLabel.frame) + 20, SCREEN_WIDTH-80, 30)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
@@ -91,7 +93,7 @@
     int startX = 100;
     int startY = 20;
     UIButton *scenarioBtn = [UIButton buttonWithColor:nil selColor:RGB(0, 89, 118)];
-    scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
+    scenarioBtn.frame = CGRectMake(ENGINEER_VIEW_LEFT, startY, cellWidth, cellHeight);
     [scenarioBtn setImage:[UIImage imageNamed:@"engineer_scenario_add_n.png"] forState:UIControlStateNormal];
     [scenarioBtn setImage:[UIImage imageNamed:@"engineer_scenario_add_n.png"] forState:UIControlStateHighlighted];
     scenarioBtn.tag = index;
