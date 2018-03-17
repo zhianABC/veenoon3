@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AirConditionComIRView : UIView
-
+@interface AirConditionComIRView : UIView {
+    
+}
+@property(nonatomic, assign) BOOL _isAllowedClose;
 @end
