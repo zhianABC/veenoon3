@@ -8,21 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
-@class SlideButton;
+@class LightSliderButton;
 
-@protocol SlideButtonDelegate <NSObject>
+@protocol LightSliderButtonDelegate <NSObject>
 
 @optional
-- (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn;
-- (void) didTappedMSelf:(SlideButton*)slbtn;
+- (void) didSlideButtonValueChanged:(float)value slbtn:(LightSliderButton*)slbtn;
+- (void) didTappedMSelf:(LightSliderButton*)slbtn;
 
 @end
 
-@interface SlideButton : UIView
+@interface LightSliderButton : UIView
 {
     
 }
-@property (nonatomic, weak) id <SlideButtonDelegate> delegate;
+@property (nonatomic, weak) id <LightSliderButtonDelegate> delegate;
 @property (nonatomic, readonly) UILabel *_titleLabel;
 @property (nonatomic, readonly) UILabel *_valueLabel;
 

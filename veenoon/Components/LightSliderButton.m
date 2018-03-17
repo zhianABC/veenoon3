@@ -6,10 +6,10 @@
 //  Copyright © 2017年 jack. All rights reserved.
 //
 
-#import "SlideButton.h"
+#import "LightSliderButton.h"
 #import "CircleProgressView.h"
 
-@interface SlideButton ()
+@interface LightSliderButton ()
 {
     UIImageView *_radioImgV;
     UIImageView *_iconImgV;
@@ -28,7 +28,7 @@
 }
 @end
 
-@implementation SlideButton
+@implementation LightSliderButton
 @synthesize delegate;
 @synthesize _titleLabel;
 @synthesize _valueLabel;
