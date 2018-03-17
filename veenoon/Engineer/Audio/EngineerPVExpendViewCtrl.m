@@ -13,7 +13,7 @@
 #import "GongLvFangDaQiView.h"
 
 
-@interface EngineerPVExpendViewCtrl () <EngineerSliderViewDelegate, CustomPickerViewDelegate>{
+@interface EngineerPVExpendViewCtrl () <EngineerSliderViewDelegate, SlideButtonDelegate, CustomPickerViewDelegate>{
     UIButton *_selectSysBtn;
     
     CustomPickerView *_customPicker;
@@ -21,9 +21,6 @@
     EngineerSliderView *_zengyiSlider;
     
     NSMutableArray *_buttonArray;
-    
-    NSMutableArray *_buttonChannelArray;
-    NSMutableArray *_buttonNumberArray;
     
     NSMutableArray *_selectedBtnArray;
     
@@ -46,8 +43,6 @@
     
     _buttonArray = [[NSMutableArray alloc] init];
     
-    _buttonChannelArray = [[NSMutableArray alloc] init];
-    _buttonNumberArray = [[NSMutableArray alloc] init];
     _selectedBtnArray = [[NSMutableArray alloc] init];
     _imageViewArray = [[NSMutableArray alloc] init];
     
@@ -113,12 +108,12 @@
     int leftRight = ENGINEER_VIEW_LEFT;
     
     int cellWidth = 92;
-    int cellHeight = 92;
+    int cellHeight = 240;
     int colNumber = ENGINEER_VIEW_COLUMN_N;
     int space = ENGINEER_VIEW_COLUMN_GAP;
     
     int index = 0;
-    int top = 250;
+    int top = ENGINEER_VIEW_COMPONENT_TOP;
     
     for (int i = 0; i < _number; i++) {
         NSMutableDictionary *dataDic;
@@ -131,7 +126,18 @@
         int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+top;
         
-        SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(startX, startY, 120, 120)];
+        UIView *conmponentView = [[UIView alloc] init];
+        conmponentView.userInteractionEnabled = YES;
+        conmponentView.frame = CGRectMake(startX, startY, 120, 200);
+        [self.view addSubview:conmponentView];
+        
+        
+        SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(startX, startY, 92, 120)];
+        btn.delegate = self;
+        btn.tag = index;
+        [self.view addSubview:btn];
+        
+        btn._titleLabel.text = [NSString stringWithFormat:@"Channel %02d",i+1];
         
         UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
         tapGesture.cancelsTouchesInView =  NO;
@@ -140,42 +146,17 @@
         [btn addGestureRecognizer:tapGesture];
         
         btn.tag = i;
-        [self.view addSubview:btn];
         
-        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width - 35, 15, 30, 20)];
+        UIView *titleView = [[UIView alloc] init];
+        titleView.frame = CGRectMake(0, 120, 120, 100);
+        titleView.alpha = 0.8;
+        titleView.userInteractionEnabled = YES;
+        [conmponentView addSubview:titleView];
+        
+        
+        UILabel *titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 -40, btn.frame.size.height - 110, 80, 20)];
         titleL.backgroundColor = [UIColor clearColor];
-        [btn addSubview:titleL];
-        titleL.font = [UIFont boldSystemFontOfSize:11];
-        titleL.textColor  = [UIColor whiteColor];
-        titleL.text = [NSString stringWithFormat:@"0%d",i+1];
-        [_buttonNumberArray addObject:titleL];
-        
-        titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 -40, btn.frame.size.height - 40, 80, 20)];
-        titleL.backgroundColor = [UIColor clearColor];
-        [btn addSubview:titleL];
-        titleL.font = [UIFont boldSystemFontOfSize:12];
-        titleL.textColor  = [UIColor whiteColor];
-        titleL.textAlignment = NSTextAlignmentCenter;
-        titleL.text = @"Channel";
-        [_buttonChannelArray addObject:titleL];
-        
-        UILongPressGestureRecognizer *longPress2 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed2:)];
-        
-        [btn addGestureRecognizer:longPress2];
-        
-        
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:nil];
-        imageView.backgroundColor = DARK_BLUE_COLOR;
-        imageView.frame = CGRectMake(btn.frame.origin.x+10, btn.frame.origin.y+10, 100, 100);
-        imageView.tag = index;
-        imageView.userInteractionEnabled=YES;
-        imageView.layer.contentsGravity = kCAGravityCenter;
-        [self.view addSubview:imageView];
-        imageView.hidden=YES;
-        
-        titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 -50, btn.frame.size.height - 110, 80, 20)];
-        titleL.backgroundColor = [UIColor clearColor];
-        [imageView addSubview:titleL];
+        [titleView addSubview:titleL];
         titleL.font = [UIFont boldSystemFontOfSize:14];
         titleL.textColor  = YELLOW_COLOR;
         titleL.textAlignment = NSTextAlignmentCenter;
@@ -185,9 +166,9 @@
         }
         titleL.text = [@"温度： " stringByAppendingString:temp];
         
-        titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 -50, btn.frame.size.height-80, 80, 20)];
+        titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 -40, btn.frame.size.height-80, 80, 20)];
         titleL.backgroundColor = [UIColor clearColor];
-        [imageView addSubview:titleL];
+        [titleView addSubview:titleL];
         titleL.font = [UIFont boldSystemFontOfSize:14];
         titleL.textColor  = YELLOW_COLOR;
         titleL.textAlignment = NSTextAlignmentCenter;
@@ -197,9 +178,9 @@
         }
         titleL.text = [@"电压： " stringByAppendingString:dianya];
         
-        titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 -50, btn.frame.size.height -50, 80, 20)];
+        titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 -40, btn.frame.size.height -50, 80, 20)];
         titleL.backgroundColor = [UIColor clearColor];
-        [imageView addSubview:titleL];
+        [titleView addSubview:titleL];
         titleL.font = [UIFont boldSystemFontOfSize:14];
         titleL.textColor  = YELLOW_COLOR;
         titleL.textAlignment = NSTextAlignmentCenter;
@@ -209,26 +190,31 @@
         }
         titleL.text = [@"电流： " stringByAppendingString:dianliu];
         
-        UILongPressGestureRecognizer *longPress3 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed3:)];
-        [imageView addGestureRecognizer:longPress3];
-        
-        [_imageViewArray addObject:imageView];
+        [_imageViewArray addObject:titleView];
         [_buttonArray addObject:btn];
         
         index++;
     }
 }
 - (void) didSliderValueChanged:(int)value object:(id)object {
-    float circleValue = (value +70.0f)/70.0f;
+    float circleValue = value;
     for (SlideButton *button in _selectedBtnArray) {
-        [button setCircleValue:circleValue];
+        
+        button._valueLabel.text = [NSString stringWithFormat:@"%0.1f db", circleValue];
+        [button setCircleValue:fabs((value+70)/82.0)];
     }
 }
-
+//value = 0....1
+- (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
+    
+    float circleValue = -70 + (value * 82);
+    slbtn._valueLabel.text = [NSString stringWithFormat:@"%0.1f db", circleValue];
+}
 -(void)handleTapGesture:(UIGestureRecognizer*)gestureRecognizer {
     int tag = (int) gestureRecognizer.view.tag;
     
     SlideButton *btn;
+    UIView *titleView = [_imageViewArray objectAtIndex:tag];
     for (SlideButton *button in _selectedBtnArray) {
         if (button.tag == tag) {
             btn = button;
@@ -239,60 +225,20 @@
     if (btn == nil) {
         SlideButton *button = [_buttonArray objectAtIndex:tag];
         [_selectedBtnArray addObject:button];
-        UILabel *chanelL = [_buttonChannelArray objectAtIndex:tag];
-        chanelL.textColor = YELLOW_COLOR;
         
-        UILabel *numberL = [_buttonNumberArray objectAtIndex:tag];
-        numberL.textColor = YELLOW_COLOR;
+        titleView.alpha = 1.0;
+        
+        [button enableValueSet:YES];
     } else {
         // remove it
         [_selectedBtnArray removeObject:btn];
-        UILabel *chanelL = [_buttonChannelArray objectAtIndex:tag];
-        chanelL.textColor = [UIColor whiteColor];
         
-        UILabel *numberL = [_buttonNumberArray objectAtIndex:tag];
-        numberL.textColor = [UIColor whiteColor];;
-    }
-}
-- (void) longPressed3:(id)sender{
-    
-    UILongPressGestureRecognizer *press = (UILongPressGestureRecognizer *)sender;
-    if (press.state == UIGestureRecognizerStateEnded) {
-        // no need anything here
-        return;
-    } else if (press.state == UIGestureRecognizerStateBegan) {
-        int index = (int) press.view.tag;
-        UIButton *button = [_buttonArray objectAtIndex:index];
-        UIImageView *imageView = [_imageViewArray objectAtIndex:index];
-        if (button.isHidden) {
-            button.hidden = NO;
-            imageView.hidden = YES;
-        } else {
-            button.hidden = YES;
-            imageView.hidden = NO;
-        }
+        [btn enableValueSet:NO];
+        
+        titleView.alpha = 0.8;
     }
 }
 
-- (void) longPressed2:(id)sender{
-    
-    UILongPressGestureRecognizer *press = (UILongPressGestureRecognizer *)sender;
-    if (press.state == UIGestureRecognizerStateEnded) {
-        // no need anything here
-        return;
-    } else if (press.state == UIGestureRecognizerStateBegan) {
-        int index = (int) press.view.tag;
-        UIButton *button = [_buttonArray objectAtIndex:index];
-        UIImageView *imageView = [_imageViewArray objectAtIndex:index];
-        if (button.isHidden) {
-            button.hidden = NO;
-            imageView.hidden = YES;
-        } else {
-            button.hidden = YES;
-            imageView.hidden = NO;
-        }
-    }
-}
 - (void) scenarioAction:(id)sender{
     
 }

@@ -96,7 +96,7 @@
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [self addSubview:_tableView];
         
-        UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 60)];
+        UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 30)];
         [self addSubview:headView];
         
         UISwipeGestureRecognizer *swip = [[UISwipeGestureRecognizer alloc] initWithTarget:self
