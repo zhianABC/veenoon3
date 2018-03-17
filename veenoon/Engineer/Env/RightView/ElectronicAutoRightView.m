@@ -186,7 +186,7 @@ CustomPickerViewDelegate> {
         int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+top;
         
-        UIButton *scenarioBtn = [UIButton buttonWithColor:rectColor selColor:nil];
+        UIButton *scenarioBtn = [UIButton buttonWithColor:rectColor selColor:M_GREEN_COLOR];
         scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
         scenarioBtn.clipsToBounds = YES;
         scenarioBtn.layer.cornerRadius = 5;
@@ -448,7 +448,7 @@ CustomPickerViewDelegate> {
     UIColor *rectColor = RGB(0, 146, 174);
     
     if(section == 1)  {
-        UIButton *openBtn = [UIButton buttonWithColor:rectColor selColor:nil];
+        UIButton *openBtn = [UIButton buttonWithColor:rectColor selColor:M_GREEN_COLOR];
         openBtn.frame = CGRectMake(10, 4, 70, 36);
         openBtn.clipsToBounds = YES;
         openBtn.layer.cornerRadius = 5;
@@ -457,7 +457,7 @@ CustomPickerViewDelegate> {
         [openBtn addTarget:self action:@selector(openBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         openBtn.titleLabel.font = [UIFont systemFontOfSize:15];
         
-        UIButton *stopBtn = [UIButton buttonWithColor:rectColor selColor:nil];
+        UIButton *stopBtn = [UIButton buttonWithColor:rectColor selColor:M_GREEN_COLOR];
         stopBtn.frame = CGRectMake(115, 4, 70, 36);
         stopBtn.clipsToBounds = YES;
         stopBtn.layer.cornerRadius = 5;
@@ -466,7 +466,7 @@ CustomPickerViewDelegate> {
         [stopBtn addTarget:self action:@selector(stopBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         stopBtn.titleLabel.font = [UIFont systemFontOfSize:15];
         
-        UIButton *closeBtn = [UIButton buttonWithColor:rectColor selColor:nil];
+        UIButton *closeBtn = [UIButton buttonWithColor:rectColor selColor:M_GREEN_COLOR];
         closeBtn.frame = CGRectMake(220, 4, 70, 36);
         closeBtn.clipsToBounds = YES;
         closeBtn.layer.cornerRadius = 5;

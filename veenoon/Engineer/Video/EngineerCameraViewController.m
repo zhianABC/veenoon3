@@ -39,7 +39,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [super setTitleAndImage:@"video_corner_shexiangji.png" withTitle:@"DVD播放器"];
+    [super setTitleAndImage:@"video_corner_shexiangji.png" withTitle:@"摄像机"];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
@@ -87,7 +87,7 @@
     int playerLeft = -60;
     int playerHeight = 50;
     
-    UIButton *minusBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    UIButton *minusBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
     minusBtn.frame = CGRectMake(230+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
     minusBtn.layer.cornerRadius = 5;
     minusBtn.layer.borderWidth = 2;
@@ -114,7 +114,7 @@
     _numberBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [self.view addSubview:_numberBtn];
     
-    UIButton *invokeBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    UIButton *invokeBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
     invokeBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-585+playerHeight, 80, 80);
     invokeBtn.layer.cornerRadius = 5;
     invokeBtn.layer.borderWidth = 2;
@@ -129,7 +129,7 @@
                     action:@selector(invokeAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *addBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    UIButton *addBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
     addBtn.frame = CGRectMake(400+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
     addBtn.layer.cornerRadius = 5;
     addBtn.layer.borderWidth = 2;
@@ -144,7 +144,7 @@
                     action:@selector(addAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *storeBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    UIButton *storeBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
     storeBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-415+playerHeight, 80, 80);
     storeBtn.layer.cornerRadius = 5;
     storeBtn.layer.borderWidth = 2;
@@ -161,7 +161,7 @@
     
     playerLeft = 320;
     
-    UIButton *tBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    UIButton *tBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
     tBtn.frame = CGRectMake(230+playerLeft, SCREEN_HEIGHT-500+playerHeight-85, 80, 80);
     tBtn.layer.cornerRadius = 5;
     tBtn.layer.borderWidth = 2;
@@ -176,7 +176,7 @@
                        action:@selector(tAction:)
              forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *lastVideoUpBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    UIButton *lastVideoUpBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
     lastVideoUpBtn.frame = CGRectMake(230+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
     lastVideoUpBtn.layer.cornerRadius = 5;
     lastVideoUpBtn.layer.borderWidth = 2;
@@ -190,7 +190,7 @@
                        action:@selector(lastSingAction:)
              forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *okPlayerBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    UIButton *okPlayerBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
     okPlayerBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
     okPlayerBtn.layer.cornerRadius = 5;
     okPlayerBtn.layer.borderWidth = 2;
@@ -205,7 +205,7 @@
     [okPlayerBtn addTarget:self action:@selector(audioPlayHoldAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *wBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    UIButton *wBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
     wBtn.frame = CGRectMake(315+playerLeft+85, SCREEN_HEIGHT-585+playerHeight, 80, 80);
     wBtn.layer.cornerRadius = 5;
     wBtn.layer.borderWidth = 2;
@@ -220,7 +220,7 @@
              action:@selector(wAction:)
    forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *volumnUpBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    UIButton *volumnUpBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
     volumnUpBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-585+playerHeight, 80, 80);
     volumnUpBtn.layer.cornerRadius = 5;
     volumnUpBtn.layer.borderWidth = 2;
@@ -234,7 +234,7 @@
                     action:@selector(volumnAddAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *zoomMinusBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    UIButton *zoomMinusBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
     zoomMinusBtn.frame = CGRectMake(315+playerLeft+85, SCREEN_HEIGHT-415+playerHeight, 80, 80);
     zoomMinusBtn.layer.cornerRadius = 5;
     zoomMinusBtn.layer.borderWidth = 2;
@@ -248,7 +248,7 @@
                    action:@selector(zoomMinusAction:)
          forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *nextPlayBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    UIButton *nextPlayBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
     nextPlayBtn.frame = CGRectMake(400+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
     nextPlayBtn.layer.cornerRadius = 5;
     nextPlayBtn.layer.borderWidth = 2;
@@ -262,7 +262,7 @@
                     action:@selector(nextSingAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *zoomAddBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    UIButton *zoomAddBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
     zoomAddBtn.frame = CGRectMake(315+playerLeft-85, SCREEN_HEIGHT-415+playerHeight, 80, 80);
     zoomAddBtn.layer.cornerRadius = 5;
     zoomAddBtn.layer.borderWidth = 2;
@@ -276,7 +276,7 @@
                    action:@selector(zoomAddAction:)
          forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *volumnDownBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    UIButton *volumnDownBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
     volumnDownBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-415+playerHeight, 80, 80);
     volumnDownBtn.layer.cornerRadius = 5;
     volumnDownBtn.layer.borderWidth = 2;

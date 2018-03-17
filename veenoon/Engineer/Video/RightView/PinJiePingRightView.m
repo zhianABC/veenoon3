@@ -59,7 +59,7 @@
         
         UIColor *rectColor = RGB(0, 146, 174);
         
-        btnSelectSecs = [UIButton buttonWithColor:rectColor selColor:nil];
+        btnSelectSecs = [UIButton buttonWithColor:rectColor selColor:M_GREEN_COLOR];
         btnSelectSecs.layer.cornerRadius = 5;
         btnSelectSecs.clipsToBounds=YES;
         [btnSelectSecs setTitle:@"1+2" forState:UIControlStateNormal];
@@ -88,7 +88,7 @@
         titleL2.text = @"调用场景";
         
         
-        btnSelectSecs2 = [UIButton buttonWithColor:rectColor selColor:nil];
+        btnSelectSecs2 = [UIButton buttonWithColor:rectColor selColor:M_GREEN_COLOR];
         btnSelectSecs2.layer.cornerRadius = 5;
         btnSelectSecs2.clipsToBounds=YES;
         [btnSelectSecs2 setTitle:@"1+2" forState:UIControlStateNormal];
@@ -156,7 +156,7 @@
         titleL5.text = @"列";
         
         int butGap = 20;
-        UIButton *hangJianBtn = [UIButton buttonWithColor:rectColor selColor:nil];
+        UIButton *hangJianBtn = [UIButton buttonWithColor:rectColor selColor:M_GREEN_COLOR];
         hangJianBtn.layer.cornerRadius = 5;
         hangJianBtn.clipsToBounds=YES;
         [hangJianBtn setTitle:@"-" forState:UIControlStateNormal];
@@ -168,7 +168,7 @@
                            action:@selector(hangJianAction:)
                  forControlEvents:UIControlEventTouchUpInside];
         
-        hangNumberBtn = [UIButton buttonWithColor:rectColor selColor:nil];
+        hangNumberBtn = [UIButton buttonWithColor:rectColor selColor:M_GREEN_COLOR];
         hangNumberBtn.userInteractionEnabled=NO;
         hangNumberBtn.layer.cornerRadius = 5;
         hangNumberBtn.clipsToBounds=YES;
@@ -177,7 +177,7 @@
         [self addSubview:hangNumberBtn];
         hangNumberBtn.titleLabel.font = [UIFont systemFontOfSize:13];
         
-        UIButton *hangJiaBtn = [UIButton buttonWithColor:rectColor selColor:nil];
+        UIButton *hangJiaBtn = [UIButton buttonWithColor:rectColor selColor:M_GREEN_COLOR];
         hangJiaBtn.layer.cornerRadius = 5;
         hangJiaBtn.clipsToBounds=YES;
         [hangJiaBtn setTitle:@"+" forState:UIControlStateNormal];
@@ -190,7 +190,7 @@
               forControlEvents:UIControlEventTouchUpInside];
         
         
-        UIButton *lieJianBtn = [UIButton buttonWithColor:rectColor selColor:nil];
+        UIButton *lieJianBtn = [UIButton buttonWithColor:rectColor selColor:M_GREEN_COLOR];
         lieJianBtn.layer.cornerRadius = 5;
         lieJianBtn.clipsToBounds=YES;
         [lieJianBtn setTitle:@"-" forState:UIControlStateNormal];
@@ -202,7 +202,7 @@
                         action:@selector(lieJianAction:)
               forControlEvents:UIControlEventTouchUpInside];
         
-        lieNumberBtn = [UIButton buttonWithColor:rectColor selColor:nil];
+        lieNumberBtn = [UIButton buttonWithColor:rectColor selColor:M_GREEN_COLOR];
         lieNumberBtn.layer.cornerRadius = 5;
         lieNumberBtn.userInteractionEnabled=NO;
         lieNumberBtn.clipsToBounds=YES;
@@ -211,7 +211,7 @@
         [self addSubview:lieNumberBtn];
         lieNumberBtn.titleLabel.font = [UIFont systemFontOfSize:13];
         
-        UIButton *lieJiaBtn = [UIButton buttonWithColor:rectColor selColor:nil];
+        UIButton *lieJiaBtn = [UIButton buttonWithColor:rectColor selColor:M_GREEN_COLOR];
         lieJiaBtn.layer.cornerRadius = 5;
         lieJiaBtn.clipsToBounds=YES;
         [lieJiaBtn setTitle:@"+" forState:UIControlStateNormal];
