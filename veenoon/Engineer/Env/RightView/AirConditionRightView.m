@@ -27,6 +27,9 @@
     NSMutableArray *_btns;
     
     UITextField *ipTextField;
+    
+    UILabel *wenduL;
+    
 }
 @property (nonatomic, strong) NSMutableArray *_coms;
 @property (nonatomic, strong) NSMutableArray *_brands;
@@ -245,8 +248,6 @@
     
     if(_picker.tag == 1) {
         _selRow1 = [[values objectForKey:@"row"] intValue];
-    } else if(_picker.tag == 2) {
-        _selRow2 = [[values objectForKey:@"row"] intValue];
     } else if(_picker.tag == 3) {
         _selRow3 = [[values objectForKey:@"row"] intValue];
     }
@@ -268,7 +269,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if(indexPath.section == 0) {
-        if(_curIndex == indexPath.row)
+        if(_curIndex == indexPath.row && _curIndex != 1)
         {
             return 144;
         }
@@ -302,18 +303,22 @@
     UILabel* valueL = [[UILabel alloc] initWithFrame:CGRectMake(10,
                                                                 12,
                                                                 CGRectGetWidth(self.frame)-35, 20)];
-    valueL.backgroundColor = [UIColor clearColor];
-    [cell.contentView addSubview:valueL];
-    valueL.font = [UIFont systemFontOfSize:13];
-    valueL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
-    valueL.textAlignment = NSTextAlignmentRight;
+    if (_curIndex != 1) {
+        
+        valueL.backgroundColor = [UIColor clearColor];
+        [cell.contentView addSubview:valueL];
+        valueL.font = [UIFont systemFontOfSize:13];
+        valueL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+        valueL.textAlignment = NSTextAlignmentRight;
+        
+        UIImageView *icon = [[UIImageView alloc]
+                             initWithFrame:CGRectMake(CGRectGetMaxX(valueL.frame)+5, 16, 10, 10)];
+        icon.image = [UIImage imageNamed:@"remote_video_down.png"];
+        [cell.contentView addSubview:icon];
+        icon.alpha = 0.8;
+        icon.layer.contentsGravity = kCAGravityResizeAspect;
+    }
     
-    UIImageView *icon = [[UIImageView alloc]
-                         initWithFrame:CGRectMake(CGRectGetMaxX(valueL.frame)+5, 16, 10, 10)];
-    icon.image = [UIImage imageNamed:@"remote_video_down.png"];
-    [cell.contentView addSubview:icon];
-    icon.alpha = 0.8;
-    icon.layer.contentsGravity = kCAGravityResizeAspect;
     
     if (indexPath.row == 0) {
         titleL.text = @"空调模式";
@@ -324,11 +329,44 @@
         
     } else if (indexPath.row == 1) {
         titleL.text = @"空调温度";
-        valueL.text = @"26度";
+        wenduL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame)/2-35,
+                                                           12,
+                                                           70, 20)];
+        wenduL.text = @"26";
+        wenduL.backgroundColor = [UIColor clearColor];
+        [cell.contentView addSubview:wenduL];
+        wenduL.font = [UIFont systemFontOfSize:13];
+        wenduL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+        wenduL.textAlignment = NSTextAlignmentCenter;
+        
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"user_airecon_wendu_n.png"] ];
+        imageView.frame = CGRectMake(160, 16, 12, 8);
+        [cell addSubview:imageView];
         
         if (_selRow2 > 0) {
-            valueL.text = [_brands objectAtIndex:_selRow2];
+            wenduL.text = [_brands objectAtIndex:_selRow2];
         }
+        UIColor *rectColor = RGB(0, 146, 174);
+        
+        UIButton *addBtn = [UIButton buttonWithColor:rectColor selColor:M_GREEN_COLOR];
+        addBtn.frame = CGRectMake(10, 7, 60, 30);
+        addBtn.clipsToBounds = YES;
+        addBtn.layer.cornerRadius = 5;
+        [cell addSubview:addBtn];
+        
+        [addBtn setTitle:@"+" forState:UIControlStateNormal];
+        [addBtn addTarget:self action:@selector(addAction:) forControlEvents:UIControlEventTouchUpInside];
+        addBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+        
+        UIButton *minusBtn = [UIButton buttonWithColor:rectColor selColor:M_GREEN_COLOR];
+        minusBtn.frame = CGRectMake(CGRectGetWidth(self.frame)-70, 7, 60, 30);
+        minusBtn.clipsToBounds = YES;
+        minusBtn.layer.cornerRadius = 5;
+        [cell addSubview:minusBtn];
+        
+        [minusBtn setTitle:@"-" forState:UIControlStateNormal];
+        [minusBtn addTarget:self action:@selector(minusAction:) forControlEvents:UIControlEventTouchUpInside];
+        minusBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     } else {
         titleL.text = @"空调风速";
         valueL.text = @"自动";
@@ -342,7 +380,7 @@
     line.backgroundColor =  M_GREEN_LINE;
     [cell.contentView addSubview:line];
     
-    if(_curIndex == indexPath.row) {
+    if(_curIndex == indexPath.row && _curIndex != 1) {
         line.frame = CGRectMake(0, 143, self.frame.size.width, 1);
         [cell.contentView addSubview:_picker];
     }
@@ -351,11 +389,7 @@
         _picker.tag = 1;
         _picker._pickerDataArray = @[@{@"values":_coms}];
         [_picker selectRow:_selRow1 inComponent:0];
-    }  else if(_curIndex == 1) {
-        _picker.tag = 2;
-        _picker._pickerDataArray = @[@{@"values":_brands}];
-        [_picker selectRow:_selRow2 inComponent:0];
-    } else if(_curIndex == 2) {
+    }  else if(_curIndex == 2) {
         _picker.tag = 3;
         _picker._pickerDataArray = @[@{@"values":_brands2}];
         [_picker selectRow:_selRow3 inComponent:0];
@@ -364,14 +398,34 @@
     
     return cell;
 }
+- (void) addAction:(id)sender {
+    NSString *wenduStr = wenduL.text;
+    int value = [wenduStr intValue];
+    value++;
+    
+    wenduStr = [NSString stringWithFormat:@"%d", value];
+    
+    wenduL.text = wenduStr;
+}
 
+- (void) minusAction:(id)sender {
+    NSString *wenduStr = wenduL.text;
+    int value = [wenduStr intValue];
+    value--;
+    
+    wenduStr = [NSString stringWithFormat:@"%d", value];
+    
+    wenduL.text = wenduStr;
+}
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     if (indexPath.section == 0) {
         _curIndex = (int)indexPath.row;
-        _tableView.scrollEnabled = NO;
-        [_tableView reloadData];
+        if (_curIndex != 1) {
+            _tableView.scrollEnabled = NO;
+            [_tableView reloadData];
+        }
     }
 }
 
