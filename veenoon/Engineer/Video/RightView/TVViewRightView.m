@@ -61,6 +61,7 @@ CustomPickerViewDelegate>
 
 @synthesize _selectedBrand;
 @synthesize _selectedType;
+@synthesize _isAllowedClose;
 
 /*
  // Only override drawRect: if you perform custom drawing.
@@ -170,9 +171,34 @@ CustomPickerViewDelegate>
         
         [self initData];
         
+        UISwipeGestureRecognizer *swip = [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                                                   action:@selector(closeComSetting)];
+        swip.direction = UISwipeGestureRecognizerDirectionUp;
+        
+        
+        [self addGestureRecognizer:swip];
+        
+        self._isAllowedClose = YES;
     }
     
     return self;
+}
+
+- (void) closeComSetting{
+    
+    if(_isAllowedClose)
+    {
+        
+        CGRect rc = self.frame;
+        rc.origin.y = 0-rc.size.height;
+        
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             self.frame = rc;
+                         } completion:^(BOOL finished) {
+                             [self removeFromSuperview];
+                         }];
+    }
 }
 
 - (void)createFooter{

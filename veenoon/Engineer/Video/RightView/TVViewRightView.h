@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TVViewRightView : UIView
-
+@interface TVViewRightView : UIView {
+    
+}
+@property (nonatomic, assign) BOOL _isAllowedClose;
 @end
 
