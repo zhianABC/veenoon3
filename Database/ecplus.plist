@@ -17,9 +17,9 @@
 				<key>type</key>
 				<string>电源插件</string>
 				<key>icon</key>
-				<string>dy_06.png</string>
+				<string>dy_08.png</string>
 				<key>icon_sel</key>
-				<string>dy_06.png</string>
+				<string>dy_08.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -29,9 +29,9 @@
 				<key>type</key>
 				<string>电源插件</string>
 				<key>icon</key>
-				<string>dy_06.png</string>
+				<string>dy_16.png</string>
 				<key>icon_sel</key>
-				<string>dy_06.png</string>
+				<string>dy_16.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -146,9 +146,9 @@
 				<key>type</key>
 				<string>电源插件</string>
 				<key>icon</key>
-				<string>dy_06.png</string>
+				<string>dy_08.png</string>
 				<key>icon_sel</key>
-				<string>dy_06.png</string>
+				<string>dy_08.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -158,9 +158,9 @@
 				<key>type</key>
 				<string>电源插件</string>
 				<key>icon</key>
-				<string>dy_06.png</string>
+				<string>dy_16.png</string>
 				<key>icon_sel</key>
-				<string>dy_06.png</string>
+				<string>dy_16.png</string>
 			</dict>
 			<dict>
 				<key>id</key>

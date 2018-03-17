@@ -122,22 +122,22 @@
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
-    [bottomBar addSubview:okBtn];
-    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
-    [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
-    okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-    [okBtn addTarget:self
-              action:@selector(okAction:)
-    forControlEvents:UIControlEventTouchUpInside];
-    
-    _settingview = [[SIconSelectView alloc]
-           initWithFrame:CGRectMake(SCREEN_WIDTH-310,
-                                    64, 310, SCREEN_HEIGHT-114)];
-    _settingview.delegate = self;
-    
+//    UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
+//    [bottomBar addSubview:okBtn];
+//    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+//    [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+//    okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+//    [okBtn addTarget:self
+//              action:@selector(okAction:)
+//    forControlEvents:UIControlEventTouchUpInside];
+//
+//    _settingview = [[SIconSelectView alloc]
+//           initWithFrame:CGRectMake(SCREEN_WIDTH-310,
+//                                    64, 310, SCREEN_HEIGHT-114)];
+//    _settingview.delegate = self;
+//    
     
     [self.view addSubview:bottomBar];
 }

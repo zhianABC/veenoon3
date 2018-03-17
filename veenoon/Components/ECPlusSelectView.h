@@ -22,4 +22,6 @@
 @property (nonatomic, strong) NSArray *_data;
 @property (nonatomic, weak) id <ECPlusSelectViewDelegate> delegate;
 
+- (void) expandSection:(int)section;
+
 @end

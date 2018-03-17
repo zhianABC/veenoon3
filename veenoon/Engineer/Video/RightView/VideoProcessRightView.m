@@ -156,8 +156,7 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate>
         
         EPlusLayerView *rowCell = [[EPlusLayerView alloc]
                                    initWithFrame:CGRectMake(0, 0,
-                                                            self.
-                                                            frame.size.width, 80)];
+                                                            80, 80)];
         [cell.contentView addSubview:rowCell];
         rowCell.tag = indexPath.section * 100 + indexPath.row;
         rowCell._enableDrag = YES;
@@ -168,8 +167,30 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate>
         
         NSString *sel = [dic objectForKey:@"icon_sel"];
         rowCell.selectedImg = [UIImage imageNamed:sel];
-        rowCell.textLabel.text = [dic objectForKey:@"name"];
-        rowCell.detailLabel.text = [dic objectForKey:@"type"];
+        
+        int xx = 90;
+        
+        UILabel* textLabel = [[UILabel alloc]
+                              initWithFrame:CGRectMake(xx,
+                                                       20,
+                                                       tableView.frame.size.width-xx-10, 20)];
+        [cell.contentView addSubview:textLabel];
+        textLabel.textAlignment = NSTextAlignmentLeft;
+        textLabel.font = [UIFont systemFontOfSize:15];
+        textLabel.textColor = [UIColor whiteColor];
+        
+        UILabel *detailLabel = [[UILabel alloc]
+                                initWithFrame:CGRectMake(xx,
+                                                         40,
+                                                         tableView.frame.size.width-xx-10, 20)];
+        [cell.contentView addSubview:detailLabel];
+        detailLabel.textAlignment = NSTextAlignmentLeft;
+        detailLabel.font = [UIFont systemFontOfSize:15];
+        detailLabel.textColor = [UIColor whiteColor];
+        
+        
+        textLabel.text = [dic objectForKey:@"name"];
+        detailLabel.text = [dic objectForKey:@"type"];
         
         if (indexPath.row == 0 || indexPath.row == 6) {
             cell.userInteractionEnabled=NO;
