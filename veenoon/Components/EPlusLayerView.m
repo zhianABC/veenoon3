@@ -37,7 +37,7 @@
     detailLabel.textColor = [UIColor orangeColor];
     */
     
-    self.backgroundColor = RGBA(253, 180, 0, 0.5);
+    //self.backgroundColor = RGBA(253, 180, 0, 0.5);
     
     _isSelected = YES;
 
