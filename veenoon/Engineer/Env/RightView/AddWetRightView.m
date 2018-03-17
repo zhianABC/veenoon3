@@ -156,7 +156,7 @@
         int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+top;
         
-        UIButton *scenarioBtn = [UIButton buttonWithColor:rectColor selColor:nil];
+        UIButton *scenarioBtn = [UIButton buttonWithColor:rectColor selColor:M_GREEN_COLOR];
         scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
         scenarioBtn.clipsToBounds = YES;
         scenarioBtn.layer.cornerRadius = 5;

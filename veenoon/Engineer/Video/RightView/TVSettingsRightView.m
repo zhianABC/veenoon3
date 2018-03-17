@@ -6,14 +6,14 @@
 //  Copyright © 2017年 jack. All rights reserved.
 //
 
-#import "TouYingJiRightView.h"
+#import "TVSettingsRightView.h"
 #import "UIButton+Color.h"
 #import "CustomPickerView.h"
-#import "ComSettingView.h"
+#import "TVViewRightView.h"
 
-@interface TouYingJiRightView () <CustomPickerViewDelegate, UITextFieldDelegate> {
+@interface TVSettingsRightView () <CustomPickerViewDelegate, UITextFieldDelegate> {
     
-    ComSettingView *_com;
+    TVViewRightView *_com;
     UITextField *ipTextField;
     
     UIView *_footerView;
@@ -22,7 +22,7 @@
 @property (nonatomic) int _numOfChannel;
 @end
 
-@implementation TouYingJiRightView
+@implementation TVSettingsRightView
 @synthesize _btns;
 @synthesize _numOfChannel;
 /*
@@ -78,7 +78,7 @@
         
         [headView addGestureRecognizer:swip];
         
-        _com = [[ComSettingView alloc] initWithFrame:self.bounds];
+        _com = [[TVViewRightView alloc] initWithFrame:self.bounds];
     }
     
     return self;
@@ -195,5 +195,6 @@
 }
 
 @end
+
 
 

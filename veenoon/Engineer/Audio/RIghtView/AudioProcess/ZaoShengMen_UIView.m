@@ -10,13 +10,17 @@
 #import "UIButton+Color.h"
 #import "SlideButton.h"
 
-@interface ZaoShengMen_UIView() {
+@interface ZaoShengMen_UIView() <SlideButtonDelegate>{
     
     UIButton *channelBtn;
     
     SlideButton *fazhi;
     SlideButton *qidongshijian;
     SlideButton *huifushijian;
+    
+    UILabel *fazhiL;
+    UILabel *qidongshijianL;
+    UILabel *huifushijianL;
 }
 
 @end
@@ -74,10 +78,10 @@
 }
 
 - (void) contentViewComps{
-    int startX = 150;
+    int startX = 140;
     int gap = 250;
     int labelY = 100;
-    int labelBtnGap = 50;
+    int labelBtnGap = 25;
     int weiYi = 20;
     
     UILabel *addLabel = [[UILabel alloc] init];
@@ -88,7 +92,19 @@
     [contentView addSubview:addLabel];
     
     fazhi = [[SlideButton alloc] initWithFrame:CGRectMake(startX, labelY+labelBtnGap, 120, 120)];
+    fazhi._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+    fazhi._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+    [fazhi enableValueSet:YES];
+    fazhi.delegate = self;
+    fazhi.tag = 1;
     [contentView addSubview:fazhi];
+    
+    fazhiL = [[UILabel alloc] initWithFrame:CGRectMake(startX, labelY+labelBtnGap+120, 120, 20)];
+    fazhiL.text = @"-12dB";
+    fazhiL.textAlignment = NSTextAlignmentCenter;
+    [contentView addSubview:fazhiL];
+    fazhiL.font = [UIFont systemFontOfSize:13];
+    fazhiL.textColor = YELLOW_COLOR;
     
     UILabel *addLabel2 = [[UILabel alloc] init];
     addLabel2.text = @"启动时间 (ms)";
@@ -98,7 +114,19 @@
     [contentView addSubview:addLabel2];
     
     qidongshijian = [[SlideButton alloc] initWithFrame:CGRectMake(startX+gap, labelY+labelBtnGap, 120, 120)];
+    qidongshijian._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+    qidongshijian._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+    [qidongshijian enableValueSet:YES];
+    qidongshijian.delegate = self;
+    qidongshijian.tag = 2;
     [contentView addSubview:qidongshijian];
+    
+    qidongshijianL = [[UILabel alloc] initWithFrame:CGRectMake(startX+gap, labelY+labelBtnGap+120, 120, 20)];
+    qidongshijianL.text = @"-12dB";
+    qidongshijianL.textAlignment = NSTextAlignmentCenter;
+    [contentView addSubview:qidongshijianL];
+    qidongshijianL.font = [UIFont systemFontOfSize:13];
+    qidongshijianL.textColor = YELLOW_COLOR;
     
     UILabel *addLabel22 = [[UILabel alloc] init];
     addLabel22.text = @"恢复时间 (ms)";
@@ -108,7 +136,19 @@
     [contentView addSubview:addLabel22];
     
     huifushijian = [[SlideButton alloc] initWithFrame:CGRectMake(startX+gap*2, labelY+labelBtnGap, 120, 120)];
+    huifushijian._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+    huifushijian._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+    [huifushijian enableValueSet:YES];
+    huifushijian.delegate = self;
+    huifushijian.tag = 3;
     [contentView addSubview:huifushijian];
+    
+    huifushijianL = [[UILabel alloc] initWithFrame:CGRectMake(startX+gap*2, labelY+labelBtnGap+120, 120, 20)];
+    huifushijianL.text = @"-12dB";
+    huifushijianL.textAlignment = NSTextAlignmentCenter;
+    [contentView addSubview:huifushijianL];
+    huifushijianL.font = [UIFont systemFontOfSize:13];
+    huifushijianL.textColor = YELLOW_COLOR;
     
     
     UIButton *zhitongBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
@@ -123,6 +163,27 @@
                 action:@selector(zhitongBtnAction:)
       forControlEvents:UIControlEventTouchUpInside];
     [contentView addSubview:zhitongBtn];
+}
+
+- (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
+    
+    int tag = (int) slbtn.tag;
+    if (tag == 1) {
+        int k = (value *24)-12;
+        NSString *valueStr= [NSString stringWithFormat:@"%d", k];
+        
+        fazhiL.text = valueStr;
+    } else if (tag == 2) {
+        int k = (value *2000)-1000;
+        NSString *valueStr= [NSString stringWithFormat:@"%d", k];
+        
+        qidongshijianL.text = valueStr;
+    } else {
+        int k = (value *2000)-1000;
+        NSString *valueStr= [NSString stringWithFormat:@"%d", k];
+        
+        huifushijianL.text = valueStr;
+    }
 }
 - (void) zhitongBtnAction:(id) sender {
     

@@ -10,16 +10,13 @@
 #import "UIButton+Color.h"
 #import "SlideButton.h"
 
-@interface DianPing_UIView() {
+@interface DianPing_UIView() <SlideButtonDelegate>{
     
     UIButton *channelBtn;
     
-    //UIView   *contentView;
-    SlideButton *fazhi;
-    SlideButton *qidongshijian;
-    SlideButton *huifushijian;
+    UILabel *labelL1;
+    
 }
-//@property (nonatomic, strong) NSMutableArray *_channelBtns;
 
 @end
 
@@ -139,8 +136,28 @@
     addLabel.frame = CGRectMake(630, 120, 120, 20);
     [contentView addSubview:addLabel];
     
-    SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(600, 135, 120, 120)];
-    [contentView addSubview:btn];
+    SlideButton *xielvSlider3 = [[SlideButton alloc] initWithFrame:CGRectMake(600, 135, 120, 120)];
+    xielvSlider3._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+    xielvSlider3._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+    [xielvSlider3 enableValueSet:YES];
+    xielvSlider3.delegate = self;
+    xielvSlider3.tag = 3;
+    [contentView addSubview:xielvSlider3];
+    
+    labelL1 = [[UILabel alloc] initWithFrame:CGRectMake(600, 135+120, 120, 20)];
+    labelL1.text = @"0";
+    labelL1.textAlignment = NSTextAlignmentCenter;
+    [contentView addSubview:labelL1];
+    labelL1.font = [UIFont systemFontOfSize:13];
+    labelL1.textColor = YELLOW_COLOR;
+}
+
+- (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
+    
+    int k = (value *24)-12;
+    NSString *valueStr= [NSString stringWithFormat:@"%d", k];
+    
+    labelL1.text = valueStr;
 }
 
 -(void) bianzuAction:(id) sender {

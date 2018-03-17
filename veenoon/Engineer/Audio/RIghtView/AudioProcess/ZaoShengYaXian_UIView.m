@@ -11,7 +11,7 @@
 #import "SlideButton.h"
 #import "GradeLineView.h"
 
-@interface ZaoShengYaXian_UIView()
+@interface ZaoShengYaXian_UIView()<SlideButtonDelegate>
 {
     UIButton *channelBtn;
     
@@ -19,6 +19,9 @@
     
     UILabel *yaxianL;
     UILabel *zaoshengL;
+    
+    SlideButton *btnJH1;
+    SlideButton *btnJH2;
 }
 @property (nonatomic, strong) NSMutableArray *_channelBtns;
 
@@ -153,29 +156,20 @@
     tL.font = [UIFont boldSystemFontOfSize:16];
     tL.textColor = [UIColor whiteColor];
     
-    SlideButton *btn1 = [[SlideButton alloc] initWithFrame:CGRectMake(x, y+50, 120, 120)];
-    [contentView addSubview:btn1];
+    btnJH1 = [[SlideButton alloc] initWithFrame:CGRectMake(x, y+125, 120, 120)];
+    btnJH1._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+    btnJH1._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+    [btnJH1 enableValueSet:YES];
+    btnJH1.delegate = self;
+    btnJH1.tag = 1;
+    [self addSubview:btnJH1];
     
-    yaxianL = [[UILabel alloc] initWithFrame:CGRectMake(x, y+45, 120, 120)];
-    yaxianL.text = @"10dB";
+    yaxianL = [[UILabel alloc] initWithFrame:CGRectMake(x, y+100, 120, 120)];
+    yaxianL.text = @"-12dB";
     yaxianL.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:yaxianL];
     yaxianL.font = [UIFont systemFontOfSize:13];
-    yaxianL.textColor = [UIColor whiteColor];
-    
-    tL = [[UILabel alloc] initWithFrame:CGRectMake(x-47, y+70, 120, 120)];
-    tL.text = @"0";
-    tL.textAlignment = NSTextAlignmentCenter;
-    [contentView addSubview:tL];
-    tL.font = [UIFont systemFontOfSize:13];
-    tL.textColor = [UIColor whiteColor];
-    
-    tL = [[UILabel alloc] initWithFrame:CGRectMake(x+43, y+70, 120, 120)];
-    tL.text = @"9";
-    tL.textAlignment = NSTextAlignmentCenter;
-    [contentView addSubview:tL];
-    tL.font = [UIFont systemFontOfSize:13];
-    tL.textColor = [UIColor whiteColor];
+    yaxianL.textColor = YELLOW_COLOR;
     
     x+=200;
     x+=10;
@@ -187,30 +181,34 @@
     tL.font = [UIFont boldSystemFontOfSize:16];
     tL.textColor = [UIColor whiteColor];
     
-    SlideButton *btn2 = [[SlideButton alloc] initWithFrame:CGRectMake(x, y+50, 120, 120)];
-    [contentView addSubview:btn2];
+    btnJH2 = [[SlideButton alloc] initWithFrame:CGRectMake(x, y+125, 120, 120)];
+    btnJH2._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+    btnJH2._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+    [btnJH2 enableValueSet:YES];
+    btnJH2.delegate = self;
+    btnJH2.tag = 2;
+    [self addSubview:btnJH2];
     
-    zaoshengL = [[UILabel alloc] initWithFrame:CGRectMake(x, y+45, 120, 120)];
-    zaoshengL.text = @"10dB";
+    zaoshengL = [[UILabel alloc] initWithFrame:CGRectMake(x, y+100, 120, 120)];
+    zaoshengL.text = @"-12dB";
     zaoshengL.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:zaoshengL];
     zaoshengL.font = [UIFont systemFontOfSize:13];
-    zaoshengL.textColor = [UIColor whiteColor];
+    zaoshengL.textColor = YELLOW_COLOR;
     
-    tL = [[UILabel alloc] initWithFrame:CGRectMake(x-47, y+70, 120, 120)];
-    tL.text = @"0";
-    tL.textAlignment = NSTextAlignmentCenter;
-    [contentView addSubview:tL];
-    tL.font = [UIFont systemFontOfSize:13];
-    tL.textColor = [UIColor whiteColor];
+}
+
+- (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
-    tL = [[UILabel alloc] initWithFrame:CGRectMake(x+43, y+70, 120, 120)];
-    tL.text = @"9";
-    tL.textAlignment = NSTextAlignmentCenter;
-    [contentView addSubview:tL];
-    tL.font = [UIFont systemFontOfSize:13];
-    tL.textColor = [UIColor whiteColor];
+    int k = (value *24)-12;
+    NSString *valueStr= [NSString stringWithFormat:@"%dB", k];
     
+    int tag = (int) slbtn.tag;
+    if (tag == 1) {
+        yaxianL.text = valueStr;
+    } else {
+        zaoshengL.text = valueStr;
+    }
 }
 
 @end

@@ -10,9 +10,6 @@
 #import "UIButton+Color.h"
 #import "CustomPickerView.h"
 #import "EngineerSliderView.h"
-#import "SlideButton.h"
-#import "BatteryView.h"
-#import "SignalView.h"
 #import "HandtoHandSettingsView.h"
 
 
@@ -29,7 +26,6 @@
     
     NSMutableArray *_buttonSeideArray;
     NSMutableArray *_buttonChannelArray;
-    NSMutableArray *_buttonNumberArray;
     
     NSMutableArray *_selectedBtnArray;
     
@@ -38,12 +34,10 @@
     BOOL isSettings;
     UIButton *okBtn;
 }
-@property(nonatomic, assign) NSMutableArray *_wirelessYaoBaoSysArray;
 
 @end
 
 @implementation EngineerHandtoHandViewCtrl
-@synthesize _wirelessYaoBaoSysArray;
 @synthesize _number;
 - (void) inintData {
     
@@ -57,7 +51,6 @@
     _buttonArray = [[NSMutableArray alloc] init];
     _buttonSeideArray = [[NSMutableArray alloc] init];
     _buttonChannelArray = [[NSMutableArray alloc] init];
-    _buttonNumberArray = [[NSMutableArray alloc] init];
     _selectedBtnArray = [[NSMutableArray alloc] init];
     [self inintData];
     
@@ -131,122 +124,83 @@
     int colNumber = ENGINEER_VIEW_COLUMN_N;
     int space = ENGINEER_VIEW_COLUMN_GAP;
     
-    NSMutableDictionary *dataDic = [_wirelessYaoBaoSysArray objectAtIndex:0];
-    NSMutableArray *dataArray = [dataDic objectForKey:@"value"];
-    
     for (int i = 0; i < self._number; i++) {
-        NSMutableDictionary *dataDic = [dataArray objectAtIndex:i];
+        NSMutableDictionary *dic;
+        if (self._handToHandSysArray && [self._handToHandSysArray count] > 0) {
+            dic = [self._handToHandSysArray objectAtIndex:i];
+        }
         
         int row = index/colNumber;
         int col = index%colNumber;
         int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+top;
         
-        SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(startX, startY, 120, 120)];
-        
-        UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
-        tapGesture.cancelsTouchesInView =  NO;
-        tapGesture.numberOfTapsRequired = 1;
-        tapGesture.view.tag = i;
-        [btn addGestureRecognizer:tapGesture];
-        
-        btn.tag = i;
-        [self.view addSubview:btn];
-        
-        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 - 30, 0, 60, 20)];
-        titleL.textAlignment = NSTextAlignmentCenter;
-        titleL.backgroundColor = [UIColor clearColor];
-        [btn addSubview:titleL];
-        titleL.font = [UIFont boldSystemFontOfSize:11];
-        titleL.textColor  = [UIColor whiteColor];
-        titleL.text = [NSString stringWithFormat:@"0%d",i+1];
-        [_buttonNumberArray addObject:titleL];
-        
-        titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 -50, btn.frame.size.height - 20, 100, 20)];
-        titleL.textAlignment = NSTextAlignmentCenter;
-        titleL.backgroundColor = [UIColor clearColor];
-        [btn addSubview:titleL];
-        titleL.font = [UIFont boldSystemFontOfSize:12];
-        titleL.textColor  = [UIColor whiteColor];
-        titleL.textAlignment = NSTextAlignmentCenter;
-        titleL.text = @"Channel";
-        [_buttonChannelArray addObject:titleL];
-        
-        UILongPressGestureRecognizer *longPress2 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed2:)];
-        
-        [btn addGestureRecognizer:longPress2];
-        
-        
-        UIImage *image;
-        NSString *huatongType = [dataDic objectForKey:@"type"];
-        if ([@"huatong" isEqualToString:huatongType]) {
-            image = [UIImage imageNamed:@"huatong_yellow_n.png"];
-        } else {
-            image = [UIImage imageNamed:@"yaobao_yellow_n.png"];
+        UIButton *scenarioBtn = [UIButton buttonWithColor:nil selColor:RGB(0, 89, 118)];
+        scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
+        scenarioBtn.clipsToBounds = YES;
+        scenarioBtn.layer.cornerRadius = 5;
+        scenarioBtn.layer.borderWidth = 2;
+        scenarioBtn.layer.borderColor = [UIColor clearColor].CGColor;
+        NSString *status;
+        if (dic) {
+            status = [dic objectForKey:@"status"];
         }
         
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-        imageView.backgroundColor = DARK_BLUE_COLOR;
-        imageView.frame = CGRectMake(btn.frame.origin.x+10, btn.frame.origin.y+10, 100, 100);
-        imageView.layer.cornerRadius = 10;
-        imageView.layer.borderWidth = 2;
-        imageView.layer.borderColor = RGB(0, 89, 118).CGColor;
-        imageView.clipsToBounds = YES;
+        [_buttonArray addObject:scenarioBtn];
         
-        imageView.tag = index;
-        imageView.userInteractionEnabled=YES;
-        imageView.layer.contentsGravity = kCAGravityCenter;
-        [self.view addSubview:imageView];
+        [scenarioBtn setImage:[UIImage imageNamed:@"dianyuanshishiqi_n.png"] forState:UIControlStateNormal];
+        [scenarioBtn setImage:[UIImage imageNamed:@"dianyuanshishiqi_s.png"] forState:UIControlStateHighlighted];
         
-        BatteryView *batter = [[BatteryView alloc] initWithFrame:CGRectZero];
-        batter.normalColor = YELLOW_COLOR;
-        [imageView addSubview:batter];
-        batter.center = CGPointMake(60, 18);
+        if ([status isEqualToString:@"ON"]) {
+            [scenarioBtn setImage:[UIImage imageNamed:@"dianyuanshishiqi_s.png"] forState:UIControlStateNormal];
+        }
+        scenarioBtn.tag = index;
+        [self.view addSubview:scenarioBtn];
         
-        NSString *dianliangStr = [dataDic objectForKey:@"dianliang"];
-        int dianliang = [dianliangStr intValue];
-        double dianliangDouble = 1.0f * dianliang / 100;
-        [batter setBatteryValue:dianliangDouble];
-        
-        SignalView *signal = [[SignalView alloc] initWithFrameAndStep:CGRectMake(70, 50, 30, 20) step:2];
-        [imageView addSubview:signal];
-        [signal setLightColor:YELLOW_COLOR];//SINGAL_COLOR
-        [signal setGrayColor:[UIColor colorWithWhite:1.0 alpha:0.6]];
-        NSString *sinalString = [dataDic objectForKey:@"signal"];
-        int signalInt = [sinalString intValue];
-        [signal setSignalValue:signalInt];
-        
-        titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, btn.frame.size.width-40, btn.frame.size.width-10, 20)];
-        titleL.backgroundColor = [UIColor clearColor];
-        [imageView addSubview:titleL];
-        titleL.font = [UIFont boldSystemFontOfSize:12];
-        titleL.textAlignment = NSTextAlignmentCenter;
-        titleL.textColor  = YELLOW_COLOR;
-        titleL.text = [dataDic objectForKey:@"name"];
-        imageView.hidden = YES;
-        
-        UILongPressGestureRecognizer *longPress3 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed3:)];
-        [imageView addGestureRecognizer:longPress3];
-        
-        [_imageViewArray addObject:imageView];
-        [_buttonArray addObject:btn];
+        [scenarioBtn addTarget:self
+                        action:@selector(scenarioAction:)
+              forControlEvents:UIControlEventTouchUpInside];
+        if (dic == nil) {
+            dic = [[NSMutableDictionary alloc] init];
+            NSString *nameStr = [@"Channel " stringByAppendingString:[NSString stringWithFormat:@"%d", index + 1]];
+            [dic setValue:nameStr forKey:@"name"];
+        }
+        [self createBtnLabel:scenarioBtn dataDic:dic];
         
         index++;
     }
 }
 
-- (void) didSliderValueChanged:(int)value object:(id)object {
-    float circleValue = (value +20.0f)/40.0f;
-    for (SlideButton *button in _selectedBtnArray) {
-        [button setCircleValue:circleValue];
+- (void) createBtnLabel:(UIButton*)sender dataDic:(NSMutableDictionary*) dataDic{
+    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, sender.frame.size.width, 20)];
+    titleL.textAlignment = NSTextAlignmentCenter;
+    titleL.backgroundColor = [UIColor clearColor];
+    [sender addSubview:titleL];
+    titleL.font = [UIFont boldSystemFontOfSize:11];
+    titleL.textColor  = [UIColor whiteColor];
+    
+    NSString *nameStr;
+    if (dataDic) {
+        nameStr = [dataDic objectForKey:@"name"];
+    } else {
+        nameStr = [NSString stringWithFormat:@"%d", 1];
     }
+    
+    titleL.text = nameStr;
+    
+    [_buttonChannelArray addObject:titleL];
 }
 
--(void)handleTapGesture:(UIGestureRecognizer*)gestureRecognizer {
-    int tag = gestureRecognizer.view.tag;
+- (void) didSliderValueChanged:(int)value object:(id)object {
     
-    SlideButton *btn;
-    for (SlideButton *button in _selectedBtnArray) {
+}
+
+-(void)scenarioAction:(id)sender {
+    UIButton *button = (UIButton*) sender;
+    int tag = (int) button.tag;
+    
+    UIButton *btn;
+    for (UIButton *button in _selectedBtnArray) {
         if (button.tag == tag) {
             btn = button;
             break;
@@ -254,66 +208,20 @@
     }
     // want to choose it
     if (btn == nil) {
-        SlideButton *button = [_buttonArray objectAtIndex:tag];
+        UIButton *button = [_buttonArray objectAtIndex:tag];
         [_selectedBtnArray addObject:button];
-        [button enableValueSet:YES];
         UILabel *chanelL = [_buttonChannelArray objectAtIndex:tag];
         chanelL.textColor = YELLOW_COLOR;
         
-        UILabel *numberL = [_buttonNumberArray objectAtIndex:tag];
-        numberL.textColor = YELLOW_COLOR;
+        [button setImage:[UIImage imageNamed:@"dianyuanshishiqi_s.png"] forState:UIControlStateNormal];
     } else {
         // remove it
         [_selectedBtnArray removeObject:btn];
-        [btn enableValueSet:NO];
         UILabel *chanelL = [_buttonChannelArray objectAtIndex:tag];
         chanelL.textColor = [UIColor whiteColor];
         
-        UILabel *numberL = [_buttonNumberArray objectAtIndex:tag];
-        numberL.textColor = [UIColor whiteColor];;
+        [button setImage:[UIImage imageNamed:@"dianyuanshishiqi_n.png"] forState:UIControlStateNormal];
     }
-}
-- (void) longPressed3:(id)sender{
-    
-    UILongPressGestureRecognizer *press = (UILongPressGestureRecognizer *)sender;
-    if (press.state == UIGestureRecognizerStateEnded) {
-        // no need anything here
-        return;
-    } else if (press.state == UIGestureRecognizerStateBegan) {
-        int index = (int) press.view.tag;
-        UIButton *button = [_buttonArray objectAtIndex:index];
-        UIImageView *imageView = [_imageViewArray objectAtIndex:index];
-        if (button.isHidden) {
-            button.hidden = NO;
-            imageView.hidden = YES;
-        } else {
-            button.hidden = YES;
-            imageView.hidden = NO;
-        }
-    }
-}
-
-- (void) longPressed2:(id)sender{
-    
-    UILongPressGestureRecognizer *press = (UILongPressGestureRecognizer *)sender;
-    if (press.state == UIGestureRecognizerStateEnded) {
-        // no need anything here
-        return;
-    } else if (press.state == UIGestureRecognizerStateBegan) {
-        int index = (int) press.view.tag;
-        UIButton *button = [_buttonArray objectAtIndex:index];
-        UIImageView *imageView = [_imageViewArray objectAtIndex:index];
-        if (button.isHidden) {
-            button.hidden = NO;
-            imageView.hidden = YES;
-        } else {
-            button.hidden = YES;
-            imageView.hidden = NO;
-        }
-    }
-}
-- (void) scenarioAction:(id)sender{
-    
 }
 
 - (void) sysSelectAction:(id)sender{

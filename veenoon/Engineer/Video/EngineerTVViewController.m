@@ -9,7 +9,7 @@
 #import "EngineerTVViewController.h"
 #import "UIButton+Color.h"
 #import "CustomPickerView.h"
-#import "TVViewRightView.h"
+#import "TVSettingsRightView.h"
 
 @interface EngineerTVViewController () <CustomPickerViewDelegate>{
     UIButton *_selectSysBtn;
@@ -21,7 +21,7 @@
     UIButton *_tanchuBtn;
     
     BOOL isSettings;
-    TVViewRightView *_rightView;
+    TVSettingsRightView *_rightView;
     UIButton *okBtn;
 }
 @end
@@ -76,7 +76,7 @@
     [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_selectSysBtn];
     
-    _tanchuBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    _tanchuBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
     _tanchuBtn.frame = CGRectMake(70, SCREEN_HEIGHT-140, 60, 60);
     _tanchuBtn.layer.cornerRadius = 5;
     _tanchuBtn.layer.borderWidth = 2;
@@ -93,7 +93,7 @@
     int playerLeft = 165;
     int playerHeight = 60;
     
-    UIButton *lastVideoUpBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    UIButton *lastVideoUpBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
     lastVideoUpBtn.frame = CGRectMake(230+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
     lastVideoUpBtn.layer.cornerRadius = 5;
     lastVideoUpBtn.layer.borderWidth = 2;
@@ -107,7 +107,7 @@
                        action:@selector(lastSingAction:)
              forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *okPlayerBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    UIButton *okPlayerBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
     okPlayerBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
     okPlayerBtn.layer.cornerRadius = 5;
     okPlayerBtn.layer.borderWidth = 2;
@@ -122,7 +122,7 @@
     [okPlayerBtn addTarget:self action:@selector(audioPlayHoldAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *volumnUpBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    UIButton *volumnUpBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
     volumnUpBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-585+playerHeight, 80, 80);
     volumnUpBtn.layer.cornerRadius = 5;
     volumnUpBtn.layer.borderWidth = 2;
@@ -136,7 +136,7 @@
                     action:@selector(volumnAddAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *nextPlayBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    UIButton *nextPlayBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
     nextPlayBtn.frame = CGRectMake(400+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
     nextPlayBtn.layer.cornerRadius = 5;
     nextPlayBtn.layer.borderWidth = 2;
@@ -150,7 +150,7 @@
                     action:@selector(nextSingAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *volumnDownBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    UIButton *volumnDownBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
     volumnDownBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-415+playerHeight, 80, 80);
     volumnDownBtn.layer.cornerRadius = 5;
     volumnDownBtn.layer.borderWidth = 2;
@@ -218,7 +218,7 @@
 }
 - (void) okAction:(id)sender{
     if (!isSettings) {
-        _rightView = [[TVViewRightView alloc]
+        _rightView = [[TVSettingsRightView alloc]
                       initWithFrame:CGRectMake(SCREEN_WIDTH-300,
                                                64, 300, SCREEN_HEIGHT-114)];
         [self.view addSubview:_rightView];

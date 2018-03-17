@@ -74,7 +74,7 @@
     [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_selectSysBtn];
     
-    _luboBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    _luboBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
     _luboBtn.frame = CGRectMake(70, SCREEN_HEIGHT-140, 60, 60);
     _luboBtn.layer.cornerRadius = 5;
     _luboBtn.layer.borderWidth = 2;
@@ -99,7 +99,7 @@
     titleL.textAlignment=NSTextAlignmentCenter;
     titleL.text = @"投影幕";
     
-    UIButton *yingmuUpBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    UIButton *yingmuUpBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
     yingmuUpBtn.frame = CGRectMake(280+playerLeft, SCREEN_HEIGHT-585+playerHeight, 80, 80);
     yingmuUpBtn.layer.cornerRadius = 5;
     yingmuUpBtn.layer.borderWidth = 2;
@@ -113,7 +113,7 @@
                     action:@selector(yingmuUpAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *yingmuStopBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    UIButton *yingmuStopBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
     yingmuStopBtn.frame = CGRectMake(280+playerLeft, SCREEN_HEIGHT-485+playerHeight, 80, 80);
     yingmuStopBtn.layer.cornerRadius = 5;
     yingmuStopBtn.layer.borderWidth = 2;
@@ -129,7 +129,7 @@
             forControlEvents:UIControlEventTouchUpInside];
     
     
-    UIButton *yingmuDownBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    UIButton *yingmuDownBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
     yingmuDownBtn.frame = CGRectMake(280+playerLeft, SCREEN_HEIGHT-385+playerHeight, 80, 80);
     yingmuDownBtn.layer.cornerRadius = 5;
     yingmuDownBtn.layer.borderWidth = 2;
@@ -152,7 +152,7 @@
     titleL.textAlignment=NSTextAlignmentCenter;
     titleL.text = @"投影机";
     
-    UIButton *yingjiUpBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    UIButton *yingjiUpBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
     yingjiUpBtn.frame = CGRectMake(455+playerLeft, SCREEN_HEIGHT-585+playerHeight, 80, 80);
     yingjiUpBtn.layer.cornerRadius = 5;
     yingjiUpBtn.layer.borderWidth = 2;
@@ -166,7 +166,7 @@
                     action:@selector(yingjiUpAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *yingjiStopBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    UIButton *yingjiStopBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
     yingjiStopBtn.frame = CGRectMake(455+playerLeft, SCREEN_HEIGHT-485+playerHeight, 80, 80);
     yingjiStopBtn.layer.cornerRadius = 5;
     yingjiStopBtn.layer.borderWidth = 2;
@@ -181,7 +181,7 @@
                       action:@selector(yingjiStopAction:)
             forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *yingjiDownBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    UIButton *yingjiDownBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
     yingjiDownBtn.frame = CGRectMake(455+playerLeft, SCREEN_HEIGHT-385+playerHeight, 80, 80);
     yingjiDownBtn.layer.cornerRadius = 5;
     yingjiDownBtn.layer.borderWidth = 2;
@@ -198,7 +198,7 @@
     playerLeft = 15;
     playerHeight=-40;
     
-    UIButton *hmi1Btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    UIButton *hmi1Btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
     hmi1Btn.frame = CGRectMake(155+playerLeft, SCREEN_HEIGHT-435+playerHeight, 80, 80);
     hmi1Btn.layer.cornerRadius = 5;
     hmi1Btn.layer.borderWidth = 2;
@@ -213,7 +213,7 @@
                       action:@selector(hmi1Action:)
             forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *hmi2Btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    UIButton *hmi2Btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
     hmi2Btn.frame = CGRectMake(255+playerLeft, SCREEN_HEIGHT-435+playerHeight, 80, 80);
     hmi2Btn.layer.cornerRadius = 5;
     hmi2Btn.layer.borderWidth = 2;
@@ -229,7 +229,7 @@
             forControlEvents:UIControlEventTouchUpInside];
     
     
-    UIButton *vgaBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    UIButton *vgaBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
     vgaBtn.frame = CGRectMake(155+playerLeft, SCREEN_HEIGHT-335+playerHeight, 80, 80);
     vgaBtn.layer.cornerRadius = 5;
     vgaBtn.layer.borderWidth = 2;
@@ -244,7 +244,7 @@
                       action:@selector(vgaAction:)
             forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *netBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    UIButton *netBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
     netBtn.frame = CGRectMake(255+playerLeft, SCREEN_HEIGHT-335+playerHeight, 80, 80);
     netBtn.layer.cornerRadius = 5;
     netBtn.layer.borderWidth = 2;

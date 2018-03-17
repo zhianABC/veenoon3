@@ -136,7 +136,7 @@
             y+=sp;
         }
         
-        UIButton *btn = [UIButton buttonWithColor:rectColor selColor:nil];
+        UIButton *btn = [UIButton buttonWithColor:rectColor selColor:M_GREEN_COLOR];
         btn.frame = CGRectMake(xx, y, w, w);
         [_footerView addSubview:btn];
         btn.layer.cornerRadius = 5;

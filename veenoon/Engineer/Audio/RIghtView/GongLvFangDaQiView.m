@@ -11,23 +11,20 @@
 #import "CustomPickerView.h"
 #import "ComSettingView.h"
 
-@interface GongLvFangDaQiView () <CustomPickerViewDelegate> {
+@interface GongLvFangDaQiView () <CustomPickerViewDelegate, UITextFieldDelegate> {
     
     ComSettingView *_com;
-    UIButton *btnSelectSecs;
-    int gonglvNumber;
+    UITextField *ipTextField;
     
-    CustomPickerView *_picker;
-    
-    UIImageView *icon;
-    UILabel *line;
-    
-    NSMutableArray *_btns;
+    UIView *_footerView;
 }
+@property (nonatomic, strong) NSMutableArray *_btns;
+@property (nonatomic) int _numOfChannel;
 @end
 
 @implementation GongLvFangDaQiView
-
+@synthesize _btns;
+@synthesize _numOfChannel;
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.
@@ -41,87 +38,38 @@
     if(self = [super initWithFrame:frame]) {
         self.backgroundColor = RGB(0, 89, 118);
         
-        UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 100)];
-        [self addSubview:headView];
+        _numOfChannel= 8;
         
-        int startX = 20;
-        int top = 60;
-        
-        gonglvNumber = 4;
-        
-        _btns = [[NSMutableArray alloc] init];
-        
-        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(startX, top, 60, 40)];
+        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(15, 25, 40, 30)];
         titleL.backgroundColor = [UIColor clearColor];
         [self addSubview:titleL];
         titleL.font = [UIFont systemFontOfSize:13];
         titleL.textColor  = [UIColor colorWithWhite:1.0 alpha:0.8];
-        titleL.text = @"输入源";
+        titleL.text = @"IP地址";
         
-        icon = [[UIImageView alloc]
-                             initWithFrame:CGRectMake(frame.size.width-15, top+15, 10, 10)];
-        icon.image = [UIImage imageNamed:@"remote_video_down.png"];
-        [self addSubview:icon];
-        icon.alpha = 0.8;
-        icon.layer.contentsGravity = kCAGravityResizeAspect;
+        ipTextField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(titleL.frame)+30, 25, self.bounds.size.width - 35 - CGRectGetMaxX(titleL.frame), 30)];
+        ipTextField.delegate = self;
+        ipTextField.backgroundColor = [UIColor clearColor];
+        ipTextField.returnKeyType = UIReturnKeyDone;
+        ipTextField.text = @"192.168.1.100";
+        ipTextField.textColor = [UIColor whiteColor];
+        ipTextField.borderStyle = UITextBorderStyleRoundedRect;
+        ipTextField.textAlignment = NSTextAlignmentRight;
+        ipTextField.font = [UIFont systemFontOfSize:13];
+        ipTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        [self addSubview:ipTextField];
         
-        btnSelectSecs = [UIButton buttonWithType:UIButtonTypeCustom];
-        [btnSelectSecs setTitle:@"1+2" forState:UIControlStateNormal];
-        btnSelectSecs.frame = CGRectMake(frame.size.width-80, top, 80, 40);
-        [self addSubview:btnSelectSecs];
-        btnSelectSecs.titleLabel.font = [UIFont systemFontOfSize:13];
-        
-        [btnSelectSecs addTarget:self
-                          action:@selector(chooseSecs:)
-                forControlEvents:UIControlEventTouchUpInside];
-        
-        _picker = [[CustomPickerView alloc]
-                   initWithFrame:CGRectMake(0, CGRectGetMaxY(btnSelectSecs.frame)+5, self.frame.size.width, 160) withGrayOrLight:@"picker_player.png"];
+        _footerView = [[UIView alloc] initWithFrame:CGRectMake(0,self.bounds.size.height - 160,
+                                                               self.frame.size.width,
+                                                               160)];
+        [self addSubview:_footerView];
+        _footerView.backgroundColor = M_GREEN_COLOR;
         
         
-        _picker._pickerDataArray = @[@{@"values":@[@"1", @"1+2", @"3"]}];
+        [self layoutFooter];
         
-        [self addSubview:_picker];
-        _picker._selectColor = YELLOW_COLOR;
-        _picker._rowNormalColor = [UIColor whiteColor];
-        _picker.delegate_ = self;
-        [_picker selectRow:0 inComponent:0];
-        _picker.hidden = YES;
-        
-        
-        line = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(btnSelectSecs.frame)+10,
-                                                                  self.frame.size.width, 1)];
-        line.backgroundColor =  M_GREEN_LINE;
-        [self addSubview:line];
-        
-        int colNumber = 4;
-        int space = 5;
-        int cellWidth = 115/2;
-        int cellHeight = 115/2;
-        int leftRight = (self.frame.size.width - 4*cellWidth - 3*5)/2;
-        int top2 = self.frame.size.height - 120;
-        UIColor *rectColor = RGB(0, 146, 174);
-        
-        for (int index = 0; index < gonglvNumber; index++) {
-            int row = index/colNumber;
-            int col = index%colNumber;
-            int startX = col*cellWidth+col*space+leftRight;
-            int startY = row*cellHeight+space*row+top2;
-            
-            UIButton *scenarioBtn = [UIButton buttonWithColor:rectColor selColor:nil];
-            scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
-            scenarioBtn.clipsToBounds = YES;
-            scenarioBtn.layer.cornerRadius = 5;
-            scenarioBtn.tag = index;
-            [self addSubview:scenarioBtn];
-            int titleInt = index + 1;
-            NSString *string = [NSString stringWithFormat:@"%d",titleInt];
-            [scenarioBtn setTitle:string forState:UIControlStateNormal];
-            [scenarioBtn addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
-            scenarioBtn.titleLabel.font = [UIFont systemFontOfSize:15];
-            
-            [_btns addObject:scenarioBtn];
-        }
+        UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 30)];
+        [self addSubview:headView];
         
         UISwipeGestureRecognizer *swip = [[UISwipeGestureRecognizer alloc] initWithTarget:self
                                                                                    action:@selector(switchComSetting)];
@@ -136,15 +84,57 @@
     return self;
 }
 
-- (void) didConfirmPickerValue:(NSString*) pickerValue{
+- (void)layoutFooter{
     
-    [btnSelectSecs setTitle:pickerValue forState:UIControlStateNormal];
+    [[_footerView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
-    line.frame = CGRectMake(0, CGRectGetMaxY(btnSelectSecs.frame)+10,
-                            self.frame.size.width, 1);
+    UIColor *rectColor = RGB(0, 146, 174);
     
-    _picker.hidden = YES;
+    self._btns = [NSMutableArray array];
+    
+    int w = 50;
+    int sp = 8;
+    int y = (160 - w*2 - sp)/2;
+    int x = (self.frame.size.width - 4*w - 3*sp)/2;
+    for(int i = 0; i < _numOfChannel; i++)
+    {
+        int col = i%4;
+        int xx = x + col*w + col*sp;
+        
+        if(i && i%4 == 0)
+        {
+            y+=w;
+            y+=sp;
+        }
+        
+        UIButton *btn = [UIButton buttonWithColor:rectColor selColor:M_GREEN_COLOR];
+        btn.frame = CGRectMake(xx, y, w, w);
+        [_footerView addSubview:btn];
+        btn.layer.cornerRadius = 5;
+        btn.clipsToBounds = YES;
+        [btn setTitle:[NSString stringWithFormat:@"%d", i+1]
+             forState:UIControlStateNormal];
+        btn.tag = i;
+        [btn setTitleColor:[UIColor whiteColor]
+                  forState:UIControlStateNormal];
+        btn.titleLabel.font = [UIFont systemFontOfSize:14];
+        [btn addTarget:self
+                action:@selector(buttonAction:)
+      forControlEvents:UIControlEventTouchUpInside];
+        
+        [_btns addObject:btn];
+        
+        if (i == 6) {
+            [btn setTitle:@"全部"
+                 forState:UIControlStateNormal];
+            break;
+        }
+    }
+    
+    [self chooseChannelAtTagIndex:0];
+    
 }
+
 - (void) buttonAction:(UIButton*)btn{
     
     [self chooseChannelAtTagIndex:(int)btn.tag];
@@ -166,12 +156,21 @@
         }
     }
 }
-
-- (void) chooseSecs:(id)sender {
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
     
-    line.frame = CGRectMake(0, CGRectGetMaxY(_picker.frame)+10,
-                            self.frame.size.width, 1);
-    _picker.hidden = NO;
+    //_curIndex = (int)textField.tag;
+    
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    
+    [textField resignFirstResponder];
+    
+    return YES;
 }
 
 - (void) switchComSetting{
