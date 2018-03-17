@@ -26,6 +26,10 @@
     BOOL isSettings;
     LuBoJiRightView *_rightView;
     UIButton *okBtn;
+    
+    UIButton *luboBtn;
+    UIButton *actionBtn;
+    UIButton *stopBtn;
 }
 @property (nonatomic, strong) NSArray *_inputs;
 @property (nonatomic, strong) NSMutableArray *_outputs;
@@ -169,6 +173,63 @@
     
     self._outputs = [NSMutableArray array];
     [self drawSplice:_outputScreenView w:w h:h type:0 spacex:50 spacey:30];
+    
+    int gap = 60;
+    luboBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    luboBtn.frame = CGRectMake(SCREEN_WIDTH/2-10-20-gap, SCREEN_HEIGHT-100, 20, 20);
+    luboBtn.layer.cornerRadius = 5;
+    luboBtn.layer.borderWidth = 2;
+    luboBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    luboBtn.clipsToBounds = YES;
+    [luboBtn setImage:[UIImage imageNamed:@"engineer_lobo_lu_n.png"] forState:UIControlStateNormal];
+    [luboBtn setImage:[UIImage imageNamed:@"engineer_lobo_lu_s.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:luboBtn];
+    
+    [luboBtn addTarget:self
+                 action:@selector(luboAction:)
+       forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    actionBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    actionBtn.frame = CGRectMake(SCREEN_WIDTH/2-10, SCREEN_HEIGHT-100, 20, 20);
+    actionBtn.layer.cornerRadius = 5;
+    actionBtn.layer.borderWidth = 2;
+    actionBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    actionBtn.clipsToBounds = YES;
+    [actionBtn setImage:[UIImage imageNamed:@"engineer_lobo_fa_n.png"] forState:UIControlStateNormal];
+    [actionBtn setImage:[UIImage imageNamed:@"engineer_lobo_fa_s.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:actionBtn];
+    
+    [actionBtn addTarget:self
+                   action:@selector(actionAction:)
+         forControlEvents:UIControlEventTouchUpInside];
+    
+    stopBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    stopBtn.frame = CGRectMake(SCREEN_WIDTH/2 + 10 +gap, SCREEN_HEIGHT-100, 20, 20);
+    stopBtn.layer.cornerRadius = 5;
+    stopBtn.layer.borderWidth = 2;
+    stopBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    stopBtn.clipsToBounds = YES;
+    [stopBtn setImage:[UIImage imageNamed:@"engineer_lobo_st_n.png"] forState:UIControlStateNormal];
+    [stopBtn setImage:[UIImage imageNamed:@"engineer_lobo_st_s.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:stopBtn];
+    
+    [stopBtn addTarget:self
+                    action:@selector(stopAction:)
+          forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void) luboAction:(id) sender {
+    
+}
+
+- (void) actionAction:(id) sender {
+    
+}
+
+- (void) stopAction:(id) sender {
+    
 }
 
 - (void) didEndTouchedStickerLayer:(DragCellView*)layer sticker:(UIImageView*)sticker{
