@@ -66,8 +66,44 @@
     @"1", @"singnal",
     @"huatong", @"type",
     @"90", @"dianliang", nil];
+    NSMutableDictionary *wuxianDic4 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"huangliurong3", @"name",
+                                       @"off", @"status",
+                                       @"1", @"singnal",
+                                       @"huatong", @"type",
+                                       @"90", @"dianliang", nil];
+    NSMutableDictionary *wuxianDic5 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"huangliurong3", @"name",
+                                       @"off", @"status",
+                                       @"1", @"singnal",
+                                       @"huatong", @"type",
+                                       @"90", @"dianliang", nil];
+    NSMutableDictionary *wuxianDic6 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"huangliurong3", @"name",
+                                       @"off", @"status",
+                                       @"1", @"singnal",
+                                       @"huatong", @"type",
+                                       @"90", @"dianliang", nil];
+    NSMutableDictionary *wuxianDic7 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"huangliurong3", @"name",
+                                       @"off", @"status",
+                                       @"1", @"singnal",
+                                       @"huatong", @"type",
+                                       @"90", @"dianliang", nil];
+    NSMutableDictionary *wuxianDic8 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"huangliurong3", @"name",
+                                       @"off", @"status",
+                                       @"1", @"singnal",
+                                       @"huatong", @"type",
+                                       @"90", @"dianliang", nil];
+    NSMutableDictionary *wuxianDic9 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"huangliurong3", @"name",
+                                       @"off", @"status",
+                                       @"1", @"singnal",
+                                       @"huatong", @"type",
+                                       @"90", @"dianliang", nil];
+    NSMutableDictionary *wuxianDic10 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"huangliurong3", @"name",
+                                       @"off", @"status",
+                                       @"1", @"singnal",
+                                       @"huatong", @"type",
+                                       @"90", @"dianliang", nil];
     
-    NSMutableArray *array1 = [NSMutableArray arrayWithObjects:wuxianDic1, wuxianDic2, wuxianDic3, nil];
+    NSMutableArray *array1 = [NSMutableArray arrayWithObjects:wuxianDic1, wuxianDic2, wuxianDic3, wuxianDic4
+                              ,wuxianDic5,wuxianDic6,wuxianDic7,wuxianDic8,wuxianDic9,wuxianDic10,nil];
     NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                  @"001", @"name",
                                  array1, @"value", nil];
@@ -149,13 +185,13 @@
     _zengyiSlider.center = CGPointMake(SCREEN_WIDTH - 150, SCREEN_HEIGHT/2);
     
     int index = 0;
-    int top = 200;
+    int top = ENGINEER_VIEW_COMPONENT_TOP;
     
     int leftRight = ENGINEER_VIEW_LEFT;
     
     int cellWidth = 120;
     int cellHeight = 240;
-    int colNumber = ENGINEER_VIEW_COLUMN_N;
+    int colNumber = ENGINEER_VIEW_COLUMN_N-2;
     int space = ENGINEER_VIEW_COLUMN_GAP;
     
     NSMutableDictionary *dataDic = [_wirelessYaoBaoSysArray objectAtIndex:0];
@@ -175,12 +211,12 @@
             int startX = col*cellWidth+col*space+leftRight;
             int startY = row*cellHeight+space*row+top;
             
-            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(startX, startY, 120, 240)];
+            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(startX, startY, cellWidth, 240)];
             view.userInteractionEnabled = YES;
             view.backgroundColor = [UIColor clearColor];
             [self.view addSubview:view];
             
-            SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(0, 0, 120, 120)];
+            SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(0, 0, cellWidth, 120)];
             [view addSubview:btn];
             
             
@@ -211,7 +247,7 @@
             titleL.text = @"Channel";
             [_buttonChannelArray addObject:titleL];
             
-            UIView *signalView = [[UIView alloc] initWithFrame:CGRectMake(0, 120, 120, 120)];
+            UIView *signalView = [[UIView alloc] initWithFrame:CGRectMake(0, 120, cellWidth, 120)];
             [view addSubview:signalView];
             signalView.alpha=0.8;
             [signalArray addObject:signalView];

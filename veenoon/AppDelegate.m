@@ -11,7 +11,7 @@
 #import "CMNavigationController.h"
 #import "WellcomeViewController.h"
 #import "HomeViewController.h"
-#import "EngineerPresetScenarioViewCtrl.h"
+#import "EngineerAudioProcessViewCtrl.h"
 
 @interface AppDelegate ()
 {
@@ -30,7 +30,7 @@
     [session setActive:YES error:nil];
     [session setCategory:AVAudioSessionCategoryPlayback error:nil];
     
-     WellcomeViewController *wellcome = [[WellcomeViewController alloc] init];
+     EngineerAudioProcessViewCtrl *wellcome = [[EngineerAudioProcessViewCtrl alloc] init];
     _naviRoot = [[CMNavigationController alloc] initWithRootViewController:wellcome];
     _naviRoot.navigationBarHidden = YES;
     self.window.rootViewController = _naviRoot;

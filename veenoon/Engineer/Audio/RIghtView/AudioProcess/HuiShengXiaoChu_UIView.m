@@ -86,7 +86,7 @@
     zhitongBtn.layer.borderWidth = 2;
     zhitongBtn.layer.borderColor = [UIColor clearColor].CGColor;;
     zhitongBtn.clipsToBounds = YES;
-    [zhitongBtn setTitle:@"直通" forState:UIControlStateNormal];
+    [zhitongBtn setTitle:@"启用" forState:UIControlStateNormal];
     zhitongBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     [zhitongBtn addTarget:self
                    action:@selector(zhitongBtnAction:)

@@ -54,7 +54,7 @@
                                        @"huatong", @"type",
                                        @"90", @"dianliang", nil];
     
-    NSMutableArray *array1 = [NSMutableArray arrayWithObjects:wuxianDic1, wuxianDic2, wuxianDic3, nil];
+    NSMutableArray *array1 = [NSMutableArray arrayWithObjects:wuxianDic1, wuxianDic2, wuxianDic3, wuxianDic1, wuxianDic2, wuxianDic3, wuxianDic1, wuxianDic2, wuxianDic3, nil];
     NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                  @"001", @"name",
                                  array1, @"value", nil];
@@ -128,7 +128,7 @@
     _zengyiSlider.center = CGPointMake(SCREEN_WIDTH - 150, SCREEN_HEIGHT/2);
     
     int index = 0;
-    int top = 250;
+    int top = ENGINEER_VIEW_COMPONENT_TOP;
     
     int leftRight = ENGINEER_VIEW_LEFT;
     

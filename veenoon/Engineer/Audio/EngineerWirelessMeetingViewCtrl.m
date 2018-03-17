@@ -82,7 +82,7 @@
     [self.view addSubview:_selectSysBtn];
     
     int index = 0;
-    int top = 250;
+    int top = ENGINEER_VIEW_COMPONENT_TOP;
     
     int leftRight = ENGINEER_VIEW_LEFT;
     
@@ -176,7 +176,7 @@
     _luboBtn.clipsToBounds = YES;
     [_luboBtn setImage:[UIImage imageNamed:@"wireless_usb_n.png"] forState:UIControlStateNormal];
     [_luboBtn setImage:[UIImage imageNamed:@"wireless_usb_s.png"] forState:UIControlStateHighlighted];
-    [self.view addSubview:_luboBtn];
+//    [self.view addSubview:_luboBtn];
     
     [_luboBtn addTarget:self
                  action:@selector(luboAction:)
@@ -218,16 +218,9 @@
     [sender addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:11];
     titleL.textColor  = [UIColor whiteColor];
-    titleL.text = [dataDic objectForKey:@"name"];
     
-    titleL = [[UILabel alloc] initWithFrame:CGRectMake(sender.frame.size.width/2 -40, sender.frame.size.height - 20, 80, 20)];
-    titleL.textAlignment = NSTextAlignmentCenter;
-    titleL.backgroundColor = [UIColor clearColor];
-    [sender addSubview:titleL];
-    titleL.font = [UIFont boldSystemFontOfSize:12];
-    titleL.textColor  = [UIColor whiteColor];
-    titleL.textAlignment = NSTextAlignmentCenter;
-    titleL.text = @"Channel";
+    NSString *value = [@"Channel " stringByAppendingString:[dataDic objectForKey:@"name"]];
+    titleL.text = value;
 }
 
 - (void) sysSelectAction:(id)sender{

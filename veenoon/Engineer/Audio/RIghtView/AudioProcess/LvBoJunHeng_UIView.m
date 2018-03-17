@@ -11,13 +11,19 @@
 #import "UIButton+Color.h"
 #import "SlideButton.h"
 
-@interface LvBoJunHeng_UIView() {
+@interface LvBoJunHeng_UIView() <SlideButtonDelegate>{
     SlideButton *xielvSlider;
-    SlideButton *xielv2Slider;
+    SlideButton *xielvSlider2;
     
     SlideButton *fazhi;
     SlideButton *qidongshijian;
     SlideButton *huifushijian;
+    
+    UILabel *xielvL1;
+    UILabel *xielvL2;
+    UILabel *fazhiL;
+    UILabel *huifushijianL;
+    UILabel *qidongshijianL;
 }
 
 @property (nonatomic, strong) NSMutableArray *_boduanChannelBtns;
@@ -95,13 +101,13 @@
     addLabel2.text = @"类型";
     addLabel2.font = [UIFont systemFontOfSize: 13];
     addLabel2.textColor = [UIColor whiteColor];
-    addLabel2.frame = CGRectMake(10, 20, view.frame.size.width, 25);
+    addLabel2.frame = CGRectMake(10, 35, view.frame.size.width, 25);
     [view addSubview:addLabel2];
     
     int btnStartX = 10;
     int btnY = 50;
     UIButton *leixingBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
-    leixingBtn.frame = CGRectMake(btnStartX, btnY, 100, 30);
+    leixingBtn.frame = CGRectMake(btnStartX+60, btnY-20, 100, 30);
     leixingBtn.layer.cornerRadius = 5;
     leixingBtn.layer.borderWidth = 2;
     leixingBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -125,7 +131,7 @@
     addLabel3.text = @"频率 (HZ)";
     addLabel3.font = [UIFont systemFontOfSize: 13];
     addLabel3.textColor = [UIColor whiteColor];
-    addLabel3.frame = CGRectMake(CGRectGetMaxX(leixingBtn.frame)+20, btnY, 75, 25);
+    addLabel3.frame = CGRectMake(CGRectGetMaxX(leixingBtn.frame)-35, btnY+20, 75, 25);
     [view addSubview:addLabel3];
     
     btnY+=35;
@@ -159,10 +165,23 @@
     [view addSubview:xielvBtn];
     
     xielvSlider = [[SlideButton alloc] initWithFrame:CGRectMake(100, 70, 120, 120)];
+    xielvSlider._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+    xielvSlider._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+    [xielvSlider enableValueSet:YES];
+    xielvSlider.delegate = self;
+    xielvSlider.tag = 1;
     [view addSubview:xielvSlider];
     
+    xielvL1 = [[UILabel alloc] initWithFrame:CGRectMake(100, 180, 120, 20)];
+    xielvL1.text = @"-12dB";
+    xielvL1.textAlignment = NSTextAlignmentCenter;
+    [view addSubview:xielvL1];
+    xielvL1.font = [UIFont systemFontOfSize:13];
+    xielvL1.textColor = YELLOW_COLOR;
+    
+    
     UIButton *zhitongBtn1 = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
-    zhitongBtn1.frame = CGRectMake(view.frame.size.width/2 - 25, view.frame.size.height - 30, 50, 25);
+    zhitongBtn1.frame = CGRectMake(10, view.frame.size.height - 30, 50, 25);
     zhitongBtn1.layer.cornerRadius = 5;
     zhitongBtn1.layer.borderWidth = 2;
     zhitongBtn1.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -268,7 +287,7 @@
     int startX = 120;
     int gap = 100;
     int labelY = 80;
-    int labelBtnGap = 5;
+    int labelBtnGap = 0;
     int weiYi = 20;
     
     UILabel *addLabel = [[UILabel alloc] init];
@@ -279,7 +298,19 @@
     [view addSubview:addLabel];
     
     fazhi = [[SlideButton alloc] initWithFrame:CGRectMake(startX, labelY+labelBtnGap, 120, 120)];
+    fazhi._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+    fazhi._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+    [fazhi enableValueSet:YES];
+    fazhi.delegate = self;
+    fazhi.tag = 3;
     [view addSubview:fazhi];
+    
+    fazhiL = [[UILabel alloc] initWithFrame:CGRectMake(startX, labelY+labelBtnGap+95, 120, 20)];
+    fazhiL.text = @"-12dB";
+    fazhiL.textAlignment = NSTextAlignmentCenter;
+    [view addSubview:fazhiL];
+    fazhiL.font = [UIFont systemFontOfSize:13];
+    fazhiL.textColor = YELLOW_COLOR;
     
     UILabel *addLabel23 = [[UILabel alloc] init];
     addLabel23.text = @"增益 (dB)";
@@ -289,7 +320,19 @@
     [view addSubview:addLabel23];
     
     qidongshijian = [[SlideButton alloc] initWithFrame:CGRectMake(startX+gap, labelY+labelBtnGap, 120, 120)];
+    qidongshijian._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+    qidongshijian._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+    [qidongshijian enableValueSet:YES];
+    qidongshijian.delegate = self;
+    qidongshijian.tag = 4;
     [view addSubview:qidongshijian];
+    
+    qidongshijianL = [[UILabel alloc] initWithFrame:CGRectMake(startX+gap, labelY+labelBtnGap+95, 120, 20)];
+    qidongshijianL.text = @"-12dB";
+    qidongshijianL.textAlignment = NSTextAlignmentCenter;
+    [view addSubview:qidongshijianL];
+    qidongshijianL.font = [UIFont systemFontOfSize:13];
+    qidongshijianL.textColor = YELLOW_COLOR;
     
     UILabel *addLabel224= [[UILabel alloc] init];
     addLabel224.text = @"Q";
@@ -299,11 +342,22 @@
     [view addSubview:addLabel224];
     
     huifushijian = [[SlideButton alloc] initWithFrame:CGRectMake(startX+gap*2, labelY+labelBtnGap, 120, 120)];
+    huifushijian._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+    huifushijian._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+    [huifushijian enableValueSet:YES];
+    huifushijian.delegate = self;
+    huifushijian.tag = 5;
     [view addSubview:huifushijian];
     
+    huifushijianL = [[UILabel alloc] initWithFrame:CGRectMake(startX+gap*2, labelY+labelBtnGap+95, 120, 20)];
+    huifushijianL.text = @"-12dB";
+    huifushijianL.textAlignment = NSTextAlignmentCenter;
+    [view addSubview:huifushijianL];
+    huifushijianL.font = [UIFont systemFontOfSize:13];
+    huifushijianL.textColor = YELLOW_COLOR;
     
     UIButton *zhitongBtn1 = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
-    zhitongBtn1.frame = CGRectMake(view.frame.size.width/2 - 25, view.frame.size.height - 30, 50, 25);
+    zhitongBtn1.frame = CGRectMake(10, view.frame.size.height - 30, 50, 25);
     zhitongBtn1.layer.cornerRadius = 5;
     zhitongBtn1.layer.borderWidth = 2;
     zhitongBtn1.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -315,6 +369,38 @@
           forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:zhitongBtn1];
 }
+
+- (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
+    
+    int tag = (int) slbtn.tag;
+    if (tag == 1) {
+        int k = (value *24)-12;
+        NSString *valueStr= [NSString stringWithFormat:@"%dB", k];
+        
+        xielvL1.text = valueStr;
+    } else if (tag == 2) {
+        int k = (value *24)-12;
+        NSString *valueStr= [NSString stringWithFormat:@"%dB", k];
+        
+        xielvL2.text = valueStr;
+    } else if (tag == 3) {
+        int k = (value *24)-12;
+        NSString *valueStr= [NSString stringWithFormat:@"%dB", k];
+        
+        fazhiL.text = valueStr;
+    } else if (tag == 4) {
+        int k = (value *2000)-1000;
+        NSString *valueStr= [NSString stringWithFormat:@"%d", k];
+        
+        qidongshijianL.text = valueStr;
+    } else {
+        int k = (value *2000)-1000;
+        NSString *valueStr= [NSString stringWithFormat:@"%d", k];
+        
+        huifushijianL.text = valueStr;
+    }
+}
+
 - (void) leixingBtn2Action:(id)sender {
     
 }
@@ -338,13 +424,13 @@
     addLabel2.text = @"类型";
     addLabel2.font = [UIFont systemFontOfSize: 13];
     addLabel2.textColor = [UIColor whiteColor];
-    addLabel2.frame = CGRectMake(10, 20, view.frame.size.width, 25);
+    addLabel2.frame = CGRectMake(10, 35, view.frame.size.width, 25);
     [view addSubview:addLabel2];
     
     int btnStartX = 10;
     int btnY = 50;
     UIButton *leixingBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
-    leixingBtn.frame = CGRectMake(btnStartX, btnY, 100, 30);
+    leixingBtn.frame = CGRectMake(btnStartX+60, btnY-20, 100, 30);
     leixingBtn.layer.cornerRadius = 5;
     leixingBtn.layer.borderWidth = 2;
     leixingBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -368,7 +454,7 @@
     addLabel3.text = @"频率 (HZ)";
     addLabel3.font = [UIFont systemFontOfSize: 13];
     addLabel3.textColor = [UIColor whiteColor];
-    addLabel3.frame = CGRectMake(CGRectGetMaxX(leixingBtn.frame)+20, btnY, 75, 25);
+    addLabel3.frame = CGRectMake(CGRectGetMaxX(leixingBtn.frame)-35, btnY+20, 75, 25);
     [view addSubview:addLabel3];
     
     btnY+=35;
@@ -401,11 +487,23 @@
        forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:xielvBtn];
     
-    xielvSlider = [[SlideButton alloc] initWithFrame:CGRectMake(100, 70, 120, 120)];
-    [view addSubview:xielvSlider];
+    xielvSlider2 = [[SlideButton alloc] initWithFrame:CGRectMake(100, 70, 120, 120)];
+    xielvSlider2._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+    xielvSlider2._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+    [xielvSlider2 enableValueSet:YES];
+    xielvSlider2.delegate = self;
+    xielvSlider2.tag = 2;
+    [view addSubview:xielvSlider2];
+    
+    xielvL2 = [[UILabel alloc] initWithFrame:CGRectMake(100, 180, 120, 20)];
+    xielvL2.text = @"-12dB";
+    xielvL2.textAlignment = NSTextAlignmentCenter;
+    [view addSubview:xielvL2];
+    xielvL2.font = [UIFont systemFontOfSize:13];
+    xielvL2.textColor = YELLOW_COLOR;
     
     UIButton *zhitongBtn1 = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
-    zhitongBtn1.frame = CGRectMake(view.frame.size.width/2 - 25, view.frame.size.height - 30, 50, 25);
+    zhitongBtn1.frame = CGRectMake(10, view.frame.size.height - 30, 50, 25);
     zhitongBtn1.layer.cornerRadius = 5;
     zhitongBtn1.layer.borderWidth = 2;
     zhitongBtn1.layer.borderColor = [UIColor clearColor].CGColor;;

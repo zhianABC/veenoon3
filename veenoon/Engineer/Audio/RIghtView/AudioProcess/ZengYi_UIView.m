@@ -10,10 +10,12 @@
 #import "UIButton+Color.h"
 #import "SlideButton.h"
 
-@interface ZengYi_UIView() {
+@interface ZengYi_UIView() <SlideButtonDelegate>{
     
     UIButton *channelBtn;
+    SlideButton *btnJH2;
     
+    UILabel *zaoshengL;
 }
 
 @end
@@ -85,12 +87,33 @@
     addLabel.text = @"增益 (db)";
     addLabel.font = [UIFont systemFontOfSize: 13];
     addLabel.textColor = [UIColor whiteColor];
-    addLabel.frame = CGRectMake(730, 120, 120, 20);
+    addLabel.frame = CGRectMake(735, 115, 120, 20);
     [contentView addSubview:addLabel];
     
-    SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(700, 135, 120, 120)];
-    [contentView addSubview:btn];
     
+    btnJH2 = [[SlideButton alloc] initWithFrame:CGRectMake(700, 235, 120, 120)];
+    btnJH2._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+    btnJH2._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+    [btnJH2 enableValueSet:YES];
+    btnJH2.delegate = self;
+    btnJH2.tag = 2;
+    [self addSubview:btnJH2];
+    
+    zaoshengL = [[UILabel alloc] initWithFrame:CGRectMake(700, 135+100, 120, 20)];
+    zaoshengL.text = @"-12dB";
+    zaoshengL.textAlignment = NSTextAlignmentCenter;
+    [contentView addSubview:zaoshengL];
+    zaoshengL.font = [UIFont systemFontOfSize:13];
+    zaoshengL.textColor = YELLOW_COLOR;
+    
+}
+
+- (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
+    
+    int k = (value *24)-12;
+    NSString *valueStr= [NSString stringWithFormat:@"%dB", k];
+    
+    zaoshengL.text = valueStr;
 }
 
 - (void) createContentViewBtns {
