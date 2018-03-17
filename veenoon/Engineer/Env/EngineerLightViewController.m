@@ -9,7 +9,7 @@
 #import "EngineerLightViewController.h"
 #import "UIButton+Color.h"
 #import "CustomPickerView.h"
-#import "SlideButton.h"
+#import "LightSliderButton.h"
 #import "EngineerSliderView.h"
 #import "LightRightView.h"
 
@@ -95,7 +95,7 @@
     [self.view addSubview:_selectSysBtn];
     
     int index = 0;
-    int top = 250;
+    int top = ENGINEER_VIEW_COMPONENT_TOP;
     
     int leftRight = ENGINEER_VIEW_LEFT;
     
@@ -108,10 +108,10 @@
         
         int row = index/colNumber;
         int col = index%colNumber;
-        int startX = col*cellWidth+col*space+leftRight-100;
+        int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+top;
         
-        SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(startX, startY, 120, 120)];
+        LightSliderButton *btn = [[LightSliderButton alloc] initWithFrame:CGRectMake(startX, startY, 120, 120)];
         
         UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
         tapGesture.cancelsTouchesInView =  NO;
@@ -122,22 +122,13 @@
         btn.tag = i;
         [self.view addSubview:btn];
         
-        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width - 30, 20, 30, 20)];
+        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2-30, 0, 80, 20)];
         titleL.backgroundColor = [UIColor clearColor];
         [btn addSubview:titleL];
         titleL.font = [UIFont boldSystemFontOfSize:11];
         titleL.textColor  = [UIColor whiteColor];
-        titleL.text = [NSString stringWithFormat:@"0%d",i+1];
+        titleL.text = [@"Channel " stringByAppendingString:[NSString stringWithFormat:@"0%d",i+1]];
         [_buttonNumberArray addObject:titleL];
-        
-        titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 -40, btn.frame.size.height - 40, 80, 20)];
-        titleL.backgroundColor = [UIColor clearColor];
-        [btn addSubview:titleL];
-        titleL.font = [UIFont boldSystemFontOfSize:12];
-        titleL.textColor  = [UIColor whiteColor];
-        titleL.textAlignment = NSTextAlignmentCenter;
-        titleL.text = @"Channel";
-        [_buttonChannelArray addObject:titleL];
         
         [_buttonArray addObject:btn];
         
@@ -160,7 +151,7 @@
 }
 - (void) didSliderValueChanged:(int)value object:(id)object {
     float circleValue = (value +0.0f)/100.0f;
-    for (SlideButton *button in _selectedBtnArray) {
+    for (LightSliderButton *button in _selectedBtnArray) {
         [button setCircleValue:circleValue];
     }
 }
@@ -171,8 +162,8 @@
 -(void)handleTapGesture:(UIGestureRecognizer*)gestureRecognizer {
     int tag = (int) gestureRecognizer.view.tag;
     
-    SlideButton *btn;
-    for (SlideButton *button in _selectedBtnArray) {
+    LightSliderButton *btn;
+    for (LightSliderButton *button in _selectedBtnArray) {
         if (button.tag == tag) {
             btn = button;
             break;
@@ -180,21 +171,21 @@
     }
     // want to choose it
     if (btn == nil) {
-        SlideButton *button = [_buttonArray objectAtIndex:tag];
+        LightSliderButton *button = [_buttonArray objectAtIndex:tag];
         [_selectedBtnArray addObject:button];
-        UILabel *chanelL = [_buttonChannelArray objectAtIndex:tag];
-        chanelL.textColor = YELLOW_COLOR;
         
         UILabel *numberL = [_buttonNumberArray objectAtIndex:tag];
         numberL.textColor = YELLOW_COLOR;
+        
+        [button enableValueSet:YES];
     } else {
         // remove it
         [_selectedBtnArray removeObject:btn];
-        UILabel *chanelL = [_buttonChannelArray objectAtIndex:tag];
-        chanelL.textColor = [UIColor whiteColor];
         
         UILabel *numberL = [_buttonNumberArray objectAtIndex:tag];
         numberL.textColor = [UIColor whiteColor];;
+        
+        [btn enableValueSet:NO];
     }
 }
 

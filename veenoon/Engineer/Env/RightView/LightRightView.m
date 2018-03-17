@@ -41,6 +41,8 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
     NSMutableArray *_btns;
     
     BOOL _isPower;
+    
+    UITextField *ipTextField;
 }
 @property (nonatomic, strong) NSMutableArray *_studyItems;
 @property (nonatomic, strong) NSMutableArray *_bianzuArrays;
@@ -81,11 +83,30 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
     if(self = [super initWithFrame:frame]) {
         self.backgroundColor = RGB(0, 89, 118);
         
+        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(15, 25, 40, 30)];
+        titleL.backgroundColor = [UIColor clearColor];
+        [self addSubview:titleL];
+        titleL.font = [UIFont systemFontOfSize:13];
+        titleL.textColor  = [UIColor colorWithWhite:1.0 alpha:0.8];
+        titleL.text = @"IP地址";
+        
+        ipTextField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(titleL.frame)+30, 25, self.bounds.size.width - 35 - CGRectGetMaxX(titleL.frame), 30)];
+        ipTextField.delegate = self;
+        ipTextField.backgroundColor = [UIColor clearColor];
+        ipTextField.returnKeyType = UIReturnKeyDone;
+        ipTextField.text = @"192.168.1.100";
+        ipTextField.textColor = [UIColor whiteColor];
+        ipTextField.borderStyle = UITextBorderStyleRoundedRect;
+        ipTextField.textAlignment = NSTextAlignmentRight;
+        ipTextField.font = [UIFont systemFontOfSize:13];
+        ipTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        [self addSubview:ipTextField];
+        
         self._value = [NSMutableDictionary dictionary];
         
         _btns = [[NSMutableArray alloc] init];
         
-        UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 100)];
+        UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 30)];
         [self addSubview:headView];
         
         UISwipeGestureRecognizer *swip = [[UISwipeGestureRecognizer alloc] initWithTarget:self
