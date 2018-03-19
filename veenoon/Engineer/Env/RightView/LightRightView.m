@@ -648,6 +648,11 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
 
 - (void) buttonAction:(UIButton*)sender{
     
+    for (UIButton *button in _selectedBtnArray) {
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [button setSelected:NO];
+    }
+    
     if ([_selectedBtnArray containsObject:sender]) {
         [sender setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [sender setSelected:NO];

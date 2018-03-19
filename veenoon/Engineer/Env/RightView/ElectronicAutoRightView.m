@@ -570,7 +570,10 @@ CustomPickerViewDelegate> {
 }
 
 - (void) buttonAction:(UIButton*)sender{
-    
+    for (UIButton *button in _selectedBtns) {
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [button setSelected:NO];
+    }
     if ([_selectedBtns containsObject:sender]) {
         [sender setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [sender setSelected:NO];

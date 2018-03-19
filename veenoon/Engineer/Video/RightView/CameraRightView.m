@@ -107,7 +107,7 @@
             y+=sp;
         }
         
-        UIButton *btn = [UIButton buttonWithColor:rectColor selColor:M_GREEN_COLOR];
+        UIButton *btn = [UIButton buttonWithColor:rectColor selColor:BLUE_DOWN_COLOR];
         btn.frame = CGRectMake(xx, y, w, w);
         [_footerView addSubview:btn];
         btn.layer.cornerRadius = 5;
@@ -148,11 +148,13 @@
         {
             [btn setTitleColor:YELLOW_COLOR
                       forState:UIControlStateNormal];
+            [btn setSelected:YES];
         }
         else
         {
             [btn setTitleColor:[UIColor whiteColor]
                       forState:UIControlStateNormal];
+            [btn setSelected:NO];
         }
     }
 }
