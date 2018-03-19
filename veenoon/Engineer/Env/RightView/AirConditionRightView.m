@@ -30,6 +30,7 @@
     
     UILabel *wenduL;
     
+    NSMutableArray *_selectedBtns;
 }
 @property (nonatomic, strong) NSMutableArray *_coms;
 @property (nonatomic, strong) NSMutableArray *_brands;
@@ -77,6 +78,7 @@
         [self addSubview:ipTextField];
         
         _btns = [[NSMutableArray alloc] init];
+        _selectedBtns = [[NSMutableArray alloc] init];
         
         UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 30)];
         [self addSubview:headView];
@@ -197,7 +199,7 @@
         int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+top;
         
-        UIButton *scenarioBtn = [UIButton buttonWithColor:rectColor selColor:M_GREEN_COLOR];
+        UIButton *scenarioBtn = [UIButton buttonWithColor:rectColor selColor:BLUE_DOWN_COLOR];
         scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
         scenarioBtn.clipsToBounds = YES;
         scenarioBtn.layer.cornerRadius = 5;
@@ -221,7 +223,15 @@
 
 - (void) buttonAction:(id)sender{
     
-    
+    if ([_selectedBtns containsObject:sender]) {
+        [sender setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [sender setSelected:NO];
+        [_selectedBtns removeObject:sender];
+    } else {
+        [sender setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+        [sender setSelected:YES];
+        [_selectedBtns addObject:sender];
+    }
 }
 - (void) switchComSetting{
     

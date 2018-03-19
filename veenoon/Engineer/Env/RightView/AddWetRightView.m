@@ -11,7 +11,7 @@
 #import "CustomPickerView.h"
 #import "UIButton+Color.h"
 
-@interface AddWetRightView () <UITableViewDelegate, UITableViewDataSource, CustomPickerViewDelegate> {
+@interface AddWetRightView () <UITableViewDelegate, UITableViewDataSource, CustomPickerViewDelegate, UITextFieldDelegate> {
     ComSettingView *_com;
     
     int _curIndex;
@@ -25,6 +25,8 @@
     UIView *_footerView;
     
     NSMutableArray *_btns;
+    
+    NSMutableArray *_selectedBtns;
     
     UITextField *ipTextField;
 }
@@ -74,6 +76,7 @@
         [self addSubview:ipTextField];
         
         _btns = [[NSMutableArray alloc] init];
+        _selectedBtns = [[NSMutableArray alloc] init];
         
         UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 30)];
         [self addSubview:headView];
@@ -200,7 +203,15 @@
 }
 
 - (void) buttonAction:(id)sender{
-    
+    if ([_selectedBtns containsObject:sender]) {
+        [sender setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [sender setSelected:NO];
+        [_selectedBtns removeObject:sender];
+    } else {
+        [sender setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+        [sender setSelected:YES];
+        [_selectedBtns addObject:sender];
+    }
 }
 - (void) switchComSetting{
     

@@ -11,7 +11,7 @@
 #import "CustomPickerView.h"
 #import "UIButton+Color.h"
 
-@interface AirCleanRightView () <UITableViewDelegate, UITableViewDataSource, CustomPickerViewDelegate> {
+@interface AirCleanRightView () <UITableViewDelegate, UITableViewDataSource, CustomPickerViewDelegate, UITextFieldDelegate> {
     ComSettingView *_com;
     
     int _curIndex;
@@ -27,6 +27,8 @@
     NSMutableArray *_btns;
     
     UITextField *ipTextField;
+    
+    NSMutableArray *_selectedBtns;
 }
 @property (nonatomic, strong) NSMutableArray *_coms;
 @property (nonatomic, strong) NSMutableArray *_brands;
@@ -177,7 +179,7 @@
         int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+top;
         
-        UIButton *scenarioBtn = [UIButton buttonWithColor:rectColor selColor:M_GREEN_COLOR];
+        UIButton *scenarioBtn = [UIButton buttonWithColor:rectColor selColor:BLUE_DOWN_COLOR];
         scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
         scenarioBtn.clipsToBounds = YES;
         scenarioBtn.layer.cornerRadius = 5;
@@ -200,7 +202,15 @@
 }
 
 - (void) buttonAction:(id)sender{
-    
+    if ([_selectedBtns containsObject:sender]) {
+        [sender setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [sender setSelected:NO];
+        [_selectedBtns removeObject:sender];
+    } else {
+        [sender setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+        [sender setSelected:YES];
+        [_selectedBtns addObject:sender];
+    }
     
 }
 - (void) switchComSetting{
@@ -357,7 +367,22 @@
         [_tableView reloadData];
     }
 }
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    
+    //_curIndex = (int)textField.tag;
+    
+}
 
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    
+    [textField resignFirstResponder];
+    
+    return YES;
+}
 @end
 
 

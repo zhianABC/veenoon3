@@ -39,6 +39,8 @@ CustomPickerViewDelegate> {
     NSMutableArray *_btns;
     
     UITextField *ipTextField;
+    
+    NSMutableArray *_selectedBtns;
 }
 @property (nonatomic, strong) NSMutableArray *_studyItems;
 @property (nonatomic, strong) NSMutableArray *_bianzuArrays;
@@ -101,6 +103,7 @@ CustomPickerViewDelegate> {
         self._value = [NSMutableDictionary dictionary];
         
         _btns = [[NSMutableArray alloc] init];
+        _selectedBtns = [[NSMutableArray alloc] init];
         
         UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 30)];
         [self addSubview:headView];
@@ -207,7 +210,7 @@ CustomPickerViewDelegate> {
         int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+top;
         
-        UIButton *scenarioBtn = [UIButton buttonWithColor:rectColor selColor:M_GREEN_COLOR];
+        UIButton *scenarioBtn = [UIButton buttonWithColor:rectColor selColor:BLUE_DOWN_COLOR];
         scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
         scenarioBtn.clipsToBounds = YES;
         scenarioBtn.layer.cornerRadius = 5;
@@ -568,79 +571,15 @@ CustomPickerViewDelegate> {
 
 - (void) buttonAction:(UIButton*)sender{
     
-    int idx = (int)sender.tag + 1;
-    
-    
-    if(_curIndex >= 0 && _curIndex < [_bianzuArrays count])
-    {
-        NSMutableDictionary *mdic = [_bianzuArrays objectAtIndex:_curIndex];
-        
-        NSMutableArray *values = [mdic objectForKey:@"values"];
-        
-        if(idx == 101)
-        {
-            //全部
-            
-            for(int i = 0; i < EAUTO_MAX_NUM; i++)
-            {
-                id obj = [NSNumber numberWithInt:i+1];
-                if(![values containsObject:obj])
-                {
-                    [values addObject:obj];
-                }
-            }
-        }
-        else
-        {
-            id obj = [NSNumber numberWithInt:idx];
-            if(![values containsObject:obj])
-            {
-                [values addObject:obj];
-            }
-            else
-            {
-                [values removeObject:obj];
-            }
-        }
-        
-        
-        NSArray *sa = [values sortedArrayUsingSelector:@selector(compare:)];
-        NSString *value = @"";
-        for(id iv in sa)
-        {
-            if([value length] == 0)
-                value = [NSString stringWithFormat:@"%d", [iv intValue]];
-            else
-                value = [NSString stringWithFormat:@"%@, %d", value, [iv intValue]];
-        }
-        
-        [mdic setObject:value forKey:@"value"];
-        
-        
-        UIImage *imgNor = [UIImage imageWithColor:RGB(0, 146, 174) andSize:CGSizeMake(1, 1)];
-        UIImage *imgSel = [UIImage imageWithColor:RGB(0, 113, 140) andSize:CGSizeMake(1, 1)];
-        
-        for(UIButton *btn in _btns)
-        {
-            int tidx = (int)btn.tag + 1;
-            id obj = [NSNumber numberWithInt:tidx];
-            
-            if([values containsObject:obj])
-            {
-                [btn setBackgroundImage:imgSel forState:UIControlStateNormal];
-                [btn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-            }
-            else
-            {
-                [btn setBackgroundImage:imgNor forState:UIControlStateNormal];
-                [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            }
-        }
+    if ([_selectedBtns containsObject:sender]) {
+        [sender setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [sender setSelected:NO];
+        [_selectedBtns removeObject:sender];
+    } else {
+        [sender setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+        [sender setSelected:YES];
+        [_selectedBtns addObject:sender];
     }
-    
-    
-    
-    [_tableView reloadData];
 }
 
 - (void) refreshFooterButtonsState{
