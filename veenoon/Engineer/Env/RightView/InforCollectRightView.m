@@ -6,12 +6,12 @@
 //  Copyright © 2017年 jack. All rights reserved.
 //
 
-#import "MonitorRightView.h"
+#import "InforCollectRightView.h"
 #import "UIButton+Color.h"
 #import "CustomPickerView.h"
 #import "ComSettingView.h"
 
-@interface MonitorRightView () <CustomPickerViewDelegate, UITextFieldDelegate> {
+@interface InforCollectRightView () <CustomPickerViewDelegate, UITextFieldDelegate> {
     
     ComSettingView *_com;
     
@@ -19,7 +19,7 @@
 }
 @end
 
-@implementation MonitorRightView
+@implementation InforCollectRightView
 
 /*
  // Only override drawRect: if you perform custom drawing.
@@ -110,6 +110,7 @@
 }
 
 @end
+
 
 
 
