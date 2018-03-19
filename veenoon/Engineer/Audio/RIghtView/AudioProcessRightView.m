@@ -212,11 +212,13 @@
         {
             [btn setTitleColor:YELLOW_COLOR
                       forState:UIControlStateNormal];
+            [btn setSelected:YES];
         }
         else
         {
             [btn setTitleColor:[UIColor whiteColor]
                       forState:UIControlStateNormal];
+            [btn setSelected:NO];
         }
     }
 }
