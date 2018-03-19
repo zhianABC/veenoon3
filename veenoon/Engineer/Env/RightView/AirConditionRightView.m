@@ -57,11 +57,11 @@
     if(self = [super initWithFrame:frame]) {
         self.backgroundColor = RGB(0, 89, 118);
         
-        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(15, 25, 40, 30)];
+        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(10, 25, 40, 30)];
+        titleL.textColor = [UIColor whiteColor];
         titleL.backgroundColor = [UIColor clearColor];
         [self addSubview:titleL];
         titleL.font = [UIFont systemFontOfSize:13];
-        titleL.textColor  = [UIColor colorWithWhite:1.0 alpha:0.8];
         titleL.text = @"IP地址";
         
         ipTextField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(titleL.frame)+30, 25, self.bounds.size.width - 35 - CGRectGetMaxX(titleL.frame), 30)];
