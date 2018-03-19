@@ -107,26 +107,29 @@
     [_selectSysBtn setTitleEdgeInsets:UIEdgeInsetsMake(0,0,0,_selectSysBtn.imageView.bounds.size.width)];
     [_selectSysBtn setImageEdgeInsets:UIEdgeInsetsMake(0,_selectSysBtn.titleLabel.bounds.size.width+35,0,0)];
     [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_selectSysBtn];
+//    [self.view addSubview:_selectSysBtn];
     
     int leftRight = 50;
     int rowGap = 5;
     int top = 10;
-    int uiviewWidth = (SCREEN_WIDTH - leftRight*2 -rowGap*2)/3;
-    int cellHeight = uiviewWidth -100;
+    int columnN = 2;
+    int uiviewWidth = (SCREEN_WIDTH - leftRight*2 -rowGap*2)/columnN;
+    int cellHeight = uiviewWidth -140;
     
     int rowNUmber = (int) [_monitorRoomList count] / 3 + 1;
     
-    UIScrollView *_botomView = [[UIScrollView alloc] initWithFrame:CGRectMake(leftRight, 150, SCREEN_WIDTH-2*leftRight, SCREEN_HEIGHT - 200)];
+    UIScrollView *_botomView = [[UIScrollView alloc] initWithFrame:CGRectMake(leftRight, 80, SCREEN_WIDTH-2*leftRight, SCREEN_HEIGHT - 200)];
     _botomView.contentSize =  CGSizeMake(SCREEN_WIDTH-2*leftRight, rowNUmber * (cellHeight + rowGap) +10);
     _botomView.scrollEnabled=YES;
     _botomView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_botomView];
     
+    
+    
     int index = 0;
     for (NSMutableDictionary *dic in _monitorRoomList) {
-        int row = index/3;
-        int col = index%3;
+        int row = index/columnN;
+        int col = index%columnN;
         int startX = col*uiviewWidth+col*rowGap;
         int startY = row*cellHeight+rowGap*row+top;
         
@@ -138,20 +141,6 @@
         UILongPressGestureRecognizer *longPress0 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed0:)];
         [inputPannel addGestureRecognizer:longPress0];
         
-        UIButton *cityBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
-        cityBtn.frame = CGRectMake(0, 5, 100, 35);
-        cityBtn.layer.cornerRadius = 5;
-        cityBtn.layer.borderWidth = 2;
-        cityBtn.layer.borderColor = [UIColor clearColor].CGColor;;
-        cityBtn.clipsToBounds = YES;
-        [cityBtn setTitle:[dic objectForKey:@"name"] forState:UIControlStateNormal];
-        [cityBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [inputPannel addSubview:cityBtn];
-        cityBtn.tag = index;
-        [cityBtn addTarget:self action:@selector(cityBtnAction:)
-          forControlEvents:UIControlEventTouchUpInside];
-        [cityBtnArray addObject:cityBtn];
-        
         UIImage *roomImage = [dic objectForKey:@"image"];
         if (roomImage == nil) {
             roomImage = [UIImage imageNamed:@"user_monitor_default_n.png"];
@@ -159,18 +148,22 @@
         UIImageView *roomeImageView = [[UIImageView alloc] initWithImage:roomImage];
         roomeImageView.tag = index;
         [inputPannel addSubview:roomeImageView];
-        roomeImageView.frame = CGRectMake(0, 45, uiviewWidth, cellHeight-40);
+        roomeImageView.frame = CGRectMake(0, 0, uiviewWidth, cellHeight);
         roomeImageView.userInteractionEnabled=YES;
         
-        UIButton *zoomoutBtn = [UIButton buttonWithColor:nil selColor:nil];
-        zoomoutBtn.tag = index;
-        zoomoutBtn.frame = CGRectMake(uiviewWidth - 50, cellHeight-30, 50, 30);
-        [zoomoutBtn setImage:[UIImage imageNamed:@"user_monitor_zoomout_n.png"] forState:UIControlStateNormal];
-        [zoomoutBtn setImage:[UIImage imageNamed:@"user_monitor_zoomout_s.png"] forState:UIControlStateHighlighted];
-        zoomoutBtn.tag = index;
-        [zoomoutBtn addTarget:self action:@selector(zoomoutAction:)
-             forControlEvents:UIControlEventTouchUpInside];
-        [inputPannel addSubview:zoomoutBtn];
+        UIImageView *roomeBotomImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"user_meeting_roome_b.png"]];
+        [inputPannel addSubview:roomeBotomImageView];
+        roomeBotomImageView.frame = CGRectMake(0, CGRectGetHeight(inputPannel.frame)-30, inputPannel.frame.size.width, 30);
+        roomeBotomImageView.userInteractionEnabled=YES;
+        
+        UIButton *cityBtn = [UIButton buttonWithColor:[UIColor clearColor] selColor:[UIColor clearColor]];
+        cityBtn.frame = CGRectMake(10, CGRectGetHeight(inputPannel.frame)-30, inputPannel.frame.size.width-10, 30);
+        cityBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        [cityBtn setTitle:[dic objectForKey:@"name"] forState:UIControlStateNormal];
+        [cityBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+        [inputPannel addSubview:cityBtn];
+        cityBtn.tag = index;
+        [cityBtnArray addObject:cityBtn];
         
         index++;
     }
