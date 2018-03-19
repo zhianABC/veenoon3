@@ -11,7 +11,7 @@
 #import "CustomPickerView.h"
 #import "UIButton+Color.h"
 
-@interface FloorWarmRightView () <UITableViewDelegate, UITableViewDataSource, CustomPickerViewDelegate> {
+@interface FloorWarmRightView () <UITableViewDelegate, UITableViewDataSource, CustomPickerViewDelegate, UITextFieldDelegate> {
     ComSettingView *_com;
     
     int _curIndex;
@@ -355,6 +355,23 @@
         _tableView.scrollEnabled = NO;
         [_tableView reloadData];
     }
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    
+    //_curIndex = (int)textField.tag;
+    
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    
+    [textField resignFirstResponder];
+    
+    return YES;
 }
 
 @end
