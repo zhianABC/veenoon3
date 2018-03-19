@@ -36,7 +36,7 @@
     BOOL isIcon;
     
     UIImageView *bottomBar;
-    UIView *topbar;
+ 
 }
 
 @end
@@ -183,7 +183,7 @@
     
     
     [self.view bringSubviewToFront:bottomBar];
-    [self.view bringSubviewToFront:topbar];
+    [self.view bringSubviewToFront:_topBar];
 }
 - (void) didSliderEndChanged:(id)object {
     
@@ -296,7 +296,7 @@
     
     //NSLog(@"%f - %f", viewPoint.x, viewPoint.y);
     
-    NSString *imageName = [data objectForKey:@"icon"];
+    NSString *imageName = [data objectForKey:@"icon_s"];
     UIImage *img = [UIImage imageNamed:imageName];
     if(img) {
         for (SlideButton *button in _inputBtnArray) {

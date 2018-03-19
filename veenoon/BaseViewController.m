@@ -10,7 +10,9 @@
 #import "UIImage+Color.h"
 
 @interface BaseViewController ()
-
+{
+    
+}
 @end
 
 @implementation BaseViewController
@@ -51,25 +53,29 @@
     
     self.view.backgroundColor = RGB(1, 138, 182);
     
+    _topBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 64)];
+    _topBar.backgroundColor = THEME_COLOR;
+    [self.view addSubview:_topBar];
+    
     titleIcon = [[UIImageView alloc] init];
-    [self.view addSubview:titleIcon];
+    [_topBar addSubview:titleIcon];
     titleIcon.frame = CGRectMake(55, 35, 16, 19);
     
     titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 35, 300, 20)];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.textAlignment = NSTextAlignmentLeft;
-    [self.view addSubview:titleLabel];
+    [_topBar addSubview:titleLabel];
     
     centerTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-100, 25, 200, 30)];
     centerTitleLabel.textColor = [UIColor whiteColor];
     centerTitleLabel.backgroundColor = [UIColor clearColor];
     centerTitleLabel.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:centerTitleLabel];
+    [_topBar addSubview:centerTitleLabel];
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 63, SCREEN_WIDTH, 1)];
     line.backgroundColor = RGB(75, 163, 202);
-    [self.view addSubview:line];
+    [_topBar addSubview:line];
     
 
     _http = [[WebClient alloc] initWithDelegate:self];

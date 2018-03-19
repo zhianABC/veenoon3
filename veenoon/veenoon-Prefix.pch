@@ -60,6 +60,7 @@
 #define DARK_BLUE_COLOR         RGB(0, 89, 118)
 #define M_GREEN_COLOR           RGB(0, 79, 105)
 #define M_GREEN_LINE            RGB(1, 138, 182)
+#define BLUE_DOWN_COLOR         RGB(0, 47, 62)
 
 #define ImageFromResource(x)    [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:x ofType:nil]]
 

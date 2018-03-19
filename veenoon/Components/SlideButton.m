@@ -13,6 +13,7 @@
 {
     UIImageView *_radioImgV;
     UIImageView *_iconImgV;
+    
     CircleProgressView *progress;
     
     CGPoint _beginPoint;
@@ -121,21 +122,21 @@
         if(_iconImgV)
             [_iconImgV removeFromSuperview];
         
-        _radioImgV.hidden = NO;
-        progress.hidden = NO;
+        //_radioImgV.hidden = NO;
+        //progress.hidden = NO;
         
         return;
     }
     
     if(_iconImgV == nil){
         _iconImgV = [[UIImageView alloc] initWithFrame:_radioImgV.frame];
-        _iconImgV.layer.contentsGravity = kCAGravityResizeAspectFill;
+        _iconImgV.layer.contentsGravity = kCAGravityCenter;
     }
     [self addSubview:_iconImgV];
     _iconImgV.image = iconImg;
     
-    _radioImgV.hidden = YES;
-    progress.hidden = YES;
+    //_radioImgV.hidden = YES;
+    //progress.hidden = YES;
     
 }
 

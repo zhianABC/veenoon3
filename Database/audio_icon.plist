@@ -20,6 +20,8 @@
 				<string>a_player_1.png</string>
 				<key>icon_sel</key>
 				<string>a_player_1.png</string>
+				<key>icon_s</key>
+				<string>s3_19.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -32,6 +34,8 @@
 				<string>v_icon_22.png</string>
 				<key>icon_sel</key>
 				<string>v_icon_22.png</string>
+				<key>icon_s</key>
+				<string>s3_13.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -44,6 +48,8 @@
 				<string>a_usb.png</string>
 				<key>icon_sel</key>
 				<string>a_usb.png</string>
+				<key>icon_s</key>
+				<string>s3_08.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -56,6 +62,8 @@
 				<string>a_sd.png</string>
 				<key>icon_sel</key>
 				<string>a_sd.png</string>
+				<key>icon_s</key>
+				<string>s3_10.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -68,6 +76,8 @@
 				<string>a_wx_2.png</string>
 				<key>icon_sel</key>
 				<string>a_wx_2.png</string>
+				<key>icon_s</key>
+				<string>s3_03.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -80,6 +90,8 @@
 				<string>a_yx_3.png</string>
 				<key>icon_sel</key>
 				<string>a_yx_3.png</string>
+				<key>icon_s</key>
+				<string>s3_05.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -92,6 +104,8 @@
 				<string>a_room_4.png</string>
 				<key>icon_sel</key>
 				<string>a_room_4.png</string>
+				<key>icon_s</key>
+				<string>s3_05.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -104,6 +118,8 @@
 				<string>a_room_5.png</string>
 				<key>icon_sel</key>
 				<string>a_room_5.png</string>
+				<key>icon_s</key>
+				<string>s3_05.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -116,6 +132,8 @@
 				<string>a_icon_6.png</string>
 				<key>icon_sel</key>
 				<string>a_icon_6.png</string>
+				<key>icon_s</key>
+				<string>s3_16.png</string>
 			</dict>
 		</array>
 	</dict>

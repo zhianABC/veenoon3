@@ -17,6 +17,7 @@
     
     UIImageView     *_backgroundImageView;
 
+    UIView *_topBar;
     UIImageView *titleIcon;
     UILabel *titleLabel;
     UILabel *centerTitleLabel;
