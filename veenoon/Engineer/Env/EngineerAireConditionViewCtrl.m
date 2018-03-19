@@ -150,6 +150,7 @@
     if (btnn) {
         [btnn setImage:[UIImage imageNamed:@"dianyuanshishiqi_n.png"] forState:UIControlStateNormal];
         nameLabel.textColor  = [UIColor whiteColor];
+        [selectedBtnArray removeObject:btnn];
     } else {
         [btn setImage:[UIImage imageNamed:@"dianyuanshishiqi_s.png"] forState:UIControlStateNormal];
         nameLabel.textColor  = RGB(230, 151, 50);
