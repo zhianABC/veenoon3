@@ -6,6 +6,7 @@
 //  Copyright © 2017年 jack. All rights reserved.
 //
 #import "UserAudioPlayerSettingsViewCtrl.h"
+#import "UIButton+Color.h"
 
 @interface UserAudioPlayerSettingsViewCtrl () {
     UIButton *_volumnMinus;
@@ -17,6 +18,8 @@
     UIImageView *playerIndicator;
     
     BOOL isplay;
+    
+    UIButton *_tanchuBtn;
 }
 
 @end
@@ -113,8 +116,24 @@
     playerIndicator.frame = CGRectMake(0, 0, 322, 322);
     playerIndicator.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT - 450);
     
+    _tanchuBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
+    _tanchuBtn.frame = CGRectMake(70, SCREEN_HEIGHT-140, 60, 60);
+    _tanchuBtn.layer.cornerRadius = 5;
+    _tanchuBtn.layer.borderWidth = 2;
+    _tanchuBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    _tanchuBtn.clipsToBounds = YES;
+    [_tanchuBtn setImage:[UIImage imageNamed:@"engineer_tanchu_n.png"] forState:UIControlStateNormal];
+    [_tanchuBtn setImage:[UIImage imageNamed:@"engineer_tanchu_s.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:_tanchuBtn];
+    
+    [_tanchuBtn addTarget:self
+                   action:@selector(tanchuAction:)
+         forControlEvents:UIControlEventTouchUpInside];
+    
 }
-
+- (void) tanchuAction:(id)sender{
+    
+}
 - (void) nextSingAction:(id)sender{
     
 }
