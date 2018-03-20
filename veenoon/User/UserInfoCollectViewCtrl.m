@@ -12,7 +12,7 @@
 #import "NSDate-Helper.h"
 #import "CircleProgressView.h"
 
-@interface UserInfoCollectViewCtrl () {
+@interface UserInfoCollectViewCtrl () <UIScrollViewDelegate> {
     
     ColumnsView *colYear;
     ColumnsView *colMonth;
@@ -79,25 +79,41 @@
     [self.view addSubview:_content];
     _content.pagingEnabled = YES;
     _content.contentSize = CGSizeMake(SCREEN_WIDTH*3, SCREEN_HEIGHT-120);
+    _content.showsHorizontalScrollIndicator = NO;
+    _content.delegate = self;
     
     [self drawYearGraphic];
     [self drawMonthGraphic];
     [self drawDaysGraphic];
     
-    btnYear = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
-    btnYear.frame  = CGRectMake(60, SCREEN_HEIGHT - 150, 50, 50);
-    [btnYear setImage:[UIImage imageNamed:@"info_collect_y.png"] forState:UIControlStateNormal];
+    btnYear = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnYear.frame  = CGRectMake(60, SCREEN_HEIGHT - 140, 50, 50);
+    [btnYear setTitle:@"年" forState:UIControlStateNormal];
+    [btnYear setTitleColor:RGBA(3, 235, 211,0.5) forState:UIControlStateNormal];
+    btnYear.titleLabel.font = [UIFont systemFontOfSize:14];
+    //[btnYear setImage:[UIImage imageNamed:@"info_collect_y.png"] forState:UIControlStateNormal];
     [self.view addSubview:btnYear];
     
-    btnMonth = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
-    btnMonth.frame  = CGRectMake(CGRectGetMaxX(btnYear.frame)+10, SCREEN_HEIGHT - 150, 50, 50);
-    [btnMonth setImage:[UIImage imageNamed:@"info_collect_m.png"] forState:UIControlStateNormal];
+    btnMonth = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnMonth.frame  = CGRectMake(CGRectGetMaxX(btnYear.frame)+10, SCREEN_HEIGHT - 140, 50, 50);
+    [btnMonth setTitle:@"月" forState:UIControlStateNormal];
+    [btnMonth setTitleColor:RGBA(3, 235, 211,0.5) forState:UIControlStateNormal];
+    btnMonth.titleLabel.font = [UIFont systemFontOfSize:14];
+    //[btnMonth setImage:[UIImage imageNamed:@"info_collect_m.png"] forState:UIControlStateNormal];
     [self.view addSubview:btnMonth];
     
-    btnDay = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
-    btnDay.frame  = CGRectMake(CGRectGetMaxX(btnMonth.frame)+10, SCREEN_HEIGHT - 150, 50, 50);
-    [btnDay setImage:[UIImage imageNamed:@"info_collect_d.png"] forState:UIControlStateNormal];
+    btnDay = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnDay.frame  = CGRectMake(CGRectGetMaxX(btnMonth.frame)+10, SCREEN_HEIGHT - 140, 50, 50);
+    [btnDay setTitle:@"日" forState:UIControlStateNormal];
+    [btnDay setTitleColor:RGBA(3, 235, 211,0.5) forState:UIControlStateNormal];
+    btnDay.titleLabel.font = [UIFont systemFontOfSize:14];
+    //[btnDay setImage:[UIImage imageNamed:@"info_collect_d.png"] forState:UIControlStateNormal];
     [self.view addSubview:btnDay];
+    
+    btnMonth.center = CGPointMake(SCREEN_WIDTH/2, btnMonth.center.y);
+    btnYear.center = CGPointMake(SCREEN_WIDTH/2 - 50, btnYear.center.y);
+    btnDay.center = CGPointMake(SCREEN_WIDTH/2 + 50, btnDay.center.y);
+    
     
     [btnYear addTarget:self
                  action:@selector(yearAction:)
@@ -147,33 +163,96 @@
 
 - (void) yearAction:(id)sender{
     
+    [btnYear setTitleColor:RGBA(3, 235, 211,1) forState:UIControlStateNormal];
+    btnYear.titleLabel.font = [UIFont systemFontOfSize:18];
+    
+    [btnMonth setTitleColor:RGBA(3, 235, 211,0.5) forState:UIControlStateNormal];
+    btnMonth.titleLabel.font = [UIFont systemFontOfSize:14];
+    
+    [btnDay setTitleColor:RGBA(3, 235, 211,0.5) forState:UIControlStateNormal];
+    btnDay.titleLabel.font = [UIFont systemFontOfSize:14];
+    
     [_content setContentOffset:CGPointMake(0, 0) animated:NO];
 
 }
 - (void) monthAction:(id)sender{
     
+    [btnYear setTitleColor:RGBA(3, 235, 211,0.5) forState:UIControlStateNormal];
+    btnYear.titleLabel.font = [UIFont systemFontOfSize:14];
+    
+    [btnMonth setTitleColor:RGBA(3, 235, 211,1) forState:UIControlStateNormal];
+    btnMonth.titleLabel.font = [UIFont systemFontOfSize:18];
+    
+    [btnDay setTitleColor:RGBA(3, 235, 211,0.5) forState:UIControlStateNormal];
+    btnDay.titleLabel.font = [UIFont systemFontOfSize:14];
+
+    
    [_content setContentOffset:CGPointMake(SCREEN_WIDTH, 0) animated:NO];
 }
 - (void) dayAction:(id)sender{
     
+    [btnYear setTitleColor:RGBA(3, 235, 211,0.5) forState:UIControlStateNormal];
+    btnYear.titleLabel.font = [UIFont systemFontOfSize:14];
+    
+    [btnMonth setTitleColor:RGBA(3, 235, 211,0.5) forState:UIControlStateNormal];
+    btnMonth.titleLabel.font = [UIFont systemFontOfSize:14];
+    
+    [btnDay setTitleColor:RGBA(3, 235, 211,1) forState:UIControlStateNormal];
+    btnDay.titleLabel.font = [UIFont systemFontOfSize:18];
+
+    
    [_content setContentOffset:CGPointMake(SCREEN_WIDTH*2, 0) animated:NO];
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    
+    
+    CGFloat pageWidth = scrollView.frame.size.width;
+    
+    int page = scrollView.contentOffset.x/pageWidth;
+    
+    if(page == 0)
+    {
+        [btnYear setTitleColor:RGBA(3, 235, 211,1) forState:UIControlStateNormal];
+        btnYear.titleLabel.font = [UIFont systemFontOfSize:18];
+        
+        [btnMonth setTitleColor:RGBA(3, 235, 211,0.5) forState:UIControlStateNormal];
+        btnMonth.titleLabel.font = [UIFont systemFontOfSize:14];
+        
+        [btnDay setTitleColor:RGBA(3, 235, 211,0.5) forState:UIControlStateNormal];
+        btnDay.titleLabel.font = [UIFont systemFontOfSize:14];
+
+    }
+    else if(page == 1)
+    {
+        [btnYear setTitleColor:RGBA(3, 235, 211,0.5) forState:UIControlStateNormal];
+        btnYear.titleLabel.font = [UIFont systemFontOfSize:14];
+        
+        [btnMonth setTitleColor:RGBA(3, 235, 211,1) forState:UIControlStateNormal];
+        btnMonth.titleLabel.font = [UIFont systemFontOfSize:18];
+        
+        [btnDay setTitleColor:RGBA(3, 235, 211,0.5) forState:UIControlStateNormal];
+        btnDay.titleLabel.font = [UIFont systemFontOfSize:14];
+
+    }
+    else if(page == 2)
+    {
+        [btnYear setTitleColor:RGBA(3, 235, 211,0.5) forState:UIControlStateNormal];
+        btnYear.titleLabel.font = [UIFont systemFontOfSize:14];
+        
+        [btnMonth setTitleColor:RGBA(3, 235, 211,0.5) forState:UIControlStateNormal];
+        btnMonth.titleLabel.font = [UIFont systemFontOfSize:14];
+        
+        [btnDay setTitleColor:RGBA(3, 235, 211,1) forState:UIControlStateNormal];
+        btnDay.titleLabel.font = [UIFont systemFontOfSize:18];
+
+    }
+    
+}
+
+
 - (void) drawYearGraphic{
     
-    NSDate *date = [NSDate date];
-    NSDateFormatter *fm = [[NSDateFormatter alloc] init];
-    [fm setDateFormat:@"yyyy年"];
-    NSString *yearVal = [fm stringFromDate:date];
-    
-    
-    //back_white_ico@2x
-    UILabel *yearL = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 20)];
-    yearL.textAlignment = NSTextAlignmentCenter;
-    yearL.font = [UIFont systemFontOfSize:16];
-    yearL.textColor = [UIColor whiteColor];
-    [_content addSubview:yearL];
-    yearL.text = yearVal;
     
     
     colYear = [[ColumnsView alloc] initWithFrame:CGRectZero];
@@ -183,8 +262,8 @@
                             @"5月",@"6月",@"7月",@"8月",
                             @"9月",@"10月",@"11月",@"12月"];
     colYear.yStepValues = @[@"0",@"5",@"10",@"15",@"20",@"25",@"30",@"35",@"40",@"45",@"50"];
-    colYear._themeColor = RGB(0, 89, 118);
-    colYear._lineColor = [UIColor whiteColor];
+    colYear._themeColor = RGB(3, 235, 211);
+    colYear._lineColor = RGB(3, 235, 211);
     colYear.xName = @"月份";
     colYear.yName = @"KW-h";
     
@@ -200,14 +279,41 @@
     [_content addSubview:colYear];
     
     
+    NSDate *date = [NSDate date];
+    NSDateFormatter *fm = [[NSDateFormatter alloc] init];
+    [fm setDateFormat:@"yyyy年"];
+    NSString *yearVal = [fm stringFromDate:date];
+    
+    
+    //back_white_ico@2x
+    UILabel *yearL = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 20)];
+    yearL.textAlignment = NSTextAlignmentCenter;
+    yearL.font = [UIFont systemFontOfSize:16];
+    yearL.textColor = RGB(3, 235, 211);
+    [_content addSubview:yearL];
+    yearL.text = yearVal;
+    
     yearL.center = CGPointMake(colYear.center.x, CGRectGetMinY(colYear.frame)-30);
     
-    UIButton *leftIcon = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_content addSubview:leftIcon];
-    [leftIcon setImage:[UIImage imageNamed:@"back_white_ico.png"]
-              forState:UIControlStateNormal];
-    leftIcon.center = CGPointMake(yearL.center.x-80, yearL.center.y);
+    CGSize s = [yearL.text sizeWithAttributes:@{NSFontAttributeName:yearL.font}];
+    UIImageView *line = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, s.width+5, 1)];
+    line.backgroundColor = RGB(3, 235, 211);
+    [_content addSubview:line];
+    line.center = CGPointMake(yearL.center.x, yearL.center.y+9);
     
+    UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_content addSubview:leftBtn];
+    leftBtn.frame = CGRectMake(0, 0, 60, 60);
+    [leftBtn setImage:[UIImage imageNamed:@"back_white_ico.png"]
+             forState:UIControlStateNormal];
+    leftBtn.center = CGPointMake(yearL.center.x-100, yearL.center.y);
+    
+    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_content addSubview:rightBtn];
+    rightBtn.frame = CGRectMake(0, 0, 60, 60);
+    [rightBtn setImage:[UIImage imageNamed:@"right_white_ico.png"]
+              forState:UIControlStateNormal];
+    rightBtn.center = CGPointMake(yearL.center.x+100, yearL.center.y);
    
 }
 
@@ -238,8 +344,8 @@
     colMonth.xStepValues = days;
     colMonth.yStepValues = @[@"0",@"5",@"10",@"15",@"20",@"25",
                              @"30",@"35",@"40",@"45",@"50"];
-    colMonth._themeColor = RGB(0, 89, 118);
-    colMonth._lineColor = [UIColor whiteColor];
+    colMonth._themeColor = RGB(3, 235, 211);
+    colMonth._lineColor = RGB(3, 235, 211);
     colMonth.xName = @"日期";
     colMonth.yName = @"KW-h";
     
@@ -253,7 +359,39 @@
     
     [_content addSubview:colMonth];
     
-   
+    [fm setDateFormat:@"yyyy年MM月"];
+    NSString *yearVal = [fm stringFromDate:date];
+    
+    
+    //back_white_ico@2x
+    UILabel *yearL = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 140, 20)];
+    yearL.textAlignment = NSTextAlignmentCenter;
+    yearL.font = [UIFont systemFontOfSize:16];
+    yearL.textColor = RGB(3, 235, 211);
+    [_content addSubview:yearL];
+    yearL.text = yearVal;
+    
+    yearL.center = CGPointMake(colMonth.center.x, CGRectGetMinY(colMonth.frame)-30);
+    
+    CGSize s = [yearL.text sizeWithAttributes:@{NSFontAttributeName:yearL.font}];
+    UIImageView *line = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, s.width+5, 1)];
+    line.backgroundColor = RGB(3, 235, 211);
+    [_content addSubview:line];
+    line.center = CGPointMake(yearL.center.x, yearL.center.y+9);
+    
+    UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_content addSubview:leftBtn];
+    leftBtn.frame = CGRectMake(0, 0, 60, 60);
+    [leftBtn setImage:[UIImage imageNamed:@"back_white_ico.png"]
+             forState:UIControlStateNormal];
+    leftBtn.center = CGPointMake(yearL.center.x-100, yearL.center.y);
+    
+    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_content addSubview:rightBtn];
+    rightBtn.frame = CGRectMake(0, 0, 60, 60);
+    [rightBtn setImage:[UIImage imageNamed:@"right_white_ico.png"]
+              forState:UIControlStateNormal];
+    rightBtn.center = CGPointMake(yearL.center.x+100, yearL.center.y);
 }
 
 - (void) drawDaysGraphic
@@ -273,8 +411,8 @@
     colDay.yStepPixel = 36;
     colDay.xStepValues = hours;
     colDay.yStepValues = @[@"0",@"5",@"10",@"15",@"20",@"25",@"30",@"35",@"40",@"45",@"50"];
-    colDay._themeColor = RGB(0, 89, 118);
-    colDay._lineColor = [UIColor whiteColor];
+    colDay._themeColor = RGB(3, 235, 211);
+    colDay._lineColor = RGB(3, 235, 211);
     colDay.xName = @"小时";
     colDay.yName = @"KW-h";
     
@@ -288,6 +426,42 @@
     
     [_content addSubview:colDay];
     
+    
+    NSDate *date = [NSDate date];
+    NSDateFormatter *fm = [[NSDateFormatter alloc] init];
+    [fm setDateFormat:@"yyyy年MM月dd日"];
+    NSString *yearVal = [fm stringFromDate:date];
+    
+    
+    //back_white_ico@2x
+    UILabel *yearL = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 140, 20)];
+    yearL.textAlignment = NSTextAlignmentCenter;
+    yearL.font = [UIFont systemFontOfSize:16];
+    yearL.textColor = RGB(3, 235, 211);
+    [_content addSubview:yearL];
+    yearL.text = yearVal;
+    
+    yearL.center = CGPointMake(colDay.center.x, CGRectGetMinY(colDay.frame)-30);
+    
+    CGSize s = [yearL.text sizeWithAttributes:@{NSFontAttributeName:yearL.font}];
+    UIImageView *line = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, s.width+5, 1)];
+    line.backgroundColor = RGB(3, 235, 211);
+    [_content addSubview:line];
+    line.center = CGPointMake(yearL.center.x, yearL.center.y+9);
+    
+    UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_content addSubview:leftBtn];
+    leftBtn.frame = CGRectMake(0, 0, 60, 60);
+    [leftBtn setImage:[UIImage imageNamed:@"back_white_ico.png"]
+             forState:UIControlStateNormal];
+    leftBtn.center = CGPointMake(yearL.center.x-100, yearL.center.y);
+    
+    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_content addSubview:rightBtn];
+    rightBtn.frame = CGRectMake(0, 0, 60, 60);
+    [rightBtn setImage:[UIImage imageNamed:@"right_white_ico.png"]
+              forState:UIControlStateNormal];
+    rightBtn.center = CGPointMake(yearL.center.x+100, yearL.center.y);
     
 }
 
