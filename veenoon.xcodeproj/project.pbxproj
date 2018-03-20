@@ -559,6 +559,8 @@
 		EB479005206146D500EDCD64 /* user_corner_sd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB479002206146D400EDCD64 /* user_corner_sd@2x.png */; };
 		EB479006206146D500EDCD64 /* user_corner_usb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB479003206146D500EDCD64 /* user_corner_usb@2x.png */; };
 		EB479007206146D500EDCD64 /* user_corner_cd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB479004206146D500EDCD64 /* user_corner_cd@2x.png */; };
+		EB47900920614F1500EDCD64 /* user_corner_huatong@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB47900820614F1400EDCD64 /* user_corner_huatong@2x.png */; };
+		EB47900B20614F9800EDCD64 /* video_corner_dvd.png@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB47900A20614F9700EDCD64 /* video_corner_dvd.png@2x.png */; };
 		EB4E39E320273F6100533575 /* HandtoHandSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4E39E220273F6100533575 /* HandtoHandSettingsView.m */; };
 		EB4E39E62027423D00533575 /* HandtoHandLineCheckView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4E39E52027423D00533575 /* HandtoHandLineCheckView.m */; };
 		EB4EC1091FE7E178000B3101 /* yaobao_yellow_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB4EC1071FE7E177000B3101 /* yaobao_yellow_n@2x.png */; };
@@ -1549,9 +1551,11 @@
 		EB478FFD2061400D00EDCD64 /* user_corner_yinpin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_corner_yinpin@2x.png"; sourceTree = "<group>"; };
 		EB478FFF206145C000EDCD64 /* UserDVDSettingsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserDVDSettingsViewController.h; sourceTree = "<group>"; };
 		EB479000206145C000EDCD64 /* UserDVDSettingsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserDVDSettingsViewController.m; sourceTree = "<group>"; };
-		EB479002206146D400EDCD64 /* user_corner_sd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "user_corner_sd@2x.png"; path = "corner/user_corner_sd@2x.png"; sourceTree = "<group>"; };
-		EB479003206146D500EDCD64 /* user_corner_usb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "user_corner_usb@2x.png"; path = "corner/user_corner_usb@2x.png"; sourceTree = "<group>"; };
-		EB479004206146D500EDCD64 /* user_corner_cd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "user_corner_cd@2x.png"; path = "corner/user_corner_cd@2x.png"; sourceTree = "<group>"; };
+		EB479002206146D400EDCD64 /* user_corner_sd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_corner_sd@2x.png"; sourceTree = "<group>"; };
+		EB479003206146D500EDCD64 /* user_corner_usb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_corner_usb@2x.png"; sourceTree = "<group>"; };
+		EB479004206146D500EDCD64 /* user_corner_cd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_corner_cd@2x.png"; sourceTree = "<group>"; };
+		EB47900820614F1400EDCD64 /* user_corner_huatong@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_corner_huatong@2x.png"; sourceTree = "<group>"; };
+		EB47900A20614F9700EDCD64 /* video_corner_dvd.png@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "video_corner_dvd.png@2x.png"; sourceTree = "<group>"; };
 		EB4E39E120273F6100533575 /* HandtoHandSettingsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HandtoHandSettingsView.h; sourceTree = "<group>"; };
 		EB4E39E220273F6100533575 /* HandtoHandSettingsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HandtoHandSettingsView.m; sourceTree = "<group>"; };
 		EB4E39E42027423D00533575 /* HandtoHandLineCheckView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HandtoHandLineCheckView.h; sourceTree = "<group>"; };
@@ -2304,9 +2308,6 @@
 		04DE1ECB1AD6B3BA00D49E2F /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
-				EB479004206146D500EDCD64 /* user_corner_cd@2x.png */,
-				EB479002206146D400EDCD64 /* user_corner_sd@2x.png */,
-				EB479003206146D500EDCD64 /* user_corner_usb@2x.png */,
 				34238A562060DD260004C6D9 /* right_white_ico@2x.png */,
 				34C73B63205FA4CC008DFACC /* s3_03@2x.png */,
 				34C73B67205FA4D4008DFACC /* s3_05@2x.png */,
@@ -2974,6 +2975,11 @@
 		EB19B65420581D2B003F1546 /* corner */ = {
 			isa = PBXGroup;
 			children = (
+				EB47900A20614F9700EDCD64 /* video_corner_dvd.png@2x.png */,
+				EB47900820614F1400EDCD64 /* user_corner_huatong@2x.png */,
+				EB479004206146D500EDCD64 /* user_corner_cd@2x.png */,
+				EB479002206146D400EDCD64 /* user_corner_sd@2x.png */,
+				EB479003206146D500EDCD64 /* user_corner_usb@2x.png */,
 				EB478FFD2061400D00EDCD64 /* user_corner_yinpin@2x.png */,
 				EB19B65520581D2B003F1546 /* audio_corner_bofangqi@2x.png */,
 				EB19B65620581D2B003F1546 /* audio_corner_dianyuanguanli@2x.png */,
@@ -3668,6 +3674,7 @@
 				EB23AEBB1FD1A98D00D1570F /* remote_video_up@2x.png in Resources */,
 				EBDF1BF61FC5A9A200A756EA /* user_meeting_room_5@2x.png in Resources */,
 				EB217FC91FD424F9003F5A8F /* user_aireclean_p_n@2x.png in Resources */,
+				EB47900B20614F9800EDCD64 /* video_corner_dvd.png@2x.png in Resources */,
 				EB23AEA61FD1917E00D1570F /* remote_video_home@2x.png in Resources */,
 				EB23AEB21FD1972400D1570F /* luboji_stop_s@2x.png in Resources */,
 				34F27A5D205121EF0045D765 /* ce_l_01_big.png in Resources */,
@@ -3877,6 +3884,7 @@
 				EBAE5B781FDD07BE00C10C4D /* engineer_video_touyingji_n@2x.png in Resources */,
 				EB217FD51FD4275E003F5A8F /* user_add_wet_bt3_n@2x.png in Resources */,
 				34F27A55205121EF0045D765 /* ce_l_07_big.png in Resources */,
+				EB47900920614F1500EDCD64 /* user_corner_huatong@2x.png in Resources */,
 				EB3685F41FC0799A009973A3 /* settings_user_s@2x.png in Resources */,
 				EB36AAE71FCDA432009A0FD8 /* user_video_disk_s@2x.png in Resources */,
 				EB09C4971FD2AEAE00776540 /* user_touyingmu_n@2x.png in Resources */,

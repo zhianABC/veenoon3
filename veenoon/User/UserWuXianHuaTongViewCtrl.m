@@ -9,10 +9,17 @@
 #import "UserWuXianHuaTongViewCtrl.h"
 #import "BatteryView.h"
 #import "SignalView.h"
+#import "SlideButton.h"
 
 @interface UserWuXianHuaTongViewCtrl () {
-    
+    NSMutableArray *_buttonNumberArray;
+    NSMutableArray *_buttonChannelArray;
+    NSMutableArray *signalArray;
+    NSMutableArray *_imageViewArray;
+    NSMutableArray *_buttonArray;
+    NSMutableArray *_selectedBtnArray;
 }
+
 @property (nonatomic, strong) NSMutableArray *wuxianhuatongArray;
 @end
 
@@ -22,17 +29,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [super setTitleAndImage:@"user_corner_huatong.png" withTitle:@"无线手持话筒"];
+    
     [self initData];
     
-    self.view.backgroundColor = RGB(63, 58, 55);
-    
-    UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
-    [self.view addSubview:titleIcon];
-    titleIcon.frame = CGRectMake(60, 40, 70, 10);
-    
-    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 63, SCREEN_WIDTH, 1)];
-    line.backgroundColor = RGB(83, 78, 75);
-    [self.view addSubview:line];
+    _buttonNumberArray = [[NSMutableArray alloc] init];
+    _buttonChannelArray = [[NSMutableArray alloc] init];
+    signalArray = [[NSMutableArray alloc] init];
+    _imageViewArray = [[NSMutableArray alloc] init];
+    _buttonArray = [[NSMutableArray alloc] init];
+    _selectedBtnArray = [[NSMutableArray alloc] init];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
@@ -53,71 +59,173 @@
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    
-    
-    int cellWidth = 105;
-    int rowGap = 15;
-    int scrollHeight = 105*5 + rowGap*4;
-    
-    int left = (SCREEN_WIDTH - 105*6 - 5*rowGap)/2;
-    
-    UIScrollView *_botomView = [[UIScrollView alloc] initWithFrame:CGRectMake(left, SCREEN_HEIGHT-scrollHeight-60 -60, SCREEN_WIDTH-2*left, scrollHeight)];
-    int rowNumber = [wuxianhuatongArray count] / 6 + 1;
-    int sizeHeight = rowNumber * (105 + rowGap);
-    _botomView.contentSize =  CGSizeMake(SCREEN_WIDTH-2*left, sizeHeight);
-    _botomView.scrollEnabled=YES;
-    _botomView.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:_botomView];
+    UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
+    [bottomBar addSubview:okBtn];
+    [okBtn setTitle:@"确认" forState:UIControlStateNormal];
+    [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [okBtn addTarget:self
+              action:@selector(okAction:)
+    forControlEvents:UIControlEventTouchUpInside];
     
     int index = 0;
+    int top = 15;
+    
+    int leftRight = ENGINEER_VIEW_LEFT-20;
+    
+    int cellWidth = 105;
+    int cellHeight = 220;
+    int colNumber = ENGINEER_VIEW_COLUMN_N;
+    int space = ENGINEER_VIEW_COLUMN_GAP;
+    
+    int scrollHeight = SCREEN_HEIGHT - 250;
+    
+    UIScrollView *_botomView = [[UIScrollView alloc] initWithFrame:CGRectMake(leftRight, SCREEN_HEIGHT-scrollHeight-60 -60, SCREEN_WIDTH-2*leftRight, scrollHeight)];
+    int rowNumber = (int) [wuxianhuatongArray count] / colNumber + 1;
+    int sizeHeight = rowNumber * (220 + space);
+    _botomView.contentSize =  CGSizeMake(SCREEN_WIDTH-2*leftRight, sizeHeight);
+    _botomView.scrollEnabled=YES;
+    [self.view addSubview:_botomView];
+    
     for (int i = 0; i < [wuxianhuatongArray count]; i++) {
-        int row = index/6;
-        int col = index%6;
-        int startX = col*cellWidth+col*rowGap;
-        int startY = row*cellWidth+rowGap*row;
+        NSMutableDictionary *dataDic = [wuxianhuatongArray objectAtIndex:i];
         
-        NSMutableDictionary *dic = [wuxianhuatongArray objectAtIndex:index];
-        NSString *huatongType = [dic objectForKey:@"huatongType"];
+        int row = index/colNumber;
+        int col = index%colNumber;
+        int startX = col*cellWidth+col*space+leftRight;
+        int startY = row*cellHeight+space*row+top;
+        
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(startX, startY, cellWidth, 240)];
+        view.userInteractionEnabled = YES;
+        view.backgroundColor = [UIColor clearColor];
+        [_botomView addSubview:view];
+        
+        SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(0, 0, cellWidth, 120)];
+        [view addSubview:btn];
+        
+        
+        UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+        tapGesture.cancelsTouchesInView =  NO;
+        tapGesture.numberOfTapsRequired = 1;
+        tapGesture.view.tag = i;
+        [btn addGestureRecognizer:tapGesture];
+        
+        btn.tag = i;
+        
+        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 - 30, 0, 60, 20)];
+        titleL.textAlignment = NSTextAlignmentCenter;
+        titleL.backgroundColor = [UIColor clearColor];
+        [view addSubview:titleL];
+        titleL.font = [UIFont boldSystemFontOfSize:11];
+        titleL.textColor  = [UIColor whiteColor];
+        titleL.text = [NSString stringWithFormat:@"0%d",i+1];
+        [_buttonNumberArray addObject:titleL];
+        
+        titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 -50, btn.frame.size.height - 20, 100, 20)];
+        titleL.textAlignment = NSTextAlignmentCenter;
+        titleL.backgroundColor = [UIColor clearColor];
+        [view addSubview:titleL];
+        titleL.font = [UIFont boldSystemFontOfSize:12];
+        titleL.textColor  = [UIColor whiteColor];
+        titleL.textAlignment = NSTextAlignmentCenter;
+        titleL.text = @"Channel";
+        [_buttonChannelArray addObject:titleL];
+        
+        UIView *signalView = [[UIView alloc] initWithFrame:CGRectMake(0, 120, cellWidth, 120)];
+        [view addSubview:signalView];
+        signalView.alpha=0.8;
+        [signalArray addObject:signalView];
         
         UIImage *image;
+        NSString *huatongType = [dataDic objectForKey:@"type"];
         if ([@"huatong" isEqualToString:huatongType]) {
-            image = [UIImage imageNamed:@"wuxianhuatong.png"];
+            image = [UIImage imageNamed:@"huatong_yellow_n.png"];
         } else {
-            image = [UIImage imageNamed:@"wuxianhuabao.png"];
+            image = [UIImage imageNamed:@"yaobao_yellow_n.png"];
         }
         
         UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-        imageView.frame = CGRectMake(startX, startY, cellWidth, cellWidth);
+        imageView.center = CGPointMake(40, 40);
+        [signalView addSubview:imageView];
         
-        [_botomView addSubview:imageView];
         
         BatteryView *batter = [[BatteryView alloc] initWithFrame:CGRectZero];
-        batter.normalColor = SINGAL_COLOR;
-        [imageView addSubview:batter];
-        batter.center = CGPointMake(60, 18);
+        batter.normalColor = [UIColor whiteColor];
+        [signalView addSubview:batter];
+        batter.center = CGPointMake(60, 20);
         
-        NSString *dianliangStr = [dic objectForKey:@"dianliang"];
+        NSString *dianliangStr = [dataDic objectForKey:@"dianliang"];
         int dianliang = [dianliangStr intValue];
         double dianliangDouble = 1.0f * dianliang / 100;
         [batter setBatteryValue:dianliangDouble];
         
-        SignalView *signal = [[SignalView alloc] initWithFrameAndStep:CGRectMake(70, 50, 30, 20) step:2];
-        [imageView addSubview:signal];
-        [signal setLightColor:SINGAL_COLOR];//SINGAL_COLOR
+        SignalView *signal = [[SignalView alloc] initWithFrameAndStep:CGRectMake(70, 40, 30, 20) step:2];
+        [signalView addSubview:signal];
+        [signal setLightColor:[UIColor whiteColor]];//
         [signal setGrayColor:[UIColor colorWithWhite:1.0 alpha:0.6]];
-        NSString *sinalString = [dic objectForKey:@"signal"];
+        NSString *sinalString = [dataDic objectForKey:@"signal"];
         int signalInt = [sinalString intValue];
         [signal setSignalValue:signalInt];
         
-        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, cellWidth-30, cellWidth, 20)];
+        titleL = [[UILabel alloc] initWithFrame:CGRectMake(50, 45, 20, 20)];
         titleL.backgroundColor = [UIColor clearColor];
-        [imageView addSubview:titleL];
+        [signalView addSubview:titleL];
         titleL.font = [UIFont boldSystemFontOfSize:12];
+        titleL.textColor  = [UIColor whiteColor];
         titleL.textAlignment = NSTextAlignmentCenter;
-        titleL.textColor  = SINGAL_COLOR;
-        titleL.text = [dic objectForKey:@"huatongName"];
+        NSString *title = @"优";
+        if (3 <= signalInt < 5) {
+            title = @"良";
+        } else if (signalInt < 3) {
+            title = @"差";
+        }
+        
+        titleL.text = title;
+        
+        [_imageViewArray addObject:imageView];
+        [_buttonArray addObject:btn];
         
         index++;
+    }
+}
+
+-(void)handleTapGesture:(UIGestureRecognizer*)gestureRecognizer {
+    int tag = (int) gestureRecognizer.view.tag;
+    
+    SlideButton *btn;
+    for (SlideButton *button in _selectedBtnArray) {
+        if (button.tag == tag) {
+            btn = button;
+            break;
+        }
+    }
+    // want to choose it
+    if (btn == nil) {
+        SlideButton *button = [_buttonArray objectAtIndex:tag];
+        [_selectedBtnArray addObject:button];
+        [button enableValueSet:YES];
+        UILabel *chanelL = [_buttonChannelArray objectAtIndex:tag];
+        chanelL.textColor = YELLOW_COLOR;
+        
+        UILabel *numberL = [_buttonNumberArray objectAtIndex:tag];
+        numberL.textColor = YELLOW_COLOR;
+        
+        UIView *signalView = [signalArray objectAtIndex:tag];
+        [signalView setAlpha:1];
+    } else {
+        // remove it
+        [_selectedBtnArray removeObject:btn];
+        [btn enableValueSet:NO];
+        UILabel *chanelL = [_buttonChannelArray objectAtIndex:tag];
+        chanelL.textColor = [UIColor whiteColor];
+        
+        UILabel *numberL = [_buttonNumberArray objectAtIndex:tag];
+        numberL.textColor = [UIColor whiteColor];
+        
+        UIView *signalView = [signalArray objectAtIndex:tag];
+        [signalView setAlpha:0.8];
     }
 }
 
@@ -160,7 +268,9 @@
     [wuxianhuatongArray sortUsingDescriptors:sortDescriptors];
     
 }
-
+- (void) okAction:(id)sender{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 - (void) cancelAction:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }

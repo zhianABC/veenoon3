@@ -376,7 +376,7 @@
         // no need anything here
         return;
     } else if (press.state == UIGestureRecognizerStateBegan) {
-        UserHuiYinViewController *controller = [[UserHuiYinViewController alloc] init];
+        UserWuXianHuaTongViewCtrl *controller = [[UserWuXianHuaTongViewCtrl alloc] init];
         [self.navigationController pushViewController:controller animated:YES];
     }
 }
