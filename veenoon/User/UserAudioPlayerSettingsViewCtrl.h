@@ -6,6 +6,7 @@
 //  Copyright © 2017年 jack. All rights reserved.
 //
 #import <UIKit/UIKit.h>
+#import "UserBaseViewControllor.h"
 
 typedef enum {
     CDPlayer,//选择省份状态
@@ -13,7 +14,7 @@ typedef enum {
     USBPlaer//选择区、县状态
 } PlayerState;
 
-@interface UserAudioPlayerSettingsViewCtrl : UIViewController {
+@interface UserAudioPlayerSettingsViewCtrl : UserBaseViewControllor {
     
 }
 

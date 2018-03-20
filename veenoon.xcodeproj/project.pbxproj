@@ -553,6 +553,7 @@
 		EB3B73BB1FE6428C001941CF /* jslide_thumb_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB3B73BA1FE6428C001941CF /* jslide_thumb_n@2x.png */; };
 		EB3B73BD1FE642FA001941CF /* v_slider_road_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB3B73BC1FE642F9001941CF /* v_slider_road_n@2x.png */; };
 		EB478FF9205FF74000EDCD64 /* InforCollectRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB478FF8205FF74000EDCD64 /* InforCollectRightView.m */; };
+		EB478FFC2061341F00EDCD64 /* UserBaseViewControllor.m in Sources */ = {isa = PBXBuildFile; fileRef = EB478FFB2061341F00EDCD64 /* UserBaseViewControllor.m */; };
 		EB4E39E320273F6100533575 /* HandtoHandSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4E39E220273F6100533575 /* HandtoHandSettingsView.m */; };
 		EB4E39E62027423D00533575 /* HandtoHandLineCheckView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4E39E52027423D00533575 /* HandtoHandLineCheckView.m */; };
 		EB4EC1091FE7E178000B3101 /* yaobao_yellow_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB4EC1071FE7E177000B3101 /* yaobao_yellow_n@2x.png */; };
@@ -1538,6 +1539,8 @@
 		EB3B73BC1FE642F9001941CF /* v_slider_road_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "v_slider_road_n@2x.png"; sourceTree = "<group>"; };
 		EB478FF7205FF74000EDCD64 /* InforCollectRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InforCollectRightView.h; sourceTree = "<group>"; };
 		EB478FF8205FF74000EDCD64 /* InforCollectRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InforCollectRightView.m; sourceTree = "<group>"; };
+		EB478FFA2061341F00EDCD64 /* UserBaseViewControllor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserBaseViewControllor.h; sourceTree = "<group>"; };
+		EB478FFB2061341F00EDCD64 /* UserBaseViewControllor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserBaseViewControllor.m; sourceTree = "<group>"; };
 		EB4E39E120273F6100533575 /* HandtoHandSettingsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HandtoHandSettingsView.h; sourceTree = "<group>"; };
 		EB4E39E220273F6100533575 /* HandtoHandSettingsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HandtoHandSettingsView.m; sourceTree = "<group>"; };
 		EB4E39E42027423D00533575 /* HandtoHandLineCheckView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HandtoHandLineCheckView.h; sourceTree = "<group>"; };
@@ -2858,6 +2861,8 @@
 		EB03F54B1FBDEC3E00865541 /* User */ = {
 			isa = PBXGroup;
 			children = (
+				EB478FFA2061341F00EDCD64 /* UserBaseViewControllor.h */,
+				EB478FFB2061341F00EDCD64 /* UserBaseViewControllor.m */,
 				EB03F54C1FBDEC6000865541 /* UserHomeViewController.m */,
 				EB03F54E1FBDEC7400865541 /* UserHomeViewController.h */,
 				EBDF1BFD1FC5B9F500A756EA /* UserMeetingRoomConfig.h */,
@@ -3985,6 +3990,7 @@
 				EBF831E31FD03A110096E6EC /* UserVideoDVDDiskViewCtrl.m in Sources */,
 				EB795B652042E8A1005D1F47 /* ZiDongHunYin_UIView.m in Sources */,
 				EB09C4A21FD3A00200776540 /* UserAirConditionViewCtrl.m in Sources */,
+				EB478FFC2061341F00EDCD64 /* UserBaseViewControllor.m in Sources */,
 				EB1717931FF5E6B600CBDB81 /* EngineerTouYingJiViewCtrl.m in Sources */,
 				EBC71B23203F011E00DD0A98 /* AirConditionRightView.m in Sources */,
 				EBDB4547205D56D5000ABAB0 /* LightSliderButton.m in Sources */,
