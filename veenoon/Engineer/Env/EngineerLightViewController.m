@@ -13,7 +13,7 @@
 #import "EngineerSliderView.h"
 #import "LightRightView.h"
 
-@interface EngineerLightViewController () <CustomPickerViewDelegate, EngineerSliderViewDelegate>{
+@interface EngineerLightViewController () <CustomPickerViewDelegate, EngineerSliderViewDelegate, LightSliderButtonDelegate>{
     
     UIButton *_selectSysBtn;
     
@@ -112,14 +112,8 @@
         int startY = row*cellHeight+space*row+top;
         
         LightSliderButton *btn = [[LightSliderButton alloc] initWithFrame:CGRectMake(startX, startY, 120, 120)];
-        
-        UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
-        tapGesture.cancelsTouchesInView =  NO;
-        tapGesture.numberOfTapsRequired = 1;
-        tapGesture.view.tag = i;
-        [btn addGestureRecognizer:tapGesture];
-        
         btn.tag = i;
+        btn.delegate = self;
         [self.view addSubview:btn];
         
         UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2-40, 0, 80, 20)];
@@ -160,6 +154,29 @@
 - (void) didSliderEndChanged:(id)object {
     
 }
+
+- (void) didTappedMSelf:(LightSliderButton*)slbtn{
+    
+    // want to choose it
+    if (![_selectedBtnArray containsObject:slbtn]) {
+        
+        [_selectedBtnArray addObject:slbtn];
+
+        UILabel *numberL = [_buttonNumberArray objectAtIndex:slbtn.tag];
+        numberL.textColor = YELLOW_COLOR;
+
+        [slbtn enableValueSet:YES];
+    } else {
+        // remove it
+        [_selectedBtnArray removeObject:slbtn];
+
+        UILabel *numberL = [_buttonNumberArray objectAtIndex:slbtn.tag];
+        numberL.textColor = [UIColor whiteColor];;
+
+        [slbtn enableValueSet:NO];
+    }
+}
+
 -(void)handleTapGesture:(UIGestureRecognizer*)gestureRecognizer {
     int tag = (int) gestureRecognizer.view.tag;
     

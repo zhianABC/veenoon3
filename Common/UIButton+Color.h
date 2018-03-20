@@ -11,5 +11,6 @@
 @interface UIButton (ColorButton)
 
 + (id)buttonWithColor:(UIColor*)nomalColor selColor:(UIColor*)selColor;
+- (void) changeNormalColor:(UIColor*)nomalColor;
 
 @end

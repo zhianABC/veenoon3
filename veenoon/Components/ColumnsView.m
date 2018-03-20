@@ -14,6 +14,7 @@
     UILabel *yLine;
     
     int leftEdage;
+    int rightEdage;
     int bottomEdage;
     int topEdage;
     
@@ -41,67 +42,95 @@
 
 - (void) initXY{
     
-    leftEdage = 80;
+    leftEdage = 0;
+    rightEdage = 50;
     bottomEdage = 40;
     topEdage = 40;
     
     self.backgroundColor = [UIColor clearColor];
     
     int h = yStepPixel * ((int)[yStepValues count]-1) + bottomEdage + topEdage;
-    int w = xStepPixel * (int)[xStepValues count] + leftEdage + 40;
+    
+    int regW = xStepPixel * (int)[xStepValues count];
+    int regH = h-bottomEdage/2-topEdage;
+    int w = regW + leftEdage + 40 + rightEdage;
     
     
     
-    yLine = [[UILabel alloc] initWithFrame:CGRectMake(leftEdage, 0, 1, h-bottomEdage)];
+    //纵向左侧坐标线
+    yLine = [[UILabel alloc] initWithFrame:CGRectMake(leftEdage,
+                                                      topEdage-1,
+                                                      1,
+                                                      regH)];
     yLine.backgroundColor = _lineColor;
     [self addSubview:yLine];
     
-    xLine = [[UILabel alloc] initWithFrame:CGRectMake(leftEdage, h-40, w-leftEdage, 1)];
+    //顶部封口线
+    UIImageView *txLine = [[UIImageView alloc] initWithFrame:CGRectMake(leftEdage,
+                                                      topEdage-1,
+                                                      regW, 1)];
+    txLine.backgroundColor = _lineColor;
+    [self addSubview:txLine];
+    
+    //横向底部坐标线
+    xLine = [[UILabel alloc] initWithFrame:CGRectMake(leftEdage,
+                                                      h-40,
+                                                      regW,
+                                                      1)];
     xLine.backgroundColor = _lineColor;
     [self addSubview:xLine];
     
     int topForX = h - bottomEdage;
     
-    int xx = 80+xStepPixel;
+    //////横坐标
+    int xx = leftEdage;
     for(NSString * xv in xStepValues){
         
-        UILabel *kdl = [[UILabel alloc] initWithFrame:CGRectMake(xx, topForX, 1, 14)];
-        kdl.backgroundColor = _themeColor;
+        UILabel *kdl = [[UILabel alloc] initWithFrame:CGRectMake(xx, topEdage, 1, regH)];
+        kdl.backgroundColor = _lineColor;
+        kdl.alpha = 0.3;
         [self addSubview:kdl];
         
-        UILabel *xLName = [[UILabel alloc] initWithFrame:CGRectMake(xx-20, topForX+14, 40, 20)];
+        UILabel *xLName = [[UILabel alloc] initWithFrame:CGRectMake(xx+5, topForX, 40, 30)];
         xLName.text = xv;
-        xLName.textColor  = _themeColor;
-        xLName.textAlignment = NSTextAlignmentCenter;
+        xLName.textColor  = _lineColor;
+        xLName.textAlignment = NSTextAlignmentLeft;
         xLName.font = [UIFont systemFontOfSize:14];
         [self addSubview:xLName];
         
         xx+=xStepPixel;
     }
     
-    //从0开始，0抬起10 pixel
-    int topForY = h - bottomEdage - 10;
+    //右侧封口
+    UILabel *kdl = [[UILabel alloc] initWithFrame:CGRectMake(xx, topEdage, 1, regH)];
+    kdl.backgroundColor = _lineColor;
+    kdl.alpha = 0.3;
+    [self addSubview:kdl];
+    
+    //纵坐标 从0开始，0抬起10 pixel
+    int topForY = h - bottomEdage;
     
     for(NSString * yv in yStepValues){
         
-        UILabel *kdl = [[UILabel alloc] initWithFrame:CGRectMake(80 - 14,
-                                                                 topForY, 14, 1)];
-        kdl.backgroundColor = _themeColor;
+        UILabel *kdl = [[UILabel alloc] initWithFrame:CGRectMake(leftEdage,
+                                                                 topForY, regW, 1)];
+        kdl.backgroundColor = _lineColor;
+        kdl.alpha = 0.3;
         [self addSubview:kdl];
         
-        UILabel *yLName = [[UILabel alloc] initWithFrame:CGRectMake(80-40-14,
-                                                                    topForY-10, 20, 20)];
+        UILabel *yLName = [[UILabel alloc] initWithFrame:CGRectMake(leftEdage+regW+5,
+                                                                    topForY-10, 40, 20)];
         yLName.text = yv;
-        yLName.textAlignment = NSTextAlignmentCenter;
+        yLName.textAlignment = NSTextAlignmentLeft;
         yLName.font = [UIFont systemFontOfSize:14];
-        yLName.textColor = _themeColor;
+        yLName.textColor = _lineColor;
         [self addSubview:yLName];
         yLName.backgroundColor = [UIColor clearColor];
         
         topForY-=yStepPixel;
     }
     
-    
+    /*
     _xNameL = [[UILabel alloc] initWithFrame:CGRectMake(leftEdage-15,
                                                         CGRectGetMaxY(xLine.frame)+5,
                                                         xStepPixel+20,
@@ -112,13 +141,14 @@
     [self addSubview:_xNameL];
     
     _xNameL.text = xName;
+     */
     
-    _yNameL = [[UILabel alloc] initWithFrame:CGRectMake(0,
-                                                        0,
-                                                        leftEdage-10,
+    _yNameL = [[UILabel alloc] initWithFrame:CGRectMake(leftEdage+regW+30,
+                                                        topEdage-10,
+                                                        80,
                                                         20)];
     _yNameL.textColor = [UIColor whiteColor];
-    _yNameL.textAlignment = NSTextAlignmentRight;
+    _yNameL.textAlignment = NSTextAlignmentLeft;
     _yNameL.font = [UIFont systemFontOfSize:13];
     [self addSubview:_yNameL];
     
@@ -142,10 +172,12 @@
     
     int h = self.frame.size.height;
  
-    int maxYForX = h - bottomEdage - 10;
-    int xx = leftEdage+xStepPixel;
+    int maxYForX = h - bottomEdage;
+    int xx = leftEdage;
     
     int mValue = h - bottomEdage - topEdage;
+    
+    float spaceWith2Sides = (xStepPixel - colWidth)/2.0;
     
     for(NSString * xv in colValues){
         
@@ -153,17 +185,19 @@
         int temp = v*mValue/maxColValue;
         
         
-        UILabel *kdl = [[UILabel alloc] initWithFrame:CGRectMake(xx-colWidth/2,
+        UILabel *kdl = [[UILabel alloc] initWithFrame:CGRectMake(xx+spaceWith2Sides,
                                                                  maxYForX-temp,
                                                                  colWidth, temp)];
         kdl.backgroundColor = _themeColor;
         [_drawView addSubview:kdl];
+        kdl.layer.cornerRadius = 2;
+        kdl.clipsToBounds = YES;
         
     
         UILabel *LName = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(kdl.frame)-20,
                                                                    maxYForX-temp-20, colWidth+40, 20)];
         LName.text = xv;
-        LName.textColor  = _themeColor;
+        LName.textColor  = _lineColor;
         LName.textAlignment = NSTextAlignmentCenter;
         LName.font = [UIFont systemFontOfSize:14];
         [_drawView addSubview:LName];

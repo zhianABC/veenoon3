@@ -33,5 +33,14 @@
     return imgBtn;
 }
 
+- (void) changeNormalColor:(UIColor*)nomalColor{
+    
+    if(nomalColor)
+    {
+        UIImage *nimage = [UIImage imageWithColor:nomalColor andSize:CGSizeMake(1, 1)];
+        [self setBackgroundImage:nimage forState:UIControlStateNormal];
+    }
+}
+
 
 @end

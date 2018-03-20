@@ -109,6 +109,7 @@
                  action:@selector(dayAction:)
        forControlEvents:UIControlEventTouchUpInside];
     
+    /*
     circle = [[CircleProgressView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
     [self.view addSubview:circle];
     [circle setProgress:0.8];
@@ -139,44 +140,73 @@
     aL.center = CGPointMake(CGRectGetMinX(circleA.frame)-20,
                             CGRectGetMinY(circleA.frame)+6);
     
+    */
     
     [self yearAction:nil];
 }
 
 - (void) yearAction:(id)sender{
     
-    [_content setContentOffset:CGPointMake(0, 0) animated:YES];
+    [_content setContentOffset:CGPointMake(0, 0) animated:NO];
 
 }
 - (void) monthAction:(id)sender{
     
-   [_content setContentOffset:CGPointMake(SCREEN_WIDTH, 0) animated:YES];
+   [_content setContentOffset:CGPointMake(SCREEN_WIDTH, 0) animated:NO];
 }
 - (void) dayAction:(id)sender{
     
-   [_content setContentOffset:CGPointMake(SCREEN_WIDTH*2, 0) animated:YES];
+   [_content setContentOffset:CGPointMake(SCREEN_WIDTH*2, 0) animated:NO];
 }
 
 - (void) drawYearGraphic{
     
+    NSDate *date = [NSDate date];
+    NSDateFormatter *fm = [[NSDateFormatter alloc] init];
+    [fm setDateFormat:@"yyyy年"];
+    NSString *yearVal = [fm stringFromDate:date];
+    
+    
+    //back_white_ico@2x
+    UILabel *yearL = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 20)];
+    yearL.textAlignment = NSTextAlignmentCenter;
+    yearL.font = [UIFont systemFontOfSize:16];
+    yearL.textColor = [UIColor whiteColor];
+    [_content addSubview:yearL];
+    yearL.text = yearVal;
+    
+    
     colYear = [[ColumnsView alloc] initWithFrame:CGRectZero];
-    colYear.xStepPixel = 72;
-    colYear.yStepPixel = 30;
-    colYear.xStepValues = @[@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10",@"11",@"12"];
+    colYear.xStepPixel = 66;
+    colYear.yStepPixel = 36;
+    colYear.xStepValues = @[@"1月",@"2月",@"3月",@"4月",
+                            @"5月",@"6月",@"7月",@"8月",
+                            @"9月",@"10月",@"11月",@"12月"];
     colYear.yStepValues = @[@"0",@"5",@"10",@"15",@"20",@"25",@"30",@"35",@"40",@"45",@"50"];
-    colYear._themeColor = SINGAL_COLOR;
+    colYear._themeColor = RGB(0, 89, 118);
+    colYear._lineColor = [UIColor whiteColor];
     colYear.xName = @"月份";
     colYear.yName = @"KW-h";
     
     [colYear initXY];
-    colYear.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2-60);
+    colYear.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
     
     colYear.maxColValue = 50;
     colYear.colWidth = 50;
-    colYear.colValues = @[@"40",@"30",@"50",@"10",@"40",@"20",@"10",@"20",@"20",@"20",@"20",@"20"];
+    colYear.colValues = @[@"40",@"30",@"20",@"10",@"40",@"20",
+                          @"10",@"20",@"20",@"20",@"20",@"20"];
     [colYear draw];
     
     [_content addSubview:colYear];
+    
+    
+    yearL.center = CGPointMake(colYear.center.x, CGRectGetMinY(colYear.frame)-30);
+    
+    UIButton *leftIcon = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_content addSubview:leftIcon];
+    [leftIcon setImage:[UIImage imageNamed:@"back_white_ico.png"]
+              forState:UIControlStateNormal];
+    leftIcon.center = CGPointMake(yearL.center.x-80, yearL.center.y);
     
    
 }
@@ -193,26 +223,32 @@
     NSString *dd = [fm stringFromDate:lastDay];
     
     NSMutableArray *days = [NSMutableArray array];
+    NSMutableArray *colvs = [NSMutableArray array];
     for(int i = 1; i <= [dd intValue]; i++)
     {
         [days addObject:[NSString stringWithFormat:@"%d", i]];
+        
+        int val = random()%50;
+        [colvs addObject:[NSString stringWithFormat:@"%d", val]];
     }
     
     colMonth = [[ColumnsView alloc] initWithFrame:CGRectZero];
-    colMonth.xStepPixel = 28;
-    colMonth.yStepPixel = 30;
+    colMonth.xStepPixel = 26;
+    colMonth.yStepPixel = 36;
     colMonth.xStepValues = days;
-    colMonth.yStepValues = @[@"0",@"5",@"10",@"15",@"20",@"25",@"30",@"35",@"40",@"45",@"50"];
-    colMonth._themeColor = SINGAL_COLOR;
+    colMonth.yStepValues = @[@"0",@"5",@"10",@"15",@"20",@"25",
+                             @"30",@"35",@"40",@"45",@"50"];
+    colMonth._themeColor = RGB(0, 89, 118);
+    colMonth._lineColor = [UIColor whiteColor];
     colMonth.xName = @"日期";
     colMonth.yName = @"KW-h";
     
     [colMonth initXY];
-    colMonth.center = CGPointMake(SCREEN_WIDTH*3/2, SCREEN_HEIGHT/2-60);
-
+    colMonth.center = CGPointMake(SCREEN_WIDTH*3/2, SCREEN_HEIGHT/2);
+    
     colMonth.maxColValue = 50;
-    colMonth.colWidth = 20;
-    colMonth.colValues = @[@"40",@"30",@"50",@"10",@"40",@"20",@"10",@"20",@"20",@"20",@"20",@"20"];
+    colMonth.colWidth = 18;
+    colMonth.colValues = colvs;
     [colMonth draw];
     
     [_content addSubview:colMonth];
@@ -223,26 +259,31 @@
 - (void) drawDaysGraphic
 {
     NSMutableArray *hours = [NSMutableArray array];
+    NSMutableArray *colvs = [NSMutableArray array];
     for(int i = 1; i <= 24; i++)
     {
         [hours addObject:[NSString stringWithFormat:@"%d", i]];
+        
+        int val = random()%50;
+        [colvs addObject:[NSString stringWithFormat:@"%d", val]];
     }
     
     colDay = [[ColumnsView alloc] initWithFrame:CGRectZero];
-    colDay.xStepPixel = 38;
-    colDay.yStepPixel = 30;
+    colDay.xStepPixel = 34;
+    colDay.yStepPixel = 36;
     colDay.xStepValues = hours;
     colDay.yStepValues = @[@"0",@"5",@"10",@"15",@"20",@"25",@"30",@"35",@"40",@"45",@"50"];
-    colDay._themeColor = SINGAL_COLOR;
+    colDay._themeColor = RGB(0, 89, 118);
+    colDay._lineColor = [UIColor whiteColor];
     colDay.xName = @"小时";
     colDay.yName = @"KW-h";
     
     [colDay initXY];
-    colDay.center = CGPointMake( SCREEN_WIDTH*5/2, SCREEN_HEIGHT/2-60);
+    colDay.center = CGPointMake( SCREEN_WIDTH*5/2, SCREEN_HEIGHT/2);
     
     colDay.maxColValue = 50;
-    colDay.colWidth = 30;
-    colDay.colValues = @[@"40",@"30",@"50",@"10",@"40",@"20",@"10",@"20",@"20",@"20",@"20",@"20"];
+    colDay.colWidth = 24;
+    colDay.colValues = colvs;
     [colDay draw];
     
     [_content addSubview:colDay];

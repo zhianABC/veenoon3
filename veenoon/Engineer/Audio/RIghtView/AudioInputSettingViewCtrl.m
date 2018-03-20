@@ -35,9 +35,13 @@
     UIButton *lvbojunhengBtn;
     UIButton *zidonghunyinBtn;
 }
+@property (nonatomic, strong) UIButton *_curSelectBtn;
+
 @end
 
 @implementation AudioInputSettingViewCtrl
+@synthesize _curSelectBtn;
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -202,6 +206,7 @@
     zengyiView = [[ZengYi_UIView alloc] initWithFrame:vrc];
     [self.view addSubview:zengyiView];
     zengyiView.hidden = NO;
+
     
     zaoshengView = [[ZaoShengMen_UIView alloc] initWithFrame:vrc];
     [self.view addSubview:zaoshengView];
@@ -223,15 +228,23 @@
     [self.view addSubview:zidonghunyinView];
     zidonghunyinView.hidden = YES;
     
+    self._curSelectBtn = zengyiBtn;
+    [zengyiBtn changeNormalColor:BLUE_DOWN_COLOR];
 }
-- (void) zidonghunyinAction:(id)sender{
-    [zengyiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [zaoshengmenBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [yaxianBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [huishengxiaochuBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [yanshiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [lvbojunhengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [zidonghunyinBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+- (void) zidonghunyinAction:(UIButton*)sender{
+   
+    if(_curSelectBtn == sender)
+    {
+        return;
+    }
+
+    [_curSelectBtn changeNormalColor:RGB(0, 89, 118)];
+    [_curSelectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    [sender setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+    [sender changeNormalColor:BLUE_DOWN_COLOR];
+    
+    self._curSelectBtn = sender;
     
     zengyiView.hidden = YES;
     yxq.hidden = YES;
@@ -241,14 +254,20 @@
     lvbo.hidden=YES;
     zidonghunyinView.hidden=NO;
 }
-- (void) huishengxiaochuAction:(id)sender{
-    [zengyiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [zaoshengmenBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [yaxianBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [huishengxiaochuBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-    [yanshiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [lvbojunhengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [zidonghunyinBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+- (void) huishengxiaochuAction:(UIButton*)sender{
+    
+    if(_curSelectBtn == sender)
+    {
+        return;
+    }
+    
+    [_curSelectBtn changeNormalColor:RGB(0, 89, 118)];
+    [_curSelectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    [sender setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+    [sender changeNormalColor:BLUE_DOWN_COLOR];
+    
+    self._curSelectBtn = sender;
     
     zengyiView.hidden = YES;
     yxq.hidden = YES;
@@ -258,14 +277,20 @@
     lvbo.hidden=YES;
     zidonghunyinView.hidden=YES;
 }
-- (void) yanshiqiAction:(id)sender{
-    [zengyiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [zaoshengmenBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [yaxianBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [huishengxiaochuBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [yanshiqiBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-    [lvbojunhengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [zidonghunyinBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+- (void) yanshiqiAction:(UIButton*)sender{
+    
+    if(_curSelectBtn == sender)
+    {
+        return;
+    }
+    
+    [_curSelectBtn changeNormalColor:RGB(0, 89, 118)];
+    [_curSelectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    [sender setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+    [sender changeNormalColor:BLUE_DOWN_COLOR];
+    
+    self._curSelectBtn = sender;
     
     zengyiView.hidden = YES;
     yxq.hidden = YES;
@@ -275,14 +300,20 @@
     lvbo.hidden=YES;
     zidonghunyinView.hidden=YES;
 }
-- (void) yaxianqiAction:(id)sender{
-    [zengyiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [zaoshengmenBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [yaxianBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-    [huishengxiaochuBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [yanshiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [lvbojunhengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [zidonghunyinBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+- (void) yaxianqiAction:(UIButton*)sender{
+    
+    if(_curSelectBtn == sender)
+    {
+        return;
+    }
+    
+    [_curSelectBtn changeNormalColor:RGB(0, 89, 118)];
+    [_curSelectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    [sender setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+    [sender changeNormalColor:BLUE_DOWN_COLOR];
+    
+    self._curSelectBtn = sender;
     
     zengyiView.hidden = YES;
     yxq.hidden = NO;
@@ -293,14 +324,20 @@
     zidonghunyinView.hidden=YES;
     
 }
-- (void) lvbojunhengAction:(id)sender{
-    [zengyiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [zaoshengmenBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [yaxianBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [huishengxiaochuBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [yanshiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [lvbojunhengBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-    [zidonghunyinBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+- (void) lvbojunhengAction:(UIButton*)sender{
+    
+    if(_curSelectBtn == sender)
+    {
+        return;
+    }
+    
+    [_curSelectBtn changeNormalColor:RGB(0, 89, 118)];
+    [_curSelectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    [sender setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+    [sender changeNormalColor:BLUE_DOWN_COLOR];
+    
+    self._curSelectBtn = sender;
     
     zengyiView.hidden = YES;
     yxq.hidden = YES;
@@ -310,14 +347,20 @@
     lvbo.hidden=NO;
     zidonghunyinView.hidden=YES;
 }
-- (void) zaoshengmenAction:(id)sender{
-    [zengyiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [zaoshengmenBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-    [yaxianBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [huishengxiaochuBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [yanshiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [lvbojunhengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [zidonghunyinBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+- (void) zaoshengmenAction:(UIButton*)sender{
+   
+    if(_curSelectBtn == sender)
+    {
+        return;
+    }
+    
+    [_curSelectBtn changeNormalColor:RGB(0, 89, 118)];
+    [_curSelectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    [sender setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+    [sender changeNormalColor:BLUE_DOWN_COLOR];
+    
+    self._curSelectBtn = sender;
     
     zengyiView.hidden = YES;
     yxq.hidden = YES;
@@ -327,14 +370,20 @@
     lvbo.hidden=YES;
     zidonghunyinView.hidden=YES;
 }
-- (void) zengyiAction:(id)sender{
-    [zengyiBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-    [zaoshengmenBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [yaxianBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [huishengxiaochuBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [yanshiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [lvbojunhengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [zidonghunyinBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+- (void) zengyiAction:(UIButton*)sender{
+    
+    if(_curSelectBtn == sender)
+    {
+        return;
+    }
+    
+    [_curSelectBtn changeNormalColor:RGB(0, 89, 118)];
+    [_curSelectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    [sender setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+    [sender changeNormalColor:BLUE_DOWN_COLOR];
+    
+    self._curSelectBtn = sender;
     
     zengyiView.hidden = NO;
     yxq.hidden = YES;
