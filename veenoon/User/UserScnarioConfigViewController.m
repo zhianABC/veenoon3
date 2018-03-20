@@ -172,21 +172,8 @@
     [_airCleanBtn addTarget:self action:@selector(airCleanSysAction:) forControlEvents:UIControlEventTouchUpInside];
     [_botomView addSubview:_airCleanBtn];
     
-    _waterCleanBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _waterCleanBtn.frame = CGRectMake(left+rowGap*8, height, 80, 132);
-    [_waterCleanBtn setImage:[UIImage imageNamed:@"clean_warter_n.png"] forState:UIControlStateNormal];
-    [_waterCleanBtn setImage:[UIImage imageNamed:@"clean_warter_s.png"] forState:UIControlStateHighlighted];
-    [_waterCleanBtn setTitle:@"净水" forState:UIControlStateNormal];
-    [_waterCleanBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_waterCleanBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _waterCleanBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_waterCleanBtn setTitleEdgeInsets:UIEdgeInsetsMake(_waterCleanBtn.imageView.frame.size.height+10,-90,-20,-20)];
-    [_waterCleanBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_waterCleanBtn.titleLabel.bounds.size.height, 0)];
-    [_waterCleanBtn addTarget:self action:@selector(warterCleanSysAction:) forControlEvents:UIControlEventTouchUpInside];
-    [_botomView addSubview:_waterCleanBtn];
-    
     _addWetBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _addWetBtn.frame = CGRectMake(left+rowGap*9, height, 80, 132);
+    _addWetBtn.frame = CGRectMake(left+rowGap*8, height, 80, 132);
     [_addWetBtn setImage:[UIImage imageNamed:@"add_wet_sys_n.png"] forState:UIControlStateNormal];
     [_addWetBtn setImage:[UIImage imageNamed:@"add_wet_sys_s.png"] forState:UIControlStateHighlighted];
     [_addWetBtn setTitle:@"加湿器" forState:UIControlStateNormal];
@@ -198,21 +185,8 @@
     [_addWetBtn addTarget:self action:@selector(addWetSysAction:) forControlEvents:UIControlEventTouchUpInside];
     [_botomView addSubview:_addWetBtn];
     
-    _doorAccessBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _doorAccessBtn.frame = CGRectMake(left+rowGap*10, height, 80, 132);
-    [_doorAccessBtn setImage:[UIImage imageNamed:@"door_access_n.png"] forState:UIControlStateNormal];
-    [_doorAccessBtn setImage:[UIImage imageNamed:@"door_access_s.png"] forState:UIControlStateHighlighted];
-    [_doorAccessBtn setTitle:@"门禁" forState:UIControlStateNormal];
-    [_doorAccessBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_doorAccessBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _doorAccessBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_doorAccessBtn setTitleEdgeInsets:UIEdgeInsetsMake(_doorAccessBtn.imageView.frame.size.height+10,-90,-20,-20)];
-    [_doorAccessBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_doorAccessBtn.titleLabel.bounds.size.height, 0)];
-    [_doorAccessBtn addTarget:self action:@selector(doorAccessSysAction:) forControlEvents:UIControlEventTouchUpInside];
-    [_botomView addSubview:_doorAccessBtn];
-    
     _monitorBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _monitorBtn.frame = CGRectMake(left+rowGap*11, height, 80, 132);
+    _monitorBtn.frame = CGRectMake(left+rowGap*9, height, 80, 132);
     [_monitorBtn setImage:[UIImage imageNamed:@"monitor_sys_n.png"] forState:UIControlStateNormal];
     [_monitorBtn setImage:[UIImage imageNamed:@"monitor_sys_s.png"] forState:UIControlStateHighlighted];
     [_monitorBtn setTitle:@"监控" forState:UIControlStateNormal];
@@ -225,7 +199,7 @@
     [_botomView addSubview:_monitorBtn];
     
     _energyCollectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _energyCollectBtn.frame = CGRectMake(left+rowGap*12, height, 80, 132);
+    _energyCollectBtn.frame = CGRectMake(left+rowGap*10, height, 80, 132);
     [_energyCollectBtn setImage:[UIImage imageNamed:@"energy_collect_n.png"] forState:UIControlStateNormal];
     [_energyCollectBtn setImage:[UIImage imageNamed:@"energy_collect_s.png"] forState:UIControlStateHighlighted];
     [_energyCollectBtn setTitle:@"能耗统计" forState:UIControlStateNormal];
@@ -258,7 +232,8 @@
     titleL2.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL2];
     titleL2.font = [UIFont boldSystemFontOfSize:24];
-    titleL2.textColor  = RGB(242, 148, 20);
+    titleL2.textColor  = [UIColor whiteColor];
+    titleL2.alpha = 0.5;
     titleL2.text = [_data objectForKey:@"title_en"];
 }
 
