@@ -6,6 +6,7 @@
 //  Copyright © 2017年 jack. All rights reserved.
 //
 #import <UIKit/UIKit.h>
-@interface UserAudioConfigViewController : UIViewController
+#import "UserBaseViewControllor.h"
+@interface UserAudioConfigViewController : UserBaseViewControllor
 
 @end

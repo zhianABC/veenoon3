@@ -241,7 +241,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
             y+=sp;
         }
         
-        UIButton *btn = [UIButton buttonWithColor:rectColor selColor:M_GREEN_COLOR];
+        UIButton *btn = [UIButton buttonWithColor:rectColor selColor:BLUE_DOWN_COLOR];
         btn.frame = CGRectMake(xx, y, w, w);
         [_footerView addSubview:btn];
         btn.layer.cornerRadius = 5;
@@ -461,7 +461,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
             int startX = col*cellWidth+col*space+leftRight;
             int startY = row*cellHeight+space*row+top;
             
-            UIButton *scenarioBtn = [UIButton buttonWithColor:rectColor selColor:M_GREEN_COLOR];
+            UIButton *scenarioBtn = [UIButton buttonWithColor:rectColor selColor:BLUE_DOWN_COLOR];
             scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
             scenarioBtn.clipsToBounds = YES;
             scenarioBtn.layer.cornerRadius = 5;
@@ -515,7 +515,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
             int startX = col*cellWidth+col*space+leftRight;
             int startY = row*cellHeight+space*row+top;
             
-            UIButton *scenarioBtn = [UIButton buttonWithColor:rectColor selColor:M_GREEN_COLOR];
+            UIButton *scenarioBtn = [UIButton buttonWithColor:rectColor selColor:BLUE_DOWN_COLOR];
             scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
             scenarioBtn.clipsToBounds = YES;
             scenarioBtn.layer.cornerRadius = 5;
@@ -595,7 +595,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
             int startX = col*cellWidth+col*space+leftRight;
             int startY = row*cellHeight+space*row+top;
             
-            UIButton *scenarioBtn = [UIButton buttonWithColor:rectColor selColor:M_GREEN_COLOR];
+            UIButton *scenarioBtn = [UIButton buttonWithColor:rectColor selColor:BLUE_DOWN_COLOR];
             scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
             scenarioBtn.clipsToBounds = YES;
             scenarioBtn.layer.cornerRadius = 5;

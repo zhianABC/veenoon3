@@ -361,7 +361,7 @@
         }
         UIColor *rectColor = RGB(0, 146, 174);
         
-        UIButton *addBtn = [UIButton buttonWithColor:rectColor selColor:M_GREEN_COLOR];
+        UIButton *addBtn = [UIButton buttonWithColor:rectColor selColor:BLUE_DOWN_COLOR];
         addBtn.frame = CGRectMake(10, 7, 60, 30);
         addBtn.clipsToBounds = YES;
         addBtn.layer.cornerRadius = 5;
@@ -371,7 +371,7 @@
         [addBtn addTarget:self action:@selector(addAction:) forControlEvents:UIControlEventTouchUpInside];
         addBtn.titleLabel.font = [UIFont systemFontOfSize:15];
         
-        UIButton *minusBtn = [UIButton buttonWithColor:rectColor selColor:M_GREEN_COLOR];
+        UIButton *minusBtn = [UIButton buttonWithColor:rectColor selColor:BLUE_DOWN_COLOR];
         minusBtn.frame = CGRectMake(CGRectGetWidth(self.frame)-70, 7, 60, 30);
         minusBtn.clipsToBounds = YES;
         minusBtn.layer.cornerRadius = 5;

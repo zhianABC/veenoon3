@@ -106,7 +106,7 @@
     [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_selectSysBtn];
     
-    _luboBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
+    _luboBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
     _luboBtn.frame = CGRectMake(70, SCREEN_HEIGHT-140, 60, 60);
     _luboBtn.layer.cornerRadius = 5;
     _luboBtn.layer.borderWidth = 2;
@@ -121,7 +121,7 @@
        forControlEvents:UIControlEventTouchUpInside];
     
     
-    _tanchuBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
+    _tanchuBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
     _tanchuBtn.frame = CGRectMake(150, SCREEN_HEIGHT-140, 60, 60);
     _tanchuBtn.layer.cornerRadius = 5;
     _tanchuBtn.layer.borderWidth = 2;
@@ -135,7 +135,7 @@
                    action:@selector(tanchuAction:)
          forControlEvents:UIControlEventTouchUpInside];
     
-    _addressBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
+    _addressBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
     _addressBtn.frame = CGRectMake(230, SCREEN_HEIGHT-140, 60, 60);
     _addressBtn.layer.cornerRadius = 5;
     _addressBtn.layer.borderWidth = 2;
@@ -149,7 +149,7 @@
                     action:@selector(addressAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
-    _yuanchengBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
+    _yuanchengBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
     _yuanchengBtn.frame = CGRectMake(310, SCREEN_HEIGHT-140, 60, 60);
     _yuanchengBtn.layer.cornerRadius = 5;
     _yuanchengBtn.layer.borderWidth = 2;
@@ -196,7 +196,7 @@
     
     labelHeight+=40;
     
-    UIButton *dialPhoneBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
+    UIButton *dialPhoneBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
     dialPhoneBtn.frame = CGRectMake(leftSpace, labelHeight+60, 60, 60);
     dialPhoneBtn.layer.cornerRadius = 5;
     dialPhoneBtn.layer.borderWidth = 2;
@@ -210,7 +210,7 @@
                      action:@selector(dialPHoneAction:)
            forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *mutePhoneBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
+    UIButton *mutePhoneBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
     mutePhoneBtn.frame = CGRectMake(leftSpace+65, labelHeight+60, 60, 60);
     mutePhoneBtn.layer.cornerRadius = 5;
     mutePhoneBtn.layer.borderWidth = 2;
@@ -224,7 +224,7 @@
                      action:@selector(mutePHoneAction:)
            forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *hangPhoneBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
+    UIButton *hangPhoneBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
     hangPhoneBtn.frame = CGRectMake(leftSpace+130, labelHeight+60, 60, 60);
     hangPhoneBtn.layer.cornerRadius = 5;
     hangPhoneBtn.layer.borderWidth = 2;
@@ -238,7 +238,7 @@
                      action:@selector(hangPHoneAction:)
            forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *phone1Btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
+    UIButton *phone1Btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
     phone1Btn.frame = CGRectMake(leftSpace, labelHeight+60+65, 60, 60);
     phone1Btn.layer.cornerRadius = 5;
     phone1Btn.layer.borderWidth = 2;
@@ -253,7 +253,7 @@
                   action:@selector(phone1Action:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *phone2Btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
+    UIButton *phone2Btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
     phone2Btn.frame = CGRectMake(leftSpace+65, labelHeight+60+65, 60, 60);
     phone2Btn.layer.cornerRadius = 5;
     phone2Btn.layer.borderWidth = 2;
@@ -268,7 +268,7 @@
                   action:@selector(phone2Action:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *phone3Btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
+    UIButton *phone3Btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
     phone3Btn.frame = CGRectMake(leftSpace+65+65, labelHeight+60+65, 60, 60);
     phone3Btn.layer.cornerRadius = 5;
     phone3Btn.layer.borderWidth = 2;
@@ -283,7 +283,7 @@
                   action:@selector(phone3Action:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *phone4Btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
+    UIButton *phone4Btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
     phone4Btn.frame = CGRectMake(leftSpace, labelHeight+60+65+65, 60, 60);
     phone4Btn.layer.cornerRadius = 5;
     phone4Btn.layer.borderWidth = 2;
@@ -298,7 +298,7 @@
                   action:@selector(phone4Action:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *phone5Btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
+    UIButton *phone5Btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
     phone5Btn.frame = CGRectMake(leftSpace+65, labelHeight+60+65+65, 60, 60);
     phone5Btn.layer.cornerRadius = 5;
     phone5Btn.layer.borderWidth = 2;
@@ -313,7 +313,7 @@
                   action:@selector(phone5Action:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *phone6Btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
+    UIButton *phone6Btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
     phone6Btn.frame = CGRectMake(leftSpace+65+65, labelHeight+60+65+65, 60, 60);
     phone6Btn.layer.cornerRadius = 5;
     phone6Btn.layer.borderWidth = 2;
@@ -328,7 +328,7 @@
                   action:@selector(phone6Action:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *phone7Btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
+    UIButton *phone7Btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
     phone7Btn.frame = CGRectMake(leftSpace, labelHeight+60+65+65+65, 60, 60);
     phone7Btn.layer.cornerRadius = 5;
     phone7Btn.layer.borderWidth = 2;
@@ -343,7 +343,7 @@
                   action:@selector(phone7Action:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *phone8Btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
+    UIButton *phone8Btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
     phone8Btn.frame = CGRectMake(leftSpace+65, labelHeight+60+65+65+65, 60, 60);
     phone8Btn.layer.cornerRadius = 5;
     phone8Btn.layer.borderWidth = 2;
@@ -358,7 +358,7 @@
                   action:@selector(phone8Action:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *phone9Btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
+    UIButton *phone9Btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
     phone9Btn.frame = CGRectMake(leftSpace+65+65, labelHeight+60+65+65+65, 60, 60);
     phone9Btn.layer.cornerRadius = 5;
     phone9Btn.layer.borderWidth = 2;
@@ -373,7 +373,7 @@
                   action:@selector(phone9Action:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *phonedotBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
+    UIButton *phonedotBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
     phonedotBtn.frame = CGRectMake(leftSpace, labelHeight+60+65+65+65+65, 60, 60);
     phonedotBtn.layer.cornerRadius = 5;
     phonedotBtn.layer.borderWidth = 2;
@@ -388,7 +388,7 @@
                     action:@selector(phonedotAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *phone0Btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
+    UIButton *phone0Btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
     phone0Btn.frame = CGRectMake(leftSpace+65, labelHeight+60+65+65+65+65, 60, 60);
     phone0Btn.layer.cornerRadius = 5;
     phone0Btn.layer.borderWidth = 2;
@@ -403,7 +403,7 @@
                   action:@selector(phone0Action:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *phoneStarBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
+    UIButton *phoneStarBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
     phoneStarBtn.frame = CGRectMake(leftSpace+65+65, labelHeight+60+65+65+65+65, 60, 60);
     phoneStarBtn.layer.cornerRadius = 5;
     phoneStarBtn.layer.borderWidth = 2;
@@ -443,7 +443,7 @@
     for (id dic in self._cameraArray) {
         int startX = index*cellHeight+index*space;
         
-        UIButton *cameraBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
+        UIButton *cameraBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
         cameraBtn.frame = CGRectMake(startX, 5, cellHeight, cellHeight);
         cameraBtn.layer.cornerRadius = 5;
         cameraBtn.layer.borderWidth = 2;
@@ -466,7 +466,7 @@
     int playerLeft = 405;
     int playerHeight = 100;
     
-    UIButton *lastVideoUpBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
+    UIButton *lastVideoUpBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
     lastVideoUpBtn.frame = CGRectMake(230+playerLeft, SCREEN_HEIGHT-500+playerHeight, 60, 60);
     lastVideoUpBtn.layer.cornerRadius = 5;
     lastVideoUpBtn.layer.borderWidth = 2;
@@ -480,7 +480,7 @@
                        action:@selector(lastSingAction:)
              forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *okPlayerBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
+    UIButton *okPlayerBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
     okPlayerBtn.frame = CGRectMake(295+playerLeft, SCREEN_HEIGHT-500+playerHeight, 60, 60);
     okPlayerBtn.layer.cornerRadius = 5;
     okPlayerBtn.layer.borderWidth = 2;
@@ -495,7 +495,7 @@
     [okPlayerBtn addTarget:self action:@selector(audioPlayHoldAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *volumnUpBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
+    UIButton *volumnUpBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
     volumnUpBtn.frame = CGRectMake(295+playerLeft, SCREEN_HEIGHT-565+playerHeight, 60, 60);
     volumnUpBtn.layer.cornerRadius = 5;
     volumnUpBtn.layer.borderWidth = 2;
@@ -509,7 +509,7 @@
                     action:@selector(volumnAddAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *nextPlayBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
+    UIButton *nextPlayBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
     nextPlayBtn.frame = CGRectMake(360+playerLeft, SCREEN_HEIGHT-500+playerHeight, 60, 60);
     nextPlayBtn.layer.cornerRadius = 5;
     nextPlayBtn.layer.borderWidth = 2;
@@ -523,7 +523,7 @@
                     action:@selector(nextSingAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *volumnDownBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:M_GREEN_COLOR];
+    UIButton *volumnDownBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
     volumnDownBtn.frame = CGRectMake(295+playerLeft, SCREEN_HEIGHT-435+playerHeight, 60, 60);
     volumnDownBtn.layer.cornerRadius = 5;
     volumnDownBtn.layer.borderWidth = 2;
