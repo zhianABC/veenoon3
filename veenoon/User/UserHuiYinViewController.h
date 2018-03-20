@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-@interface UserHuiYinViewController : UIViewController {
+#import "UserBaseViewControllor.h"
+@interface UserHuiYinViewController : UserBaseViewControllor {
     
 }
 
