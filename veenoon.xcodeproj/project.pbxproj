@@ -552,6 +552,7 @@
 		EB3B73B91FE63F10001941CF /* wireless_slide_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB3B73B71FE63F10001941CF /* wireless_slide_s@2x.png */; };
 		EB3B73BB1FE6428C001941CF /* jslide_thumb_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB3B73BA1FE6428C001941CF /* jslide_thumb_n@2x.png */; };
 		EB3B73BD1FE642FA001941CF /* v_slider_road_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB3B73BC1FE642F9001941CF /* v_slider_road_n@2x.png */; };
+		EB478FF9205FF74000EDCD64 /* InforCollectRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB478FF8205FF74000EDCD64 /* InforCollectRightView.m */; };
 		EB4E39E320273F6100533575 /* HandtoHandSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4E39E220273F6100533575 /* HandtoHandSettingsView.m */; };
 		EB4E39E62027423D00533575 /* HandtoHandLineCheckView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4E39E52027423D00533575 /* HandtoHandLineCheckView.m */; };
 		EB4EC1091FE7E178000B3101 /* yaobao_yellow_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB4EC1071FE7E177000B3101 /* yaobao_yellow_n@2x.png */; };
@@ -1535,6 +1536,8 @@
 		EB3B73B71FE63F10001941CF /* wireless_slide_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wireless_slide_s@2x.png"; sourceTree = "<group>"; };
 		EB3B73BA1FE6428C001941CF /* jslide_thumb_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jslide_thumb_n@2x.png"; sourceTree = "<group>"; };
 		EB3B73BC1FE642F9001941CF /* v_slider_road_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "v_slider_road_n@2x.png"; sourceTree = "<group>"; };
+		EB478FF7205FF74000EDCD64 /* InforCollectRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InforCollectRightView.h; sourceTree = "<group>"; };
+		EB478FF8205FF74000EDCD64 /* InforCollectRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InforCollectRightView.m; sourceTree = "<group>"; };
 		EB4E39E120273F6100533575 /* HandtoHandSettingsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HandtoHandSettingsView.h; sourceTree = "<group>"; };
 		EB4E39E220273F6100533575 /* HandtoHandSettingsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HandtoHandSettingsView.m; sourceTree = "<group>"; };
 		EB4E39E42027423D00533575 /* HandtoHandLineCheckView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HandtoHandLineCheckView.h; sourceTree = "<group>"; };
@@ -3152,6 +3155,8 @@
 				EB7333FF20410B5100AE60B8 /* DoorAccessRightView.m */,
 				EB7333FB20410A7E00AE60B8 /* MonitorRightView.h */,
 				EB7333FC20410A7E00AE60B8 /* MonitorRightView.m */,
+				EB478FF7205FF74000EDCD64 /* InforCollectRightView.h */,
+				EB478FF8205FF74000EDCD64 /* InforCollectRightView.m */,
 			);
 			path = RightView;
 			sourceTree = "<group>";
@@ -4076,6 +4081,7 @@
 				EB1A55C21FE93CD4000B18E6 /* EngineerAudioProcessViewCtrl.m in Sources */,
 				04DE1EA81AD6AEE000D49E2F /* SBJson4StreamWriterState.m in Sources */,
 				341671881FBA97BD001D33D0 /* HomeViewController.m in Sources */,
+				EB478FF9205FF74000EDCD64 /* InforCollectRightView.m in Sources */,
 				EBDB4535205AB0F6000ABAB0 /* PlayerRightView.m in Sources */,
 				EBC71B2C204100DD00DD0A98 /* NewWindRightView.m in Sources */,
 				342814231FE34BF100170D11 /* PowerSettingView.m in Sources */,

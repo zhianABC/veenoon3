@@ -30,6 +30,7 @@
     
     UILabel *wenduL;
     
+    NSMutableArray *_selectedBtns;
 }
 @property (nonatomic, strong) NSMutableArray *_coms;
 @property (nonatomic, strong) NSMutableArray *_brands;
@@ -57,11 +58,11 @@
     if(self = [super initWithFrame:frame]) {
         self.backgroundColor = RGB(0, 89, 118);
         
-        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(15, 25, 40, 30)];
+        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(10, 25, 40, 30)];
+        titleL.textColor = [UIColor whiteColor];
         titleL.backgroundColor = [UIColor clearColor];
         [self addSubview:titleL];
         titleL.font = [UIFont systemFontOfSize:13];
-        titleL.textColor  = [UIColor colorWithWhite:1.0 alpha:0.8];
         titleL.text = @"IP地址";
         
         ipTextField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(titleL.frame)+30, 25, self.bounds.size.width - 35 - CGRectGetMaxX(titleL.frame), 30)];
@@ -77,6 +78,7 @@
         [self addSubview:ipTextField];
         
         _btns = [[NSMutableArray alloc] init];
+        _selectedBtns = [[NSMutableArray alloc] init];
         
         UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 30)];
         [self addSubview:headView];
@@ -197,7 +199,7 @@
         int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+top;
         
-        UIButton *scenarioBtn = [UIButton buttonWithColor:rectColor selColor:M_GREEN_COLOR];
+        UIButton *scenarioBtn = [UIButton buttonWithColor:rectColor selColor:BLUE_DOWN_COLOR];
         scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
         scenarioBtn.clipsToBounds = YES;
         scenarioBtn.layer.cornerRadius = 5;
@@ -220,8 +222,19 @@
 }
 
 - (void) buttonAction:(id)sender{
-    
-    
+    for (UIButton *button in _selectedBtns) {
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [button setSelected:NO];
+    }
+    if ([_selectedBtns containsObject:sender]) {
+        [sender setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [sender setSelected:NO];
+        [_selectedBtns removeObject:sender];
+    } else {
+        [sender setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+        [sender setSelected:YES];
+        [_selectedBtns addObject:sender];
+    }
 }
 - (void) switchComSetting{
     

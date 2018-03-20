@@ -18,11 +18,13 @@
     CustomPickerView *_customPicker;
     
     NSMutableArray *_nameLabelArray;
-    NSMutableArray *_channelArray;
     
     BOOL isSettings;
-    UIButton *okBtn;
     NewWindRightView *_rightView;
+    UIButton *okBtn;
+    
+    NSMutableArray *buttonArray;
+    NSMutableArray *selectedBtnArray;
 }
 @end
 
@@ -30,20 +32,21 @@
 @synthesize _windSysArray;
 @synthesize _number;
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     
-    isSettings = NO;
+    isSettings=NO;
     
     if (_windSysArray == nil) {
         _windSysArray = [[NSMutableArray alloc] init];
     }
+    _nameLabelArray = [[NSMutableArray alloc] init];
+    buttonArray = [[NSMutableArray alloc] init];
+    selectedBtnArray = [[NSMutableArray alloc] init];
     for (int i = 0; i < self._number; i++) {
         NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
         [_windSysArray addObject:dic];
     }
-    _nameLabelArray = [[NSMutableArray alloc] init];
-    _channelArray = [[NSMutableArray alloc] init];
-    
     [super setTitleAndImage:@"env_corner_xinfeng.png" withTitle:@"新风"];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
@@ -89,9 +92,8 @@
     [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_selectSysBtn];
     
-    
     int index = 0;
-    int top = 250;
+    int top = ENGINEER_VIEW_COMPONENT_TOP;
     
     int leftRight = ENGINEER_VIEW_LEFT;
     
@@ -101,7 +103,6 @@
     int space = ENGINEER_VIEW_COLUMN_GAP;
     
     for (int i = 0; i < self._number; i++) {
-        NSMutableDictionary *dic = [self._windSysArray objectAtIndex:i];
         
         int row = index/colNumber;
         int col = index%colNumber;
@@ -114,66 +115,58 @@
         scenarioBtn.layer.cornerRadius = 5;
         scenarioBtn.layer.borderWidth = 2;
         scenarioBtn.layer.borderColor = [UIColor clearColor].CGColor;
-        NSString *status = [dic objectForKey:@"status"];
         
         [scenarioBtn setImage:[UIImage imageNamed:@"dianyuanshishiqi_n.png"] forState:UIControlStateNormal];
         [scenarioBtn setImage:[UIImage imageNamed:@"dianyuanshishiqi_s.png"] forState:UIControlStateHighlighted];
         
-        if ([status isEqualToString:@"ON"]) {
-            [scenarioBtn setImage:[UIImage imageNamed:@"dianyuanshishiqi_s.png"] forState:UIControlStateNormal];
-        }
         scenarioBtn.tag = index;
         [self.view addSubview:scenarioBtn];
+        [buttonArray addObject:scenarioBtn];
+        
+        NSMutableDictionary *dataDic = [[NSMutableDictionary alloc] init];
+        [dataDic setObject:[NSString stringWithFormat:@"%d", index+1] forKey:@"name"];
         
         [scenarioBtn addTarget:self
                         action:@selector(scenarioAction:)
               forControlEvents:UIControlEventTouchUpInside];
-        [self createBtnLabel:scenarioBtn dataDic:dic];
+        [self createBtnLabel:scenarioBtn dataDic:dataDic];
         index++;
     }
 }
 - (void) scenarioAction:(id)sender{
     UIButton *btn = (UIButton*) sender;
-    int index = (int) btn.tag;
+    int tag = (int) btn.tag;
     
-    NSMutableDictionary *dic = [self._windSysArray objectAtIndex:index];
+    UILabel *nameLabel = [_nameLabelArray objectAtIndex:tag];
     
-    NSString *status = [dic objectForKey:@"status"];
-    
-    UILabel *nameLabel = [_nameLabelArray objectAtIndex:index];
-    UILabel *channelLabel = [_channelArray objectAtIndex:index];
-    if ([status isEqualToString:@"ON"]) {
-        [btn setImage:[UIImage imageNamed:@"dianyuanshishiqi_n.png"] forState:UIControlStateNormal];
-        [dic setObject:@"OFF" forKey:@"status"];
+    UIButton *btnn;
+    for (UIButton *button in selectedBtnArray) {
+        if (button.tag == tag) {
+            btnn = button;
+            break;
+        }
+    }
+    // want to choose it
+    if (btnn) {
+        [btnn setImage:[UIImage imageNamed:@"dianyuanshishiqi_n.png"] forState:UIControlStateNormal];
         nameLabel.textColor  = [UIColor whiteColor];
-        channelLabel.textColor  = [UIColor whiteColor];
+        
+        [selectedBtnArray removeObject:btnn];
     } else {
         [btn setImage:[UIImage imageNamed:@"dianyuanshishiqi_s.png"] forState:UIControlStateNormal];
-        [dic setObject:@"ON" forKey:@"status"];
         nameLabel.textColor  = RGB(230, 151, 50);
-        channelLabel.textColor  = RGB(230, 151, 50);
+        [selectedBtnArray addObject:btn];
     }
 }
-
 - (void) createBtnLabel:(UIButton*)sender dataDic:(NSMutableDictionary*) dataDic{
-    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(sender.frame.size.width - 20, 0, 20, 20)];
+    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(sender.frame.size.width/2 - 40, 0, 80, 20)];
     titleL.textAlignment = NSTextAlignmentCenter;
     titleL.backgroundColor = [UIColor clearColor];
     [sender addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:11];
     titleL.textColor  = [UIColor whiteColor];
-    titleL.text = [dataDic objectForKey:@"name"];
+    titleL.text = [@"Channel " stringByAppendingString:[dataDic objectForKey:@"name"]];
     [_nameLabelArray addObject:titleL];
-    
-    titleL = [[UILabel alloc] initWithFrame:CGRectMake(sender.frame.size.width/2 -40, sender.frame.size.height - 20, 80, 20)];
-    titleL.textAlignment = NSTextAlignmentCenter;
-    titleL.backgroundColor = [UIColor clearColor];
-    [sender addSubview:titleL];
-    titleL.font = [UIFont boldSystemFontOfSize:12];
-    titleL.textColor  = [UIColor whiteColor];
-    titleL.textAlignment = NSTextAlignmentCenter;
-    titleL.text = @"Channel";
-    [_channelArray addObject:titleL];
 }
 
 - (void) sysSelectAction:(id)sender{
@@ -182,7 +175,7 @@
     
     
     NSMutableArray *arr = [NSMutableArray array];
-    for(int i = 1; i< 8; i++)
+    for(int i = 1; i< 9; i++)
     {
         [arr addObject:[NSString stringWithFormat:@"00%d", i]];
     }
@@ -226,6 +219,4 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 @end
-
-
 

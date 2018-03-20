@@ -12,7 +12,7 @@
 #import "NSDate-Helper.h"
 #import "CircleProgressView.h"
 #import "CustomPickerView.h"
-#import "EngineerScenarioSettingsViewCtrl.h"
+#import "InforCollectRightView.h"
 
 @interface EngineerInfoCollectViewCtrl () <CustomPickerViewDelegate,
 UIScrollViewDelegate>{
@@ -33,12 +33,19 @@ UIScrollViewDelegate>{
     
     CircleProgressView *circle;
     CircleProgressView *circleA;
+    
+    InforCollectRightView *_rightView;
+    BOOL isSettings;
+    
+    UIButton *okBtn;
 }
 @end
 
 @implementation EngineerInfoCollectViewCtrl
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    isSettings=NO;
     
     [super setTitleAndImage:@"env_corner_infoclollect.png" withTitle:@"能耗统计"];
     
@@ -61,10 +68,10 @@ UIScrollViewDelegate>{
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
     [bottomBar addSubview:okBtn];
-    [okBtn setTitle:@"保存" forState:UIControlStateNormal];
+    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
     [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
     okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
@@ -462,9 +469,23 @@ UIScrollViewDelegate>{
     rightBtn.center = CGPointMake(yearL.center.x+100, yearL.center.y);
 }
 - (void) okAction:(id)sender{
-    EngineerScenarioSettingsViewCtrl *ctrl = [[EngineerScenarioSettingsViewCtrl alloc] init];
     
-    [self.navigationController pushViewController:ctrl animated:YES];
+    if (!isSettings) {
+        _rightView = [[InforCollectRightView alloc]
+                      initWithFrame:CGRectMake(SCREEN_WIDTH-300,
+                                               64, 300, SCREEN_HEIGHT-114)];
+        [self.view addSubview:_rightView];
+        
+        [okBtn setTitle:@"保存" forState:UIControlStateNormal];
+        
+        isSettings = YES;
+    } else {
+        if (_rightView) {
+            [_rightView removeFromSuperview];
+        }
+        [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+        isSettings = NO;
+    }
 }
 
 - (void) cancelAction:(id)sender{

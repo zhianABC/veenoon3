@@ -9,7 +9,6 @@
 #import "EngineerFloorWarmViewCtrl.h"
 #import "UIButton+Color.h"
 #import "CustomPickerView.h"
-#import "SlideButton.h"
 #import "FloorWarmRightView.h"
 
 @interface EngineerFloorWarmViewCtrl () <CustomPickerViewDelegate>{
@@ -18,17 +17,14 @@
     
     CustomPickerView *_customPicker;
     
-    NSMutableArray *_buttonArray;
-    
-    NSMutableArray *_buttonSeideArray;
-    NSMutableArray *_buttonChannelArray;
-    NSMutableArray *_buttonNumberArray;
-    
-    NSMutableArray *_selectedBtnArray;
+    NSMutableArray *_nameLabelArray;
     
     BOOL isSettings;
-    UIButton *okBtn;
     FloorWarmRightView *_rightView;
+    UIButton *okBtn;
+    
+    NSMutableArray *buttonArray;
+    NSMutableArray *selectedBtnArray;
 }
 @end
 
@@ -36,18 +32,22 @@
 @synthesize _floorWarmSysArray;
 @synthesize _number;
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     
-    isSettings = NO;
+    isSettings=NO;
     
-    _buttonArray = [[NSMutableArray alloc] init];
-    _buttonSeideArray = [[NSMutableArray alloc] init];
-    _buttonChannelArray = [[NSMutableArray alloc] init];
-    _buttonNumberArray = [[NSMutableArray alloc] init];
-    _selectedBtnArray = [[NSMutableArray alloc] init];
-    
-    
-    [super setTitleAndImage:@"env_corner_dire.png" withTitle:@"地暖"];
+    if (_floorWarmSysArray == nil) {
+        _floorWarmSysArray = [[NSMutableArray alloc] init];
+    }
+    _nameLabelArray = [[NSMutableArray alloc] init];
+    buttonArray = [[NSMutableArray alloc] init];
+    selectedBtnArray = [[NSMutableArray alloc] init];
+    for (int i = 0; i < self._number; i++) {
+        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+        [_floorWarmSysArray addObject:dic];
+    }
+    [super setTitleAndImage:@"env_corner_dire.png" withTitle:@"地热"];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
@@ -93,7 +93,7 @@
     [self.view addSubview:_selectSysBtn];
     
     int index = 0;
-    int top = 250;
+    int top = ENGINEER_VIEW_COMPONENT_TOP;
     
     int leftRight = ENGINEER_VIEW_LEFT;
     
@@ -109,67 +109,64 @@
         int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+top;
         
-        SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(startX, startY, 120, 120)];
+        UIButton *scenarioBtn = [UIButton buttonWithColor:nil selColor:RGB(0, 89, 118)];
+        scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
+        scenarioBtn.clipsToBounds = YES;
+        scenarioBtn.layer.cornerRadius = 5;
+        scenarioBtn.layer.borderWidth = 2;
+        scenarioBtn.layer.borderColor = [UIColor clearColor].CGColor;
         
-        UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
-        tapGesture.cancelsTouchesInView =  NO;
-        tapGesture.numberOfTapsRequired = 1;
-        tapGesture.view.tag = i;
-        [btn addGestureRecognizer:tapGesture];
+        [scenarioBtn setImage:[UIImage imageNamed:@"dianyuanshishiqi_n.png"] forState:UIControlStateNormal];
+        [scenarioBtn setImage:[UIImage imageNamed:@"dianyuanshishiqi_s.png"] forState:UIControlStateHighlighted];
         
-        btn.tag = i;
-        [self.view addSubview:btn];
+        scenarioBtn.tag = index;
+        [self.view addSubview:scenarioBtn];
+        [buttonArray addObject:scenarioBtn];
         
-        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width - 30, 20, 30, 20)];
-        titleL.backgroundColor = [UIColor clearColor];
-        [btn addSubview:titleL];
-        titleL.font = [UIFont boldSystemFontOfSize:11];
-        titleL.textColor  = [UIColor whiteColor];
-        titleL.text = [NSString stringWithFormat:@"0%d",i+1];
-        [_buttonNumberArray addObject:titleL];
+        NSMutableDictionary *dataDic = [[NSMutableDictionary alloc] init];
+        [dataDic setObject:[NSString stringWithFormat:@"%d", index+1] forKey:@"name"];
         
-        titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 -40, btn.frame.size.height - 40, 80, 20)];
-        titleL.backgroundColor = [UIColor clearColor];
-        [btn addSubview:titleL];
-        titleL.font = [UIFont boldSystemFontOfSize:12];
-        titleL.textColor  = [UIColor whiteColor];
-        titleL.textAlignment = NSTextAlignmentCenter;
-        titleL.text = @"Channel";
-        [_buttonChannelArray addObject:titleL];
-        
-        [_buttonArray addObject:btn];
-        
+        [scenarioBtn addTarget:self
+                        action:@selector(scenarioAction:)
+              forControlEvents:UIControlEventTouchUpInside];
+        [self createBtnLabel:scenarioBtn dataDic:dataDic];
         index++;
     }
 }
--(void)handleTapGesture:(UIGestureRecognizer*)gestureRecognizer {
-    int tag = (int) gestureRecognizer.view.tag;
+- (void) scenarioAction:(id)sender{
+    UIButton *btn = (UIButton*) sender;
+    int tag = (int) btn.tag;
     
-    SlideButton *btn;
-    for (SlideButton *button in _selectedBtnArray) {
+    UILabel *nameLabel = [_nameLabelArray objectAtIndex:tag];
+    
+    UIButton *btnn;
+    for (UIButton *button in selectedBtnArray) {
         if (button.tag == tag) {
-            btn = button;
+            btnn = button;
             break;
         }
     }
     // want to choose it
-    if (btn == nil) {
-        SlideButton *button = [_buttonArray objectAtIndex:tag];
-        [_selectedBtnArray addObject:button];
-        UILabel *chanelL = [_buttonChannelArray objectAtIndex:tag];
-        chanelL.textColor = YELLOW_COLOR;
+    if (btnn) {
+        [btnn setImage:[UIImage imageNamed:@"dianyuanshishiqi_n.png"] forState:UIControlStateNormal];
+        nameLabel.textColor  = [UIColor whiteColor];
         
-        UILabel *numberL = [_buttonNumberArray objectAtIndex:tag];
-        numberL.textColor = YELLOW_COLOR;
+        [selectedBtnArray removeObject:btnn];
     } else {
-        // remove it
-        [_selectedBtnArray removeObject:btn];
-        UILabel *chanelL = [_buttonChannelArray objectAtIndex:tag];
-        chanelL.textColor = [UIColor whiteColor];
-        
-        UILabel *numberL = [_buttonNumberArray objectAtIndex:tag];
-        numberL.textColor = [UIColor whiteColor];;
+        [btn setImage:[UIImage imageNamed:@"dianyuanshishiqi_s.png"] forState:UIControlStateNormal];
+        nameLabel.textColor  = RGB(230, 151, 50);
+        [selectedBtnArray addObject:btn];
     }
+}
+- (void) createBtnLabel:(UIButton*)sender dataDic:(NSMutableDictionary*) dataDic{
+    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(sender.frame.size.width/2 - 40, 0, 80, 20)];
+    titleL.textAlignment = NSTextAlignmentCenter;
+    titleL.backgroundColor = [UIColor clearColor];
+    [sender addSubview:titleL];
+    titleL.font = [UIFont boldSystemFontOfSize:11];
+    titleL.textColor  = [UIColor whiteColor];
+    titleL.text = [@"Channel " stringByAppendingString:[dataDic objectForKey:@"name"]];
+    [_nameLabelArray addObject:titleL];
 }
 
 - (void) sysSelectAction:(id)sender{
@@ -222,3 +219,5 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 @end
+
+

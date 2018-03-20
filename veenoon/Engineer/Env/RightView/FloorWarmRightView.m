@@ -11,7 +11,7 @@
 #import "CustomPickerView.h"
 #import "UIButton+Color.h"
 
-@interface FloorWarmRightView () <UITableViewDelegate, UITableViewDataSource, CustomPickerViewDelegate> {
+@interface FloorWarmRightView () <UITableViewDelegate, UITableViewDataSource, CustomPickerViewDelegate, UITextFieldDelegate> {
     ComSettingView *_com;
     
     int _curIndex;
@@ -25,6 +25,10 @@
     UIView *_footerView;
     
     NSMutableArray *_btns;
+    
+    UITextField *ipTextField;
+    
+    NSMutableArray *_selectedBtns;
 }
 @property (nonatomic, strong) NSMutableArray *_coms;
 @property (nonatomic, strong) NSMutableArray *_brands;
@@ -52,9 +56,29 @@
     if(self = [super initWithFrame:frame]) {
         self.backgroundColor = RGB(0, 89, 118);
         
-        _btns = [[NSMutableArray alloc] init];
+        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(10, 25, 40, 30)];
+        titleL.textColor = [UIColor whiteColor];
+        titleL.backgroundColor = [UIColor clearColor];
+        [self addSubview:titleL];
+        titleL.font = [UIFont systemFontOfSize:13];
+        titleL.text = @"IP地址";
         
-        UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 100)];
+        ipTextField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(titleL.frame)+30, 25, self.bounds.size.width - 35 - CGRectGetMaxX(titleL.frame), 30)];
+        ipTextField.delegate = self;
+        ipTextField.backgroundColor = [UIColor clearColor];
+        ipTextField.returnKeyType = UIReturnKeyDone;
+        ipTextField.text = @"192.168.1.100";
+        ipTextField.textColor = [UIColor whiteColor];
+        ipTextField.borderStyle = UITextBorderStyleRoundedRect;
+        ipTextField.textAlignment = NSTextAlignmentRight;
+        ipTextField.font = [UIFont systemFontOfSize:13];
+        ipTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        [self addSubview:ipTextField];
+        
+        _btns = [[NSMutableArray alloc] init];
+        _selectedBtns = [[NSMutableArray alloc] init];
+        
+        UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 30)];
         [self addSubview:headView];
         
         UISwipeGestureRecognizer *swip = [[UISwipeGestureRecognizer alloc] initWithTarget:self
@@ -156,7 +180,7 @@
         int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+top;
         
-        UIButton *scenarioBtn = [UIButton buttonWithColor:rectColor selColor:M_GREEN_COLOR];
+        UIButton *scenarioBtn = [UIButton buttonWithColor:rectColor selColor:BLUE_DOWN_COLOR];
         scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
         scenarioBtn.clipsToBounds = YES;
         scenarioBtn.layer.cornerRadius = 5;
@@ -179,7 +203,19 @@
 }
 
 - (void) buttonAction:(id)sender{
-    
+    for (UIButton *button in _selectedBtns) {
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [button setSelected:NO];
+    }
+    if ([_selectedBtns containsObject:sender]) {
+        [sender setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [sender setSelected:NO];
+        [_selectedBtns removeObject:sender];
+    } else {
+        [sender setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+        [sender setSelected:YES];
+        [_selectedBtns addObject:sender];
+    }
 }
 - (void) switchComSetting{
     
@@ -334,6 +370,23 @@
         _tableView.scrollEnabled = NO;
         [_tableView reloadData];
     }
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField{
+    
+    //_curIndex = (int)textField.tag;
+    
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    
+    [textField resignFirstResponder];
+    
+    return YES;
 }
 
 @end
