@@ -554,6 +554,11 @@
 		EB3B73BD1FE642FA001941CF /* v_slider_road_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB3B73BC1FE642F9001941CF /* v_slider_road_n@2x.png */; };
 		EB478FF9205FF74000EDCD64 /* InforCollectRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB478FF8205FF74000EDCD64 /* InforCollectRightView.m */; };
 		EB478FFC2061341F00EDCD64 /* UserBaseViewControllor.m in Sources */ = {isa = PBXBuildFile; fileRef = EB478FFB2061341F00EDCD64 /* UserBaseViewControllor.m */; };
+		EB478FFE2061400D00EDCD64 /* user_corner_yinpin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB478FFD2061400D00EDCD64 /* user_corner_yinpin@2x.png */; };
+		EB479001206145C000EDCD64 /* UserDVDSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB479000206145C000EDCD64 /* UserDVDSettingsViewController.m */; };
+		EB479005206146D500EDCD64 /* user_corner_sd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB479002206146D400EDCD64 /* user_corner_sd@2x.png */; };
+		EB479006206146D500EDCD64 /* user_corner_usb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB479003206146D500EDCD64 /* user_corner_usb@2x.png */; };
+		EB479007206146D500EDCD64 /* user_corner_cd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB479004206146D500EDCD64 /* user_corner_cd@2x.png */; };
 		EB4E39E320273F6100533575 /* HandtoHandSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4E39E220273F6100533575 /* HandtoHandSettingsView.m */; };
 		EB4E39E62027423D00533575 /* HandtoHandLineCheckView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4E39E52027423D00533575 /* HandtoHandLineCheckView.m */; };
 		EB4EC1091FE7E178000B3101 /* yaobao_yellow_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB4EC1071FE7E177000B3101 /* yaobao_yellow_n@2x.png */; };
@@ -1541,6 +1546,12 @@
 		EB478FF8205FF74000EDCD64 /* InforCollectRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InforCollectRightView.m; sourceTree = "<group>"; };
 		EB478FFA2061341F00EDCD64 /* UserBaseViewControllor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserBaseViewControllor.h; sourceTree = "<group>"; };
 		EB478FFB2061341F00EDCD64 /* UserBaseViewControllor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserBaseViewControllor.m; sourceTree = "<group>"; };
+		EB478FFD2061400D00EDCD64 /* user_corner_yinpin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_corner_yinpin@2x.png"; sourceTree = "<group>"; };
+		EB478FFF206145C000EDCD64 /* UserDVDSettingsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserDVDSettingsViewController.h; sourceTree = "<group>"; };
+		EB479000206145C000EDCD64 /* UserDVDSettingsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserDVDSettingsViewController.m; sourceTree = "<group>"; };
+		EB479002206146D400EDCD64 /* user_corner_sd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "user_corner_sd@2x.png"; path = "corner/user_corner_sd@2x.png"; sourceTree = "<group>"; };
+		EB479003206146D500EDCD64 /* user_corner_usb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "user_corner_usb@2x.png"; path = "corner/user_corner_usb@2x.png"; sourceTree = "<group>"; };
+		EB479004206146D500EDCD64 /* user_corner_cd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "user_corner_cd@2x.png"; path = "corner/user_corner_cd@2x.png"; sourceTree = "<group>"; };
 		EB4E39E120273F6100533575 /* HandtoHandSettingsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HandtoHandSettingsView.h; sourceTree = "<group>"; };
 		EB4E39E220273F6100533575 /* HandtoHandSettingsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HandtoHandSettingsView.m; sourceTree = "<group>"; };
 		EB4E39E42027423D00533575 /* HandtoHandLineCheckView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HandtoHandLineCheckView.h; sourceTree = "<group>"; };
@@ -2293,6 +2304,9 @@
 		04DE1ECB1AD6B3BA00D49E2F /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
+				EB479004206146D500EDCD64 /* user_corner_cd@2x.png */,
+				EB479002206146D400EDCD64 /* user_corner_sd@2x.png */,
+				EB479003206146D500EDCD64 /* user_corner_usb@2x.png */,
 				34238A562060DD260004C6D9 /* right_white_ico@2x.png */,
 				34C73B63205FA4CC008DFACC /* s3_03@2x.png */,
 				34C73B67205FA4D4008DFACC /* s3_05@2x.png */,
@@ -2873,6 +2887,8 @@
 				EB1A045F1FC7156C007CC1F2 /* UserAudioConfigViewController.m */,
 				EBF6A72B1FC8486000260FF0 /* UserAudioPlayerSettingsViewCtrl.m */,
 				EBF6A72D1FC8487000260FF0 /* UserAudioPlayerSettingsViewCtrl.h */,
+				EB478FFF206145C000EDCD64 /* UserDVDSettingsViewController.h */,
+				EB479000206145C000EDCD64 /* UserDVDSettingsViewController.m */,
 				EBF6A7461FC861CA00260FF0 /* UserWuXianHuaTongViewCtrl.h */,
 				EBF6A7471FC861D400260FF0 /* UserWuXianHuaTongViewCtrl.m */,
 				EBF5D4301FCC591A0014D5F0 /* UserHuiYinViewController.m */,
@@ -2958,6 +2974,7 @@
 		EB19B65420581D2B003F1546 /* corner */ = {
 			isa = PBXGroup;
 			children = (
+				EB478FFD2061400D00EDCD64 /* user_corner_yinpin@2x.png */,
 				EB19B65520581D2B003F1546 /* audio_corner_bofangqi@2x.png */,
 				EB19B65620581D2B003F1546 /* audio_corner_dianyuanguanli@2x.png */,
 				EB19B65720581D2B003F1546 /* audio_corner_gongfang@2x.png */,
@@ -3371,6 +3388,7 @@
 				EB3B73981FE6119F001941CF /* engineer_sys_select_down_n@2x.png in Resources */,
 				EBDF1BF51FC5A9A200A756EA /* user_meeting_room_4@2x.png in Resources */,
 				34190F02205D5375009A519C /* hj_icon_1_sel@2x.png in Resources */,
+				EB479005206146D500EDCD64 /* user_corner_sd@2x.png in Resources */,
 				EB1A04701FC71EEC007CC1F2 /* huiyinhuiyi_player_n@2x.png in Resources */,
 				34F27A57205121EF0045D765 /* ce_l_05_big.png in Resources */,
 				EB09C4AA1FD3AB0500776540 /* user_aircon_hot_n@2x.png in Resources */,
@@ -3465,6 +3483,7 @@
 				EB948A4D204EE4660018C80A /* wireless_slide_light_n@2x.png in Resources */,
 				EB19B67B20581D2C003F1546 /* video_corner_dianshi@2x.png in Resources */,
 				34F27A60205121EF0045D765 /* ce_l_09_big.png in Resources */,
+				EB479007206146D500EDCD64 /* user_corner_cd@2x.png in Resources */,
 				EB217FAF1FD41E45003F5A8F /* user_newwind_n@2x.png in Resources */,
 				341C60F71FDD0DBF003A5490 /* v_icon_2@2x.png in Resources */,
 				EBDF1C4B1FC5D5CF00A756EA /* air_clean_sys_s@2x.png in Resources */,
@@ -3488,6 +3507,7 @@
 				EBDF1C371FC5D5CF00A756EA /* energy_collect_n@2x.png in Resources */,
 				EB2E70801FC1B5B4009C477C /* settings_view_6@2x.png in Resources */,
 				EBDF1C4D1FC5D5CF00A756EA /* monitor_sys_s@2x.png in Resources */,
+				EB478FFE2061400D00EDCD64 /* user_corner_yinpin@2x.png in Resources */,
 				04D9A0E81DAF8381008DF2E6 /* beep-beep.aiff in Resources */,
 				EB2E707D1FC1B5B4009C477C /* settings_view_5@2x.png in Resources */,
 				EBAE5B841FDD07BE00C10C4D /* engineer_video_luboji_s@2x.png in Resources */,
@@ -3498,6 +3518,7 @@
 				EB38BAB51FD43C8B00E672CA /* user_monitor_zoomout_s@2x.png in Resources */,
 				EB36AAE01FCDA432009A0FD8 /* user_video_yejing_s@2x.png in Resources */,
 				EB09C4821FD25FF900776540 /* user_light_bg_n@2x.png in Resources */,
+				EB479006206146D500EDCD64 /* user_corner_usb@2x.png in Resources */,
 				EBAE5BB41FDD20C400C10C4D /* engineer_env_dire_n@2x.png in Resources */,
 				34190F06205D5375009A519C /* hj_icon_4_sel@2x.png in Resources */,
 				EBAE5BA31FDD20C400C10C4D /* engineer_env_kongtiao_n@2x.png in Resources */,
@@ -3940,6 +3961,7 @@
 				EB217FB81FD42188003F5A8F /* UserFloorWarmViewCtrl.m in Sources */,
 				0477DC531DA9F3CC0077FA52 /* SHA1.m in Sources */,
 				04DE1EB31AD6AEE000D49E2F /* UIButton+WebCache.m in Sources */,
+				EB479001206145C000EDCD64 /* UserDVDSettingsViewController.m in Sources */,
 				EB1717B21FF614BB00CBDB81 /* EngineerMonitorViewCtrl.m in Sources */,
 				EB7333F1204102DF00AE60B8 /* FloorWarmRightView.m in Sources */,
 				04D719771DADD3A4002153D7 /* SSUser.m in Sources */,
