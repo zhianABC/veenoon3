@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-@interface UserElectronicAutoViewCtrl : UIViewController {
+#import "UserBaseViewControllor.h"
+@interface UserElectronicAutoViewCtrl : UserBaseViewControllor {
     
 }
 

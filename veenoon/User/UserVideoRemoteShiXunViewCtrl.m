@@ -48,15 +48,7 @@
         _cameraBtnArray = [[NSMutableArray alloc] init];
     }
     
-    self.view.backgroundColor = RGB(63, 58, 55);
-    
-    UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
-    [self.view addSubview:titleIcon];
-    titleIcon.frame = CGRectMake(60, 40, 70, 10);
-    
-    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 63, SCREEN_WIDTH, 1)];
-    line.backgroundColor = RGB(83, 78, 75);
-    [self.view addSubview:line];
+    [super setTitleAndImage:@"user_corner_remote.png" withTitle:@"远程视讯会议"];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
@@ -88,8 +80,9 @@
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
-    int labelHeight = SCREEN_HEIGHT - 700;
-    int leftSpace = 250;
+    int labelHeight = SCREEN_HEIGHT - 670;
+    int leftSpace = 200;
+    
     UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(leftSpace, labelHeight, 250, 33)];
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
@@ -348,7 +341,7 @@
         forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *homeBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
-    homeBtn.frame = CGRectMake(100, SCREEN_HEIGHT-150, 50, 50);
+    homeBtn.frame = CGRectMake(100, SCREEN_HEIGHT-140, 50, 50);
     homeBtn.layer.cornerRadius = 5;
     homeBtn.layer.borderWidth = 2;
     homeBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -360,7 +353,7 @@
            forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *addressBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
-    addressBtn.frame = CGRectMake(100+55, SCREEN_HEIGHT-150, 50, 50);
+    addressBtn.frame = CGRectMake(100+55, SCREEN_HEIGHT-140, 50, 50);
     addressBtn.layer.cornerRadius = 5;
     addressBtn.layer.borderWidth = 2;
     addressBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -372,7 +365,7 @@
       forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *mackBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
-    mackBtn.frame = CGRectMake(100+55+55, SCREEN_HEIGHT-150, 50, 50);
+    mackBtn.frame = CGRectMake(100+55+55, SCREEN_HEIGHT-140, 50, 50);
     mackBtn.layer.cornerRadius = 5;
     mackBtn.layer.borderWidth = 2;
     mackBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -384,7 +377,7 @@
          forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *anniuBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
-    anniuBtn.frame = CGRectMake(100+55+55+55, SCREEN_HEIGHT-150, 50, 50);
+    anniuBtn.frame = CGRectMake(100+55+55+55, SCREEN_HEIGHT-140, 50, 50);
     anniuBtn.layer.cornerRadius = 5;
     anniuBtn.layer.borderWidth = 2;
     anniuBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -430,7 +423,7 @@
         index++;
     }
     
-    int playerLeft = 425;
+    int playerLeft = 370;
     int playerHeight = 60;
     
     UIButton *lastVideoUpBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];

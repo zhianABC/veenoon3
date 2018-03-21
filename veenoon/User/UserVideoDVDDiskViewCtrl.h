@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-@interface UserVideoDVDDiskViewCtrl : UIViewController {
+#import "UserBaseViewControllor.h"
+@interface UserVideoDVDDiskViewCtrl : UserBaseViewControllor {
     
 }
 

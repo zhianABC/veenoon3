@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-@interface UserLightConfigViewCtrl : UIViewController {
+#import "UserBaseViewControllor.h"
+@interface UserLightConfigViewCtrl : UserBaseViewControllor {
     
 }
 

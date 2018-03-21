@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-@interface UserVideoRemoteShiXunViewCtrl : UIViewController {
+#import "UserBaseViewControllor.h"
+@interface UserVideoRemoteShiXunViewCtrl : UserBaseViewControllor {
     
 }
 @end
