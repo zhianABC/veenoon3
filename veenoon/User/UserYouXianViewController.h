@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-@interface UserYouXianViewController : UIViewController {
+#import "UserBaseViewControllor.h"
+@interface UserYouXianViewController : UserBaseViewControllor {
     
 }
 
