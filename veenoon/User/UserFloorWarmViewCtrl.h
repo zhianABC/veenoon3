@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "MapMarkerLayer.h"
-@interface UserFloorWarmViewCtrl<MapMarkerLayerDelegateå> : UIViewController {
+#import "UserBaseViewControllor.h"
+@interface UserFloorWarmViewCtrl<MapMarkerLayerDelegateå> : UserBaseViewControllor {
     
 }
     

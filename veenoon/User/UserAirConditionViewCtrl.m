@@ -9,7 +9,8 @@
 #import "UIButton+Color.h"
 #import "MapMarkerLayer.h"
 
-@interface UserAirConditionViewCtrl <MapMarkerLayerDelegate>() {
+
+@interface UserAirConditionViewCtrl () {
     NSMutableArray *_conditionRoomList;
     NSMutableArray *_conditionBtnList;
     MapMarkerLayer *markerLayer;
@@ -211,6 +212,10 @@
     markerLayer.points3 = array3;
     
     markerLayer.selectedColor = [UIColor blackColor];
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"user_airecon_wendu_n.png"] ];
+    imageView.frame = CGRectMake(48, 9, 9, 6);
+    [markerLayer addSubview:imageView];
     
     wenduL = [[UILabel alloc] init];
     wenduL.text = @"26";

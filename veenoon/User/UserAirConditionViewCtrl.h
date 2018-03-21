@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MapMarkerLayer.h"
 #import "UserBaseViewControllor.h"
-@interface UserAirConditionViewCtrl<MapMarkerLayerDelegateå> : UserBaseViewControllor {
+@interface UserAirConditionViewCtrl<MapMarkerLayerDelegate> : UserBaseViewControllor {
     
 }
 
