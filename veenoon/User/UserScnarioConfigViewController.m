@@ -68,7 +68,7 @@
     
     int left = 70;
     int rowGap = (SCREEN_WIDTH - left * 2)/5;
-    int height = 0;
+    int height = 10;
     _audioSysBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left, height, 80, 100)];
     [_audioSysBtn buttonWithIcon:[UIImage imageNamed:@"audio_sys_n.png"] selectedIcon:[UIImage imageNamed:@"audio_sys_s.png"] text:@"音频系统" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_audioSysBtn addTarget:self action:@selector(audioSysAction:) forControlEvents:UIControlEventTouchUpInside];

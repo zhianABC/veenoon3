@@ -74,5 +74,15 @@
     _titleL.textColor = _normalColor;
 }
 
+- (void) setBtnHighlited:(BOOL)isSel {
+    if (isSel) {
+        _icon.image = _selImg;
+        _titleL.textColor = _selColor;
+    } else {
+        _icon.image = _normalImg;
+        _titleL.textColor = _normalColor;
+    }
+}
+
 @end
 
