@@ -10,18 +10,19 @@
 #import "EngineerEnvDevicePluginViewCtrl.h"
 #import "CenterCustomerPickerView.h"
 #import "UIButton+Color.h"
+#import "IconCenterTextButton.h"
 
 @interface EngineerVedioDevicePluginViewCtrl ()<CenterCustomerPickerViewDelegate> {
-    UIButton *_dianyuanguanliBtn;
-    UIButton *_shipinbofangBtn;
-    UIButton *_shexiangjiBtn;
-    UIButton *_xinxiheBtn;
-    UIButton *_yuanchengshixunBtn;
-    UIButton *_shipinchuliBtn;
-    UIButton *_pinjiepingBtn;
-    UIButton *_yejingdianshiBtn;
-    UIButton *_lubojiBtn;
-    UIButton *_touyingjiBtn;
+    IconCenterTextButton *_dianyuanguanliBtn;
+    IconCenterTextButton *_shipinbofangBtn;
+    IconCenterTextButton *_shexiangjiBtn;
+    IconCenterTextButton *_xinxiheBtn;
+    IconCenterTextButton *_yuanchengshixunBtn;
+    IconCenterTextButton *_shipinchuliBtn;
+    IconCenterTextButton *_pinjiepingBtn;
+    IconCenterTextButton *_yejingdianshiBtn;
+    IconCenterTextButton *_lubojiBtn;
+    IconCenterTextButton *_touyingjiBtn;
     
     UIButton *_confirmButton;
     
@@ -84,134 +85,55 @@
     int left = 150;
     int rowGap = (SCREEN_WIDTH - left * 2)/5 - 10;
     int height = 200;
-    _dianyuanguanliBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _dianyuanguanliBtn.frame = CGRectMake(left, height, 80, 132);
-    [_dianyuanguanliBtn setImage:[UIImage imageNamed:@"engineer_dianyuanguanli_n.png"] forState:UIControlStateNormal];
-    [_dianyuanguanliBtn setImage:[UIImage imageNamed:@"engineer_dianyuanguanli_s.png"] forState:UIControlStateHighlighted];
-    [_dianyuanguanliBtn setTitle:@"电源管理" forState:UIControlStateNormal];
-    [_dianyuanguanliBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_dianyuanguanliBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _dianyuanguanliBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_dianyuanguanliBtn setTitleEdgeInsets:UIEdgeInsetsMake(_dianyuanguanliBtn.imageView.frame.size.height+3,-80,-18,-20)];
-    [_dianyuanguanliBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_dianyuanguanliBtn.titleLabel.bounds.size.height, 0)];
+    
+    _dianyuanguanliBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left, height,80, 110)];
+    [_dianyuanguanliBtn buttonWithIcon:[UIImage imageNamed:@"engineer_dianyuanguanli_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_dianyuanguanli_s.png"] text:@"电源管理" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_dianyuanguanliBtn addTarget:self action:@selector(dianyuanguanliAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_dianyuanguanliBtn];
     
-    
-    _shipinbofangBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _shipinbofangBtn.frame = CGRectMake(left+rowGap, height, 80, 132);
-    [_shipinbofangBtn setImage:[UIImage imageNamed:@"engineer_video_dvd_n.png"] forState:UIControlStateNormal];
-    [_shipinbofangBtn setImage:[UIImage imageNamed:@"engineer_video_dvd_s.png"] forState:UIControlStateHighlighted];
-    [_shipinbofangBtn setTitle:@"视频播放" forState:UIControlStateNormal];
-    [_shipinbofangBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_shipinbofangBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _shipinbofangBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_shipinbofangBtn setTitleEdgeInsets:UIEdgeInsetsMake(_shipinbofangBtn.imageView.frame.size.height+10,-90,-20,-10)];
-    [_shipinbofangBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_shipinbofangBtn.titleLabel.bounds.size.height, 0)];
+    _shipinbofangBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap, height,80, 110)];
+    [_shipinbofangBtn buttonWithIcon:[UIImage imageNamed:@"engineer_video_dvd_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_video_dvd_s.png"] text:@"视频播放" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_shipinbofangBtn addTarget:self action:@selector(shipinbofangAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_shipinbofangBtn];
     
-    _shexiangjiBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _shexiangjiBtn.frame = CGRectMake(left+rowGap*2, height, 80, 132);
-    [_shexiangjiBtn setImage:[UIImage imageNamed:@"engineer_video_shexiangji_n.png"] forState:UIControlStateNormal];
-    [_shexiangjiBtn setImage:[UIImage imageNamed:@"engineer_video_shexiangji_s.png"] forState:UIControlStateHighlighted];
-    [_shexiangjiBtn setTitle:@"摄像机" forState:UIControlStateNormal];
-    [_shexiangjiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_shexiangjiBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _shexiangjiBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_shexiangjiBtn setTitleEdgeInsets:UIEdgeInsetsMake(_shexiangjiBtn.imageView.frame.size.height+10,-85,-20,-35)];
-    [_shexiangjiBtn setImageEdgeInsets:UIEdgeInsetsMake(-10,0,_shexiangjiBtn.titleLabel.bounds.size.height, -10)];
+    
+    _shexiangjiBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*2, height,80, 110)];
+    [_shexiangjiBtn buttonWithIcon:[UIImage imageNamed:@"engineer_video_shexiangji_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_video_shexiangji_s.png"] text:@"摄像机" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_shexiangjiBtn addTarget:self action:@selector(shexiangjiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_shexiangjiBtn];
     
-    _xinxiheBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _xinxiheBtn.frame = CGRectMake(left+rowGap*3, height, 80, 132);
-    [_xinxiheBtn setImage:[UIImage imageNamed:@"engineer_video_xinxihe_n.png"] forState:UIControlStateNormal];
-    [_xinxiheBtn setImage:[UIImage imageNamed:@"engineer_video_xinxihe_s.png"] forState:UIControlStateHighlighted];
-    [_xinxiheBtn setTitle:@"信息盒" forState:UIControlStateNormal];
-    [_xinxiheBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_xinxiheBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _xinxiheBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_xinxiheBtn setTitleEdgeInsets:UIEdgeInsetsMake(_xinxiheBtn.imageView.frame.size.height+10,-55,-20,-5)];
-    [_xinxiheBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,5.0,_xinxiheBtn.titleLabel.bounds.size.height, -5)];
+    _xinxiheBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*3, height,80, 110)];
+    [_xinxiheBtn buttonWithIcon:[UIImage imageNamed:@"engineer_video_xinxihe_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_video_xinxihe_s.png"] text:@"信息盒" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_xinxiheBtn addTarget:self action:@selector(xinxiheAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_xinxiheBtn];
     
-    _yuanchengshixunBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _yuanchengshixunBtn.frame = CGRectMake(left+rowGap*4, height, 80, 132);
-    [_yuanchengshixunBtn setImage:[UIImage imageNamed:@"engineer_video_yuanchengshixun_n.png"] forState:UIControlStateNormal];
-    [_yuanchengshixunBtn setImage:[UIImage imageNamed:@"engineer_video_yuanchengshixun_s.png"] forState:UIControlStateHighlighted];
-    [_yuanchengshixunBtn setTitle:@"远程视讯" forState:UIControlStateNormal];
-    [_yuanchengshixunBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_yuanchengshixunBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _yuanchengshixunBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_yuanchengshixunBtn setTitleEdgeInsets:UIEdgeInsetsMake(_yuanchengshixunBtn.imageView.frame.size.height+10,-90,-20,-10)];
-    [_yuanchengshixunBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_yuanchengshixunBtn.titleLabel.bounds.size.height, 0)];
+    _yuanchengshixunBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*4, height,80, 110)];
+    [_yuanchengshixunBtn buttonWithIcon:[UIImage imageNamed:@"engineer_video_yuanchengshixun_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_video_yuanchengshixun_s.png"] text:@"远程视讯" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_yuanchengshixunBtn addTarget:self action:@selector(yuanchengshixunAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_yuanchengshixunBtn];
     
-    _shipinchuliBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _shipinchuliBtn.frame = CGRectMake(left+rowGap*5, height, 80, 132);
-    [_shipinchuliBtn setImage:[UIImage imageNamed:@"engineer_video_shipinchuli_n.png"] forState:UIControlStateNormal];
-    [_shipinchuliBtn setImage:[UIImage imageNamed:@"engineer_video_shipinchuli_s.png"] forState:UIControlStateHighlighted];
-    [_shipinchuliBtn setTitle:@"视频处理" forState:UIControlStateNormal];
-    [_shipinchuliBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_shipinchuliBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _shipinchuliBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_shipinchuliBtn setTitleEdgeInsets:UIEdgeInsetsMake(_shipinchuliBtn.imageView.frame.size.height+10,-80,-20,-30)];
-    [_shipinchuliBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_shipinchuliBtn.titleLabel.bounds.size.height, 0)];
+    _shipinchuliBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*5, height,80, 110)];
+    [_shipinchuliBtn buttonWithIcon:[UIImage imageNamed:@"engineer_video_shipinchuli_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_video_shipinchuli_s.png"] text:@"视频处理" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_shipinchuliBtn addTarget:self action:@selector(shipinchuliAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_shipinchuliBtn];
     
-    _pinjiepingBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _pinjiepingBtn.frame = CGRectMake(left, height+132, 80, 132);
-    [_pinjiepingBtn setImage:[UIImage imageNamed:@"engineer_video_pinjieping_n.png"] forState:UIControlStateNormal];
-    [_pinjiepingBtn setImage:[UIImage imageNamed:@"engineer_video_pinjieping_s.png"] forState:UIControlStateHighlighted];
-    [_pinjiepingBtn setTitle:@"拼接屏" forState:UIControlStateNormal];
-    [_pinjiepingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_pinjiepingBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _pinjiepingBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_pinjiepingBtn setTitleEdgeInsets:UIEdgeInsetsMake(_pinjiepingBtn.imageView.frame.size.height+10,-65,-20,0)];
-    [_pinjiepingBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0,_pinjiepingBtn.titleLabel.bounds.size.height, 0)];
+    _pinjiepingBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left, height+150,80, 110)];
+    [_pinjiepingBtn buttonWithIcon:[UIImage imageNamed:@"engineer_video_pinjieping_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_video_pinjieping_s.png"] text:@"拼接屏" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_pinjiepingBtn addTarget:self action:@selector(pinjiepingAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_pinjiepingBtn];
     
-    _yejingdianshiBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _yejingdianshiBtn.frame = CGRectMake(left+rowGap, height+132, 80, 132);
-    [_yejingdianshiBtn setImage:[UIImage imageNamed:@"engineer_video_yejingdianshi_n.png"] forState:UIControlStateNormal];
-    [_yejingdianshiBtn setImage:[UIImage imageNamed:@"engineer_video_yejingdianshi_s.png"] forState:UIControlStateHighlighted];
-    [_yejingdianshiBtn setTitle:@"液晶电视" forState:UIControlStateNormal];
-    [_yejingdianshiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_yejingdianshiBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _yejingdianshiBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_yejingdianshiBtn setTitleEdgeInsets:UIEdgeInsetsMake(_yejingdianshiBtn.imageView.frame.size.height+10,-90,-20,-10)];
-    [_yejingdianshiBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_yejingdianshiBtn.titleLabel.bounds.size.height, 0)];
+    _yejingdianshiBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap, height+150,80, 110)];
+    [_yejingdianshiBtn buttonWithIcon:[UIImage imageNamed:@"engineer_video_yejingdianshi_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_video_yejingdianshi_s.png"] text:@"液晶电视" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_yejingdianshiBtn addTarget:self action:@selector(yejingdianshiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_yejingdianshiBtn];
     
-    _lubojiBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _lubojiBtn.frame = CGRectMake(left+rowGap*2, height+132, 80, 132);
-    [_lubojiBtn setImage:[UIImage imageNamed:@"engineer_video_luboji_n.png"] forState:UIControlStateNormal];
-    [_lubojiBtn setImage:[UIImage imageNamed:@"engineer_video_luboji_s.png"] forState:UIControlStateHighlighted];
-    [_lubojiBtn setTitle:@"录播机" forState:UIControlStateNormal];
-    [_lubojiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_lubojiBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _lubojiBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_lubojiBtn setTitleEdgeInsets:UIEdgeInsetsMake(_lubojiBtn.imageView.frame.size.height+10,-70,-20,10)];
-    [_lubojiBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0,_lubojiBtn.titleLabel.bounds.size.height, 0)];
+    _lubojiBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*2, height+150,80, 110)];
+    [_lubojiBtn buttonWithIcon:[UIImage imageNamed:@"engineer_video_luboji_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_video_luboji_s.png"] text:@"录播机" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_lubojiBtn addTarget:self action:@selector(lubojiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_lubojiBtn];
     
-    _touyingjiBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _touyingjiBtn.frame = CGRectMake(left+rowGap*3, height+132, 80, 132);
-    [_touyingjiBtn setImage:[UIImage imageNamed:@"engineer_video_touyingji_n.png"] forState:UIControlStateNormal];
-    [_touyingjiBtn setImage:[UIImage imageNamed:@"engineer_video_touyingji_s.png"] forState:UIControlStateHighlighted];
-    [_touyingjiBtn setTitle:@"投影机" forState:UIControlStateNormal];
-    [_touyingjiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_touyingjiBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _touyingjiBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_touyingjiBtn setTitleEdgeInsets:UIEdgeInsetsMake(_touyingjiBtn.imageView.frame.size.height+15,-60,-25,5)];
-    [_touyingjiBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,5.0,_touyingjiBtn.titleLabel.bounds.size.height, -5)];
+    _touyingjiBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*3, height+150,80, 110)];
+    [_touyingjiBtn buttonWithIcon:[UIImage imageNamed:@"engineer_video_touyingji_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_video_touyingji_n.png"] text:@"投影机" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_touyingjiBtn addTarget:self action:@selector(touyingjiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_touyingjiBtn];
     
@@ -303,369 +225,179 @@
     
 }
 - (void) touyingjiAction:(id)sender{
-    [_dianyuanguanliBtn setImage:[UIImage imageNamed:@"engineer_dianyuanguanli_n.png"] forState:UIControlStateNormal];
-    [_dianyuanguanliBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_shipinbofangBtn setImage:[UIImage imageNamed:@"engineer_video_dvd_n.png"] forState:UIControlStateNormal];
-    [_shipinbofangBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_shexiangjiBtn setImage:[UIImage imageNamed:@"engineer_video_shexiangji_n.png"] forState:UIControlStateNormal];
-    [_shexiangjiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_xinxiheBtn setImage:[UIImage imageNamed:@"engineer_video_xinxihe_n.png"] forState:UIControlStateNormal];
-    [_xinxiheBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_yuanchengshixunBtn setImage:[UIImage imageNamed:@"engineer_video_yuanchengshixun_n.png"] forState:UIControlStateNormal];
-    [_yuanchengshixunBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_shipinchuliBtn setImage:[UIImage imageNamed:@"engineer_video_shipinchuli_n.png"] forState:UIControlStateNormal];
-    [_shipinchuliBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_pinjiepingBtn setImage:[UIImage imageNamed:@"engineer_video_pinjieping_n.png"] forState:UIControlStateNormal];
-    [_pinjiepingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_yejingdianshiBtn setImage:[UIImage imageNamed:@"engineer_video_yejingdianshi_n.png"] forState:UIControlStateNormal];
-    [_yejingdianshiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_lubojiBtn setImage:[UIImage imageNamed:@"engineer_video_luboji_n.png"] forState:UIControlStateNormal];
-    [_lubojiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_touyingjiBtn setImage:[UIImage imageNamed:@"engineer_video_touyingji_s.png"] forState:UIControlStateNormal];
-    [_touyingjiBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
+    [_dianyuanguanliBtn setBtnHighlited:NO];
+    [_shipinbofangBtn setBtnHighlited:NO];
+    [_shexiangjiBtn setBtnHighlited:NO];
+    [_xinxiheBtn setBtnHighlited:NO];
+    [_yuanchengshixunBtn setBtnHighlited:NO];
+    [_shipinchuliBtn setBtnHighlited:NO];
+    [_pinjiepingBtn setBtnHighlited:NO];
+    [_yejingdianshiBtn setBtnHighlited:NO];
+    [_lubojiBtn setBtnHighlited:NO];
+    [_touyingjiBtn setBtnHighlited:YES];
     
     
-    UIButton *btn = (UIButton*) sender;
-    NSString *btnText = btn.titleLabel.text;
+    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
+    NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
 }
 - (void) lubojiAction:(id)sender{
-    [_dianyuanguanliBtn setImage:[UIImage imageNamed:@"engineer_dianyuanguanli_n.png"] forState:UIControlStateNormal];
-    [_dianyuanguanliBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_shipinbofangBtn setImage:[UIImage imageNamed:@"engineer_video_dvd_n.png"] forState:UIControlStateNormal];
-    [_shipinbofangBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_shexiangjiBtn setImage:[UIImage imageNamed:@"engineer_video_shexiangji_n.png"] forState:UIControlStateNormal];
-    [_shexiangjiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_xinxiheBtn setImage:[UIImage imageNamed:@"engineer_video_xinxihe_n.png"] forState:UIControlStateNormal];
-    [_xinxiheBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_yuanchengshixunBtn setImage:[UIImage imageNamed:@"engineer_video_yuanchengshixun_n.png"] forState:UIControlStateNormal];
-    [_yuanchengshixunBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_shipinchuliBtn setImage:[UIImage imageNamed:@"engineer_video_shipinchuli_n.png"] forState:UIControlStateNormal];
-    [_shipinchuliBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_pinjiepingBtn setImage:[UIImage imageNamed:@"engineer_video_pinjieping_n.png"] forState:UIControlStateNormal];
-    [_pinjiepingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_yejingdianshiBtn setImage:[UIImage imageNamed:@"engineer_video_yejingdianshi_n.png"] forState:UIControlStateNormal];
-    [_yejingdianshiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_lubojiBtn setImage:[UIImage imageNamed:@"engineer_video_luboji_s.png"] forState:UIControlStateNormal];
-    [_lubojiBtn setTitleColor:RGB(230, 151, 50)forState:UIControlStateNormal];
-    
-    [_touyingjiBtn setImage:[UIImage imageNamed:@"engineer_video_touyingji_n.png"] forState:UIControlStateNormal];
-    [_touyingjiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_dianyuanguanliBtn setBtnHighlited:NO];
+    [_shipinbofangBtn setBtnHighlited:NO];
+    [_shexiangjiBtn setBtnHighlited:NO];
+    [_xinxiheBtn setBtnHighlited:NO];
+    [_yuanchengshixunBtn setBtnHighlited:NO];
+    [_shipinchuliBtn setBtnHighlited:NO];
+    [_pinjiepingBtn setBtnHighlited:NO];
+    [_yejingdianshiBtn setBtnHighlited:NO];
+    [_lubojiBtn setBtnHighlited:YES];
+    [_touyingjiBtn setBtnHighlited:NO];
     
     
-    UIButton *btn = (UIButton*) sender;
-    NSString *btnText = btn.titleLabel.text;
+    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
+    NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
 }
 - (void) yejingdianshiAction:(id)sender{
-    [_dianyuanguanliBtn setImage:[UIImage imageNamed:@"engineer_dianyuanguanli_n.png"] forState:UIControlStateNormal];
-    [_dianyuanguanliBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_shipinbofangBtn setImage:[UIImage imageNamed:@"engineer_video_dvd_n.png"] forState:UIControlStateNormal];
-    [_shipinbofangBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_shexiangjiBtn setImage:[UIImage imageNamed:@"engineer_video_shexiangji_n.png"] forState:UIControlStateNormal];
-    [_shexiangjiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_xinxiheBtn setImage:[UIImage imageNamed:@"engineer_video_xinxihe_n.png"] forState:UIControlStateNormal];
-    [_xinxiheBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_yuanchengshixunBtn setImage:[UIImage imageNamed:@"engineer_video_yuanchengshixun_n.png"] forState:UIControlStateNormal];
-    [_yuanchengshixunBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_shipinchuliBtn setImage:[UIImage imageNamed:@"engineer_video_shipinchuli_n.png"] forState:UIControlStateNormal];
-    [_shipinchuliBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_pinjiepingBtn setImage:[UIImage imageNamed:@"engineer_video_pinjieping_n.png"] forState:UIControlStateNormal];
-    [_pinjiepingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_yejingdianshiBtn setImage:[UIImage imageNamed:@"engineer_video_yejingdianshi_s.png"] forState:UIControlStateNormal];
-    [_yejingdianshiBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
-    
-    [_lubojiBtn setImage:[UIImage imageNamed:@"engineer_video_luboji_n.png"] forState:UIControlStateNormal];
-    [_lubojiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_touyingjiBtn setImage:[UIImage imageNamed:@"engineer_video_touyingji_n.png"] forState:UIControlStateNormal];
-    [_touyingjiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_dianyuanguanliBtn setBtnHighlited:NO];
+    [_shipinbofangBtn setBtnHighlited:NO];
+    [_shexiangjiBtn setBtnHighlited:NO];
+    [_xinxiheBtn setBtnHighlited:NO];
+    [_yuanchengshixunBtn setBtnHighlited:NO];
+    [_shipinchuliBtn setBtnHighlited:NO];
+    [_pinjiepingBtn setBtnHighlited:NO];
+    [_yejingdianshiBtn setBtnHighlited:YES];
+    [_lubojiBtn setBtnHighlited:NO];
+    [_touyingjiBtn setBtnHighlited:NO];
     
     
-    UIButton *btn = (UIButton*) sender;
-    NSString *btnText = btn.titleLabel.text;
+    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
+    NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
 }
 - (void) pinjiepingAction:(id)sender{
-    [_dianyuanguanliBtn setImage:[UIImage imageNamed:@"engineer_dianyuanguanli_n.png"] forState:UIControlStateNormal];
-    [_dianyuanguanliBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_shipinbofangBtn setImage:[UIImage imageNamed:@"engineer_video_dvd_n.png"] forState:UIControlStateNormal];
-    [_shipinbofangBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_shexiangjiBtn setImage:[UIImage imageNamed:@"engineer_video_shexiangji_n.png"] forState:UIControlStateNormal];
-    [_shexiangjiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_xinxiheBtn setImage:[UIImage imageNamed:@"engineer_video_xinxihe_n.png"] forState:UIControlStateNormal];
-    [_xinxiheBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_yuanchengshixunBtn setImage:[UIImage imageNamed:@"engineer_video_yuanchengshixun_n.png"] forState:UIControlStateNormal];
-    [_yuanchengshixunBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_shipinchuliBtn setImage:[UIImage imageNamed:@"engineer_video_shipinchuli_n.png"] forState:UIControlStateNormal];
-    [_shipinchuliBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_pinjiepingBtn setImage:[UIImage imageNamed:@"engineer_video_pinjieping_s.png"] forState:UIControlStateNormal];
-    [_pinjiepingBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
-    
-    [_yejingdianshiBtn setImage:[UIImage imageNamed:@"engineer_video_yejingdianshi_n.png"] forState:UIControlStateNormal];
-    [_yejingdianshiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_lubojiBtn setImage:[UIImage imageNamed:@"engineer_video_luboji_n.png"] forState:UIControlStateNormal];
-    [_lubojiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_touyingjiBtn setImage:[UIImage imageNamed:@"engineer_video_touyingji_n.png"] forState:UIControlStateNormal];
-    [_touyingjiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_dianyuanguanliBtn setBtnHighlited:NO];
+    [_shipinbofangBtn setBtnHighlited:NO];
+    [_shexiangjiBtn setBtnHighlited:NO];
+    [_xinxiheBtn setBtnHighlited:NO];
+    [_yuanchengshixunBtn setBtnHighlited:NO];
+    [_shipinchuliBtn setBtnHighlited:NO];
+    [_pinjiepingBtn setBtnHighlited:YES];
+    [_yejingdianshiBtn setBtnHighlited:NO];
+    [_lubojiBtn setBtnHighlited:NO];
+    [_touyingjiBtn setBtnHighlited:NO];
     
     
-    UIButton *btn = (UIButton*) sender;
-    NSString *btnText = btn.titleLabel.text;
+    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
+    NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
 }
 
 - (void) shipinchuliAction:(id)sender{
-    [_dianyuanguanliBtn setImage:[UIImage imageNamed:@"engineer_dianyuanguanli_n.png"] forState:UIControlStateNormal];
-    [_dianyuanguanliBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_shipinbofangBtn setImage:[UIImage imageNamed:@"engineer_video_dvd_n.png"] forState:UIControlStateNormal];
-    [_shipinbofangBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_shexiangjiBtn setImage:[UIImage imageNamed:@"engineer_video_shexiangji_n.png"] forState:UIControlStateNormal];
-    [_shexiangjiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_xinxiheBtn setImage:[UIImage imageNamed:@"engineer_video_xinxihe_n.png"] forState:UIControlStateNormal];
-    [_xinxiheBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_yuanchengshixunBtn setImage:[UIImage imageNamed:@"engineer_video_yuanchengshixun_n.png"] forState:UIControlStateNormal];
-    [_yuanchengshixunBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_shipinchuliBtn setImage:[UIImage imageNamed:@"engineer_video_shipinchuli_s.png"] forState:UIControlStateNormal];
-    [_shipinchuliBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
-    
-    [_pinjiepingBtn setImage:[UIImage imageNamed:@"engineer_video_pinjieping_n.png"] forState:UIControlStateNormal];
-    [_pinjiepingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_yejingdianshiBtn setImage:[UIImage imageNamed:@"engineer_video_yejingdianshi_n.png"] forState:UIControlStateNormal];
-    [_yejingdianshiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_lubojiBtn setImage:[UIImage imageNamed:@"engineer_video_luboji_n.png"] forState:UIControlStateNormal];
-    [_lubojiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_touyingjiBtn setImage:[UIImage imageNamed:@"engineer_video_touyingji_n.png"] forState:UIControlStateNormal];
-    [_touyingjiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_dianyuanguanliBtn setBtnHighlited:NO];
+    [_shipinbofangBtn setBtnHighlited:NO];
+    [_shexiangjiBtn setBtnHighlited:NO];
+    [_xinxiheBtn setBtnHighlited:NO];
+    [_yuanchengshixunBtn setBtnHighlited:NO];
+    [_shipinchuliBtn setBtnHighlited:YES];
+    [_pinjiepingBtn setBtnHighlited:NO];
+    [_yejingdianshiBtn setBtnHighlited:NO];
+    [_lubojiBtn setBtnHighlited:NO];
+    [_touyingjiBtn setBtnHighlited:NO];
     
     
-    UIButton *btn = (UIButton*) sender;
-    NSString *btnText = btn.titleLabel.text;
+    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
+    NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
 }
 
 - (void) yuanchengshixunAction:(id)sender{
-    [_dianyuanguanliBtn setImage:[UIImage imageNamed:@"engineer_dianyuanguanli_n.png"] forState:UIControlStateNormal];
-    [_dianyuanguanliBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_shipinbofangBtn setImage:[UIImage imageNamed:@"engineer_video_dvd_n.png"] forState:UIControlStateNormal];
-    [_shipinbofangBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_shexiangjiBtn setImage:[UIImage imageNamed:@"engineer_video_shexiangji_n.png"] forState:UIControlStateNormal];
-    [_shexiangjiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_xinxiheBtn setImage:[UIImage imageNamed:@"engineer_video_xinxihe_n.png"] forState:UIControlStateNormal];
-    [_xinxiheBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_yuanchengshixunBtn setImage:[UIImage imageNamed:@"engineer_video_yuanchengshixun_s.png"] forState:UIControlStateNormal];
-    [_yuanchengshixunBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
-    
-    [_shipinchuliBtn setImage:[UIImage imageNamed:@"engineer_video_shipinchuli_n.png"] forState:UIControlStateNormal];
-    [_shipinchuliBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_pinjiepingBtn setImage:[UIImage imageNamed:@"engineer_video_pinjieping_n.png"] forState:UIControlStateNormal];
-    [_pinjiepingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_yejingdianshiBtn setImage:[UIImage imageNamed:@"engineer_video_yejingdianshi_n.png"] forState:UIControlStateNormal];
-    [_yejingdianshiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_lubojiBtn setImage:[UIImage imageNamed:@"engineer_video_luboji_n.png"] forState:UIControlStateNormal];
-    [_lubojiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_touyingjiBtn setImage:[UIImage imageNamed:@"engineer_video_touyingji_n.png"] forState:UIControlStateNormal];
-    [_touyingjiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_dianyuanguanliBtn setBtnHighlited:NO];
+    [_shipinbofangBtn setBtnHighlited:NO];
+    [_shexiangjiBtn setBtnHighlited:NO];
+    [_xinxiheBtn setBtnHighlited:NO];
+    [_yuanchengshixunBtn setBtnHighlited:YES];
+    [_shipinchuliBtn setBtnHighlited:NO];
+    [_pinjiepingBtn setBtnHighlited:NO];
+    [_yejingdianshiBtn setBtnHighlited:NO];
+    [_lubojiBtn setBtnHighlited:NO];
+    [_touyingjiBtn setBtnHighlited:NO];
     
     
-    UIButton *btn = (UIButton*) sender;
-    NSString *btnText = btn.titleLabel.text;
+    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
+    NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
 }
 
 - (void) xinxiheAction:(id)sender{
-    [_dianyuanguanliBtn setImage:[UIImage imageNamed:@"engineer_dianyuanguanli_n.png"] forState:UIControlStateNormal];
-    [_dianyuanguanliBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_shipinbofangBtn setImage:[UIImage imageNamed:@"engineer_video_dvd_n.png"] forState:UIControlStateNormal];
-    [_shipinbofangBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_shexiangjiBtn setImage:[UIImage imageNamed:@"engineer_video_shexiangji_n.png"] forState:UIControlStateNormal];
-    [_shexiangjiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_xinxiheBtn setImage:[UIImage imageNamed:@"engineer_video_xinxihe_s.png"] forState:UIControlStateNormal];
-    [_xinxiheBtn setTitleColor:RGB(230, 151, 50)forState:UIControlStateNormal];
-    
-    [_yuanchengshixunBtn setImage:[UIImage imageNamed:@"engineer_video_yuanchengshixun_n.png"] forState:UIControlStateNormal];
-    [_yuanchengshixunBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_shipinchuliBtn setImage:[UIImage imageNamed:@"engineer_video_shipinchuli_n.png"] forState:UIControlStateNormal];
-    [_shipinchuliBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_pinjiepingBtn setImage:[UIImage imageNamed:@"engineer_video_pinjieping_n.png"] forState:UIControlStateNormal];
-    [_pinjiepingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_yejingdianshiBtn setImage:[UIImage imageNamed:@"engineer_video_yejingdianshi_n.png"] forState:UIControlStateNormal];
-    [_yejingdianshiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_lubojiBtn setImage:[UIImage imageNamed:@"engineer_video_luboji_n.png"] forState:UIControlStateNormal];
-    [_lubojiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_touyingjiBtn setImage:[UIImage imageNamed:@"engineer_video_touyingji_n.png"] forState:UIControlStateNormal];
-    [_touyingjiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_dianyuanguanliBtn setBtnHighlited:NO];
+    [_shipinbofangBtn setBtnHighlited:NO];
+    [_shexiangjiBtn setBtnHighlited:NO];
+    [_xinxiheBtn setBtnHighlited:YES];
+    [_yuanchengshixunBtn setBtnHighlited:NO];
+    [_shipinchuliBtn setBtnHighlited:NO];
+    [_pinjiepingBtn setBtnHighlited:NO];
+    [_yejingdianshiBtn setBtnHighlited:NO];
+    [_lubojiBtn setBtnHighlited:NO];
+    [_touyingjiBtn setBtnHighlited:NO];
     
     
-    UIButton *btn = (UIButton*) sender;
-    NSString *btnText = btn.titleLabel.text;
+    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
+    NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
 }
 
 - (void) shexiangjiAction:(id)sender{
-    [_dianyuanguanliBtn setImage:[UIImage imageNamed:@"engineer_dianyuanguanli_n.png"] forState:UIControlStateNormal];
-    [_dianyuanguanliBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_shipinbofangBtn setImage:[UIImage imageNamed:@"engineer_video_dvd_n.png"] forState:UIControlStateNormal];
-    [_shipinbofangBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_shexiangjiBtn setImage:[UIImage imageNamed:@"engineer_video_shexiangji_s.png"] forState:UIControlStateNormal];
-    [_shexiangjiBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
-    
-    [_xinxiheBtn setImage:[UIImage imageNamed:@"engineer_video_xinxihe_n.png"] forState:UIControlStateNormal];
-    [_xinxiheBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_yuanchengshixunBtn setImage:[UIImage imageNamed:@"engineer_video_yuanchengshixun_n.png"] forState:UIControlStateNormal];
-    [_yuanchengshixunBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_shipinchuliBtn setImage:[UIImage imageNamed:@"engineer_video_shipinchuli_n.png"] forState:UIControlStateNormal];
-    [_shipinchuliBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_pinjiepingBtn setImage:[UIImage imageNamed:@"engineer_video_pinjieping_n.png"] forState:UIControlStateNormal];
-    [_pinjiepingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_yejingdianshiBtn setImage:[UIImage imageNamed:@"engineer_video_yejingdianshi_n.png"] forState:UIControlStateNormal];
-    [_yejingdianshiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_lubojiBtn setImage:[UIImage imageNamed:@"engineer_video_luboji_n.png"] forState:UIControlStateNormal];
-    [_lubojiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_touyingjiBtn setImage:[UIImage imageNamed:@"engineer_video_touyingji_n.png"] forState:UIControlStateNormal];
-    [_touyingjiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_dianyuanguanliBtn setBtnHighlited:NO];
+    [_shipinbofangBtn setBtnHighlited:NO];
+    [_shexiangjiBtn setBtnHighlited:YES];
+    [_xinxiheBtn setBtnHighlited:NO];
+    [_yuanchengshixunBtn setBtnHighlited:NO];
+    [_shipinchuliBtn setBtnHighlited:NO];
+    [_pinjiepingBtn setBtnHighlited:NO];
+    [_yejingdianshiBtn setBtnHighlited:NO];
+    [_lubojiBtn setBtnHighlited:NO];
+    [_touyingjiBtn setBtnHighlited:NO];
     
     
-    UIButton *btn = (UIButton*) sender;
-    NSString *btnText = btn.titleLabel.text;
+    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
+    NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
 }
 
 - (void) shipinbofangAction:(id)sender{
-    [_dianyuanguanliBtn setImage:[UIImage imageNamed:@"engineer_dianyuanguanli_n.png"] forState:UIControlStateNormal];
-    [_dianyuanguanliBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_shipinbofangBtn setImage:[UIImage imageNamed:@"engineer_video_dvd_s.png"] forState:UIControlStateNormal];
-    [_shipinbofangBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
-    
-    [_shexiangjiBtn setImage:[UIImage imageNamed:@"engineer_video_shexiangji_n.png"] forState:UIControlStateNormal];
-    [_shexiangjiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_xinxiheBtn setImage:[UIImage imageNamed:@"engineer_video_xinxihe_n.png"] forState:UIControlStateNormal];
-    [_xinxiheBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_yuanchengshixunBtn setImage:[UIImage imageNamed:@"engineer_video_yuanchengshixun_n.png"] forState:UIControlStateNormal];
-    [_yuanchengshixunBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_shipinchuliBtn setImage:[UIImage imageNamed:@"engineer_video_shipinchuli_n.png"] forState:UIControlStateNormal];
-    [_shipinchuliBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_pinjiepingBtn setImage:[UIImage imageNamed:@"engineer_video_pinjieping_n.png"] forState:UIControlStateNormal];
-    [_pinjiepingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_yejingdianshiBtn setImage:[UIImage imageNamed:@"engineer_video_yejingdianshi_n.png"] forState:UIControlStateNormal];
-    [_yejingdianshiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_lubojiBtn setImage:[UIImage imageNamed:@"engineer_video_luboji_n.png"] forState:UIControlStateNormal];
-    [_lubojiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_touyingjiBtn setImage:[UIImage imageNamed:@"engineer_video_touyingji_n.png"] forState:UIControlStateNormal];
-    [_touyingjiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_dianyuanguanliBtn setBtnHighlited:NO];
+    [_shipinbofangBtn setBtnHighlited:YES];
+    [_shexiangjiBtn setBtnHighlited:NO];
+    [_xinxiheBtn setBtnHighlited:NO];
+    [_yuanchengshixunBtn setBtnHighlited:NO];
+    [_shipinchuliBtn setBtnHighlited:NO];
+    [_pinjiepingBtn setBtnHighlited:NO];
+    [_yejingdianshiBtn setBtnHighlited:NO];
+    [_lubojiBtn setBtnHighlited:NO];
+    [_touyingjiBtn setBtnHighlited:NO];
     
     
-    UIButton *btn = (UIButton*) sender;
-    NSString *btnText = btn.titleLabel.text;
+    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
+    NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
 }
 
 - (void) dianyuanguanliAction:(id)sender{
-    [_dianyuanguanliBtn setImage:[UIImage imageNamed:@"engineer_dianyuanguanli_s.png"] forState:UIControlStateNormal];
-    [_dianyuanguanliBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
-    
-    [_shipinbofangBtn setImage:[UIImage imageNamed:@"engineer_video_dvd_n.png"] forState:UIControlStateNormal];
-    [_shipinbofangBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_shexiangjiBtn setImage:[UIImage imageNamed:@"engineer_video_shexiangji_n.png"] forState:UIControlStateNormal];
-    [_shexiangjiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_xinxiheBtn setImage:[UIImage imageNamed:@"engineer_video_xinxihe_n.png"] forState:UIControlStateNormal];
-    [_xinxiheBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_yuanchengshixunBtn setImage:[UIImage imageNamed:@"engineer_video_yuanchengshixun_n.png"] forState:UIControlStateNormal];
-    [_yuanchengshixunBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_shipinchuliBtn setImage:[UIImage imageNamed:@"engineer_video_shipinchuli_n.png"] forState:UIControlStateNormal];
-    [_shipinchuliBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_pinjiepingBtn setImage:[UIImage imageNamed:@"engineer_video_pinjieping_n.png"] forState:UIControlStateNormal];
-    [_pinjiepingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_yejingdianshiBtn setImage:[UIImage imageNamed:@"engineer_video_yejingdianshi_n.png"] forState:UIControlStateNormal];
-    [_yejingdianshiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_lubojiBtn setImage:[UIImage imageNamed:@"engineer_video_luboji_n.png"] forState:UIControlStateNormal];
-    [_lubojiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_touyingjiBtn setImage:[UIImage imageNamed:@"engineer_video_touyingji_n.png"] forState:UIControlStateNormal];
-    [_touyingjiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_dianyuanguanliBtn setBtnHighlited:YES];
+    [_shipinbofangBtn setBtnHighlited:NO];
+    [_shexiangjiBtn setBtnHighlited:NO];
+    [_xinxiheBtn setBtnHighlited:NO];
+    [_yuanchengshixunBtn setBtnHighlited:NO];
+    [_shipinchuliBtn setBtnHighlited:NO];
+    [_pinjiepingBtn setBtnHighlited:NO];
+    [_yejingdianshiBtn setBtnHighlited:NO];
+    [_lubojiBtn setBtnHighlited:NO];
+    [_touyingjiBtn setBtnHighlited:NO];
     
     
-    UIButton *btn = (UIButton*) sender;
-    NSString *btnText = btn.titleLabel.text;
+    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
+    NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
 }
 

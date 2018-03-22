@@ -10,8 +10,7 @@
 
 @interface IconCenterTextButton ()
 {
-    UIImageView *_icon;
-    UILabel     *_titleL;
+    
 }
 @property (nonatomic, strong) UIImage *_selImg;
 @property (nonatomic, strong) UIImage *_normalImg;
@@ -24,6 +23,7 @@
 @synthesize _normalImg;
 @synthesize _normalColor;
 @synthesize _selColor;
+@synthesize _titleL;
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.
