@@ -673,6 +673,7 @@
 		EBBCBBDE2063DABC00A7771A /* user_corner_addwet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBBCBBDD2063DABC00A7771A /* user_corner_addwet@2x.png */; };
 		EBBCBBE12063DDDD00A7771A /* user_corner_audio@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBBCBBDF2063DDDD00A7771A /* user_corner_audio@2x.png */; };
 		EBBCBBE22063DDDD00A7771A /* user_corner_video@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBBCBBE02063DDDD00A7771A /* user_corner_video@2x.png */; };
+		EBBCBBE52063E0C800A7771A /* IconCenterTextButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EBBCBBE42063E0C800A7771A /* IconCenterTextButton.m */; };
 		EBC71AFF203AF4EE00DD0A98 /* DVDRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71AFE203AF4EE00DD0A98 /* DVDRightView.m */; };
 		EBC71B05203AF72D00DD0A98 /* CameraRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B04203AF72D00DD0A98 /* CameraRightView.m */; };
 		EBC71B08203AF74100DD0A98 /* RemoteVideoRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B07203AF74100DD0A98 /* RemoteVideoRightView.m */; };
@@ -1710,6 +1711,8 @@
 		EBBCBBDD2063DABC00A7771A /* user_corner_addwet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_corner_addwet@2x.png"; sourceTree = "<group>"; };
 		EBBCBBDF2063DDDD00A7771A /* user_corner_audio@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_corner_audio@2x.png"; sourceTree = "<group>"; };
 		EBBCBBE02063DDDD00A7771A /* user_corner_video@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_corner_video@2x.png"; sourceTree = "<group>"; };
+		EBBCBBE32063E0C800A7771A /* IconCenterTextButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IconCenterTextButton.h; sourceTree = "<group>"; };
+		EBBCBBE42063E0C800A7771A /* IconCenterTextButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IconCenterTextButton.m; sourceTree = "<group>"; };
 		EBC71AFD203AF4EE00DD0A98 /* DVDRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVDRightView.h; sourceTree = "<group>"; };
 		EBC71AFE203AF4EE00DD0A98 /* DVDRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DVDRightView.m; sourceTree = "<group>"; };
 		EBC71B03203AF72D00DD0A98 /* CameraRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraRightView.h; sourceTree = "<group>"; };
@@ -2153,6 +2156,8 @@
 				0477DC521DA9F3CC0077FA52 /* SHA1.m */,
 				04DE1E1E1AD6AEE000D49E2F /* Utilities.h */,
 				04DE1E1F1AD6AEE000D49E2F /* Utilities.m */,
+				EBBCBBE32063E0C800A7771A /* IconCenterTextButton.h */,
+				EBBCBBE42063E0C800A7771A /* IconCenterTextButton.m */,
 			);
 			path = Common;
 			sourceTree = SOURCE_ROOT;
@@ -3961,6 +3966,7 @@
 				EB03F52B1FBDC07200865541 /* InvitationCodeViewCotroller.m in Sources */,
 				345427702046DEE800E1A436 /* LimiterView.swift in Sources */,
 				34928A9A1EC1BD330089F429 /* ReaderCodeViewController.m in Sources */,
+				EBBCBBE52063E0C800A7771A /* IconCenterTextButton.m in Sources */,
 				EBA16C652046EA8800FC6E1F /* ZaoShengYaXian_UIView.m in Sources */,
 				34615F091FC9BD7B002DFCE0 /* JSlideView.m in Sources */,
 				EB36AAC41FCD9E71009A0FD8 /* UserVideoConfigViewCtrl.m in Sources */,
