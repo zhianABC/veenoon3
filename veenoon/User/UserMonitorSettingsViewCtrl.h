@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-@interface UserMonitorSettingsViewCtrl : UIViewController {
-    
+#import "UserBaseViewControllor.h"
+@interface UserMonitorSettingsViewCtrl : UserBaseViewControllor {
+    NSMutableArray *_monitorRoomList;
+    int _number;
 }
-
+@property (nonatomic, strong) NSMutableArray *_monitorRoomList;
+@property (nonatomic, assign) int _number;
 @end

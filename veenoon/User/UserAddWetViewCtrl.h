@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-@interface UserAddWetViewCtrl : UIViewController {
+#import "UserBaseViewControllor.h"
+@interface UserAddWetViewCtrl : UserBaseViewControllor {
     
 }
     

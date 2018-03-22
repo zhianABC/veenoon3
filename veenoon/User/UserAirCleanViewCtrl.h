@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-@interface UserAirCleanViewCtrl : UIViewController {
+#import "UserBaseViewControllor.h"
+@interface UserAirCleanViewCtrl : UserBaseViewControllor {
     
 }
     

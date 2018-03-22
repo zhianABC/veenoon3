@@ -41,7 +41,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [super setTitleAndImage:@"user_corner_yinpin.png" withTitle:@"音频系统"];
+    [super setTitleAndImage:@"user_corner_audio.png" withTitle:@"音频系统"];
     
     int leftRight = 80;
     int number = 8;

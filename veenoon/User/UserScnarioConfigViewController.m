@@ -181,7 +181,7 @@
     [_addWetBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
     _addWetBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     [_addWetBtn setTitleEdgeInsets:UIEdgeInsetsMake(_addWetBtn.imageView.frame.size.height+10,-85,-20,-30)];
-    [_addWetBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_addWetBtn.titleLabel.bounds.size.height, -15)];
+    [_addWetBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,8,_addWetBtn.titleLabel.bounds.size.height, -5)];
     [_addWetBtn addTarget:self action:@selector(addWetSysAction:) forControlEvents:UIControlEventTouchUpInside];
     [_botomView addSubview:_addWetBtn];
     

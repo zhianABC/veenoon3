@@ -23,21 +23,19 @@
     if (_airCleanRoomList) {
         [_airCleanRoomList removeAllObjects];
     } else {
-        NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"大会议室", @"name",
+        NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"Channel 01", @"name",
                                      nil];
-        NSMutableDictionary *dic2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"小会议室", @"name",
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"Channel 02", @"name",
                                      nil];
-        NSMutableDictionary *dic3 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"大会议室", @"name",
+        NSMutableDictionary *dic3 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"Channel 03", @"name",
                                      nil];
-        NSMutableDictionary *dic4 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"大会议室", @"name",
+        NSMutableDictionary *dic4 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"Channel 04", @"name",
                                      nil];
-        NSMutableDictionary *dic5 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"大会议室", @"name",
+        NSMutableDictionary *dic5 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"Channel 05", @"name",
                                      nil];
-        NSMutableDictionary *dic6 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"大会议室", @"name",
+        NSMutableDictionary *dic6 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"Channel 06", @"name",
                                      nil];
-        NSMutableDictionary *dic7 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"大会议室", @"name",
-                                     nil];
-        self._airCleanRoomList = [NSMutableArray arrayWithObjects:dic1, dic2, dic3, dic4, dic5, dic6, dic7, nil];
+        self._airCleanRoomList = [NSMutableArray arrayWithObjects:dic1, dic2, dic3, dic4, dic5, dic6, nil];
     }
 }
     
@@ -52,15 +50,7 @@
         _aireCleanBtnList = [[NSMutableArray alloc] init];
     }
     
-    self.view.backgroundColor = RGB(63, 58, 55);
-    
-    UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
-    [self.view addSubview:titleIcon];
-    titleIcon.frame = CGRectMake(60, 40, 70, 10);
-    
-    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 63, SCREEN_WIDTH, 1)];
-    line.backgroundColor = RGB(83, 78, 75);
-    [self.view addSubview:line];
+    [super setTitleAndImage:@"user_corner_airclean.png" withTitle:@"空气净化"];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
@@ -92,12 +82,12 @@
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
-    int leftGap = 165;
+    int leftGap = 150;
     int scrollHeight = 600;
     int cellWidth = 100;
-    int rowGap = 40;
-    int number = [self._airCleanRoomList count];
-    int contentWidth = number * 100 + (number-1) * rowGap-30;
+    int rowGap = 20;
+    int number = (int) [self._airCleanRoomList count];
+    int contentWidth = number * 100 + (number-1) * rowGap;
     UIScrollView *airCondtionView = [[UIScrollView alloc] initWithFrame:CGRectMake(leftGap, SCREEN_HEIGHT-scrollHeight, SCREEN_WIDTH - leftGap*2, cellWidth+10)];
     airCondtionView.contentSize =  CGSizeMake(contentWidth, cellWidth+10);
     airCondtionView.scrollEnabled=YES;
@@ -106,7 +96,7 @@
     
     int index = 0;
     for (id dic in _airCleanRoomList) {
-        int startX = index*cellWidth+index*rowGap+10;
+        int startX = index*cellWidth+index*rowGap+40;
         int startY = 5;
         
         UIButton *airConditionBtn = [UIButton buttonWithColor:nil selColor:nil];
@@ -116,9 +106,10 @@
         [airConditionBtn setImage:[UIImage imageNamed:@"user_aireclean_s.png"] forState:UIControlStateHighlighted];
         [airConditionBtn setTitle:[dic objectForKey:@"name"] forState:UIControlStateNormal];
         [airConditionBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
+        airConditionBtn.titleLabel.font = [UIFont systemFontOfSize:13];
         [airConditionBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
         airConditionBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-        [airConditionBtn setTitleEdgeInsets:UIEdgeInsetsMake(airConditionBtn.imageView.frame.size.height+10,-90,-20,20)];
+        [airConditionBtn setTitleEdgeInsets:UIEdgeInsetsMake(airConditionBtn.imageView.frame.size.height+10,-105,-20,20)];
         [airConditionBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,-15,airConditionBtn.titleLabel.bounds.size.height, 0)];
         [airConditionBtn addTarget:self action:@selector(airConditionAction:) forControlEvents:UIControlEventTouchUpInside];
         [airCondtionView addSubview:airConditionBtn];
@@ -128,10 +119,11 @@
         [_aireCleanBtnList addObject:airConditionBtn];
     }
     
-    int btnLeftRight = 300;
+    int btnGap = 40;
+    int btnStartX = SCREEN_WIDTH/2 - btnGap - 120;
     
     UIButton *zhilengBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
-    zhilengBtn.frame = CGRectMake(btnLeftRight+70, SCREEN_HEIGHT-350, 100, 100);
+    zhilengBtn.frame = CGRectMake(btnStartX, SCREEN_HEIGHT-350, 80, 80);
     zhilengBtn.layer.cornerRadius = 5;
     zhilengBtn.layer.borderWidth = 2;
     zhilengBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -143,7 +135,7 @@
          forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *zhireBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
-    zhireBtn.frame = CGRectMake(btnLeftRight+210, SCREEN_HEIGHT-350, 100, 100);
+    zhireBtn.frame = CGRectMake(btnStartX+btnGap+80, SCREEN_HEIGHT-350, 80, 80);
     zhireBtn.layer.cornerRadius = 5;
     zhireBtn.layer.borderWidth = 2;
     zhireBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -155,7 +147,7 @@
        forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *aireWindBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
-    aireWindBtn.frame = CGRectMake(btnLeftRight+350, SCREEN_HEIGHT-350, 100, 100);
+    aireWindBtn.frame = CGRectMake(btnStartX+btnGap*2+80*2, SCREEN_HEIGHT-350, 80, 80);
     aireWindBtn.layer.cornerRadius = 5;
     aireWindBtn.layer.borderWidth = 2;
     aireWindBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -177,7 +169,7 @@
 }
 - (void) airConditionAction:(id)sender{
     UIButton *selectBtn = (UIButton*) sender;
-    int selectTag = selectBtn.tag;
+    int selectTag = (int) selectBtn.tag;
     
     for (UIButton *btn in _aireCleanBtnList) {
         if (btn.tag == selectTag) {

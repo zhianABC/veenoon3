@@ -29,17 +29,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = RGB(63, 58, 55);
-    
-    
-    
-    UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
-    [self.view addSubview:titleIcon];
-    titleIcon.frame = CGRectMake(60, 40, 70, 10);
-    
-    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 63, SCREEN_WIDTH, 1)];
-    line.backgroundColor = RGB(83, 78, 75);
-    [self.view addSubview:line];
+    [super setTitleAndImage:@"user_corner_video.png" withTitle:@"视频处理器"];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
