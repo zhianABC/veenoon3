@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-@interface UserWuXianHuaTongViewCtrl : UIViewController {
+#import "UserBaseViewControllor.h"
+@interface UserWuXianHuaTongViewCtrl : UserBaseViewControllor {
     
 }
 

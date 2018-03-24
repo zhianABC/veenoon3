@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-@interface UserVideoLuBoJiViewCtrl : UIViewController {
+#import "UserBaseViewControllor.h"
+@interface UserVideoLuBoJiViewCtrl : UserBaseViewControllor {
     
 }
 

@@ -116,7 +116,7 @@
     int uiviewWidth = (SCREEN_WIDTH - leftRight*2 -rowGap*2)/columnN;
     int cellHeight = uiviewWidth -140;
     
-    int rowNUmber = (int) [_monitorRoomList count] / 3 + 1;
+    int rowNUmber = (int) [_monitorRoomList count] / 2 + 1;
     
     UIScrollView *_botomView = [[UIScrollView alloc] initWithFrame:CGRectMake(leftRight, 80, SCREEN_WIDTH-2*leftRight, SCREEN_HEIGHT - 200)];
     _botomView.contentSize =  CGSizeMake(SCREEN_WIDTH-2*leftRight, rowNUmber * (cellHeight + rowGap) +10);

@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-@interface UserVideoCameraSettingsViewCtrl : UIViewController {
+#import "UserBaseViewControllor.h"
+@interface UserVideoCameraSettingsViewCtrl : UserBaseViewControllor {
+    NSMutableArray *_cameraSysArray;
     
+    int _number;
 }
-
+@property(nonatomic, strong) NSMutableArray *_cameraSysArray;
+@property(nonatomic, assign) int _number;
 @end
 
 

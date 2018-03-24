@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "UserVideoConfigView.h"
-
-@interface UserVideoConfigViewCtrl : UIViewController<UserVideoConfigViewDelegate> {
+#import "UserBaseViewControllor.h"
+@interface UserVideoConfigViewCtrl : UserBaseViewControllor<UserVideoConfigViewDelegate> {
     
 }
 

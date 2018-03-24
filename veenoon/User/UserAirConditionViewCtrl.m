@@ -9,7 +9,8 @@
 #import "UIButton+Color.h"
 #import "MapMarkerLayer.h"
 
-@interface UserAirConditionViewCtrl <MapMarkerLayerDelegate>() {
+
+@interface UserAirConditionViewCtrl () {
     NSMutableArray *_conditionRoomList;
     NSMutableArray *_conditionBtnList;
     MapMarkerLayer *markerLayer;
@@ -31,21 +32,19 @@
     if (_conditionRoomList) {
         [_conditionRoomList removeAllObjects];
     } else {
-        NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"大会议室", @"name",
+        NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"Channel 01", @"name",
                                      nil];
-        NSMutableDictionary *dic2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"大会议室", @"name",
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"Channel 02", @"name",
                                      nil];
-        NSMutableDictionary *dic3 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"大会议室", @"name",
+        NSMutableDictionary *dic3 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"Channel 03", @"name",
                                      nil];
-        NSMutableDictionary *dic4 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"大会议室", @"name",
+        NSMutableDictionary *dic4 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"Channel 04", @"name",
                                      nil];
-        NSMutableDictionary *dic5 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"大会议室", @"name",
+        NSMutableDictionary *dic5 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"Channel 05", @"name",
                                      nil];
-        NSMutableDictionary *dic6 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"大会议室", @"name",
+        NSMutableDictionary *dic6 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"Channel 06", @"name",
                                      nil];
-        NSMutableDictionary *dic7 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"大会议室", @"name",
-                                     nil];
-        self._conditionRoomList = [NSMutableArray arrayWithObjects:dic1, dic2, dic3, dic4, dic5, dic6, dic7, nil];
+        self._conditionRoomList = [NSMutableArray arrayWithObjects:dic1, dic2, dic3, dic4, dic5, dic6, nil];
     }
 }
 
@@ -60,15 +59,7 @@
         _conditionBtnList = [[NSMutableArray alloc] init];
     }
     
-    self.view.backgroundColor = RGB(63, 58, 55);
-    
-    UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
-    [self.view addSubview:titleIcon];
-    titleIcon.frame = CGRectMake(60, 40, 70, 10);
-    
-    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 63, SCREEN_WIDTH, 1)];
-    line.backgroundColor = RGB(83, 78, 75);
-    [self.view addSubview:line];
+    [super setTitleAndImage:@"env_corner_kongtiao.png" withTitle:@"空调"];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
@@ -100,11 +91,11 @@
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
-    int leftGap = 155;
+    int leftGap = 160;
     int scrollHeight = 600;
     int cellWidth = 100;
     int rowGap = 20;
-    int number = [self._conditionRoomList count];
+    int number = (int) [self._conditionRoomList count];
     int contentWidth = number * 100 + (number-1) * rowGap;
     UIScrollView *airCondtionView = [[UIScrollView alloc] initWithFrame:CGRectMake(leftGap, SCREEN_HEIGHT-scrollHeight, SCREEN_WIDTH - leftGap*2, cellWidth+10)];
     airCondtionView.contentSize =  CGSizeMake(contentWidth, cellWidth+10);
@@ -114,7 +105,7 @@
     
     int index = 0;
     for (id dic in _conditionRoomList) {
-        int startX = index*cellWidth+index*rowGap+10;
+        int startX = index*cellWidth+index*rowGap+20;
         int startY = 5;
         
         UIButton *airConditionBtn = [UIButton buttonWithColor:nil selColor:nil];
@@ -124,9 +115,10 @@
         [airConditionBtn setImage:[UIImage imageNamed:@"user_aircondition_s.png"] forState:UIControlStateHighlighted];
         [airConditionBtn setTitle:[dic objectForKey:@"name"] forState:UIControlStateNormal];
         [airConditionBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
+        airConditionBtn.titleLabel.font = [UIFont systemFontOfSize:13];
         [airConditionBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
         airConditionBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-        [airConditionBtn setTitleEdgeInsets:UIEdgeInsetsMake(airConditionBtn.imageView.frame.size.height+10,-90,-20,20)];
+        [airConditionBtn setTitleEdgeInsets:UIEdgeInsetsMake(airConditionBtn.imageView.frame.size.height+10,-105,-20,20)];
         [airConditionBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,-15,airConditionBtn.titleLabel.bounds.size.height, 0)];
         [airConditionBtn addTarget:self action:@selector(airConditionAction:) forControlEvents:UIControlEventTouchUpInside];
         [airCondtionView addSubview:airConditionBtn];
@@ -135,11 +127,11 @@
         
         [_conditionBtnList addObject:airConditionBtn];
     }
-    
-    int btnLeftRight = 180;
+    int rowGap2 = 40;
+    int btnLeftRight = SCREEN_WIDTH/2-160-60;
     
     zhilengBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
-    zhilengBtn.frame = CGRectMake(btnLeftRight, SCREEN_HEIGHT-350, 100, 100);
+    zhilengBtn.frame = CGRectMake(btnLeftRight, SCREEN_HEIGHT-400, 80, 80);
     zhilengBtn.layer.cornerRadius = 5;
     zhilengBtn.layer.borderWidth = 2;
     zhilengBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -151,7 +143,7 @@
        forControlEvents:UIControlEventTouchUpInside];
     
     zhireBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
-    zhireBtn.frame = CGRectMake(btnLeftRight+140, SCREEN_HEIGHT-350, 100, 100);
+    zhireBtn.frame = CGRectMake(btnLeftRight+rowGap2 +80, SCREEN_HEIGHT-400, 80, 80);
     zhireBtn.layer.cornerRadius = 5;
     zhireBtn.layer.borderWidth = 2;
     zhireBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -163,17 +155,17 @@
          forControlEvents:UIControlEventTouchUpInside];
     
     
-    markerLayer = [[MapMarkerLayer alloc] initWithFrame:CGRectMake(btnLeftRight+280, SCREEN_HEIGHT-350, 100, 100)];
+    markerLayer = [[MapMarkerLayer alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2 - 40, SCREEN_HEIGHT-230, 80, 80)];
     markerLayer.isFill = YES;
     
     NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"LX",
                                  @"0", @"LY",
                                  nil];
-    NSMutableDictionary *dic2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"100", @"LX",
+    NSMutableDictionary *dic2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"80", @"LX",
                                  @"0", @"LY",
                                  nil];
-    NSMutableDictionary *dic3 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"50", @"LX",
-                                 @"50", @"LY",
+    NSMutableDictionary *dic3 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"40", @"LX",
+                                 @"40", @"LY",
                                  nil];
     NSMutableDictionary *dic4 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"LX",
                                  @"0", @"LY",
@@ -183,33 +175,33 @@
     NSMutableDictionary *dic5 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"LX",
                                  @"0", @"LY",
                                  nil];
-    NSMutableDictionary *dic6 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"50", @"LX",
-                                 @"50", @"LY",
+    NSMutableDictionary *dic6 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"40", @"LX",
+                                 @"40", @"LY",
                                  nil];
-    NSMutableDictionary *dic7 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"50", @"LX",
-                                 @"100", @"LY",
+    NSMutableDictionary *dic7 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"40", @"LX",
+                                 @"80", @"LY",
                                  nil];
     NSMutableDictionary *dic8 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"LX",
-                                 @"100", @"LY",
+                                 @"80", @"LY",
                                  nil];
     NSMutableDictionary *dic9 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"LX",
                                  @"0", @"LY",
                                  nil];
     
     
-    NSMutableDictionary *dic11 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"100", @"LX",
+    NSMutableDictionary *dic11 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"80", @"LX",
                                  @"0", @"LY",
                                  nil];
-    NSMutableDictionary *dic12 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"100", @"LX",
-                                 @"100", @"LY",
+    NSMutableDictionary *dic12 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"80", @"LX",
+                                 @"80", @"LY",
                                  nil];
-    NSMutableDictionary *dic13 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"50", @"LX",
-                                 @"100", @"LY",
+    NSMutableDictionary *dic13 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"40", @"LX",
+                                 @"80", @"LY",
                                  nil];
-    NSMutableDictionary *dic14 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"50", @"LX",
-                                 @"50", @"LY",
+    NSMutableDictionary *dic14 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"40", @"LX",
+                                 @"40", @"LY",
                                  nil];
-    NSMutableDictionary *dic15 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"100", @"LX",
+    NSMutableDictionary *dic15 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"80", @"LX",
                                   @"0", @"LY",
                                   nil];
     NSMutableArray *array1 = [NSMutableArray arrayWithObjects:dic1, dic2, dic3,dic4, nil];
@@ -221,29 +213,34 @@
     
     markerLayer.selectedColor = [UIColor blackColor];
     
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"user_airecon_wendu_n.png"] ];
+    imageView.frame = CGRectMake(48, 9, 9, 6);
+    [markerLayer addSubview:imageView];
+    
     wenduL = [[UILabel alloc] init];
     wenduL.text = @"26";
+    wenduL.font = [UIFont systemFontOfSize:12];
     wenduL.textColor = [UIColor whiteColor];
-    wenduL.frame = CGRectMake(41, 12, 25, 12);
+    wenduL.frame = CGRectMake(33, 10, 30, 12);
     [markerLayer addSubview:wenduL];
     
     UILabel *addLabel = [[UILabel alloc] init];
     addLabel.text = @"+";
     addLabel.textColor = [UIColor whiteColor];
-    addLabel.frame = CGRectMake(20, 50, 20, 20);
+    addLabel.frame = CGRectMake(15, 40, 20, 20);
     [markerLayer addSubview:addLabel];
     
     UILabel *minusLabel = [[UILabel alloc] init];
     minusLabel.text = @"-";
     minusLabel.textColor = [UIColor whiteColor];
-    minusLabel.frame = CGRectMake(70, 50, 20, 20);
+    minusLabel.frame = CGRectMake(60, 40, 20, 20);
     [markerLayer addSubview:minusLabel];
     
     [self.view addSubview:markerLayer];
     markerLayer.delegate_ = self;
     
     aireWindBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
-    aireWindBtn.frame = CGRectMake(btnLeftRight+420, SCREEN_HEIGHT-350, 100, 100);
+    aireWindBtn.frame = CGRectMake(btnLeftRight+rowGap2*2 +80*2, SCREEN_HEIGHT-400, 80, 80);
     aireWindBtn.layer.cornerRadius = 5;
     aireWindBtn.layer.borderWidth = 2;
     aireWindBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -256,7 +253,7 @@
     
     
     aireFireBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
-    aireFireBtn.frame = CGRectMake(btnLeftRight+560, SCREEN_HEIGHT-350, 100, 100);
+    aireFireBtn.frame = CGRectMake(btnLeftRight+rowGap2*3 +80*3, SCREEN_HEIGHT-400, 80, 80);
     aireFireBtn.layer.cornerRadius = 5;
     aireFireBtn.layer.borderWidth = 2;
     aireFireBtn.layer.borderColor = [UIColor clearColor].CGColor;;

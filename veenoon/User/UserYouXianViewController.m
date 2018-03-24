@@ -25,15 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = RGB(63, 58, 55);
-    
-    UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
-    [self.view addSubview:titleIcon];
-    titleIcon.frame = CGRectMake(60, 40, 70, 10);
-    
-    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 63, SCREEN_WIDTH, 1)];
-    line.backgroundColor = RGB(83, 78, 75);
-    [self.view addSubview:line];
+    [super setTitleAndImage:@"user_corner_handto.png" withTitle:@"手拉手会议系统"];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
@@ -67,12 +59,12 @@
     
     int leftRight = 200;
     int rowGap = 120;
-    int height = SCREEN_HEIGHT - 600;
+    int height = SCREEN_HEIGHT - 550;
     int cellHeight = 150;
     
     int pickerRowLeft = -20;
     
-    int pickerHeight = 200;
+    int pickerHeight = 250;
     
     int cellWidth = (SCREEN_WIDTH - leftRight*2 - rowGap*3)/4;
     
@@ -89,7 +81,7 @@
     [_zhuximoshiBtn addTarget:self action:@selector(zhuxiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_zhuximoshiBtn];
     
-    _peoplePicker1 = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(leftRight+pickerRowLeft, height+pickerHeight, 100, 120) withGrayOrLight:@"gray"];
+    _peoplePicker1 = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(leftRight+pickerRowLeft-5, height+pickerHeight, 120, 120) withGrayOrLight:@"gray"];
     [_peoplePicker1 removeArray];
     
     _peoplePicker1._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
@@ -113,7 +105,7 @@
     [_luntimoshiBtn addTarget:self action:@selector(luntiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_luntimoshiBtn];
     
-    _peoplePicker2 = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(leftRight+rowGap+cellWidth+pickerRowLeft, height+pickerHeight, 100, 120) withGrayOrLight:@"gray"];
+    _peoplePicker2 = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(leftRight+rowGap+cellWidth+pickerRowLeft-10, height+pickerHeight, 120, 120) withGrayOrLight:@"gray"];
     [_peoplePicker2 removeArray];
     _peoplePicker2._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
     [self.view addSubview:_peoplePicker2];
@@ -136,7 +128,7 @@
     [_shenqingmoshiBtn addTarget:self action:@selector(shenqingAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_shenqingmoshiBtn];
     
-    _peoplePicker3 = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(leftRight+rowGap*2+cellWidth*2+pickerRowLeft, height+pickerHeight, 100, 120) withGrayOrLight:@"gray"];
+    _peoplePicker3 = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(leftRight+rowGap*2+cellWidth*2+pickerRowLeft-15, height+pickerHeight, 120, 120) withGrayOrLight:@"gray"];
     [_peoplePicker3 removeArray];
     _peoplePicker3._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
     [self.view addSubview:_peoplePicker3];

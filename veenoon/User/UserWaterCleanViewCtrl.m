@@ -25,7 +25,7 @@
     if (_RoomList) {
         [_RoomList removeAllObjects];
     } else {
-        NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"大会议室", @"name",
+        NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"Chan", @"name",
                                      nil];
         NSMutableDictionary *dic2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"小会议室", @"name",
                                      nil];

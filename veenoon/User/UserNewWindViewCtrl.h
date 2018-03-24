@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-@interface UserNewWindViewCtrl : UIViewController {
+#import "UserBaseViewControllor.h"
+@interface UserNewWindViewCtrl : UserBaseViewControllor {
     
 }
 

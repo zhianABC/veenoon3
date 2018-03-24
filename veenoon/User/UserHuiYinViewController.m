@@ -24,15 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = RGB(63, 58, 55);
-    
-    UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
-    [self.view addSubview:titleIcon];
-    titleIcon.frame = CGRectMake(60, 40, 70, 10);
-    
-    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 63, SCREEN_WIDTH, 1)];
-    line.backgroundColor = RGB(83, 78, 75);
-    [self.view addSubview:line];
+    [super setTitleAndImage:@"" withTitle:@""];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
@@ -117,20 +109,29 @@
     _peoplePicker._rowNormalColor = SINGAL_COLOR;
     IMP_BLOCK_SELF(UserHuiYinViewController);
     _peoplePicker._selectionBlock = ^(NSDictionary *values) {
-        //[block_self didPickerValue:values];
+        [block_self didPickerValue:values];
     };
+}
+- (void) didPickerValue:(NSDictionary *)values{
+    if (_peoplePicker) {
+        [_peoplePicker removeFromSuperview];
+    }
 }
 - (void) fayanrenshuAction:(id)sender{
     _peoplePicker.hidden=NO;
     
     [_shedingzhuxiBtn setSelected:NO];
+    _shedingzhuxiBtn.alpha=0.4;
     [_fayanrenshuBtn setSelected:YES];
+    _fayanrenshuBtn.alpha=1;
 }
 - (void) shedingzhuxiAction:(id)sender{
     _peoplePicker.hidden=NO;
     
     [_shedingzhuxiBtn setSelected:YES];
+    _shedingzhuxiBtn.alpha=1;
     [_fayanrenshuBtn setSelected:NO];
+    _fayanrenshuBtn.alpha=0.4;
 }
 
 - (void) biaozhunmoshiAction:(id)sender{

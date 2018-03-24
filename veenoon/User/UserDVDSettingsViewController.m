@@ -1,42 +1,37 @@
 //
-//  UserAudioPlayerSettingsViewCtrl.m
+//  EngineerDVDViewController.m
 //  veenoon
 //
-//  Created by 安志良 on 2017/11/24.
+//  Created by 安志良 on 2017/12/20.
 //  Copyright © 2017年 jack. All rights reserved.
 //
-#import "UserAudioPlayerSettingsViewCtrl.h"
+
+#import "UserDVDSettingsViewController.h"
 #import "UIButton+Color.h"
 
-@interface UserAudioPlayerSettingsViewCtrl () {
+@interface UserDVDSettingsViewController () {
+    
     UIButton *_volumnMinus;
     UIButton *_lastSing;
     UIButton *_playOrHold;
     UIButton *_nextSing;
     UIButton *_volumnAdd;
     
-    UIImageView *playerIndicator;
-    
     BOOL isplay;
     
+    UIButton *_luboBtn;
     UIButton *_tanchuBtn;
+    UIButton *_addressBtn;
 }
-
 @end
 
-@implementation UserAudioPlayerSettingsViewCtrl
-
+@implementation UserDVDSettingsViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if (self.playerState == USBPlaer) {
-        [super setTitleAndImage:@"user_corner_usb.png" withTitle:@"USB播放器"];
-    } else if (self.playerState == CDPlayer) {
-        [super setTitleAndImage:@"user_corner_cd.png" withTitle:@"CD播放器"];
-    } else {
-        [super setTitleAndImage:@"user_corner_sd.png" withTitle:@"SD播放器"];
-    }
+    [super setTitleAndImage:@"video_corner_dvd.png" withTitle:@"DVD播放器"];
     
+    //缺切图，把切图贴上即可。
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
     
@@ -111,10 +106,21 @@
     [_volumnAdd addTarget:self action:@selector(volumnAddAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_volumnAdd];
     
-    playerIndicator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"audio_player_title_n.png"]];
-    [self.view addSubview:playerIndicator];
-    playerIndicator.frame = CGRectMake(0, 0, 322, 322);
-    playerIndicator.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT - 450);
+    
+//    _luboBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+//    _luboBtn.frame = CGRectMake(70, SCREEN_HEIGHT-140, 60, 60);
+//    _luboBtn.layer.cornerRadius = 5;
+//    _luboBtn.layer.borderWidth = 2;
+//    _luboBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+//    _luboBtn.clipsToBounds = YES;
+//    [_luboBtn setImage:[UIImage imageNamed:@"engineer_lubo_n.png"] forState:UIControlStateNormal];
+//    [_luboBtn setImage:[UIImage imageNamed:@"engineer_lubo_s.png"] forState:UIControlStateHighlighted];
+//    [self.view addSubview:_luboBtn];
+//
+//    [_luboBtn addTarget:self
+//                 action:@selector(luboAction:)
+//       forControlEvents:UIControlEventTouchUpInside];
+    
     
     _tanchuBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
     _tanchuBtn.frame = CGRectMake(70, SCREEN_HEIGHT-140, 60, 60);
@@ -130,8 +136,104 @@
                    action:@selector(tanchuAction:)
          forControlEvents:UIControlEventTouchUpInside];
     
+    _addressBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
+    _addressBtn.frame = CGRectMake(150, SCREEN_HEIGHT-140, 60, 60);
+    _addressBtn.layer.cornerRadius = 5;
+    _addressBtn.layer.borderWidth = 2;
+    _addressBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    _addressBtn.clipsToBounds = YES;
+    [_addressBtn setImage:[UIImage imageNamed:@"engineer_address_n.png"] forState:UIControlStateNormal];
+    [_addressBtn setImage:[UIImage imageNamed:@"engineer_address_s.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:_addressBtn];
+    
+    [_addressBtn addTarget:self
+                    action:@selector(addressAction:)
+          forControlEvents:UIControlEventTouchUpInside];
+    
+    int playerLeft = 155;
+    int playerHeight = 10;
+    
+    UIButton *lastVideoUpBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
+    lastVideoUpBtn.frame = CGRectMake(230+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
+    lastVideoUpBtn.layer.cornerRadius = 5;
+    lastVideoUpBtn.layer.borderWidth = 2;
+    lastVideoUpBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    lastVideoUpBtn.clipsToBounds = YES;
+    [lastVideoUpBtn setImage:[UIImage imageNamed:@"engineer_left_n.png"] forState:UIControlStateNormal];
+    [lastVideoUpBtn setImage:[UIImage imageNamed:@"engineer_left_s.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:lastVideoUpBtn];
+    
+    [lastVideoUpBtn addTarget:self
+                       action:@selector(lastSingAction:)
+             forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *okPlayerBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
+    okPlayerBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
+    okPlayerBtn.layer.cornerRadius = 5;
+    okPlayerBtn.layer.borderWidth = 2;
+    okPlayerBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    okPlayerBtn.clipsToBounds = YES;
+    [okPlayerBtn setTitle:@"ok" forState:UIControlStateNormal];
+    [okPlayerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [okPlayerBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    okPlayerBtn.titleLabel.font = [UIFont boldSystemFontOfSize:24];
+    [self.view addSubview:okPlayerBtn];
+    
+    [okPlayerBtn addTarget:self action:@selector(okPlayAction:)
+          forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *volumnUpBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
+    volumnUpBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-585+playerHeight, 80, 80);
+    volumnUpBtn.layer.cornerRadius = 5;
+    volumnUpBtn.layer.borderWidth = 2;
+    volumnUpBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    volumnUpBtn.clipsToBounds = YES;
+    [volumnUpBtn setImage:[UIImage imageNamed:@"engineer_up_n.png"] forState:UIControlStateNormal];
+    [volumnUpBtn setImage:[UIImage imageNamed:@"engineer_up_s.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:volumnUpBtn];
+    
+    [volumnUpBtn addTarget:self
+                    action:@selector(volumnAddAction:)
+          forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *nextPlayBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
+    nextPlayBtn.frame = CGRectMake(400+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
+    nextPlayBtn.layer.cornerRadius = 5;
+    nextPlayBtn.layer.borderWidth = 2;
+    nextPlayBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    nextPlayBtn.clipsToBounds = YES;
+    [nextPlayBtn setImage:[UIImage imageNamed:@"engineer_next_n.png"] forState:UIControlStateNormal];
+    [nextPlayBtn setImage:[UIImage imageNamed:@"engineer_next_s.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:nextPlayBtn];
+    
+    [nextPlayBtn addTarget:self
+                    action:@selector(nextSingAction:)
+          forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *volumnDownBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
+    volumnDownBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-415+playerHeight, 80, 80);
+    volumnDownBtn.layer.cornerRadius = 5;
+    volumnDownBtn.layer.borderWidth = 2;
+    volumnDownBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    volumnDownBtn.clipsToBounds = YES;
+    [volumnDownBtn setImage:[UIImage imageNamed:@"engineer_down_n.png"] forState:UIControlStateNormal];
+    [volumnDownBtn setImage:[UIImage imageNamed:@"engineer_down_s.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:volumnDownBtn];
+    
+    [volumnDownBtn addTarget:self
+                      action:@selector(volumnMinusAction:)
+            forControlEvents:UIControlEventTouchUpInside];
 }
+- (void) okPlayAction:(id)sender {
+    
+}
+- (void) luboAction:(id)sender{
+}
+
 - (void) tanchuAction:(id)sender{
+    
+}
+- (void) addressAction:(id)sender{
     
 }
 - (void) nextSingAction:(id)sender{
@@ -140,11 +242,9 @@
 
 - (void) audioPlayHoldAction:(id)sender{
     if (isplay) {
-        [playerIndicator setImage:[UIImage imageNamed: @"audio_player_title_n.png"]];
         [_playOrHold setImage:[UIImage imageNamed:@"audio_player_hold.png"] forState:UIControlStateNormal];
         isplay = NO;
     } else {
-        [playerIndicator setImage:[UIImage imageNamed: @"audio_player_title_s.png"]];
         [_playOrHold setImage:[UIImage imageNamed:@"audio_player_play.png"] forState:UIControlStateNormal];
         isplay = YES;
     }
@@ -161,7 +261,6 @@
 - (void) volumnAddAction:(id)sender{
     
 }
-
 - (void) okAction:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -169,6 +268,5 @@
 - (void) cancelAction:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }
-
-
 @end
+
