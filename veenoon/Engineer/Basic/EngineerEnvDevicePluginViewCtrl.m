@@ -10,19 +10,20 @@
 #import "CenterCustomerPickerView.h"
 #import "EngineerScenarioListViewCtrl.h"
 #import "UIButton+Color.h"
+#import "IconCenterTextButton.h"
 
 @interface EngineerEnvDevicePluginViewCtrl () <CenterCustomerPickerViewDelegate> {
-    UIButton *_zhaomingBtn;
-    UIButton *_kongtiaoBtn;
-    UIButton *_diandongmadaBtn;
-    UIButton *_xinfengBtn;
-    UIButton *_dinuanBtn;
-    UIButton *_kongqijinghuaBtn;
-    UIButton *_jingshuiBtn;
-    UIButton *_jiashiqiBtn;
-    UIButton *_menjinBtn;
-    UIButton *_jiankongBtn;
-    UIButton *_nenghaotongjiBtn;
+    IconCenterTextButton *_zhaomingBtn;
+    IconCenterTextButton *_kongtiaoBtn;
+    IconCenterTextButton *_diandongmadaBtn;
+    IconCenterTextButton *_xinfengBtn;
+    IconCenterTextButton *_dinuanBtn;
+    IconCenterTextButton *_kongqijinghuaBtn;
+    IconCenterTextButton *_jingshuiBtn;
+    IconCenterTextButton *_jiashiqiBtn;
+    IconCenterTextButton *_menjinBtn;
+    IconCenterTextButton *_jiankongBtn;
+    IconCenterTextButton *_nenghaotongjiBtn;
     
     UIButton *_confirmButton;
     
@@ -85,121 +86,55 @@
     int left = 150;
     int rowGap = (SCREEN_WIDTH - left * 2)/5 -10;
     int height = 200;
-    _zhaomingBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _zhaomingBtn.frame = CGRectMake(left, height, 80, 132);
-    [_zhaomingBtn setImage:[UIImage imageNamed:@"engineer_env_zhaoming_n.png"] forState:UIControlStateNormal];
-    [_zhaomingBtn setImage:[UIImage imageNamed:@"engineer_env_zhaoming_s.png"] forState:UIControlStateHighlighted];
-    [_zhaomingBtn setTitle:@"照明" forState:UIControlStateNormal];
-    [_zhaomingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_zhaomingBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _zhaomingBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_zhaomingBtn setTitleEdgeInsets:UIEdgeInsetsMake(_zhaomingBtn.imageView.frame.size.height+3,-80,-18,-20)];
-    [_zhaomingBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,5,_zhaomingBtn.titleLabel.bounds.size.height, 10)];
+    
+    _zhaomingBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left, height, 80, 110)];
+    [_zhaomingBtn buttonWithIcon:[UIImage imageNamed:@"engineer_env_zhaoming_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_env_zhaoming_s.png"] text:@"照明" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_zhaomingBtn addTarget:self action:@selector(zhaomingAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_zhaomingBtn];
     
     
-    _kongtiaoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _kongtiaoBtn.frame = CGRectMake(left+rowGap, height, 80, 132);
-    [_kongtiaoBtn setImage:[UIImage imageNamed:@"engineer_env_kongtiao_n.png"] forState:UIControlStateNormal];
-    [_kongtiaoBtn setImage:[UIImage imageNamed:@"engineer_env_kongtiao_s.png"] forState:UIControlStateHighlighted];
-    [_kongtiaoBtn setTitle:@"空调" forState:UIControlStateNormal];
-    [_kongtiaoBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_kongtiaoBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _kongtiaoBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_kongtiaoBtn setTitleEdgeInsets:UIEdgeInsetsMake(_kongtiaoBtn.imageView.frame.size.height+10,-90,-20,-10)];
-    [_kongtiaoBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_kongtiaoBtn.titleLabel.bounds.size.height, 0)];
+    _kongtiaoBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap, height, 80, 110)];
+    [_kongtiaoBtn buttonWithIcon:[UIImage imageNamed:@"engineer_env_kongtiao_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_env_kongtiao_s.png"] text:@"空调" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_kongtiaoBtn addTarget:self action:@selector(kongtiaoAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_kongtiaoBtn];
     
-    _diandongmadaBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _diandongmadaBtn.frame = CGRectMake(left+rowGap*2, height, 80, 132);
-    [_diandongmadaBtn setImage:[UIImage imageNamed:@"engineer_env_diandongmada_n.png"] forState:UIControlStateNormal];
-    [_diandongmadaBtn setImage:[UIImage imageNamed:@"engineer_env_diandongmada_s.png"] forState:UIControlStateHighlighted];
-    [_diandongmadaBtn setTitle:@"电动马达" forState:UIControlStateNormal];
-    [_diandongmadaBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_diandongmadaBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _diandongmadaBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_diandongmadaBtn setTitleEdgeInsets:UIEdgeInsetsMake(_diandongmadaBtn.imageView.frame.size.height+10,-85,-20,-35)];
-    [_diandongmadaBtn setImageEdgeInsets:UIEdgeInsetsMake(-10,0,_diandongmadaBtn.titleLabel.bounds.size.height, -10)];
+    
+    
+    _diandongmadaBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*2, height, 80, 110)];
+    [_diandongmadaBtn buttonWithIcon:[UIImage imageNamed:@"engineer_env_diandongmada_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_env_diandongmada_s.png"] text:@"电动马达" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_diandongmadaBtn addTarget:self action:@selector(diandongmadaAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_diandongmadaBtn];
     
-    _xinfengBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _xinfengBtn.frame = CGRectMake(left+rowGap*3, height, 80, 132);
-    [_xinfengBtn setImage:[UIImage imageNamed:@"engineer_env_xinfeng_n.png"] forState:UIControlStateNormal];
-    [_xinfengBtn setImage:[UIImage imageNamed:@"engineer_env_xinfeng_s.png"] forState:UIControlStateHighlighted];
-    [_xinfengBtn setTitle:@"新风" forState:UIControlStateNormal];
-    [_xinfengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_xinfengBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _xinfengBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_xinfengBtn setTitleEdgeInsets:UIEdgeInsetsMake(_xinfengBtn.imageView.frame.size.height+10,-55,-20,-5)];
-    [_xinfengBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,5.0,_xinfengBtn.titleLabel.bounds.size.height, -5)];
+    
+    _xinfengBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*3, height, 80, 110)];
+    [_xinfengBtn buttonWithIcon:[UIImage imageNamed:@"engineer_env_xinfeng_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_env_xinfeng_s.png"] text:@"新风" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_xinfengBtn addTarget:self action:@selector(xinfengAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_xinfengBtn];
     
-    _dinuanBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _dinuanBtn.frame = CGRectMake(left+rowGap*4, height, 80, 132);
-    [_dinuanBtn setImage:[UIImage imageNamed:@"engineer_env_dire_n.png"] forState:UIControlStateNormal];
-    [_dinuanBtn setImage:[UIImage imageNamed:@"engineer_env_dire_s.png"] forState:UIControlStateHighlighted];
-    [_dinuanBtn setTitle:@"地暖" forState:UIControlStateNormal];
-    [_dinuanBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_dinuanBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _dinuanBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_dinuanBtn setTitleEdgeInsets:UIEdgeInsetsMake(_dinuanBtn.imageView.frame.size.height+10,-90,-20,-10)];
-    [_dinuanBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_dinuanBtn.titleLabel.bounds.size.height, 0)];
+    
+    _dinuanBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*4, height, 80, 110)];
+    [_dinuanBtn buttonWithIcon:[UIImage imageNamed:@"engineer_env_dire_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_env_dire_s.png"] text:@"地暖" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_dinuanBtn addTarget:self action:@selector(dinuanAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_dinuanBtn];
     
-    _kongqijinghuaBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _kongqijinghuaBtn.frame = CGRectMake(left+rowGap*5, height, 80, 132);
-    [_kongqijinghuaBtn setImage:[UIImage imageNamed:@"engineer_env_kongqijignhua_n.png"] forState:UIControlStateNormal];
-    [_kongqijinghuaBtn setImage:[UIImage imageNamed:@"engineer_env_kongqijignhua_s.png"] forState:UIControlStateHighlighted];
-    [_kongqijinghuaBtn setTitle:@"空气净化" forState:UIControlStateNormal];
-    [_kongqijinghuaBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_kongqijinghuaBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _kongqijinghuaBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_kongqijinghuaBtn setTitleEdgeInsets:UIEdgeInsetsMake(_kongqijinghuaBtn.imageView.frame.size.height+10,-80,-20,-30)];
-    [_kongqijinghuaBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_kongqijinghuaBtn.titleLabel.bounds.size.height, 0)];
+    _kongqijinghuaBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*5, height, 80, 110)];
+    [_kongqijinghuaBtn buttonWithIcon:[UIImage imageNamed:@"engineer_env_kongqijignhua_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_env_kongqijignhua_s.png"] text:@"空气净化" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_kongqijinghuaBtn addTarget:self action:@selector(kongqijinghuaAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_kongqijinghuaBtn];
     
-    _jiashiqiBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _jiashiqiBtn.frame = CGRectMake(left, height+132, 80, 132);
-    [_jiashiqiBtn setImage:[UIImage imageNamed:@"engineer_env_jiashi_n.png"] forState:UIControlStateNormal];
-    [_jiashiqiBtn setImage:[UIImage imageNamed:@"engineer_env_jiashi_s.png"] forState:UIControlStateHighlighted];
-    [_jiashiqiBtn setTitle:@"加湿器" forState:UIControlStateNormal];
-    [_jiashiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_jiashiqiBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _jiashiqiBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_jiashiqiBtn setTitleEdgeInsets:UIEdgeInsetsMake(_jiashiqiBtn.imageView.frame.size.height+10,-60,-20,0)];
-    [_jiashiqiBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,0.0,_jiashiqiBtn.titleLabel.bounds.size.height, 0)];
+    
+    _jiashiqiBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left, height+130, 80, 110)];
+    [_jiashiqiBtn buttonWithIcon:[UIImage imageNamed:@"engineer_env_jiashi_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_env_jiashi_s.png"] text:@"加湿器" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_jiashiqiBtn addTarget:self action:@selector(jiashiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_jiashiqiBtn];
     
-    _jiankongBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _jiankongBtn.frame = CGRectMake(left+rowGap, height+132, 80, 132);
-    [_jiankongBtn setImage:[UIImage imageNamed:@"engineer_env_jiankong_n.png"] forState:UIControlStateNormal];
-    [_jiankongBtn setImage:[UIImage imageNamed:@"engineer_env_jiankong_s.png"] forState:UIControlStateHighlighted];
-    [_jiankongBtn setTitle:@"监控" forState:UIControlStateNormal];
-    [_jiankongBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_jiankongBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _jiankongBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_jiankongBtn setTitleEdgeInsets:UIEdgeInsetsMake(_jiankongBtn.imageView.frame.size.height+15,-60,-25,5)];
-    [_jiankongBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,5.0,_jiankongBtn.titleLabel.bounds.size.height, -5)];
+    _jiankongBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap, height+130, 80, 110)];
+    [_jiankongBtn buttonWithIcon:[UIImage imageNamed:@"engineer_env_jiankong_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_env_jiankong_s.png"] text:@"监控" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_jiankongBtn addTarget:self action:@selector(jiankongAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_jiankongBtn];
     
-    _nenghaotongjiBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _nenghaotongjiBtn.frame = CGRectMake(left+rowGap*2, height+132, 80, 132);
-    [_nenghaotongjiBtn setImage:[UIImage imageNamed:@"engineer_env_nenghao_n.png"] forState:UIControlStateNormal];
-    [_nenghaotongjiBtn setImage:[UIImage imageNamed:@"engineer_env_nenghao_s.png"] forState:UIControlStateHighlighted];
-    [_nenghaotongjiBtn setTitle:@"能耗统计" forState:UIControlStateNormal];
-    [_nenghaotongjiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_nenghaotongjiBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _nenghaotongjiBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_nenghaotongjiBtn setTitleEdgeInsets:UIEdgeInsetsMake(_nenghaotongjiBtn.imageView.frame.size.height+15,-60,-25,5)];
-    [_nenghaotongjiBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,5.0,_nenghaotongjiBtn.titleLabel.bounds.size.height, -5)];
+    _nenghaotongjiBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*2, height+130, 80, 110)];
+    [_nenghaotongjiBtn buttonWithIcon:[UIImage imageNamed:@"engineer_env_nenghao_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_env_nenghao_s.png"] text:@"能耗统计" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_nenghaotongjiBtn addTarget:self action:@selector(nenghaotongjiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_nenghaotongjiBtn];
     
