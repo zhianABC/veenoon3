@@ -16,7 +16,7 @@
 #import "WirlessYaoBaoViewSettingsView.h"
 
 
-@interface EngineerWirlessYaoBaoViewCtrl () <CustomPickerViewDelegate, EngineerSliderViewDelegate> {
+@interface EngineerWirlessYaoBaoViewCtrl () <CustomPickerViewDelegate, EngineerSliderViewDelegate, SlideButtonDelegate> {
     
     UIButton *_selectSysBtn;
     
@@ -218,14 +218,7 @@
             
             SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(0, 0, cellWidth, 120)];
             [view addSubview:btn];
-            
-            
-            UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
-            tapGesture.cancelsTouchesInView =  NO;
-            tapGesture.numberOfTapsRequired = 1;
-            tapGesture.view.tag = i;
-            [btn addGestureRecognizer:tapGesture];
-            
+            btn.delegate = self;
             btn.tag = i;
             
             UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 - 30, 0, 60, 20)];
@@ -313,10 +306,12 @@
     }
 }
 
--(void)handleTapGesture:(UIGestureRecognizer*)gestureRecognizer {
-    int tag = (int) gestureRecognizer.view.tag;
+
+- (void) didTappedMSelf:(SlideButton*)slbtn{
     
-    SlideButton *btn;
+    int tag = (int)slbtn.tag;
+    
+    SlideButton *btn = nil;
     for (SlideButton *button in _selectedBtnArray) {
         if (button.tag == tag) {
             btn = button;
@@ -327,7 +322,9 @@
     if (btn == nil) {
         SlideButton *button = [_buttonArray objectAtIndex:tag];
         [_selectedBtnArray addObject:button];
+        
         [button enableValueSet:YES];
+        
         UILabel *chanelL = [_buttonChannelArray objectAtIndex:tag];
         chanelL.textColor = YELLOW_COLOR;
         
@@ -336,10 +333,13 @@
         
         UIView *signalView = [signalArray objectAtIndex:tag];
         [signalView setAlpha:1];
+        
     } else {
         // remove it
         [_selectedBtnArray removeObject:btn];
+        
         [btn enableValueSet:NO];
+     
         UILabel *chanelL = [_buttonChannelArray objectAtIndex:tag];
         chanelL.textColor = [UIColor whiteColor];
         

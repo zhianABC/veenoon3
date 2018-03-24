@@ -332,10 +332,10 @@
         EngineerElectronicSysConfigViewCtrl *ctrl = [[EngineerElectronicSysConfigViewCtrl alloc] init];
         if ([name isEqualToString:@"8路电源管理"]) {
             ctrl._number = 8;
-            ctrl._electronicSysArray = [NSMutableArray array];
+            ctrl._electronicSysArray = nil;// [NSMutableArray array];
         } else {
             ctrl._number = 16;
-            ctrl._electronicSysArray = [NSMutableArray array];
+            ctrl._electronicSysArray = nil;// [NSMutableArray array];
         }
         [self.navigationController pushViewController:ctrl animated:YES];
     }
@@ -366,7 +366,9 @@
         // wuxian array
         if ([name isEqualToString:@"有线会议麦"]) {
             EngineerHandtoHandViewCtrl *ctrl = [[EngineerHandtoHandViewCtrl alloc] init];
-            ctrl._handToHandSysArray = [NSMutableArray arrayWithObject:data];
+            
+            //传
+            ctrl._handToHandSysArray = nil;//[NSMutableArray arrayWithObject:data];
             ctrl._number = 12;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
@@ -374,14 +376,14 @@
         // wuxian array
         if ([name isEqualToString:@"无线会议麦"]) {
             EngineerWirelessMeetingViewCtrl *ctrl = [[EngineerWirelessMeetingViewCtrl alloc] init];
-            ctrl._wirelessMeetingArray = [NSMutableArray arrayWithObject:data];
+            ctrl._wirelessMeetingArray = nil;// [NSMutableArray arrayWithObject:data];
             ctrl._number = 12;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
         if ([name isEqualToString:@"音频处理"]) {
             EngineerAudioProcessViewCtrl *ctrl = [[EngineerAudioProcessViewCtrl alloc] init];
-            ctrl._audioProcessArray = [NSMutableArray arrayWithObject:data];
+            ctrl._audioProcessArray = nil;// [NSMutableArray arrayWithObject:data];
             ctrl._inputNumber=16;
             ctrl._outputNumber=16;
             [self.navigationController pushViewController:ctrl animated:YES];
@@ -389,7 +391,7 @@
         // wuxian array
         if ([name isEqualToString:@"功放"]) {
             EngineerPVExpendViewCtrl *ctrl = [[EngineerPVExpendViewCtrl alloc] init];
-            ctrl._pvExpendArray = [NSMutableArray arrayWithObject:data];
+            ctrl._pvExpendArray = nil;// [NSMutableArray arrayWithObject:data];
             ctrl._number=16;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
@@ -399,21 +401,21 @@
         // wuxian array
         if ([name isEqualToString:@"视频播放器"]) {
             EngineerDVDViewController *ctrl = [[EngineerDVDViewController alloc] init];
-            ctrl._dvdSysArray = [NSMutableArray arrayWithObject:data];
+            ctrl._dvdSysArray = nil;// [NSMutableArray arrayWithObject:data];
             ctrl._number=16;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
         if ([name isEqualToString:@"摄像机"]) {
             EngineerCameraViewController *ctrl = [[EngineerCameraViewController alloc] init];
-            ctrl._cameraSysArray = [NSMutableArray arrayWithObject:data];
+            ctrl._cameraSysArray = nil;// [NSMutableArray arrayWithObject:data];
             ctrl._number=16;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
         if ([name isEqualToString:@"远程视讯"]) {
             EngineerRemoteVideoViewCtrl *ctrl = [[EngineerRemoteVideoViewCtrl alloc] init];
-            ctrl._remoteVideoArray = [NSMutableArray arrayWithObject:data];
+            ctrl._remoteVideoArray = nil;// [NSMutableArray arrayWithObject:data];
             ctrl._number=16;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
@@ -422,7 +424,7 @@
             EngineerVideoProcessViewCtrl *ctrl = [[EngineerVideoProcessViewCtrl alloc] init];
             ctrl._inNumber=18;
             ctrl._outNumber=14;
-            ctrl._videoProcessInArray = [NSMutableArray arrayWithObject:data];
+            ctrl._videoProcessInArray = nil;// [NSMutableArray arrayWithObject:data];
             ctrl._videoProcessOutArray = nil;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
@@ -432,7 +434,7 @@
             EngineerVideoPinJieViewCtrl *ctrl = [[EngineerVideoPinJieViewCtrl alloc] init];
             ctrl._rowNumber=6;
             ctrl._colNumber=8;
-            ctrl._pinjieSysArray = [NSMutableArray arrayWithObject:data];
+            ctrl._pinjieSysArray = nil;// [NSMutableArray arrayWithObject:data];
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
@@ -459,70 +461,70 @@
         if ([name isEqualToString:@"照明"]) {
             
             EngineerLightViewController *ctrl = [[EngineerLightViewController alloc] init];
-            ctrl._lightSysArray = [NSMutableArray arrayWithObject:data];
+            ctrl._lightSysArray = nil;// [NSMutableArray arrayWithObject:data];
             ctrl._number=8;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
         if ([name isEqualToString:@"空调"]) {
             EngineerAireConditionViewCtrl *ctrl = [[EngineerAireConditionViewCtrl alloc] init];
-            ctrl._airSysArray= [NSMutableArray arrayWithObject:data];
+            ctrl._airSysArray= nil;// [NSMutableArray arrayWithObject:data];
             ctrl._number=8;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
         if ([name isEqualToString:@"电动马达"]) {
             EngineerElectronicAutoViewCtrl *ctrl = [[EngineerElectronicAutoViewCtrl alloc] init];
-            ctrl._electronicSysArray= [NSMutableArray arrayWithObject:data];
+            ctrl._electronicSysArray= nil;// [NSMutableArray arrayWithObject:data];
             ctrl._number=8;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
         if ([name isEqualToString:@"新风"]) {
             EngineerNewWindViewCtrl *ctrl = [[EngineerNewWindViewCtrl alloc] init];
-            ctrl._windSysArray= [NSMutableArray arrayWithObject:data];
+            ctrl._windSysArray= nil;// [NSMutableArray arrayWithObject:data];
             ctrl._number=8;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
         if ([name isEqualToString:@"地暖"]) {
             EngineerFloorWarmViewCtrl *ctrl = [[EngineerFloorWarmViewCtrl alloc] init];
-            ctrl._floorWarmSysArray= [NSMutableArray arrayWithObject:data];
+            ctrl._floorWarmSysArray= nil;// [NSMutableArray arrayWithObject:data];
             ctrl._number=8;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
         if ([name isEqualToString:@"空气净化"]) {
             EngineerAirCleanViewCtrl *ctrl = [[EngineerAirCleanViewCtrl alloc] init];
-            ctrl._airCleanSysArray= [NSMutableArray arrayWithObject:data];
+            ctrl._airCleanSysArray= nil;// [NSMutableArray arrayWithObject:data];
             ctrl._number=8;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
         if ([name isEqualToString:@"净水"]) {
             EngineerCleanWaterViewCtrl *ctrl = [[EngineerCleanWaterViewCtrl alloc] init];
-            ctrl._cleanWaterSysArray= [NSMutableArray arrayWithObject:data];
+            ctrl._cleanWaterSysArray= nil;//[NSMutableArray arrayWithObject:data];
             ctrl._number=8;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
         if ([name isEqualToString:@"加湿器"]) {
             EngineerAddWetViewCtrl *ctrl = [[EngineerAddWetViewCtrl alloc] init];
-            ctrl._addWetSysArray= [NSMutableArray arrayWithObject:data];
+            ctrl._addWetSysArray= nil;// [NSMutableArray arrayWithObject:data];
             ctrl._number=8;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
         if ([name isEqualToString:@"门禁"]) {
             EngineerDoorAccessViewCtrl *ctrl = [[EngineerDoorAccessViewCtrl alloc] init];
-            ctrl._doorAccessSysArray = [NSMutableArray arrayWithObject:data];
+            ctrl._doorAccessSysArray = nil;// [NSMutableArray arrayWithObject:data];
             ctrl._number=8;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
         if ([name isEqualToString:@"监控"]) {
             EngineerMonitorViewCtrl *ctrl = [[EngineerMonitorViewCtrl alloc] init];
-            ctrl._monitorRoomList = [NSMutableArray arrayWithObject:data];
+            ctrl._monitorRoomList = nil;// [NSMutableArray arrayWithObject:data];
             ctrl._number=8;
             [self.navigationController pushViewController:ctrl animated:YES];
         }

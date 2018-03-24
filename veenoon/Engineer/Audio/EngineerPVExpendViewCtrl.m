@@ -134,19 +134,12 @@
         
         SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(startX, startY, 92, 120)];
         btn.delegate = self;
-        btn.tag = index;
+        btn.tag = i;
         [self.view addSubview:btn];
         
         btn._titleLabel.text = [NSString stringWithFormat:@"Channel %02d",i+1];
         
-        UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
-        tapGesture.cancelsTouchesInView =  NO;
-        tapGesture.numberOfTapsRequired = 1;
-        tapGesture.view.tag = i;
-        [btn addGestureRecognizer:tapGesture];
-        
-        btn.tag = i;
-        
+            
         UIView *titleView = [[UIView alloc] init];
         titleView.frame = CGRectMake(0, 120, 120, 100);
         titleView.alpha = 0.8;
@@ -210,25 +203,30 @@
     float circleValue = -70 + (value * 82);
     slbtn._valueLabel.text = [NSString stringWithFormat:@"%0.1f db", circleValue];
 }
--(void)handleTapGesture:(UIGestureRecognizer*)gestureRecognizer {
-    int tag = (int) gestureRecognizer.view.tag;
+
+
+- (void) didTappedMSelf:(SlideButton*)slbtn{
     
-    SlideButton *btn;
-    UIView *titleView = [_imageViewArray objectAtIndex:tag];
+    int tag = (int)slbtn.tag;
+    
+    SlideButton *btn = nil;
     for (SlideButton *button in _selectedBtnArray) {
         if (button.tag == tag) {
             btn = button;
             break;
         }
     }
+    
+    UIView *titleView = [_imageViewArray objectAtIndex:tag];
     // want to choose it
     if (btn == nil) {
         SlideButton *button = [_buttonArray objectAtIndex:tag];
         [_selectedBtnArray addObject:button];
         
-        titleView.alpha = 1.0;
-        
         [button enableValueSet:YES];
+        
+         titleView.alpha = 1.0;
+        
     } else {
         // remove it
         [_selectedBtnArray removeObject:btn];
@@ -238,6 +236,7 @@
         titleView.alpha = 0.8;
     }
 }
+
 
 - (void) scenarioAction:(id)sender{
     

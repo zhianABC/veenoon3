@@ -235,6 +235,8 @@
 		34C73B6E205FA4D4008DFACC /* s3_05@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34C73B67205FA4D4008DFACC /* s3_05@2x.png */; };
 		34DC473F1FD6984400ACB589 /* ColumnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DC473E1FD6984400ACB589 /* ColumnView.m */; };
 		34DC47421FD6DD9300ACB589 /* CircleProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DC47401FD6DD9300ACB589 /* CircleProgressView.m */; };
+		34DE8E9620663E840061B48D /* MeetingRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DE8E9520663E840061B48D /* MeetingRoom.m */; };
+		34DE8E992066408C0061B48D /* Scenario.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DE8E982066408C0061B48D /* Scenario.m */; };
 		34F27A51205121EF0045D765 /* ce_l_06_big.png in Resources */ = {isa = PBXBuildFile; fileRef = 34F27A3D205121EF0045D765 /* ce_l_06_big.png */; };
 		34F27A52205121EF0045D765 /* ce_l_09@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34F27A3E205121EF0045D765 /* ce_l_09@2x.png */; };
 		34F27A53205121EF0045D765 /* ce_l_05@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34F27A3F205121EF0045D765 /* ce_l_05@2x.png */; };
@@ -1161,6 +1163,10 @@
 		34DC473E1FD6984400ACB589 /* ColumnView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ColumnView.m; sourceTree = "<group>"; };
 		34DC47401FD6DD9300ACB589 /* CircleProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleProgressView.m; sourceTree = "<group>"; };
 		34DC47411FD6DD9300ACB589 /* CircleProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleProgressView.h; sourceTree = "<group>"; };
+		34DE8E9420663E840061B48D /* MeetingRoom.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MeetingRoom.h; sourceTree = "<group>"; };
+		34DE8E9520663E840061B48D /* MeetingRoom.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MeetingRoom.m; sourceTree = "<group>"; };
+		34DE8E972066408C0061B48D /* Scenario.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Scenario.h; sourceTree = "<group>"; };
+		34DE8E982066408C0061B48D /* Scenario.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Scenario.m; sourceTree = "<group>"; };
 		34F27A3D205121EF0045D765 /* ce_l_06_big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ce_l_06_big.png; sourceTree = "<group>"; };
 		34F27A3E205121EF0045D765 /* ce_l_09@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ce_l_09@2x.png"; sourceTree = "<group>"; };
 		34F27A3F205121EF0045D765 /* ce_l_05@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ce_l_05@2x.png"; sourceTree = "<group>"; };
@@ -2286,6 +2292,10 @@
 				04D719761DADD3A4002153D7 /* WSUser.m */,
 				04DE1EBD1AD6AF7900D49E2F /* User.h */,
 				04DE1EBE1AD6AF7900D49E2F /* User.m */,
+				34DE8E9420663E840061B48D /* MeetingRoom.h */,
+				34DE8E9520663E840061B48D /* MeetingRoom.m */,
+				34DE8E972066408C0061B48D /* Scenario.h */,
+				34DE8E982066408C0061B48D /* Scenario.m */,
 			);
 			path = Module;
 			sourceTree = SOURCE_ROOT;
@@ -4066,6 +4076,7 @@
 				3429E2B5205AAAFD00F87AC3 /* VNSettingsView.m in Sources */,
 				EB36AAB21FCD939E009A0FD8 /* UserYouXianViewController.m in Sources */,
 				EBAE5BBB1FE0070600C10C4D /* EngineerPresetScenarioViewCtrl.m in Sources */,
+				34DE8E992066408C0061B48D /* Scenario.m in Sources */,
 				04DE1E9A1AD6AEE000D49E2F /* ASIInputStream.m in Sources */,
 				341928401FD3D6200014695B /* OutputScreenView.m in Sources */,
 				04DE1EAB1AD6AEE000D49E2F /* NSData+GIF.m in Sources */,
@@ -4083,6 +4094,7 @@
 				EB4EC1221FE7FC3B000B3101 /* EngineerWirelessMeetingViewCtrl.m in Sources */,
 				EB4E39E320273F6100533575 /* HandtoHandSettingsView.m in Sources */,
 				04DE1EA01AD6AEE000D49E2F /* WebClient.m in Sources */,
+				34DE8E9620663E840061B48D /* MeetingRoom.m in Sources */,
 				EB1B90FE2046E6B00076EEEC /* HunyinYinpinchuliViewCtrl.m in Sources */,
 				EB1A55C21FE93CD4000B18E6 /* EngineerAudioProcessViewCtrl.m in Sources */,
 				04DE1EA81AD6AEE000D49E2F /* SBJson4StreamWriterState.m in Sources */,

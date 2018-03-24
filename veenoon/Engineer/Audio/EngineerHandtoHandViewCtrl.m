@@ -125,8 +125,8 @@
     int space = ENGINEER_VIEW_COLUMN_GAP;
     
     for (int i = 0; i < self._number; i++) {
-        NSMutableDictionary *dic;
-        if (self._handToHandSysArray && [self._handToHandSysArray count] > 0) {
+        NSMutableDictionary *dic = nil;
+        if (self._handToHandSysArray && [self._handToHandSysArray count] > i) {
             dic = [self._handToHandSysArray objectAtIndex:i];
         }
         
@@ -141,7 +141,7 @@
         scenarioBtn.layer.cornerRadius = 5;
         scenarioBtn.layer.borderWidth = 2;
         scenarioBtn.layer.borderColor = [UIColor clearColor].CGColor;
-        NSString *status;
+        NSString *status = nil;
         if (dic) {
             status = [dic objectForKey:@"status"];
         }
@@ -179,7 +179,7 @@
     titleL.font = [UIFont boldSystemFontOfSize:11];
     titleL.textColor  = [UIColor whiteColor];
     
-    NSString *nameStr;
+    NSString *nameStr = nil;
     if (dataDic) {
         nameStr = [dataDic objectForKey:@"name"];
     } else {
