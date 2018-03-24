@@ -15,9 +15,6 @@
     
     BOOL            _isShowing;
     
-    NSInteger       _comSelected;
-    NSInteger       _rowSelected;
-    
     UIImageView  *_background;
     
     UIColor *_selectColor;
@@ -26,6 +23,8 @@
     UIButton *btnSave;
     
     int _cellWidth;
+    
+    int _rowSelected;
 }
 
 @end
@@ -40,7 +39,7 @@
 @synthesize _unitString;
 @synthesize _values;
 
-- (id)initWithFrame:(CGRect)frame withGrayOrLight:(NSString*)grayOrLight {
+- (id)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
         // Initialization code
         //self.backgroundColor = [UIColor redColor];
@@ -48,19 +47,6 @@
         self._selectColor = RGB(230, 151, 50);
         self._rowNormalColor = SINGAL_COLOR;
         
-        
-        _background = [[UIImageView alloc] initWithFrame:self.bounds];
-        _background.layer.contentsGravity = kCAGravityResize;
-        _background.clipsToBounds = YES;
-        if([grayOrLight isEqualToString:@"gray"])
-            _background.image = [UIImage imageNamed:@"gray_slide_bg.png"];
-        else
-        {
-            _background.image = [UIImage imageNamed:grayOrLight];
-        }
-        
-        [self addSubview:_background];
-        //_background.contentMode = UIViewContentModeScaleAspectFill;
         
         _cellWidth = frame.size.width;
         
@@ -118,19 +104,17 @@
 
 - (void)selectRow:(NSInteger)row inComponent:(NSInteger)component {
     
-    _comSelected = component;
-    _rowSelected = row;
+    _rowSelected = (int)row;
     
     [_myPickerView reloadComponent:0];
-    
+
     NSDictionary *section = [_pickerDataArray objectAtIndex:component];
     NSArray *values = [section objectForKey:@"values"];
     
-    [_values setObject:[values objectAtIndex:row]
-                forKey:[NSNumber numberWithInteger:component]];
+    NSString *value = [values objectAtIndex:row];
     
-    [_values setObject:[NSNumber numberWithInteger:row]
-                forKey:@"row"];
+    [_values setObject:@{@"value":value, @"index":[NSNumber numberWithInteger:row]}
+                forKey:[NSNumber numberWithInteger:component]];
     
     
     [_myPickerView selectRow:row inComponent:component animated:YES];
@@ -149,17 +133,19 @@
     NSDictionary *section = [_pickerDataArray objectAtIndex:component];
     NSArray *values = [section objectForKey:@"values"];
     
-    [_values setObject:[values objectAtIndex:row]
+    _rowSelected = (int)row;
+    
+    NSString *value = [values objectAtIndex:row];
+    [_values setObject:@{@"value":value, @"index":[NSNumber numberWithInteger:row]}
                 forKey:[NSNumber numberWithInteger:component]];
     
-    [_values setObject:[NSNumber numberWithInteger:row]
-                forKey:@"row"];
-    
-    _rowSelected = row;
     
     [pickerView reloadComponent:component];
     
-    NSString *value = [values objectAtIndex:row];
+    if ([self.delegate_ respondsToSelector:@selector(didChangedPickerValue:)]) {
+        [self.delegate_ didChangedPickerValue:_values];
+    }
+    
     
     if ([self.delegate_ respondsToSelector:@selector(didScrollPickerValue:)]) {
         [self.delegate_ didScrollPickerValue:value];
@@ -181,7 +167,7 @@
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
 {
-    return 50.0;
+    return 44.0;
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component

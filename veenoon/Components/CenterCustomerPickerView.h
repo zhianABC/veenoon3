@@ -33,7 +33,6 @@ typedef void(^CustomPickerSelectionBlock)(NSDictionary* values);
 @property (nonatomic, strong) NSMutableDictionary *_values;
 
 - (void)selectRow:(NSInteger)row inComponent:(NSInteger)component;
-- (id)initWithFrame:(CGRect)frame withGrayOrLight:(NSString*)grayOrLight;
 - (void)removeArray;
 @end
 

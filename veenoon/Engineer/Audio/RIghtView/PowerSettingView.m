@@ -137,7 +137,7 @@
         _chooseBg.backgroundColor = self.backgroundColor;
         
         CenterCustomerPickerView *levelSetting = [[CenterCustomerPickerView alloc]
-                                          initWithFrame:CGRectMake(0, 0, self.frame.size.width, 200) withGrayOrLight:@"light"];
+                                          initWithFrame:CGRectMake(0, 0, self.frame.size.width, 200) ];
         [levelSetting removeArray];
         
         NSMutableArray *arr = [NSMutableArray array];

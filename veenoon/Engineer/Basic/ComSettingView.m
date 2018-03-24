@@ -74,7 +74,7 @@
         _chooseBg.backgroundColor = self.backgroundColor;
         
         CenterCustomerPickerView *levelSetting = [[CenterCustomerPickerView alloc]
-                                          initWithFrame:CGRectMake(0, 0, self.frame.size.width, 200) withGrayOrLight:@"light"];
+                                          initWithFrame:CGRectMake(0, 0, self.frame.size.width, 200) ];
         [levelSetting removeArray];
         
         levelSetting._pickerDataArray = @[@{@"values":@[@"Com 1", @"Com 2", @"Com 3"]}];

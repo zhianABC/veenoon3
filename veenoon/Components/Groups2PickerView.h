@@ -13,7 +13,7 @@ typedef void(^Groups2PickerSelectionBlock)(NSDictionary* values);
 
 @optional
 - (void) didConfirmPickerValue:(NSString*) pickerValue;
-
+- (void) didValueChangedWithGroups2Picker:(NSDictionary*)value;
 
 @end
 
@@ -33,6 +33,6 @@ typedef void(^Groups2PickerSelectionBlock)(NSDictionary* values);
 - (id)initWithFrame:(CGRect)frame withGrayOrLight:(NSString*)grayOrLight;
 
 - (void)selectRow:(NSInteger)row inComponent:(NSInteger)component;
-
+- (void)selectRows:(NSArray*)rows;
 
 @end

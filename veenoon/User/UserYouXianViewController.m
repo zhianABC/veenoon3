@@ -81,7 +81,7 @@
     [_zhuximoshiBtn addTarget:self action:@selector(zhuxiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_zhuximoshiBtn];
     
-    _peoplePicker1 = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(leftRight+pickerRowLeft-5, height+pickerHeight, 120, 120) withGrayOrLight:@"gray"];
+    _peoplePicker1 = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(leftRight+pickerRowLeft-5, height+pickerHeight, 120, 120)];
     [_peoplePicker1 removeArray];
     
     _peoplePicker1._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
@@ -105,7 +105,7 @@
     [_luntimoshiBtn addTarget:self action:@selector(luntiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_luntimoshiBtn];
     
-    _peoplePicker2 = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(leftRight+rowGap+cellWidth+pickerRowLeft-10, height+pickerHeight, 120, 120) withGrayOrLight:@"gray"];
+    _peoplePicker2 = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(leftRight+rowGap+cellWidth+pickerRowLeft-10, height+pickerHeight, 120, 120) ];
     [_peoplePicker2 removeArray];
     _peoplePicker2._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
     [self.view addSubview:_peoplePicker2];
@@ -128,7 +128,7 @@
     [_shenqingmoshiBtn addTarget:self action:@selector(shenqingAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_shenqingmoshiBtn];
     
-    _peoplePicker3 = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(leftRight+rowGap*2+cellWidth*2+pickerRowLeft-15, height+pickerHeight, 120, 120) withGrayOrLight:@"gray"];
+    _peoplePicker3 = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(leftRight+rowGap*2+cellWidth*2+pickerRowLeft-15, height+pickerHeight, 120, 120)];
     [_peoplePicker3 removeArray];
     _peoplePicker3._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
     [self.view addSubview:_peoplePicker3];

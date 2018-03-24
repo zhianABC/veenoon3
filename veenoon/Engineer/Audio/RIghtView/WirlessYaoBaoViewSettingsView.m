@@ -75,30 +75,21 @@
         _curIndex = -1;
         
         _picker = [[CenterCustomerPickerView alloc]
-                   initWithFrame:CGRectMake(frame.size.width/2-100, 43, 200, 100) withGrayOrLight:@"picker_player.png"];
+                   initWithFrame:CGRectMake(frame.size.width/2-100, 43, 200, 120)];
 
         [_picker removeArray];
         _picker._selectColor = YELLOW_COLOR;
         _picker._rowNormalColor = [UIColor whiteColor];
         _picker.delegate_ = self;
-        IMP_BLOCK_SELF(WirlessYaoBaoViewSettingsView);
-        _picker._selectionBlock = ^(NSDictionary *values)
-        {
-            [block_self didPickerValue:values];
-        };
+       
         
         _tpicker = [[Groups2PickerView alloc]
-                    initWithFrame:CGRectMake(frame.size.width/2-125, 43, 250, 100) withGrayOrLight:@"picker_player.png"];
+                    initWithFrame:CGRectMake(frame.size.width/2-125, 43, 250, 120) withGrayOrLight:@"picker_player.png"];
         
         
         _tpicker._selectColor = YELLOW_COLOR;
         _tpicker._rowNormalColor = [UIColor whiteColor];
         _tpicker.delegate_ = self;
-        //IMP_BLOCK_SELF(WirlessHandleSettingsView);
-        _tpicker._selectionBlock = ^(NSDictionary *values)
-        {
-            [block_self didG2PickerValue:values];
-        };
         
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,
                                                                    60,
@@ -262,31 +253,6 @@
     }
 }
 
-- (void) didPickerValue:(NSDictionary *)values{
-    
-    id key = [NSNumber numberWithInt:(int)_picker.tag];
-    
-    NSString *obj = [values objectForKey:@0];
-    [_map setObject:obj forKey:key];
-    
-    
-    
-    [_tableView reloadData];
-    
-}
-
-- (void) didG2PickerValue:(NSDictionary *)values{
-    
-    id key = [NSNumber numberWithInt:(int)_tpicker.tag];
-    
-    NSString *obj = [values objectForKey:@0];
-    [_map setObject:obj forKey:key];
-
-    [_tableView reloadData];
-    
-}
-
-
 - (void) didConfirmPickerValue:(NSString*) pickerValue{
 
     _curIndex = -1;
@@ -294,6 +260,22 @@
     [_tableView reloadData];
 }
 
+- (void) didChangedPickerValue:(NSDictionary*)value{
+    
+    id key = [NSNumber numberWithInt:(int)_picker.tag];
+    
+    NSDictionary *dic = [value objectForKey:@0];
+    [_map setObject:dic forKey:key];
+
+}
+- (void) didValueChangedWithGroups2Picker:(NSDictionary*)value{
+    
+    id key = [NSNumber numberWithInt:(int)_tpicker.tag];
+    
+   // NSDictionary *dic = [value objectForKey:@0];
+    [_map setObject:value forKey:key];
+
+}
 
 #pragma mark -
 #pragma mark Table View DataSource
@@ -313,7 +295,7 @@
     {
         if(_curIndex == indexPath.row)
         {
-            return 144;
+            return 164;
         }
     }
     return 44;
@@ -380,7 +362,7 @@
     [cell.contentView addSubview:line];
     if(_curIndex == indexPath.row)
     {
-        line.frame = CGRectMake(0, 143, self.frame.size.width, 1);
+        line.frame = CGRectMake(0, 163, self.frame.size.width, 1);
         
         if(_curIndex == 4)
         {
@@ -388,7 +370,28 @@
             _tpicker._datas = [data objectForKey:@"values"];
             
             [cell.contentView addSubview:_tpicker];
-            [_tpicker selectRow:0 inComponent:0];
+            
+            id key = [NSNumber numberWithInt:_curIndex];
+            NSDictionary *dic = [_map objectForKey:key];
+            int row1 = 0;
+            int row2 = 0;
+            if(dic)
+            {
+                NSDictionary *col1 = [dic objectForKey:[NSNumber numberWithInt:0]];
+                if(col1)
+                {
+                    row1 = [[col1 objectForKey:@"index"] intValue];
+                }
+                NSDictionary *col2 = [dic objectForKey:[NSNumber numberWithInt:1]];
+                if(col2)
+                {
+                    row2 = [[col2 objectForKey:@"index"] intValue];
+                }
+            }
+            
+            [_tpicker selectRows:@[[NSNumber numberWithInt:row1],
+                                   [NSNumber numberWithInt:row2]]];
+            
         }
         else if(_curIndex != 2)
         {
@@ -396,7 +399,17 @@
             _picker._pickerDataArray = @[@{@"values":[data objectForKey:@"values"]}];
            
             [cell.contentView addSubview:_picker];
-            [_picker selectRow:0 inComponent:0];
+            
+            id key = [NSNumber numberWithInt:_curIndex];
+            NSDictionary *dic = [_map objectForKey:key];
+            
+            int row = 0;
+            if(dic)
+            {
+                row = [[dic objectForKey:@"index"] intValue];
+            }
+            
+            [_picker selectRow:row inComponent:0];
         }
         
     }

@@ -50,6 +50,7 @@
         self._rowNormalColor = SINGAL_COLOR;
         
         
+        
         _background = [[UIImageView alloc] initWithFrame:self.bounds];
         _background.layer.contentsGravity = kCAGravityResize;
         _background.clipsToBounds = YES;
@@ -59,6 +60,7 @@
         {
             _background.image = [UIImage imageNamed:grayOrLight];
         }
+        
         
         [self addSubview:_background];
         //_background.contentMode = UIViewContentModeScaleAspectFill;

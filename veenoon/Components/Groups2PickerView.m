@@ -48,21 +48,21 @@
         // Initialization code
         self.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
     
-        _cellWidth = frame.size.width - 50;
+        _cellWidth = frame.size.width;
         CGRect rc = self.bounds;
         rc.size.width = _cellWidth;
         
-        _background = [[UIImageView alloc] initWithFrame:rc];
-        _background.layer.contentsGravity = kCAGravityResize;
-        _background.clipsToBounds = YES;
-        if([grayOrLight isEqualToString:@"gray"])
-            _background.image = [UIImage imageNamed:@"gray_slide_bg.png"];
-        else
-        {
-            _background.image = [UIImage imageNamed:grayOrLight];
-        }
-        
-        [self addSubview:_background];
+//        _background = [[UIImageView alloc] initWithFrame:rc];
+//        _background.layer.contentsGravity = kCAGravityResize;
+//        _background.clipsToBounds = YES;
+//        if([grayOrLight isEqualToString:@"gray"])
+//            _background.image = [UIImage imageNamed:@"gray_slide_bg.png"];
+//        else
+//        {
+//            _background.image = [UIImage imageNamed:grayOrLight];
+//        }
+//
+//        [self addSubview:_background];
     
         _myPickerView = [[UIPickerView alloc] initWithFrame:rc];
         _myPickerView.delegate = self;
@@ -71,16 +71,16 @@
         [self addSubview:_myPickerView];
         
         
-        btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
-        btnSave.frame = CGRectMake(frame.size.width-50, frame.size.height/2-25, 50, 50);
-        [btnSave setImage:[UIImage imageNamed:@"customer_view_confirm_n.png"] forState:UIControlStateNormal];
-        [btnSave setImage:[UIImage imageNamed:@"customer_view_confirm_s.png"] forState:UIControlStateHighlighted];
-        [btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [btnSave setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-        btnSave.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-        [btnSave addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:btnSave];
-        
+//        btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
+//        btnSave.frame = CGRectMake(frame.size.width-50, frame.size.height/2-25, 50, 50);
+//        [btnSave setImage:[UIImage imageNamed:@"customer_view_confirm_n.png"] forState:UIControlStateNormal];
+//        [btnSave setImage:[UIImage imageNamed:@"customer_view_confirm_s.png"] forState:UIControlStateHighlighted];
+//        [btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//        [btnSave setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
+//        btnSave.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+//        [btnSave addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
+//        [self addSubview:btnSave];
+//
         
 //        UIButton *btnOK = [UIButton buttonWithType:UIButtonTypeCustom];
 //        btnOK.frame = CGRectMake(frame.size.width - 60, 10, 60, 40);
@@ -161,29 +161,47 @@
 }
 
 
+- (void)selectRows:(NSArray*)rows{
+    
+    if([rows count] >= 2)
+    {
+        _rowAndCom1Selected = [[rows objectAtIndex:0] intValue];
+        _rowAndCom2Selected = [[rows objectAtIndex:1] intValue];
+        
+        [_myPickerView selectRow:_rowAndCom1Selected inComponent:0 animated:YES];
+        [_myPickerView selectRow:_rowAndCom2Selected inComponent:1 animated:YES];
+        
+        
+        if(_rowAndCom1Selected < [_datas count])
+        {
+            NSDictionary *val = [_datas objectAtIndex:_rowAndCom1Selected];
+            
+            [_values setObject:@{@"value":val, @"index":[NSNumber numberWithInteger:_rowAndCom1Selected]}
+                        forKey:[NSNumber numberWithInteger:0]];
+            
+            NSDictionary *pro = [_datas objectAtIndex:_rowAndCom1Selected];
+            NSArray *values = [pro objectForKey:@"subs"];
+            
+            if([values count])
+            {
+                NSDictionary *city = [values objectAtIndex:_rowAndCom2Selected];
 
+                [_values setObject:@{@"value":city, @"index":[NSNumber numberWithInteger:_rowAndCom2Selected]}
+                            forKey:[NSNumber numberWithInteger:1]];
+            }
+        }
+    }
+}
 
 - (void)selectRow:(NSInteger)row inComponent:(NSInteger)component {
     
+    if(component == 0)
+        _rowAndCom1Selected = row;
+    if(component == 1)
+        _rowAndCom2Selected = row;
     
-    [_myPickerView selectRow:0 inComponent:0 animated:YES];
-    [_myPickerView selectRow:0 inComponent:1 animated:YES];
     
-    if(row < [_datas count])
-    {
-        [_values setObject:[_datas objectAtIndex:row]
-                    forKey:[NSNumber numberWithInteger:component]];
-        
-        NSDictionary *pro = [_datas objectAtIndex:row];
-        NSArray *values = [pro objectForKey:@"subs"];
-        
-        if([values count])
-        {
-            NSDictionary *city = [values objectAtIndex:0];
-            [_values setObject:city
-                        forKey:[NSNumber numberWithInteger:1]];
-        }
-    }
+    
     
 }
 
@@ -216,7 +234,9 @@
     {
         _rowAndCom1Selected = row;
         
-        [_values setObject:[_datas objectAtIndex:row]
+        NSDictionary *val = [_datas objectAtIndex:row];
+        
+        [_values setObject:@{@"value":val, @"index":[NSNumber numberWithInteger:row]}
                     forKey:[NSNumber numberWithInteger:component]];
         
         [self resetValues];
@@ -232,10 +252,17 @@
         NSDictionary *pro = [_datas objectAtIndex:_rowAndCom1Selected];
         NSArray *values = [pro objectForKey:@"subs"];
         
-        [_values setObject:[values objectAtIndex:row]
+        NSDictionary *val = [values objectAtIndex:row];
+        
+        [_values setObject:@{@"value":val, @"index":[NSNumber numberWithInteger:row]}
                     forKey:[NSNumber numberWithInteger:component]];
         
         [pickerView reloadComponent:1];
+    }
+    
+    if(delegate_&& [delegate_ respondsToSelector:@selector(didValueChangedWithGroups2Picker:)])
+    {
+        [delegate_ didValueChangedWithGroups2Picker:_values];
     }
    
 }
@@ -249,7 +276,7 @@
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
 {
-    return 50.0;
+    return 44;
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component

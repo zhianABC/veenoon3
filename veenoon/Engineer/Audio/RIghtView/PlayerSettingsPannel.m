@@ -139,7 +139,7 @@ CenterCustomerPickerViewDelegate>
         
         
         _picker = [[CenterCustomerPickerView alloc]
-                                          initWithFrame:CGRectMake(frame.size.width/2-100, 43, 200, 100) withGrayOrLight:@"light"];
+                                          initWithFrame:CGRectMake(frame.size.width/2-100, 43, 200, 100)];
         
         [_picker removeArray];
         _picker._pickerDataArray = @[@{@"values":@[@"1", @"2", @"3"]}];
