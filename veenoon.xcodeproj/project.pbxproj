@@ -2318,6 +2318,7 @@
 		04DE1EBC1AD6AF7900D49E2F /* Module */ = {
 			isa = PBXGroup;
 			children = (
+				EB18B7232067D45A000BDEAB /* Video */,
 				341F0F451EC2FC500027C800 /* WSCode.h */,
 				341F0F461EC2FC500027C800 /* WSCode.m */,
 				04D719831DADE2D8002153D7 /* DataSync.h */,
@@ -2336,8 +2337,6 @@
 				34DE8E982066408C0061B48D /* Scenario.m */,
 				EBBCBBEB20673ECE00A7771A /* VeenoonConstatns.h */,
 				EBBCBBEC20673ECE00A7771A /* VeenoonConstatns.m */,
-				EB18B7202067CAA7000BDEAB /* VideoDVDPlayer.h */,
-				EB18B7212067CAA7000BDEAB /* VideoDVDPlayer.m */,
 			);
 			path = Module;
 			sourceTree = SOURCE_ROOT;
@@ -3008,6 +3007,15 @@
 			);
 			path = Env;
 			sourceTree = "<group>";
+		};
+		EB18B7232067D45A000BDEAB /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				EB18B7202067CAA7000BDEAB /* VideoDVDPlayer.h */,
+				EB18B7212067CAA7000BDEAB /* VideoDVDPlayer.m */,
+			);
+			path = Video;
+			sourceTree = SOURCE_ROOT;
 		};
 		EB19B65420581D2B003F1546 /* corner */ = {
 			isa = PBXGroup;
