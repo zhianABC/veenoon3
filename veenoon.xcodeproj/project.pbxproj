@@ -339,6 +339,7 @@
 		EB1717B51FF614DB00CBDB81 /* EngineerInfoCollectViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1717B41FF614DB00CBDB81 /* EngineerInfoCollectViewCtrl.m */; };
 		EB1717B81FF6150400CBDB81 /* EngineerScenarioSettingsViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1717B71FF6150400CBDB81 /* EngineerScenarioSettingsViewCtrl.m */; };
 		EB18B7282067D4A6000BDEAB /* VideoDVDPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = EB18B7272067D4A6000BDEAB /* VideoDVDPlayer.m */; };
+		EB18B7322067D613000BDEAB /* VideoCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = EB18B7312067D613000BDEAB /* VideoCamera.m */; };
 		EB19B66C20581D2C003F1546 /* audio_corner_bofangqi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB19B65520581D2B003F1546 /* audio_corner_bofangqi@2x.png */; };
 		EB19B66D20581D2C003F1546 /* audio_corner_dianyuanguanli@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB19B65620581D2B003F1546 /* audio_corner_dianyuanguanli@2x.png */; };
 		EB19B66E20581D2C003F1546 /* audio_corner_gongfang@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB19B65720581D2B003F1546 /* audio_corner_gongfang@2x.png */; };
@@ -1318,6 +1319,8 @@
 		EB1717B71FF6150400CBDB81 /* EngineerScenarioSettingsViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerScenarioSettingsViewCtrl.m; sourceTree = "<group>"; };
 		EB18B7262067D4A6000BDEAB /* VideoDVDPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoDVDPlayer.h; sourceTree = "<group>"; };
 		EB18B7272067D4A6000BDEAB /* VideoDVDPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VideoDVDPlayer.m; sourceTree = "<group>"; };
+		EB18B7302067D613000BDEAB /* VideoCamera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoCamera.h; sourceTree = "<group>"; };
+		EB18B7312067D613000BDEAB /* VideoCamera.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoCamera.m; sourceTree = "<group>"; };
 		EB19B65520581D2B003F1546 /* audio_corner_bofangqi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio_corner_bofangqi@2x.png"; sourceTree = "<group>"; };
 		EB19B65620581D2B003F1546 /* audio_corner_dianyuanguanli@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio_corner_dianyuanguanli@2x.png"; sourceTree = "<group>"; };
 		EB19B65720581D2B003F1546 /* audio_corner_gongfang@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio_corner_gongfang@2x.png"; sourceTree = "<group>"; };
@@ -3015,6 +3018,8 @@
 			children = (
 				EB18B7262067D4A6000BDEAB /* VideoDVDPlayer.h */,
 				EB18B7272067D4A6000BDEAB /* VideoDVDPlayer.m */,
+				EB18B7302067D613000BDEAB /* VideoCamera.h */,
+				EB18B7312067D613000BDEAB /* VideoCamera.m */,
 			);
 			path = Video;
 			sourceTree = "<group>";
@@ -4109,6 +4114,7 @@
 				EB09EF371FD9801400C968CA /* EngineerEnvDevicePluginViewCtrl.m in Sources */,
 				04D27A2A1AF8470100305E39 /* SelDataViewController.m in Sources */,
 				EB29820C1FD57FC2007B5C20 /* EngineerShootQRCode.m in Sources */,
+				EB18B7322067D613000BDEAB /* VideoCamera.m in Sources */,
 				EB09C47C1FD25B4300776540 /* UserLightConfigViewCtrl.m in Sources */,
 				345492FC1FE638F300793E2E /* SlideButton.m in Sources */,
 				EB16474A203ACD6300E71483 /* GongLvFangDaQiView.m in Sources */,

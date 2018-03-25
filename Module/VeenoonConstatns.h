@@ -20,5 +20,18 @@ extern NSString *const VideoDVDPlayerPowerStatus;
 extern NSString *const VideoDVDPlayerTanchuStatus;
 extern NSString *const VideoDVDPlayerAddressStatus;
 
+
+// 视频 - 摄像机
+extern NSString *const VideoCameraName;
+extern NSString *const VideoCameraCom;
+extern NSString *const VideoCameraIP;
+extern NSString *const VideoCameraAction;
+extern NSString *const VideoCameratStatus;
+extern NSString *const VideoCamerawStatus;
+extern NSString *const VideoCameracunchuStr;
+extern NSString *const VideoCameratdiaoyongStr;
+extern NSString *const VideoCameratvolumnStatus;
+extern NSString *const VideoCameratzoomInStatus;
+extern NSString *const VideoCameratzoomOutStatus;
 #endif
 
