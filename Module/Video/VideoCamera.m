@@ -22,20 +22,20 @@
 @synthesize _zoomInStatus;
 @synthesize _zoomOutStatus;
 
-- (void) setVideoCameraData:(NSDictionary*)VideoCamera {
-    self._name = [VideoCamera objectForKey:VideoCameraName];
-    self._com = [VideoCamera objectForKey:VideoCameraCom];
-    self._ip = [VideoCamera objectForKey:VideoCameraIP];
-    self._action = [VideoCamera objectForKey:VideoCameraAction];
-    self._tStatus = [VideoCamera objectForKey:VideoCameratStatus];
-    self._wStatus = [VideoCamera objectForKey:VideoCamerawStatus];
-    self._cunchuStr = [VideoCamera objectForKey:VideoCameracunchuStr];
-    self._diaoyongStr = [VideoCamera objectForKey:VideoCameratdiaoyongStr];
-    self._volumnStatus = [VideoCamera objectForKey:VideoCameratvolumnStatus];
-    self._zoomInStatus = [VideoCamera objectForKey:VideoCameratzoomInStatus];
-    self._zoomOutStatus = [VideoCamera objectForKey:VideoCameratzoomOutStatus];
+- (void) setVideoCameraData:(NSDictionary*)videoCamera {
+    self._name = [videoCamera objectForKey:VideoCameraName];
+    self._com = [videoCamera objectForKey:VideoCameraCom];
+    self._ip = [videoCamera objectForKey:VideoCameraIP];
+    self._action = [videoCamera objectForKey:VideoCameraAction];
+    self._tStatus = [videoCamera objectForKey:VideoCameratStatus];
+    self._wStatus = [videoCamera objectForKey:VideoCamerawStatus];
+    self._cunchuStr = [videoCamera objectForKey:VideoCameracunchuStr];
+    self._diaoyongStr = [videoCamera objectForKey:VideoCameratdiaoyongStr];
+    self._volumnStatus = [videoCamera objectForKey:VideoCameratvolumnStatus];
+    self._zoomInStatus = [videoCamera objectForKey:VideoCameratzoomInStatus];
+    self._zoomOutStatus = [videoCamera objectForKey:VideoCameratzoomOutStatus];
 }
-- (NSDictionary *)VideoCamera {
+- (NSDictionary *)videoCamera {
     NSMutableDictionary *dic = [NSMutableDictionary dictionary];
     if (self._com) {
         [dic setObject:self._com forKey:VideoCameraCom];

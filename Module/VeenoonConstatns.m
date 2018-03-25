@@ -31,3 +31,10 @@ NSString *const VideoCameratdiaoyongStr = @"VideoCameratdiaoyongStr";
 NSString *const VideoCameratvolumnStatus = @"VideoCameratvolumnStatus";
 NSString *const VideoCameratzoomInStatus = @"VideoCameratzoomInStatus";
 NSString *const VideoCameratzoomOutStatus = @"VideoCameratzoomOutStatus";
+
+
+// 视频 - 远程视讯
+NSString *const VideoRemoteName = @"VideoRemoteName";
+NSString *const VideoRemoteCom = @"VideoRemoteCom";
+NSString *const VideoRemoteIP = @"VideoRemoteIP";
+NSString *const VideoRemoteIRArray = @"VideoRemoteIRArray";

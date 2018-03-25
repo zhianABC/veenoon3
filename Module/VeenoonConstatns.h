@@ -33,5 +33,12 @@ extern NSString *const VideoCameratdiaoyongStr;
 extern NSString *const VideoCameratvolumnStatus;
 extern NSString *const VideoCameratzoomInStatus;
 extern NSString *const VideoCameratzoomOutStatus;
+
+
+// 视频 - 远程视讯
+extern NSString *const VideoRemoteName;
+extern NSString *const VideoRemoteCom;
+extern NSString *const VideoRemoteIP;
+extern NSString *const VideoRemoteIRArray;
 #endif
 

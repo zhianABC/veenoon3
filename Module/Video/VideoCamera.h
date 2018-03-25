@@ -20,7 +20,7 @@
 @property (nonatomic, strong) NSString *_wStatus;
 @property (nonatomic, strong) NSString *_zoomInStatus;
 @property (nonatomic, strong) NSString *_zoomOutStatus;
-- (void) setVideoCameraData:(NSDictionary*)VideoCamera;
-- (NSDictionary *)VideoCamera;
+- (void) setVideoCameraData:(NSDictionary*)videoCamera;
+- (NSDictionary *)videoCamera;
 
 @end
