@@ -338,6 +338,7 @@
 		EB1717B21FF614BB00CBDB81 /* EngineerMonitorViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1717B11FF614BB00CBDB81 /* EngineerMonitorViewCtrl.m */; };
 		EB1717B51FF614DB00CBDB81 /* EngineerInfoCollectViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1717B41FF614DB00CBDB81 /* EngineerInfoCollectViewCtrl.m */; };
 		EB1717B81FF6150400CBDB81 /* EngineerScenarioSettingsViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1717B71FF6150400CBDB81 /* EngineerScenarioSettingsViewCtrl.m */; };
+		EB18B7222067CAA7000BDEAB /* VideoDVDPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = EB18B7212067CAA7000BDEAB /* VideoDVDPlayer.m */; };
 		EB19B66C20581D2C003F1546 /* audio_corner_bofangqi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB19B65520581D2B003F1546 /* audio_corner_bofangqi@2x.png */; };
 		EB19B66D20581D2C003F1546 /* audio_corner_dianyuanguanli@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB19B65620581D2B003F1546 /* audio_corner_dianyuanguanli@2x.png */; };
 		EB19B66E20581D2C003F1546 /* audio_corner_gongfang@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB19B65720581D2B003F1546 /* audio_corner_gongfang@2x.png */; };
@@ -676,6 +677,7 @@
 		EBBCBBE12063DDDD00A7771A /* user_corner_audio@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBBCBBDF2063DDDD00A7771A /* user_corner_audio@2x.png */; };
 		EBBCBBE22063DDDD00A7771A /* user_corner_video@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBBCBBE02063DDDD00A7771A /* user_corner_video@2x.png */; };
 		EBBCBBE52063E0C800A7771A /* IconCenterTextButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EBBCBBE42063E0C800A7771A /* IconCenterTextButton.m */; };
+		EBBCBBED20673ECE00A7771A /* VeenoonConstatns.m in Sources */ = {isa = PBXBuildFile; fileRef = EBBCBBEC20673ECE00A7771A /* VeenoonConstatns.m */; };
 		EBC71AFF203AF4EE00DD0A98 /* DVDRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71AFE203AF4EE00DD0A98 /* DVDRightView.m */; };
 		EBC71B05203AF72D00DD0A98 /* CameraRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B04203AF72D00DD0A98 /* CameraRightView.m */; };
 		EBC71B08203AF74100DD0A98 /* RemoteVideoRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B07203AF74100DD0A98 /* RemoteVideoRightView.m */; };
@@ -1314,6 +1316,8 @@
 		EB1717B41FF614DB00CBDB81 /* EngineerInfoCollectViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerInfoCollectViewCtrl.m; sourceTree = "<group>"; };
 		EB1717B61FF6150400CBDB81 /* EngineerScenarioSettingsViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerScenarioSettingsViewCtrl.h; sourceTree = "<group>"; };
 		EB1717B71FF6150400CBDB81 /* EngineerScenarioSettingsViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerScenarioSettingsViewCtrl.m; sourceTree = "<group>"; };
+		EB18B7202067CAA7000BDEAB /* VideoDVDPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoDVDPlayer.h; sourceTree = "<group>"; };
+		EB18B7212067CAA7000BDEAB /* VideoDVDPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoDVDPlayer.m; sourceTree = "<group>"; };
 		EB19B65520581D2B003F1546 /* audio_corner_bofangqi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio_corner_bofangqi@2x.png"; sourceTree = "<group>"; };
 		EB19B65620581D2B003F1546 /* audio_corner_dianyuanguanli@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio_corner_dianyuanguanli@2x.png"; sourceTree = "<group>"; };
 		EB19B65720581D2B003F1546 /* audio_corner_gongfang@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audio_corner_gongfang@2x.png"; sourceTree = "<group>"; };
@@ -1719,6 +1723,8 @@
 		EBBCBBE02063DDDD00A7771A /* user_corner_video@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_corner_video@2x.png"; sourceTree = "<group>"; };
 		EBBCBBE32063E0C800A7771A /* IconCenterTextButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IconCenterTextButton.h; sourceTree = "<group>"; };
 		EBBCBBE42063E0C800A7771A /* IconCenterTextButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IconCenterTextButton.m; sourceTree = "<group>"; };
+		EBBCBBEB20673ECE00A7771A /* VeenoonConstatns.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VeenoonConstatns.h; sourceTree = "<group>"; };
+		EBBCBBEC20673ECE00A7771A /* VeenoonConstatns.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VeenoonConstatns.m; sourceTree = "<group>"; };
 		EBC71AFD203AF4EE00DD0A98 /* DVDRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVDRightView.h; sourceTree = "<group>"; };
 		EBC71AFE203AF4EE00DD0A98 /* DVDRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DVDRightView.m; sourceTree = "<group>"; };
 		EBC71B03203AF72D00DD0A98 /* CameraRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraRightView.h; sourceTree = "<group>"; };
@@ -2328,6 +2334,10 @@
 				34DE8E9520663E840061B48D /* MeetingRoom.m */,
 				34DE8E972066408C0061B48D /* Scenario.h */,
 				34DE8E982066408C0061B48D /* Scenario.m */,
+				EBBCBBEB20673ECE00A7771A /* VeenoonConstatns.h */,
+				EBBCBBEC20673ECE00A7771A /* VeenoonConstatns.m */,
+				EB18B7202067CAA7000BDEAB /* VideoDVDPlayer.h */,
+				EB18B7212067CAA7000BDEAB /* VideoDVDPlayer.m */,
 			);
 			path = Module;
 			sourceTree = SOURCE_ROOT;
@@ -4056,6 +4066,7 @@
 				EB2982151FD58699007B5C20 /* EngineerMeetingRoomListViewCtrl.m in Sources */,
 				EB795B562042E838005D1F47 /* ZaoShengMen_UIView.m in Sources */,
 				EB948A49204EE3550018C80A /* JLightSliderView.m in Sources */,
+				EB18B7222067CAA7000BDEAB /* VideoDVDPlayer.m in Sources */,
 				EB1717A31FF6141A00CBDB81 /* EngineerFloorWarmViewCtrl.m in Sources */,
 				EBF831E31FD03A110096E6EC /* UserVideoDVDDiskViewCtrl.m in Sources */,
 				EB795B652042E8A1005D1F47 /* ZiDongHunYin_UIView.m in Sources */,
@@ -4133,6 +4144,7 @@
 				04DE1EA91AD6AEE000D49E2F /* SBJson4Writer.m in Sources */,
 				EBC71B1A203C496500DD0A98 /* LuBoJiRightView.m in Sources */,
 				EBD79C0F204BBC2400FD534C /* YinPinProcessCodeUIView.m in Sources */,
+				EBBCBBED20673ECE00A7771A /* VeenoonConstatns.m in Sources */,
 				3429E2B5205AAAFD00F87AC3 /* VNSettingsView.m in Sources */,
 				EB36AAB21FCD939E009A0FD8 /* UserYouXianViewController.m in Sources */,
 				EBAE5BBB1FE0070600C10C4D /* EngineerPresetScenarioViewCtrl.m in Sources */,
