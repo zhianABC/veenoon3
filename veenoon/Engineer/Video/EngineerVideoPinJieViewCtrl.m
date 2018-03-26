@@ -21,6 +21,8 @@
     BOOL isSettings;
     PinJiePingRightView *_rightView;
     UIButton *okBtn;
+    
+    UIScrollView *_scroolView;
 }
 
 @end
@@ -79,24 +81,41 @@
     [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_selectSysBtn];
     
-    int labelHeight = SCREEN_HEIGHT - 550;
+    
+    [self refreshScrollView:self._rowNumber withColumn:self._colNumber];
+    
+}
+
+- (void) refreshScrollView:(int)row withColumn:(int) column {
+    int labelHeight = SCREEN_HEIGHT - 600;
     int cellHeight = 80;
     int space = 2;
-    int left = 150;
-    int right = 400;
+    int leftRight = 150;
     
-    UIScrollView *scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(left, labelHeight, SCREEN_WIDTH-left-right, cellHeight*5+space*4)];
-    scroolView.backgroundColor = [UIColor clearColor];
-    int contentWidth = self._colNumber * 80 + (self._colNumber-1) *space;
-    int contentHeight = self._rowNumber * 80 + (self._rowNumber - 1) * space;
+    if (_inPutBtnArray) {
+        [_inPutBtnArray removeAllObjects];
+    }
     
-    scroolView.contentSize = CGSizeMake(contentWidth, contentHeight);
-    [self.view addSubview:scroolView];
+    if (_scroolView) {
+        for (UIView *view in [_scroolView subviews]) {
+            if (view) {
+                [view removeFromSuperview];
+            }
+        }
+    } else {
+        _scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(leftRight, labelHeight, SCREEN_WIDTH - leftRight*2, cellHeight*5+space*4)];
+        _scroolView.backgroundColor = [UIColor clearColor];
+        int contentWidth = column * 80 + (column-1) *space;
+        int contentHeight = row * 80 + (row - 1) * space;
+        
+        _scroolView.contentSize = CGSizeMake(contentWidth, contentHeight);
+        [self.view addSubview:_scroolView];
+    }
     int index = 0;
     
-    for (int i = 0; i < self._rowNumber;i++) {
+    for (int i = 0; i < row;i++) {
         int startY = i * (cellHeight+space);
-        for (int j = 0; j < self._colNumber; j++) {
+        for (int j = 0; j < column; j++) {
             int startX = j * (cellHeight+space);
             
             UIButton *cameraBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
@@ -107,7 +126,7 @@
             cameraBtn.layer.borderColor = [UIColor clearColor].CGColor;;
             cameraBtn.clipsToBounds = YES;
             cameraBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
-            [scroolView addSubview:cameraBtn];
+            [_scroolView addSubview:cameraBtn];
             [cameraBtn addTarget:self
                           action:@selector(inputBtnAction:)
                 forControlEvents:UIControlEventTouchUpInside];
@@ -116,6 +135,7 @@
             index++;
         }
     }
+    
 }
 
 - (void) inputBtnAction:(id)sender{
