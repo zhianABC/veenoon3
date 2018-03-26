@@ -259,7 +259,7 @@
 
 - (void) didEndDragingElecCell:(NSDictionary *)data pt:(CGPoint)pt {
     CGPoint viewPoint = [self.view convertPoint:pt fromView:_rightView];
-    
+    viewPoint.y+=60;
     //NSLog(@"%f - %f", viewPoint.x, viewPoint.y);
     
     NSNumber *number = [data objectForKey:@"id"];
