@@ -92,9 +92,9 @@
     [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_selectSysBtn];
     
-    int labelHeight = SCREEN_HEIGHT - 550;
+    int labelHeight = 200;
     
-    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, labelHeight, SCREEN_WIDTH-125*2, 40)];
+    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, labelHeight, SCREEN_WIDTH-125*2, 20)];
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:20];
@@ -103,29 +103,28 @@
     titleL.text = @"输入";
     
     int index = 0;
-    int cellHeight = 60;
+    int cellHeight = 80;
     int cellWidth = 80;
     int space = 5;
     
-    scroolViewIn = [[UIScrollView alloc] initWithFrame:CGRectMake(100, labelHeight+40, SCREEN_WIDTH - 175*2, 70)];
+    scroolViewIn = [[UIScrollView alloc] initWithFrame:CGRectMake(100,
+                                                                  labelHeight+50,
+                                                                  SCREEN_WIDTH - 175*2,
+                                                                  100)];
     int viewWidth = self._inNumber * 85;
     scroolViewIn.contentSize = CGSizeMake(viewWidth, 70);
     [self.view addSubview:scroolViewIn];
+    scroolViewIn.showsHorizontalScrollIndicator = NO;
     
     for (int i = 0 ; i < self._inNumber; i++) {
         int startX = index*cellWidth+index*space;
         
-        UIButton *cameraBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
-        cameraBtn.frame = CGRectMake(startX, 5, cellWidth, cellHeight);
-        cameraBtn.layer.cornerRadius = 5;
-        cameraBtn.layer.borderWidth = 2;
+        UIButton *cameraBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        cameraBtn.frame = CGRectMake(startX, 20, cellWidth, cellHeight);
         cameraBtn.tag = index;
-        cameraBtn.layer.borderColor = [UIColor clearColor].CGColor;;
         cameraBtn.clipsToBounds = YES;
-        [cameraBtn setTitle:@"摄像机" forState:UIControlStateNormal];
-        [cameraBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [cameraBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
-        cameraBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+        [cameraBtn setImage:[UIImage imageNamed:@"engineer_scenario_add_n.png"]
+                   forState:UIControlStateNormal];
         [scroolViewIn addSubview:cameraBtn];
         [cameraBtn addTarget:self
                       action:@selector(inputBtnAction:)

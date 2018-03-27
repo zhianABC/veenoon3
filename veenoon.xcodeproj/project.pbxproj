@@ -139,6 +139,13 @@
 		34190F22205D538E009A519C /* dy_16_sel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34190F1E205D538E009A519C /* dy_16_sel@2x.png */; };
 		3419283D1FD3CC760014695B /* DragCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3419283C1FD3CC760014695B /* DragCellView.m */; };
 		341928401FD3D6200014695B /* OutputScreenView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3419283F1FD3D6200014695B /* OutputScreenView.m */; };
+		341AEB65206A5B9A00E01D03 /* AudioEPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 341AEB64206A5B9A00E01D03 /* AudioEPlayer.m */; };
+		341AEB68206A5BF600E01D03 /* AudioEWirlessMike.m in Sources */ = {isa = PBXBuildFile; fileRef = 341AEB67206A5BF600E01D03 /* AudioEWirlessMike.m */; };
+		341AEB6B206A5C2600E01D03 /* AudioEHand2Hand.m in Sources */ = {isa = PBXBuildFile; fileRef = 341AEB6A206A5C2600E01D03 /* AudioEHand2Hand.m */; };
+		341AEB6E206A5C4900E01D03 /* AudioEMix.m in Sources */ = {isa = PBXBuildFile; fileRef = 341AEB6D206A5C4900E01D03 /* AudioEMix.m */; };
+		341AEB71206A5C7800E01D03 /* AudioEWirlessMeetingSys.m in Sources */ = {isa = PBXBuildFile; fileRef = 341AEB70206A5C7700E01D03 /* AudioEWirlessMeetingSys.m */; };
+		341AEB74206A5CA800E01D03 /* AudioEProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 341AEB73206A5CA800E01D03 /* AudioEProcessor.m */; };
+		341AEB77206A5CBC00E01D03 /* AudioEMinMax.m in Sources */ = {isa = PBXBuildFile; fileRef = 341AEB76206A5CBC00E01D03 /* AudioEMinMax.m */; };
 		341C60C41FDCF1EA003A5490 /* ECPlusSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 341C60C31FDCF1EA003A5490 /* ECPlusSelectView.m */; };
 		341C60C61FDCF878003A5490 /* ecplus.plist in Resources */ = {isa = PBXBuildFile; fileRef = 341C60C51FDCF878003A5490 /* ecplus.plist */; };
 		341C60C91FDCFD7D003A5490 /* EPlusLayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 341C60C71FDCFD7C003A5490 /* EPlusLayerView.m */; };
@@ -1053,6 +1060,20 @@
 		3419283C1FD3CC760014695B /* DragCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DragCellView.m; sourceTree = "<group>"; };
 		3419283E1FD3D6200014695B /* OutputScreenView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OutputScreenView.h; sourceTree = "<group>"; };
 		3419283F1FD3D6200014695B /* OutputScreenView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OutputScreenView.m; sourceTree = "<group>"; };
+		341AEB63206A5B9A00E01D03 /* AudioEPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioEPlayer.h; path = Module/Audio/AudioEPlayer.h; sourceTree = SOURCE_ROOT; };
+		341AEB64206A5B9A00E01D03 /* AudioEPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AudioEPlayer.m; path = Module/Audio/AudioEPlayer.m; sourceTree = SOURCE_ROOT; };
+		341AEB66206A5BF600E01D03 /* AudioEWirlessMike.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AudioEWirlessMike.h; path = Module/Audio/AudioEWirlessMike.h; sourceTree = SOURCE_ROOT; };
+		341AEB67206A5BF600E01D03 /* AudioEWirlessMike.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AudioEWirlessMike.m; path = Module/Audio/AudioEWirlessMike.m; sourceTree = SOURCE_ROOT; };
+		341AEB69206A5C2600E01D03 /* AudioEHand2Hand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AudioEHand2Hand.h; path = Module/AudioEHand2Hand.h; sourceTree = SOURCE_ROOT; };
+		341AEB6A206A5C2600E01D03 /* AudioEHand2Hand.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AudioEHand2Hand.m; path = Module/AudioEHand2Hand.m; sourceTree = SOURCE_ROOT; };
+		341AEB6C206A5C4900E01D03 /* AudioEMix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AudioEMix.h; path = Module/AudioEMix.h; sourceTree = SOURCE_ROOT; };
+		341AEB6D206A5C4900E01D03 /* AudioEMix.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AudioEMix.m; path = Module/AudioEMix.m; sourceTree = SOURCE_ROOT; };
+		341AEB6F206A5C7700E01D03 /* AudioEWirlessMeetingSys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AudioEWirlessMeetingSys.h; path = Module/AudioEWirlessMeetingSys.h; sourceTree = SOURCE_ROOT; };
+		341AEB70206A5C7700E01D03 /* AudioEWirlessMeetingSys.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AudioEWirlessMeetingSys.m; path = Module/AudioEWirlessMeetingSys.m; sourceTree = SOURCE_ROOT; };
+		341AEB72206A5CA800E01D03 /* AudioEProcessor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AudioEProcessor.h; path = Module/AudioEProcessor.h; sourceTree = SOURCE_ROOT; };
+		341AEB73206A5CA800E01D03 /* AudioEProcessor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AudioEProcessor.m; path = Module/AudioEProcessor.m; sourceTree = SOURCE_ROOT; };
+		341AEB75206A5CBC00E01D03 /* AudioEMinMax.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AudioEMinMax.h; path = Module/AudioEMinMax.h; sourceTree = SOURCE_ROOT; };
+		341AEB76206A5CBC00E01D03 /* AudioEMinMax.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AudioEMinMax.m; path = Module/AudioEMinMax.m; sourceTree = SOURCE_ROOT; };
 		341C60C21FDCF1EA003A5490 /* ECPlusSelectView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ECPlusSelectView.h; sourceTree = "<group>"; };
 		341C60C31FDCF1EA003A5490 /* ECPlusSelectView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ECPlusSelectView.m; sourceTree = "<group>"; };
 		341C60C51FDCF878003A5490 /* ecplus.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ecplus.plist; sourceTree = "<group>"; };
@@ -2324,8 +2345,8 @@
 		04DE1EBC1AD6AF7900D49E2F /* Module */ = {
 			isa = PBXGroup;
 			children = (
-				EB18B72F2067D58D000BDEAB /* Audio */,
-				EB18B72E2067D58D000BDEAB /* Env */,
+				341AEB62206A5B7A00E01D03 /* Env */,
+				341AEB61206A5B3100E01D03 /* Audio */,
 				EB18B7252067D4A6000BDEAB /* Video */,
 				341F0F451EC2FC500027C800 /* WSCode.h */,
 				341F0F461EC2FC500027C800 /* WSCode.m */,
@@ -2770,6 +2791,34 @@
 			path = MainPages;
 			sourceTree = "<group>";
 		};
+		341AEB61206A5B3100E01D03 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				341AEB63206A5B9A00E01D03 /* AudioEPlayer.h */,
+				341AEB64206A5B9A00E01D03 /* AudioEPlayer.m */,
+				341AEB66206A5BF600E01D03 /* AudioEWirlessMike.h */,
+				341AEB67206A5BF600E01D03 /* AudioEWirlessMike.m */,
+				341AEB69206A5C2600E01D03 /* AudioEHand2Hand.h */,
+				341AEB6A206A5C2600E01D03 /* AudioEHand2Hand.m */,
+				341AEB6C206A5C4900E01D03 /* AudioEMix.h */,
+				341AEB6D206A5C4900E01D03 /* AudioEMix.m */,
+				341AEB6F206A5C7700E01D03 /* AudioEWirlessMeetingSys.h */,
+				341AEB70206A5C7700E01D03 /* AudioEWirlessMeetingSys.m */,
+				341AEB72206A5CA800E01D03 /* AudioEProcessor.h */,
+				341AEB73206A5CA800E01D03 /* AudioEProcessor.m */,
+				341AEB75206A5CBC00E01D03 /* AudioEMinMax.h */,
+				341AEB76206A5CBC00E01D03 /* AudioEMinMax.m */,
+			);
+			path = Audio;
+			sourceTree = SOURCE_ROOT;
+		};
+		341AEB62206A5B7A00E01D03 /* Env */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Env;
+			sourceTree = "<group>";
+		};
 		341C60CC1FDD0DBF003A5490 /* elements */ = {
 			isa = PBXGroup;
 			children = (
@@ -3027,20 +3076,6 @@
 				EB18B7342067D978000BDEAB /* VideoRemoteShiXun.m */,
 			);
 			path = Video;
-			sourceTree = "<group>";
-		};
-		EB18B72E2067D58D000BDEAB /* Env */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Env;
-			sourceTree = "<group>";
-		};
-		EB18B72F2067D58D000BDEAB /* Audio */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Audio;
 			sourceTree = "<group>";
 		};
 		EB19B65420581D2B003F1546 /* corner */ = {
@@ -4127,9 +4162,11 @@
 				EB795B622042E890005D1F47 /* HuiShengXiaoChu_UIView.m in Sources */,
 				345487C8204BE4F60068126B /* APBaseView.m in Sources */,
 				EB1A55F41FEF80D7000B18E6 /* EngineerRemoteVideoViewCtrl.m in Sources */,
+				341AEB74206A5CA800E01D03 /* AudioEProcessor.m in Sources */,
 				EB5CF0411FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m in Sources */,
 				EB1A56151FEF8F29000B18E6 /* EngineerVideoProcessViewCtrl.m in Sources */,
 				04D719881DADE7D4002153D7 /* ActivityViewController.m in Sources */,
+				341AEB65206A5B9A00E01D03 /* AudioEPlayer.m in Sources */,
 				EB7333FD20410A7E00AE60B8 /* MonitorRightView.m in Sources */,
 				EB17179A1FF60C2600CBDB81 /* EngineerAireConditionViewCtrl.m in Sources */,
 				04DE1E8A1AD6AEE000D49E2F /* MaskRender.m in Sources */,
@@ -4139,6 +4176,7 @@
 				04D7197F1DADE098002153D7 /* NSDate-Helper.m in Sources */,
 				EB09EF2F1FD978C700C968CA /* EngineerToUseTeslariViewCtrl.m in Sources */,
 				34686C9E1ED025CB001749A1 /* ConverUtil.m in Sources */,
+				341AEB6E206A5C4900E01D03 /* AudioEMix.m in Sources */,
 				EB235011204D9648008F6CA2 /* XDPickView.m in Sources */,
 				EB795B482042DD6F005D1F47 /* AudioOutputSettingViewCtrl.m in Sources */,
 				34141699204BC3D5002E0B00 /* AudioMatrixView.m in Sources */,
@@ -4152,6 +4190,7 @@
 				04DE1EA51AD6AEE000D49E2F /* SBJson4StreamParserState.m in Sources */,
 				341C60C41FDCF1EA003A5490 /* ECPlusSelectView.m in Sources */,
 				04DE1E931AD6AEE000D49E2F /* Utilities.m in Sources */,
+				341AEB68206A5BF600E01D03 /* AudioEWirlessMike.m in Sources */,
 				EB1A04601FC7156C007CC1F2 /* UserAudioConfigViewController.m in Sources */,
 				341C784D2050185200DD1677 /* IconLayerView.m in Sources */,
 				04DE1E981AD6AEE000D49E2F /* ASIFormDataRequest.m in Sources */,
@@ -4170,6 +4209,7 @@
 				EB1717B81FF6150400CBDB81 /* EngineerScenarioSettingsViewCtrl.m in Sources */,
 				3421EA2D1FC4136600DC5378 /* CustomPickerView.m in Sources */,
 				04DE1E8B1AD6AEE000D49E2F /* Progress7View.m in Sources */,
+				341AEB6B206A5C2600E01D03 /* AudioEHand2Hand.m in Sources */,
 				EB09EF311FD97CB500C968CA /* EngineerAudioDevicePluginViewCtrl.m in Sources */,
 				04DE1EB41AD6AEE000D49E2F /* UIImage+GIF.m in Sources */,
 				EBC71B05203AF72D00DD0A98 /* CameraRightView.m in Sources */,
@@ -4205,6 +4245,7 @@
 				34DE8E9620663E840061B48D /* MeetingRoom.m in Sources */,
 				EB1B90FE2046E6B00076EEEC /* HunyinYinpinchuliViewCtrl.m in Sources */,
 				EB1A55C21FE93CD4000B18E6 /* EngineerAudioProcessViewCtrl.m in Sources */,
+				341AEB71206A5C7800E01D03 /* AudioEWirlessMeetingSys.m in Sources */,
 				04DE1EA81AD6AEE000D49E2F /* SBJson4StreamWriterState.m in Sources */,
 				341671881FBA97BD001D33D0 /* HomeViewController.m in Sources */,
 				EB478FF9205FF74000EDCD64 /* InforCollectRightView.m in Sources */,
@@ -4233,6 +4274,7 @@
 				EBCA834B1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m in Sources */,
 				04DE1EB51AD6AEE000D49E2F /* UIImageView+WebCache.m in Sources */,
 				34DC47421FD6DD9300ACB589 /* CircleProgressView.m in Sources */,
+				341AEB77206A5CBC00E01D03 /* AudioEMinMax.m in Sources */,
 				04DE1E8E1AD6AEE000D49E2F /* UIButton+Color.m in Sources */,
 				EB795B5C2042E861005D1F47 /* YaXianQi_UIView.m in Sources */,
 				341671841FBA9765001D33D0 /* SignupViewController.m in Sources */,
