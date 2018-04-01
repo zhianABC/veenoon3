@@ -12,7 +12,7 @@
 #import "EngineerDNSSettingView.h"
 #import "EngineerToUseTeslariViewCtrl.h"
 
-@interface EngineerSysSelectViewCtrl () {
+@interface EngineerSysSelectViewCtrl ()<UIScrollViewDelegate>{
     EngineerDNSSettingView *_dnsView;
     EngineerPortSettingView *_portView;
     
@@ -111,6 +111,7 @@
                                                                     0,
                                                                     SCREEN_WIDTH,
                                                                     SCREEN_HEIGHT)];
+    _switchContent.delegate=self;
     [_container addSubview:_switchContent];
     _switchContent.pagingEnabled = YES;
     [_switchContent setContentSize:CGSizeMake(SCREEN_WIDTH*2, SCREEN_HEIGHT)];
@@ -247,6 +248,23 @@
 
 - (void) signupAction:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    
+    CGFloat pageWidth = scrollView.frame.size.width;
+    //NSLog(@"pageHeight = %f", pageHeight);
+    int _pageIndex = scrollView.contentOffset.x / pageWidth;
+    
+    if(_pageIndex == 0) {
+        [_portSettingsBtn setImage:[UIImage imageNamed:@"engineer_port_s.png"] forState:UIControlStateNormal];
+        [_dnsSettingsBtn setImage:[UIImage imageNamed:@"engineer_dns_n.png"] forState:UIControlStateNormal];
+        
+    }  else{
+        [_portSettingsBtn setImage:[UIImage imageNamed:@"engineer_port_n.png"] forState:UIControlStateNormal];
+        [_dnsSettingsBtn setImage:[UIImage imageNamed:@"engineer_dns_s.png"] forState:UIControlStateNormal];
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {
