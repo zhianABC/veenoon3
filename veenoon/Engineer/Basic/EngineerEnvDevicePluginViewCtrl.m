@@ -232,8 +232,8 @@
     [_jiankongBtn setBtnHighlited:NO];
     [_nenghaotongjiBtn setBtnHighlited:NO];
     
-    UIButton *btn = (UIButton*) sender;
-    NSString *btnText = btn.titleLabel.text;
+    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
+    NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
 }
 - (void) kongtiaoAction:(id)sender{
@@ -247,8 +247,8 @@
     [_jiankongBtn setBtnHighlited:NO];
     [_nenghaotongjiBtn setBtnHighlited:NO];
     
-    UIButton *btn = (UIButton*) sender;
-    NSString *btnText = btn.titleLabel.text;
+    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
+    NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
 }
 - (void) diandongmadaAction:(id)sender{
@@ -262,8 +262,8 @@
     [_jiankongBtn setBtnHighlited:NO];
     [_nenghaotongjiBtn setBtnHighlited:NO];
     
-    UIButton *btn = (UIButton*) sender;
-    NSString *btnText = btn.titleLabel.text;
+    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
+    NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
 }
 - (void) xinfengAction:(id)sender{
@@ -277,8 +277,8 @@
     [_jiankongBtn setBtnHighlited:NO];
     [_nenghaotongjiBtn setBtnHighlited:NO];
     
-    UIButton *btn = (UIButton*) sender;
-    NSString *btnText = btn.titleLabel.text;
+    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
+    NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
 }
 - (void) dinuanAction:(id)sender{
@@ -292,8 +292,8 @@
     [_jiankongBtn setBtnHighlited:NO];
     [_nenghaotongjiBtn setBtnHighlited:NO];
     
-    UIButton *btn = (UIButton*) sender;
-    NSString *btnText = btn.titleLabel.text;
+    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
+    NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
 }
 - (void) kongqijinghuaAction:(id)sender{
@@ -307,8 +307,8 @@
     [_jiankongBtn setBtnHighlited:NO];
     [_nenghaotongjiBtn setBtnHighlited:NO];
     
-    UIButton *btn = (UIButton*) sender;
-    NSString *btnText = btn.titleLabel.text;
+    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
+    NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
 }
 - (void) jingshuiAction:(id)sender{
@@ -322,8 +322,8 @@
     [_jiankongBtn setBtnHighlited:NO];
     [_nenghaotongjiBtn setBtnHighlited:NO];
     
-    UIButton *btn = (UIButton*) sender;
-    NSString *btnText = btn.titleLabel.text;
+    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
+    NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
 }
 - (void) jiashiAction:(id)sender{
@@ -337,8 +337,8 @@
     [_jiankongBtn setBtnHighlited:NO];
     [_nenghaotongjiBtn setBtnHighlited:NO];
     
-    UIButton *btn = (UIButton*) sender;
-    NSString *btnText = btn.titleLabel.text;
+    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
+    NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
 }
 - (void) menjinAction:(id)sender{
@@ -352,8 +352,8 @@
     [_jiankongBtn setBtnHighlited:NO];
     [_nenghaotongjiBtn setBtnHighlited:NO];
     
-    UIButton *btn = (UIButton*) sender;
-    NSString *btnText = btn.titleLabel.text;
+    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
+    NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
 }
 - (void) jiankongAction:(id)sender{
@@ -367,8 +367,8 @@
     [_jiankongBtn setBtnHighlited:YES];
     [_nenghaotongjiBtn setBtnHighlited:NO];
     
-    UIButton *btn = (UIButton*) sender;
-    NSString *btnText = btn.titleLabel.text;
+    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
+    NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
 }
 - (void) nenghaotongjiAction:(id)sender{
@@ -382,8 +382,8 @@
     [_jiankongBtn setBtnHighlited:NO];
     [_nenghaotongjiBtn setBtnHighlited:YES];
     
-    UIButton *btn = (UIButton*) sender;
-    NSString *btnText = btn.titleLabel.text;
+    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
+    NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
 }
 -(void) didScrollPickerValue:(NSString*)brand {
@@ -399,13 +399,9 @@
         [self dinuanAction:_dinuanBtn];
     } else if ([@"空气净化" isEqualToString:brand]) {
         [self kongqijinghuaAction:_kongqijinghuaBtn];
-    } else if ([@"净水" isEqualToString:brand]) {
-        [self jingshuiAction:_jingshuiBtn];
     } else if ([@"加湿器" isEqualToString:brand]) {
         [self jiashiAction:_jiashiqiBtn];
-    } else if ([@"门禁" isEqualToString:brand]) {
-        [self menjinAction:_menjinBtn];
-    } else if ([@"监控" isEqualToString:brand]) {
+    }else if ([@"监控" isEqualToString:brand]) {
         [self jiankongAction:_jiankongBtn];
     } else {
         [self nenghaotongjiAction:_nenghaotongjiBtn];

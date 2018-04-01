@@ -88,11 +88,12 @@
     [scenarioArray addObject:newScenarioDic];
     
     int index = 0;
-    int arraySize = (int)[scenarioArray count];
-    
-    int startX = 100;
     int startY = 20;
     UIButton *scenarioBtn = [UIButton buttonWithColor:nil selColor:RGB(0, 89, 118)];
+    scenarioBtn.layer.cornerRadius = 15;
+    scenarioBtn.layer.borderWidth = 2;
+    scenarioBtn.layer.borderColor = [UIColor clearColor].CGColor;
+    scenarioBtn.clipsToBounds=YES;
     scenarioBtn.frame = CGRectMake(ENGINEER_VIEW_LEFT, startY, cellWidth, cellHeight);
     [scenarioBtn setImage:[UIImage imageNamed:@"engineer_scenario_add_n.png"] forState:UIControlStateNormal];
     [scenarioBtn setImage:[UIImage imageNamed:@"engineer_scenario_add_n.png"] forState:UIControlStateHighlighted];
