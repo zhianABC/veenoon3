@@ -221,7 +221,7 @@
     
     [_rows addObject:@{@"title":@"线路检查",@"values":@[@"D1",@"D2",@"D3"]}];
     [_rows addObject:@{@"title":@"发言模式",@"values":@[@"先进先出"]}];
-    [_rows addObject:@{@"title":@"发言人数",@"values":@[@"1"]}];
+    [_rows addObject:@{@"title":@"设定代表",@"values":@[@"1"]}];
     [_rows addObject:@{@"title":@"主席数量",@"values":@[@"1",@"2"]}];
     [_rows addObject:@{@"title":@"设备ID",@"values":@[@"1",@"2"]}];
     [_rows addObject:@{@"title":@"摄像机ID",@"values":@[@"1",@"2"]}];
