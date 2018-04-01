@@ -52,23 +52,23 @@
         // Initialization code
         self.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
     
-        _cellWidth = frame.size.width - 30;
+        _cellWidth = frame.size.width;
         CGRect rc = self.bounds;
         rc.size.width = _cellWidth;
         
         colCount = 1;
         
-        _background = [[UIImageView alloc] initWithFrame:rc];
-        _background.layer.contentsGravity = kCAGravityResize;
-        _background.clipsToBounds = YES;
-        if([grayOrLight isEqualToString:@"gray"])
-            _background.image = [UIImage imageNamed:@"gray_slide_bg.png"];
-        else
-        {
-            _background.image = [UIImage imageNamed:grayOrLight];
-        }
-        
-        [self addSubview:_background];
+//        _background = [[UIImageView alloc] initWithFrame:rc];
+//        _background.layer.contentsGravity = kCAGravityResize;
+//        _background.clipsToBounds = YES;
+//        if([grayOrLight isEqualToString:@"gray"])
+//            _background.image = [UIImage imageNamed:@"gray_slide_bg.png"];
+//        else
+//        {
+//            _background.image = [UIImage imageNamed:grayOrLight];
+//        }
+//
+//        [self addSubview:_background];
     
         _myPickerView = [[UIPickerView alloc] initWithFrame:rc];
         _myPickerView.delegate = self;
@@ -77,16 +77,16 @@
         [self addSubview:_myPickerView];
         
         
-        btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
-        btnSave.frame = CGRectMake(frame.size.width-45, frame.size.height/2-25, 50, 50);
-        [btnSave setImage:[UIImage imageNamed:@"customer_view_confirm_n.png"] forState:UIControlStateNormal];
-        [btnSave setImage:[UIImage imageNamed:@"customer_view_confirm_s.png"] forState:UIControlStateHighlighted];
-        [btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [btnSave setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-        btnSave.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-        [btnSave addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:btnSave];
-        
+//        btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
+//        btnSave.frame = CGRectMake(frame.size.width-45, frame.size.height/2-25, 50, 50);
+//        [btnSave setImage:[UIImage imageNamed:@"customer_view_confirm_n.png"] forState:UIControlStateNormal];
+//        [btnSave setImage:[UIImage imageNamed:@"customer_view_confirm_s.png"] forState:UIControlStateHighlighted];
+//        [btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//        [btnSave setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
+//        btnSave.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+//        [btnSave addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
+//        [self addSubview:btnSave];
+//        
         
 //        UIButton *btnOK = [UIButton buttonWithType:UIButtonTypeCustom];
 //        btnOK.frame = CGRectMake(frame.size.width - 60, 10, 60, 40);
@@ -212,6 +212,10 @@
         
     }
    
+    if(_selectionBlock)
+    {
+        _selectionBlock(_values);
+    }
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
@@ -223,7 +227,7 @@
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
 {
-    return 50.0;
+    return 44.0;
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component

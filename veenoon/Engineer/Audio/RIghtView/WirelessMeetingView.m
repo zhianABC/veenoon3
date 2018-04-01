@@ -149,7 +149,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
         [self addSubview:_tableView];
         
         _secsGroup = [[GroupsPickerView alloc]
-                      initWithFrame:CGRectMake(frame.size.width/2-90, 43, 250, 100) withGrayOrLight:@"picker_player.png"];
+                      initWithFrame:CGRectMake(frame.size.width/2-90, 43, 220, 120) withGrayOrLight:@"picker_player.png"];
         
         _secsGroup._gdatas = @[@[@"00",@"01",@"02"],@[@"00",@"01",@"02"],@[@"00",@"01",@"02"],@[@"00",@"01",@"02"],@[@"00",@"01",@"02"]];
         
@@ -168,7 +168,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
         
         
         _secsGroup2 = [[GroupsPickerView alloc]
-                      initWithFrame:CGRectMake(frame.size.width/2-90, 43, 250, 100) withGrayOrLight:@"picker_player.png"];
+                      initWithFrame:CGRectMake(frame.size.width/2-90, 43, 220, 120) withGrayOrLight:@"picker_player.png"];
         
         _secsGroup2._gdatas = @[@[@"03",@"04",@"05"],@[@"03",@"04",@"05"],@[@"03",@"04",@"05"],@[@"03",@"04",@"05"],@[@"03",@"04",@"05"]];
         
@@ -185,7 +185,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
         
         
         _secsGroup3 = [[GroupsPickerView alloc]
-                      initWithFrame:CGRectMake(frame.size.width/2-90, 43, 120, 100) withGrayOrLight:@"picker_player.png"];
+                      initWithFrame:CGRectMake(frame.size.width/2-100, 43, 110, 120) withGrayOrLight:@"picker_player.png"];
         
         _secsGroup3._gdatas = @[@[@"06",@"07",@"08"],@[@"06",@"07",@"08"]];
         
@@ -411,7 +411,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
     
     if(_curSectionIndex == section)
     {
-        return 144;
+        return 164;
     }
     return 44;
 }
@@ -456,6 +456,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
         int top = 8;
         
         for (int index = 0; index < 5; index++) {
+            
             int row = index/colNumber;
             int col = index%colNumber;
             int startX = col*cellWidth+col*space+leftRight;
@@ -467,12 +468,13 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
             scenarioBtn.layer.cornerRadius = 5;
             scenarioBtn.tag = index;
             [header addSubview:scenarioBtn];
-            int titleInt = index + 1+70;
-            NSString *string = [NSString stringWithFormat:@"%d",titleInt];
-            
-            [scenarioBtn setTitle:string forState:UIControlStateNormal];
+//            int titleInt = index + 1+70;
+//            NSString *string = [NSString stringWithFormat:@"%d",titleInt];
+//
+            [scenarioBtn setTitle:@"00" forState:UIControlStateNormal];
             scenarioBtn.titleLabel.font = [UIFont systemFontOfSize:15];
             
+            scenarioBtn.userInteractionEnabled = NO;
             [_btns addObject:scenarioBtn];
             
             if([_selectedSecs count]) {
@@ -487,7 +489,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
         {
             [header addSubview:_secsGroup];
             
-            height = 144;
+            height = 164;
         }
     } else if(section == 2) {
         rowLT.text = @"音量";
@@ -521,10 +523,11 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
             scenarioBtn.layer.cornerRadius = 5;
             scenarioBtn.tag = index;
             [header addSubview:scenarioBtn];
-            int titleInt = index + 1+10;
-            NSString *string = [NSString stringWithFormat:@"%d",titleInt];
-            
-            [scenarioBtn setTitle:string forState:UIControlStateNormal];
+//            int titleInt = index + 1+10;
+//            NSString *string = [NSString stringWithFormat:@"%d",titleInt];
+//
+            scenarioBtn.userInteractionEnabled = NO;
+            [scenarioBtn setTitle:@"03" forState:UIControlStateNormal];
             scenarioBtn.titleLabel.font = [UIFont systemFontOfSize:15];
             
             [_btns2 addObject:scenarioBtn];
@@ -532,7 +535,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
             if([_selectedSecs2 count]) {
                 NSString *m1 = [_selectedSecs2 objectForKey:[NSNumber numberWithInteger:index]];
                 if(m1==nil)
-                    m1=@"00";
+                    m1=@"03";
                 [scenarioBtn setTitle:m1 forState:UIControlStateNormal];
             }
         }
@@ -541,7 +544,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
         {
             [header addSubview:_secsGroup2];
             
-            height = 144;
+            height = 164;
         }
     }
     else if(section == 3)
@@ -601,10 +604,11 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
             scenarioBtn.layer.cornerRadius = 5;
             scenarioBtn.tag = index;
             [header addSubview:scenarioBtn];
-            int titleInt = index + 1+70;
-            NSString *string = [NSString stringWithFormat:@"%d",titleInt];
-            
-            [scenarioBtn setTitle:string forState:UIControlStateNormal];
+//            int titleInt = index + 1+70;
+//            NSString *string = [NSString stringWithFormat:@"%d",titleInt];
+//
+            scenarioBtn.userInteractionEnabled = NO;
+            [scenarioBtn setTitle:@"06" forState:UIControlStateNormal];
             scenarioBtn.titleLabel.font = [UIFont systemFontOfSize:15];
             
             [_btns3 addObject:scenarioBtn];
@@ -612,7 +616,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
             if([_selectedSecs3 count]) {
                 NSString *m1 = [_selectedSecs3 objectForKey:[NSNumber numberWithInteger:index]];
                 if(m1==nil)
-                    m1=@"00";
+                    m1=@"06";
                 [scenarioBtn setTitle:m1 forState:UIControlStateNormal];
             }
         }
@@ -620,7 +624,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
         {
             [header addSubview:_secsGroup3];
             
-            height = 144;
+            height = 164;
         }
     }
     
@@ -633,7 +637,15 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
 
 - (void) clickHeader:(UIButton*)sender{
     
-    _curSectionIndex = (int)sender.tag;
+    int curIndex = (int)sender.tag;
+    if(_curSectionIndex == curIndex)
+    {
+        _curSectionIndex = -1;
+    }
+    else
+    {
+        _curSectionIndex = curIndex;
+    }
     
     [_tableView reloadData];
 }
@@ -647,7 +659,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
 
 - (void) didPickerGValue:(NSDictionary *)values{
     
-    _curSectionIndex = -1;
+   // _curSectionIndex = -1;
     
     self._selectedSecs = values;
     
@@ -657,7 +669,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
 
 - (void) didPickerGValue2:(NSDictionary *)values{
     
-    _curSectionIndex = -1;
+    //_curSectionIndex = -1;
     
     self._selectedSecs2 = values;
     
@@ -667,7 +679,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
 
 - (void) didPickerGValue3:(NSDictionary *)values{
     
-    _curSectionIndex = -1;
+    //_curSectionIndex = -1;
     
     self._selectedSecs3 = values;
     

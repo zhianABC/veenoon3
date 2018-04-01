@@ -144,7 +144,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
         [self createFooter];
         
         _picker = [[CustomPickerView alloc]
-                   initWithFrame:CGRectMake(frame.size.width/2-100, 43, 200, 100) withGrayOrLight:@"picker_player.png"];
+                   initWithFrame:CGRectMake(frame.size.width/2-100, 43, 200, 120) withGrayOrLight:@"picker_player.png"];
         
         
         _picker._pickerDataArray = @[@{@"values":@[@"1", @"2", @"3"]}];
@@ -162,7 +162,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
         
         
         _secsGroup = [[GroupsPickerView alloc]
-                        initWithFrame:CGRectMake(frame.size.width/2-100, 43, 200, 100) withGrayOrLight:@"picker_player.png"];
+                        initWithFrame:CGRectMake(frame.size.width/2-100, 43, 200, 120) withGrayOrLight:@"picker_player.png"];
         
         
         _secsGroup._gdatas = @[@[@"00",@"01",@"02"],@[@"00",@"01",@"02"]];
@@ -459,7 +459,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
 
     if(_curSectionIndex == section)
     {
-        return 144;
+        return 164;
     }
     return 44;
 }
@@ -565,7 +565,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
         {
             [header addSubview:_secsGroup];
             
-            height = 144;
+            height = 164;
         }
         
     }
@@ -597,7 +597,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
 
             [header addSubview:_picker];
             
-            height = 144;
+            height = 164;
         }
     }
     
@@ -612,7 +612,16 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
 
 - (void) clickHeader:(UIButton*)sender{
     
-    _curSectionIndex = (int)sender.tag;
+    int curIndex = (int)sender.tag;
+    
+    if(curIndex == _curSectionIndex)
+    {
+        _curSectionIndex = -1;
+    }
+    else
+    {
+        _curSectionIndex = curIndex;
+    }
     
     [_tableView reloadData];
 }
@@ -631,14 +640,14 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
         _selRowIp = [[values objectForKey:@"row"] intValue];
     }
    
-    _curSectionIndex = -1;
+    //_curSectionIndex = -1;
     
     [_tableView reloadData];
     
 }
 - (void) didPickerGValue:(NSDictionary *)values{
 
-    _curSectionIndex = -1;
+    //_curSectionIndex = -1;
     
     self._selectedSecs = values;
     

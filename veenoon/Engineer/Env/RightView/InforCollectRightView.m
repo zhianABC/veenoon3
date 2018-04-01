@@ -8,10 +8,9 @@
 
 #import "InforCollectRightView.h"
 #import "UIButton+Color.h"
-#import "CustomPickerView.h"
 #import "ComSettingView.h"
 
-@interface InforCollectRightView () <CustomPickerViewDelegate, UITextFieldDelegate> {
+@interface InforCollectRightView () <UITextFieldDelegate> {
     
     ComSettingView *_com;
     

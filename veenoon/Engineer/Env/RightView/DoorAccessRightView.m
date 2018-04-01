@@ -8,10 +8,9 @@
 
 #import "DoorAccessRightView.h"
 #import "UIButton+Color.h"
-#import "CustomPickerView.h"
 #import "ComSettingView.h"
 
-@interface DoorAccessRightView () <CustomPickerViewDelegate> {
+@interface DoorAccessRightView () {
     
     ComSettingView *_com;
     
