@@ -11,6 +11,7 @@
 #import "CheckButton.h"
 #import "CenterCustomerPickerView.h"
 #import "ComSettingView.h"
+#import "APowerESet.h"
 
 @interface PowerSettingView () <CenterCustomerPickerViewDelegate, UITextFieldDelegate>
 {
@@ -25,10 +26,13 @@
     ComSettingView *_com;
     
     UITextField *ipTextField;
+    
+    CenterCustomerPickerView *levelSetting;
 }
 @end
 
 @implementation PowerSettingView
+@synthesize _objSet;
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -136,7 +140,7 @@
         _chooseBg = [[UIView alloc] initWithFrame:CGRectMake(0, 101, frame.size.width, 220)];
         _chooseBg.backgroundColor = self.backgroundColor;
         
-        CenterCustomerPickerView *levelSetting = [[CenterCustomerPickerView alloc]
+        levelSetting = [[CenterCustomerPickerView alloc]
                                           initWithFrame:CGRectMake(0, 0, self.frame.size.width, 200) ];
         [levelSetting removeArray];
         
@@ -152,14 +156,8 @@
         levelSetting._selectColor = [UIColor orangeColor];
         levelSetting._rowNormalColor = [UIColor whiteColor];
         [_chooseBg addSubview:levelSetting];
-        
         [levelSetting selectRow:0 inComponent:0];
         
-
-        levelSetting._selectionBlock = ^(NSDictionary *values)
-        {
-            [block_self didPickerValue:values];
-        };
         
         line = [[UILabel alloc] initWithFrame:CGRectMake(0, 219, frame.size.width, 1)];
         line.backgroundColor = RGB(1, 138, 182);
@@ -229,6 +227,19 @@
     }
 }
 
+- (void) didChangedPickerValue:(NSDictionary*)value{
+    
+    
+    NSDictionary *dic = [value objectForKey:@0];
+    if(dic)
+    {
+        NSString *value = [dic objectForKey:@"value"];
+        _secs.text = value;
+    }
+    
+}
+
+
 
 - (void) checkClicked:(int)tagIndex{
     
@@ -250,6 +261,9 @@
     
     int xx = 15;
     int yy = 10;
+    
+    NSArray *vals = _objSet._lines;
+    
     for(int i = 0; i < 8; i++)
     {
         UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(xx, yy, 50, 50)];
@@ -267,7 +281,12 @@
         [_sliders addSubview:slider];
         slider.minValue = 1;
         slider.maxValue = 180;
-        [slider setScaleValue:1];
+        
+        
+        NSMutableDictionary *dic = [vals objectAtIndex:i];
+        int val = [[dic objectForKey:@"Value"] intValue];
+        
+        [slider setScaleValue:val];
         
         yy+=50;
         
@@ -282,6 +301,10 @@
     
     int xx = 15;
     int yy = 10;
+    
+    NSArray *vals = _objSet._lines;
+    
+    
     for(int i = 0; i < 16; i++)
     {
         UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(xx, yy, 50, 50)];
@@ -299,7 +322,13 @@
         [_sliders addSubview:slider];
         slider.minValue = 1;
         slider.maxValue = 180;
-        [slider setScaleValue:1];
+        
+        
+        NSMutableDictionary *dic = [vals objectAtIndex:i];
+        int val = [[dic objectForKey:@"Value"] intValue];
+        
+        [slider setScaleValue:val];
+        
         
         yy+=50;
         

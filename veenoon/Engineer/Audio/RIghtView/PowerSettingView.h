@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class APowerESet;
+
 @interface PowerSettingView : UIView
 {
     
 }
+@property (nonatomic, strong) APowerESet *_objSet;
 
 - (void) show8Labs;
 - (void) show16Labs;

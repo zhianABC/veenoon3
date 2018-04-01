@@ -10,6 +10,7 @@
 #import "UIButton+Color.h"
 #import "PowerSettingView.h"
 #import "CustomPickerView.h"
+#import "APowerESet.h"
 
 @interface EngineerElectronicSysConfigViewCtrl () <CustomPickerViewDelegate>{
     PowerSettingView *_psv;
@@ -24,11 +25,17 @@
     
     NSMutableArray *lableArray;
 }
+
+@property (nonatomic, strong) APowerESet *_objSet;
+
 @end
 
 @implementation EngineerElectronicSysConfigViewCtrl
 @synthesize _electronicSysArray;
 @synthesize _number;
+
+@synthesize _objSet;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     isSettings = NO;
@@ -91,6 +98,10 @@
     int cellHeight = 92;
     int colNumber = ENGINEER_VIEW_COLUMN_N;
     int space = ENGINEER_VIEW_COLUMN_GAP*3;
+    
+    self._objSet = [[APowerESet alloc] init];
+    [_objSet initLabs:_number];
+    
     
     if ([self._electronicSysArray count] == 0) {
         int nameStart = 1;
@@ -183,6 +194,7 @@
 }
 
 - (void) sysSelectAction:(id)sender{
+    
     _customPicker = [[CustomPickerView alloc]
                                       initWithFrame:CGRectMake(50, _selectSysBtn.frame.origin.y, _selectSysBtn.frame.size.width, 100) withGrayOrLight:@"gray"];
     
@@ -236,6 +248,9 @@
                 initWithFrame:CGRectMake(SCREEN_WIDTH-300,
                                          64, 300, SCREEN_HEIGHT-114)];
         [self.view addSubview:_psv];
+        
+        _psv._objSet = [[APowerESet alloc] init];
+        [_psv._objSet initLabs:_number];
         
         if (self._number == 8) {
             [_psv show8Labs];
