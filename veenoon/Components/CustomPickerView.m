@@ -51,21 +51,21 @@
         
         
         
-        _background = [[UIImageView alloc] initWithFrame:self.bounds];
-        _background.layer.contentsGravity = kCAGravityResize;
-        _background.clipsToBounds = YES;
-        if([grayOrLight isEqualToString:@"gray"])
-            _background.image = [UIImage imageNamed:@"gray_slide_bg.png"];
-        else
-        {
-            _background.image = [UIImage imageNamed:grayOrLight];
-        }
-        
-        
-        [self addSubview:_background];
+//        _background = [[UIImageView alloc] initWithFrame:self.bounds];
+//        _background.layer.contentsGravity = kCAGravityResize;
+//        _background.clipsToBounds = YES;
+//        if([grayOrLight isEqualToString:@"gray"])
+//            _background.image = [UIImage imageNamed:@"gray_slide_bg.png"];
+//        else
+//        {
+//            _background.image = [UIImage imageNamed:grayOrLight];
+//        }
+//
+//
+//        [self addSubview:_background];
         //_background.contentMode = UIViewContentModeScaleAspectFill;
         
-        _cellWidth = frame.size.width-25;
+        _cellWidth = frame.size.width;
         
         _myPickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0.0, 0,
                                                                        frame.size.width,
@@ -87,16 +87,16 @@
         
           _values = [[NSMutableDictionary alloc] init];
         
-        btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
-        btnSave.frame = CGRectMake(frame.size.width-25, frame.size.height/2-13, 25, 25);
-        [btnSave setImage:[UIImage imageNamed:@"customer_view_confirm_n.png"] forState:UIControlStateNormal];
-        [btnSave setImage:[UIImage imageNamed:@"customer_view_confirm_s.png"] forState:UIControlStateHighlighted];
-        [btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [btnSave setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-        btnSave.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-        [btnSave addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:btnSave];
-        
+//        btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
+//        btnSave.frame = CGRectMake(frame.size.width-25, frame.size.height/2-13, 25, 25);
+//        [btnSave setImage:[UIImage imageNamed:@"customer_view_confirm_n.png"] forState:UIControlStateNormal];
+//        [btnSave setImage:[UIImage imageNamed:@"customer_view_confirm_s.png"] forState:UIControlStateHighlighted];
+//        [btnSave setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//        [btnSave setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
+//        btnSave.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+//        [btnSave addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
+//        [self addSubview:btnSave];
+//
         
     }
     return self;
@@ -167,6 +167,11 @@
     if ([self.delegate_ respondsToSelector:@selector(didScrollPickerValue:)]) {
         [self.delegate_ didScrollPickerValue:value];
     }
+    
+    if(_selectionBlock)
+    {
+        _selectionBlock(_values);
+    }
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
@@ -184,7 +189,7 @@
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
 {
-    return 50.0;
+    return 44.0;
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
@@ -211,7 +216,7 @@
     
     UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, componentWidth-10, 30)];
     tL.backgroundColor = [UIColor clearColor];
-    tL.textAlignment = NSTextAlignmentLeft;
+    tL.textAlignment = NSTextAlignmentCenter;
     
     id valueRow = [values objectAtIndex:row];
     if([valueRow isKindOfClass:[NSString class]])
@@ -223,7 +228,7 @@
         tL.text = [valueRow objectForKey:@"title"];
     }
     
-    tL.textAlignment = NSTextAlignmentLeft;
+    //tL.textAlignment = NSTextAlignmentLeft;
     
     if (_rowSelected == row) {
         tL.textColor = _selectColor;

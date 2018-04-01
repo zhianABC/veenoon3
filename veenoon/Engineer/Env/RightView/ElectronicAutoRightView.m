@@ -138,7 +138,7 @@ CustomPickerViewDelegate> {
         [self createFooter];
         
         _picker = [[CustomPickerView alloc]
-                   initWithFrame:CGRectMake(frame.size.width/2-100, 43, 200, 100) withGrayOrLight:@"picker_player.png"];
+                   initWithFrame:CGRectMake(frame.size.width/2-100, 43, 200, 120) withGrayOrLight:@"picker_player.png"];
         
         
         _picker._pickerDataArray = @[@{@"values":@[@"1", @"2", @"3"]}];
@@ -434,7 +434,7 @@ CustomPickerViewDelegate> {
     
     if(_curSectionIndex == section)
     {
-        return 144;
+        return 164;
     }
     return 44;
 }
@@ -526,7 +526,7 @@ CustomPickerViewDelegate> {
             
             [header addSubview:_picker];
             
-            height = 144;
+            height = 164;
         }
     }
     
@@ -551,7 +551,15 @@ CustomPickerViewDelegate> {
 
 - (void) clickHeader:(UIButton*)sender{
     
-    _curSectionIndex = (int)sender.tag;
+    int curIdx = (int)sender.tag;
+    if(_curSectionIndex == curIdx)
+    {
+        _curSectionIndex = -1;
+    }
+    else
+    {
+        _curSectionIndex = curIdx;
+    }
     
     [_tableView reloadData];
 }
@@ -563,8 +571,8 @@ CustomPickerViewDelegate> {
         _selRowIp = [[values objectForKey:@"row"] intValue];
     }
     
-    _curSectionIndex = -1;
-    
+    //_curSectionIndex = -1;
+    _tableView.scrollEnabled = YES;
     [_tableView reloadData];
     
 }

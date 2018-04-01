@@ -8,10 +8,9 @@
 
 #import "CleanWaterRightView.h"
 #import "UIButton+Color.h"
-#import "CustomPickerView.h"
 #import "ComSettingView.h"
 
-@interface CleanWaterRightView () <CustomPickerViewDelegate> {
+@interface CleanWaterRightView ()  {
     
     ComSettingView *_com;
 }

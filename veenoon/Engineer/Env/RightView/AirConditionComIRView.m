@@ -137,7 +137,7 @@ CustomPickerViewDelegate>
         
         
         _picker = [[CustomPickerView alloc]
-                   initWithFrame:CGRectMake(frame.size.width/2-100, 43, 200, 100) withGrayOrLight:@"picker_player.png"];
+                   initWithFrame:CGRectMake(frame.size.width/2-100, 43, 200, 120) withGrayOrLight:@"picker_player.png"];
         
         
         _picker._pickerDataArray = @[@{@"values":@[@"1", @"2", @"3"]}];
@@ -408,7 +408,7 @@ CustomPickerViewDelegate>
     {
         if(_curIndex == indexPath.row)
         {
-            return 144;
+            return 164;
         }
     }
     else if(indexPath.section == 1)
@@ -500,7 +500,7 @@ CustomPickerViewDelegate>
         [cell.contentView addSubview:line];
         if(_curIndex == indexPath.row)
         {
-            line.frame = CGRectMake(0, 143, self.frame.size.width, 1);
+            line.frame = CGRectMake(0, 163, self.frame.size.width, 1);
             
             [cell.contentView addSubview:_picker];
         }

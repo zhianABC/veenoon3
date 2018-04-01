@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-#import "CustomPickerView.h"
 
-@interface EngineerAireConditionViewCtrl<CustomPickerViewDelegate> : BaseViewController {
+@interface EngineerAireConditionViewCtrl : BaseViewController {
     NSMutableArray *_airSysArray;
     
     int _number;

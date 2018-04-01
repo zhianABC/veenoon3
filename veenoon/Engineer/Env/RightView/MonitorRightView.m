@@ -8,10 +8,9 @@
 
 #import "MonitorRightView.h"
 #import "UIButton+Color.h"
-#import "CustomPickerView.h"
 #import "ComSettingView.h"
 
-@interface MonitorRightView () <CustomPickerViewDelegate, UITextFieldDelegate> {
+@interface MonitorRightView () <UITextFieldDelegate> {
     
     ComSettingView *_com;
     

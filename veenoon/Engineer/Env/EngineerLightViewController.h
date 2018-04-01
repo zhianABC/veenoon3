@@ -8,10 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-#import "CustomPickerView.h"
 #import "EngineerSliderView.h"
 
-@interface EngineerLightViewController<CustomPickerViewDelegate, EngineerSliderViewDelegate> : BaseViewController {
+@interface EngineerLightViewController< EngineerSliderViewDelegate> : BaseViewController {
     NSMutableArray *_lightSysArray;
     
     int _number;

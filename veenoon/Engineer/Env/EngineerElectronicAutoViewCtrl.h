@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-#import "CustomPickerView.h"
 
-@interface EngineerElectronicAutoViewCtrl<CustomPickerViewDelegate> : BaseViewController {
+
+@interface EngineerElectronicAutoViewCtrl : BaseViewController {
     NSMutableArray *_electronicSysArray;
     
     int _number;

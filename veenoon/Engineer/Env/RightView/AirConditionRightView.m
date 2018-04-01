@@ -110,7 +110,7 @@
         [self createFooter];
         
         _picker = [[CustomPickerView alloc]
-                   initWithFrame:CGRectMake(frame.size.width/2-100, 43, 200, 100) withGrayOrLight:@"picker_player.png"];
+                   initWithFrame:CGRectMake(frame.size.width/2-100, 43, 200, 120) withGrayOrLight:@"picker_player.png"];
         
         
         _picker._pickerDataArray = @[@{@"values":@[@"1", @"2", @"3"]}];
@@ -265,6 +265,7 @@
         _selRow3 = [[values objectForKey:@"row"] intValue];
     }
     
+    _tableView.scrollEnabled = YES;
     [_tableView reloadData];
     
 }
@@ -284,7 +285,7 @@
     if(indexPath.section == 0) {
         if(_curIndex == indexPath.row && _curIndex != 1)
         {
-            return 144;
+            return 164;
         }
     }
     return 44;
@@ -394,7 +395,7 @@
     [cell.contentView addSubview:line];
     
     if(_curIndex == indexPath.row && _curIndex != 1) {
-        line.frame = CGRectMake(0, 143, self.frame.size.width, 1);
+        line.frame = CGRectMake(0, 163, self.frame.size.width, 1);
         [cell.contentView addSubview:_picker];
     }
     
@@ -434,7 +435,18 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     if (indexPath.section == 0) {
-        _curIndex = (int)indexPath.row;
+        
+        int curIndx = (int)indexPath.row;
+        
+        if(_curIndex == curIndx)
+        {
+            _curIndex = -1;
+        }
+        else
+        {
+            _curIndex = curIndx;
+        }
+        
         if (_curIndex != 1) {
             _tableView.scrollEnabled = NO;
             [_tableView reloadData];

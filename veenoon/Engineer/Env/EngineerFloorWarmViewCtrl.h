@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-#import "CustomPickerView.h"
 
-@interface EngineerFloorWarmViewCtrl<CustomPickerViewDelegate> : BaseViewController {
+@interface EngineerFloorWarmViewCtrl : BaseViewController {
     NSMutableArray *_floorWarmSysArray;
     
     int _number;

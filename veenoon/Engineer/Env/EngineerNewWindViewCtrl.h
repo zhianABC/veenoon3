@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-#import "CustomPickerView.h"
 
-@interface EngineerNewWindViewCtrl<CustomPickerViewDelegate> : BaseViewController {
+@interface EngineerNewWindViewCtrl : BaseViewController {
     NSMutableArray *_windSysArray;
     
     int _number;
