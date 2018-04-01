@@ -211,7 +211,7 @@
     signup.frame = CGRectMake(SCREEN_WIDTH/2-50, labelStartY+120+25, 100, 40);
     signup.layer.cornerRadius = 5;
     signup.layer.borderWidth = 2;
-    signup.layer.borderColor = RGB(0, 89, 118).CGColor;
+    signup.layer.borderColor = [UIColor clearColor].CGColor;
     signup.clipsToBounds = YES;
     [self.view addSubview:signup];
     [signup setTitle:@"确认" forState:UIControlStateNormal];
