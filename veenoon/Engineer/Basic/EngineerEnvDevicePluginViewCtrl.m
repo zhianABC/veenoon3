@@ -222,429 +222,165 @@
     [self.view addSubview:_confirmButton];
 }
 - (void) zhaomingAction:(id)sender{
-    [_zhaomingBtn setImage:[UIImage imageNamed:@"engineer_env_zhaoming_s.png"] forState:UIControlStateNormal];
-    [_zhaomingBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
-    
-    
-    [_kongtiaoBtn setImage:[UIImage imageNamed:@"engineer_env_kongtiao_n.png"] forState:UIControlStateNormal];
-    [_kongtiaoBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_diandongmadaBtn setImage:[UIImage imageNamed:@"engineer_env_diandongmada_n.png"] forState:UIControlStateNormal];
-    [_diandongmadaBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_xinfengBtn setImage:[UIImage imageNamed:@"engineer_env_xinfeng_n.png"] forState:UIControlStateNormal];
-    [_xinfengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_dinuanBtn setImage:[UIImage imageNamed:@"engineer_env_dire_n.png"] forState:UIControlStateNormal];
-    [_dinuanBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_kongqijinghuaBtn setImage:[UIImage imageNamed:@"engineer_env_kongqijignhua_n.png"] forState:UIControlStateNormal];
-    [_kongqijinghuaBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_jingshuiBtn setImage:[UIImage imageNamed:@"engineer_env_jingshui_n.png"] forState:UIControlStateNormal];
-    [_jingshuiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_jiashiqiBtn setImage:[UIImage imageNamed:@"engineer_env_jiashi_n.png"] forState:UIControlStateNormal];
-    [_jiashiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_menjinBtn setImage:[UIImage imageNamed:@"engineer_env_menjin_n.png"] forState:UIControlStateNormal];
-    [_menjinBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_jiankongBtn setImage:[UIImage imageNamed:@"engineer_env_jiankong_n.png"] forState:UIControlStateNormal];
-    [_jiankongBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_nenghaotongjiBtn setImage:[UIImage imageNamed:@"engineer_env_nenghao_n.png"] forState:UIControlStateNormal];
-    [_nenghaotongjiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_zhaomingBtn setBtnHighlited:YES];
+    [_kongtiaoBtn setBtnHighlited:NO];
+    [_diandongmadaBtn setBtnHighlited:NO];
+    [_xinfengBtn setBtnHighlited:NO];
+    [_dinuanBtn setBtnHighlited:NO];
+    [_kongqijinghuaBtn setBtnHighlited:NO];
+    [_jiashiqiBtn setBtnHighlited:NO];
+    [_jiankongBtn setBtnHighlited:NO];
+    [_nenghaotongjiBtn setBtnHighlited:NO];
     
     UIButton *btn = (UIButton*) sender;
     NSString *btnText = btn.titleLabel.text;
     [self setBrandValue:btnText];
 }
 - (void) kongtiaoAction:(id)sender{
-    [_zhaomingBtn setImage:[UIImage imageNamed:@"engineer_env_zhaoming_n.png"] forState:UIControlStateNormal];
-    [_zhaomingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    
-    [_kongtiaoBtn setImage:[UIImage imageNamed:@"engineer_env_kongtiao_s.png"] forState:UIControlStateNormal];
-    [_kongtiaoBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
-    
-    [_diandongmadaBtn setImage:[UIImage imageNamed:@"engineer_env_diandongmada_n.png"] forState:UIControlStateNormal];
-    [_diandongmadaBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_xinfengBtn setImage:[UIImage imageNamed:@"engineer_env_xinfeng_n.png"] forState:UIControlStateNormal];
-    [_xinfengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_dinuanBtn setImage:[UIImage imageNamed:@"engineer_env_dire_n.png"] forState:UIControlStateNormal];
-    [_dinuanBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_kongqijinghuaBtn setImage:[UIImage imageNamed:@"engineer_env_kongqijignhua_n.png"] forState:UIControlStateNormal];
-    [_kongqijinghuaBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_jingshuiBtn setImage:[UIImage imageNamed:@"engineer_env_jingshui_n.png"] forState:UIControlStateNormal];
-    [_jingshuiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_jiashiqiBtn setImage:[UIImage imageNamed:@"engineer_env_jiashi_n.png"] forState:UIControlStateNormal];
-    [_jiashiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_menjinBtn setImage:[UIImage imageNamed:@"engineer_env_menjin_n.png"] forState:UIControlStateNormal];
-    [_menjinBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_jiankongBtn setImage:[UIImage imageNamed:@"engineer_env_jiankong_n.png"] forState:UIControlStateNormal];
-    [_jiankongBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_nenghaotongjiBtn setImage:[UIImage imageNamed:@"engineer_env_nenghao_n.png"] forState:UIControlStateNormal];
-    [_nenghaotongjiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_zhaomingBtn setBtnHighlited:NO];
+    [_kongtiaoBtn setBtnHighlited:YES];
+    [_diandongmadaBtn setBtnHighlited:NO];
+    [_xinfengBtn setBtnHighlited:NO];
+    [_dinuanBtn setBtnHighlited:NO];
+    [_kongqijinghuaBtn setBtnHighlited:NO];
+    [_jiashiqiBtn setBtnHighlited:NO];
+    [_jiankongBtn setBtnHighlited:NO];
+    [_nenghaotongjiBtn setBtnHighlited:NO];
     
     UIButton *btn = (UIButton*) sender;
     NSString *btnText = btn.titleLabel.text;
     [self setBrandValue:btnText];
 }
 - (void) diandongmadaAction:(id)sender{
-    [_zhaomingBtn setImage:[UIImage imageNamed:@"engineer_env_zhaoming_n.png"] forState:UIControlStateNormal];
-    [_zhaomingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    
-    [_kongtiaoBtn setImage:[UIImage imageNamed:@"engineer_env_kongtiao_n.png"] forState:UIControlStateNormal];
-    [_kongtiaoBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_diandongmadaBtn setImage:[UIImage imageNamed:@"engineer_env_diandongmada_s.png"] forState:UIControlStateNormal];
-    [_diandongmadaBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
-    
-    [_xinfengBtn setImage:[UIImage imageNamed:@"engineer_env_xinfeng_n.png"] forState:UIControlStateNormal];
-    [_xinfengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_dinuanBtn setImage:[UIImage imageNamed:@"engineer_env_dire_n.png"] forState:UIControlStateNormal];
-    [_dinuanBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_kongqijinghuaBtn setImage:[UIImage imageNamed:@"engineer_env_kongqijignhua_n.png"] forState:UIControlStateNormal];
-    [_kongqijinghuaBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_jingshuiBtn setImage:[UIImage imageNamed:@"engineer_env_jingshui_n.png"] forState:UIControlStateNormal];
-    [_jingshuiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_jiashiqiBtn setImage:[UIImage imageNamed:@"engineer_env_jiashi_n.png"] forState:UIControlStateNormal];
-    [_jiashiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_menjinBtn setImage:[UIImage imageNamed:@"engineer_env_menjin_n.png"] forState:UIControlStateNormal];
-    [_menjinBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_jiankongBtn setImage:[UIImage imageNamed:@"engineer_env_jiankong_n.png"] forState:UIControlStateNormal];
-    [_jiankongBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_nenghaotongjiBtn setImage:[UIImage imageNamed:@"engineer_env_nenghao_n.png"] forState:UIControlStateNormal];
-    [_nenghaotongjiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_zhaomingBtn setBtnHighlited:NO];
+    [_kongtiaoBtn setBtnHighlited:NO];
+    [_diandongmadaBtn setBtnHighlited:YES];
+    [_xinfengBtn setBtnHighlited:NO];
+    [_dinuanBtn setBtnHighlited:NO];
+    [_kongqijinghuaBtn setBtnHighlited:NO];
+    [_jiashiqiBtn setBtnHighlited:NO];
+    [_jiankongBtn setBtnHighlited:NO];
+    [_nenghaotongjiBtn setBtnHighlited:NO];
     
     UIButton *btn = (UIButton*) sender;
     NSString *btnText = btn.titleLabel.text;
     [self setBrandValue:btnText];
 }
 - (void) xinfengAction:(id)sender{
-    [_zhaomingBtn setImage:[UIImage imageNamed:@"engineer_env_zhaoming_n.png"] forState:UIControlStateNormal];
-    [_zhaomingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    
-    [_kongtiaoBtn setImage:[UIImage imageNamed:@"engineer_env_kongtiao_n.png"] forState:UIControlStateNormal];
-    [_kongtiaoBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_diandongmadaBtn setImage:[UIImage imageNamed:@"engineer_env_diandongmada_n.png"] forState:UIControlStateNormal];
-    [_diandongmadaBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_xinfengBtn setImage:[UIImage imageNamed:@"engineer_env_xinfeng_s.png"] forState:UIControlStateNormal];
-    [_xinfengBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
-    
-    [_dinuanBtn setImage:[UIImage imageNamed:@"engineer_env_dire_n.png"] forState:UIControlStateNormal];
-    [_dinuanBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_kongqijinghuaBtn setImage:[UIImage imageNamed:@"engineer_env_kongqijignhua_n.png"] forState:UIControlStateNormal];
-    [_kongqijinghuaBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_jingshuiBtn setImage:[UIImage imageNamed:@"engineer_env_jingshui_n.png"] forState:UIControlStateNormal];
-    [_jingshuiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_jiashiqiBtn setImage:[UIImage imageNamed:@"engineer_env_jiashi_n.png"] forState:UIControlStateNormal];
-    [_jiashiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_menjinBtn setImage:[UIImage imageNamed:@"engineer_env_menjin_n.png"] forState:UIControlStateNormal];
-    [_menjinBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_jiankongBtn setImage:[UIImage imageNamed:@"engineer_env_jiankong_n.png"] forState:UIControlStateNormal];
-    [_jiankongBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_nenghaotongjiBtn setImage:[UIImage imageNamed:@"engineer_env_nenghao_n.png"] forState:UIControlStateNormal];
-    [_nenghaotongjiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_zhaomingBtn setBtnHighlited:NO];
+    [_kongtiaoBtn setBtnHighlited:NO];
+    [_diandongmadaBtn setBtnHighlited:NO];
+    [_xinfengBtn setBtnHighlited:YES];
+    [_dinuanBtn setBtnHighlited:NO];
+    [_kongqijinghuaBtn setBtnHighlited:NO];
+    [_jiashiqiBtn setBtnHighlited:NO];
+    [_jiankongBtn setBtnHighlited:NO];
+    [_nenghaotongjiBtn setBtnHighlited:NO];
     
     UIButton *btn = (UIButton*) sender;
     NSString *btnText = btn.titleLabel.text;
     [self setBrandValue:btnText];
 }
 - (void) dinuanAction:(id)sender{
-    [_zhaomingBtn setImage:[UIImage imageNamed:@"engineer_env_zhaoming_n.png"] forState:UIControlStateNormal];
-    [_zhaomingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    
-    [_kongtiaoBtn setImage:[UIImage imageNamed:@"engineer_env_kongtiao_n.png"] forState:UIControlStateNormal];
-    [_kongtiaoBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_diandongmadaBtn setImage:[UIImage imageNamed:@"engineer_env_diandongmada_n.png"] forState:UIControlStateNormal];
-    [_diandongmadaBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_xinfengBtn setImage:[UIImage imageNamed:@"engineer_env_xinfeng_n.png"] forState:UIControlStateNormal];
-    [_xinfengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_dinuanBtn setImage:[UIImage imageNamed:@"engineer_env_dire_s.png"] forState:UIControlStateNormal];
-    [_dinuanBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
-    
-    [_kongqijinghuaBtn setImage:[UIImage imageNamed:@"engineer_env_kongqijignhua_n.png"] forState:UIControlStateNormal];
-    [_kongqijinghuaBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_jingshuiBtn setImage:[UIImage imageNamed:@"engineer_env_jingshui_n.png"] forState:UIControlStateNormal];
-    [_jingshuiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_jiashiqiBtn setImage:[UIImage imageNamed:@"engineer_env_jiashi_n.png"] forState:UIControlStateNormal];
-    [_jiashiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_menjinBtn setImage:[UIImage imageNamed:@"engineer_env_menjin_n.png"] forState:UIControlStateNormal];
-    [_menjinBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_jiankongBtn setImage:[UIImage imageNamed:@"engineer_env_jiankong_n.png"] forState:UIControlStateNormal];
-    [_jiankongBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_nenghaotongjiBtn setImage:[UIImage imageNamed:@"engineer_env_nenghao_n.png"] forState:UIControlStateNormal];
-    [_nenghaotongjiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_zhaomingBtn setBtnHighlited:NO];
+    [_kongtiaoBtn setBtnHighlited:NO];
+    [_diandongmadaBtn setBtnHighlited:NO];
+    [_xinfengBtn setBtnHighlited:NO];
+    [_dinuanBtn setBtnHighlited:YES];
+    [_kongqijinghuaBtn setBtnHighlited:NO];
+    [_jiashiqiBtn setBtnHighlited:NO];
+    [_jiankongBtn setBtnHighlited:NO];
+    [_nenghaotongjiBtn setBtnHighlited:NO];
     
     UIButton *btn = (UIButton*) sender;
     NSString *btnText = btn.titleLabel.text;
     [self setBrandValue:btnText];
 }
 - (void) kongqijinghuaAction:(id)sender{
-    [_zhaomingBtn setImage:[UIImage imageNamed:@"engineer_env_zhaoming_n.png"] forState:UIControlStateNormal];
-    [_zhaomingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    
-    [_kongtiaoBtn setImage:[UIImage imageNamed:@"engineer_env_kongtiao_n.png"] forState:UIControlStateNormal];
-    [_kongtiaoBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_diandongmadaBtn setImage:[UIImage imageNamed:@"engineer_env_diandongmada_n.png"] forState:UIControlStateNormal];
-    [_diandongmadaBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_xinfengBtn setImage:[UIImage imageNamed:@"engineer_env_xinfeng_n.png"] forState:UIControlStateNormal];
-    [_xinfengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_dinuanBtn setImage:[UIImage imageNamed:@"engineer_env_dire_n.png"] forState:UIControlStateNormal];
-    [_dinuanBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_kongqijinghuaBtn setImage:[UIImage imageNamed:@"engineer_env_kongqijignhua_s.png"] forState:UIControlStateNormal];
-    [_kongqijinghuaBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
-    
-    [_jingshuiBtn setImage:[UIImage imageNamed:@"engineer_env_jingshui_n.png"] forState:UIControlStateNormal];
-    [_jingshuiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_jiashiqiBtn setImage:[UIImage imageNamed:@"engineer_env_jiashi_n.png"] forState:UIControlStateNormal];
-    [_jiashiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_menjinBtn setImage:[UIImage imageNamed:@"engineer_env_menjin_n.png"] forState:UIControlStateNormal];
-    [_menjinBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_jiankongBtn setImage:[UIImage imageNamed:@"engineer_env_jiankong_n.png"] forState:UIControlStateNormal];
-    [_jiankongBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_nenghaotongjiBtn setImage:[UIImage imageNamed:@"engineer_env_nenghao_n.png"] forState:UIControlStateNormal];
-    [_nenghaotongjiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_zhaomingBtn setBtnHighlited:NO];
+    [_kongtiaoBtn setBtnHighlited:NO];
+    [_diandongmadaBtn setBtnHighlited:NO];
+    [_xinfengBtn setBtnHighlited:NO];
+    [_dinuanBtn setBtnHighlited:NO];
+    [_kongqijinghuaBtn setBtnHighlited:YES];
+    [_jiashiqiBtn setBtnHighlited:NO];
+    [_jiankongBtn setBtnHighlited:NO];
+    [_nenghaotongjiBtn setBtnHighlited:NO];
     
     UIButton *btn = (UIButton*) sender;
     NSString *btnText = btn.titleLabel.text;
     [self setBrandValue:btnText];
 }
 - (void) jingshuiAction:(id)sender{
-    [_zhaomingBtn setImage:[UIImage imageNamed:@"engineer_env_zhaoming_n.png"] forState:UIControlStateNormal];
-    [_zhaomingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    
-    [_kongtiaoBtn setImage:[UIImage imageNamed:@"engineer_env_kongtiao_n.png"] forState:UIControlStateNormal];
-    [_kongtiaoBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_diandongmadaBtn setImage:[UIImage imageNamed:@"engineer_env_diandongmada_n.png"] forState:UIControlStateNormal];
-    [_diandongmadaBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_xinfengBtn setImage:[UIImage imageNamed:@"engineer_env_xinfeng_n.png"] forState:UIControlStateNormal];
-    [_xinfengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_dinuanBtn setImage:[UIImage imageNamed:@"engineer_env_dire_n.png"] forState:UIControlStateNormal];
-    [_dinuanBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_kongqijinghuaBtn setImage:[UIImage imageNamed:@"engineer_env_kongqijignhua_n.png"] forState:UIControlStateNormal];
-    [_kongqijinghuaBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_jingshuiBtn setImage:[UIImage imageNamed:@"engineer_env_jingshui_s.png"] forState:UIControlStateNormal];
-    [_jingshuiBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
-    
-    [_jiashiqiBtn setImage:[UIImage imageNamed:@"engineer_env_jiashi_n.png"] forState:UIControlStateNormal];
-    [_jiashiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_menjinBtn setImage:[UIImage imageNamed:@"engineer_env_menjin_n.png"] forState:UIControlStateNormal];
-    [_menjinBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_jiankongBtn setImage:[UIImage imageNamed:@"engineer_env_jiankong_n.png"] forState:UIControlStateNormal];
-    [_jiankongBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_nenghaotongjiBtn setImage:[UIImage imageNamed:@"engineer_env_nenghao_n.png"] forState:UIControlStateNormal];
-    [_nenghaotongjiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_zhaomingBtn setBtnHighlited:NO];
+    [_kongtiaoBtn setBtnHighlited:NO];
+    [_diandongmadaBtn setBtnHighlited:NO];
+    [_xinfengBtn setBtnHighlited:NO];
+    [_dinuanBtn setBtnHighlited:NO];
+    [_kongqijinghuaBtn setBtnHighlited:NO];
+    [_jiashiqiBtn setBtnHighlited:NO];
+    [_jiankongBtn setBtnHighlited:NO];
+    [_nenghaotongjiBtn setBtnHighlited:NO];
     
     UIButton *btn = (UIButton*) sender;
     NSString *btnText = btn.titleLabel.text;
     [self setBrandValue:btnText];
 }
 - (void) jiashiAction:(id)sender{
-    [_zhaomingBtn setImage:[UIImage imageNamed:@"engineer_env_zhaoming_n.png"] forState:UIControlStateNormal];
-    [_zhaomingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    
-    [_kongtiaoBtn setImage:[UIImage imageNamed:@"engineer_env_kongtiao_n.png"] forState:UIControlStateNormal];
-    [_kongtiaoBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_diandongmadaBtn setImage:[UIImage imageNamed:@"engineer_env_diandongmada_n.png"] forState:UIControlStateNormal];
-    [_diandongmadaBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_xinfengBtn setImage:[UIImage imageNamed:@"engineer_env_xinfeng_n.png"] forState:UIControlStateNormal];
-    [_xinfengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_dinuanBtn setImage:[UIImage imageNamed:@"engineer_env_dire_n.png"] forState:UIControlStateNormal];
-    [_dinuanBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_kongqijinghuaBtn setImage:[UIImage imageNamed:@"engineer_env_kongqijignhua_n.png"] forState:UIControlStateNormal];
-    [_kongqijinghuaBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_jingshuiBtn setImage:[UIImage imageNamed:@"engineer_env_jingshui_n.png"] forState:UIControlStateNormal];
-    [_jingshuiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_jiashiqiBtn setImage:[UIImage imageNamed:@"engineer_env_jiashi_s.png"] forState:UIControlStateNormal];
-    [_jiashiqiBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
-    
-    [_menjinBtn setImage:[UIImage imageNamed:@"engineer_env_menjin_n.png"] forState:UIControlStateNormal];
-    [_menjinBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_jiankongBtn setImage:[UIImage imageNamed:@"engineer_env_jiankong_n.png"] forState:UIControlStateNormal];
-    [_jiankongBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_nenghaotongjiBtn setImage:[UIImage imageNamed:@"engineer_env_nenghao_n.png"] forState:UIControlStateNormal];
-    [_nenghaotongjiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_zhaomingBtn setBtnHighlited:NO];
+    [_kongtiaoBtn setBtnHighlited:NO];
+    [_diandongmadaBtn setBtnHighlited:NO];
+    [_xinfengBtn setBtnHighlited:NO];
+    [_dinuanBtn setBtnHighlited:NO];
+    [_kongqijinghuaBtn setBtnHighlited:NO];
+    [_jiashiqiBtn setBtnHighlited:YES];
+    [_jiankongBtn setBtnHighlited:NO];
+    [_nenghaotongjiBtn setBtnHighlited:NO];
     
     UIButton *btn = (UIButton*) sender;
     NSString *btnText = btn.titleLabel.text;
     [self setBrandValue:btnText];
 }
 - (void) menjinAction:(id)sender{
-    [_zhaomingBtn setImage:[UIImage imageNamed:@"engineer_env_zhaoming_n.png"] forState:UIControlStateNormal];
-    [_zhaomingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    
-    [_kongtiaoBtn setImage:[UIImage imageNamed:@"engineer_env_kongtiao_n.png"] forState:UIControlStateNormal];
-    [_kongtiaoBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_diandongmadaBtn setImage:[UIImage imageNamed:@"engineer_env_diandongmada_n.png"] forState:UIControlStateNormal];
-    [_diandongmadaBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_xinfengBtn setImage:[UIImage imageNamed:@"engineer_env_xinfeng_n.png"] forState:UIControlStateNormal];
-    [_xinfengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_dinuanBtn setImage:[UIImage imageNamed:@"engineer_env_dire_n.png"] forState:UIControlStateNormal];
-    [_dinuanBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_kongqijinghuaBtn setImage:[UIImage imageNamed:@"engineer_env_kongqijignhua_n.png"] forState:UIControlStateNormal];
-    [_kongqijinghuaBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_jingshuiBtn setImage:[UIImage imageNamed:@"engineer_env_jingshui_n.png"] forState:UIControlStateNormal];
-    [_jingshuiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_jiashiqiBtn setImage:[UIImage imageNamed:@"engineer_env_jiashi_n.png"] forState:UIControlStateNormal];
-    [_jiashiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_menjinBtn setImage:[UIImage imageNamed:@"engineer_env_menjin_s.png"] forState:UIControlStateNormal];
-    [_menjinBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
-    
-    [_jiankongBtn setImage:[UIImage imageNamed:@"engineer_env_jiankong_n.png"] forState:UIControlStateNormal];
-    [_jiankongBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_nenghaotongjiBtn setImage:[UIImage imageNamed:@"engineer_env_nenghao_n.png"] forState:UIControlStateNormal];
-    [_nenghaotongjiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_zhaomingBtn setBtnHighlited:NO];
+    [_kongtiaoBtn setBtnHighlited:YES];
+    [_diandongmadaBtn setBtnHighlited:NO];
+    [_xinfengBtn setBtnHighlited:NO];
+    [_dinuanBtn setBtnHighlited:NO];
+    [_kongqijinghuaBtn setBtnHighlited:NO];
+    [_jiashiqiBtn setBtnHighlited:NO];
+    [_jiankongBtn setBtnHighlited:NO];
+    [_nenghaotongjiBtn setBtnHighlited:NO];
     
     UIButton *btn = (UIButton*) sender;
     NSString *btnText = btn.titleLabel.text;
     [self setBrandValue:btnText];
 }
 - (void) jiankongAction:(id)sender{
-    [_zhaomingBtn setImage:[UIImage imageNamed:@"engineer_env_zhaoming_n.png"] forState:UIControlStateNormal];
-    [_zhaomingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    
-    [_kongtiaoBtn setImage:[UIImage imageNamed:@"engineer_env_kongtiao_n.png"] forState:UIControlStateNormal];
-    [_kongtiaoBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_diandongmadaBtn setImage:[UIImage imageNamed:@"engineer_env_diandongmada_n.png"] forState:UIControlStateNormal];
-    [_diandongmadaBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_xinfengBtn setImage:[UIImage imageNamed:@"engineer_env_xinfeng_n.png"] forState:UIControlStateNormal];
-    [_xinfengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_dinuanBtn setImage:[UIImage imageNamed:@"engineer_env_dire_n.png"] forState:UIControlStateNormal];
-    [_dinuanBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_kongqijinghuaBtn setImage:[UIImage imageNamed:@"engineer_env_kongqijignhua_n.png"] forState:UIControlStateNormal];
-    [_kongqijinghuaBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_jingshuiBtn setImage:[UIImage imageNamed:@"engineer_env_jingshui_n.png"] forState:UIControlStateNormal];
-    [_jingshuiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_jiashiqiBtn setImage:[UIImage imageNamed:@"engineer_env_jiashi_n.png"] forState:UIControlStateNormal];
-    [_jiashiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_menjinBtn setImage:[UIImage imageNamed:@"engineer_env_menjin_n.png"] forState:UIControlStateNormal];
-    [_menjinBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_jiankongBtn setImage:[UIImage imageNamed:@"engineer_env_jiankong_s.png"] forState:UIControlStateNormal];
-    [_jiankongBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
-    
-    [_nenghaotongjiBtn setImage:[UIImage imageNamed:@"engineer_env_nenghao_n.png"] forState:UIControlStateNormal];
-    [_nenghaotongjiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_zhaomingBtn setBtnHighlited:NO];
+    [_kongtiaoBtn setBtnHighlited:NO];
+    [_diandongmadaBtn setBtnHighlited:NO];
+    [_xinfengBtn setBtnHighlited:NO];
+    [_dinuanBtn setBtnHighlited:NO];
+    [_kongqijinghuaBtn setBtnHighlited:NO];
+    [_jiashiqiBtn setBtnHighlited:NO];
+    [_jiankongBtn setBtnHighlited:YES];
+    [_nenghaotongjiBtn setBtnHighlited:NO];
     
     UIButton *btn = (UIButton*) sender;
     NSString *btnText = btn.titleLabel.text;
     [self setBrandValue:btnText];
 }
 - (void) nenghaotongjiAction:(id)sender{
-    [_zhaomingBtn setImage:[UIImage imageNamed:@"engineer_env_zhaoming_n.png"] forState:UIControlStateNormal];
-    [_zhaomingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    
-    [_kongtiaoBtn setImage:[UIImage imageNamed:@"engineer_env_kongtiao_n.png"] forState:UIControlStateNormal];
-    [_kongtiaoBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_diandongmadaBtn setImage:[UIImage imageNamed:@"engineer_env_diandongmada_n.png"] forState:UIControlStateNormal];
-    [_diandongmadaBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_xinfengBtn setImage:[UIImage imageNamed:@"engineer_env_xinfeng_n.png"] forState:UIControlStateNormal];
-    [_xinfengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_dinuanBtn setImage:[UIImage imageNamed:@"engineer_env_dire_n.png"] forState:UIControlStateNormal];
-    [_dinuanBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_kongqijinghuaBtn setImage:[UIImage imageNamed:@"engineer_env_kongqijignhua_n.png"] forState:UIControlStateNormal];
-    [_kongqijinghuaBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_jingshuiBtn setImage:[UIImage imageNamed:@"engineer_env_jingshui_n.png"] forState:UIControlStateNormal];
-    [_jingshuiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_jiashiqiBtn setImage:[UIImage imageNamed:@"engineer_env_jiashi_n.png"] forState:UIControlStateNormal];
-    [_jiashiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_menjinBtn setImage:[UIImage imageNamed:@"engineer_env_menjin_n.png"] forState:UIControlStateNormal];
-    [_menjinBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_jiankongBtn setImage:[UIImage imageNamed:@"engineer_env_jiankong_n.png"] forState:UIControlStateNormal];
-    [_jiankongBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    [_nenghaotongjiBtn setImage:[UIImage imageNamed:@"engineer_env_nenghao_s.png"] forState:UIControlStateNormal];
-    [_nenghaotongjiBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
+    [_zhaomingBtn setBtnHighlited:NO];
+    [_kongtiaoBtn setBtnHighlited:NO];
+    [_diandongmadaBtn setBtnHighlited:NO];
+    [_xinfengBtn setBtnHighlited:NO];
+    [_dinuanBtn setBtnHighlited:NO];
+    [_kongqijinghuaBtn setBtnHighlited:NO];
+    [_jiashiqiBtn setBtnHighlited:NO];
+    [_jiankongBtn setBtnHighlited:NO];
+    [_nenghaotongjiBtn setBtnHighlited:YES];
     
     UIButton *btn = (UIButton*) sender;
     NSString *btnText = btn.titleLabel.text;
