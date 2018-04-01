@@ -186,7 +186,7 @@
     zhitongBtn1.layer.borderWidth = 2;
     zhitongBtn1.layer.borderColor = [UIColor clearColor].CGColor;;
     zhitongBtn1.clipsToBounds = YES;
-    [zhitongBtn1 setTitle:@"直通" forState:UIControlStateNormal];
+    [zhitongBtn1 setTitle:@"启用" forState:UIControlStateNormal];
     zhitongBtn1.titleLabel.font = [UIFont systemFontOfSize:13];
     [zhitongBtn1 addTarget:self
                    action:@selector(zhitongBtn1Action:)
@@ -362,7 +362,7 @@
     zhitongBtn1.layer.borderWidth = 2;
     zhitongBtn1.layer.borderColor = [UIColor clearColor].CGColor;;
     zhitongBtn1.clipsToBounds = YES;
-    [zhitongBtn1 setTitle:@"直通" forState:UIControlStateNormal];
+    [zhitongBtn1 setTitle:@"启用" forState:UIControlStateNormal];
     zhitongBtn1.titleLabel.font = [UIFont systemFontOfSize:13];
     [zhitongBtn1 addTarget:self
                     action:@selector(zhitongBtn2Action:)
@@ -508,7 +508,7 @@
     zhitongBtn1.layer.borderWidth = 2;
     zhitongBtn1.layer.borderColor = [UIColor clearColor].CGColor;;
     zhitongBtn1.clipsToBounds = YES;
-    [zhitongBtn1 setTitle:@"直通" forState:UIControlStateNormal];
+    [zhitongBtn1 setTitle:@"启用" forState:UIControlStateNormal];
     zhitongBtn1.titleLabel.font = [UIFont systemFontOfSize:13];
     [zhitongBtn1 addTarget:self
                     action:@selector(zhitongBtn3Action:)

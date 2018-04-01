@@ -24,6 +24,8 @@
     BOOL isSettings;
     
     NSMutableArray *lableArray;
+    NSMutableArray *_selectedBtnArray;
+    NSMutableArray *_allBtnArray;
 }
 
 @property (nonatomic, strong) APowerESet *_objSet;
@@ -41,6 +43,8 @@
     isSettings = NO;
     
     lableArray = [[NSMutableArray alloc] init];
+    _selectedBtnArray = [[NSMutableArray alloc] init];
+    _allBtnArray = [[NSMutableArray alloc] init];
     
     [super setTitleAndImage:@"audio_corner_dianyuanguanli.png" withTitle:@"电源实时器"];
     
@@ -90,8 +94,6 @@
     int index = 0;
     int top = ENGINEER_VIEW_COMPONENT_TOP;
     
-    self._number = 16;
-    
     int leftRight = ENGINEER_VIEW_LEFT;
     
     int cellWidth = 92;
@@ -128,7 +130,7 @@
             int startX = col*cellWidth+col*space+leftRight;
             int startY = row*cellHeight+space*row+top;
             
-            UIButton *scenarioBtn = [UIButton buttonWithColor:nil selColor:RGB(0, 89, 118)];
+            UIButton *scenarioBtn = [UIButton buttonWithColor:nil selColor:nil];
             scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
             scenarioBtn.layer.cornerRadius = 5;
             scenarioBtn.layer.borderWidth = 2;
@@ -143,6 +145,9 @@
                             action:@selector(scenarioAction:)
                   forControlEvents:UIControlEventTouchUpInside];
             [self createBtnLabel:scenarioBtn dataDic:dic];
+            
+            [_allBtnArray addObject:scenarioBtn];
+            
             index++;
         }
     } else {
@@ -227,18 +232,27 @@
     
     UILabel *titleL = [lableArray objectAtIndex:index];
     
-    NSMutableDictionary *dic = [self._electronicSysArray objectAtIndex:index];
+    UIButton *selctedBtn;
     
-    NSString *status = [dic objectForKey:@"status"];
-    if ([status isEqualToString:@"ON"]) {
-        [btn setImage:[UIImage imageNamed:@"dianyuanshishiqi_n.png"] forState:UIControlStateNormal];
-        [dic setObject:@"OFF" forKey:@"status"];
+    for(UIButton *btn in _selectedBtnArray) {
+        if (index == (int) btn.tag) {
+            selctedBtn = btn;
+            break;
+        }
+    }
+    
+    if (selctedBtn != nil) {
+        [selctedBtn setImage:[UIImage imageNamed:@"dianyuanshishiqi_n.png"] forState:UIControlStateNormal];
         [titleL setTextColor:[UIColor whiteColor]];
-    } else {
-        [btn setImage:[UIImage imageNamed:@"dianyuanshishiqi_s.png"] forState:UIControlStateNormal];
-        [dic setObject:@"ON" forKey:@"status"];
         
+        [_selectedBtnArray removeObject:selctedBtn];
+    } else {
+        selctedBtn = [_allBtnArray objectAtIndex:index];
+        
+        [selctedBtn setImage:[UIImage imageNamed:@"dianyuanshishiqi_s.png"] forState:UIControlStateNormal];
         [titleL setTextColor:YELLOW_COLOR];
+        
+        [_selectedBtnArray addObject:selctedBtn];
     }
 }
 

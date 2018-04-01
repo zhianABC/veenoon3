@@ -124,7 +124,7 @@
     
     [self inintData];
     
-    [super setTitleAndImage:@"audio_corner_huatong.png" withTitle:@"无线手持腰包系统"];
+    [super setTitleAndImage:@"audio_corner_huatong.png" withTitle:@"无线麦"];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];

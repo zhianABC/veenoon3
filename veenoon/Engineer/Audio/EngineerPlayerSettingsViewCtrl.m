@@ -43,7 +43,7 @@
     
     isSettings = NO;
     
-    [super setTitleAndImage:@"audio_corner_bofangqi.png" withTitle:@"播放器"];
+    [super setTitleAndImage:@"audio_corner_bofangqi.png" withTitle:@"CD"];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];

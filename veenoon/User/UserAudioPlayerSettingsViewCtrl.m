@@ -30,11 +30,11 @@
     [super viewDidLoad];
     
     if (self.playerState == USBPlaer) {
-        [super setTitleAndImage:@"user_corner_usb.png" withTitle:@"USB播放器"];
+        [super setTitleAndImage:@"user_corner_usb.png" withTitle:@"USB"];
     } else if (self.playerState == CDPlayer) {
-        [super setTitleAndImage:@"user_corner_cd.png" withTitle:@"CD播放器"];
+        [super setTitleAndImage:@"user_corner_cd.png" withTitle:@"CD"];
     } else {
-        [super setTitleAndImage:@"user_corner_sd.png" withTitle:@"SD播放器"];
+        [super setTitleAndImage:@"user_corner_sd.png" withTitle:@"SD"];
     }
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];

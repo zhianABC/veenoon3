@@ -46,7 +46,7 @@
     _selectedBtnArray = [[NSMutableArray alloc] init];
     _imageViewArray = [[NSMutableArray alloc] init];
     
-    [super setTitleAndImage:@"audio_corner_gongfang.png" withTitle:@"功率放大器"];
+    [super setTitleAndImage:@"audio_corner_gongfang.png" withTitle:@"功率"];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];

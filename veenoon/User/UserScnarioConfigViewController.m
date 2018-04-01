@@ -98,7 +98,7 @@
     
     
     _newWindBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*5, height, 80, 100)];
-    [_newWindBtn buttonWithIcon:[UIImage imageNamed:@"new_wind_sys_n.png"] selectedIcon:[UIImage imageNamed:@"new_wind_sys_s.png"] text:@"电动马达" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
+    [_newWindBtn buttonWithIcon:[UIImage imageNamed:@"new_wind_sys_n.png"] selectedIcon:[UIImage imageNamed:@"new_wind_sys_s.png"] text:@"新风" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_newWindBtn addTarget:self action:@selector(newWindSysAction:) forControlEvents:UIControlEventTouchUpInside];
     [_botomView addSubview:_newWindBtn];
     
