@@ -114,8 +114,8 @@
     //选择箭头 pending....
     UIButton *countrySelector = [UIButton buttonWithType:UIButtonTypeCustom];
     int w2 = CGRectGetWidth(_inputPannel.frame)-20;
-    countrySelector.frame = CGRectMake(left+w2, top + 18, 8, 14);
-    [countrySelector setBackgroundImage:[UIImage imageNamed:@"down_arraw.png"] forState:UIControlStateNormal];
+    countrySelector.frame = CGRectMake(left+w2-30, top + 10, 54, 30);
+    [countrySelector setImage:[UIImage imageNamed:@"down_arraw.png"] forState:UIControlStateNormal];
     [_inputPannel addSubview:countrySelector];
     
     [countrySelector addTarget:self
