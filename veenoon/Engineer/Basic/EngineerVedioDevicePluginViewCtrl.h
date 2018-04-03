@@ -19,7 +19,9 @@
 
 @interface EngineerVedioDevicePluginViewCtrl : BaseViewController {
     NSMutableDictionary *_meetingRoomDic;
+    NSMutableDictionary *_selectedSysDic;
 }
 @property (nonatomic,strong) NSMutableDictionary *_meetingRoomDic;
+@property (nonatomic,strong) NSMutableDictionary *_selectedSysDic;
 @end
 

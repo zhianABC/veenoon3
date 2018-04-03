@@ -22,8 +22,6 @@
     IconCenterTextButton *_yinpinchuliBtn;
     IconCenterTextButton *_floorWarmBtn;
     
-    UIButton *_confirmButton;
-    
     CenterCustomerPickerView *_productTypePikcer;
     CenterCustomerPickerView *_brandPicker;
     CenterCustomerPickerView *_productCategoryPicker;
@@ -33,6 +31,8 @@
 
 @implementation EngineerAudioDevicePluginViewCtrl
 @synthesize _meetingRoomDic;
+@synthesize _selectedSysDic;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -206,12 +206,28 @@
     [signup setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [signup setTitleColor:RGB(1, 138, 182) forState:UIControlStateHighlighted];
     signup.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-    [_confirmButton addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_confirmButton];
+    [signup addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void) confirmAction:(id)sender{
+    NSString *productType = _productTypePikcer._unitString;
+    NSString *brand = _brandPicker._unitString;
+    NSString *productCategory = _productCategoryPicker._unitString;
+    NSString *number = _numberPicker._unitString;
     
+    NSMutableDictionary *audioDic = [[NSMutableDictionary alloc] init];
+    [audioDic setObject:productType forKey:@"productType"];
+    [audioDic setObject:brand forKey:@"brand"];
+    [audioDic setObject:productCategory forKey:@"productCategory"];
+    [audioDic setObject:number forKey:@"number"];
+    
+    NSMutableArray *audioArray = [self._selectedSysDic objectForKey:@"audio"];
+    if (audioArray == nil) {
+        audioArray = [[NSMutableArray alloc] init];
+        [self._selectedSysDic setObject:audioArray forKey:@"audio"];
+    }
+    
+    [audioArray addObject:audioDic];
 }
 
 - (void) gongfangAction:(id)sender{
@@ -349,6 +365,7 @@
 - (void) okAction:(id)sender{
     EngineerVedioDevicePluginViewCtrl *ctrl = [[EngineerVedioDevicePluginViewCtrl alloc] init];
     ctrl._meetingRoomDic = self._meetingRoomDic;
+    ctrl._selectedSysDic = self._selectedSysDic;
     
     [self.navigationController pushViewController:ctrl animated:YES];
 }

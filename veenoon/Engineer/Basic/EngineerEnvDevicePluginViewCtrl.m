@@ -11,6 +11,7 @@
 #import "EngineerScenarioListViewCtrl.h"
 #import "UIButton+Color.h"
 #import "IconCenterTextButton.h"
+#import "AdjustAudioVideoEnvSettingsViewCtrl.h"
 
 @interface EngineerEnvDevicePluginViewCtrl () <CenterCustomerPickerViewDelegate> {
     IconCenterTextButton *_zhaomingBtn;
@@ -25,8 +26,6 @@
     IconCenterTextButton *_jiankongBtn;
     IconCenterTextButton *_nenghaotongjiBtn;
     
-    UIButton *_confirmButton;
-    
     CenterCustomerPickerView *_productTypePikcer;
     CenterCustomerPickerView *_brandPicker;
     CenterCustomerPickerView *_productCategoryPicker;
@@ -36,8 +35,21 @@
 
 @implementation EngineerEnvDevicePluginViewCtrl
 @synthesize _meetingRoomDic;
+@synthesize _selectedSysDic;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UIButton *scenarioButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    scenarioButton.frame = CGRectMake(SCREEN_WIDTH-120, 20, 100, 44);
+    [_topBar addSubview:scenarioButton];
+    [scenarioButton setTitle:@"修改配置" forState:UIControlStateNormal];
+    [scenarioButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [scenarioButton setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    scenarioButton.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    [scenarioButton addTarget:self
+                       action:@selector(adjustSettings:)
+             forControlEvents:UIControlEventTouchUpInside];
     
     UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, ENGINEER_VIEW_TOP+10, SCREEN_WIDTH-80, 30)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
@@ -218,8 +230,13 @@
     [signup setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [signup setTitleColor:RGB(1, 138, 182) forState:UIControlStateHighlighted];
     signup.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-    [_confirmButton addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_confirmButton];
+    [signup addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
+}
+- (void) adjustSettings:(id) sender {
+    AdjustAudioVideoEnvSettingsViewCtrl *ctrl = [[AdjustAudioVideoEnvSettingsViewCtrl alloc] init];
+    ctrl.selectedSysDic = self._selectedSysDic;
+    
+    [self.navigationController pushViewController:ctrl animated:YES];
 }
 - (void) zhaomingAction:(id)sender{
     [_zhaomingBtn setBtnHighlited:YES];
@@ -432,8 +449,24 @@
     
 }
 - (void) confirmAction:(id)sender{
-    EngineerScenarioListViewCtrl *ctrl = [[EngineerScenarioListViewCtrl alloc] init];
-    [self.navigationController pushViewController:ctrl animated:YES];
+    NSString *productType = _productTypePikcer._unitString;
+    NSString *brand = _brandPicker._unitString;
+    NSString *productCategory = _productCategoryPicker._unitString;
+    NSString *number = _numberPicker._unitString;
+    
+    NSMutableDictionary *audioDic = [[NSMutableDictionary alloc] init];
+    [audioDic setObject:productType forKey:@"productType"];
+    [audioDic setObject:brand forKey:@"brand"];
+    [audioDic setObject:productCategory forKey:@"productCategory"];
+    [audioDic setObject:number forKey:@"number"];
+    
+    NSMutableArray *audioArray = [self._selectedSysDic objectForKey:@"env"];
+    if (audioArray == nil) {
+        audioArray = [[NSMutableArray alloc] init];
+        [self._selectedSysDic setObject:audioArray forKey:@"env"];
+    }
+    
+    [audioArray addObject:audioDic];
     
 }
 - (void) cancelAction:(id)sender{
