@@ -585,6 +585,10 @@
 		EB4EC1221FE7FC3B000B3101 /* EngineerWirelessMeetingViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4EC1211FE7FC3B000B3101 /* EngineerWirelessMeetingViewCtrl.m */; };
 		EB4EC1251FE7FE3A000B3101 /* wireless_usb_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB4EC1231FE7FE39000B3101 /* wireless_usb_n@2x.png */; };
 		EB4EC1261FE7FE3A000B3101 /* wireless_usb_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB4EC1241FE7FE3A000B3101 /* wireless_usb_s@2x.png */; };
+		EB5A47EC2073B3E500564C06 /* huisedianchi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB5A47EA2073B3E400564C06 /* huisedianchi@2x.png */; };
+		EB5A47ED2073B3E500564C06 /* huisehuatong@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB5A47EB2073B3E400564C06 /* huisehuatong@2x.png */; };
+		EB5A47EF2073B66900564C06 /* huangsedianchi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB5A47EE2073B66900564C06 /* huangsedianchi@2x.png */; };
+		EB5A47F12073BA1500564C06 /* huiseyaobao@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB5A47F02073BA1500564C06 /* huiseyaobao@2x.png */; };
 		EB5CF03F1FD3DC92007958C9 /* UserNewWindViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5CF03E1FD3DC92007958C9 /* UserNewWindViewCtrl.m */; };
 		EB5CF0411FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5CF0401FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m */; };
 		EB5F7F841FD5902D00351888 /* engineer_meetingroom_default_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB5F7F831FD5902C00351888 /* engineer_meetingroom_default_n@2x.png */; };
@@ -1619,6 +1623,10 @@
 		EB4EC1211FE7FC3B000B3101 /* EngineerWirelessMeetingViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerWirelessMeetingViewCtrl.m; sourceTree = "<group>"; };
 		EB4EC1231FE7FE39000B3101 /* wireless_usb_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wireless_usb_n@2x.png"; sourceTree = "<group>"; };
 		EB4EC1241FE7FE3A000B3101 /* wireless_usb_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wireless_usb_s@2x.png"; sourceTree = "<group>"; };
+		EB5A47EA2073B3E400564C06 /* huisedianchi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "huisedianchi@2x.png"; sourceTree = "<group>"; };
+		EB5A47EB2073B3E400564C06 /* huisehuatong@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "huisehuatong@2x.png"; sourceTree = "<group>"; };
+		EB5A47EE2073B66900564C06 /* huangsedianchi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "huangsedianchi@2x.png"; sourceTree = "<group>"; };
+		EB5A47F02073BA1500564C06 /* huiseyaobao@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "huiseyaobao@2x.png"; sourceTree = "<group>"; };
 		EB5CF03D1FD3DC80007958C9 /* UserNewWindViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserNewWindViewCtrl.h; sourceTree = "<group>"; };
 		EB5CF03E1FD3DC92007958C9 /* UserNewWindViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserNewWindViewCtrl.m; sourceTree = "<group>"; };
 		EB5CF0401FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserInfoCollectViewCtrl.m; sourceTree = "<group>"; };
@@ -2376,6 +2384,10 @@
 		04DE1ECB1AD6B3BA00D49E2F /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
+				EB5A47F02073BA1500564C06 /* huiseyaobao@2x.png */,
+				EB5A47EE2073B66900564C06 /* huangsedianchi@2x.png */,
+				EB5A47EA2073B3E400564C06 /* huisedianchi@2x.png */,
+				EB5A47EB2073B3E400564C06 /* huisehuatong@2x.png */,
 				34238A562060DD260004C6D9 /* right_white_ico@2x.png */,
 				34C73B63205FA4CC008DFACC /* s3_03@2x.png */,
 				34C73B67205FA4D4008DFACC /* s3_05@2x.png */,
@@ -3522,6 +3534,7 @@
 				EBBCBBD6206286CA00A7771A /* user_corner_handto@2x.png in Resources */,
 				3422A5B51FCC17AE00F6D3C2 /* battery@2x.png in Resources */,
 				EBDF1BF31FC5A9A200A756EA /* user_meeting_room_2@2x.png in Resources */,
+				EB5A47EF2073B66900564C06 /* huangsedianchi@2x.png in Resources */,
 				EB1A04711FC71EEC007CC1F2 /* youxianxitong_player_s@2x.png in Resources */,
 				EB7E815D1FF8C4C90053E5A7 /* info_year_s@2x.png in Resources */,
 				EB09C49D1FD3744000776540 /* user_electronic_down@2x.png in Resources */,
@@ -3596,6 +3609,7 @@
 				EB1A04721FC71EEC007CC1F2 /* youxianxitong_player_n@2x.png in Resources */,
 				EBDF1C501FC5D5CF00A756EA /* clean_warter_s@2x.png in Resources */,
 				EB38BAB31FD43C8B00E672CA /* user_monitor_zoomout_n@2x.png in Resources */,
+				EB5A47ED2073B3E500564C06 /* huisehuatong@2x.png in Resources */,
 				EBF5D42F1FCC45350014D5F0 /* wuxianhuatong@2x.png in Resources */,
 				EB1A55D51FEF49FC000B18E6 /* engineer_address_s@2x.png in Resources */,
 				EB7E815A1FF8C4C90053E5A7 /* info_day_s@2x.png in Resources */,
@@ -3821,6 +3835,7 @@
 				EB36AADF1FCDA432009A0FD8 /* user_video_camera_n@2x.png in Resources */,
 				EB09EF531FD9A9AE00C968CA /* engineer_gongfang_n@2x.png in Resources */,
 				EB3B73A31FE61F13001941CF /* audio_layer_r_next_n@2x.png in Resources */,
+				EB5A47F12073BA1500564C06 /* huiseyaobao@2x.png in Resources */,
 				EB3B73A51FE61F13001941CF /* audio_player_r_next_n@2x.png in Resources */,
 				EB1A56091FEF8708000B18E6 /* engineer_dial_phone_s@2x.png in Resources */,
 				EB09C4A61FD3A6DF00776540 /* user_aircondition_s@2x.png in Resources */,
@@ -3871,6 +3886,7 @@
 				EBDF1C131FC5C6C900A756EA /* user_training_n@2x.png in Resources */,
 				EB09EF4C1FD9A8EA00C968CA /* enginner_fankuiyizhi_n@2x.png in Resources */,
 				34190F20205D538E009A519C /* dy_16@2x.png in Resources */,
+				EB5A47EC2073B3E500564C06 /* huisedianchi@2x.png in Resources */,
 				EB1A55EA1FEF594B000B18E6 /* engineer_down_n@2x.png in Resources */,
 				EB19B67C20581D2C003F1546 /* video_corner_dvd@2x.png in Resources */,
 				EBDF1C411FC5D5CF00A756EA /* air_clean_sys_n@2x.png in Resources */,

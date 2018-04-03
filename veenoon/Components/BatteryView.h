@@ -16,5 +16,6 @@
 @property (nonatomic, strong) UIColor *warningColor;
 //0 - 1  (0 - 100%)
 - (void) setBatteryValue:(float)value;
-
+- (void) updateGrayBatteryView;
+- (void) updateYellowBatteryView;
 @end
