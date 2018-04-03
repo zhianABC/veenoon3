@@ -9,17 +9,26 @@
 #import "EngineerScenarioSettingsViewCtrl.h"
 #import "UIButton+Color.h"
 #import "EngineerPresetScenarioViewCtrl.h"
+#import "SIconSelectView.h"
 
-@interface EngineerScenarioSettingsViewCtrl (){
+@interface EngineerScenarioSettingsViewCtrl ()<SIconSelectViewDelegate>{
     
     UIButton *_selectSysBtn;
     
     NSMutableArray *_scenarioLabelArray;
+    
+    SIconSelectView *_settingview;
+    
+    UIScrollView *scroolView;
 }
+@property (nonatomic, strong) NSMutableArray *_sBtns;
+@property (nonatomic, strong) NSMutableDictionary *_map;
 @end
 
 @implementation EngineerScenarioSettingsViewCtrl
 @synthesize _scenarioArray;
+@synthesize _sBtns;
+@synthesize _map;
 
 - (void) initDat {
     if (_scenarioArray == nil) {
@@ -34,6 +43,11 @@
     [super viewDidLoad];
     
     [self initDat];
+    
+    self._sBtns = [NSMutableArray array];
+    self._map = [NSMutableDictionary dictionary];
+    
+    
     _scenarioLabelArray = [[NSMutableArray alloc] init];
     
     UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
@@ -90,7 +104,7 @@
     int cellHeight = 100;
     int top = 5;
     
-    UIScrollView *scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(leftRightSpace, CGRectGetMaxY(portDNSLabel.frame)+20, SCREEN_WIDTH-leftRightSpace*2, SCREEN_HEIGHT-240)];
+    scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(leftRightSpace, CGRectGetMaxY(portDNSLabel.frame)+20, SCREEN_WIDTH-leftRightSpace*2, SCREEN_HEIGHT-240)];
     [self.view addSubview:scroolView];
     
     int scrollHeight = rowNumber*cellHeight + (rowNumber-1)*colGap+10;
@@ -104,8 +118,10 @@
         int startX = colN*cellWidth+colN*colGap;
         int startY = rowN*cellHeight+colGap*rowN+top;
         
-        UIView *scenarioView = [[UIView alloc] init];
+        UIButton *scenarioView = [[UIButton alloc] init];
         [scroolView addSubview:scenarioView];
+        
+        [_sBtns addObject:scenarioView];
         
         scenarioView.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
         scenarioView.userInteractionEnabled=YES;
@@ -150,6 +166,29 @@
         
         index++;
     }
+    
+
+    
+    UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
+    [bottomBar addSubview:okBtn];
+    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+    [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [okBtn addTarget:self
+              action:@selector(okAction:)
+    forControlEvents:UIControlEventTouchUpInside];
+    
+    _settingview = [[SIconSelectView alloc]
+                    initWithFrame:CGRectMake(SCREEN_WIDTH-310,
+                                             64, 310, SCREEN_HEIGHT-114)];
+    _settingview.delegate = self;
+    
+    [self.view addSubview:_settingview];
+
+    
+    
 }
 - (void) longPressed0:(id)sender {
     UILongPressGestureRecognizer *viewRecognizer = (UILongPressGestureRecognizer*) sender;
@@ -195,6 +234,35 @@
 - (void) okAction:(id)sender{
     
 }
+
+
+- (void) didEndDragingElecCell:(NSDictionary *)data pt:(CGPoint)pt{
+    
+    CGPoint viewPoint = [self.view convertPoint:pt fromView:_settingview];
+    
+    //    viewPoint.x -= CGRectGetMinX(scroolView.frame);
+    //    viewPoint.y -= CGRectGetMinY(scroolView.frame);
+    //
+    NSString *imageName = [data objectForKey:@"iconbig"];
+    UIImage *img = [UIImage imageNamed:imageName];
+    if(img) {
+        for (UIButton *button in _sBtns) {
+            
+            CGRect rect = [self.view convertRect:button.frame fromView:scroolView];
+            if (CGRectContainsPoint(rect, viewPoint)) {
+                
+                [_map setObject:data forKey:[NSNumber numberWithInteger:button.tag]];
+                
+                [button setBackgroundImage:img
+                                  forState:UIControlStateNormal];
+                [button setTitle:@"" forState:UIControlStateNormal];
+            }
+        }
+    }
+    
+}
+
+
 @end
 
 
