@@ -98,7 +98,8 @@
     _userNameField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 248, 31)];
     _userNameField.delegate = self;
     _userNameField.returnKeyType = UIReturnKeyDone;
-    _userNameField.placeholder = @"输入账号";
+    _userNameField.placeholder = @" 输入账号";
+    [_userNameField setValue:[UIColor lightGrayColor] forKeyPath:@"_placeholderLabel.textColor"];
     _userNameField.backgroundColor = [UIColor clearColor];
     _userNameField.textColor = [UIColor whiteColor];
     _userNameField.borderStyle = UITextBorderStyleNone;
@@ -113,7 +114,8 @@
     
     _userPwdField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 248, 31)];
     _userPwdField.delegate = self;
-    _userPwdField.placeholder=@"输入密码";
+    _userPwdField.placeholder=@" 输入密码";
+    [_userPwdField setValue:[UIColor lightGrayColor] forKeyPath:@"_placeholderLabel.textColor"];
     _userPwdField.returnKeyType = UIReturnKeyDone;
     _userPwdField.backgroundColor = [UIColor clearColor];
     _userPwdField.textColor = [UIColor whiteColor];
