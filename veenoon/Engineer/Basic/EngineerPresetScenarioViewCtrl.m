@@ -36,8 +36,6 @@
 #import "EngineerInfoCollectViewCtrl.h"
 #import "EngineerScenarioSettingsViewCtrl.h"
 
-#import "EngineerScenarioSettingsViewCtrl.h"
-
 #define E_CELL_WIDTH   60
 
 
@@ -153,6 +151,16 @@
     UIView *topbar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 64)];
     topbar.backgroundColor = THEME_COLOR;
     
+    UIButton *scenarioButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    scenarioButton.frame = CGRectMake(SCREEN_WIDTH-120, 20, 100, 44);
+    [topbar addSubview:scenarioButton];
+    [scenarioButton setTitle:@"生成场景" forState:UIControlStateNormal];
+    [scenarioButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [scenarioButton setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    scenarioButton.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    [scenarioButton addTarget:self
+                 action:@selector(createScenarioAction:)
+       forControlEvents:UIControlEventTouchUpInside];
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 63, SCREEN_WIDTH, 1)];
     line.backgroundColor = RGB(75, 163, 202);
@@ -284,7 +292,11 @@
     [self.view addSubview:topbar];
     [self.view addSubview:bottomBar];
 }
-
+- (void) createScenarioAction:(id) sender{
+    EngineerScenarioSettingsViewCtrl *ctrl = [[EngineerScenarioSettingsViewCtrl alloc] init];
+    
+    [self.navigationController pushViewController:ctrl animated:YES];
+}
 - (void) handleTapGesture:(UIGestureRecognizer*)sender{
     
     CGPoint pt = [sender locationInView:self.view];

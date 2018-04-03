@@ -32,6 +32,10 @@
     NSMutableArray *_buttonNumberArray;
     
     NSMutableArray *_selectedBtnArray;
+    NSMutableArray *_signalLabelArray;
+    NSMutableArray *_signalViewArray;
+    NSMutableArray *_dianchiArray;
+    NSMutableArray *_huatongArray;
     
     WirlessYaoBaoViewSettingsView *_rightSetView;
     
@@ -121,6 +125,11 @@
     _buttonNumberArray = [[NSMutableArray alloc] init];
     _selectedBtnArray = [[NSMutableArray alloc] init];
     signalArray = [[NSMutableArray alloc] init];
+    _signalLabelArray = [[NSMutableArray alloc] init];
+    _signalViewArray = [[NSMutableArray alloc] init];
+    _dianchiArray = [[NSMutableArray alloc] init];
+    _huatongArray = [[NSMutableArray alloc] init];
+    
     
     [self inintData];
     
@@ -248,20 +257,23 @@
             UIImage *image;
             NSString *huatongType = [dataDic objectForKey:@"type"];
             if ([@"huatong" isEqualToString:huatongType]) {
-                image = [UIImage imageNamed:@"huatong_yellow_n.png"];
+                image = [UIImage imageNamed:@"huisehuatong.png"];
             } else {
-                image = [UIImage imageNamed:@"yaobao_yellow_n.png"];
+                image = [UIImage imageNamed:@"huiseyaobao.png"];
             }
             
             UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+            [_huatongArray addObject: imageView];
             imageView.center = CGPointMake(40, 40);
             [signalView addSubview:imageView];
             
             
             BatteryView *batter = [[BatteryView alloc] initWithFrame:CGRectZero];
             batter.normalColor = [UIColor whiteColor];
+            [batter updateGrayBatteryView];
             [signalView addSubview:batter];
             batter.center = CGPointMake(60, 20);
+            [_dianchiArray addObject:batter];
             
             NSString *dianliangStr = [dataDic objectForKey:@"dianliang"];
             int dianliang = [dianliangStr intValue];
@@ -275,6 +287,7 @@
             NSString *sinalString = [dataDic objectForKey:@"signal"];
             int signalInt = [sinalString intValue];
             [signal setSignalValue:signalInt];
+            [_signalViewArray addObject:signal];
             
             titleL = [[UILabel alloc] initWithFrame:CGRectMake(50, 45, 20, 20)];
             titleL.backgroundColor = [UIColor clearColor];
@@ -290,6 +303,8 @@
             }
             
             titleL.text = title;
+            titleL.tag = index;
+            [_signalLabelArray addObject:titleL];
             
             [_imageViewArray addObject:imageView];
             [_buttonArray addObject:btn];
@@ -319,6 +334,12 @@
         }
     }
     // want to choose it
+    
+    NSMutableDictionary *dataDic = [_wirelessYaoBaoSysArray objectAtIndex:0];
+    NSMutableArray *dataArray = [dataDic objectForKey:@"value"];
+    
+    NSMutableDictionary *dataDic2 = [dataArray objectAtIndex:tag];
+    NSString *huatongType = [dataDic2 objectForKey:@"type"];
     if (btn == nil) {
         SlideButton *button = [_buttonArray objectAtIndex:tag];
         [_selectedBtnArray addObject:button];
@@ -334,6 +355,23 @@
         UIView *signalView = [signalArray objectAtIndex:tag];
         [signalView setAlpha:1];
         
+        UILabel *sinalLabel = [_signalLabelArray objectAtIndex:tag];
+        sinalLabel.textColor = YELLOW_COLOR;
+        
+        SignalView *signalView2 = [_signalViewArray objectAtIndex:tag];
+        [signalView2 setLightColor:YELLOW_COLOR];//
+        
+        BatteryView *batter = [_dianchiArray objectAtIndex:tag];
+        [batter updateYellowBatteryView];
+        batter.normalColor = YELLOW_COLOR;
+        
+        UIImageView *imageView = [_huatongArray objectAtIndex:tag];
+        if ([@"huatong" isEqualToString:huatongType]) {
+            imageView.image = [UIImage imageNamed:@"huatong_yellow_n.png"];
+        } else {
+            imageView.image = [UIImage imageNamed:@"yaobao_yellow_n.png"];
+        }
+        
     } else {
         // remove it
         [_selectedBtnArray removeObject:btn];
@@ -348,6 +386,24 @@
         
         UIView *signalView = [signalArray objectAtIndex:tag];
         [signalView setAlpha:0.8];
+        
+        UILabel *sinalLabel = [_signalLabelArray objectAtIndex:tag];
+        sinalLabel.textColor = [UIColor whiteColor];
+        
+        SignalView *signalView2 = [_signalViewArray objectAtIndex:tag];
+        [signalView2 setLightColor:[UIColor whiteColor]];//
+        [signalView2 setGrayColor:[UIColor colorWithWhite:1.0 alpha:0.6]];
+        
+        BatteryView *batter = [_dianchiArray objectAtIndex:tag];
+        [batter updateGrayBatteryView];
+        batter.normalColor = [UIColor whiteColor];
+        
+        UIImageView *imageView = [_huatongArray objectAtIndex:tag];
+        if ([@"huatong" isEqualToString:huatongType]) {
+            imageView.image = [UIImage imageNamed:@"huisehuatong.png"];
+        } else {
+            imageView.image = [UIImage imageNamed:@"huiseyaobao.png"];
+        }
     }
 }
 

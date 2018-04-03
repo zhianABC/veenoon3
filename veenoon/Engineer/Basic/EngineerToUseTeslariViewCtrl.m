@@ -75,6 +75,9 @@
     EngineerAudioDevicePluginViewCtrl *ctrl = [[EngineerAudioDevicePluginViewCtrl alloc] init];
     ctrl._meetingRoomDic = self._meetingRoomDic;
     
+    NSMutableDictionary *selectedSysDic = [[NSMutableDictionary alloc] init];
+    ctrl._selectedSysDic = selectedSysDic;
+    
     [self.navigationController pushViewController:ctrl animated:YES];
 }
 

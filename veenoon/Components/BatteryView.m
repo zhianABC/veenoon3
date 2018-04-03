@@ -54,7 +54,7 @@
         
         self.frame = CGRectMake(0, 0, bg.frame.size.width+left, bg.frame.size.height);
         
-        valueThumb = [[UIImageView alloc] initWithFrame:CGRectMake(left+3.5,
+        valueThumb = [[UIImageView alloc] initWithFrame:CGRectMake(left,
                                                                    2,
                                                                    bg.frame.size.width-5,
                                                                    bg.frame.size.height-4)];
@@ -71,7 +71,7 @@
     
     int w = value * CGRectGetWidth(valueThumb.frame);
     
-    valueThumb.frame = CGRectMake(left + 3.5 + ow - w,
+    valueThumb.frame = CGRectMake(left + ow - w,
                                   2,
                                   w,
                                   bg.frame.size.height-4);
@@ -104,5 +104,34 @@
     }
     
 }
-
+- (void) updateGrayBatteryView{
+    if (bg) {
+        [bg removeFromSuperview];
+    }
+    
+    bg = [[UIImageView alloc]
+          initWithImage:[UIImage imageNamed:@"huisedianchi.png"]];
+    [self addSubview:bg];
+    
+    left = 53;
+    
+    bg.frame = CGRectMake(left, 0, bg.frame.size.width, bg.frame.size.height);
+    percent.textColor = [UIColor whiteColor];
+    valueThumb.backgroundColor = [UIColor whiteColor];
+}
+- (void) updateYellowBatteryView {
+    if (bg) {
+        [bg removeFromSuperview];
+    }
+    
+    bg = [[UIImageView alloc]
+          initWithImage:[UIImage imageNamed:@"huangsedianchi.png"]];
+    [self addSubview:bg];
+    
+    left = 53;
+    
+    bg.frame = CGRectMake(left, 0, bg.frame.size.width, bg.frame.size.height);
+    percent.textColor = YELLOW_COLOR;
+    valueThumb.backgroundColor = YELLOW_COLOR;
+}
 @end
