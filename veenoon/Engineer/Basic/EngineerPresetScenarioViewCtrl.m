@@ -53,13 +53,40 @@
     int audioStartY;
     
     NSString *_selectComName;
+    
+    BOOL _isEditMode;
+    UIButton *_setBtn;
+    UIButton *_doneBtn;
 }
+@property (nonatomic, strong) NSMutableArray *_audioCells;
+@property (nonatomic, strong) NSMutableArray *_videoCells;
+@property (nonatomic, strong) NSMutableArray *_envCells;
+
+@property (nonatomic, strong) NSMutableArray *_deleteCells;
+@property (nonatomic, strong) NSMutableDictionary *_buttonTagWithDataMap;
+
 @end
 
 @implementation EngineerPresetScenarioViewCtrl
 @synthesize _meetingRoomDic;
 @synthesize _scenarioName;
+
+@synthesize _audioCells;
+@synthesize _videoCells;
+@synthesize _envCells;
+
+@synthesize _deleteCells;
+@synthesize _buttonTagWithDataMap;
+
+
 -(void) initData {
+    
+    self._audioCells = [NSMutableArray array];
+    self._videoCells = [NSMutableArray array];
+    self._envCells = [NSMutableArray array];
+    self._deleteCells = [NSMutableArray array];
+    self._buttonTagWithDataMap = [NSMutableDictionary dictionary];
+    
     if (_meetingRoomDic) {
         [_meetingRoomDic removeAllObjects];
     } else {
@@ -111,8 +138,10 @@
     [self initData];
     
     audioStartX = 0;
-    space = 10;
+    space = 20;
     audioStartY = 50;
+    
+    _isEditMode = NO;
     
     ecp = [[ECPlusSelectView alloc]
                              initWithFrame:CGRectMake(SCREEN_WIDTH-300,
@@ -142,6 +171,8 @@
     portDNSLabel.font = [UIFont boldSystemFontOfSize:16];
     portDNSLabel.textColor  = [UIColor whiteColor];
     portDNSLabel.text = @"音频管理";
+    
+    
     
     _audioScroll = [[UIScrollView alloc] init];
     [self.view addSubview:_audioScroll];
@@ -219,16 +250,29 @@
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
-    [bottomBar addSubview:okBtn];
-    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
-    [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
-    okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-    [okBtn addTarget:self
+    _setBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _setBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
+    [bottomBar addSubview:_setBtn];
+    [_setBtn setTitle:@"设置" forState:UIControlStateNormal];
+    [_setBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_setBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    _setBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [_setBtn addTarget:self
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
+    
+    _doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _doneBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
+    [bottomBar addSubview:_doneBtn];
+    [_doneBtn setTitle:@"完成" forState:UIControlStateNormal];
+    [_doneBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_doneBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    _doneBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [_doneBtn addTarget:self
+                action:@selector(doneAction:)
+      forControlEvents:UIControlEventTouchUpInside];
+    _doneBtn.hidden = YES;
+
     
     UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
     tapGesture.cancelsTouchesInView =  YES;
@@ -290,6 +334,9 @@
 
 - (void) addAction:(UIButton*)sender{
     
+    if(_isEditMode)
+        return;
+    
     [ecp expandSection:(int)sender.tag];
     
     CGRect rc = ecp.frame;
@@ -310,7 +357,6 @@
     int tag = (int)cellBtn.tag;
     int baseTag = tag/1000;
     
-    int idx = tag - baseTag*1000;
     NSArray *dataArray = nil;
     if(baseTag == 1)//音频
     {
@@ -325,7 +371,16 @@
         dataArray = [_curScenario objectForKey:@"envArray"];
     }
     
-    NSMutableDictionary *data = [dataArray objectAtIndex:idx];
+    if(_isEditMode)//删除模式
+    {
+        
+        return;
+    }
+ 
+    id  key = [NSNumber numberWithInteger:cellBtn.tag];
+    NSMutableDictionary *data = [_buttonTagWithDataMap
+                                  objectForKey:key];
+    
     NSString *name = [data objectForKey:@"name"];
 
     if ([name isEqualToString:@"8路电源管理"] || [name isEqualToString:@"16路电源管理"]) {
@@ -541,6 +596,7 @@
 - (void) addComponentToEnd:(UIScrollView*) scrollView dataDic:(NSDictionary*)dataDic {
     
     NSMutableArray *dataArray = nil;
+    NSMutableArray *btnCells = nil;
     
     int tagBase = 0;
     int addTag = 100;
@@ -548,20 +604,34 @@
         tagBase = 1000;
         addTag = 0;
         dataArray = [_curScenario objectForKey:@"audioArray"];
+        
+        btnCells = _audioCells;
+        
     } else if (scrollView == _videoScroll) {
         addTag = 1;
         tagBase = 2000;
         dataArray = [_curScenario objectForKey:@"videoArray"];
+        
+        btnCells = _videoCells;
+        
     } else {
         addTag = 2;
         tagBase = 3000;
         dataArray = [_curScenario objectForKey:@"envArray"];
+        
+        btnCells = _envCells;
     }
     
-    if(dataDic)
+    //保存数据到数组
+    if(dataDic){
         [dataArray addObject:dataDic];
+    }
     
     [[scrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+    [btnCells removeAllObjects];
+    
+    //scrollView.backgroundColor = [UIColor grayColor];
     
     int x = audioStartX;
     for(int i = 0; i < [dataArray count]; i++)
@@ -577,13 +647,25 @@
                                                                        E_CELL_WIDTH)];
         cellBtn.tag = tagBase+i;
         
+        
+        [_buttonTagWithDataMap setObject:dic
+                                  forKey:[NSNumber numberWithInteger:cellBtn.tag]];
+        
         [cellBtn setBackgroundImage:eImg forState:UIControlStateNormal];
         
         [scrollView addSubview:cellBtn];
         [cellBtn addTarget:self
                     action:@selector(buttonAction:)
           forControlEvents:UIControlEventTouchUpInside];
-      
+        
+        UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(btnlongPressed:)];
+        [cellBtn addGestureRecognizer:longPress];
+        
+        [btnCells addObject:cellBtn];
+        
+        
+        
+        
         x+=E_CELL_WIDTH;
         x+=space;
         
@@ -600,10 +682,178 @@
           forControlEvents:UIControlEventTouchUpInside];
 
     
+    [btnCells addObject:addElem];
     
     scrollView.contentSize = CGSizeMake(x+E_CELL_WIDTH, 150);
     
 }
+
+- (void) doneAction:(id)sender{
+    
+    _isEditMode = NO;
+    
+    _setBtn.hidden = NO;
+    _doneBtn.hidden = YES;
+    
+    for(UIButton *btn in _deleteCells)
+    {
+        [btn removeFromSuperview];
+    }
+    
+    [_deleteCells removeAllObjects];
+    
+}
+
+- (void) btnlongPressed:(id)sender{
+    
+    if(_isEditMode)
+        return;
+    _isEditMode = YES;
+    
+    _setBtn.hidden = YES;
+    _doneBtn.hidden = NO;
+    
+    [_deleteCells removeAllObjects];
+    
+    for(UIButton *btn in _audioCells)
+    {
+        if(btn.tag > 100)
+        {
+        UIButton *btnDel = [UIButton buttonWithType:UIButtonTypeCustom];
+        btnDel.frame = btn.bounds;
+        btnDel.tag = btn.tag;
+        
+        [btn addSubview:btnDel];
+        
+        [btnDel setImage:[UIImage imageNamed:@"red_del_icon.png"]
+                forState:UIControlStateNormal];
+        
+        btnDel.imageEdgeInsets = UIEdgeInsetsMake(-30, -30, 0, 0);
+        
+        [btnDel addTarget:self
+                   action:@selector(delButton:)
+         forControlEvents:UIControlEventTouchUpInside];
+        
+        [_deleteCells addObject:btnDel];
+        }
+    }
+    
+    for(UIButton *btn in _videoCells)
+    {
+        if(btn.tag > 100)
+        {
+        UIButton *btnDel = [UIButton buttonWithType:UIButtonTypeCustom];
+        btnDel.frame = btn.bounds;
+        btnDel.tag = btn.tag;
+        
+        [btn addSubview:btnDel];
+        
+        [btnDel setImage:[UIImage imageNamed:@"red_del_icon.png"]
+                forState:UIControlStateNormal];
+        
+        btnDel.imageEdgeInsets = UIEdgeInsetsMake(-30, -30, 0, 0);
+        
+        [btnDel addTarget:self
+                   action:@selector(delButton:)
+         forControlEvents:UIControlEventTouchUpInside];
+        
+        [_deleteCells addObject:btnDel];
+        }
+    }
+    
+    for(UIButton *btn in _envCells)
+    {
+        if(btn.tag > 100)
+        {
+        UIButton *btnDel = [UIButton buttonWithType:UIButtonTypeCustom];
+        btnDel.frame = btn.bounds;
+        btnDel.tag = btn.tag;
+        
+        [btn addSubview:btnDel];
+        
+        [btnDel setImage:[UIImage imageNamed:@"red_del_icon.png"]
+                forState:UIControlStateNormal];
+        
+        btnDel.imageEdgeInsets = UIEdgeInsetsMake(-30, -30, 0, 0);
+        
+        [btnDel addTarget:self
+                   action:@selector(delButton:)
+         forControlEvents:UIControlEventTouchUpInside];
+        
+        [_deleteCells addObject:btnDel];
+        }
+    }
+    
+    [self handleTapGesture:nil];
+}
+
+- (void) delButton:(UIButton*)cellBtn{
+    
+    int tag = (int)cellBtn.tag;
+    int baseTag = tag/1000;
+    
+    NSMutableArray *dataArray = nil;
+    NSMutableArray *btnCells = nil;
+    if(baseTag == 1)//音频
+    {
+        dataArray = [_curScenario objectForKey:@"audioArray"];
+        btnCells = _audioCells;
+    }
+    else if(baseTag == 2)//视频
+    {
+        dataArray = [_curScenario objectForKey:@"videoArray"];
+        btnCells = _videoCells;
+    }
+    else//环境
+    {
+        dataArray = [_curScenario objectForKey:@"envArray"];
+        btnCells = _envCells;
+    }
+    
+    id  key = [NSNumber numberWithInteger:cellBtn.tag];
+    NSDictionary *selectedData = [_buttonTagWithDataMap
+                                  objectForKey:key];
+    
+
+    [dataArray removeObject:selectedData];
+ 
+    
+    UIView *supBtn = cellBtn.superview;
+    [UIView animateWithDuration:0.25
+                     animations:^{
+                         
+                         supBtn.transform = CGAffineTransformMakeScale(0, 0);
+                         
+                     } completion:^(BOOL finished) {
+                         
+                         [supBtn removeFromSuperview];
+                     }];
+    
+    
+    int x = audioStartX;
+    [btnCells removeObject:supBtn];
+    
+    for(int i = 0; i < [btnCells count]; i++)
+    {
+        [UIView beginAnimations:nil context:nil];
+        
+        UIButton *b = [btnCells objectAtIndex:i];
+        b.frame = CGRectMake(x,
+                             audioStartY,
+                             E_CELL_WIDTH,
+                             E_CELL_WIDTH);
+        
+        [UIView commitAnimations];
+        
+        x+=E_CELL_WIDTH;
+        x+=space;
+    }
+    
+    [_buttonTagWithDataMap removeObjectForKey:key];
+}
+
+
+
 - (void) didEndDragingElecCell:(NSDictionary *)data pt:(CGPoint)pt {
     
     CGPoint viewPoint = [self.view convertPoint:pt fromView:ecp];
