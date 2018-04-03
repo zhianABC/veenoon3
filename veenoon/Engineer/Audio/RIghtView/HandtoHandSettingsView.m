@@ -67,7 +67,7 @@
         _curIndex = -1;
         
         _picker = [[CustomPickerView alloc]
-                   initWithFrame:CGRectMake(frame.size.width/2-100, 43, 200, 100) withGrayOrLight:@"picker_player.png"];
+                   initWithFrame:CGRectMake(frame.size.width/2-100, 43, 200, 120) withGrayOrLight:@"picker_player.png"];
         
         
         _picker._selectColor = YELLOW_COLOR;

@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-#import "CustomPickerView.h"
 
-@interface EngineerDoorAccessViewCtrl<CustomPickerViewDelegate> : BaseViewController {
+@interface EngineerDoorAccessViewCtrl : BaseViewController {
     NSMutableArray *_doorAccessSysArray;
     
     int _number;

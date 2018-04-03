@@ -8,10 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-#import "CustomPickerView.h"
 #import "EngineerSliderView.h"
 
-@interface EngineerHandtoHandViewCtrl<CustomPickerViewDelegate, EngineerSliderViewDelegate> : BaseViewController {
+@interface EngineerHandtoHandViewCtrl< EngineerSliderViewDelegate> : BaseViewController {
     NSMutableArray *_handToHandSysArray;
     
     int _number;

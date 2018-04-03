@@ -8,10 +8,9 @@
 
 #import "AudioProcessRightView.h"
 #import "UIButton+Color.h"
-#import "CustomPickerView.h"
 #import "ComSettingView.h"
 
-@interface AudioProcessRightView () <UITableViewDelegate, UITableViewDataSource,CustomPickerViewDelegate, UITextFieldDelegate> {
+@interface AudioProcessRightView () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate> {
     
     ComSettingView *_com;
     

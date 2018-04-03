@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-#import "CustomPickerView.h"
 
-@interface EngineerVideoPinJieViewCtrl<CustomPickerViewDelegate> : BaseViewController {
+@interface EngineerVideoPinJieViewCtrl : BaseViewController {
     NSMutableArray *_pinjieSysArray;
     int _rowNumber;
     int _colNumber;

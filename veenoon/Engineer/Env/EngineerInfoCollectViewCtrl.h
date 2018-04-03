@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-#import "CustomPickerView.h"
 
-@interface EngineerInfoCollectViewCtrl<CustomPickerViewDelegate> : BaseViewController {
+@interface EngineerInfoCollectViewCtrl : BaseViewController {
    
 }
 

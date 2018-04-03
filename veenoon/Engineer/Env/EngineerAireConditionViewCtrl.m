@@ -202,9 +202,7 @@
     
 }
 
-- (void) didConfirmPickerValue:(NSString*) pickerValue {
-   
-}
+
 - (void) okAction:(id)sender{
     if (!isSettings) {
         _rightView = [[AirConditionRightView alloc]

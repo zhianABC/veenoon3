@@ -8,10 +8,9 @@
 
 #import "GongLvFangDaQiView.h"
 #import "UIButton+Color.h"
-#import "CustomPickerView.h"
 #import "ComSettingView.h"
 
-@interface GongLvFangDaQiView () <CustomPickerViewDelegate, UITextFieldDelegate> {
+@interface GongLvFangDaQiView () < UITextFieldDelegate> {
     
     ComSettingView *_com;
     UITextField *ipTextField;

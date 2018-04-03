@@ -8,10 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-#import "CustomPickerView.h"
 #import "DragCellView.h"
 
-@interface EngineerLuBoJiViewController<CustomPickerViewDelegate, DragCellViewDelegate> : BaseViewController {
+@interface EngineerLuBoJiViewController< DragCellViewDelegate> : BaseViewController {
     NSMutableArray *_lubojiArray;
 }
 @property (nonatomic,strong) NSMutableArray *_lubojiArray;

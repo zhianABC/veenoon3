@@ -7,7 +7,6 @@
 //
 
 #import "PlayerRightView.h"
-#import "CustomPickerView.h"
 #import "UIButton+Color.h"
 #import "PlayerSettingsPannel.h"
 

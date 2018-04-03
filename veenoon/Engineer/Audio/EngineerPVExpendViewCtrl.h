@@ -8,10 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-#import "CustomPickerView.h"
 #import "EngineerSliderView.h"
 
-@interface EngineerPVExpendViewCtrl<CustomPickerViewDelegate, EngineerSliderViewDelegate> : BaseViewController {
+@interface EngineerPVExpendViewCtrl<EngineerSliderViewDelegate> : BaseViewController {
     NSMutableArray *_pvExpendArray;
     int _number;
 }

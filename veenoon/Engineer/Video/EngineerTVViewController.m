@@ -191,8 +191,10 @@
 
 
 - (void) sysSelectAction:(id)sender{
+    
+    if(_customPicker == nil)
     _customPicker = [[CustomPickerView alloc]
-                     initWithFrame:CGRectMake(_selectSysBtn.frame.origin.x, _selectSysBtn.frame.origin.y, _selectSysBtn.frame.size.width, 100) withGrayOrLight:@"gray"];
+                     initWithFrame:CGRectMake(_selectSysBtn.frame.origin.x, _selectSysBtn.frame.origin.y, _selectSysBtn.frame.size.width, 120) withGrayOrLight:@"gray"];
     
     
     NSMutableArray *arr = [NSMutableArray array];
@@ -209,12 +211,16 @@
     [self.view addSubview:_customPicker];
     _customPicker.delegate_ = self;
 }
-- (void) didConfirmPickerValue:(NSString*) pickerValue {
+- (void) didChangedPickerValue:(NSDictionary*)value{
+    
     if (_customPicker) {
         [_customPicker removeFromSuperview];
     }
-    NSString *title =  [@"" stringByAppendingString:pickerValue];
+    
+    NSDictionary *dic = [value objectForKey:@0];
+    NSString *title =  [dic objectForKey:@"value"];
     [_selectSysBtn setTitle:title forState:UIControlStateNormal];
+    
 }
 - (void) okAction:(id)sender{
     if (!isSettings) {

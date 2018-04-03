@@ -8,10 +8,9 @@
 
 #import "LuBoJiRightView.h"
 #import "UIButton+Color.h"
-#import "CustomPickerView.h"
 #import "ComSettingView.h"
 
-@interface LuBoJiRightView () <CustomPickerViewDelegate, UITextFieldDelegate> {
+@interface LuBoJiRightView () <UITextFieldDelegate> {
     
     ComSettingView *_com;
     UITextField *ipTextField;

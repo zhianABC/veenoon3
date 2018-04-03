@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-#import "CustomPickerView.h"
 
-@interface EngineerRemoteVideoViewCtrl<CustomPickerViewDelegate> : BaseViewController {
+@interface EngineerRemoteVideoViewCtrl : BaseViewController {
     NSMutableArray *_remoteVideoArray;
     NSMutableArray *_cameraArray;
     int _number;

@@ -8,10 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-#import "CustomPickerView.h"
 #import "EngineerSliderView.h"
 
-@interface EngineerWirelessMeetingViewCtrl<CustomPickerViewDelegate, EngineerSliderViewDelegate> : BaseViewController {
+@interface EngineerWirelessMeetingViewCtrl<EngineerSliderViewDelegate> : BaseViewController {
     NSMutableArray *_wirelessMeetingArray;
     
     int _number;

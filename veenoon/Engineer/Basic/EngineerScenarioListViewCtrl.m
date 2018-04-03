@@ -7,7 +7,6 @@
 //
 
 #import "EngineerScenarioListViewCtrl.h"
-#import "CustomPickerView.h"
 #import "UIButton+Color.h"
 #import "EngineerPresetScenarioViewCtrl.h"
 #import "SIconSelectView.h"

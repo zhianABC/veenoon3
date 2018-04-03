@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-#import "CustomPickerView.h"
 
-@interface EngineerAirCleanViewCtrl<CustomPickerViewDelegate> : BaseViewController {
+@interface EngineerAirCleanViewCtrl : BaseViewController {
     NSMutableArray *_airCleanSysArray;
     
     int _number;

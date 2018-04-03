@@ -11,15 +11,13 @@
 #import "UIButton+Color.h"
 #import "NSDate-Helper.h"
 #import "CircleProgressView.h"
-#import "CustomPickerView.h"
 #import "InforCollectRightView.h"
 
-@interface EngineerInfoCollectViewCtrl () <CustomPickerViewDelegate,
+@interface EngineerInfoCollectViewCtrl () <
 UIScrollViewDelegate>{
     
     UIButton *_selectSysBtn;
     
-    CustomPickerView *_customPicker;
     
     ColumnsView *colYear;
     ColumnsView *colMonth;

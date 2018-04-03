@@ -8,10 +8,9 @@
 
 #import "TouYingJiRightView.h"
 #import "UIButton+Color.h"
-#import "CustomPickerView.h"
 #import "ComSettingView.h"
 
-@interface TouYingJiRightView () <CustomPickerViewDelegate, UITextFieldDelegate> {
+@interface TouYingJiRightView () < UITextFieldDelegate> {
     
     ComSettingView *_com;
     UITextField *ipTextField;

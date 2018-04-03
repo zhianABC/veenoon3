@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-#import "CustomPickerView.h"
 
-@interface EngineerVideoProcessViewCtrl<CustomPickerViewDelegate> : BaseViewController {
+@interface EngineerVideoProcessViewCtrl : BaseViewController {
     NSMutableArray *_videoProcessInArray;
     NSMutableArray *_videoProcessOutArray;
     int _inNumber;

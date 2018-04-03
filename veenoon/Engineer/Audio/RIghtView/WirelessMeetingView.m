@@ -8,14 +8,12 @@
 
 #import "WirelessMeetingView.h"
 #import "ComSettingView.h"
-#import "CustomPickerView.h"
 #import "UIButton+Color.h"
 #import "GroupsPickerView.h"
 #import "UIImage+Color.h"
 
 @interface WirelessMeetingView () <UITableViewDelegate,
-UITableViewDataSource, UITextFieldDelegate,
-CustomPickerViewDelegate, GroupsPickerViewDelegate> {
+UITableViewDataSource, UITextFieldDelegate, GroupsPickerViewDelegate> {
     
     ComSettingView *_com;
     

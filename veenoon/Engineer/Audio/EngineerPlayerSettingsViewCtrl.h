@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-#import "CustomPickerView.h"
 
-@interface EngineerPlayerSettingsViewCtrl<CustomPickerViewDelegate> : BaseViewController {
+@interface EngineerPlayerSettingsViewCtrl : BaseViewController {
     NSMutableArray *_playerSysArray;
     
     int _number;

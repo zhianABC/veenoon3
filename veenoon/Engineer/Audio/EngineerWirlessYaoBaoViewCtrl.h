@@ -8,10 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-#import "CustomPickerView.h"
 #import "EngineerSliderView.h"
 
-@interface EngineerWirlessYaoBaoViewCtrl<CustomPickerViewDelegate, EngineerSliderViewDelegate> : BaseViewController {
+@interface EngineerWirlessYaoBaoViewCtrl< EngineerSliderViewDelegate> : BaseViewController {
     NSMutableArray *_wirelessYaoBaoSysArray;
     
     int _number;

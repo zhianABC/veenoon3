@@ -8,10 +8,9 @@
 
 #import "CameraRightView.h"
 #import "UIButton+Color.h"
-#import "CustomPickerView.h"
 #import "ComSettingView.h"
 
-@interface CameraRightView () <CustomPickerViewDelegate, UITextFieldDelegate> {
+@interface CameraRightView () <UITextFieldDelegate> {
     
     ComSettingView *_com;
     UITextField *ipTextField;

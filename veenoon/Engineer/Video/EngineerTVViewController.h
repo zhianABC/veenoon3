@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-#import "CustomPickerView.h"
 
-@interface EngineerTVViewController<CustomPickerViewDelegate> : BaseViewController {
+@interface EngineerTVViewController : BaseViewController {
     NSMutableArray *_videoTVArray;
 }
 @property (nonatomic,strong) NSMutableArray *_videoTVArray;

@@ -384,9 +384,14 @@
         levelSetting.hidden=YES;
     }
 }
-- (void) didConfirmPickerValue:(NSString*) pickerValue{
+
+- (void) didChangedPickerValue:(NSDictionary*)value{
+
     
-    [_shexiangxieyiBtn setTitle:pickerValue forState:UIControlStateNormal];
+    NSDictionary *dic = [value objectForKey:@0];
+    NSString *title =  [dic objectForKey:@"value"];
+    
+    [_shexiangxieyiBtn setTitle:title forState:UIControlStateNormal];
     
     levelSetting.hidden=YES;
 }

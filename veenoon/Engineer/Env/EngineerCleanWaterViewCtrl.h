@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-#import "CustomPickerView.h"
 
-@interface EngineerCleanWaterViewCtrl<CustomPickerViewDelegate> : BaseViewController {
+@interface EngineerCleanWaterViewCtrl : BaseViewController {
     NSMutableArray *_cleanWaterSysArray;
     
     int _number;

@@ -8,10 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-#import "CustomPickerView.h"
 #import "EngineerSliderView.h"
 
-@interface EngineerAudioProcessViewCtrl<CustomPickerViewDelegate, EngineerSliderViewDelegate> : BaseViewController {
+@interface EngineerAudioProcessViewCtrl< EngineerSliderViewDelegate> : BaseViewController {
     NSMutableArray *_audioProcessArray;
     
     int _inputNumber;

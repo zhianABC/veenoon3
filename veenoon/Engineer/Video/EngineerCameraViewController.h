@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-#import "CustomPickerView.h"
 
-@interface EngineerCameraViewController<CustomPickerViewDelegate> : BaseViewController {
+@interface EngineerCameraViewController : BaseViewController {
     NSMutableArray *_cameraSysArray;
     
     int _number;

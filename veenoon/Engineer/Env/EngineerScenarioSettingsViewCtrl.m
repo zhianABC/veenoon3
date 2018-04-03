@@ -8,14 +8,11 @@
 
 #import "EngineerScenarioSettingsViewCtrl.h"
 #import "UIButton+Color.h"
-#import "CustomPickerView.h"
 #import "EngineerPresetScenarioViewCtrl.h"
 
-@interface EngineerScenarioSettingsViewCtrl () <CustomPickerViewDelegate>{
+@interface EngineerScenarioSettingsViewCtrl (){
     
     UIButton *_selectSysBtn;
-    
-    CustomPickerView *_customPicker;
     
     NSMutableArray *_scenarioLabelArray;
 }

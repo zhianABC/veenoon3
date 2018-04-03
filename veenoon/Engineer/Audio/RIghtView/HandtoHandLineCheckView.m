@@ -6,10 +6,9 @@
 //
 
 #import "HandtoHandLineCheckView.h"
-#import "CustomPickerView.h"
 #import "UIButton+Color.h"
 
-@interface HandtoHandLineCheckView () <UITableViewDelegate, UITableViewDataSource, CustomPickerViewDelegate>
+@interface HandtoHandLineCheckView () <UITableViewDelegate, UITableViewDataSource>
 {
     UITableView *_tableView;
     int _curIndex;

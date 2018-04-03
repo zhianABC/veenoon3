@@ -8,11 +8,10 @@
 
 #import "RemoteVideoRightView.h"
 #import "UIButton+Color.h"
-#import "CustomPickerView.h"
 #import "ComSettingView.h"
 #import "PlayerSettingsPannel.h"
 
-@interface RemoteVideoRightView () <CustomPickerViewDelegate, UITextFieldDelegate> {
+@interface RemoteVideoRightView () <UITextFieldDelegate> {
     
     PlayerSettingsPannel *_com;
     UITextField *ipTextField;

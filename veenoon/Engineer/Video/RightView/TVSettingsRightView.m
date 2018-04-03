@@ -8,10 +8,9 @@
 
 #import "TVSettingsRightView.h"
 #import "UIButton+Color.h"
-#import "CustomPickerView.h"
 #import "TVViewRightView.h"
 
-@interface TVSettingsRightView () <CustomPickerViewDelegate, UITextFieldDelegate> {
+@interface TVSettingsRightView () <UITextFieldDelegate> {
     
     TVViewRightView *_com;
     UITextField *ipTextField;

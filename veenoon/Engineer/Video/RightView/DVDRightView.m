@@ -8,10 +8,9 @@
 
 #import "DVDRightView.h"
 #import "UIButton+Color.h"
-#import "CustomPickerView.h"
 #import "ComSettingView.h"
 
-@interface DVDRightView () <CustomPickerViewDelegate, UITextFieldDelegate> {
+@interface DVDRightView () <UITextFieldDelegate> {
     
     ComSettingView *_com;
     UITextField *ipTextField;

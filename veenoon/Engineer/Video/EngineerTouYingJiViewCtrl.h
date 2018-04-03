@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-#import "CustomPickerView.h"
 
-@interface EngineerTouYingJiViewCtrl<CustomPickerViewDelegate> : BaseViewController {
+@interface EngineerTouYingJiViewCtrl : BaseViewController {
     NSMutableArray *_touyingjiArray;
 }
 @property (nonatomic,strong) NSMutableArray *_touyingjiArray;
