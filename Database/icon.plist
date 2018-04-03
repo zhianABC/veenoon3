@@ -23,9 +23,9 @@
 				<key>type</key>
 				<string>标识图标</string>
 				<key>icon</key>
-				<string>v_icon_1.png</string>
+				<string>videop_dvd_w.png</string>
 				<key>icon_sel</key>
-				<string>v_icon_1.png</string>
+				<string>videop_dvd_y.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -35,9 +35,9 @@
 				<key>type</key>
 				<string>标识图标</string>
 				<key>icon</key>
-				<string>v_icon_22.png</string>
+				<string>videop_usb_w.png</string>
 				<key>icon_sel</key>
-				<string>v_icon_22.png</string>
+				<string>videop_usb_y.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -47,9 +47,9 @@
 				<key>type</key>
 				<string>标识图标</string>
 				<key>icon</key>
-				<string>v_icon_2.png</string>
+				<string>videop_camera_w.png</string>
 				<key>icon_sel</key>
-				<string>v_icon_2.png</string>
+				<string>videop_camera_y.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -59,9 +59,9 @@
 				<key>type</key>
 				<string>标识图标</string>
 				<key>icon</key>
-				<string>v_icon_3.png</string>
+				<string>videop_xinxihe_w.png</string>
 				<key>icon_sel</key>
-				<string>v_icon_3.png</string>
+				<string>videop_xinxihe_y.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -71,9 +71,9 @@
 				<key>type</key>
 				<string>标识图标</string>
 				<key>icon</key>
-				<string>v_icon_4.png</string>
+				<string>videop_remotevideo_w.png</string>
 				<key>icon_sel</key>
-				<string>v_icon_4.png</string>
+				<string>videop_remotevideo_y.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -89,9 +89,9 @@
 				<key>type</key>
 				<string>标识图标</string>
 				<key>icon</key>
-				<string>v_icon_4.png</string>
+				<string>videop_remotevideo_w.png</string>
 				<key>icon_sel</key>
-				<string>v_icon_4.png</string>
+				<string>videop_remotevideo_y.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -101,9 +101,9 @@
 				<key>type</key>
 				<string>标识图标</string>
 				<key>icon</key>
-				<string>v_icon_6.png</string>
+				<string>videop_screen_w.png</string>
 				<key>icon_sel</key>
-				<string>v_icon_6.png</string>
+				<string>videop_screen_y.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -113,9 +113,9 @@
 				<key>type</key>
 				<string>标识图标</string>
 				<key>icon</key>
-				<string>v_icon_7.png</string>
+				<string>videop_tv_w.png</string>
 				<key>icon_sel</key>
-				<string>v_icon_7.png</string>
+				<string>videop_tv_y.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -125,9 +125,9 @@
 				<key>type</key>
 				<string>标识图标</string>
 				<key>icon</key>
-				<string>v_icon_8.png</string>
+				<string>videop_player_w.png</string>
 				<key>icon_sel</key>
-				<string>v_icon_8.png</string>
+				<string>videop_player_y.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -137,9 +137,9 @@
 				<key>type</key>
 				<string>标识图标</string>
 				<key>icon</key>
-				<string>v_icon_9.png</string>
+				<string>videop_tscreen_w.png</string>
 				<key>icon_sel</key>
-				<string>v_icon_9.png</string>
+				<string>videop_tscreen_y.png</string>
 			</dict>
 		</array>
 	</dict>

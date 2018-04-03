@@ -54,7 +54,7 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
 
 - (id) initWithFrame:(CGRect)frame {
     if(self = [super initWithFrame:frame]) {
-        _curIndex = -1;
+        _curIndex = 0;
         
         [self initData];
         
@@ -91,6 +91,7 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
         ipTextField.textAlignment = NSTextAlignmentRight;
         ipTextField.font = [UIFont systemFontOfSize:13];
         ipTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        
         
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,
                                                                    60,
@@ -273,7 +274,21 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    return 80;
+    NSDictionary *sec = [_data objectAtIndex:indexPath.section];
+    NSArray *items = [sec objectForKey:@"items"];
+    if(indexPath.row < [items count]) {
+        NSDictionary *dic = [items objectAtIndex:indexPath.row];
+        
+        int idx = [[dic objectForKey:@"id"] intValue];
+        
+        if(idx)
+        {
+            
+            return 80;
+        }
+    }
+    
+    return 50;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -296,9 +311,17 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
     if(indexPath.row < [items count]) {
         NSDictionary *dic = [items objectAtIndex:indexPath.row];
         
+        int idx = [[dic objectForKey:@"id"] intValue];
+        
+        if(idx)
+        {
+        
         EPlusLayerView *rowCell = [[EPlusLayerView alloc]
                                    initWithFrame:CGRectMake(0, 0,
                                                             80, 80)];
+        
+        [rowCell setIconContentsGravity:kCAGravityCenter];
+        
         [cell.contentView addSubview:rowCell];
         rowCell.tag = indexPath.section * 100 + indexPath.row;
         rowCell._enableDrag = YES;
@@ -310,6 +333,7 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
         NSString *sel = [dic objectForKey:@"icon_sel"];
         rowCell.selectedImg = [UIImage imageNamed:sel];
         
+        }
         int xx = 90;
         
         UILabel* textLabel = [[UILabel alloc]
@@ -333,11 +357,7 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
         
         textLabel.text = [dic objectForKey:@"name"];
         detailLabel.text = [dic objectForKey:@"type"];
-        
-        if (indexPath.row == 0 || indexPath.row == 6) {
-            cell.userInteractionEnabled=NO;
-            [rowCell moveTitleToLeft];
-        }
+    
     }
     
     

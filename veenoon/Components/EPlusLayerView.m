@@ -61,7 +61,10 @@
     return _isSelected;
 }
 
-
+- (void) setIconContentsGravity:(NSString*)style{
+    
+    _sticker.layer.contentsGravity = style;
+}
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];

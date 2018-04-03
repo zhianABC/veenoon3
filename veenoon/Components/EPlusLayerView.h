@@ -52,6 +52,8 @@
 
 @property (nonatomic, assign) BOOL _resetWhenEndDrag;
 
+- (void) setIconContentsGravity:(NSString*)style;
+
 - (void) selected;
 - (void) unselected;
 
