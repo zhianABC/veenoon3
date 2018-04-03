@@ -336,7 +336,7 @@
 }
 
 - (void) createShexiangzhuizongView {
-    _shexiangzhuizongView = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height/2+1, self.frame.size.width, self.frame.size.height/2-1)];
+    _shexiangzhuizongView = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height/2-150, self.frame.size.width, self.frame.size.height/2-1)];
     
     [self addSubview:_shexiangzhuizongView];
     
@@ -397,7 +397,7 @@
 }
 
 - (void) createYuYinJiLiView {
-    _yuyinjiliView = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height/2+1, self.frame.size.width, self.frame.size.height/2-1)];
+    _yuyinjiliView = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height/2-100, self.frame.size.width, self.frame.size.height/2-1)];
     
     [self addSubview:_yuyinjiliView];
     
@@ -420,14 +420,14 @@
     _fayanrenshuBtn.clipsToBounds = YES;
     _fayanrenshuBtn.layer.cornerRadius = 5;
     [_yuyinjiliView addSubview:_fayanrenshuBtn];
-    [_fayanrenshuBtn setTitle:@"发言人数" forState:UIControlStateNormal];
+    [_fayanrenshuBtn setTitle:@"设定代表" forState:UIControlStateNormal];
     [_fayanrenshuBtn addTarget:self action:@selector(fayanrenshuAction:) forControlEvents:UIControlEventTouchUpInside];
     _fayanrenshuBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     _yuyinjiliView.hidden = YES;
 }
 
 - (void) createBiaoZhunFaYanView {
-    _biaozhunfayanView = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height/2+1, self.frame.size.width, self.frame.size.height/2-1)];
+    _biaozhunfayanView = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height/2-100, self.frame.size.width, self.frame.size.height/2-1)];
     
     [self addSubview:_biaozhunfayanView];
     

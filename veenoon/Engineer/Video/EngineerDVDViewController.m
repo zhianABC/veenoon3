@@ -43,7 +43,7 @@
     
     isSettings = NO;
     
-    [super setTitleAndImage:@"video_corner_dvd.png" withTitle:@"DVD播放器"];
+    [super setTitleAndImage:@"video_corner_dvd.png" withTitle:@"DVD"];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];

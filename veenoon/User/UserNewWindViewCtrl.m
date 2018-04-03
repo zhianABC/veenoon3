@@ -12,6 +12,10 @@
 @interface UserNewWindViewCtrl () {
     NSMutableArray *_windRoomList;
     NSMutableArray *_newWindBtnList;
+    
+    UIButton *zhilengBtn;
+    UIButton *zhireBtn;
+    UIButton *aireWindBtn;
 }
 @property (nonatomic, strong) NSMutableArray *_windRoomList;
 @end
@@ -122,7 +126,7 @@
     int btnGap = 40;
     int btnStartX = SCREEN_WIDTH/2 - btnGap - 120;
     
-    UIButton *zhilengBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
+    zhilengBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
     zhilengBtn.frame = CGRectMake(btnStartX, SCREEN_HEIGHT-350, 80, 80);
     zhilengBtn.layer.cornerRadius = 5;
     zhilengBtn.layer.borderWidth = 2;
@@ -134,7 +138,7 @@
     [zhilengBtn addTarget:self action:@selector(windhAction:)
          forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *zhireBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
+    zhireBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
     zhireBtn.frame = CGRectMake(btnStartX+btnGap+80, SCREEN_HEIGHT-350, 80, 80);
     zhireBtn.layer.cornerRadius = 5;
     zhireBtn.layer.borderWidth = 2;
@@ -146,7 +150,7 @@
     [zhireBtn addTarget:self action:@selector(windmAction:)
        forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *aireWindBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
+    aireWindBtn  = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
     aireWindBtn.frame = CGRectMake(btnStartX+btnGap*2+80*2, SCREEN_HEIGHT-350, 80, 80);
     aireWindBtn.layer.cornerRadius = 5;
     aireWindBtn.layer.borderWidth = 2;
@@ -175,16 +179,22 @@
 }
     
 - (void) windlAction:(id)sender{
-        
+    [zhilengBtn setSelected:NO];
+    [zhireBtn setSelected:NO];
+    [aireWindBtn setSelected:YES];
 }
     
     
 - (void) windmAction:(id)sender{
-        
+    [zhilengBtn setSelected:NO];
+    [zhireBtn setSelected:YES];
+    [aireWindBtn setSelected:NO];
 }
     
 - (void) windhAction:(id)sender{
-        
+    [zhilengBtn setSelected:YES];
+    [zhireBtn setSelected:NO];
+    [aireWindBtn setSelected:NO];
 }
 
 - (void) okAction:(id)sender{

@@ -41,7 +41,7 @@
     icon.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.5-80);
     
     UIButton *login = [UIButton buttonWithColor:[UIColor whiteColor] selColor:RGB(1, 138, 182)];
-    login.frame = CGRectMake(0, 0,260, 50);
+    login.frame = CGRectMake(0, 0,220, 50);
     login.layer.cornerRadius = 10;
     login.layer.borderWidth = 2;
     login.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -51,14 +51,14 @@
     [login setTitleColor:RGB(1, 138, 182) forState:UIControlStateNormal];
     [login setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     login.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-    login.center = CGPointMake(SCREEN_WIDTH/2-150, CGRectGetMaxY(icon.frame)+80);
+    login.center = CGPointMake(SCREEN_WIDTH/2-120, CGRectGetMaxY(icon.frame)+160);
 
     [login addTarget:self
               action:@selector(loginAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *signup = [UIButton buttonWithColor:nil selColor:[UIColor whiteColor]];
-    signup.frame = CGRectMake(0, 0,260, 50);
+    signup.frame = CGRectMake(0, 0,220, 50);
     signup.layer.cornerRadius = 10;
     signup.layer.borderWidth = 2;
     signup.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -68,7 +68,7 @@
     [signup setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [signup setTitleColor:RGB(1, 138, 182) forState:UIControlStateHighlighted];
     signup.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-    signup.center = CGPointMake(SCREEN_WIDTH/2+150, CGRectGetMaxY(icon.frame)+80);
+    signup.center = CGPointMake(SCREEN_WIDTH/2+120, CGRectGetMaxY(icon.frame)+160);
 
     [signup addTarget:self
               action:@selector(signupAction:)

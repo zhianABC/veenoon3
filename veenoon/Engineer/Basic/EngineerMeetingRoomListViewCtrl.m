@@ -90,6 +90,7 @@
         UIImageView *roomeImageView = [[UIImageView alloc] initWithImage:roomImage];
         roomeImageView.userInteractionEnabled=YES;
         roomeImageView.contentMode = UIViewContentModeScaleAspectFill;
+        roomeImageView.clipsToBounds=YES;
         roomeImageView.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
         
         UIView *view = [[UIView alloc] init];
@@ -212,7 +213,7 @@
     {
         _imagePicker = [[UIImagePickerController alloc] init];
         _imagePicker.delegate = self;
-        _imagePicker.allowsEditing = NO;
+        _imagePicker.allowsEditing = YES;
         
     }
     
@@ -264,7 +265,7 @@
 
 /**** Image Picker Delegates ******/
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
+    UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     if(image)
     {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{

@@ -92,7 +92,7 @@
     
     _fayanrenshuBtn = [UIButton buttonWithColor:SINGAL_COLOR selColor:RGB(230, 151, 50)];
     _fayanrenshuBtn.frame = CGRectMake(590, 450, 80, 30);
-    [_fayanrenshuBtn setTitle:@"发言人数" forState:UIControlStateNormal];
+    [_fayanrenshuBtn setTitle:@"设定代表" forState:UIControlStateNormal];
     [_fayanrenshuBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_fayanrenshuBtn setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
     [_fayanrenshuBtn addTarget:self action:@selector(fayanrenshuAction:) forControlEvents:UIControlEventTouchUpInside];
