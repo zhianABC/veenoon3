@@ -8,7 +8,6 @@
 
 #import "EngineerEnvDevicePluginViewCtrl.h"
 #import "CenterCustomerPickerView.h"
-#import "EngineerScenarioListViewCtrl.h"
 #import "UIButton+Color.h"
 #import "IconCenterTextButton.h"
 #import "AdjustAudioVideoEnvSettingsViewCtrl.h"
@@ -42,7 +41,7 @@
     
     UIButton *scenarioButton = [UIButton buttonWithType:UIButtonTypeCustom];
     scenarioButton.frame = CGRectMake(SCREEN_WIDTH-120, 20, 100, 44);
-    [_topBar addSubview:scenarioButton];
+//    [_topBar addSubview:scenarioButton];
     [scenarioButton setTitle:@"修改配置" forState:UIControlStateNormal];
     [scenarioButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [scenarioButton setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
@@ -239,12 +238,6 @@
     [signup setTitleColor:RGB(1, 138, 182) forState:UIControlStateHighlighted];
     signup.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [signup addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
-}
-- (void) adjustSettings:(id) sender {
-    AdjustAudioVideoEnvSettingsViewCtrl *ctrl = [[AdjustAudioVideoEnvSettingsViewCtrl alloc] init];
-    ctrl.selectedSysDic = self._selectedSysDic;
-    
-    [self.navigationController pushViewController:ctrl animated:YES];
 }
 - (void) zhaomingAction:(id)sender{
     [_zhaomingBtn setBtnHighlited:YES];
@@ -452,7 +445,8 @@
 }
 - (void) okAction:(id)sender{
     
-    EngineerScenarioListViewCtrl *ctrl = [[EngineerScenarioListViewCtrl alloc] init];
+    AdjustAudioVideoEnvSettingsViewCtrl *ctrl = [[AdjustAudioVideoEnvSettingsViewCtrl alloc] init];
+    ctrl.selectedSysDic = self._selectedSysDic;
     [self.navigationController pushViewController:ctrl animated:YES];
     
 }

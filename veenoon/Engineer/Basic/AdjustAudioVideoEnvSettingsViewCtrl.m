@@ -5,7 +5,7 @@
 //  Created by 安志良 on 2018/4/3.
 //  Copyright © 2018年 jack. All rights reserved.
 //
-
+#import "EngineerScenarioListViewCtrl.h"
 #import "AdjustAudioVideoEnvSettingsViewCtrl.h"
 
 @interface AdjustAudioVideoEnvSettingsViewCtrl() <UITableViewDelegate, UITableViewDataSource> {
@@ -59,7 +59,8 @@
 
 
 - (void) okAction:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
+    EngineerScenarioListViewCtrl *ctrl = [[EngineerScenarioListViewCtrl alloc] init];
+    [self.navigationController pushViewController:ctrl animated:YES];
 }
 #pragma mark -
 #pragma mark Table View DataSource
