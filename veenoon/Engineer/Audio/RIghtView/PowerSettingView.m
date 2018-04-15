@@ -13,7 +13,7 @@
 #import "ComSettingView.h"
 #import "APowerESet.h"
 
-@interface PowerSettingView () <CenterCustomerPickerViewDelegate, UITextFieldDelegate>
+@interface PowerSettingView () <CenterCustomerPickerViewDelegate, UITextFieldDelegate, JHSlideViewDelegate>
 {
     UILabel *_secs;
     
@@ -29,6 +29,8 @@
     
     CenterCustomerPickerView *levelSetting;
 }
+
+
 @end
 
 @implementation PowerSettingView
@@ -235,6 +237,16 @@
     {
         NSString *value = [dic objectForKey:@"value"];
         _secs.text = value;
+        
+        NSString *scs = [value stringByReplacingOccurrencesOfString:@"s" withString:@""];
+        int cc = (int)[_objSet._lines count];
+        
+        for(int i = 0; i < cc; i++)
+        {
+            [_objSet setLabDelaySecs:[scs intValue]
+                           withIndex:i];
+        }
+        
     }
     
 }
@@ -264,6 +276,20 @@
     
     NSArray *vals = _objSet._lines;
     
+    int res = [_objSet checkIsSameSeconds];
+    if(res)
+    {
+        _secs.text = [NSString stringWithFormat:@"%ds", res];
+        
+        [self checkClicked:1];
+    }
+    else
+    {
+        [self checkClicked:0];
+    }
+    
+    ipTextField.text = _objSet._ipaddress;
+    
     for(int i = 0; i < 8; i++)
     {
         UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(xx, yy, 50, 50)];
@@ -281,10 +307,11 @@
         [_sliders addSubview:slider];
         slider.minValue = 1;
         slider.maxValue = 180;
-        
-        
+        slider.delegate = self;
+        slider.tag = i;
+    
         NSMutableDictionary *dic = [vals objectAtIndex:i];
-        int val = [[dic objectForKey:@"Value"] intValue];
+        int val = [[dic objectForKey:@"seconds"] intValue];
         
         [slider setScaleValue:val];
         
@@ -293,6 +320,11 @@
     }
     
     _sliders.contentSize = CGSizeMake(_sliders.frame.size.width, yy);
+}
+
+- (void) didSlideValueChanged:(int)value index:(int)index{
+    
+    [_objSet setLabDelaySecs:value withIndex:index];
 }
 
 - (void) show16Labs{
@@ -304,6 +336,19 @@
     
     NSArray *vals = _objSet._lines;
     
+    int res = [_objSet checkIsSameSeconds];
+    if(res)
+    {
+        _secs.text = [NSString stringWithFormat:@"%ds", res];
+        
+        [self checkClicked:1];
+    }
+    else
+    {
+        [self checkClicked:0];
+    }
+    
+    ipTextField.text = _objSet._ipaddress;
     
     for(int i = 0; i < 16; i++)
     {
@@ -322,10 +367,11 @@
         [_sliders addSubview:slider];
         slider.minValue = 1;
         slider.maxValue = 180;
-        
+        slider.tag = i;
+        slider.delegate = self;
         
         NSMutableDictionary *dic = [vals objectAtIndex:i];
-        int val = [[dic objectForKey:@"Value"] intValue];
+        int val = [[dic objectForKey:@"seconds"] intValue];
         
         [slider setScaleValue:val];
         
@@ -344,6 +390,8 @@
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
+    
+    _objSet._ipaddress = textField.text;
     
 }
 

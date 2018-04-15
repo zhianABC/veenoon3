@@ -212,6 +212,7 @@
     }
     
     if (selctedBtn != nil) {
+        
         [selctedBtn setImage:[UIImage imageNamed:@"dianyuanshishiqi_n.png"] forState:UIControlStateNormal];
         [titleL setTextColor:[UIColor whiteColor]];
         
@@ -220,6 +221,7 @@
         [_objSetCur setLabValue:NO withIndex:index];
         
     } else {
+        
         selctedBtn = [_allBtnArray objectAtIndex:index];
         
         [selctedBtn setImage:[UIImage imageNamed:@"dianyuanshishiqi_s.png"] forState:UIControlStateNormal];
@@ -233,15 +235,19 @@
 
 - (void) okAction:(id)sender{
     if (!isSettings) {
+        
+        if(_psv == nil)
+        {
         _psv = [[PowerSettingView alloc]
                 initWithFrame:CGRectMake(SCREEN_WIDTH-300,
                                          64, 300, SCREEN_HEIGHT-114)];
+        }
         [self.view addSubview:_psv];
         
-        _psv._objSet = [[APowerESet alloc] init];
-        [_psv._objSet initLabs:_number];
+        _psv._objSet = _objSetCur;
         
-        if (self._number == 8) {
+        int cc = (int)[_objSetCur._lines count];
+        if (cc == 8) {
             [_psv show8Labs];
         } else {
             [_psv show16Labs];

@@ -25,10 +25,12 @@
     {
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setObject:@"OFF" forKey:@"status"];
-        [dic setObject:@"0" forKey:@"seconds"];
+        [dic setObject:@"1" forKey:@"seconds"];
         [dic setObject:[NSString stringWithFormat:@"Channel %02d", i+1] forKey:@"name"];
         [_lines addObject:dic];
     }
+    
+    self._ipaddress = @"192.168.1.100";
     
 }
 
@@ -56,6 +58,36 @@
 - (NSDictionary *)getLabValueWithIndex:(int)index{
     
     return [_lines objectAtIndex:index];
+}
+
+- (int) checkIsSameSeconds{
+    
+    int res = 0;
+    
+    BOOL same = YES;
+    int cur = 1;
+    
+    for(int i = 0; i < [_lines count]; i++)
+    {
+        NSMutableDictionary *value = [_lines objectAtIndex:i];
+        int s = [[value objectForKey:@"seconds"] intValue];
+        if(i == 0)
+            cur = s;
+        else
+        {
+            if(cur != s){
+                same = NO;
+                break;
+            }
+        }
+    }
+    
+    if(same)
+    {
+        res = cur;
+    }
+    
+    return res;
 }
 
 @end

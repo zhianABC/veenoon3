@@ -28,4 +28,6 @@
 - (void) setLabDelaySecs:(int)secs withIndex:(int)index;
 - (NSDictionary *)getLabValueWithIndex:(int)index;
 
+- (int) checkIsSameSeconds;
+
 @end

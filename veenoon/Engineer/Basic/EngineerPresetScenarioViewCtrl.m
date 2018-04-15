@@ -435,6 +435,10 @@
         
         EngineerElectronicSysConfigViewCtrl *ctrl = [[EngineerElectronicSysConfigViewCtrl alloc] init];
         ctrl._number = 16;
+        if(baseTag == 1)//Audio
+        {
+            ctrl._electronicSysArray = _scenario._A16PowerPlugs;
+        }
         ctrl._electronicSysArray = nil;
         [self.navigationController pushViewController:ctrl animated:YES];
     }
@@ -636,6 +640,44 @@
     
 }
 
+- (void) init8Powers{
+    
+    if([_scenario._A8PowerPlugs count] == 0)
+    {
+        NSMutableArray *powers = [NSMutableArray array];
+        
+        for(int i = 0; i < 3; i++)
+        {
+            APowerESet *pset = [[APowerESet alloc] init];
+            [pset initLabs:8];
+            pset._brand = @"brand1";
+            
+            [powers addObject:pset];
+        }
+        
+        _scenario._A8PowerPlugs = powers;
+    }
+}
+
+- (void) init16Powers{
+    
+    if([_scenario._A16PowerPlugs count] == 0)
+    {
+        NSMutableArray *powers = [NSMutableArray array];
+        
+        for(int i = 0; i < 3; i++)
+        {
+            APowerESet *pset = [[APowerESet alloc] init];
+            [pset initLabs:16];
+            pset._brand = @"brand1";
+            
+            [powers addObject:pset];
+        }
+        
+        _scenario._A16PowerPlugs = powers;
+    }
+}
+
 // if dataDic == nil, refresh scroll view
 - (void) addComponentToEnd:(UIScrollView*) scrollView dataDic:(NSDictionary*)dataDic {
     
@@ -664,26 +706,15 @@
             {
                 return;
             }
-            
             [_aDataCheckTestMap setObject:dataDic forKey:name];
             
             if([name isEqualToString:@"8路电源管理"])
             {
-                if([_scenario._A8PowerPlugs count] == 0)
-                {
-                    NSMutableArray *powers = [NSMutableArray array];
-                    
-                    for(int i = 0; i < 3; i++)
-                    {
-                        APowerESet *pset = [[APowerESet alloc] init];
-                        [pset initLabs:8];
-                        pset._brand = @"brand1";
-                        
-                        [powers addObject:pset];
-                    }
-                    
-                    _scenario._A8PowerPlugs = powers;
-                }
+                [self init8Powers];
+            }
+            else if([name isEqualToString:@"16路电源管理"])
+            {
+                [self init16Powers];
             }
         }
         
@@ -696,12 +727,12 @@
         
         if(name)
         {
-        if([_vDataCheckTestMap objectForKey:name])
-        {
-            return;
-        }
-        
-        [_vDataCheckTestMap setObject:dataDic forKey:name];
+            if([_vDataCheckTestMap objectForKey:name])
+            {
+                return;
+            }
+            
+            [_vDataCheckTestMap setObject:dataDic forKey:name];
         }
         
     } else {
@@ -713,12 +744,12 @@
         
         if(name)
         {
-        if([_eDataCheckTestMap objectForKey:name])
-        {
-            return;
-        }
-        
-        [_eDataCheckTestMap setObject:dataDic forKey:name];
+            if([_eDataCheckTestMap objectForKey:name])
+            {
+                return;
+            }
+            
+            [_eDataCheckTestMap setObject:dataDic forKey:name];
         }
     }
     

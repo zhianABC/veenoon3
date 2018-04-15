@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol JHSlideViewDelegate <NSObject>
+
+@optional
+- (void) didSlideValueChanged:(int)value index:(int)index;
+
+@end
 
 @interface JHSlideView : UIView
 {
@@ -23,6 +29,8 @@
 @property (nonatomic, assign) int minValue;
 @property (nonatomic, readonly) UILabel *maxL;
 @property (nonatomic, assign) BOOL _isShowValue;
+
+@property (nonatomic, weak) id <JHSlideViewDelegate> delegate;
 
 - (id) initWithSliderBg:(UIImage*)sliderBg frame:(CGRect)frame;
 

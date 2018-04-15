@@ -14,6 +14,8 @@
 @synthesize maxL;
 @synthesize _isShowValue;
 
+@synthesize delegate;
+
 - (id) initWithSliderBg:(UIImage*)sliderBg frame:(CGRect)frame{
     
     
@@ -167,6 +169,12 @@
     CGRect rc = _sliderFr.frame;
     rc.size.width = _thumb.center.x;
     _sliderFr.frame = rc;
+    
+    
+    if(delegate && [delegate respondsToSelector:@selector(didSlideValueChanged:index:)])
+    {
+        [delegate didSlideValueChanged:value index:(int)self.tag];
+    }
     
 }
 
