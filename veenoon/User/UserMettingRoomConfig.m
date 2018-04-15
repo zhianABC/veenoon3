@@ -22,12 +22,14 @@
     UIScrollView *_content;
 }
 @property (nonatomic, strong) NSArray *scens;
+@property (nonatomic, strong) NSMutableDictionary *_mapSelect;
 
 @end
 
 @implementation UserMeetingRoomConfig
 @synthesize meetingRoomDic;
 @synthesize scens;
+@synthesize _mapSelect;
 
 - (void)viewDidLoad {
    
@@ -57,6 +59,7 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = [meetingRoomDic objectForKey:@"roomname"];
     
+    self._mapSelect = [NSMutableDictionary dictionary];
     
     _content = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 80,
                                                               SCREEN_WIDTH,
@@ -129,6 +132,28 @@
 }
 
 - (void) userTrainingAction:(UIButton*)sender{
+    
+    id key = [NSNumber numberWithInteger:sender.tag];
+    
+    NSDictionary *scen = [scens objectAtIndex:[key intValue]];
+
+    if([_mapSelect objectForKey:key])
+    {
+        //取消
+        [sender setImage:[UIImage imageNamed:[scen objectForKey:@"icon_nor"]] forState:UIControlStateNormal];
+        [sender setImage:[UIImage imageNamed:[scen objectForKey:@"icon_sel"]] forState:UIControlStateHighlighted];
+
+        [_mapSelect removeObjectForKey:key];
+    }
+    else
+    {
+        //选中
+        [sender setImage:[UIImage imageNamed:[scen objectForKey:@"icon_sel"]] forState:UIControlStateNormal];
+        [sender setImage:[UIImage imageNamed:[scen objectForKey:@"icon_sel"]] forState:UIControlStateHighlighted];
+
+        
+        [_mapSelect setObject:scen forKey:key];
+    }
     
 }
 

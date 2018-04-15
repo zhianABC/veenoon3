@@ -46,7 +46,7 @@
     
     _titleL = [[UILabel alloc] initWithFrame:CGRectMake(0,
                                                         self.frame.size.height - 30,
-                                                        self.frame.size.width, 30)];
+                                                        self.frame.size.width, 20)];
     _titleL.backgroundColor = [UIColor clearColor];
     _titleL.font = [UIFont systemFontOfSize:18];
     _titleL.textAlignment = NSTextAlignmentCenter;

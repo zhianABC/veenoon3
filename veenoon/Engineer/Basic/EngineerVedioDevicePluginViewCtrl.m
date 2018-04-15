@@ -117,30 +117,35 @@
     [_shipinchuliBtn addTarget:self action:@selector(shipinchuliAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_shipinchuliBtn];
     
-    _pinjiepingBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left, height+150,80, 110)];
+    _pinjiepingBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left, height+120,80, 110)];
     [_pinjiepingBtn buttonWithIcon:[UIImage imageNamed:@"engineer_video_pinjieping_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_video_pinjieping_s.png"] text:@"拼接屏" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_pinjiepingBtn addTarget:self action:@selector(pinjiepingAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_pinjiepingBtn];
     
-    _yejingdianshiBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap, height+150,80, 110)];
+    _yejingdianshiBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap, height+120,80, 110)];
     [_yejingdianshiBtn buttonWithIcon:[UIImage imageNamed:@"engineer_video_yejingdianshi_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_video_yejingdianshi_s.png"] text:@"液晶电视" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_yejingdianshiBtn addTarget:self action:@selector(yejingdianshiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_yejingdianshiBtn];
     
-    _lubojiBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*2, height+150,80, 110)];
+    _lubojiBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*2, height+120,80, 110)];
     [_lubojiBtn buttonWithIcon:[UIImage imageNamed:@"engineer_video_luboji_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_video_luboji_s.png"] text:@"录播机" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_lubojiBtn addTarget:self action:@selector(lubojiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_lubojiBtn];
     
-    _touyingjiBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*3, height+150,80, 110)];
+    _touyingjiBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*3, height+120,80, 110)];
     [_touyingjiBtn buttonWithIcon:[UIImage imageNamed:@"engineer_video_touyingji_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_video_touyingji_n.png"] text:@"投影机" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_touyingjiBtn addTarget:self action:@selector(touyingjiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_touyingjiBtn];
     
-    int labelStartX = 170;
-    int labelStartY = 500;
+    int maxWidth = 120;
+    float labelStartX = (SCREEN_WIDTH - maxWidth*3 - 60 - 15)/2.0;
+    int labelStartY = 480;
     
-    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(labelStartX-40, labelStartY, 200, 30)];
+    
+    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(labelStartX,
+                                                                labelStartY,
+                                                                maxWidth,
+                                                                20)];
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:16];
@@ -148,17 +153,21 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"产品类型";
     
-    _productTypePikcer = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(labelStartX, labelStartY+30, 120, 150)];
+    _productTypePikcer = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(labelStartX,
+                                                                                    labelStartY+20,
+                                                                                    maxWidth, 160)];
     [_productTypePikcer removeArray];
     _productTypePikcer.delegate_=self;
     _productTypePikcer.fontSize = 14;
     _productTypePikcer._pickerDataArray = @[@{@"values":@[@"电源管理",@"视频播放",@"摄像机",@"信息盒",@"远程视讯",@"视频处理",@"拼接屏",@"液晶电视",@"录播机",@"投影机"]}];
     [_productTypePikcer selectRow:0 inComponent:0];
     _productTypePikcer._selectColor = RGB(253, 180, 0);
-    _productTypePikcer._rowNormalColor = RGB(117, 165, 186);
+    _productTypePikcer._rowNormalColor = [UIColor whiteColor];
     [self.view addSubview:_productTypePikcer];
     
-    titleL = [[UILabel alloc] initWithFrame:CGRectMake(labelStartX+145, labelStartY, 200, 30)];
+    int x1 = CGRectGetMaxX(titleL.frame)+5;
+    
+    titleL = [[UILabel alloc] initWithFrame:CGRectMake(x1, labelStartY, maxWidth, 20)];
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:16];
@@ -166,15 +175,17 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"品牌";
     
-    _brandPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(labelStartX+200, labelStartY+30, 91, 150)];
+    _brandPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(x1, labelStartY+20, maxWidth, 160)];
     [_brandPicker removeArray];
-    _brandPicker._pickerDataArray = @[@{@"values":@[@"f",@"e",@"a"]}];
+    _brandPicker._pickerDataArray = @[@{@"values":@[@"F",@"E",@"A"]}];
     [_brandPicker selectRow:0 inComponent:0];
     _brandPicker._selectColor = RGB(253, 180, 0);
-    _brandPicker._rowNormalColor = RGB(117, 165, 186);
+    _brandPicker._rowNormalColor = [UIColor whiteColor];
     [self.view addSubview:_brandPicker];
     
-    titleL = [[UILabel alloc] initWithFrame:CGRectMake(labelStartX+345, labelStartY, 200, 30)];
+    x1 = CGRectGetMaxX(titleL.frame)+5;
+    
+    titleL = [[UILabel alloc] initWithFrame:CGRectMake(x1, labelStartY, maxWidth, 20)];
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:16];
@@ -182,15 +193,20 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"型号";
     
-    _productCategoryPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(labelStartX+400, labelStartY+30, 91, 150)];
+    _productCategoryPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(x1, labelStartY+20, maxWidth, 160)];
     [_productCategoryPicker removeArray];
-    _productCategoryPicker._pickerDataArray = @[@{@"values":@[@"c",@"v",@"b"]}];
+    _productCategoryPicker._pickerDataArray = @[@{@"values":@[@"C",@"V",@"B"]}];
     [_productCategoryPicker selectRow:0 inComponent:0];
     _productCategoryPicker._selectColor = RGB(253, 180, 0);
-    _productCategoryPicker._rowNormalColor = RGB(117, 165, 186);
+    _productCategoryPicker._rowNormalColor = [UIColor whiteColor];
     [self.view addSubview:_productCategoryPicker];
     
-    titleL = [[UILabel alloc] initWithFrame:CGRectMake(labelStartX+595, labelStartY, 100, 30)];
+    
+    x1 = CGRectGetMaxX(titleL.frame)+5;
+    
+    titleL = [[UILabel alloc] initWithFrame:CGRectMake(x1,
+                                                       labelStartY,
+                                                       60, 20)];
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:16];
@@ -198,16 +214,19 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"数量";
     
-    _numberPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(labelStartX+600, labelStartY+30, 91, 150)];
+    _numberPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(x1,
+                                                                               labelStartY+20,
+                                                                               60,
+                                                                               160)];
     [_numberPicker removeArray];
     _numberPicker._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
     [_numberPicker selectRow:0 inComponent:0];
     _numberPicker._selectColor = RGB(253, 180, 0);
-    _numberPicker._rowNormalColor = RGB(117, 165, 186);
+    _numberPicker._rowNormalColor = [UIColor whiteColor];
     [self.view addSubview:_numberPicker];
     
-    UIButton *signup = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:YELLOW_COLOR];
-    signup.frame = CGRectMake(SCREEN_WIDTH/2-50, labelStartY+120+25, 100, 40);
+    UIButton *signup = [UIButton buttonWithColor:YELLOW_COLOR selColor:nil];
+    signup.frame = CGRectMake(SCREEN_WIDTH/2-50, labelStartY+120+55, 100, 40);
     signup.layer.cornerRadius = 5;
     signup.layer.borderWidth = 2;
     signup.layer.borderColor = [UIColor clearColor].CGColor;

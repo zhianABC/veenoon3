@@ -36,6 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    //self.view.backgroundColor = RGB(63, 58, 55);
     
     UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, ENGINEER_VIEW_TOP+10, SCREEN_WIDTH-80, 30)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
@@ -48,8 +49,8 @@
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
     portDNSLabel.font = [UIFont systemFontOfSize:18];
-    portDNSLabel.textColor  = [UIColor colorWithWhite:1.0 alpha:0.9];
-    portDNSLabel.text = @"选择您所需要设置的设备类型> 品牌 > 型号> 数量";
+    portDNSLabel.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+    portDNSLabel.text = @"选择您所需要设置的设备类型 > 品牌 > 型号 > 数量";
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
@@ -116,15 +117,19 @@
     [_yinpinchuliBtn addTarget:self action:@selector(yinpinchuliAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_yinpinchuliBtn];
     
-    _floorWarmBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left, height+150,80, 110)];
+    _floorWarmBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left, height+120,80, 110)];
     [_floorWarmBtn  buttonWithIcon:[UIImage imageNamed:@"engineer_gongfang_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_gongfang_s.png"] text:@"功放" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_floorWarmBtn addTarget:self action:@selector(gongfangAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_floorWarmBtn];
     
-    int labelStartX = 170;
-    int labelStartY = 500;
+    int maxWidth = 120;
+    float labelStartX = (SCREEN_WIDTH - maxWidth*3 - 60 - 15)/2.0;
+    int labelStartY = 480;
     
-    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(labelStartX-35, labelStartY, 200, 30)];
+    
+    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(labelStartX,
+                                                                labelStartY,
+                                                                maxWidth, 20)];
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:16];
@@ -132,18 +137,27 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"产品类型";
     
-    _productTypePikcer = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(labelStartX, labelStartY+30, 120, 150)];
+    _productTypePikcer = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(labelStartX, labelStartY+20, maxWidth, 160)];
     [_productTypePikcer removeArray];
     _productTypePikcer.delegate_=self;
     _productTypePikcer.tag = 101;
     _productTypePikcer.fontSize=14;
-    _productTypePikcer._pickerDataArray = @[@{@"values":@[@"电源管理",@"音乐播放",@"无线话筒",@"会议",@"反馈抑制",@"音频处理",@"功放"]}];
+    _productTypePikcer._pickerDataArray = @[@{@"values":@[@"电源管理",
+                                                          @"音乐播放",
+                                                          @"无线话筒",
+                                                          @"会议",
+                                                          @"反馈抑制",
+                                                          @"音频处理",
+                                                          @"功放"]}];
     [_productTypePikcer selectRow:0 inComponent:0];
     _productTypePikcer._selectColor = RGB(253, 180, 0);
-    _productTypePikcer._rowNormalColor = RGB(117, 165, 186);
+    _productTypePikcer._rowNormalColor = [UIColor whiteColor];
     [self.view addSubview:_productTypePikcer];
     
-    titleL = [[UILabel alloc] initWithFrame:CGRectMake(labelStartX+145, labelStartY, 200, 30)];
+    int x1 = CGRectGetMaxX(titleL.frame)+5;
+    titleL = [[UILabel alloc] initWithFrame:CGRectMake(x1,
+                                                       labelStartY,
+                                                       maxWidth, 20)];
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:16];
@@ -151,16 +165,21 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"品牌";
     
-    _brandPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(labelStartX+200, labelStartY+30, 91, 150)];
+    _brandPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(x1,
+                                                                              labelStartY+20,
+                                                                              maxWidth, 160)];
     _brandPicker.tag=102;
     [_brandPicker  removeArray];
-    _brandPicker._pickerDataArray = @[@{@"values":@[@"f",@"e",@"a"]}];
+    _brandPicker._pickerDataArray = @[@{@"values":@[@"品牌1",@"品牌2",@"品牌3"]}];
     [_brandPicker selectRow:0 inComponent:0];
     _brandPicker._selectColor = RGB(253, 180, 0);
-    _brandPicker._rowNormalColor = RGB(117, 165, 186);
+    _brandPicker._rowNormalColor = [UIColor whiteColor];
     [self.view addSubview:_brandPicker];
     
-    titleL = [[UILabel alloc] initWithFrame:CGRectMake(labelStartX+345, labelStartY, 200, 30)];
+    
+    x1 = CGRectGetMaxX(titleL.frame)+5;
+    
+    titleL = [[UILabel alloc] initWithFrame:CGRectMake(x1, labelStartY, maxWidth, 20)];
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:16];
@@ -168,17 +187,19 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"型号";
     
-    _productCategoryPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(labelStartX+400, labelStartY+30, 91, 150)];
+    _productCategoryPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(x1, labelStartY+20, maxWidth, 160)];
     _productCategoryPicker.tag=103;
     _productCategoryPicker.delegate_=self;
     [_productCategoryPicker removeArray];
-    _productCategoryPicker._pickerDataArray = @[@{@"values":@[@"c",@"v",@"b"]}];
+    _productCategoryPicker._pickerDataArray = @[@{@"values":@[@"型号A",@"型号B",@"型号C"]}];
     [_productCategoryPicker selectRow:0 inComponent:0];
     _productCategoryPicker._selectColor = RGB(253, 180, 0);
-    _productCategoryPicker._rowNormalColor = RGB(117, 165, 186);
+    _productCategoryPicker._rowNormalColor = [UIColor whiteColor];
     [self.view addSubview:_productCategoryPicker];
     
-    titleL = [[UILabel alloc] initWithFrame:CGRectMake(labelStartX+595, labelStartY, 100, 30)];
+    x1 = CGRectGetMaxX(titleL.frame)+5;
+    
+    titleL = [[UILabel alloc] initWithFrame:CGRectMake(x1, labelStartY, 60, 20)];
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:16];
@@ -186,17 +207,19 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"数量";
     
-    _numberPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(labelStartX+600, labelStartY+30, 91, 150)];
+    _numberPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(x1,
+                                                                               labelStartY+20,
+                                                                               60, 160)];
     _numberPicker.tag=104;
     [_numberPicker removeArray];
     _numberPicker._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
     [_numberPicker selectRow:0 inComponent:0];
     _numberPicker._selectColor = RGB(253, 180, 0);
-    _numberPicker._rowNormalColor = RGB(117, 165, 186);
+    _numberPicker._rowNormalColor = [UIColor whiteColor];
     [self.view addSubview:_numberPicker];
     
-    UIButton *signup = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:YELLOW_COLOR];
-    signup.frame = CGRectMake(SCREEN_WIDTH/2-50, labelStartY+120+25, 100, 40);
+    UIButton *signup = [UIButton buttonWithColor:YELLOW_COLOR selColor:nil];
+    signup.frame = CGRectMake(SCREEN_WIDTH/2-50, labelStartY+120+55, 100, 40);
     signup.layer.cornerRadius = 5;
     signup.layer.borderWidth = 2;
     signup.layer.borderColor = [UIColor clearColor].CGColor;
