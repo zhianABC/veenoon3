@@ -7,7 +7,21 @@
 //
 
 #import "Scenario.h"
+#import "APowerESet.h"
 
 @implementation Scenario
+
+@synthesize _A8PowerPlugs;
+@synthesize _A16PowerPlugs;
+
+- (id)init
+{
+    if(self = [super init])
+    {
+        
+    }
+    
+    return self;
+}
 
 @end

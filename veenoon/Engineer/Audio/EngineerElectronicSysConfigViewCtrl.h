@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 
+@class APowerESet;
 @interface EngineerElectronicSysConfigViewCtrl : BaseViewController {
     NSMutableArray *_electronicSysArray;
     
@@ -16,4 +17,6 @@
 }
 @property (nonatomic,strong) NSMutableArray *_electronicSysArray;
 @property (nonatomic,assign) int _number;
+
+
 @end

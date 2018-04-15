@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface Scenario : NSObject
+
+@property (nonatomic, strong) NSMutableArray *_A8PowerPlugs;
+@property (nonatomic, strong) NSMutableArray *_A16PowerPlugs;
+
+
 
 @end

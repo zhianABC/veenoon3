@@ -36,6 +36,9 @@
 #import "EngineerInfoCollectViewCtrl.h"
 #import "EngineerScenarioSettingsViewCtrl.h"
 
+#import "Scenario.h"
+#import "APowerESet.h"
+
 #define E_CELL_WIDTH   60
 
 
@@ -63,6 +66,12 @@
 @property (nonatomic, strong) NSMutableArray *_deleteCells;
 @property (nonatomic, strong) NSMutableDictionary *_buttonTagWithDataMap;
 
+@property (nonatomic, strong) Scenario *_scenario;
+
+
+@property (nonatomic, strong) NSMutableDictionary *_aDataCheckTestMap;
+@property (nonatomic, strong) NSMutableDictionary *_vDataCheckTestMap;
+@property (nonatomic, strong) NSMutableDictionary *_eDataCheckTestMap;
 @end
 
 @implementation EngineerPresetScenarioViewCtrl
@@ -76,6 +85,11 @@
 @synthesize _deleteCells;
 @synthesize _buttonTagWithDataMap;
 
+@synthesize _scenario;
+@synthesize _aDataCheckTestMap;
+@synthesize _vDataCheckTestMap;
+@synthesize _eDataCheckTestMap;
+
 
 -(void) initData {
     
@@ -85,11 +99,17 @@
     self._deleteCells = [NSMutableArray array];
     self._buttonTagWithDataMap = [NSMutableDictionary dictionary];
     
+    
+    self._aDataCheckTestMap = [NSMutableDictionary dictionary];
+    self._vDataCheckTestMap = [NSMutableDictionary dictionary];
+    self._eDataCheckTestMap = [NSMutableDictionary dictionary];
+    
     if (_meetingRoomDic) {
         [_meetingRoomDic removeAllObjects];
     } else {
         _meetingRoomDic = [[NSMutableDictionary alloc] init];
     }
+    
     NSMutableArray *scenarioArray = [_meetingRoomDic objectForKey:@"scenarioArray"];
     if (scenarioArray == nil) {
         NSMutableArray *scenarioArray = [[NSMutableArray alloc] init];
@@ -130,6 +150,11 @@
         NSMutableArray *envArray = [[NSMutableArray alloc] init];
         [_curScenario setObject:envArray forKey:@"envArray"];
     }
+    
+    
+    self._scenario = [[Scenario alloc] init];
+    
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -395,15 +420,22 @@
     
     NSString *name = [data objectForKey:@"name"];
 
-    if ([name isEqualToString:@"8路电源管理"] || [name isEqualToString:@"16路电源管理"]) {
+    if ([name isEqualToString:@"8路电源管理"]) {
+        
         EngineerElectronicSysConfigViewCtrl *ctrl = [[EngineerElectronicSysConfigViewCtrl alloc] init];
-        if ([name isEqualToString:@"8路电源管理"]) {
-            ctrl._number = 8;
-            ctrl._electronicSysArray = nil;// [NSMutableArray array];
-        } else {
-            ctrl._number = 16;
-            ctrl._electronicSysArray = nil;// [NSMutableArray array];
+        ctrl._number = 8;
+        if(baseTag == 1)//Audio
+        {
+            ctrl._electronicSysArray = _scenario._A8PowerPlugs;
         }
+        [self.navigationController pushViewController:ctrl animated:YES];
+        
+    }
+    else if ([name isEqualToString:@"16路电源管理"]) {
+        
+        EngineerElectronicSysConfigViewCtrl *ctrl = [[EngineerElectronicSysConfigViewCtrl alloc] init];
+        ctrl._number = 16;
+        ctrl._electronicSysArray = nil;
         [self.navigationController pushViewController:ctrl animated:YES];
     }
     
@@ -607,8 +639,15 @@
 // if dataDic == nil, refresh scroll view
 - (void) addComponentToEnd:(UIScrollView*) scrollView dataDic:(NSDictionary*)dataDic {
     
+    
     NSMutableArray *dataArray = nil;
     NSMutableArray *btnCells = nil;
+    
+    NSString *name = nil;
+    if(dataDic)
+    {
+        name = [dataDic objectForKey:@"name"];
+    }
     
     int tagBase = 0;
     int addTag = 100;
@@ -619,6 +658,35 @@
         
         btnCells = _audioCells;
         
+        if(name)
+        {
+            if([_aDataCheckTestMap objectForKey:name])
+            {
+                return;
+            }
+            
+            [_aDataCheckTestMap setObject:dataDic forKey:name];
+            
+            if([name isEqualToString:@"8路电源管理"])
+            {
+                if([_scenario._A8PowerPlugs count] == 0)
+                {
+                    NSMutableArray *powers = [NSMutableArray array];
+                    
+                    for(int i = 0; i < 3; i++)
+                    {
+                        APowerESet *pset = [[APowerESet alloc] init];
+                        [pset initLabs:8];
+                        pset._brand = @"brand1";
+                        
+                        [powers addObject:pset];
+                    }
+                    
+                    _scenario._A8PowerPlugs = powers;
+                }
+            }
+        }
+        
     } else if (scrollView == _videoScroll) {
         addTag = 1;
         tagBase = 2000;
@@ -626,12 +694,32 @@
         
         btnCells = _videoCells;
         
+        if(name)
+        {
+        if([_vDataCheckTestMap objectForKey:name])
+        {
+            return;
+        }
+        
+        [_vDataCheckTestMap setObject:dataDic forKey:name];
+        }
+        
     } else {
         addTag = 2;
         tagBase = 3000;
         dataArray = [_curScenario objectForKey:@"envArray"];
         
         btnCells = _envCells;
+        
+        if(name)
+        {
+        if([_eDataCheckTestMap objectForKey:name])
+        {
+            return;
+        }
+        
+        [_eDataCheckTestMap setObject:dataDic forKey:name];
+        }
     }
     
     //保存数据到数组
@@ -642,8 +730,6 @@
     [[scrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     [btnCells removeAllObjects];
-    
-    //scrollView.backgroundColor = [UIColor grayColor];
     
     int x = audioStartX;
     for(int i = 0; i < [dataArray count]; i++)

@@ -134,11 +134,11 @@
 - (void) userTrainingAction:(UIButton*)sender{
     
     id key = [NSNumber numberWithInteger:sender.tag];
-    
     NSDictionary *scen = [scens objectAtIndex:[key intValue]];
 
     if([_mapSelect objectForKey:key])
     {
+
         //取消
         [sender setImage:[UIImage imageNamed:[scen objectForKey:@"icon_nor"]] forState:UIControlStateNormal];
         [sender setImage:[UIImage imageNamed:[scen objectForKey:@"icon_sel"]] forState:UIControlStateHighlighted];
@@ -147,12 +147,26 @@
     }
     else
     {
+        
+        UIButton *btn = [_mapSelect objectForKey:@"selected_btn"];
+        if(btn)
+        {
+            id oldkey = [NSNumber numberWithInteger:btn.tag];
+            NSDictionary *scenold = [scens objectAtIndex:[oldkey intValue]];
+            
+            [btn setImage:[UIImage imageNamed:[scenold objectForKey:@"icon_nor"]] forState:UIControlStateNormal];
+            [btn setImage:[UIImage imageNamed:[scenold objectForKey:@"icon_sel"]] forState:UIControlStateHighlighted];
+            
+            [_mapSelect removeObjectForKey:oldkey];
+        }
+        
         //选中
         [sender setImage:[UIImage imageNamed:[scen objectForKey:@"icon_sel"]] forState:UIControlStateNormal];
         [sender setImage:[UIImage imageNamed:[scen objectForKey:@"icon_sel"]] forState:UIControlStateHighlighted];
 
         
         [_mapSelect setObject:scen forKey:key];
+        [_mapSelect setObject:sender forKey:@"selected_btn"];
     }
     
 }

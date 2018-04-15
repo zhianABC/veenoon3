@@ -28,7 +28,7 @@
     NSMutableArray *_allBtnArray;
 }
 
-@property (nonatomic, strong) APowerESet *_objSet;
+@property (nonatomic, strong) APowerESet *_objSetCur;
 
 @end
 
@@ -36,7 +36,7 @@
 @synthesize _electronicSysArray;
 @synthesize _number;
 
-@synthesize _objSet;
+@synthesize _objSetCur;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -90,8 +90,7 @@
     [_selectSysBtn setImageEdgeInsets:UIEdgeInsetsMake(0,_selectSysBtn.titleLabel.bounds.size.width+35,0,0)];
     [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_selectSysBtn];
-    
-    int index = 0;
+
     int top = ENGINEER_VIEW_COMPONENT_TOP;
     
     int leftRight = ENGINEER_VIEW_LEFT;
@@ -101,99 +100,62 @@
     int colNumber = ENGINEER_VIEW_COLUMN_N;
     int space = ENGINEER_VIEW_COLUMN_GAP*3;
     
-    self._objSet = [[APowerESet alloc] init];
-    [_objSet initLabs:_number];
+    
+    if([_electronicSysArray count])
+    {
+        self._objSetCur = [_electronicSysArray objectAtIndex:0];
+    }
+    
+    if(_objSetCur == nil){
+        self._objSetCur = [[APowerESet alloc] init];
+        [_objSetCur initLabs:_number];
+    }
     
     
-    if ([self._electronicSysArray count] == 0) {
-        int nameStart = 1;
-        for (int i = 0; i < self._number; i++) {
-            NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-            
-            if (nameStart < 10) {
-                NSString *startStr = [NSString stringWithFormat:@"%d",nameStart];
-                NSString *name = [@"0" stringByAppendingString:startStr];
-                
-                [dic setObject:name forKey:@"name"];
-            } else {
-                NSString *startStr = [NSString stringWithFormat:@"%d",nameStart];
-                [dic setObject:startStr forKey:@"name"];
-            }
-            
-            [dic setObject:@"OFF" forKey:@"status"];
-            
-            nameStart++;
-            [self._electronicSysArray addObject:dic];
-            
-            int row = index/colNumber;
-            int col = index%colNumber;
-            int startX = col*cellWidth+col*space+leftRight;
-            int startY = row*cellHeight+space*row+top;
-            
-            UIButton *scenarioBtn = [UIButton buttonWithColor:nil selColor:nil];
-            scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
-            scenarioBtn.layer.cornerRadius = 5;
-            scenarioBtn.layer.borderWidth = 2;
-            scenarioBtn.layer.borderColor = [UIColor clearColor].CGColor;
-            scenarioBtn.clipsToBounds = YES;
-            [scenarioBtn setImage:[UIImage imageNamed:@"dianyuanshishiqi_n.png"] forState:UIControlStateNormal];
-            [scenarioBtn setImage:[UIImage imageNamed:@"dianyuanshishiqi_s.png"] forState:UIControlStateHighlighted];
-            scenarioBtn.tag = index;
-            [self.view addSubview:scenarioBtn];
-            
-            [scenarioBtn addTarget:self
-                            action:@selector(scenarioAction:)
-                  forControlEvents:UIControlEventTouchUpInside];
-            [self createBtnLabel:scenarioBtn dataDic:dic];
-            
-            [_allBtnArray addObject:scenarioBtn];
-            
-            index++;
+    for (int i = 0; i < self._number; i++) {
+        
+        NSDictionary *dic = [_objSetCur getLabValueWithIndex:i];
+        
+        int row = i/colNumber;
+        int col = i%colNumber;
+        int startX = col*cellWidth+col*space+leftRight;
+        int startY = row*cellHeight+space*row+top;
+        
+        UIButton *scenarioBtn = [UIButton buttonWithColor:nil selColor:RGB(0, 89, 118)];
+        scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
+        scenarioBtn.clipsToBounds = YES;
+        scenarioBtn.layer.cornerRadius = 5;
+        scenarioBtn.layer.borderWidth = 2;
+        scenarioBtn.layer.borderColor = [UIColor clearColor].CGColor;
+        NSString *status = [dic objectForKey:@"status"];
+        
+        [scenarioBtn setImage:[UIImage imageNamed:@"dianyuanshishiqi_n.png"] forState:UIControlStateNormal];
+        [scenarioBtn setImage:[UIImage imageNamed:@"dianyuanshishiqi_s.png"] forState:UIControlStateHighlighted];
+        
+        if ([status isEqualToString:@"ON"]) {
+            [scenarioBtn setImage:[UIImage imageNamed:@"dianyuanshishiqi_s.png"] forState:UIControlStateNormal];
         }
-    } else {
-        for (int i = 0; i < self._number; i++) {
-            NSMutableDictionary *dic = [self._electronicSysArray objectAtIndex:i];
-            
-            int row = index/colNumber;
-            int col = index%colNumber;
-            int startX = col*cellWidth+col*space+leftRight;
-            int startY = row*cellHeight+space*row+top;
-            
-            UIButton *scenarioBtn = [UIButton buttonWithColor:nil selColor:RGB(0, 89, 118)];
-            scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
-            scenarioBtn.clipsToBounds = YES;
-            scenarioBtn.layer.cornerRadius = 5;
-            scenarioBtn.layer.borderWidth = 2;
-            scenarioBtn.layer.borderColor = [UIColor clearColor].CGColor;
-            NSString *status = [dic objectForKey:@"status"];
-            
-            [scenarioBtn setImage:[UIImage imageNamed:@"dianyuanshishiqi_n.png"] forState:UIControlStateNormal];
-            [scenarioBtn setImage:[UIImage imageNamed:@"dianyuanshishiqi_s.png"] forState:UIControlStateHighlighted];
-            
-            if ([status isEqualToString:@"ON"]) {
-                [scenarioBtn setImage:[UIImage imageNamed:@"dianyuanshishiqi_s.png"] forState:UIControlStateNormal];
-            }
-            scenarioBtn.tag = index;
-            [self.view addSubview:scenarioBtn];
-            
-            [scenarioBtn addTarget:self
-                            action:@selector(scenarioAction:)
-                  forControlEvents:UIControlEventTouchUpInside];
-            [self createBtnLabel:scenarioBtn dataDic:dic];
-            index++;
-        }
+        scenarioBtn.tag = i;
+        [self.view addSubview:scenarioBtn];
+        
+        [scenarioBtn addTarget:self
+                        action:@selector(scenarioAction:)
+              forControlEvents:UIControlEventTouchUpInside];
+        [self createBtnLabel:scenarioBtn dataDic:dic];
+        
+        [_allBtnArray addObject:scenarioBtn];
     }
 }
-- (void) createBtnLabel:(UIButton*)sender dataDic:(NSMutableDictionary*) dataDic{
+- (void) createBtnLabel:(UIButton*)sender dataDic:(NSDictionary*) dataDic{
+    
     UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, sender.frame.size.width, 20)];
     titleL.textAlignment = NSTextAlignmentCenter;
     titleL.backgroundColor = [UIColor clearColor];
     [sender addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:11];
     titleL.textColor  = [UIColor whiteColor];
-    
-    NSString *title = [@"Channel  " stringByAppendingString: [dataDic objectForKey:@"name"]];
-    titleL.text = title;
+
+    titleL.text = [dataDic objectForKey:@"name"];
     
     [lableArray addObject:titleL];
 }
@@ -240,7 +202,7 @@
     
     UILabel *titleL = [lableArray objectAtIndex:index];
     
-    UIButton *selctedBtn;
+    UIButton *selctedBtn = nil;
     
     for(UIButton *btn in _selectedBtnArray) {
         if (index == (int) btn.tag) {
@@ -254,6 +216,9 @@
         [titleL setTextColor:[UIColor whiteColor]];
         
         [_selectedBtnArray removeObject:selctedBtn];
+        
+        [_objSetCur setLabValue:NO withIndex:index];
+        
     } else {
         selctedBtn = [_allBtnArray objectAtIndex:index];
         
@@ -261,6 +226,8 @@
         [titleL setTextColor:YELLOW_COLOR];
         
         [_selectedBtnArray addObject:selctedBtn];
+        
+        [_objSetCur setLabValue:YES withIndex:index];
     }
 }
 
