@@ -608,6 +608,8 @@
 		EB5A47EF2073B66900564C06 /* huangsedianchi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB5A47EE2073B66900564C06 /* huangsedianchi@2x.png */; };
 		EB5A47F12073BA1500564C06 /* huiseyaobao@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB5A47F02073BA1500564C06 /* huiseyaobao@2x.png */; };
 		EB5A47F42073C2FE00564C06 /* AdjustAudioVideoEnvSettingsViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5A47F32073C2FE00564C06 /* AdjustAudioVideoEnvSettingsViewCtrl.m */; };
+		EB5A47F72084D83500564C06 /* VDVDPlayerSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5A47F62084D83500564C06 /* VDVDPlayerSet.m */; };
+		EB5A47FA2084D9F300564C06 /* SystemIRSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5A47F92084D9F300564C06 /* SystemIRSet.m */; };
 		EB5CF03F1FD3DC92007958C9 /* UserNewWindViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5CF03E1FD3DC92007958C9 /* UserNewWindViewCtrl.m */; };
 		EB5CF0411FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5CF0401FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m */; };
 		EB5F7F841FD5902D00351888 /* engineer_meetingroom_default_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB5F7F831FD5902C00351888 /* engineer_meetingroom_default_n@2x.png */; };
@@ -1664,6 +1666,10 @@
 		EB5A47F02073BA1500564C06 /* huiseyaobao@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "huiseyaobao@2x.png"; sourceTree = "<group>"; };
 		EB5A47F22073C2FE00564C06 /* AdjustAudioVideoEnvSettingsViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AdjustAudioVideoEnvSettingsViewCtrl.h; sourceTree = "<group>"; };
 		EB5A47F32073C2FE00564C06 /* AdjustAudioVideoEnvSettingsViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AdjustAudioVideoEnvSettingsViewCtrl.m; sourceTree = "<group>"; };
+		EB5A47F52084D83500564C06 /* VDVDPlayerSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VDVDPlayerSet.h; sourceTree = "<group>"; };
+		EB5A47F62084D83500564C06 /* VDVDPlayerSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VDVDPlayerSet.m; sourceTree = "<group>"; };
+		EB5A47F82084D9F300564C06 /* SystemIRSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SystemIRSet.h; sourceTree = "<group>"; };
+		EB5A47F92084D9F300564C06 /* SystemIRSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SystemIRSet.m; sourceTree = "<group>"; };
 		EB5CF03D1FD3DC80007958C9 /* UserNewWindViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserNewWindViewCtrl.h; sourceTree = "<group>"; };
 		EB5CF03E1FD3DC92007958C9 /* UserNewWindViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserNewWindViewCtrl.m; sourceTree = "<group>"; };
 		EB5CF0401FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserInfoCollectViewCtrl.m; sourceTree = "<group>"; };
@@ -2414,6 +2420,8 @@
 				34DE8E982066408C0061B48D /* Scenario.m */,
 				EBBCBBEB20673ECE00A7771A /* VeenoonConstatns.h */,
 				EBBCBBEC20673ECE00A7771A /* VeenoonConstatns.m */,
+				EB5A47F82084D9F300564C06 /* SystemIRSet.h */,
+				EB5A47F92084D9F300564C06 /* SystemIRSet.m */,
 			);
 			path = Module;
 			sourceTree = SOURCE_ROOT;
@@ -3150,6 +3158,8 @@
 		EB18B7252067D4A6000BDEAB /* Video */ = {
 			isa = PBXGroup;
 			children = (
+				EB5A47F52084D83500564C06 /* VDVDPlayerSet.h */,
+				EB5A47F62084D83500564C06 /* VDVDPlayerSet.m */,
 			);
 			path = Video;
 			sourceTree = "<group>";
@@ -4360,6 +4370,7 @@
 				04DE1E9F1AD6AEE000D49E2F /* iHttpAdmin.m in Sources */,
 				049ECAC21C8D694400A611D8 /* DataMatrix.mm in Sources */,
 				EB4EC11C1FE7F164000B3101 /* EngineerHunYinSysViewController.m in Sources */,
+				EB5A47FA2084D9F300564C06 /* SystemIRSet.m in Sources */,
 				04DE1EB01AD6AEE000D49E2F /* SDWebImageDownloaderOperation.m in Sources */,
 				34217A721FCE9C160006701C /* StickerLayerView.m in Sources */,
 				EB03F53F1FBDE8FB00865541 /* SettingsViewController.m in Sources */,
@@ -4369,6 +4380,7 @@
 				04DE1EAF1AD6AEE000D49E2F /* SDWebImageDownloader.m in Sources */,
 				EBC71B14203C3A3200DD0A98 /* PinJiePingRightView.m in Sources */,
 				34F27A67205168570045D765 /* YearDatePickerView.m in Sources */,
+				EB5A47F72084D83500564C06 /* VDVDPlayerSet.m in Sources */,
 				04DE1EA41AD6AEE000D49E2F /* SBJson4StreamParser.m in Sources */,
 				3421EA301FC4161300DC5378 /* ColumnsView.m in Sources */,
 				04DE1EA31AD6AEE000D49E2F /* SBJson4Parser.m in Sources */,
