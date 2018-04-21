@@ -17,6 +17,8 @@
 @property (nonatomic, strong) NSString *_ipaddress;
 @property (nonatomic, strong) NSString *_com;
 
+@property (nonatomic,assign) int _index;
+
 - (NSString*) showName;
 
 @end

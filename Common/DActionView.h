@@ -8,11 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void (^DActionViewCallbackBlock)(int tagIndex, id obj);
+
+
 @interface DActionView : UIView
 {
-    
+    DActionViewCallbackBlock _callback;
 }
+@property (nonatomic, assign) int _selectIndex;
+@property (nonatomic, copy) DActionViewCallbackBlock _callback;
 
 - (void) setSelectDatas:(NSArray*)datas;
+- (void) dismissView;
 
 @end

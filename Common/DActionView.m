@@ -20,6 +20,9 @@
 
 @implementation DActionView
 @synthesize _datas;
+@synthesize _selectIndex;
+@synthesize _callback;
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -98,7 +101,13 @@
                          
                      }];
     
+    [_tableView reloadData];
     
+}
+
+- (void) dismissView{
+    
+    [self cancelAction:nil];
 }
 
 #pragma mark -
@@ -147,11 +156,24 @@
                                                                     CGRectGetWidth(self.frame)-20, 30)];
         valueL.backgroundColor = [UIColor clearColor];
         [cell.contentView addSubview:valueL];
-        valueL.font = [UIFont systemFontOfSize:18];
+        valueL.font = [UIFont systemFontOfSize:20];
         valueL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
         valueL.textAlignment = NSTextAlignmentCenter;
         
         valueL.text = [dic objectForKey:@"name"];
+        
+        if(_selectIndex == indexPath.row)
+        {
+            UIImageView *round = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
+            round.backgroundColor = LINE_COLOR;
+            round.layer.cornerRadius = 5;
+            round.clipsToBounds = YES;
+            [cell.contentView addSubview:round];
+            
+            CGSize s = [valueL.text sizeWithAttributes:@{NSFontAttributeName:valueL.font}];
+            round.center = CGPointMake(SCREEN_WIDTH/2 - s.width/2-15, 30);
+            
+        }
 
         
     }
@@ -163,8 +185,15 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
-    [_tableView reloadData];
     
+    if(_callback)
+    {
+        NSDictionary *dic = [_datas objectAtIndex:indexPath.row];
+        
+        _callback((int)indexPath.row, [dic objectForKey:@"object"]);
+    }
+    
+    [self dismissView];
 }
 
 

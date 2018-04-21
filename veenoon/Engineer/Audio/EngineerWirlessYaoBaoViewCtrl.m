@@ -126,6 +126,8 @@
     if(_curMike)
         [_selectSysBtn setShowText:[_curMike showName]];
     
+
+    
     _zengyiSlider = [[EngineerSliderView alloc]
                        initWithSliderBg:[UIImage imageNamed:@"engineer_zengyi_n.png"]
                        frame:CGRectZero];
@@ -441,10 +443,24 @@
     
 }
 
+- (void) selectCurrentMike:(AudioEWirlessMike*)mike{
+    
+    
+    self._curMike = mike;
+    
+    
+}
+
 - (void) sysSelectAction:(id)sender{
     
     
     [self.view addSubview:_dActionView];
+    
+    IMP_BLOCK_SELF(EngineerWirlessYaoBaoViewCtrl);
+    _dActionView._callback = ^(int tagIndex, id obj)
+    {
+        [block_self selectCurrentMike:obj];
+    };
     
     
     
@@ -454,6 +470,7 @@
         [arr addObject:@{@"object":mike,@"name":[mike showName]}];
     }
    
+    _dActionView._selectIndex = _curMike._index;
     [_dActionView setSelectDatas:arr];
    
 }

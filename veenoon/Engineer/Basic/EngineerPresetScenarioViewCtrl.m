@@ -733,6 +733,7 @@
             AudioEWirlessMike *pset = [[AudioEWirlessMike alloc] init];
             pset._brand = @"品牌";
             pset._type = @"型号";
+            pset._index = i;
             pset._deviceno = [NSString stringWithFormat:@"%02d", i+1];
             [pset initChannels:2];
             [mikes addObject:pset];

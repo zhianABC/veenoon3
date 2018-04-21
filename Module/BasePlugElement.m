@@ -15,6 +15,7 @@
 @synthesize _ipaddress;
 @synthesize _com;
 @synthesize _deviceid;
+@synthesize _index;
 
 - (NSString*) showName{
     
