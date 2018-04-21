@@ -9,6 +9,8 @@
 #import "DVDRightView.h"
 #import "UIButton+Color.h"
 #import "ComSettingView.h"
+#import "VDVDPlayerSet.h"
+
 
 @interface DVDRightView () <UITextFieldDelegate> {
     
@@ -16,14 +18,17 @@
     UITextField *ipTextField;
     
     UIView *_footerView;
+    
 }
 @property (nonatomic, strong) NSMutableArray *_btns;
 @property (nonatomic) int _numOfChannel;
+
 @end
 
 @implementation DVDRightView
 @synthesize _btns;
 @synthesize _numOfChannel;
+@synthesize _currentObj;
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.
@@ -50,7 +55,7 @@
         ipTextField.delegate = self;
         ipTextField.backgroundColor = [UIColor clearColor];
         ipTextField.returnKeyType = UIReturnKeyDone;
-        ipTextField.text = @"192.168.1.100";
+        ipTextField.text = _currentObj._ipaddress;
         ipTextField.textColor = [UIColor whiteColor];
         ipTextField.borderStyle = UITextBorderStyleRoundedRect;
         ipTextField.textAlignment = NSTextAlignmentRight;
@@ -134,6 +139,12 @@
     
 }
 
+-(void) refreshView:(VDVDPlayerSet*) dvdPlayerSet {
+    self._currentObj = dvdPlayerSet;
+    
+    ipTextField.text = dvdPlayerSet._ipaddress;
+}
+
 - (void) buttonAction:(UIButton*)btn{
     
     [self chooseChannelAtTagIndex:(int)btn.tag];
@@ -164,7 +175,7 @@
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
-    
+    _currentObj._ipaddress = ipTextField.text;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
