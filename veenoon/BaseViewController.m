@@ -45,6 +45,10 @@
 	// Do any additional setup after loading the view.
     
     
+    _dActionView = [[DActionView alloc] initWithFrame:CGRectMake(0, 0,
+                                                                 SCREEN_WIDTH,
+                                                                 SCREEN_HEIGHT)];
+    
     
     if(IOS7_OR_LATER){
         self.edgesForExtendedLayout = UIRectEdgeNone;

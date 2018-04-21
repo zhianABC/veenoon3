@@ -43,21 +43,38 @@
     {
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         
+        //Channel配置数据
+        
+        //编号
         [dic setObject:[NSString stringWithFormat:@"%02d", i] forKey:@"name"];
-        [dic setObject:@"OFF" forKey:@"status"];
+        
+        //别称
+        [dic setObject:@"Channel" forKey:@"nickname"];
         [dic setObject:@0 forKey:@"db"];
         [dic setObject:@4 forKey:@"signal"];
         [dic setObject:@80 forKey:@"battery"];
         [dic setObject:@"huatong" forKey:@"type"];
+        
+        //序号
+        [dic setObject:[NSNumber numberWithInt:i] forKey:@"index"];
+        
+        //设备号
+        if(self._deviceno)
+            [dic setObject:self._deviceno forKey:@"device"];
         
         [_channels addObject:dic];
     }
     
 }
 
+- (NSArray*)channles{
+    
+    return _channels;
+}
+
 - (int) channelsCount{
     
-    return [_channels count];
+    return (int)[_channels count];
 }
 
 - (NSMutableDictionary *)channelAtIndex:(int)index{

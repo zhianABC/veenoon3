@@ -245,6 +245,7 @@
 		34686C9F1ED025CB001749A1 /* DesUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 34686C9D1ED025CB001749A1 /* DesUtil.m */; };
 		348FC8CD208AF80600F7DB3D /* BasePlugElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 348FC8CB208AF80100F7DB3D /* BasePlugElement.m */; };
 		348FC8D0208B203E00F7DB3D /* PlugsCtrlTitleHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 348FC8CF208B203E00F7DB3D /* PlugsCtrlTitleHeader.m */; };
+		348FC8D3208B748B00F7DB3D /* DActionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 348FC8D2208B748B00F7DB3D /* DActionView.m */; };
 		34928A9A1EC1BD330089F429 /* ReaderCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34928A991EC1BD330089F429 /* ReaderCodeViewController.m */; };
 		3496B75A1FCAF3C5005F4857 /* SignalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3496B7591FCAF3C5005F4857 /* SignalView.m */; };
 		349DADDF206E8D02001593DE /* AudioEHand2Hand.m in Sources */ = {isa = PBXBuildFile; fileRef = 349DADD1206E8D02001593DE /* AudioEHand2Hand.m */; };
@@ -1225,6 +1226,8 @@
 		348FC8CC208AF80600F7DB3D /* BasePlugElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasePlugElement.h; sourceTree = "<group>"; };
 		348FC8CE208B203E00F7DB3D /* PlugsCtrlTitleHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlugsCtrlTitleHeader.h; sourceTree = "<group>"; };
 		348FC8CF208B203E00F7DB3D /* PlugsCtrlTitleHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlugsCtrlTitleHeader.m; sourceTree = "<group>"; };
+		348FC8D1208B748B00F7DB3D /* DActionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DActionView.h; sourceTree = "<group>"; };
+		348FC8D2208B748B00F7DB3D /* DActionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DActionView.m; sourceTree = "<group>"; };
 		34928A981EC1BD330089F429 /* ReaderCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderCodeViewController.h; sourceTree = "<group>"; };
 		34928A991EC1BD330089F429 /* ReaderCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderCodeViewController.m; sourceTree = "<group>"; };
 		3496B7581FCAF3C5005F4857 /* SignalView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignalView.h; sourceTree = "<group>"; };
@@ -2262,6 +2265,8 @@
 				EBBCBBE42063E0C800A7771A /* IconCenterTextButton.m */,
 				EB5A47FB208AE2D500564C06 /* BrandCategoryNoUtil.h */,
 				EB5A47FC208AE2D500564C06 /* BrandCategoryNoUtil.m */,
+				348FC8D1208B748B00F7DB3D /* DActionView.h */,
+				348FC8D2208B748B00F7DB3D /* DActionView.m */,
 			);
 			path = Common;
 			sourceTree = SOURCE_ROOT;
@@ -4406,6 +4411,7 @@
 				348FC8D0208B203E00F7DB3D /* PlugsCtrlTitleHeader.m in Sources */,
 				04DE1EB51AD6AEE000D49E2F /* UIImageView+WebCache.m in Sources */,
 				34DC47421FD6DD9300ACB589 /* CircleProgressView.m in Sources */,
+				348FC8D3208B748B00F7DB3D /* DActionView.m in Sources */,
 				04DE1E8E1AD6AEE000D49E2F /* UIButton+Color.m in Sources */,
 				EB795B5C2042E861005D1F47 /* YaXianQi_UIView.m in Sources */,
 				341671841FBA9765001D33D0 /* SignupViewController.m in Sources */,

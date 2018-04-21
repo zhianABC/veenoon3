@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ConfigureSetting.h"
 #import "WebClient.h"
+#import "DActionView.h"
 
 
 @interface BaseViewController : UIViewController
@@ -21,6 +22,8 @@
     UIImageView *titleIcon;
     UILabel *titleLabel;
     UILabel *centerTitleLabel;
+    
+    DActionView *_dActionView;
 }
 
 - (CGSize )lengthString:(NSString *)text  withFont:(UIFont *)font; //根据字符串、字体计算长度

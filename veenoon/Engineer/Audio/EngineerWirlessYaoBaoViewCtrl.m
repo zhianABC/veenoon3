@@ -47,6 +47,7 @@
 }
 
 @property (nonatomic, strong) AudioEWirlessMike *_curMike;
+@property (nonatomic, strong) NSMutableArray *_channels;
 
 @end
 
@@ -54,6 +55,7 @@
 @synthesize _wirelessYaoBaoSysArray;
 @synthesize _number;
 @synthesize _curMike;
+@synthesize _channels;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -73,8 +75,17 @@
     _dianchiArray = [[NSMutableArray alloc] init];
     _huatongArray = [[NSMutableArray alloc] init];
     
-    if([_wirelessYaoBaoSysArray count])
+    self._channels = [NSMutableArray array];
+    
+    if([_wirelessYaoBaoSysArray count]){
         self._curMike = [_wirelessYaoBaoSysArray objectAtIndex:0];
+        
+        //把所有设备的Channel放入数组
+        for(AudioEWirlessMike *mike in _wirelessYaoBaoSysArray)
+        {
+            [_channels addObjectsFromArray:[mike channles]];
+        }
+    }
     
     [super setTitleAndImage:@"audio_corner_huatong.png" withTitle:@"无线麦"];
     
@@ -109,11 +120,11 @@
     forControlEvents:UIControlEventTouchUpInside];
     
     _selectSysBtn = [[PlugsCtrlTitleHeader alloc] initWithFrame:CGRectMake(50, 100, 80, 30)];
-    [_selectSysBtn setShowText:@"设备名-型号-001"];
-    _selectSysBtn.titleLabel.font = [UIFont systemFontOfSize:16];
      [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_selectSysBtn];
     
+    if(_curMike)
+        [_selectSysBtn setShowText:[_curMike showName]];
     
     _zengyiSlider = [[EngineerSliderView alloc]
                        initWithSliderBg:[UIImage imageNamed:@"engineer_zengyi_n.png"]
@@ -140,12 +151,12 @@
     int space = ENGINEER_VIEW_COLUMN_GAP;
     
     
-    if(_curMike)
+    if([_channels count])
     {
-        int max = [_curMike channelsCount];
+        int max = (int)[_channels count];
         
         for (int i = 0; i < max; i++) {
-            NSMutableDictionary *dataDic = [_curMike channelAtIndex:i];
+            NSMutableDictionary *dataDic = [_channels objectAtIndex:i];
             
             int row = index/colNumber;
             int col = index%colNumber;
@@ -167,7 +178,6 @@
             [btn setCircleValue:circleValue];
             
             
-            
             UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 - 30, 0, 60, 20)];
             titleL.textAlignment = NSTextAlignmentCenter;
             titleL.backgroundColor = [UIColor clearColor];
@@ -184,7 +194,7 @@
             titleL1.font = [UIFont boldSystemFontOfSize:12];
             titleL1.textColor  = [UIColor whiteColor];
             titleL1.textAlignment = NSTextAlignmentCenter;
-            titleL1.text = @"Channel";
+            titleL1.text = [dataDic objectForKey:@"nickname"];
             [_buttonChannelArray addObject:titleL1];
             
             UIView *signalView = [[UIView alloc] initWithFrame:CGRectMake(0, 120, cellWidth, 120)];
@@ -246,28 +256,6 @@
             [_imageViewArray addObject:imageView];
             [_buttonArray addObject:btn];
             
-            
-            NSString *status = [dataDic objectForKey:@"status"];
-            if([status isEqualToString:@"ON"])
-            {
-                [btn enableValueSet:YES];
-                titleL.textColor = YELLOW_COLOR;
-                titleL1.textColor = YELLOW_COLOR;
-                sgtitleL.textColor = YELLOW_COLOR;
-                [signal setLightColor:YELLOW_COLOR];
-                [signalView setAlpha:1];
-                batter.normalColor = YELLOW_COLOR;
-                [batter updateYellowBatteryView];
-                
-                if ([@"huatong" isEqualToString:huatongType]) {
-                    imageView.image = [UIImage imageNamed:@"huatong_yellow_n.png"];
-                } else {
-                    imageView.image = [UIImage imageNamed:@"yaobao_yellow_n.png"];
-                }
-                
-                [_selectedBtnArray addObject:btn];
-            }
-            
             index++;
         }
     }
@@ -279,7 +267,7 @@
     int circleValue = value * 40.0f - 20;
     
     int idx = (int)slbtn.tag;
-    NSMutableDictionary *dataDic = [_curMike channelAtIndex:idx];
+    NSMutableDictionary *dataDic = [_channels objectAtIndex:idx];
     if(dataDic)
     {
         [dataDic setObject:[NSNumber numberWithInt:circleValue]
@@ -294,7 +282,7 @@
         [button setCircleValue:circleValue];
         
         int idx = (int)button.tag;
-        NSMutableDictionary *dataDic = [_curMike channelAtIndex:idx];
+        NSMutableDictionary *dataDic = [_channels objectAtIndex:idx];
         if(dataDic)
         {
             [dataDic setObject:[NSNumber numberWithInt:value]
@@ -303,6 +291,65 @@
         
     }
 }
+
+- (void) testCurrentMike:(NSString*)deviceno{
+    
+    for(AudioEWirlessMike *mike in _wirelessYaoBaoSysArray)
+    {
+        if([mike._deviceno isEqualToString:deviceno])
+        {
+            self._curMike = mike;
+            break;
+        }
+    }
+    
+    [_selectSysBtn setShowText:[_curMike showName]];
+    
+    for(int i = 0; i < [_channels count]; i++)
+    {
+        NSDictionary *data = [_channels objectAtIndex:i];
+        NSString *dn = [data objectForKey:@"device"];
+        NSString *huatongType = [data objectForKey:@"huatongType"];
+        if([dn isEqualToString:deviceno])
+        {
+            continue;
+        }
+        
+        SlideButton *btn = [_buttonArray objectAtIndex:i];
+        
+        [_selectedBtnArray removeObject:btn];
+        
+        [btn enableValueSet:NO];
+        
+        UILabel *chanelL = [_buttonChannelArray objectAtIndex:i];
+        chanelL.textColor = [UIColor whiteColor];
+        
+        UILabel *numberL = [_buttonNumberArray objectAtIndex:i];
+        numberL.textColor = [UIColor whiteColor];
+        
+        UIView *signalView = [signalArray objectAtIndex:i];
+        [signalView setAlpha:0.8];
+        
+        UILabel *sinalLabel = [_signalLabelArray objectAtIndex:i];
+        sinalLabel.textColor = [UIColor whiteColor];
+        
+        SignalView *signalView2 = [_signalViewArray objectAtIndex:i];
+        [signalView2 setLightColor:[UIColor whiteColor]];//
+        [signalView2 setGrayColor:[UIColor colorWithWhite:1.0 alpha:0.6]];
+        
+        BatteryView *batter = [_dianchiArray objectAtIndex:i];
+        [batter updateGrayBatteryView];
+        batter.normalColor = [UIColor whiteColor];
+        
+        UIImageView *imageView = [_huatongArray objectAtIndex:i];
+        if ([@"huatong" isEqualToString:huatongType]) {
+            imageView.image = [UIImage imageNamed:@"huisehuatong.png"];
+        } else {
+            imageView.image = [UIImage imageNamed:@"huiseyaobao.png"];
+        }
+    }
+}
+
 
 
 - (void) didTappedMSelf:(SlideButton*)slbtn{
@@ -318,20 +365,16 @@
     }
     // want to choose it
     
-    if(_curMike == nil)
-        return;
-        
-    NSMutableDictionary *dataDic = [_curMike channelAtIndex:tag];
+    NSMutableDictionary *dataDic = [_channels objectAtIndex:tag];
     NSString *huatongType = [dataDic objectForKey:@"type"];
+    
+    [self testCurrentMike:[dataDic objectForKey:@"device"]];
     
     if (btn == nil) {
         SlideButton *button = [_buttonArray objectAtIndex:tag];
         [_selectedBtnArray addObject:button];
         
         [button enableValueSet:YES];
-        
-        if(dataDic)
-        [dataDic setObject:@"ON" forKey:@"status"];
         
         UILabel *chanelL = [_buttonChannelArray objectAtIndex:tag];
         chanelL.textColor = YELLOW_COLOR;
@@ -364,10 +407,7 @@
         [_selectedBtnArray removeObject:btn];
         
         [btn enableValueSet:NO];
-     
-        if(dataDic)
-        [dataDic setObject:@"OFF" forKey:@"status"];
-        
+    
         UILabel *chanelL = [_buttonChannelArray objectAtIndex:tag];
         chanelL.textColor = [UIColor whiteColor];
         
@@ -403,24 +443,19 @@
 
 - (void) sysSelectAction:(id)sender{
     
-    if(_customPicker == nil)
-    _customPicker = [[CustomPickerView alloc]
-                     initWithFrame:CGRectMake(_selectSysBtn.frame.origin.x, _selectSysBtn.frame.origin.y, _selectSysBtn.frame.size.width, 120) withGrayOrLight:@"gray"];
+    
+    [self.view addSubview:_dActionView];
+    
     
     
     NSMutableArray *arr = [NSMutableArray array];
-    for(int i = 1; i< 2; i++)
+    for(AudioEWirlessMike *mike in _wirelessYaoBaoSysArray)
     {
-        [arr addObject:[NSString stringWithFormat:@"00%d", i]];
+        [arr addObject:@{@"object":mike,@"name":[mike showName]}];
     }
-    
-    _customPicker._pickerDataArray = @[@{@"values":arr}];
-    
-    
-    _customPicker._selectColor = [UIColor orangeColor];
-    _customPicker._rowNormalColor = [UIColor whiteColor];
-    [self.view addSubview:_customPicker];
-    _customPicker.delegate_ = self;
+   
+    [_dActionView setSelectDatas:arr];
+   
 }
 
 - (void) didChangedPickerValue:(NSDictionary*)value{

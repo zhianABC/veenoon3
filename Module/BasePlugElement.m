@@ -14,5 +14,14 @@
 @synthesize _deviceno;
 @synthesize _ipaddress;
 @synthesize _com;
+@synthesize _deviceid;
+
+- (NSString*) showName{
+    
+    NSString *name = [NSString stringWithFormat:@"%@ - %@ - %@",
+                      _brand, _type, _deviceno];
+    
+    return name;
+}
 
 @end

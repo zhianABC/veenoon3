@@ -19,5 +19,8 @@
 - (void) initChannels:(int)num;
 
 - (NSMutableDictionary *)channelAtIndex:(int)index;
+- (NSArray*)channles;
+
+
 
 @end
