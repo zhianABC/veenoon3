@@ -305,6 +305,12 @@
         }
     }
     
+    [self updateCurrentMikeState:deviceno];
+    
+}
+
+- (void) updateCurrentMikeState:(NSString *)deviceno{
+    
     [_selectSysBtn setShowText:[_curMike showName]];
     
     for(int i = 0; i < [_channels count]; i++)
@@ -449,6 +455,7 @@
     self._curMike = mike;
     
     
+    [self updateCurrentMikeState:mike._deviceno];
 }
 
 - (void) sysSelectAction:(id)sender{
