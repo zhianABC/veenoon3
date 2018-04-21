@@ -39,6 +39,7 @@
 #import "Scenario.h"
 #import "APowerESet.h"
 #import "AudioEPlayer.h"
+#import "VDVDPlayerSet.h"
 
 #define E_CELL_WIDTH   60
 
