@@ -610,6 +610,7 @@
 		EB5A47F42073C2FE00564C06 /* AdjustAudioVideoEnvSettingsViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5A47F32073C2FE00564C06 /* AdjustAudioVideoEnvSettingsViewCtrl.m */; };
 		EB5A47F72084D83500564C06 /* VDVDPlayerSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5A47F62084D83500564C06 /* VDVDPlayerSet.m */; };
 		EB5A47FA2084D9F300564C06 /* SystemIRSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5A47F92084D9F300564C06 /* SystemIRSet.m */; };
+		EB5A47FD208AE2D500564C06 /* BrandCategoryNoUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5A47FC208AE2D500564C06 /* BrandCategoryNoUtil.m */; };
 		EB5CF03F1FD3DC92007958C9 /* UserNewWindViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5CF03E1FD3DC92007958C9 /* UserNewWindViewCtrl.m */; };
 		EB5CF0411FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5CF0401FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m */; };
 		EB5F7F841FD5902D00351888 /* engineer_meetingroom_default_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB5F7F831FD5902C00351888 /* engineer_meetingroom_default_n@2x.png */; };
@@ -1670,6 +1671,8 @@
 		EB5A47F62084D83500564C06 /* VDVDPlayerSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VDVDPlayerSet.m; sourceTree = "<group>"; };
 		EB5A47F82084D9F300564C06 /* SystemIRSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SystemIRSet.h; sourceTree = "<group>"; };
 		EB5A47F92084D9F300564C06 /* SystemIRSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SystemIRSet.m; sourceTree = "<group>"; };
+		EB5A47FB208AE2D500564C06 /* BrandCategoryNoUtil.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BrandCategoryNoUtil.h; sourceTree = "<group>"; };
+		EB5A47FC208AE2D500564C06 /* BrandCategoryNoUtil.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrandCategoryNoUtil.m; sourceTree = "<group>"; };
 		EB5CF03D1FD3DC80007958C9 /* UserNewWindViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserNewWindViewCtrl.h; sourceTree = "<group>"; };
 		EB5CF03E1FD3DC92007958C9 /* UserNewWindViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserNewWindViewCtrl.m; sourceTree = "<group>"; };
 		EB5CF0401FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserInfoCollectViewCtrl.m; sourceTree = "<group>"; };
@@ -2251,6 +2254,8 @@
 				04DE1E1F1AD6AEE000D49E2F /* Utilities.m */,
 				EBBCBBE32063E0C800A7771A /* IconCenterTextButton.h */,
 				EBBCBBE42063E0C800A7771A /* IconCenterTextButton.m */,
+				EB5A47FB208AE2D500564C06 /* BrandCategoryNoUtil.h */,
+				EB5A47FC208AE2D500564C06 /* BrandCategoryNoUtil.m */,
 			);
 			path = Common;
 			sourceTree = SOURCE_ROOT;
@@ -4410,6 +4415,7 @@
 				EB7333F42041046400AE60B8 /* AirCleanRightView.m in Sources */,
 				34A8965320443184007934E1 /* GradeLineView.m in Sources */,
 				EBF6A72C1FC8486000260FF0 /* UserAudioPlayerSettingsViewCtrl.m in Sources */,
+				EB5A47FD208AE2D500564C06 /* BrandCategoryNoUtil.m in Sources */,
 				04DE1E941AD6AEE000D49E2F /* ASIAuthenticationDialog.m in Sources */,
 				049ECAC51C8D694400A611D8 /* QREncoder.mm in Sources */,
 				EB795B452042DD2B005D1F47 /* AudioInputSettingViewCtrl.m in Sources */,
