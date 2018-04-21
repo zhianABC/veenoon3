@@ -38,6 +38,7 @@
 
 #import "Scenario.h"
 #import "APowerESet.h"
+#import "AudioEPlayer.h"
 
 #define E_CELL_WIDTH   60
 
@@ -449,7 +450,7 @@
         // player array
         if ([name isEqualToString:@"播放器"]) {
             EngineerPlayerSettingsViewCtrl *ctrl = [[EngineerPlayerSettingsViewCtrl alloc] init];
-            ctrl._playerSysArray = [NSMutableArray arrayWithObject:data];
+            ctrl._playerSysArray = _scenario._APlayerPlugs;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         
@@ -678,6 +679,24 @@
     }
 }
 
+- (void) initAudioEPlayers{
+    
+    if([_scenario._APlayerPlugs count] == 0)
+    {
+        NSMutableArray *palyers = [NSMutableArray array];
+        
+        for(int i = 0; i < 3; i++)
+        {
+            AudioEPlayer *pset = [[AudioEPlayer alloc] init];
+            pset._brand = @"brand1";
+            
+            [palyers addObject:pset];
+        }
+        
+        _scenario._APlayerPlugs = palyers;
+    }
+}
+
 // if dataDic == nil, refresh scroll view
 - (void) addComponentToEnd:(UIScrollView*) scrollView dataDic:(NSDictionary*)dataDic {
     
@@ -715,6 +734,10 @@
             else if([name isEqualToString:@"16路电源管理"])
             {
                 [self init16Powers];
+            }
+            else if([name isEqualToString:@"播放器"])
+            {
+                [self initAudioEPlayers];
             }
         }
         

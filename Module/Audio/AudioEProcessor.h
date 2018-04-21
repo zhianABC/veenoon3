@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BasePlugElement.h"
 
-@interface AudioEProcessor : NSObject
+@interface AudioEProcessor : BasePlugElement
 
 @end

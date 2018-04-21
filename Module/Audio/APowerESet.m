@@ -11,11 +11,7 @@
 @implementation APowerESet
 @synthesize _lines;
 
-@synthesize _brand;
-@synthesize _type;
-@synthesize _deviceno;
-@synthesize _ipaddress;
-@synthesize _com;
+
 
 - (void) initLabs:(int)num{
     

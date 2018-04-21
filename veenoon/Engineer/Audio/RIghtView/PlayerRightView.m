@@ -9,7 +9,7 @@
 #import "PlayerRightView.h"
 #import "UIButton+Color.h"
 #import "PlayerSettingsPannel.h"
-
+#import "AudioEPlayer.h"
 
 @interface PlayerRightView ()<UITextFieldDelegate> {
     
@@ -25,6 +25,7 @@
 @property (nonatomic) int _numOfChannel;
 @property (nonatomic, strong) NSMutableArray *_btns;
 
+
 @end
 
 @implementation PlayerRightView
@@ -33,6 +34,8 @@
 @synthesize _groupValues;
 @synthesize _btns;
 @synthesize _numOfChannel;
+
+@synthesize _playerPlug;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -52,7 +55,7 @@
         ipTextField.delegate = self;
         ipTextField.backgroundColor = [UIColor clearColor];
         ipTextField.returnKeyType = UIReturnKeyDone;
-        ipTextField.text = @"192.168.1.100";
+        ipTextField.text = _playerPlug._ipaddress;
         ipTextField.textColor = [UIColor whiteColor];
         ipTextField.borderStyle = UITextBorderStyleRoundedRect;
         ipTextField.textAlignment = NSTextAlignmentRight;
@@ -193,6 +196,9 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     
+    NSString *ipaddress = textField.text;
+    if([ipaddress length])
+        _playerPlug._ipaddress = ipaddress;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{

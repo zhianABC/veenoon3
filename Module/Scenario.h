@@ -13,6 +13,7 @@
 
 @property (nonatomic, strong) NSMutableArray *_A8PowerPlugs;
 @property (nonatomic, strong) NSMutableArray *_A16PowerPlugs;
+@property (nonatomic, strong) NSMutableArray *_APlayerPlugs;
 
 
 

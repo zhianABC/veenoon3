@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class AudioEPlayer;
+
 @interface PlayerRightView : UIView
+{
+    
+}
+@property (nonatomic, strong) AudioEPlayer *_playerPlug;
 
 @end

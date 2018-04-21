@@ -13,7 +13,7 @@
 
 @synthesize _A8PowerPlugs;
 @synthesize _A16PowerPlugs;
-
+@synthesize _APlayerPlugs;
 - (id)init
 {
     if(self = [super init])

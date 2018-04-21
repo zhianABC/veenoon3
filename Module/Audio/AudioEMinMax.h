@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BasePlugElement.h"
 
-@interface AudioEMinMax : NSObject
+@interface AudioEMinMax : BasePlugElement
 
 @end

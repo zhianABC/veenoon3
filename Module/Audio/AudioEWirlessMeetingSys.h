@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BasePlugElement.h"
 
-@interface AudioEWirlessMeetingSys : NSObject
+@interface AudioEWirlessMeetingSys : BasePlugElement
 
 @end

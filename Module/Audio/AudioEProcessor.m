@@ -10,4 +10,15 @@
 
 @implementation AudioEProcessor
 
+- (id) init
+{
+    if(self = [super init])
+    {
+        
+        self._ipaddress = @"192.168.1.100";
+    }
+    
+    return self;
+}
+
 @end

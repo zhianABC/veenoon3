@@ -10,6 +10,7 @@
 #import "UIButton+Color.h"
 #import "CustomPickerView.h"
 #import "PlayerRightView.h"
+#import "AudioEPlayer.h"
 
 @interface EngineerPlayerSettingsViewCtrl () <CustomPickerViewDelegate>{
     
@@ -33,11 +34,17 @@
     PlayerRightView *_psv;
     UIButton *okBtn;
 }
+@property (nonatomic, strong) AudioEPlayer *_curPalyer;
+
 @end
 
 @implementation EngineerPlayerSettingsViewCtrl
 @synthesize _playerSysArray;
 @synthesize _number;
+
+@synthesize _curPalyer;
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -47,6 +54,11 @@
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
+    
+    if([_playerSysArray count])
+    {
+        self._curPalyer = [_playerSysArray objectAtIndex:0];
+    }
     
     //缺切图，把切图贴上即可。
     bottomBar.backgroundColor = [UIColor grayColor];
@@ -170,6 +182,8 @@
     [_tanchuBtn addTarget:self
                        action:@selector(tanchuAction:)
              forControlEvents:UIControlEventTouchUpInside];
+    
+    
 }
 - (void) luboAction:(id)sender{
 }

@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BasePlugElement.h"
 
-@interface AudioEHand2Hand : NSObject
+@interface AudioEHand2Hand : BasePlugElement
 
 @end
