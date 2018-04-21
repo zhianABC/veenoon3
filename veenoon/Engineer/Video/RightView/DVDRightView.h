@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "VDVDPlayerSet.h"
+@interface DVDRightView : UIView {
+    VDVDPlayerSet *_currentObj;
+}
+@property(nonatomic, strong) VDVDPlayerSet *_currentObj;
 
-@interface DVDRightView : UIView
-
+-(void) refreshView:(VDVDPlayerSet*) dvdPlayerSet;
 @end

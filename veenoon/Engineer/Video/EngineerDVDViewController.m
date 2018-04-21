@@ -34,14 +34,16 @@
     UIButton *okBtn;
     DVDRightView *_rightView;
     BOOL isSettings;
+    
+    VDVDPlayerSet *_currentObj;
 }
-@property (nonatomic, strong) VDVDPlayerSet *_objSetCur;
+@property (nonatomic, strong) VDVDPlayerSet *_currentObj;
 @end
 
 @implementation EngineerDVDViewController
 @synthesize _dvdSysArray;
 @synthesize _number;
-@synthesize _objSetCur;
+@synthesize _currentObj;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -49,11 +51,11 @@
     isSettings = NO;
     
     if ([_dvdSysArray count]) {
-        self._objSetCur = [_dvdSysArray objectAtIndex:0];
+        self._currentObj = [_dvdSysArray objectAtIndex:0];
     }
     
-    if(_objSetCur == nil) {
-        self._objSetCur = [[VDVDPlayerSet alloc] init];
+    if(_currentObj == nil) {
+        self._currentObj = [[VDVDPlayerSet alloc] init];
     }
     
     
@@ -355,6 +357,8 @@
         [okBtn setTitle:@"设置" forState:UIControlStateNormal];
         isSettings = NO;
     }
+    
+    [_rightView  refreshView:_currentObj];
 }
 
 - (void) cancelAction:(id)sender{
