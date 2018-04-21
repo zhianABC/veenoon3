@@ -452,7 +452,8 @@
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
-    
+ 
+    ipTextField.text = textField.text;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{

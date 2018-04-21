@@ -168,6 +168,11 @@
             btn.delegate = self;
             btn.tag = i;
             
+            int value = [[dataDic objectForKey:@"db"] intValue];
+            float circleValue = (value +20.0f)/40.0f;
+            [btn setCircleValue:circleValue];
+            
+            
             
             UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 - 30, 0, 60, 20)];
             titleL.textAlignment = NSTextAlignmentCenter;
@@ -214,7 +219,7 @@
             batter.center = CGPointMake(60, 20);
             [_dianchiArray addObject:batter];
             
-            NSString *dianliangStr = [dataDic objectForKey:@"dianliang"];
+            id dianliangStr = [dataDic objectForKey:@"battery"];
             int dianliang = [dianliangStr intValue];
             double dianliangDouble = 1.0f * dianliang / 100;
             [batter setBatteryValue:dianliangDouble];
@@ -265,6 +270,8 @@
                 } else {
                     imageView.image = [UIImage imageNamed:@"yaobao_yellow_n.png"];
                 }
+                
+                [_selectedBtnArray addObject:btn];
             }
             
             index++;
@@ -273,11 +280,33 @@
   
 }
 
+- (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
+    
+    int circleValue = value * 40.0f - 20;
+    
+    int idx = (int)slbtn.tag;
+    NSMutableDictionary *dataDic = [_curMike channelAtIndex:idx];
+    if(dataDic)
+    {
+        [dataDic setObject:[NSNumber numberWithInt:circleValue]
+                    forKey:@"db"];
+    }
+    
+}
 - (void) didSliderValueChanged:(int)value object:(id)object {
     
     float circleValue = (value +20.0f)/40.0f;
     for (SlideButton *button in _selectedBtnArray) {
         [button setCircleValue:circleValue];
+        
+        int idx = (int)button.tag;
+        NSMutableDictionary *dataDic = [_curMike channelAtIndex:idx];
+        if(dataDic)
+        {
+            [dataDic setObject:[NSNumber numberWithInt:value]
+                        forKey:@"db"];
+        }
+        
     }
 }
 
@@ -307,6 +336,7 @@
         
         [button enableValueSet:YES];
         
+        if(dataDic)
         [dataDic setObject:@"ON" forKey:@"status"];
         
         UILabel *chanelL = [_buttonChannelArray objectAtIndex:tag];
@@ -341,6 +371,9 @@
         
         [btn enableValueSet:NO];
      
+        if(dataDic)
+        [dataDic setObject:@"OFF" forKey:@"status"];
+        
         UILabel *chanelL = [_buttonChannelArray objectAtIndex:tag];
         chanelL.textColor = [UIColor whiteColor];
         
