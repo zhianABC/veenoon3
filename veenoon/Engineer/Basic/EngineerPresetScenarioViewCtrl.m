@@ -40,6 +40,7 @@
 #import "APowerESet.h"
 #import "AudioEPlayer.h"
 #import "VDVDPlayerSet.h"
+#import "AudioEWirlessMike.h"
 
 #define E_CELL_WIDTH   60
 
@@ -458,7 +459,7 @@
         // wuxian array
         if ([name isEqualToString:@"无线麦"]) {
             EngineerWirlessYaoBaoViewCtrl *ctrl = [[EngineerWirlessYaoBaoViewCtrl alloc] init];
-            ctrl._wirelessYaoBaoSysArray = [NSMutableArray arrayWithObject:data];
+            ctrl._wirelessYaoBaoSysArray = _scenario._AWirelessMikePlugs;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
@@ -721,6 +722,24 @@
     }
 }
 
+- (void) initWirelessMikePlugs{
+    
+    if([_scenario._AWirelessMikePlugs count] == 0)
+    {
+        NSMutableArray *mikes = [NSMutableArray array];
+        
+        for(int i = 0; i < 3; i++)
+        {
+            AudioEWirlessMike *pset = [[AudioEWirlessMike alloc] init];
+            pset._brand = @"brand1";
+            [pset initChannels:8];
+            [mikes addObject:pset];
+        }
+        
+        _scenario._AWirelessMikePlugs = mikes;
+    }
+}
+
 // if dataDic == nil, refresh scroll view
 - (void) addComponentToEnd:(UIScrollView*) scrollView dataDic:(NSDictionary*)dataDic {
     
@@ -762,6 +781,10 @@
             else if([name isEqualToString:@"播放器"])
             {
                 [self initAudioEPlayers];
+            }
+            else if([name isEqualToString:@"无线麦"])
+            {
+                [self initWirelessMikePlugs];
             }
         }
         

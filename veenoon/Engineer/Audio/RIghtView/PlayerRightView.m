@@ -55,7 +55,7 @@
         ipTextField.delegate = self;
         ipTextField.backgroundColor = [UIColor clearColor];
         ipTextField.returnKeyType = UIReturnKeyDone;
-        ipTextField.text = _playerPlug._ipaddress;
+        
         ipTextField.textColor = [UIColor whiteColor];
         ipTextField.borderStyle = UITextBorderStyleRoundedRect;
         ipTextField.textAlignment = NSTextAlignmentRight;
@@ -89,6 +89,11 @@
     }
     
     return self;
+}
+
+- (void) recoverShow{
+    
+    ipTextField.text = _playerPlug._ipaddress;
 }
 
 - (void) switchComSetting{

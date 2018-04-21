@@ -16,4 +16,6 @@
 }
 @property (nonatomic, strong) AudioEPlayer *_playerPlug;
 
+- (void) recoverShow;
+
 @end

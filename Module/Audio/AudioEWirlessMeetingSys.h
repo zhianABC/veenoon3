@@ -10,5 +10,11 @@
 #import "BasePlugElement.h"
 
 @interface AudioEWirlessMeetingSys : BasePlugElement
+{
+    
+}
+- (void) initChannels:(int)num;
+
+- (NSMutableDictionary *)channelAtIndex:(int)index;
 
 @end

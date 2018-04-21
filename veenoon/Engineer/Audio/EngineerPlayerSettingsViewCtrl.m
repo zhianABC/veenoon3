@@ -249,14 +249,23 @@
 
 - (void) okAction:(id)sender{
     if (!isSettings) {
-        _psv = [[PlayerRightView alloc]
-                initWithFrame:CGRectMake(SCREEN_WIDTH-300,
-                                         64, 300, SCREEN_HEIGHT-114)];
+       
+        if(_psv == nil)
+        {
+            _psv = [[PlayerRightView alloc]
+                    initWithFrame:CGRectMake(SCREEN_WIDTH-300,
+                                             64, 300, SCREEN_HEIGHT-114)];
+            
+        }
+        
+        _psv._playerPlug = _curPalyer;
         [self.view addSubview:_psv];
         
         [okBtn setTitle:@"保存" forState:UIControlStateNormal];
         
         isSettings = YES;
+        
+        [_psv recoverShow];
     } else {
         if (_psv) {
             [_psv removeFromSuperview];

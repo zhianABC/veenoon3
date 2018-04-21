@@ -14,7 +14,7 @@
 #import "BatteryView.h"
 #import "SignalView.h"
 #import "WirlessYaoBaoViewSettingsView.h"
-
+#import "AudioEWirlessMike.h"
 
 @interface EngineerWirlessYaoBaoViewCtrl () <CustomPickerViewDelegate, EngineerSliderViewDelegate, SlideButtonDelegate> {
     
@@ -44,79 +44,21 @@
     
     NSMutableArray *signalArray;
 }
+
+@property (nonatomic, strong) AudioEWirlessMike *_curMike;
+
 @end
 
 @implementation EngineerWirlessYaoBaoViewCtrl
 @synthesize _wirelessYaoBaoSysArray;
 @synthesize _number;
-- (void) inintData {
-    if (_wirelessYaoBaoSysArray) {
-        [_wirelessYaoBaoSysArray removeAllObjects];
-    } else {
-        _wirelessYaoBaoSysArray = [[NSMutableArray alloc] init];
-    }
-    NSMutableDictionary *wuxianDic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"huangliurong", @"name",
-                                       @"off", @"status",
-                                       @"1", @"singnal",
-                                       @"huatong", @"type",
-                                       @"100", @"dianliang", nil];
-  NSMutableDictionary *wuxianDic2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"huangliurong2", @"name",
-    @"off", @"status",
-    @"1", @"singnal",
-    @"yaobao", @"type",
-    @"100", @"dianliang", nil];
-  NSMutableDictionary *wuxianDic3 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"huangliurong3", @"name",
-    @"off", @"status",
-    @"1", @"singnal",
-    @"huatong", @"type",
-    @"90", @"dianliang", nil];
-    NSMutableDictionary *wuxianDic4 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"huangliurong3", @"name",
-                                       @"off", @"status",
-                                       @"1", @"singnal",
-                                       @"huatong", @"type",
-                                       @"90", @"dianliang", nil];
-    NSMutableDictionary *wuxianDic5 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"huangliurong3", @"name",
-                                       @"off", @"status",
-                                       @"1", @"singnal",
-                                       @"huatong", @"type",
-                                       @"90", @"dianliang", nil];
-    NSMutableDictionary *wuxianDic6 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"huangliurong3", @"name",
-                                       @"off", @"status",
-                                       @"1", @"singnal",
-                                       @"huatong", @"type",
-                                       @"90", @"dianliang", nil];
-    NSMutableDictionary *wuxianDic7 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"huangliurong3", @"name",
-                                       @"off", @"status",
-                                       @"1", @"singnal",
-                                       @"huatong", @"type",
-                                       @"90", @"dianliang", nil];
-    NSMutableDictionary *wuxianDic8 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"huangliurong3", @"name",
-                                       @"off", @"status",
-                                       @"1", @"singnal",
-                                       @"huatong", @"type",
-                                       @"90", @"dianliang", nil];
-    NSMutableDictionary *wuxianDic9 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"huangliurong3", @"name",
-                                       @"off", @"status",
-                                       @"1", @"singnal",
-                                       @"huatong", @"type",
-                                       @"90", @"dianliang", nil];
-    NSMutableDictionary *wuxianDic10 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"huangliurong3", @"name",
-                                       @"off", @"status",
-                                       @"1", @"singnal",
-                                       @"huatong", @"type",
-                                       @"90", @"dianliang", nil];
-    
-    NSMutableArray *array1 = [NSMutableArray arrayWithObjects:wuxianDic1, wuxianDic2, wuxianDic3, wuxianDic4
-                              ,wuxianDic5,wuxianDic6,wuxianDic7,wuxianDic8,wuxianDic9,wuxianDic10,nil];
-    NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                 @"001", @"name",
-                                 array1, @"value", nil];
-    [_wirelessYaoBaoSysArray addObject:dic1];
-}
+@synthesize _curMike;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     isSettings = NO;
+
     
     _imageViewArray = [[NSMutableArray alloc] init];
     _buttonArray = [[NSMutableArray alloc] init];
@@ -130,8 +72,8 @@
     _dianchiArray = [[NSMutableArray alloc] init];
     _huatongArray = [[NSMutableArray alloc] init];
     
-    
-    [self inintData];
+    if([_wirelessYaoBaoSysArray count])
+        self._curMike = [_wirelessYaoBaoSysArray objectAtIndex:0];
     
     [super setTitleAndImage:@"audio_corner_huatong.png" withTitle:@"无线麦"];
     
@@ -203,17 +145,13 @@
     int colNumber = ENGINEER_VIEW_COLUMN_N-2;
     int space = ENGINEER_VIEW_COLUMN_GAP;
     
-    NSMutableDictionary *dataDic = [_wirelessYaoBaoSysArray objectAtIndex:0];
-    NSMutableArray *dataArray = [dataDic objectForKey:@"value"];
     
-    if ([dataArray count] == 0) {
-        int nameStart = 1;
-        for (int i = 0; i < self._number; i++) {
-            
-        }
-    } else {
-        for (int i = 0; i < [dataArray count]; i++) {
-            NSMutableDictionary *dataDic = [dataArray objectAtIndex:i];
+    if(_curMike)
+    {
+        int max = [_curMike channelsCount];
+        
+        for (int i = 0; i < max; i++) {
+            NSMutableDictionary *dataDic = [_curMike channelAtIndex:i];
             
             int row = index/colNumber;
             int col = index%colNumber;
@@ -230,31 +168,32 @@
             btn.delegate = self;
             btn.tag = i;
             
+            
             UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 - 30, 0, 60, 20)];
             titleL.textAlignment = NSTextAlignmentCenter;
             titleL.backgroundColor = [UIColor clearColor];
             [view addSubview:titleL];
             titleL.font = [UIFont boldSystemFontOfSize:11];
             titleL.textColor  = [UIColor whiteColor];
-            titleL.text = [NSString stringWithFormat:@"0%d",i+1];
+            titleL.text = [dataDic objectForKey:@"name"];
             [_buttonNumberArray addObject:titleL];
             
-            titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 -50, btn.frame.size.height - 20, 100, 20)];
-            titleL.textAlignment = NSTextAlignmentCenter;
-            titleL.backgroundColor = [UIColor clearColor];
-            [view addSubview:titleL];
-            titleL.font = [UIFont boldSystemFontOfSize:12];
-            titleL.textColor  = [UIColor whiteColor];
-            titleL.textAlignment = NSTextAlignmentCenter;
-            titleL.text = @"Channel";
-            [_buttonChannelArray addObject:titleL];
+            UILabel* titleL1 = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 -50, btn.frame.size.height - 20, 100, 20)];
+            titleL1.textAlignment = NSTextAlignmentCenter;
+            titleL1.backgroundColor = [UIColor clearColor];
+            [view addSubview:titleL1];
+            titleL1.font = [UIFont boldSystemFontOfSize:12];
+            titleL1.textColor  = [UIColor whiteColor];
+            titleL1.textAlignment = NSTextAlignmentCenter;
+            titleL1.text = @"Channel";
+            [_buttonChannelArray addObject:titleL1];
             
             UIView *signalView = [[UIView alloc] initWithFrame:CGRectMake(0, 120, cellWidth, 120)];
             [view addSubview:signalView];
             signalView.alpha=0.8;
             [signalArray addObject:signalView];
             
-            UIImage *image;
+            UIImage *image = nil;
             NSString *huatongType = [dataDic objectForKey:@"type"];
             if ([@"huatong" isEqualToString:huatongType]) {
                 image = [UIImage imageNamed:@"huisehuatong.png"];
@@ -284,37 +223,58 @@
             [signalView addSubview:signal];
             [signal setLightColor:[UIColor whiteColor]];//
             [signal setGrayColor:[UIColor colorWithWhite:1.0 alpha:0.6]];
-            NSString *sinalString = [dataDic objectForKey:@"signal"];
-            int signalInt = [sinalString intValue];
+            int signalInt = [[dataDic objectForKey:@"signal"] intValue];
             [signal setSignalValue:signalInt];
             [_signalViewArray addObject:signal];
             
-            titleL = [[UILabel alloc] initWithFrame:CGRectMake(50, 45, 20, 20)];
-            titleL.backgroundColor = [UIColor clearColor];
-            [signalView addSubview:titleL];
-            titleL.font = [UIFont boldSystemFontOfSize:12];
-            titleL.textColor  = [UIColor whiteColor];
-            titleL.textAlignment = NSTextAlignmentCenter;
+            UILabel* sgtitleL = [[UILabel alloc] initWithFrame:CGRectMake(50, 45, 20, 20)];
+            sgtitleL.backgroundColor = [UIColor clearColor];
+            [signalView addSubview:sgtitleL];
+            sgtitleL.font = [UIFont boldSystemFontOfSize:12];
+            sgtitleL.textColor  = [UIColor whiteColor];
+            sgtitleL.textAlignment = NSTextAlignmentCenter;
             NSString *title = @"优";
-            if (3 <= signalInt < 5) {
+            if (signalInt >= 3 && signalInt < 5) {
                 title = @"良";
             } else if (signalInt < 3) {
                 title = @"差";
             }
             
-            titleL.text = title;
-            titleL.tag = index;
-            [_signalLabelArray addObject:titleL];
+            sgtitleL.text = title;
+            sgtitleL.tag = index;
+            [_signalLabelArray addObject:sgtitleL];
             
             [_imageViewArray addObject:imageView];
             [_buttonArray addObject:btn];
             
+            
+            NSString *status = [dataDic objectForKey:@"status"];
+            if([status isEqualToString:@"ON"])
+            {
+                [btn enableValueSet:YES];
+                titleL.textColor = YELLOW_COLOR;
+                titleL1.textColor = YELLOW_COLOR;
+                sgtitleL.textColor = YELLOW_COLOR;
+                [signal setLightColor:YELLOW_COLOR];
+                [signalView setAlpha:1];
+                batter.normalColor = YELLOW_COLOR;
+                [batter updateYellowBatteryView];
+                
+                if ([@"huatong" isEqualToString:huatongType]) {
+                    imageView.image = [UIImage imageNamed:@"huatong_yellow_n.png"];
+                } else {
+                    imageView.image = [UIImage imageNamed:@"yaobao_yellow_n.png"];
+                }
+            }
+            
             index++;
         }
     }
+  
 }
 
 - (void) didSliderValueChanged:(int)value object:(id)object {
+    
     float circleValue = (value +20.0f)/40.0f;
     for (SlideButton *button in _selectedBtnArray) {
         [button setCircleValue:circleValue];
@@ -335,16 +295,19 @@
     }
     // want to choose it
     
-    NSMutableDictionary *dataDic = [_wirelessYaoBaoSysArray objectAtIndex:0];
-    NSMutableArray *dataArray = [dataDic objectForKey:@"value"];
+    if(_curMike == nil)
+        return;
+        
+    NSMutableDictionary *dataDic = [_curMike channelAtIndex:tag];
+    NSString *huatongType = [dataDic objectForKey:@"type"];
     
-    NSMutableDictionary *dataDic2 = [dataArray objectAtIndex:tag];
-    NSString *huatongType = [dataDic2 objectForKey:@"type"];
     if (btn == nil) {
         SlideButton *button = [_buttonArray objectAtIndex:tag];
         [_selectedBtnArray addObject:button];
         
         [button enableValueSet:YES];
+        
+        [dataDic setObject:@"ON" forKey:@"status"];
         
         UILabel *chanelL = [_buttonChannelArray objectAtIndex:tag];
         chanelL.textColor = YELLOW_COLOR;
@@ -457,6 +420,9 @@
                                               64, 300, SCREEN_HEIGHT-114);
             [UIView commitAnimations];
         }
+        
+        _rightSetView._audioMike = _curMike;
+        [_rightSetView showData];
         
         [self.view addSubview:_rightSetView];
         [okBtn setTitle:@"保存" forState:UIControlStateNormal];

@@ -7,12 +7,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class AudioEWirlessMike;
 @interface WirlessYaoBaoViewSettingsView : UIView
 {
     
 }
 @property (nonatomic, assign) int _numOfChannel;
-
+@property (nonatomic, strong) AudioEWirlessMike *_audioMike;
 - (void) layoutFooter;
-
+- (void) showData;
 @end

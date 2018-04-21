@@ -3247,8 +3247,8 @@
 				EBAE5BB61FDFFBD700C10C4D /* EngineerScenarioListViewCtrl.m */,
 				341C78482050184200DD1677 /* SIconSelectView.h */,
 				341C78492050184200DD1677 /* SIconSelectView.m */,
-				EBAE5BBA1FE0070600C10C4D /* EngineerPresetScenarioViewCtrl.m */,
 				EBAE5BBC1FE0071C00C10C4D /* EngineerPresetScenarioViewCtrl.h */,
+				EBAE5BBA1FE0070600C10C4D /* EngineerPresetScenarioViewCtrl.m */,
 			);
 			path = Basic;
 			sourceTree = "<group>";

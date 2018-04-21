@@ -9,6 +9,15 @@
 #import <Foundation/Foundation.h>
 #import "BasePlugElement.h"
 
+//无线麦
 @interface AudioEWirlessMike : BasePlugElement
+{
+    
+}
+
+- (int) channelsCount;
+- (void) initChannels:(int)num;
+
+- (NSMutableDictionary *)channelAtIndex:(int)index;
 
 @end

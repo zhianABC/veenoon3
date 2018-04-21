@@ -11,7 +11,7 @@
 #import "Groups2PickerView.h"
 #import "UIButton+Color.h"
 #import "ComSettingView.h"
-
+#import "AudioEWirlessMike.h"
 
 @interface WirlessYaoBaoViewSettingsView () <UITableViewDelegate, UITableViewDataSource, CenterCustomerPickerViewDelegate, Groups2PickerViewDelegate, UITextFieldDelegate>
 {
@@ -41,6 +41,7 @@
 @synthesize _groupValues;
 @synthesize _btns;
 @synthesize _numOfChannel;
+@synthesize _audioMike;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -128,6 +129,11 @@
     }
     
     return self;
+}
+
+- (void) showData{
+    
+    ipTextField.text = _audioMike._ipaddress;
 }
 
 - (void) switchComSetting{
