@@ -10,6 +10,7 @@
 #import "UIButton+Color.h"
 #import "CustomPickerView.h"
 #import "DVDRightView.h"
+#import "VDVDPlayerSet.h"
 
 @interface EngineerDVDViewController () <CustomPickerViewDelegate>{
     
@@ -33,15 +34,27 @@
     DVDRightView *_rightView;
     BOOL isSettings;
 }
+@property (nonatomic, strong) VDVDPlayerSet *_objSetCur;
 @end
 
 @implementation EngineerDVDViewController
 @synthesize _dvdSysArray;
 @synthesize _number;
+@synthesize _objSetCur;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     isSettings = NO;
+    
+    if ([_dvdSysArray count]) {
+        self._objSetCur = [_dvdSysArray objectAtIndex:0];
+    }
+    
+    if(_objSetCur == nil) {
+        self._objSetCur = [[VDVDPlayerSet alloc] init];
+    }
+    
     
     [super setTitleAndImage:@"video_corner_dvd.png" withTitle:@"DVD"];
     

@@ -16,5 +16,6 @@
 @property (nonatomic, strong) NSMutableArray *_APlayerPlugs;
 
 
+@property (nonatomic, strong) NSMutableArray *_VDVDPlayers;
 
 @end

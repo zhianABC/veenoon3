@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 
+@class VDVDPlayerSet;
+
 @interface EngineerDVDViewController: BaseViewController {
     NSMutableArray *_dvdSysArray;
     

@@ -507,6 +507,9 @@
             EngineerDVDViewController *ctrl = [[EngineerDVDViewController alloc] init];
             ctrl._dvdSysArray = nil;// [NSMutableArray arrayWithObject:data];
             ctrl._number=16;
+                
+            ctrl._dvdSysArray = _scenario._VDVDPlayers;
+            
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
@@ -640,6 +643,24 @@
     }
     
 }
+- (void) initVDVDPlayers{
+    
+    if([_scenario._VDVDPlayers count] == 0)
+    {
+        NSMutableArray *powers = [NSMutableArray array];
+        
+        for(int i = 0; i < 3; i++)
+        {
+            VDVDPlayerSet *pset = [[VDVDPlayerSet alloc] init];
+            pset._com = @"191.16.1.100";
+            pset._brand = @"brand1";
+            pset._irArray = [NSMutableArray array];
+            [powers addObject:pset];
+        }
+        
+        _scenario._VDVDPlayers = powers;
+    }
+}
 
 - (void) init8Powers{
     
@@ -756,6 +777,11 @@
             }
             
             [_vDataCheckTestMap setObject:dataDic forKey:name];
+            
+            if([name isEqualToString:@"视频播放器"])
+            {
+                [self init8Powers];
+            }
         }
         
     } else {
