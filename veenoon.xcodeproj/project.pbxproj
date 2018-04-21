@@ -244,6 +244,7 @@
 		34686C9E1ED025CB001749A1 /* ConverUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 34686C9B1ED025CB001749A1 /* ConverUtil.m */; };
 		34686C9F1ED025CB001749A1 /* DesUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 34686C9D1ED025CB001749A1 /* DesUtil.m */; };
 		348FC8CD208AF80600F7DB3D /* BasePlugElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 348FC8CB208AF80100F7DB3D /* BasePlugElement.m */; };
+		348FC8D0208B203E00F7DB3D /* PlugsCtrlTitleHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 348FC8CF208B203E00F7DB3D /* PlugsCtrlTitleHeader.m */; };
 		34928A9A1EC1BD330089F429 /* ReaderCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34928A991EC1BD330089F429 /* ReaderCodeViewController.m */; };
 		3496B75A1FCAF3C5005F4857 /* SignalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3496B7591FCAF3C5005F4857 /* SignalView.m */; };
 		349DADDF206E8D02001593DE /* AudioEHand2Hand.m in Sources */ = {isa = PBXBuildFile; fileRef = 349DADD1206E8D02001593DE /* AudioEHand2Hand.m */; };
@@ -1222,6 +1223,8 @@
 		34686C9D1ED025CB001749A1 /* DesUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DesUtil.m; sourceTree = "<group>"; };
 		348FC8CB208AF80100F7DB3D /* BasePlugElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasePlugElement.m; sourceTree = "<group>"; };
 		348FC8CC208AF80600F7DB3D /* BasePlugElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasePlugElement.h; sourceTree = "<group>"; };
+		348FC8CE208B203E00F7DB3D /* PlugsCtrlTitleHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlugsCtrlTitleHeader.h; sourceTree = "<group>"; };
+		348FC8CF208B203E00F7DB3D /* PlugsCtrlTitleHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlugsCtrlTitleHeader.m; sourceTree = "<group>"; };
 		34928A981EC1BD330089F429 /* ReaderCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderCodeViewController.h; sourceTree = "<group>"; };
 		34928A991EC1BD330089F429 /* ReaderCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderCodeViewController.m; sourceTree = "<group>"; };
 		3496B7581FCAF3C5005F4857 /* SignalView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignalView.h; sourceTree = "<group>"; };
@@ -3514,6 +3517,8 @@
 				EBDB4546205D56D5000ABAB0 /* LightSliderButton.m */,
 				3448D96A2073C5070055D48F /* TwoIconAndTitleView.h */,
 				3448D96B2073C5070055D48F /* TwoIconAndTitleView.m */,
+				348FC8CE208B203E00F7DB3D /* PlugsCtrlTitleHeader.h */,
+				348FC8CF208B203E00F7DB3D /* PlugsCtrlTitleHeader.m */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -4398,6 +4403,7 @@
 				EBA16C622046EA6700FC6E1F /* JunHengQi_UIView.m in Sources */,
 				EB1A55C71FEA919C000B18E6 /* EngineerPVExpendViewCtrl.m in Sources */,
 				EBCA834B1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m in Sources */,
+				348FC8D0208B203E00F7DB3D /* PlugsCtrlTitleHeader.m in Sources */,
 				04DE1EB51AD6AEE000D49E2F /* UIImageView+WebCache.m in Sources */,
 				34DC47421FD6DD9300ACB589 /* CircleProgressView.m in Sources */,
 				04DE1E8E1AD6AEE000D49E2F /* UIButton+Color.m in Sources */,

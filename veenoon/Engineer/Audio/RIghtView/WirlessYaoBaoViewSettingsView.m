@@ -173,9 +173,9 @@
     [_groupValues addObject:@{@"name":@"B", @"subs":@[@{@"name":@"04"},@{@"name":@"05"},@{@"name":@"06"}]}];
     [_groupValues addObject:@{@"name":@"C", @"subs":@[@{@"name":@"10"},@{@"name":@"20"},@{@"name":@"30"}]}];
     
-    [_rows addObject:@{@"title":@"设备名称",@"values":@[@"D1",@"D2",@"D3"]}];
-    [_rows addObject:@{@"title":@"型号规格",@"values":@[@"X1",@"X2",@"X3"]}];
-    [_rows addObject:@{@"title":@"自动对频",@"values":@[@"扫描"]}];
+    [_rows addObject:@{@"title":@"设备名称",@"value":@"D1"}];
+    [_rows addObject:@{@"title":@"型号规格",@"value":@"X1"}];
+    [_rows addObject:@{@"title":@"自动对频",@"value":@"扫描"}];
     [_rows addObject:@{@"title":@"频率",@"values":@[@"720MHz",@"600MHz"]}];
     [_rows addObject:@{@"title":@"组-通道",@"values":_groupValues}];
     [_rows addObject:@{@"title":@"增益",@"values":dbs}];
@@ -299,7 +299,7 @@
     
     if(indexPath.section == 0)
     {
-        if(_curIndex == indexPath.row)
+        if(indexPath.row > 2 && _curIndex == indexPath.row)
         {
             return 164;
         }
@@ -341,14 +341,14 @@
     valueL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
     valueL.textAlignment = NSTextAlignmentRight;
     
-    if(indexPath.row != 2)
+    if(indexPath.row > 2)
     {
-    UIImageView *icon = [[UIImageView alloc]
-                         initWithFrame:CGRectMake(CGRectGetMaxX(valueL.frame)+5, 17, 10, 10)];
-    icon.image = [UIImage imageNamed:@"remote_video_down.png"];
-    [cell.contentView addSubview:icon];
-    icon.alpha = 0.8;
-    icon.layer.contentsGravity = kCAGravityResizeAspect;
+        UIImageView *icon = [[UIImageView alloc]
+                             initWithFrame:CGRectMake(CGRectGetMaxX(valueL.frame)+5, 17, 10, 10)];
+        icon.image = [UIImage imageNamed:@"remote_video_down.png"];
+        [cell.contentView addSubview:icon];
+        icon.alpha = 0.8;
+        icon.layer.contentsGravity = kCAGravityResizeAspect;
     }
     
     titleL.text = [data objectForKey:@"title"];
@@ -399,7 +399,7 @@
                                    [NSNumber numberWithInt:row2]]];
             
         }
-        else if(_curIndex != 2)
+        else if(_curIndex > 2)
         {
             _picker.tag = _curIndex;
             _picker._pickerDataArray = @[@{@"values":[data objectForKey:@"values"]}];
@@ -430,7 +430,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
     int targetIndx = (int)indexPath.row;
-    if(targetIndx != 2)
+    if(targetIndx > 2)
     {
         if(_curIndex == targetIndx)
         {
