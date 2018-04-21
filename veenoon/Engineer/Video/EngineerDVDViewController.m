@@ -11,6 +11,7 @@
 #import "CustomPickerView.h"
 #import "DVDRightView.h"
 #import "VDVDPlayerSet.h"
+#import "BrandCategoryNoUtil.h"
 
 @interface EngineerDVDViewController () <CustomPickerViewDelegate>{
     
@@ -309,9 +310,11 @@
     
     
     NSMutableArray *arr = [NSMutableArray array];
-    for(int i = 1; i< 7; i++)
+    for(VDVDPlayerSet *dvdSet in self._dvdSysArray)
     {
-        [arr addObject:[NSString stringWithFormat:@"00%d", i]];
+        NSString *nameStr = [BrandCategoryNoUtil generatePickerValue:dvdSet._brand withCategory:dvdSet._type withNo:dvdSet._deviceno];
+        
+        [arr addObject:nameStr];
     }
     
     _customPicker._pickerDataArray = @[@{@"values":arr}];

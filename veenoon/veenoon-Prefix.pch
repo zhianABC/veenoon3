@@ -106,5 +106,5 @@
 
 #define CMD_LOCATION_VIDEO_PATH  [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents"]]
 
-
+#define HENG_XIAN @"-"
 

@@ -644,7 +644,7 @@
     }
     
 }
-- (void) initVDVDPlayers{
+- (void) initVDVDPlayers {
     
     if([_scenario._VDVDPlayers count] == 0)
     {
@@ -655,6 +655,8 @@
             VDVDPlayerSet *pset = [[VDVDPlayerSet alloc] init];
             pset._com = @"191.16.1.100";
             pset._brand = @"brand1";
+            pset._type = @"type1";
+            pset._deviceno = [NSString stringWithFormat:@"%d", i];
             pset._irArray = [NSMutableArray array];
             [powers addObject:pset];
         }
@@ -781,7 +783,7 @@
             
             if([name isEqualToString:@"视频播放器"])
             {
-                [self init8Powers];
+                [self initVDVDPlayers];
             }
         }
         
