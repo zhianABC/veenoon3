@@ -8,13 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-
+#import "VRemoteSettingsSet.h"
 @interface EngineerRemoteVideoViewCtrl : BaseViewController {
-    NSMutableArray *_remoteVideoArray;
+    
     NSMutableArray *_cameraArray;
-    int _number;
+    VRemoteSettingsSet *_currentObj;
 }
-@property (nonatomic,strong) NSMutableArray *_remoteVideoArray;
 @property (nonatomic,strong) NSMutableArray *_cameraArray;
-@property (nonatomic,assign) int _number;
+@property (nonatomic,strong) VRemoteSettingsSet *_currentObj;
+
+
 @end

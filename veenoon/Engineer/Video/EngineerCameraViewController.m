@@ -10,10 +10,13 @@
 #import "UIButton+Color.h"
 #import "CustomPickerView.h"
 #import "CameraRightView.h"
+#import "VCameraSettingSet.h"
+#import "BrandCategoryNoUtil.h"
+#import "PlugsCtrlTitleHeader.h"
 
 @interface EngineerCameraViewController () <CustomPickerViewDelegate>{
     
-    UIButton *_selectSysBtn;
+    PlugsCtrlTitleHeader *_selectSysBtn;
     
     CustomPickerView *_customPicker;
     
@@ -26,18 +29,30 @@
     UIButton *_volumnAdd;
     
     BOOL isplay;
-    BOOL isSettings;
     
     UIButton *okBtn;
     CameraRightView *_rightView;
+    
+    VCameraSettingSet *_currentObj;
 }
+@property (nonatomic, strong) VCameraSettingSet *_currentObj;
 @end
 
 @implementation EngineerCameraViewController
 @synthesize _cameraSysArray;
 @synthesize _number;
+@synthesize _currentObj;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if ([_cameraSysArray count]) {
+        self._currentObj = [_cameraSysArray objectAtIndex:0];
+    }
+    
+    if(_currentObj == nil) {
+        self._currentObj = [[VCameraSettingSet alloc] init];
+    }
     
     [super setTitleAndImage:@"video_corner_shexiangji.png" withTitle:@"摄像机"];
     
@@ -68,21 +83,17 @@
     [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
     okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [okBtn addTarget:self
-              action:@selector(okAction:)
+              action:@selector(settingsAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
-    _selectSysBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _selectSysBtn.frame = CGRectMake(50, 100, 80, 30);
-    [_selectSysBtn setImage:[UIImage imageNamed:@"engineer_sys_select_down_n.png"] forState:UIControlStateNormal];
-    [_selectSysBtn setTitle:@"001" forState:UIControlStateNormal];
-    _selectSysBtn.titleLabel.font = [UIFont systemFontOfSize:16];
-    [_selectSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_selectSysBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _selectSysBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [_selectSysBtn setTitleEdgeInsets:UIEdgeInsetsMake(0,0,0,_selectSysBtn.imageView.bounds.size.width)];
-    [_selectSysBtn setImageEdgeInsets:UIEdgeInsetsMake(0,_selectSysBtn.titleLabel.bounds.size.width+35,0,0)];
+    _selectSysBtn = [[PlugsCtrlTitleHeader alloc] initWithFrame:CGRectMake(50, 100, 80, 30)];
     [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_selectSysBtn];
+    
+    if (_currentObj) {
+        NSString *nameStr = [BrandCategoryNoUtil generatePickerValue:_currentObj._brand withCategory:_currentObj._type withNo:_currentObj._deviceno];
+        [_selectSysBtn setShowText:nameStr];
+    }
     
     int playerLeft = -60;
     int playerHeight = 50;
@@ -356,54 +367,111 @@
 - (void) invokeAction:(id)sender{
     
 }
+
+- (void) selectCurrentMike:(VCameraSettingSet*)mike{
+    
+    
+    self._currentObj = mike;
+    
+    
+    [self updateCurrentMikeState:mike._deviceno];
+}
+
+- (void) updateCurrentMikeState:(NSString *)deviceno{
+    
+    NSString *nameStr = [BrandCategoryNoUtil generatePickerValue:_currentObj._brand withCategory:_currentObj._type withNo:_currentObj._deviceno];
+    [_selectSysBtn setShowText:nameStr];
+    
+    if ([_rightView superview]) {
+        _rightView._currentObj = _currentObj;
+        [_rightView refreshView:_currentObj];
+    }
+    
+    
+    
+}
+
 - (void) sysSelectAction:(id)sender{
     
-    if(_customPicker == nil)
-    _customPicker = [[CustomPickerView alloc]
-                     initWithFrame:CGRectMake(_selectSysBtn.frame.origin.x, _selectSysBtn.frame.origin.y, _selectSysBtn.frame.size.width, 100) withGrayOrLight:@"gray"];
+    [self.view addSubview:_dActionView];
+    
+    IMP_BLOCK_SELF(EngineerCameraViewController);
+    _dActionView._callback = ^(int tagIndex, id obj)
+    {
+        [block_self selectCurrentMike:obj];
+    };
+    
     
     
     NSMutableArray *arr = [NSMutableArray array];
-    for(int i = 1; i< 2; i++)
-    {
-        [arr addObject:[NSString stringWithFormat:@"00%d", i]];
+    for(VCameraSettingSet *mike in _cameraSysArray) {
+        NSString *nameStr = [BrandCategoryNoUtil generatePickerValue:mike._brand withCategory:mike._type withNo:mike._deviceno];
+        [arr addObject:@{@"object":mike,@"name":nameStr}];
     }
     
-    _customPicker._pickerDataArray = @[@{@"values":arr}];
+    _dActionView._selectIndex = _currentObj._index;
+    [_dActionView setSelectDatas:arr];
     
-    _customPicker._selectColor = [UIColor orangeColor];
-    _customPicker._rowNormalColor = [UIColor whiteColor];
-    [self.view addSubview:_customPicker];
-    _customPicker.delegate_ = self;
+}
+- (void) chooseDeviceAtIndex:(int)idx{
+    
+    self._currentObj = [_cameraSysArray objectAtIndex:idx];
+    
+    [self updateCurrentMikeState:_currentObj._deviceno];
+    
 }
 
-- (void) didChangedPickerValue:(NSDictionary*)value{
-    
-    if (_customPicker) {
-        [_customPicker removeFromSuperview];
-    }
-    
-    NSDictionary *dic = [value objectForKey:@0];
-    NSString *title =  [dic objectForKey:@"value"];
-    [_selectSysBtn setTitle:title forState:UIControlStateNormal];
-    
-}
-- (void) okAction:(id)sender{
-    if (!isSettings) {
+- (void) settingsAction:(id)sender{
+    //检查是否需要创建
+    if (_rightView == nil) {
         _rightView = [[CameraRightView alloc]
                       initWithFrame:CGRectMake(SCREEN_WIDTH-300,
                                                64, 300, SCREEN_HEIGHT-114)];
-        [self.view addSubview:_rightView];
         
+        //创建底部设备切换按钮
+        _rightView._numOfDevice = (int)[_cameraSysArray count];
+        [_rightView layoutDevicePannel];
+        
+        
+        IMP_BLOCK_SELF(EngineerCameraViewController);
+        _rightView._callback = ^(int deviceIndex) {
+            
+            [block_self chooseDeviceAtIndex:deviceIndex];
+        };
+    }
+    
+    //如果在显示，消失
+    if([_rightView superview])
+    {
+        
+        //写入中控
+        //......
+        
+        [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+        
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             
+                             _rightView.frame  = CGRectMake(SCREEN_WIDTH,
+                                                            64, 300, SCREEN_HEIGHT-114);
+                         } completion:^(BOOL finished) {
+                             [_rightView removeFromSuperview];
+                         }];
+    }
+    else//如果没显示，显示
+    {
+        _rightView._currentObj = _currentObj;
+        [_rightView refreshView:_currentObj];
+        
+        
+        [self.view addSubview:_rightView];
         [okBtn setTitle:@"保存" forState:UIControlStateNormal];
         
-        isSettings = YES;
-    } else {
-        if (_rightView) {
-            [_rightView removeFromSuperview];
-        }
-        [okBtn setTitle:@"设置" forState:UIControlStateNormal];
-        isSettings = NO;
+        
+        [UIView beginAnimations:nil context:nil];
+        _rightView.frame  = CGRectMake(SCREEN_WIDTH-300,
+                                       64, 300, SCREEN_HEIGHT-114);
+        [UIView commitAnimations];
     }
 }
 

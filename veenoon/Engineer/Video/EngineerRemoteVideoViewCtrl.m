@@ -10,9 +10,13 @@
 #import "UIButton+Color.h"
 #import "RemoteVideoRightView.h"
 #import "CustomPickerView.h"
+#import "VRemoteSettingsSet.h"
+#import "BrandCategoryNoUtil.h"
+#import "PlugsCtrlTitleHeader.h"
+#import "VRemoteVideoSet.h"
 
 @interface EngineerRemoteVideoViewCtrl () <CustomPickerViewDelegate>{
-    UIButton *_selectSysBtn;
+    PlugsCtrlTitleHeader *_selectSysBtn;
     
     CustomPickerView *_customPicker;
     
@@ -34,33 +38,19 @@
 @end
 
 @implementation EngineerRemoteVideoViewCtrl
-@synthesize _number;
-@synthesize _remoteVideoArray;
 @synthesize _cameraArray;
-
-- (void) initData {
-    _cameraBtnArray = [[NSMutableArray alloc] init];
-    
-    if (_cameraArray) {
-        [_cameraArray removeAllObjects];
-    } else {
-        
-        NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"1", @"name",
-                                     nil];
-        NSMutableDictionary *dic2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"2", @"name",
-                                     nil];
-        NSMutableDictionary *dic3 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"3", @"name",
-                                     nil];
-        NSMutableDictionary *dic4 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"4", @"name",
-                                     nil];
-        self._cameraArray = [NSMutableArray arrayWithObjects:dic1, dic2, dic3, dic4,nil];
-    }
-}
+@synthesize _currentObj;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self initData];
+    if ([_cameraArray count]) {
+        self._currentObj = [_cameraArray objectAtIndex:0];
+    }
+    
+    if (_currentObj == nil) {
+        self._currentObj = [[VRemoteSettingsSet alloc] init];
+    }
     
     [super setTitleAndImage:@"video_corner_yuancheng.png" withTitle:@"远程视讯"];
     
@@ -91,21 +81,17 @@
     [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
     okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [okBtn addTarget:self
-              action:@selector(okAction:)
+              action:@selector(settingsAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
-    _selectSysBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _selectSysBtn.frame = CGRectMake(50, 100, 80, 30);
-    [_selectSysBtn setImage:[UIImage imageNamed:@"engineer_sys_select_down_n.png"] forState:UIControlStateNormal];
-    [_selectSysBtn setTitle:@"001" forState:UIControlStateNormal];
-    _selectSysBtn.titleLabel.font = [UIFont systemFontOfSize:16];
-    [_selectSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_selectSysBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _selectSysBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [_selectSysBtn setTitleEdgeInsets:UIEdgeInsetsMake(0,0,0,_selectSysBtn.imageView.bounds.size.width)];
-    [_selectSysBtn setImageEdgeInsets:UIEdgeInsetsMake(0,_selectSysBtn.titleLabel.bounds.size.width+35,0,0)];
+    _selectSysBtn = [[PlugsCtrlTitleHeader alloc] initWithFrame:CGRectMake(50, 100, 80, 30)];
     [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_selectSysBtn];
+    
+    if (_currentObj) {
+        NSString *nameStr = [BrandCategoryNoUtil generatePickerValue:_currentObj._brand withCategory:_currentObj._type withNo:_currentObj._deviceno];
+        [_selectSysBtn setShowText:nameStr];
+    }
     
     _luboBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
     _luboBtn.frame = CGRectMake(70, SCREEN_HEIGHT-140, 60, 60);
@@ -437,11 +423,11 @@
     UIScrollView *scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(leftRight+50, labelHeight+40, 255+135, 70)];
     scroolView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:scroolView];
-    int viewWidth = [self._cameraArray count] * 65;
+    int viewWidth = (int) [_currentObj._cameraVideoArray count] * 65;
     scroolView.contentSize = CGSizeMake(viewWidth, 65);
     int index = 0;
     
-    for (id dic in self._cameraArray) {
+    for (VRemoteVideoSet *vSet in _currentObj._cameraVideoArray) {
         int startX = index*cellHeight+index*space;
         
         UIButton *cameraBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
@@ -451,7 +437,7 @@
         cameraBtn.tag = index;
         cameraBtn.layer.borderColor = [UIColor clearColor].CGColor;;
         cameraBtn.clipsToBounds = YES;
-        [cameraBtn setTitle:[dic objectForKey:@"name"] forState:UIControlStateNormal];
+        [cameraBtn setTitle:vSet._name forState:UIControlStateNormal];
         [cameraBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [cameraBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
         cameraBtn.titleLabel.font = [UIFont boldSystemFontOfSize:20];
@@ -676,55 +662,110 @@
     
 }
 
-- (void) sysSelectAction:(id)sender{
-    
-    if(_customPicker == nil)
-    _customPicker = [[CustomPickerView alloc]
-                     initWithFrame:CGRectMake(_selectSysBtn.frame.origin.x, _selectSysBtn.frame.origin.y, _selectSysBtn.frame.size.width, 120) withGrayOrLight:@"gray"];
+- (void) selectCurrentMike:(VRemoteSettingsSet*)mike{
     
     
-    NSMutableArray *arr = [NSMutableArray array];
-    for(int i = 1; i< 2; i++)
-    {
-        [arr addObject:[NSString stringWithFormat:@"00%d", i]];
-    }
-    
-    _customPicker._pickerDataArray = @[@{@"values":arr}];
+    self._currentObj = mike;
     
     
-    _customPicker._selectColor = [UIColor orangeColor];
-    _customPicker._rowNormalColor = [UIColor whiteColor];
-    [self.view addSubview:_customPicker];
-    _customPicker.delegate_ = self;
+    [self updateCurrentMikeState:mike._deviceno];
 }
-- (void) didChangedPickerValue:(NSDictionary*)value{
+
+- (void) updateCurrentMikeState:(NSString *)deviceno{
     
-    if (_customPicker) {
-        [_customPicker removeFromSuperview];
+    NSString *nameStr = [BrandCategoryNoUtil generatePickerValue:_currentObj._brand withCategory:_currentObj._type withNo:_currentObj._deviceno];
+    [_selectSysBtn setShowText:nameStr];
+    
+    if ([_rightView superview]) {
+        _rightView._currentObj = _currentObj;
+        [_rightView refreshView:_currentObj];
     }
     
-    NSDictionary *dic = [value objectForKey:@0];
-    NSString *title =  [dic objectForKey:@"value"];
-    [_selectSysBtn setTitle:title forState:UIControlStateNormal];
+    
     
 }
 
-- (void) okAction:(id)sender{
-    if (!isSettings) {
+- (void) sysSelectAction:(id)sender{
+    
+    [self.view addSubview:_dActionView];
+    
+    IMP_BLOCK_SELF(EngineerRemoteVideoViewCtrl);
+    _dActionView._callback = ^(int tagIndex, id obj)
+    {
+        [block_self selectCurrentMike:obj];
+    };
+    
+    
+    
+    NSMutableArray *arr = [NSMutableArray array];
+    for(VRemoteSettingsSet *mike in _cameraArray) {
+        NSString *nameStr = [BrandCategoryNoUtil generatePickerValue:mike._brand withCategory:mike._type withNo:mike._deviceno];
+        [arr addObject:@{@"object":mike,@"name":nameStr}];
+    }
+    
+    _dActionView._selectIndex = _currentObj._index;
+    [_dActionView setSelectDatas:arr];
+    
+}
+- (void) chooseDeviceAtIndex:(int)idx{
+    
+    self._currentObj = [_cameraArray objectAtIndex:idx];
+    
+    [self updateCurrentMikeState:_currentObj._deviceno];
+    
+}
+
+- (void) settingsAction:(id)sender{
+    //检查是否需要创建
+    if (_rightView == nil) {
         _rightView = [[RemoteVideoRightView alloc]
                       initWithFrame:CGRectMake(SCREEN_WIDTH-300,
                                                64, 300, SCREEN_HEIGHT-114)];
-        [self.view addSubview:_rightView];
         
+        //创建底部设备切换按钮
+        _rightView._numOfDevice = (int)[_cameraArray count];
+        [_rightView layoutDevicePannel];
+        
+        
+        IMP_BLOCK_SELF(EngineerRemoteVideoViewCtrl);
+        _rightView._callback = ^(int deviceIndex) {
+            
+            [block_self chooseDeviceAtIndex:deviceIndex];
+        };
+    }
+    
+    //如果在显示，消失
+    if([_rightView superview])
+    {
+        
+        //写入中控
+        //......
+        
+        [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+        
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             
+                             _rightView.frame  = CGRectMake(SCREEN_WIDTH,
+                                                            64, 300, SCREEN_HEIGHT-114);
+                         } completion:^(BOOL finished) {
+                             [_rightView removeFromSuperview];
+                         }];
+    }
+    else//如果没显示，显示
+    {
+        _rightView._currentObj = _currentObj;
+        [_rightView refreshView:_currentObj];
+        
+        
+        [self.view addSubview:_rightView];
         [okBtn setTitle:@"保存" forState:UIControlStateNormal];
         
-        isSettings = YES;
-    } else {
-        if (_rightView) {
-            [_rightView removeFromSuperview];
-        }
-        [okBtn setTitle:@"设置" forState:UIControlStateNormal];
-        isSettings = NO;
+        
+        [UIView beginAnimations:nil context:nil];
+        _rightView.frame  = CGRectMake(SCREEN_WIDTH-300,
+                                       64, 300, SCREEN_HEIGHT-114);
+        [UIView commitAnimations];
     }
 }
 

@@ -10,7 +10,6 @@
 #import "VDVDPlayerSet.h"
 @interface DVDRightView : UIView {
     VDVDPlayerSet *_currentObj;
-    int numberOfDevice;
     
     RightSetViewCallbackBlock _callback;
 }

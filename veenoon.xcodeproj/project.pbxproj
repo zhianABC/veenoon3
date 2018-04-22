@@ -734,6 +734,9 @@
 		EBC71B2C204100DD00DD0A98 /* NewWindRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B2B204100DD00DD0A98 /* NewWindRightView.m */; };
 		EBCA834B1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCA834A1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m */; };
 		EBD009B0208C744900920849 /* DVDComIRView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009AF208C744900920849 /* DVDComIRView.m */; };
+		EBD009B3208CB12900920849 /* VCameraSettingSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009B2208CB12900920849 /* VCameraSettingSet.m */; };
+		EBD009B6208CB88300920849 /* VRemoteSettingsSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009B5208CB88300920849 /* VRemoteSettingsSet.m */; };
+		EBD009B9208CBD8100920849 /* VRemoteVideoSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009B8208CBD8100920849 /* VRemoteVideoSet.m */; };
 		EBD79C0F204BBC2400FD534C /* YinPinProcessCodeUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD79C0E204BBC2400FD534C /* YinPinProcessCodeUIView.m */; };
 		EBDB4535205AB0F6000ABAB0 /* PlayerRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBDB4534205AB0F6000ABAB0 /* PlayerRightView.m */; };
 		EBDB4538205D4C44000ABAB0 /* TVSettingsRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBDB4537205D4C44000ABAB0 /* TVSettingsRightView.m */; };
@@ -1851,6 +1854,12 @@
 		EBCA834C1FD434D1007DEB8E /* UserMonitorSettingsViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserMonitorSettingsViewCtrl.h; sourceTree = "<group>"; };
 		EBD009AE208C744900920849 /* DVDComIRView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVDComIRView.h; sourceTree = "<group>"; };
 		EBD009AF208C744900920849 /* DVDComIRView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DVDComIRView.m; sourceTree = "<group>"; };
+		EBD009B1208CB12900920849 /* VCameraSettingSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VCameraSettingSet.h; sourceTree = "<group>"; };
+		EBD009B2208CB12900920849 /* VCameraSettingSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VCameraSettingSet.m; sourceTree = "<group>"; };
+		EBD009B4208CB88300920849 /* VRemoteSettingsSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VRemoteSettingsSet.h; sourceTree = "<group>"; };
+		EBD009B5208CB88300920849 /* VRemoteSettingsSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VRemoteSettingsSet.m; sourceTree = "<group>"; };
+		EBD009B7208CBD8100920849 /* VRemoteVideoSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VRemoteVideoSet.h; sourceTree = "<group>"; };
+		EBD009B8208CBD8100920849 /* VRemoteVideoSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VRemoteVideoSet.m; sourceTree = "<group>"; };
 		EBD79C0D204BBC2400FD534C /* YinPinProcessCodeUIView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YinPinProcessCodeUIView.h; sourceTree = "<group>"; };
 		EBD79C0E204BBC2400FD534C /* YinPinProcessCodeUIView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YinPinProcessCodeUIView.m; sourceTree = "<group>"; };
 		EBDB4533205AB0F6000ABAB0 /* PlayerRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerRightView.h; sourceTree = "<group>"; };
@@ -3181,6 +3190,12 @@
 			children = (
 				EB5A47F52084D83500564C06 /* VDVDPlayerSet.h */,
 				EB5A47F62084D83500564C06 /* VDVDPlayerSet.m */,
+				EBD009B1208CB12900920849 /* VCameraSettingSet.h */,
+				EBD009B2208CB12900920849 /* VCameraSettingSet.m */,
+				EBD009B4208CB88300920849 /* VRemoteSettingsSet.h */,
+				EBD009B5208CB88300920849 /* VRemoteSettingsSet.m */,
+				EBD009B7208CBD8100920849 /* VRemoteVideoSet.h */,
+				EBD009B8208CBD8100920849 /* VRemoteVideoSet.m */,
 			);
 			path = Video;
 			sourceTree = "<group>";
@@ -4232,6 +4247,7 @@
 				04DE1EB31AD6AEE000D49E2F /* UIButton+WebCache.m in Sources */,
 				EB479001206145C000EDCD64 /* UserDVDSettingsViewController.m in Sources */,
 				EB1717B21FF614BB00CBDB81 /* EngineerMonitorViewCtrl.m in Sources */,
+				EBD009B9208CBD8100920849 /* VRemoteVideoSet.m in Sources */,
 				EB7333F1204102DF00AE60B8 /* FloorWarmRightView.m in Sources */,
 				04D719771DADD3A4002153D7 /* SSUser.m in Sources */,
 				04DE1FE71AD6B52400D49E2F /* CMNavigationController.m in Sources */,
@@ -4244,6 +4260,7 @@
 				EB3686011FC07A9C009973A3 /* SettingsAccountView.m in Sources */,
 				04DE1EAE1AD6AEE000D49E2F /* SDWebImageDecoder.m in Sources */,
 				04DE1EA61AD6AEE000D49E2F /* SBJson4StreamTokeniser.m in Sources */,
+				EBD009B3208CB12900920849 /* VCameraSettingSet.m in Sources */,
 				04DE1EA71AD6AEE000D49E2F /* SBJson4StreamWriter.m in Sources */,
 				EB217FBE1FD423B8003F5A8F /* UserAirCleanViewCtrl.m in Sources */,
 				EB17179D1FF60C6900CBDB81 /* EngineerElectronicAutoViewCtrl.m in Sources */,
@@ -4314,6 +4331,7 @@
 				04D7197F1DADE098002153D7 /* NSDate-Helper.m in Sources */,
 				EB09EF2F1FD978C700C968CA /* EngineerToUseTeslariViewCtrl.m in Sources */,
 				34686C9E1ED025CB001749A1 /* ConverUtil.m in Sources */,
+				EBD009B6208CB88300920849 /* VRemoteSettingsSet.m in Sources */,
 				EB235011204D9648008F6CA2 /* XDPickView.m in Sources */,
 				EB795B482042DD6F005D1F47 /* AudioOutputSettingViewCtrl.m in Sources */,
 				34141699204BC3D5002E0B00 /* AudioMatrixView.m in Sources */,

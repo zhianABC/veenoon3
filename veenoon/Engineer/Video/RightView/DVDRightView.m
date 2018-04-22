@@ -123,12 +123,6 @@
       forControlEvents:UIControlEventTouchUpInside];
         
         [_btns addObject:btn];
-        
-        if (i == 6) {
-            [btn setTitle:@"全部"
-                 forState:UIControlStateNormal];
-            break;
-        }
     }
     
     [self chooseChannelAtTagIndex:_curentDeviceIndex];
