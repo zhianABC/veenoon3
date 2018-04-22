@@ -8,12 +8,12 @@
 
 #import "RemoteVideoRightView.h"
 #import "UIButton+Color.h"
-#import "ComSettingView.h"
+#import "RemoteCOMIRView.h"
 #import "PlayerSettingsPannel.h"
 
 @interface RemoteVideoRightView () <UITextFieldDelegate> {
     
-    PlayerSettingsPannel *_com;
+    RemoteCOMIRView *_com;
     UITextField *ipTextField;
     
     UIView *_footerView;
@@ -76,7 +76,7 @@
         
         [headView addGestureRecognizer:swip];
         
-        _com = [[PlayerSettingsPannel alloc] initWithFrame:self.bounds];
+        _com = [[RemoteCOMIRView alloc] initWithFrame:self.bounds];
     }
     
     return self;
