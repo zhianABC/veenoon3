@@ -29,7 +29,6 @@
 }
 @property (nonatomic, strong) NSMutableArray *_rows;
 @property (nonatomic, strong) NSMutableDictionary *_map;
-@property (nonatomic, strong) NSMutableArray *_groupValues;
 
 @property (nonatomic, strong) NSMutableArray *_btns;
 
@@ -38,10 +37,11 @@
 @implementation WirlessYaoBaoViewSettingsView
 @synthesize _map;
 @synthesize _rows;
-@synthesize _groupValues;
 @synthesize _btns;
-@synthesize _numOfChannel;
+@synthesize _numOfDevice;
 @synthesize _audioMike;
+@synthesize _curentDeviceIndex;
+@synthesize _callback;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -108,12 +108,7 @@
                                                                160)];
         [self addSubview:_footerView];
         _footerView.backgroundColor = M_GREEN_COLOR;
-        
-        _numOfChannel = 8;
-        [self layoutFooter];
-        
-        [self initData];
-        
+    
         
         UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 30)];
         [self addSubview:headView];
@@ -134,6 +129,90 @@
 - (void) showData{
     
     ipTextField.text = _audioMike._ipaddress;
+    
+    self._rows = [NSMutableArray array];
+    self._map = [NSMutableDictionary dictionary];
+    
+    [_rows addObject:@{@"title":@"设备名称", @"value":_audioMike._brand}];
+    [_rows addObject:@{@"title":@"型号规格", @"value":_audioMike._type}];
+    [_rows addObject:@{@"title":@"自动对频",@"value":@"扫描"}];
+    [_rows addObject:@{@"title":@"频率",@"values":_audioMike._freqops}];
+    [_rows addObject:@{@"title":@"组-通道",@"values":_audioMike._groups}];
+    [_rows addObject:@{@"title":@"增益",@"values":_audioMike._dbs}];
+    [_rows addObject:@{@"title":@"SQ",@"values":_audioMike._sq}];
+    
+    
+    [_map setObject:@"扫描" forKey:@2];
+
+    //恢复UI数据
+    for(int i = 0; i < [_audioMike._freqops count]; i++)
+    {
+        NSString *v = [_audioMike._freqops objectAtIndex:i];
+        
+        if([v isEqualToString:_audioMike._freqVal])
+        {
+            [_map setObject:@{@"index":[NSNumber numberWithInt:i],
+                              @"value":v} forKey:@3];
+        }
+    }
+    
+    for(int i = 0; i < [_audioMike._dbs count]; i++)
+    {
+        NSString *v = [_audioMike._dbs objectAtIndex:i];
+        
+        if([v isEqualToString:_audioMike._dbVal])
+        {
+            [_map setObject:@{@"index":[NSNumber numberWithInt:i],
+                              @"value":v} forKey:@5];
+        }
+    }
+    
+    for(int i = 0; i < [_audioMike._sq count]; i++)
+    {
+        NSString *v = [_audioMike._sq objectAtIndex:i];
+        
+        if([v isEqualToString:_audioMike._sqVal])
+        {
+            [_map setObject:@{@"index":[NSNumber numberWithInt:i],
+                              @"value":v} forKey:@6];
+        }
+    }
+    
+    [_map setObject:_audioMike._groupVal forKey:@4];
+    
+    self._curentDeviceIndex = _audioMike._index;
+    [self chooseChannelAtTagIndex:_curentDeviceIndex];
+    
+    [_tableView reloadData];
+}
+
+- (void) saveCurrentSetting{
+    
+    NSDictionary *dic = [_map objectForKey:@3];
+    if(dic)
+    {
+        _audioMike._freqVal = [dic objectForKey:@"value"];
+    }
+    dic = [_map objectForKey:@6];
+    if(dic)
+    {
+        _audioMike._sqVal = [dic objectForKey:@"value"];
+    }
+    
+    dic = [_map objectForKey:@5];
+    if(dic)
+    {
+        _audioMike._dbVal = [dic objectForKey:@"value"];
+    }
+    //组-通
+    dic = [_map objectForKey:@4];
+    if(dic)
+    {
+       _audioMike._groupVal = dic;
+        
+    }
+    
+    _audioMike._ipaddress = ipTextField.text;
 }
 
 - (void) switchComSetting{
@@ -157,40 +236,7 @@
     
 }
 
-- (void) initData{
-    
-    self._rows = [NSMutableArray array];
-    self._map = [NSMutableDictionary dictionary];
-    
-    NSMutableArray *dbs = [NSMutableArray array];
-    for(int i = 0; i < 80; i++)
-    {
-        [dbs addObject:[NSString stringWithFormat:@"+%d", i]];
-    }
-    
-    self._groupValues = [NSMutableArray array];
-    [_groupValues addObject:@{@"name":@"A", @"subs":@[@{@"name":@"01"},@{@"name":@"02"},@{@"name":@"03"}]}];
-    [_groupValues addObject:@{@"name":@"B", @"subs":@[@{@"name":@"04"},@{@"name":@"05"},@{@"name":@"06"}]}];
-    [_groupValues addObject:@{@"name":@"C", @"subs":@[@{@"name":@"10"},@{@"name":@"20"},@{@"name":@"30"}]}];
-    
-    [_rows addObject:@{@"title":@"设备名称",@"value":@"D1"}];
-    [_rows addObject:@{@"title":@"型号规格",@"value":@"X1"}];
-    [_rows addObject:@{@"title":@"自动对频",@"value":@"扫描"}];
-    [_rows addObject:@{@"title":@"频率",@"values":@[@"720MHz",@"600MHz"]}];
-    [_rows addObject:@{@"title":@"组-通道",@"values":_groupValues}];
-    [_rows addObject:@{@"title":@"增益",@"values":dbs}];
-    [_rows addObject:@{@"title":@"SQ",@"values":@[@"1",@"2",@"3"]}];
-    
-    
-    [_map setObject:@"扫描" forKey:@2];
-    
-    
-    [_tableView reloadData];
- 
-    
-}
-
-- (void)layoutFooter{
+- (void)layoutDevicePannel{
     
     [[_footerView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
@@ -202,7 +248,7 @@
     int sp = 8;
     int y = (160 - w*2 - sp)/2;
     int x = (self.frame.size.width - 4*w - 3*sp)/2;
-    for(int i = 0; i < _numOfChannel; i++)
+    for(int i = 0; i < _numOfDevice; i++)
     {
         int col = i%4;
         int xx = x + col*w + col*sp;
@@ -231,13 +277,20 @@
         [_btns addObject:btn];
     }
     
-    [self chooseChannelAtTagIndex:0];
+    [self chooseChannelAtTagIndex:_curentDeviceIndex];
   
 }
 
 - (void) buttonAction:(UIButton*)btn{
     
-    [self chooseChannelAtTagIndex:(int)btn.tag];
+    int idx = (int)btn.tag;
+    [self chooseChannelAtTagIndex:idx];
+    
+    if(_callback)
+    {
+        _callback(idx);
+    }
+    
 }
 
 - (void) chooseChannelAtTagIndex:(int)index{
@@ -259,13 +312,6 @@
     }
 }
 
-- (void) didConfirmPickerValue:(NSString*) pickerValue{
-
-    _curIndex = -1;
-    _tableView.scrollEnabled = YES;
-    [_tableView reloadData];
-}
-
 - (void) didChangedPickerValue:(NSDictionary*)value{
     
     id key = [NSNumber numberWithInt:(int)_picker.tag];
@@ -273,14 +319,21 @@
     NSDictionary *dic = [value objectForKey:@0];
     [_map setObject:dic forKey:key];
 
+    [_tableView reloadData];
+    
+    //实时保存到内存
+    [self saveCurrentSetting];
 }
 - (void) didValueChangedWithGroups2Picker:(NSDictionary*)value{
     
     id key = [NSNumber numberWithInt:(int)_tpicker.tag];
-    
-   // NSDictionary *dic = [value objectForKey:@0];
+
     [_map setObject:value forKey:key];
 
+    [_tableView reloadData];
+    
+    //实时保存到内存
+    [self saveCurrentSetting];
 }
 
 #pragma mark -
@@ -352,15 +405,41 @@
     }
     
     titleL.text = [data objectForKey:@"title"];
-    
-    id v = [_map objectForKey:[NSNumber numberWithInt:(int)indexPath.row]];
-    if([v isKindOfClass:[NSString class]])
+    if([data objectForKey:@"value"])
     {
-        valueL.text = v;
+        //展示的数据
+        valueL.text = [data objectForKey:@"value"];
     }
     else
     {
-        valueL.text = [v objectForKey:@"title"];
+        //设置的新数据
+        id v = [_map objectForKey:[NSNumber numberWithInt:(int)indexPath.row]];
+        if([v isKindOfClass:[NSString class]])
+        {
+            valueL.text = v;
+        }
+        else
+        {
+            if([v isKindOfClass:[NSDictionary class]] && [v count] == 2)
+            {
+                NSString *value = [v objectForKey:@"value"];
+                if(value)//单组选择
+                {
+                    valueL.text = value;
+                }
+                else//双组选择
+                {
+                    NSDictionary *g0 = [[v objectForKey:@0] objectForKey:@"value"];
+                    NSDictionary *g1 = [[v objectForKey:@1] objectForKey:@"value"];
+                    if(g0 && g1)
+                    {
+                        valueL.text = [NSString stringWithFormat:@"%@-%@",
+                                       [g0 objectForKey:@"name"],
+                                       [g1 objectForKey:@"name"]];
+                    }
+                }
+            }
+        }
     }
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 43, self.frame.size.width, 1)];

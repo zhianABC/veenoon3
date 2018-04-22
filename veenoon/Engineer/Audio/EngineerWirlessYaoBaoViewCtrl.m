@@ -20,9 +20,7 @@
 @interface EngineerWirlessYaoBaoViewCtrl () <CustomPickerViewDelegate, EngineerSliderViewDelegate, SlideButtonDelegate> {
     
     PlugsCtrlTitleHeader *_selectSysBtn;
-    
-    CustomPickerView *_customPicker;
-    
+
     EngineerSliderView *_zengyiSlider;
     
     NSMutableArray *_imageViewArray;
@@ -40,7 +38,6 @@
     
     WirlessYaoBaoViewSettingsView *_rightSetView;
     
-    BOOL isSettings;
     UIButton *okBtn;
     
     NSMutableArray *signalArray;
@@ -59,8 +56,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    isSettings = NO;
 
     
     _imageViewArray = [[NSMutableArray alloc] init];
@@ -116,7 +111,7 @@
     [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
     okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [okBtn addTarget:self
-              action:@selector(okAction:)
+              action:@selector(settingAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
     _selectSysBtn = [[PlugsCtrlTitleHeader alloc] initWithFrame:CGRectMake(50, 100, 80, 30)];
@@ -313,6 +308,12 @@
     
     [_selectSysBtn setShowText:[_curMike showName]];
     
+    if([_rightSetView superview])
+    {
+        _rightSetView._audioMike = _curMike;
+        [_rightSetView showData];
+    }
+    
     for(int i = 0; i < [_channels count]; i++)
     {
         NSDictionary *data = [_channels objectAtIndex:i];
@@ -482,45 +483,68 @@
    
 }
 
-- (void) didChangedPickerValue:(NSDictionary*)value{
+- (void) chooseDeviceAtIndex:(int)idx{
     
-    if (_customPicker) {
-        [_customPicker removeFromSuperview];
-    }
-    NSDictionary *dic = [value objectForKey:@0];
-    NSString *title =  [dic objectForKey:@"value"];
-    
-    [_selectSysBtn setTitle:title forState:UIControlStateNormal];
+    self._curMike = [_wirelessYaoBaoSysArray objectAtIndex:idx];
+    [self updateCurrentMikeState:_curMike._deviceno];
     
 }
 
-- (void) okAction:(id)sender{
-    if (!isSettings) {
-        if (_rightSetView == nil) {
-            _rightSetView = [[WirlessYaoBaoViewSettingsView alloc]
-                             initWithFrame:CGRectMake(SCREEN_WIDTH-300,
-                                                      64, 300, SCREEN_HEIGHT-114)];
-        } else {
-            [UIView beginAnimations:nil context:nil];
-            _rightSetView.frame  = CGRectMake(SCREEN_WIDTH-300,
-                                              64, 300, SCREEN_HEIGHT-114);
-            [UIView commitAnimations];
-        }
+//显示设置页面
+- (void) settingAction:(id)sender{
+    
+    //检查是否需要创建
+    if (_rightSetView == nil) {
+        _rightSetView = [[WirlessYaoBaoViewSettingsView alloc]
+                         initWithFrame:CGRectMake(SCREEN_WIDTH-300,
+                                                  64, 300, SCREEN_HEIGHT-114)];
         
+        //创建底部设备切换按钮
+        _rightSetView._numOfDevice = (int)[_wirelessYaoBaoSysArray count];
+        [_rightSetView layoutDevicePannel];
+        
+        
+        IMP_BLOCK_SELF(EngineerWirlessYaoBaoViewCtrl);
+        _rightSetView._callback = ^(int deviceIndex) {
+            
+            [block_self chooseDeviceAtIndex:deviceIndex];
+        };
+    }
+    
+    //如果在显示，消失
+    if([_rightSetView superview])
+    {
+
+        //写入中控
+        //......
+        
+        [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+        
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             
+                             _rightSetView.frame  = CGRectMake(SCREEN_WIDTH,
+                                                               64, 300, SCREEN_HEIGHT-114);
+                         } completion:^(BOOL finished) {
+                             [_rightSetView removeFromSuperview];
+                         }];
+    }
+    else//如果没显示，显示
+    {
         _rightSetView._audioMike = _curMike;
         [_rightSetView showData];
+        
         
         [self.view addSubview:_rightSetView];
         [okBtn setTitle:@"保存" forState:UIControlStateNormal];
         
-        isSettings = YES;
-    } else {
-        if (_rightSetView) {
-            [_rightSetView removeFromSuperview];
-        }
-        [okBtn setTitle:@"设置" forState:UIControlStateNormal];
-        isSettings = NO;
+        
+        [UIView beginAnimations:nil context:nil];
+        _rightSetView.frame  = CGRectMake(SCREEN_WIDTH-300,
+                                          64, 300, SCREEN_HEIGHT-114);
+        [UIView commitAnimations];
     }
+    
 }
 
 - (void) cancelAction:(id)sender{

@@ -10,10 +10,14 @@
 @class AudioEWirlessMike;
 @interface WirlessYaoBaoViewSettingsView : UIView
 {
-    
+    RightSetViewCallbackBlock _callback;
 }
-@property (nonatomic, assign) int _numOfChannel;
+@property (nonatomic, assign) int _numOfDevice;
+@property (nonatomic, assign) int _curentDeviceIndex;
 @property (nonatomic, strong) AudioEWirlessMike *_audioMike;
-- (void) layoutFooter;
+@property (nonatomic, copy) RightSetViewCallbackBlock _callback;
+
+- (void) layoutDevicePannel;
 - (void) showData;
+
 @end

@@ -215,8 +215,8 @@
     
     if([values count])
     {
-        NSDictionary *city = [values objectAtIndex:0];
-        [_values setObject:city
+        NSDictionary *val = [values objectAtIndex:0];
+        [_values setObject:@{@"value":val, @"index":[NSNumber numberWithInteger:0]}
                     forKey:[NSNumber numberWithInteger:1]];
         
     }

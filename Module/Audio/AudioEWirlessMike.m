@@ -19,7 +19,17 @@
 
 @implementation AudioEWirlessMike
 @synthesize _channels;
+@synthesize _freqVal;//频率
+@synthesize _freqops;
 
+@synthesize _groups;//组-通道
+@synthesize _groupVal;
+
+@synthesize _dbs;//增益
+@synthesize _dbVal;
+
+@synthesize _sq;
+@synthesize _sqVal;
 
 - (id) init
 {
@@ -65,6 +75,47 @@
         [_channels addObject:dic];
     }
     
+}
+
+- (void) fillDataFromCtrlCenter
+{
+    NSMutableArray *groupValues = [NSMutableArray array];
+    [groupValues addObject:@{@"name":@"A", @"subs":@[@{@"name":@"01"},@{@"name":@"02"},@{@"name":@"03"}]}];
+    [groupValues addObject:@{@"name":@"B", @"subs":@[@{@"name":@"04"},@{@"name":@"05"},@{@"name":@"06"}]}];
+    [groupValues addObject:@{@"name":@"C", @"subs":@[@{@"name":@"10"},@{@"name":@"20"},@{@"name":@"30"}]}];
+    
+    self._groups = groupValues;
+    self._freqops = @[@"720MHz",@"600MHz"];
+    
+    NSMutableArray *dbs = [NSMutableArray array];
+    for(int i = -20; i < 20; i++)
+    {
+        if(i > 0)
+        {
+            [dbs addObject:[NSString stringWithFormat:@"+%d", abs(i)]];
+        }
+        else if(i < 0)
+        {
+            [dbs addObject:[NSString stringWithFormat:@"-%d", abs(i)]];
+        }
+        else
+            [dbs addObject:[NSString stringWithFormat:@"%d", i]];
+    }
+    
+    self._dbs = dbs;
+    
+    self._sq = @[@"SQ1",@"SQ2",@"SQ3"];
+
+    
+    //初始化/保存的数据
+    self._freqVal = @"720MHz";
+    self._sqVal = @"SQ1";
+    self._dbVal = @"0";
+    
+    NSDictionary *g0 = [groupValues objectAtIndex:0];
+    NSDictionary *g1 = [[g0 objectForKey:@"subs"] objectAtIndex:0];
+    self._groupVal = @{@0:@{@"index":@0, @"value":g0}
+                       ,@1:@{@"index":@0,@"value":g1}};
 }
 
 - (NSArray*)channles{

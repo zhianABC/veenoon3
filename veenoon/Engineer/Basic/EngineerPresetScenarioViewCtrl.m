@@ -736,6 +736,7 @@
             pset._index = i;
             pset._deviceno = [NSString stringWithFormat:@"%02d", i+1];
             [pset initChannels:2];
+            [pset fillDataFromCtrlCenter];
             [mikes addObject:pset];
         }
         

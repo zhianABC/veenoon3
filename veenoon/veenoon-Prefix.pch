@@ -108,3 +108,4 @@
 
 #define HENG_XIAN @"-"
 
+typedef void (^RightSetViewCallbackBlock)(int deviceIndex);

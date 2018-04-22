@@ -17,6 +17,18 @@
 @synthesize _deviceid;
 @synthesize _index;
 
+- (id) init
+{
+    if(self = [super init])
+    {
+        self._brand = @"";
+        self._type = @"";
+        self._deviceno = @"";
+    }
+    
+    return self;
+}
+
 - (NSString*) showName{
     
     NSString *name = [NSString stringWithFormat:@"%@ - %@ - %@",
