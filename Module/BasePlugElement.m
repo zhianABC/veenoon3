@@ -24,6 +24,10 @@
         self._brand = @"";
         self._type = @"";
         self._deviceno = @"";
+        self._com = @"";
+        self._ipaddress = @"";
+        self._deviceid = @"";
+        self._index = 0;
     }
     
     return self;
@@ -35,6 +39,15 @@
                       _brand, _type, _deviceno];
     
     return name;
+}
+
+- (NSString *)objectToJsonString{
+    
+    return nil;
+}
+
+- (void) jsonStringToObject:(NSString*)json{
+ 
 }
 
 @end

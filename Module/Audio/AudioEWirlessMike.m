@@ -136,5 +136,122 @@
     return nil;
 }
 
+- (NSString *)objectToJsonString{
+    
+    NSMutableDictionary *allData = [NSMutableDictionary dictionary];
+    
+    if(self._brand)
+        [allData setObject:self._brand forKey:@"brand"];
+    
+    if(self._type)
+        [allData setObject:self._type forKey:@"type"];
+    
+    if(self._deviceno)
+        [allData setObject:self._deviceno forKey:@"deviceno"];
+    
+    if(self._ipaddress)
+        [allData setObject:self._ipaddress forKey:@"ipaddress"];
+    
+    if(self._deviceid)
+        [allData setObject:self._deviceid forKey:@"deviceid"];
+    
+    if(self._com)
+        [allData setObject:self._com forKey:@"com"];
+    [allData setObject:[NSString stringWithFormat:@"%d",self._index] forKey:@"index"];
+    
+    
+    if(self._channels)
+        [allData setObject:self._channels forKey:@"channels"];
+    
+    if(self._freqVal)
+        [allData setObject:self._freqVal forKey:@"freqVal"];
+    
+    if(self._freqops)
+        [allData setObject:self._freqops forKey:@"freqops"];
+    
+    if(self._groups)
+        [allData setObject:self._groups forKey:@"groups"];
+    
+    if(self._groupVal)
+        [allData setObject:self._groupVal forKey:@"groupVal"];
+    
+    if(self._sq)
+        [allData setObject:self._sq forKey:@"sq"];
+    if(self._sqVal)
+        [allData setObject:self._sqVal forKey:@"sqVal"];
+    
+    if(self._dbs)
+        [allData setObject:self._dbs forKey:@"dbs"];
+    if(self._dbVal)
+        [allData setObject:self._dbVal forKey:@"dbVal"];
+    
+    NSError *error = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:allData
+                                                       options:NSJSONWritingPrettyPrinted
+                                                         error: &error];
+    
+    NSString *jsonresult = [[NSString alloc] initWithData:jsonData
+                                            encoding:NSUTF8StringEncoding];
+    
+    
+    return jsonresult;
+}
+
+- (void) jsonStringToObject:(NSString*)json{
+    
+    NSData *data = [NSData dataWithBytes:[json UTF8String] length:[json length]];
+    
+    NSDictionary *allData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+    
+    if([allData objectForKey:@"brand"])
+        self._brand = [allData objectForKey:@"brand"];
+    if([allData objectForKey:@"type"])
+        self._type = [allData objectForKey:@"type"];
+    
+    if([allData objectForKey:@"deviceno"])
+        self._deviceno = [allData objectForKey:@"deviceno"];
+    
+    if([allData objectForKey:@"ipaddress"])
+        self._ipaddress = [allData objectForKey:@"ipaddress"];
+  
+    if([allData objectForKey:@"deviceid"])
+        self._deviceid = [allData objectForKey:@"deviceid"];
+
+    if([allData objectForKey:@"com"])
+        self._com = [allData objectForKey:@"com"];
+    
+    self._index = [[allData objectForKey:@"index"] intValue];
+    
+    if([allData objectForKey:@"channels"])
+        self._channels = [allData objectForKey:@"channels"];
+    
+    if([allData objectForKey:@"freqVal"])
+        self._freqVal = [allData objectForKey:@"freqVal"];
+    
+    if([allData objectForKey:@"freqops"])
+        self._freqops = [allData objectForKey:@"freqops"];
+    
+    if([allData objectForKey:@"groups"])
+        self._groups = [allData objectForKey:@"groups"];
+    
+    if([allData objectForKey:@"groupVal"])
+        self._groupVal = [allData objectForKey:@"groupVal"];
+    
+
+    if([allData objectForKey:@"sq"])
+        self._sq = [allData objectForKey:@"sq"];
+    
+    if([allData objectForKey:@"sqVal"])
+        self._sqVal = [allData objectForKey:@"sqVal"];
+    
+    if([allData objectForKey:@"dbs"])
+        self._dbs = [allData objectForKey:@"dbs"];
+    
+    if([allData objectForKey:@"dbVal"])
+        self._dbVal = [allData objectForKey:@"dbVal"];
+    
+}
+
+
 
 @end

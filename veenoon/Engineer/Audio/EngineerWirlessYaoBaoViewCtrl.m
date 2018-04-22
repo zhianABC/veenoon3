@@ -318,7 +318,7 @@
     {
         NSDictionary *data = [_channels objectAtIndex:i];
         NSString *dn = [data objectForKey:@"device"];
-        NSString *huatongType = [data objectForKey:@"huatongType"];
+        NSString *huatongType = [data objectForKey:@"type"];
         if([dn isEqualToString:deviceno])
         {
             continue;
