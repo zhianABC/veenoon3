@@ -657,6 +657,7 @@
             pset._com = @"191.16.1.100";
             pset._brand = @"brand1";
             pset._type = @"type1";
+            pset._index = i;
             pset._deviceno = [NSString stringWithFormat:@"%d", i];
             pset._irArray = [NSMutableArray array];
             [powers addObject:pset];

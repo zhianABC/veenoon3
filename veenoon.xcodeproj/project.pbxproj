@@ -733,6 +733,7 @@
 		EBC71B29204100A200DD0A98 /* ElectronicAutoRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B28204100A200DD0A98 /* ElectronicAutoRightView.m */; };
 		EBC71B2C204100DD00DD0A98 /* NewWindRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B2B204100DD00DD0A98 /* NewWindRightView.m */; };
 		EBCA834B1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCA834A1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m */; };
+		EBD009B0208C744900920849 /* DVDComIRView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009AF208C744900920849 /* DVDComIRView.m */; };
 		EBD79C0F204BBC2400FD534C /* YinPinProcessCodeUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD79C0E204BBC2400FD534C /* YinPinProcessCodeUIView.m */; };
 		EBDB4535205AB0F6000ABAB0 /* PlayerRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBDB4534205AB0F6000ABAB0 /* PlayerRightView.m */; };
 		EBDB4538205D4C44000ABAB0 /* TVSettingsRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBDB4537205D4C44000ABAB0 /* TVSettingsRightView.m */; };
@@ -1848,6 +1849,8 @@
 		EBC71B2B204100DD00DD0A98 /* NewWindRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewWindRightView.m; sourceTree = "<group>"; };
 		EBCA834A1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserMonitorSettingsViewCtrl.m; sourceTree = "<group>"; };
 		EBCA834C1FD434D1007DEB8E /* UserMonitorSettingsViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserMonitorSettingsViewCtrl.h; sourceTree = "<group>"; };
+		EBD009AE208C744900920849 /* DVDComIRView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVDComIRView.h; sourceTree = "<group>"; };
+		EBD009AF208C744900920849 /* DVDComIRView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DVDComIRView.m; sourceTree = "<group>"; };
 		EBD79C0D204BBC2400FD534C /* YinPinProcessCodeUIView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YinPinProcessCodeUIView.h; sourceTree = "<group>"; };
 		EBD79C0E204BBC2400FD534C /* YinPinProcessCodeUIView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YinPinProcessCodeUIView.m; sourceTree = "<group>"; };
 		EBDB4533205AB0F6000ABAB0 /* PlayerRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerRightView.h; sourceTree = "<group>"; };
@@ -3066,10 +3069,10 @@
 		EB03F5441FBDEB1200865541 /* Engineer */ = {
 			isa = PBXGroup;
 			children = (
-				EB1717941FF5F34900CBDB81 /* Env */,
-				EB1A55CF1FEAA0F4000B18E6 /* Video */,
-				EB1A55CE1FEA9E2A000B18E6 /* Audio */,
 				EB1A55CD1FEA9E21000B18E6 /* Basic */,
+				EB1A55CE1FEA9E2A000B18E6 /* Audio */,
+				EB1A55CF1FEAA0F4000B18E6 /* Video */,
+				EB1717941FF5F34900CBDB81 /* Env */,
 			);
 			path = Engineer;
 			sourceTree = "<group>";
@@ -3356,6 +3359,8 @@
 			children = (
 				EBC71AFD203AF4EE00DD0A98 /* DVDRightView.h */,
 				EBC71AFE203AF4EE00DD0A98 /* DVDRightView.m */,
+				EBD009AE208C744900920849 /* DVDComIRView.h */,
+				EBD009AF208C744900920849 /* DVDComIRView.m */,
 				EBC71B03203AF72D00DD0A98 /* CameraRightView.h */,
 				EBC71B04203AF72D00DD0A98 /* CameraRightView.m */,
 				EBC71B06203AF74100DD0A98 /* RemoteVideoRightView.h */,
@@ -4265,6 +4270,7 @@
 				04D719781DADD3A4002153D7 /* WSUser.m in Sources */,
 				EB795B682042E8C1005D1F47 /* XinHaoFaShengQi_UIView.m in Sources */,
 				04D9A0EB1DAF83E0008DF2E6 /* AudioPlayer.m in Sources */,
+				EBD009B0208C744900920849 /* DVDComIRView.m in Sources */,
 				04DE1E971AD6AEE000D49E2F /* ASIDownloadCache.m in Sources */,
 				EB3B73B21FE6382F001941CF /* EngineerWirlessYaoBaoViewCtrl.m in Sources */,
 				EB09C4B11FD3B27200776540 /* MapMarkerLayer.m in Sources */,
