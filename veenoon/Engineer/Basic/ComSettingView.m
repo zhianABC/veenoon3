@@ -15,12 +15,14 @@
 {
     UILabel *_secs;
     UIView *_chooseBg;
+    CenterCustomerPickerView *levelSetting;
 }
 @end
 
 @implementation ComSettingView
 @synthesize _isAllowedClose;
 @synthesize delegate;
+@synthesize _currentObj;
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -75,7 +77,7 @@
         _chooseBg = [[UIView alloc] initWithFrame:CGRectMake(0, 101, frame.size.width, 220)];
         _chooseBg.backgroundColor = self.backgroundColor;
         
-        CenterCustomerPickerView *levelSetting = [[CenterCustomerPickerView alloc]
+        levelSetting = [[CenterCustomerPickerView alloc]
                                           initWithFrame:CGRectMake(0, 0, self.frame.size.width, 200) ];
         [levelSetting removeArray];
         
@@ -107,7 +109,19 @@
     }
     return self;
 }
-
+- (void) refreshCom:(NSArray*) comArray withCurrentCom:(NSString*) currentCom {
+    [levelSetting removeArray];
+    
+    levelSetting._pickerDataArray = comArray;
+    
+    NSDictionary *section = [comArray objectAtIndex:0];
+    NSArray *values = [section objectForKey:@"values"];
+    
+    NSInteger index = [values indexOfObject:currentCom];
+    
+    [levelSetting selectRow:index inComponent:0];
+    
+}
 - (void) closeComSetting{
     
     if(_isAllowedClose)
@@ -135,7 +149,7 @@
     {
         [delegate didChoosedComVal:title];
     }
-    
+    _currentObj._com = title;
 }
 
 

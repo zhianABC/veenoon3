@@ -9,6 +9,7 @@
 #import "TouYingJiRightView.h"
 #import "UIButton+Color.h"
 #import "ComSettingView.h"
+#import "IPValidate.h"
 
 @interface TouYingJiRightView () < UITextFieldDelegate> {
     
@@ -51,7 +52,7 @@
         ipTextField.delegate = self;
         ipTextField.backgroundColor = [UIColor clearColor];
         ipTextField.returnKeyType = UIReturnKeyDone;
-        ipTextField.text = @"192.168.1.100";
+        ipTextField.text = _currentObj._ipaddress;
         ipTextField.textColor = [UIColor whiteColor];
         ipTextField.borderStyle = UITextBorderStyleRoundedRect;
         ipTextField.textAlignment = NSTextAlignmentRight;
@@ -76,6 +77,7 @@
         [headView addGestureRecognizer:swip];
         
         _com = [[ComSettingView alloc] initWithFrame:self.bounds];
+        
     }
     
     return self;
@@ -140,7 +142,9 @@
     self._curentDeviceIndex = _currentObj._index;
     [self chooseChannelAtTagIndex:_curentDeviceIndex];
     
+    _com._currentObj = _currentObj;
     
+    [_com refreshCom:_currentObj._comArray withCurrentCom:_currentObj._com];
 }
 
 - (void) buttonAction:(UIButton*)btn{
@@ -178,8 +182,20 @@
     
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField{
+- (void)textFieldDidEndEditing:(UITextField *)textField {
     
+    NSString *ipaddress = textField.text;
+    BOOL valid = [IPValidate isValidIP:ipaddress];
+    if (valid) {
+        _currentObj._ipaddress = textField.text;
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                        message:@"请输入正确的ip地址."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil, nil];
+        [alert show];
+    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{

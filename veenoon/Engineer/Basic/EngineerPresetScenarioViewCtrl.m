@@ -682,10 +682,13 @@
         for(int i = 0; i < 3; i++)
         {
             VTouyingjiSet *pset = [[VTouyingjiSet alloc] init];
-            pset._com = @"191.16.1.100";
+            pset._ipaddress = [@"191.16.1.10" stringByAppendingString:[NSString stringWithFormat:@"%d", i]];
             pset._brand = @"brand1";
             pset._type = @"type1";
             pset._index = i;
+            
+            pset._comArray = @[@{@"values":@[@"Com0", @"Com1", @"Com2"]}];
+            pset._com = [@"Com" stringByAppendingString:[NSString stringWithFormat:@"%d", i]];
             pset._deviceno = [NSString stringWithFormat:@"%d", i];
             [powers addObject:pset];
         }

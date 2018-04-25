@@ -733,6 +733,7 @@
 		EBC71B29204100A200DD0A98 /* ElectronicAutoRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B28204100A200DD0A98 /* ElectronicAutoRightView.m */; };
 		EBC71B2C204100DD00DD0A98 /* NewWindRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B2B204100DD00DD0A98 /* NewWindRightView.m */; };
 		EBCA834B1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCA834A1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m */; };
+		EBCD01C62090C0AF00787D48 /* IPValidate.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCD01C52090C0AF00787D48 /* IPValidate.m */; };
 		EBD009B0208C744900920849 /* DVDComIRView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009AF208C744900920849 /* DVDComIRView.m */; };
 		EBD009B3208CB12900920849 /* VCameraSettingSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009B2208CB12900920849 /* VCameraSettingSet.m */; };
 		EBD009B6208CB88300920849 /* VRemoteSettingsSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009B5208CB88300920849 /* VRemoteSettingsSet.m */; };
@@ -1859,6 +1860,8 @@
 		EBC71B2B204100DD00DD0A98 /* NewWindRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewWindRightView.m; sourceTree = "<group>"; };
 		EBCA834A1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserMonitorSettingsViewCtrl.m; sourceTree = "<group>"; };
 		EBCA834C1FD434D1007DEB8E /* UserMonitorSettingsViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserMonitorSettingsViewCtrl.h; sourceTree = "<group>"; };
+		EBCD01C42090C0AF00787D48 /* IPValidate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IPValidate.h; sourceTree = "<group>"; };
+		EBCD01C52090C0AF00787D48 /* IPValidate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IPValidate.m; sourceTree = "<group>"; };
 		EBD009AE208C744900920849 /* DVDComIRView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVDComIRView.h; sourceTree = "<group>"; };
 		EBD009AF208C744900920849 /* DVDComIRView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DVDComIRView.m; sourceTree = "<group>"; };
 		EBD009B1208CB12900920849 /* VCameraSettingSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VCameraSettingSet.h; sourceTree = "<group>"; };
@@ -2300,6 +2303,8 @@
 				EB5A47FC208AE2D500564C06 /* BrandCategoryNoUtil.m */,
 				348FC8D1208B748B00F7DB3D /* DActionView.h */,
 				348FC8D2208B748B00F7DB3D /* DActionView.m */,
+				EBCD01C42090C0AF00787D48 /* IPValidate.h */,
+				EBCD01C52090C0AF00787D48 /* IPValidate.m */,
 			);
 			path = Common;
 			sourceTree = SOURCE_ROOT;
@@ -4287,6 +4292,7 @@
 				EB1717B21FF614BB00CBDB81 /* EngineerMonitorViewCtrl.m in Sources */,
 				EBD009B9208CBD8100920849 /* VRemoteVideoSet.m in Sources */,
 				EB7333F1204102DF00AE60B8 /* FloorWarmRightView.m in Sources */,
+				EBCD01C62090C0AF00787D48 /* IPValidate.m in Sources */,
 				04D719771DADD3A4002153D7 /* SSUser.m in Sources */,
 				04DE1FE71AD6B52400D49E2F /* CMNavigationController.m in Sources */,
 				04DE1DDB1AD68C5E00D49E2F /* AppDelegate.m in Sources */,

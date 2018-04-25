@@ -16,6 +16,7 @@
 @synthesize _com;
 @synthesize _deviceid;
 @synthesize _index;
+@synthesize _comArray;
 
 - (id) init
 {

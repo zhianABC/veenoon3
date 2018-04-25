@@ -360,6 +360,8 @@
         
         //创建底部设备切换按钮
         _rightView._numOfDevice = (int)[_touyingjiArray count];
+        [_rightView refreshView:_currentObj];
+        
         [_rightView layoutDevicePannel];
         
         
