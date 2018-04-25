@@ -10,8 +10,14 @@
 #import "VDVDPlayerSet.h"
 @interface DVDRightView : UIView {
     VDVDPlayerSet *_currentObj;
+    
+    RightSetViewCallbackBlock _callback;
 }
 @property(nonatomic, strong) VDVDPlayerSet *_currentObj;
+@property(nonatomic, assign) int _numOfDevice;
+@property (nonatomic, copy) RightSetViewCallbackBlock _callback;
+@property (nonatomic, assign) int _curentDeviceIndex;
 
 -(void) refreshView:(VDVDPlayerSet*) dvdPlayerSet;
+-(void) layoutDevicePannel;
 @end

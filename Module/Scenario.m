@@ -15,7 +15,8 @@
 @synthesize _A16PowerPlugs;
 @synthesize _VDVDPlayers;
 @synthesize _AWirelessMikePlugs;
-
+@synthesize _VCameraSettings;
+@synthesize _VRemoteSettings;
 
 @synthesize _APlayerPlugs;
 - (id)init

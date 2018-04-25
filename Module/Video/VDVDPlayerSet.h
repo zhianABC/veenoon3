@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BasePlugElement.h"
 
-@interface VDVDPlayerSet : NSObject
+@interface VDVDPlayerSet : BasePlugElement
 @property (nonatomic, strong) NSString *_brand;
 @property (nonatomic, strong) NSString *_type;
 @property (nonatomic, strong) NSString *_deviceno;

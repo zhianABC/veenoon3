@@ -8,23 +8,25 @@
 
 #import "RemoteVideoRightView.h"
 #import "UIButton+Color.h"
-#import "ComSettingView.h"
+#import "RemoteCOMIRView.h"
 #import "PlayerSettingsPannel.h"
 
 @interface RemoteVideoRightView () <UITextFieldDelegate> {
     
-    PlayerSettingsPannel *_com;
+    RemoteCOMIRView *_com;
     UITextField *ipTextField;
     
     UIView *_footerView;
 }
 @property (nonatomic, strong) NSMutableArray *_btns;
-@property (nonatomic) int _numOfChannel;
 @end
 
 @implementation RemoteVideoRightView
 @synthesize _btns;
-@synthesize _numOfChannel;
+@synthesize _currentObj;
+@synthesize _numOfDevice;
+@synthesize _callback;
+@synthesize _curentDeviceIndex;
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.
@@ -37,8 +39,6 @@
     
     if(self = [super initWithFrame:frame]) {
         self.backgroundColor = RGB(0, 89, 118);
-        
-        _numOfChannel= 8;
         
         UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(10, 25, 40, 30)];
         titleL.textColor = [UIColor whiteColor];
@@ -66,8 +66,6 @@
         _footerView.backgroundColor = M_GREEN_COLOR;
         
         
-        [self layoutFooter];
-        
         UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 30)];
         [self addSubview:headView];
         
@@ -78,13 +76,13 @@
         
         [headView addGestureRecognizer:swip];
         
-        _com = [[PlayerSettingsPannel alloc] initWithFrame:self.bounds];
+        _com = [[RemoteCOMIRView alloc] initWithFrame:self.bounds];
     }
     
     return self;
 }
 
-- (void)layoutFooter{
+- (void)layoutDevicePannel{
     
     [[_footerView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
@@ -96,7 +94,7 @@
     int sp = 8;
     int y = (160 - w*2 - sp)/2;
     int x = (self.frame.size.width - 4*w - 3*sp)/2;
-    for(int i = 0; i < _numOfChannel; i++)
+    for(int i = 0; i < _numOfDevice; i++)
     {
         int col = i%4;
         int xx = x + col*w + col*sp;
@@ -124,20 +122,21 @@
         
         [_btns addObject:btn];
         
-        if (i == 6) {
-            [btn setTitle:@"全部"
-                 forState:UIControlStateNormal];
-            break;
-        }
     }
     
-    [self chooseChannelAtTagIndex:0];
+    [self chooseChannelAtTagIndex:_curentDeviceIndex];
     
 }
 
 - (void) buttonAction:(UIButton*)btn{
     
     [self chooseChannelAtTagIndex:(int)btn.tag];
+    
+    int idx = (int)btn.tag;
+    
+    if(_callback) {
+        _callback(idx);
+    }
 }
 
 - (void) chooseChannelAtTagIndex:(int)index{
@@ -158,6 +157,16 @@
         }
     }
 }
+
+-(void) refreshView:(VRemoteSettingsSet*) vRemoteSettingsSet {
+    self._currentObj = vRemoteSettingsSet;
+    
+    ipTextField.text = vRemoteSettingsSet._ipaddress;
+    
+    self._curentDeviceIndex = _currentObj._index;
+    [self chooseChannelAtTagIndex:_curentDeviceIndex];
+}
+
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     
     //_curIndex = (int)textField.tag;
@@ -165,7 +174,7 @@
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
-    
+    _currentObj._ipaddress = ipTextField.text;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{

@@ -7,7 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "VCameraSettingSet.h"
+@interface CameraRightView : UIView {
+    VCameraSettingSet *_currentObj;
+    RightSetViewCallbackBlock _callback;
+}
+@property (nonatomic, strong) VCameraSettingSet *_currentObj;
+@property(nonatomic, assign) int _numOfDevice;
+@property (nonatomic, copy) RightSetViewCallbackBlock _callback;
+@property (nonatomic, assign) int _curentDeviceIndex;
 
-@interface CameraRightView : UIView
-
+-(void) refreshView:(VCameraSettingSet*) vCameraSettingSet;
+-(void) layoutDevicePannel;
 @end

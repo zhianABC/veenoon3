@@ -17,5 +17,6 @@
 @property (nonatomic, strong) NSMutableArray *_AWirelessMikePlugs;
 
 @property (nonatomic, strong) NSMutableArray *_VDVDPlayers;
-
+@property (nonatomic, strong) NSMutableArray *_VCameraSettings;
+@property (nonatomic, strong) NSMutableArray *_VRemoteSettings;
 @end

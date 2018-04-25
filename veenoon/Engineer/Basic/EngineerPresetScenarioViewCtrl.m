@@ -41,6 +41,9 @@
 #import "AudioEPlayer.h"
 #import "VDVDPlayerSet.h"
 #import "AudioEWirlessMike.h"
+#import "VCameraSettingSet.h"
+#import "VRemoteSettingsSet.h"
+#import "VRemoteVideoSet.h"
 
 #define E_CELL_WIDTH   60
 
@@ -517,15 +520,17 @@
         // wuxian array
         if ([name isEqualToString:@"摄像机"]) {
             EngineerCameraViewController *ctrl = [[EngineerCameraViewController alloc] init];
-            ctrl._cameraSysArray = nil;// [NSMutableArray arrayWithObject:data];
-            ctrl._number=16;
+            
+            ctrl._cameraSysArray = _scenario._VCameraSettings;
+            
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
         if ([name isEqualToString:@"远程视讯"]) {
             EngineerRemoteVideoViewCtrl *ctrl = [[EngineerRemoteVideoViewCtrl alloc] init];
-            ctrl._remoteVideoArray = nil;// [NSMutableArray arrayWithObject:data];
-            ctrl._number=16;
+            
+            ctrl._cameraArray = _scenario._VRemoteSettings;
+            
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
@@ -645,6 +650,56 @@
     }
     
 }
+- (void) initVRemoteSettings {
+    if([_scenario._VRemoteSettings count] == 0)
+    {
+        NSMutableArray *powers = [NSMutableArray array];
+        
+        for(int i = 0; i < 6; i++)
+        {
+            VRemoteSettingsSet *pset = [[VRemoteSettingsSet alloc] init];
+            pset._com = @"191.16.1.100";
+            pset._brand = @"brand1";
+            pset._type = @"type1";
+            pset._index = i;
+            pset._deviceno = [NSString stringWithFormat:@"%d", i];
+            
+            NSMutableArray *videoArray = [NSMutableArray array];
+            for (int j = 0; j < 4; j++) {
+                VRemoteVideoSet *vSet = [[VRemoteVideoSet alloc] init];
+                vSet._name = [NSString stringWithFormat:@"%d", i+1];
+                
+                [videoArray addObject:vSet];
+            }
+            pset._cameraVideoArray = videoArray;
+            
+            [powers addObject:pset];
+        }
+        
+        _scenario._VRemoteSettings = powers;
+    }
+}
+
+- (void) initVCameraSettings {
+    if([_scenario._VCameraSettings count] == 0)
+    {
+        NSMutableArray *powers = [NSMutableArray array];
+        
+        for(int i = 0; i < 6; i++)
+        {
+            VCameraSettingSet *pset = [[VCameraSettingSet alloc] init];
+            pset._com = @"191.16.1.100";
+            pset._brand = @"brand1";
+            pset._type = @"type1";
+            pset._index = i;
+            pset._deviceno = [NSString stringWithFormat:@"%d", i];
+            [powers addObject:pset];
+        }
+        
+        _scenario._VCameraSettings = powers;
+    }
+}
+
 - (void) initVDVDPlayers {
     
     if([_scenario._VDVDPlayers count] == 0)
@@ -657,6 +712,7 @@
             pset._com = @"191.16.1.100";
             pset._brand = @"brand1";
             pset._type = @"type1";
+            pset._index = i;
             pset._deviceno = [NSString stringWithFormat:@"%d", i];
             pset._irArray = [NSMutableArray array];
             [powers addObject:pset];
@@ -811,6 +867,16 @@
             if([name isEqualToString:@"视频播放器"])
             {
                 [self initVDVDPlayers];
+            }
+            
+            if([name isEqualToString:@"摄像机"])
+            {
+                [self initVCameraSettings];
+            }
+            
+            if([name isEqualToString:@"远程视讯"])
+            {
+                [self initVRemoteSettings];
             }
         }
         

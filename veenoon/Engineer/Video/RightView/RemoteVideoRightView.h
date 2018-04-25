@@ -7,7 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "VRemoteSettingsSet.h"
+@interface RemoteVideoRightView : UIView {
+    VRemoteSettingsSet *_currentObj;
+    RightSetViewCallbackBlock _callback;
+}
+@property (nonatomic, strong) VRemoteSettingsSet *_currentObj;
+@property(nonatomic, assign) int _numOfDevice;
+@property (nonatomic, copy) RightSetViewCallbackBlock _callback;
+@property (nonatomic, assign) int _curentDeviceIndex;
 
-@interface RemoteVideoRightView : UIView
-
+-(void) refreshView:(VRemoteSettingsSet*) vRemoteSettingsSet;
+-(void) layoutDevicePannel;
 @end
