@@ -23,4 +23,5 @@
 @property (nonatomic, strong) NSMutableArray *_VPinJie;
 @property (nonatomic, strong) NSMutableArray *_VTV;
 @property (nonatomic, strong) NSMutableArray *_VLuBoJi;
+@property (nonatomic, strong) NSMutableArray *_VTouyingji;
 @end

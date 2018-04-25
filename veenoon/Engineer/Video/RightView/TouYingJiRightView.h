@@ -7,7 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "VTouyingjiSet.h"
 
-@interface TouYingJiRightView : UIView
+@interface TouYingJiRightView : UIView {
+    VTouyingjiSet *_currentObj;
+    RightSetViewCallbackBlock _callback;
+}
+@property(nonatomic, strong) VTouyingjiSet *_currentObj;
+@property(nonatomic, assign) int _numOfDevice;
+@property (nonatomic, copy) RightSetViewCallbackBlock _callback;
+@property (nonatomic, assign) int _curentDeviceIndex;
 
+-(void) refreshView:(VTouyingjiSet*) dvdPlayerSet;
+-(void) layoutDevicePannel;
 @end

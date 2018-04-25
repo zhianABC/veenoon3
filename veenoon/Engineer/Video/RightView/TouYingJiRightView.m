@@ -23,7 +23,10 @@
 
 @implementation TouYingJiRightView
 @synthesize _btns;
-@synthesize _numOfChannel;
+@synthesize _currentObj;
+@synthesize _curentDeviceIndex;
+@synthesize _callback;
+@synthesize _numOfDevice;
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.
@@ -36,8 +39,6 @@
     
     if(self = [super initWithFrame:frame]) {
         self.backgroundColor = RGB(0, 89, 118);
-        
-        _numOfChannel= 8;
         
         UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(10, 25, 40, 30)];
         titleL.textColor = [UIColor whiteColor];
@@ -64,9 +65,6 @@
         [self addSubview:_footerView];
         _footerView.backgroundColor = M_GREEN_COLOR;
         
-        
-        [self layoutFooter];
-        
         UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 30)];
         [self addSubview:headView];
         
@@ -83,7 +81,7 @@
     return self;
 }
 
-- (void)layoutFooter{
+- (void)layoutDevicePannel {
     
     [[_footerView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
@@ -95,7 +93,7 @@
     int sp = 8;
     int y = (160 - w*2 - sp)/2;
     int x = (self.frame.size.width - 4*w - 3*sp)/2;
-    for(int i = 0; i < _numOfChannel; i++)
+    for(int i = 0; i < _numOfDevice; i++)
     {
         int col = i%4;
         int xx = x + col*w + col*sp;
@@ -130,13 +128,30 @@
         }
     }
     
-    [self chooseChannelAtTagIndex:0];
+    [self chooseChannelAtTagIndex:_curentDeviceIndex];
+    
+}
+
+-(void) refreshView:(VTouyingjiSet*) vLuBoJiSet {
+    self._currentObj = vLuBoJiSet;
+    
+    ipTextField.text = vLuBoJiSet._ipaddress;
+    
+    self._curentDeviceIndex = _currentObj._index;
+    [self chooseChannelAtTagIndex:_curentDeviceIndex];
+    
     
 }
 
 - (void) buttonAction:(UIButton*)btn{
     
     [self chooseChannelAtTagIndex:(int)btn.tag];
+    
+    int idx = (int)btn.tag;
+    
+    if(_callback) {
+        _callback(idx);
+    }
 }
 
 - (void) chooseChannelAtTagIndex:(int)index{

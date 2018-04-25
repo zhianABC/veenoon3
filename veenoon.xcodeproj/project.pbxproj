@@ -743,6 +743,7 @@
 		EBD009C520906AB800920849 /* VPinJieSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009C420906AB800920849 /* VPinJieSet.m */; };
 		EBD009C820907B0700920849 /* VTVSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009C720907B0700920849 /* VTVSet.m */; };
 		EBD009CB20907E8C00920849 /* VLuBoJiSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009CA20907E8C00920849 /* VLuBoJiSet.m */; };
+		EBD009CE2090A9D200920849 /* VTouyingjiSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009CD2090A9D200920849 /* VTouyingjiSet.m */; };
 		EBD79C0F204BBC2400FD534C /* YinPinProcessCodeUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD79C0E204BBC2400FD534C /* YinPinProcessCodeUIView.m */; };
 		EBDB4535205AB0F6000ABAB0 /* PlayerRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBDB4534205AB0F6000ABAB0 /* PlayerRightView.m */; };
 		EBDB4538205D4C44000ABAB0 /* TVSettingsRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBDB4537205D4C44000ABAB0 /* TVSettingsRightView.m */; };
@@ -1878,6 +1879,8 @@
 		EBD009C720907B0700920849 /* VTVSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VTVSet.m; sourceTree = "<group>"; };
 		EBD009C920907E8C00920849 /* VLuBoJiSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VLuBoJiSet.h; sourceTree = "<group>"; };
 		EBD009CA20907E8C00920849 /* VLuBoJiSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VLuBoJiSet.m; sourceTree = "<group>"; };
+		EBD009CC2090A9D200920849 /* VTouyingjiSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VTouyingjiSet.h; sourceTree = "<group>"; };
+		EBD009CD2090A9D200920849 /* VTouyingjiSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VTouyingjiSet.m; sourceTree = "<group>"; };
 		EBD79C0D204BBC2400FD534C /* YinPinProcessCodeUIView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YinPinProcessCodeUIView.h; sourceTree = "<group>"; };
 		EBD79C0E204BBC2400FD534C /* YinPinProcessCodeUIView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YinPinProcessCodeUIView.m; sourceTree = "<group>"; };
 		EBDB4533205AB0F6000ABAB0 /* PlayerRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerRightView.h; sourceTree = "<group>"; };
@@ -3224,6 +3227,8 @@
 				EBD009C720907B0700920849 /* VTVSet.m */,
 				EBD009C920907E8C00920849 /* VLuBoJiSet.h */,
 				EBD009CA20907E8C00920849 /* VLuBoJiSet.m */,
+				EBD009CC2090A9D200920849 /* VTouyingjiSet.h */,
+				EBD009CD2090A9D200920849 /* VTouyingjiSet.m */,
 			);
 			path = Video;
 			sourceTree = "<group>";
@@ -4276,6 +4281,7 @@
 				045850191B08CF42002BC23C /* BookCache.m in Sources */,
 				EB217FB81FD42188003F5A8F /* UserFloorWarmViewCtrl.m in Sources */,
 				0477DC531DA9F3CC0077FA52 /* SHA1.m in Sources */,
+				EBD009CE2090A9D200920849 /* VTouyingjiSet.m in Sources */,
 				04DE1EB31AD6AEE000D49E2F /* UIButton+WebCache.m in Sources */,
 				EB479001206145C000EDCD64 /* UserDVDSettingsViewController.m in Sources */,
 				EB1717B21FF614BB00CBDB81 /* EngineerMonitorViewCtrl.m in Sources */,

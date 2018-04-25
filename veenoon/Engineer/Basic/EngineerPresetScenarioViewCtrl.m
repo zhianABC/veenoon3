@@ -568,7 +568,8 @@
         // wuxian array
         if ([name isEqualToString:@"投影仪"]) {
             EngineerTouYingJiViewCtrl *ctrl = [[EngineerTouYingJiViewCtrl alloc] init];
-            ctrl._touyingjiArray = [NSMutableArray arrayWithObject:data];
+            ctrl._touyingjiArray = _scenario._VTouyingji;
+            
             [self.navigationController pushViewController:ctrl animated:YES];
         }
     }
@@ -670,6 +671,26 @@
         }
         
         _scenario._VLuBoJi = powers;
+    }
+}
+- (void) initTouyingyi {
+    
+    if([_scenario._VTouyingji count] == 0)
+    {
+        NSMutableArray *powers = [NSMutableArray array];
+        
+        for(int i = 0; i < 3; i++)
+        {
+            VTouyingjiSet *pset = [[VTouyingjiSet alloc] init];
+            pset._com = @"191.16.1.100";
+            pset._brand = @"brand1";
+            pset._type = @"type1";
+            pset._index = i;
+            pset._deviceno = [NSString stringWithFormat:@"%d", i];
+            [powers addObject:pset];
+        }
+        
+        _scenario._VTouyingji = powers;
     }
 }
 
@@ -1000,6 +1021,11 @@
             if([name isEqualToString:@"录播机"])
             {
                 [self initLuboji];
+            }
+            
+            if([name isEqualToString:@"投影仪"])
+            {
+                [self initTouyingyi];
             }
         }
         
