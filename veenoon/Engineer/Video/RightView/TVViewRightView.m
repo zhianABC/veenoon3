@@ -10,6 +10,7 @@
 #import "ComSettingView.h"
 #import "CustomPickerView.h"
 #import "UIButton+Color.h"
+#import "VTVSet.h"
 
 @interface TVViewRightView () <UITableViewDelegate,
 UITableViewDataSource, UITextFieldDelegate,
@@ -62,6 +63,7 @@ CustomPickerViewDelegate>
 @synthesize _selectedBrand;
 @synthesize _selectedType;
 @synthesize _isAllowedClose;
+@synthesize _currentObj;
 
 /*
  // Only override drawRect: if you perform custom drawing.

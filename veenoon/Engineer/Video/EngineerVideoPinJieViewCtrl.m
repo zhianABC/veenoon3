@@ -202,17 +202,6 @@
     
 }
 
-- (void) didChangedPickerValue:(NSDictionary*)value{
-    
-    if (_customPicker) {
-        [_customPicker removeFromSuperview];
-    }
-    
-    NSDictionary *dic = [value objectForKey:@0];
-    NSString *title =  [dic objectForKey:@"value"];
-    [_selectSysBtn setTitle:title forState:UIControlStateNormal];
-    
-}
 - (void) settingsAction:(id)sender{
     //检查是否需要创建
     if (_rightView == nil) {

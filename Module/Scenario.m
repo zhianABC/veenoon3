@@ -19,6 +19,7 @@
 @synthesize _VRemoteSettings;
 @synthesize _VVideoProcess;
 @synthesize _VPinJie;
+@synthesize _VTV;
 
 @synthesize _APlayerPlugs;
 - (id)init

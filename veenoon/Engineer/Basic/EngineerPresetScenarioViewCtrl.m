@@ -555,7 +555,8 @@
         // wuxian array
         if ([name isEqualToString:@"液晶电视"]) {
             EngineerTVViewController *ctrl = [[EngineerTVViewController alloc] init];
-            ctrl._videoTVArray = [NSMutableArray arrayWithObject:data];
+            ctrl._videoTVArray = _scenario._VTV;
+            
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
@@ -651,6 +652,27 @@
     }
     
 }
+- (void) initTV {
+    
+    if([_scenario._VTV count] == 0)
+    {
+        NSMutableArray *powers = [NSMutableArray array];
+        
+        for(int i = 0; i < 3; i++)
+        {
+            VTVSet *pset = [[VTVSet alloc] init];
+            pset._com = @"191.16.1.100";
+            pset._brand = @"brand1";
+            pset._type = @"type1";
+            pset._index = i;
+            pset._deviceno = [NSString stringWithFormat:@"%d", i];
+            [powers addObject:pset];
+        }
+        
+        _scenario._VTV = powers;
+    }
+}
+
 - (void) initPinJiePing {
     
     if([_scenario._VDVDPlayers count] == 0)
@@ -947,6 +969,11 @@
             if([name isEqualToString:@"拼接屏"])
             {
                 [self initPinJiePing];
+            }
+            
+            if([name isEqualToString:@"液晶电视"])
+            {
+                [self initTV];
             }
         }
         

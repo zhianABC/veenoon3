@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "VTVSet.h"
 
 @interface TVViewRightView : UIView {
-    
+    VTVSet *_currentObj;
 }
 @property (nonatomic, assign) BOOL _isAllowedClose;
+@property (nonatomic,strong) VTVSet *_currentObj;
+
 @end
 

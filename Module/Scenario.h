@@ -21,4 +21,5 @@
 @property (nonatomic, strong) NSMutableArray *_VRemoteSettings;
 @property (nonatomic, strong) NSMutableArray *_VVideoProcess;
 @property (nonatomic, strong) NSMutableArray *_VPinJie;
+@property (nonatomic, strong) NSMutableArray *_VTV;
 @end
