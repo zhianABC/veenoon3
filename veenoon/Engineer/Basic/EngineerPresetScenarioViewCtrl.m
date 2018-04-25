@@ -46,6 +46,7 @@
 #import "VRemoteVideoSet.h"
 #import "VVideoProcessSet.h"
 #import "VVideoProcessInOut.h"
+#import "VPinJieSet.h"
 
 #define E_CELL_WIDTH   60
 
@@ -548,7 +549,7 @@
             EngineerVideoPinJieViewCtrl *ctrl = [[EngineerVideoPinJieViewCtrl alloc] init];
             ctrl._rowNumber=6;
             ctrl._colNumber=8;
-            ctrl._pinjieSysArray = nil;// [NSMutableArray arrayWithObject:data];
+            ctrl._pinjieSysArray = _scenario._VPinJie;// [NSMutableArray arrayWithObject:data];
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
@@ -650,6 +651,27 @@
     }
     
 }
+- (void) initPinJiePing {
+    
+    if([_scenario._VDVDPlayers count] == 0)
+    {
+        NSMutableArray *powers = [NSMutableArray array];
+        
+        for(int i = 0; i < 3; i++)
+        {
+            VPinJieSet *pset = [[VPinJieSet alloc] init];
+            pset._com = @"191.16.1.100";
+            pset._brand = @"brand1";
+            pset._type = @"type1";
+            pset._index = i;
+            pset._deviceno = [NSString stringWithFormat:@"%d", i];
+            [powers addObject:pset];
+        }
+        
+        _scenario._VPinJie = powers;
+    }
+}
+
 - (void) initVVideoProcess {
     if([_scenario._VVideoProcess count] == 0)
     {
@@ -920,6 +942,11 @@
             if([name isEqualToString:@"视频处理"])
             {
                 [self initVVideoProcess];
+            }
+            
+            if([name isEqualToString:@"拼接屏"])
+            {
+                [self initPinJiePing];
             }
         }
         

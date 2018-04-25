@@ -740,6 +740,7 @@
 		EBD009BC208CC2C800920849 /* RemoteCOMIRView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009BB208CC2C800920849 /* RemoteCOMIRView.m */; };
 		EBD009BF2090613C00920849 /* VVideoProcessSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009BE2090613C00920849 /* VVideoProcessSet.m */; };
 		EBD009C22090639100920849 /* VVideoProcessInOut.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009C12090639100920849 /* VVideoProcessInOut.m */; };
+		EBD009C520906AB800920849 /* VPinJieSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009C420906AB800920849 /* VPinJieSet.m */; };
 		EBD79C0F204BBC2400FD534C /* YinPinProcessCodeUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD79C0E204BBC2400FD534C /* YinPinProcessCodeUIView.m */; };
 		EBDB4535205AB0F6000ABAB0 /* PlayerRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBDB4534205AB0F6000ABAB0 /* PlayerRightView.m */; };
 		EBDB4538205D4C44000ABAB0 /* TVSettingsRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBDB4537205D4C44000ABAB0 /* TVSettingsRightView.m */; };
@@ -1869,6 +1870,8 @@
 		EBD009BE2090613C00920849 /* VVideoProcessSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VVideoProcessSet.m; sourceTree = "<group>"; };
 		EBD009C02090639100920849 /* VVideoProcessInOut.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VVideoProcessInOut.h; sourceTree = "<group>"; };
 		EBD009C12090639100920849 /* VVideoProcessInOut.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VVideoProcessInOut.m; sourceTree = "<group>"; };
+		EBD009C320906AB800920849 /* VPinJieSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VPinJieSet.h; sourceTree = "<group>"; };
+		EBD009C420906AB800920849 /* VPinJieSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VPinJieSet.m; sourceTree = "<group>"; };
 		EBD79C0D204BBC2400FD534C /* YinPinProcessCodeUIView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YinPinProcessCodeUIView.h; sourceTree = "<group>"; };
 		EBD79C0E204BBC2400FD534C /* YinPinProcessCodeUIView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YinPinProcessCodeUIView.m; sourceTree = "<group>"; };
 		EBDB4533205AB0F6000ABAB0 /* PlayerRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerRightView.h; sourceTree = "<group>"; };
@@ -3209,6 +3212,8 @@
 				EBD009BE2090613C00920849 /* VVideoProcessSet.m */,
 				EBD009C02090639100920849 /* VVideoProcessInOut.h */,
 				EBD009C12090639100920849 /* VVideoProcessInOut.m */,
+				EBD009C320906AB800920849 /* VPinJieSet.h */,
+				EBD009C420906AB800920849 /* VPinJieSet.m */,
 			);
 			path = Video;
 			sourceTree = "<group>";
@@ -4225,6 +4230,7 @@
 				345427702046DEE800E1A436 /* LimiterView.swift in Sources */,
 				34928A9A1EC1BD330089F429 /* ReaderCodeViewController.m in Sources */,
 				EBBCBBE52063E0C800A7771A /* IconCenterTextButton.m in Sources */,
+				EBD009C520906AB800920849 /* VPinJieSet.m in Sources */,
 				EBA16C652046EA8800FC6E1F /* ZaoShengYaXian_UIView.m in Sources */,
 				349DADE4206E8D02001593DE /* AudioEMinMax.m in Sources */,
 				34615F091FC9BD7B002DFCE0 /* JSlideView.m in Sources */,

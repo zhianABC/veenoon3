@@ -8,13 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
+#import "VPinJieSet.h"
 
 @interface EngineerVideoPinJieViewCtrl : BaseViewController {
     NSMutableArray *_pinjieSysArray;
     int _rowNumber;
     int _colNumber;
+    
+    VPinJieSet *_currentObj;
 }
 @property (nonatomic,strong) NSMutableArray *_pinjieSysArray;
 @property (nonatomic,assign) int _rowNumber;
 @property (nonatomic,assign) int _colNumber;
+@property (nonatomic,strong) VPinJieSet *_currentObj;
 @end
