@@ -738,6 +738,8 @@
 		EBD009B6208CB88300920849 /* VRemoteSettingsSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009B5208CB88300920849 /* VRemoteSettingsSet.m */; };
 		EBD009B9208CBD8100920849 /* VRemoteVideoSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009B8208CBD8100920849 /* VRemoteVideoSet.m */; };
 		EBD009BC208CC2C800920849 /* RemoteCOMIRView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009BB208CC2C800920849 /* RemoteCOMIRView.m */; };
+		EBD009BF2090613C00920849 /* VVideoProcessSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009BE2090613C00920849 /* VVideoProcessSet.m */; };
+		EBD009C22090639100920849 /* VVideoProcessInOut.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009C12090639100920849 /* VVideoProcessInOut.m */; };
 		EBD79C0F204BBC2400FD534C /* YinPinProcessCodeUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD79C0E204BBC2400FD534C /* YinPinProcessCodeUIView.m */; };
 		EBDB4535205AB0F6000ABAB0 /* PlayerRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBDB4534205AB0F6000ABAB0 /* PlayerRightView.m */; };
 		EBDB4538205D4C44000ABAB0 /* TVSettingsRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBDB4537205D4C44000ABAB0 /* TVSettingsRightView.m */; };
@@ -1863,6 +1865,10 @@
 		EBD009B8208CBD8100920849 /* VRemoteVideoSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VRemoteVideoSet.m; sourceTree = "<group>"; };
 		EBD009BA208CC2C800920849 /* RemoteCOMIRView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemoteCOMIRView.h; sourceTree = "<group>"; };
 		EBD009BB208CC2C800920849 /* RemoteCOMIRView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemoteCOMIRView.m; sourceTree = "<group>"; };
+		EBD009BD2090613C00920849 /* VVideoProcessSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VVideoProcessSet.h; sourceTree = "<group>"; };
+		EBD009BE2090613C00920849 /* VVideoProcessSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VVideoProcessSet.m; sourceTree = "<group>"; };
+		EBD009C02090639100920849 /* VVideoProcessInOut.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VVideoProcessInOut.h; sourceTree = "<group>"; };
+		EBD009C12090639100920849 /* VVideoProcessInOut.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VVideoProcessInOut.m; sourceTree = "<group>"; };
 		EBD79C0D204BBC2400FD534C /* YinPinProcessCodeUIView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YinPinProcessCodeUIView.h; sourceTree = "<group>"; };
 		EBD79C0E204BBC2400FD534C /* YinPinProcessCodeUIView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YinPinProcessCodeUIView.m; sourceTree = "<group>"; };
 		EBDB4533205AB0F6000ABAB0 /* PlayerRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerRightView.h; sourceTree = "<group>"; };
@@ -3199,6 +3205,10 @@
 				EBD009B5208CB88300920849 /* VRemoteSettingsSet.m */,
 				EBD009B7208CBD8100920849 /* VRemoteVideoSet.h */,
 				EBD009B8208CBD8100920849 /* VRemoteVideoSet.m */,
+				EBD009BD2090613C00920849 /* VVideoProcessSet.h */,
+				EBD009BE2090613C00920849 /* VVideoProcessSet.m */,
+				EBD009C02090639100920849 /* VVideoProcessInOut.h */,
+				EBD009C12090639100920849 /* VVideoProcessInOut.m */,
 			);
 			path = Video;
 			sourceTree = "<group>";
@@ -4293,6 +4303,7 @@
 				EB795B682042E8C1005D1F47 /* XinHaoFaShengQi_UIView.m in Sources */,
 				04D9A0EB1DAF83E0008DF2E6 /* AudioPlayer.m in Sources */,
 				EBD009B0208C744900920849 /* DVDComIRView.m in Sources */,
+				EBD009C22090639100920849 /* VVideoProcessInOut.m in Sources */,
 				04DE1E971AD6AEE000D49E2F /* ASIDownloadCache.m in Sources */,
 				EB3B73B21FE6382F001941CF /* EngineerWirlessYaoBaoViewCtrl.m in Sources */,
 				EB09C4B11FD3B27200776540 /* MapMarkerLayer.m in Sources */,
@@ -4336,6 +4347,7 @@
 				04D7197F1DADE098002153D7 /* NSDate-Helper.m in Sources */,
 				EB09EF2F1FD978C700C968CA /* EngineerToUseTeslariViewCtrl.m in Sources */,
 				34686C9E1ED025CB001749A1 /* ConverUtil.m in Sources */,
+				EBD009BF2090613C00920849 /* VVideoProcessSet.m in Sources */,
 				EBD009B6208CB88300920849 /* VRemoteSettingsSet.m in Sources */,
 				EB235011204D9648008F6CA2 /* XDPickView.m in Sources */,
 				EB795B482042DD6F005D1F47 /* AudioOutputSettingViewCtrl.m in Sources */,

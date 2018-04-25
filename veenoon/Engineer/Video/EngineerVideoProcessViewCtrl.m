@@ -11,9 +11,12 @@
 #import "CustomPickerView.h"
 #import "VideoProcessRightView.h"
 #import "TwoIconAndTitleView.h"
+#import "VVideoProcessInOut.h"
+#import "PlugsCtrlTitleHeader.h"
+#import "BrandCategoryNoUtil.h"
 
 @interface EngineerVideoProcessViewCtrl () <CustomPickerViewDelegate, VideoProcessRightViewDelegate, TwoIconAndTitleViewDelegate>{
-    UIButton *_selectSysBtn;
+    PlugsCtrlTitleHeader *_selectSysBtn;
     
     CustomPickerView *_customPicker;
     
@@ -44,11 +47,21 @@
 @synthesize _selectedDataMap;
 @synthesize _outDataMap;
 @synthesize _current;
+@synthesize _currentObj;
+@synthesize _videoProcessArray;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     isSettings = NO;
+    
+    if ([_videoProcessArray count]) {
+        self._currentObj = [_videoProcessArray objectAtIndex:0];
+    }
+    
+    if (_currentObj == nil) {
+        self._currentObj = [[VVideoProcessSet alloc] init];
+    }
     
     _inPutBtnArray = [[NSMutableArray alloc] init];
     _outPutBtnArray = [[NSMutableArray alloc] init];
@@ -89,7 +102,7 @@
     [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
     okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [okBtn addTarget:self
-              action:@selector(okAction:)
+              action:@selector(settingsAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
     saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -104,18 +117,15 @@
       forControlEvents:UIControlEventTouchUpInside];
     saveBtn.hidden = YES;
     
-    _selectSysBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _selectSysBtn.frame = CGRectMake(50, 100, 80, 30);
-    [_selectSysBtn setImage:[UIImage imageNamed:@"engineer_sys_select_down_n.png"] forState:UIControlStateNormal];
-    [_selectSysBtn setTitle:@"001" forState:UIControlStateNormal];
-    _selectSysBtn.titleLabel.font = [UIFont systemFontOfSize:16];
-    [_selectSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_selectSysBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _selectSysBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [_selectSysBtn setTitleEdgeInsets:UIEdgeInsetsMake(0,0,0,_selectSysBtn.imageView.bounds.size.width)];
-    [_selectSysBtn setImageEdgeInsets:UIEdgeInsetsMake(0,_selectSysBtn.titleLabel.bounds.size.width+35,0,0)];
+    _selectSysBtn = [[PlugsCtrlTitleHeader alloc] initWithFrame:CGRectMake(50, 100, 80, 30)];
     [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_selectSysBtn];
+    
+    if (_currentObj) {
+        NSString *nameStr = [BrandCategoryNoUtil generatePickerValue:_currentObj._brand withCategory:_currentObj._type withNo:_currentObj._deviceno];
+        [_selectSysBtn setShowText:nameStr];
+    }
+    
     
     int labelHeight = 180;
     
@@ -191,6 +201,15 @@
                   initWithFrame:CGRectMake(SCREEN_WIDTH-300,
                                            64, 300, SCREEN_HEIGHT-114)];
     _rightView.delegate = self;
+    _rightView._numOfDevice = (int) [_videoProcessArray count];
+    [_rightView layoutDevicePannel];
+    
+    IMP_BLOCK_SELF(EngineerVideoProcessViewCtrl);
+    _rightView._callback = ^(int deviceIndex) {
+        
+        [block_self chooseDeviceAtIndex:deviceIndex];
+    };
+    
     [self.view insertSubview:_rightView belowSubview:_topView];
     
     
@@ -235,30 +254,50 @@
 
 
 - (void) inputBtnAction:(id)sender{
+    
 }
 - (void) outputBtnAction:(id)sender{
+    
 }
+
+- (void) selectCurrentMike:(VVideoProcessSet*)mike{
+    
+    self._currentObj = mike;
+    [self updateCurrentMikeState:mike._deviceno];
+}
+
+- (void) updateCurrentMikeState:(NSString *)deviceno{
+    
+    NSString *nameStr = [BrandCategoryNoUtil generatePickerValue:_currentObj._brand withCategory:_currentObj._type withNo:_currentObj._deviceno];
+    [_selectSysBtn setShowText:nameStr];
+    
+    if ([_rightView superview]) {
+        _rightView._currentObj = _currentObj;
+        [_rightView refreshView:_currentObj];
+    }
+    
+}
+
 - (void) sysSelectAction:(id)sender{
+    [self.view addSubview:_dActionView];
     
+    IMP_BLOCK_SELF(EngineerVideoProcessViewCtrl);
+    _dActionView._callback = ^(int tagIndex, id obj)
+    {
+        [block_self selectCurrentMike:obj];
+    };
     
-    if(_customPicker == nil)
-    _customPicker = [[CustomPickerView alloc]
-                     initWithFrame:CGRectMake(_selectSysBtn.frame.origin.x, _selectSysBtn.frame.origin.y, _selectSysBtn.frame.size.width, 120) withGrayOrLight:@"gray"];
     
     
     NSMutableArray *arr = [NSMutableArray array];
-    for(int i = 1; i< 8; i++)
-    {
-        [arr addObject:[NSString stringWithFormat:@"00%d", i]];
+    for(VVideoProcessSet *mike in _videoProcessArray) {
+        NSString *nameStr = [BrandCategoryNoUtil generatePickerValue:mike._brand withCategory:mike._type withNo:mike._deviceno];
+        [arr addObject:@{@"object":mike,@"name":nameStr}];
     }
     
-    _customPicker._pickerDataArray = @[@{@"values":arr}];
+    _dActionView._selectIndex = _currentObj._index;
+    [_dActionView setSelectDatas:arr];
     
-    
-    _customPicker._selectColor = [UIColor orangeColor];
-    _customPicker._rowNormalColor = [UIColor whiteColor];
-    [self.view addSubview:_customPicker];
-    _customPicker.delegate_ = self;
 }
 
 - (void) didChangedPickerValue:(NSDictionary*)value{
@@ -273,34 +312,71 @@
     
 }
 
+- (void) chooseDeviceAtIndex:(int)idx{
+    
+    self._currentObj = [_videoProcessArray objectAtIndex:idx];
+    
+    [self updateCurrentMikeState:_currentObj._deviceno];
+    
+}
+
 - (void) saveAction:(id)sender{
     
     [self handleTapGesture:nil];
     
     
 }
-- (void) okAction:(id)sender{
-    if (!isSettings) {
-    
-        okBtn.hidden = YES;
-        saveBtn.hidden = NO;
-        isSettings = YES;
+- (void) settingsAction:(id)sender{
+    //检查是否需要创建
+    if (_rightView == nil) {
+        _rightView = [[VideoProcessRightView alloc]
+                      initWithFrame:CGRectMake(SCREEN_WIDTH-300,
+                                               64, 300, SCREEN_HEIGHT-114)];
         
-        CGRect rc = _rightView.frame;
-        rc.origin.x = SCREEN_WIDTH-300;
+        //创建底部设备切换按钮
+        _rightView._numOfDevice = (int)[_videoProcessArray count];
+        [_rightView layoutDevicePannel];
+        
+        
+        IMP_BLOCK_SELF(EngineerVideoProcessViewCtrl);
+        _rightView._callback = ^(int deviceIndex) {
+            
+            [block_self chooseDeviceAtIndex:deviceIndex];
+        };
+    }
+    
+    //如果在显示，消失
+    if([_rightView superview])
+    {
+        
+        //写入中控
+        //......
+        
+        [okBtn setTitle:@"设置" forState:UIControlStateNormal];
         
         [UIView animateWithDuration:0.25
                          animations:^{
                              
-                             _rightView.frame = rc;
-                             
+                             _rightView.frame  = CGRectMake(SCREEN_WIDTH,
+                                                            64, 300, SCREEN_HEIGHT-114);
                          } completion:^(BOOL finished) {
-                             
+                             [_rightView removeFromSuperview];
                          }];
     }
-    else
+    else//如果没显示，显示
     {
-        [self handleTapGesture:nil];
+        _rightView._currentObj = _currentObj;
+        [_rightView refreshView:_currentObj];
+        
+        
+        [self.view addSubview:_rightView];
+        [okBtn setTitle:@"保存" forState:UIControlStateNormal];
+        
+        
+        [UIView beginAnimations:nil context:nil];
+        _rightView.frame  = CGRectMake(SCREEN_WIDTH-300,
+                                       64, 300, SCREEN_HEIGHT-114);
+        [UIView commitAnimations];
     }
 }
 

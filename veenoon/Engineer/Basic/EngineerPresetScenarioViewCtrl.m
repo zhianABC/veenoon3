@@ -44,6 +44,8 @@
 #import "VCameraSettingSet.h"
 #import "VRemoteSettingsSet.h"
 #import "VRemoteVideoSet.h"
+#import "VVideoProcessSet.h"
+#import "VVideoProcessInOut.h"
 
 #define E_CELL_WIDTH   60
 
@@ -536,10 +538,8 @@
         // wuxian array
         if ([name isEqualToString:@"视频处理"]) {
             EngineerVideoProcessViewCtrl *ctrl = [[EngineerVideoProcessViewCtrl alloc] init];
-            ctrl._inNumber=18;
-            ctrl._outNumber=14;
-            ctrl._videoProcessInArray = nil;// [NSMutableArray arrayWithObject:data];
-            ctrl._videoProcessOutArray = nil;
+            ctrl._videoProcessArray = _scenario._VVideoProcess;
+            
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         
@@ -649,6 +649,44 @@
         }
     }
     
+}
+- (void) initVVideoProcess {
+    if([_scenario._VVideoProcess count] == 0)
+    {
+        NSMutableArray *powers = [NSMutableArray array];
+        
+        for(int i = 0; i < 6; i++)
+        {
+            VVideoProcessSet *pset = [[VVideoProcessSet alloc] init];
+            pset._com = @"191.16.1.100";
+            pset._brand = @"brand1";
+            pset._type = @"type1";
+            pset._index = i;
+            pset._deviceno = [NSString stringWithFormat:@"%d", i];
+            
+            NSMutableArray *videoArray = [NSMutableArray array];
+            for (int j = 0; j < 4; j++) {
+                VVideoProcessInOut *vSet = [[VVideoProcessInOut alloc] init];
+                vSet._channel = [NSString stringWithFormat:@"%d", i+1];
+                
+                [videoArray addObject:vSet];
+            }
+            pset._inputArray = videoArray;
+            
+            NSMutableArray *videoArray2 = [NSMutableArray array];
+            for (int j = 0; j < 4; j++) {
+                VVideoProcessInOut *vSet = [[VVideoProcessInOut alloc] init];
+                vSet._channel = [NSString stringWithFormat:@"%d", i+1];
+                
+                [videoArray2 addObject:vSet];
+            }
+            pset._outputArray = videoArray2;
+            
+            [powers addObject:pset];
+        }
+        
+        _scenario._VVideoProcess = powers;
+    }
 }
 - (void) initVRemoteSettings {
     if([_scenario._VRemoteSettings count] == 0)
@@ -877,6 +915,11 @@
             if([name isEqualToString:@"远程视讯"])
             {
                 [self initVRemoteSettings];
+            }
+            
+            if([name isEqualToString:@"视频处理"])
+            {
+                [self initVVideoProcess];
             }
         }
         
