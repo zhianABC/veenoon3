@@ -22,4 +22,5 @@
 @property (nonatomic, strong) NSMutableArray *_VVideoProcess;
 @property (nonatomic, strong) NSMutableArray *_VPinJie;
 @property (nonatomic, strong) NSMutableArray *_VTV;
+@property (nonatomic, strong) NSMutableArray *_VLuBoJi;
 @end

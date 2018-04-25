@@ -9,9 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 #import "DragCellView.h"
+#import "VLuBoJiSet.h"
 
 @interface EngineerLuBoJiViewController< DragCellViewDelegate> : BaseViewController {
     NSMutableArray *_lubojiArray;
+    
+    VLuBoJiSet *_currentObj;
 }
 @property (nonatomic,strong) NSMutableArray *_lubojiArray;
+@property (nonatomic,strong) VLuBoJiSet *_currentObj;
 @end

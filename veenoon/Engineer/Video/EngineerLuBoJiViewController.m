@@ -13,9 +13,12 @@
 #import "UIImage+Color.h"
 #import "OutputScreenView.h"
 #import "LuBoJiRightView.h"
+#import "PlugsCtrlTitleHeader.h"
+#import "VLuBoJiSet.h"
+#import "BrandCategoryNoUtil.h"
 
 @interface EngineerLuBoJiViewController ()<CustomPickerViewDelegate, DragCellViewDelegate> {
-    UIButton *_selectSysBtn;
+    PlugsCtrlTitleHeader *_selectSysBtn;
     
     CustomPickerView *_customPicker;
     
@@ -41,10 +44,20 @@
 @synthesize _inputs;
 @synthesize _outputs;
 @synthesize _ctrls;
+@synthesize _currentObj;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [super setTitleAndImage:@"video_corner_luboji.png" withTitle:@"录播机"];
+    
+    if ([_lubojiArray count]) {
+        self._currentObj = [_lubojiArray objectAtIndex:0];
+    }
+    
+    if(_currentObj == nil) {
+        self._currentObj = [[VLuBoJiSet alloc] init];
+    }
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
@@ -73,21 +86,17 @@
     [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
     okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [okBtn addTarget:self
-              action:@selector(okAction:)
+              action:@selector(settingsAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
-    _selectSysBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _selectSysBtn.frame = CGRectMake(50, 100, 80, 30);
-    [_selectSysBtn setImage:[UIImage imageNamed:@"engineer_sys_select_down_n.png"] forState:UIControlStateNormal];
-    [_selectSysBtn setTitle:@"001" forState:UIControlStateNormal];
-    _selectSysBtn.titleLabel.font = [UIFont systemFontOfSize:16];
-    [_selectSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_selectSysBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _selectSysBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [_selectSysBtn setTitleEdgeInsets:UIEdgeInsetsMake(0,0,0,_selectSysBtn.imageView.bounds.size.width)];
-    [_selectSysBtn setImageEdgeInsets:UIEdgeInsetsMake(0,_selectSysBtn.titleLabel.bounds.size.width+35,0,0)];
+    _selectSysBtn = [[PlugsCtrlTitleHeader alloc] initWithFrame:CGRectMake(50, 100, 80, 30)];
     [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_selectSysBtn];
+    
+    if (_currentObj) {
+        NSString *nameStr = [BrandCategoryNoUtil generatePickerValue:_currentObj._brand withCategory:_currentObj._type withNo:_currentObj._deviceno];
+        [_selectSysBtn setShowText:nameStr];
+    }
     
     _outputScreenView  = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 400, 300)];
     _outputScreenView.backgroundColor = RGB(0, 89, 118);
@@ -601,54 +610,107 @@
     }
 }
 
+- (void) selectCurrentMike:(VLuBoJiSet*)mike{
+    
+    
+    self._currentObj = mike;
+    
+    
+    [self updateCurrentMikeState:mike._deviceno];
+}
+
+- (void) updateCurrentMikeState:(NSString *)deviceno{
+    
+    NSString *nameStr = [BrandCategoryNoUtil generatePickerValue:_currentObj._brand withCategory:_currentObj._type withNo:_currentObj._deviceno];
+    [_selectSysBtn setShowText:nameStr];
+    
+    if ([_rightView superview]) {
+        _rightView._currentObj = _currentObj;
+        [_rightView refreshView:_currentObj];
+    }
+    
+}
 - (void) sysSelectAction:(id)sender{
     
-    if(_customPicker == nil)
-    _customPicker = [[CustomPickerView alloc]
-                     initWithFrame:CGRectMake(_selectSysBtn.frame.origin.x, _selectSysBtn.frame.origin.y, _selectSysBtn.frame.size.width, 120) withGrayOrLight:@"gray"];
+    [self.view addSubview:_dActionView];
+    
+    IMP_BLOCK_SELF(EngineerLuBoJiViewController);
+    _dActionView._callback = ^(int tagIndex, id obj)
+    {
+        [block_self selectCurrentMike:obj];
+    };
+    
     
     
     NSMutableArray *arr = [NSMutableArray array];
-    for(int i = 1; i< 2; i++)
-    {
-        [arr addObject:[NSString stringWithFormat:@"00%d", i]];
+    for(VLuBoJiSet *mike in _lubojiArray) {
+        NSString *nameStr = [BrandCategoryNoUtil generatePickerValue:mike._brand withCategory:mike._type withNo:mike._deviceno];
+        [arr addObject:@{@"object":mike,@"name":nameStr}];
     }
     
-    _customPicker._pickerDataArray = @[@{@"values":arr}];
-    
-    
-    _customPicker._selectColor = [UIColor orangeColor];
-    _customPicker._rowNormalColor = [UIColor whiteColor];
-    [self.view addSubview:_customPicker];
-    _customPicker.delegate_ = self;
+    _dActionView._selectIndex = _currentObj._index;
+    [_dActionView setSelectDatas:arr];
 }
-- (void) didChangedPickerValue:(NSDictionary*)value{
+
+- (void) chooseDeviceAtIndex:(int)idx{
     
-    if (_customPicker) {
-        [_customPicker removeFromSuperview];
-    }
+    self._currentObj = [_lubojiArray objectAtIndex:idx];
     
-    NSDictionary *dic = [value objectForKey:@0];
-    NSString *title =  [dic objectForKey:@"value"];
-    [_selectSysBtn setTitle:title forState:UIControlStateNormal];
+    [self updateCurrentMikeState:_currentObj._deviceno];
     
 }
-- (void) okAction:(id)sender{
-    if (!isSettings) {
+
+- (void) settingsAction:(id)sender{
+    //检查是否需要创建
+    if (_rightView == nil) {
         _rightView = [[LuBoJiRightView alloc]
                       initWithFrame:CGRectMake(SCREEN_WIDTH-300,
                                                64, 300, SCREEN_HEIGHT-114)];
-        [self.view addSubview:_rightView];
         
+        //创建底部设备切换按钮
+        _rightView._numOfDevice = (int)[_lubojiArray count];
+        [_rightView layoutDevicePannel];
+        
+        
+        IMP_BLOCK_SELF(EngineerLuBoJiViewController);
+        _rightView._callback = ^(int deviceIndex) {
+            
+            [block_self chooseDeviceAtIndex:deviceIndex];
+        };
+    }
+    
+    //如果在显示，消失
+    if([_rightView superview])
+    {
+        
+        //写入中控
+        //......
+        
+        [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+        
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             
+                             _rightView.frame  = CGRectMake(SCREEN_WIDTH,
+                                                            64, 300, SCREEN_HEIGHT-114);
+                         } completion:^(BOOL finished) {
+                             [_rightView removeFromSuperview];
+                         }];
+    }
+    else//如果没显示，显示
+    {
+        _rightView._currentObj = _currentObj;
+        [_rightView refreshView:_currentObj];
+        
+        
+        [self.view addSubview:_rightView];
         [okBtn setTitle:@"保存" forState:UIControlStateNormal];
         
-        isSettings = YES;
-    } else {
-        if (_rightView) {
-            [_rightView removeFromSuperview];
-        }
-        [okBtn setTitle:@"设置" forState:UIControlStateNormal];
-        isSettings = NO;
+        
+        [UIView beginAnimations:nil context:nil];
+        _rightView.frame  = CGRectMake(SCREEN_WIDTH-300,
+                                       64, 300, SCREEN_HEIGHT-114);
+        [UIView commitAnimations];
     }
 }
 

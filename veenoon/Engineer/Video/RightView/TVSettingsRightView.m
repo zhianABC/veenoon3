@@ -18,7 +18,6 @@
     UIView *_footerView;
 }
 @property (nonatomic, strong) NSMutableArray *_btns;
-@property (nonatomic) int _numOfChannel;
 @end
 
 @implementation TVSettingsRightView
