@@ -139,7 +139,7 @@ CenterCustomerPickerViewDelegate>
         
         
         _picker = [[CenterCustomerPickerView alloc]
-                                          initWithFrame:CGRectMake(frame.size.width/2-100, 43, 200, 120)];
+                                          initWithFrame:CGRectMake(frame.size.width/2-100, 40, 200, 120)];
         
         [_picker removeArray];
         _picker._pickerDataArray = @[@{@"values":@[@"1", @"2", @"3"]}];
@@ -149,11 +149,11 @@ CenterCustomerPickerViewDelegate>
         _picker._rowNormalColor = [UIColor whiteColor];
         _picker.delegate_ = self;
         [_picker selectRow:0 inComponent:0];
-        IMP_BLOCK_SELF(PlayerSettingsPannel);
-        _picker._selectionBlock = ^(NSDictionary *values)
-        {
-            [block_self didPickerValue:values];
-        };
+//        IMP_BLOCK_SELF(PlayerSettingsPannel);
+//        _picker._selectionBlock = ^(NSDictionary *values)
+//        {
+//            [block_self didPickerValue:values];
+//        };
         
         
         _selRow1 = 0;
@@ -332,27 +332,29 @@ CenterCustomerPickerViewDelegate>
     
 }
 
-- (void) didPickerValue:(NSDictionary *)values{
+- (void) didChangedPickerValue:(NSDictionary*)value{
     
+    NSDictionary * rowVal = [value objectForKey:@0];
     if(_picker.tag == 1)
     {
-        _selRow1 = [[values objectForKey:@"row"] intValue];
+        _selRow1 = [[rowVal objectForKey:@"index"] intValue];
     }
     else if(_picker.tag == 2)
     {
-         _selRow2 = [[values objectForKey:@"row"] intValue];
+        _selRow2 = [[rowVal objectForKey:@"index"] intValue];
         _selRow3 = 0;
-        self._selectedBrand = [values objectForKey:@0];
+        self._selectedBrand = [rowVal objectForKey:@"value"];
     }
     else if(_picker.tag == 3)
     {
-         _selRow3 = [[values objectForKey:@"row"] intValue];
-        self._selectedType = [values objectForKey:@0];
+        _selRow3 = [[rowVal objectForKey:@"index"] intValue];
+        self._selectedType = [rowVal objectForKey:@"value"];
     }
     
     [_tableView reloadData];
-    
 }
+
+
 
 - (void) didConfirmPickerValue:(NSString*) pickerValue{
     

@@ -346,14 +346,26 @@ CenterCustomerPickerViewDelegate>
 
 - (void) didChangedPickerValue:(NSDictionary*)value{
     
-    id key = [NSNumber numberWithInt:(int)_picker.tag];
-    
-    NSDictionary *dic = [value objectForKey:@0];
-    [_map setObject:dic forKey:key];
+    NSDictionary * rowVal = [value objectForKey:@0];
+    if(_picker.tag == 1)
+    {
+        _selRow1 = [[rowVal objectForKey:@"index"] intValue];
+    }
+    else if(_picker.tag == 2)
+    {
+        _selRow2 = [[rowVal objectForKey:@"index"] intValue];
+        _selRow3 = 0;
+        self._selectedBrand = [rowVal objectForKey:@"value"];
+    }
+    else if(_picker.tag == 3)
+    {
+        _selRow3 = [[rowVal objectForKey:@"index"] intValue];
+        self._selectedType = [rowVal objectForKey:@"value"];
+    }
     
     [_tableView reloadData];
-    
 }
+
 
 - (void) didConfirmPickerValue:(NSString*) pickerValue{
     
