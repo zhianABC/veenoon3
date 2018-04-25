@@ -20,6 +20,8 @@
 
 @implementation ComSettingView
 @synthesize _isAllowedClose;
+@synthesize delegate;
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -86,13 +88,7 @@
         [_chooseBg addSubview:levelSetting];
         
         [levelSetting selectRow:0 inComponent:0];
-        
 
-        IMP_BLOCK_SELF(ComSettingView);
-        levelSetting._selectionBlock = ^(NSDictionary *values)
-        {
-            [block_self didPickerValue:values];
-        };
         
         line = [[UILabel alloc] initWithFrame:CGRectMake(0, 219, frame.size.width, 1)];
         line.backgroundColor = RGB(1, 138, 182);
@@ -129,11 +125,19 @@
     }
 }
 
-- (void) didPickerValue:(NSDictionary*)values{
+- (void) didChangedPickerValue:(NSDictionary*)value{
+
+    NSDictionary *dic = [value objectForKey:@0];
+    NSString *title =  [dic objectForKey:@"value"];
+    _secs.text = title;
     
-    NSString *v = [values objectForKey:@0];
-    _secs.text = v;
+    if(delegate && [delegate respondsToSelector:@selector(didChoosedComVal:)])
+    {
+        [delegate didChoosedComVal:title];
+    }
+    
 }
+
 
 - (void) chooseSecs:(UIButton*)sender{
     
@@ -150,12 +154,6 @@
     }
     
 }
-- (void) didConfirmPickerValue:(NSString*) pickerValue{
-    
-    if([_chooseBg superview])
-    {
-        [_chooseBg removeFromSuperview];
-    }
-}
+
 
 @end

@@ -8,11 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol ComSettingViewDelegate <NSObject>
+
+@optional
+- (void) didChoosedComVal:(NSString*)val;
+
+@end
+
 @interface ComSettingView : UIView
 {
-    
+
 }
 @property (nonatomic, assign) BOOL _isAllowedClose;
-
+@property (nonatomic, weak) id <ComSettingViewDelegate> delegate;
 
 @end

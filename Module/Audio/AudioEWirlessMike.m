@@ -88,7 +88,7 @@
     self._freqops = @[@"720MHz",@"600MHz"];
     
     NSMutableArray *dbs = [NSMutableArray array];
-    for(int i = -20; i < 20; i++)
+    for(int i = -20; i <= 20; i++)
     {
         if(i > 0)
         {
