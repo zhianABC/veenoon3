@@ -24,5 +24,5 @@
 @property (nonatomic, weak) id <ComSettingViewDelegate> delegate;
 @property (nonatomic, strong) BasePlugElement *_currentObj;
 
-- (void) refreshCom:(NSArray*) comArray withCurrentCom:(NSString*) currentCom;
+- (void) refreshCom:(BasePlugElement*) currentObj;
 @end

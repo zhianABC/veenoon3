@@ -109,15 +109,18 @@
     }
     return self;
 }
-- (void) refreshCom:(NSArray*) comArray withCurrentCom:(NSString*) currentCom {
+- (void) refreshCom:(BasePlugElement *)currentObj {
+    
+    _currentObj = currentObj;
+    
     [levelSetting removeArray];
     
-    levelSetting._pickerDataArray = comArray;
+    levelSetting._pickerDataArray = currentObj._comArray;
     
-    NSDictionary *section = [comArray objectAtIndex:0];
+    NSDictionary *section = [currentObj._comArray objectAtIndex:0];
     NSArray *values = [section objectForKey:@"values"];
     
-    NSInteger index = [values indexOfObject:currentCom];
+    NSInteger index = [values indexOfObject:currentObj._com];
     
     [levelSetting selectRow:index inComponent:0];
     

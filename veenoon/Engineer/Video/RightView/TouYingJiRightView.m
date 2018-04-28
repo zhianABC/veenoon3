@@ -144,7 +144,7 @@
     
     _com._currentObj = _currentObj;
     
-    [_com refreshCom:_currentObj._comArray withCurrentCom:_currentObj._com];
+    [_com refreshCom:_currentObj];
 }
 
 - (void) buttonAction:(UIButton*)btn{
