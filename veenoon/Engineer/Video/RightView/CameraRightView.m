@@ -164,6 +164,8 @@
     
     self._curentDeviceIndex = _currentObj._index;
     [self chooseChannelAtTagIndex:_curentDeviceIndex];
+    
+    [_com refreshCom:_currentObj];
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{

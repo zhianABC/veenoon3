@@ -57,7 +57,7 @@
         _secs.textAlignment = NSTextAlignmentRight;
         _secs.font = [UIFont systemFontOfSize:13];
         _secs.textColor  = [UIColor colorWithWhite:1.0 alpha:0.8];
-        _secs.text = @"Com 1";
+        _secs.text = @"";
         
         UIButton *btnSelectSecs = [UIButton buttonWithType:UIButtonTypeCustom];
         btnSelectSecs.frame = CGRectMake(frame.size.width-110, 60, 110, 40);
@@ -76,20 +76,6 @@
         
         _chooseBg = [[UIView alloc] initWithFrame:CGRectMake(0, 101, frame.size.width, 220)];
         _chooseBg.backgroundColor = self.backgroundColor;
-        
-        levelSetting = [[CenterCustomerPickerView alloc]
-                                          initWithFrame:CGRectMake(0, 0, self.frame.size.width, 200) ];
-        [levelSetting removeArray];
-        
-        levelSetting._pickerDataArray = @[@{@"values":@[@"Com 1", @"Com 2", @"Com 3"]}];
-        
-        
-        levelSetting._selectColor = [UIColor orangeColor];
-        levelSetting._rowNormalColor = [UIColor whiteColor];
-        levelSetting.delegate_ = self;
-        [_chooseBg addSubview:levelSetting];
-        
-        [levelSetting selectRow:0 inComponent:0];
 
         
         line = [[UILabel alloc] initWithFrame:CGRectMake(0, 219, frame.size.width, 1)];
@@ -110,6 +96,21 @@
     return self;
 }
 - (void) refreshCom:(BasePlugElement *)currentObj {
+    if (levelSetting == nil) {
+        levelSetting = [[CenterCustomerPickerView alloc]
+                        initWithFrame:CGRectMake(0, 0, self.frame.size.width, 200) ];
+    }
+    
+    [levelSetting removeArray];
+    
+    levelSetting._pickerDataArray = currentObj._comArray;
+    
+    levelSetting._selectColor = [UIColor orangeColor];
+    levelSetting._rowNormalColor = [UIColor whiteColor];
+    levelSetting.delegate_ = self;
+    [_chooseBg addSubview:levelSetting];
+    
+    [levelSetting selectRow:0 inComponent:0];
     
     _currentObj = currentObj;
     
@@ -124,6 +125,7 @@
     
     [levelSetting selectRow:index inComponent:0];
     
+    _secs.text = _currentObj._com;
 }
 - (void) closeComSetting{
     
