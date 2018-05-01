@@ -7,7 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "VTVSet.h"
 
-@interface TVSettingsRightView : UIView
+@interface TVSettingsRightView : UIView {
+    VTVSet *_currentObj;
+    RightSetViewCallbackBlock _callback;
+}
+@property(nonatomic, strong) VTVSet *_currentObj;
+@property(nonatomic, assign) int _numOfDevice;
+@property (nonatomic, copy) RightSetViewCallbackBlock _callback;
+@property (nonatomic, assign) int _curentDeviceIndex;
 
+-(void) refreshView:(VTVSet*) dvdPlayerSet;
+-(void) layoutDevicePannel;
 @end

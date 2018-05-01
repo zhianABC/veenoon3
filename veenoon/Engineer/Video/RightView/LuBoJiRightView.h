@@ -7,7 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "VLuBoJiSet.h"
 
-@interface LuBoJiRightView : UIView
+@interface LuBoJiRightView : UIView {
+    VLuBoJiSet *_currentObj;
+    RightSetViewCallbackBlock _callback;
+}
+@property(nonatomic, strong) VLuBoJiSet *_currentObj;
+@property(nonatomic, assign) int _numOfDevice;
+@property (nonatomic, copy) RightSetViewCallbackBlock _callback;
+@property (nonatomic, assign) int _curentDeviceIndex;
 
+-(void) refreshView:(VLuBoJiSet*) dvdPlayerSet;
+-(void) layoutDevicePannel;
 @end

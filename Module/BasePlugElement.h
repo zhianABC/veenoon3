@@ -16,6 +16,7 @@
 @property (nonatomic, strong) NSString *_deviceid;
 @property (nonatomic, strong) NSString *_ipaddress;
 @property (nonatomic, strong) NSString *_com;
+@property (nonatomic, strong) NSArray *_comArray;
 
 @property (nonatomic,assign) int _index;
 

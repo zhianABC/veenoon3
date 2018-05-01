@@ -19,6 +19,11 @@
 
 @synthesize _VCameraSettings;
 @synthesize _VRemoteSettings;
+@synthesize _VVideoProcess;
+@synthesize _VPinJie;
+@synthesize _VTV;
+@synthesize _VLuBoJi;
+@synthesize _VTouyingji;
 
 @synthesize _APlayerPlugs;
 - (id)init

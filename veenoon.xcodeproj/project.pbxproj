@@ -733,11 +733,18 @@
 		EBC71B29204100A200DD0A98 /* ElectronicAutoRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B28204100A200DD0A98 /* ElectronicAutoRightView.m */; };
 		EBC71B2C204100DD00DD0A98 /* NewWindRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B2B204100DD00DD0A98 /* NewWindRightView.m */; };
 		EBCA834B1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCA834A1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m */; };
+		EBCD01C62090C0AF00787D48 /* IPValidate.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCD01C52090C0AF00787D48 /* IPValidate.m */; };
 		EBD009B0208C744900920849 /* DVDComIRView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009AF208C744900920849 /* DVDComIRView.m */; };
 		EBD009B3208CB12900920849 /* VCameraSettingSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009B2208CB12900920849 /* VCameraSettingSet.m */; };
 		EBD009B6208CB88300920849 /* VRemoteSettingsSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009B5208CB88300920849 /* VRemoteSettingsSet.m */; };
 		EBD009B9208CBD8100920849 /* VRemoteVideoSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009B8208CBD8100920849 /* VRemoteVideoSet.m */; };
 		EBD009BC208CC2C800920849 /* RemoteCOMIRView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009BB208CC2C800920849 /* RemoteCOMIRView.m */; };
+		EBD009BF2090613C00920849 /* VVideoProcessSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009BE2090613C00920849 /* VVideoProcessSet.m */; };
+		EBD009C22090639100920849 /* VVideoProcessInOut.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009C12090639100920849 /* VVideoProcessInOut.m */; };
+		EBD009C520906AB800920849 /* VPinJieSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009C420906AB800920849 /* VPinJieSet.m */; };
+		EBD009C820907B0700920849 /* VTVSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009C720907B0700920849 /* VTVSet.m */; };
+		EBD009CB20907E8C00920849 /* VLuBoJiSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009CA20907E8C00920849 /* VLuBoJiSet.m */; };
+		EBD009CE2090A9D200920849 /* VTouyingjiSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009CD2090A9D200920849 /* VTouyingjiSet.m */; };
 		EBD79C0F204BBC2400FD534C /* YinPinProcessCodeUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD79C0E204BBC2400FD534C /* YinPinProcessCodeUIView.m */; };
 		EBDB4535205AB0F6000ABAB0 /* PlayerRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBDB4534205AB0F6000ABAB0 /* PlayerRightView.m */; };
 		EBDB4538205D4C44000ABAB0 /* TVSettingsRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBDB4537205D4C44000ABAB0 /* TVSettingsRightView.m */; };
@@ -1853,6 +1860,8 @@
 		EBC71B2B204100DD00DD0A98 /* NewWindRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewWindRightView.m; sourceTree = "<group>"; };
 		EBCA834A1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserMonitorSettingsViewCtrl.m; sourceTree = "<group>"; };
 		EBCA834C1FD434D1007DEB8E /* UserMonitorSettingsViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserMonitorSettingsViewCtrl.h; sourceTree = "<group>"; };
+		EBCD01C42090C0AF00787D48 /* IPValidate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IPValidate.h; sourceTree = "<group>"; };
+		EBCD01C52090C0AF00787D48 /* IPValidate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IPValidate.m; sourceTree = "<group>"; };
 		EBD009AE208C744900920849 /* DVDComIRView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVDComIRView.h; sourceTree = "<group>"; };
 		EBD009AF208C744900920849 /* DVDComIRView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DVDComIRView.m; sourceTree = "<group>"; };
 		EBD009B1208CB12900920849 /* VCameraSettingSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VCameraSettingSet.h; sourceTree = "<group>"; };
@@ -1863,6 +1872,18 @@
 		EBD009B8208CBD8100920849 /* VRemoteVideoSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VRemoteVideoSet.m; sourceTree = "<group>"; };
 		EBD009BA208CC2C800920849 /* RemoteCOMIRView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemoteCOMIRView.h; sourceTree = "<group>"; };
 		EBD009BB208CC2C800920849 /* RemoteCOMIRView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemoteCOMIRView.m; sourceTree = "<group>"; };
+		EBD009BD2090613C00920849 /* VVideoProcessSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VVideoProcessSet.h; sourceTree = "<group>"; };
+		EBD009BE2090613C00920849 /* VVideoProcessSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VVideoProcessSet.m; sourceTree = "<group>"; };
+		EBD009C02090639100920849 /* VVideoProcessInOut.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VVideoProcessInOut.h; sourceTree = "<group>"; };
+		EBD009C12090639100920849 /* VVideoProcessInOut.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VVideoProcessInOut.m; sourceTree = "<group>"; };
+		EBD009C320906AB800920849 /* VPinJieSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VPinJieSet.h; sourceTree = "<group>"; };
+		EBD009C420906AB800920849 /* VPinJieSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VPinJieSet.m; sourceTree = "<group>"; };
+		EBD009C620907B0700920849 /* VTVSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VTVSet.h; sourceTree = "<group>"; };
+		EBD009C720907B0700920849 /* VTVSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VTVSet.m; sourceTree = "<group>"; };
+		EBD009C920907E8C00920849 /* VLuBoJiSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VLuBoJiSet.h; sourceTree = "<group>"; };
+		EBD009CA20907E8C00920849 /* VLuBoJiSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VLuBoJiSet.m; sourceTree = "<group>"; };
+		EBD009CC2090A9D200920849 /* VTouyingjiSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VTouyingjiSet.h; sourceTree = "<group>"; };
+		EBD009CD2090A9D200920849 /* VTouyingjiSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VTouyingjiSet.m; sourceTree = "<group>"; };
 		EBD79C0D204BBC2400FD534C /* YinPinProcessCodeUIView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YinPinProcessCodeUIView.h; sourceTree = "<group>"; };
 		EBD79C0E204BBC2400FD534C /* YinPinProcessCodeUIView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YinPinProcessCodeUIView.m; sourceTree = "<group>"; };
 		EBDB4533205AB0F6000ABAB0 /* PlayerRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerRightView.h; sourceTree = "<group>"; };
@@ -2282,6 +2303,8 @@
 				EB5A47FC208AE2D500564C06 /* BrandCategoryNoUtil.m */,
 				348FC8D1208B748B00F7DB3D /* DActionView.h */,
 				348FC8D2208B748B00F7DB3D /* DActionView.m */,
+				EBCD01C42090C0AF00787D48 /* IPValidate.h */,
+				EBCD01C52090C0AF00787D48 /* IPValidate.m */,
 			);
 			path = Common;
 			sourceTree = SOURCE_ROOT;
@@ -3199,6 +3222,18 @@
 				EBD009B5208CB88300920849 /* VRemoteSettingsSet.m */,
 				EBD009B7208CBD8100920849 /* VRemoteVideoSet.h */,
 				EBD009B8208CBD8100920849 /* VRemoteVideoSet.m */,
+				EBD009BD2090613C00920849 /* VVideoProcessSet.h */,
+				EBD009BE2090613C00920849 /* VVideoProcessSet.m */,
+				EBD009C02090639100920849 /* VVideoProcessInOut.h */,
+				EBD009C12090639100920849 /* VVideoProcessInOut.m */,
+				EBD009C320906AB800920849 /* VPinJieSet.h */,
+				EBD009C420906AB800920849 /* VPinJieSet.m */,
+				EBD009C620907B0700920849 /* VTVSet.h */,
+				EBD009C720907B0700920849 /* VTVSet.m */,
+				EBD009C920907E8C00920849 /* VLuBoJiSet.h */,
+				EBD009CA20907E8C00920849 /* VLuBoJiSet.m */,
+				EBD009CC2090A9D200920849 /* VTouyingjiSet.h */,
+				EBD009CD2090A9D200920849 /* VTouyingjiSet.m */,
 			);
 			path = Video;
 			sourceTree = "<group>";
@@ -3384,7 +3419,6 @@
 				EBD009BA208CC2C800920849 /* RemoteCOMIRView.h */,
 				EBD009BB208CC2C800920849 /* RemoteCOMIRView.m */,
 				EBC71B06203AF74100DD0A98 /* RemoteVideoRightView.h */,
-				EBC71B07203AF74100DD0A98 /* RemoteVideoRightView.m */,
 				EBC71B09203AF90700DD0A98 /* VideoProcessRightView.h */,
 				EBC71B0A203AF90700DD0A98 /* VideoProcessRightView.m */,
 				EBC71B12203C3A3200DD0A98 /* PinJiePingRightView.h */,
@@ -3392,6 +3426,7 @@
 				EBDB4536205D4C44000ABAB0 /* TVSettingsRightView.h */,
 				EBDB4537205D4C44000ABAB0 /* TVSettingsRightView.m */,
 				EBC71B15203C487000DD0A98 /* TVViewRightView.h */,
+				EBC71B07203AF74100DD0A98 /* RemoteVideoRightView.m */,
 				EBC71B16203C487000DD0A98 /* TVViewRightView.m */,
 				EBC71B18203C496500DD0A98 /* LuBoJiRightView.h */,
 				EBC71B19203C496500DD0A98 /* LuBoJiRightView.m */,
@@ -4215,6 +4250,7 @@
 				345427702046DEE800E1A436 /* LimiterView.swift in Sources */,
 				34928A9A1EC1BD330089F429 /* ReaderCodeViewController.m in Sources */,
 				EBBCBBE52063E0C800A7771A /* IconCenterTextButton.m in Sources */,
+				EBD009C520906AB800920849 /* VPinJieSet.m in Sources */,
 				EBA16C652046EA8800FC6E1F /* ZaoShengYaXian_UIView.m in Sources */,
 				349DADE4206E8D02001593DE /* AudioEMinMax.m in Sources */,
 				34615F091FC9BD7B002DFCE0 /* JSlideView.m in Sources */,
@@ -4228,6 +4264,7 @@
 				04D719851DADE2D8002153D7 /* DataSync.m in Sources */,
 				EB795B422042DA33005D1F47 /* AudioProcessRightView.m in Sources */,
 				04DE1EC51AD6B21600D49E2F /* LoginViewController.m in Sources */,
+				EBD009CB20907E8C00920849 /* VLuBoJiSet.m in Sources */,
 				EB795B592042E84B005D1F47 /* LvBoJunHeng_UIView.m in Sources */,
 				04D719821DADE0A9002153D7 /* WSEvent.m in Sources */,
 				342389B02026D93500885405 /* JCActionView.m in Sources */,
@@ -4249,11 +4286,13 @@
 				045850191B08CF42002BC23C /* BookCache.m in Sources */,
 				EB217FB81FD42188003F5A8F /* UserFloorWarmViewCtrl.m in Sources */,
 				0477DC531DA9F3CC0077FA52 /* SHA1.m in Sources */,
+				EBD009CE2090A9D200920849 /* VTouyingjiSet.m in Sources */,
 				04DE1EB31AD6AEE000D49E2F /* UIButton+WebCache.m in Sources */,
 				EB479001206145C000EDCD64 /* UserDVDSettingsViewController.m in Sources */,
 				EB1717B21FF614BB00CBDB81 /* EngineerMonitorViewCtrl.m in Sources */,
 				EBD009B9208CBD8100920849 /* VRemoteVideoSet.m in Sources */,
 				EB7333F1204102DF00AE60B8 /* FloorWarmRightView.m in Sources */,
+				EBCD01C62090C0AF00787D48 /* IPValidate.m in Sources */,
 				04D719771DADD3A4002153D7 /* SSUser.m in Sources */,
 				04DE1FE71AD6B52400D49E2F /* CMNavigationController.m in Sources */,
 				04DE1DDB1AD68C5E00D49E2F /* AppDelegate.m in Sources */,
@@ -4293,6 +4332,7 @@
 				EB795B682042E8C1005D1F47 /* XinHaoFaShengQi_UIView.m in Sources */,
 				04D9A0EB1DAF83E0008DF2E6 /* AudioPlayer.m in Sources */,
 				EBD009B0208C744900920849 /* DVDComIRView.m in Sources */,
+				EBD009C22090639100920849 /* VVideoProcessInOut.m in Sources */,
 				04DE1E971AD6AEE000D49E2F /* ASIDownloadCache.m in Sources */,
 				EB3B73B21FE6382F001941CF /* EngineerWirlessYaoBaoViewCtrl.m in Sources */,
 				EB09C4B11FD3B27200776540 /* MapMarkerLayer.m in Sources */,
@@ -4336,6 +4376,7 @@
 				04D7197F1DADE098002153D7 /* NSDate-Helper.m in Sources */,
 				EB09EF2F1FD978C700C968CA /* EngineerToUseTeslariViewCtrl.m in Sources */,
 				34686C9E1ED025CB001749A1 /* ConverUtil.m in Sources */,
+				EBD009BF2090613C00920849 /* VVideoProcessSet.m in Sources */,
 				EBD009B6208CB88300920849 /* VRemoteSettingsSet.m in Sources */,
 				EB235011204D9648008F6CA2 /* XDPickView.m in Sources */,
 				EB795B482042DD6F005D1F47 /* AudioOutputSettingViewCtrl.m in Sources */,
@@ -4384,6 +4425,7 @@
 				EBD79C0F204BBC2400FD534C /* YinPinProcessCodeUIView.m in Sources */,
 				EBBCBBED20673ECE00A7771A /* VeenoonConstatns.m in Sources */,
 				3429E2B5205AAAFD00F87AC3 /* VNSettingsView.m in Sources */,
+				EBD009C820907B0700920849 /* VTVSet.m in Sources */,
 				EB36AAB21FCD939E009A0FD8 /* UserYouXianViewController.m in Sources */,
 				EBAE5BBB1FE0070600C10C4D /* EngineerPresetScenarioViewCtrl.m in Sources */,
 				34DE8E992066408C0061B48D /* Scenario.m in Sources */,

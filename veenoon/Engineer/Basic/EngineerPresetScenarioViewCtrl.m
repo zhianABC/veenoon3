@@ -535,10 +535,8 @@
         // wuxian array
         if ([name isEqualToString:@"视频处理"]) {
             EngineerVideoProcessViewCtrl *ctrl = [[EngineerVideoProcessViewCtrl alloc] init];
-            ctrl._inNumber=18;
-            ctrl._outNumber=14;
-            ctrl._videoProcessInArray = nil;// [NSMutableArray arrayWithObject:data];
-            ctrl._videoProcessOutArray = nil;
+            ctrl._videoProcessArray = _scenario._VVideoProcess;
+            
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         
@@ -547,25 +545,27 @@
             EngineerVideoPinJieViewCtrl *ctrl = [[EngineerVideoPinJieViewCtrl alloc] init];
             ctrl._rowNumber=6;
             ctrl._colNumber=8;
-            ctrl._pinjieSysArray = nil;// [NSMutableArray arrayWithObject:data];
+            ctrl._pinjieSysArray = _scenario._VPinJie;// [NSMutableArray arrayWithObject:data];
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
         if ([name isEqualToString:@"液晶电视"]) {
             EngineerTVViewController *ctrl = [[EngineerTVViewController alloc] init];
-            ctrl._videoTVArray = [NSMutableArray arrayWithObject:data];
+            ctrl._videoTVArray = _scenario._VTV;
+            
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
         if ([name isEqualToString:@"录播机"]) {
             EngineerLuBoJiViewController *ctrl = [[EngineerLuBoJiViewController alloc] init];
-            ctrl._lubojiArray = [NSMutableArray arrayWithObject:data];
+            ctrl._lubojiArray = _scenario._VLuBoJi;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
         if ([name isEqualToString:@"投影仪"]) {
             EngineerTouYingJiViewCtrl *ctrl = [[EngineerTouYingJiViewCtrl alloc] init];
-            ctrl._touyingjiArray = [NSMutableArray arrayWithObject:data];
+            ctrl._touyingjiArray = _scenario._VTouyingji;
+            
             [self.navigationController pushViewController:ctrl animated:YES];
         }
     }
@@ -649,6 +649,130 @@
     }
     
 }
+- (void) initLuboji {
+    
+    if([_scenario._VLuBoJi count] == 0)
+    {
+        NSMutableArray *powers = [NSMutableArray array];
+        
+        for(int i = 0; i < 3; i++)
+        {
+            VLuBoJiSet *pset = [[VLuBoJiSet alloc] init];
+            pset._com = @"191.16.1.100";
+            pset._brand = @"brand1";
+            pset._type = @"type1";
+            pset._index = i;
+            pset._deviceno = [NSString stringWithFormat:@"%d", i];
+            [powers addObject:pset];
+        }
+        
+        _scenario._VLuBoJi = powers;
+    }
+}
+- (void) initTouyingyi {
+    
+    if([_scenario._VTouyingji count] == 0)
+    {
+        NSMutableArray *powers = [NSMutableArray array];
+        
+        for(int i = 0; i < 3; i++)
+        {
+            VTouyingjiSet *pset = [[VTouyingjiSet alloc] init];
+            pset._ipaddress = [@"191.16.1.10" stringByAppendingString:[NSString stringWithFormat:@"%d", i]];
+            pset._brand = @"brand1";
+            pset._type = @"type1";
+            pset._index = i;
+            
+            pset._comArray = @[@{@"values":@[@"Com0", @"Com1", @"Com2"]}];
+            pset._com = [@"Com" stringByAppendingString:[NSString stringWithFormat:@"%d", i]];
+            pset._deviceno = [NSString stringWithFormat:@"%d", i];
+            [powers addObject:pset];
+        }
+        
+        _scenario._VTouyingji = powers;
+    }
+}
+
+- (void) initTV {
+    
+    if([_scenario._VTV count] == 0)
+    {
+        NSMutableArray *powers = [NSMutableArray array];
+        
+        for(int i = 0; i < 3; i++)
+        {
+            VTVSet *pset = [[VTVSet alloc] init];
+            pset._com = @"191.16.1.100";
+            pset._brand = @"brand1";
+            pset._type = @"type1";
+            pset._index = i;
+            pset._deviceno = [NSString stringWithFormat:@"%d", i];
+            [powers addObject:pset];
+        }
+        
+        _scenario._VTV = powers;
+    }
+}
+
+- (void) initPinJiePing {
+    
+    if([_scenario._VDVDPlayers count] == 0)
+    {
+        NSMutableArray *powers = [NSMutableArray array];
+        
+        for(int i = 0; i < 3; i++)
+        {
+            VPinJieSet *pset = [[VPinJieSet alloc] init];
+            pset._com = @"191.16.1.100";
+            pset._brand = @"brand1";
+            pset._type = @"type1";
+            pset._index = i;
+            pset._deviceno = [NSString stringWithFormat:@"%d", i];
+            [powers addObject:pset];
+        }
+        
+        _scenario._VPinJie = powers;
+    }
+}
+
+- (void) initVVideoProcess {
+    if([_scenario._VVideoProcess count] == 0)
+    {
+        NSMutableArray *powers = [NSMutableArray array];
+        
+        for(int i = 0; i < 6; i++)
+        {
+            VVideoProcessSet *pset = [[VVideoProcessSet alloc] init];
+            pset._com = @"191.16.1.100";
+            pset._brand = @"brand1";
+            pset._type = @"type1";
+            pset._index = i;
+            pset._deviceno = [NSString stringWithFormat:@"%d", i];
+            
+            NSMutableArray *videoArray = [NSMutableArray array];
+            for (int j = 0; j < 4; j++) {
+                VVideoProcessInOut *vSet = [[VVideoProcessInOut alloc] init];
+                vSet._channel = [NSString stringWithFormat:@"%d", i+1];
+                
+                [videoArray addObject:vSet];
+            }
+            pset._inputArray = videoArray;
+            
+            NSMutableArray *videoArray2 = [NSMutableArray array];
+            for (int j = 0; j < 4; j++) {
+                VVideoProcessInOut *vSet = [[VVideoProcessInOut alloc] init];
+                vSet._channel = [NSString stringWithFormat:@"%d", i+1];
+                
+                [videoArray2 addObject:vSet];
+            }
+            pset._outputArray = videoArray2;
+            
+            [powers addObject:pset];
+        }
+        
+        _scenario._VVideoProcess = powers;
+    }
+}
 - (void) initVRemoteSettings {
     if([_scenario._VRemoteSettings count] == 0)
     {
@@ -684,13 +808,17 @@
     {
         NSMutableArray *powers = [NSMutableArray array];
         
-        for(int i = 0; i < 6; i++)
+        for(int i = 0; i < 3; i++)
         {
             VCameraSettingSet *pset = [[VCameraSettingSet alloc] init];
-            pset._com = @"191.16.1.100";
+            pset._ipaddress = @"191.16.1.100";
             pset._brand = @"brand1";
             pset._type = @"type1";
             pset._index = i;
+            
+            pset._comArray = @[@{@"values":@[@"Com0", @"Com1", @"Com2"]}];
+            pset._com = [@"Com" stringByAppendingString:[NSString stringWithFormat:@"%d", i]];
+            
             pset._deviceno = [NSString stringWithFormat:@"%d", i];
             [powers addObject:pset];
         }
@@ -905,6 +1033,31 @@
             if([name isEqualToString:@"远程视讯"])
             {
                 [self initVRemoteSettings];
+            }
+            
+            if([name isEqualToString:@"视频处理"])
+            {
+                [self initVVideoProcess];
+            }
+            
+            if([name isEqualToString:@"拼接屏"])
+            {
+                [self initPinJiePing];
+            }
+            
+            if([name isEqualToString:@"液晶电视"])
+            {
+                [self initTV];
+            }
+            
+            if([name isEqualToString:@"录播机"])
+            {
+                [self initLuboji];
+            }
+            
+            if([name isEqualToString:@"投影仪"])
+            {
+                [self initTouyingyi];
             }
         }
         

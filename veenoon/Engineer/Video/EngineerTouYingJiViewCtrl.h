@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
+#import "VTouyingjiSet.h"
 
 @interface EngineerTouYingJiViewCtrl : BaseViewController {
     NSMutableArray *_touyingjiArray;
+    
+    VTouyingjiSet *_currentObj;
 }
 @property (nonatomic,strong) NSMutableArray *_touyingjiArray;
+@property (nonatomic,strong) VTouyingjiSet *_currentObj;
 @end

@@ -9,6 +9,7 @@
 #import "TouYingJiRightView.h"
 #import "UIButton+Color.h"
 #import "ComSettingView.h"
+#import "IPValidate.h"
 
 @interface TouYingJiRightView () < UITextFieldDelegate> {
     
@@ -23,7 +24,10 @@
 
 @implementation TouYingJiRightView
 @synthesize _btns;
-@synthesize _numOfChannel;
+@synthesize _currentObj;
+@synthesize _curentDeviceIndex;
+@synthesize _callback;
+@synthesize _numOfDevice;
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.
@@ -37,8 +41,6 @@
     if(self = [super initWithFrame:frame]) {
         self.backgroundColor = RGB(0, 89, 118);
         
-        _numOfChannel= 8;
-        
         UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(10, 25, 40, 30)];
         titleL.textColor = [UIColor whiteColor];
         titleL.backgroundColor = [UIColor clearColor];
@@ -50,7 +52,7 @@
         ipTextField.delegate = self;
         ipTextField.backgroundColor = [UIColor clearColor];
         ipTextField.returnKeyType = UIReturnKeyDone;
-        ipTextField.text = @"192.168.1.100";
+        ipTextField.text = _currentObj._ipaddress;
         ipTextField.textColor = [UIColor whiteColor];
         ipTextField.borderStyle = UITextBorderStyleRoundedRect;
         ipTextField.textAlignment = NSTextAlignmentRight;
@@ -64,9 +66,6 @@
         [self addSubview:_footerView];
         _footerView.backgroundColor = M_GREEN_COLOR;
         
-        
-        [self layoutFooter];
-        
         UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 30)];
         [self addSubview:headView];
         
@@ -78,12 +77,13 @@
         [headView addGestureRecognizer:swip];
         
         _com = [[ComSettingView alloc] initWithFrame:self.bounds];
+        
     }
     
     return self;
 }
 
-- (void)layoutFooter{
+- (void)layoutDevicePannel {
     
     [[_footerView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
@@ -95,7 +95,7 @@
     int sp = 8;
     int y = (160 - w*2 - sp)/2;
     int x = (self.frame.size.width - 4*w - 3*sp)/2;
-    for(int i = 0; i < _numOfChannel; i++)
+    for(int i = 0; i < _numOfDevice; i++)
     {
         int col = i%4;
         int xx = x + col*w + col*sp;
@@ -130,13 +130,32 @@
         }
     }
     
-    [self chooseChannelAtTagIndex:0];
+    [self chooseChannelAtTagIndex:_curentDeviceIndex];
     
+}
+
+-(void) refreshView:(VTouyingjiSet*) vLuBoJiSet {
+    self._currentObj = vLuBoJiSet;
+    
+    ipTextField.text = vLuBoJiSet._ipaddress;
+    
+    self._curentDeviceIndex = _currentObj._index;
+    [self chooseChannelAtTagIndex:_curentDeviceIndex];
+    
+    _com._currentObj = _currentObj;
+    
+    [_com refreshCom:_currentObj];
 }
 
 - (void) buttonAction:(UIButton*)btn{
     
     [self chooseChannelAtTagIndex:(int)btn.tag];
+    
+    int idx = (int)btn.tag;
+    
+    if(_callback) {
+        _callback(idx);
+    }
 }
 
 - (void) chooseChannelAtTagIndex:(int)index{
@@ -163,8 +182,20 @@
     
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField{
+- (void)textFieldDidEndEditing:(UITextField *)textField {
     
+    NSString *ipaddress = textField.text;
+    BOOL valid = [IPValidate isValidIP:ipaddress];
+    if (valid) {
+        _currentObj._ipaddress = textField.text;
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                        message:@"请输入正确的ip地址."
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil, nil];
+        [alert show];
+    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BasePlugElement.h"
 
 @protocol ComSettingViewDelegate <NSObject>
 
@@ -17,9 +18,11 @@
 
 @interface ComSettingView : UIView
 {
-
+    BasePlugElement *_currentObj;
 }
 @property (nonatomic, assign) BOOL _isAllowedClose;
 @property (nonatomic, weak) id <ComSettingViewDelegate> delegate;
+@property (nonatomic, strong) BasePlugElement *_currentObj;
 
+- (void) refreshCom:(BasePlugElement*) currentObj;
 @end

@@ -20,4 +20,9 @@
 @property (nonatomic, strong) NSMutableArray *_VDVDPlayers;
 @property (nonatomic, strong) NSMutableArray *_VCameraSettings;
 @property (nonatomic, strong) NSMutableArray *_VRemoteSettings;
+@property (nonatomic, strong) NSMutableArray *_VVideoProcess;
+@property (nonatomic, strong) NSMutableArray *_VPinJie;
+@property (nonatomic, strong) NSMutableArray *_VTV;
+@property (nonatomic, strong) NSMutableArray *_VLuBoJi;
+@property (nonatomic, strong) NSMutableArray *_VTouyingji;
 @end

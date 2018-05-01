@@ -10,6 +10,7 @@
 #import "EPlusLayerView.h"
 #import "ComSettingView.h"
 #import "UIButton+Color.h"
+#import "VVideoProcessSet.h"
 
 @interface VideoProcessRightView () <UITableViewDelegate,
 UITableViewDataSource,
@@ -28,14 +29,16 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
     UIView *_headerView;
 }
 @property (nonatomic, strong) NSMutableArray *_btns;
-@property (nonatomic) int _numOfChannel;
 @end
 
 @implementation VideoProcessRightView
 @synthesize _data;
 @synthesize delegate;
 @synthesize _btns;
-@synthesize _numOfChannel;
+@synthesize _currentObj;
+@synthesize _numOfDevice;
+@synthesize _callback;
+@synthesize _curentDeviceIndex;
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.
@@ -57,8 +60,6 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
         _curIndex = 0;
         
         [self initData];
-        
-        _numOfChannel= 8;
         
         self.backgroundColor = RGB(0, 89, 118);
         
@@ -123,13 +124,11 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
         [self addSubview:_footerView];
         _footerView.backgroundColor = M_GREEN_COLOR;
         
-        [self layoutFooter];
-        
     }
     return self;
 }
 
-- (void)layoutFooter{
+- (void)layoutDevicePannel {
     
     [[_footerView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
@@ -141,7 +140,7 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
     int sp = 8;
     int y = (160 - w*2 - sp)/2;
     int x = (self.frame.size.width - 4*w - 3*sp)/2;
-    for(int i = 0; i < _numOfChannel; i++)
+    for(int i = 0; i < _numOfDevice; i++)
     {
         int col = i%4;
         int xx = x + col*w + col*sp;
@@ -176,13 +175,19 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
         }
     }
     
-    [self chooseChannelAtTagIndex:0];
+    [self chooseChannelAtTagIndex:_curentDeviceIndex];
     
 }
 
 - (void) buttonAction:(UIButton*)btn{
     
     [self chooseChannelAtTagIndex:(int)btn.tag];
+    
+    int idx = (int)btn.tag;
+    
+    if(_callback) {
+        _callback(idx);
+    }
 }
 
 - (void) chooseChannelAtTagIndex:(int)index{
@@ -203,6 +208,16 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
         }
     }
 }
+
+-(void) refreshView:(VVideoProcessSet*) vVideoProcessSet {
+    self._currentObj = vVideoProcessSet;
+    
+    ipTextField.text = vVideoProcessSet._ipaddress;
+    
+    self._curentDeviceIndex = _currentObj._index;
+    [self chooseChannelAtTagIndex:_curentDeviceIndex];
+}
+
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     
     //_curIndex = (int)textField.tag;
@@ -210,7 +225,7 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
-    
+    _currentObj._ipaddress = ipTextField.text;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{

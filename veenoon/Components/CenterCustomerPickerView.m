@@ -104,7 +104,7 @@
 
 - (void)selectRow:(NSInteger)row inComponent:(NSInteger)component {
     
-    _rowSelected = (int)row;
+    _rowSelected = (int) row;
     
     [_myPickerView reloadComponent:0];
 

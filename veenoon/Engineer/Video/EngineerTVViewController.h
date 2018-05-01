@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
+#import "VTVSet.h"
 
 @interface EngineerTVViewController : BaseViewController {
     NSMutableArray *_videoTVArray;
+    
+    VTVSet *_currentObj;
 }
 @property (nonatomic,strong) NSMutableArray *_videoTVArray;
+@property (nonatomic,strong) VTVSet *_currentObj;
 @end

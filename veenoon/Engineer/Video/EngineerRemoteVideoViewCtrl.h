@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 #import "VRemoteSettingsSet.h"
+
 @interface EngineerRemoteVideoViewCtrl : BaseViewController {
     
     NSMutableArray *_cameraArray;
