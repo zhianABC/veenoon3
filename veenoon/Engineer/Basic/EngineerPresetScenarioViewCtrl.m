@@ -45,6 +45,9 @@
 #import "VRemoteSettingsSet.h"
 #import "VRemoteVideoSet.h"
 #import "AudioEHand2Hand.h"
+#import "VVideoProcessSet.h"
+#import "VVideoProcessInOut.h"
+#import "VPinJieSet.h"
 
 #define E_CELL_WIDTH   60
 
