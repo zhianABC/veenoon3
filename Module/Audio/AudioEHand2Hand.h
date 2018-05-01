@@ -10,5 +10,13 @@
 #import "BasePlugElement.h"
 
 @interface AudioEHand2Hand : BasePlugElement
+{
+    
+}
+@property (nonatomic, assign) int _dbVal;
+
+- (void) initChannels:(int)num;
+- (int) channelsCount;
+- (NSMutableDictionary *)channelAtIndex:(int)index;
 
 @end

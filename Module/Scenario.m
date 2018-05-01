@@ -15,6 +15,8 @@
 @synthesize _A16PowerPlugs;
 @synthesize _VDVDPlayers;
 @synthesize _AWirelessMikePlugs;
+@synthesize _AHand2HandPlugs;
+
 @synthesize _VCameraSettings;
 @synthesize _VRemoteSettings;
 

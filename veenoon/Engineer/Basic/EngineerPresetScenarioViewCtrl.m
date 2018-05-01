@@ -44,6 +44,7 @@
 #import "VCameraSettingSet.h"
 #import "VRemoteSettingsSet.h"
 #import "VRemoteVideoSet.h"
+#import "AudioEHand2Hand.h"
 
 #define E_CELL_WIDTH   60
 
@@ -475,10 +476,8 @@
         // wuxian array
         if ([name isEqualToString:@"有线会议麦"]) {
             EngineerHandtoHandViewCtrl *ctrl = [[EngineerHandtoHandViewCtrl alloc] init];
-            
             //传
-            ctrl._handToHandSysArray = nil;//[NSMutableArray arrayWithObject:data];
-            ctrl._number = 12;
+            ctrl._handToHandSysArray = _scenario._AHand2HandPlugs;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         
@@ -800,6 +799,27 @@
     }
 }
 
+- (void) initHand2HandPlugs{
+    
+    if([_scenario._AHand2HandPlugs count] == 0)
+    {
+        NSMutableArray *h2h = [NSMutableArray array];
+        
+        for(int i = 0; i < 3; i++)
+        {
+            AudioEHand2Hand *pset = [[AudioEHand2Hand alloc] init];
+            pset._brand = @"品牌";
+            pset._type = @"型号";
+            pset._index = i;
+            pset._deviceno = [NSString stringWithFormat:@"%02d", i+1];
+            [pset initChannels:8];
+            [h2h addObject:pset];
+        }
+        
+        _scenario._AHand2HandPlugs = h2h;
+    }
+}
+
 // if dataDic == nil, refresh scroll view
 - (void) addComponentToEnd:(UIScrollView*) scrollView dataDic:(NSDictionary*)dataDic {
     
@@ -845,6 +865,14 @@
             else if([name isEqualToString:@"无线麦"])
             {
                 [self initWirelessMikePlugs];
+            }
+            else if([name isEqualToString:@"无线麦"])
+            {
+                [self initWirelessMikePlugs];
+            }
+            else if([name isEqualToString:@"有线会议麦"])
+            {
+                [self initHand2HandPlugs];
             }
         }
         

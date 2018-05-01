@@ -15,6 +15,7 @@
 @property (nonatomic, strong) NSMutableArray *_A16PowerPlugs;
 @property (nonatomic, strong) NSMutableArray *_APlayerPlugs;
 @property (nonatomic, strong) NSMutableArray *_AWirelessMikePlugs;
+@property (nonatomic, strong) NSMutableArray *_AHand2HandPlugs;
 
 @property (nonatomic, strong) NSMutableArray *_VDVDPlayers;
 @property (nonatomic, strong) NSMutableArray *_VCameraSettings;
