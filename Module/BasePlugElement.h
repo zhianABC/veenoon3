@@ -10,6 +10,7 @@
 
 @interface BasePlugElement : NSObject
 
+@property (nonatomic, strong) NSString *_name;
 @property (nonatomic, strong) NSString *_brand;
 @property (nonatomic, strong) NSString *_type;
 @property (nonatomic, strong) NSString *_deviceno;

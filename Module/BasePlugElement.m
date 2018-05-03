@@ -9,6 +9,7 @@
 #import "BasePlugElement.h"
 
 @implementation BasePlugElement
+@synthesize _name;
 @synthesize _brand;
 @synthesize _type;
 @synthesize _deviceno;
@@ -29,6 +30,8 @@
         self._ipaddress = @"";
         self._deviceid = @"";
         self._index = 0;
+        
+        self._name = @"";
     }
     
     return self;
@@ -37,7 +40,7 @@
 - (NSString*) showName{
     
     NSString *name = [NSString stringWithFormat:@"%@ - %@ - %@",
-                      _brand, _type, _deviceno];
+                      _brand, _name, _deviceno];
     
     return name;
 }

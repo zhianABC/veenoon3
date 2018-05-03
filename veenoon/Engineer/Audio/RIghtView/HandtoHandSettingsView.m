@@ -268,7 +268,7 @@
     {
         if(_curIndex == indexPath.row)
         {
-            return 144;
+            return 164;
         }
     }
     return 44;
@@ -341,7 +341,7 @@
     line.backgroundColor =  M_GREEN_LINE;
     [cell.contentView addSubview:line];
     if(_curIndex == indexPath.row) {
-        line.frame = CGRectMake(0, 143, self.frame.size.width, 1);
+        line.frame = CGRectMake(0, 163, self.frame.size.width, 1);
         
         _picker.tag = _curIndex;
         _picker._pickerDataArray = @[@{@"values":[data objectForKey:@"values"]}];

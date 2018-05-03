@@ -9,6 +9,7 @@
 #import "ECPlusSelectView.h"
 #import "EPlusLayerView.h"
 
+
 @interface ECPlusSelectView () <UITableViewDelegate,
 UITableViewDataSource,
 EPlusLayerViewDelegate>
@@ -33,20 +34,11 @@ EPlusLayerViewDelegate>
 */
 
 
-- (void) initData{
-    
-    NSBundle *bundle = [NSBundle mainBundle];
-    NSString *plistPath = [bundle pathForResource:@"ecplus" ofType:@"plist"];
-    self._data = [[NSArray alloc] initWithContentsOfFile:plistPath];
-}
-
 - (id) initWithFrame:(CGRect)frame
 {
     if(self = [super initWithFrame:frame])
     {
         _curIndex = -1;
-        
-        [self initData];
         
         _tableView = [[UITableView alloc] initWithFrame:self.bounds];
         _tableView.delegate = self;
@@ -67,6 +59,11 @@ EPlusLayerViewDelegate>
         
     }
     return self;
+}
+
+- (void) reloadData{
+    
+    [_tableView reloadData];
 }
 
 #pragma mark -

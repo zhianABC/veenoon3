@@ -12,10 +12,11 @@
 #import "EngineerSliderView.h"
 #import "HandtoHandSettingsView.h"
 #import "AudioEHand2Hand.h"
+#import "PlugsCtrlTitleHeader.h"
 
 @interface EngineerHandtoHandViewCtrl () <CustomPickerViewDelegate, EngineerSliderViewDelegate> {
     
-    UIButton *_selectSysBtn;
+    PlugsCtrlTitleHeader *_selectSysBtn;
     
     CustomPickerView *_customPicker;
     
@@ -61,6 +62,9 @@
     _selectedBtnArray = [[NSMutableArray alloc] init];
     [self inintData];
     
+    if([_handToHandSysArray count])
+        self._curH2H = [_handToHandSysArray objectAtIndex:0];
+    
     [super setTitleAndImage:@"audio_corner_hunyin.png" withTitle:@"有线会议"];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
@@ -93,19 +97,14 @@
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
-    _selectSysBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _selectSysBtn.frame = CGRectMake(50, 100, 80, 30);
-    [_selectSysBtn setImage:[UIImage imageNamed:@"engineer_sys_select_down_n.png"] forState:UIControlStateNormal];
-    [_selectSysBtn setTitle:@"001" forState:UIControlStateNormal];
-    _selectSysBtn.titleLabel.font = [UIFont systemFontOfSize:16];
-    [_selectSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_selectSysBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _selectSysBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [_selectSysBtn setTitleEdgeInsets:UIEdgeInsetsMake(0,0,0,_selectSysBtn.imageView.bounds.size.width)];
-    [_selectSysBtn setImageEdgeInsets:UIEdgeInsetsMake(0,_selectSysBtn.titleLabel.bounds.size.width+35,0,0)];
+    _selectSysBtn = [[PlugsCtrlTitleHeader alloc] initWithFrame:CGRectMake(50, 100, 80, 30)];
     [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_selectSysBtn];
     
+    if(_curH2H)
+        [_selectSysBtn setShowText:[_curH2H showName]];
+    
+
     _zengyiSlider = [[EngineerSliderView alloc]
                      initWithSliderBg:[UIImage imageNamed:@"engineer_zengyi_n.png"]
                      frame:CGRectZero];
@@ -119,6 +118,8 @@
     _zengyiSlider.delegate = self;
     [_zengyiSlider resetScale];
     _zengyiSlider.center = CGPointMake(SCREEN_WIDTH - 150, SCREEN_HEIGHT/2);
+    
+    [_zengyiSlider setScaleValue:_curH2H._dbVal];
     
     int index = 0;
     int top = 200;
@@ -134,7 +135,7 @@
     [self.view addSubview:_channelView];
     _channelView.backgroundColor = [UIColor clearColor];
     
-    self._curH2H = [_handToHandSysArray objectAtIndex:0];
+    
     self._number = [_curH2H channelsCount];
     
     [self.view addSubview:_zengyiSlider];
@@ -244,24 +245,6 @@
 
 - (void) sysSelectAction:(id)sender{
     
-    if(_customPicker == nil)
-    _customPicker = [[CustomPickerView alloc]
-                     initWithFrame:CGRectMake(_selectSysBtn.frame.origin.x, _selectSysBtn.frame.origin.y, _selectSysBtn.frame.size.width, 120) withGrayOrLight:@"gray"];
-    
-    
-    NSMutableArray *arr = [NSMutableArray array];
-    for(int i = 1; i< 2; i++)
-    {
-        [arr addObject:[NSString stringWithFormat:@"00%d", i]];
-    }
-    
-    _customPicker._pickerDataArray = @[@{@"values":arr}];
-    
-    
-    _customPicker._selectColor = [UIColor orangeColor];
-    _customPicker._rowNormalColor = [UIColor whiteColor];
-    [self.view addSubview:_customPicker];
-    _customPicker.delegate_ = self;
 }
 
 - (void) didChangedPickerValue:(NSDictionary*)value{

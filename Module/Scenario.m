@@ -16,6 +16,8 @@
 @synthesize _VDVDPlayers;
 @synthesize _AWirelessMikePlugs;
 @synthesize _AHand2HandPlugs;
+@synthesize _AProcessorPlugs;
+
 
 @synthesize _VCameraSettings;
 @synthesize _VRemoteSettings;
@@ -26,6 +28,9 @@
 @synthesize _VTouyingji;
 
 @synthesize _APlayerPlugs;
+
+@synthesize _areas;
+
 - (id)init
 {
     if(self = [super init])

@@ -38,6 +38,9 @@
 
 @synthesize _eventMap;
 
+@synthesize _currentReglusLogged;
+@synthesize _drivers;
+@synthesize _mapDrivers;
 
 static DataSync* dSyncInstance = nil;
 
@@ -66,6 +69,20 @@ static DataSync* dSyncInstance = nil;
     }
     
     return self;
+    
+}
+
+- (void) loadingLocalDrivers{
+    
+    NSBundle *bundle = [NSBundle mainBundle];
+    NSString *plistPath = [bundle pathForResource:@"ecplus" ofType:@"plist"];
+    NSArray *arr = [[NSArray alloc] initWithContentsOfFile:plistPath];
+
+    self._drivers = [NSMutableArray array];
+    for(NSDictionary *dic in arr)
+    {
+        [_drivers addObject:[NSMutableDictionary dictionaryWithDictionary:dic]];
+    }
     
 }
 

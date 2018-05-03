@@ -15,6 +15,11 @@
 #import "AudioMatrixSettingViewCtrl.h"
 #import "AudioIconSettingView.h"
 #import "CustomPickerView.h"
+#import "AudioEProcessor.h"
+
+#ifdef OPEN_REG_LIB_DEF
+#import "RegulusSDK.h"
+#endif
 
 @interface EngineerAudioProcessViewCtrl () <EngineerSliderViewDelegate, CustomPickerViewDelegate, AudioProcessRightViewDelegate, AudioIconSettingViewDelegate, SlideButtonDelegate> {
     UIButton *_selectSysBtn;
@@ -39,6 +44,8 @@
     UIImageView *bottomBar;
  
 }
+@property (nonatomic, strong) AudioEProcessor *_curProcessor;
+@property (nonatomic, strong) NSArray *_proxys;
 
 @end
 
@@ -46,6 +53,9 @@
 @synthesize _audioProcessArray;
 @synthesize _inputNumber;
 @synthesize _outputNumber;
+@synthesize _curProcessor;
+@synthesize _proxys;
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -62,6 +72,9 @@
 
     bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
+    
+    if([_audioProcessArray count])
+        self._curProcessor = [_audioProcessArray objectAtIndex:0];
     
     //缺切图，把切图贴上即可。
     bottomBar.backgroundColor = [UIColor grayColor];
@@ -185,7 +198,40 @@
     
     [self.view bringSubviewToFront:bottomBar];
     [self.view bringSubviewToFront:_topBar];
+    
+    [self getDriverProxys];
 }
+
+- (void) getDriverProxys{
+    
+#ifdef OPEN_REG_LIB_DEF
+    
+    IMP_BLOCK_SELF(EngineerAudioProcessViewCtrl);
+    
+    RgsDriverObj *driver = _curProcessor._driver;
+    if([driver isKindOfClass:[RgsDriverObj class]])
+    {
+        [[RegulusSDK sharedRegulusSDK] GetDriverProxys:driver.m_id completion:^(BOOL result, NSArray *proxys, NSError *error) {
+            if (result) {
+                if ([proxys count]) {
+                   
+                    block_self._proxys = proxys;
+                    [block_self initChannels];
+                }
+            }
+            else{
+                // [KVNProgress showErrorWithStatus:[error description]];
+            }
+        }];
+    }
+#endif
+}
+
+- (void) initChannels{
+    
+    
+}
+
 - (void) didSliderEndChanged:(id)object {
     
 }

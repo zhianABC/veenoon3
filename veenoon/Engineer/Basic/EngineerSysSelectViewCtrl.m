@@ -11,6 +11,13 @@
 #import "EngineerPortSettingView.h"
 #import "EngineerDNSSettingView.h"
 #import "EngineerToUseTeslariViewCtrl.h"
+#import "KVNProgress.h"
+#import "DataSync.h"
+
+#ifdef OPEN_REG_LIB_DEF
+#import "RegulusSDK.h"
+
+#endif
 
 @interface EngineerSysSelectViewCtrl ()<UIScrollViewDelegate>{
     EngineerDNSSettingView *_dnsView;
@@ -22,10 +29,16 @@
     UIButton *_portSettingsBtn;
     UIButton *_dnsSettingsBtn;
 }
+@property (nonatomic, strong) NSString *_regulus_user_id;
+@property (nonatomic, strong) NSString *_regulus_gateway_id;
 @end
 
 @implementation EngineerSysSelectViewCtrl
 @synthesize _meetingRoomDic;
+@synthesize _regulus_user_id;
+@synthesize _regulus_gateway_id;
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -126,6 +139,86 @@
     
     
     [self containerView];
+    
+    self._regulus_gateway_id = [[NSUserDefaults standardUserDefaults] objectForKey:@"gateway_id"];
+    self._regulus_user_id = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_id"];
+    
+    if(_regulus_gateway_id && _regulus_user_id)
+    {
+        [self loginCtrlDevice];
+    }
+    else
+    {
+        self._regulus_gateway_id = @"RGS_EOC500_01";
+        [self regCtrlDevice];
+    }
+    
+}
+
+- (void) regCtrlDevice{
+    
+#ifdef OPEN_REG_LIB_DEF
+    
+    IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
+    
+    [KVNProgress showWithStatus:@"登录中..."];
+    
+    [[RegulusSDK sharedRegulusSDK] RequestJoinGateWay:_regulus_gateway_id
+                                           completion:^(NSString *user_id, BOOL is_init, NSError * aError) {
+        if (aError) {
+            [KVNProgress showErrorWithStatus:[aError description]];
+            
+            [DataSync sharedDataSync]._currentReglusLogged = nil;
+        }
+        else{
+            
+            block_self._regulus_user_id = user_id;
+            //NSLog(@"user_id:%@,gw:%@\n",user_id,_gw_id.text);
+            [[NSUserDefaults standardUserDefaults] setObject:@"RGS_EOC500_01" forKey:@"gateway_id"];
+            [[NSUserDefaults standardUserDefaults] setObject:user_id forKey:@"user_id"];
+            
+            
+            [block_self loginCtrlDevice];
+        }
+    }];
+#endif
+    
+}
+
+- (void) loginCtrlDevice{
+    
+#ifdef OPEN_REG_LIB_DEF
+    
+    IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
+
+    [[RegulusSDK sharedRegulusSDK] Login:self._regulus_user_id
+                                   gw_id:_regulus_gateway_id
+                                password:@"111111"
+                                   level:1 completion:^(BOOL result, NSInteger level, NSError *error) {
+        if (result) {
+            
+            [KVNProgress showSuccess];
+            
+            [block_self update];
+        }
+        else{
+            
+            [DataSync sharedDataSync]._currentReglusLogged = nil;
+            
+            [KVNProgress showErrorWithStatus:[error description]];
+        }
+    }];
+    
+#endif
+    
+}
+
+- (void) update{
+    
+    [DataSync sharedDataSync]._currentReglusLogged = @{@"gw_id":_regulus_gateway_id,
+                                                       @"user_id":_regulus_user_id
+                                                       };
+    
 }
 
 - (void) containerView{
@@ -236,10 +329,42 @@
 }
 
 - (void) loginAction:(id)sender{
+    
+#ifdef OPEN_REG_LIB_DEF
+    
+    if([DataSync sharedDataSync]._currentReglusLogged)
+    {
+        IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
+        
+        [[RegulusSDK sharedRegulusSDK] NewProject:@"Veenoon" completion:^(BOOL result, NSError *error) {
+            if(result)
+            {
+                [block_self setNewProject];
+            }
+            else
+            {
+                NSLog(@"%@", [error description]);
+            }
+        }];
+
+    }
+    else
+    {
+        [KVNProgress showErrorWithStatus:@"未登录"];
+    }
+    
+#endif
+    
+}
+
+
+
+- (void) setNewProject{
+    
     EngineerToUseTeslariViewCtrl *ctrl = [[EngineerToUseTeslariViewCtrl alloc] init];
     ctrl._meetingRoomDic = self._meetingRoomDic;
-    
     [self.navigationController pushViewController:ctrl animated:YES];
+
 }
 
 - (void) cancelAction:(id)sender{

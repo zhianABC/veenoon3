@@ -9,6 +9,21 @@
 #import <Foundation/Foundation.h>
 #import "BasePlugElement.h"
 
+
 @interface AudioEProcessor : BasePlugElement
+{
+    
+}
+@property (nonatomic, strong) id _driverInfo;
+@property (nonatomic, strong) id _driver;
+
+- (void) initInputChannels:(int)num;
+- (int) inputChannelsCount;
+- (NSMutableDictionary *)inputChannelAtIndex:(int)index;
+
+- (void) initOutChannels:(int)num;
+- (int) outChannelsCount;
+- (NSMutableDictionary *)outChannelAtIndex:(int)index;
+
 
 @end

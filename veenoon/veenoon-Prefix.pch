@@ -108,4 +108,7 @@
 
 #define HENG_XIAN @"-"
 
+#define OPEN_REG_LIB_DEF  1
+#define VEENOON_AREA_NAME @"veenoon_room"
+
 typedef void (^RightSetViewCallbackBlock)(int deviceIndex);

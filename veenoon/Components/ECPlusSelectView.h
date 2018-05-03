@@ -24,4 +24,6 @@
 
 - (void) expandSection:(int)section;
 
+- (void) reloadData;
+
 @end
