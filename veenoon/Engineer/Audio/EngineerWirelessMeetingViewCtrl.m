@@ -197,7 +197,7 @@
     _zengyiSlider.center = CGPointMake(SCREEN_WIDTH - 150, SCREEN_HEIGHT/2);
 }
 
-- (void) didSliderValueChanged:(int)value object:(id)object {
+- (void) didSliderValueChanged:(float)value object:(id)object {
     
 }
 

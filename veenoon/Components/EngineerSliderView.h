@@ -11,8 +11,8 @@
 @protocol EngineerSliderViewDelegate <NSObject>
 
 @optional
-- (void) didSliderValueChanged:(int)value object:(id)object;
-- (void) didSliderEndChanged:(id)object;
+- (void) didSliderValueChanged:(float)value object:(id)object;
+- (void) didSliderEndChanged:(float)value object:(id)object;
 
 @end
 

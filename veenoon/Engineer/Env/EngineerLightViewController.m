@@ -144,7 +144,7 @@
     [_zengyiSlider resetScale];
     _zengyiSlider.center = CGPointMake(SCREEN_WIDTH - 150, SCREEN_HEIGHT/2);
 }
-- (void) didSliderValueChanged:(int)value object:(id)object {
+- (void) didSliderValueChanged:(float)value object:(id)object {
     float circleValue = (value +0.0f)/100.0f;
     for (LightSliderButton *button in _selectedBtnArray) {
         [button setCircleValue:circleValue];

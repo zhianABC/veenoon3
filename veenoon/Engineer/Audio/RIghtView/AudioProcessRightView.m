@@ -246,6 +246,10 @@
     _processor._ipaddress = ipTextField.text;
 }
 
+- (void) recoverSetting{
+    
+    ipTextField.text = _processor._ipaddress;
+}
 #pragma mark -
 #pragma mark Table View DataSource
 

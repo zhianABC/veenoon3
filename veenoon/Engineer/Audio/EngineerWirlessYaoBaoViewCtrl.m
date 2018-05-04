@@ -272,7 +272,7 @@
     }
     
 }
-- (void) didSliderValueChanged:(int)value object:(id)object {
+- (void) didSliderValueChanged:(float)value object:(id)object {
     
     float circleValue = (value +20.0f)/40.0f;
     for (SlideButton *button in _selectedBtnArray) {

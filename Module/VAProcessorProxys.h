@@ -18,6 +18,6 @@
 
 - (void) checkRgsProxyCommandLoad;
 
-- (void) controlDeviceDb:(float)db;
+- (void) controlDeviceDb:(float)db force:(BOOL)force;
 - (void) controlDeviceMute:(BOOL)isMute;
 @end

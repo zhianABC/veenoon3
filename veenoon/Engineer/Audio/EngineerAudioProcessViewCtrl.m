@@ -32,6 +32,7 @@
     EngineerSliderView *_zengyiSlider;
     
     NSMutableArray *_buttonArray;
+    NSMutableArray *_inputBtnArray;
 
     NSMutableArray *_selectedBtnArray;
     
@@ -76,6 +77,8 @@
     
     
     _selectedBtnArray = [[NSMutableArray alloc] init];
+    _inputBtnArray = [[NSMutableArray alloc] init];
+
     
     [super setTitleAndImage:@"audio_corner_yinpinchuli.png" withTitle:@"音频处理器"];
 
@@ -129,7 +132,7 @@
     _zengyiSlider = [[EngineerSliderView alloc]
                      initWithSliderBg:[UIImage imageNamed:@"engineer_zengyi3.png"]
                      frame:CGRectZero];
-    [self.view addSubview:_zengyiSlider];
+    
     [_zengyiSlider setRoadImage:[UIImage imageNamed:@"e_v_slider_road.png"]];
     [_zengyiSlider setIndicatorImage:[UIImage imageNamed:@"wireless_slide_s.png"]];
     _zengyiSlider.topEdge = 90;
@@ -148,12 +151,31 @@
                                                            SCREEN_HEIGHT-height-60)];
     [self.view addSubview:_proxysView];
     
+    [self.view addSubview:_zengyiSlider];
 
     [self.view bringSubviewToFront:bottomBar];
     [self.view bringSubviewToFront:_topBar];
     
     
+    UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+    tapGesture.cancelsTouchesInView =  NO;
+    tapGesture.numberOfTapsRequired = 1;
+    [_proxysView addGestureRecognizer:tapGesture];
+    
+    
     [self getCurrentDeviceDriverProxys];
+}
+
+- (void) handleTapGesture:(id)sender{
+    
+    if ([_rightView superview]) {
+        [_rightView removeFromSuperview];
+    }
+    if ([_inconView superview]) {
+        [_inconView removeFromSuperview];
+    }
+    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+    isSettings = NO;
 }
 
 - (void) getCurrentDeviceDriverProxys{
@@ -191,6 +213,7 @@
     self._outputProxys = [NSMutableArray array];
     [[_proxysView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
+    [_inputBtnArray removeAllObjects];
     
     int height = 5;
     int inputOutGap = 282;
@@ -255,6 +278,8 @@
         btn.data = vap;
         [_proxysView addSubview:btn];
         
+        [_inputBtnArray addObject:btn];
+        
         btn._titleLabel.text = vap._rgsProxyObj.name;
         
         [_buttonArray addObject:btn];
@@ -291,17 +316,18 @@
     [_curProcessor syncDriverIPProperty];
 }
 
-- (void) didSliderEndChanged:(id)object {
-    
-}
-
 //value = 0....1
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
     float circleValue = -70 + (value * 82);
     slbtn._valueLabel.text = [NSString stringWithFormat:@"%0.1f db", circleValue];
     
-    
+    id data = slbtn.data;
+    if([data isKindOfClass:[VAProcessorProxys class]])
+    {
+        float circleValue = -70 + (value * 82);
+        [(VAProcessorProxys*)data controlDeviceDb:circleValue force:NO];
+    }
 }
 
 - (void) didEndSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
@@ -310,18 +336,44 @@
     if([data isKindOfClass:[VAProcessorProxys class]])
     {
         float circleValue = -70 + (value * 82);
-        [(VAProcessorProxys*)data controlDeviceDb:circleValue];
+        [(VAProcessorProxys*)data controlDeviceDb:circleValue force:YES];
     }
 }
-- (void) didSliderValueChanged:(int)value object:(id)object {
+
+
+#pragma mark ---Engineer Slide ---
+- (void) didSliderValueChanged:(float)value object:(id)object {
     
     float circleValue = value;
     for (SlideButton *button in _selectedBtnArray) {
         
         button._valueLabel.text = [NSString stringWithFormat:@"%0.1f db", circleValue];
         [button setCircleValue:fabs((value+70)/82.0)];
+        
+        id data = button.data;
+        if([data isKindOfClass:[VAProcessorProxys class]])
+        {
+            [(VAProcessorProxys*)data controlDeviceDb:circleValue force:NO];
+        }
     }
 }
+
+- (void) didSliderEndChanged:(float)value object:(id)object{
+    
+    float circleValue = value;
+    for (SlideButton *button in _selectedBtnArray) {
+        
+        button._valueLabel.text = [NSString stringWithFormat:@"%0.1f db", circleValue];
+        [button setCircleValue:fabs((value+70)/82.0)];
+        
+        id data = button.data;
+        if([data isKindOfClass:[VAProcessorProxys class]])
+        {
+            [(VAProcessorProxys*)data controlDeviceDb:circleValue force:YES];
+        }
+    }
+}
+
 
 - (void) didTappedMSelf:(SlideButton*)slbtn{
     
@@ -391,8 +443,29 @@
     
 }
 
+- (void) didEndDragingElecCell:(NSDictionary *)data pt:(CGPoint)pt {
+    CGPoint viewPoint = [self.view convertPoint:pt fromView:_rightView];
+    
+    //NSLog(@"%f - %f", viewPoint.x, viewPoint.y);
+    
+    NSString *imageName = [data objectForKey:@"icon_s"];
+    UIImage *img = [UIImage imageNamed:imageName];
+    if(img) {
+        for (SlideButton *button in _inputBtnArray) {
+            CGRect rect = [self.view convertRect:button.frame fromView:button.superview];
+            if (CGRectContainsPoint(rect, viewPoint)) {
+                
+                [button changToIcon:img];
+            }
+        }
+    }
+    
+    NSLog(@"ssss");
+}
+
+
 - (void) okAction:(id)sender{
-    if (_inconView) {
+    if ([_inconView superview]) {
         [_inconView removeFromSuperview];
     }
     if (!isSettings) {
@@ -409,12 +482,14 @@
         }
         
         _rightView._processor = _curProcessor;
+        [_rightView recoverSetting];
+        
         [self.view addSubview:_rightView];
         [okBtn setTitle:@"保存" forState:UIControlStateNormal];
         
         isSettings = YES;
     } else {
-        if (_rightView) {
+        if ([_rightView superview]) {
             [_rightView removeFromSuperview];
         }
         [okBtn setTitle:@"设置" forState:UIControlStateNormal];

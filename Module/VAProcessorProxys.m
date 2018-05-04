@@ -8,10 +8,11 @@
 
 #import "VAProcessorProxys.h"
 #import "RegulusSDK.h"
+#import "KVNProgress.h"
 
 @interface VAProcessorProxys ()
 {
-    
+    float _voiceDb;
 }
 @property (nonatomic, strong) NSArray *_rgsCommands;
 @property (nonatomic, strong) NSMutableDictionary *_cmdMap;
@@ -42,6 +43,13 @@
                 }
             }
         }
+        else
+        {
+            NSString *errorMsg = [NSString stringWithFormat:@"%@ - proxyid:%d",
+                               [error description], (int)_rgsProxyObj.m_id];
+            
+            [KVNProgress showErrorWithStatus:errorMsg];
+        }
        
     }];
 }
@@ -66,7 +74,17 @@
  SET_PEQ
  */
 //SET_ANALOGY_GRAIN
-- (void) controlDeviceDb:(float)db{
+- (void) controlDeviceDb:(float)db force:(BOOL)force{
+    
+//    if(!force)
+//    {
+//        int iv = _voiceDb;
+//        int now = db;
+//        
+//        if(iv == now)
+//            return;
+//    }
+    _voiceDb = db;
     
     RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_ANALOGY_GRAIN"];
     if(cmd)
@@ -77,7 +95,7 @@
             RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
             if(param_info.type == RGS_PARAM_TYPE_FLOAT)
             {
-                [param setObject:[NSString stringWithFormat:@"%0.1f",db]
+                [param setObject:[NSString stringWithFormat:@"%0.1f",_voiceDb]
                           forKey:param_info.name];
             }
         }

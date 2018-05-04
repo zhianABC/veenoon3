@@ -201,7 +201,7 @@
     [_buttonChannelArray addObject:titleL];
 }
 
-- (void) didSliderValueChanged:(int)value object:(id)object {
+- (void) didSliderValueChanged:(float)value object:(id)object {
     
     _curH2H._dbVal = value;
 }

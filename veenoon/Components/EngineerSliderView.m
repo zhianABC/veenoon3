@@ -80,9 +80,9 @@
     return self;
 }
 
-- (void) resetScalValue:(int) scalValue {
+- (void) resetScalValue:(float) scalValue {
     
-    valueLabel.text = [NSString stringWithFormat:@"%d", (scalValue)];
+    valueLabel.text = [NSString stringWithFormat:@"%0.1f", (scalValue)];
     curValue = scalValue;
     
     if (scalValue == minValue) {
@@ -148,7 +148,7 @@
         
         int h = rc.size.height - topEdge - bottomEdge;
         int subh = (rc.size.height - bottomEdge) - sliderThumb.center.y;
-        int value = (maxValue - minValue)*(float)subh/h + minValue;
+        float value = (maxValue - minValue)*(float)subh/h + minValue;
         
         [self resetScalValue:value];
         
@@ -202,7 +202,7 @@
         int h = rc.size.height - topEdge - bottomEdge;
         int subh = (rc.size.height - bottomEdge) - sliderThumb.center.y;
         
-        int value = (maxValue - minValue)*(float)subh/h + minValue;
+        float value = (maxValue - minValue)*(float)subh/h + minValue;
         
         [self resetScalValue:value];
        
@@ -236,11 +236,11 @@
         beginPoint = CGPointZero;
     }
     
-    if(delegate && [delegate respondsToSelector:@selector(didSliderEndChanged:)])
+    if(delegate && [delegate respondsToSelector:@selector(didSliderEndChanged:object:)])
     {
-        [delegate didSliderEndChanged:self];
+        [delegate didSliderEndChanged:curValue object:self];
     }
-    
+
 }
 
 - (int) getScaleValue{
