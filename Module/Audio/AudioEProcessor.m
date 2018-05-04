@@ -7,20 +7,31 @@
 //
 
 #import "AudioEProcessor.h"
+#import "RegulusSDK.h"
 
 @interface AudioEProcessor ()
 {
     
 }
+//以后实现
 @property (nonatomic, strong) NSMutableArray *_inchannels;
 @property (nonatomic, strong) NSMutableArray *_outchannels;
+
+@property (nonatomic, strong) RgsPropertyObj *_driver_ip_Property;
 
 @end
 
 @implementation AudioEProcessor
-//@synthesize _driver;
-@synthesize _driverInfo;
 
+//中控上对应的数据
+@synthesize _driver;
+@synthesize _driverInfo;
+@synthesize _driver_ip_Property;
+@synthesize _inAudioProxys;
+@synthesize _outAudioProxys;
+
+//配置数据，保存从中控数据结构转换来的数据
+//以后实现
 @synthesize _inchannels;
 @synthesize _outchannels;
 
@@ -90,5 +101,69 @@
     return nil;
 }
 
+- (void) syncDriverIPProperty{
+    
+    if(_driver && [_driver isKindOfClass:[RgsDriverObj class]])
+    {
+        IMP_BLOCK_SELF(AudioEProcessor);
+        
+        RgsDriverObj *rd = (RgsDriverObj*)_driver;
+        [[RegulusSDK sharedRegulusSDK] GetDriverProperties:rd.m_id completion:^(BOOL result, NSArray *properties, NSError *error) {
+            if (result) {
+                if ([properties count]) {
+                    
+                    for(RgsPropertyObj *pro in properties)
+                    {
+                        if([pro.name isEqualToString:@"IP"])
+                        {
+                            block_self._driver_ip_Property = pro;
+                            block_self._ipaddress = pro.value;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                
+            }
+        }];
+    }
+}
+
+- (void) uploadDriverIPProperty
+{
+    if(_driver && [_driver isKindOfClass:[RgsDriverObj class]])
+    {
+        IMP_BLOCK_SELF(AudioEProcessor);
+        
+        RgsDriverObj *rd = (RgsDriverObj*)_driver;
+        
+        [[RegulusSDK sharedRegulusSDK] SetDriverProperty:rd.m_id
+                                          property_name:_driver_ip_Property.name
+                                         property_value:self._ipaddress
+                                             completion:^(BOOL result, NSError *error) {
+            if (result) {
+                
+                [block_self saveProject];
+            }
+            else{
+                
+            }
+        }];
+    }
+}
+
+- (void) saveProject{
+    
+    [[RegulusSDK sharedRegulusSDK] ReloadProject:^(BOOL result, NSError *error) {
+        if(result)
+        {
+            NSLog(@"reload project.");
+        }
+        else{
+            NSLog(@"%@",[error description]);
+        }
+    }];
+}
 
 @end

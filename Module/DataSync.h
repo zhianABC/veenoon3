@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+@class RgsAreaObj;
 
 
 @interface DataSync : NSObject
@@ -19,15 +20,21 @@
 @property (nonatomic, strong) NSMutableDictionary *_eventMap;
 
 @property (nonatomic, strong) NSDictionary *_currentReglusLogged;
-@property (nonatomic, strong) NSMutableArray *_drivers;
+@property (nonatomic, strong) NSMutableArray *_plugTypes;
+
 @property (nonatomic, strong) NSMutableDictionary *_mapDrivers;
+@property (nonatomic, strong) RgsAreaObj* _currentArea;
+@property (nonatomic, strong) NSMutableArray* _currentAreaDrivers;
 
 + (DataSync*)sharedDataSync;
 
 
-- (void) syncCurrentEvent;
-- (id) currentEvent;
+- (void) syncCurrentArea;
 
 - (void) loadingLocalDrivers;
+- (void) syncAreaHasDrivers;
+- (void) syncRegulusDrivers;
+
+- (void) addCurrentSelectDriverToCurrentArea:(NSString*)mapkey;
 
 @end

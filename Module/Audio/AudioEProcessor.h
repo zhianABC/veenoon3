@@ -17,13 +17,10 @@
 @property (nonatomic, strong) id _driverInfo;
 @property (nonatomic, strong) id _driver;
 
-- (void) initInputChannels:(int)num;
-- (int) inputChannelsCount;
-- (NSMutableDictionary *)inputChannelAtIndex:(int)index;
+@property (nonatomic, strong) NSArray *_inAudioProxys;
+@property (nonatomic, strong) NSArray *_outAudioProxys;
 
-- (void) initOutChannels:(int)num;
-- (int) outChannelsCount;
-- (NSMutableDictionary *)outChannelAtIndex:(int)index;
-
+- (void) syncDriverIPProperty;
+- (void) uploadDriverIPProperty;
 
 @end

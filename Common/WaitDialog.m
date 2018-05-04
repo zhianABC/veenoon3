@@ -58,7 +58,7 @@ static WaitDialog *_sharedAlertWaitDialog;
         bk.layer.cornerRadius = 5;
         bk.clipsToBounds = YES;
         bk.backgroundColor = [UIColor whiteColor];
-        bk.frame = CGRectMake(0, 0, SCREEN_WIDTH*0.7, 100);
+        bk.frame = CGRectMake(0, 0, 400, 100);
         bk.center = self.center;
         
         
@@ -98,14 +98,14 @@ static WaitDialog *_sharedAlertWaitDialog;
         _grayBk.layer.cornerRadius = 5;
         _grayBk.clipsToBounds = YES;
         _grayBk.backgroundColor = RGBA(0, 0, 0, 0.3);
-        _grayBk.frame = CGRectMake(0, 0, SCREEN_WIDTH*0.7, 30);
+        _grayBk.frame = CGRectMake(0, 0, 200, 100);
         _grayBk.center = self.center;
         
         
-        _label = [[UILabel alloc] initWithFrame:CGRectMake(10, 8, CGRectGetWidth(_grayBk.frame)-20, 20)];
+        _label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, CGRectGetWidth(_grayBk.frame)-20, 40)];
         _label.backgroundColor = [UIColor clearColor];
-        _label.textColor = THEME_COLOR;
-        _label.font = [UIFont systemFontOfSize:13];
+        _label.textColor = [UIColor whiteColor];
+        _label.font = [UIFont systemFontOfSize:15];
         _label.textAlignment = NSTextAlignmentCenter;
         _label.tag = LABEL_TAG;
         _label.text = @"Loading";
@@ -173,8 +173,8 @@ static WaitDialog *_sharedAlertWaitDialog;
     _label.frame = CGRectMake(10, 8, CGRectGetWidth(_grayBk.frame)-20, 20);
     [_label contentSize];
     
-    int h = CGRectGetHeight(_label.frame)+16;
-    _grayBk.frame = CGRectMake(0, 0, SCREEN_WIDTH*0.6, h);
+    _label.center = CGPointMake(CGRectGetMidX(_grayBk.bounds),
+                               CGRectGetMidY(_grayBk.bounds));
     _grayBk.center = self.center;
     
     AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];

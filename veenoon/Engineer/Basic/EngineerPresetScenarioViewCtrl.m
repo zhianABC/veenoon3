@@ -52,6 +52,8 @@
 #import "KVNProgress.h"
 #import "AudioEProcessor.h"
 
+#import "WaitDialog.h"
+
 #ifdef OPEN_REG_LIB_DEF
 #import "RegulusSDK.h"
 #endif
@@ -90,8 +92,6 @@
 @property (nonatomic, strong) NSMutableDictionary *_vDataCheckTestMap;
 @property (nonatomic, strong) NSMutableDictionary *_eDataCheckTestMap;
 
-@property (nonatomic, strong) NSArray *_area_objs;
-@property (nonatomic, strong) NSArray *_drivers;
 @end
 
 @implementation EngineerPresetScenarioViewCtrl
@@ -109,9 +109,6 @@
 @synthesize _aDataCheckTestMap;
 @synthesize _vDataCheckTestMap;
 @synthesize _eDataCheckTestMap;
-
-@synthesize _area_objs;
-@synthesize _drivers;
 
 
 -(void) initData {
@@ -197,7 +194,7 @@
                                                       64, 300, SCREEN_HEIGHT-114)];
     ecp.delegate = self;
     
-    ecp._data = [DataSync sharedDataSync]._drivers;
+    ecp._data = [DataSync sharedDataSync]._plugTypes;
     [ecp reloadData];
     
     
@@ -344,85 +341,10 @@
     
     [self.view addSubview:topbar];
     [self.view addSubview:bottomBar];
-    
-    [self getRegulusArea];
-    [self getRegulusDrivers];
-}
 
-- (void) getRegulusArea{
-    
-#ifdef OPEN_REG_LIB_DEF
-    
-    IMP_BLOCK_SELF(EngineerPresetScenarioViewCtrl);
-    
-    [[RegulusSDK sharedRegulusSDK] GetAreas:^(NSArray *RgsAreaObjs, NSError *error) {
-        if (error) {
-            
-        }
-        else
-        {
-            block_self._area_objs = RgsAreaObjs;
-            [block_self checkNeedCreateArea];
-        }
-    }];
-    
-#endif
     
 }
 
-- (void) checkNeedCreateArea{
-    
-#ifdef OPEN_REG_LIB_DEF
-    
-    IMP_BLOCK_SELF(EngineerPresetScenarioViewCtrl);
-    
-    if([_area_objs count] == 0)
-    {
-        [[RegulusSDK sharedRegulusSDK] CreateArea:VEENOON_AREA_NAME completion:^(BOOL result, RgsAreaObj *area, NSError *error) {
-            if (result) {
-                block_self._area_objs = @[area];
-                [block_self getRegulusDrivers];
-            }
-        }];
-    }
-    else
-    {
-        [self getRegulusDrivers];
-    }
-#endif
-}
-
-- (void) getRegulusDrivers{
-    
-#ifdef OPEN_REG_LIB_DEF
-    
-    IMP_BLOCK_SELF(EngineerPresetScenarioViewCtrl);
-    
-    RgsAreaObj *areaObj = nil;
-
-    if([_area_objs count])
-    {
-        areaObj = [_area_objs objectAtIndex:0];
-    }
-    
-    if(areaObj)
-    {
-        [[RegulusSDK sharedRegulusSDK] GetDrivers:areaObj.m_id completion:^(BOOL result, NSArray *drivers, NSError *error) {
-            
-            if (error) {
-                [KVNProgress showErrorWithStatus:[error localizedDescription]];
-            }
-            else{
-                block_self._drivers = drivers;
-                
-            }
-        }];
-    }
-    
-    
-#endif
-    
-}
 
 - (void) addDriver:(AudioEProcessor*)adp{
     
@@ -430,33 +352,18 @@
     
     RgsDriverInfo *info = adp._driverInfo;
     
-    for(RgsDriverObj *odr in _drivers)
+    NSMutableArray *drivers = [DataSync sharedDataSync]._currentAreaDrivers;
+    for(RgsDriverObj *odr in drivers)
     {
         if([odr.info.serial isEqualToString:info.serial])
         {
+            adp._driver = odr;
             return;
         }
     }
-  
-    RgsAreaObj *areaObj = nil;
-    if([_area_objs count])
-    {
-        areaObj = [_area_objs objectAtIndex:0];
-    }
-    if(info && areaObj)
-    {
-        [[RegulusSDK sharedRegulusSDK] CreateDriver:areaObj.m_id serial:info.serial completion:^(BOOL result, RgsDriverObj *driver, NSError *error) {
-            if (result) {
-                //[self.navigationController popViewControllerAnimated:YES];
-                
-                adp._driver = driver;
-                [KVNProgress showSuccess];
-            }
-            else{
-                //[KVNProgress showErrorWithStatus:[error localizedDescription]];
-            }
-        }];
-    }
+
+    [[WaitDialog sharedAlertDialog] setTitle:@"未找到对应设备的驱动"];
+    [[WaitDialog sharedAlertDialog] animateShow];
     
 #endif
 }
@@ -560,6 +467,7 @@
         return;
     }
  
+    /*
 #ifdef OPEN_REG_LIB_DEF
     [[RegulusSDK sharedRegulusSDK] ReloadProject:^(BOOL result, NSError *error) {
         if(result)
@@ -571,6 +479,7 @@
         }
     }];
 #endif
+     */
     
     id  key = [NSNumber numberWithInteger:cellBtn.tag];
     NSMutableDictionary *data = [_buttonTagWithDataMap
@@ -643,8 +552,6 @@
         if ([name isEqualToString:@"音频处理"]) {
             EngineerAudioProcessViewCtrl *ctrl = [[EngineerAudioProcessViewCtrl alloc] init];
             ctrl._audioProcessArray = _scenario._AProcessorPlugs;
-            ctrl._inputNumber=16;
-            ctrl._outputNumber=16;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array

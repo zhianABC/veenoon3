@@ -13,6 +13,10 @@
 #import "NSDate-Helper.h"
 #import "WSEvent.h"
 
+#import "KVNProgress.h"
+#import "RegulusSDK.h"
+#import "WaitDialog.h"
+
 @interface DataSync ()
 {
     WebClient *_syncClient;
@@ -39,8 +43,11 @@
 @synthesize _eventMap;
 
 @synthesize _currentReglusLogged;
-@synthesize _drivers;
+@synthesize _plugTypes;
+
 @synthesize _mapDrivers;
+@synthesize _currentArea;
+@synthesize _currentAreaDrivers;
 
 static DataSync* dSyncInstance = nil;
 
@@ -66,6 +73,7 @@ static DataSync* dSyncInstance = nil;
             self._event = [[WSEvent alloc] initWithDictionary:eventJson];
         }
         
+        
     }
     
     return self;
@@ -78,114 +86,159 @@ static DataSync* dSyncInstance = nil;
     NSString *plistPath = [bundle pathForResource:@"ecplus" ofType:@"plist"];
     NSArray *arr = [[NSArray alloc] initWithContentsOfFile:plistPath];
 
-    self._drivers = [NSMutableArray array];
+    self._plugTypes = [NSMutableArray array];
     for(NSDictionary *dic in arr)
     {
-        [_drivers addObject:[NSMutableDictionary dictionaryWithDictionary:dic]];
+        [_plugTypes addObject:[NSMutableDictionary dictionaryWithDictionary:dic]];
     }
     
 }
 
-- (id) currentEvent{
-    
-    return _event;
-}
 
-- (void) syncCurrentEvent{
+- (void) syncCurrentArea{
     
-    User *u = [UserDefaultsKV getUser];
-    
-    NSString *token = nil;
-    if(u)
-    {
-        token = u._authtoken;
-    }
-    
-    
-    if(_eventClient == nil)
-        _eventClient = [[WebClient alloc] initWithDelegate:self];
-    
-    NSMutableDictionary *param = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                  [NSString stringWithFormat:@"%d", 0], @"start",
-                                  @"1", @"num",
-                                  nil];
-    
-    if(token)
-    {
-        [param setObject:token forKey:@"token"];
-    }
-    
-    //[param setObject:@"1" forKey:@"NEW_SYS"];
-    
-    _eventClient._method = NEW_API_EVENT_LIST;
-    _eventClient._httpMethod = @"GET";
-    _eventClient._requestParam = param;
+#ifdef OPEN_REG_LIB_DEF
     
     IMP_BLOCK_SELF(DataSync);
     
-    [_eventClient requestWithSusessBlock:^(id lParam, id rParam) {
-        
-        NSString *response = lParam;
-        // NSLog(@"%@", response);
-        
-
-        SBJson4ValueBlock block = ^(id v, BOOL *stop) {
+    [[RegulusSDK sharedRegulusSDK] GetAreas:^(NSArray *RgsAreaObjs, NSError *error) {
+        if (error) {
             
-            if([v isKindOfClass:[NSDictionary class]])
-            {
-                
-                NSString *result = [v objectForKey:@"code"];
-                
-                if([result intValue] == 0)
-                {
-                    NSArray *list = [v objectForKey:@"list"];
-                    [block_self refreshData:list];
-                }
-                
-                return;
-            }
-    
-        };
-        
-        SBJson4ErrorBlock eh = ^(NSError* err) {
-            NSLog(@"OOPS: %@", err);
-        
-        };
-        
-        id parser = [SBJson4Parser multiRootParserWithBlock:block
-                                               errorHandler:eh];
-        
-        id data = [response dataUsingEncoding:NSUTF8StringEncoding];
-        [parser parse:data];
-        
-        
-    } FailBlock:^(id lParam, id rParam) {
-        
-        NSString *response = lParam;
-        NSLog(@"%@", response);
-        
+            [KVNProgress showErrorWithStatus:@"连接中控出错!"];
+        }
+        else
+        {
+            [block_self checkNeedCreateArea:RgsAreaObjs];
+        }
     }];
     
+#endif
+    
 }
 
--(void) refreshData:(NSArray*)data{
+- (void) checkNeedCreateArea:(NSArray*)RgsAreaObjs{
     
-    for(NSDictionary *dic in data)
+#ifdef OPEN_REG_LIB_DEF
+    
+    IMP_BLOCK_SELF(DataSync);
+    
+    if([RgsAreaObjs count] == 0)
     {
-        WSEvent *event = [[WSEvent alloc] initWithDictionary:dic];
-        self._event = event;
+        [[RegulusSDK sharedRegulusSDK] CreateArea:VEENOON_AREA_NAME completion:^(BOOL result, RgsAreaObj *area, NSError *error) {
+            if (result) {
+                block_self._currentArea = area;
+            }
+            else
+                [KVNProgress showErrorWithStatus:@"创建Area出错!"];
+        }];
+    }
+    else
+    {
+        self._currentArea = [RgsAreaObjs objectAtIndex:0];;
+    }
+#endif
+}
+
+- (void) syncAreaHasDrivers{
+    
+    self._currentAreaDrivers = [NSMutableArray array];
+    
+#ifdef OPEN_REG_LIB_DEF
+    
+    //IMP_BLOCK_SELF(DataSync);
+    
+    RgsAreaObj *areaObj = [DataSync sharedDataSync]._currentArea;
+    if(areaObj)
+    {
+        [[RegulusSDK sharedRegulusSDK] GetDrivers:areaObj.m_id completion:^(BOOL result, NSArray *drivers, NSError *error) {
+            
+            if (error) {
+                [KVNProgress showErrorWithStatus:[error localizedDescription]];
+            }
+            else{
+                [_currentAreaDrivers addObjectsFromArray:drivers];
+                
+            }
+        }];
+    }
+    
+    
+#endif
+}
+
+- (void) syncRegulusDrivers{
+    
+#ifdef OPEN_REG_LIB_DEF
         
-        [[NSUserDefaults standardUserDefaults] setObject:dic forKey:@"current_event_json"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        IMP_BLOCK_SELF(DataSync);
         
+        [[RegulusSDK sharedRegulusSDK] RequestDriverInfos:^(BOOL result, NSArray *driver_infos, NSError *error) {
+            
+            if (result) {
+                [block_self mappingDrivers:driver_infos];
+            }
+            else{
+                [KVNProgress showErrorWithStatus:[error localizedDescription]];
+            }
+        }];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"Notify_Refresh_Event_Info"
-                                                            object:nil];
-        
-        break;
+#endif
+ 
+}
+
+- (void) mappingDrivers:(NSArray*)driver_infos{
+    
+#ifdef OPEN_REG_LIB_DEF
+    
+    self._mapDrivers = [NSMutableDictionary dictionary];
+    for(RgsDriverInfo *dr in driver_infos)
+    {
+        [_mapDrivers setObject:dr forKey:[NSString stringWithFormat:@"%@-%@-%@",
+                                          dr.classify, dr.brand, dr.name]];
+    }
+    
+#endif
+}
+
+
+- (void) addCurrentSelectDriverToCurrentArea:(NSString*)mapkey{
+    
+    RgsDriverInfo *info = [_mapDrivers objectForKey:mapkey];
+    if(!info)
+    {
+        [[WaitDialog sharedAlertDialog] setTitle:@"未找到对应设备的驱动"];
+        [[WaitDialog sharedAlertDialog] animateShow];
         
     }
-   
+    else
+    {
+        NSMutableArray *drivers = self._currentAreaDrivers;
+        for(RgsDriverObj *odr in drivers)
+        {
+            if([odr.info.serial isEqualToString:info.serial])
+            {
+                return;
+            }
+        }
+        if(_currentArea)
+        {
+            [[RegulusSDK sharedRegulusSDK] CreateDriver:_currentArea.m_id serial:info.serial completion:^(BOOL result, RgsDriverObj *driver, NSError *error) {
+                if (result) {
+                    
+                    [_currentAreaDrivers addObject:driver];
+                    
+                    [[WaitDialog sharedAlertDialog] setTitle:@"已添加"];
+                    [[WaitDialog sharedAlertDialog] animateShow];
+                }
+                else{
+                    [KVNProgress showErrorWithStatus:[error localizedDescription]];
+                }
+            }];
+        }
+    }
+    
+
 }
+
 
 @end

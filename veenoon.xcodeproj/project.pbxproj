@@ -171,6 +171,7 @@
 		341C610B1FDD0DBF003A5490 /* a_room_4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 341C60ED1FDD0DBF003A5490 /* a_room_4@2x.png */; };
 		341C784A2050184300DD1677 /* SIconSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 341C78492050184200DD1677 /* SIconSelectView.m */; };
 		341C784D2050185200DD1677 /* IconLayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 341C784B2050185200DD1677 /* IconLayerView.m */; };
+		341E75E4209BF94C00E69DB2 /* VAProcessorProxys.m in Sources */ = {isa = PBXBuildFile; fileRef = 341E75E3209BF94C00E69DB2 /* VAProcessorProxys.m */; };
 		341E7BE5205BFD7400E2DEA0 /* back_white_ico@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 341E7BE4205BFD7300E2DEA0 /* back_white_ico@2x.png */; };
 		341F0F471EC2FC500027C800 /* WSCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 341F0F461EC2FC500027C800 /* WSCode.m */; };
 		3421561820597293005205D6 /* slide_btn_light_nokd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3421561620597292005205D6 /* slide_btn_light_nokd@2x.png */; };
@@ -1143,6 +1144,8 @@
 		341C78492050184200DD1677 /* SIconSelectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIconSelectView.m; sourceTree = "<group>"; };
 		341C784B2050185200DD1677 /* IconLayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconLayerView.m; sourceTree = "<group>"; };
 		341C784C2050185200DD1677 /* IconLayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconLayerView.h; sourceTree = "<group>"; };
+		341E75E2209BF94C00E69DB2 /* VAProcessorProxys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VAProcessorProxys.h; sourceTree = "<group>"; };
+		341E75E3209BF94C00E69DB2 /* VAProcessorProxys.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VAProcessorProxys.m; sourceTree = "<group>"; };
 		341E7BE4205BFD7300E2DEA0 /* back_white_ico@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_white_ico@2x.png"; sourceTree = "<group>"; };
 		341F0F451EC2FC500027C800 /* WSCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSCode.h; sourceTree = "<group>"; };
 		341F0F461EC2FC500027C800 /* WSCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSCode.m; sourceTree = "<group>"; };
@@ -2494,6 +2497,8 @@
 				341F0F461EC2FC500027C800 /* WSCode.m */,
 				04D719831DADE2D8002153D7 /* DataSync.h */,
 				04D719841DADE2D8002153D7 /* DataSync.m */,
+				341E75E2209BF94C00E69DB2 /* VAProcessorProxys.h */,
+				341E75E3209BF94C00E69DB2 /* VAProcessorProxys.m */,
 				04D719801DADE0A9002153D7 /* WSEvent.h */,
 				04D719811DADE0A9002153D7 /* WSEvent.m */,
 				04D719731DADD3A4002153D7 /* SSUser.h */,
@@ -3377,8 +3382,8 @@
 				EB5F7F971FD59D8400351888 /* EngineerDNSSettingView.m */,
 				EB09EF2D1FD978BD00C968CA /* EngineerToUseTeslariViewCtrl.h */,
 				EB09EF2E1FD978C700C968CA /* EngineerToUseTeslariViewCtrl.m */,
-				EB09EF301FD97CB500C968CA /* EngineerAudioDevicePluginViewCtrl.m */,
 				EB09EF321FD97CBE00C968CA /* EngineerAudioDevicePluginViewCtrl.h */,
+				EB09EF301FD97CB500C968CA /* EngineerAudioDevicePluginViewCtrl.m */,
 				EB09EF331FD97FF900C968CA /* EngineerVedioDevicePluginViewCtrl.h */,
 				EB09EF341FD9800300C968CA /* EngineerVedioDevicePluginViewCtrl.m */,
 				EB09EF361FD9801400C968CA /* EngineerEnvDevicePluginViewCtrl.m */,
@@ -4508,6 +4513,7 @@
 				3429E2B5205AAAFD00F87AC3 /* VNSettingsView.m in Sources */,
 				EBD009C820907B0700920849 /* VTVSet.m in Sources */,
 				EB36AAB21FCD939E009A0FD8 /* UserYouXianViewController.m in Sources */,
+				341E75E4209BF94C00E69DB2 /* VAProcessorProxys.m in Sources */,
 				EBAE5BBB1FE0070600C10C4D /* EngineerPresetScenarioViewCtrl.m in Sources */,
 				34DE8E992066408C0061B48D /* Scenario.m in Sources */,
 				04DE1E9A1AD6AEE000D49E2F /* ASIInputStream.m in Sources */,

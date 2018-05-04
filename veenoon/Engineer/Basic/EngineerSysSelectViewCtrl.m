@@ -328,15 +328,20 @@
     
 }
 
-- (void) loginAction:(id)sender{
+- (void) loginAction:(UIButton*)sender{
     
+    sender.enabled = NO;
 #ifdef OPEN_REG_LIB_DEF
     
     if([DataSync sharedDataSync]._currentReglusLogged)
     {
-        IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
         
+        IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
+
         [[RegulusSDK sharedRegulusSDK] NewProject:@"Veenoon" completion:^(BOOL result, NSError *error) {
+            
+            sender.enabled = YES;
+            
             if(result)
             {
                 [block_self setNewProject];
@@ -351,6 +356,8 @@
     else
     {
         [KVNProgress showErrorWithStatus:@"未登录"];
+        
+        sender.enabled = YES;
     }
     
 #endif

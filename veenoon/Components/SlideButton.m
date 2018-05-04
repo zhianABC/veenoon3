@@ -37,6 +37,7 @@
 @synthesize _grayBackgroundImage;
 @synthesize _lightBackgroundImage;
 
+@synthesize data;
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -222,6 +223,10 @@
         [delegate didSlideButtonValueChanged:[progress pgvalue] slbtn:self];
     }
     
+    if(delegate && [delegate respondsToSelector:@selector(didEndSlideButtonValueChanged:slbtn:)])
+    {
+        [delegate didEndSlideButtonValueChanged:[progress pgvalue] slbtn:self];
+    }
 }
 
 

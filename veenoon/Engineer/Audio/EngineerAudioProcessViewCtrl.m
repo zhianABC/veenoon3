@@ -16,6 +16,9 @@
 #import "AudioIconSettingView.h"
 #import "CustomPickerView.h"
 #import "AudioEProcessor.h"
+#import "VAProcessorProxys.h"
+
+#import "KVNProgress.h"
 
 #ifdef OPEN_REG_LIB_DEF
 #import "RegulusSDK.h"
@@ -29,8 +32,7 @@
     EngineerSliderView *_zengyiSlider;
     
     NSMutableArray *_buttonArray;
-    
-    NSMutableArray *_inputBtnArray;
+
     NSMutableArray *_selectedBtnArray;
     
     
@@ -42,19 +44,27 @@
     BOOL isIcon;
     
     UIImageView *bottomBar;
+    
+    UIView *_proxysView;
  
 }
 @property (nonatomic, strong) AudioEProcessor *_curProcessor;
 @property (nonatomic, strong) NSArray *_proxys;
 
+// <VAProcessorProxys>
+@property (nonatomic, strong) NSMutableArray * _inputProxys;
+@property (nonatomic, strong) NSMutableArray * _outputProxys;
+
 @end
 
 @implementation EngineerAudioProcessViewCtrl
 @synthesize _audioProcessArray;
-@synthesize _inputNumber;
-@synthesize _outputNumber;
 @synthesize _curProcessor;
 @synthesize _proxys;
+
+@synthesize _inputProxys;
+@synthesize _outputProxys;
+
 
 
 - (void)viewDidLoad {
@@ -66,7 +76,6 @@
     
     
     _selectedBtnArray = [[NSMutableArray alloc] init];
-    _inputBtnArray = [[NSMutableArray alloc] init];
     
     [super setTitleAndImage:@"audio_corner_yinpinchuli.png" withTitle:@"音频处理器"];
 
@@ -132,77 +141,25 @@
     _zengyiSlider.center = CGPointMake(SCREEN_WIDTH - 110, SCREEN_HEIGHT/2+50);
     
     int height = 150;
-    int inputOutGap = 282;
     
-    UILabel* subTL = [[UILabel alloc] initWithFrame:CGRectMake(50, height-5, 100, 20)];
-    subTL.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:subTL];
-    subTL.font = [UIFont boldSystemFontOfSize:16];
-    subTL.textColor  = [UIColor whiteColor];
-    subTL.text = @"InPuts";
+    _proxysView = [[UIView alloc] initWithFrame:CGRectMake(0,
+                                                           height-5,
+                                                           SCREEN_WIDTH,
+                                                           SCREEN_HEIGHT-height-60)];
+    [self.view addSubview:_proxysView];
     
-    subTL = [[UILabel alloc] initWithFrame:CGRectMake(50, height+inputOutGap-5, 100, 20)];
-    subTL.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:subTL];
-    subTL.font = [UIFont boldSystemFontOfSize:16];
-    subTL.textColor  = [UIColor whiteColor];
-    subTL.text = @"OutPuts";
-    
-    int colNumber = ENGINEER_VIEW_COLUMN_N;
-    int index = 0;
-    int cellWidth = 92;
-    int cellHeight = 120;
-    int leftRight = ENGINEER_VIEW_LEFT;
-    int space = 8;
-    
-    for (int i = 0; i < self._inputNumber; i++) {
-        
-        int row = index/colNumber;
-        int col = index%colNumber;
-        int startX = col*cellWidth+col*space+leftRight;
-        int startY = row*cellHeight+space*row+height+20;
-        
-        SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(startX, startY, cellWidth, cellHeight)];
-        btn.delegate = self;
-        btn.tag = index;
-        [self.view addSubview:btn];
-        
-        btn._titleLabel.text = [NSString stringWithFormat:@"Channel %02d",i+1];
-        
-        [_buttonArray addObject:btn];
-        [_inputBtnArray addObject:btn];
-        
-        index++;
-    }
-    
-    for (int i = 0; i < self._outputNumber; i++) {
-        
-        int row = i/colNumber;
-        int col = i%colNumber;
-        int startX = col*cellWidth+col*space+leftRight;
-        int startY = row*cellHeight+space*row+height+20+inputOutGap;
-        
-        SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(startX, startY, cellWidth, cellHeight)];
-        btn.tag = index;
-        btn.delegate = self;
-        [self.view addSubview:btn];
-        btn._titleLabel.text = [NSString stringWithFormat:@"Channel %02d",i+1];
-        
 
-        [_buttonArray addObject:btn];
-        
-        index++;
-    }
-    
-    
-    
     [self.view bringSubviewToFront:bottomBar];
     [self.view bringSubviewToFront:_topBar];
     
-    [self getDriverProxys];
+    
+    [self getCurrentDeviceDriverProxys];
 }
 
-- (void) getDriverProxys{
+- (void) getCurrentDeviceDriverProxys{
+    
+    if(_curProcessor == nil)
+        return;
     
 #ifdef OPEN_REG_LIB_DEF
     
@@ -220,7 +177,7 @@
                 }
             }
             else{
-                // [KVNProgress showErrorWithStatus:[error description]];
+                 [KVNProgress showErrorWithStatus:@"中控链接断开！"];
             }
         }];
     }
@@ -229,7 +186,109 @@
 
 - (void) initChannels{
     
+    //清空一下
+    self._inputProxys = [NSMutableArray array];
+    self._outputProxys = [NSMutableArray array];
+    [[_proxysView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
+    
+    int height = 5;
+    int inputOutGap = 282;
+    
+    
+    UILabel* subTL = [[UILabel alloc] initWithFrame:CGRectMake(50, height-5, 100, 20)];
+    subTL.backgroundColor = [UIColor clearColor];
+    [_proxysView addSubview:subTL];
+    subTL.font = [UIFont boldSystemFontOfSize:16];
+    subTL.textColor  = [UIColor whiteColor];
+    subTL.text = @"InPuts";
+    
+    subTL = [[UILabel alloc] initWithFrame:CGRectMake(50, height+inputOutGap-5, 100, 20)];
+    subTL.backgroundColor = [UIColor clearColor];
+    [_proxysView addSubview:subTL];
+    subTL.font = [UIFont boldSystemFontOfSize:16];
+    subTL.textColor  = [UIColor whiteColor];
+    subTL.text = @"OutPuts";
+    
+    int colNumber = ENGINEER_VIEW_COLUMN_N;
+    int index = 0;
+    int cellWidth = 92;
+    int cellHeight = 120;
+    int leftRight = ENGINEER_VIEW_LEFT;
+    int space = 8;
+    
+    for(RgsProxyObj *proxy in _proxys)
+    {
+        if([proxy.type isEqualToString:@"Audio In"])
+        {
+            VAProcessorProxys *vap = [[VAProcessorProxys alloc] init];
+            vap._rgsProxyObj = proxy;
+            [_inputProxys addObject:vap];
+            
+            //[vap checkRgsProxyCommandLoad];
+        }
+        else if([proxy.type isEqualToString:@"Audio Out"])
+        {
+            VAProcessorProxys *vap = [[VAProcessorProxys alloc] init];
+            vap._rgsProxyObj = proxy;
+            [_outputProxys addObject:vap];
+            
+            //[vap checkRgsProxyCommandLoad];
+        }
+    }
+    
+    _curProcessor._inAudioProxys = _inputProxys;
+    _curProcessor._outAudioProxys = _outputProxys;
+    
+    for (int i = 0; i < [_inputProxys count]; i++) {
+        
+        VAProcessorProxys *vap = [_inputProxys objectAtIndex:i];
+        
+        int row = index/colNumber;
+        int col = index%colNumber;
+        int startX = col*cellWidth+col*space+leftRight;
+        int startY = row*cellHeight+space*row+height+20;
+        
+        SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(startX, startY, cellWidth, cellHeight)];
+        btn.delegate = self;
+        btn.tag = index;
+        btn.data = vap;
+        [_proxysView addSubview:btn];
+        
+        btn._titleLabel.text = vap._rgsProxyObj.name;
+        
+        [_buttonArray addObject:btn];
+        
+        index++;
+    }
+    
+    for (int i = 0; i < [_outputProxys count]; i++) {
+        
+        VAProcessorProxys *vap = [_outputProxys objectAtIndex:i];
+        
+        int row = i/colNumber;
+        int col = i%colNumber;
+        int startX = col*cellWidth+col*space+leftRight;
+        int startY = row*cellHeight+space*row+height+20+inputOutGap;
+        
+        SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(startX, startY, cellWidth, cellHeight)];
+        btn.tag = index;
+        btn.delegate = self;
+        btn.data = vap;
+        [_proxysView addSubview:btn];
+        
+        
+        btn._titleLabel.text = vap._rgsProxyObj.name;
+        
+        
+        [_buttonArray addObject:btn];
+        
+        index++;
+    }
+    
+    
+    
+    [_curProcessor syncDriverIPProperty];
 }
 
 - (void) didSliderEndChanged:(id)object {
@@ -241,6 +300,18 @@
     
     float circleValue = -70 + (value * 82);
     slbtn._valueLabel.text = [NSString stringWithFormat:@"%0.1f db", circleValue];
+    
+    
+}
+
+- (void) didEndSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
+    
+    id data = slbtn.data;
+    if([data isKindOfClass:[VAProcessorProxys class]])
+    {
+        float circleValue = -70 + (value * 82);
+        [(VAProcessorProxys*)data controlDeviceDb:circleValue];
+    }
 }
 - (void) didSliderValueChanged:(int)value object:(id)object {
     
@@ -269,6 +340,12 @@
         [_selectedBtnArray addObject:button];
         
         [button enableValueSet:YES];
+        
+        id data = button.data;
+        if([data isKindOfClass:[VAProcessorProxys class]])
+        {
+            [(VAProcessorProxys*)data checkRgsProxyCommandLoad];
+        }
 
     } else {
         // remove it
@@ -331,6 +408,7 @@
             [UIView commitAnimations];
         }
         
+        _rightView._processor = _curProcessor;
         [self.view addSubview:_rightView];
         [okBtn setTitle:@"保存" forState:UIControlStateNormal];
         
@@ -341,28 +419,13 @@
         }
         [okBtn setTitle:@"设置" forState:UIControlStateNormal];
         isSettings = NO;
+        
+        [_rightView saveCurrentSetting];
+        
+        [_curProcessor uploadDriverIPProperty];
     }
 }
 
-- (void) didEndDragingElecCell:(NSDictionary *)data pt:(CGPoint)pt {
-    CGPoint viewPoint = [self.view convertPoint:pt fromView:_rightView];
-    
-    //NSLog(@"%f - %f", viewPoint.x, viewPoint.y);
-    
-    NSString *imageName = [data objectForKey:@"icon_s"];
-    UIImage *img = [UIImage imageNamed:imageName];
-    if(img) {
-        for (SlideButton *button in _inputBtnArray) {
-            CGRect rect = [self.view convertRect:button.frame fromView:button.superview];
-            if (CGRectContainsPoint(rect, viewPoint)) {
-                
-                [button changToIcon:img];
-            }
-        }
-    }
-    
-    NSLog(@"ssss");
-}
 
 - (void) didSelectButtonAction:(NSString*)value {
     if ([@"输入设置" isEqualToString:value]) {

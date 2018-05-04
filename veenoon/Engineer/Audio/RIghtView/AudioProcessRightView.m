@@ -9,6 +9,7 @@
 #import "AudioProcessRightView.h"
 #import "UIButton+Color.h"
 #import "ComSettingView.h"
+#import "AudioEProcessor.h"
 
 @interface AudioProcessRightView () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate> {
     
@@ -31,6 +32,7 @@
 @synthesize delegate_;
 @synthesize _btns;
 @synthesize _numOfChannel;
+@synthesize _processor;
 
 - (id)initWithFrame:(CGRect)frame {
     
@@ -229,6 +231,7 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     
+    _processor._ipaddress = textField.text;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
@@ -236,6 +239,11 @@
     [textField resignFirstResponder];
     
     return YES;
+}
+
+- (void) saveCurrentSetting{
+    
+    _processor._ipaddress = ipTextField.text;
 }
 
 #pragma mark -

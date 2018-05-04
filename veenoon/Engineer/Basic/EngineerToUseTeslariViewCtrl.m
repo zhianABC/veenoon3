@@ -11,15 +11,13 @@
 
 #import "DataSync.h"
 
-#ifdef OPEN_REG_LIB_DEF
-#import "RegulusSDK.h"
-#endif
 
 @interface EngineerToUseTeslariViewCtrl () {
     
 }
 @property (nonatomic, strong) NSArray *_driver_objs;
 @property (nonatomic, strong) NSMutableDictionary *_mapDrivers;
+@property (nonatomic, strong) NSArray *_area_objs;
 
 @end
 
@@ -27,6 +25,7 @@
 @synthesize _meetingRoomDic;
 @synthesize _mapDrivers;
 @synthesize _driver_objs;
+@synthesize _area_objs;
 
 
 - (void)viewDidLoad {
@@ -83,47 +82,15 @@
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
-    [self getReglusDrivers];
+    //创建Area
+    [[DataSync sharedDataSync] syncCurrentArea];
+    
+    //获取Regulus支持的插件
+    [[DataSync sharedDataSync] syncRegulusDrivers];
 }
-
-- (void) getReglusDrivers{
-    
-#ifdef OPEN_REG_LIB_DEF
-    
-    IMP_BLOCK_SELF(EngineerToUseTeslariViewCtrl);
-    
-    [[RegulusSDK sharedRegulusSDK] RequestDriverInfos:^(BOOL result, NSArray *driver_infos, NSError *error) {
-        
-        if (result) {
-            _driver_objs = driver_infos;
-            [block_self mappingDrivers];
-        }
-        else{
-            // [KVNProgress showErrorWithStatus:[error localizedDescription]];
-        }
-    }];
-    
-#endif
-}
-
-- (void) mappingDrivers{
-    
-#ifdef OPEN_REG_LIB_DEF
-    
-    self._mapDrivers = [NSMutableDictionary dictionary];
-    for(RgsDriverInfo *dr in _driver_objs)
-    {
-        [_mapDrivers setObject:dr forKey:[NSString stringWithFormat:@"%@-%@-%@",
-                                         dr.classify, dr.brand, dr.name]];
-    }
-    
-    [DataSync sharedDataSync]._mapDrivers = _mapDrivers;
-    
-#endif
-}
-
 
 - (void) okAction:(id)sender{
+    
     EngineerAudioDevicePluginViewCtrl *ctrl = [[EngineerAudioDevicePluginViewCtrl alloc] init];
     ctrl._meetingRoomDic = self._meetingRoomDic;
     
