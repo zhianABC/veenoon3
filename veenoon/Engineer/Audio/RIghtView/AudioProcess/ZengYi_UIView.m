@@ -27,6 +27,9 @@
     UIButton *zerodbBtn;
     
     CenterCustomerPickerView *_lineSelect;
+    CenterCustomerPickerView *_micDbSelect;
+    
+    int _curSelectorIndex;
 }
 @property (nonatomic, strong) VAProcessorProxys *_curProxy;
 
@@ -110,6 +113,12 @@
              forState:UIControlStateNormal];
     
     [self updateMuteButtonState];
+    [self update48VButtonState];
+    [self updateInvertButtonState];
+    
+    [zerodbBtn setTitle:_curProxy._micDb
+               forState:UIControlStateNormal];
+    
     
 }
 
@@ -239,6 +248,10 @@
     icon2.layer.contentsGravity = kCAGravityResizeAspect;
     [contentView addSubview:zerodbBtn];
     
+    [zerodbBtn addTarget:self
+                action:@selector(micDbBtnAction:)
+      forControlEvents:UIControlEventTouchUpInside];
+    
     foureivBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
     foureivBtn.frame = CGRectMake(CGRectGetMaxX(zerodbBtn.frame)+10, btnY, 50, 30);
     foureivBtn.layer.cornerRadius = 5;
@@ -291,9 +304,31 @@
     [contentView addSubview:fanxiangBtn];
 }
 
+- (void) update48VButtonState{
+    
+    BOOL is48V = _curProxy._is48V;
+    
+    if(is48V)
+    {
+        [foureivBtn changeNormalColor:THEME_RED_COLOR];
+    }
+    else
+    {
+        [foureivBtn changeNormalColor:RGB(75, 163, 202)];
+    }
+}
+
 - (void) f48vBtnAction:(UIButton*)sender{
     
+    if(_curProxy == nil)
+        return;
     
+    BOOL is48v = _curProxy._is48V;
+    
+    [_curProxy control48V:!is48v];
+    
+    [self update48VButtonState];
+
 }
 
 -(void) fanxiangAction:(id) sender {
@@ -311,6 +346,41 @@
 -(void) bianzuAction:(id) sender {
     
 }
+
+- (void) micDbBtnAction:(UIButton*) sender {
+
+    
+    if([_micDbSelect superview])
+    {
+        [_micDbSelect removeFromSuperview];
+        return;
+    }
+    
+    NSArray *options = [_curProxy getMicDbOptions];
+    
+    if([options count])
+    {
+        
+        if(_micDbSelect == nil)
+        {
+            _micDbSelect = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(0, 0, 100, 150)];
+            _micDbSelect._selectColor = RGB(253, 180, 0);
+            _micDbSelect._rowNormalColor = RGB(117, 165, 186);
+            _micDbSelect.delegate_= self;
+            
+            _micDbSelect._pickerDataArray = @[@{@"values":options}];
+            [_micDbSelect selectRow:0 inComponent:0];
+        }
+        
+        _curSelectorIndex = 1;
+        _micDbSelect.center = CGPointMake(sender.center.x, CGRectGetMaxY(sender.frame)+75);
+        [contentView addSubview:_micDbSelect];
+    }
+    
+}
+
+
+
 -(void) lineBtnAction:(UIButton*) sender {
     
     if([_lineSelect superview])
@@ -335,6 +405,7 @@
             [_lineSelect selectRow:0 inComponent:0];
         }
         
+        _curSelectorIndex = 0;
         _lineSelect.center = CGPointMake(sender.center.x, CGRectGetMaxY(sender.frame)+75);
         [contentView addSubview:_lineSelect];
     }
@@ -345,29 +416,43 @@
     NSDictionary *val = [value objectForKey:@0];
     if(val)
     {
-        NSString *vtx = [val objectForKey:@"value"];
-        [lineBtn setTitle:vtx forState:UIControlStateNormal];
-        
-        if(_curProxy)
+        //Mode select
+        if(_curSelectorIndex == 0)
         {
-            [_curProxy controlDeviceMode:vtx];
-        }
-        
-        if([vtx isEqualToString:@"MIC"])
-        {
-            foureivBtn.alpha = 1;
-            foureivBtn.enabled = YES;
+            NSString *vtx = [val objectForKey:@"value"];
+            [lineBtn setTitle:vtx forState:UIControlStateNormal];
             
-            zerodbBtn.alpha = 1;
-            zerodbBtn.enabled = YES;
-        }
-        else
-        {
-            foureivBtn.alpha = 0.8;
-            foureivBtn.enabled = NO;
+            if(_curProxy)
+            {
+                [_curProxy controlDeviceMode:vtx];
+            }
             
-            zerodbBtn.alpha = 0.8;
-            zerodbBtn.enabled = NO;
+            if([vtx isEqualToString:@"MIC"])
+            {
+                foureivBtn.alpha = 1;
+                foureivBtn.enabled = YES;
+                
+                zerodbBtn.alpha = 1;
+                zerodbBtn.enabled = YES;
+            }
+            else
+            {
+                foureivBtn.alpha = 0.8;
+                foureivBtn.enabled = NO;
+                
+                zerodbBtn.alpha = 0.8;
+                zerodbBtn.enabled = NO;
+            }
+        }
+        else//Mic db select
+        {
+            NSString *vtx = [val objectForKey:@"value"];
+            [zerodbBtn setTitle:vtx forState:UIControlStateNormal];
+            
+            if(_curProxy)
+            {
+                [_curProxy controlDeviceMicDb:vtx];
+            }
         }
     }
 }

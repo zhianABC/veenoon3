@@ -38,6 +38,7 @@
     
     BOOL _inverted;
     
+    
 }
 @property (nonatomic, strong) NSArray *_rgsCommands;
 @property (nonatomic, strong) NSMutableDictionary *_cmdMap;
@@ -53,6 +54,7 @@
 
 @synthesize _mode;
 @synthesize _is48V;
+@synthesize _micDb;
 
 - (id) init
 {
@@ -65,6 +67,7 @@
         
         _inverted = NO;
         self._is48V = NO;
+        self._micDb = @"0db";
         
         self._mode = @"LINE"; //LINE or MIC
     }
@@ -351,6 +354,49 @@
     }
 }
 
+- (void) control48V:(BOOL)is48v{
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_48V"];
+    NSString* tureOrFalse = @"False";
+    
+    self._is48V = is48v;
+    
+    if(_is48V)
+    {
+        tureOrFalse = @"True";
+    }
+    else
+    {
+        tureOrFalse = @"False";
+    }
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        
+        
+        if([cmd.params count])
+        {
+            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
+            if(param_info.type == RGS_PARAM_TYPE_LIST)
+            {
+                [param setObject:tureOrFalse forKey:param_info.name];
+            }
+            
+        }
+        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+                                                 cmd:cmd.name
+                                               param:param completion:^(BOOL result, NSError *error) {
+                                                   if (result) {
+                                                       
+                                                   }
+                                                   else{
+                                                       
+                                                   }
+                                               }];
+    }
+}
+
 - (void) controlDeviceMode:(NSString*)mode{
     
     RgsCommandInfo *cmd = nil;
@@ -366,6 +412,37 @@
             if(param_info.type == RGS_PARAM_TYPE_LIST)
             {
                 [param setObject:mode forKey:param_info.name];
+            }
+            
+        }
+        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+                                                 cmd:cmd.name
+                                               param:param completion:^(BOOL result, NSError *error) {
+                                                   if (result) {
+                                                       
+                                                   }
+                                                   else{
+                                                       
+                                                   }
+                                               }];
+    }
+}
+
+- (void) controlDeviceMicDb:(NSString*)db{
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_MIC_DB"];
+    self._micDb = db;
+    
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
+            if(param_info.type == RGS_PARAM_TYPE_LIST)
+            {
+                [param setObject:_micDb forKey:param_info.name];
             }
             
         }

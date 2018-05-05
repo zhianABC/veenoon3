@@ -19,6 +19,7 @@
 //Property
 @property (nonatomic, strong) NSString *_mode;
 @property (nonatomic, assign) BOOL _is48V;
+@property (nonatomic, strong) NSString *_micDb;
 
 /*
  SET_MUTE
@@ -55,7 +56,10 @@
 - (void) controlDigtalMute:(BOOL)isMute;
 - (void) controlInverted:(BOOL)invert;
 
+- (void) control48V:(BOOL)is48v;
+
 - (void) controlDeviceMode:(NSString*)mode;
+- (void) controlDeviceMicDb:(NSString*)db;
 
 - (id) generateEventOperation_AnalogyGain;
 - (id) generateEventOperation_Mute;
