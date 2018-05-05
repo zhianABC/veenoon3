@@ -11,14 +11,22 @@
 #import "SlideButton.h"
 #import "RegulusSDK.h"
 #import "VAProcessorProxys.h"
+#import "CenterCustomerPickerView.h"
 
-@interface ZengYi_UIView() <SlideButtonDelegate>{
+@interface ZengYi_UIView() <SlideButtonDelegate, CenterCustomerPickerViewDelegate>{
     
     UIButton *channelBtn;
     SlideButton *btnJH2;
     
     UILabel *zaoshengL;
     UIButton *muteBtn;
+    UIButton *fanxiangBtn;
+    UIButton *lineBtn;
+    UIButton *foureivBtn;
+    UIButton *bianzuBtn;
+    UIButton *zerodbBtn;
+    
+    CenterCustomerPickerView *_lineSelect;
 }
 @property (nonatomic, strong) VAProcessorProxys *_curProxy;
 
@@ -91,6 +99,16 @@
     }
     
     
+    float kdb = [_curProxy getDigitalGain];
+    NSString *valueStr= [NSString stringWithFormat:@"%0.1fdB", kdb];
+    zaoshengL.text = valueStr;
+    
+    float f = (12.0 + kdb)/24.0;
+    [btnJH2 setCircleValue:f];
+    
+    [lineBtn setTitle:_curProxy._mode
+             forState:UIControlStateNormal];
+    
     [self updateMuteButtonState];
     
 }
@@ -106,6 +124,20 @@
     else
     {
         [muteBtn changeNormalColor:RGB(75, 163, 202)];
+    }
+}
+
+- (void) updateInvertButtonState{
+    
+    BOOL isInverted = [_curProxy getInverted];
+    
+    if(isInverted)
+    {
+        [fanxiangBtn changeNormalColor:THEME_RED_COLOR];
+    }
+    else
+    {
+        [fanxiangBtn changeNormalColor:RGB(75, 163, 202)];
     }
 }
 
@@ -147,16 +179,19 @@
 }
 
 - (void) createContentViewBtns {
+    
     int btnStartX = 100;
     int btnY = 150;
     
-    UIButton *lineBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    lineBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
     lineBtn.frame = CGRectMake(btnStartX, btnY, 120, 30);
     lineBtn.layer.cornerRadius = 5;
     lineBtn.layer.borderWidth = 2;
     lineBtn.layer.borderColor = [UIColor clearColor].CGColor;;
     lineBtn.clipsToBounds = YES;
-    [lineBtn setTitle:@"  线路" forState:UIControlStateNormal];
+    //[lineBtn setTitle:@"线路" forState:UIControlStateNormal];
+    [lineBtn setTitleEdgeInsets:UIEdgeInsetsMake(0,10,0,0)];
+    
     lineBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     lineBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     UIImageView *icon = [[UIImageView alloc]
@@ -185,13 +220,14 @@
     [contentView addSubview:muteBtn];
     
     
-    UIButton *zerodbBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    zerodbBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
     zerodbBtn.frame = CGRectMake(CGRectGetMaxX(muteBtn.frame)+20, btnY, 120, 30);
     zerodbBtn.layer.cornerRadius = 5;
     zerodbBtn.layer.borderWidth = 2;
     zerodbBtn.layer.borderColor = [UIColor clearColor].CGColor;;
     zerodbBtn.clipsToBounds = YES;
-    [zerodbBtn setTitle:@"  0db" forState:UIControlStateNormal];
+    [zerodbBtn setTitle:@"0db" forState:UIControlStateNormal];
+    [zerodbBtn setTitleEdgeInsets:UIEdgeInsetsMake(0,10,0,0)];
     zerodbBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     zerodbBtn.alpha = 0.8;
     zerodbBtn.enabled = NO;
@@ -200,11 +236,10 @@
                          initWithFrame:CGRectMake(zerodbBtn.frame.size.width - 20, 10, 10, 10)];
     icon2.image = [UIImage imageNamed:@"remote_video_down.png"];
     [zerodbBtn addSubview:icon2];
-    icon2.alpha = 0.8;
     icon2.layer.contentsGravity = kCAGravityResizeAspect;
     [contentView addSubview:zerodbBtn];
     
-    UIButton *foureivBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    foureivBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
     foureivBtn.frame = CGRectMake(CGRectGetMaxX(zerodbBtn.frame)+10, btnY, 50, 30);
     foureivBtn.layer.cornerRadius = 5;
     foureivBtn.layer.borderWidth = 2;
@@ -218,7 +253,7 @@
     [contentView addSubview:foureivBtn];
     
     
-    UIButton *bianzuBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    bianzuBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
     bianzuBtn.frame = CGRectMake(CGRectGetMaxX(foureivBtn.frame)+20, btnY, 120, 30);
     bianzuBtn.layer.cornerRadius = 5;
     bianzuBtn.layer.borderWidth = 2;
@@ -231,7 +266,6 @@
                          initWithFrame:CGRectMake(bianzuBtn.frame.size.width - 20, 10, 10, 10)];
     icon3.image = [UIImage imageNamed:@"remote_video_down.png"];
     [bianzuBtn addSubview:icon3];
-    icon3.alpha = 0.8;
     icon3.layer.contentsGravity = kCAGravityResizeAspect;
     [bianzuBtn addTarget:self
                 action:@selector(bianzuAction:)
@@ -239,7 +273,7 @@
     [contentView addSubview:bianzuBtn];
     
     
-    UIButton *fanxiangBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    fanxiangBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
     fanxiangBtn.frame = CGRectMake(CGRectGetMaxX(bianzuBtn.frame)+10, btnY, 50, 30);
     fanxiangBtn.layer.cornerRadius = 5;
     fanxiangBtn.layer.borderWidth = 2;
@@ -254,12 +288,78 @@
 }
 -(void) fanxiangAction:(id) sender {
     
+    if(_curProxy == nil)
+        return;
+    
+    BOOL isInverted = [_curProxy getInverted];
+    
+    [_curProxy controlInverted:!isInverted];
+    
+    [self updateInvertButtonState];
+    
 }
 -(void) bianzuAction:(id) sender {
     
 }
--(void) lineBtnAction:(id) sender {
+-(void) lineBtnAction:(UIButton*) sender {
     
+    if([_lineSelect superview])
+    {
+        [_lineSelect removeFromSuperview];
+        return;
+    }
+    
+    NSArray *options = [_curProxy getModeOptions];
+    
+    if([options count])
+    {
+        
+        if(_lineSelect == nil)
+        {
+            _lineSelect = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(0, 0, 100, 150)];
+            _lineSelect._selectColor = RGB(253, 180, 0);
+            _lineSelect._rowNormalColor = RGB(117, 165, 186);
+            _lineSelect.delegate_= self;
+            
+            _lineSelect._pickerDataArray = @[@{@"values":options}];
+            [_lineSelect selectRow:0 inComponent:0];
+        }
+        
+        _lineSelect.center = CGPointMake(sender.center.x, CGRectGetMaxY(sender.frame)+75);
+        [contentView addSubview:_lineSelect];
+    }
+}
+
+- (void) didChangedPickerValue:(NSDictionary*)value{
+    
+    NSDictionary *val = [value objectForKey:@0];
+    if(val)
+    {
+        NSString *vtx = [val objectForKey:@"value"];
+        [lineBtn setTitle:vtx forState:UIControlStateNormal];
+        
+        if(_curProxy)
+        {
+            [_curProxy controlDeviceMode:vtx];
+        }
+        
+        if([vtx isEqualToString:@"MIC"])
+        {
+            foureivBtn.alpha = 1;
+            foureivBtn.enabled = YES;
+            
+            zerodbBtn.alpha = 1;
+            zerodbBtn.enabled = YES;
+        }
+        else
+        {
+            foureivBtn.alpha = 0.8;
+            foureivBtn.enabled = NO;
+            
+            zerodbBtn.alpha = 0.8;
+            zerodbBtn.enabled = NO;
+        }
+    }
 }
 
 -(void) muteBtnAction:(id) sender {

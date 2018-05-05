@@ -16,17 +16,49 @@
 }
 @property (nonatomic, strong) RgsProxyObj *_rgsProxyObj;
 
+//Property
+@property (nonatomic, strong) NSString *_mode;
+
+/*
+ SET_MUTE
+ SET_UNMUTE
+ SET_DIGIT_MUTE options [True, False]
+ SET_DIGIT_GRAIN
+ SET_ANALOGY_GRAIN
+ SET_INVERTED
+ SET_MODE  options [LINE, MIC]
+ SET_MIC_DB
+ SET_48V
+ SET_NOISE_GATE
+ SET_FB_CTRL
+ SET_PRESS_LIMIT
+ SET_DELAY
+ SET_HIGH_FILTER
+ SET_LOW_FILTER
+ SET_PEQ
+ */
+
 - (void) checkRgsProxyCommandLoad;
 
 - (BOOL) isProxyMute;
 - (BOOL) isProxyDigitalMute;
+- (float) getDigitalGain;
+- (BOOL) getInverted;
+
+- (NSArray*)getModeOptions;
+- (NSArray*)getMicDbOptions;
+
 - (void) controlDeviceDb:(float)db force:(BOOL)force;
 - (void) controlDeviceMute:(BOOL)isMute;
 - (void) controlDeviceDigitalGain:(float)digVal;
 - (void) controlDigtalMute:(BOOL)isMute;
+- (void) controlInverted:(BOOL)invert;
+
+- (void) controlDeviceMode:(NSString*)mode;
 
 - (id) generateEventOperation_AnalogyGain;
 - (id) generateEventOperation_Mute;
 - (id) generateEventOperation_DigitalMute;
+- (id) generateEventOperation_Mode;
 
 @end
