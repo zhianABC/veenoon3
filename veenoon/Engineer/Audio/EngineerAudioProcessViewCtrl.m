@@ -310,9 +310,6 @@
         
         index++;
     }
-    
-    
-    
     [_curProcessor syncDriverIPProperty];
 }
 

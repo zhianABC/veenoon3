@@ -20,4 +20,8 @@
 
 - (void) controlDeviceDb:(float)db force:(BOOL)force;
 - (void) controlDeviceMute:(BOOL)isMute;
+
+- (id) generateEventOperation_AnalogyGain;
+- (id) generateEventOperation_Mute;
+
 @end

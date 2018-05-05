@@ -14,6 +14,7 @@
 #import "KVNProgress.h"
 #import "DataSync.h"
 #import "WaitDialog.h"
+#import "EngineerScenarioSettingsViewCtrl.h"
 
 #ifdef OPEN_REG_LIB_DEF
 #import "RegulusSDK.h"
@@ -81,7 +82,7 @@
     login.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     
     [login addTarget:self
-              action:@selector(loginAction:)
+              action:@selector(renewSysAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *signup = [UIButton buttonWithColor:nil selColor:[UIColor whiteColor]];
@@ -97,7 +98,7 @@
     signup.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     
     [signup addTarget:self
-               action:@selector(signupAction:)
+               action:@selector(linktoSysAction:)
      forControlEvents:UIControlEventTouchUpInside];
     
     
@@ -407,7 +408,7 @@
     
 }
 
-- (void) loginAction:(UIButton*)sender{
+- (void) renewSysAction:(UIButton*)sender{
     
     sender.enabled = NO;
 #ifdef OPEN_REG_LIB_DEF
@@ -457,8 +458,17 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void) signupAction:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
+- (void) linktoSysAction:(id)sender{
+    
+    if([_sceneDrivers count])
+    {
+        EngineerScenarioSettingsViewCtrl *ctrl = [[EngineerScenarioSettingsViewCtrl alloc] init];
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+    else
+    {
+        [KVNProgress showWithStatus:@"您还没有创建场景!"];
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{

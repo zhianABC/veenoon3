@@ -8,6 +8,7 @@
 
 #import "Scenario.h"
 #import "APowerESet.h"
+#import "RegulusSDK.h"
 
 @implementation Scenario
 
@@ -31,14 +32,32 @@
 
 @synthesize _areas;
 
+@synthesize _eventOperations;
+@synthesize _eventOperations_map;
+
 - (id)init
 {
     if(self = [super init])
     {
-        
+        self._eventOperations = [NSMutableArray array];
+        self._eventOperations_map = [NSMutableDictionary dictionary];
     }
     
     return self;
+}
+
+- (void) addEventOperation:(RgsSceneOperation*)rgsSceneOp{
+    
+    id opt = [rgsSceneOp getOperation];
+    
+    if([opt isKindOfClass:[RgsSceneDeviceOperation class]])
+    {
+        RgsSceneDeviceOperation *dev_opt = (RgsSceneDeviceOperation*)opt;
+        [_eventOperations_map setObject:dev_opt
+                                 forKey:[NSNumber numberWithInteger:dev_opt.dev_id]];
+    }
+    
+    
 }
 
 @end

@@ -13,6 +13,7 @@
 @interface VAProcessorProxys ()
 {
     float _voiceDb;
+    BOOL _isMute;
 }
 @property (nonatomic, strong) NSArray *_rgsCommands;
 @property (nonatomic, strong) NSMutableDictionary *_cmdMap;
@@ -22,6 +23,17 @@
 @synthesize _rgsCommands;
 @synthesize _rgsProxyObj;
 @synthesize _cmdMap;
+
+- (id) init
+{
+    if(self = [super init])
+    {
+        _isMute = NO;
+        _voiceDb = 0;
+    }
+    
+    return self;
+}
 
 - (void) checkRgsProxyCommandLoad{
     
@@ -117,10 +129,14 @@
     if(isMute)
     {
         cmd = [_cmdMap objectForKey:@"SET_MUTE"];
+        
+        _isMute = YES;
     }
     else
     {
         cmd = [_cmdMap objectForKey:@"SET_UNMUTE"];
+        
+        _isMute = NO;
     }
     if(cmd)
     {
@@ -138,5 +154,62 @@
     }
 }
 
+- (id) generateEventOperation_AnalogyGain
+{
+    RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_ANALOGY_GRAIN"];
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
+            if(param_info.type == RGS_PARAM_TYPE_FLOAT)
+            {
+                [param setObject:[NSString stringWithFormat:@"%0.1f",_voiceDb]
+                          forKey:param_info.name];
+            }
+        }
+        
+        RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc]init];
+        scene_opt.dev_id = _rgsProxyObj.m_id;
+        scene_opt.cmd = cmd.name;
+        scene_opt.param = param;
 
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
+                                                                          cmd:scene_opt.cmd
+                                                                        param:scene_opt.param];
+        
+        return opt;
+    }
+    
+    return nil;
+}
+- (id) generateEventOperation_Mute{
+    
+    RgsCommandInfo *cmd = nil;
+    if(_isMute)
+    {
+        cmd = [_cmdMap objectForKey:@"SET_MUTE"];
+    }
+    else
+    {
+        cmd = [_cmdMap objectForKey:@"SET_UNMUTE"];
+    }
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc]init];
+        scene_opt.dev_id = _rgsProxyObj.m_id;
+        scene_opt.cmd = cmd.name;
+        scene_opt.param = param;
+        
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
+                                                                          cmd:scene_opt.cmd
+                                                                        param:scene_opt.param];
+        
+        return opt;
+    }
+    
+    return nil;
+}
 @end

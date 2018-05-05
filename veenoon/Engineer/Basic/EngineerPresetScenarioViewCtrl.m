@@ -342,7 +342,6 @@
     [self.view addSubview:topbar];
     [self.view addSubview:bottomBar];
 
-    
 }
 
 
@@ -358,6 +357,9 @@
         if([odr.info.serial isEqualToString:info.serial])
         {
             adp._driver = odr;
+            
+            //同步一下IP地址
+            [adp syncDriverIPProperty];
             return;
         }
     }
@@ -716,7 +718,7 @@
         for(int i = 0; i < 3; i++)
         {
             VLuBoJiSet *pset = [[VLuBoJiSet alloc] init];
-            pset._com = @"191.16.1.100";
+            pset._ipaddress = @"191.16.1.100";
             pset._brand = @"brand1";
             pset._type = @"type1";
             pset._index = i;
@@ -1033,7 +1035,7 @@
             
             id dr = [[DataSync sharedDataSync]._mapDrivers objectForKey:key];
             pset._driverInfo = dr;
-  
+
         }
         
         _scenario._AProcessorPlugs = h2h;

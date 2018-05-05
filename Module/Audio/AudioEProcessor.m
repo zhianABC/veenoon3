@@ -103,6 +103,12 @@
 
 - (void) syncDriverIPProperty{
     
+    if(_driver_ip_Property)
+    {
+        self._ipaddress = _driver_ip_Property.value;
+        return;
+    }
+    
     if(_driver && [_driver isKindOfClass:[RgsDriverObj class]])
     {
         IMP_BLOCK_SELF(AudioEProcessor);

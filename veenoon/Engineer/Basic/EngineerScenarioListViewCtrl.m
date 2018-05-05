@@ -140,28 +140,30 @@
 
 - (void) addAction:(id)sender{
     
-    RgsDriverInfo *info = [[DataSync sharedDataSync]._mapDrivers
-                           objectForKey:@"System-Regulus-Regulus Scene"];
-    if(info)
-    {
-        RgsAreaObj *area = [DataSync sharedDataSync]._currentArea;
-        if(area)
-        {
-            IMP_BLOCK_SELF(EngineerScenarioListViewCtrl);
-            
-            [[RegulusSDK sharedRegulusSDK] CreateDriver:area.m_id
-                                                 serial:info.serial
-                                             completion:^(BOOL result, RgsDriverObj *driver, NSError *error) {
-                if (result)
-                {
-                    [block_self gotoCreateNewScenario];
-                }
-                else{
-                    
-                }
-            }];
-        }
-    }
+//    RgsDriverInfo *info = [[DataSync sharedDataSync]._mapDrivers
+//                           objectForKey:@"System-Regulus-Regulus Scene"];
+//    if(info)
+//    {
+//        RgsAreaObj *area = [DataSync sharedDataSync]._currentArea;
+//        if(area)
+//        {
+//            IMP_BLOCK_SELF(EngineerScenarioListViewCtrl);
+//
+//            [[RegulusSDK sharedRegulusSDK] CreateDriver:area.m_id
+//                                                 serial:info.serial
+//                                             completion:^(BOOL result, RgsDriverObj *driver, NSError *error) {
+//                if (result)
+//                {
+//                    [block_self gotoCreateNewScenario];
+//                }
+//                else{
+//
+//                }
+//            }];
+//        }
+//    }
+    
+    [self gotoCreateNewScenario];
 }
 
 - (void) gotoCreateNewScenario{

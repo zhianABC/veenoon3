@@ -17,7 +17,10 @@
 @property (nonatomic, strong) id _driverInfo;
 @property (nonatomic, strong) id _driver;
 
+//<VAProcessorProxys>
 @property (nonatomic, strong) NSArray *_inAudioProxys;
+
+//<VAProcessorProxys>
 @property (nonatomic, strong) NSArray *_outAudioProxys;
 
 - (void) syncDriverIPProperty;
