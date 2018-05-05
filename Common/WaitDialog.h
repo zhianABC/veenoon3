@@ -15,6 +15,7 @@
 
 + (WaitDialog *)sharedDialog;
 + (WaitDialog *)sharedAlertDialog;
++ (WaitDialog *)sharedRoundImageDialog;
 
 - (void) setTitle:(NSString *)title;
 
@@ -22,6 +23,9 @@
 - (void) endLoading;
 
 - (void) animateShow;
+
+- (void) showRing;
+- (void) endRing;
 
 @end
 

@@ -12,6 +12,7 @@
 #import "WellcomeViewController.h"
 #import "HomeViewController.h"
 #import "EngineerPresetScenarioViewCtrl.h"
+#import "DataSync.h"
 
 @interface AppDelegate ()
 {
@@ -103,6 +104,8 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
+    [[DataSync sharedDataSync] reloginRegulus];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

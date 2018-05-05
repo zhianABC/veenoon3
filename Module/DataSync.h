@@ -37,4 +37,6 @@
 
 - (void) addCurrentSelectDriverToCurrentArea:(NSString*)mapkey;
 
+- (void) reloginRegulus;
+
 @end

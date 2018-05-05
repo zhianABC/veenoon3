@@ -17,6 +17,7 @@
 
 static WaitDialog *_sharedWaitDialog;
 static WaitDialog *_sharedAlertWaitDialog;
+static WaitDialog *_sharedImageWaitDialog;
 
 @interface WaitDialog ()
 {
@@ -24,6 +25,9 @@ static WaitDialog *_sharedAlertWaitDialog;
     UIActivityIndicatorView *_indicator;
     
     UIImageView *_grayBk;
+    
+    UIImageView *_aniWaitDialog;
+    CABasicAnimation *_animation;
 }
 
 @end
@@ -45,6 +49,14 @@ static WaitDialog *_sharedAlertWaitDialog;
         _sharedAlertWaitDialog = [[WaitDialog alloc] initWithAlertFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     }
     return _sharedAlertWaitDialog;
+}
+
++ (WaitDialog *)sharedRoundImageDialog{
+    
+    if (!_sharedImageWaitDialog) {
+        _sharedImageWaitDialog = [[WaitDialog alloc] initWithImageWaitFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    }
+    return _sharedImageWaitDialog;
 }
 
 - (id) initWithFrame:(CGRect)frame{
@@ -117,6 +129,58 @@ static WaitDialog *_sharedAlertWaitDialog;
     return nil;
 }
 
+
+- (id) initWithImageWaitFrame:(CGRect)frame{
+    if(self = [super initWithFrame:frame]){
+        
+        
+        self.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.6];
+        
+        UIBlurEffect *footerblur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+        UIVisualEffectView* effectview = [[UIVisualEffectView alloc] initWithEffect:footerblur];
+        effectview.frame = CGRectMake(0, 0, SCREEN_WIDTH, 50);
+        [self addSubview:effectview];
+        effectview.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.6];
+        
+        _aniWaitDialog = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ring.png"]];
+        [self addSubview:_aniWaitDialog];
+        _aniWaitDialog.center = CGPointMake(frame.size.width/2, frame.size.height/2);
+        
+        _animation =  [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+        //默认是顺时针效果，若将fromValue和toValue的值互换，则为逆时针效果
+        _animation.fromValue = [NSNumber numberWithFloat:0.f];
+        _animation.toValue =  [NSNumber numberWithFloat: M_PI *2];
+        _animation.duration  = 1;
+        _animation.autoreverses = NO;
+        _animation.fillMode =kCAFillModeForwards;
+        _animation.repeatCount = MAXFLOAT;
+        
+
+        
+        return self;
+    }
+    return nil;
+}
+
+- (void) showRing{
+    
+    AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    [app.window addSubview:self];
+    self.alpha = 1.0;
+    
+    [_aniWaitDialog.layer addAnimation:_animation forKey:@"ring"];
+}
+- (void) endRing{
+    
+    [UIView animateWithDuration:0.35
+                     animations:^{
+                         self.alpha = 0.0;
+                     } completion:^(BOOL finished) {
+                         [_aniWaitDialog.layer removeAnimationForKey:@"ring"];
+                         [self removeFromSuperview];
+                     }];
+    
+}
 
 - (void) updateSpin{
     

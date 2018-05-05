@@ -95,6 +95,27 @@ static DataSync* dSyncInstance = nil;
 }
 
 
+- (void) reloginRegulus{
+    
+#ifdef OPEN_REG_LIB_DEF
+    
+    NSString *regulus_gateway_id = [_currentReglusLogged objectForKey:@"gw_id"];
+    NSString *regulus_user_id = [_currentReglusLogged objectForKey:@"user_id"];
+   
+    if(regulus_user_id && regulus_gateway_id)
+    {
+    [[RegulusSDK sharedRegulusSDK] Login:regulus_user_id
+                                   gw_id:regulus_gateway_id
+                                password:@"111111"
+                                   level:1
+                              completion:^(BOOL result, NSInteger level, NSError *error) {
+                                       
+                                   }];
+    }
+    
+#endif
+}
+
 - (void) syncCurrentArea{
     
 #ifdef OPEN_REG_LIB_DEF
@@ -150,14 +171,14 @@ static DataSync* dSyncInstance = nil;
     RgsAreaObj *areaObj = [DataSync sharedDataSync]._currentArea;
     if(areaObj)
     {
-        [[RegulusSDK sharedRegulusSDK] GetDrivers:areaObj.m_id completion:^(BOOL result, NSArray *drivers, NSError *error) {
+        [[RegulusSDK sharedRegulusSDK] GetDrivers:areaObj.m_id
+                                       completion:^(BOOL result, NSArray *drivers, NSError *error) {
             
             if (error) {
                 [KVNProgress showErrorWithStatus:[error localizedDescription]];
             }
             else{
                 [_currentAreaDrivers addObjectsFromArray:drivers];
-                
             }
         }];
     }
@@ -239,6 +260,5 @@ static DataSync* dSyncInstance = nil;
     
 
 }
-
 
 @end

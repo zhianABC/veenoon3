@@ -13,6 +13,7 @@
 #import "EngineerToUseTeslariViewCtrl.h"
 #import "KVNProgress.h"
 #import "DataSync.h"
+#import "WaitDialog.h"
 
 #ifdef OPEN_REG_LIB_DEF
 #import "RegulusSDK.h"
@@ -28,15 +29,19 @@
     
     UIButton *_portSettingsBtn;
     UIButton *_dnsSettingsBtn;
+    
+    UIImageView *_aniWaitDialog;
 }
 @property (nonatomic, strong) NSString *_regulus_user_id;
 @property (nonatomic, strong) NSString *_regulus_gateway_id;
+@property (nonatomic, strong) NSMutableArray *_sceneDrivers;
 @end
 
 @implementation EngineerSysSelectViewCtrl
 @synthesize _meetingRoomDic;
 @synthesize _regulus_user_id;
 @synthesize _regulus_gateway_id;
+@synthesize _sceneDrivers;
 
 
 - (void)viewDidLoad {
@@ -143,6 +148,9 @@
     self._regulus_gateway_id = [[NSUserDefaults standardUserDefaults] objectForKey:@"gateway_id"];
     self._regulus_user_id = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_id"];
     
+    
+    [KVNProgress show];
+    
     if(_regulus_gateway_id && _regulus_user_id)
     {
         [self loginCtrlDevice];
@@ -166,6 +174,7 @@
     [[RegulusSDK sharedRegulusSDK] RequestJoinGateWay:_regulus_gateway_id
                                            completion:^(NSString *user_id, BOOL is_init, NSError * aError) {
         if (aError) {
+            
             [KVNProgress showErrorWithStatus:[aError description]];
             
             [DataSync sharedDataSync]._currentReglusLogged = nil;
@@ -196,15 +205,11 @@
                                 password:@"111111"
                                    level:1 completion:^(BOOL result, NSInteger level, NSError *error) {
         if (result) {
-            
-            [KVNProgress showSuccess];
-            
             [block_self update];
         }
         else{
             
             [DataSync sharedDataSync]._currentReglusLogged = nil;
-            
             [KVNProgress showErrorWithStatus:[error description]];
         }
     }];
@@ -219,7 +224,81 @@
                                                        @"user_id":_regulus_user_id
                                                        };
     
+    [self checkArea];
+    
 }
+
+- (void) checkArea{
+    
+#ifdef OPEN_REG_LIB_DEF
+    
+    IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
+    
+    [[RegulusSDK sharedRegulusSDK] GetAreas:^(NSArray *RgsAreaObjs, NSError *error) {
+        if (error) {
+            
+            [KVNProgress showErrorWithStatus:@"连接中控出错!"];
+        }
+        else
+        {
+            [block_self checkSceneData:RgsAreaObjs];
+        }
+    }];
+    
+#endif
+    
+}
+- (void) checkSceneData:(NSArray*)RgsAreaObjs{
+    
+#ifdef OPEN_REG_LIB_DEF
+    
+    IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
+    
+    RgsAreaObj *areaObj = nil;
+    if([RgsAreaObjs count])
+        areaObj = [RgsAreaObjs objectAtIndex:0];
+    if(areaObj)
+    {
+        [[RegulusSDK sharedRegulusSDK] GetDrivers:areaObj.m_id
+                                       completion:^(BOOL result, NSArray *drivers, NSError *error) {
+                                           
+                                           if (error) {
+                                               
+                                               
+                                               [KVNProgress showErrorWithStatus:[error localizedDescription]];
+                                           }
+                                           else{
+                                               [block_self checkSceneDriver:drivers];
+                                           }
+                                       }];
+    }
+    else
+    {
+        [KVNProgress showSuccess];
+    }
+    
+    
+#endif
+}
+
+- (void) checkSceneDriver:(NSArray*)drivers{
+    
+    NSString *keymap = @"System-Regulus-Regulus Scene";
+    
+    for(RgsDriverObj *dr in drivers)
+    {
+        NSString *drkey = [NSString stringWithFormat:@"%@-%@-%@",
+                           dr.info.classify, dr.info.brand, dr.info.name];
+        if([drkey isEqualToString:keymap])
+        {
+            [_sceneDrivers addObject:dr];
+        }
+    }
+    
+    
+    [KVNProgress showSuccess];
+}
+
 
 - (void) containerView{
     
