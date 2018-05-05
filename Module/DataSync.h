@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class RgsAreaObj;
+@class RgsDriverInfo;
 
 
 @interface DataSync : NSObject
@@ -36,6 +37,7 @@
 - (void) syncRegulusDrivers;
 
 - (void) addCurrentSelectDriverToCurrentArea:(NSString*)mapkey;
+- (RgsDriverInfo *) driverInfoByUUID:(NSString*)uuid;
 
 - (void) reloginRegulus;
 

@@ -110,6 +110,8 @@
 @synthesize _vDataCheckTestMap;
 @synthesize _eDataCheckTestMap;
 
+@synthesize _selectedDevices;
+
 
 -(void) initData {
     
@@ -374,8 +376,8 @@
 - (void) createScenarioAction:(id) sender{
     
     EngineerScenarioSettingsViewCtrl *ctrl = [[EngineerScenarioSettingsViewCtrl alloc] init];
-    
     [self.navigationController pushViewController:ctrl animated:YES];
+    
 }
 - (void) handleTapGesture:(UIGestureRecognizer*)sender{
     
@@ -383,18 +385,17 @@
     
     if(pt.x < SCREEN_WIDTH-300)
     {
-    
-    CGRect rc = ecp.frame;
-    rc.origin.x = SCREEN_WIDTH;
-    
-    [UIView animateWithDuration:0.25
-                     animations:^{
-                         
-                         ecp.frame = rc;
-                         
-                     } completion:^(BOOL finished) {
-                         
-                     }];
+        CGRect rc = ecp.frame;
+        rc.origin.x = SCREEN_WIDTH;
+        
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             
+                             ecp.frame = rc;
+                             
+                         } completion:^(BOOL finished) {
+                             
+                         }];
     }
 }
 
@@ -1016,24 +1017,14 @@
     {
         NSMutableArray *h2h = [NSMutableArray array];
         
-        //
+        NSArray *audioArray = [_selectedDevices objectForKey:@"audio"];
         
-        for(int i = 0; i < 1; i++)
+        for(id pset in audioArray)
         {
-            AudioEProcessor *pset = [[AudioEProcessor alloc] init];
-            pset._brand = @"Teslaria";
-            pset._type = @"Audio";
-            pset._name = @"Teslaria Audio Processor";
-            pset._driverUUID = @"a3508fda-8775-4561-a26f-3df071f78b09";
-            pset._index = i;
-            pset._deviceno = [NSString stringWithFormat:@"%02d", i+1];
-            [h2h addObject:pset];
-            
-            id key = pset._driverUUID;
-            
-            id dr = [[DataSync sharedDataSync]._mapDrivers objectForKey:key];
-            pset._driverInfo = dr;
-
+            if([pset isKindOfClass:[AudioEProcessor class]])
+            {
+                [h2h addObject:pset];
+            }
         }
         
         _scenario._AProcessorPlugs = h2h;

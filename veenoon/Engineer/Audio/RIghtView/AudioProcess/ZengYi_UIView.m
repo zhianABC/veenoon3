@@ -252,6 +252,10 @@
     foureivBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [contentView addSubview:foureivBtn];
     
+    [foureivBtn addTarget:self
+                action:@selector(f48vBtnAction:)
+      forControlEvents:UIControlEventTouchUpInside];
+    
     
     bianzuBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
     bianzuBtn.frame = CGRectMake(CGRectGetMaxX(foureivBtn.frame)+20, btnY, 120, 30);
@@ -286,6 +290,12 @@
       forControlEvents:UIControlEventTouchUpInside];
     [contentView addSubview:fanxiangBtn];
 }
+
+- (void) f48vBtnAction:(UIButton*)sender{
+    
+    
+}
+
 -(void) fanxiangAction:(id) sender {
     
     if(_curProxy == nil)

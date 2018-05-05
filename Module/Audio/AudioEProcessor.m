@@ -8,6 +8,8 @@
 
 #import "AudioEProcessor.h"
 #import "RegulusSDK.h"
+#import "DataSync.h"
+
 
 @interface AudioEProcessor ()
 {
@@ -47,6 +49,11 @@
     }
     
     return self;
+}
+
+- (NSString*) deviceName{
+    
+    return @"音频处理";
 }
 
 - (void) initInputChannels:(int)num{
@@ -173,6 +180,38 @@
             NSLog(@"%@",[error description]);
         }
     }];
+}
+
+- (void) createDriver{
+    
+    RgsAreaObj *area = [DataSync sharedDataSync]._currentArea;
+    if(area && _driverInfo && !_driver)
+    {
+        RgsDriverInfo *info = _driverInfo;
+        
+        IMP_BLOCK_SELF(AudioEProcessor);
+        [[RegulusSDK sharedRegulusSDK] CreateDriver:area.m_id
+                                             serial:info.serial
+                                         completion:^(BOOL result, RgsDriverObj *driver, NSError *error) {
+            if (result) {
+                
+                block_self._driver = driver;
+            }
+            
+        }];
+    }
+}
+
+- (void) removeDriver{
+    
+    if(_driver)
+    {
+        RgsDriverObj *dr = _driver;
+        [[RegulusSDK sharedRegulusSDK] DeleteDriver:dr.m_id
+                                         completion:^(BOOL result, NSError *error) {
+                                             
+                                         }];
+    }
 }
 
 @end

@@ -18,6 +18,7 @@
 
 //Property
 @property (nonatomic, strong) NSString *_mode;
+@property (nonatomic, assign) BOOL _is48V;
 
 /*
  SET_MUTE

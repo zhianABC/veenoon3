@@ -37,6 +37,7 @@
     float _digitalGain;
     
     BOOL _inverted;
+    
 }
 @property (nonatomic, strong) NSArray *_rgsCommands;
 @property (nonatomic, strong) NSMutableDictionary *_cmdMap;
@@ -51,6 +52,7 @@
 @synthesize _cmdMap;
 
 @synthesize _mode;
+@synthesize _is48V;
 
 - (id) init
 {
@@ -62,6 +64,7 @@
         _digitalGain = 0;
         
         _inverted = NO;
+        self._is48V = NO;
         
         self._mode = @"LINE"; //LINE or MIC
     }
