@@ -11,8 +11,9 @@
 @protocol EngineerSliderViewDelegate <NSObject>
 
 @optional
-- (void) didSliderValueChanged:(int)value object:(id)object;
-- (void) didSliderEndChanged:(id)object;
+- (void) didSliderValueChanged:(float)value object:(id)object;
+- (void) didSliderEndChanged:(float)value object:(id)object;
+- (void) didSliderMuteChanged:(BOOL)mute object:(id)object;
 
 @end
 
@@ -33,6 +34,8 @@
 @property (nonatomic, assign) int stepValue;
 
 - (id) initWithSliderBg:(UIImage*)sliderBg frame:(CGRect)frame;
+
+- (void) setMuteVal:(BOOL)mute;
 
 - (void) setRoadImage:(UIImage *)image;
 - (void) setIndicatorImage:(UIImage *)image;

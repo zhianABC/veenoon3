@@ -37,6 +37,7 @@
 @synthesize _grayBackgroundImage;
 @synthesize _lightBackgroundImage;
 
+@synthesize data;
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -150,6 +151,19 @@
     [progress setProgress:value];
 }
 
+- (void) muteSlider:(BOOL)mute{
+    
+    if(mute)
+    {
+        progress.progressColor = THEME_RED_COLOR;
+        [progress setNeedsDisplay];
+    }
+    else
+    {
+        progress.progressColor = RGB(242, 148, 20);
+        [progress setNeedsDisplay];
+    }
+}
 
 -(void) touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event {
     
@@ -222,6 +236,10 @@
         [delegate didSlideButtonValueChanged:[progress pgvalue] slbtn:self];
     }
     
+    if(delegate && [delegate respondsToSelector:@selector(didEndSlideButtonValueChanged:slbtn:)])
+    {
+        [delegate didEndSlideButtonValueChanged:[progress pgvalue] slbtn:self];
+    }
 }
 
 

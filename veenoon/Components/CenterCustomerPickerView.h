@@ -21,6 +21,7 @@ typedef void(^CustomPickerSelectionBlock)(NSDictionary* values);
     
     CustomPickerSelectionBlock _selectionBlock;
 }
+
 @property (nonatomic, copy) CustomPickerSelectionBlock _selectionBlock;
 
 @property (nonatomic, strong) NSArray *_pickerDataArray;

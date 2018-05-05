@@ -9,6 +9,7 @@
 #import "AudioProcessRightView.h"
 #import "UIButton+Color.h"
 #import "ComSettingView.h"
+#import "AudioEProcessor.h"
 
 @interface AudioProcessRightView () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate> {
     
@@ -31,6 +32,7 @@
 @synthesize delegate_;
 @synthesize _btns;
 @synthesize _numOfChannel;
+@synthesize _processor;
 
 - (id)initWithFrame:(CGRect)frame {
     
@@ -132,6 +134,12 @@
         
         [headView addGestureRecognizer:swip];
         
+        
+        UISwipeGestureRecognizer *rightswip = [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                                                   action:@selector(swipClose)];
+        rightswip.direction = UISwipeGestureRecognizerDirectionRight;
+        [self addGestureRecognizer:rightswip];
+        
         _com = [[ComSettingView alloc] initWithFrame:self.bounds];
         
         _footerView = [[UIView alloc] initWithFrame:CGRectMake(0,self.bounds.size.height - 160,
@@ -229,6 +237,7 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     
+    _processor._ipaddress = textField.text;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
@@ -238,6 +247,15 @@
     return YES;
 }
 
+- (void) saveCurrentSetting{
+    
+    _processor._ipaddress = ipTextField.text;
+}
+
+- (void) recoverSetting{
+    
+    ipTextField.text = _processor._ipaddress;
+}
 #pragma mark -
 #pragma mark Table View DataSource
 
@@ -357,6 +375,16 @@
                          
                      }];
     
+}
+
+- (void) swipClose{
+    
+    
+    if(delegate_ && [delegate_ respondsToSelector:@selector(dissmissSettingView)])
+    {
+        [delegate_ dissmissSettingView];
+    }
+ 
 }
 
 @end

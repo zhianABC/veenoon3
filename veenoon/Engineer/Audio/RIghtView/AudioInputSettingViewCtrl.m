@@ -16,6 +16,7 @@
 #import "LvBoJunHeng_UIView.h"
 #import "YinPinProcessCodeUIView.h"
 #import "ZiDongHunYin_UIView.h"
+#import "AudioEProcessor.h"
 
 @interface AudioInputSettingViewCtrl () <HuiShengXiaoChu_UIViewDelegate> {
     YaXianQi_UIView *yxq;
@@ -41,6 +42,8 @@
 
 @implementation AudioInputSettingViewCtrl
 @synthesize _curSelectBtn;
+@synthesize _processor;
+
 
 
 - (void)viewDidLoad {
@@ -230,6 +233,13 @@
     
     self._curSelectBtn = zengyiBtn;
     [zengyiBtn changeNormalColor:BLUE_DOWN_COLOR];
+    
+    
+    int numProxys = (int)[_processor._inAudioProxys count];
+    zengyiView._proxys = _processor._inAudioProxys;
+    [zengyiView layoutChannelBtns:numProxys];
+    
+    
 }
 - (void) zidonghunyinAction:(UIButton*)sender{
    

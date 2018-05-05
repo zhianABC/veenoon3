@@ -9,6 +9,21 @@
 #import <Foundation/Foundation.h>
 #import "BasePlugElement.h"
 
+
 @interface AudioEProcessor : BasePlugElement
+{
+    
+}
+@property (nonatomic, strong) id _driverInfo;
+@property (nonatomic, strong) id _driver;
+
+//<VAProcessorProxys>
+@property (nonatomic, strong) NSArray *_inAudioProxys;
+
+//<VAProcessorProxys>
+@property (nonatomic, strong) NSArray *_outAudioProxys;
+
+- (void) syncDriverIPProperty;
+- (void) uploadDriverIPProperty;
 
 @end

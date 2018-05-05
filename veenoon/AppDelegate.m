@@ -12,6 +12,7 @@
 #import "WellcomeViewController.h"
 #import "HomeViewController.h"
 #import "EngineerPresetScenarioViewCtrl.h"
+#import "DataSync.h"
 
 @interface AppDelegate ()
 {
@@ -30,7 +31,7 @@
     [session setActive:YES error:nil];
     [session setCategory:AVAudioSessionCategoryPlayback error:nil];
     
-    EngineerPresetScenarioViewCtrl *wellcome = [[EngineerPresetScenarioViewCtrl alloc] init];
+    WellcomeViewController *wellcome = [[WellcomeViewController alloc] init];
     _naviRoot = [[CMNavigationController alloc] initWithRootViewController:wellcome];
     _naviRoot.navigationBarHidden = YES;
     self.window.rootViewController = _naviRoot;
@@ -103,6 +104,8 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
+    [[DataSync sharedDataSync] reloginRegulus];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

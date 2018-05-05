@@ -14,6 +14,7 @@
 
 @optional
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn;
+- (void) didEndSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn;
 - (void) didTappedMSelf:(SlideButton*)slbtn;
 
 @end
@@ -29,6 +30,8 @@
 @property (nonatomic, strong) UIImage *_grayBackgroundImage;
 @property (nonatomic, strong) UIImage *_lightBackgroundImage;
 
+@property (nonatomic, strong) id data;
+
 - (void) setCircleValue:(float) value;
 - (void) changeButtonBackgroundImage:(UIImage *)image;
 
@@ -38,5 +41,7 @@
 
 -(void) setTitle:(NSString*)title;
 -(void) setvalueTitle:(NSString*)title;
+
+- (void) muteSlider:(BOOL)mute;
 
 @end

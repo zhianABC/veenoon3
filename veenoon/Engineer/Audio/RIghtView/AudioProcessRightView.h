@@ -8,12 +8,22 @@
 
 #import <UIKit/UIKit.h>
 
+
 @protocol AudioProcessRightViewDelegate <NSObject>
 
 @optional
 - (void) didSelectButtonAction:(NSString*)value;
+- (void) dissmissSettingView;
 @end
+
+@class AudioEProcessor;
 
 @interface AudioProcessRightView : UIView
 @property (nonatomic, weak) id  <AudioProcessRightViewDelegate> delegate_;
+@property (nonatomic, strong) AudioEProcessor *_processor;
+
+- (void) recoverSetting;
+
+- (void) saveCurrentSetting;
+
 @end

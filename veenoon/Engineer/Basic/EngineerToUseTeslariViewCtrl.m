@@ -8,13 +8,26 @@
 
 #import "EngineerToUseTeslariViewCtrl.h"
 #import "EngineerAudioDevicePluginViewCtrl.h"
+
+#import "DataSync.h"
+
+
 @interface EngineerToUseTeslariViewCtrl () {
     
 }
+@property (nonatomic, strong) NSArray *_driver_objs;
+@property (nonatomic, strong) NSMutableDictionary *_mapDrivers;
+@property (nonatomic, strong) NSArray *_area_objs;
+
 @end
 
 @implementation EngineerToUseTeslariViewCtrl
 @synthesize _meetingRoomDic;
+@synthesize _mapDrivers;
+@synthesize _driver_objs;
+@synthesize _area_objs;
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -68,10 +81,16 @@
     [okBtn addTarget:self
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
+    
+    //创建Area
+    [[DataSync sharedDataSync] syncCurrentArea];
+    
+    //获取Regulus支持的插件
+    [[DataSync sharedDataSync] syncRegulusDrivers];
 }
 
-
 - (void) okAction:(id)sender{
+    
     EngineerAudioDevicePluginViewCtrl *ctrl = [[EngineerAudioDevicePluginViewCtrl alloc] init];
     ctrl._meetingRoomDic = self._meetingRoomDic;
     

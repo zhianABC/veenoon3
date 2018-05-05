@@ -44,9 +44,19 @@
 #import "VCameraSettingSet.h"
 #import "VRemoteSettingsSet.h"
 #import "VRemoteVideoSet.h"
+#import "AudioEHand2Hand.h"
 #import "VVideoProcessSet.h"
 #import "VVideoProcessInOut.h"
 #import "VPinJieSet.h"
+#import "DataSync.h"
+#import "KVNProgress.h"
+#import "AudioEProcessor.h"
+
+#import "WaitDialog.h"
+
+#ifdef OPEN_REG_LIB_DEF
+#import "RegulusSDK.h"
+#endif
 
 #define E_CELL_WIDTH   60
 
@@ -81,6 +91,7 @@
 @property (nonatomic, strong) NSMutableDictionary *_aDataCheckTestMap;
 @property (nonatomic, strong) NSMutableDictionary *_vDataCheckTestMap;
 @property (nonatomic, strong) NSMutableDictionary *_eDataCheckTestMap;
+
 @end
 
 @implementation EngineerPresetScenarioViewCtrl
@@ -175,11 +186,16 @@
     
     _isEditMode = NO;
     
+    
+    [[DataSync sharedDataSync] loadingLocalDrivers];
+    
     ecp = [[ECPlusSelectView alloc]
                              initWithFrame:CGRectMake(SCREEN_WIDTH-300,
                                                       64, 300, SCREEN_HEIGHT-114)];
     ecp.delegate = self;
     
+    ecp._data = [DataSync sharedDataSync]._plugTypes;
+    [ecp reloadData];
     
     
     UIView *topbar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 64)];
@@ -325,8 +341,38 @@
     
     [self.view addSubview:topbar];
     [self.view addSubview:bottomBar];
+
 }
+
+
+- (void) addDriver:(AudioEProcessor*)adp{
+    
+#ifdef OPEN_REG_LIB_DEF
+    
+    RgsDriverInfo *info = adp._driverInfo;
+    
+    NSMutableArray *drivers = [DataSync sharedDataSync]._currentAreaDrivers;
+    for(RgsDriverObj *odr in drivers)
+    {
+        if([odr.info.serial isEqualToString:info.serial])
+        {
+            adp._driver = odr;
+            
+            //同步一下IP地址
+            [adp syncDriverIPProperty];
+            return;
+        }
+    }
+
+    [[WaitDialog sharedAlertDialog] setTitle:@"未找到对应设备的驱动"];
+    [[WaitDialog sharedAlertDialog] animateShow];
+    
+#endif
+}
+
+
 - (void) createScenarioAction:(id) sender{
+    
     EngineerScenarioSettingsViewCtrl *ctrl = [[EngineerScenarioSettingsViewCtrl alloc] init];
     
     [self.navigationController pushViewController:ctrl animated:YES];
@@ -423,6 +469,20 @@
         return;
     }
  
+    /*
+#ifdef OPEN_REG_LIB_DEF
+    [[RegulusSDK sharedRegulusSDK] ReloadProject:^(BOOL result, NSError *error) {
+        if(result)
+        {
+            NSLog(@"reload project.");
+        }
+        else{
+            NSLog(@"%@",[error description]);
+        }
+    }];
+#endif
+     */
+    
     id  key = [NSNumber numberWithInteger:cellBtn.tag];
     NSMutableDictionary *data = [_buttonTagWithDataMap
                                   objectForKey:key];
@@ -478,10 +538,8 @@
         // wuxian array
         if ([name isEqualToString:@"有线会议麦"]) {
             EngineerHandtoHandViewCtrl *ctrl = [[EngineerHandtoHandViewCtrl alloc] init];
-            
             //传
-            ctrl._handToHandSysArray = nil;//[NSMutableArray arrayWithObject:data];
-            ctrl._number = 12;
+            ctrl._handToHandSysArray = _scenario._AHand2HandPlugs;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         
@@ -495,9 +553,7 @@
         // wuxian array
         if ([name isEqualToString:@"音频处理"]) {
             EngineerAudioProcessViewCtrl *ctrl = [[EngineerAudioProcessViewCtrl alloc] init];
-            ctrl._audioProcessArray = nil;// [NSMutableArray arrayWithObject:data];
-            ctrl._inputNumber=16;
-            ctrl._outputNumber=16;
+            ctrl._audioProcessArray = _scenario._AProcessorPlugs;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
@@ -662,7 +718,7 @@
         for(int i = 0; i < 3; i++)
         {
             VLuBoJiSet *pset = [[VLuBoJiSet alloc] init];
-            pset._com = @"191.16.1.100";
+            pset._ipaddress = @"191.16.1.100";
             pset._brand = @"brand1";
             pset._type = @"type1";
             pset._index = i;
@@ -919,7 +975,8 @@
         {
             AudioEWirlessMike *pset = [[AudioEWirlessMike alloc] init];
             pset._brand = @"品牌";
-            pset._type = @"型号";
+            pset._type = @"Audio";
+            pset._name = @"无线麦";
             pset._index = i;
             pset._deviceno = [NSString stringWithFormat:@"%02d", i+1];
             [pset initChannels:2];
@@ -929,6 +986,70 @@
         
         _scenario._AWirelessMikePlugs = mikes;
     }
+}
+
+- (void) initHand2HandPlugs{
+    
+    if([_scenario._AHand2HandPlugs count] == 0)
+    {
+        NSMutableArray *h2h = [NSMutableArray array];
+        
+        for(int i = 0; i < 3; i++)
+        {
+            AudioEHand2Hand *pset = [[AudioEHand2Hand alloc] init];
+            pset._brand = @"品牌";
+            pset._type = @"Audio";
+            pset._name = @"有线麦";
+            pset._index = i;
+            pset._deviceno = [NSString stringWithFormat:@"%02d", i+1];
+            [pset initChannels:8];
+            [h2h addObject:pset];
+        }
+        
+        _scenario._AHand2HandPlugs = h2h;
+    }
+}
+
+- (void) initProcessorPlugs{
+    
+    if([_scenario._AProcessorPlugs count] == 0)
+    {
+        NSMutableArray *h2h = [NSMutableArray array];
+        
+        //
+        
+        for(int i = 0; i < 1; i++)
+        {
+            AudioEProcessor *pset = [[AudioEProcessor alloc] init];
+            pset._brand = @"Teslaria";
+            pset._type = @"Audio";
+            pset._name = @"Teslaria Audio Processor";
+            pset._driverUUID = @"a3508fda-8775-4561-a26f-3df071f78b09";
+            pset._index = i;
+            pset._deviceno = [NSString stringWithFormat:@"%02d", i+1];
+            [h2h addObject:pset];
+            
+            id key = pset._driverUUID;
+            
+            id dr = [[DataSync sharedDataSync]._mapDrivers objectForKey:key];
+            pset._driverInfo = dr;
+
+        }
+        
+        _scenario._AProcessorPlugs = h2h;
+    }
+}
+
+- (void) checkAreaHaveDriver{
+    
+    for(AudioEProcessor *a in _scenario._AProcessorPlugs)
+    {
+        if(a._driverInfo)
+        {
+            [self addDriver:a];
+        }
+    }
+    
 }
 
 // if dataDic == nil, refresh scroll view
@@ -976,6 +1097,19 @@
             else if([name isEqualToString:@"无线麦"])
             {
                 [self initWirelessMikePlugs];
+            }
+            else if([name isEqualToString:@"无线麦"])
+            {
+                [self initWirelessMikePlugs];
+            }
+            else if([name isEqualToString:@"有线会议麦"])
+            {
+                [self initHand2HandPlugs];
+            }
+            else if([name isEqualToString:@"音频处理"])
+            {
+                [self initProcessorPlugs];
+                [self checkAreaHaveDriver];
             }
         }
         

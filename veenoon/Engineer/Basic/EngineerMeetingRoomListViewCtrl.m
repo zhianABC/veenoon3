@@ -11,6 +11,10 @@
 #import "JCActionView.h"
 #import "AppDelegate.h"
 
+#ifdef OPEN_REG_LIB_DEF
+#import "RegulusSDK.h"
+#endif
+
 @interface EngineerMeetingRoomListViewCtrl () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, JCActionViewDelegate>{
     NSMutableArray *lableArray;
     NSMutableArray *roomImageArray;
@@ -157,7 +161,22 @@
     [backBtn addTarget:self
                 action:@selector(backAction:)
       forControlEvents:UIControlEventTouchUpInside];
+    
+    
+#ifdef OPEN_REG_LIB_DEF
+    NSString* _regulus_gateway_id = [[NSUserDefaults standardUserDefaults] objectForKey:@"gateway_id"];
+    NSString* _regulus_user_id = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_id"];
+    
+    if(_regulus_gateway_id && _regulus_user_id)
+    {
+        //[[RegulusSDK sharedRegulusSDK] Logout:_regulus_user_id
+                                        //gw_id:_regulus_gateway_id completion:nil];
+    }
+#endif
 }
+
+
+
 
 - (void) longPressed0:(id)sender{
     

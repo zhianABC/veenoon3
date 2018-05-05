@@ -17,6 +17,5 @@
     int _outputNumber;
 }
 @property (nonatomic,strong) NSMutableArray *_audioProcessArray;
-@property (nonatomic,assign) int _inputNumber;
-@property (nonatomic,assign) int _outputNumber;
+
 @end

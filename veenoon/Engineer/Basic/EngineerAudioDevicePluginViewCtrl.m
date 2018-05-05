@@ -12,6 +12,7 @@
 #import "UIButton+Color.h"
 
 #import "IconCenterTextButton.h"
+#import "DataSync.h"
 
 @interface EngineerAudioDevicePluginViewCtrl () <CenterCustomerPickerViewDelegate>{
     IconCenterTextButton *_electronicSysBtn;
@@ -27,11 +28,19 @@
     CenterCustomerPickerView *_productCategoryPicker;
     CenterCustomerPickerView *_numberPicker;
 }
+@property (nonatomic, strong) NSArray *_currentBrands;
+@property (nonatomic, strong) NSArray *_currentTypes;
+@property (nonatomic, strong) NSArray *_driverUdids;
+
 @end
 
 @implementation EngineerAudioDevicePluginViewCtrl
 @synthesize _meetingRoomDic;
 @synthesize _selectedSysDic;
+
+@synthesize _currentBrands;
+@synthesize _currentTypes;
+@synthesize _driverUdids;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -165,12 +174,14 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"品牌";
     
+    [self initBrandAndTypes];
+    
     _brandPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(x1,
                                                                               labelStartY+20,
                                                                               maxWidth, 160)];
     _brandPicker.tag=102;
     [_brandPicker  removeArray];
-    _brandPicker._pickerDataArray = @[@{@"values":@[@"品牌1",@"品牌2",@"品牌3"]}];
+    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
     [_brandPicker selectRow:0 inComponent:0];
     _brandPicker._selectColor = RGB(253, 180, 0);
     _brandPicker._rowNormalColor = [UIColor whiteColor];
@@ -189,9 +200,8 @@
     
     _productCategoryPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(x1, labelStartY+20, maxWidth, 160)];
     _productCategoryPicker.tag=103;
-    _productCategoryPicker.delegate_=self;
     [_productCategoryPicker removeArray];
-    _productCategoryPicker._pickerDataArray = @[@{@"values":@[@"型号A",@"型号B",@"型号C"]}];
+    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
     [_productCategoryPicker selectRow:0 inComponent:0];
     _productCategoryPicker._selectColor = RGB(253, 180, 0);
     _productCategoryPicker._rowNormalColor = [UIColor whiteColor];
@@ -212,7 +222,7 @@
                                                                                60, 160)];
     _numberPicker.tag=104;
     [_numberPicker removeArray];
-    _numberPicker._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
+    _numberPicker._pickerDataArray = @[@{@"values":@[@"1",@"2",@"3",@"4",@"5",@"6"]}];
     [_numberPicker selectRow:0 inComponent:0];
     _numberPicker._selectColor = RGB(253, 180, 0);
     _numberPicker._rowNormalColor = [UIColor whiteColor];
@@ -230,9 +240,12 @@
     [signup setTitleColor:RGB(1, 138, 182) forState:UIControlStateHighlighted];
     signup.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [signup addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [[DataSync sharedDataSync] syncAreaHasDrivers];
 }
 
 - (void) confirmAction:(id)sender{
+    
     NSString *productType = _productTypePikcer._unitString;
     NSString *brand = _brandPicker._unitString;
     NSString *productCategory = _productCategoryPicker._unitString;
@@ -250,7 +263,32 @@
         [self._selectedSysDic setObject:audioArray forKey:@"audio"];
     }
     
+    NSDictionary *val = [_productCategoryPicker._values objectForKey:@0];
+    
+    int idx = [[val objectForKey:@"index"] intValue];
+    if(idx < [_driverUdids count])
+    {
+        id key = [_driverUdids objectAtIndex:idx];
+        
+        [[DataSync sharedDataSync] addCurrentSelectDriverToCurrentArea:key];
+
+    }
+    
+    
     [audioArray addObject:audioDic];
+}
+
+- (void) initBrandAndTypes{
+    
+    self._currentBrands = @[@"品牌1",@"品牌2",@"品牌3"];
+    self._currentTypes = @[@"型号A",@"型号B",@"型号C"];
+    self._driverUdids = @[];
+    
+    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
+    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
+    
+    [_brandPicker selectRow:0 inComponent:0];
+    [_productTypePikcer selectRow:0 inComponent:0];
 }
 
 - (void) gongfangAction:(id)sender{
@@ -265,9 +303,12 @@
     IconCenterTextButton *btn = (IconCenterTextButton*) sender;
     NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
+    
+    [self initBrandAndTypes];
 }
 
 - (void) yinpinchuliAction:(id)sender{
+    
     [_electronicSysBtn setBtnHighlited:NO];
     [_musicPlayBtn setBtnHighlited:NO];
     [_wuxianhuatongBtn setBtnHighlited:NO];
@@ -279,9 +320,20 @@
     IconCenterTextButton *btn = (IconCenterTextButton*) sender;
     NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
+    
+    self._currentBrands = @[@"Teslaria"];
+    self._currentTypes = @[@"Teslaria Audio Processor"];
+    self._driverUdids = @[@"a3508fda-8775-4561-a26f-3df071f78b09"];
+    
+    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
+    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
+    
+    [_brandPicker selectRow:0 inComponent:0];
+    [_productCategoryPicker selectRow:0 inComponent:0];
 }
 
 - (void) fankuiyizhiAction:(id)sender{
+    
     [_electronicSysBtn setBtnHighlited:NO];
     [_musicPlayBtn setBtnHighlited:NO];
     [_wuxianhuatongBtn setBtnHighlited:NO];
@@ -293,6 +345,8 @@
     IconCenterTextButton *btn = (IconCenterTextButton*) sender;
     NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
+    
+    [self initBrandAndTypes];
 }
 
 - (void) huiyiAction:(id)sender{
@@ -307,6 +361,8 @@
     IconCenterTextButton *btn = (IconCenterTextButton*) sender;
     NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
+    
+    [self initBrandAndTypes];
 }
 
 - (void) wuxianhuatongAction:(id)sender{
@@ -321,6 +377,8 @@
     IconCenterTextButton *btn = (IconCenterTextButton*) sender;
     NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
+    
+    [self initBrandAndTypes];
 }
 
 - (void) musicPlayAction:(id)sender{
@@ -335,6 +393,8 @@
     IconCenterTextButton *btn = (IconCenterTextButton*) sender;
     NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
+    
+    [self initBrandAndTypes];
 }
 
 - (void) electronicSysAction:(id)sender{
@@ -349,8 +409,11 @@
     IconCenterTextButton *btn = (IconCenterTextButton*) sender;
     NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
+    
+    [self initBrandAndTypes];
 }
 -(void) didScrollPickerValue:(NSString*)brand {
+    
     if ([@"电源管理" isEqualToString:brand]) {
         [self electronicSysAction:_electronicSysBtn];
     } else if ([@"音乐播放" isEqualToString:brand]) {
@@ -386,6 +449,7 @@
 }
 
 - (void) okAction:(id)sender{
+    
     EngineerVedioDevicePluginViewCtrl *ctrl = [[EngineerVedioDevicePluginViewCtrl alloc] init];
     ctrl._meetingRoomDic = self._meetingRoomDic;
     ctrl._selectedSysDic = self._selectedSysDic;

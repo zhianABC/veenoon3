@@ -17,6 +17,7 @@
 
 static WaitDialog *_sharedWaitDialog;
 static WaitDialog *_sharedAlertWaitDialog;
+static WaitDialog *_sharedImageWaitDialog;
 
 @interface WaitDialog ()
 {
@@ -24,6 +25,9 @@ static WaitDialog *_sharedAlertWaitDialog;
     UIActivityIndicatorView *_indicator;
     
     UIImageView *_grayBk;
+    
+    UIImageView *_aniWaitDialog;
+    CABasicAnimation *_animation;
 }
 
 @end
@@ -47,6 +51,14 @@ static WaitDialog *_sharedAlertWaitDialog;
     return _sharedAlertWaitDialog;
 }
 
++ (WaitDialog *)sharedRoundImageDialog{
+    
+    if (!_sharedImageWaitDialog) {
+        _sharedImageWaitDialog = [[WaitDialog alloc] initWithImageWaitFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    }
+    return _sharedImageWaitDialog;
+}
+
 - (id) initWithFrame:(CGRect)frame{
     if(self = [super initWithFrame:frame]){
         
@@ -58,7 +70,7 @@ static WaitDialog *_sharedAlertWaitDialog;
         bk.layer.cornerRadius = 5;
         bk.clipsToBounds = YES;
         bk.backgroundColor = [UIColor whiteColor];
-        bk.frame = CGRectMake(0, 0, SCREEN_WIDTH*0.7, 100);
+        bk.frame = CGRectMake(0, 0, 400, 100);
         bk.center = self.center;
         
         
@@ -98,14 +110,14 @@ static WaitDialog *_sharedAlertWaitDialog;
         _grayBk.layer.cornerRadius = 5;
         _grayBk.clipsToBounds = YES;
         _grayBk.backgroundColor = RGBA(0, 0, 0, 0.3);
-        _grayBk.frame = CGRectMake(0, 0, SCREEN_WIDTH*0.7, 30);
+        _grayBk.frame = CGRectMake(0, 0, 200, 100);
         _grayBk.center = self.center;
         
         
-        _label = [[UILabel alloc] initWithFrame:CGRectMake(10, 8, CGRectGetWidth(_grayBk.frame)-20, 20)];
+        _label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, CGRectGetWidth(_grayBk.frame)-20, 40)];
         _label.backgroundColor = [UIColor clearColor];
-        _label.textColor = THEME_COLOR;
-        _label.font = [UIFont systemFontOfSize:13];
+        _label.textColor = [UIColor whiteColor];
+        _label.font = [UIFont systemFontOfSize:15];
         _label.textAlignment = NSTextAlignmentCenter;
         _label.tag = LABEL_TAG;
         _label.text = @"Loading";
@@ -117,6 +129,58 @@ static WaitDialog *_sharedAlertWaitDialog;
     return nil;
 }
 
+
+- (id) initWithImageWaitFrame:(CGRect)frame{
+    if(self = [super initWithFrame:frame]){
+        
+        
+        self.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.6];
+        
+        UIBlurEffect *footerblur = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+        UIVisualEffectView* effectview = [[UIVisualEffectView alloc] initWithEffect:footerblur];
+        effectview.frame = CGRectMake(0, 0, SCREEN_WIDTH, 50);
+        [self addSubview:effectview];
+        effectview.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.6];
+        
+        _aniWaitDialog = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ring.png"]];
+        [self addSubview:_aniWaitDialog];
+        _aniWaitDialog.center = CGPointMake(frame.size.width/2, frame.size.height/2);
+        
+        _animation =  [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+        //默认是顺时针效果，若将fromValue和toValue的值互换，则为逆时针效果
+        _animation.fromValue = [NSNumber numberWithFloat:0.f];
+        _animation.toValue =  [NSNumber numberWithFloat: M_PI *2];
+        _animation.duration  = 1;
+        _animation.autoreverses = NO;
+        _animation.fillMode =kCAFillModeForwards;
+        _animation.repeatCount = MAXFLOAT;
+        
+
+        
+        return self;
+    }
+    return nil;
+}
+
+- (void) showRing{
+    
+    AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    [app.window addSubview:self];
+    self.alpha = 1.0;
+    
+    [_aniWaitDialog.layer addAnimation:_animation forKey:@"ring"];
+}
+- (void) endRing{
+    
+    [UIView animateWithDuration:0.35
+                     animations:^{
+                         self.alpha = 0.0;
+                     } completion:^(BOOL finished) {
+                         [_aniWaitDialog.layer removeAnimationForKey:@"ring"];
+                         [self removeFromSuperview];
+                     }];
+    
+}
 
 - (void) updateSpin{
     
@@ -173,8 +237,8 @@ static WaitDialog *_sharedAlertWaitDialog;
     _label.frame = CGRectMake(10, 8, CGRectGetWidth(_grayBk.frame)-20, 20);
     [_label contentSize];
     
-    int h = CGRectGetHeight(_label.frame)+16;
-    _grayBk.frame = CGRectMake(0, 0, SCREEN_WIDTH*0.6, h);
+    _label.center = CGPointMake(CGRectGetMidX(_grayBk.bounds),
+                               CGRectGetMidY(_grayBk.bounds));
     _grayBk.center = self.center;
     
     AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];

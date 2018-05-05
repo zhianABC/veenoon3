@@ -31,6 +31,7 @@
 @synthesize _map;
 
 - (void) initDat {
+    
     if (_scenarioArray == nil) {
         _scenarioArray = [[NSMutableArray alloc] init];
     }
