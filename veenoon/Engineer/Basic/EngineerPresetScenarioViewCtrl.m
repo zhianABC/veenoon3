@@ -1024,14 +1024,12 @@
             pset._brand = @"Teslaria";
             pset._type = @"Audio";
             pset._name = @"Teslaria Audio Processor";
+            pset._driverUUID = @"a3508fda-8775-4561-a26f-3df071f78b09";
             pset._index = i;
             pset._deviceno = [NSString stringWithFormat:@"%02d", i+1];
             [h2h addObject:pset];
             
-            id key = [NSString stringWithFormat:@"%@-%@-%@",
-                      @"Audio",
-                      pset._brand,
-                      pset._name];
+            id key = pset._driverUUID;
             
             id dr = [[DataSync sharedDataSync]._mapDrivers objectForKey:key];
             pset._driverInfo = dr;

@@ -284,12 +284,11 @@
 
 - (void) checkSceneDriver:(NSArray*)drivers{
     
-    NSString *keymap = @"System-Regulus-Regulus Scene";
+    NSString *keymap = @"b836539a-376c-4fae-86d0-d7d580e7a626";
     
     for(RgsDriverObj *dr in drivers)
     {
-        NSString *drkey = [NSString stringWithFormat:@"%@-%@-%@",
-                           dr.info.classify, dr.info.brand, dr.info.name];
+        NSString *drkey = dr.info.serial;
         if([drkey isEqualToString:keymap])
         {
             [_sceneDrivers addObject:dr];
@@ -416,6 +415,10 @@
     if([DataSync sharedDataSync]._currentReglusLogged)
     {
         
+        //test
+        [self setNewProject];
+        
+        /*
         IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
 
         [[RegulusSDK sharedRegulusSDK] NewProject:@"Veenoon" completion:^(BOOL result, NSError *error) {
@@ -431,6 +434,7 @@
                 NSLog(@"%@", [error description]);
             }
         }];
+         */
 
     }
     else

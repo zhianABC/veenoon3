@@ -15,6 +15,7 @@
 }
 @property (nonatomic, readonly) UILabel *textL;
 @property (nonatomic, assign) BOOL _isShowingPoint;
+@property (strong, nonatomic) UIColor *progressColor;
 
 - (void) setProgress:(float)progress;
 - (void) updateOffest:(float)offset;
@@ -27,5 +28,6 @@
 - (void) syncCurrentStepedValue;
 
 - (float) pgvalue;
+
 
 @end

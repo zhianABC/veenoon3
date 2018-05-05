@@ -18,6 +18,7 @@
 @synthesize _deviceid;
 @synthesize _index;
 @synthesize _comArray;
+@synthesize _driverUUID;
 
 - (id) init
 {

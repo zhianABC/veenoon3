@@ -169,7 +169,17 @@
 - (void) handleTapGesture:(id)sender{
     
     if ([_rightView superview]) {
-        [_rightView removeFromSuperview];
+       
+        CGRect rc = _rightView.frame;
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             _rightView.frame = CGRectMake(SCREEN_WIDTH,
+                                                     rc.origin.y,
+                                                     rc.size.width,
+                                                     rc.size.height);
+                         } completion:^(BOOL finished) {
+                             [_rightView removeFromSuperview];
+                         }];
     }
     if ([_inconView superview]) {
         [_inconView removeFromSuperview];
@@ -177,6 +187,8 @@
     [okBtn setTitle:@"设置" forState:UIControlStateNormal];
     isSettings = NO;
 }
+
+
 
 - (void) getCurrentDeviceDriverProxys{
     
@@ -371,6 +383,20 @@
     }
 }
 
+- (void) didSliderMuteChanged:(BOOL)mute object:(id)object{
+    
+    for (SlideButton *button in _selectedBtnArray) {
+       
+        [button muteSlider:mute];
+        
+        id data = button.data;
+        if([data isKindOfClass:[VAProcessorProxys class]])
+        {
+            [(VAProcessorProxys*)data controlDeviceMute:mute];
+        }
+    }
+}
+
 
 - (void) didTappedMSelf:(SlideButton*)slbtn{
     
@@ -499,9 +525,16 @@
 }
 
 
+#pragma mark -- Right View Delegate ---
+- (void) dissmissSettingView{
+    [self handleTapGesture:nil];
+}
+
 - (void) didSelectButtonAction:(NSString*)value {
     if ([@"输入设置" isEqualToString:value]) {
         AudioInputSettingViewCtrl *ctrl = [[AudioInputSettingViewCtrl alloc] init];
+        ctrl._processor = _curProcessor;
+        
         [self.navigationController pushViewController:ctrl animated:YES];
     } else if ([@"输出设置" isEqualToString:value]) {
         AudioOutputSettingViewCtrl *ctrl = [[AudioOutputSettingViewCtrl alloc] init];

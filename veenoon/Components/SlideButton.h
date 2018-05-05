@@ -42,4 +42,6 @@
 -(void) setTitle:(NSString*)title;
 -(void) setvalueTitle:(NSString*)title;
 
+- (void) muteSlider:(BOOL)mute;
+
 @end

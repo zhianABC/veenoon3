@@ -30,6 +30,7 @@
 }
 @property (nonatomic, strong) NSArray *_currentBrands;
 @property (nonatomic, strong) NSArray *_currentTypes;
+@property (nonatomic, strong) NSArray *_driverUdids;
 
 @end
 
@@ -39,6 +40,7 @@
 
 @synthesize _currentBrands;
 @synthesize _currentTypes;
+@synthesize _driverUdids;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -261,12 +263,17 @@
         [self._selectedSysDic setObject:audioArray forKey:@"audio"];
     }
     
-    id key = [NSString stringWithFormat:@"%@-%@-%@",
-              @"Audio",
-              brand,
-              productCategory];
+    NSDictionary *val = [_productCategoryPicker._values objectForKey:@0];
     
-    [[DataSync sharedDataSync] addCurrentSelectDriverToCurrentArea:key];
+    int idx = [[val objectForKey:@"index"] intValue];
+    if(idx < [_driverUdids count])
+    {
+        id key = [_driverUdids objectAtIndex:idx];
+        
+        [[DataSync sharedDataSync] addCurrentSelectDriverToCurrentArea:key];
+
+    }
+    
     
     [audioArray addObject:audioDic];
 }
@@ -275,6 +282,7 @@
     
     self._currentBrands = @[@"品牌1",@"品牌2",@"品牌3"];
     self._currentTypes = @[@"型号A",@"型号B",@"型号C"];
+    self._driverUdids = @[];
     
     _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
     _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
@@ -315,6 +323,7 @@
     
     self._currentBrands = @[@"Teslaria"];
     self._currentTypes = @[@"Teslaria Audio Processor"];
+    self._driverUdids = @[@"a3508fda-8775-4561-a26f-3df071f78b09"];
     
     _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
     _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];

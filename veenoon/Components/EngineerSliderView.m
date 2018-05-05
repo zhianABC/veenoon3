@@ -17,6 +17,10 @@
     CGPoint beginPoint;
     
     int curValue;
+    
+    BOOL _isMute;
+    
+    UIButton *_muteBtn;
 }
 
 @end
@@ -74,6 +78,14 @@
         zengyiLabel.font = [UIFont systemFontOfSize:14];
         zengyiLabel.textAlignment = NSTextAlignmentCenter;
         
+        
+        _muteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _muteBtn.frame = CGRectMake(0, CGRectGetHeight(self.bounds)-44, frame.size.width, 44);
+        [self addSubview:_muteBtn];
+        [_muteBtn addTarget:self
+                     action:@selector(muteAction:)
+           forControlEvents:UIControlEventTouchUpInside];
+        
         stepValue = 1;
     }
     
@@ -87,16 +99,18 @@
     
     if (scalValue == minValue) {
         
-        [self setIndicatorImage: [UIImage imageNamed:@"wireless_slide_n.png"]];
+        if(!_isMute)
+            [self setIndicatorImage: [UIImage imageNamed:@"wireless_slide_n.png"]];
         sliderThumb.image = [UIImage imageNamed:@"jslide_thumb_n.png"];
         
     } else {
         
-        [self setIndicatorImage: [UIImage imageNamed:@"wireless_slide_s.png"]];
+        if(!_isMute)
+            [self setIndicatorImage: [UIImage imageNamed:@"wireless_slide_s.png"]];
+        
         sliderThumb.image = [UIImage imageNamed:@"jslide_thumb.png"];
         
     }
-    
     
     CGRect rc = roadSliderHighlight.frame;
     rc.origin.y = CGRectGetMidY(sliderThumb.frame);
@@ -118,9 +132,47 @@
     
     [self addSubview:indicator];
     
-    indicator.center = CGPointMake(self.bounds.size.width/2, CGRectGetMaxY(self.bounds)-16);
+    indicator.center = CGPointMake(self.bounds.size.width/2, CGRectGetMaxY(self.bounds)-20);
     
     [self bringSubviewToFront:sliderThumb];
+}
+
+- (void) muteAction:(id)sender{
+    
+    _isMute = !_isMute;
+    
+    [self updateMuteState];
+    
+    if(delegate && [delegate respondsToSelector:@selector(didSliderMuteChanged:object:)])
+    {
+        [delegate didSliderMuteChanged:_isMute object:self];
+    }
+}
+
+- (void) updateMuteState{
+    
+    if(_isMute)
+        indicator.image = [UIImage imageNamed:@"wireless_slide_mute.png"];
+    else
+    {
+        if (curValue <= minValue) {
+            
+            [self setIndicatorImage: [UIImage imageNamed:@"wireless_slide_n.png"]];
+            
+        } else {
+            
+            [self setIndicatorImage: [UIImage imageNamed:@"wireless_slide_s.png"]];
+        }
+    }
+    
+    
+}
+
+- (void) setMuteVal:(BOOL)mute{
+    
+    _isMute = mute;
+    
+    [self updateMuteState];
 }
 
 //废弃

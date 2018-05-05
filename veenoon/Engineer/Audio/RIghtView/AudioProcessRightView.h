@@ -13,6 +13,7 @@
 
 @optional
 - (void) didSelectButtonAction:(NSString*)value;
+- (void) dissmissSettingView;
 @end
 
 @class AudioEProcessor;

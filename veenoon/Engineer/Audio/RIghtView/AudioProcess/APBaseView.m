@@ -19,6 +19,7 @@
 
 @implementation APBaseView
 @synthesize _channelBtns;
+@synthesize _proxys;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -35,7 +36,7 @@
         tapGesture.numberOfTapsRequired = 1;
         [self addGestureRecognizer:tapGesture];
         
-        [self layoutChannelBtns:16];
+        //[self layoutChannelBtns:16];
        
     }
     
@@ -43,6 +44,11 @@
 }
 
 - (void) layoutChannelBtns:(int)num{
+    
+    if(_channelBtns && [_channelBtns count])
+    {
+        [_channelBtns makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    }
     
     self._channelBtns = [NSMutableArray array];
     
@@ -88,6 +94,9 @@
         [btn addGestureRecognizer:longPress0];
         
     }
+    
+    if([_channelBtns count])
+        [self channelBtnAction:[_channelBtns objectAtIndex:0]];
     
 }
 

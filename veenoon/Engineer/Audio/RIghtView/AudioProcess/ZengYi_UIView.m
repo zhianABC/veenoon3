@@ -9,6 +9,8 @@
 #import "ZengYi_UIView.h"
 #import "UIButton+Color.h"
 #import "SlideButton.h"
+#import "RegulusSDK.h"
+#import "VAProcessorProxys.h"
 
 @interface ZengYi_UIView() <SlideButtonDelegate>{
     
@@ -16,12 +18,15 @@
     SlideButton *btnJH2;
     
     UILabel *zaoshengL;
+    UIButton *muteBtn;
 }
+@property (nonatomic, strong) VAProcessorProxys *_curProxy;
 
 @end
 
 
 @implementation ZengYi_UIView
+@synthesize _curProxy;
 
 /*
  // Only override drawRect: if you perform custom drawing.
@@ -65,8 +70,13 @@
 
 - (void) channelBtnAction:(UIButton*)sender{
     
-    int tag = (int)sender.tag+1;
-    [channelBtn setTitle:[NSString stringWithFormat:@"In %d", tag] forState:UIControlStateNormal];
+    int idx = (int)sender.tag;
+    self._curProxy = [self._proxys objectAtIndex:idx];
+
+    NSString *name = _curProxy._rgsProxyObj.name;
+    [channelBtn setTitle:name forState:UIControlStateNormal];
+    
+    [_curProxy checkRgsProxyCommandLoad];
     
     for(UIButton * btn in _channelBtns)
     {
@@ -78,6 +88,24 @@
         {
             [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }
+    }
+    
+    
+    [self updateMuteButtonState];
+    
+}
+
+- (void) updateMuteButtonState{
+    
+    BOOL isMute = [_curProxy isProxyDigitalMute];
+    
+    if(isMute)
+    {
+        [muteBtn changeNormalColor:THEME_RED_COLOR];
+    }
+    else
+    {
+        [muteBtn changeNormalColor:RGB(75, 163, 202)];
     }
 }
 
@@ -110,10 +138,12 @@
 
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
-    int k = (value *24)-12;
-    NSString *valueStr= [NSString stringWithFormat:@"%dB", k];
+    float k = (value *24.0)-12.0;
+    NSString *valueStr= [NSString stringWithFormat:@"%0.1fdB", k];
     
     zaoshengL.text = valueStr;
+    
+    [_curProxy controlDeviceDigitalGain:[valueStr floatValue]];
 }
 
 - (void) createContentViewBtns {
@@ -141,7 +171,7 @@
     [contentView addSubview:lineBtn];
     
     
-    UIButton *muteBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    muteBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
     muteBtn.frame = CGRectMake(CGRectGetMaxX(lineBtn.frame)+10, btnY, 50, 30);
     muteBtn.layer.cornerRadius = 5;
     muteBtn.layer.borderWidth = 2;
@@ -234,6 +264,14 @@
 
 -(void) muteBtnAction:(id) sender {
     
+    if(_curProxy == nil)
+        return;
+    
+    BOOL isMute = [_curProxy isProxyDigitalMute];
+    
+    [_curProxy controlDigtalMute:!isMute];
+    
+    [self updateMuteButtonState];
 }
 
 @end

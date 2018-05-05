@@ -14,6 +14,8 @@
     NSMutableArray *_channelBtns;
 }
 @property (nonatomic, strong) NSMutableArray *_channelBtns;
+@property (nonatomic, strong) NSArray *_proxys;
 
+- (void) layoutChannelBtns:(int)num;
 
 @end

@@ -18,10 +18,15 @@
 
 - (void) checkRgsProxyCommandLoad;
 
+- (BOOL) isProxyMute;
+- (BOOL) isProxyDigitalMute;
 - (void) controlDeviceDb:(float)db force:(BOOL)force;
 - (void) controlDeviceMute:(BOOL)isMute;
+- (void) controlDeviceDigitalGain:(float)digVal;
+- (void) controlDigtalMute:(BOOL)isMute;
 
 - (id) generateEventOperation_AnalogyGain;
 - (id) generateEventOperation_Mute;
+- (id) generateEventOperation_DigitalMute;
 
 @end

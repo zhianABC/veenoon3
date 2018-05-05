@@ -144,6 +144,9 @@
         
         RgsDriverObj *rd = (RgsDriverObj*)_driver;
         
+        //保存到内存
+        _driver_ip_Property.value = self._ipaddress;
+        
         [[RegulusSDK sharedRegulusSDK] SetDriverProperty:rd.m_id
                                           property_name:_driver_ip_Property.name
                                          property_value:self._ipaddress

@@ -151,6 +151,19 @@
     [progress setProgress:value];
 }
 
+- (void) muteSlider:(BOOL)mute{
+    
+    if(mute)
+    {
+        progress.progressColor = THEME_RED_COLOR;
+        [progress setNeedsDisplay];
+    }
+    else
+    {
+        progress.progressColor = RGB(242, 148, 20);
+        [progress setNeedsDisplay];
+    }
+}
 
 -(void) touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event {
     

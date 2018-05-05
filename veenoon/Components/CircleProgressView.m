@@ -22,7 +22,6 @@
 
 }
 @property (strong, nonatomic) UIColor *backColor;
-@property (strong, nonatomic) UIColor *progressColor;
 @property (assign, nonatomic) CGFloat lineWidth;
 @property (assign, nonatomic) CGFloat currentProgress;
 

@@ -13,6 +13,7 @@
 @property (nonatomic, strong) NSString *_name;
 @property (nonatomic, strong) NSString *_brand;
 @property (nonatomic, strong) NSString *_type;
+@property (nonatomic, strong) NSString *_driverUUID;
 @property (nonatomic, strong) NSString *_deviceno;
 @property (nonatomic, strong) NSString *_deviceid;
 @property (nonatomic, strong) NSString *_ipaddress;

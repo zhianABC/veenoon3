@@ -214,8 +214,7 @@ static DataSync* dSyncInstance = nil;
     self._mapDrivers = [NSMutableDictionary dictionary];
     for(RgsDriverInfo *dr in driver_infos)
     {
-        [_mapDrivers setObject:dr forKey:[NSString stringWithFormat:@"%@-%@-%@",
-                                          dr.classify, dr.brand, dr.name]];
+        [_mapDrivers setObject:dr forKey:dr.serial];
     }
     
 #endif
@@ -238,6 +237,9 @@ static DataSync* dSyncInstance = nil;
         {
             if([odr.info.serial isEqualToString:info.serial])
             {
+                [[WaitDialog sharedAlertDialog] setTitle:@"已添加"];
+                [[WaitDialog sharedAlertDialog] animateShow];
+                
                 return;
             }
         }

@@ -14,6 +14,8 @@
 {
     float _voiceDb;
     BOOL _isMute;
+    BOOL _isDigitalMute;
+    float _digitalGain;
 }
 @property (nonatomic, strong) NSArray *_rgsCommands;
 @property (nonatomic, strong) NSMutableDictionary *_cmdMap;
@@ -29,12 +31,22 @@
     if(self = [super init])
     {
         _isMute = NO;
+        _isDigitalMute = NO;
         _voiceDb = 0;
+        _digitalGain = 0;
     }
     
     return self;
 }
 
+- (BOOL) isProxyMute{
+    
+    return _isMute;
+}
+- (BOOL) isProxyDigitalMute{
+    
+    return _isDigitalMute;
+}
 - (void) checkRgsProxyCommandLoad{
     
     if(_rgsProxyObj == nil || _rgsCommands)
@@ -70,11 +82,11 @@
 /*
  SET_MUTE
  SET_UNMUTE
- SET_DIGIT_MUTE
+ SET_DIGIT_MUTE options [True, False]
  SET_DIGIT_GRAIN
  SET_ANALOGY_GRAIN
  SET_INVERTED
- SET_MODE
+ SET_MODE  options [LINE, MIC]
  SET_MIC_DB
  SET_48V
  SET_NOISE_GATE
@@ -123,6 +135,41 @@
         }];
     }
 }
+
+- (void) controlDeviceDigitalGain:(float)digVal{
+    
+    _digitalGain = digVal;
+    
+    RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_DIGIT_GRAIN"];
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
+            if(param_info.type == RGS_PARAM_TYPE_FLOAT)
+            {
+                [param setObject:[NSString stringWithFormat:@"%0.1f",digVal]
+                          forKey:param_info.name];
+            }
+            else if(param_info.type == RGS_PARAM_TYPE_INT)
+            {
+                [param setObject:[NSString stringWithFormat:@"%0.0f",digVal]
+                          forKey:param_info.name];
+            }
+        }
+        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+                                                 cmd:cmd.name
+                                               param:param completion:^(BOOL result, NSError *error) {
+                                                   if (result) {
+                                                       
+                                                   }
+                                                   else{
+                                                       
+                                                   }
+                                               }];
+    }
+}
 - (void) controlDeviceMute:(BOOL)isMute{
     
     RgsCommandInfo *cmd = nil;
@@ -141,6 +188,48 @@
     if(cmd)
     {
         NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+                                                 cmd:cmd.name
+                                               param:param completion:^(BOOL result, NSError *error) {
+                                                   if (result) {
+                                                       
+                                                   }
+                                                   else{
+                                                       
+                                                   }
+                                               }];
+    }
+}
+
+- (void) controlDigtalMute:(BOOL)isMute{
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_DIGIT_MUTE"];
+    NSString* tureOrFalse = @"False";
+    if(isMute)
+    {
+        tureOrFalse = @"True";
+        _isDigitalMute = YES;
+    }
+    else
+    {
+        tureOrFalse = @"False";
+        _isDigitalMute = NO;
+    }
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        
+        
+        if([cmd.params count])
+        {
+            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
+            if(param_info.type == RGS_PARAM_TYPE_LIST)
+            {
+                [param setObject:tureOrFalse forKey:param_info.name];
+            }
+           
+        }
         [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
                                                  cmd:cmd.name
                                                param:param completion:^(BOOL result, NSError *error) {
@@ -198,6 +287,46 @@
     if(cmd)
     {
         NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc]init];
+        scene_opt.dev_id = _rgsProxyObj.m_id;
+        scene_opt.cmd = cmd.name;
+        scene_opt.param = param;
+        
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
+                                                                          cmd:scene_opt.cmd
+                                                                        param:scene_opt.param];
+        
+        return opt;
+    }
+    
+    return nil;
+}
+- (id) generateEventOperation_DigitalMute{
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_DIGIT_MUTE"];
+    NSString* tureOrFalse = @"False";
+    if(_isDigitalMute)
+    {
+        tureOrFalse = @"True";
+    }
+    else
+    {
+        tureOrFalse = @"False";
+    }
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+
+        if([cmd.params count])
+        {
+            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
+            if(param_info.type == RGS_PARAM_TYPE_LIST)
+            {
+                [param setObject:tureOrFalse forKey:param_info.name];
+            }
+            
+        }
         RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc]init];
         scene_opt.dev_id = _rgsProxyObj.m_id;
         scene_opt.cmd = cmd.name;
