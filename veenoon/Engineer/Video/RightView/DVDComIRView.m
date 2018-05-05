@@ -60,6 +60,7 @@ CenterCustomerPickerViewDelegate>
 @synthesize _selectedBrand;
 @synthesize _selectedType;
 @synthesize _isAllowedClose;
+@synthesize _currentObj;
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.
@@ -241,7 +242,7 @@ CenterCustomerPickerViewDelegate>
     
 }
 
-- (void) initData{
+- (void) initData {
     
     if(self._brands == nil)
     {
@@ -759,6 +760,12 @@ CenterCustomerPickerViewDelegate>
     [textField resignFirstResponder];
     
     return YES;
+}
+
+-(void) refreshComIR:(BasePlugElement*) currentObj {
+    _currentObj = currentObj;
+    
+    [_com refreshCom:currentObj];
 }
 
 @end
