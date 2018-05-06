@@ -39,6 +39,7 @@
 - (void) controlDeviceLoadPostion;
 - (void) controlDeviceZoom:(NSString*)zoom;
 
+- (BOOL) isSetChanged;
 ////生成场景片段
 - (id) generateEventOperation_Postion;
 

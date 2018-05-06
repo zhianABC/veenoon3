@@ -33,6 +33,7 @@
 - (void) controlDevicePower:(NSString*)power;
 - (void) controlDeviceInput:(NSString*)input;
 
+- (BOOL) isSetChanged;
 ////生成场景片段
 - (id) generateEventOperation_Power;
 - (id) generateEventOperation_Input;

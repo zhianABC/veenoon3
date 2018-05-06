@@ -138,6 +138,14 @@
     return _inverted;
 }
 
+- (BOOL) isSetChanged{
+    
+    if(_cmdMap)
+        return YES;
+    
+    return NO;
+}
+
 - (void) checkRgsProxyCommandLoad{
     
     if(_rgsProxyObj == nil || _rgsCommands)
@@ -405,6 +413,8 @@
 - (void) controlDeviceMode:(NSString*)mode{
     
     RgsCommandInfo *cmd = nil;
+    
+    if(_cmdMap)
     cmd = [_cmdMap objectForKey:@"SET_MODE"];
     self._mode = mode;
     
@@ -436,6 +446,8 @@
 - (void) controlDeviceMicDb:(NSString*)db{
     
     RgsCommandInfo *cmd = nil;
+    
+    if(_cmdMap)
     cmd = [_cmdMap objectForKey:@"SET_MIC_DB"];
     self._micDb = db;
     
@@ -466,7 +478,11 @@
 
 - (id) generateEventOperation_AnalogyGain
 {
-    RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_ANALOGY_GRAIN"];
+    RgsCommandInfo *cmd = nil;
+    if(_cmdMap)
+    {
+        cmd = [_cmdMap objectForKey:@"SET_ANALOGY_GRAIN"];
+    }
     if(cmd)
     {
         NSMutableDictionary * param = [NSMutableDictionary dictionary];
@@ -497,13 +513,17 @@
 - (id) generateEventOperation_Mute{
     
     RgsCommandInfo *cmd = nil;
-    if(_isMute)
+    
+    if(_cmdMap)
     {
-        cmd = [_cmdMap objectForKey:@"SET_MUTE"];
-    }
-    else
-    {
-        cmd = [_cmdMap objectForKey:@"SET_UNMUTE"];
+        if(_isMute)
+        {
+            cmd = [_cmdMap objectForKey:@"SET_MUTE"];
+        }
+        else
+        {
+            cmd = [_cmdMap objectForKey:@"SET_UNMUTE"];
+        }
     }
     if(cmd)
     {
@@ -525,7 +545,10 @@
 
 - (id) generateEventOperation_DigitalGain
 {
-    RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_DIGIT_GRAIN"];
+    RgsCommandInfo *cmd = nil;
+   
+    if(_cmdMap)
+        cmd = [_cmdMap objectForKey:@"SET_DIGIT_GRAIN"];
     if(cmd)
     {
         NSMutableDictionary * param = [NSMutableDictionary dictionary];
@@ -557,6 +580,8 @@
 - (id) generateEventOperation_DigitalMute{
     
     RgsCommandInfo *cmd = nil;
+    
+    if(_cmdMap)
     cmd = [_cmdMap objectForKey:@"SET_DIGIT_MUTE"];
     NSString* tureOrFalse = @"False";
     if(_isDigitalMute)
@@ -597,6 +622,8 @@
 - (id) generateEventOperation_Mode{
     
     RgsCommandInfo *cmd = nil;
+    
+    if(_cmdMap)
     cmd = [_cmdMap objectForKey:@"SET_MODE"];
 
     if(cmd)
@@ -629,6 +656,8 @@
 - (id) generateEventOperation_MicDb{
     
     RgsCommandInfo *cmd = nil;
+    
+    if(_cmdMap)
     cmd = [_cmdMap objectForKey:@"SET_MIC_DB"];
     
     if(cmd)
@@ -660,6 +689,8 @@
 - (id) generateEventOperation_48v{
     
     RgsCommandInfo *cmd = nil;
+    
+    if(_cmdMap)
     cmd = [_cmdMap objectForKey:@"SET_48V"];
     
     NSString* tureOrFalse = @"False";
@@ -702,7 +733,9 @@
 - (id) generateEventOperation_Inverted{
     
     RgsCommandInfo *cmd = nil;
-    cmd = [_cmdMap objectForKey:@"SET_INVERTED"];
+    
+    if(_cmdMap)
+        cmd = [_cmdMap objectForKey:@"SET_INVERTED"];
     
     NSString* tureOrFalse = @"False";
     if(_inverted)

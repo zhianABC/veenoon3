@@ -52,6 +52,11 @@
 #import "KVNProgress.h"
 #import "AudioEProcessor.h"
 
+#import "VAProcessorProxys.h"
+#import "VCameraProxys.h"
+#import "VTouyingjiSet.h"
+#import "VProjectProxys.h"
+
 #import "WaitDialog.h"
 #import "DevicePlugButton.h"
 
@@ -78,6 +83,8 @@
     BOOL _isEditMode;
     UIButton *_setBtn;
     UIButton *_doneBtn;
+    
+    UIButton *scenarioButton;
 }
 @property (nonatomic, strong) NSMutableArray *_audioCells;
 @property (nonatomic, strong) NSMutableArray *_videoCells;
@@ -179,6 +186,13 @@
     
     
 }
+
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initData];
@@ -204,7 +218,7 @@
     UIView *topbar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 64)];
     topbar.backgroundColor = THEME_COLOR;
     
-    UIButton *scenarioButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    scenarioButton = [UIButton buttonWithType:UIButtonTypeCustom];
     scenarioButton.frame = CGRectMake(SCREEN_WIDTH-120, 20, 100, 44);
     [topbar addSubview:scenarioButton];
     [scenarioButton setTitle:@"生成场景" forState:UIControlStateNormal];
@@ -345,6 +359,11 @@
     [self.view addSubview:topbar];
     [self.view addSubview:bottomBar];
 
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(notifyScenarioResult:)
+                                                 name:@"Notify_Scenario_Create_Result"
+                                               object:nil];
 }
 
 
@@ -374,12 +393,30 @@
 }
 
 
-- (void) createScenarioAction:(id) sender{
+
+
+- (void) createScenarioAction:(UIButton*) sender{
     
-    EngineerScenarioSettingsViewCtrl *ctrl = [[EngineerScenarioSettingsViewCtrl alloc] init];
-    [self.navigationController pushViewController:ctrl animated:YES];
+    sender.enabled = NO;
     
+    [_scenario prepareSenarioSlice];
+    [_scenario createEventScenario];
+
 }
+
+- (void) notifyScenarioResult:(NSNotification*)notify{
+    
+    scenarioButton.enabled = YES;
+    
+    NSDictionary *object = notify.object;
+    BOOL res = [[object objectForKey:@"result"] boolValue];
+    if(res)
+    {
+        EngineerScenarioSettingsViewCtrl *ctrl = [[EngineerScenarioSettingsViewCtrl alloc] init];
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+}
+
 - (void) handleTapGesture:(UIGestureRecognizer*)sender{
     
     CGPoint pt = [sender locationInView:self.view];
@@ -1425,4 +1462,7 @@
 - (void) cancelAction:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+
+
 @end

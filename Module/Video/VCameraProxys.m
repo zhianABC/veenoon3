@@ -236,9 +236,21 @@
     [self controlDeviceDirection:@"STOP"];
 }
 
+- (BOOL) isSetChanged{
+    
+    if(_cmdMap)
+        return YES;
+    
+    return NO;
+}
+
 - (id) generateEventOperation_Postion{
     
-    RgsCommandInfo *cmd = [_cmdMap objectForKey:@"LOAD"];
+    RgsCommandInfo *cmd = nil;
+    
+    if(_cmdMap)
+        cmd = [_cmdMap objectForKey:@"LOAD"];
+    
     if(cmd)
     {
         NSMutableDictionary * param = [NSMutableDictionary dictionary];

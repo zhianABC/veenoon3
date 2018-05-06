@@ -65,6 +65,7 @@
 - (void) controlInverted:(BOOL)invert;
 
 
+- (BOOL) isSetChanged;
 ////生成场景片段
 - (id) generateEventOperation_AnalogyGain;
 - (id) generateEventOperation_Mute;

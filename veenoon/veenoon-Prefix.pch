@@ -115,5 +115,6 @@
 #define UUID_NetCamera      @"08b3fbff-118b-457c-adea-2c81cad47ebb"
 #define UUID_CANON_WUX450   @"e084c393-19a3-47a1-aada-efc12869a965"
 #define UUID_DIMMER_LIGHT   @"16803f55-9f85-4dd8-bfca-0e55e7c53d41"
+#define UUID_Regulus_Scene  @"f8f84c9c-4246-4ef2-b7fd-cdb76f8b08a3"
 
 typedef void (^RightSetViewCallbackBlock)(int deviceIndex);

@@ -190,9 +190,19 @@
     }
 }
 
+- (BOOL) isSetChanged{
+    
+    if(_cmdMap)
+        return YES;
+    
+    return NO;
+}
+
 - (id) generateEventOperation_Power{
     
     RgsCommandInfo *cmd = nil;
+    
+    if(_cmdMap)
     cmd = [_cmdMap objectForKey:@"SET_POWER"];
     
     if(cmd)
@@ -229,6 +239,8 @@
 - (id) generateEventOperation_Input{
     
     RgsCommandInfo *cmd = nil;
+
+    if(_cmdMap)
     cmd = [_cmdMap objectForKey:@"SET_INPUT"];
     
     if(cmd)

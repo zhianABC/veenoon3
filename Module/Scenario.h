@@ -37,4 +37,7 @@
 
 - (void) addEventOperation:(RgsSceneOperation*)rgsSceneOp;
 
+- (void) prepareSenarioSlice;
+- (void) createEventScenario;
+
 @end
