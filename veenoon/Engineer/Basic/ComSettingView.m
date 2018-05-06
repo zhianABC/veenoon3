@@ -110,16 +110,18 @@
         
     }
     
-     [_chooseBg addSubview:levelSetting];
-    levelSetting._pickerDataArray = @[@{@"values":_currentObj._comArray}];
+    
     NSArray *values = _currentObj._comArray;
     
     if([values count])
     {
+        levelSetting._pickerDataArray = @[@{@"values":values}];
+        
         NSInteger index = _currentObj._comIdx;
         [levelSetting selectRow:index inComponent:0];
         _secs.text = [values objectAtIndex:index];
 
+        [_chooseBg addSubview:levelSetting];
     }
     
 }

@@ -20,4 +20,7 @@
 
 -(void) refreshView:(VTouyingjiSet*) dvdPlayerSet;
 -(void) layoutDevicePannel;
+
+- (void) saveCurrentSetting;
+
 @end

@@ -239,6 +239,7 @@
 		3454930A1FE65AA300793E2E /* picker_player@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 345493091FE65AA200793E2E /* picker_player@2x.png */; };
 		3456C172209D8A6B001FAB61 /* wireless_slide_mute@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3456C171209D8A6B001FAB61 /* wireless_slide_mute@2x.png */; };
 		3456C175209EACD1001FAB61 /* VCameraProxys.m in Sources */ = {isa = PBXBuildFile; fileRef = 3456C173209EACD0001FAB61 /* VCameraProxys.m */; };
+		3456C178209ED2F1001FAB61 /* VProjectProxys.m in Sources */ = {isa = PBXBuildFile; fileRef = 3456C177209ED2F1001FAB61 /* VProjectProxys.m */; };
 		34615F091FC9BD7B002DFCE0 /* JSlideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34615F051FC9BD7B002DFCE0 /* JSlideView.m */; };
 		34615F0A1FC9BD7B002DFCE0 /* jslide_bk@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34615F061FC9BD7B002DFCE0 /* jslide_bk@2x.png */; };
 		34615F0B1FC9BD7B002DFCE0 /* jslide_thumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34615F071FC9BD7B002DFCE0 /* jslide_thumb@2x.png */; };
@@ -1237,6 +1238,8 @@
 		3456C171209D8A6B001FAB61 /* wireless_slide_mute@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wireless_slide_mute@2x.png"; sourceTree = "<group>"; };
 		3456C173209EACD0001FAB61 /* VCameraProxys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCameraProxys.m; sourceTree = "<group>"; };
 		3456C174209EACD1001FAB61 /* VCameraProxys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCameraProxys.h; sourceTree = "<group>"; };
+		3456C176209ED2F0001FAB61 /* VProjectProxys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VProjectProxys.h; sourceTree = "<group>"; };
+		3456C177209ED2F1001FAB61 /* VProjectProxys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VProjectProxys.m; sourceTree = "<group>"; };
 		34615F051FC9BD7B002DFCE0 /* JSlideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSlideView.m; sourceTree = "<group>"; };
 		34615F061FC9BD7B002DFCE0 /* jslide_bk@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jslide_bk@2x.png"; sourceTree = "<group>"; };
 		34615F071FC9BD7B002DFCE0 /* jslide_thumb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jslide_thumb@2x.png"; sourceTree = "<group>"; };
@@ -3310,6 +3313,10 @@
 				3456C173209EACD0001FAB61 /* VCameraProxys.m */,
 				EBD009B4208CB88300920849 /* VRemoteSettingsSet.h */,
 				EBD009B5208CB88300920849 /* VRemoteSettingsSet.m */,
+				EBD009CC2090A9D200920849 /* VTouyingjiSet.h */,
+				EBD009CD2090A9D200920849 /* VTouyingjiSet.m */,
+				3456C176209ED2F0001FAB61 /* VProjectProxys.h */,
+				3456C177209ED2F1001FAB61 /* VProjectProxys.m */,
 				EBD009B7208CBD8100920849 /* VRemoteVideoSet.h */,
 				EBD009B8208CBD8100920849 /* VRemoteVideoSet.m */,
 				EBD009BD2090613C00920849 /* VVideoProcessSet.h */,
@@ -3322,8 +3329,6 @@
 				EBD009C720907B0700920849 /* VTVSet.m */,
 				EBD009C920907E8C00920849 /* VLuBoJiSet.h */,
 				EBD009CA20907E8C00920849 /* VLuBoJiSet.m */,
-				EBD009CC2090A9D200920849 /* VTouyingjiSet.h */,
-				EBD009CD2090A9D200920849 /* VTouyingjiSet.m */,
 			);
 			path = Video;
 			sourceTree = "<group>";
@@ -4479,6 +4484,7 @@
 				349DADE1206E8D02001593DE /* AudioEMix.m in Sources */,
 				3425E98C1FE571CE003559F7 /* ComSettingView.m in Sources */,
 				EB3B739A1FE61B18001941CF /* EngineerPlayerSettingsViewCtrl.m in Sources */,
+				3456C178209ED2F1001FAB61 /* VProjectProxys.m in Sources */,
 				0477DC581DA9F4700077FA52 /* Base64.m in Sources */,
 				049BA6601AF7B64000F17584 /* DataBase.m in Sources */,
 				EB795B532042E81F005D1F47 /* ZengYi_UIView.m in Sources */,

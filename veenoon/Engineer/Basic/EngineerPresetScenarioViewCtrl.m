@@ -626,7 +626,6 @@
         if ([name isEqualToString:@"投影仪"]) {
             EngineerTouYingJiViewCtrl *ctrl = [[EngineerTouYingJiViewCtrl alloc] init];
             ctrl._touyingjiArray = _scenario._VTouyingji;
-            
             [self.navigationController pushViewController:ctrl animated:YES];
         }
     }
@@ -734,22 +733,20 @@
     
     if([_scenario._VTouyingji count] == 0)
     {
-        NSMutableArray *powers = [NSMutableArray array];
+        NSMutableArray *h2h = [NSMutableArray array];
         
-        for(int i = 0; i < 3; i++)
+        NSArray *devices = [_selectedDevices objectForKey:@"video"];
+        
+        for(id pset in devices)
         {
-            VTouyingjiSet *pset = [[VTouyingjiSet alloc] init];
-            pset._ipaddress = [@"191.16.1.10" stringByAppendingString:[NSString stringWithFormat:@"%d", i]];
-            pset._brand = @"brand1";
-            pset._type = @"type1";
-            pset._index = i;
-        
-            pset._deviceno = [NSString stringWithFormat:@"%d", i];
-            [powers addObject:pset];
+            if([pset isKindOfClass:[VTouyingjiSet class]])
+            {
+                [h2h addObject:pset];
+            }
         }
-        
-        _scenario._VTouyingji = powers;
+        _scenario._VTouyingji = h2h;
     }
+    
 }
 
 - (void) initTV {

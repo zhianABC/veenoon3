@@ -33,6 +33,9 @@
 @synthesize _rgsProxyObj;
 @synthesize _cmdMap;
 
+@synthesize _zoom;
+@synthesize _move;
+
 @synthesize _save;
 @synthesize _load;
 
@@ -129,6 +132,105 @@
                                                }];
     }
 }
+
+- (void) controlDeviceSavePostion{
+    
+    RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SAVE"];
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
+            if(param_info.type == RGS_PARAM_TYPE_FLOAT)
+            {
+                [param setObject:[NSString stringWithFormat:@"%0.1f",(float)_save]
+                          forKey:param_info.name];
+            }
+            else if(param_info.type == RGS_PARAM_TYPE_INT)
+            {
+                [param setObject:[NSString stringWithFormat:@"%d",_save]
+                          forKey:param_info.name];
+            }
+        }
+        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+                                                 cmd:cmd.name
+                                               param:param completion:^(BOOL result, NSError *error) {
+                                                   if (result) {
+                                                       
+                                                   }
+                                                   else{
+                                                       
+                                                   }
+                                               }];
+    }
+}
+
+- (void) controlDeviceLoadPostion{
+    
+    RgsCommandInfo *cmd = [_cmdMap objectForKey:@"LOAD"];
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
+            if(param_info.type == RGS_PARAM_TYPE_FLOAT)
+            {
+                [param setObject:[NSString stringWithFormat:@"%0.1f",(float)_save]
+                          forKey:param_info.name];
+            }
+            else if(param_info.type == RGS_PARAM_TYPE_INT)
+            {
+                [param setObject:[NSString stringWithFormat:@"%d",_save]
+                          forKey:param_info.name];
+            }
+        }
+        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+                                                 cmd:cmd.name
+                                               param:param completion:^(BOOL result, NSError *error) {
+                                                   if (result) {
+                                                       
+                                                   }
+                                                   else{
+                                                       
+                                                   }
+                                               }];
+    }
+}
+
+- (void) controlDeviceZoom:(NSString*)zoom{
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_ZOOM"];
+    self._zoom = zoom;
+    
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
+            if(param_info.type == RGS_PARAM_TYPE_LIST)
+            {
+                [param setObject:zoom forKey:param_info.name];
+            }
+            
+        }
+        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+                                                 cmd:cmd.name
+                                               param:param completion:^(BOOL result, NSError *error) {
+                                                   if (result) {
+                                                       
+                                                   }
+                                                   else{
+                                                       
+                                                   }
+                                               }];
+    }
+    
+}
+
 - (void) stopControlDeviceDirection{
     
     [self controlDeviceDirection:@"STOP"];

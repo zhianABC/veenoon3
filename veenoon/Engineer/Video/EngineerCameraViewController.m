@@ -137,7 +137,7 @@
     
     [invokeBtn addTarget:self
                     action:@selector(invokeAction:)
-          forControlEvents:UIControlEventTouchUpInside];
+          forControlEvents:UIControlEventTouchDown];
     
     UIButton *addBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
     addBtn.frame = CGRectMake(400+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
@@ -167,7 +167,7 @@
     
     [storeBtn addTarget:self
                       action:@selector(storeAction:)
-            forControlEvents:UIControlEventTouchUpInside];
+            forControlEvents:UIControlEventTouchDown];
     
     playerLeft = 320;
     
@@ -184,22 +184,32 @@
     
     [tBtn addTarget:self
                        action:@selector(tAction:)
-             forControlEvents:UIControlEventTouchUpInside];
+             forControlEvents:UIControlEventTouchDown];
     
-    UIButton *lastVideoUpBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
-    lastVideoUpBtn.frame = CGRectMake(230+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
-    lastVideoUpBtn.layer.cornerRadius = 5;
-    lastVideoUpBtn.layer.borderWidth = 2;
-    lastVideoUpBtn.layer.borderColor = [UIColor clearColor].CGColor;;
-    lastVideoUpBtn.clipsToBounds = YES;
-    [lastVideoUpBtn setImage:[UIImage imageNamed:@"engineer_left_n.png"] forState:UIControlStateNormal];
-    [lastVideoUpBtn setImage:[UIImage imageNamed:@"engineer_left_s.png"] forState:UIControlStateHighlighted];
-    [self.view addSubview:lastVideoUpBtn];
+    UIButton *directLeftBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    directLeftBtn.frame = CGRectMake(230+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
+    directLeftBtn.layer.cornerRadius = 5;
+    directLeftBtn.layer.borderWidth = 2;
+    directLeftBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    directLeftBtn.clipsToBounds = YES;
+    [directLeftBtn setImage:[UIImage imageNamed:@"engineer_left_n.png"] forState:UIControlStateNormal];
+    [directLeftBtn setImage:[UIImage imageNamed:@"engineer_left_s.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:directLeftBtn];
     
-    [lastVideoUpBtn addTarget:self
-                       action:@selector(lastSingAction:)
-             forControlEvents:UIControlEventTouchUpInside];
+    [directLeftBtn addTarget:self
+                       action:@selector(directLeftAction:)
+             forControlEvents:UIControlEventTouchDown];
     
+    [directLeftBtn addTarget:self
+                    action:@selector(camerDirectStopAction:)
+          forControlEvents:UIControlEventTouchCancel];
+    [directLeftBtn addTarget:self
+                    action:@selector(camerDirectStopAction:)
+          forControlEvents:UIControlEventTouchUpOutside];
+    [directLeftBtn addTarget:self
+                    action:@selector(camerDirectStopAction:)
+          forControlEvents:UIControlEventTouchUpInside];
+
     UIButton *okPlayerBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
     okPlayerBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
     okPlayerBtn.layer.cornerRadius = 5;
@@ -230,69 +240,135 @@
              action:@selector(wAction:)
    forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *volumnUpBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
-    volumnUpBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-585+playerHeight, 80, 80);
-    volumnUpBtn.layer.cornerRadius = 5;
-    volumnUpBtn.layer.borderWidth = 2;
-    volumnUpBtn.layer.borderColor = [UIColor clearColor].CGColor;;
-    volumnUpBtn.clipsToBounds = YES;
-    [volumnUpBtn setImage:[UIImage imageNamed:@"engineer_up_n.png"] forState:UIControlStateNormal];
-    [volumnUpBtn setImage:[UIImage imageNamed:@"engineer_up_s.png"] forState:UIControlStateHighlighted];
-    [self.view addSubview:volumnUpBtn];
+    UIButton *directUpBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    directUpBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-585+playerHeight, 80, 80);
+    directUpBtn.layer.cornerRadius = 5;
+    directUpBtn.layer.borderWidth = 2;
+    directUpBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    directUpBtn.clipsToBounds = YES;
+    [directUpBtn setImage:[UIImage imageNamed:@"engineer_up_n.png"] forState:UIControlStateNormal];
+    [directUpBtn setImage:[UIImage imageNamed:@"engineer_up_s.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:directUpBtn];
     
-    [volumnUpBtn addTarget:self
+    [directUpBtn addTarget:self
                       action:@selector(camerDirectUPAction:)
             forControlEvents:UIControlEventTouchDown];
     
-    [volumnUpBtn addTarget:self
+    [directUpBtn addTarget:self
                       action:@selector(camerDirectStopAction:)
             forControlEvents:UIControlEventTouchCancel];
-    [volumnUpBtn addTarget:self
+    [directUpBtn addTarget:self
+                      action:@selector(camerDirectStopAction:)
+            forControlEvents:UIControlEventTouchUpOutside];
+    [directUpBtn addTarget:self
                       action:@selector(camerDirectStopAction:)
             forControlEvents:UIControlEventTouchUpInside];
     
     
-    UIButton *zoomMinusBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
-    zoomMinusBtn.frame = CGRectMake(315+playerLeft+85, SCREEN_HEIGHT-415+playerHeight, 80, 80);
-    zoomMinusBtn.layer.cornerRadius = 5;
-    zoomMinusBtn.layer.borderWidth = 2;
-    zoomMinusBtn.layer.borderColor = [UIColor clearColor].CGColor;;
-    zoomMinusBtn.clipsToBounds = YES;
-    [zoomMinusBtn setImage:[UIImage imageNamed:@"engineer_zoom_minus_n.png"] forState:UIControlStateNormal];
-    [zoomMinusBtn setImage:[UIImage imageNamed:@"engineer_zoom_minus_s.png"] forState:UIControlStateHighlighted];
-    [self.view addSubview:zoomMinusBtn];
+    UIButton *zoomOutBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    zoomOutBtn.frame = CGRectMake(315+playerLeft+85, SCREEN_HEIGHT-415+playerHeight, 80, 80);
+    zoomOutBtn.layer.cornerRadius = 5;
+    zoomOutBtn.layer.borderWidth = 2;
+    zoomOutBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    zoomOutBtn.clipsToBounds = YES;
+    [zoomOutBtn setImage:[UIImage imageNamed:@"engineer_zoom_minus_n.png"] forState:UIControlStateNormal];
+    [zoomOutBtn setImage:[UIImage imageNamed:@"engineer_zoom_minus_s.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:zoomOutBtn];
     
-    [zoomMinusBtn addTarget:self
-                   action:@selector(zoomMinusAction:)
-         forControlEvents:UIControlEventTouchUpInside];
+    [zoomOutBtn addTarget:self
+                   action:@selector(zoomOutAction:)
+         forControlEvents:UIControlEventTouchDown];
     
-    UIButton *nextPlayBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
-    nextPlayBtn.frame = CGRectMake(400+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
-    nextPlayBtn.layer.cornerRadius = 5;
-    nextPlayBtn.layer.borderWidth = 2;
-    nextPlayBtn.layer.borderColor = [UIColor clearColor].CGColor;;
-    nextPlayBtn.clipsToBounds = YES;
-    [nextPlayBtn setImage:[UIImage imageNamed:@"engineer_next_n.png"] forState:UIControlStateNormal];
-    [nextPlayBtn setImage:[UIImage imageNamed:@"engineer_next_s.png"] forState:UIControlStateHighlighted];
-    [self.view addSubview:nextPlayBtn];
+    [zoomOutBtn addTarget:self
+                      action:@selector(zoomStop:)
+            forControlEvents:UIControlEventTouchCancel];
+    [zoomOutBtn addTarget:self
+                      action:@selector(zoomStop:)
+            forControlEvents:UIControlEventTouchUpOutside];
+    [zoomOutBtn addTarget:self
+                      action:@selector(zoomStop:)
+            forControlEvents:UIControlEventTouchUpInside];
+
+    [wBtn addTarget:self
+                     action:@selector(zoomOutAction:)
+           forControlEvents:UIControlEventTouchDown];
     
-    [nextPlayBtn addTarget:self
-                    action:@selector(nextSingAction:)
+    
+    [wBtn addTarget:self
+                     action:@selector(zoomStop:)
+           forControlEvents:UIControlEventTouchCancel];
+    [wBtn addTarget:self
+                     action:@selector(zoomStop:)
+           forControlEvents:UIControlEventTouchUpOutside];
+    [wBtn addTarget:self
+                     action:@selector(zoomStop:)
+           forControlEvents:UIControlEventTouchUpInside];
+
+    
+    UIButton *directRightBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    directRightBtn.frame = CGRectMake(400+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
+    directRightBtn.layer.cornerRadius = 5;
+    directRightBtn.layer.borderWidth = 2;
+    directRightBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    directRightBtn.clipsToBounds = YES;
+    [directRightBtn setImage:[UIImage imageNamed:@"engineer_next_n.png"] forState:UIControlStateNormal];
+    [directRightBtn setImage:[UIImage imageNamed:@"engineer_next_s.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:directRightBtn];
+    
+    [directRightBtn addTarget:self
+                    action:@selector(directRightAction:)
+          forControlEvents:UIControlEventTouchDown];
+    
+    [directRightBtn addTarget:self
+                    action:@selector(camerDirectStopAction:)
+          forControlEvents:UIControlEventTouchCancel];
+    [directRightBtn addTarget:self
+                    action:@selector(camerDirectStopAction:)
+          forControlEvents:UIControlEventTouchUpOutside];
+    [directRightBtn addTarget:self
+                    action:@selector(camerDirectStopAction:)
           forControlEvents:UIControlEventTouchUpInside];
+
     
-    UIButton *zoomAddBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
-    zoomAddBtn.frame = CGRectMake(315+playerLeft-85, SCREEN_HEIGHT-415+playerHeight, 80, 80);
-    zoomAddBtn.layer.cornerRadius = 5;
-    zoomAddBtn.layer.borderWidth = 2;
-    zoomAddBtn.layer.borderColor = [UIColor clearColor].CGColor;;
-    zoomAddBtn.clipsToBounds = YES;
-    [zoomAddBtn setImage:[UIImage imageNamed:@"engineer_zoom_add_n.png"] forState:UIControlStateNormal];
-    [zoomAddBtn setImage:[UIImage imageNamed:@"engineer_zoom_add_s.png"] forState:UIControlStateHighlighted];
-    [self.view addSubview:zoomAddBtn];
     
-    [zoomAddBtn addTarget:self
-                   action:@selector(zoomAddAction:)
+    UIButton *zoomInBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    zoomInBtn.frame = CGRectMake(315+playerLeft-85, SCREEN_HEIGHT-415+playerHeight, 80, 80);
+    zoomInBtn.layer.cornerRadius = 5;
+    zoomInBtn.layer.borderWidth = 2;
+    zoomInBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    zoomInBtn.clipsToBounds = YES;
+    [zoomInBtn setImage:[UIImage imageNamed:@"engineer_zoom_add_n.png"] forState:UIControlStateNormal];
+    [zoomInBtn setImage:[UIImage imageNamed:@"engineer_zoom_add_s.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:zoomInBtn];
+    
+    [zoomInBtn addTarget:self
+                   action:@selector(zoomInAction:)
+         forControlEvents:UIControlEventTouchDown];
+    
+    [zoomInBtn addTarget:self
+                     action:@selector(zoomStop:)
+           forControlEvents:UIControlEventTouchCancel];
+    [zoomInBtn addTarget:self
+                     action:@selector(zoomStop:)
+           forControlEvents:UIControlEventTouchUpOutside];
+    [zoomInBtn addTarget:self
+                     action:@selector(zoomStop:)
+           forControlEvents:UIControlEventTouchUpInside];
+
+    [tBtn addTarget:self
+                   action:@selector(zoomOutAction:)
+         forControlEvents:UIControlEventTouchDown];
+    
+    [tBtn addTarget:self
+                   action:@selector(zoomStop:)
+         forControlEvents:UIControlEventTouchCancel];
+    [tBtn addTarget:self
+                   action:@selector(zoomStop:)
+         forControlEvents:UIControlEventTouchUpOutside];
+    [tBtn addTarget:self
+                   action:@selector(zoomStop:)
          forControlEvents:UIControlEventTouchUpInside];
+
     
     UIButton *volumnDownBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
     volumnDownBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-415+playerHeight, 80, 80);
@@ -313,6 +389,9 @@
             forControlEvents:UIControlEventTouchCancel];
     [volumnDownBtn addTarget:self
                       action:@selector(camerDirectStopAction:)
+            forControlEvents:UIControlEventTouchUpOutside];
+    [volumnDownBtn addTarget:self
+                      action:@selector(camerDirectStopAction:)
             forControlEvents:UIControlEventTouchUpInside];
     
     
@@ -327,6 +406,19 @@
         [vcam stopControlDeviceDirection];
 }
 
+- (void) directLeftAction:(id)sender{
+    
+    VCameraProxys *vcam = _currentObj._proxyObj;
+    if(vcam)
+        [vcam controlDeviceDirection:@"LEFT"];
+}
+
+- (void) directRightAction:(id)sender{
+    
+    VCameraProxys *vcam = _currentObj._proxyObj;
+    if(vcam)
+        [vcam controlDeviceDirection:@"RIGHT"];
+}
 
 - (void) camerDirectUPAction:(id)sender{
     
@@ -342,7 +434,26 @@
         [vcam controlDeviceDirection:@"DOWN"];
 }
 
+- (void) zoomInAction:(id)sender{
+    
+    VCameraProxys *vcam = _currentObj._proxyObj;
+    if(vcam)
+        [vcam controlDeviceZoom:@"IN"];
+}
 
+- (void) zoomOutAction:(id)sender{
+    
+    VCameraProxys *vcam = _currentObj._proxyObj;
+    if(vcam)
+        [vcam controlDeviceZoom:@"OUT"];
+}
+
+- (void) zoomStop:(id)sender{
+    
+    VCameraProxys *vcam = _currentObj._proxyObj;
+    if(vcam)
+        [vcam controlDeviceZoom:@"STOP"];
+}
 
 - (void) getCurrentDeviceDriverProxys{
     
@@ -396,9 +507,6 @@
     
 }
 
-- (void) nextSingAction:(id)sender{
-    
-}
 
 - (void) audioPlayHoldAction:(id)sender{
     if (isplay) {
@@ -410,17 +518,6 @@
     }
 }
 
-- (void) lastSingAction:(id)sender{
-    
-}
-
-- (void) volumnMinusAction:(id)sender{
-    
-}
-
-- (void) volumnAddAction:(id)sender{
-    
-}
 - (void) addAction:(id)sender{
     NSString *currentValue = _numberBtn.titleLabel.text;
     int value = [currentValue intValue];
@@ -443,10 +540,29 @@
 
 - (void) storeAction:(id)sender{
     
+    VCameraProxys *vcam = _currentObj._proxyObj;
+    if(vcam){
+        
+        NSString *currentValue = _numberBtn.titleLabel.text;
+        int value = [currentValue intValue];
+        vcam._save = value;
+        
+        [vcam controlDeviceSavePostion];
+    }
+
 }
 
 - (void) invokeAction:(id)sender{
     
+    VCameraProxys *vcam = _currentObj._proxyObj;
+    if(vcam){
+        
+        NSString *currentValue = _numberBtn.titleLabel.text;
+        int value = [currentValue intValue];
+        vcam._save = value;
+        
+        [vcam controlDeviceLoadPostion];
+    }
 }
 
 - (void) selectCurrentMike:(VCameraSettingSet*)mike{
@@ -509,13 +625,6 @@
         //[_rightView layoutDevicePannel];
     }
 
-    [_rightView refreshView:_currentObj];
-    
-//    IMP_BLOCK_SELF(EngineerCameraViewController);
-//    _rightView._callback = ^(int deviceIndex) {
-//
-//        [block_self chooseDeviceAtIndex:deviceIndex];
-//    };
     
   
     //如果在显示，消失

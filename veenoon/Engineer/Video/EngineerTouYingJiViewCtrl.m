@@ -13,13 +13,17 @@
 #import "PlugsCtrlTitleHeader.h"
 #import "VTouyingjiSet.h"
 #import "BrandCategoryNoUtil.h"
+#import "RegulusSDK.h"
+#import "KVNProgress.h"
+#import "VProjectProxys.h"
 
 @interface EngineerTouYingJiViewCtrl () <CustomPickerViewDelegate>{
     PlugsCtrlTitleHeader *_selectSysBtn;
     
     CustomPickerView *_customPicker;
     
-    UIButton *_luboBtn;
+    UIButton *_powerOnBtn;
+    UIButton *_powerOffBtn;
     
     BOOL isSettings;
     TouYingJiRightView *_rightView;
@@ -36,10 +40,6 @@
     
     if ([_touyingjiArray count]) {
         self._currentObj = [_touyingjiArray objectAtIndex:0];
-    }
-    
-    if(_currentObj == nil) {
-        self._currentObj = [[VTouyingjiSet alloc] init];
     }
     
     [super setTitleAndImage:@"video_corner_shipinbofang.png" withTitle:@"投影机"];
@@ -83,19 +83,37 @@
         [_selectSysBtn setShowText:nameStr];
     }
     
-    _luboBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
-    _luboBtn.frame = CGRectMake(70, SCREEN_HEIGHT-140, 60, 60);
-    _luboBtn.layer.cornerRadius = 5;
-    _luboBtn.layer.borderWidth = 2;
-    _luboBtn.layer.borderColor = [UIColor clearColor].CGColor;;
-    _luboBtn.clipsToBounds = YES;
-    [_luboBtn setImage:[UIImage imageNamed:@"engineer_lubo_n.png"] forState:UIControlStateNormal];
-    [_luboBtn setImage:[UIImage imageNamed:@"engineer_lubo_s.png"] forState:UIControlStateHighlighted];
-    [self.view addSubview:_luboBtn];
+    _powerOnBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    _powerOnBtn.frame = CGRectMake(70, SCREEN_HEIGHT-140, 60, 60);
+    _powerOnBtn.layer.cornerRadius = 5;
+    _powerOnBtn.layer.borderWidth = 2;
+    _powerOnBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    _powerOnBtn.clipsToBounds = YES;
+    [_powerOnBtn setImage:[UIImage imageNamed:@"engineer_lubo_n.png"] forState:UIControlStateNormal];
+    [_powerOnBtn setImage:[UIImage imageNamed:@"engineer_lubo_s.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:_powerOnBtn];
     
-    [_luboBtn addTarget:self
-                 action:@selector(luboAction:)
+    [_powerOnBtn addTarget:self
+                 action:@selector(powerOnAction:)
        forControlEvents:UIControlEventTouchUpInside];
+    
+    _powerOffBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    _powerOffBtn.frame = _powerOnBtn.frame;
+    _powerOffBtn.layer.cornerRadius = 5;
+    _powerOffBtn.layer.borderWidth = 2;
+    _powerOffBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    _powerOffBtn.clipsToBounds = YES;
+    [_powerOffBtn setImage:[UIImage imageNamed:@"engineer_lubo_s.png"] forState:UIControlStateNormal];
+    [_powerOffBtn setImage:[UIImage imageNamed:@"engineer_lubo_n.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:_powerOffBtn];
+    
+    [_powerOffBtn addTarget:self
+                    action:@selector(powerOffAction:)
+          forControlEvents:UIControlEventTouchUpInside];
+    
+    _powerOffBtn.hidden = YES;
+    
+    
     
     int playerLeft = 215;
     int playerHeight = 60;
@@ -213,33 +231,17 @@
     hmi1Btn.layer.borderWidth = 2;
     hmi1Btn.layer.borderColor = [UIColor clearColor].CGColor;;
     hmi1Btn.clipsToBounds = YES;
-    [hmi1Btn setTitle:@"HMI1" forState:UIControlStateNormal];
+    [hmi1Btn setTitle:@"HDMI" forState:UIControlStateNormal];
     [hmi1Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [hmi1Btn setTitleColor:RGB(242, 148, 20) forState:UIControlStateHighlighted];
     [self.view addSubview:hmi1Btn];
     
     [hmi1Btn addTarget:self
-                      action:@selector(hmi1Action:)
-            forControlEvents:UIControlEventTouchUpInside];
-    
-    UIButton *hmi2Btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
-    hmi2Btn.frame = CGRectMake(255+playerLeft, SCREEN_HEIGHT-435+playerHeight, 80, 80);
-    hmi2Btn.layer.cornerRadius = 5;
-    hmi2Btn.layer.borderWidth = 2;
-    hmi2Btn.layer.borderColor = [UIColor clearColor].CGColor;;
-    hmi2Btn.clipsToBounds = YES;
-    [hmi2Btn setTitle:@"HMI2" forState:UIControlStateNormal];
-    [hmi2Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [hmi2Btn setTitleColor:RGB(242, 148, 20) forState:UIControlStateHighlighted];
-    [self.view addSubview:hmi2Btn];
-    
-    [hmi2Btn addTarget:self
-                      action:@selector(hmi2Action:)
-            forControlEvents:UIControlEventTouchUpInside];
-    
+                      action:@selector(hdmiAction:)
+            forControlEvents:UIControlEventTouchDown];
     
     UIButton *vgaBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
-    vgaBtn.frame = CGRectMake(155+playerLeft, SCREEN_HEIGHT-335+playerHeight, 80, 80);
+    vgaBtn.frame = CGRectMake(255+playerLeft, SCREEN_HEIGHT-435+playerHeight, 80, 80);
     vgaBtn.layer.cornerRadius = 5;
     vgaBtn.layer.borderWidth = 2;
     vgaBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -251,6 +253,22 @@
     
     [vgaBtn addTarget:self
                       action:@selector(vgaAction:)
+            forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    UIButton *usbBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    usbBtn.frame = CGRectMake(155+playerLeft, SCREEN_HEIGHT-335+playerHeight, 80, 80);
+    usbBtn.layer.cornerRadius = 5;
+    usbBtn.layer.borderWidth = 2;
+    usbBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    usbBtn.clipsToBounds = YES;
+    [usbBtn setTitle:@"USB" forState:UIControlStateNormal];
+    [usbBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [usbBtn setTitleColor:RGB(242, 148, 20) forState:UIControlStateHighlighted];
+    [self.view addSubview:usbBtn];
+    
+    [usbBtn addTarget:self
+                      action:@selector(usbAction:)
             forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *netBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
@@ -265,21 +283,112 @@
     [self.view addSubview:netBtn];
     
     [netBtn addTarget:self
-                      action:@selector(netAction:)
+                      action:@selector(lanAction:)
             forControlEvents:UIControlEventTouchUpInside];
-}
-- (void) netAction:(id)sender{
     
+    [self getCurrentDeviceDriverProxys];
+}
+
+- (void) getCurrentDeviceDriverProxys{
+    
+    if(_currentObj == nil)
+        return;
+    
+#ifdef OPEN_REG_LIB_DEF
+    
+    IMP_BLOCK_SELF(EngineerTouYingJiViewCtrl);
+    
+    RgsDriverObj *driver = _currentObj._driver;
+    if([driver isKindOfClass:[RgsDriverObj class]])
+    {
+        /* 投影机 - 没有Proxy，直接访问Commands
+        [[RegulusSDK sharedRegulusSDK] GetDriverProxys:driver.m_id completion:^(BOOL result, NSArray *proxys, NSError *error) {
+            if (result) {
+                if ([proxys count]) {
+                    
+                    [block_self loadedCameraProxy:proxys];
+                    
+                }
+            }
+            else{
+                [KVNProgress showErrorWithStatus:@"中控链接断开！"];
+            }
+        }];
+         */
+        
+        [[RegulusSDK sharedRegulusSDK] GetDriverCommands:driver.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
+            if (result) {
+                if ([commands count]) {
+                    [block_self loadedProjectCommands:commands];
+                }
+            }
+            else{
+                [KVNProgress showErrorWithStatus:@"中控链接断开！"];
+            }
+        }];
+    }
+#endif
+}
+
+- (void) loadedProjectCommands:(NSArray*)cmds{
+    
+    RgsDriverObj *driver = _currentObj._driver;
+    
+    VProjectProxys *vpro = [[VProjectProxys alloc] init];
+    vpro._deviceId = driver.m_id;
+    [vpro checkRgsProxyCommandLoad:cmds];
+    
+    self._currentObj._proxyObj = vpro;
+    [_currentObj syncDriverIPProperty];
+    [_currentObj syncDriverComs];
+}
+
+
+- (void) hdmiAction:(id)sender{
+    
+    VProjectProxys *vcam = _currentObj._proxyObj;
+    if(vcam)
+        [vcam controlDeviceInput:@"HDMI"];
 }
 - (void) vgaAction:(id)sender{
     
+    VProjectProxys *vcam = _currentObj._proxyObj;
+    if(vcam)
+        [vcam controlDeviceInput:@"COMP"];
 }
-- (void) hmi2Action:(id)sender{
+- (void) usbAction:(id)sender{
+    
+    VProjectProxys *vcam = _currentObj._proxyObj;
+    if(vcam)
+        [vcam controlDeviceInput:@"USB"];
+}
+- (void) lanAction:(id)sender{
+    
+    VProjectProxys *vcam = _currentObj._proxyObj;
+    if(vcam)
+        [vcam controlDeviceInput:@"LAN"];
+}
+
+- (void) powerOnAction:(id)sender{
+    
+    _powerOnBtn.hidden = YES;
+    _powerOffBtn.hidden = NO;
+    
+    VProjectProxys *vcam = _currentObj._proxyObj;
+    if(vcam)
+        [vcam controlDevicePower:@"ON"];
     
 }
-- (void) hmi1Action:(id)sender{
+- (void) powerOffAction:(id)sender{
     
+    _powerOnBtn.hidden = NO;
+    _powerOffBtn.hidden = YES;
+    
+    VProjectProxys *vcam = _currentObj._proxyObj;
+    if(vcam)
+        [vcam controlDevicePower:@"OFF"];
 }
+
 - (void) yingjiDownAction:(id)sender{
     
 }
@@ -298,9 +407,7 @@
 - (void) yingjiUpAction:(id)sender{
     
 }
-- (void) luboAction:(id)sender{
-    
-}
+
 
 - (void) selectCurrentMike:(VTouyingjiSet*)mike{
     
@@ -359,18 +466,18 @@
                                                64, 300, SCREEN_HEIGHT-114)];
         
         //创建底部设备切换按钮
-        _rightView._numOfDevice = (int)[_touyingjiArray count];
-        [_rightView refreshView:_currentObj];
-        
-        [_rightView layoutDevicePannel];
-        
-        
-        IMP_BLOCK_SELF(EngineerTouYingJiViewCtrl);
-        _rightView._callback = ^(int deviceIndex) {
-            
-            [block_self chooseDeviceAtIndex:deviceIndex];
-        };
+//        _rightView._numOfDevice = (int)[_touyingjiArray count];
+//        [_rightView layoutDevicePannel];
+//
+//
+//        IMP_BLOCK_SELF(EngineerTouYingJiViewCtrl);
+//        _rightView._callback = ^(int deviceIndex) {
+//
+//            [block_self chooseDeviceAtIndex:deviceIndex];
+//        };
     }
+    
+    
     
     //如果在显示，消失
     if([_rightView superview])
@@ -378,6 +485,9 @@
         
         //写入中控
         //......
+        [_rightView saveCurrentSetting];
+        [_currentObj uploadDriverIPProperty];
+
         
         [okBtn setTitle:@"设置" forState:UIControlStateNormal];
         

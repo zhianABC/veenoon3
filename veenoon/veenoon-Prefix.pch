@@ -111,8 +111,9 @@
 #define OPEN_REG_LIB_DEF  1
 #define VEENOON_AREA_NAME @"veenoon_room"
 
-#define UUID_Serial_Com @"714c6c57-7ff2-47cd-8b67-dc8d370eb3f6"
-#define UUID_NetCamera  @"08b3fbff-118b-457c-adea-2c81cad47ebb"
-
+#define UUID_Serial_Com     @"714c6c57-7ff2-47cd-8b67-dc8d370eb3f6"
+#define UUID_NetCamera      @"08b3fbff-118b-457c-adea-2c81cad47ebb"
+#define UUID_CANON_WUX450   @"e084c393-19a3-47a1-aada-efc12869a965"
+#define UUID_DIMMER_LIGHT   @"16803f55-9f85-4dd8-bfca-0e55e7c53d41"
 
 typedef void (^RightSetViewCallbackBlock)(int deviceIndex);

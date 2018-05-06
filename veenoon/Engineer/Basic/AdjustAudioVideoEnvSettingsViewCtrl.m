@@ -9,6 +9,7 @@
 #import "AdjustAudioVideoEnvSettingsViewCtrl.h"
 #import "AudioEProcessor.h"
 #import "VCameraSettingSet.h"
+#import "VTouyingjiSet.h"
 
 @interface AdjustAudioVideoEnvSettingsViewCtrl() <UITableViewDelegate, UITableViewDataSource> {
     UITableView *_tableView;
@@ -179,6 +180,13 @@
         brandL.text = device._brand;
         catL.text = device._type;
     }
+    else if([dataDic isKindOfClass:[VTouyingjiSet class]])
+    {
+        VTouyingjiSet *device = (VTouyingjiSet*)dataDic;
+        valueL.text = [device deviceName];
+        brandL.text = device._brand;
+        catL.text = device._type;
+    }
     return cell;
 }
 
@@ -205,6 +213,11 @@
     else if([obj isKindOfClass:[VCameraSettingSet class]])
     {
         VCameraSettingSet *device = (VCameraSettingSet*)obj;
+        [device removeDriver];
+    }
+    else if([obj isKindOfClass:[VTouyingjiSet class]])
+    {
+        VTouyingjiSet *device = (VTouyingjiSet*)obj;
         [device removeDriver];
     }
     //

@@ -35,5 +35,8 @@
 - (void) controlDeviceDirection:(NSString*)direct;
 - (void) stopControlDeviceDirection;
 
+- (void) controlDeviceSavePostion;
+- (void) controlDeviceLoadPostion;
+- (void) controlDeviceZoom:(NSString*)zoom;
 
 @end

@@ -13,6 +13,7 @@
 #import "IconCenterTextButton.h"
 #import "VCameraSettingSet.h"
 #import "DataSync.h"
+#import "VTouyingjiSet.h"
 
 @interface EngineerVedioDevicePluginViewCtrl ()<CenterCustomerPickerViewDelegate> {
     IconCenterTextButton *_dianyuanguanliBtn;
@@ -307,7 +308,21 @@
                 
                 [devices addObject:device];
             }
-           
+            else if([productType isEqualToString:@"投影机"])
+            {
+                VTouyingjiSet *device = [[VTouyingjiSet alloc] init];
+                
+                device._brand = brand;
+                device._type = productCategory;
+                device._driverUUID = key;
+                device._driverInfo = [[DataSync sharedDataSync] driverInfoByUUID:key];
+                device._comDriverInfo = [[DataSync sharedDataSync] driverInfoByUUID:UUID_Serial_Com];
+                
+                //根据此类型的插件，创建自己的驱动，上传到中控
+                [device createDriver];
+                
+                [devices addObject:device];
+            }
         }
     }
 }
@@ -328,7 +343,16 @@
     NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
     
-    [self initBrandAndTypes];
+    self._currentBrands = @[@"Canon"];
+    self._currentTypes = @[@"WUX450"];
+    self._driverUdids = @[UUID_CANON_WUX450];
+    
+    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
+    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
+    
+    [_brandPicker selectRow:0 inComponent:0];
+    [_productCategoryPicker selectRow:0 inComponent:0];
+
 }
 - (void) lubojiAction:(id)sender{
     [_dianyuanguanliBtn setBtnHighlited:NO];
