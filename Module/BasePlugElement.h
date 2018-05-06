@@ -24,6 +24,8 @@
 
 @property (nonatomic,assign) int _index;
 
+@property (nonatomic, assign) BOOL _isViewed;
+
 - (NSString*) showName;
 
 - (NSString *)objectToJsonString;

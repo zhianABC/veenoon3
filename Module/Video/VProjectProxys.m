@@ -190,5 +190,78 @@
     }
 }
 
+- (id) generateEventOperation_Power{
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_POWER"];
+    
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
+            if(param_info.type == RGS_PARAM_TYPE_LIST)
+            {
+                [param setObject:_power forKey:param_info.name];
+            }
+            
+        }
+        
+        if(_rgsProxyObj)
+        {
+            _deviceId = _rgsProxyObj.m_id;
+        }
+        RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc]init];
+        scene_opt.dev_id = _deviceId;
+        scene_opt.cmd = cmd.name;
+        scene_opt.param = param;
+        
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
+                                                                          cmd:scene_opt.cmd
+                                                                        param:scene_opt.param];
+        
+        return opt;
+    }
+    return nil;
+}
+
+- (id) generateEventOperation_Input{
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_INPUT"];
+    
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
+            if(param_info.type == RGS_PARAM_TYPE_LIST)
+            {
+                [param setObject:_input forKey:param_info.name];
+            }
+            
+        }
+        
+        if(_rgsProxyObj)
+        {
+            _deviceId = _rgsProxyObj.m_id;
+        }
+        RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc]init];
+        scene_opt.dev_id = _deviceId;
+        scene_opt.cmd = cmd.name;
+        scene_opt.param = param;
+        
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
+                                                                          cmd:scene_opt.cmd
+                                                                        param:scene_opt.param];
+        
+        return opt;
+    }
+    
+    return nil;
+}
+
 
 @end

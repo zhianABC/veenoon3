@@ -39,4 +39,7 @@
 - (void) controlDeviceLoadPostion;
 - (void) controlDeviceZoom:(NSString*)zoom;
 
+////生成场景片段
+- (id) generateEventOperation_Postion;
+
 @end

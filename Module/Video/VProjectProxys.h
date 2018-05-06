@@ -33,4 +33,8 @@
 - (void) controlDevicePower:(NSString*)power;
 - (void) controlDeviceInput:(NSString*)input;
 
+////生成场景片段
+- (id) generateEventOperation_Power;
+- (id) generateEventOperation_Input;
+
 @end

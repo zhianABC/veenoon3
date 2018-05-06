@@ -10,6 +10,7 @@
 #import "RegulusSDK.h"
 #import "DataSync.h"
 #import "KVNProgress.h"
+#import "VProjectProxys.h"
 
 @interface VTouyingjiSet ()
 {
@@ -270,5 +271,87 @@
         }];
     }
 }
+
+
+- (NSString *)objectToJsonString{
+    
+    NSMutableDictionary *allData = [NSMutableDictionary dictionary];
+    
+    //基本信息
+    if(self._brand)
+        [allData setObject:self._brand forKey:@"brand"];
+    
+    if(self._type)
+        [allData setObject:self._type forKey:@"type"];
+    
+    if(self._deviceno)
+        [allData setObject:self._deviceno forKey:@"deviceno"];
+    
+    if(self._ipaddress)
+        [allData setObject:self._ipaddress forKey:@"ipaddress"];
+    
+    if(self._deviceid)
+        [allData setObject:self._deviceid forKey:@"deviceid"];
+    
+    if(self._driverUUID)
+        [allData setObject:self._driverUUID forKey:@"driverUUID"];
+    
+    if(self._comIdx)
+        [allData setObject:[NSString stringWithFormat:@"%d",self._comIdx] forKey:@"com"];
+    
+    [allData setObject:[NSString stringWithFormat:@"%d",self._index] forKey:@"index"];
+    
+    
+    if(_driverInfo)
+    {
+        RgsDriverInfo *info = _driverInfo;
+        [allData setObject:info.serial forKey:@"driver_info_uuid"];
+    }
+    if(_driver)
+    {
+        RgsDriverObj *dr = _driver;
+        [allData setObject:[NSNumber numberWithInteger:dr.m_id] forKey:@"driver_id"];
+    }
+    if(_comDriverInfo)
+    {
+        RgsDriverInfo *info = _comDriverInfo;
+        [allData setObject:info.serial forKey:@"com_driver_info_uuid"];
+    }
+    if(_comDriver)
+    {
+        RgsDriverObj *dr = _comDriver;
+        [allData setObject:[NSNumber numberWithInteger:dr.m_id] forKey:@"com_driver_id"];
+    }
+    
+    if(_proxyObj)
+    {
+        VProjectProxys *vprj = _proxyObj;
+        
+        if(vprj._deviceId)
+        {
+            NSMutableArray *commands = [NSMutableArray array];
+            NSMutableDictionary *cmdDic = [NSMutableDictionary dictionary];
+            [commands addObject:cmdDic];
+            
+            [cmdDic setObject:[NSNumber numberWithInteger:vprj._deviceId] forKey:@"proxy_id"];
+            [cmdDic setObject:vprj._power forKey:@"power"];
+            [cmdDic setObject:vprj._input forKey:@"input"];
+            
+            [allData setObject:commands forKey:@"commands"];
+        }
+    }
+    
+    NSError *error = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:allData
+                                                       options:NSJSONWritingPrettyPrinted
+                                                         error: &error];
+    
+    NSString *jsonresult = [[NSString alloc] initWithData:jsonData
+                                                 encoding:NSUTF8StringEncoding];
+    
+    
+    return jsonresult;
+}
+
 
 @end

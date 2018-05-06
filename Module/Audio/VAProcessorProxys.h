@@ -45,6 +45,7 @@
 - (BOOL) isProxyMute;
 - (BOOL) isProxyDigitalMute;
 - (float) getDigitalGain;
+- (float) getAnalogyGain;
 - (BOOL) getInverted;
 
 - (NSArray*)getModeOptions;
@@ -52,18 +53,30 @@
 
 - (void) controlDeviceDb:(float)db force:(BOOL)force;
 - (void) controlDeviceMute:(BOOL)isMute;
+
 - (void) controlDeviceDigitalGain:(float)digVal;
 - (void) controlDigtalMute:(BOOL)isMute;
-- (void) controlInverted:(BOOL)invert;
-
-- (void) control48V:(BOOL)is48v;
 
 - (void) controlDeviceMode:(NSString*)mode;
-- (void) controlDeviceMicDb:(NSString*)db;
 
+- (void) controlDeviceMicDb:(NSString*)db;
+- (void) control48V:(BOOL)is48v;
+
+- (void) controlInverted:(BOOL)invert;
+
+
+////生成场景片段
 - (id) generateEventOperation_AnalogyGain;
 - (id) generateEventOperation_Mute;
+
+- (id) generateEventOperation_DigitalGain;
 - (id) generateEventOperation_DigitalMute;
+
 - (id) generateEventOperation_Mode;
+
+- (id) generateEventOperation_MicDb;
+- (id) generateEventOperation_48v;
+
+- (id) generateEventOperation_Inverted;
 
 @end

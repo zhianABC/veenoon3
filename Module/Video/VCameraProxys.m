@@ -236,4 +236,39 @@
     [self controlDeviceDirection:@"STOP"];
 }
 
+- (id) generateEventOperation_Postion{
+    
+    RgsCommandInfo *cmd = [_cmdMap objectForKey:@"LOAD"];
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
+            if(param_info.type == RGS_PARAM_TYPE_FLOAT)
+            {
+                [param setObject:[NSString stringWithFormat:@"%0.1f",(float)_save]
+                          forKey:param_info.name];
+            }
+            else if(param_info.type == RGS_PARAM_TYPE_INT)
+            {
+                [param setObject:[NSString stringWithFormat:@"%d",_save]
+                          forKey:param_info.name];
+            }
+        }
+        RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc]init];
+        scene_opt.dev_id = _rgsProxyObj.m_id;
+        scene_opt.cmd = cmd.name;
+        scene_opt.param = param;
+        
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
+                                                                          cmd:scene_opt.cmd
+                                                                        param:scene_opt.param];
+        
+        return opt;
+    }
+    
+    return nil;
+}
+
 @end

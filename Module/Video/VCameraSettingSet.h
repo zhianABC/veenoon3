@@ -38,5 +38,4 @@
 
 - (NSString*) deviceName;
 
-
 @end

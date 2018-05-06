@@ -19,6 +19,7 @@
 @synthesize _comIdx;
 @synthesize _comArray;
 @synthesize _driverUUID;
+@synthesize _isViewed;
 
 - (id) init
 {
@@ -41,6 +42,8 @@
     
     NSString *name = [NSString stringWithFormat:@"%@ - %@ - %@",
                       _brand, _name, _deviceno];
+    
+    self._isViewed = YES;
     
     return name;
 }

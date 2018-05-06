@@ -10,6 +10,7 @@
 #import "RegulusSDK.h"
 #import "DataSync.h"
 #import "KVNProgress.h"
+#import "VAProcessorProxys.h"
 
 
 @interface AudioEProcessor ()
@@ -219,6 +220,140 @@
                                              
                                          }];
     }
+}
+
+- (NSString *)objectToJsonString{
+    
+    NSMutableDictionary *allData = [NSMutableDictionary dictionary];
+    
+    //基本信息
+    if(self._brand)
+        [allData setObject:self._brand forKey:@"brand"];
+    
+    if(self._type)
+        [allData setObject:self._type forKey:@"type"];
+    
+    if(self._deviceno)
+        [allData setObject:self._deviceno forKey:@"deviceno"];
+    
+    if(self._ipaddress)
+        [allData setObject:self._ipaddress forKey:@"ipaddress"];
+    
+    if(self._deviceid)
+        [allData setObject:self._deviceid forKey:@"deviceid"];
+    
+    if(self._driverUUID)
+        [allData setObject:self._driverUUID forKey:@"driverUUID"];
+    
+    if(self._comIdx)
+        [allData setObject:[NSString stringWithFormat:@"%d",self._comIdx] forKey:@"com"];
+    
+    [allData setObject:[NSString stringWithFormat:@"%d",self._index] forKey:@"index"];
+    
+    
+    if(_driverInfo)
+    {
+        RgsDriverInfo *info = _driverInfo;
+        [allData setObject:info.serial forKey:@"driver_info_uuid"];
+    }
+    if(_driver)
+    {
+        RgsDriverObj *dr = _driver;
+        [allData setObject:[NSNumber numberWithInteger:dr.m_id] forKey:@"driver_id"];
+    }
+
+    if(_inAudioProxys)
+    {
+        NSMutableArray *proxys = [NSMutableArray array];
+        
+        for(VAProcessorProxys *vap in _inAudioProxys)
+        {
+            RgsProxyObj *proxy = vap._rgsProxyObj;
+            
+            NSMutableDictionary *proxyDic = [NSMutableDictionary dictionary];
+            [proxys addObject:proxyDic];
+            
+            [proxyDic setObject:[NSNumber numberWithInteger:proxy.m_id]
+                         forKey:@"proxy_id"];
+            
+            [proxyDic setObject:[NSString stringWithFormat:@"%0.1f", [vap getAnalogyGain]]
+                         forKey:@"analogy_gain"];
+            
+            [proxyDic setObject:[NSNumber numberWithBool:[vap isProxyMute]]
+                         forKey:@"analogy_mute"];
+            
+            [proxyDic setObject:[NSString stringWithFormat:@"%0.1f", [vap getDigitalGain]]
+                         forKey:@"digital_gain"];
+            
+            [proxyDic setObject:[NSNumber numberWithBool:[vap isProxyDigitalMute]]
+                         forKey:@"digital_mute"];
+            
+            [proxyDic setObject:vap._mode forKey:@"mode"];
+            
+            [proxyDic setObject:vap._micDb forKey:@"mic_db"];
+            
+            [proxyDic setObject:[NSNumber numberWithBool:vap._is48V]
+                         forKey:@"48v"];
+            
+            [proxyDic setObject:[NSNumber numberWithBool:[vap getInverted]]
+                         forKey:@"inverted"];
+        }
+        
+        [allData setObject:proxys forKey:@"in_audio_proxys"];
+       
+    }
+    
+    if(_outAudioProxys)
+    {
+        NSMutableArray *proxys = [NSMutableArray array];
+        
+        for(VAProcessorProxys *vap in _outAudioProxys)
+        {
+            RgsProxyObj *proxy = vap._rgsProxyObj;
+            
+            NSMutableDictionary *proxyDic = [NSMutableDictionary dictionary];
+            [proxys addObject:proxyDic];
+            
+            [proxyDic setObject:[NSNumber numberWithInteger:proxy.m_id]
+                         forKey:@"proxy_id"];
+            
+            [proxyDic setObject:[NSString stringWithFormat:@"%0.1f", [vap getAnalogyGain]]
+                         forKey:@"analogy_gain"];
+            
+            [proxyDic setObject:[NSNumber numberWithBool:[vap isProxyMute]]
+                         forKey:@"analogy_mute"];
+            
+            [proxyDic setObject:[NSString stringWithFormat:@"%0.1f", [vap getDigitalGain]]
+                         forKey:@"digital_gain"];
+            
+            [proxyDic setObject:[NSNumber numberWithBool:[vap isProxyDigitalMute]]
+                         forKey:@"digital_mute"];
+            
+            [proxyDic setObject:vap._mode forKey:@"mode"];
+            
+            [proxyDic setObject:vap._micDb forKey:@"mic_db"];
+            
+            [proxyDic setObject:[NSNumber numberWithBool:vap._is48V]
+                         forKey:@"48v"];
+            
+            [proxyDic setObject:[NSNumber numberWithBool:[vap getInverted]]
+                         forKey:@"inverted"];
+        }
+        
+        [allData setObject:proxys forKey:@"out_audio_proxys"];
+        
+    }
+    
+    NSError *error = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:allData
+                                                       options:NSJSONWritingPrettyPrinted
+                                                         error: &error];
+    
+    NSString *jsonresult = [[NSString alloc] initWithData:jsonData
+                                                 encoding:NSUTF8StringEncoding];
+    
+    
+    return jsonresult;
 }
 
 @end

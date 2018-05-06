@@ -53,6 +53,7 @@
 #import "AudioEProcessor.h"
 
 #import "WaitDialog.h"
+#import "DevicePlugButton.h"
 
 #ifdef OPEN_REG_LIB_DEF
 #import "RegulusSDK.h"
@@ -445,7 +446,7 @@
                      }];
 }
 
--(void)buttonAction:(UIButton*)cellBtn{
+-(void)buttonAction:(DevicePlugButton*)cellBtn{
     
     int tag = (int)cellBtn.tag;
     int baseTag = tag/1000;
@@ -466,29 +467,23 @@
     
     if(_isEditMode)//删除模式
     {
-        
         return;
     }
- 
-    /*
-#ifdef OPEN_REG_LIB_DEF
-    [[RegulusSDK sharedRegulusSDK] ReloadProject:^(BOOL result, NSError *error) {
-        if(result)
-        {
-            NSLog(@"reload project.");
-        }
-        else{
-            NSLog(@"%@",[error description]);
-        }
-    }];
-#endif
-     */
     
     id  key = [NSNumber numberWithInteger:cellBtn.tag];
     NSMutableDictionary *data = [_buttonTagWithDataMap
                                   objectForKey:key];
     
     NSString *name = [data objectForKey:@"name"];
+    
+    /////////
+    id notifykey = [NSString stringWithFormat:@"%d-%@",
+              [[data objectForKey:@"id"] intValue],
+              [data objectForKey:@"name"]];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:notifykey
+                                                        object:nil];
+    /////////
 
     if ([name isEqualToString:@"8路电源管理"]) {
         
@@ -1169,7 +1164,16 @@
         [dataArray addObject:dataDic];
     }
     
-    [[scrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    for(DevicePlugButton *btn in [scrollView subviews])
+    {
+        if([btn isKindOfClass:[DevicePlugButton class]])
+        {
+            [btn removeMyObserver];
+        }
+        
+        [btn removeFromSuperview];
+    }
+
     
     [btnCells removeAllObjects];
     
@@ -1181,12 +1185,13 @@
         NSString *imageStr = [dic objectForKey:@"icon"];
         UIImage *eImg = [UIImage imageNamed:imageStr];
         
-        UIButton *cellBtn = [[UIButton alloc] initWithFrame:CGRectMake(x,
+        DevicePlugButton *cellBtn = [[DevicePlugButton alloc] initWithFrame:CGRectMake(x,
                                                                        audioStartY,
                                                                        E_CELL_WIDTH,
                                                                        E_CELL_WIDTH)];
         cellBtn.tag = tagBase+i;
-        
+        cellBtn._mydata = dic;
+        [cellBtn addMyObserver];
         
         [_buttonTagWithDataMap setObject:dic
                                   forKey:[NSNumber numberWithInteger:cellBtn.tag]];
@@ -1371,6 +1376,12 @@
     
     
     int x = audioStartX;
+    
+    if([supBtn isKindOfClass:[DevicePlugButton class]])
+    {
+        [(DevicePlugButton*)supBtn removeMyObserver];
+    }
+    
     [btnCells removeObject:supBtn];
     
     for(int i = 0; i < [btnCells count]; i++)
