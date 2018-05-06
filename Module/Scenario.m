@@ -37,6 +37,7 @@
 
 @implementation Scenario
 @synthesize room_id;
+@synthesize _rgsSceneObj;
 
 @synthesize _rgsSceneEvent;
 @synthesize _rgsScene;
@@ -96,6 +97,69 @@
     [_scenarioData setObject:[NSNumber numberWithInt:room_id]
                       forKey:@"room_id"];
     
+}
+
+- (NSMutableDictionary *)senarioData{
+    
+    return _scenarioData;
+}
+
+- (void) fillWithData:(NSMutableDictionary*)data{
+    
+    self._scenarioData = data;
+    
+    self._rgsDriver = [[RgsDriverObj alloc] init];
+    _rgsDriver.m_id = [[data objectForKey:@"s_driver_id"] intValue];
+    
+    NSArray *audios = [data objectForKey:@"audio"];
+    for(NSDictionary *a in audios){
+        
+        NSString *classname = [a objectForKey:@"class"];
+        Class someClass = NSClassFromString(classname);
+        BasePlugElement * obj = [[someClass alloc] init];
+        [obj jsonToObject:a];
+    }
+    NSArray *videos = [data objectForKey:@"video"];
+    for(NSDictionary *v in videos){
+        
+        NSString *classname = [v objectForKey:@"class"];
+        Class someClass = NSClassFromString(classname);
+        BasePlugElement * obj = [[someClass alloc] init];
+        [obj jsonToObject:v];
+    }
+    NSArray *envs = [data objectForKey:@"environment"];
+    for(NSDictionary *env in envs){
+        
+        NSString *classname = [env objectForKey:@"class"];
+        Class someClass = NSClassFromString(classname);
+        BasePlugElement * obj = [[someClass alloc] init];
+        [obj jsonToObject:env];
+    }
+    
+    
+    [self recoverDriverEvent];
+    
+    
+    
+}
+
+- (void) recoverDriverEvent{
+    
+    IMP_BLOCK_SELF(Scenario);
+    
+    [[RegulusSDK sharedRegulusSDK] GetDriverEvents:_rgsDriver.m_id
+                                        completion:^(BOOL result, NSArray *events, NSError *error) {
+        if (result) {
+            if ([events count]) {
+                
+                block_self._rgsSceneEvent = [events objectAtIndex:0];
+            }
+        }
+        else
+        {
+            NSLog(@"++++++++++recoverDriverEvent++++++++++Error");
+        }
+    }];
 }
 
 - (void) addEventOperation:(RgsSceneOperation*)rgsSceneOp{

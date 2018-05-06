@@ -117,6 +117,6 @@
 #define UUID_DIMMER_LIGHT   @"16803f55-9f85-4dd8-bfca-0e55e7c53d41"
 #define UUID_Regulus_Scene  @"f8f84c9c-4246-4ef2-b7fd-cdb76f8b08a3"
 
-#define LOGIN_REGULUS 0
+#define LOGIN_REGULUS 1
 
 typedef void (^RightSetViewCallbackBlock)(int deviceIndex);

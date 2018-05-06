@@ -279,6 +279,8 @@
     
     NSMutableDictionary *allData = [NSMutableDictionary dictionary];
     
+    [allData setValue:[NSString stringWithFormat:@"%@", [self class]] forKey:@"class"];
+    
     //基本信息
     if(self._brand)
         [allData setObject:self._brand forKey:@"brand"];

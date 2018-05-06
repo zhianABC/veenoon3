@@ -9,10 +9,12 @@
 #import <Foundation/Foundation.h>
 
 @class RgsSceneOperation;
+@class RgsSceneObj;
 
 @interface Scenario : NSObject
 
 @property (nonatomic, assign) int room_id;
+@property (nonatomic, strong) RgsSceneObj *_rgsSceneObj;
 
 @property (nonatomic, strong) NSMutableArray *_areas;
 
@@ -36,9 +38,14 @@
 //<RgsSceneOperation> -- 参见Regulus SDK里的对象说明
 @property (nonatomic, strong) NSMutableArray *_eventOperations;
 
+
 - (void) addEventOperation:(RgsSceneOperation*)rgsSceneOp;
 
 - (void) prepareSenarioSlice;
 - (void) createEventScenario;
+
+- (void) fillWithData:(NSDictionary*)data;
+- (NSMutableDictionary *)senarioData;
+
 
 @end

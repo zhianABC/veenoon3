@@ -11,6 +11,10 @@
 #import "EngineerPresetScenarioViewCtrl.h"
 #import "SIconSelectView.h"
 #import "DataBase.h"
+#import "Scenario.h"
+#import "RegulusSDK.h"
+#import "KVNProgress.h"
+#import "DataSync.h"
 
 @interface EngineerScenarioSettingsViewCtrl ()<SIconSelectViewDelegate>{
     
@@ -21,10 +25,12 @@
     UIScrollView *scroolView;
     
     NSMutableArray *_scenarioLabelArray;
+    
+    int topy;
 }
 @property (nonatomic, strong) NSMutableArray *_sBtns;
 @property (nonatomic, strong) NSMutableDictionary *_map;
-@property (nonatomic, strong) NSMutableArray *_scenarioArray;
+
 @end
 
 @implementation EngineerScenarioSettingsViewCtrl
@@ -35,14 +41,12 @@
 
 - (void) initDat {
     
-    self._scenarioArray = [[DataBase sharedDatabaseInstance] getSavedScenario:1];
     
 
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self initDat];
+
     
     self._sBtns = [NSMutableArray array];
     self._map = [NSMutableDictionary dictionary];
@@ -90,6 +94,105 @@
     portDNSLabel.textColor  = [UIColor colorWithWhite:1.0 alpha:0.9];
     portDNSLabel.text = @"在场景内，可选择您所需要配置的设备";
     
+    topy = CGRectGetMaxY(portDNSLabel.frame)+20;
+
+    UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
+    [bottomBar addSubview:okBtn];
+    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+    [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [okBtn addTarget:self
+              action:@selector(okAction:)
+    forControlEvents:UIControlEventTouchUpInside];
+    
+    _settingview = [[SIconSelectView alloc]
+                    initWithFrame:CGRectMake(SCREEN_WIDTH-310,
+                                             64, 310, SCREEN_HEIGHT-114)];
+    _settingview.delegate = self;
+    
+    [self.view addSubview:_settingview];
+
+    
+    if([_scenarioArray count])
+    {
+        [self layoutScenarios];
+    }
+    else
+    {
+        [self loadSenseFromRegulusCtrl];
+    }
+}
+
+- (void) loadSenseFromRegulusCtrl{
+    
+    self._scenarioArray = [NSMutableArray array];
+    
+    [self checkSceneData:[DataSync sharedDataSync]._currentArea];
+}
+
+- (void) checkSceneData:(RgsAreaObj*)areaObj{
+    
+#ifdef OPEN_REG_LIB_DEF
+    
+    IMP_BLOCK_SELF(EngineerScenarioSettingsViewCtrl);
+    
+    if(areaObj)
+    {
+        [KVNProgress show];
+        
+        [[RegulusSDK sharedRegulusSDK] GetAreaScenes:areaObj.m_id
+                                          completion:^(BOOL result, NSArray *scenes, NSError *error) {
+                                              if (result) {
+                                                  
+                                                  [block_self checkSceneDriver:scenes];
+                                              }
+                                          }];
+    }
+    else
+    {
+        [KVNProgress showSuccess];
+    }
+    
+    
+#endif
+}
+
+- (void) checkSceneDriver:(NSArray*)scenes{
+    
+    NSArray* savedScenarios = [[DataBase sharedDatabaseInstance] getSavedScenario:1];
+    
+    NSMutableDictionary *map = [NSMutableDictionary dictionary];
+    for(NSDictionary *senario in savedScenarios)
+    {
+        int s_driver_id = [[senario objectForKey:@"s_driver_id"] intValue];
+        [map setObject:senario forKey:[NSNumber numberWithInt:s_driver_id]];
+    }
+    
+    
+    
+    for(RgsSceneObj *dr in scenes)
+    {
+        id key = [NSNumber numberWithInt:(int)dr.m_id];
+        
+        if([map objectForKey:key])
+        {
+            Scenario *s = [[Scenario alloc] init];
+            [s fillWithData:[map objectForKey:key]];
+            s._rgsSceneObj = dr;
+            
+            [_scenarioArray addObject:s];
+        }
+    }
+    
+    [KVNProgress showSuccess];
+    
+    if([_scenarioArray count])
+        [self layoutScenarios];
+}
+
+- (void) layoutScenarios{
     
     int scenarioSize = (int)[_scenarioArray count] + 1;
     
@@ -103,7 +206,10 @@
     int cellHeight = 100;
     int top = 5;
     
-    scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(leftRightSpace, CGRectGetMaxY(portDNSLabel.frame)+20, SCREEN_WIDTH-leftRightSpace*2, SCREEN_HEIGHT-240)];
+    scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(leftRightSpace,
+                                                                topy,
+                                                                SCREEN_WIDTH-leftRightSpace*2,
+                                                                SCREEN_HEIGHT-240)];
     [self.view addSubview:scroolView];
     
     int scrollHeight = rowNumber*cellHeight + (rowNumber-1)*colGap+10;
@@ -157,10 +263,10 @@
             longPress0.view.tag = index;
             [scenarioView addGestureRecognizer:longPress0];
             
-            NSDictionary *scenarioDic = [self._scenarioArray objectAtIndex:index];
-            titleL.text = [scenarioDic objectForKey:@"name"];
+            Scenario *s = [self._scenarioArray objectAtIndex:index];
+            titleL.text = [[s senarioData] objectForKey:@"name"];
             titleL.textColor  = [UIColor whiteColor];
-        
+            
         }
         
         scenarioView.tag = index;
@@ -169,30 +275,8 @@
         
         index++;
     }
-    
-
-    
-    UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
-    [bottomBar addSubview:okBtn];
-    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
-    [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
-    okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-    [okBtn addTarget:self
-              action:@selector(okAction:)
-    forControlEvents:UIControlEventTouchUpInside];
-    
-    _settingview = [[SIconSelectView alloc]
-                    initWithFrame:CGRectMake(SCREEN_WIDTH-310,
-                                             64, 310, SCREEN_HEIGHT-114)];
-    _settingview.delegate = self;
-    
-    [self.view addSubview:_settingview];
-
-    
-    
 }
+
 - (void) longPressed0:(id)sender {
     UILongPressGestureRecognizer *viewRecognizer = (UILongPressGestureRecognizer*) sender;
     int index = (int)viewRecognizer.view.tag;
@@ -211,13 +295,15 @@
         if (scenarioName && [scenarioName length] > 0) {
             
             
-            NSMutableDictionary *scenarioDic = [self._scenarioArray objectAtIndex:index];
+            Scenario *s = [self._scenarioArray objectAtIndex:index];
             UILabel *scenarioLabel = [_scenarioLabelArray objectAtIndex:index];
             
-            [scenarioDic setObject:scenarioName forKey:@"name"];
+            NSMutableDictionary *sdic = [s senarioData];
+            [sdic setObject:scenarioName
+                            forKey:@"name"];
             scenarioLabel.text = scenarioName;
             
-            [[DataBase sharedDatabaseInstance] saveScenario:scenarioDic];
+            [[DataBase sharedDatabaseInstance] saveScenario:sdic];
         }
     }]];
     
@@ -267,7 +353,9 @@
                 int index = (int)button.tag;
                 if(index < [_scenarioArray count])
                 {
-                    NSMutableDictionary *scenarioDic = [self._scenarioArray objectAtIndex:index];
+                    Scenario *s = [self._scenarioArray objectAtIndex:index];
+                    
+                    NSMutableDictionary *scenarioDic = [s senarioData];
                     [scenarioDic setObject:imageName forKey:@"small_icon"];
                     [[DataBase sharedDatabaseInstance] saveScenario:scenarioDic];
                 }
