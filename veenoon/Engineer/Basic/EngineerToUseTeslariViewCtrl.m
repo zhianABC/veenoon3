@@ -82,11 +82,13 @@
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
+#if LOGIN_REGULUS
     //创建Area
     [[DataSync sharedDataSync] syncCurrentArea];
     
     //获取Regulus支持的插件
     [[DataSync sharedDataSync] syncRegulusDrivers];
+#endif
 }
 
 - (void) okAction:(id)sender{
