@@ -210,8 +210,8 @@
         if (result) {
             [block_self update];
         }
-        else{
-            
+        else
+        {
             [DataSync sharedDataSync]._currentReglusLogged = nil;
             [KVNProgress showErrorWithStatus:[error description]];
         }
