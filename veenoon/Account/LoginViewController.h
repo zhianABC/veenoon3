@@ -9,7 +9,7 @@
 #import "BaseViewController.h"
 
 
-@interface LoginViewController : BaseViewController <UITextFieldDelegate> {
+@interface LoginViewController : UIViewController <UITextFieldDelegate> {
     
     UITextField *_userName;
     UITextField *_userPwd;

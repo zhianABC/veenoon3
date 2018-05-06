@@ -109,7 +109,7 @@
     
     
     _engineerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _engineerBtn.frame = CGRectMake(SCREEN_WIDTH - 120, SCREEN_HEIGHT - 60, 50, 50);
+    _engineerBtn.frame = CGRectMake(70, SCREEN_HEIGHT - 60, 50, 50);
     [_engineerBtn setImage:[UIImage imageNamed:@"main_engineer_n.png"] forState:UIControlStateNormal];
     [_engineerBtn setImage:[UIImage imageNamed:@"main_engineer_s.png"] forState:UIControlStateHighlighted];
     [_engineerBtn addTarget:self action:@selector(engineerAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -117,7 +117,7 @@
     
     
     _userBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _userBtn.frame = CGRectMake(70, SCREEN_HEIGHT - 60, 50, 50);
+    _userBtn.frame = CGRectMake(SCREEN_WIDTH - 120, SCREEN_HEIGHT - 60, 50, 50);
     [_userBtn setImage:[UIImage imageNamed:@"main_user_log_normal.png"] forState:UIControlStateNormal];
     [_userBtn setImage:[UIImage imageNamed:@"main_user_login_selected.png"] forState:UIControlStateHighlighted];
     [_userBtn addTarget:self action:@selector(userLoginAction:) forControlEvents:UIControlEventTouchUpInside];

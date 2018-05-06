@@ -42,12 +42,14 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(50,
+    self.view.backgroundColor = RGB(1, 138, 182);
+    
+    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(80,
                                                                 80,
                                                                 SCREEN_WIDTH, 20)];
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
-    titleL.font = [UIFont boldSystemFontOfSize:18];
+    titleL.font = [UIFont boldSystemFontOfSize:16];
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"创建您的 TESLARIA 账户";
     
@@ -94,8 +96,8 @@
     
     UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(left, top, 80, 50)];
     tL.text = @"国家/地区";
-    tL.textColor = RGB(70, 219, 254);
-    tL.font = [UIFont boldSystemFontOfSize:18];
+    tL.textColor = [UIColor whiteColor];
+    tL.font = [UIFont boldSystemFontOfSize:14];
     [_inputPannel addSubview:tL];
 
     _countryBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -103,7 +105,7 @@
     [_countryBtn setTitle:@"中国" forState:UIControlStateNormal];
     _countryBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     _countryBtn.titleLabel.textColor = [UIColor redColor];
-    _countryBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    _countryBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
     [_inputPannel addSubview:_countryBtn];
     [_countryBtn addTarget:self
               action:@selector(countrySelectAction:)
@@ -137,8 +139,8 @@
     _regionBtn.frame = CGRectMake(left, top+100, w-80, 40);
     [_regionBtn setTitle:@"所在地区：" forState:UIControlStateNormal];
     _regionBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [_regionBtn setTitleColor:RGB(109, 210, 244) forState:UIControlStateNormal];
-    _regionBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [_regionBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _regionBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
     [_inputPannel addSubview:_regionBtn];
     [_regionBtn addTarget:self
                     action:@selector(regionSelectAction:)
@@ -168,8 +170,8 @@
 
     UILabel *tL2 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+190, 80, 40)];
     tL2.text = @"+86";
-    tL2.textColor = RGB(70, 219, 254);
-    tL2.font = [UIFont boldSystemFontOfSize:18];
+    tL2.textColor = [UIColor whiteColor];
+    tL2.font = [UIFont boldSystemFontOfSize:14];
     [_inputPannel addSubview:tL2];
 
     _cellphoneTextfield = [[UITextField alloc] initWithFrame:CGRectMake(left+80, top+190, 180, 40)];
@@ -190,7 +192,7 @@
     _registerNumberBtn.frame = CGRectMake(left+285, top+190, 100, 40);
     [_registerNumberBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
     _registerNumberBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [_registerNumberBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+    [_registerNumberBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _registerNumberBtn.titleLabel.font = [UIFont boldSystemFontOfSize:16];
     [_inputPannel addSubview:_registerNumberBtn];
     [_registerNumberBtn addTarget:self
@@ -204,8 +206,8 @@
 
     UILabel *tL3 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+235, 80, 40)];
     tL3.text = @"校验码";
-    tL3.textColor = RGB(70, 219, 254);
-    tL3.font = [UIFont boldSystemFontOfSize:18];
+    tL3.textColor = [UIColor whiteColor];
+    tL3.font = [UIFont boldSystemFontOfSize:14];
     [_inputPannel addSubview:tL3];
 
     _jiaoyanmaTextfield = [[UITextField alloc] initWithFrame:CGRectMake(left+80, top+235, 240, 40)];
@@ -224,8 +226,8 @@
 
     _timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(left+285, top+235, 100, 40)];
     _timerLabel.text = @"180s 有效";
-    _timerLabel.textColor = RGB(255, 180, 0);
-    _timerLabel.font = [UIFont boldSystemFontOfSize:18];
+    _timerLabel.textColor = [UIColor whiteColor];
+    _timerLabel.font = [UIFont boldSystemFontOfSize:14];
     [_inputPannel addSubview:_timerLabel];
 
     UILabel *line8 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+276, w, 1)];
@@ -238,8 +240,8 @@
 
     UILabel *tL4 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+320, 80, 40)];
     tL4.text = @"设置密码";
-    tL4.textColor = RGB(70, 219, 254);
-    tL4.font = [UIFont boldSystemFontOfSize:18];
+    tL4.textColor = [UIColor whiteColor];
+    tL4.font = [UIFont boldSystemFontOfSize:14];
     [_inputPannel addSubview:tL4];
 
     _password = [[UITextField alloc] initWithFrame:CGRectMake(left+80, top+320, 240, 40)];
@@ -259,8 +261,8 @@
 
     UILabel *tL5 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+365, 80, 40)];
     tL5.text = @"确认密码";
-    tL5.textColor = RGB(70, 219, 254);
-    tL5.font = [UIFont boldSystemFontOfSize:18];
+    tL5.textColor = [UIColor whiteColor];
+    tL5.font = [UIFont boldSystemFontOfSize:14];
     [_inputPannel addSubview:tL5];
 
     _passwordAgain = [[UITextField alloc] initWithFrame:CGRectMake(left+80, top+365, 240, 40)];
@@ -282,7 +284,7 @@
     loginBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     loginBtn.frame = CGRectMake(left-20, top+480, w+60, 40);
     [loginBtn setTitle:@"* 如果您已经使用过了TESLARIA服务，则应返回以使用该账号登录。*" forState:UIControlStateNormal];
-    [loginBtn setTitleColor:RGB(70, 219, 254) forState:UIControlStateNormal];
+    [loginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     loginBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     loginBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
     [_inputPannel addSubview:loginBtn];
