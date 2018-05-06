@@ -149,8 +149,9 @@
     self._regulus_gateway_id = [[NSUserDefaults standardUserDefaults] objectForKey:@"gateway_id"];
     self._regulus_user_id = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_id"];
     
-    
+#if LOGIN_REGULUS
     [KVNProgress show];
+    
     
     if(_regulus_gateway_id && _regulus_user_id)
     {
@@ -161,6 +162,7 @@
         self._regulus_gateway_id = @"RGS_EOC500_01";
         [self regCtrlDevice];
     }
+#endif
     
 }
 
@@ -208,8 +210,8 @@
         if (result) {
             [block_self update];
         }
-        else{
-            
+        else
+        {
             [DataSync sharedDataSync]._currentReglusLogged = nil;
             [KVNProgress showErrorWithStatus:[error description]];
         }
@@ -409,8 +411,9 @@
 
 - (void) renewSysAction:(UIButton*)sender{
     
+#if LOGIN_REGULUS
+    
     sender.enabled = NO;
-#ifdef OPEN_REG_LIB_DEF
     
     if([DataSync sharedDataSync]._currentReglusLogged)
     {
@@ -444,6 +447,8 @@
         sender.enabled = YES;
     }
     
+#else
+    [self setNewProject];
 #endif
     
 }
