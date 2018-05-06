@@ -19,7 +19,7 @@
 				<key>icon</key>
 				<string>dy_08.png</string>
 				<key>icon_sel</key>
-				<string>dy_08.png</string>
+				<string>dy_08_sel.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -31,7 +31,7 @@
 				<key>icon</key>
 				<string>dy_16.png</string>
 				<key>icon_sel</key>
-				<string>dy_16.png</string>
+				<string>dy_16_sel.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -43,7 +43,7 @@
 				<key>icon</key>
 				<string>a_player_1.png</string>
 				<key>icon_sel</key>
-				<string>a_player_1.png</string>
+				<string>a_player_1_sel.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -55,7 +55,7 @@
 				<key>icon</key>
 				<string>a_wx_2.png</string>
 				<key>icon_sel</key>
-				<string>a_wx_2.png</string>
+				<string>a_wx_2_sel.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -67,7 +67,7 @@
 				<key>icon</key>
 				<string>a_yx_3.png</string>
 				<key>icon_sel</key>
-				<string>a_yx_3.png</string>
+				<string>a_yx_3_sel.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -79,7 +79,7 @@
 				<key>icon</key>
 				<string>a_room_4.png</string>
 				<key>icon_sel</key>
-				<string>a_room_4.png</string>
+				<string>a_room_4_sel.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -91,7 +91,7 @@
 				<key>icon</key>
 				<string>a_room_5.png</string>
 				<key>icon_sel</key>
-				<string>a_room_5.png</string>
+				<string>a_room_5_sel.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -103,7 +103,7 @@
 				<key>icon</key>
 				<string>a_icon_6.png</string>
 				<key>icon_sel</key>
-				<string>a_icon_6.png</string>
+				<string>a_icon_6_sel.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -115,7 +115,7 @@
 				<key>icon</key>
 				<string>a_icon_7.png</string>
 				<key>icon_sel</key>
-				<string>a_icon_7.png</string>
+				<string>a_icon_7_sel.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -127,7 +127,7 @@
 				<key>icon</key>
 				<string>a_icon_8.png</string>
 				<key>icon_sel</key>
-				<string>a_icon_8.png</string>
+				<string>a_icon_8_sel.png</string>
 			</dict>
 		</array>
 	</dict>
@@ -148,7 +148,7 @@
 				<key>icon</key>
 				<string>dy_08.png</string>
 				<key>icon_sel</key>
-				<string>dy_08.png</string>
+				<string>dy_08_sel.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -160,7 +160,7 @@
 				<key>icon</key>
 				<string>dy_16.png</string>
 				<key>icon_sel</key>
-				<string>dy_16.png</string>
+				<string>dy_16_sel.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -172,7 +172,7 @@
 				<key>icon</key>
 				<string>v_icon_1.png</string>
 				<key>icon_sel</key>
-				<string>v_icon_1.png</string>
+				<string>v_icon_1_sel.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -184,7 +184,7 @@
 				<key>icon</key>
 				<string>v_icon_2.png</string>
 				<key>icon_sel</key>
-				<string>v_icon_2.png</string>
+				<string>v_icon_2_sel.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -196,7 +196,7 @@
 				<key>icon</key>
 				<string>v_icon_3.png</string>
 				<key>icon_sel</key>
-				<string>v_icon_3.png</string>
+				<string>v_icon_3_sel.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -208,7 +208,7 @@
 				<key>icon</key>
 				<string>v_icon_4.png</string>
 				<key>icon_sel</key>
-				<string>v_icon_4.png</string>
+				<string>v_icon_4_sel.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -220,7 +220,7 @@
 				<key>icon</key>
 				<string>v_icon_5.png</string>
 				<key>icon_sel</key>
-				<string>v_icon_5.png</string>
+				<string>v_icon_5_sel.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -232,7 +232,7 @@
 				<key>icon</key>
 				<string>v_icon_6.png</string>
 				<key>icon_sel</key>
-				<string>v_icon_6.png</string>
+				<string>v_icon_6_sel.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -244,7 +244,7 @@
 				<key>icon</key>
 				<string>v_icon_7.png</string>
 				<key>icon_sel</key>
-				<string>v_icon_7.png</string>
+				<string>v_icon_7_sel.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -256,7 +256,7 @@
 				<key>icon</key>
 				<string>v_icon_8.png</string>
 				<key>icon_sel</key>
-				<string>a_player_8.png</string>
+				<string>a_player_8_sel.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -268,7 +268,7 @@
 				<key>icon</key>
 				<string>v_icon_9.png</string>
 				<key>icon_sel</key>
-				<string>v_icon_9.png</string>
+				<string>v_icon_9_sel.png</string>
 			</dict>
 		</array>
 	</dict>
@@ -289,7 +289,7 @@
 				<key>icon</key>
 				<string>hj_icon_1.png</string>
 				<key>icon_sel</key>
-				<string>hj_icon_1.png</string>
+				<string>hj_icon_1_sel.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -301,7 +301,7 @@
 				<key>icon</key>
 				<string>hj_icon_2.png</string>
 				<key>icon_sel</key>
-				<string>hj_icon_2.png</string>
+				<string>hj_icon_2_sel.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -313,7 +313,7 @@
 				<key>icon</key>
 				<string>hj_icon_3.png</string>
 				<key>icon_sel</key>
-				<string>hj_icon_3.png</string>
+				<string>hj_icon_3_sel.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -325,7 +325,7 @@
 				<key>icon</key>
 				<string>hj_icon_4.png</string>
 				<key>icon_sel</key>
-				<string>hj_icon_4.png</string>
+				<string>hj_icon_4_sel.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -337,7 +337,7 @@
 				<key>icon</key>
 				<string>hj_icon_5.png</string>
 				<key>icon_sel</key>
-				<string>hj_icon_5.png</string>
+				<string>hj_icon_5_sel.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -349,7 +349,7 @@
 				<key>icon</key>
 				<string>hj_icon_7.png</string>
 				<key>icon_sel</key>
-				<string>hj_icon_7.png</string>
+				<string>hj_icon_7_sel.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -361,7 +361,7 @@
 				<key>icon</key>
 				<string>hj_icon_9.png</string>
 				<key>icon_sel</key>
-				<string>hj_icon_9.png</string>
+				<string>hj_icon_9_sel.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -373,7 +373,7 @@
 				<key>icon</key>
 				<string>hj_icon_11.png</string>
 				<key>icon_sel</key>
-				<string>hj_icon_11.png</string>
+				<string>hj_icon_11_sel.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -385,7 +385,7 @@
 				<key>icon</key>
 				<string>hj_icon_12.png</string>
 				<key>icon_sel</key>
-				<string>hj_icon_12.png</string>
+				<string>hj_icon_12_sel.png</string>
 			</dict>
 		</array>
 	</dict>

@@ -8,6 +8,34 @@
 
 #import <Foundation/Foundation.h>
 #import "BasePlugElement.h"
+
+
 @interface VCameraSettingSet : BasePlugElement
+
+@property (nonatomic, strong) id _driverInfo;
+@property (nonatomic, strong) id _driver;
+
+@property (nonatomic, strong) id _comDriverInfo;
+@property (nonatomic, strong) id _comDriver;
+
+//<VCameraProxy>
+@property (nonatomic, strong) id _proxyObj;
+
+//<RgsConnectionObj>
+@property (nonatomic, strong) NSArray *_comConnections;
+@property (nonatomic, strong) NSArray *_cameraConnections;
+
+- (void) syncDriverIPProperty;
+- (void) uploadDriverIPProperty;
+
+- (void) syncDriverComs;
+
+
+- (void) createDriver;
+- (void) removeDriver;
+
+- (void) createConnection;
+
+- (NSString*) deviceName;
 
 @end

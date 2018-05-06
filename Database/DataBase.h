@@ -23,24 +23,9 @@
 
 - (NSString *)dbPath;
 
-//Code, - code:text, uploaded:int, time:int, data:text (json data)
 
-- (int) insertCode:(NSString*)code;
-
-- (void) updateCode:(NSString*)code withData:(NSDictionary*)data status:(int)status;
-
-- (void) updateCodeStauts:(NSString*)code status:(int)status;
-
-- (NSMutableArray*) getSavedCode;
-- (int) countTotal;
-- (int) countOffline;
-
-- (int) deleteCode:(NSString*)code;
-
-- (NSDictionary *)chkAdmission:(NSString*)code;
-
-- (NSMutableArray *)searchByKeywords:(NSString*)keywords;
-
-
+- (int) saveScenario:(NSDictionary*)scenario;
+- (int) deleteScenario:(NSDictionary*)scenario;
+- (NSMutableArray*) getSavedScenario:(int)room_id;
 
 @end

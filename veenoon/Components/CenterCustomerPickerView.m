@@ -116,6 +116,7 @@
     [_values setObject:@{@"value":value, @"index":[NSNumber numberWithInteger:row]}
                 forKey:[NSNumber numberWithInteger:component]];
     
+    self._unitString = value;
     
     [_myPickerView selectRow:row inComponent:component animated:YES];
 }
@@ -139,6 +140,7 @@
     [_values setObject:@{@"value":value, @"index":[NSNumber numberWithInteger:row]}
                 forKey:[NSNumber numberWithInteger:component]];
     
+    self._unitString = value;
     
     [pickerView reloadComponent:component];
     
@@ -217,7 +219,7 @@
         
     }
     
-    _unitString = tL.text;
+    //_unitString = tL.text;
     
     return tL;
 }

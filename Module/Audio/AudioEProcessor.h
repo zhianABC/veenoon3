@@ -26,4 +26,10 @@
 - (void) syncDriverIPProperty;
 - (void) uploadDriverIPProperty;
 
+- (void) createDriver;
+- (void) removeDriver;
+
+- (NSString*) deviceName;
+
+
 @end

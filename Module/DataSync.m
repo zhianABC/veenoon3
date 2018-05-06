@@ -220,6 +220,10 @@ static DataSync* dSyncInstance = nil;
 #endif
 }
 
+- (RgsDriverInfo *) driverInfoByUUID:(NSString*)uuid{
+    
+    return [_mapDrivers objectForKey:uuid];
+}
 
 - (void) addCurrentSelectDriverToCurrentArea:(NSString*)mapkey{
     
@@ -228,7 +232,6 @@ static DataSync* dSyncInstance = nil;
     {
         [[WaitDialog sharedAlertDialog] setTitle:@"未找到对应设备的驱动"];
         [[WaitDialog sharedAlertDialog] animateShow];
-        
     }
     else
     {

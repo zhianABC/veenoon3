@@ -173,7 +173,6 @@
 		341C784D2050185200DD1677 /* IconLayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 341C784B2050185200DD1677 /* IconLayerView.m */; };
 		341E75E4209BF94C00E69DB2 /* VAProcessorProxys.m in Sources */ = {isa = PBXBuildFile; fileRef = 341E75E3209BF94C00E69DB2 /* VAProcessorProxys.m */; };
 		341E7BE5205BFD7400E2DEA0 /* back_white_ico@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 341E7BE4205BFD7300E2DEA0 /* back_white_ico@2x.png */; };
-		341F0F471EC2FC500027C800 /* WSCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 341F0F461EC2FC500027C800 /* WSCode.m */; };
 		3421561820597293005205D6 /* slide_btn_light_nokd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3421561620597292005205D6 /* slide_btn_light_nokd@2x.png */; };
 		3421561920597293005205D6 /* slide_btn_gray_nokd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3421561720597292005205D6 /* slide_btn_gray_nokd@2x.png */; };
 		34217A6F1FCE98200006701C /* UserVideoConfigView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34217A6E1FCE98200006701C /* UserVideoConfigView.m */; };
@@ -238,6 +237,9 @@
 		345493081FE6585600793E2E /* add_brand_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 345493071FE6585500793E2E /* add_brand_icon@2x.png */; };
 		3454930A1FE65AA300793E2E /* picker_player@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 345493091FE65AA200793E2E /* picker_player@2x.png */; };
 		3456C172209D8A6B001FAB61 /* wireless_slide_mute@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3456C171209D8A6B001FAB61 /* wireless_slide_mute@2x.png */; };
+		3456C175209EACD1001FAB61 /* VCameraProxys.m in Sources */ = {isa = PBXBuildFile; fileRef = 3456C173209EACD0001FAB61 /* VCameraProxys.m */; };
+		3456C178209ED2F1001FAB61 /* VProjectProxys.m in Sources */ = {isa = PBXBuildFile; fileRef = 3456C177209ED2F1001FAB61 /* VProjectProxys.m */; };
+		3456C17B209EEDCC001FAB61 /* DevicePlugButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3456C17A209EEDCC001FAB61 /* DevicePlugButton.m */; };
 		34615F091FC9BD7B002DFCE0 /* JSlideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34615F051FC9BD7B002DFCE0 /* JSlideView.m */; };
 		34615F0A1FC9BD7B002DFCE0 /* jslide_bk@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34615F061FC9BD7B002DFCE0 /* jslide_bk@2x.png */; };
 		34615F0B1FC9BD7B002DFCE0 /* jslide_thumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34615F071FC9BD7B002DFCE0 /* jslide_thumb@2x.png */; };
@@ -1148,8 +1150,6 @@
 		341E75E2209BF94C00E69DB2 /* VAProcessorProxys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VAProcessorProxys.h; sourceTree = "<group>"; };
 		341E75E3209BF94C00E69DB2 /* VAProcessorProxys.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VAProcessorProxys.m; sourceTree = "<group>"; };
 		341E7BE4205BFD7300E2DEA0 /* back_white_ico@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_white_ico@2x.png"; sourceTree = "<group>"; };
-		341F0F451EC2FC500027C800 /* WSCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSCode.h; sourceTree = "<group>"; };
-		341F0F461EC2FC500027C800 /* WSCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSCode.m; sourceTree = "<group>"; };
 		3421561620597292005205D6 /* slide_btn_light_nokd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slide_btn_light_nokd@2x.png"; sourceTree = "<group>"; };
 		3421561720597292005205D6 /* slide_btn_gray_nokd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slide_btn_gray_nokd@2x.png"; sourceTree = "<group>"; };
 		34217A6D1FCE98200006701C /* UserVideoConfigView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserVideoConfigView.h; sourceTree = "<group>"; };
@@ -1234,6 +1234,12 @@
 		345493071FE6585500793E2E /* add_brand_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add_brand_icon@2x.png"; sourceTree = "<group>"; };
 		345493091FE65AA200793E2E /* picker_player@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "picker_player@2x.png"; sourceTree = "<group>"; };
 		3456C171209D8A6B001FAB61 /* wireless_slide_mute@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wireless_slide_mute@2x.png"; sourceTree = "<group>"; };
+		3456C173209EACD0001FAB61 /* VCameraProxys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VCameraProxys.m; sourceTree = "<group>"; };
+		3456C174209EACD1001FAB61 /* VCameraProxys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VCameraProxys.h; sourceTree = "<group>"; };
+		3456C176209ED2F0001FAB61 /* VProjectProxys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VProjectProxys.h; sourceTree = "<group>"; };
+		3456C177209ED2F1001FAB61 /* VProjectProxys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VProjectProxys.m; sourceTree = "<group>"; };
+		3456C179209EEDCC001FAB61 /* DevicePlugButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DevicePlugButton.h; sourceTree = "<group>"; };
+		3456C17A209EEDCC001FAB61 /* DevicePlugButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DevicePlugButton.m; sourceTree = "<group>"; };
 		34615F051FC9BD7B002DFCE0 /* JSlideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSlideView.m; sourceTree = "<group>"; };
 		34615F061FC9BD7B002DFCE0 /* jslide_bk@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jslide_bk@2x.png"; sourceTree = "<group>"; };
 		34615F071FC9BD7B002DFCE0 /* jslide_thumb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jslide_thumb@2x.png"; sourceTree = "<group>"; };
@@ -2342,6 +2348,8 @@
 				348FC8D2208B748B00F7DB3D /* DActionView.m */,
 				EBCD01C42090C0AF00787D48 /* IPValidate.h */,
 				EBCD01C52090C0AF00787D48 /* IPValidate.m */,
+				3456C179209EEDCC001FAB61 /* DevicePlugButton.h */,
+				3456C17A209EEDCC001FAB61 /* DevicePlugButton.m */,
 			);
 			path = Common;
 			sourceTree = SOURCE_ROOT;
@@ -2495,8 +2503,6 @@
 				349DADD0206E8D02001593DE /* Audio */,
 				341AEB62206A5B7A00E01D03 /* Env */,
 				EB18B7252067D4A6000BDEAB /* Video */,
-				341F0F451EC2FC500027C800 /* WSCode.h */,
-				341F0F461EC2FC500027C800 /* WSCode.m */,
 				04D719831DADE2D8002153D7 /* DataSync.h */,
 				04D719841DADE2D8002153D7 /* DataSync.m */,
 				04D719801DADE0A9002153D7 /* WSEvent.h */,
@@ -3303,8 +3309,14 @@
 				EB5A47F62084D83500564C06 /* VDVDPlayerSet.m */,
 				EBD009B1208CB12900920849 /* VCameraSettingSet.h */,
 				EBD009B2208CB12900920849 /* VCameraSettingSet.m */,
+				3456C174209EACD1001FAB61 /* VCameraProxys.h */,
+				3456C173209EACD0001FAB61 /* VCameraProxys.m */,
 				EBD009B4208CB88300920849 /* VRemoteSettingsSet.h */,
 				EBD009B5208CB88300920849 /* VRemoteSettingsSet.m */,
+				EBD009CC2090A9D200920849 /* VTouyingjiSet.h */,
+				EBD009CD2090A9D200920849 /* VTouyingjiSet.m */,
+				3456C176209ED2F0001FAB61 /* VProjectProxys.h */,
+				3456C177209ED2F1001FAB61 /* VProjectProxys.m */,
 				EBD009B7208CBD8100920849 /* VRemoteVideoSet.h */,
 				EBD009B8208CBD8100920849 /* VRemoteVideoSet.m */,
 				EBD009BD2090613C00920849 /* VVideoProcessSet.h */,
@@ -3317,8 +3329,6 @@
 				EBD009C720907B0700920849 /* VTVSet.m */,
 				EBD009C920907E8C00920849 /* VLuBoJiSet.h */,
 				EBD009CA20907E8C00920849 /* VLuBoJiSet.m */,
-				EBD009CC2090A9D200920849 /* VTouyingjiSet.h */,
-				EBD009CD2090A9D200920849 /* VTouyingjiSet.m */,
 			);
 			path = Video;
 			sourceTree = "<group>";
@@ -3504,6 +3514,7 @@
 				EBD009BA208CC2C800920849 /* RemoteCOMIRView.h */,
 				EBD009BB208CC2C800920849 /* RemoteCOMIRView.m */,
 				EBC71B06203AF74100DD0A98 /* RemoteVideoRightView.h */,
+				EBC71B07203AF74100DD0A98 /* RemoteVideoRightView.m */,
 				EBC71B09203AF90700DD0A98 /* VideoProcessRightView.h */,
 				EBC71B0A203AF90700DD0A98 /* VideoProcessRightView.m */,
 				EBC71B12203C3A3200DD0A98 /* PinJiePingRightView.h */,
@@ -3511,7 +3522,6 @@
 				EBDB4536205D4C44000ABAB0 /* TVSettingsRightView.h */,
 				EBDB4537205D4C44000ABAB0 /* TVSettingsRightView.m */,
 				EBC71B15203C487000DD0A98 /* TVViewRightView.h */,
-				EBC71B07203AF74100DD0A98 /* RemoteVideoRightView.m */,
 				EBC71B16203C487000DD0A98 /* TVViewRightView.m */,
 				EBC71B18203C496500DD0A98 /* LuBoJiRightView.h */,
 				EBC71B19203C496500DD0A98 /* LuBoJiRightView.m */,
@@ -4349,6 +4359,7 @@
 				EB4EC11F1FE7F94B000B3101 /* EngineerHandtoHandViewCtrl.m in Sources */,
 				EB1A55BB1FE801CF000B18E6 /* EngineerWIrelessMeetingPlayViewCtrl.m in Sources */,
 				04DE1E921AD6AEE000D49E2F /* UserDefaultsKV.m in Sources */,
+				3456C17B209EEDCC001FAB61 /* DevicePlugButton.m in Sources */,
 				0469CF3C1B033162006B901E /* CustomImagePickerCtrlor.m in Sources */,
 				04D719851DADE2D8002153D7 /* DataSync.m in Sources */,
 				EB795B422042DA33005D1F47 /* AudioProcessRightView.m in Sources */,
@@ -4438,7 +4449,6 @@
 				EB1717931FF5E6B600CBDB81 /* EngineerTouYingJiViewCtrl.m in Sources */,
 				EBC71B23203F011E00DD0A98 /* AirConditionRightView.m in Sources */,
 				EBDB4547205D56D5000ABAB0 /* LightSliderButton.m in Sources */,
-				341F0F471EC2FC500027C800 /* WSCode.m in Sources */,
 				04DE1EAD1AD6AEE000D49E2F /* SDWebImageCompat.m in Sources */,
 				34DC473F1FD6984400ACB589 /* ColumnView.m in Sources */,
 				EBAE5BB71FDFFBD700C10C4D /* EngineerScenarioListViewCtrl.m in Sources */,
@@ -4474,6 +4484,7 @@
 				349DADE1206E8D02001593DE /* AudioEMix.m in Sources */,
 				3425E98C1FE571CE003559F7 /* ComSettingView.m in Sources */,
 				EB3B739A1FE61B18001941CF /* EngineerPlayerSettingsViewCtrl.m in Sources */,
+				3456C178209ED2F1001FAB61 /* VProjectProxys.m in Sources */,
 				0477DC581DA9F4700077FA52 /* Base64.m in Sources */,
 				049BA6601AF7B64000F17584 /* DataBase.m in Sources */,
 				EB795B532042E81F005D1F47 /* ZengYi_UIView.m in Sources */,
@@ -4483,6 +4494,7 @@
 				341C60C41FDCF1EA003A5490 /* ECPlusSelectView.m in Sources */,
 				04DE1E931AD6AEE000D49E2F /* Utilities.m in Sources */,
 				EB1A04601FC7156C007CC1F2 /* UserAudioConfigViewController.m in Sources */,
+				3456C175209EACD1001FAB61 /* VCameraProxys.m in Sources */,
 				349DADE0206E8D02001593DE /* AudioEWirlessMike.m in Sources */,
 				341C784D2050185200DD1677 /* IconLayerView.m in Sources */,
 				04DE1E981AD6AEE000D49E2F /* ASIFormDataRequest.m in Sources */,

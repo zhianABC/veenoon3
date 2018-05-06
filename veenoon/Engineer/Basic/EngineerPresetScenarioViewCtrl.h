@@ -17,5 +17,7 @@
     NSMutableDictionary *_curScenario;
 }
 @property (nonatomic,strong) NSMutableDictionary *_meetingRoomDic;
+@property (nonatomic, strong) NSDictionary *_selectedDevices;
+
 @property (nonatomic,strong) NSString *_scenarioName;
 @end

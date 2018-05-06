@@ -52,7 +52,15 @@
 #import "KVNProgress.h"
 #import "AudioEProcessor.h"
 
+#import "VAProcessorProxys.h"
+#import "VCameraProxys.h"
+#import "VTouyingjiSet.h"
+#import "VProjectProxys.h"
+
 #import "WaitDialog.h"
+#import "DevicePlugButton.h"
+
+
 
 #ifdef OPEN_REG_LIB_DEF
 #import "RegulusSDK.h"
@@ -77,6 +85,8 @@
     BOOL _isEditMode;
     UIButton *_setBtn;
     UIButton *_doneBtn;
+    
+    UIButton *scenarioButton;
 }
 @property (nonatomic, strong) NSMutableArray *_audioCells;
 @property (nonatomic, strong) NSMutableArray *_videoCells;
@@ -109,6 +119,8 @@
 @synthesize _aDataCheckTestMap;
 @synthesize _vDataCheckTestMap;
 @synthesize _eDataCheckTestMap;
+
+@synthesize _selectedDevices;
 
 
 -(void) initData {
@@ -173,9 +185,16 @@
     
     
     self._scenario = [[Scenario alloc] init];
-    
+    self._scenario.room_id = 1;
     
 }
+
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initData];
@@ -201,7 +220,7 @@
     UIView *topbar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 64)];
     topbar.backgroundColor = THEME_COLOR;
     
-    UIButton *scenarioButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    scenarioButton = [UIButton buttonWithType:UIButtonTypeCustom];
     scenarioButton.frame = CGRectMake(SCREEN_WIDTH-120, 20, 100, 44);
     [topbar addSubview:scenarioButton];
     [scenarioButton setTitle:@"生成场景" forState:UIControlStateNormal];
@@ -342,6 +361,11 @@
     [self.view addSubview:topbar];
     [self.view addSubview:bottomBar];
 
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(notifyScenarioResult:)
+                                                 name:@"Notify_Scenario_Create_Result"
+                                               object:nil];
 }
 
 
@@ -364,37 +388,55 @@
         }
     }
 
-    [[WaitDialog sharedAlertDialog] setTitle:@"未找到对应设备的驱动"];
-    [[WaitDialog sharedAlertDialog] animateShow];
-    
+//    [[WaitDialog sharedAlertDialog] setTitle:@"未找到对应设备的驱动"];
+//    [[WaitDialog sharedAlertDialog] animateShow];
+//
 #endif
 }
 
 
-- (void) createScenarioAction:(id) sender{
+
+
+- (void) createScenarioAction:(UIButton*) sender{
     
-    EngineerScenarioSettingsViewCtrl *ctrl = [[EngineerScenarioSettingsViewCtrl alloc] init];
+    sender.enabled = NO;
     
-    [self.navigationController pushViewController:ctrl animated:YES];
+    [_scenario prepareSenarioSlice];
+    [_scenario createEventScenario];
+
 }
+
+- (void) notifyScenarioResult:(NSNotification*)notify{
+    
+    scenarioButton.enabled = YES;
+    
+    NSDictionary *object = notify.object;
+    BOOL res = [[object objectForKey:@"result"] boolValue];
+    if(res)
+    {
+      
+        EngineerScenarioSettingsViewCtrl *ctrl = [[EngineerScenarioSettingsViewCtrl alloc] init];
+        [self.navigationController pushViewController:ctrl animated:YES];
+    }
+}
+
 - (void) handleTapGesture:(UIGestureRecognizer*)sender{
     
     CGPoint pt = [sender locationInView:self.view];
     
     if(pt.x < SCREEN_WIDTH-300)
     {
-    
-    CGRect rc = ecp.frame;
-    rc.origin.x = SCREEN_WIDTH;
-    
-    [UIView animateWithDuration:0.25
-                     animations:^{
-                         
-                         ecp.frame = rc;
-                         
-                     } completion:^(BOOL finished) {
-                         
-                     }];
+        CGRect rc = ecp.frame;
+        rc.origin.x = SCREEN_WIDTH;
+        
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             
+                             ecp.frame = rc;
+                             
+                         } completion:^(BOOL finished) {
+                             
+                         }];
     }
 }
 
@@ -444,7 +486,7 @@
                      }];
 }
 
--(void)buttonAction:(UIButton*)cellBtn{
+-(void)buttonAction:(DevicePlugButton*)cellBtn{
     
     int tag = (int)cellBtn.tag;
     int baseTag = tag/1000;
@@ -465,29 +507,23 @@
     
     if(_isEditMode)//删除模式
     {
-        
         return;
     }
- 
-    /*
-#ifdef OPEN_REG_LIB_DEF
-    [[RegulusSDK sharedRegulusSDK] ReloadProject:^(BOOL result, NSError *error) {
-        if(result)
-        {
-            NSLog(@"reload project.");
-        }
-        else{
-            NSLog(@"%@",[error description]);
-        }
-    }];
-#endif
-     */
     
     id  key = [NSNumber numberWithInteger:cellBtn.tag];
     NSMutableDictionary *data = [_buttonTagWithDataMap
                                   objectForKey:key];
     
     NSString *name = [data objectForKey:@"name"];
+    
+    /////////
+    id notifykey = [NSString stringWithFormat:@"%d-%@",
+              [[data objectForKey:@"id"] intValue],
+              [data objectForKey:@"name"]];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:notifykey
+                                                        object:nil];
+    /////////
 
     if ([name isEqualToString:@"8路电源管理"]) {
         
@@ -625,7 +661,6 @@
         if ([name isEqualToString:@"投影仪"]) {
             EngineerTouYingJiViewCtrl *ctrl = [[EngineerTouYingJiViewCtrl alloc] init];
             ctrl._touyingjiArray = _scenario._VTouyingji;
-            
             [self.navigationController pushViewController:ctrl animated:YES];
         }
     }
@@ -733,24 +768,20 @@
     
     if([_scenario._VTouyingji count] == 0)
     {
-        NSMutableArray *powers = [NSMutableArray array];
+        NSMutableArray *h2h = [NSMutableArray array];
         
-        for(int i = 0; i < 3; i++)
+        NSArray *devices = [_selectedDevices objectForKey:@"video"];
+        
+        for(id pset in devices)
         {
-            VTouyingjiSet *pset = [[VTouyingjiSet alloc] init];
-            pset._ipaddress = [@"191.16.1.10" stringByAppendingString:[NSString stringWithFormat:@"%d", i]];
-            pset._brand = @"brand1";
-            pset._type = @"type1";
-            pset._index = i;
-            
-            pset._comArray = @[@{@"values":@[@"Com0", @"Com1", @"Com2"]}];
-            pset._com = [@"Com" stringByAppendingString:[NSString stringWithFormat:@"%d", i]];
-            pset._deviceno = [NSString stringWithFormat:@"%d", i];
-            [powers addObject:pset];
+            if([pset isKindOfClass:[VTouyingjiSet class]])
+            {
+                [h2h addObject:pset];
+            }
         }
-        
-        _scenario._VTouyingji = powers;
+        _scenario._VTouyingji = h2h;
     }
+    
 }
 
 - (void) initTV {
@@ -762,7 +793,6 @@
         for(int i = 0; i < 3; i++)
         {
             VTVSet *pset = [[VTVSet alloc] init];
-            pset._com = @"191.16.1.100";
             pset._brand = @"brand1";
             pset._type = @"type1";
             pset._index = i;
@@ -783,7 +813,6 @@
         for(int i = 0; i < 3; i++)
         {
             VPinJieSet *pset = [[VPinJieSet alloc] init];
-            pset._com = @"191.16.1.100";
             pset._brand = @"brand1";
             pset._type = @"type1";
             pset._index = i;
@@ -803,7 +832,6 @@
         for(int i = 0; i < 6; i++)
         {
             VVideoProcessSet *pset = [[VVideoProcessSet alloc] init];
-            pset._com = @"191.16.1.100";
             pset._brand = @"brand1";
             pset._type = @"type1";
             pset._index = i;
@@ -841,7 +869,6 @@
         for(int i = 0; i < 6; i++)
         {
             VRemoteSettingsSet *pset = [[VRemoteSettingsSet alloc] init];
-            pset._com = @"191.16.1.100";
             pset._brand = @"brand1";
             pset._type = @"type1";
             pset._index = i;
@@ -864,26 +891,21 @@
 }
 
 - (void) initVCameraSettings {
+    
     if([_scenario._VCameraSettings count] == 0)
     {
-        NSMutableArray *powers = [NSMutableArray array];
+        NSMutableArray *h2h = [NSMutableArray array];
         
-        for(int i = 0; i < 3; i++)
+        NSArray *devices = [_selectedDevices objectForKey:@"video"];
+        
+        for(id pset in devices)
         {
-            VCameraSettingSet *pset = [[VCameraSettingSet alloc] init];
-            pset._ipaddress = @"191.16.1.100";
-            pset._brand = @"brand1";
-            pset._type = @"type1";
-            pset._index = i;
-            
-            pset._comArray = @[@{@"values":@[@"Com0", @"Com1", @"Com2"]}];
-            pset._com = [@"Com" stringByAppendingString:[NSString stringWithFormat:@"%d", i]];
-            
-            pset._deviceno = [NSString stringWithFormat:@"%d", i];
-            [powers addObject:pset];
+            if([pset isKindOfClass:[VCameraSettingSet class]])
+            {
+                [h2h addObject:pset];
+            }
         }
-        
-        _scenario._VCameraSettings = powers;
+        _scenario._VCameraSettings = h2h;
     }
 }
 
@@ -896,7 +918,6 @@
         for(int i = 0; i < 3; i++)
         {
             VDVDPlayerSet *pset = [[VDVDPlayerSet alloc] init];
-            pset._com = @"191.16.1.100";
             pset._brand = @"brand1";
             pset._type = @"type1";
             pset._index = i;
@@ -1016,24 +1037,14 @@
     {
         NSMutableArray *h2h = [NSMutableArray array];
         
-        //
+        NSArray *audioArray = [_selectedDevices objectForKey:@"audio"];
         
-        for(int i = 0; i < 1; i++)
+        for(id pset in audioArray)
         {
-            AudioEProcessor *pset = [[AudioEProcessor alloc] init];
-            pset._brand = @"Teslaria";
-            pset._type = @"Audio";
-            pset._name = @"Teslaria Audio Processor";
-            pset._driverUUID = @"a3508fda-8775-4561-a26f-3df071f78b09";
-            pset._index = i;
-            pset._deviceno = [NSString stringWithFormat:@"%02d", i+1];
-            [h2h addObject:pset];
-            
-            id key = pset._driverUUID;
-            
-            id dr = [[DataSync sharedDataSync]._mapDrivers objectForKey:key];
-            pset._driverInfo = dr;
-
+            if([pset isKindOfClass:[AudioEProcessor class]])
+            {
+                [h2h addObject:pset];
+            }
         }
         
         _scenario._AProcessorPlugs = h2h;
@@ -1109,7 +1120,7 @@
             else if([name isEqualToString:@"音频处理"])
             {
                 [self initProcessorPlugs];
-                [self checkAreaHaveDriver];
+                //[self checkAreaHaveDriver];
             }
         }
         
@@ -1193,7 +1204,16 @@
         [dataArray addObject:dataDic];
     }
     
-    [[scrollView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    for(DevicePlugButton *btn in [scrollView subviews])
+    {
+        if([btn isKindOfClass:[DevicePlugButton class]])
+        {
+            [btn removeMyObserver];
+        }
+        
+        [btn removeFromSuperview];
+    }
+
     
     [btnCells removeAllObjects];
     
@@ -1205,12 +1225,13 @@
         NSString *imageStr = [dic objectForKey:@"icon"];
         UIImage *eImg = [UIImage imageNamed:imageStr];
         
-        UIButton *cellBtn = [[UIButton alloc] initWithFrame:CGRectMake(x,
+        DevicePlugButton *cellBtn = [[DevicePlugButton alloc] initWithFrame:CGRectMake(x,
                                                                        audioStartY,
                                                                        E_CELL_WIDTH,
                                                                        E_CELL_WIDTH)];
         cellBtn.tag = tagBase+i;
-        
+        cellBtn._mydata = dic;
+        [cellBtn addMyObserver];
         
         [_buttonTagWithDataMap setObject:dic
                                   forKey:[NSNumber numberWithInteger:cellBtn.tag]];
@@ -1395,6 +1416,12 @@
     
     
     int x = audioStartX;
+    
+    if([supBtn isKindOfClass:[DevicePlugButton class]])
+    {
+        [(DevicePlugButton*)supBtn removeMyObserver];
+    }
+    
     [btnCells removeObject:supBtn];
     
     for(int i = 0; i < [btnCells count]; i++)
@@ -1438,4 +1465,7 @@
 - (void) cancelAction:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+
+
 @end

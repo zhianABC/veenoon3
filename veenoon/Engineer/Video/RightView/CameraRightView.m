@@ -11,7 +11,7 @@
 #import "ComSettingView.h"
 #import "VCameraSettingSet.h"
 
-@interface CameraRightView () <UITextFieldDelegate> {
+@interface CameraRightView () <UITextFieldDelegate, ComSettingViewDelegate> {
     
     ComSettingView *_com;
     UITextField *ipTextField;
@@ -27,6 +27,7 @@
 @synthesize _numOfDevice;
 @synthesize _callback;
 @synthesize _curentDeviceIndex;
+@synthesize delegate_;
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.
@@ -75,7 +76,15 @@
         
         [headView addGestureRecognizer:swip];
         
+        
+        UISwipeGestureRecognizer *rightswip = [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                                                        action:@selector(swipClose)];
+        rightswip.direction = UISwipeGestureRecognizerDirectionRight;
+        [self addGestureRecognizer:rightswip];
+        
+        
         _com = [[ComSettingView alloc] initWithFrame:self.bounds];
+        _com.delegate = self;
     }
     
     return self;
@@ -158,14 +167,20 @@
 }
 
 -(void) refreshView:(VCameraSettingSet*) vCameraSettingSet {
+   
     self._currentObj = vCameraSettingSet;
-    
     ipTextField.text = vCameraSettingSet._ipaddress;
     
-    self._curentDeviceIndex = _currentObj._index;
-    [self chooseChannelAtTagIndex:_curentDeviceIndex];
+    //self._curentDeviceIndex = _currentObj._index;
+    
+    //[self chooseChannelAtTagIndex:_curentDeviceIndex];
     
     [_com refreshCom:_currentObj];
+}
+
+- (void) didChoosedComVal:(NSString*)val{
+    
+    [_currentObj createConnection];
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
@@ -175,6 +190,11 @@
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
+    _currentObj._ipaddress = ipTextField.text;
+}
+
+- (void) saveCurrentSetting{
+    
     _currentObj._ipaddress = ipTextField.text;
 }
 
@@ -203,6 +223,16 @@
                      } completion:^(BOOL finished) {
                          
                      }];
+    
+}
+
+- (void) swipClose{
+    
+    
+    if(delegate_ && [delegate_ respondsToSelector:@selector(dissmissSettingView)])
+    {
+        [delegate_ dissmissSettingView];
+    }
     
 }
 

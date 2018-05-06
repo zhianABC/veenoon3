@@ -35,7 +35,7 @@ static DataBase* sharedInstance = nil;
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *path = [documentsDirectory stringByAppendingPathComponent:@"zhucebao_db.sqlite"];
+    NSString *path = [documentsDirectory stringByAppendingPathComponent:@"veenoon_db.sqlite"];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
     BOOL find = [fileManager fileExistsAtPath:path];
@@ -47,7 +47,7 @@ static DataBase* sharedInstance = nil;
     }
     
     NSError *error;
-    NSString *pathToDefaultPlist = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"zhucebao_db.sqlite"];
+    NSString *pathToDefaultPlist = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"veenoon_db.sqlite"];
     [fileManager copyItemAtPath:pathToDefaultPlist toPath:path error:&error];
     
     
@@ -66,13 +66,13 @@ static DataBase* sharedInstance = nil;
 	
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *dbPath = [documentsDirectory stringByAppendingPathComponent:@"zhucebao_db.sqlite"];
+    NSString *dbPath = [documentsDirectory stringByAppendingPathComponent:@"veenoon_db.sqlite"];
 
 	
 	self.databasePath_ = dbPath;
 	if(sqlite3_open([dbPath UTF8String], &database_)== SQLITE_OK)
 	{
-        [self checkCachedBarcodeTable];
+        [self checkCachedTable];
         
 		return 1;
 	}
@@ -110,17 +110,17 @@ static DataBase* sharedInstance = nil;
 }
 
 
-#pragma mark ----Cached Barcode-------
-- (void) checkCachedBarcodeTable{
+#pragma mark ----Cached Scenario-------
+- (void) checkCachedTable{
     
-    NSString *s = @"SELECT * FROM sqlite_master WHERE type='table' AND name='tblCachedBarcode'";
+    NSString *s = @"SELECT * FROM sqlite_master WHERE type='table' AND name='tblCachedScenario'";
     
     const char *sqlStatement = [s UTF8String];
     sqlite3_stmt *statement;
     
     int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
     if (success != SQLITE_OK) {
-        NSLog(@"Error: failed to tblCachedBarcode");
+        NSLog(@"Error: failed to tblCachedScenario");
         return;
     }
     
@@ -133,13 +133,13 @@ static DataBase* sharedInstance = nil;
     
     if(!have)
     {
-        s = @"CREATE TABLE tblCachedBarcode(id INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL  UNIQUE, qr TEXT, uploaded INTEGER, time INTEGER, data TEXT, eventid INTEGER, chkin INTEGER)";
+        s = @"CREATE TABLE tblCachedScenario(id INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL  UNIQUE, s_driver_id INTEGER, cover TEXT, name TEXT, small_icon TEXT, data BLOB, room_id INTEGER)";
         
         const char * sql = [s UTF8String];
         sqlite3_stmt *delete_statement = nil;
         
         if (sqlite3_prepare_v2(database_, sql, -1, &delete_statement, NULL) != SQLITE_OK) {
-            NSLog(@"Not Prepared DataBase! -- tblCachedBarcode");
+            NSLog(@"Not Prepared DataBase! -- tblCachedScenario");
         }
         
         sqlite3_step(delete_statement);
@@ -148,19 +148,20 @@ static DataBase* sharedInstance = nil;
 }
 
 
-- (int) isCodeExist:(NSString*)code{
+- (int) isScenarioExist:(int)s_driver_id room_id:(int)room_id{
     
-    NSString *s = [NSString stringWithFormat:@"select * from tblCachedBarcode where qr = ?"];
+    NSString *s = [NSString stringWithFormat:@"select * from tblCachedScenario where s_driver_id = ? and room_id = ?"];
 	const char *sqlStatement = [s UTF8String];
 	sqlite3_stmt *statement;
 	
 	int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
     if (success != SQLITE_OK) {
-        NSLog(@"Error: failed to access:tblCachedBarcode");
+        NSLog(@"Error: failed to access:tblCachedScenario");
         return NO;
     }
 	
-    sqlite3_bind_text(statement, 1, [code UTF8String], -1, SQLITE_TRANSIENT);
+    sqlite3_bind_int(statement, 1, s_driver_id);
+    sqlite3_bind_int(statement, 2, room_id);
     
     int bRes = 0;
 	while (sqlite3_step(statement) == SQLITE_ROW) {		
@@ -178,151 +179,101 @@ static DataBase* sharedInstance = nil;
 	return bRes;
 }
 
-- (void) updateCode:(NSString*)code withData:(NSDictionary*)data status:(int)status{
+- (void) updateScenario:(NSDictionary*)scenario{
     
     @synchronized (self) {
-        
-        if([self isCodeExist:code])
-        {
-            SBJson4Writer *writer = [SBJson4Writer new];
-            NSString *jsonData  = [writer stringWithObject:data];
-            
-            const char *sqlStatement = "update tblCachedBarcode set uploaded=?,time=?,data=? where qr=?";
-            sqlite3_stmt *statement;
-            
-            int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
-            if (success != SQLITE_OK) {
-                NSLog(@"Error: failed to insert: tblCachedBarcode");
-                return;
-            }
-            int time = [[NSDate date] timeIntervalSince1970];
-            sqlite3_bind_int(statement, 1, status);
-            sqlite3_bind_int(statement, 2, time);
-            sqlite3_bind_text(statement, 3, [jsonData UTF8String], -1, SQLITE_TRANSIENT);
-            sqlite3_bind_text(statement, 4, [code UTF8String], -1, SQLITE_TRANSIENT);
-            
-            success = sqlite3_step(statement);
-            sqlite3_finalize(statement);
-        }
-    }
-}
-- (void) updateCodeStauts:(NSString*)code status:(int)status{
     
-    @synchronized (self) {
-        
-        if([self isCodeExist:code])
-        {
-            const char *sqlStatement = "update tblCachedBarcode set uploaded=?,time=? where qr=?";
-            sqlite3_stmt *statement;
-            
-            int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
-            if (success != SQLITE_OK) {
-                NSLog(@"Error: failed to insert: tblCachedBarcode");
-                return;
-            }
-            
-            int time = [[NSDate date] timeIntervalSince1970];
-            sqlite3_bind_int(statement, 1, status);
-            sqlite3_bind_int(statement, 2, time);
-            sqlite3_bind_text(statement, 3, [code UTF8String], -1, SQLITE_TRANSIENT);
-            
-            success = sqlite3_step(statement);
-            sqlite3_finalize(statement);
-        }
-    }
-    
-    
-}
-
-- (void) encountQR:(NSString*)qr base:(int)base{
-    
-    const char *sqlStatement = "update tblCachedBarcode set chkin=? where qr=?";
-    sqlite3_stmt *statement;
-    
-    int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
-    if (success != SQLITE_OK) {
-        NSLog(@"Error: failed to insert: tblCachedBarcode");
-        return;
-    }
-    
-    base+=1;
-    sqlite3_bind_int(statement, 1, base);
-    sqlite3_bind_text(statement, 2, [qr UTF8String], -1, SQLITE_TRANSIENT);
-    
-    success = sqlite3_step(statement);
-    sqlite3_finalize(statement);
-}
-
-- (NSDictionary *)chkAdmission:(NSString*)code{
-    
-    NSString *s = [NSString stringWithFormat:@"select * from tblCachedBarcode where qr = ?"];
-    const char *sqlStatement = [s UTF8String];
-    sqlite3_stmt *statement;
-    
-    int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
-    if (success != SQLITE_OK) {
-        NSLog(@"Error: failed to access:Code");
-        return nil;
-    }
-    
-    sqlite3_bind_text(statement, 1, [code UTF8String], -1, SQLITE_TRANSIENT);
-    
-    NSMutableDictionary *mDic = [NSMutableDictionary dictionary];
-    
-    while (sqlite3_step(statement) == SQLITE_ROW) {
-        
-        char* code = (char*)sqlite3_column_text(statement, 1);
-        int time = sqlite3_column_int(statement,3);
-        int chkin = sqlite3_column_int(statement,6);
-    
-        
-        if(code){
-            [mDic setObject:[NSString stringWithUTF8String:code] forKey:@"qr"];
-            //[objs addObject:[NSString stringWithUTF8String:jsonData]];
-        }
-
-        [mDic setObject:[NSNumber numberWithInt:chkin] forKey:@"chkin"];
-        [mDic setObject:[NSNumber numberWithInt:time] forKey:@"time"];
-        
-    
-    }
-    sqlite3_finalize(statement);
-    
-    return mDic;
-}
-
-- (int) insertCode:(NSString*)code{
-    
-    @synchronized (self) {
-        
-        int c = [self isCodeExist:code];
-        if(c)
-        {
-            [self encountQR:code base:c];
-            return 0;
-        }
-        
-        const char *sqlStatement = "insert into tblCachedBarcode (qr, uploaded, time, chkin) VALUES (?,?,?,?)";
+        const char *sqlStatement = "update tblCachedScenario set cover=?,name=?,small_icon=?,data=? where s_driver_id=? and room_id=?";
         sqlite3_stmt *statement;
         
         int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
         if (success != SQLITE_OK) {
-            NSLog(@"Error: failed to insert: tblCachedBarcode");
+            NSLog(@"Error: failed to insert: tblCachedScenario");
+            return;
+        }
+        
+        NSString *cover = [scenario objectForKey:@"cover"];
+        if(cover == nil)
+            cover = @"";
+        
+        NSString *name = [scenario objectForKey:@"name"];
+        if(name == nil)
+            name = @"";
+        NSString *small_icon = [scenario objectForKey:@"small_icon"];
+        if(small_icon == nil)
+            small_icon = @"";
+        
+        NSDictionary *data = scenario;
+        
+        int s_driver_id = [[scenario objectForKey:@"s_driver_id"] intValue];
+        int room_id = [[scenario objectForKey:@"room_id"] intValue];
+        
+        sqlite3_bind_text(statement, 1, [cover UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(statement, 2, [name UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(statement, 3, [small_icon UTF8String], -1, SQLITE_TRANSIENT);
+        
+        NSData *archiveData = [NSKeyedArchiver archivedDataWithRootObject:data];
+        sqlite3_bind_blob(statement, 4, [archiveData bytes], (int)[archiveData length], NULL);
+        
+        sqlite3_bind_int(statement, 5, s_driver_id);
+        sqlite3_bind_int(statement, 6, room_id);
+        
+        success = sqlite3_step(statement);
+        sqlite3_finalize(statement);
+    }
+}
+
+- (int) saveScenario:(NSDictionary*)scenario{
+    
+    @synchronized (self) {
+        
+        int s_driver_id = [[scenario objectForKey:@"s_driver_id"] intValue];
+        int room_id = [[scenario objectForKey:@"room_id"] intValue];
+        int c = [self isScenarioExist:s_driver_id room_id:room_id];
+        if(c)
+        {
+            [self updateScenario:scenario];
+            return 0;
+        }
+        
+        const char *sqlStatement = "insert into tblCachedScenario (s_driver_id, cover, name, small_icon, data, room_id) VALUES (?,?,?,?,?,?)";
+        sqlite3_stmt *statement;
+        
+        int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
+        if (success != SQLITE_OK) {
+            NSLog(@"Error: failed to insert: tblCachedScenario");
             return -1;
         }
         
-        int time = [[NSDate date] timeIntervalSince1970];
+        NSString *cover = [scenario objectForKey:@"cover"];
+        if(cover == nil)
+            cover = @"";
         
-        sqlite3_bind_text(statement, 1, [code UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_int(statement, 2, 0);
-        sqlite3_bind_int(statement, 3, time);
-        sqlite3_bind_int(statement, 4, 1);
+        NSString *name = [scenario objectForKey:@"name"];
+        if(name == nil)
+            name = @"";
+        NSString *small_icon = [scenario objectForKey:@"small_icon"];
+        if(small_icon == nil)
+            small_icon = @"";
+        
+        NSDictionary *data = scenario;
+        
+        sqlite3_bind_int(statement, 1, s_driver_id);
+        
+        sqlite3_bind_text(statement, 2, [cover UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(statement, 3, [name UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(statement, 4, [small_icon UTF8String], -1, SQLITE_TRANSIENT);
+        
+        NSData *archiveData = [NSKeyedArchiver archivedDataWithRootObject:data];
+        sqlite3_bind_blob(statement, 5, [archiveData bytes], (int)[archiveData length], NULL);
+        
+        sqlite3_bind_int(statement, 6, room_id);
         
         success = sqlite3_step(statement);
         sqlite3_finalize(statement);
         
         if (success == SQLITE_ERROR) {
-            NSLog(@"Error: failed to insert into tblCachedBarcode with message.");
+            NSLog(@"Error: failed to insert into tblCachedScenario with message.");
             return -1;
         }
         
@@ -334,104 +285,34 @@ static DataBase* sharedInstance = nil;
     }
 }
 
-- (int) countTotal{
+- (NSMutableArray*) getSavedScenario:(int)room_id{
     
-    NSString *s = [NSString stringWithFormat:@"select count(*) from tblCachedBarcode"];
-    const char *sqlStatement = [s UTF8String];
-    sqlite3_stmt *statement;
-    
-    int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
-    if (success != SQLITE_OK) {
-        NSLog(@"Error: failed to access:tblCachedBarcode");
-        return 0;
-    }
-    
-    //SBJson4Parser *parser = [SBJson4Parser new];
-    
-    int iRes  =0;
-   
-    while (sqlite3_step(statement) == SQLITE_ROW) {
-        
-       
-        iRes = sqlite3_column_int(statement,0);
-        
-        break;
-    }
-    sqlite3_finalize(statement);
-    
-    return iRes;
-}
-- (int) countOffline{
-    
-    NSString *s = [NSString stringWithFormat:@"select count(*) from tblCachedBarcode where uploaded = 0"];
-    const char *sqlStatement = [s UTF8String];
-    sqlite3_stmt *statement;
-    
-    int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
-    if (success != SQLITE_OK) {
-        NSLog(@"Error: failed to access:Code");
-        return 0;
-    }
-    
-    //SBJson4Parser *parser = [SBJson4Parser new];
-    
-    int iRes  =0;
-    
-    while (sqlite3_step(statement) == SQLITE_ROW) {
-        
-        
-        iRes = sqlite3_column_int(statement,0);
-        
-        break;
-    }
-    sqlite3_finalize(statement);
-    
-    return iRes;
-}
-- (NSMutableArray*) getSavedCode{
-    
-    NSString *s = [NSString stringWithFormat:@"select * from tblCachedBarcode where uploaded = 0"];
+    NSString *s = [NSString stringWithFormat:@"select data from tblCachedScenario where room_id = ?"];
 	const char *sqlStatement = [s UTF8String];
 	sqlite3_stmt *statement;
 	
 	int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
     if (success != SQLITE_OK) {
-        NSLog(@"Error: failed to access:Code");
+        NSLog(@"Error: failed to access:tblCachedScenario");
         return nil;
     }
 	
-    //SBJson4Parser *parser = [SBJson4Parser new];
+    sqlite3_bind_int(statement, 1, room_id);
     
 	NSMutableArray *objs = [[NSMutableArray alloc] init];
 	while (sqlite3_step(statement) == SQLITE_ROW) {		
         
-		char* code = (char*)sqlite3_column_text(statement, 1);
-        int uploaded = sqlite3_column_int(statement,2);
-        int time = sqlite3_column_int(statement,3);
-        char* jsonData = (char*)sqlite3_column_text(statement, 4);
+        const void* achievement_id       = sqlite3_column_blob(statement, 0);
+        int achievement_idSize           = sqlite3_column_bytes(statement, 0);
         
-        
-        if(uploaded){
-            continue;
+        if(achievement_id)
+        {
+            NSData *data = [[NSData alloc] initWithBytes:achievement_id length:achievement_idSize];
+            NSDictionary * dic = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+            NSMutableDictionary *mdic = [NSMutableDictionary dictionaryWithDictionary:dic];
+            [objs addObject:mdic];
         }
-        
-        NSMutableDictionary *mDic = [NSMutableDictionary dictionary];
-		if(code){
-            [mDic setObject:[NSString stringWithUTF8String:code] forKey:@"qr"];
-			//[objs addObject:[NSString stringWithUTF8String:jsonData]];
-		}
-        if(jsonData){
-            NSString *s = [NSString stringWithUTF8String:jsonData];
-            
-            //id dic = [parser objectWithString:s];
-            [mDic setObject:s forKey:@"data"];
-            
-		}
-        [mDic setObject:[NSNumber numberWithInt:uploaded] forKey:@"uploaded"];
-        [mDic setObject:[NSNumber numberWithInt:time] forKey:@"time"];
-		
-		
-        [objs addObject:mDic];
+
 	}
 	sqlite3_finalize(statement);
 	
@@ -439,60 +320,30 @@ static DataBase* sharedInstance = nil;
     
 }
 
-- (int) deleteCode:(NSString*)code{
-    const char *sqlStatement = "delete from tblCachedBarcode where qr = ?";
+- (int) deleteScenario:(NSDictionary*)scenario{
+    
+    const char *sqlStatement = "delete from tblCachedScenario where s_driver_id = ? and room_id=?";
 	sqlite3_stmt *statement;
 	
 	int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
     if (success != SQLITE_OK) {
-        NSLog(@"Error: failed to delete: tblCachedBarcode");
+        NSLog(@"Error: failed to delete: tblCachedScenario");
         return -1;
     }
     
-    sqlite3_bind_text(statement, 1, [code UTF8String], -1, SQLITE_TRANSIENT);
-
+    int s_driver_id = [[scenario objectForKey:@"s_driver_id"] intValue];
+    int room_id = [[scenario objectForKey:@"room_id"] intValue];
+    sqlite3_bind_int(statement, 1, s_driver_id);
+    sqlite3_bind_int(statement, 2, room_id);
     
     success = sqlite3_step(statement);
     sqlite3_finalize(statement);
     
     if (success == SQLITE_ERROR) {
-        NSLog(@"Error: failed to insert into tblCachedBarcode with message.");
+        NSLog(@"Error: failed to insert into tblCachedScenario with message.");
         return -1;
     }
     return 0;
-}
-
-
-- (NSMutableArray *)searchByKeywords:(NSString*)keywords{
-
-    const char *sqlStatement = "select code from CCode";
-    
-    if([keywords length])
-    {
-        NSString *sql = [NSString stringWithFormat:@"select code from CCode where code like '%%%@%%'", keywords];
-        sqlStatement = [sql UTF8String];
-    }
-    
-    sqlite3_stmt *statement;
-	
-	int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
-    if (success != SQLITE_OK) {
-        NSLog(@"Error: failed to insert: Code");
-        return nil;
-    }
-
- 
-    NSMutableArray *objs = [[NSMutableArray alloc] init];
-	while (sqlite3_step(statement) == SQLITE_ROW) {
-        
-		char* code = (char*)sqlite3_column_text(statement, 0);
-              
-		if(code)
-            [objs addObject:[NSString stringWithUTF8String:code]];
-	}
-	sqlite3_finalize(statement);
-    
-    return objs;
 }
 
 

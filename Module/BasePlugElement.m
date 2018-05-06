@@ -14,11 +14,12 @@
 @synthesize _type;
 @synthesize _deviceno;
 @synthesize _ipaddress;
-@synthesize _com;
 @synthesize _deviceid;
 @synthesize _index;
+@synthesize _comIdx;
 @synthesize _comArray;
 @synthesize _driverUUID;
+@synthesize _isViewed;
 
 - (id) init
 {
@@ -27,11 +28,10 @@
         self._brand = @"";
         self._type = @"";
         self._deviceno = @"";
-        self._com = @"";
         self._ipaddress = @"";
         self._deviceid = @"";
         self._index = 0;
-        
+        self._comIdx = 0;
         self._name = @"";
     }
     
@@ -43,10 +43,12 @@
     NSString *name = [NSString stringWithFormat:@"%@ - %@ - %@",
                       _brand, _name, _deviceno];
     
+    self._isViewed = YES;
+    
     return name;
 }
 
-- (NSString *)objectToJsonString{
+- (NSDictionary *)objectToJson{
     
     return nil;
 }

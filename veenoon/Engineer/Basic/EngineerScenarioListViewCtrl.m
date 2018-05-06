@@ -29,7 +29,7 @@
 @synthesize _meetingRoomDic;
 @synthesize _sBtns;
 @synthesize _map;
-
+@synthesize _selectedDevices;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -170,18 +170,9 @@
     
     EngineerPresetScenarioViewCtrl *ctrl = [[EngineerPresetScenarioViewCtrl alloc] init];
     ctrl._meetingRoomDic = self._meetingRoomDic;
+    ctrl._selectedDevices = _selectedDevices;
     [self.navigationController pushViewController:ctrl animated:YES];
-}
-
-- (void) scenarioAction:(id)sender{
-    UIButton *btn = (UIButton*) sender;
-    int tag = (int)btn.tag;
-    int count = (int)[[self._meetingRoomDic objectForKey:@"scenarioArray"] count];
-    if (tag+1 == count) {
-        EngineerPresetScenarioViewCtrl *ctrl = [[EngineerPresetScenarioViewCtrl alloc] init];
-        ctrl._meetingRoomDic = self._meetingRoomDic;
-        [self.navigationController pushViewController:ctrl animated:YES];
-    }
+    
 }
 
 - (void) didMoveDragingElecCell:(NSDictionary *)data pt:(CGPoint)pt{

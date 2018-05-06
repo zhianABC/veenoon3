@@ -37,6 +37,8 @@
     float _digitalGain;
     
     BOOL _inverted;
+    
+    
 }
 @property (nonatomic, strong) NSArray *_rgsCommands;
 @property (nonatomic, strong) NSMutableDictionary *_cmdMap;
@@ -46,11 +48,15 @@
 @end
 
 @implementation VAProcessorProxys
+@synthesize _icon_name;
+
 @synthesize _rgsCommands;
 @synthesize _rgsProxyObj;
 @synthesize _cmdMap;
 
 @synthesize _mode;
+@synthesize _is48V;
+@synthesize _micDb;
 
 - (id) init
 {
@@ -62,8 +68,12 @@
         _digitalGain = 0;
         
         _inverted = NO;
+        self._is48V = NO;
+        self._micDb = @"0db";
         
         self._mode = @"LINE"; //LINE or MIC
+        
+        self._icon_name = nil;
     }
     
     return self;
@@ -122,9 +132,22 @@
     return _digitalGain;
 }
 
+- (float) getAnalogyGain{
+    
+    return _voiceDb;
+}
+
 - (BOOL) getInverted{
     
     return _inverted;
+}
+
+- (BOOL) isSetChanged{
+    
+    if(_cmdMap)
+        return YES;
+    
+    return NO;
 }
 
 - (void) checkRgsProxyCommandLoad{
@@ -348,9 +371,54 @@
     }
 }
 
+- (void) control48V:(BOOL)is48v{
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_48V"];
+    NSString* tureOrFalse = @"False";
+    
+    self._is48V = is48v;
+    
+    if(_is48V)
+    {
+        tureOrFalse = @"True";
+    }
+    else
+    {
+        tureOrFalse = @"False";
+    }
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        
+        
+        if([cmd.params count])
+        {
+            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
+            if(param_info.type == RGS_PARAM_TYPE_LIST)
+            {
+                [param setObject:tureOrFalse forKey:param_info.name];
+            }
+            
+        }
+        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+                                                 cmd:cmd.name
+                                               param:param completion:^(BOOL result, NSError *error) {
+                                                   if (result) {
+                                                       
+                                                   }
+                                                   else{
+                                                       
+                                                   }
+                                               }];
+    }
+}
+
 - (void) controlDeviceMode:(NSString*)mode{
     
     RgsCommandInfo *cmd = nil;
+    
+    if(_cmdMap)
     cmd = [_cmdMap objectForKey:@"SET_MODE"];
     self._mode = mode;
     
@@ -379,9 +447,46 @@
     }
 }
 
+- (void) controlDeviceMicDb:(NSString*)db{
+    
+    RgsCommandInfo *cmd = nil;
+    
+    if(_cmdMap)
+    cmd = [_cmdMap objectForKey:@"SET_MIC_DB"];
+    self._micDb = db;
+    
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
+            if(param_info.type == RGS_PARAM_TYPE_LIST)
+            {
+                [param setObject:_micDb forKey:param_info.name];
+            }
+            
+        }
+        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+                                                 cmd:cmd.name
+                                               param:param completion:^(BOOL result, NSError *error) {
+                                                   if (result) {
+                                                       
+                                                   }
+                                                   else{
+                                                       
+                                                   }
+                                               }];
+    }
+}
+
 - (id) generateEventOperation_AnalogyGain
 {
-    RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_ANALOGY_GRAIN"];
+    RgsCommandInfo *cmd = nil;
+    if(_cmdMap)
+    {
+        cmd = [_cmdMap objectForKey:@"SET_ANALOGY_GRAIN"];
+    }
     if(cmd)
     {
         NSMutableDictionary * param = [NSMutableDictionary dictionary];
@@ -412,13 +517,17 @@
 - (id) generateEventOperation_Mute{
     
     RgsCommandInfo *cmd = nil;
-    if(_isMute)
+    
+    if(_cmdMap)
     {
-        cmd = [_cmdMap objectForKey:@"SET_MUTE"];
-    }
-    else
-    {
-        cmd = [_cmdMap objectForKey:@"SET_UNMUTE"];
+        if(_isMute)
+        {
+            cmd = [_cmdMap objectForKey:@"SET_MUTE"];
+        }
+        else
+        {
+            cmd = [_cmdMap objectForKey:@"SET_UNMUTE"];
+        }
     }
     if(cmd)
     {
@@ -437,9 +546,46 @@
     
     return nil;
 }
+
+- (id) generateEventOperation_DigitalGain
+{
+    RgsCommandInfo *cmd = nil;
+   
+    if(_cmdMap)
+        cmd = [_cmdMap objectForKey:@"SET_DIGIT_GRAIN"];
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
+            if(param_info.type == RGS_PARAM_TYPE_FLOAT)
+            {
+                [param setObject:[NSString stringWithFormat:@"%0.1f",_digitalGain]
+                          forKey:param_info.name];
+            }
+        }
+        
+        RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc]init];
+        scene_opt.dev_id = _rgsProxyObj.m_id;
+        scene_opt.cmd = cmd.name;
+        scene_opt.param = param;
+        
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
+                                                                          cmd:scene_opt.cmd
+                                                                        param:scene_opt.param];
+        
+        return opt;
+    }
+    
+    return nil;
+}
+
 - (id) generateEventOperation_DigitalMute{
     
     RgsCommandInfo *cmd = nil;
+    
+    if(_cmdMap)
     cmd = [_cmdMap objectForKey:@"SET_DIGIT_MUTE"];
     NSString* tureOrFalse = @"False";
     if(_isDigitalMute)
@@ -480,6 +626,8 @@
 - (id) generateEventOperation_Mode{
     
     RgsCommandInfo *cmd = nil;
+    
+    if(_cmdMap)
     cmd = [_cmdMap objectForKey:@"SET_MODE"];
 
     if(cmd)
@@ -508,4 +656,127 @@
     
     return nil;
 }
+
+- (id) generateEventOperation_MicDb{
+    
+    RgsCommandInfo *cmd = nil;
+    
+    if(_cmdMap)
+    cmd = [_cmdMap objectForKey:@"SET_MIC_DB"];
+    
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
+            if(param_info.type == RGS_PARAM_TYPE_LIST)
+            {
+                [param setObject:_micDb forKey:param_info.name];
+            }
+            
+        }
+        RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc]init];
+        scene_opt.dev_id = _rgsProxyObj.m_id;
+        scene_opt.cmd = cmd.name;
+        scene_opt.param = param;
+        
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
+                                                                          cmd:scene_opt.cmd
+                                                                        param:scene_opt.param];
+        
+        return opt;
+    }
+    
+    return nil;
+}
+- (id) generateEventOperation_48v{
+    
+    RgsCommandInfo *cmd = nil;
+    
+    if(_cmdMap)
+    cmd = [_cmdMap objectForKey:@"SET_48V"];
+    
+    NSString* tureOrFalse = @"False";
+    if(_is48V)
+    {
+        tureOrFalse = @"True";
+    }
+    else
+    {
+        tureOrFalse = @"False";
+    }
+ 
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
+            if(param_info.type == RGS_PARAM_TYPE_LIST)
+            {
+                [param setObject:tureOrFalse forKey:param_info.name];
+            }
+            
+        }
+        RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc]init];
+        scene_opt.dev_id = _rgsProxyObj.m_id;
+        scene_opt.cmd = cmd.name;
+        scene_opt.param = param;
+        
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
+                                                                          cmd:scene_opt.cmd
+                                                                        param:scene_opt.param];
+        
+        return opt;
+    }
+    
+    return nil;
+}
+
+- (id) generateEventOperation_Inverted{
+    
+    RgsCommandInfo *cmd = nil;
+    
+    if(_cmdMap)
+        cmd = [_cmdMap objectForKey:@"SET_INVERTED"];
+    
+    NSString* tureOrFalse = @"False";
+    if(_inverted)
+    {
+        tureOrFalse = @"True";
+    }
+    else
+    {
+        tureOrFalse = @"False";
+    }
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        
+        
+        if([cmd.params count])
+        {
+            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
+            if(param_info.type == RGS_PARAM_TYPE_LIST)
+            {
+                [param setObject:tureOrFalse forKey:param_info.name];
+            }
+            
+        }
+        RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc]init];
+        scene_opt.dev_id = _rgsProxyObj.m_id;
+        scene_opt.cmd = cmd.name;
+        scene_opt.param = param;
+        
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
+                                                                          cmd:scene_opt.cmd
+                                                                        param:scene_opt.param];
+        
+        return opt;
+    }
+    
+    return nil;
+}
+
 @end

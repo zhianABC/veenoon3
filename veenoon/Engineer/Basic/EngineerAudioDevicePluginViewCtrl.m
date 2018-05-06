@@ -13,6 +13,8 @@
 
 #import "IconCenterTextButton.h"
 #import "DataSync.h"
+#import "AudioEProcessor.h"
+
 
 @interface EngineerAudioDevicePluginViewCtrl () <CenterCustomerPickerViewDelegate>{
     IconCenterTextButton *_electronicSysBtn;
@@ -251,11 +253,6 @@
     NSString *productCategory = _productCategoryPicker._unitString;
     NSString *number = _numberPicker._unitString;
     
-    NSMutableDictionary *audioDic = [[NSMutableDictionary alloc] init];
-    [audioDic setObject:productType forKey:@"productType"];
-    [audioDic setObject:brand forKey:@"brand"];
-    [audioDic setObject:productCategory forKey:@"productCategory"];
-    [audioDic setObject:number forKey:@"number"];
     
     NSMutableArray *audioArray = [self._selectedSysDic objectForKey:@"audio"];
     if (audioArray == nil) {
@@ -266,16 +263,34 @@
     NSDictionary *val = [_productCategoryPicker._values objectForKey:@0];
     
     int idx = [[val objectForKey:@"index"] intValue];
+    
+
     if(idx < [_driverUdids count])
     {
         id key = [_driverUdids objectAtIndex:idx];
-        
-        [[DataSync sharedDataSync] addCurrentSelectDriverToCurrentArea:key];
-
+       
+        for(int i = 0; i < [number intValue]; i++)
+        {
+            //创建number个Device
+            if([productType isEqualToString:@"音频处理"])
+            {
+                AudioEProcessor *device = [[AudioEProcessor alloc] init];
+                
+                device._brand = brand;
+                device._type = productCategory;
+                device._driverUUID = key;
+                device._driverInfo = [[DataSync sharedDataSync] driverInfoByUUID:key];
+                
+                //根据此类型的插件，创建自己的驱动，上传到中控
+                [device createDriver];
+                
+                [audioArray addObject:device];
+            }
+            //else if([productType isEqualToString:@"电源"])
+          
+        }
     }
     
-    
-    [audioArray addObject:audioDic];
 }
 
 - (void) initBrandAndTypes{
@@ -292,6 +307,7 @@
 }
 
 - (void) gongfangAction:(id)sender{
+    
     [_electronicSysBtn setBtnHighlited:NO];
     [_musicPlayBtn setBtnHighlited:NO];
     [_wuxianhuatongBtn setBtnHighlited:NO];
@@ -350,6 +366,7 @@
 }
 
 - (void) huiyiAction:(id)sender{
+    
     [_electronicSysBtn setBtnHighlited:NO];
     [_musicPlayBtn setBtnHighlited:NO];
     [_wuxianhuatongBtn setBtnHighlited:NO];

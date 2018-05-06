@@ -11,7 +11,7 @@
 #import "ComSettingView.h"
 #import "IPValidate.h"
 
-@interface TouYingJiRightView () < UITextFieldDelegate> {
+@interface TouYingJiRightView () < UITextFieldDelegate, ComSettingViewDelegate> {
     
     ComSettingView *_com;
     UITextField *ipTextField;
@@ -28,6 +28,8 @@
 @synthesize _curentDeviceIndex;
 @synthesize _callback;
 @synthesize _numOfDevice;
+@synthesize delegate_;
+
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.
@@ -76,7 +78,14 @@
         
         [headView addGestureRecognizer:swip];
         
+        UISwipeGestureRecognizer *rightswip = [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                                                        action:@selector(swipClose)];
+        rightswip.direction = UISwipeGestureRecognizerDirectionRight;
+        [self addGestureRecognizer:rightswip];
+        
+        
         _com = [[ComSettingView alloc] initWithFrame:self.bounds];
+        _com.delegate = self;
         
     }
     
@@ -135,16 +144,21 @@
 }
 
 -(void) refreshView:(VTouyingjiSet*) vLuBoJiSet {
+   
     self._currentObj = vLuBoJiSet;
-    
     ipTextField.text = vLuBoJiSet._ipaddress;
     
-    self._curentDeviceIndex = _currentObj._index;
-    [self chooseChannelAtTagIndex:_curentDeviceIndex];
-    
+//    self._curentDeviceIndex = _currentObj._index;
+//    [self chooseChannelAtTagIndex:_curentDeviceIndex];
+//
     _com._currentObj = _currentObj;
-    
     [_com refreshCom:_currentObj];
+}
+
+
+- (void) saveCurrentSetting{
+    
+    _currentObj._ipaddress = ipTextField.text;
 }
 
 - (void) buttonAction:(UIButton*)btn{
@@ -176,6 +190,12 @@
         }
     }
 }
+
+- (void) didChoosedComVal:(NSString*)val{
+    
+    [_currentObj createConnection];
+}
+
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     
     //_curIndex = (int)textField.tag;
@@ -223,6 +243,16 @@
                      } completion:^(BOOL finished) {
                          
                      }];
+    
+}
+
+- (void) swipClose{
+    
+    
+    if(delegate_ && [delegate_ respondsToSelector:@selector(dissmissSettingView)])
+    {
+        [delegate_ dissmissSettingView];
+    }
     
 }
 

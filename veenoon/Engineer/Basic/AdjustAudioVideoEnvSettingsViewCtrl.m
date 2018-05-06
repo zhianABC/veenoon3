@@ -7,6 +7,9 @@
 //
 #import "EngineerScenarioListViewCtrl.h"
 #import "AdjustAudioVideoEnvSettingsViewCtrl.h"
+#import "AudioEProcessor.h"
+#import "VCameraSettingSet.h"
+#import "VTouyingjiSet.h"
 
 @interface AdjustAudioVideoEnvSettingsViewCtrl() <UITableViewDelegate, UITableViewDataSource> {
     UITableView *_tableView;
@@ -59,14 +62,17 @@
 
 
 - (void) okAction:(id)sender{
+    
     EngineerScenarioListViewCtrl *ctrl = [[EngineerScenarioListViewCtrl alloc] init];
+    ctrl._selectedDevices = selectedSysDic;
     [self.navigationController pushViewController:ctrl animated:YES];
+    
 }
 #pragma mark -
 #pragma mark Table View DataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    
+
     return 3;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -133,44 +139,54 @@
     valueL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
     valueL.textAlignment = NSTextAlignmentLeft;
     
-    valueL.text = [dataDic objectForKey:@"productType"];
     
-    
-    valueL = [[UILabel alloc] initWithFrame:CGRectMake(leftRight+gap+labelWidth,
+    UILabel* brandL = [[UILabel alloc] initWithFrame:CGRectMake(leftRight+gap+labelWidth,
                                                                 5,
                                                                 labelWidth, 34)];
-    valueL.backgroundColor = [UIColor clearColor];
-    [cell.contentView addSubview:valueL];
-    valueL.font = [UIFont systemFontOfSize:15];
-    valueL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
-    valueL.textAlignment = NSTextAlignmentLeft;
-    
-    valueL.text = [dataDic objectForKey:@"brand"];
+    brandL.backgroundColor = [UIColor clearColor];
+    [cell.contentView addSubview:brandL];
+    brandL.font = [UIFont systemFontOfSize:15];
+    brandL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+    brandL.textAlignment = NSTextAlignmentLeft;
     
     
-    valueL = [[UILabel alloc] initWithFrame:CGRectMake(leftRight+2*gap+2*labelWidth,
+    
+    UILabel *catL = [[UILabel alloc] initWithFrame:CGRectMake(leftRight+2*gap+2*labelWidth,
                                                        5,
                                                        labelWidth, 34)];
-    valueL.backgroundColor = [UIColor clearColor];
-    [cell.contentView addSubview:valueL];
-    valueL.font = [UIFont systemFontOfSize:15];
-    valueL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
-    valueL.textAlignment = NSTextAlignmentLeft;
+    catL.backgroundColor = [UIColor clearColor];
+    [cell.contentView addSubview:catL];
+    catL.font = [UIFont systemFontOfSize:15];
+    catL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+    catL.textAlignment = NSTextAlignmentLeft;
     
-    valueL.text = [dataDic objectForKey:@"productCategory"];
-    
-    
-    valueL = [[UILabel alloc] initWithFrame:CGRectMake(leftRight+3*gap+3*labelWidth,
-                                                       5,
-                                                       labelWidth, 34)];
-    valueL.backgroundColor = [UIColor clearColor];
-    [cell.contentView addSubview:valueL];
-    valueL.font = [UIFont systemFontOfSize:15];
-    valueL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
-    valueL.textAlignment = NSTextAlignmentLeft;
-    
-    valueL.text = [dataDic objectForKey:@"number"];
-    
+    if([dataDic isKindOfClass:[NSDictionary class]])
+    {
+        valueL.text = [dataDic objectForKey:@"productType"];
+        brandL.text = [dataDic objectForKey:@"brand"];
+        catL.text = [dataDic objectForKey:@"productCategory"];
+    }
+    else if([dataDic isKindOfClass:[AudioEProcessor class]])
+    {
+        AudioEProcessor *device = (AudioEProcessor*)dataDic;
+        valueL.text = [device deviceName];
+        brandL.text = device._brand;
+        catL.text = device._type;
+    }
+    else if([dataDic isKindOfClass:[VCameraSettingSet class]])
+    {
+        VCameraSettingSet *device = (VCameraSettingSet*)dataDic;
+        valueL.text = [device deviceName];
+        brandL.text = device._brand;
+        catL.text = device._type;
+    }
+    else if([dataDic isKindOfClass:[VTouyingjiSet class]])
+    {
+        VTouyingjiSet *device = (VTouyingjiSet*)dataDic;
+        valueL.text = [device deviceName];
+        brandL.text = device._brand;
+        catL.text = device._type;
+    }
     return cell;
 }
 
@@ -187,6 +203,24 @@
         dataArray = [self.selectedSysDic objectForKey:@"env"];
     }
     
+    //删除前，需要先从中控上删除对应的Driver
+    id obj = [dataArray objectAtIndex:row];
+    if([obj isKindOfClass:[AudioEProcessor class]])
+    {
+        AudioEProcessor *device = (AudioEProcessor*)obj;
+        [device removeDriver];
+    }
+    else if([obj isKindOfClass:[VCameraSettingSet class]])
+    {
+        VCameraSettingSet *device = (VCameraSettingSet*)obj;
+        [device removeDriver];
+    }
+    else if([obj isKindOfClass:[VTouyingjiSet class]])
+    {
+        VTouyingjiSet *device = (VTouyingjiSet*)obj;
+        [device removeDriver];
+    }
+    //
     [dataArray removeObjectAtIndex:row];
     
     [_tableView reloadData];
