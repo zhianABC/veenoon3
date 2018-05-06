@@ -11,6 +11,12 @@
 
 @class VCameraSettingSet;
 
+@protocol CameraRightViewDelegate <NSObject>
+
+@optional
+- (void) dissmissSettingView;
+@end
+
 @interface CameraRightView : UIView {
     VCameraSettingSet *_currentObj;
     RightSetViewCallbackBlock _callback;
@@ -19,6 +25,8 @@
 @property(nonatomic, assign) int _numOfDevice;
 @property (nonatomic, copy) RightSetViewCallbackBlock _callback;
 @property (nonatomic, assign) int _curentDeviceIndex;
+
+@property (nonatomic, weak) id <CameraRightViewDelegate> delegate_;
 
 -(void) refreshView:(VCameraSettingSet*) vCameraSettingSet;
 -(void) layoutDevicePannel;

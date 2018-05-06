@@ -10,35 +10,34 @@
 #import "UIButton+Color.h"
 #import "EngineerPresetScenarioViewCtrl.h"
 #import "SIconSelectView.h"
+#import "DataBase.h"
 
 @interface EngineerScenarioSettingsViewCtrl ()<SIconSelectViewDelegate>{
     
     UIButton *_selectSysBtn;
-    
-    NSMutableArray *_scenarioLabelArray;
-    
+
     SIconSelectView *_settingview;
     
     UIScrollView *scroolView;
+    
+    NSMutableArray *_scenarioLabelArray;
 }
 @property (nonatomic, strong) NSMutableArray *_sBtns;
 @property (nonatomic, strong) NSMutableDictionary *_map;
+@property (nonatomic, strong) NSMutableArray *_scenarioArray;
 @end
 
 @implementation EngineerScenarioSettingsViewCtrl
 @synthesize _scenarioArray;
 @synthesize _sBtns;
 @synthesize _map;
+@synthesize _room_id;
 
 - (void) initDat {
     
-    if (_scenarioArray == nil) {
-        _scenarioArray = [[NSMutableArray alloc] init];
-    }
+    self._scenarioArray = [[DataBase sharedDatabaseInstance] getSavedScenario:1];
     
-    NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"场景",@"scenario_name", nil];
-    [_scenarioArray addObject:dic];
-    
+
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -47,7 +46,6 @@
     
     self._sBtns = [NSMutableArray array];
     self._map = [NSMutableDictionary dictionary];
-    
     
     _scenarioLabelArray = [[NSMutableArray alloc] init];
     
@@ -114,6 +112,7 @@
     
     int index = 0;
     for (int i = 0; i < scenarioSize; i++) {
+        
         int rowN = index/col;
         int colN = index%col;
         int startX = colN*cellWidth+colN*colGap;
@@ -158,10 +157,13 @@
             longPress0.view.tag = index;
             [scenarioView addGestureRecognizer:longPress0];
             
-            NSMutableDictionary *scenarioDic = [self._scenarioArray objectAtIndex:index];
-            titleL.text = [scenarioDic objectForKey:@"scenario_name"];
+            NSDictionary *scenarioDic = [self._scenarioArray objectAtIndex:index];
+            titleL.text = [scenarioDic objectForKey:@"name"];
             titleL.textColor  = [UIColor whiteColor];
+        
         }
+        
+        scenarioView.tag = index;
         
         [_scenarioLabelArray addObject:titleL];
         
@@ -207,11 +209,15 @@
         UITextField *envirnmentNameTextField = alertController.textFields.firstObject;
         NSString *scenarioName = envirnmentNameTextField.text;
         if (scenarioName && [scenarioName length] > 0) {
+            
+            
             NSMutableDictionary *scenarioDic = [self._scenarioArray objectAtIndex:index];
             UILabel *scenarioLabel = [_scenarioLabelArray objectAtIndex:index];
             
-            [scenarioDic setObject:scenarioName forKey:@"scenario_name"];
-            scenarioLabel.text =scenarioName;
+            [scenarioDic setObject:scenarioName forKey:@"name"];
+            scenarioLabel.text = scenarioName;
+            
+            [[DataBase sharedDatabaseInstance] saveScenario:scenarioDic];
         }
     }]];
     
@@ -257,6 +263,17 @@
                 [button setBackgroundImage:img
                                   forState:UIControlStateNormal];
                 [button setTitle:@"" forState:UIControlStateNormal];
+                
+                int index = (int)button.tag;
+                if(index < [_scenarioArray count])
+                {
+                    NSMutableDictionary *scenarioDic = [self._scenarioArray objectAtIndex:index];
+                    [scenarioDic setObject:imageName forKey:@"small_icon"];
+                    [[DataBase sharedDatabaseInstance] saveScenario:scenarioDic];
+                }
+                
+                break;
+                
             }
         }
     }

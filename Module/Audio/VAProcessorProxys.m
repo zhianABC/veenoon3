@@ -48,6 +48,8 @@
 @end
 
 @implementation VAProcessorProxys
+@synthesize _icon_name;
+
 @synthesize _rgsCommands;
 @synthesize _rgsProxyObj;
 @synthesize _cmdMap;
@@ -70,6 +72,8 @@
         self._micDb = @"0db";
         
         self._mode = @"LINE"; //LINE or MIC
+        
+        self._icon_name = nil;
     }
     
     return self;

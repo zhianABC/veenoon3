@@ -28,7 +28,7 @@
 
 - (NSString*) showName;
 
-- (NSString *)objectToJsonString;
+- (NSDictionary *)objectToJson;
 - (void) jsonStringToObject:(NSString*)json;
 
 @end

@@ -28,6 +28,8 @@
 @synthesize _curentDeviceIndex;
 @synthesize _callback;
 @synthesize _numOfDevice;
+@synthesize delegate_;
+
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.
@@ -75,6 +77,12 @@
         
         
         [headView addGestureRecognizer:swip];
+        
+        UISwipeGestureRecognizer *rightswip = [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                                                        action:@selector(swipClose)];
+        rightswip.direction = UISwipeGestureRecognizerDirectionRight;
+        [self addGestureRecognizer:rightswip];
+        
         
         _com = [[ComSettingView alloc] initWithFrame:self.bounds];
         _com.delegate = self;
@@ -235,6 +243,16 @@
                      } completion:^(BOOL finished) {
                          
                      }];
+    
+}
+
+- (void) swipClose{
+    
+    
+    if(delegate_ && [delegate_ respondsToSelector:@selector(dissmissSettingView)])
+    {
+        [delegate_ dissmissSettingView];
+    }
     
 }
 

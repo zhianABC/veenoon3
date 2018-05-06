@@ -479,6 +479,12 @@
             if (CGRectContainsPoint(rect, viewPoint)) {
                 
                 [button changToIcon:img];
+                
+                id data = button.data;
+                if([data isKindOfClass:[VAProcessorProxys class]])
+                {
+                    ((VAProcessorProxys*)data)._icon_name = imageName;
+                }
             }
         }
     }

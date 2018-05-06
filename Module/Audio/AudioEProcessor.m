@@ -147,7 +147,9 @@
 
 - (void) uploadDriverIPProperty
 {
-    if(_driver && [_driver isKindOfClass:[RgsDriverObj class]])
+    if(_driver
+       && [_driver isKindOfClass:[RgsDriverObj class]]
+       && _driver_ip_Property)
     {
         IMP_BLOCK_SELF(AudioEProcessor);
         
@@ -222,7 +224,7 @@
     }
 }
 
-- (NSString *)objectToJsonString{
+- (NSDictionary *)objectToJson{
     
     NSMutableDictionary *allData = [NSMutableDictionary dictionary];
     
@@ -273,6 +275,12 @@
             NSMutableDictionary *proxyDic = [NSMutableDictionary dictionary];
             [proxys addObject:proxyDic];
             
+            if(vap._icon_name)
+            {
+                [proxyDic setObject:vap._icon_name
+                             forKey:@"icon_name"];
+            }
+            
             [proxyDic setObject:[NSNumber numberWithInteger:proxy.m_id]
                          forKey:@"proxy_id"];
             
@@ -314,6 +322,12 @@
             NSMutableDictionary *proxyDic = [NSMutableDictionary dictionary];
             [proxys addObject:proxyDic];
             
+            if(vap._icon_name)
+            {
+                [proxyDic setObject:vap._icon_name
+                             forKey:@"icon_name"];
+            }
+            
             [proxyDic setObject:[NSNumber numberWithInteger:proxy.m_id]
                          forKey:@"proxy_id"];
             
@@ -344,16 +358,16 @@
         
     }
     
-    NSError *error = nil;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:allData
-                                                       options:NSJSONWritingPrettyPrinted
-                                                         error: &error];
+//    NSError *error = nil;
+//    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:allData
+//                                                       options:NSJSONWritingPrettyPrinted
+//                                                         error: &error];
+//
+//    NSString *jsonresult = [[NSString alloc] initWithData:jsonData
+//                                                 encoding:NSUTF8StringEncoding];
     
-    NSString *jsonresult = [[NSString alloc] initWithData:jsonData
-                                                 encoding:NSUTF8StringEncoding];
     
-    
-    return jsonresult;
+    return allData;
 }
 
 @end

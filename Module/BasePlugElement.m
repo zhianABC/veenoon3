@@ -48,7 +48,7 @@
     return name;
 }
 
-- (NSString *)objectToJsonString{
+- (NSDictionary *)objectToJson{
     
     return nil;
 }

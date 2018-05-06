@@ -21,6 +21,8 @@
 #import "VTouyingjiSet.h"
 #import "VProjectProxys.h"
 
+#import "DataBase.h"
+
 @interface Scenario ()
 {
     
@@ -29,9 +31,12 @@
 @property (nonatomic, strong) RgsSceneObj *_rgsScene;
 @property (nonatomic, strong) RgsEventObj *_rgsSceneEvent;
 
+@property (nonatomic, strong) NSMutableDictionary *_scenarioData;
+
 @end
 
 @implementation Scenario
+@synthesize room_id;
 
 @synthesize _rgsSceneEvent;
 @synthesize _rgsScene;
@@ -58,17 +63,39 @@
 @synthesize _areas;
 
 @synthesize _eventOperations;
-@synthesize _eventOperations_map;
+
+@synthesize _scenarioData;
 
 - (id)init
 {
     if(self = [super init])
     {
-        self._eventOperations = [NSMutableArray array];
-        self._eventOperations_map = [NSMutableDictionary dictionary];
+        [self initData];
+       
     }
     
     return self;
+}
+
+- (void) initData{
+    
+    self._eventOperations = [NSMutableArray array];
+    self._scenarioData = [NSMutableDictionary dictionary];
+    
+    NSMutableArray *audio = [NSMutableArray array];
+    [_scenarioData setObject:audio forKey:@"audio"];
+    
+    NSMutableArray *video = [NSMutableArray array];
+    [_scenarioData setObject:video forKey:@"video"];
+    
+    NSMutableArray *env = [NSMutableArray array];
+    [_scenarioData setObject:env forKey:@"environment"];
+    
+    [_scenarioData setObject:@"场景" forKey:@"name"];
+    
+    [_scenarioData setObject:[NSNumber numberWithInt:room_id]
+                      forKey:@"room_id"];
+    
 }
 
 - (void) addEventOperation:(RgsSceneOperation*)rgsSceneOp{
@@ -79,6 +106,12 @@
 }
 
 - (void) postCreateScenarioNotifyResult:(BOOL)success{
+    
+    if(success)
+    {
+        //保存数据库
+        [[DataBase sharedDatabaseInstance] saveScenario:_scenarioData];
+    }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"Notify_Scenario_Create_Result"
                                                         object:@{@"result":[NSNumber numberWithBool:success]}];
@@ -144,6 +177,12 @@
     
     IMP_BLOCK_SELF(Scenario);
     
+    [_scenarioData setObject:[NSNumber numberWithInteger:_rgsDriver.m_id]
+                      forKey:@"s_driver_id"];
+    
+    [_scenarioData setObject:[NSNumber numberWithInteger:_rgsSceneEvent.m_id]
+                      forKey:@"s_event_id"];
+    
     [[RegulusSDK sharedRegulusSDK] SetEventOperatons:_rgsSceneEvent
                                            operation:_eventOperations
                                           completion:^(BOOL result, NSError *error) {
@@ -162,7 +201,7 @@
 }
 
 - (void) reloadProject{
-    
+
      IMP_BLOCK_SELF(Scenario);
     
     [[RegulusSDK sharedRegulusSDK] ReloadProject:^(BOOL result, NSError *error) {
@@ -185,6 +224,8 @@
 
 - (void) prepareSenarioSlice{
     
+    [self initData];
+    
     //音频处理
     if([self._AProcessorPlugs count])
     {
@@ -200,14 +241,22 @@
     {
         [self createVideoProjectScenario];
     }
+    
+    
 }
 
 #pragma mark -----Create 场景 ---
 
 - (void) createAudioProcessScenario{
     
+    NSMutableArray *audios = [_scenarioData objectForKey:@"audio"];
+   
+
     for(AudioEProcessor *ap in self._AProcessorPlugs)
     {
+        NSDictionary *data = [ap objectToJson];
+        [audios addObject:data];
+        
         
         NSArray *audioIn = ap._inAudioProxys;
         //NSArray *audioOut = ap._outAudioProxys;
@@ -269,8 +318,14 @@
 
 - (void) createVideoCameraScenario{
     
+    NSMutableArray *videos = [_scenarioData objectForKey:@"video"];
+    
     for(VCameraSettingSet *vcam in self._VCameraSettings)
     {
+        NSDictionary *data = [vcam objectToJson];
+        [videos addObject:data];
+        
+        
         VCameraProxys *cam = vcam._proxyObj;
         if([cam isSetChanged])
         {
@@ -285,8 +340,14 @@
 
 - (void) createVideoProjectScenario{
     
+    NSMutableArray *videos = [_scenarioData objectForKey:@"video"];
+    
     for(VTouyingjiSet *vprj in self._VTouyingji)
     {
+        NSDictionary *data = [vprj objectToJson];
+        [videos addObject:data];
+        
+        
         VProjectProxys *proj = vprj._proxyObj;
         if([proj isSetChanged])
         {

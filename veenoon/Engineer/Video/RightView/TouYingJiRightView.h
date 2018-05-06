@@ -9,6 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "VTouyingjiSet.h"
 
+@protocol TouYingJiRightViewDelegate <NSObject>
+
+@optional
+- (void) dissmissSettingView;
+@end
+
 @interface TouYingJiRightView : UIView {
     VTouyingjiSet *_currentObj;
     RightSetViewCallbackBlock _callback;
@@ -17,6 +23,8 @@
 @property(nonatomic, assign) int _numOfDevice;
 @property (nonatomic, copy) RightSetViewCallbackBlock _callback;
 @property (nonatomic, assign) int _curentDeviceIndex;
+
+@property (nonatomic, weak) id <TouYingJiRightViewDelegate> delegate_;
 
 -(void) refreshView:(VTouyingjiSet*) dvdPlayerSet;
 -(void) layoutDevicePannel;

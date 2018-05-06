@@ -14,12 +14,16 @@
 {
     
 }
+@property (nonatomic, strong) NSString *_icon_name;
+
 @property (nonatomic, strong) RgsProxyObj *_rgsProxyObj;
 
 //Property
 @property (nonatomic, strong) NSString *_mode;
 @property (nonatomic, assign) BOOL _is48V;
 @property (nonatomic, strong) NSString *_micDb;
+
+
 
 /*
  SET_MUTE

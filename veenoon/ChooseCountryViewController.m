@@ -7,7 +7,7 @@
 //
 
 #import "ChooseCountryViewController.h"
-#import "DataBase.h"
+#import "wsDB.h"
 
 @interface ChooseCountryViewController ()
 
@@ -37,7 +37,7 @@
     self.title = @"选择国家";
     
 
-    self.data_ = [[DataBase sharedDatabaseInstance] searchByKeywords:@""];
+    self.data_ = [[wsDB sharedDBInstance] searchByKeywords:@""];
     
     searchBar_ = [[UISearchBar alloc] initWithFrame:CGRectMake(10, 10, 360, 40)];
 	searchBar_.delegate = self;
@@ -62,7 +62,7 @@
     
     NSString *txt = searchBar.text;
     if([txt length] > 0){
-        self.data_ = [[DataBase sharedDatabaseInstance] searchByKeywords:txt];
+        self.data_ = [[wsDB sharedDBInstance] searchByKeywords:txt];
         [tableView_ reloadData];
     }
     
@@ -75,7 +75,7 @@
     NSString *txt = searchBar.text;
     if(txt == nil)txt = @"";
     if(txt){
-        self.data_ = [[DataBase sharedDatabaseInstance] searchByKeywords:txt];
+        self.data_ = [[wsDB sharedDBInstance] searchByKeywords:txt];
         [tableView_ reloadData];
     }
 }

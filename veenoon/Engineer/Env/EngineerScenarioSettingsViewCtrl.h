@@ -10,10 +10,9 @@
 #import "BaseViewController.h"
 
 @interface EngineerScenarioSettingsViewCtrl : BaseViewController {
-    NSMutableArray *_scenarioArray;
+    
 }
-@property(nonatomic, strong) NSMutableArray *_scenarioArray;
-
+@property (nonatomic, assign) int _room_id;
 
 @end
 

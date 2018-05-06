@@ -22,7 +22,7 @@
     
     UISearchBar *searchBar_;
 }
-@property (nonatomic, strong) NSMutableArray *data_;
+@property (nonatomic, strong) NSArray *data_;
 @property (nonatomic, weak) id root;
 
 @end

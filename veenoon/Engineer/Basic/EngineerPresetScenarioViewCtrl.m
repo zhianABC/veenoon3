@@ -60,6 +60,8 @@
 #import "WaitDialog.h"
 #import "DevicePlugButton.h"
 
+
+
 #ifdef OPEN_REG_LIB_DEF
 #import "RegulusSDK.h"
 #endif
@@ -183,7 +185,7 @@
     
     
     self._scenario = [[Scenario alloc] init];
-    
+    self._scenario.room_id = 1;
     
 }
 
@@ -386,9 +388,9 @@
         }
     }
 
-    [[WaitDialog sharedAlertDialog] setTitle:@"未找到对应设备的驱动"];
-    [[WaitDialog sharedAlertDialog] animateShow];
-    
+//    [[WaitDialog sharedAlertDialog] setTitle:@"未找到对应设备的驱动"];
+//    [[WaitDialog sharedAlertDialog] animateShow];
+//
 #endif
 }
 
@@ -412,6 +414,7 @@
     BOOL res = [[object objectForKey:@"result"] boolValue];
     if(res)
     {
+      
         EngineerScenarioSettingsViewCtrl *ctrl = [[EngineerScenarioSettingsViewCtrl alloc] init];
         [self.navigationController pushViewController:ctrl animated:YES];
     }
@@ -1117,7 +1120,7 @@
             else if([name isEqualToString:@"音频处理"])
             {
                 [self initProcessorPlugs];
-                [self checkAreaHaveDriver];
+                //[self checkAreaHaveDriver];
             }
         }
         
