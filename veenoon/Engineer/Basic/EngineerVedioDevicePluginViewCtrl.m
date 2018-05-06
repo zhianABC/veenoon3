@@ -11,6 +11,8 @@
 #import "CenterCustomerPickerView.h"
 #import "UIButton+Color.h"
 #import "IconCenterTextButton.h"
+#import "VCameraSettingSet.h"
+#import "DataSync.h"
 
 @interface EngineerVedioDevicePluginViewCtrl ()<CenterCustomerPickerViewDelegate> {
     IconCenterTextButton *_dianyuanguanliBtn;
@@ -29,11 +31,20 @@
     CenterCustomerPickerView *_productCategoryPicker;
     CenterCustomerPickerView *_numberPicker;
 }
+@property (nonatomic, strong) NSArray *_currentBrands;
+@property (nonatomic, strong) NSArray *_currentTypes;
+@property (nonatomic, strong) NSArray *_driverUdids;
+
+
 @end
 
 @implementation EngineerVedioDevicePluginViewCtrl
 @synthesize _meetingRoomDic;
 @synthesize _selectedSysDic;
+
+@synthesize _currentBrands;
+@synthesize _currentTypes;
+@synthesize _driverUdids;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -165,6 +176,8 @@
     _productTypePikcer._rowNormalColor = [UIColor whiteColor];
     [self.view addSubview:_productTypePikcer];
     
+    [self initBrandAndTypes];
+    
     int x1 = CGRectGetMaxX(titleL.frame)+5;
     
     titleL = [[UILabel alloc] initWithFrame:CGRectMake(x1, labelStartY, maxWidth, 20)];
@@ -174,6 +187,7 @@
     titleL.textAlignment = NSTextAlignmentCenter;
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"品牌";
+    
     
     _brandPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(x1, labelStartY+20, maxWidth, 160)];
     [_brandPicker removeArray];
@@ -219,7 +233,7 @@
                                                                                60,
                                                                                160)];
     [_numberPicker removeArray];
-    _numberPicker._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
+    _numberPicker._pickerDataArray = @[@{@"values":@[@"1",@"2",@"3"]}];
     [_numberPicker selectRow:0 inComponent:0];
     _numberPicker._selectColor = RGB(253, 180, 0);
     _numberPicker._rowNormalColor = [UIColor whiteColor];
@@ -239,25 +253,63 @@
     [signup addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
 }
 
+- (void) initBrandAndTypes{
+    
+    self._currentBrands = @[@"品牌1",@"品牌2",@"品牌3"];
+    self._currentTypes = @[@"型号A",@"型号B",@"型号C"];
+    self._driverUdids = @[];
+    
+    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
+    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
+    
+    [_brandPicker selectRow:0 inComponent:0];
+    [_productTypePikcer selectRow:0 inComponent:0];
+}
+
 - (void) confirmAction:(id)sender{
+    
     NSString *productType = _productTypePikcer._unitString;
     NSString *brand = _brandPicker._unitString;
     NSString *productCategory = _productCategoryPicker._unitString;
     NSString *number = _numberPicker._unitString;
     
-    NSMutableDictionary *audioDic = [[NSMutableDictionary alloc] init];
-    [audioDic setObject:productType forKey:@"productType"];
-    [audioDic setObject:brand forKey:@"brand"];
-    [audioDic setObject:productCategory forKey:@"productCategory"];
-    [audioDic setObject:number forKey:@"number"];
     
-    NSMutableArray *audioArray = [self._selectedSysDic objectForKey:@"video"];
-    if (audioArray == nil) {
-        audioArray = [[NSMutableArray alloc] init];
-        [self._selectedSysDic setObject:audioArray forKey:@"video"];
+    NSMutableArray *devices = [self._selectedSysDic objectForKey:@"video"];
+    if (devices == nil) {
+        devices = [[NSMutableArray alloc] init];
+        [self._selectedSysDic setObject:devices forKey:@"video"];
     }
     
-    [audioArray addObject:audioDic];
+    NSDictionary *val = [_productCategoryPicker._values objectForKey:@0];
+    
+    int idx = [[val objectForKey:@"index"] intValue];
+    
+    
+    if(idx < [_driverUdids count])
+    {
+        id key = [_driverUdids objectAtIndex:idx];
+        
+        for(int i = 0; i < [number intValue]; i++)
+        {
+            //创建number个Device
+            if([productType isEqualToString:@"摄像机"])
+            {
+                VCameraSettingSet *device = [[VCameraSettingSet alloc] init];
+                
+                device._brand = brand;
+                device._type = productCategory;
+                device._driverUUID = key;
+                device._driverInfo = [[DataSync sharedDataSync] driverInfoByUUID:key];
+                device._comDriverInfo = [[DataSync sharedDataSync] driverInfoByUUID:UUID_Serial_Com];
+                
+                //根据此类型的插件，创建自己的驱动，上传到中控
+                [device createDriver];
+                
+                [devices addObject:device];
+            }
+           
+        }
+    }
 }
 - (void) touyingjiAction:(id)sender{
     [_dianyuanguanliBtn setBtnHighlited:NO];
@@ -275,6 +327,8 @@
     IconCenterTextButton *btn = (IconCenterTextButton*) sender;
     NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
+    
+    [self initBrandAndTypes];
 }
 - (void) lubojiAction:(id)sender{
     [_dianyuanguanliBtn setBtnHighlited:NO];
@@ -292,6 +346,8 @@
     IconCenterTextButton *btn = (IconCenterTextButton*) sender;
     NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
+    
+    [self initBrandAndTypes];
 }
 - (void) yejingdianshiAction:(id)sender{
     [_dianyuanguanliBtn setBtnHighlited:NO];
@@ -309,6 +365,8 @@
     IconCenterTextButton *btn = (IconCenterTextButton*) sender;
     NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
+    
+    [self initBrandAndTypes];
 }
 - (void) pinjiepingAction:(id)sender{
     [_dianyuanguanliBtn setBtnHighlited:NO];
@@ -326,6 +384,8 @@
     IconCenterTextButton *btn = (IconCenterTextButton*) sender;
     NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
+    
+    [self initBrandAndTypes];
 }
 
 - (void) shipinchuliAction:(id)sender{
@@ -344,6 +404,8 @@
     IconCenterTextButton *btn = (IconCenterTextButton*) sender;
     NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
+    
+    [self initBrandAndTypes];
 }
 
 - (void) yuanchengshixunAction:(id)sender{
@@ -362,6 +424,8 @@
     IconCenterTextButton *btn = (IconCenterTextButton*) sender;
     NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
+    
+    [self initBrandAndTypes];
 }
 
 - (void) xinxiheAction:(id)sender{
@@ -380,6 +444,8 @@
     IconCenterTextButton *btn = (IconCenterTextButton*) sender;
     NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
+    
+    [self initBrandAndTypes];
 }
 
 - (void) shexiangjiAction:(id)sender{
@@ -398,6 +464,18 @@
     IconCenterTextButton *btn = (IconCenterTextButton*) sender;
     NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
+    
+    
+    self._currentBrands = @[@"Teslaria"];
+    self._currentTypes = @[@"录播摄像机"];
+    self._driverUdids = @[UUID_NetCamera];
+    
+    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
+    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
+    
+    [_brandPicker selectRow:0 inComponent:0];
+    [_productCategoryPicker selectRow:0 inComponent:0];
+
 }
 
 - (void) shipinbofangAction:(id)sender{
@@ -416,6 +494,8 @@
     IconCenterTextButton *btn = (IconCenterTextButton*) sender;
     NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
+    
+    [self initBrandAndTypes];
 }
 
 - (void) dianyuanguanliAction:(id)sender{
@@ -434,9 +514,19 @@
     IconCenterTextButton *btn = (IconCenterTextButton*) sender;
     NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
+    
+    [self initBrandAndTypes];
 }
 
--(void) didScrollPickerValue:(NSString*)brand {
+- (void) didChangedPickerValue:(NSDictionary*)value {
+    
+    NSDictionary *val = [value objectForKey:@0];
+    if(val)
+    {
+        
+    NSString *brand = [val objectForKey:@"value"];
+            
+            
     if ([@"电源管理" isEqualToString:brand]) {
         [self dianyuanguanliAction:_dianyuanguanliBtn];
     } else if ([@"视频播放" isEqualToString:brand]) {
@@ -457,6 +547,7 @@
         [self lubojiAction:_lubojiBtn];
     } else {
         [self touyingjiAction:_touyingjiBtn];
+    }
     }
 }
 

@@ -10,6 +10,7 @@
 #import "JHSlideView.h"
 #import "CheckButton.h"
 #import "CenterCustomerPickerView.h"
+#import "RegulusSDK.h"
 
 @interface ComSettingView () <CenterCustomerPickerViewDelegate>
 {
@@ -96,36 +97,31 @@
     return self;
 }
 - (void) refreshCom:(BasePlugElement *)currentObj {
+    
+    self._currentObj = currentObj;
+    
     if (levelSetting == nil) {
         levelSetting = [[CenterCustomerPickerView alloc]
                         initWithFrame:CGRectMake(0, 0, self.frame.size.width, 200) ];
+        
+        levelSetting._selectColor = [UIColor orangeColor];
+        levelSetting._rowNormalColor = [UIColor whiteColor];
+        levelSetting.delegate_ = self;
+        
     }
     
-    [levelSetting removeArray];
+     [_chooseBg addSubview:levelSetting];
+    levelSetting._pickerDataArray = @[@{@"values":_currentObj._comArray}];
+    NSArray *values = _currentObj._comArray;
     
-    levelSetting._pickerDataArray = currentObj._comArray;
+    if([values count])
+    {
+        NSInteger index = _currentObj._comIdx;
+        [levelSetting selectRow:index inComponent:0];
+        _secs.text = [values objectAtIndex:index];
+
+    }
     
-    levelSetting._selectColor = [UIColor orangeColor];
-    levelSetting._rowNormalColor = [UIColor whiteColor];
-    levelSetting.delegate_ = self;
-    [_chooseBg addSubview:levelSetting];
-    
-    [levelSetting selectRow:0 inComponent:0];
-    
-    _currentObj = currentObj;
-    
-    [levelSetting removeArray];
-    
-    levelSetting._pickerDataArray = currentObj._comArray;
-    
-    NSDictionary *section = [currentObj._comArray objectAtIndex:0];
-    NSArray *values = [section objectForKey:@"values"];
-    
-    NSInteger index = [values indexOfObject:currentObj._com];
-    
-    [levelSetting selectRow:index inComponent:0];
-    
-    _secs.text = _currentObj._com;
 }
 - (void) closeComSetting{
     
@@ -150,11 +146,15 @@
     NSString *title =  [dic objectForKey:@"value"];
     _secs.text = title;
     
+    int idx = [[dic objectForKey:@"index"] intValue];
+    _currentObj._comIdx = idx;
+    
+    
     if(delegate && [delegate respondsToSelector:@selector(didChoosedComVal:)])
     {
         [delegate didChoosedComVal:title];
     }
-    _currentObj._com = title;
+
 }
 
 

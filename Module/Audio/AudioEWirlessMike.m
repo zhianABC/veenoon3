@@ -155,8 +155,9 @@
     if(self._deviceid)
         [allData setObject:self._deviceid forKey:@"deviceid"];
     
-    if(self._com)
-        [allData setObject:self._com forKey:@"com"];
+    if(self._comIdx)
+        [allData setObject:[NSString stringWithFormat:@"%d",self._comIdx] forKey:@"com"];
+    
     [allData setObject:[NSString stringWithFormat:@"%d",self._index] forKey:@"index"];
     
     
@@ -217,8 +218,8 @@
     if([allData objectForKey:@"deviceid"])
         self._deviceid = [allData objectForKey:@"deviceid"];
 
-    if([allData objectForKey:@"com"])
-        self._com = [allData objectForKey:@"com"];
+//    if([allData objectForKey:@"com"])
+//        self._com = [allData objectForKey:@"com"];
     
     self._index = [[allData objectForKey:@"index"] intValue];
     

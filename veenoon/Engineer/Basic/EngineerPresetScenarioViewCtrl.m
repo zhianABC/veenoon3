@@ -743,9 +743,7 @@
             pset._brand = @"brand1";
             pset._type = @"type1";
             pset._index = i;
-            
-            pset._comArray = @[@{@"values":@[@"Com0", @"Com1", @"Com2"]}];
-            pset._com = [@"Com" stringByAppendingString:[NSString stringWithFormat:@"%d", i]];
+        
             pset._deviceno = [NSString stringWithFormat:@"%d", i];
             [powers addObject:pset];
         }
@@ -763,7 +761,6 @@
         for(int i = 0; i < 3; i++)
         {
             VTVSet *pset = [[VTVSet alloc] init];
-            pset._com = @"191.16.1.100";
             pset._brand = @"brand1";
             pset._type = @"type1";
             pset._index = i;
@@ -784,7 +781,6 @@
         for(int i = 0; i < 3; i++)
         {
             VPinJieSet *pset = [[VPinJieSet alloc] init];
-            pset._com = @"191.16.1.100";
             pset._brand = @"brand1";
             pset._type = @"type1";
             pset._index = i;
@@ -804,7 +800,6 @@
         for(int i = 0; i < 6; i++)
         {
             VVideoProcessSet *pset = [[VVideoProcessSet alloc] init];
-            pset._com = @"191.16.1.100";
             pset._brand = @"brand1";
             pset._type = @"type1";
             pset._index = i;
@@ -842,7 +837,6 @@
         for(int i = 0; i < 6; i++)
         {
             VRemoteSettingsSet *pset = [[VRemoteSettingsSet alloc] init];
-            pset._com = @"191.16.1.100";
             pset._brand = @"brand1";
             pset._type = @"type1";
             pset._index = i;
@@ -865,26 +859,21 @@
 }
 
 - (void) initVCameraSettings {
+    
     if([_scenario._VCameraSettings count] == 0)
     {
-        NSMutableArray *powers = [NSMutableArray array];
+        NSMutableArray *h2h = [NSMutableArray array];
         
-        for(int i = 0; i < 3; i++)
+        NSArray *devices = [_selectedDevices objectForKey:@"video"];
+        
+        for(id pset in devices)
         {
-            VCameraSettingSet *pset = [[VCameraSettingSet alloc] init];
-            pset._ipaddress = @"191.16.1.100";
-            pset._brand = @"brand1";
-            pset._type = @"type1";
-            pset._index = i;
-            
-            pset._comArray = @[@{@"values":@[@"Com0", @"Com1", @"Com2"]}];
-            pset._com = [@"Com" stringByAppendingString:[NSString stringWithFormat:@"%d", i]];
-            
-            pset._deviceno = [NSString stringWithFormat:@"%d", i];
-            [powers addObject:pset];
+            if([pset isKindOfClass:[VCameraSettingSet class]])
+            {
+                [h2h addObject:pset];
+            }
         }
-        
-        _scenario._VCameraSettings = powers;
+        _scenario._VCameraSettings = h2h;
     }
 }
 
@@ -897,7 +886,6 @@
         for(int i = 0; i < 3; i++)
         {
             VDVDPlayerSet *pset = [[VDVDPlayerSet alloc] init];
-            pset._com = @"191.16.1.100";
             pset._brand = @"brand1";
             pset._type = @"type1";
             pset._index = i;

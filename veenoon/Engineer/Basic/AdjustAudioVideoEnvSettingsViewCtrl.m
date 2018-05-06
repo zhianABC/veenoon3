@@ -8,6 +8,7 @@
 #import "EngineerScenarioListViewCtrl.h"
 #import "AdjustAudioVideoEnvSettingsViewCtrl.h"
 #import "AudioEProcessor.h"
+#import "VCameraSettingSet.h"
 
 @interface AdjustAudioVideoEnvSettingsViewCtrl() <UITableViewDelegate, UITableViewDataSource> {
     UITableView *_tableView;
@@ -171,7 +172,13 @@
         brandL.text = device._brand;
         catL.text = device._type;
     }
-    
+    else if([dataDic isKindOfClass:[VCameraSettingSet class]])
+    {
+        VCameraSettingSet *device = (VCameraSettingSet*)dataDic;
+        valueL.text = [device deviceName];
+        brandL.text = device._brand;
+        catL.text = device._type;
+    }
     return cell;
 }
 
@@ -195,7 +202,11 @@
         AudioEProcessor *device = (AudioEProcessor*)obj;
         [device removeDriver];
     }
-    
+    else if([obj isKindOfClass:[VCameraSettingSet class]])
+    {
+        VCameraSettingSet *device = (VCameraSettingSet*)obj;
+        [device removeDriver];
+    }
     //
     [dataArray removeObjectAtIndex:row];
     

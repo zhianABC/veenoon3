@@ -13,6 +13,9 @@
 #import "VCameraSettingSet.h"
 #import "BrandCategoryNoUtil.h"
 #import "PlugsCtrlTitleHeader.h"
+#import "RegulusSDK.h"
+#import "VCameraProxys.h"
+#import "KVNProgress.h"
 
 @interface EngineerCameraViewController () <CustomPickerViewDelegate>{
     
@@ -48,10 +51,6 @@
     
     if ([_cameraSysArray count]) {
         self._currentObj = [_cameraSysArray objectAtIndex:0];
-    }
-    
-    if(_currentObj == nil) {
-        self._currentObj = [[VCameraSettingSet alloc] init];
     }
     
     [super setTitleAndImage:@"video_corner_shexiangji.png" withTitle:@"摄像机"];
@@ -242,8 +241,16 @@
     [self.view addSubview:volumnUpBtn];
     
     [volumnUpBtn addTarget:self
-                    action:@selector(volumnAddAction:)
-          forControlEvents:UIControlEventTouchUpInside];
+                      action:@selector(camerDirectUPAction:)
+            forControlEvents:UIControlEventTouchDown];
+    
+    [volumnUpBtn addTarget:self
+                      action:@selector(camerDirectStopAction:)
+            forControlEvents:UIControlEventTouchCancel];
+    [volumnUpBtn addTarget:self
+                      action:@selector(camerDirectStopAction:)
+            forControlEvents:UIControlEventTouchUpInside];
+    
     
     UIButton *zoomMinusBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
     zoomMinusBtn.frame = CGRectMake(315+playerLeft+85, SCREEN_HEIGHT-415+playerHeight, 80, 80);
@@ -298,10 +305,84 @@
     [self.view addSubview:volumnDownBtn];
     
     [volumnDownBtn addTarget:self
-                      action:@selector(volumnMinusAction:)
+                      action:@selector(camerDirectDownAction:)
+            forControlEvents:UIControlEventTouchDown];
+    
+    [volumnDownBtn addTarget:self
+                      action:@selector(camerDirectStopAction:)
+            forControlEvents:UIControlEventTouchCancel];
+    [volumnDownBtn addTarget:self
+                      action:@selector(camerDirectStopAction:)
             forControlEvents:UIControlEventTouchUpInside];
     
+    
+    [self getCurrentDeviceDriverProxys];
+    
 }
+
+- (void) camerDirectStopAction:(id)sender{
+    
+    VCameraProxys *vcam = _currentObj._proxyObj;
+    if(vcam)
+        [vcam stopControlDeviceDirection];
+}
+
+
+- (void) camerDirectUPAction:(id)sender{
+    
+    VCameraProxys *vcam = _currentObj._proxyObj;
+    if(vcam)
+        [vcam controlDeviceDirection:@"UP"];
+}
+
+- (void) camerDirectDownAction:(id)sender{
+    
+    VCameraProxys *vcam = _currentObj._proxyObj;
+    if(vcam)
+        [vcam controlDeviceDirection:@"DOWN"];
+}
+
+
+
+- (void) getCurrentDeviceDriverProxys{
+    
+    if(_currentObj == nil)
+        return;
+    
+#ifdef OPEN_REG_LIB_DEF
+    
+    IMP_BLOCK_SELF(EngineerCameraViewController);
+    
+    RgsDriverObj *driver = _currentObj._driver;
+    if([driver isKindOfClass:[RgsDriverObj class]])
+    {
+        [[RegulusSDK sharedRegulusSDK] GetDriverProxys:driver.m_id completion:^(BOOL result, NSArray *proxys, NSError *error) {
+            if (result) {
+                if ([proxys count]) {
+                    
+                    [block_self loadedCameraProxy:proxys];
+                    
+                }
+            }
+            else{
+                [KVNProgress showErrorWithStatus:@"中控链接断开！"];
+            }
+        }];
+    }
+#endif
+}
+
+- (void) loadedCameraProxy:(NSArray*)proxys{
+    
+    VCameraProxys *vcam = [[VCameraProxys alloc] init];
+    vcam._rgsProxyObj = [proxys objectAtIndex:0];
+    [vcam checkRgsProxyCommandLoad];
+    
+    self._currentObj._proxyObj = vcam;
+    [_currentObj syncDriverIPProperty];
+    [_currentObj syncDriverComs];
+}
+
 - (void) zoomMinusAction:(id)sender{
     
 }
@@ -370,10 +451,7 @@
 
 - (void) selectCurrentMike:(VCameraSettingSet*)mike{
     
-    
     self._currentObj = mike;
-    
-    
     [self updateCurrentMikeState:mike._deviceno];
 }
 
@@ -386,9 +464,7 @@
         _rightView._currentObj = _currentObj;
         [_rightView refreshView:_currentObj];
     }
-    
-    
-    
+
 }
 
 - (void) sysSelectAction:(id)sender{
@@ -429,23 +505,29 @@
                                                64, 300, SCREEN_HEIGHT-114)];
         
         //创建底部设备切换按钮
-        _rightView._numOfDevice = (int)[_cameraSysArray count];
-        [_rightView layoutDevicePannel];
-        
-        
-        IMP_BLOCK_SELF(EngineerCameraViewController);
-        _rightView._callback = ^(int deviceIndex) {
-            
-            [block_self chooseDeviceAtIndex:deviceIndex];
-        };
+        //_rightView._numOfDevice = (int)[_cameraSysArray count];
+        //[_rightView layoutDevicePannel];
     }
+
+    [_rightView refreshView:_currentObj];
     
+//    IMP_BLOCK_SELF(EngineerCameraViewController);
+//    _rightView._callback = ^(int deviceIndex) {
+//
+//        [block_self chooseDeviceAtIndex:deviceIndex];
+//    };
+    
+  
     //如果在显示，消失
     if([_rightView superview])
     {
         
         //写入中控
         //......
+        
+        [_rightView saveCurrentSetting];
+        [_currentObj uploadDriverIPProperty];
+
         
         [okBtn setTitle:@"设置" forState:UIControlStateNormal];
         

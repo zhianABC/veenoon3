@@ -11,7 +11,7 @@
 #import "ComSettingView.h"
 #import "VCameraSettingSet.h"
 
-@interface CameraRightView () <UITextFieldDelegate> {
+@interface CameraRightView () <UITextFieldDelegate, ComSettingViewDelegate> {
     
     ComSettingView *_com;
     UITextField *ipTextField;
@@ -76,6 +76,7 @@
         [headView addGestureRecognizer:swip];
         
         _com = [[ComSettingView alloc] initWithFrame:self.bounds];
+        _com.delegate = self;
     }
     
     return self;
@@ -158,14 +159,20 @@
 }
 
 -(void) refreshView:(VCameraSettingSet*) vCameraSettingSet {
+   
     self._currentObj = vCameraSettingSet;
-    
     ipTextField.text = vCameraSettingSet._ipaddress;
     
-    self._curentDeviceIndex = _currentObj._index;
-    [self chooseChannelAtTagIndex:_curentDeviceIndex];
+    //self._curentDeviceIndex = _currentObj._index;
+    
+    //[self chooseChannelAtTagIndex:_curentDeviceIndex];
     
     [_com refreshCom:_currentObj];
+}
+
+- (void) didChoosedComVal:(NSString*)val{
+    
+    [_currentObj createConnection];
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
@@ -175,6 +182,11 @@
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
+    _currentObj._ipaddress = ipTextField.text;
+}
+
+- (void) saveCurrentSetting{
+    
     _currentObj._ipaddress = ipTextField.text;
 }
 
