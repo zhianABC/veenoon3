@@ -185,9 +185,6 @@
         _imagePicker = [[UIImagePickerController alloc] init];
         _imagePicker.delegate = self;
         _imagePicker.modalPresentationStyle = UIModalPresentationCustom;
-    } else  {
-        _imagePicker.modalPresentationStyle = UIModalPresentationCustom;
-        return;
     }
     
     [[UINavigationBar appearance] setTintColor:THEME_COLOR];
