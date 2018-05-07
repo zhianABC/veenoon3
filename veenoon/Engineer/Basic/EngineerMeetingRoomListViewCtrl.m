@@ -33,6 +33,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.view.backgroundColor = BLACK_COLOR;
+    
     lableArray = [[NSMutableArray alloc] init];
     roomImageArray = [[NSMutableArray alloc] init];
     selectedRoomIndex = -1;
@@ -173,7 +175,7 @@
     [self.view addSubview:bottomBar];
     bottomBar.backgroundColor = [UIColor grayColor];
     bottomBar.userInteractionEnabled = YES;
-    bottomBar.image = [UIImage imageNamed:@"botomo_icon.png"];
+    bottomBar.image = [UIImage imageNamed:@"botomo_icon_black.png"];
     
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     backBtn.frame = CGRectMake(60, SCREEN_HEIGHT -45, 60, 40);

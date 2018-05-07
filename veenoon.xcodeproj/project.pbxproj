@@ -761,6 +761,8 @@
 		EBC71B2C204100DD00DD0A98 /* NewWindRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B2B204100DD00DD0A98 /* NewWindRightView.m */; };
 		EBCA834B1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCA834A1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m */; };
 		EBCD01C62090C0AF00787D48 /* IPValidate.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCD01C52090C0AF00787D48 /* IPValidate.m */; };
+		EBCD01CE20A09EEE00787D48 /* left_back_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBCD01CD20A09EED00787D48 /* left_back_bg@2x.png */; };
+		EBCD01D020A0A17100787D48 /* botomo_icon_black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBCD01CF20A0A17100787D48 /* botomo_icon_black@2x.png */; };
 		EBD009B0208C744900920849 /* DVDComIRView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009AF208C744900920849 /* DVDComIRView.m */; };
 		EBD009B3208CB12900920849 /* VCameraSettingSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009B2208CB12900920849 /* VCameraSettingSet.m */; };
 		EBD009B6208CB88300920849 /* VRemoteSettingsSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009B5208CB88300920849 /* VRemoteSettingsSet.m */; };
@@ -1938,6 +1940,8 @@
 		EBCA834C1FD434D1007DEB8E /* UserMonitorSettingsViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserMonitorSettingsViewCtrl.h; sourceTree = "<group>"; };
 		EBCD01C42090C0AF00787D48 /* IPValidate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IPValidate.h; sourceTree = "<group>"; };
 		EBCD01C52090C0AF00787D48 /* IPValidate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IPValidate.m; sourceTree = "<group>"; };
+		EBCD01CD20A09EED00787D48 /* left_back_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_back_bg@2x.png"; sourceTree = "<group>"; };
+		EBCD01CF20A0A17100787D48 /* botomo_icon_black@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "botomo_icon_black@2x.png"; sourceTree = "<group>"; };
 		EBD009AE208C744900920849 /* DVDComIRView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVDComIRView.h; sourceTree = "<group>"; };
 		EBD009AF208C744900920849 /* DVDComIRView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DVDComIRView.m; sourceTree = "<group>"; };
 		EBD009B1208CB12900920849 /* VCameraSettingSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VCameraSettingSet.h; sourceTree = "<group>"; };
@@ -2564,6 +2568,8 @@
 		04DE1ECB1AD6B3BA00D49E2F /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
+				EBCD01CF20A0A17100787D48 /* botomo_icon_black@2x.png */,
+				EBCD01CD20A09EED00787D48 /* left_back_bg@2x.png */,
 				3456C17D20A034D9001FAB61 /* SenarioIcon */,
 				EB5A47F02073BA1500564C06 /* huiseyaobao@2x.png */,
 				EB5A47EE2073B66900564C06 /* huangsedianchi@2x.png */,
@@ -4328,6 +4334,7 @@
 				345487C5204BE3910068126B /* yinpinchuli_anniu@2x.png in Resources */,
 				3456C1A020A051AA001FAB61 /* senario_02_07_big@2x.png in Resources */,
 				EB36AAE31FCDA432009A0FD8 /* user_video_dvd_s@2x.png in Resources */,
+				EBCD01CE20A09EEE00787D48 /* left_back_bg@2x.png in Resources */,
 				EB2982091FD5793F007B5C20 /* engineer_login_input_n@2x.png in Resources */,
 				EBAE5BA41FDD20C400C10C4D /* engineer_env_xinfeng_n@2x.png in Resources */,
 				EBAE5B7E1FDD07BE00C10C4D /* engineer_video_shipinchuli_s@2x.png in Resources */,
@@ -4340,6 +4347,7 @@
 				EB1A04761FC71EEC007CC1F2 /* cd_player_n@2x.png in Resources */,
 				EB3B73961FE60FEB001941CF /* customer_view_confirm_s@2x.png in Resources */,
 				EBDF1C441FC5D5CF00A756EA /* floor_warm_s@2x.png in Resources */,
+				EBCD01D020A0A17100787D48 /* botomo_icon_black@2x.png in Resources */,
 				EBAE5B641FDD046A00C10C4D /* engineer_confirm_bt_s@2x.png in Resources */,
 				34190EF6205D536C009A519C /* v_icon_2_sel@2x.png in Resources */,
 				3456C18E20A034D9001FAB61 /* senario_02_18@2x.png in Resources */,

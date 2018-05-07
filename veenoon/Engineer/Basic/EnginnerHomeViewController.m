@@ -33,95 +33,84 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    int leftRight = 250;
-    int width = SCREEN_WIDTH - leftRight*2;
-    int height = width * 2 / 3;
     
-    [super setCenterTitle:@"工程师登录"];
+    self.view.backgroundColor = BLACK_COLOR;
     
-    _inputPannel = [[UIView alloc] initWithFrame:CGRectMake(leftRight, SCREEN_HEIGHT/2-250, width, height)];
-    [self.view addSubview:_inputPannel];
-    _inputPannel.backgroundColor = RGB(0, 89, 118);
-    _inputPannel.userInteractionEnabled=YES;
+    UIView *_topBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 64)];
+    _topBar.backgroundColor = DARK_GRAY_COLOR;
+    [self.view addSubview:_topBar];
     
-    UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
-    [self.view addSubview:bottomBar];
-    bottomBar.backgroundColor = [UIColor grayColor];
-    bottomBar.userInteractionEnabled = YES;
-    bottomBar.image = [UIImage imageNamed:@"botomo_icon.png"];
-    
-    UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    cancelBtn.frame = CGRectMake(0, 0,160, 50);
-    [bottomBar addSubview:cancelBtn];
-    [cancelBtn setTitle:@"返回" forState:UIControlStateNormal];
-    [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [cancelBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
-    cancelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-    [cancelBtn addTarget:self
-                  action:@selector(cancelAction:)
-        forControlEvents:UIControlEventTouchUpInside];
-    
-    UIImage *roomImage = [UIImage imageNamed:@"engineer_login_icon.png"];
-    UIImageView *roomeImageView = [[UIImageView alloc] initWithImage:roomImage];
-    [_inputPannel addSubview:roomeImageView];
-    roomeImageView.frame = CGRectMake(width/2-69, 80, 138, 109);
-    roomeImageView.userInteractionEnabled=YES;
-    
-    UIView *_inputPannel2 = [[UIView alloc] initWithFrame:CGRectMake(leftRight, SCREEN_HEIGHT/2-250+height, width, 150)];
-    [self.view addSubview:_inputPannel2];
-    _inputPannel2.backgroundColor = [UIColor whiteColor];
-    _inputPannel2.userInteractionEnabled=YES;
-    
-    UIButton *login = [UIButton buttonWithColor:nil selColor:[UIColor blackColor]];
-    login.frame = CGRectMake(_inputPannel2.frame.size.width/2 - 124,_inputPannel2.frame.size.height/2-25,248, 31);
-    login.layer.cornerRadius = 5;
-    login.layer.borderWidth = 2;
-    login.layer.borderColor = [UIColor blackColor].CGColor;
-    login.clipsToBounds = YES;
-    [_inputPannel2 addSubview:login];
-    [login setTitle:@"登录" forState:UIControlStateNormal];
-    [login setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [login setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
-    login.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-    
-    [login addTarget:self
-              action:@selector(loginAction:)
-    forControlEvents:UIControlEventTouchUpInside];
+    UILabel *centerTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-100, 25, 200, 30)];
+    centerTitleLabel.textColor = [UIColor whiteColor];
+    centerTitleLabel.backgroundColor = [UIColor clearColor];
+    centerTitleLabel.textAlignment = NSTextAlignmentCenter;
+    centerTitleLabel.text = @"工程师登录";
+    [_topBar addSubview:centerTitleLabel];
     
     
-    UIImage *userImage = [UIImage imageNamed:@"engineer_login_input_n.png"];
-    UIImageView *userImageView = [[UIImageView alloc] initWithImage:userImage];
-    [_inputPannel addSubview:userImageView];
-    userImageView.frame = CGRectMake(_inputPannel.frame.size.width/2 - 124, _inputPannel.frame.size.height-150, 248, 31);
-    userImageView.userInteractionEnabled=YES;
+    int inputHeight = 280;
+    UIView *_topBar2 = [[UIView alloc] initWithFrame:CGRectMake(0, inputHeight, SCREEN_WIDTH, 64)];
+    _topBar2.backgroundColor = DARK_GRAY_COLOR;
+    [self.view addSubview:_topBar2];
     
-    _userNameField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 248, 31)];
+    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, inputHeight+63, SCREEN_WIDTH, 1)];
+    line.backgroundColor = RGB(56, 56, 56);
+    [self.view addSubview:line];
+    
+    UIView *_topBar3 = [[UIView alloc] initWithFrame:CGRectMake(0, inputHeight+64, SCREEN_WIDTH, 64)];
+    _topBar3.backgroundColor = DARK_GRAY_COLOR;
+    [self.view addSubview:_topBar3];
+    
+    _userNameField = [[UITextField alloc] initWithFrame:CGRectMake(0, inputHeight + 10, SCREEN_WIDTH, 44)];
     _userNameField.delegate = self;
-    _userNameField.returnKeyType = UIReturnKeyDone;
-    _userNameField.placeholder = @" 输入账号";
-    [_userNameField setValue:[UIColor lightGrayColor] forKeyPath:@"_placeholderLabel.textColor"];
     _userNameField.backgroundColor = [UIColor clearColor];
+    _userNameField.returnKeyType = UIReturnKeyDone;
     _userNameField.textColor = [UIColor whiteColor];
-    _userNameField.borderStyle = UITextBorderStyleNone;
-    [userImageView addSubview:_userNameField];
+    _userNameField.borderStyle = UITextBorderStyleRoundedRect;
+    _userNameField.textAlignment = NSTextAlignmentCenter;
+    _userNameField.font = [UIFont systemFontOfSize:14];
+    _userNameField.placeholder=@"ID";
+    _userNameField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    [self.view addSubview:_userNameField];
     
-    //密码输入框 pending....
-    UIImage *userImage2 = [UIImage imageNamed:@"engineer_login_input_n.png"];
-    UIImageView *userImageView2 = [[UIImageView alloc] initWithImage:userImage2];
-    [_inputPannel addSubview:userImageView2];
-    userImageView2.frame = CGRectMake(_inputPannel.frame.size.width/2 - 124, _inputPannel.frame.size.height-110, 248, 31);
-    userImageView2.userInteractionEnabled=YES;
     
-    _userPwdField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 248, 31)];
+    _userPwdField = [[UITextField alloc] initWithFrame:CGRectMake(0, inputHeight + 10+64, SCREEN_WIDTH, 44)];
     _userPwdField.delegate = self;
-    _userPwdField.placeholder=@" 输入密码";
-    [_userPwdField setValue:[UIColor lightGrayColor] forKeyPath:@"_placeholderLabel.textColor"];
-    _userPwdField.returnKeyType = UIReturnKeyDone;
     _userPwdField.backgroundColor = [UIColor clearColor];
+    _userPwdField.returnKeyType = UIReturnKeyDone;
     _userPwdField.textColor = [UIColor whiteColor];
-    _userPwdField.borderStyle = UITextBorderStyleNone;
-    _userPwdField.secureTextEntry = YES;
-    [userImageView2 addSubview:_userPwdField];
+    _userPwdField.borderStyle = UITextBorderStyleRoundedRect;
+    _userPwdField.textAlignment = NSTextAlignmentCenter;
+    _userPwdField.placeholder=@"Password";
+    _userPwdField.font = [UIFont systemFontOfSize:14];
+    _userPwdField.secureTextEntry=YES;
+    _userPwdField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    [self.view addSubview:_userPwdField];
+    
+    
+    UIButton *signup = [UIButton buttonWithColor:nil selColor:[UIColor whiteColor]];
+    signup.frame = CGRectMake(SCREEN_WIDTH/2 - 125, inputHeight+128+120, 250, 44);
+    signup.layer.cornerRadius = 8;
+    signup.layer.borderWidth = 1;
+    signup.layer.borderColor = [UIColor whiteColor].CGColor;
+    signup.clipsToBounds = YES;
+    [self.view addSubview:signup];
+    [signup setTitle:@"登录" forState:UIControlStateNormal];
+    [signup setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [signup setTitleColor:BLACK_COLOR forState:UIControlStateHighlighted];
+    signup.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    
+    [signup addTarget:self
+               action:@selector(loginAction:)
+     forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    backBtn.frame = CGRectMake(30, 22, 40, 20);
+    [backBtn setImage:[UIImage imageNamed:@"left_back_bg.png"] forState:UIControlStateNormal];
+    [backBtn setImage:[UIImage imageNamed:@"left_back_bg.png"] forState:UIControlStateHighlighted];
+    [backBtn addTarget:self action:@selector(cancelAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_topBar addSubview:backBtn];
+    
 }
 
 - (void)cancelAction:(id)sender {
@@ -130,38 +119,13 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     
-    
-    if (textField == _userPwdField) {
-        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2-140);
-    }
-    if (textField == _userNameField) {
-        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2-120);
-    }
 }
 
-- (void)  textFieldDidEndEditing:(UITextField *)textField{
-    int leftRight = 250;
-    int width = SCREEN_WIDTH - leftRight*2;
-    int height = width * 2 / 3;
-    int center = SCREEN_HEIGHT/2-250 + height/2;
-    
-    if (textField == _userPwdField) {
-        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, center);
-    }
-    if (textField == _userNameField) {
-        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, center);
-    }
+- (void)textFieldDidEndEditing:(UITextField *)textField{
     
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    
-    [textField resignFirstResponder];
-    
-    if(textField == _userNameField) {
-        [_userPwdField becomeFirstResponder];
-    }
-    
     return YES;
 }
 
