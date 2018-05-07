@@ -154,6 +154,7 @@
     
     self._sceneDrivers = [NSMutableArray array];
     
+
 #if LOGIN_REGULUS
     [KVNProgress show];
     
@@ -194,6 +195,7 @@
             [[NSUserDefaults standardUserDefaults] setObject:@"RGS_EOC500_01" forKey:@"gateway_id"];
             [[NSUserDefaults standardUserDefaults] setObject:user_id forKey:@"user_id"];
             
+            [[NSUserDefaults standardUserDefaults] synchronize];
             
             [block_self loginCtrlDevice];
         }
@@ -496,7 +498,7 @@
     }
     else
     {
-        [KVNProgress showWithStatus:@"您还没有创建场景!"];
+        [KVNProgress showErrorWithStatus:@"您还没有创建场景!"];
     }
 }
 

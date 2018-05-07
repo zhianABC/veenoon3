@@ -80,7 +80,7 @@
     [cancelBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
     cancelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [cancelBtn addTarget:self
-                  action:@selector(okAction:)
+                  action:@selector(backAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
     UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT,
@@ -101,17 +101,17 @@
     
     topy = CGRectGetMaxY(portDNSLabel.frame)+20;
 
-    UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
-    [bottomBar addSubview:okBtn];
-    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
-    [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
-    okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-    [okBtn addTarget:self
-              action:@selector(okAction:)
-    forControlEvents:UIControlEventTouchUpInside];
-    
+//    UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
+//    [bottomBar addSubview:okBtn];
+//    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+//    [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+//    okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+//    [okBtn addTarget:self
+//              action:@selector(okAction:)
+//    forControlEvents:UIControlEventTouchUpInside];
+//
     _settingview = [[SIconSelectView alloc]
                     initWithFrame:CGRectMake(SCREEN_WIDTH-310,
                                              64, 310, SCREEN_HEIGHT-114)];
@@ -137,6 +137,11 @@
                                              selector:@selector(notifyReloadScenario:)
                                                  name:@"Notify_Reload_Senario"
                                                object:nil];
+}
+
+- (void) backAction:(id)sender{
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void) notifyReloadScenario:(id)sender{
@@ -424,7 +429,7 @@
 }
 - (void) okAction:(id)sender{
     
-    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 
 
@@ -438,6 +443,7 @@
     NSString *imageName = [data objectForKey:@"iconbig"];
     NSString *icon_user = [data objectForKey:@"icon_user"];
     NSString *title = [data objectForKey:@"title"];
+    NSString *en_name = [data objectForKey:@"en_name"];
     UIImage *img = [UIImage imageNamed:imageName];
     if(img) {
         for (UIButton *button in _sBtns) {
@@ -462,6 +468,10 @@
                     [scenarioDic setObject:imageName forKey:@"small_icon"];
                     [scenarioDic setObject:icon_user forKey:@"icon_user"];
                     [scenarioDic setObject:title forKey:@"name"];
+                    
+                    if(en_name)
+                    [scenarioDic setObject:en_name
+                             forKey:@"en_name"];
                     
                     UILabel *tL = [button viewWithTag:102];
                     

@@ -221,6 +221,7 @@
 
 - (void) audioSysAction:(id)sender{
     UserAudioConfigViewController *controller = [[UserAudioConfigViewController alloc] init];
+    controller._scenario = _data;
     [self.navigationController pushViewController:controller animated:YES];
 }
 

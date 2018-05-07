@@ -7,6 +7,14 @@
 //
 #import <UIKit/UIKit.h>
 #import "UserBaseViewControllor.h"
+
+@class Scenario;
+
 @interface UserAudioConfigViewController : UserBaseViewControllor
+{
+    
+}
+
+@property (nonatomic, strong) Scenario *_scenario;
 
 @end

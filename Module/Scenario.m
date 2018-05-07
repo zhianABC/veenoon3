@@ -332,7 +332,30 @@
 
 - (void) prepareSenarioSlice{
     
-    [self initData];
+    //[self initData];
+    
+    self._eventOperations = [NSMutableArray array];
+    
+    if(_scenarioData == nil){
+        
+        self._scenarioData = [NSMutableDictionary dictionary];
+        
+        [_scenarioData setObject:@"场景" forKey:@"name"];
+        
+        [_scenarioData setObject:[NSNumber numberWithInt:room_id]
+                          forKey:@"room_id"];
+
+    }
+    
+    NSMutableArray *audio = [NSMutableArray array];
+    [_scenarioData setObject:audio forKey:@"audio"];
+    
+    NSMutableArray *video = [NSMutableArray array];
+    [_scenarioData setObject:video forKey:@"video"];
+    
+    NSMutableArray *env = [NSMutableArray array];
+    [_scenarioData setObject:env forKey:@"environment"];
+    
     
     //音频处理
     if([self._AProcessorPlugs count])

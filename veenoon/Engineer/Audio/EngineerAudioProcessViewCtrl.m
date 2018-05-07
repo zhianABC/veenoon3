@@ -112,7 +112,7 @@
     [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
     okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [okBtn addTarget:self
-              action:@selector(okAction:)
+              action:@selector(settingAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
     _selectSysBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -519,7 +519,8 @@
 }
 
 
-- (void) okAction:(id)sender{
+- (void) settingAction:(id)sender{
+    
     if ([_inconView superview]) {
         [_inconView removeFromSuperview];
     }
@@ -563,18 +564,27 @@
 }
 
 - (void) didSelectButtonAction:(NSString*)value {
-    if ([@"输入设置" isEqualToString:value]) {
+    if ([@"输入设置" isEqualToString:value])
+    {
         AudioInputSettingViewCtrl *ctrl = [[AudioInputSettingViewCtrl alloc] init];
         ctrl._processor = _curProcessor;
         
         [self.navigationController pushViewController:ctrl animated:YES];
-    } else if ([@"输出设置" isEqualToString:value]) {
+    }
+    else if ([@"输出设置" isEqualToString:value])
+    {
         AudioOutputSettingViewCtrl *ctrl = [[AudioOutputSettingViewCtrl alloc] init];
         [self.navigationController pushViewController:ctrl animated:YES];
-    } else if ([@"矩阵路由" isEqualToString:value]) {
+        
+    }
+    else if ([@"矩阵路由" isEqualToString:value])
+    {
         AudioMatrixSettingViewCtrl *ctrl = [[AudioMatrixSettingViewCtrl alloc] init];
         [self.navigationController pushViewController:ctrl animated:YES];
-    } else {
+    }
+    else
+    {
+        
         if (_rightView) {
             [_rightView removeFromSuperview];
             

@@ -10,7 +10,8 @@
 
 @protocol JSlideViewDelegate <NSObject>
 
-- (void) didSliderValueChanged:(int)value object:(id)object;
+@optional
+- (void) didSliderValueChanged:(float)value object:(id)object;
 - (void) didSliderEndChanged:(id)object;
 
 @end
@@ -30,6 +31,8 @@
 @property (nonatomic, assign) int maxValue;
 @property (nonatomic, assign) int minValue;
 @property (nonatomic, assign) float stepValue;
+
+@property (nonatomic, strong) id data;
 
 - (id) initWithSliderBg:(UIImage*)sliderBg frame:(CGRect)frame;
 

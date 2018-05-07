@@ -92,7 +92,7 @@
     self._sel_image = [UIImage imageNamed:@"user_training_s.png"];
     
     self._regulus_gateway_id = @"RGS_EOC500_01";//[_meetingRoomDic objectForKey:@"regulus_id"];
-    self._regulus_user_id = @"RGS_EOC500_01_3";//[[NSUserDefaults standardUserDefaults] objectForKey:@"user_id"];
+    self._regulus_user_id = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_id"];
     
     self._sceneDrivers = [NSMutableArray array];
     
@@ -343,15 +343,15 @@
             en_name = @"";
         }
         
-        UILabel* titleEnL = [[UILabel alloc] initWithFrame:CGRectMake(180, 0, 200, 40)];
+        UILabel* titleEnL = [[UILabel alloc] initWithFrame:CGRectMake(180, 0, 300, 40)];
         titleEnL.backgroundColor = [UIColor clearColor];
         [btn addSubview:titleEnL];
-        titleEnL.font = [UIFont boldSystemFontOfSize:22];
+        titleEnL.font = [UIFont systemFontOfSize:22];
         titleEnL.textColor  = [UIColor whiteColor];
         titleEnL.text = en_name;
         titleEnL.tag = 103;
         titleEnL.textAlignment = NSTextAlignmentLeft;
-        titleEnL.center = CGPointMake(titleEnL.center.x, 130);
+        titleEnL.center = CGPointMake(titleEnL.center.x, 140);
         
         
         UILongPressGestureRecognizer *longPress0 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed0:)];
@@ -423,7 +423,7 @@
                     [KVNProgress showSuccess];
                 }
                 else{
-                    [KVNProgress showWithStatus:@"执行失败！"];
+                    [KVNProgress showErrorWithStatus:@"执行失败！"];
                 }
             }];
         }
