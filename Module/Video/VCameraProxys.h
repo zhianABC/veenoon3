@@ -28,6 +28,8 @@
  MOVE [UP, DOWN, LEFT, RIGHT, STOP]
  */
 
+- (NSDictionary *)getScenarioSliceLocatedShadow;
+
 - (void) checkRgsProxyCommandLoad;
 
 - (NSArray*)getDirectOptions;
@@ -42,5 +44,9 @@
 - (BOOL) isSetChanged;
 ////生成场景片段
 - (id) generateEventOperation_Postion;
+
+/////场景还原
+- (void) recoverWithDictionary:(NSDictionary*)data;
+
 
 @end

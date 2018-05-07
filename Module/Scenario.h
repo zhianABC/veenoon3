@@ -43,6 +43,7 @@
 
 - (void) prepareSenarioSlice;
 - (void) createEventScenario;
+- (void) saveEventScenario;
 
 - (void) fillWithData:(NSDictionary*)data;
 - (NSMutableDictionary *)senarioData;

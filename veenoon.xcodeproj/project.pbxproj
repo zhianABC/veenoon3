@@ -3296,8 +3296,6 @@
 				EB1717B11FF614BB00CBDB81 /* EngineerMonitorViewCtrl.m */,
 				EB1717B31FF614DB00CBDB81 /* EngineerInfoCollectViewCtrl.h */,
 				EB1717B41FF614DB00CBDB81 /* EngineerInfoCollectViewCtrl.m */,
-				EB1717B61FF6150400CBDB81 /* EngineerScenarioSettingsViewCtrl.h */,
-				EB1717B71FF6150400CBDB81 /* EngineerScenarioSettingsViewCtrl.m */,
 			);
 			path = Env;
 			sourceTree = "<group>";
@@ -3406,6 +3404,8 @@
 				EBAE5BB61FDFFBD700C10C4D /* EngineerScenarioListViewCtrl.m */,
 				341C78482050184200DD1677 /* SIconSelectView.h */,
 				341C78492050184200DD1677 /* SIconSelectView.m */,
+				EB1717B61FF6150400CBDB81 /* EngineerScenarioSettingsViewCtrl.h */,
+				EB1717B71FF6150400CBDB81 /* EngineerScenarioSettingsViewCtrl.m */,
 				EBAE5BBC1FE0071C00C10C4D /* EngineerPresetScenarioViewCtrl.h */,
 				EBAE5BBA1FE0070600C10C4D /* EngineerPresetScenarioViewCtrl.m */,
 			);

@@ -127,7 +127,7 @@
         UserVideoRemoteShiXunViewCtrl *ctrl = [[UserVideoRemoteShiXunViewCtrl alloc] init];
         [self.navigationController pushViewController:ctrl animated:YES];
     }
-    if ([deviceName containsString:@"摄像机"]) {
+    if ([deviceName containsString:video_camera_name]) {
         UserVideoCameraSettingsViewCtrl *ctrl = [[UserVideoCameraSettingsViewCtrl alloc] init];
         [self.navigationController pushViewController:ctrl animated:YES];
     }

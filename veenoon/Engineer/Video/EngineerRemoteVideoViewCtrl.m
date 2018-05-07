@@ -414,7 +414,7 @@
     titleL.font = [UIFont boldSystemFontOfSize:16];
     titleL.textColor  = [UIColor whiteColor];
     titleL.textAlignment=NSTextAlignmentCenter;
-    titleL.text = @"摄像机";
+    titleL.text = video_camera_name;
     
     int cellHeight = 60;
     int space = 5;

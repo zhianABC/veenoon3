@@ -11,6 +11,8 @@
 @implementation DevicePlugButton
 
 @synthesize _mydata;
+@synthesize _isEdited;
+
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -37,14 +39,23 @@
 
 - (void) revNotifyChangedMyBg:(id)sender{
     
+    [self setEditChanged];
+}
+
+- (void) setEditChanged{
+    
     if(_mydata && [_mydata objectForKey:@"icon_sel"])
     {
         UIImage *image = [UIImage imageNamed:[_mydata objectForKey:@"icon_sel"]];
         
         if(image)
-        [self setBackgroundImage:image
-                           forState:UIControlStateNormal];
+            [self setBackgroundImage:image
+                            forState:UIControlStateNormal];
+        
+        
     }
+    
+    _isEdited = YES;
 }
 
 - (void) removeMyObserver{

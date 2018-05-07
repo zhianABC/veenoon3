@@ -9,6 +9,7 @@
 #import "EngineerScenarioSettingsViewCtrl.h"
 #import "UIButton+Color.h"
 #import "EngineerPresetScenarioViewCtrl.h"
+#import "EngineerScenarioListViewCtrl.h"
 #import "SIconSelectView.h"
 #import "DataBase.h"
 #import "Scenario.h"
@@ -72,7 +73,7 @@
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     cancelBtn.frame = CGRectMake(0, 0,160, 50);
     [bottomBar addSubview:cancelBtn];
-    [cancelBtn setTitle:@"修改" forState:UIControlStateNormal];
+    [cancelBtn setTitle:@"返回" forState:UIControlStateNormal];
     [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [cancelBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
     cancelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
@@ -170,8 +171,6 @@
         [map setObject:senario forKey:[NSNumber numberWithInt:s_driver_id]];
     }
     
-    
-    
     for(RgsSceneObj *dr in scenes)
     {
         id key = [NSNumber numberWithInt:(int)dr.m_id];
@@ -237,12 +236,16 @@
         scenarioView.layer.borderColor = [UIColor clearColor].CGColor;;
         scenarioView.clipsToBounds = YES;
         
-        UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
-        tapGesture.cancelsTouchesInView =  NO;
-        tapGesture.numberOfTapsRequired = 1;
-        tapGesture.view.tag = index;
-        [scenarioView addGestureRecognizer:tapGesture];
+        [scenarioView addTarget:self
+                         action:@selector(handleTapGesture:)
+               forControlEvents:UIControlEventTouchUpInside];
         
+//        UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+//        tapGesture.cancelsTouchesInView =  NO;
+//        tapGesture.numberOfTapsRequired = 1;
+//        tapGesture.view.tag = index;
+//        [scenarioView addGestureRecognizer:tapGesture];
+//
         UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, scenarioView.frame.size.height/2-15, 100, 30)];
         titleL.backgroundColor = [UIColor clearColor];
         [scenarioView addSubview:titleL];
@@ -250,6 +253,7 @@
         titleL.textAlignment = NSTextAlignmentCenter;
         
         if ([_scenarioArray count] == index) {
+            
             titleL.text = @"+";
             titleL.textColor  = DARK_BLUE_COLOR;
             
@@ -258,6 +262,7 @@
             scenarioView.layer.borderWidth = 2;
             scenarioView.layer.borderColor = DARK_BLUE_COLOR.CGColor;;
             scenarioView.clipsToBounds = YES;
+            
         } else {
             UILongPressGestureRecognizer *longPress0 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed0:)];
             longPress0.view.tag = index;
@@ -278,6 +283,7 @@
 }
 
 - (void) longPressed0:(id)sender {
+    
     UILongPressGestureRecognizer *viewRecognizer = (UILongPressGestureRecognizer*) sender;
     int index = (int)viewRecognizer.view.tag;
     if (index == [self._scenarioArray count]) {
@@ -290,10 +296,11 @@
     }];
     
     [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
         UITextField *envirnmentNameTextField = alertController.textFields.firstObject;
         NSString *scenarioName = envirnmentNameTextField.text;
+        
         if (scenarioName && [scenarioName length] > 0) {
-            
             
             Scenario *s = [self._scenarioArray objectAtIndex:index];
             UILabel *scenarioLabel = [_scenarioLabelArray objectAtIndex:index];
@@ -312,20 +319,22 @@
     [self presentViewController:alertController animated:true completion:nil];
 }
 
--(void)handleTapGesture:(UIGestureRecognizer*)gestureRecognizer{
-    UIViewController *target = nil;
-    for (UIViewController *vc in self.navigationController.viewControllers) {
-        if ([vc isKindOfClass:[EngineerPresetScenarioViewCtrl class]]) {
-            target = vc;
-            break;
-        }
+-(void)handleTapGesture:(UIButton*)sender{
+    
+    if(sender.tag < [_scenarioArray count])
+    {
+        Scenario *s = [self._scenarioArray objectAtIndex:sender.tag];
+        
+        EngineerPresetScenarioViewCtrl *ctrl = [[EngineerPresetScenarioViewCtrl alloc] init];
+        ctrl._scenario = s;
+        [self.navigationController pushViewController:ctrl animated:YES];
+        
     }
-    if (target) {
-        [self.navigationController popToViewController:target animated:YES];
-    }
+
 }
 - (void) okAction:(id)sender{
     
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

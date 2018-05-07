@@ -84,4 +84,9 @@
 
 - (id) generateEventOperation_Inverted;
 
+
+/////场景还原
+- (void) recoverWithDictionary:(NSDictionary*)data;
+- (NSDictionary *)getScenarioSliceLocatedShadow;
+
 @end

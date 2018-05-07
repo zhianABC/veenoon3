@@ -110,7 +110,7 @@
     
     
     _shexiangjiBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*2, height,80, 110)];
-    [_shexiangjiBtn buttonWithIcon:[UIImage imageNamed:@"engineer_video_shexiangji_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_video_shexiangji_s.png"] text:@"摄像机" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
+    [_shexiangjiBtn buttonWithIcon:[UIImage imageNamed:@"engineer_video_shexiangji_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_video_shexiangji_s.png"] text:video_camera_name normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_shexiangjiBtn addTarget:self action:@selector(shexiangjiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_shexiangjiBtn];
     
@@ -171,7 +171,7 @@
     [_productTypePikcer removeArray];
     _productTypePikcer.delegate_=self;
     _productTypePikcer.fontSize = 14;
-    _productTypePikcer._pickerDataArray = @[@{@"values":@[@"电源管理",@"视频播放",@"摄像机",@"信息盒",@"远程视讯",@"视频处理",@"拼接屏",@"液晶电视",@"录播机",@"投影机"]}];
+    _productTypePikcer._pickerDataArray = @[@{@"values":@[@"电源管理",@"视频播放",video_camera_name,@"信息盒",@"远程视讯",@"视频处理",@"拼接屏",@"液晶电视",@"录播机",@"投影机"]}];
     [_productTypePikcer selectRow:0 inComponent:0];
     _productTypePikcer._selectColor = RGB(253, 180, 0);
     _productTypePikcer._rowNormalColor = [UIColor whiteColor];
@@ -293,7 +293,7 @@
         for(int i = 0; i < [number intValue]; i++)
         {
             //创建number个Device
-            if([productType isEqualToString:@"摄像机"])
+            if([productType isEqualToString:video_camera_name])
             {
                 VCameraSettingSet *device = [[VCameraSettingSet alloc] init];
                 
@@ -555,7 +555,7 @@
         [self dianyuanguanliAction:_dianyuanguanliBtn];
     } else if ([@"视频播放" isEqualToString:brand]) {
         [self shipinbofangAction:_shipinbofangBtn];
-    } else if ([@"摄像机" isEqualToString:brand]) {
+    } else if ([video_camera_name isEqualToString:brand]) {
         [self shexiangjiAction:_shexiangjiBtn];
     } else if ([@"信息盒" isEqualToString:brand]) {
         [self xinxiheAction:_xinxiheBtn];

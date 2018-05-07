@@ -97,7 +97,7 @@
     titleL2.font = [UIFont boldSystemFontOfSize:16];
     titleL2.textColor  = [UIColor whiteColor];
     titleL2.textAlignment=NSTextAlignmentCenter;
-    titleL2.text = @"摄像机";
+    titleL2.text = video_camera_name;
     
     UIImageView *textBGView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"remote_video_filed_bg.png"]];
     [self.view addSubview:textBGView];

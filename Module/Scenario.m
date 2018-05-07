@@ -71,6 +71,8 @@
 {
     if(self = [super init])
     {
+        
+        self.room_id = 1;
         [self initData];
        
     }
@@ -111,6 +113,11 @@
     self._rgsDriver = [[RgsDriverObj alloc] init];
     _rgsDriver.m_id = [[data objectForKey:@"s_driver_id"] intValue];
     
+    
+    self._AProcessorPlugs = [NSMutableArray array];
+    self._VCameraSettings = [NSMutableArray array];
+    self._VTouyingji = [NSMutableArray array];
+    
     NSArray *audios = [data objectForKey:@"audio"];
     for(NSDictionary *a in audios){
         
@@ -118,6 +125,11 @@
         Class someClass = NSClassFromString(classname);
         BasePlugElement * obj = [[someClass alloc] init];
         [obj jsonToObject:a];
+        
+        if([obj isKindOfClass:[AudioEProcessor class]])
+        {
+            [_AProcessorPlugs addObject:obj];
+        }
     }
     NSArray *videos = [data objectForKey:@"video"];
     for(NSDictionary *v in videos){
@@ -126,6 +138,15 @@
         Class someClass = NSClassFromString(classname);
         BasePlugElement * obj = [[someClass alloc] init];
         [obj jsonToObject:v];
+        
+        if([obj isKindOfClass:[VCameraSettingSet class]])
+        {
+            [_VCameraSettings addObject:obj];
+        }
+        else if([obj isKindOfClass:[VTouyingjiSet class]])
+        {
+            [_VTouyingji addObject:obj];
+        }
     }
     NSArray *envs = [data objectForKey:@"environment"];
     for(NSDictionary *env in envs){
@@ -138,9 +159,7 @@
     
     
     [self recoverDriverEvent];
-    
-    
-    
+
 }
 
 - (void) recoverDriverEvent{
@@ -214,6 +233,23 @@
     }
     
 }
+
+- (void) saveEventScenario{
+    
+    
+    if(_rgsDriver && [_eventOperations count])
+    {
+        [KVNProgress show];
+        
+        [self getDriverEvent];
+    }
+    else
+    {
+        [self postCreateScenarioNotifyResult:NO];
+    }
+    
+}
+
 
 - (void) getDriverEvent{
     
@@ -318,10 +354,7 @@
 
     for(AudioEProcessor *ap in self._AProcessorPlugs)
     {
-        NSDictionary *data = [ap objectToJson];
-        [audios addObject:data];
-        
-        
+    
         NSArray *audioIn = ap._inAudioProxys;
         //NSArray *audioOut = ap._outAudioProxys;
         
@@ -376,6 +409,9 @@
                 }
             }
         }
+       
+        NSDictionary *data = [ap objectToJson];
+        [audios addObject:data];
         
     }
 }
@@ -386,9 +422,6 @@
     
     for(VCameraSettingSet *vcam in self._VCameraSettings)
     {
-        NSDictionary *data = [vcam objectToJson];
-        [videos addObject:data];
-        
         
         VCameraProxys *cam = vcam._proxyObj;
         if([cam isSetChanged])
@@ -399,6 +432,9 @@
                 [self addEventOperation:rsp];
             }
         }
+        
+        NSDictionary *data = [vcam objectToJson];
+        [videos addObject:data];
     }
 }
 
@@ -408,9 +444,6 @@
     
     for(VTouyingjiSet *vprj in self._VTouyingji)
     {
-        NSDictionary *data = [vprj objectToJson];
-        [videos addObject:data];
-        
         
         VProjectProxys *proj = vprj._proxyObj;
         if([proj isSetChanged])
@@ -426,8 +459,12 @@
                 [self addEventOperation:rsp];
             }
         }
+        
+        NSDictionary *data = [vprj objectToJson];
+        [videos addObject:data];
     }
 }
+
 
 
 @end

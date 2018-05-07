@@ -124,7 +124,7 @@
     [self.view addSubview:_fankuiyizhiBtn];
     
     _yinpinchuliBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*5, height,80, 110)];
-    [_yinpinchuliBtn  buttonWithIcon:[UIImage imageNamed:@"engineer_yinpinchuli_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_yinpinchuli_s.png"] text:@"音频处理" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
+    [_yinpinchuliBtn  buttonWithIcon:[UIImage imageNamed:@"engineer_yinpinchuli_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_yinpinchuli_s.png"] text:audio_process_name normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_yinpinchuliBtn addTarget:self action:@selector(yinpinchuliAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_yinpinchuliBtn];
     
@@ -158,7 +158,7 @@
                                                           @"无线话筒",
                                                           @"会议",
                                                           @"反馈抑制",
-                                                          @"音频处理",
+                                                          audio_process_name,
                                                           @"功放"]}];
     [_productTypePikcer selectRow:0 inComponent:0];
     _productTypePikcer._selectColor = RGB(253, 180, 0);
@@ -272,7 +272,7 @@
         for(int i = 0; i < [number intValue]; i++)
         {
             //创建number个Device
-            if([productType isEqualToString:@"音频处理"])
+            if([productType isEqualToString:audio_process_name])
             {
                 AudioEProcessor *device = [[AudioEProcessor alloc] init];
                 
@@ -441,7 +441,7 @@
         [self huiyiAction:_huiyiBtn];
     } else if ([@"反馈抑制" isEqualToString:brand]) {
         [self fankuiyizhiAction:_fankuiyizhiBtn];
-    } else if ([@"音频处理" isEqualToString:brand]) {
+    } else if ([audio_process_name isEqualToString:brand]) {
         [self yinpinchuliAction:_yinpinchuliBtn];
     } else {
         [self gongfangAction:_floorWarmBtn];

@@ -279,6 +279,12 @@
         
         VAProcessorProxys *vap = [_inputProxys objectAtIndex:i];
         
+        NSDictionary *dic = [_curProcessor inputChannelAtIndex:i];
+        if(dic)
+        {
+            [vap recoverWithDictionary:dic];
+        }
+        
         int row = index/colNumber;
         int col = index%colNumber;
         int startX = col*cellWidth+col*space+leftRight;
@@ -296,12 +302,21 @@
         
         [_buttonArray addObject:btn];
         
+        float p = fabs(([vap getAnalogyGain]+70)/82.0);
+        [btn setCircleValue:p];
+        
         index++;
     }
     
     for (int i = 0; i < [_outputProxys count]; i++) {
         
         VAProcessorProxys *vap = [_outputProxys objectAtIndex:i];
+        
+        NSDictionary *dic = [_curProcessor outChannelAtIndex:i];
+        if(dic)
+        {
+            [vap recoverWithDictionary:dic];
+        }
         
         int row = i/colNumber;
         int col = i%colNumber;
@@ -320,6 +335,9 @@
         
         [_buttonArray addObject:btn];
         
+        float p = fabs(([vap getAnalogyGain]+70)/82.0);
+        [btn setCircleValue:p];
+        
         index++;
     }
     [_curProcessor syncDriverIPProperty];
@@ -334,8 +352,10 @@
     id data = slbtn.data;
     if([data isKindOfClass:[VAProcessorProxys class]])
     {
-        float circleValue = -70 + (value * 82);
+        //float circleValue = -70 + (value * 82);
         [(VAProcessorProxys*)data controlDeviceDb:circleValue force:NO];
+        
+        [_zengyiSlider setScaleValue:circleValue];
     }
 }
 
@@ -346,6 +366,8 @@
     {
         float circleValue = -70 + (value * 82);
         [(VAProcessorProxys*)data controlDeviceDb:circleValue force:YES];
+        
+        [_zengyiSlider setScaleValue:circleValue];
     }
 }
 
@@ -420,7 +442,11 @@
         if([data isKindOfClass:[VAProcessorProxys class]])
         {
             [(VAProcessorProxys*)data checkRgsProxyCommandLoad];
+            
+            [_zengyiSlider setScaleValue:[(VAProcessorProxys*)data getAnalogyGain]];
         }
+        
+        
 
     } else {
         // remove it

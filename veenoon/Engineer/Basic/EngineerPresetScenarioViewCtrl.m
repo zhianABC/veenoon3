@@ -87,6 +87,8 @@
     UIButton *_doneBtn;
     
     UIButton *scenarioButton;
+    
+    BOOL _isEditingScenario;
 }
 @property (nonatomic, strong) NSMutableArray *_audioCells;
 @property (nonatomic, strong) NSMutableArray *_videoCells;
@@ -94,9 +96,6 @@
 
 @property (nonatomic, strong) NSMutableArray *_deleteCells;
 @property (nonatomic, strong) NSMutableDictionary *_buttonTagWithDataMap;
-
-@property (nonatomic, strong) Scenario *_scenario;
-
 
 @property (nonatomic, strong) NSMutableDictionary *_aDataCheckTestMap;
 @property (nonatomic, strong) NSMutableDictionary *_vDataCheckTestMap;
@@ -123,6 +122,7 @@
 @synthesize _selectedDevices;
 
 
+
 -(void) initData {
     
     self._audioCells = [NSMutableArray array];
@@ -130,7 +130,7 @@
     self._envCells = [NSMutableArray array];
     self._deleteCells = [NSMutableArray array];
     self._buttonTagWithDataMap = [NSMutableDictionary dictionary];
-    
+ 
     
     self._aDataCheckTestMap = [NSMutableDictionary dictionary];
     self._vDataCheckTestMap = [NSMutableDictionary dictionary];
@@ -184,8 +184,18 @@
     }
     
     
-    self._scenario = [[Scenario alloc] init];
-    self._scenario.room_id = 1;
+    
+    if(_scenario == nil)
+    {
+        self._scenario = [[Scenario alloc] init];
+        self._scenario.room_id = 1;
+        
+        _isEditingScenario = NO;
+    }
+    else
+    {
+        _isEditingScenario = YES;
+    }
     
 }
 
@@ -195,8 +205,66 @@
     
 }
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    
+    BOOL checkAllEdited = YES;
+    for(DevicePlugButton *btn in _audioCells)
+    {
+        if([btn isKindOfClass:[DevicePlugButton class]])
+        {
+        if(!btn._isEdited)
+        {
+            checkAllEdited = NO;
+            break;
+        }
+        }
+    }
+    if(checkAllEdited)
+    {
+        for(DevicePlugButton *btn in _videoCells)
+        {
+            if([btn isKindOfClass:[DevicePlugButton class]])
+            {
+            if(!btn._isEdited)
+            {
+                checkAllEdited = NO;
+                break;
+            }
+            }
+        }
+    }
+    if(checkAllEdited)
+    {
+        for(DevicePlugButton *btn in _envCells)
+        {
+            if([btn isKindOfClass:[DevicePlugButton class]])
+            {
+            if(!btn._isEdited)
+            {
+                checkAllEdited = NO;
+                break;
+            }
+            }
+        }
+    }
+    
+    if(checkAllEdited)
+    {
+        scenarioButton.enabled = YES;
+        scenarioButton.alpha = 1.0;
+    }
+    else
+    {
+        scenarioButton.enabled = NO;
+        scenarioButton.alpha = 0.7;
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
     [self initData];
     
     audioStartX = 0;
@@ -230,6 +298,14 @@
     [scenarioButton addTarget:self
                  action:@selector(createScenarioAction:)
        forControlEvents:UIControlEventTouchUpInside];
+    
+    if(_isEditingScenario)
+    {
+        [scenarioButton setTitle:@"保存场景" forState:UIControlStateNormal];
+    }
+    scenarioButton.enabled = NO;
+    scenarioButton.alpha = 0.7;
+    
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 63, SCREEN_WIDTH, 1)];
     line.backgroundColor = RGB(75, 163, 202);
@@ -366,6 +442,54 @@
                                              selector:@selector(notifyScenarioResult:)
                                                  name:@"Notify_Scenario_Create_Result"
                                                object:nil];
+    
+    
+    if(_isEditingScenario)
+    {
+        [self recoverScrollThumbCells];
+    }
+}
+
+- (void) recoverScrollThumbCells{
+    
+    NSArray *data = ecp._data;
+    
+    if([data count] == 3)
+    {
+        //Audio
+        NSDictionary *audioDic = [data objectAtIndex:0];
+        NSArray *items = [audioDic objectForKey:@"items"];
+        NSMutableDictionary *map = [NSMutableDictionary dictionary];
+        for(NSDictionary *item in items)
+        {
+            [map setObject:item forKey:[item objectForKey:@"name"]];
+        }
+        
+        if([_scenario._AProcessorPlugs count])
+        {
+            [self addComponentToEnd:_audioScroll dataDic:[map objectForKey:audio_process_name]];
+        }
+        
+        
+        //Video
+        NSDictionary *videoDic = [data objectAtIndex:1];
+        items = [videoDic objectForKey:@"items"];
+        map = [NSMutableDictionary dictionary];
+        for(NSDictionary *item in items)
+        {
+            [map setObject:item forKey:[item objectForKey:@"name"]];
+        }
+        
+        if([_scenario._VCameraSettings count])
+        {
+            [self addComponentToEnd:_videoScroll dataDic:[map objectForKey:video_camera_name]];
+        }
+        if([_scenario._VTouyingji count])
+        {
+            [self addComponentToEnd:_videoScroll dataDic:[map objectForKey:video_touying_name]];
+        }
+    }
+    
 }
 
 
@@ -402,8 +526,15 @@
     sender.enabled = NO;
     
     [_scenario prepareSenarioSlice];
-    [_scenario createEventScenario];
-
+    
+    if(_isEditingScenario)
+    {
+        [_scenario saveEventScenario];
+    }
+    else
+    {
+        [_scenario createEventScenario];
+    }
 }
 
 - (void) notifyScenarioResult:(NSNotification*)notify{
@@ -587,7 +718,7 @@
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
-        if ([name isEqualToString:@"音频处理"]) {
+        if ([name isEqualToString:audio_process_name]) {
             EngineerAudioProcessViewCtrl *ctrl = [[EngineerAudioProcessViewCtrl alloc] init];
             ctrl._audioProcessArray = _scenario._AProcessorPlugs;
             [self.navigationController pushViewController:ctrl animated:YES];
@@ -613,7 +744,7 @@
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
-        if ([name isEqualToString:@"摄像机"]) {
+        if ([name isEqualToString:video_camera_name]) {
             EngineerCameraViewController *ctrl = [[EngineerCameraViewController alloc] init];
             
             ctrl._cameraSysArray = _scenario._VCameraSettings;
@@ -658,7 +789,7 @@
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
-        if ([name isEqualToString:@"投影仪"]) {
+        if ([name isEqualToString:video_touying_name]) {
             EngineerTouYingJiViewCtrl *ctrl = [[EngineerTouYingJiViewCtrl alloc] init];
             ctrl._touyingjiArray = _scenario._VTouyingji;
             [self.navigationController pushViewController:ctrl animated:YES];
@@ -1117,7 +1248,7 @@
             {
                 [self initHand2HandPlugs];
             }
-            else if([name isEqualToString:@"音频处理"])
+            else if([name isEqualToString:audio_process_name])
             {
                 [self initProcessorPlugs];
                 //[self checkAreaHaveDriver];
@@ -1145,7 +1276,7 @@
                 [self initVDVDPlayers];
             }
             
-            if([name isEqualToString:@"摄像机"])
+            if([name isEqualToString:video_camera_name])
             {
                 [self initVCameraSettings];
             }
@@ -1175,7 +1306,7 @@
                 [self initLuboji];
             }
             
-            if([name isEqualToString:@"投影仪"])
+            if([name isEqualToString:video_touying_name])
             {
                 [self initTouyingyi];
             }
@@ -1233,6 +1364,8 @@
         cellBtn._mydata = dic;
         [cellBtn addMyObserver];
         
+        
+        
         [_buttonTagWithDataMap setObject:dic
                                   forKey:[NSNumber numberWithInteger:cellBtn.tag]];
         
@@ -1249,7 +1382,10 @@
         [btnCells addObject:cellBtn];
         
         
-        
+        if(_isEditingScenario)
+        {
+            [cellBtn setEditChanged];
+        }
         
         x+=E_CELL_WIDTH;
         x+=space;

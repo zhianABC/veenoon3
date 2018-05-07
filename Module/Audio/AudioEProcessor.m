@@ -55,7 +55,7 @@
 
 - (NSString*) deviceName{
     
-    return @"音频处理";
+    return audio_process_name;
 }
 
 - (void) initInputChannels:(int)num{
@@ -287,6 +287,9 @@
             
             [proxyDic setObject:[NSNumber numberWithBool:[vap getInverted]]
                          forKey:@"inverted"];
+            
+            [proxyDic setObject:[vap getScenarioSliceLocatedShadow]
+                         forKey:@"RgsSceneDeviceOperation"];
         }
         
         [allData setObject:proxys forKey:@"in_audio_proxys"];
@@ -334,6 +337,9 @@
             
             [proxyDic setObject:[NSNumber numberWithBool:[vap getInverted]]
                          forKey:@"inverted"];
+            
+            [proxyDic setObject:[vap getScenarioSliceLocatedShadow]
+                         forKey:@"RgsSceneDeviceOperation"];
         }
         
         [allData setObject:proxys forKey:@"out_audio_proxys"];
@@ -388,6 +394,21 @@
     
     self._inchannels = [json objectForKey:@"in_audio_proxys"];
     self._outchannels = [json objectForKey:@"out_audio_proxys"];
+    
+    self._inAudioProxys = [NSMutableArray array];
+    for(NSDictionary *dic in _inchannels)
+    {
+        VAProcessorProxys *vap = [[VAProcessorProxys alloc] init];
+        [vap recoverWithDictionary:dic];
+        [_inAudioProxys addObject:vap];
+    }
+    self._outAudioProxys = [NSMutableArray array];
+    for(NSDictionary *dic in _outchannels)
+    {
+        VAProcessorProxys *vap = [[VAProcessorProxys alloc] init];
+        [vap recoverWithDictionary:dic];
+        [_outAudioProxys addObject:vap];
+    }
     /*
     if(_inAudioProxys)
     {

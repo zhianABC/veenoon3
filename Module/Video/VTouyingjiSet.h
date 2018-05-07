@@ -24,6 +24,8 @@
 @property (nonatomic, strong) NSArray *_comConnections;
 @property (nonatomic, strong) NSArray *_cameraConnections;
 
+@property (nonatomic, strong) NSArray *_localSavedCommands;
+
 - (void) syncDriverIPProperty;
 - (void) uploadDriverIPProperty;
 

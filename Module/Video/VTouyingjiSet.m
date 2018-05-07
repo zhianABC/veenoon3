@@ -33,6 +33,7 @@
 @synthesize _comConnections;
 @synthesize _cameraConnections;
 
+@synthesize _localSavedCommands;
 
 - (id) init
 {
@@ -352,6 +353,9 @@
             [cmdDic setObject:vprj._power forKey:@"power"];
             [cmdDic setObject:vprj._input forKey:@"input"];
             
+            [cmdDic setObject:[vprj getScenarioSliceLocatedShadow]
+                         forKey:@"RgsSceneDeviceOperation"];
+            
             [allData setObject:commands forKey:@"commands"];
         }
     }
@@ -366,6 +370,64 @@
     
     
     return allData;
+}
+
+
+- (void) jsonToObject:(NSDictionary*)json{
+    
+    //基本信息
+    if([json objectForKey:@"brand"])
+        self._brand = [json objectForKey:@"brand"];
+    
+    if([json objectForKey:@"type"])
+        self._type = [json objectForKey:@"type"];
+    
+    if([json objectForKey:@"deviceno"])
+        self._deviceno = [json objectForKey:@"deviceno"];
+    
+    if([json objectForKey:@"ipaddress"])
+        self._ipaddress = [json objectForKey:@"ipaddress"];
+    
+    if([json objectForKey:@"deviceid"])
+        self._deviceid = [json objectForKey:@"deviceid"];
+    
+    if([json objectForKey:@"driverUUID"])
+        self._driverUUID = [json objectForKey:@"driverUUID"];
+    
+    if([json objectForKey:@"com"])
+        self._comIdx = [[json objectForKey:@"com"] intValue];
+    
+    self._index = [[json objectForKey:@"index"] intValue];
+    
+    RgsDriverInfo *drinfo = [[RgsDriverInfo alloc] init];
+    drinfo.serial = [json objectForKey:@"driver_info_uuid"];
+    self._driverInfo = drinfo;
+    
+    RgsDriverObj *dr = [[RgsDriverObj alloc] init];
+    dr.m_id = [[json objectForKey:@"driver_id"] integerValue];
+    self._driver = dr;
+    
+    RgsDriverInfo *comdrinfo = [[RgsDriverInfo alloc] init];
+    comdrinfo.serial = [json objectForKey:@"com_driver_info_uuid"];
+    self._comDriverInfo = comdrinfo;
+    
+    RgsDriverObj *comdr = [[RgsDriverObj alloc] init];
+    comdr.m_id = [[json objectForKey:@"com_driver_id"] integerValue];
+    self._comDriver = comdr;
+    
+    
+    self._localSavedCommands = [json objectForKey:@"commands"];
+    
+    if([_localSavedCommands count])
+    {
+        RgsDriverObj *driver = self._driver;
+        VProjectProxys *vpro = [[VProjectProxys alloc] init];
+        vpro._deviceId = driver.m_id;
+        NSDictionary *local = [self._localSavedCommands objectAtIndex:0];
+        [vpro recoverWithDictionary:local];
+        self._proxyObj = vpro;
+    }
+
 }
 
 

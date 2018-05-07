@@ -39,10 +39,12 @@
     BOOL _inverted;
     
     
+    BOOL _isSetOK;
 }
 @property (nonatomic, strong) NSArray *_rgsCommands;
 @property (nonatomic, strong) NSMutableDictionary *_cmdMap;
 
+@property (nonatomic, strong) NSMutableDictionary *_RgsSceneDeviceOperationShadow;
 
 
 @end
@@ -57,6 +59,8 @@
 @synthesize _mode;
 @synthesize _is48V;
 @synthesize _micDb;
+
+@synthesize _RgsSceneDeviceOperationShadow;
 
 - (id) init
 {
@@ -74,9 +78,49 @@
         self._mode = @"LINE"; //LINE or MIC
         
         self._icon_name = nil;
+        
+        _isSetOK = NO;
+        
+        self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionary];
     }
     
     return self;
+}
+
+- (NSDictionary *)getScenarioSliceLocatedShadow{
+    
+    return _RgsSceneDeviceOperationShadow;
+}
+
+- (void) recoverWithDictionary:(NSDictionary *)data
+{
+    NSInteger proxy_id = [[data objectForKey:@"proxy_id"] integerValue];
+    
+    if(!_rgsProxyObj || (_rgsProxyObj && (proxy_id == _rgsProxyObj.m_id)))
+    {
+        self._icon_name = [data objectForKey:@"icon_name"];
+        _voiceDb = [[data objectForKey:@"analogy_gain"] floatValue];
+        _isMute = [[data objectForKey:@"analogy_mute"] boolValue];
+        
+        _digitalGain = [[data objectForKey:@"digital_gain"] floatValue];
+        _isDigitalMute = [[data objectForKey:@"digital_mute"] boolValue];
+        
+        self._mode = [data objectForKey:@"mode"];
+        self._micDb = [data objectForKey:@"mic_db"];
+        
+        _is48V = [[data objectForKey:@"48v"] boolValue];
+        
+        _inverted = [[data objectForKey:@"inverted"] boolValue];
+        
+        
+        
+        
+        if([data objectForKey:@"RgsSceneDeviceOperation"]){
+            self._RgsSceneDeviceOperationShadow = [data objectForKey:@"RgsSceneDeviceOperation"];
+            _isSetOK = YES;
+        }
+
+    }
 }
 
 - (NSArray*)getModeOptions{
@@ -144,10 +188,7 @@
 
 - (BOOL) isSetChanged{
     
-    if(_cmdMap)
-        return YES;
-    
-    return NO;
+    return _isSetOK;
 }
 
 - (void) checkRgsProxyCommandLoad{
@@ -163,11 +204,14 @@
         if (result)
         {
             if ([commands count]) {
+                
                 block_self._rgsCommands = commands;
                 for(RgsCommandInfo *cmd in commands)
                 {
                     [block_self._cmdMap setObject:cmd forKey:cmd.name];
                 }
+                
+                _isSetOK = YES;
             }
         }
         else
@@ -504,6 +548,13 @@
         scene_opt.dev_id = _rgsProxyObj.m_id;
         scene_opt.cmd = cmd.name;
         scene_opt.param = param;
+        
+        //用于保存还原
+        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
+        [slice setObject:[NSNumber numberWithInteger:_rgsProxyObj.m_id] forKey:@"dev_id"];
+        [slice setObject:cmd.name forKey:@"cmd"];
+        [slice setObject:param forKey:@"param"];
+        [_RgsSceneDeviceOperationShadow setObject:slice forKey:@"SET_ANALOGY_GRAIN"];
 
         RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
                                                                           cmd:scene_opt.cmd
@@ -511,23 +562,37 @@
         
         return opt;
     }
-    
+    else
+    {
+        NSDictionary *cmdsRev = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_ANALOGY_GRAIN"];
+        if(cmdsRev)
+        {
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc]
+                                       initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
+                                       cmd:[cmdsRev objectForKey:@"cmd"]
+                                       param:[cmdsRev objectForKey:@"param"]];
+            
+            return opt;
+        }
+    }
     return nil;
 }
 - (id) generateEventOperation_Mute{
     
     RgsCommandInfo *cmd = nil;
-    
+    NSString *cmd_name = nil;
     if(_cmdMap)
     {
         if(_isMute)
         {
-            cmd = [_cmdMap objectForKey:@"SET_MUTE"];
+            cmd_name = @"SET_MUTE";
         }
         else
         {
-            cmd = [_cmdMap objectForKey:@"SET_UNMUTE"];
+            cmd_name = @"SET_UNMUTE";
         }
+        
+        cmd = [_cmdMap objectForKey:cmd_name];
     }
     if(cmd)
     {
@@ -537,13 +602,32 @@
         scene_opt.cmd = cmd.name;
         scene_opt.param = param;
         
+        //用于保存还原
+        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
+        [slice setObject:[NSNumber numberWithInteger:_rgsProxyObj.m_id] forKey:@"dev_id"];
+        [slice setObject:cmd.name forKey:@"cmd"];
+        [slice setObject:param forKey:@"param"];
+        [_RgsSceneDeviceOperationShadow setObject:slice forKey:cmd_name];
+        
         RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
                                                                           cmd:scene_opt.cmd
                                                                         param:scene_opt.param];
         
         return opt;
     }
-    
+    else
+    {
+        NSDictionary *cmdsRev = [_RgsSceneDeviceOperationShadow objectForKey:cmd_name];
+        if(cmdsRev)
+        {
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc]
+                                       initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
+                                       cmd:[cmdsRev objectForKey:@"cmd"]
+                                       param:[cmdsRev objectForKey:@"param"]];
+            
+            return opt;
+        }
+    }
     return nil;
 }
 
@@ -571,13 +655,33 @@
         scene_opt.cmd = cmd.name;
         scene_opt.param = param;
         
+        //用于保存还原
+        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
+        [slice setObject:[NSNumber numberWithInteger:_rgsProxyObj.m_id] forKey:@"dev_id"];
+        [slice setObject:cmd.name forKey:@"cmd"];
+        [slice setObject:param forKey:@"param"];
+        [_RgsSceneDeviceOperationShadow setObject:slice forKey:@"SET_DIGIT_GRAIN"];
+        
+        
         RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
                                                                           cmd:scene_opt.cmd
                                                                         param:scene_opt.param];
         
         return opt;
     }
-    
+    else
+    {
+        NSDictionary *cmdsRev = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_DIGIT_GRAIN"];
+        if(cmdsRev)
+        {
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc]
+                                       initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
+                                       cmd:[cmdsRev objectForKey:@"cmd"]
+                                       param:[cmdsRev objectForKey:@"param"]];
+            
+            return opt;
+        }
+    }
     return nil;
 }
 
@@ -614,13 +718,33 @@
         scene_opt.cmd = cmd.name;
         scene_opt.param = param;
         
+        //用于保存还原
+        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
+        [slice setObject:[NSNumber numberWithInteger:_rgsProxyObj.m_id] forKey:@"dev_id"];
+        [slice setObject:cmd.name forKey:@"cmd"];
+        [slice setObject:param forKey:@"param"];
+        [_RgsSceneDeviceOperationShadow setObject:slice forKey:@"SET_DIGIT_MUTE"];
+        
+        
         RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
                                                                           cmd:scene_opt.cmd
                                                                         param:scene_opt.param];
         
         return opt;
     }
-    
+    else
+    {
+        NSDictionary *cmdsRev = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_DIGIT_MUTE"];
+        if(cmdsRev)
+        {
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc]
+                                       initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
+                                       cmd:[cmdsRev objectForKey:@"cmd"]
+                                       param:[cmdsRev objectForKey:@"param"]];
+            
+            return opt;
+        }
+    }
     return nil;
 }
 - (id) generateEventOperation_Mode{
@@ -647,13 +771,32 @@
         scene_opt.cmd = cmd.name;
         scene_opt.param = param;
         
+        //用于保存还原
+        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
+        [slice setObject:[NSNumber numberWithInteger:_rgsProxyObj.m_id] forKey:@"dev_id"];
+        [slice setObject:cmd.name forKey:@"cmd"];
+        [slice setObject:param forKey:@"param"];
+        [_RgsSceneDeviceOperationShadow setObject:slice forKey:@"SET_MODE"];
+        
         RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
                                                                           cmd:scene_opt.cmd
                                                                         param:scene_opt.param];
         
         return opt;
     }
-    
+    else
+    {
+        NSDictionary *cmdsRev = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_MODE"];
+        if(cmdsRev)
+        {
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc]
+                                       initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
+                                       cmd:[cmdsRev objectForKey:@"cmd"]
+                                       param:[cmdsRev objectForKey:@"param"]];
+            
+            return opt;
+        }
+    }
     return nil;
 }
 
@@ -681,13 +824,33 @@
         scene_opt.cmd = cmd.name;
         scene_opt.param = param;
         
+        //用于保存还原
+        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
+        [slice setObject:[NSNumber numberWithInteger:_rgsProxyObj.m_id] forKey:@"dev_id"];
+        [slice setObject:cmd.name forKey:@"cmd"];
+        [slice setObject:param forKey:@"param"];
+        [_RgsSceneDeviceOperationShadow setObject:slice forKey:@"SET_MIC_DB"];
+
+        
         RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
                                                                           cmd:scene_opt.cmd
                                                                         param:scene_opt.param];
         
         return opt;
     }
-    
+    else
+    {
+        NSDictionary *cmdsRev = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_MIC_DB"];
+        if(cmdsRev)
+        {
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc]
+                                       initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
+                                       cmd:[cmdsRev objectForKey:@"cmd"]
+                                       param:[cmdsRev objectForKey:@"param"]];
+            
+            return opt;
+        }
+    }
     return nil;
 }
 - (id) generateEventOperation_48v{
@@ -724,13 +887,33 @@
         scene_opt.cmd = cmd.name;
         scene_opt.param = param;
         
+        //用于保存还原
+        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
+        [slice setObject:[NSNumber numberWithInteger:_rgsProxyObj.m_id] forKey:@"dev_id"];
+        [slice setObject:cmd.name forKey:@"cmd"];
+        [slice setObject:param forKey:@"param"];
+        [_RgsSceneDeviceOperationShadow setObject:slice forKey:@"SET_48V"];
+        
+
         RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
                                                                           cmd:scene_opt.cmd
                                                                         param:scene_opt.param];
         
         return opt;
     }
-    
+    else
+    {
+        NSDictionary *cmdsRev = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_48V"];
+        if(cmdsRev)
+        {
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc]
+                                       initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
+                                       cmd:[cmdsRev objectForKey:@"cmd"]
+                                       param:[cmdsRev objectForKey:@"param"]];
+            
+            return opt;
+        }
+    }
     return nil;
 }
 
@@ -769,13 +952,33 @@
         scene_opt.cmd = cmd.name;
         scene_opt.param = param;
         
+        //用于保存还原
+        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
+        [slice setObject:[NSNumber numberWithInteger:_rgsProxyObj.m_id] forKey:@"dev_id"];
+        [slice setObject:cmd.name forKey:@"cmd"];
+        [slice setObject:param forKey:@"param"];
+        [_RgsSceneDeviceOperationShadow setObject:slice forKey:@"SET_INVERTED"];
+
+        
         RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
                                                                           cmd:scene_opt.cmd
                                                                         param:scene_opt.param];
         
         return opt;
     }
-    
+    else
+    {
+        NSDictionary *cmdsRev = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_INVERTED"];
+        if(cmdsRev)
+        {
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc]
+                                       initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
+                                       cmd:[cmdsRev objectForKey:@"cmd"]
+                                       param:[cmdsRev objectForKey:@"param"]];
+            
+            return opt;
+        }
+    }
     return nil;
 }
 

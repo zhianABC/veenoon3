@@ -53,7 +53,7 @@
         self._currentObj = [_cameraSysArray objectAtIndex:0];
     }
     
-    [super setTitleAndImage:@"video_corner_shexiangji.png" withTitle:@"摄像机"];
+    [super setTitleAndImage:@"video_corner_shexiangji.png" withTitle:video_camera_name];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
@@ -488,6 +488,15 @@
     VCameraProxys *vcam = [[VCameraProxys alloc] init];
     vcam._rgsProxyObj = [proxys objectAtIndex:0];
     [vcam checkRgsProxyCommandLoad];
+    
+    if([_currentObj._localSavedProxys count])
+    {
+        NSDictionary *local = [_currentObj._localSavedProxys objectAtIndex:0];
+        [vcam recoverWithDictionary:local];
+        
+        [_numberBtn setTitle:[NSString stringWithFormat:@"%d", vcam._load]
+                    forState:UIControlStateNormal];
+    }
     
     self._currentObj._proxyObj = vcam;
     [_currentObj syncDriverIPProperty];
