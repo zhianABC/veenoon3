@@ -262,6 +262,11 @@
                 [proxyDic setObject:vap._icon_name
                              forKey:@"icon_name"];
             }
+            if(vap._voiceInDevice)
+            {
+                [proxyDic setObject:vap._voiceInDevice
+                             forKey:@"voiceInDevice"];
+            }
             
             [proxyDic setObject:[NSNumber numberWithInteger:proxy.m_id]
                          forKey:@"proxy_id"];
@@ -409,101 +414,6 @@
         [vap recoverWithDictionary:dic];
         [_outAudioProxys addObject:vap];
     }
-    /*
-    if(_inAudioProxys)
-    {
-        NSMutableArray *proxys = [NSMutableArray array];
-        
-        for(VAProcessorProxys *vap in _inAudioProxys)
-        {
-            RgsProxyObj *proxy = vap._rgsProxyObj;
-            
-            NSMutableDictionary *proxyDic = [NSMutableDictionary dictionary];
-            [proxys addObject:proxyDic];
-            
-            if(vap._icon_name)
-            {
-                [proxyDic setObject:vap._icon_name
-                             forKey:@"icon_name"];
-            }
-            
-            [proxyDic setObject:[NSNumber numberWithInteger:proxy.m_id]
-                         forKey:@"proxy_id"];
-            
-            [proxyDic setObject:[NSString stringWithFormat:@"%0.1f", [vap getAnalogyGain]]
-                         forKey:@"analogy_gain"];
-            
-            [proxyDic setObject:[NSNumber numberWithBool:[vap isProxyMute]]
-                         forKey:@"analogy_mute"];
-            
-            [proxyDic setObject:[NSString stringWithFormat:@"%0.1f", [vap getDigitalGain]]
-                         forKey:@"digital_gain"];
-            
-            [proxyDic setObject:[NSNumber numberWithBool:[vap isProxyDigitalMute]]
-                         forKey:@"digital_mute"];
-            
-            [proxyDic setObject:vap._mode forKey:@"mode"];
-            
-            [proxyDic setObject:vap._micDb forKey:@"mic_db"];
-            
-            [proxyDic setObject:[NSNumber numberWithBool:vap._is48V]
-                         forKey:@"48v"];
-            
-            [proxyDic setObject:[NSNumber numberWithBool:[vap getInverted]]
-                         forKey:@"inverted"];
-        }
-        
-        [allData setObject:proxys forKey:@"in_audio_proxys"];
-        
-    }
-    
-    if(_outAudioProxys)
-    {
-        NSMutableArray *proxys = [NSMutableArray array];
-        
-        for(VAProcessorProxys *vap in _outAudioProxys)
-        {
-            RgsProxyObj *proxy = vap._rgsProxyObj;
-            
-            NSMutableDictionary *proxyDic = [NSMutableDictionary dictionary];
-            [proxys addObject:proxyDic];
-            
-            if(vap._icon_name)
-            {
-                [proxyDic setObject:vap._icon_name
-                             forKey:@"icon_name"];
-            }
-            
-            [proxyDic setObject:[NSNumber numberWithInteger:proxy.m_id]
-                         forKey:@"proxy_id"];
-            
-            [proxyDic setObject:[NSString stringWithFormat:@"%0.1f", [vap getAnalogyGain]]
-                         forKey:@"analogy_gain"];
-            
-            [proxyDic setObject:[NSNumber numberWithBool:[vap isProxyMute]]
-                         forKey:@"analogy_mute"];
-            
-            [proxyDic setObject:[NSString stringWithFormat:@"%0.1f", [vap getDigitalGain]]
-                         forKey:@"digital_gain"];
-            
-            [proxyDic setObject:[NSNumber numberWithBool:[vap isProxyDigitalMute]]
-                         forKey:@"digital_mute"];
-            
-            [proxyDic setObject:vap._mode forKey:@"mode"];
-            
-            [proxyDic setObject:vap._micDb forKey:@"mic_db"];
-            
-            [proxyDic setObject:[NSNumber numberWithBool:vap._is48V]
-                         forKey:@"48v"];
-            
-            [proxyDic setObject:[NSNumber numberWithBool:[vap getInverted]]
-                         forKey:@"inverted"];
-        }
-        
-        [allData setObject:proxys forKey:@"out_audio_proxys"];
-        
-    }
-     */
 }
 
 @end

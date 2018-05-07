@@ -7,7 +7,8 @@
 //
 
 #import "DataCenter.h"
-
+#import "Scenario.h"
+#import "DataBase.h"
 
 static DataCenter *_globalDataInstanse;
 
@@ -17,7 +18,7 @@ static DataCenter *_globalDataInstanse;
 
 @synthesize _selectedDevice;
 @synthesize _roomData;
-
+@synthesize _scenario;
 
 + (DataCenter*)defaultDataCenter{
 	
@@ -25,6 +26,15 @@ static DataCenter *_globalDataInstanse;
 		_globalDataInstanse = [[DataCenter alloc] init];
 	}
 	return _globalDataInstanse;
+}
+
+- (void) cacheScenarioOnLocalDB{
+    
+    if(_scenario)
+    {
+    NSDictionary *sdata = [_scenario senarioData];
+    [[DataBase sharedDatabaseInstance] saveScenario:sdata];
+    }
 }
 
 - (void)dealloc{

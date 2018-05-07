@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+@class Scenario;
 
 @interface DataCenter : NSObject {
 	   
@@ -16,6 +17,10 @@
 @property (nonatomic, strong) NSMutableDictionary *_selectedDevice;
 @property (nonatomic, strong) NSMutableDictionary *_roomData;
 
+@property (nonatomic, strong) Scenario *_scenario;
+
 + (DataCenter*)defaultDataCenter;
+
+- (void) cacheScenarioOnLocalDB;
 
 @end

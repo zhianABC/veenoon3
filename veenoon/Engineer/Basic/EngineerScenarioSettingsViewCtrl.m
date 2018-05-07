@@ -19,6 +19,7 @@
 #import "UIButton+Color.h"
 #import "DataCenter.h"
 #import "EngineerToUseTeslariViewCtrl.h"
+#import "HomeViewController.h"
 
 @interface EngineerScenarioSettingsViewCtrl ()<SIconSelectViewDelegate>{
     
@@ -101,17 +102,17 @@
     
     topy = CGRectGetMaxY(portDNSLabel.frame)+20;
 
-//    UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
-//    [bottomBar addSubview:okBtn];
-//    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
-//    [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
-//    okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-//    [okBtn addTarget:self
-//              action:@selector(okAction:)
-//    forControlEvents:UIControlEventTouchUpInside];
-//
+    UIButton *goHomeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    goHomeBtn.frame = CGRectMake(SCREEN_WIDTH/2-25, 0, 50, 50);
+    [bottomBar addSubview:goHomeBtn];
+    [goHomeBtn setImage:[UIImage imageNamed:@"gohome_icon.png"]
+               forState:UIControlStateNormal];
+    [goHomeBtn setImage:[UIImage imageNamed:@"gohome_icon_sel.png"]
+               forState:UIControlStateHighlighted];
+    [goHomeBtn addTarget:self
+              action:@selector(gohomeAction:)
+    forControlEvents:UIControlEventTouchUpInside];
+
     _settingview = [[SIconSelectView alloc]
                     initWithFrame:CGRectMake(SCREEN_WIDTH-310,
                                              64, 310, SCREEN_HEIGHT-114)];
@@ -137,6 +138,26 @@
                                              selector:@selector(notifyReloadScenario:)
                                                  name:@"Notify_Reload_Senario"
                                                object:nil];
+}
+
+- (void) gohomeAction:(id)sender{
+    
+    //返回到场景列表页面
+    UIViewController *engCtrl = nil;
+    
+    NSArray *ctrls = self.navigationController.viewControllers;
+    for(UIViewController *vc in ctrls)
+    {
+        if([vc isKindOfClass:[HomeViewController class]])
+        {
+            engCtrl = vc;
+            break;
+        }
+    }
+    
+    if(engCtrl){
+        [self.navigationController popToViewController:engCtrl animated:YES];
+    }
 }
 
 - (void) backAction:(id)sender{

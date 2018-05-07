@@ -22,6 +22,10 @@
 				<string>a_player_1.png</string>
 				<key>icon_s</key>
 				<string>s3_19.png</string>
+				<key>user_show_icon</key>
+				<string>cd_player_n.png</string>
+				<key>user_show_icon_s</key>
+				<string>cd_player_s.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -36,6 +40,10 @@
 				<string>v_icon_22.png</string>
 				<key>icon_s</key>
 				<string>s3_13.png</string>
+				<key>user_show_icon</key>
+				<string>sd_player_n.png</string>
+				<key>user_show_icon_s</key>
+				<string>sd_player_s.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -50,6 +58,10 @@
 				<string>a_usb.png</string>
 				<key>icon_s</key>
 				<string>s3_08.png</string>
+				<key>user_show_icon</key>
+				<string>usb_player_n.png</string>
+				<key>user_show_icon_s</key>
+				<string>usb_player_s.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -64,6 +76,10 @@
 				<string>a_sd.png</string>
 				<key>icon_s</key>
 				<string>s3_10.png</string>
+				<key>user_show_icon</key>
+				<string>user_video_dvd_n.png</string>
+				<key>user_show_icon_s</key>
+				<string>user_video_dvd_s.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -78,6 +94,10 @@
 				<string>a_wx_2.png</string>
 				<key>icon_s</key>
 				<string>s3_03.png</string>
+				<key>user_show_icon</key>
+				<string>huatong_player_n.png</string>
+				<key>user_show_icon_s</key>
+				<string>huatong_player_s.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -92,6 +112,10 @@
 				<string>a_yx_3.png</string>
 				<key>icon_s</key>
 				<string>s3_05.png</string>
+				<key>user_show_icon</key>
+				<string>huiyinhuiyi_player_n.png</string>
+				<key>user_show_icon_s</key>
+				<string>huiyinhuiyi_player_s.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -106,6 +130,10 @@
 				<string>a_room_4.png</string>
 				<key>icon_s</key>
 				<string>s3_05.png</string>
+				<key>user_show_icon</key>
+				<string>youxianxitong_player_n.png</string>
+				<key>user_show_icon_s</key>
+				<string>youxianxitong_player_s.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
@@ -120,6 +148,10 @@
 				<string>a_room_5.png</string>
 				<key>icon_s</key>
 				<string>s3_05.png</string>
+				<key>user_show_icon</key>
+				<string>youxianxitong_player_n.png</string>
+				<key>user_show_icon_s</key>
+				<string>youxianxitong_player_s.png</string>
 			</dict>
 			<dict>
 				<key>id</key>
