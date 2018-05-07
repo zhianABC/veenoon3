@@ -31,6 +31,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.view.backgroundColor = BLACK_COLOR;
+    
     UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, ENGINEER_VIEW_TOP+10, SCREEN_WIDTH-80, 40)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
@@ -58,12 +60,12 @@
     //缺切图，把切图贴上即可。
     bottomBar.backgroundColor = [UIColor grayColor];
     bottomBar.userInteractionEnabled = YES;
-    bottomBar.image = [UIImage imageNamed:@"botomo_icon.png"];
+    bottomBar.image = [UIImage imageNamed:@"botomo_icon_black.png"];
     
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     cancelBtn.frame = CGRectMake(0, 0, 160, 50);
     [bottomBar addSubview:cancelBtn];
-    [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
+    [cancelBtn setTitle:@"返回" forState:UIControlStateNormal];
     [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [cancelBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
     cancelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];

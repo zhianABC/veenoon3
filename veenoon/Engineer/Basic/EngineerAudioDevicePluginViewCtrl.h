@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 
-@interface EngineerAudioDevicePluginViewCtrl : BaseViewController {
+@interface EngineerAudioDevicePluginViewCtrl : UIViewController {
     NSMutableDictionary *_meetingRoomDic;
     NSMutableDictionary *_selectedSysDic;
 }

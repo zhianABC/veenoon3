@@ -34,18 +34,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.view.backgroundColor = BLACK_COLOR;
+    
     [self initData];
     
     self._sBtns = [NSMutableArray array];
     self._map = [NSMutableDictionary dictionary];
-    
-    UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
-    [self.view addSubview:titleIcon];
-    titleIcon.frame = CGRectMake(60, 40, 70, 10);
-    
-    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 63, SCREEN_WIDTH, 1)];
-    line.backgroundColor = RGB(75, 163, 202);
-    [self.view addSubview:line];
     
     UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT,
                                                                       ENGINEER_VIEW_TOP+10,
@@ -112,7 +106,7 @@
     //缺切图，把切图贴上即可。
     bottomBar.backgroundColor = [UIColor grayColor];
     bottomBar.userInteractionEnabled = YES;
-    bottomBar.image = [UIImage imageNamed:@"botomo_icon.png"];
+    bottomBar.image = [UIImage imageNamed:@"botomo_icon_black.png"];
     
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     cancelBtn.frame = CGRectMake(0, 0,160, 50);
