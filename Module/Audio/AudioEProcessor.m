@@ -55,22 +55,12 @@
 
 - (NSString*) deviceName{
     
-    return @"音频处理";
+    return audio_process_name;
 }
 
 - (void) initInputChannels:(int)num{
     
-    [self._inchannels removeAllObjects];
     
-    for(int i = 0; i < num; i++)
-    {
-        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        
-        [dic setObject:[NSString stringWithFormat:@"Channel %02d", i] forKey:@"name"];
-        [dic setObject:@"OFF" forKey:@"status"];
-        
-        [_inchannels addObject:dic];
-    }
 }
 - (int) inputChannelsCount{
     
@@ -86,17 +76,7 @@
 
 - (void) initOutChannels:(int)num{
     
-    [self._outchannels removeAllObjects];
-    
-    for(int i = 0; i < num; i++)
-    {
-        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        
-        [dic setObject:[NSString stringWithFormat:@"Channel %02d", i] forKey:@"name"];
-        [dic setObject:@"OFF" forKey:@"status"];
-        
-        [_outchannels addObject:dic];
-    }
+  
 }
 - (int) outChannelsCount{
     
@@ -228,6 +208,8 @@
     
     NSMutableDictionary *allData = [NSMutableDictionary dictionary];
     
+    [allData setValue:[NSString stringWithFormat:@"%@", [self class]] forKey:@"class"];
+    
     //基本信息
     if(self._brand)
         [allData setObject:self._brand forKey:@"brand"];
@@ -305,10 +287,174 @@
             
             [proxyDic setObject:[NSNumber numberWithBool:[vap getInverted]]
                          forKey:@"inverted"];
+            
+            [proxyDic setObject:[vap getScenarioSliceLocatedShadow]
+                         forKey:@"RgsSceneDeviceOperation"];
         }
         
         [allData setObject:proxys forKey:@"in_audio_proxys"];
        
+    }
+    
+    if(_outAudioProxys)
+    {
+        NSMutableArray *proxys = [NSMutableArray array];
+        
+        for(VAProcessorProxys *vap in _outAudioProxys)
+        {
+            RgsProxyObj *proxy = vap._rgsProxyObj;
+            
+            NSMutableDictionary *proxyDic = [NSMutableDictionary dictionary];
+            [proxys addObject:proxyDic];
+            
+            if(vap._icon_name)
+            {
+                [proxyDic setObject:vap._icon_name
+                             forKey:@"icon_name"];
+            }
+            
+            [proxyDic setObject:[NSNumber numberWithInteger:proxy.m_id]
+                         forKey:@"proxy_id"];
+            
+            [proxyDic setObject:[NSString stringWithFormat:@"%0.1f", [vap getAnalogyGain]]
+                         forKey:@"analogy_gain"];
+            
+            [proxyDic setObject:[NSNumber numberWithBool:[vap isProxyMute]]
+                         forKey:@"analogy_mute"];
+            
+            [proxyDic setObject:[NSString stringWithFormat:@"%0.1f", [vap getDigitalGain]]
+                         forKey:@"digital_gain"];
+            
+            [proxyDic setObject:[NSNumber numberWithBool:[vap isProxyDigitalMute]]
+                         forKey:@"digital_mute"];
+            
+            [proxyDic setObject:vap._mode forKey:@"mode"];
+            
+            [proxyDic setObject:vap._micDb forKey:@"mic_db"];
+            
+            [proxyDic setObject:[NSNumber numberWithBool:vap._is48V]
+                         forKey:@"48v"];
+            
+            [proxyDic setObject:[NSNumber numberWithBool:[vap getInverted]]
+                         forKey:@"inverted"];
+            
+            [proxyDic setObject:[vap getScenarioSliceLocatedShadow]
+                         forKey:@"RgsSceneDeviceOperation"];
+        }
+        
+        [allData setObject:proxys forKey:@"out_audio_proxys"];
+        
+    }
+    
+//    NSError *error = nil;
+//    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:allData
+//                                                       options:NSJSONWritingPrettyPrinted
+//                                                         error: &error];
+//
+//    NSString *jsonresult = [[NSString alloc] initWithData:jsonData
+//                                                 encoding:NSUTF8StringEncoding];
+    
+    
+    return allData;
+}
+
+- (void) jsonToObject:(NSDictionary*)json{
+    
+    //基本信息
+    if([json objectForKey:@"brand"])
+        self._brand = [json objectForKey:@"brand"];
+    
+    if([json objectForKey:@"type"])
+        self._type = [json objectForKey:@"type"];
+    
+    if([json objectForKey:@"deviceno"])
+        self._deviceno = [json objectForKey:@"deviceno"];
+    
+    if([json objectForKey:@"ipaddress"])
+        self._ipaddress = [json objectForKey:@"ipaddress"];
+    
+    if([json objectForKey:@"deviceid"])
+        self._deviceid = [json objectForKey:@"deviceid"];
+    
+    if([json objectForKey:@"driverUUID"])
+        self._driverUUID = [json objectForKey:@"driverUUID"];
+    
+    if([json objectForKey:@"com"])
+        self._comIdx = [[json objectForKey:@"com"] intValue];
+    
+    self._index = [[json objectForKey:@"index"] intValue];
+  
+    RgsDriverInfo *drinfo = [[RgsDriverInfo alloc] init];
+    drinfo.serial = [json objectForKey:@"driver_info_uuid"];
+    self._driverInfo = drinfo;
+    
+    RgsDriverObj *dr = [[RgsDriverObj alloc] init];
+    dr.m_id = [[json objectForKey:@"driver_id"] integerValue];
+    self._driver = dr;
+    
+    self._inchannels = [json objectForKey:@"in_audio_proxys"];
+    self._outchannels = [json objectForKey:@"out_audio_proxys"];
+    
+    self._inAudioProxys = [NSMutableArray array];
+    for(NSDictionary *dic in _inchannels)
+    {
+        VAProcessorProxys *vap = [[VAProcessorProxys alloc] init];
+        [vap recoverWithDictionary:dic];
+        [_inAudioProxys addObject:vap];
+    }
+    self._outAudioProxys = [NSMutableArray array];
+    for(NSDictionary *dic in _outchannels)
+    {
+        VAProcessorProxys *vap = [[VAProcessorProxys alloc] init];
+        [vap recoverWithDictionary:dic];
+        [_outAudioProxys addObject:vap];
+    }
+    /*
+    if(_inAudioProxys)
+    {
+        NSMutableArray *proxys = [NSMutableArray array];
+        
+        for(VAProcessorProxys *vap in _inAudioProxys)
+        {
+            RgsProxyObj *proxy = vap._rgsProxyObj;
+            
+            NSMutableDictionary *proxyDic = [NSMutableDictionary dictionary];
+            [proxys addObject:proxyDic];
+            
+            if(vap._icon_name)
+            {
+                [proxyDic setObject:vap._icon_name
+                             forKey:@"icon_name"];
+            }
+            
+            [proxyDic setObject:[NSNumber numberWithInteger:proxy.m_id]
+                         forKey:@"proxy_id"];
+            
+            [proxyDic setObject:[NSString stringWithFormat:@"%0.1f", [vap getAnalogyGain]]
+                         forKey:@"analogy_gain"];
+            
+            [proxyDic setObject:[NSNumber numberWithBool:[vap isProxyMute]]
+                         forKey:@"analogy_mute"];
+            
+            [proxyDic setObject:[NSString stringWithFormat:@"%0.1f", [vap getDigitalGain]]
+                         forKey:@"digital_gain"];
+            
+            [proxyDic setObject:[NSNumber numberWithBool:[vap isProxyDigitalMute]]
+                         forKey:@"digital_mute"];
+            
+            [proxyDic setObject:vap._mode forKey:@"mode"];
+            
+            [proxyDic setObject:vap._micDb forKey:@"mic_db"];
+            
+            [proxyDic setObject:[NSNumber numberWithBool:vap._is48V]
+                         forKey:@"48v"];
+            
+            [proxyDic setObject:[NSNumber numberWithBool:[vap getInverted]]
+                         forKey:@"inverted"];
+        }
+        
+        [allData setObject:proxys forKey:@"in_audio_proxys"];
+        
     }
     
     if(_outAudioProxys)
@@ -357,17 +503,7 @@
         [allData setObject:proxys forKey:@"out_audio_proxys"];
         
     }
-    
-//    NSError *error = nil;
-//    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:allData
-//                                                       options:NSJSONWritingPrettyPrinted
-//                                                         error: &error];
-//
-//    NSString *jsonresult = [[NSString alloc] initWithData:jsonData
-//                                                 encoding:NSUTF8StringEncoding];
-    
-    
-    return allData;
+     */
 }
 
 @end

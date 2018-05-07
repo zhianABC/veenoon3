@@ -13,17 +13,8 @@
 	   
    
 }
-@property (nonatomic, strong) NSArray *downloadedMagazines;
-@property (nonatomic, strong) NSArray *magazineQueue;
-@property (nonatomic, strong) NSDictionary *activityQueue;
-@property (nonatomic, strong) NSMutableDictionary *downloadQueue;
-
-@property (nonatomic, strong) NSMutableArray *allMagazines;
-
-@property (nonatomic, strong) NSMutableDictionary *_allCarSpecialMap;
-
-@property (nonatomic, strong) NSDictionary *_printer;
-
+@property (nonatomic, strong) NSMutableDictionary *_selectedDevice;
+@property (nonatomic, strong) NSMutableDictionary *_roomData;
 
 + (DataCenter*)defaultDataCenter;
 

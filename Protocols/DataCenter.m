@@ -15,20 +15,14 @@ static DataCenter *_globalDataInstanse;
 @implementation DataCenter
 
 
-@synthesize magazineQueue;
-@synthesize activityQueue;
-@synthesize downloadQueue;
-@synthesize downloadedMagazines;
-@synthesize allMagazines;
-@synthesize _allCarSpecialMap;
+@synthesize _selectedDevice;
+@synthesize _roomData;
 
-@synthesize _printer;
 
 + (DataCenter*)defaultDataCenter{
 	
 	if(_globalDataInstanse == nil){
 		_globalDataInstanse = [[DataCenter alloc] init];
-        _globalDataInstanse.allMagazines = [NSMutableArray array];
 	}
 	return _globalDataInstanse;
 }

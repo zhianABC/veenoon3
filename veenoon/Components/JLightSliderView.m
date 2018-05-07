@@ -111,7 +111,7 @@
         
         int h = rc.size.height - topEdge - bottomEdge;
         int subh = (rc.size.height - bottomEdge) - sliderThumb.center.y;
-        int value = (maxValue - minValue)*(float)subh/h + minValue;
+        float value = (maxValue - minValue)*(float)subh/h + minValue;
         
         // NSLog(@"value = %d", value);
         
@@ -144,7 +144,7 @@
         int h = rc.size.height - topEdge - bottomEdge;
         int subh = (rc.size.height - bottomEdge) - sliderThumb.center.y;
         
-        int value = (maxValue - minValue)*(float)subh/h + minValue;
+        float value = (maxValue - minValue)*(float)subh/h + minValue;
         
         //        valueLabel.text = [NSString stringWithFormat:@"%d", (value)];
         [self resetScalValue:value];
@@ -175,7 +175,7 @@
     int h = rc.size.height - topEdge - bottomEdge;
     int subh = (rc.size.height - bottomEdge) - sliderThumb.center.y;
     
-    int value = (maxValue - minValue)*(float)subh/h + minValue;
+    float value = (maxValue - minValue)*(float)subh/h + minValue;
     
     return value;
 }

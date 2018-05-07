@@ -259,7 +259,7 @@
     } else if (indexPath.row == 1) {
         titleL.text = @"标准发言";
     } else if (indexPath.row == 2) {
-        titleL.text = @"音频处理";
+        titleL.text = audio_process_name;
     } else {
         titleL.text = @"摄像追踪";
     }

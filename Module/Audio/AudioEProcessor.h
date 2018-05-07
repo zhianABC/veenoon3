@@ -18,10 +18,10 @@
 @property (nonatomic, strong) id _driver;
 
 //<VAProcessorProxys>
-@property (nonatomic, strong) NSArray *_inAudioProxys;
+@property (nonatomic, strong) NSMutableArray *_inAudioProxys;
 
 //<VAProcessorProxys>
-@property (nonatomic, strong) NSArray *_outAudioProxys;
+@property (nonatomic, strong) NSMutableArray *_outAudioProxys;
 
 - (void) syncDriverIPProperty;
 - (void) uploadDriverIPProperty;
@@ -31,5 +31,7 @@
 
 - (NSString*) deviceName;
 
+- (NSMutableDictionary *)inputChannelAtIndex:(int)index;
+- (NSMutableDictionary *)outChannelAtIndex:(int)index;
 
 @end

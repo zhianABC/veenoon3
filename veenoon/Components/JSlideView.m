@@ -31,6 +31,8 @@
 @synthesize minValue;
 @synthesize stepValue;
 
+@synthesize data;
+
 - (id) initWithSliderBg:(UIImage*)sliderBg frame:(CGRect)frame{
     
     

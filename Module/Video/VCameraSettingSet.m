@@ -33,6 +33,7 @@
 @synthesize _comConnections;
 @synthesize _cameraConnections;
 
+@synthesize _localSavedProxys;
 
 - (id) init
 {
@@ -279,6 +280,8 @@
     
     NSMutableDictionary *allData = [NSMutableDictionary dictionary];
     
+    [allData setValue:[NSString stringWithFormat:@"%@", [self class]] forKey:@"class"];
+    
     //基本信息
     if(self._brand)
         [allData setObject:self._brand forKey:@"brand"];
@@ -338,6 +341,9 @@
         [proxyDic setObject:[NSNumber numberWithInteger:proxy.m_id] forKey:@"proxy_id"];
         [proxyDic setObject:[NSNumber numberWithInteger:vcam._save] forKey:@"load"];
         
+        [proxyDic setObject:[vcam getScenarioSliceLocatedShadow]
+                     forKey:@"RgsSceneDeviceOperation"];
+        
         [allData setObject:proxys forKey:@"proxys"];
     }
     
@@ -351,6 +357,61 @@
     
     
     return allData;
+}
+
+- (void) jsonToObject:(NSDictionary*)json{
+    
+    //基本信息
+    if([json objectForKey:@"brand"])
+        self._brand = [json objectForKey:@"brand"];
+    
+    if([json objectForKey:@"type"])
+        self._type = [json objectForKey:@"type"];
+    
+    if([json objectForKey:@"deviceno"])
+        self._deviceno = [json objectForKey:@"deviceno"];
+    
+    if([json objectForKey:@"ipaddress"])
+        self._ipaddress = [json objectForKey:@"ipaddress"];
+    
+    if([json objectForKey:@"deviceid"])
+        self._deviceid = [json objectForKey:@"deviceid"];
+    
+    if([json objectForKey:@"driverUUID"])
+        self._driverUUID = [json objectForKey:@"driverUUID"];
+    
+    if([json objectForKey:@"com"])
+        self._comIdx = [[json objectForKey:@"com"] intValue];
+    
+    self._index = [[json objectForKey:@"index"] intValue];
+    
+    RgsDriverInfo *drinfo = [[RgsDriverInfo alloc] init];
+    drinfo.serial = [json objectForKey:@"driver_info_uuid"];
+    self._driverInfo = drinfo;
+    
+    RgsDriverObj *dr = [[RgsDriverObj alloc] init];
+    dr.m_id = [[json objectForKey:@"driver_id"] integerValue];
+    self._driver = dr;
+    
+    RgsDriverInfo *comdrinfo = [[RgsDriverInfo alloc] init];
+    comdrinfo.serial = [json objectForKey:@"com_driver_info_uuid"];
+    self._comDriverInfo = comdrinfo;
+    
+    RgsDriverObj *comdr = [[RgsDriverObj alloc] init];
+    comdr.m_id = [[json objectForKey:@"com_driver_id"] integerValue];
+    self._comDriver = comdr;
+    
+    
+    self._localSavedProxys = [json objectForKey:@"proxys"];
+    
+    if([_localSavedProxys count])
+    {
+        VCameraProxys *vcam = [[VCameraProxys alloc] init];
+        NSDictionary *local = [self._localSavedProxys objectAtIndex:0];
+        [vcam recoverWithDictionary:local];
+        self._proxyObj = vcam;
+
+    }
 }
 
 

@@ -53,7 +53,7 @@
     return nil;
 }
 
-- (void) jsonStringToObject:(NSString*)json{
+- (void) jsonToObject:(NSDictionary*)json{
  
 }
 

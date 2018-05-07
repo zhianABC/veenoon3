@@ -15,6 +15,9 @@
 #import "DataSync.h"
 #import "WaitDialog.h"
 #import "EngineerScenarioSettingsViewCtrl.h"
+#import "DataBase.h"
+#import "Scenario.h"
+#import "DataCenter.h"
 
 #ifdef OPEN_REG_LIB_DEF
 #import "RegulusSDK.h"
@@ -146,9 +149,12 @@
     
     [self containerView];
     
-    self._regulus_gateway_id = [[NSUserDefaults standardUserDefaults] objectForKey:@"gateway_id"];
+    self._regulus_gateway_id = [_meetingRoomDic objectForKey:@"regulus_id"];
     self._regulus_user_id = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_id"];
     
+    self._sceneDrivers = [NSMutableArray array];
+    
+
 #if LOGIN_REGULUS
     [KVNProgress show];
     
@@ -189,6 +195,7 @@
             [[NSUserDefaults standardUserDefaults] setObject:@"RGS_EOC500_01" forKey:@"gateway_id"];
             [[NSUserDefaults standardUserDefaults] setObject:user_id forKey:@"user_id"];
             
+            [[NSUserDefaults standardUserDefaults] synchronize];
             
             [block_self loginCtrlDevice];
         }
@@ -222,6 +229,9 @@
 }
 
 - (void) update{
+    
+    [DataCenter defaultDataCenter]._roomData = _meetingRoomDic;
+    [_meetingRoomDic setObject:_regulus_user_id forKey:@"user_id"];
     
     [DataSync sharedDataSync]._currentReglusLogged = @{@"gw_id":_regulus_gateway_id,
                                                        @"user_id":_regulus_user_id
@@ -262,18 +272,13 @@
         areaObj = [RgsAreaObjs objectAtIndex:0];
     if(areaObj)
     {
-        [[RegulusSDK sharedRegulusSDK] GetDrivers:areaObj.m_id
-                                       completion:^(BOOL result, NSArray *drivers, NSError *error) {
-                                           
-                                           if (error) {
-                                               
-                                               
-                                               [KVNProgress showErrorWithStatus:[error localizedDescription]];
-                                           }
-                                           else{
-                                               [block_self checkSceneDriver:drivers];
-                                           }
-                                       }];
+        [[RegulusSDK sharedRegulusSDK] GetAreaScenes:areaObj.m_id
+                                          completion:^(BOOL result, NSArray *scenes, NSError *error) {
+            if (result) {
+                
+                [block_self checkSceneDriver:scenes];
+            }
+        }];
     }
     else
     {
@@ -284,16 +289,31 @@
 #endif
 }
 
-- (void) checkSceneDriver:(NSArray*)drivers{
+- (void) checkSceneDriver:(NSArray*)scenes{
     
-    NSString *keymap = @"b836539a-376c-4fae-86d0-d7d580e7a626";
-    
-    for(RgsDriverObj *dr in drivers)
+    NSArray* savedScenarios = [[DataBase sharedDatabaseInstance] getSavedScenario:1];
+
+    NSMutableDictionary *map = [NSMutableDictionary dictionary];
+    for(NSMutableDictionary *senario in savedScenarios)
     {
-        NSString *drkey = dr.info.serial;
-        if([drkey isEqualToString:keymap])
+        int s_driver_id = [[senario objectForKey:@"s_driver_id"] intValue];
+        [map setObject:senario forKey:[NSNumber numberWithInt:s_driver_id]];
+    }
+    
+    
+    
+    for(RgsSceneObj *dr in scenes)
+    {
+        id key = [NSNumber numberWithInt:(int)dr.m_id];
+        
+        if([map objectForKey:key])
         {
-            [_sceneDrivers addObject:dr];
+            Scenario *s = [[Scenario alloc] init];
+            [s fillWithData:[map objectForKey:key]];
+            s._rgsSceneObj = dr;
+            
+            
+            [_sceneDrivers addObject:s];
         }
     }
     
@@ -472,11 +492,13 @@
     if([_sceneDrivers count])
     {
         EngineerScenarioSettingsViewCtrl *ctrl = [[EngineerScenarioSettingsViewCtrl alloc] init];
+        ctrl._room_id = 1;
+        ctrl._scenarioArray = _sceneDrivers;
         [self.navigationController pushViewController:ctrl animated:YES];
     }
     else
     {
-        [KVNProgress showWithStatus:@"您还没有创建场景!"];
+        [KVNProgress showErrorWithStatus:@"您还没有创建场景!"];
     }
 }
 

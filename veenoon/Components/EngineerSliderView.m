@@ -319,7 +319,7 @@
     [self resetScalValue:value];
 }
 
-- (void) setScaleValue:(int)value{
+- (void) setScaleValue:(float)value{
     
     CGRect rc = slider.frame;
     int h = rc.size.height - topEdge - bottomEdge;

@@ -261,9 +261,10 @@
     zaoshengView.hidden = YES;
     huishengView.hidden = YES;
     yanshiView.hidden = YES;
-    lvbo.hidden=YES;
+    lvbo.hidden = YES;
     zidonghunyinView.hidden=NO;
 }
+
 - (void) huishengxiaochuAction:(UIButton*)sender{
     
     if(_curSelectBtn == sender)

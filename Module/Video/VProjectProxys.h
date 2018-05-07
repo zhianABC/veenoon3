@@ -26,6 +26,8 @@
  SET_INPUT [HDMI, COMP, USB, LAN]
  */
 
+- (NSDictionary *)getScenarioSliceLocatedShadow;
+
 - (void) checkRgsProxyCommandLoad:(NSArray*)cmds;
 
 - (NSArray*)getDirectOptions;
@@ -37,5 +39,9 @@
 ////生成场景片段
 - (id) generateEventOperation_Power;
 - (id) generateEventOperation_Input;
+
+/////场景还原
+- (void) recoverWithDictionary:(NSDictionary*)data;
+
 
 @end

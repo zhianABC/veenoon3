@@ -13,6 +13,7 @@
     
 }
 @property (nonatomic, assign) int _room_id;
+@property (nonatomic, strong) NSMutableArray *_scenarioArray;
 
 @end
 

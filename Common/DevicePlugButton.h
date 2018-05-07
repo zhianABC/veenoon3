@@ -11,8 +11,11 @@
 @interface DevicePlugButton : UIButton
 
 @property (nonatomic, strong) NSDictionary *_mydata;
+@property (nonatomic, assign) BOOL _isEdited;
 
 - (void) addMyObserver;
 - (void) removeMyObserver;
+
+- (void) setEditChanged;
 
 @end

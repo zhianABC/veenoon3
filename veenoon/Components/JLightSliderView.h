@@ -10,7 +10,7 @@
 
 @protocol JLightSliderViewDelegate <NSObject>
 
-- (void) didSliderValueChanged:(int)value object:(id)object;
+- (void) didSliderValueChanged:(float)value object:(id)object;
 - (void) didSliderEndChanged:(id)object;
 
 @end

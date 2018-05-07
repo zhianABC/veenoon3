@@ -37,6 +37,7 @@
 
 @implementation Scenario
 @synthesize room_id;
+@synthesize _rgsSceneObj;
 
 @synthesize _rgsSceneEvent;
 @synthesize _rgsScene;
@@ -70,6 +71,8 @@
 {
     if(self = [super init])
     {
+        
+        self.room_id = 1;
         [self initData];
        
     }
@@ -96,6 +99,86 @@
     [_scenarioData setObject:[NSNumber numberWithInt:room_id]
                       forKey:@"room_id"];
     
+}
+
+- (NSMutableDictionary *)senarioData{
+    
+    return _scenarioData;
+}
+
+- (void) fillWithData:(NSMutableDictionary*)data{
+    
+    self._scenarioData = data;
+    
+    self._rgsDriver = [[RgsDriverObj alloc] init];
+    _rgsDriver.m_id = [[data objectForKey:@"s_driver_id"] intValue];
+    
+    
+    self._AProcessorPlugs = [NSMutableArray array];
+    self._VCameraSettings = [NSMutableArray array];
+    self._VTouyingji = [NSMutableArray array];
+    
+    NSArray *audios = [data objectForKey:@"audio"];
+    for(NSDictionary *a in audios){
+        
+        NSString *classname = [a objectForKey:@"class"];
+        Class someClass = NSClassFromString(classname);
+        BasePlugElement * obj = [[someClass alloc] init];
+        [obj jsonToObject:a];
+        
+        if([obj isKindOfClass:[AudioEProcessor class]])
+        {
+            [_AProcessorPlugs addObject:obj];
+        }
+    }
+    NSArray *videos = [data objectForKey:@"video"];
+    for(NSDictionary *v in videos){
+        
+        NSString *classname = [v objectForKey:@"class"];
+        Class someClass = NSClassFromString(classname);
+        BasePlugElement * obj = [[someClass alloc] init];
+        [obj jsonToObject:v];
+        
+        if([obj isKindOfClass:[VCameraSettingSet class]])
+        {
+            [_VCameraSettings addObject:obj];
+        }
+        else if([obj isKindOfClass:[VTouyingjiSet class]])
+        {
+            [_VTouyingji addObject:obj];
+        }
+    }
+    NSArray *envs = [data objectForKey:@"environment"];
+    for(NSDictionary *env in envs){
+        
+        NSString *classname = [env objectForKey:@"class"];
+        Class someClass = NSClassFromString(classname);
+        BasePlugElement * obj = [[someClass alloc] init];
+        [obj jsonToObject:env];
+    }
+    
+    
+    [self recoverDriverEvent];
+
+}
+
+- (void) recoverDriverEvent{
+    
+    IMP_BLOCK_SELF(Scenario);
+    
+    [[RegulusSDK sharedRegulusSDK] GetDriverEvents:_rgsDriver.m_id
+                                        completion:^(BOOL result, NSArray *events, NSError *error) {
+        if (result) {
+            if ([events count]) {
+                
+                block_self._rgsSceneEvent = [events objectAtIndex:0];
+            }
+        }
+        else
+        {
+            NSLog(@"++++++++++recoverDriverEvent++++++++++Error");
+        }
+    }];
 }
 
 - (void) addEventOperation:(RgsSceneOperation*)rgsSceneOp{
@@ -128,21 +211,29 @@
     {
         [KVNProgress show];
         
-        [[RegulusSDK sharedRegulusSDK] CreateDriver:area.m_id
-                                             serial:info.serial
-                                         completion:^(BOOL result, RgsDriverObj *driver, NSError *error) {
-                                             if (result) {
-                                                 
-                                                 block_self._rgsDriver = driver;
-                                                 
-                                                 [block_self getDriverEvent];
-                                             }
-                                             else
-                                             {
-                                                 [KVNProgress showErrorWithStatus:[error description]];
-                                                 [block_self postCreateScenarioNotifyResult:NO];
-                                             }
-                                         }];
+        if(_rgsDriver == nil)
+        {
+            [[RegulusSDK sharedRegulusSDK] CreateDriver:area.m_id
+                                                 serial:info.serial
+                                             completion:^(BOOL result, RgsDriverObj *driver, NSError *error) {
+                                                 if (result) {
+                                                     
+                                                     block_self._rgsDriver = driver;
+                                                     
+                                                     [block_self getDriverEvent];
+                                                 }
+                                                 else
+                                                 {
+                                                     [KVNProgress showErrorWithStatus:[error description]];
+                                                     [block_self postCreateScenarioNotifyResult:NO];
+                                                 }
+                                             }];
+        }
+        else
+        {
+            [block_self getDriverEvent];
+        }
+        
     }
     else
     {
@@ -150,6 +241,23 @@
     }
     
 }
+
+- (void) saveEventScenario{
+    
+    
+    if(_rgsDriver && [_eventOperations count])
+    {
+        [KVNProgress show];
+        
+        [self getDriverEvent];
+    }
+    else
+    {
+        [self postCreateScenarioNotifyResult:NO];
+    }
+    
+}
+
 
 - (void) getDriverEvent{
     
@@ -207,7 +315,7 @@
     [[RegulusSDK sharedRegulusSDK] ReloadProject:^(BOOL result, NSError *error) {
         if(result)
         {
-            NSLog(@"reload project.");
+            NSLog(@"---------------------reload project.");
             
             [KVNProgress showSuccess];
             [block_self postCreateScenarioNotifyResult:YES];
@@ -224,7 +332,30 @@
 
 - (void) prepareSenarioSlice{
     
-    [self initData];
+    //[self initData];
+    
+    self._eventOperations = [NSMutableArray array];
+    
+    if(_scenarioData == nil){
+        
+        self._scenarioData = [NSMutableDictionary dictionary];
+        
+        [_scenarioData setObject:@"场景" forKey:@"name"];
+        
+        [_scenarioData setObject:[NSNumber numberWithInt:room_id]
+                          forKey:@"room_id"];
+
+    }
+    
+    NSMutableArray *audio = [NSMutableArray array];
+    [_scenarioData setObject:audio forKey:@"audio"];
+    
+    NSMutableArray *video = [NSMutableArray array];
+    [_scenarioData setObject:video forKey:@"video"];
+    
+    NSMutableArray *env = [NSMutableArray array];
+    [_scenarioData setObject:env forKey:@"environment"];
+    
     
     //音频处理
     if([self._AProcessorPlugs count])
@@ -254,10 +385,7 @@
 
     for(AudioEProcessor *ap in self._AProcessorPlugs)
     {
-        NSDictionary *data = [ap objectToJson];
-        [audios addObject:data];
-        
-        
+    
         NSArray *audioIn = ap._inAudioProxys;
         //NSArray *audioOut = ap._outAudioProxys;
         
@@ -312,6 +440,9 @@
                 }
             }
         }
+       
+        NSDictionary *data = [ap objectToJson];
+        [audios addObject:data];
         
     }
 }
@@ -322,9 +453,6 @@
     
     for(VCameraSettingSet *vcam in self._VCameraSettings)
     {
-        NSDictionary *data = [vcam objectToJson];
-        [videos addObject:data];
-        
         
         VCameraProxys *cam = vcam._proxyObj;
         if([cam isSetChanged])
@@ -335,6 +463,9 @@
                 [self addEventOperation:rsp];
             }
         }
+        
+        NSDictionary *data = [vcam objectToJson];
+        [videos addObject:data];
     }
 }
 
@@ -344,9 +475,6 @@
     
     for(VTouyingjiSet *vprj in self._VTouyingji)
     {
-        NSDictionary *data = [vprj objectToJson];
-        [videos addObject:data];
-        
         
         VProjectProxys *proj = vprj._proxyObj;
         if([proj isSetChanged])
@@ -362,8 +490,12 @@
                 [self addEventOperation:rsp];
             }
         }
+        
+        NSDictionary *data = [vprj objectToJson];
+        [videos addObject:data];
     }
 }
+
 
 
 @end

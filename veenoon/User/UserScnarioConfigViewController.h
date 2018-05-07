@@ -6,9 +6,14 @@
 //  Copyright © 2017年 jack. All rights reserved.
 //
 #import <UIKit/UIKit.h>
+
+@class Scenario;
+
 @interface UserScnarioConfigViewController : UIViewController
 {
     
 }
-@property (nonatomic, strong) NSDictionary *_data;
+@property (nonatomic, strong) Scenario *_data;
+
+
 @end
