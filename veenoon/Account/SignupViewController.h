@@ -10,7 +10,7 @@
 #import "BaseViewController.h"
 #import "AreaPickView.h"
 
-@interface SignupViewController : BaseViewController<UITextFieldDelegate, AreaPickViewDelegate> {
+@interface SignupViewController : UIViewController<UITextFieldDelegate, AreaPickViewDelegate> {
     
 }
 

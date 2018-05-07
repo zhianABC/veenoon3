@@ -49,13 +49,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.view.backgroundColor = RGB(1, 138, 182);
     // Do any additional setup after loading the view.
-    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(50,
+    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(80,
                                                                 80,
                                                                 SCREEN_WIDTH, 20)];
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
-    titleL.font = [UIFont boldSystemFontOfSize:20];
+    titleL.font = [UIFont boldSystemFontOfSize:18];
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"使用手机号码登录";
    
@@ -107,7 +109,7 @@
     
     _country = [[UILabel alloc] initWithFrame:CGRectMake(left+120, top, w, 50)];
     _country.text = @"中国";
-    _country.textColor = [UIColor whiteColor];
+    _country.textColor = YELLOW_COLOR;
     _country.font = [UIFont boldSystemFontOfSize:18];
     [_inputPannel addSubview:_country];
     
@@ -141,10 +143,10 @@
     [_inputPannel addSubview:_countrycode];
     
     ///手机号输入框 pending....
-    _userName = [[UITextField alloc] initWithFrame:CGRectMake(left + 85, top+10, w-85, 30)];
+    _userName = [[UITextField alloc] initWithFrame:CGRectMake(left + 95, top+10, w-95, 30)];
     _userName.delegate = self;
     _userName.returnKeyType = UIReturnKeyDone;
-    _userName.placeholder = @"";
+    _userName.placeholder = @"输入手机号码";
     _userName.keyboardType = UIKeyboardTypePhonePad;
     _userName.backgroundColor = [UIColor clearColor];
     _userName.textColor = [UIColor whiteColor];
@@ -165,7 +167,7 @@
     [_inputPannel addSubview:tL];
     
     //密码输入框 pending....
-    _userPwd = [[UITextField alloc] initWithFrame:CGRectMake(left + 85, top+10, w-85, 30)];
+    _userPwd = [[UITextField alloc] initWithFrame:CGRectMake(left + 95, top+10, w-95, 30)];
     _userPwd.delegate = self;
     _userPwd.returnKeyType = UIReturnKeyDone;
     _userPwd.placeholder = @"6-12位密码";

@@ -137,7 +137,7 @@
     self._curentDeviceIndex = _currentObj._index;
     [self chooseChannelAtTagIndex:_curentDeviceIndex];
     
-    
+    [_com refreshComIR:_currentObj];
 }
 
 - (void) buttonAction:(UIButton*)btn{

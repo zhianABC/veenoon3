@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BasePlugElement.h"
 
 @interface DVDComIRView : UIView {
-    
+    BasePlugElement *_currentObj;
 }
 @property(nonatomic, assign) BOOL _isAllowedClose;
+@property(nonatomic, strong) BasePlugElement *_currentObj;
+
+-(void) refreshComIR:(BasePlugElement*) currentObj;
 @end
 
