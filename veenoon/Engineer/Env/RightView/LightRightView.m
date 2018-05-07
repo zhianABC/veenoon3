@@ -13,6 +13,8 @@
 #import "GroupsPickerView.h"
 #import "JHSlideView.h"
 #import "UIImage+Color.h"
+#import "EDimmerLight.h"
+#import "IPValidate.h"
 
 #define LIGHT_MAX_NUM   6
 
@@ -71,6 +73,8 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
 
 @synthesize _selectedSecs;
 @synthesize _selectedType;
+
+@synthesize _currentObj;
 
 /*
  // Only override drawRect: if you perform custom drawing.
@@ -364,6 +368,20 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
     
     _tableView.scrollEnabled = YES;
     [_tableView reloadData];
+}
+
+
+-(void) refreshView:(EDimmerLight*) dimmer {
+    
+    self._currentObj = dimmer;
+    ipTextField.text = dimmer._ipaddress;
+
+}
+
+
+- (void) saveCurrentSetting{
+    
+    _currentObj._ipaddress = ipTextField.text;
 }
 
 
@@ -709,6 +727,21 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     
+    if(textField == ipTextField)
+    {
+        NSString *ipaddress = textField.text;
+        BOOL valid = [IPValidate isValidIP:ipaddress];
+        if (valid) {
+            _currentObj._ipaddress = textField.text;
+        } else {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                            message:@"请输入正确的ip地址."
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{

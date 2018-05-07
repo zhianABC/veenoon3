@@ -61,6 +61,8 @@
 
 @synthesize _APlayerPlugs;
 
+@synthesize _EDimmerLights;
+
 @synthesize _areas;
 
 @synthesize _eventOperations;

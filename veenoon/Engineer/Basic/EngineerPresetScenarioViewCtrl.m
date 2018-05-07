@@ -56,6 +56,7 @@
 #import "VCameraProxys.h"
 #import "VTouyingjiSet.h"
 #import "VProjectProxys.h"
+#import "EDimmerLight.h"
 
 #import "WaitDialog.h"
 #import "DevicePlugButton.h"
@@ -834,8 +835,7 @@
         if ([name isEqualToString:@"照明"]) {
             
             EngineerLightViewController *ctrl = [[EngineerLightViewController alloc] init];
-            ctrl._lightSysArray = nil;// [NSMutableArray arrayWithObject:data];
-            ctrl._number=8;
+            ctrl._lightSysArray = _scenario._EDimmerLights;// [NSMutableArray arrayWithObject:data];
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
@@ -1216,6 +1216,23 @@
     }
 }
 
+- (void) initDimmerLightPlugs{
+    
+    if([_scenario._EDimmerLights count] == 0)
+    {
+        NSMutableArray *h2h = [NSMutableArray array];
+        NSArray *darray = [_selectedDevices objectForKey:@"env"];
+        for(id pset in darray)
+        {
+            if([pset isKindOfClass:[EDimmerLight class]])
+            {
+                [h2h addObject:pset];
+            }
+        }
+        _scenario._EDimmerLights = h2h;
+    }
+}
+
 - (void) checkAreaHaveDriver{
     
     for(AudioEProcessor *a in _scenario._AProcessorPlugs)
@@ -1361,6 +1378,12 @@
             }
             
             [_eDataCheckTestMap setObject:dataDic forKey:name];
+            
+            if([name isEqualToString:@"照明"])
+            {
+                [self initDimmerLightPlugs];
+            }
+            
         }
     }
     

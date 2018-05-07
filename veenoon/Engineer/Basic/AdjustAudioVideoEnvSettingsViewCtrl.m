@@ -11,6 +11,7 @@
 #import "VCameraSettingSet.h"
 #import "VTouyingjiSet.h"
 #import "DataCenter.h"
+#import "EDimmerLight.h"
 
 @interface AdjustAudioVideoEnvSettingsViewCtrl() <UITableViewDelegate, UITableViewDataSource> {
     UITableView *_tableView;
@@ -190,6 +191,13 @@
         brandL.text = device._brand;
         catL.text = device._type;
     }
+    else if([dataDic isKindOfClass:[EDimmerLight class]])
+    {
+        EDimmerLight *device = (EDimmerLight*)dataDic;
+        valueL.text = [device deviceName];
+        brandL.text = device._brand;
+        catL.text = device._type;
+    }
     return cell;
 }
 
@@ -221,6 +229,11 @@
     else if([obj isKindOfClass:[VTouyingjiSet class]])
     {
         VTouyingjiSet *device = (VTouyingjiSet*)obj;
+        [device removeDriver];
+    }
+    else if([obj isKindOfClass:[EDimmerLight class]])
+    {
+        EDimmerLight *device = (EDimmerLight*)obj;
         [device removeDriver];
     }
     //

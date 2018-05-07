@@ -8,6 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@class EDimmerLight;
+
 @interface LightRightView : UIView
+{
+    
+}
+
+@property(nonatomic, strong) EDimmerLight *_currentObj;
+
+- (void) saveCurrentSetting;
+
+-(void) refreshView:(EDimmerLight*) dimmer;
 
 @end

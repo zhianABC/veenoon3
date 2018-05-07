@@ -12,6 +12,10 @@
 #import "LightSliderButton.h"
 #import "EngineerSliderView.h"
 #import "LightRightView.h"
+#import "EDimmerLight.h"
+#import "RegulusSDK.h"
+#import "KVNProgress.h"
+#import "EDimmerLightProxys.h"
 
 @interface EngineerLightViewController () <CustomPickerViewDelegate, EngineerSliderViewDelegate, LightSliderButtonDelegate>{
     
@@ -32,12 +36,19 @@
     BOOL isSettings;
     LightRightView *_rightView;
     UIButton *okBtn;
+    
+    UIView *_proxysView;
 }
+@property (nonatomic, strong) EDimmerLight *_curProcessor;
+
+
 @end
 
 @implementation EngineerLightViewController
 @synthesize _lightSysArray;
 @synthesize _number;
+@synthesize _curProcessor;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -50,6 +61,9 @@
     _selectedBtnArray = [[NSMutableArray alloc] init];
     
     [super setTitleAndImage:@"env_corner_light.png" withTitle:@"照明"];
+    
+    if([_lightSysArray count])
+        self._curProcessor = [_lightSysArray objectAtIndex:0];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
@@ -94,8 +108,37 @@
     [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_selectSysBtn];
     
+    
+    _proxysView = [[UIView alloc] initWithFrame:CGRectMake(0,
+                                                           64,
+                                                           SCREEN_WIDTH,
+                                                           SCREEN_HEIGHT-64-50)];
+    [self.view addSubview:_proxysView];
+    
+    
+    _zengyiSlider = [[EngineerSliderView alloc]
+                     initWithSliderBg:[UIImage imageNamed:@"engineer_zengyi2_n.png"]
+                     frame:CGRectZero];
+    [self.view addSubview:_zengyiSlider];
+    
+    //[_zengyiSlider setRoadImage:[UIImage imageNamed:@"e_v_slider_road.png"]];
+    [_zengyiSlider setIndicatorImage:[UIImage imageNamed:@"wireless_slide_s.png"]];
+    _zengyiSlider.topEdge = 90;
+    _zengyiSlider.bottomEdge = 55;
+    _zengyiSlider.maxValue = 100;
+    _zengyiSlider.minValue = 0;
+    _zengyiSlider.delegate = self;
+    [_zengyiSlider resetScale];
+    _zengyiSlider.center = CGPointMake(SCREEN_WIDTH - 150, SCREEN_HEIGHT/2);
+    
+    [self getCurrentDeviceDriverProxys];
+    
+}
+
+- (void) layoutChannels{
+    
     int index = 0;
-    int top = ENGINEER_VIEW_COMPONENT_TOP;
+    int top = ENGINEER_VIEW_COMPONENT_TOP-64;
     
     int leftRight = ENGINEER_VIEW_LEFT;
     
@@ -103,6 +146,7 @@
     int cellHeight = 92;
     int colNumber = ENGINEER_VIEW_COLUMN_N;
     int space = ENGINEER_VIEW_COLUMN_GAP;
+    
     
     for (int i = 0; i < self._number; i++) {
         
@@ -114,7 +158,7 @@
         LightSliderButton *btn = [[LightSliderButton alloc] initWithFrame:CGRectMake(startX, startY, 120, 120)];
         btn.tag = i;
         btn.delegate = self;
-        [self.view addSubview:btn];
+        [_proxysView addSubview:btn];
         
         UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2-40, 0, 80, 20)];
         titleL.backgroundColor = [UIColor clearColor];
@@ -122,7 +166,7 @@
         [btn addSubview:titleL];
         titleL.font = [UIFont boldSystemFontOfSize:11];
         titleL.textColor  = [UIColor whiteColor];
-        titleL.text = [@"Channel " stringByAppendingString:[NSString stringWithFormat:@"0%d",i+1]];
+        titleL.text = [@"CH " stringByAppendingString:[NSString stringWithFormat:@"0%d",i+1]];
         [_buttonNumberArray addObject:titleL];
         
         [_buttonArray addObject:btn];
@@ -130,25 +174,98 @@
         index++;
     }
     
-    _zengyiSlider = [[EngineerSliderView alloc]
-                     initWithSliderBg:[UIImage imageNamed:@"engineer_zengyi2_n.png"]
-                     frame:CGRectZero];
-    [self.view addSubview:_zengyiSlider];
-    //[_zengyiSlider setRoadImage:[UIImage imageNamed:@"e_v_slider_road.png"]];
-    [_zengyiSlider setIndicatorImage:[UIImage imageNamed:@"wireless_slide_s.png"]];
-    _zengyiSlider.topEdge = 90;
-    _zengyiSlider.bottomEdge = 55;
-    _zengyiSlider.maxValue = 100;
-    _zengyiSlider.minValue = 0;
-    _zengyiSlider.delegate = self;
-    [_zengyiSlider resetScale];
-    _zengyiSlider.center = CGPointMake(SCREEN_WIDTH - 150, SCREEN_HEIGHT/2);
 }
-- (void) didSliderValueChanged:(float)value object:(id)object {
-    float circleValue = (value +0.0f)/100.0f;
-    for (LightSliderButton *button in _selectedBtnArray) {
-        [button setCircleValue:circleValue];
+
+- (void) getCurrentDeviceDriverProxys{
+    
+    if(_curProcessor == nil)
+        return;
+    
+#ifdef OPEN_REG_LIB_DEF
+    
+    IMP_BLOCK_SELF(EngineerLightViewController);
+    
+    RgsDriverObj *driver = _curProcessor._driver;
+    if([driver isKindOfClass:[RgsDriverObj class]])
+    {
+//        [[RegulusSDK sharedRegulusSDK] GetDriverProxys:driver.m_id completion:^(BOOL result, NSArray *proxys, NSError *error) {
+//            if (result) {
+//                if ([proxys count]) {
+//
+//                   // block_self._proxys = proxys;
+//                   // [block_self initChannels];
+//                }
+//            }
+//            else{
+//                [KVNProgress showErrorWithStatus:@"中控链接断开！"];
+//            }
+//        }];
+        
+        [[RegulusSDK sharedRegulusSDK] GetDriverCommands:driver.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
+            if (result) {
+                if ([commands count]) {
+                    [block_self loadedLightCommands:commands];
+                }
+            }
+            else{
+                [KVNProgress showErrorWithStatus:@"中控链接断开！"];
+            }
+        }];
     }
+#endif
+}
+
+- (void) loadedLightCommands:(NSArray*)cmds{
+    
+    RgsDriverObj *driver = _curProcessor._driver;
+    
+    EDimmerLightProxys *vpro = [[EDimmerLightProxys alloc] init];
+    vpro._deviceId = driver.m_id;
+    [vpro checkRgsProxyCommandLoad:cmds];
+    
+    if([_curProcessor._localSavedCommands count])
+    {
+        NSDictionary *local = [_curProcessor._localSavedCommands objectAtIndex:0];
+        [vpro recoverWithDictionary:local];
+    }
+    
+    self._curProcessor._proxyObj = vpro;
+    [_curProcessor syncDriverIPProperty];
+    
+    self._number = [vpro getNumberOfLights];
+    [self layoutChannels];
+}
+
+- (void) didSliderValueChanged:(float)value object:(id)object {
+    
+    float circleValue = (value + 0.0f)/100.0f;
+    for (LightSliderButton *button in _selectedBtnArray) {
+        
+        [button setCircleValue:circleValue];
+        
+        EDimmerLightProxys *vpro = self._curProcessor._proxyObj;
+        vpro._ch = (int)button.tag + 1;
+        if([vpro isKindOfClass:[EDimmerLightProxys class]])
+        {
+            [vpro controlDeviceLightLevel:(int)value];
+            
+            
+        }
+    }
+}
+
+- (void) didSlideButtonValueChanged:(float)value slbtn:(LightSliderButton*)slbtn{
+    
+    int circleValue = value*100.0f;
+    
+    EDimmerLightProxys *vpro = self._curProcessor._proxyObj;
+    vpro._ch = (int)slbtn.tag + 1;
+    if([vpro isKindOfClass:[EDimmerLightProxys class]])
+    {
+        [vpro controlDeviceLightLevel:circleValue];
+    }
+    
+    [_zengyiSlider setScaleValue:circleValue];
 }
 
 - (void) didSliderEndChanged:(id)object {
@@ -244,10 +361,18 @@
 }
 - (void) okAction:(id)sender{
     if (!isSettings) {
+        
+        if(_rightView == nil)
+        {
         _rightView = [[LightRightView alloc]
                       initWithFrame:CGRectMake(SCREEN_WIDTH-300,
                                                64, 300, SCREEN_HEIGHT-114)];
+        }
         [self.view addSubview:_rightView];
+        
+        _rightView._currentObj = _curProcessor;
+        [_rightView refreshView:_curProcessor];
+        
         
         [okBtn setTitle:@"保存" forState:UIControlStateNormal];
         
@@ -256,6 +381,11 @@
         if (_rightView) {
             [_rightView removeFromSuperview];
         }
+        
+        [_rightView saveCurrentSetting];
+        [_curProcessor uploadDriverIPProperty];
+
+        
         [okBtn setTitle:@"设置" forState:UIControlStateNormal];
         isSettings = NO;
     }
