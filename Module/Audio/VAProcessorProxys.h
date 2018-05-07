@@ -15,6 +15,7 @@
     
 }
 @property (nonatomic, strong) NSString *_icon_name;
+@property (nonatomic, strong) NSDictionary *_voiceInDevice;
 
 @property (nonatomic, strong) RgsProxyObj *_rgsProxyObj;
 

@@ -24,6 +24,10 @@
 @synthesize _normalColor;
 @synthesize _selColor;
 @synthesize _titleL;
+
+@synthesize vdata;
+
+
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.

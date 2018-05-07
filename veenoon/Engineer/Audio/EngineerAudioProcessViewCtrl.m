@@ -19,6 +19,7 @@
 #import "VAProcessorProxys.h"
 
 #import "KVNProgress.h"
+#import "DataCenter.h"
 
 #ifdef OPEN_REG_LIB_DEF
 #import "RegulusSDK.h"
@@ -302,6 +303,20 @@
         
         [_buttonArray addObject:btn];
         
+        
+        /////
+        NSDictionary *indevice = vap._voiceInDevice;
+        if(indevice)
+        {
+            NSString *imageName = [indevice objectForKey:@"icon_s"];
+            UIImage *img = [UIImage imageNamed:imageName];
+            if(img)
+            {
+                [btn changToIcon:img];
+            }
+        }
+        
+        
         float p = fabs(([vap getAnalogyGain]+70)/82.0);
         [btn setCircleValue:p];
         
@@ -506,10 +521,13 @@
                 
                 [button changToIcon:img];
                 
-                id data = button.data;
-                if([data isKindOfClass:[VAProcessorProxys class]])
+                id vap = button.data;
+                if([vap isKindOfClass:[VAProcessorProxys class]])
                 {
-                    ((VAProcessorProxys*)data)._icon_name = imageName;
+                    ((VAProcessorProxys*)vap)._icon_name = imageName;
+                    ((VAProcessorProxys*)vap)._voiceInDevice = data;
+                    
+                    [[DataCenter defaultDataCenter] cacheScenarioOnLocalDB];
                 }
             }
         }

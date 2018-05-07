@@ -258,6 +258,8 @@
 		3456C19F20A051AA001FAB61 /* senario_02_23_big@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3456C19620A051A2001FAB61 /* senario_02_23_big@2x.png */; };
 		3456C1A020A051AA001FAB61 /* senario_02_07_big@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3456C19720A051A6001FAB61 /* senario_02_07_big@2x.png */; };
 		3456C1A120A051AA001FAB61 /* senario_02_15_big@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3456C19820A051A9001FAB61 /* senario_02_15_big@2x.png */; };
+		3456C1A420A08CD3001FAB61 /* gohome_icon_sel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3456C1A220A08CD0001FAB61 /* gohome_icon_sel@2x.png */; };
+		3456C1A520A08CD3001FAB61 /* gohome_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3456C1A320A08CD3001FAB61 /* gohome_icon@2x.png */; };
 		34615F091FC9BD7B002DFCE0 /* JSlideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34615F051FC9BD7B002DFCE0 /* JSlideView.m */; };
 		34615F0A1FC9BD7B002DFCE0 /* jslide_bk@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34615F061FC9BD7B002DFCE0 /* jslide_bk@2x.png */; };
 		34615F0B1FC9BD7B002DFCE0 /* jslide_thumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34615F071FC9BD7B002DFCE0 /* jslide_thumb@2x.png */; };
@@ -1278,6 +1280,8 @@
 		3456C19620A051A2001FAB61 /* senario_02_23_big@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "senario_02_23_big@2x.png"; sourceTree = "<group>"; };
 		3456C19720A051A6001FAB61 /* senario_02_07_big@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "senario_02_07_big@2x.png"; sourceTree = "<group>"; };
 		3456C19820A051A9001FAB61 /* senario_02_15_big@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "senario_02_15_big@2x.png"; sourceTree = "<group>"; };
+		3456C1A220A08CD0001FAB61 /* gohome_icon_sel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gohome_icon_sel@2x.png"; sourceTree = "<group>"; };
+		3456C1A320A08CD3001FAB61 /* gohome_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gohome_icon@2x.png"; sourceTree = "<group>"; };
 		34615F051FC9BD7B002DFCE0 /* JSlideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSlideView.m; sourceTree = "<group>"; };
 		34615F061FC9BD7B002DFCE0 /* jslide_bk@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jslide_bk@2x.png"; sourceTree = "<group>"; };
 		34615F071FC9BD7B002DFCE0 /* jslide_thumb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jslide_thumb@2x.png"; sourceTree = "<group>"; };
@@ -2572,6 +2576,8 @@
 				EBCD01CD20A09EED00787D48 /* left_back_bg@2x.png */,
 				3456C17D20A034D9001FAB61 /* SenarioIcon */,
 				EB5A47F02073BA1500564C06 /* huiseyaobao@2x.png */,
+				3456C1A220A08CD0001FAB61 /* gohome_icon_sel@2x.png */,
+				3456C1A320A08CD3001FAB61 /* gohome_icon@2x.png */,
 				EB5A47EE2073B66900564C06 /* huangsedianchi@2x.png */,
 				EB5A47EA2073B3E400564C06 /* huisedianchi@2x.png */,
 				EB5A47EB2073B3E400564C06 /* huisehuatong@2x.png */,
@@ -3864,6 +3870,7 @@
 				EB1A04731FC71EEC007CC1F2 /* huatong_player_n@2x.png in Resources */,
 				EBF6A7441FC851E500260FF0 /* audio_player_last_n@2x.png in Resources */,
 				EBDF1BF91FC5ABB500A756EA /* camera_n@2x.png in Resources */,
+				3456C1A420A08CD3001FAB61 /* gohome_icon_sel@2x.png in Resources */,
 				3448D9592073B9590055D48F /* videop_tscreen_w@2x.png in Resources */,
 				EB19B68120581D2C003F1546 /* video_corner_shipinchuli@2x.png in Resources */,
 				EB36AADC1FCDA432009A0FD8 /* user_video_pinjieping_s@2x.png in Resources */,
@@ -4120,6 +4127,7 @@
 				3448D9632073B9590055D48F /* videop_dvd_y@2x.png in Resources */,
 				EB1A55EC1FEF594B000B18E6 /* engineer_next_s@2x.png in Resources */,
 				3456C19B20A051AA001FAB61 /* senario_02_03_big@2x.png in Resources */,
+				3456C1A520A08CD3001FAB61 /* gohome_icon@2x.png in Resources */,
 				EBF6A73A1FC851E500260FF0 /* audio_player_title_n@2x.png in Resources */,
 				345493081FE6585600793E2E /* add_brand_icon@2x.png in Resources */,
 				341C610B1FDD0DBF003A5490 /* a_room_4@2x.png in Resources */,

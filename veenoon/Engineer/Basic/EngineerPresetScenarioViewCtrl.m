@@ -59,7 +59,7 @@
 
 #import "WaitDialog.h"
 #import "DevicePlugButton.h"
-
+#import "DataCenter.h"
 
 
 #ifdef OPEN_REG_LIB_DEF
@@ -191,10 +191,15 @@
         self._scenario.room_id = 1;
         
         _isEditingScenario = NO;
+        
+        [DataCenter defaultDataCenter]._scenario = nil;
     }
     else
     {
         _isEditingScenario = YES;
+        
+        [DataCenter defaultDataCenter]._scenario = _scenario;
+        
     }
     
 }

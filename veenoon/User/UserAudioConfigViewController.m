@@ -49,6 +49,8 @@
 @property (nonatomic, strong) NSMutableArray *_inputBtnArray;
 @property (nonatomic, strong) AudioEProcessor *_curProcessor;
 
+@property (nonatomic, strong) NSMutableArray *_iconBtns;
+
 @end
 
 @implementation UserAudioConfigViewController
@@ -57,6 +59,8 @@
 @synthesize _inputProxys;
 @synthesize _inputBtnArray;
 @synthesize _scenario;
+
+@synthesize _iconBtns;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -107,6 +111,8 @@
         self._curProcessor = [_scenario._AProcessorPlugs objectAtIndex:0];
     }
     
+    self._iconBtns = [NSMutableArray array];
+    
     [self getCurrentDeviceDriverProxys];
 }
 
@@ -140,167 +146,6 @@
 #endif
 }
 
-/*
- int leftRight = 50;
- int number = 8;
- int height = 150;
- int rowGap = 115;
- int width = (SCREEN_WIDTH - leftRight*2) / number;
- 
- _cdPlayerBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(leftRight, height, width, width)];
- [_cdPlayerBtn buttonWithIcon:[UIImage imageNamed:@"cd_player_n.png"] selectedIcon:[UIImage imageNamed:@"cd_player_s.png"] text:@"CD播放器" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
- [_cdPlayerBtn addTarget:self action:@selector(cdPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
- UILongPressGestureRecognizer *longPress0 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed0:)];
- [_cdPlayerBtn addGestureRecognizer:longPress0];
- [self.view addSubview:_cdPlayerBtn];
- 
- int sliderHeight = 475;
- int sliderLeftRight = 110;
- 
- _cdPlayerSlider = [[JSlideView alloc]
- initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light.png"]
- frame:CGRectZero];
- [self.view addSubview:_cdPlayerSlider];
- [_cdPlayerSlider setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
- _cdPlayerSlider.topEdge = 60;
- _cdPlayerSlider.bottomEdge = 55;
- _cdPlayerSlider.maxValue = 20;
- _cdPlayerSlider.minValue = -20;
- [_cdPlayerSlider resetScale];
- _cdPlayerSlider.center = CGPointMake(sliderLeftRight, sliderHeight);
- 
- 
- _sdPlayersBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(leftRight+rowGap, height, width, width)];
- [_sdPlayersBtn buttonWithIcon:[UIImage imageNamed:@"sd_player_n.png"] selectedIcon:[UIImage imageNamed:@"sd_player_s.png"] text:@"SD播放器" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
- [_sdPlayersBtn addTarget:self action:@selector(sdPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
- UILongPressGestureRecognizer *longPress1 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed1:)];
- [_sdPlayersBtn addGestureRecognizer:longPress1];
- [self.view addSubview:_sdPlayersBtn];
- 
- _sdPlayerSlider = [[JSlideView alloc]
- initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light.png"]
- frame:CGRectZero];
- [self.view addSubview:_sdPlayerSlider];
- [_sdPlayerSlider setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
- _sdPlayerSlider.topEdge = 60;
- _sdPlayerSlider.bottomEdge = 55;
- _sdPlayerSlider.maxValue = 20;
- _sdPlayerSlider.minValue = -20;
- [_sdPlayerSlider resetScale];
- _sdPlayerSlider.center = CGPointMake(sliderLeftRight+rowGap, sliderHeight);
- 
- _usbPlayersBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(leftRight+rowGap*2, height, width, width)];
- [_usbPlayersBtn buttonWithIcon:[UIImage imageNamed:@"usb_player_n.png"] selectedIcon:[UIImage imageNamed:@"usb_player_s.png"] text:@"USB播放器" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
- [_usbPlayersBtn addTarget:self action:@selector(usbPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
- UILongPressGestureRecognizer *longPress2 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed2:)];
- [_usbPlayersBtn addGestureRecognizer:longPress2];
- [self.view addSubview:_usbPlayersBtn];
- 
- _usbPlayerSlider = [[JSlideView alloc]
- initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light.png"]
- frame:CGRectZero];
- [self.view addSubview:_usbPlayerSlider];
- [_usbPlayerSlider setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
- _usbPlayerSlider.topEdge = 60;
- _usbPlayerSlider.bottomEdge = 55;
- _usbPlayerSlider.maxValue = 20;
- _usbPlayerSlider.minValue = -20;
- [_usbPlayerSlider resetScale];
- _usbPlayerSlider.center = CGPointMake(sliderLeftRight+rowGap*2, sliderHeight);
- 
- _dvdPlayerBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(leftRight+rowGap*3, height, width, width)];
- [_dvdPlayerBtn buttonWithIcon:[UIImage imageNamed:@"user_video_dvd_n.png"] selectedIcon:[UIImage imageNamed:@"user_video_dvd_s.png"] text:@"USB播放器" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
- [_dvdPlayerBtn addTarget:self action:@selector(dvdPlayerAction:) forControlEvents:UIControlEventTouchUpInside];
- UILongPressGestureRecognizer *longPress3 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed3:)];
- [_dvdPlayerBtn addGestureRecognizer:longPress3];
- [self.view addSubview:_dvdPlayerBtn];
- 
- _wuxianPlayerSlider = [[JSlideView alloc]
- initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light.png"]
- frame:CGRectZero];
- [self.view addSubview:_wuxianPlayerSlider];
- [_wuxianPlayerSlider setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
- _wuxianPlayerSlider.topEdge = 60;
- _wuxianPlayerSlider.bottomEdge = 55;
- _wuxianPlayerSlider.maxValue = 20;
- _wuxianPlayerSlider.minValue = -20;
- [_wuxianPlayerSlider resetScale];
- _wuxianPlayerSlider.center = CGPointMake(sliderLeftRight+rowGap*3, sliderHeight);
- 
- _wuxianhuatongBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(leftRight+rowGap*4, height, width, width)];
- [_wuxianhuatongBtn buttonWithIcon:[UIImage imageNamed:@"huatong_player_n.png"] selectedIcon:[UIImage imageNamed:@"huatong_player_s.png"] text:@"无线手持话筒" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
- [_wuxianhuatongBtn addTarget:self action:@selector(wuxianhuatongAction:) forControlEvents:UIControlEventTouchUpInside];
- UILongPressGestureRecognizer *longPress4 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed4:)];
- [_wuxianhuatongBtn addGestureRecognizer:longPress4];
- [self.view addSubview:_wuxianhuatongBtn];
- 
- _hunyinPlayerSlider = [[JSlideView alloc]
- initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light.png"]
- frame:CGRectZero];
- [self.view addSubview:_hunyinPlayerSlider];
- [_hunyinPlayerSlider setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
- _hunyinPlayerSlider.topEdge = 60;
- _hunyinPlayerSlider.bottomEdge = 55;
- _hunyinPlayerSlider.maxValue = 20;
- _hunyinPlayerSlider.minValue = -20;
- [_hunyinPlayerSlider resetScale];
- _hunyinPlayerSlider.center = CGPointMake(sliderLeftRight+rowGap*4, sliderHeight);
- 
- _ejinhuiyi1Btn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(leftRight+rowGap*5, height, width, width)];
- [_ejinhuiyi1Btn buttonWithIcon:[UIImage imageNamed:@"huiyinhuiyi_player_n.png"] selectedIcon:[UIImage imageNamed:@"huiyinhuiyi_player_s.png"] text:@"鹅颈会议" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
- [_ejinhuiyi1Btn addTarget:self action:@selector(ejinAction:) forControlEvents:UIControlEventTouchUpInside];
- UILongPressGestureRecognizer *longPress5 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed5:)];
- [_ejinhuiyi1Btn addGestureRecognizer:longPress5];
- [self.view addSubview:_ejinhuiyi1Btn];
- 
- _youxianPlayerSlider = [[JSlideView alloc]
- initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light.png"]
- frame:CGRectZero];
- [self.view addSubview:_youxianPlayerSlider];
- [_youxianPlayerSlider setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
- _youxianPlayerSlider.topEdge = 60;
- _youxianPlayerSlider.bottomEdge = 55;
- _youxianPlayerSlider.maxValue = 20;
- _youxianPlayerSlider.minValue = -20;
- [_youxianPlayerSlider resetScale];
- _youxianPlayerSlider.center = CGPointMake(sliderLeftRight+rowGap*5, sliderHeight);
- 
- _youxianPlayer2Btn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(leftRight+rowGap*6, height, width, width)];
- [_youxianPlayer2Btn buttonWithIcon:[UIImage imageNamed:@"youxianxitong_player_n.png"] selectedIcon:[UIImage imageNamed:@"youxianxitong_player_s.png"] text:@"有线会议" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
- [_youxianPlayer2Btn addTarget:self action:@selector(youxianPlayer2Action:) forControlEvents:UIControlEventTouchUpInside];
- UILongPressGestureRecognizer *longPress6 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed6:)];
- [_youxianPlayer2Btn addGestureRecognizer:longPress6];
- [self.view addSubview:_youxianPlayer2Btn];
- 
- _youxianPlayerSlider2 = [[JSlideView alloc]
- initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light.png"]
- frame:CGRectZero];
- [self.view addSubview:_youxianPlayerSlider2];
- [_youxianPlayerSlider2 setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
- _youxianPlayerSlider2.topEdge = 60;
- _youxianPlayerSlider2.bottomEdge = 55;
- _youxianPlayerSlider2.maxValue = 20;
- _youxianPlayerSlider2.minValue = -20;
- [_youxianPlayerSlider2 resetScale];
- _youxianPlayerSlider2.center = CGPointMake(sliderLeftRight+rowGap*6, sliderHeight);
- 
- _youxianPlayer3Btn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(leftRight+rowGap*7, height, width, width)];
- [_youxianPlayer3Btn buttonWithIcon:[UIImage imageNamed:@"youxianxitong_player_n.png"] selectedIcon:[UIImage imageNamed:@"youxianxitong_player_n.png"] text:@"无线会议" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
- [_youxianPlayer3Btn addTarget:self action:@selector(youxianPlayer3Action:) forControlEvents:UIControlEventTouchUpInside];
- [self.view addSubview:_youxianPlayer3Btn];
- 
- _wuxianSysPlayerSlider = [[JSlideView alloc]
- initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light.png"]
- frame:CGRectZero];
- [self.view addSubview:_wuxianSysPlayerSlider];
- [_wuxianSysPlayerSlider setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
- _wuxianSysPlayerSlider.topEdge = 60;
- _wuxianSysPlayerSlider.bottomEdge = 55;
- _wuxianSysPlayerSlider.maxValue = 20;
- _wuxianSysPlayerSlider.minValue = -20;
- [_wuxianSysPlayerSlider resetScale];
- _wuxianSysPlayerSlider.center = CGPointMake(sliderLeftRight+rowGap*7, sliderHeight);
- */
 
 - (void) initChannels{
     
@@ -328,10 +173,22 @@
     
     
     int sliderHeight = 475-64;
-    int sliderLeftRight = 110;
+    int sliderLeftRight = 90;
     
+    int count = (int)[_inputProxys count];
+    int pages = count/8;
+    if(count%8 > 0)
+    {
+        pages++;
+    }
     
     for (int i = 0; i < [_inputProxys count]; i++) {
+        
+        
+        if(i % 8 == 0 && i)
+        {
+            sliderLeftRight = i/8 * SCREEN_WIDTH+90;
+        }
         
         VAProcessorProxys *vap = [_inputProxys objectAtIndex:i];
         
@@ -357,12 +214,49 @@
         sliderCtrl.data = vap;
         sliderCtrl.center = CGPointMake(sliderLeftRight, sliderHeight);
         
-        sliderLeftRight+=110;
+        [sliderCtrl setScaleValue:[vap getAnalogyGain]];
+        
+        if(vap._voiceInDevice)
+        {
+            
+            NSString *icon = [vap._voiceInDevice objectForKey:@"user_show_icon"];
+            NSString *icon_s = [vap._voiceInDevice objectForKey:@"user_show_icon_s"];
+            NSString *name = [vap._voiceInDevice objectForKey:@"name"];
+            if(icon && icon_s && name)
+            {
+                IconCenterTextButton* inDevice = [[IconCenterTextButton alloc]
+                                                  initWithFrame:CGRectMake(0, 0, 150, 150)];
+                [inDevice buttonWithIcon:[UIImage imageNamed:icon]
+                            selectedIcon:[UIImage imageNamed:icon_s]
+                                    text:name
+                             normalColor:[UIColor whiteColor]
+                                selColor:RGB(230, 151, 50)];
+                
+                inDevice.vdata = vap._voiceInDevice;
+                
+                inDevice.center = CGPointMake(sliderLeftRight, CGRectGetMinY(sliderCtrl.frame) - 130);
+                [inDevice addTarget:self action:@selector(inDeviceAction:) forControlEvents:UIControlEventTouchUpInside];
+                
+                UILongPressGestureRecognizer *longPress0 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed0:)];
+                [inDevice addGestureRecognizer:longPress0];
+                
+                [_proxysView addSubview:inDevice];
+                [_iconBtns addObject:inDevice];
+            }
+            
+
+        }
+        
+        
+        sliderLeftRight+=120;
     
     }
     
-    _proxysView.contentSize = CGSizeMake(sliderLeftRight+110, _proxysView.frame.size.height);
+    int ww1 = pages*SCREEN_WIDTH;
+   
     
+    _proxysView.contentSize = CGSizeMake(ww1, _proxysView.frame.size.height);
+    _proxysView.pagingEnabled = YES;
     //[_curProcessor syncDriverIPProperty];
 }
 
@@ -400,172 +294,63 @@
         return;
     } else if (press.state == UIGestureRecognizerStateBegan) {
         
-        UserAudioPlayerSettingsViewCtrl *controller = [[UserAudioPlayerSettingsViewCtrl alloc] init];
-        controller.playerState = CDPlayer;
-        [self.navigationController pushViewController:controller animated:YES];
-    }
-}
-
-- (void) longPressed1:(id)sender{
-    
-    UILongPressGestureRecognizer *press = (UILongPressGestureRecognizer *)sender;
-    if (press.state == UIGestureRecognizerStateEnded) {
-        // no need anything here
-        return;
-    } else if (press.state == UIGestureRecognizerStateBegan) {
+        id btn = press.view;
         
-        UserAudioPlayerSettingsViewCtrl *controller = [[UserAudioPlayerSettingsViewCtrl alloc] init];
-        controller.playerState = SDPlayer;
+        if([btn isKindOfClass:[IconCenterTextButton class]])
+        {
+            IconCenterTextButton *icbtn = (IconCenterTextButton*)btn;
+            NSDictionary *data = icbtn.vdata;
+            NSString *name = [data objectForKey:@"name"];
+            if([name isEqualToString:@"播放器"]
+               || [name isEqualToString:@"硬盘存储器"]
+               || [name isEqualToString:@"SD"])
+            {
+                UserAudioPlayerSettingsViewCtrl *controller = [[UserAudioPlayerSettingsViewCtrl alloc] init];
+                controller.playerState = CDPlayer;
+                [self.navigationController pushViewController:controller animated:YES];
+
+            }
+            else if([name isEqualToString:@"USB"])
+            {
+                UserDVDSettingsViewController *controller = [[UserDVDSettingsViewController alloc] init];
+                [self.navigationController pushViewController:controller animated:YES];
+            }
+            else if([name isEqualToString:@"无线麦"])
+            {
+                UserWuXianHuaTongViewCtrl *controller = [[UserWuXianHuaTongViewCtrl alloc] init];
+                [self.navigationController pushViewController:controller animated:YES];
+            }
+            else if([name isEqualToString:@"有线麦"])
+            {
+                UserYouXianViewController *controller = [[UserYouXianViewController alloc] init];
+                [self.navigationController pushViewController:controller animated:YES];
+            }
+            else if([name isEqualToString:@"有线会议室"])
+            {
+                UserHuiYinViewController *controller = [[UserHuiYinViewController alloc] init];
+                [self.navigationController pushViewController:controller animated:YES];
+            }
+        }
         
-        [self.navigationController pushViewController:controller animated:YES];
-    }
-}
-
-- (void) longPressed2:(id)sender{
-    
-    UILongPressGestureRecognizer *press = (UILongPressGestureRecognizer *)sender;
-    if (press.state == UIGestureRecognizerStateEnded) {
-        // no need anything here
-        return;
-    } else if (press.state == UIGestureRecognizerStateBegan) {
-        UserAudioPlayerSettingsViewCtrl *controller = [[UserAudioPlayerSettingsViewCtrl alloc] init];
-        controller.playerState = USBPlaer;
         
-        [self.navigationController pushViewController:controller animated:YES];
     }
 }
 
-- (void) longPressed3:(id)sender{
-    
-    UILongPressGestureRecognizer *press = (UILongPressGestureRecognizer *)sender;
-    if (press.state == UIGestureRecognizerStateEnded) {
-        // no need anything here
-        return;
-    } else if (press.state == UIGestureRecognizerStateBegan) {
-        UserDVDSettingsViewController *controller = [[UserDVDSettingsViewController alloc] init];
-        [self.navigationController pushViewController:controller animated:YES];
+
+- (void) inDeviceAction:(IconCenterTextButton*)sender{
+   
+    for(IconCenterTextButton *icbtn in _iconBtns)
+    {
+        if(icbtn == sender)
+        {
+            [icbtn setBtnHighlited:YES];
+        }
+        else
+        {
+            [icbtn setBtnHighlited:NO];
+        }
     }
-}
-
-- (void) longPressed4:(id)sender{
     
-    UILongPressGestureRecognizer *press = (UILongPressGestureRecognizer *)sender;
-    if (press.state == UIGestureRecognizerStateEnded) {
-        // no need anything here
-        return;
-    } else if (press.state == UIGestureRecognizerStateBegan) {
-        UserWuXianHuaTongViewCtrl *controller = [[UserWuXianHuaTongViewCtrl alloc] init];
-        [self.navigationController pushViewController:controller animated:YES];
-    }
-}
-- (void) longPressed6:(id)sender{
-    
-    UILongPressGestureRecognizer *press = (UILongPressGestureRecognizer *)sender;
-    if (press.state == UIGestureRecognizerStateEnded) {
-        // no need anything here
-        return;
-    } else if (press.state == UIGestureRecognizerStateBegan) {
-        UserYouXianViewController *controller = [[UserYouXianViewController alloc] init];
-        [self.navigationController pushViewController:controller animated:YES];
-    }
-}
-- (void) longPressed5:(id)sender{
-    
-    UILongPressGestureRecognizer *press = (UILongPressGestureRecognizer *)sender;
-    if (press.state == UIGestureRecognizerStateEnded) {
-        // no need anything here
-        return;
-    } else if (press.state == UIGestureRecognizerStateBegan) {
-        UserHuiYinViewController *controller = [[UserHuiYinViewController alloc] init];
-        [self.navigationController pushViewController:controller animated:YES];
-    }
-}
-- (void) youxianPlayer3Action:(id)sender{
-    [_cdPlayerBtn setBtnHighlited:NO];
-    [_sdPlayersBtn setBtnHighlited:NO];
-    [_usbPlayersBtn setBtnHighlited:NO];
-    [_dvdPlayerBtn setBtnHighlited:NO];
-    [_wuxianhuatongBtn setBtnHighlited:NO];
-    [_ejinhuiyi1Btn setBtnHighlited:NO];
-    [_youxianPlayer2Btn setBtnHighlited:NO];
-    [_youxianPlayer3Btn setBtnHighlited:YES];
-}
-- (void) youxianPlayer2Action:(id)sender{
-    [_cdPlayerBtn setBtnHighlited:NO];
-    [_sdPlayersBtn setBtnHighlited:NO];
-    [_usbPlayersBtn setBtnHighlited:NO];
-    [_dvdPlayerBtn setBtnHighlited:NO];
-    [_wuxianhuatongBtn setBtnHighlited:NO];
-    [_ejinhuiyi1Btn setBtnHighlited:NO];
-    [_youxianPlayer2Btn setBtnHighlited:YES];
-    [_youxianPlayer3Btn setBtnHighlited:NO];
-}
-
-- (void) ejinAction:(id)sender{
-    [_cdPlayerBtn setBtnHighlited:NO];
-    [_sdPlayersBtn setBtnHighlited:NO];
-    [_usbPlayersBtn setBtnHighlited:NO];
-    [_dvdPlayerBtn setBtnHighlited:NO];
-    [_wuxianhuatongBtn setBtnHighlited:NO];
-    [_ejinhuiyi1Btn setBtnHighlited:YES];
-    [_youxianPlayer2Btn setBtnHighlited:NO];
-    [_youxianPlayer3Btn setBtnHighlited:NO];
-}
-
-- (void) wuxianhuatongAction:(id)sender{
-    [_cdPlayerBtn setBtnHighlited:NO];
-    [_sdPlayersBtn setBtnHighlited:NO];
-    [_usbPlayersBtn setBtnHighlited:NO];
-    [_dvdPlayerBtn setBtnHighlited:NO];
-    [_wuxianhuatongBtn setBtnHighlited:YES];
-    [_ejinhuiyi1Btn setBtnHighlited:NO];
-    [_youxianPlayer2Btn setBtnHighlited:NO];
-    [_youxianPlayer3Btn setBtnHighlited:NO];
-}
-
-- (void) dvdPlayerAction:(id)sender{
-    [_cdPlayerBtn setBtnHighlited:NO];
-    [_sdPlayersBtn setBtnHighlited:NO];
-    [_usbPlayersBtn setBtnHighlited:NO];
-    [_dvdPlayerBtn setBtnHighlited:YES];
-    [_wuxianhuatongBtn setBtnHighlited:NO];
-    [_ejinhuiyi1Btn setBtnHighlited:NO];
-    [_youxianPlayer2Btn setBtnHighlited:NO];
-    [_youxianPlayer3Btn setBtnHighlited:NO];
-}
-
-- (void) usbPlayerAction:(id)sender{
-    [_cdPlayerBtn setBtnHighlited:NO];
-    [_sdPlayersBtn setBtnHighlited:NO];
-    [_usbPlayersBtn setBtnHighlited:YES];
-    [_dvdPlayerBtn setBtnHighlited:NO];
-    [_wuxianhuatongBtn setBtnHighlited:NO];
-    [_ejinhuiyi1Btn setBtnHighlited:NO];
-    [_youxianPlayer2Btn setBtnHighlited:NO];
-    [_youxianPlayer3Btn setBtnHighlited:NO];
-}
-
-- (void) sdPlayerAction:(id)sender{
-    [_cdPlayerBtn setBtnHighlited:NO];
-    [_sdPlayersBtn setBtnHighlited:YES];
-    [_usbPlayersBtn setBtnHighlited:NO];
-    [_dvdPlayerBtn setBtnHighlited:NO];
-    [_wuxianhuatongBtn setBtnHighlited:NO];
-    [_ejinhuiyi1Btn setBtnHighlited:NO];
-    [_youxianPlayer2Btn setBtnHighlited:NO];
-    [_youxianPlayer3Btn setBtnHighlited:NO];
-    
-}
-
-- (void) cdPlayerAction:(id)sender{
-    [_cdPlayerBtn setBtnHighlited:YES];
-    [_sdPlayersBtn setBtnHighlited:NO];
-    [_usbPlayersBtn setBtnHighlited:NO];
-    [_dvdPlayerBtn setBtnHighlited:NO];
-    [_wuxianhuatongBtn setBtnHighlited:NO];
-    [_ejinhuiyi1Btn setBtnHighlited:NO];
-    [_youxianPlayer2Btn setBtnHighlited:NO];
-    [_youxianPlayer3Btn setBtnHighlited:NO];
 }
 
 @end

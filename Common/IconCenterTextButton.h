@@ -14,6 +14,8 @@
     UILabel     *_titleL;
 }
 @property (nonatomic, strong) UILabel *_titleL;
+@property (nonatomic, strong) NSDictionary* vdata;
+
 - (void) buttonWithIcon:(UIImage*)normalIcon selectedIcon:(UIImage*)sIcon text:(NSString*)text normalColor:(UIColor*) normalColor
                selColor:(UIColor*)selColor;
 - (void) setBtnHighlited:(BOOL)isSel;

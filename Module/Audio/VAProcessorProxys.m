@@ -51,6 +51,7 @@
 
 @implementation VAProcessorProxys
 @synthesize _icon_name;
+@synthesize _voiceInDevice;
 
 @synthesize _rgsCommands;
 @synthesize _rgsProxyObj;
@@ -99,6 +100,9 @@
     if(!_rgsProxyObj || (_rgsProxyObj && (proxy_id == _rgsProxyObj.m_id)))
     {
         self._icon_name = [data objectForKey:@"icon_name"];
+        
+        self._voiceInDevice = [data objectForKey:@"voiceInDevice"];
+        
         _voiceDb = [[data objectForKey:@"analogy_gain"] floatValue];
         _isMute = [[data objectForKey:@"analogy_mute"] boolValue];
         
