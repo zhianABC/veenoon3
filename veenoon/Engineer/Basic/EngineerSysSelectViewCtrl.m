@@ -17,6 +17,7 @@
 #import "EngineerScenarioSettingsViewCtrl.h"
 #import "DataBase.h"
 #import "Scenario.h"
+#import "DataCenter.h"
 
 #ifdef OPEN_REG_LIB_DEF
 #import "RegulusSDK.h"
@@ -148,7 +149,7 @@
     
     [self containerView];
     
-    self._regulus_gateway_id = @"RGS_EOC500_01";//[[NSUserDefaults standardUserDefaults] objectForKey:@"gateway_id"];
+    self._regulus_gateway_id = [_meetingRoomDic objectForKey:@"regulus_id"];
     self._regulus_user_id = @"RGS_EOC500_01_3";//[[NSUserDefaults standardUserDefaults] objectForKey:@"user_id"];
     
     self._sceneDrivers = [NSMutableArray array];
@@ -226,6 +227,9 @@
 }
 
 - (void) update{
+    
+    [DataCenter defaultDataCenter]._roomData = _meetingRoomDic;
+    [_meetingRoomDic setObject:_regulus_user_id forKey:@"user_id"];
     
     [DataSync sharedDataSync]._currentReglusLogged = @{@"gw_id":_regulus_gateway_id,
                                                        @"user_id":_regulus_user_id

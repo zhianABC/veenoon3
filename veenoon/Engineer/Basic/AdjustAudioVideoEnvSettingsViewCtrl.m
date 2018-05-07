@@ -10,6 +10,7 @@
 #import "AudioEProcessor.h"
 #import "VCameraSettingSet.h"
 #import "VTouyingjiSet.h"
+#import "DataCenter.h"
 
 @interface AdjustAudioVideoEnvSettingsViewCtrl() <UITableViewDelegate, UITableViewDataSource> {
     UITableView *_tableView;
@@ -62,6 +63,8 @@
 
 
 - (void) okAction:(id)sender{
+    
+    [DataCenter defaultDataCenter]._selectedDevice = selectedSysDic;
     
     EngineerScenarioListViewCtrl *ctrl = [[EngineerScenarioListViewCtrl alloc] init];
     ctrl._selectedDevices = selectedSysDic;

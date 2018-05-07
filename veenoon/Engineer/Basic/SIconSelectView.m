@@ -50,16 +50,16 @@ IconLayerViewDelegate, CustomPickerViewDelegate>
     
     self._autoDatas = [NSMutableArray array];
     
-    self._icondata = @[@{@"title":@"环境照明",@"icon":@"ce_l_01.png",@"iconbig":@"ce_l_01_big.png"},
-                       @{@"title":@"环境控制",@"icon":@"ce_l_02.png",@"iconbig":@"ce_l_02_big.png"},
-                       @{@"title":@"宾客接待",@"icon":@"ce_l_03.png",@"iconbig":@"ce_l_03_big.png"},
-                       @{@"title":@"专业培训",@"icon":@"ce_l_04.png",@"iconbig":@"ce_l_04_big.png"},
-                       @{@"title":@"讨论会议",@"icon":@"ce_l_05.png",@"iconbig":@"ce_l_05_big.png"},
-                       @{@"title":@"离开模式",@"icon":@"ce_l_06.png",@"iconbig":@"ce_l_06_big.png"},
-                       @{@"title":@"洽谈",@"icon":@"ce_l_07.png",@"iconbig":@"ce_l_07_big.png"},
-                       @{@"title":@"影音模式",@"icon":@"ce_l_08.png",@"iconbig":@"ce_l_08_big.png"},
-                       @{@"title":@"娱乐",@"icon":@"ce_l_09.png",@"iconbig":@"ce_l_09_big.png"},
-                       @{@"title":@"商务",@"icon":@"ce_l_10.png",@"iconbig":@"ce_l_10_big.png"}];
+    self._icondata = @[@{@"title":@"环境照明",@"icon":@"ce_l_01.png",@"iconbig":@"senario_02_03.png"},
+                       @{@"title":@"环境控制",@"icon":@"ce_l_02.png",@"iconbig":@"senario_02_07.png"},
+                       @{@"title":@"宾客接待",@"icon":@"ce_l_03.png",@"iconbig":@"senario_02_11.png"},
+                       @{@"title":@"专业培训",@"icon":@"ce_l_04.png",@"iconbig":@"senario_02_15.png"},
+                       @{@"title":@"讨论会议",@"icon":@"ce_l_05.png",@"iconbig":@"senario_02_18.png"},
+                       @{@"title":@"离开模式",@"icon":@"ce_l_06.png",@"iconbig":@"senario_02_20.png"},
+                       @{@"title":@"洽谈",@"icon":@"ce_l_07.png",@"iconbig":@"senario_02_20.png"},
+                       @{@"title":@"影音模式",@"icon":@"ce_l_08.png",@"iconbig":@"senario_02_23.png"},
+                       @{@"title":@"娱乐",@"icon":@"ce_l_09.png",@"iconbig":@"senario_02_26.png"},
+                       @{@"title":@"商务",@"icon":@"ce_l_10.png",@"iconbig":@"senario_02_28.png"}];
 }
 
 - (id) initWithFrame:(CGRect)frame

@@ -211,21 +211,29 @@
     {
         [KVNProgress show];
         
-        [[RegulusSDK sharedRegulusSDK] CreateDriver:area.m_id
-                                             serial:info.serial
-                                         completion:^(BOOL result, RgsDriverObj *driver, NSError *error) {
-                                             if (result) {
-                                                 
-                                                 block_self._rgsDriver = driver;
-                                                 
-                                                 [block_self getDriverEvent];
-                                             }
-                                             else
-                                             {
-                                                 [KVNProgress showErrorWithStatus:[error description]];
-                                                 [block_self postCreateScenarioNotifyResult:NO];
-                                             }
-                                         }];
+        if(_rgsDriver == nil)
+        {
+            [[RegulusSDK sharedRegulusSDK] CreateDriver:area.m_id
+                                                 serial:info.serial
+                                             completion:^(BOOL result, RgsDriverObj *driver, NSError *error) {
+                                                 if (result) {
+                                                     
+                                                     block_self._rgsDriver = driver;
+                                                     
+                                                     [block_self getDriverEvent];
+                                                 }
+                                                 else
+                                                 {
+                                                     [KVNProgress showErrorWithStatus:[error description]];
+                                                     [block_self postCreateScenarioNotifyResult:NO];
+                                                 }
+                                             }];
+        }
+        else
+        {
+            [block_self getDriverEvent];
+        }
+        
     }
     else
     {

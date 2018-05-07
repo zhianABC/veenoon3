@@ -16,6 +16,9 @@
 #import "RegulusSDK.h"
 #import "KVNProgress.h"
 #import "DataSync.h"
+#import "UIButton+Color.h"
+#import "DataCenter.h"
+#import "EngineerToUseTeslariViewCtrl.h"
 
 @interface EngineerScenarioSettingsViewCtrl ()<SIconSelectViewDelegate>{
     
@@ -24,8 +27,6 @@
     SIconSelectView *_settingview;
     
     UIScrollView *scroolView;
-    
-    NSMutableArray *_scenarioLabelArray;
     
     int topy;
 }
@@ -48,11 +49,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    
     self._sBtns = [NSMutableArray array];
     self._map = [NSMutableDictionary dictionary];
-    
-    _scenarioLabelArray = [[NSMutableArray alloc] init];
     
     UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
     [self.view addSubview:titleIcon];
@@ -81,17 +79,19 @@
                   action:@selector(okAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, ENGINEER_VIEW_TOP, SCREEN_WIDTH-80, 30)];
+    UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT,
+                                                                      ENGINEER_VIEW_TOP,
+                                                                      SCREEN_WIDTH-80, 30)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont boldSystemFontOfSize:22];
+    portDNSLabel.font = [UIFont boldSystemFontOfSize:18];
     portDNSLabel.textColor  = [UIColor whiteColor];
     portDNSLabel.text = @"设置场景";
     
     portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, CGRectGetMaxY(portDNSLabel.frame)+20, SCREEN_WIDTH-80, 20)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont systemFontOfSize:18];
+    portDNSLabel.font = [UIFont systemFontOfSize:16];
     portDNSLabel.textColor  = [UIColor colorWithWhite:1.0 alpha:0.9];
     portDNSLabel.text = @"在场景内，可选择您所需要配置的设备";
     
@@ -122,8 +122,22 @@
     }
     else
     {
+        cancelBtn.hidden = YES;
         [self loadSenseFromRegulusCtrl];
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(notifyReloadScenario:)
+                                                 name:@"Notify_Reload_Senario"
+                                               object:nil];
+}
+
+- (void) notifyReloadScenario:(id)sender{
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [self loadSenseFromRegulusCtrl];
+    });
 }
 
 - (void) loadSenseFromRegulusCtrl{
@@ -205,15 +219,24 @@
     int cellHeight = 100;
     int top = 5;
     
+    if(scroolView == nil)
+    {
     scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(leftRightSpace,
                                                                 topy,
                                                                 SCREEN_WIDTH-leftRightSpace*2,
                                                                 SCREEN_HEIGHT-240)];
+    }
+    else
+    {
+        [[scroolView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    }
     [self.view addSubview:scroolView];
     
     int scrollHeight = rowNumber*cellHeight + (rowNumber-1)*colGap+10;
     
     scroolView.contentSize = CGSizeMake(SCREEN_WIDTH-leftRightSpace*2, scrollHeight);
+    
+    [_sBtns removeAllObjects];
     
     int index = 0;
     for (int i = 0; i < scenarioSize; i++) {
@@ -223,60 +246,80 @@
         int startX = colN*cellWidth+colN*colGap;
         int startY = rowN*cellHeight+colGap*rowN+top;
         
-        UIButton *scenarioView = [[UIButton alloc] init];
-        [scroolView addSubview:scenarioView];
+        UIButton *scenarioCellBtn = [UIButton buttonWithColor:DARK_BLUE_COLOR
+                                                     selColor:nil];
+        [scroolView addSubview:scenarioCellBtn];
         
-        [_sBtns addObject:scenarioView];
+        [_sBtns addObject:scenarioCellBtn];
         
-        scenarioView.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
-        scenarioView.userInteractionEnabled=YES;
-        scenarioView.backgroundColor = DARK_BLUE_COLOR;
-        scenarioView.layer.cornerRadius = 5;
-        scenarioView.layer.borderWidth = 2;
-        scenarioView.layer.borderColor = [UIColor clearColor].CGColor;;
-        scenarioView.clipsToBounds = YES;
+        scenarioCellBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
+        scenarioCellBtn.layer.cornerRadius = 5;
+        scenarioCellBtn.clipsToBounds = YES;
         
-        [scenarioView addTarget:self
+        
+        [scenarioCellBtn addTarget:self
                          action:@selector(handleTapGesture:)
                forControlEvents:UIControlEventTouchUpInside];
         
-//        UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
-//        tapGesture.cancelsTouchesInView =  NO;
-//        tapGesture.numberOfTapsRequired = 1;
-//        tapGesture.view.tag = index;
-//        [scenarioView addGestureRecognizer:tapGesture];
-//
-        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, scenarioView.frame.size.height/2-15, 100, 30)];
-        titleL.backgroundColor = [UIColor clearColor];
-        [scenarioView addSubview:titleL];
-        titleL.font = [UIFont boldSystemFontOfSize:16];
-        titleL.textAlignment = NSTextAlignmentCenter;
+        scenarioCellBtn.titleLabel.font = [UIFont boldSystemFontOfSize:16];
         
         if ([_scenarioArray count] == index) {
             
-            titleL.text = @"+";
-            titleL.textColor  = DARK_BLUE_COLOR;
+            [scenarioCellBtn setTitle:@"+" forState:UIControlStateNormal];
+            [scenarioCellBtn setTitleColor:DARK_BLUE_COLOR
+                               forState:UIControlStateNormal];
             
-            scenarioView.backgroundColor = [UIColor clearColor];
-            scenarioView.layer.cornerRadius = 5;
-            scenarioView.layer.borderWidth = 2;
-            scenarioView.layer.borderColor = DARK_BLUE_COLOR.CGColor;;
-            scenarioView.clipsToBounds = YES;
+            [scenarioCellBtn changeNormalColor:[UIColor clearColor]];
+            scenarioCellBtn.layer.borderColor = DARK_BLUE_COLOR.CGColor;;
+            scenarioCellBtn.clipsToBounds = YES;
+            scenarioCellBtn.layer.borderWidth = 2;
             
         } else {
+            
             UILongPressGestureRecognizer *longPress0 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed0:)];
             longPress0.view.tag = index;
-            [scenarioView addGestureRecognizer:longPress0];
+            [scenarioCellBtn addGestureRecognizer:longPress0];
+            
+//            [scenarioCellBtn setTitleEdgeInsets:UIEdgeInsetsMake(70.0, 0, 0, 0)];
+//            [scenarioCellBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 20, 0)];
+//
             
             Scenario *s = [self._scenarioArray objectAtIndex:index];
-            titleL.text = [[s senarioData] objectForKey:@"name"];
+            NSString *name  = [[s senarioData] objectForKey:@"name"];
+            
+            
+            UIImageView *iconView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cellWidth, 70)];
+            [scenarioCellBtn addSubview:iconView];
+            iconView.tag = 101;
+            iconView.contentMode = UIViewContentModeCenter;
+            
+            UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(2, 70, cellWidth-4, 1)];
+            line.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.5];
+            [scenarioCellBtn addSubview:line];
+            
+            
+            UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, 70, cellWidth, 30)];
+            titleL.backgroundColor = [UIColor clearColor];
+            [scenarioCellBtn addSubview:titleL];
+            titleL.font = [UIFont boldSystemFontOfSize:14];
             titleL.textColor  = [UIColor whiteColor];
+            titleL.text = name;
+            titleL.tag = 102;
+            titleL.textAlignment = NSTextAlignmentCenter;
+        
+            NSString *small = [[s senarioData] objectForKey:@"small_icon"];
+            if(small)
+            {
+                UIImage * img = [UIImage imageNamed:small];
+                
+                if(img){
+                    iconView.image = img;
+                }
+            }
             
         }
         
-        scenarioView.tag = index;
-        
-        [_scenarioLabelArray addObject:titleL];
+        scenarioCellBtn.tag = index;
         
         index++;
     }
@@ -303,12 +346,17 @@
         if (scenarioName && [scenarioName length] > 0) {
             
             Scenario *s = [self._scenarioArray objectAtIndex:index];
-            UILabel *scenarioLabel = [_scenarioLabelArray objectAtIndex:index];
+            UIButton *scenarioCellBtn = [_sBtns objectAtIndex:index];
             
             NSMutableDictionary *sdic = [s senarioData];
             [sdic setObject:scenarioName
                             forKey:@"name"];
-            scenarioLabel.text = scenarioName;
+           
+            
+            UILabel *tL = [scenarioCellBtn viewWithTag:102];
+            
+            if([tL isKindOfClass:[UILabel class]])
+                tL.text = scenarioName;
             
             [[DataBase sharedDatabaseInstance] saveScenario:sdic];
         }
@@ -328,6 +376,26 @@
         EngineerPresetScenarioViewCtrl *ctrl = [[EngineerPresetScenarioViewCtrl alloc] init];
         ctrl._scenario = s;
         [self.navigationController pushViewController:ctrl animated:YES];
+        
+    }
+    else
+    {
+        NSMutableDictionary *devicesSel = [DataCenter defaultDataCenter]._selectedDevice;
+        NSMutableDictionary *roomDic = [DataCenter defaultDataCenter]._roomData;
+        if(devicesSel)
+        {
+            EngineerScenarioListViewCtrl *ctrl = [[EngineerScenarioListViewCtrl alloc] init];
+            ctrl._selectedDevices = devicesSel;
+            ctrl._meetingRoomDic = roomDic;
+            [self.navigationController pushViewController:ctrl animated:YES];
+        }
+        else
+        {
+            EngineerToUseTeslariViewCtrl *ctrl = [[EngineerToUseTeslariViewCtrl alloc] init];
+            ctrl._meetingRoomDic = roomDic;
+            [self.navigationController pushViewController:ctrl animated:YES];
+
+        }
         
     }
 
@@ -355,9 +423,11 @@
                 
                 [_map setObject:data forKey:[NSNumber numberWithInteger:button.tag]];
                 
-                [button setBackgroundImage:img
-                                  forState:UIControlStateNormal];
-                [button setTitle:@"" forState:UIControlStateNormal];
+    
+                UIImageView *icon = [button viewWithTag:101];
+                if([icon isKindOfClass:[UIImageView class]])
+                    icon.image = img;
+                
                 
                 int index = (int)button.tag;
                 if(index < [_scenarioArray count])

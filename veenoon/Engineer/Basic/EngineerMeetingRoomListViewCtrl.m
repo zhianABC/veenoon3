@@ -46,23 +46,47 @@
         UIImage *roomImage4 = [UIImage imageNamed:@"user_meeting_room_4.png"];
         UIImage *roomImage5 = [UIImage imageNamed:@"user_meeting_room_5.png"];
         UIImage *roomImage6 = [UIImage imageNamed:@"user_meeting_room_6.png"];
-        NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:roomImage1, @"image",
-                                     @"meeting_room1", @"roomname",
+        NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:roomImage1,
+                                     @"image",
+                                     @"meeting_room1",
+                                     @"roomname",
+                                     @"1",@"room_id",
+                                     @"RGS_EOC500_01",@"regulus_id",
                                      nil];
-        NSMutableDictionary *dic2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:roomImage2, @"image",
-                                     @"meeting_room2", @"roomname",
+        NSMutableDictionary *dic2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:roomImage2,
+                                     @"image",
+                                     @"meeting_room2",
+                                     @"roomname",
+                                     @"2",@"room_id",
+                                     @"RGS_EOC500_01",@"regulus_id",
                                      nil];
-        NSMutableDictionary *dic3 = [NSMutableDictionary dictionaryWithObjectsAndKeys:roomImage3, @"image",
-                                     @"meeting_room3", @"roomname",
+        NSMutableDictionary *dic3 = [NSMutableDictionary dictionaryWithObjectsAndKeys:roomImage3,
+                                     @"image",
+                                     @"meeting_room3",
+                                     @"roomname",
+                                     @"3",@"room_id",
+                                     @"RGS_EOC500_01",@"regulus_id",
                                      nil];
-        NSMutableDictionary *dic4 = [NSMutableDictionary dictionaryWithObjectsAndKeys:roomImage4, @"image",
-                                     @"meeting_room4", @"roomname",
+        NSMutableDictionary *dic4 = [NSMutableDictionary dictionaryWithObjectsAndKeys:roomImage4,
+                                     @"image",
+                                     @"meeting_room4",
+                                     @"roomname",
+                                     @"4",@"room_id",
+                                     @"RGS_EOC500_01",@"regulus_id",
                                      nil];
-        NSMutableDictionary *dic5 = [NSMutableDictionary dictionaryWithObjectsAndKeys:roomImage5, @"image",
-                                     @"meeting_room5", @"roomname",
+        NSMutableDictionary *dic5 = [NSMutableDictionary dictionaryWithObjectsAndKeys:roomImage5,
+                                     @"image",
+                                     @"meeting_room5",
+                                     @"roomname",
+                                     @"5",@"room_id",
+                                     @"RGS_EOC500_01",@"regulus_id",
                                      nil];
-        NSMutableDictionary *dic6 = [NSMutableDictionary dictionaryWithObjectsAndKeys:roomImage6, @"image",
-                                     @"meeting_room6", @"roomname",
+        NSMutableDictionary *dic6 = [NSMutableDictionary dictionaryWithObjectsAndKeys:roomImage6,
+                                     @"image",
+                                     @"meeting_room6",
+                                     @"roomname",
+                                     @"6",@"room_id",
+                                     @"RGS_EOC500_01",@"regulus_id",
                                      nil];
         self.roomList = [NSMutableArray arrayWithObjects:dic1, dic2, dic3, dic4, dic5, dic6, nil];
     }
