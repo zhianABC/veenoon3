@@ -8,6 +8,12 @@
 
 #import "UserMeetingRoomConfig.h"
 #import "UserScnarioConfigViewController.h"
+#import "KVNProgress.h"
+#import "RegulusSDK.h"
+#import "DataCenter.h"
+#import "DataSync.h"
+#import "DataBase.h"
+#import "Scenario.h"
 
 @interface UserMeetingRoomConfig () {
     NSMutableDictionary *meetingRoomDic;
@@ -21,15 +27,29 @@
     
     UIScrollView *_content;
 }
-@property (nonatomic, strong) NSArray *scens;
 @property (nonatomic, strong) NSMutableDictionary *_mapSelect;
+
+@property (nonatomic, strong) NSString *_regulus_user_id;
+@property (nonatomic, strong) NSString *_regulus_gateway_id;
+@property (nonatomic, strong) NSMutableArray *_sceneDrivers;
+
+@property (nonatomic, strong) UIImage *_nor_image;
+@property (nonatomic, strong) UIImage *_sel_image;
+
 
 @end
 
 @implementation UserMeetingRoomConfig
 @synthesize meetingRoomDic;
-@synthesize scens;
 @synthesize _mapSelect;
+
+@synthesize _regulus_user_id;
+@synthesize _regulus_gateway_id;
+@synthesize _sceneDrivers;
+
+@synthesize _nor_image;
+@synthesize _sel_image;
+
 
 - (void)viewDidLoad {
    
@@ -63,29 +83,211 @@
     
     _content = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 80,
                                                               SCREEN_WIDTH,
-                                                              SCREEN_HEIGHT-80-40)];
+                                                              SCREEN_HEIGHT-80-50)];
     [self.view addSubview:_content];
+    _content.clipsToBounds = YES;
     
     
-    self.scens = @[@{@"icon_nor":@"user_training_n.png",@"icon_sel":@"user_training_s.png",
-                         @"title":@"专业培训",@"title_en":@"Training"},
-                       @{@"icon_nor":@"envirement_control_n.png",@"icon_sel":@"envirement_control_s.png",
-                         @"title":@"环境控制",@"title_en":@"Environmental control"},
-                       @{@"icon_nor":@"guest_reception_n.png",@"icon_sel":@"guest_reception_s.png",
-                         @"title":@"宾客接待",@"title_en":@"Guests reception"},
-                       @{@"icon_nor":@"envirement_light_n.png",@"icon_sel":@"envirement_light_s.png",
-                         @"title":@"环境照明",@"title_en":@"Ambient lighting"},
-                       @{@"icon_nor":@"meeting_discuss_n.png",@"icon_sel":@"meeting_discuss_s.png",
-                         @"title":@"讨论会议",@"title_en":@"Meeting"},
-                       @{@"icon_nor":@"close_system_n.png",@"icon_sel":@"close_system_s.png",
-                         @"title":@"离开会场",@"title_en":@"Close system"}];
+    self._nor_image = [UIImage imageNamed:@"user_training_n.png"];
+    self._sel_image = [UIImage imageNamed:@"user_training_s.png"];
     
+    self._regulus_gateway_id = @"RGS_EOC500_01";//[_meetingRoomDic objectForKey:@"regulus_id"];
+    self._regulus_user_id = @"RGS_EOC500_01_3";//[[NSUserDefaults standardUserDefaults] objectForKey:@"user_id"];
+    
+    self._sceneDrivers = [NSMutableArray array];
+    
+#if LOGIN_REGULUS
+    [KVNProgress show];
+    
+    
+    if(_regulus_gateway_id && _regulus_user_id)
+    {
+        [self loginCtrlDevice];
+    }
+    else
+    {
+        self._regulus_gateway_id = @"RGS_EOC500_01";
+        [self regCtrlDevice];
+    }
+    
+#endif
+    
+   
+}
+
+
+- (void) regCtrlDevice{
+    
+#ifdef OPEN_REG_LIB_DEF
+    
+    IMP_BLOCK_SELF(UserMeetingRoomConfig);
+    
+    [KVNProgress showWithStatus:@"登录中..."];
+    
+    [[RegulusSDK sharedRegulusSDK] RequestJoinGateWay:_regulus_gateway_id
+                                           completion:^(NSString *user_id, BOOL is_init, NSError * aError) {
+                                               if (aError) {
+                                                   
+                                                   [KVNProgress showErrorWithStatus:[aError description]];
+                                                   
+                                                   [DataSync sharedDataSync]._currentReglusLogged = nil;
+                                               }
+                                               else{
+                                                   
+                                                   block_self._regulus_user_id = user_id;
+                                                   //NSLog(@"user_id:%@,gw:%@\n",user_id,_gw_id.text);
+                                                   [[NSUserDefaults standardUserDefaults] setObject:@"RGS_EOC500_01" forKey:@"gateway_id"];
+                                                   [[NSUserDefaults standardUserDefaults] setObject:user_id forKey:@"user_id"];
+                                                   
+                                                   
+                                                   [block_self loginCtrlDevice];
+                                               }
+                                           }];
+#endif
+    
+}
+
+- (void) loginCtrlDevice{
+    
+#ifdef OPEN_REG_LIB_DEF
+    
+    IMP_BLOCK_SELF(UserMeetingRoomConfig);
+    
+    [[RegulusSDK sharedRegulusSDK] Login:self._regulus_user_id
+                                   gw_id:_regulus_gateway_id
+                                password:@"111111"
+                                   level:1 completion:^(BOOL result, NSInteger level, NSError *error) {
+                                       if (result) {
+                                           [block_self update];
+                                       }
+                                       else
+                                       {
+                                           [DataSync sharedDataSync]._currentReglusLogged = nil;
+                                           [KVNProgress showErrorWithStatus:[error description]];
+                                       }
+                                   }];
+    
+#endif
+    
+}
+
+- (void) update{
+    
+    [DataCenter defaultDataCenter]._roomData = meetingRoomDic;
+    [meetingRoomDic setObject:_regulus_user_id forKey:@"user_id"];
+    
+    [DataSync sharedDataSync]._currentReglusLogged = @{@"gw_id":_regulus_gateway_id,
+                                                       @"user_id":_regulus_user_id
+                                                       };
+    
+    [self checkArea];
+    
+}
+
+- (void) checkArea{
+    
+#ifdef OPEN_REG_LIB_DEF
+    
+    IMP_BLOCK_SELF(UserMeetingRoomConfig);
+    
+    [[RegulusSDK sharedRegulusSDK] GetAreas:^(NSArray *RgsAreaObjs, NSError *error) {
+        if (error) {
+            
+            [KVNProgress showErrorWithStatus:@"连接中控出错!"];
+        }
+        else
+        {
+            [block_self checkSceneData:RgsAreaObjs];
+        }
+    }];
+    
+#endif
+    
+}
+- (void) checkSceneData:(NSArray*)RgsAreaObjs{
+    
+#ifdef OPEN_REG_LIB_DEF
+    
+    IMP_BLOCK_SELF(UserMeetingRoomConfig);
+    
+    RgsAreaObj *areaObj = nil;
+    if([RgsAreaObjs count])
+        areaObj = [RgsAreaObjs objectAtIndex:0];
+    if(areaObj)
+    {
+        [[RegulusSDK sharedRegulusSDK] GetAreaScenes:areaObj.m_id
+                                          completion:^(BOOL result, NSArray *scenes, NSError *error) {
+                                              if (result) {
+                                                  
+                                                  [block_self checkSceneDriver:scenes];
+                                              }
+                                          }];
+    }
+    else
+    {
+        [KVNProgress showSuccess];
+    }
+    
+    
+#endif
+}
+
+- (void) checkSceneDriver:(NSArray*)scenes{
+    
+    NSArray* savedScenarios = [[DataBase sharedDatabaseInstance] getSavedScenario:1];
+    
+    NSMutableDictionary *map = [NSMutableDictionary dictionary];
+    for(NSMutableDictionary *senario in savedScenarios)
+    {
+        int s_driver_id = [[senario objectForKey:@"s_driver_id"] intValue];
+        [map setObject:senario forKey:[NSNumber numberWithInt:s_driver_id]];
+    }
+    
+    
+    
+    for(RgsSceneObj *dr in scenes)
+    {
+        id key = [NSNumber numberWithInt:(int)dr.m_id];
+        
+        if([map objectForKey:key])
+        {
+            Scenario *s = [[Scenario alloc] init];
+            [s fillWithData:[map objectForKey:key]];
+            s._rgsSceneObj = dr;
+            
+            
+            [_sceneDrivers addObject:s];
+        }
+    }
+    
+    
+    [KVNProgress showSuccess];
+    
+    [self layoutScenarios];
+}
+
+
+- (void) layoutScenarios{
+    
+//    self.scens = @[@{@"icon_nor":@"user_training_n.png",@"icon_sel":@"user_training_s.png",
+//                     @"title":@"专业培训",@"title_en":@"Training"},
+//                   @{@"icon_nor":@"envirement_control_n.png",@"icon_sel":@"envirement_control_s.png",
+//                     @"title":@"环境控制",@"title_en":@"Environmental control"},
+//                   @{@"icon_nor":@"guest_reception_n.png",@"icon_sel":@"guest_reception_s.png",
+//                     @"title":@"宾客接待",@"title_en":@"Guests reception"},
+//                   @{@"icon_nor":@"envirement_light_n.png",@"icon_sel":@"envirement_light_s.png",
+//                     @"title":@"环境照明",@"title_en":@"Ambient lighting"},
+//                   @{@"icon_nor":@"meeting_discuss_n.png",@"icon_sel":@"meeting_discuss_s.png",
+//                     @"title":@"讨论会议",@"title_en":@"Meeting"},
+//                   @{@"icon_nor":@"close_system_n.png",@"icon_sel":@"close_system_s.png",
+//                     @"title":@"离开会场",@"title_en":@"Close system"}];
+//
     
     
     int ox = (SCREEN_WIDTH - 420*2 - 20)/2 - 20;
-    int y = 70;
+    int y = 0;
     int x = ox;
-    for(int i = 0; i < [scens count]; i++)
+    for(int i = 0; i < [_sceneDrivers count]; i++)
     {
         
         if(i%2==0 && i > 0){
@@ -98,19 +300,67 @@
             x+=10;
         }
         
-        NSDictionary *scen = [scens objectAtIndex:i];
+        Scenario *scen = [_sceneDrivers objectAtIndex:i];
+        
+        NSDictionary *sDic = [scen senarioData];
         
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         btn.frame = CGRectMake(x, y, 481, 250);
-        [btn setImage:[UIImage imageNamed:[scen objectForKey:@"icon_nor"]] forState:UIControlStateNormal];
-        [btn setImage:[UIImage imageNamed:[scen objectForKey:@"icon_sel"]] forState:UIControlStateHighlighted];
+        [btn setImage:_nor_image
+             forState:UIControlStateNormal];
+        [btn setImage:_sel_image
+             forState:UIControlStateHighlighted];
         [btn addTarget:self action:@selector(userTrainingAction:) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:btn];
+        [_content addSubview:btn];
         btn.tag = i;
+        
+        NSString *iconUser = [sDic objectForKey:@"icon_user"];
+        UIImage *img = [UIImage imageNamed:iconUser];
+        if(img)
+        {
+            UIImageView *iconView = [[UIImageView alloc] initWithImage:img];
+            [btn addSubview:iconView];
+            iconView.contentMode = UIViewContentModeCenter;
+            
+            iconView.center = CGPointMake(120, 125);
+        }
+        
+        NSString *name = [sDic objectForKey:@"name"];
+        
+        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(180, 0, 200, 40)];
+        titleL.backgroundColor = [UIColor clearColor];
+        [btn addSubview:titleL];
+        titleL.font = [UIFont boldSystemFontOfSize:22];
+        titleL.textColor  = [UIColor whiteColor];
+        titleL.text = name;
+        titleL.tag = 102;
+        titleL.textAlignment = NSTextAlignmentLeft;
+        titleL.center = CGPointMake(titleL.center.x, 110);
+        
+        NSString *en_name = [sDic objectForKey:@"en_name"];
+        if(en_name == nil)
+        {
+            en_name = @"";
+        }
+        
+        UILabel* titleEnL = [[UILabel alloc] initWithFrame:CGRectMake(180, 0, 200, 40)];
+        titleEnL.backgroundColor = [UIColor clearColor];
+        [btn addSubview:titleEnL];
+        titleEnL.font = [UIFont boldSystemFontOfSize:22];
+        titleEnL.textColor  = [UIColor whiteColor];
+        titleEnL.text = en_name;
+        titleEnL.tag = 103;
+        titleEnL.textAlignment = NSTextAlignmentLeft;
+        titleEnL.center = CGPointMake(titleEnL.center.x, 130);
+        
         
         UILongPressGestureRecognizer *longPress0 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed0:)];
         [btn addGestureRecognizer:longPress0];
     }
+    
+    _content.contentSize = CGSizeMake(_content.frame.size.width,
+                                      y+260);
+    
 }
 
 - (void) longPressed0:(id)sender{
@@ -123,7 +373,7 @@
         UILongPressGestureRecognizer *viewRecognizer = (UILongPressGestureRecognizer*) sender;
         int index = (int)viewRecognizer.view.tag;
         
-        NSDictionary *scen = [scens objectAtIndex:index];
+        Scenario *scen = [_sceneDrivers objectAtIndex:index];
         
         UserScnarioConfigViewController *invitation = [[UserScnarioConfigViewController alloc] init];
         invitation._data = scen;
@@ -134,14 +384,13 @@
 - (void) userTrainingAction:(UIButton*)sender{
     
     id key = [NSNumber numberWithInteger:sender.tag];
-    NSDictionary *scen = [scens objectAtIndex:[key intValue]];
+    Scenario *scen = [_sceneDrivers objectAtIndex:[key intValue]];
 
     if([_mapSelect objectForKey:key])
     {
-
         //取消
-        [sender setImage:[UIImage imageNamed:[scen objectForKey:@"icon_nor"]] forState:UIControlStateNormal];
-        [sender setImage:[UIImage imageNamed:[scen objectForKey:@"icon_sel"]] forState:UIControlStateHighlighted];
+        [sender setImage:_nor_image forState:UIControlStateNormal];
+        [sender setImage:_sel_image forState:UIControlStateHighlighted];
 
         [_mapSelect removeObjectForKey:key];
     }
@@ -152,18 +401,32 @@
         if(btn)
         {
             id oldkey = [NSNumber numberWithInteger:btn.tag];
-            NSDictionary *scenold = [scens objectAtIndex:[oldkey intValue]];
             
-            [btn setImage:[UIImage imageNamed:[scenold objectForKey:@"icon_nor"]] forState:UIControlStateNormal];
-            [btn setImage:[UIImage imageNamed:[scenold objectForKey:@"icon_sel"]] forState:UIControlStateHighlighted];
+            [btn setImage:_nor_image forState:UIControlStateNormal];
+            [btn setImage:_sel_image forState:UIControlStateHighlighted];
             
             [_mapSelect removeObjectForKey:oldkey];
         }
         
         //选中
-        [sender setImage:[UIImage imageNamed:[scen objectForKey:@"icon_sel"]] forState:UIControlStateNormal];
-        [sender setImage:[UIImage imageNamed:[scen objectForKey:@"icon_sel"]] forState:UIControlStateHighlighted];
+        [sender setImage:_sel_image forState:UIControlStateNormal];
+        [sender setImage:_sel_image forState:UIControlStateHighlighted];
 
+        [KVNProgress show];
+        
+        RgsSceneObj * scene_obj = scen._rgsSceneObj;
+        if(scene_obj && [scene_obj isKindOfClass:[RgsSceneObj class]])
+        {
+            [[RegulusSDK sharedRegulusSDK] ExecScene:scene_obj.m_id
+                                          completion:^(BOOL result, NSError *error) {
+                if (result) {
+                    [KVNProgress showSuccess];
+                }
+                else{
+                    [KVNProgress showWithStatus:@"执行失败！"];
+                }
+            }];
+        }
         
         [_mapSelect setObject:scen forKey:key];
         [_mapSelect setObject:sender forKey:@"selected_btn"];

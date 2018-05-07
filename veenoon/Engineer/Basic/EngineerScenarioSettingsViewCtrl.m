@@ -23,9 +23,7 @@
 @interface EngineerScenarioSettingsViewCtrl ()<SIconSelectViewDelegate>{
     
     UIButton *_selectSysBtn;
-
     SIconSelectView *_settingview;
-    
     UIScrollView *scroolView;
     
     int topy;
@@ -42,10 +40,9 @@
 @synthesize _room_id;
 
 - (void) initDat {
-    
-    
 
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -60,8 +57,15 @@
     line.backgroundColor = RGB(75, 163, 202);
     [self.view addSubview:line];
     
+    UIView *topbar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 64)];
+    topbar.backgroundColor = THEME_COLOR;
+    
+    UIView *bottom = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
+    bottom.backgroundColor = THEME_COLOR;
+    
+    
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
-    [self.view addSubview:bottomBar];
+    
     
     //缺切图，把切图贴上即可。
     bottomBar.backgroundColor = [UIColor grayColor];
@@ -114,8 +118,11 @@
     _settingview.delegate = self;
     
     [self.view addSubview:_settingview];
-
     
+    [self.view addSubview:topbar];
+    [self.view addSubview:bottom];
+    [self.view addSubview:bottomBar];
+
     if([_scenarioArray count])
     {
         [self layoutScenarios];
@@ -143,7 +150,6 @@
 - (void) loadSenseFromRegulusCtrl{
     
     self._scenarioArray = [NSMutableArray array];
-    
     [self checkSceneData:[DataSync sharedDataSync]._currentArea];
 }
 
@@ -209,7 +215,7 @@
     
     int scenarioSize = (int)[_scenarioArray count] + 1;
     
-    int col = 10;
+    int col = 5;
     int leftRightSpace = ENGINEER_VIEW_LEFT;
     int colGap = 10;
     
@@ -223,18 +229,19 @@
     {
     scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(leftRightSpace,
                                                                 topy,
-                                                                SCREEN_WIDTH-leftRightSpace*2,
+                                                                SCREEN_WIDTH-leftRightSpace*2-300,
                                                                 SCREEN_HEIGHT-240)];
+        
     }
     else
     {
         [[scroolView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     }
-    [self.view addSubview:scroolView];
+    [self.view insertSubview:scroolView belowSubview:_settingview];
     
     int scrollHeight = rowNumber*cellHeight + (rowNumber-1)*colGap+10;
     
-    scroolView.contentSize = CGSizeMake(SCREEN_WIDTH-leftRightSpace*2, scrollHeight);
+    scroolView.contentSize = CGSizeMake(SCREEN_WIDTH-leftRightSpace*2-300, scrollHeight);
     
     [_sBtns removeAllObjects];
     
@@ -332,33 +339,48 @@
     if (index == [self._scenarioArray count]) {
         return;
     }
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"请输入场景名称" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController
+                                          alertControllerWithTitle:@"提示"
+                                          message:@"请输入场景名称"
+                                          preferredStyle:UIAlertControllerStyleAlert];
     
     [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
         textField.placeholder = @"场景名称";
     }];
     
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"英文名称";
+    }];
+    
     [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
-        UITextField *envirnmentNameTextField = alertController.textFields.firstObject;
-        NSString *scenarioName = envirnmentNameTextField.text;
-        
-        if (scenarioName && [scenarioName length] > 0) {
+        if([alertController.textFields count] == 2)
+        {
+            UITextField *envirnmentNameTextField = alertController.textFields.firstObject;
+            NSString *scenarioName = envirnmentNameTextField.text;
             
-            Scenario *s = [self._scenarioArray objectAtIndex:index];
-            UIButton *scenarioCellBtn = [_sBtns objectAtIndex:index];
+            UITextField *enNameTextField = [alertController.textFields objectAtIndex:1];
+            NSString *enName = enNameTextField.text;
             
-            NSMutableDictionary *sdic = [s senarioData];
-            [sdic setObject:scenarioName
-                            forKey:@"name"];
-           
-            
-            UILabel *tL = [scenarioCellBtn viewWithTag:102];
-            
-            if([tL isKindOfClass:[UILabel class]])
-                tL.text = scenarioName;
-            
-            [[DataBase sharedDatabaseInstance] saveScenario:sdic];
+            if (scenarioName && [scenarioName length] > 0 && [enName length])
+            {
+                Scenario *s = [self._scenarioArray objectAtIndex:index];
+                UIButton *scenarioCellBtn = [_sBtns objectAtIndex:index];
+                
+                NSMutableDictionary *sdic = [s senarioData];
+                [sdic setObject:scenarioName
+                         forKey:@"name"];
+                
+                [sdic setObject:enName
+                         forKey:@"en_name"];
+                
+                UILabel *tL = [scenarioCellBtn viewWithTag:102];
+                
+                if([tL isKindOfClass:[UILabel class]])
+                    tL.text = scenarioName;
+                
+                [[DataBase sharedDatabaseInstance] saveScenario:sdic];
+            }
         }
     }]];
     
@@ -414,6 +436,8 @@
     //    viewPoint.y -= CGRectGetMinY(scroolView.frame);
     //
     NSString *imageName = [data objectForKey:@"iconbig"];
+    NSString *icon_user = [data objectForKey:@"icon_user"];
+    NSString *title = [data objectForKey:@"title"];
     UIImage *img = [UIImage imageNamed:imageName];
     if(img) {
         for (UIButton *button in _sBtns) {
@@ -436,6 +460,14 @@
                     
                     NSMutableDictionary *scenarioDic = [s senarioData];
                     [scenarioDic setObject:imageName forKey:@"small_icon"];
+                    [scenarioDic setObject:icon_user forKey:@"icon_user"];
+                    [scenarioDic setObject:title forKey:@"name"];
+                    
+                    UILabel *tL = [button viewWithTag:102];
+                    
+                    if([tL isKindOfClass:[UILabel class]])
+                        tL.text = title;
+                    
                     [[DataBase sharedDatabaseInstance] saveScenario:scenarioDic];
                 }
                 

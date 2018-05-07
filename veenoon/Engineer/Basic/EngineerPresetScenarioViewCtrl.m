@@ -548,35 +548,35 @@
         //编辑/保存
       if(_isEditingScenario)
       {
-          //返回到场景列表页面
-          UIViewController *engCtrl = nil;
           
-          NSArray *ctrls = self.navigationController.viewControllers;
-          for(UIViewController *vc in ctrls)
-          {
-              if([vc isKindOfClass:[EngineerScenarioSettingsViewCtrl class]])
-              {
-                  engCtrl = vc;
-                  break;
-              }
-          }
-          
-          if(engCtrl){
-              
-              [[NSNotificationCenter defaultCenter] postNotificationName:@"Notify_Reload_Senario"
-                                                                  object:nil];
-              [self.navigationController popToViewController:engCtrl animated:YES];
-          }
-          
-          return;
       }
-       else
-       {
-           EngineerScenarioSettingsViewCtrl *ctrl = [[EngineerScenarioSettingsViewCtrl alloc] init];
-           ctrl._room_id = 1;
-           [self.navigationController pushViewController:ctrl animated:YES];
-       }
         
+        //返回到场景列表页面
+        UIViewController *engCtrl = nil;
+        
+        NSArray *ctrls = self.navigationController.viewControllers;
+        for(UIViewController *vc in ctrls)
+        {
+            if([vc isKindOfClass:[EngineerScenarioSettingsViewCtrl class]])
+            {
+                engCtrl = vc;
+                break;
+            }
+        }
+        
+        if(engCtrl){
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"Notify_Reload_Senario"
+                                                                object:nil];
+            [self.navigationController popToViewController:engCtrl animated:YES];
+        }
+        else
+        {
+            EngineerScenarioSettingsViewCtrl *ctrl = [[EngineerScenarioSettingsViewCtrl alloc] init];
+            ctrl._room_id = 1;
+            [self.navigationController pushViewController:ctrl animated:YES];
+        }
+
     }
 }
 

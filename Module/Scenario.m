@@ -315,7 +315,7 @@
     [[RegulusSDK sharedRegulusSDK] ReloadProject:^(BOOL result, NSError *error) {
         if(result)
         {
-            NSLog(@"reload project.");
+            NSLog(@"---------------------reload project.");
             
             [KVNProgress showSuccess];
             [block_self postCreateScenarioNotifyResult:YES];

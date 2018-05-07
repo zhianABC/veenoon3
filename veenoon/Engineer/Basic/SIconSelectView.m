@@ -50,16 +50,70 @@ IconLayerViewDelegate, CustomPickerViewDelegate>
     
     self._autoDatas = [NSMutableArray array];
     
-    self._icondata = @[@{@"title":@"环境照明",@"icon":@"ce_l_01.png",@"iconbig":@"senario_02_03.png"},
-                       @{@"title":@"环境控制",@"icon":@"ce_l_02.png",@"iconbig":@"senario_02_07.png"},
-                       @{@"title":@"宾客接待",@"icon":@"ce_l_03.png",@"iconbig":@"senario_02_11.png"},
-                       @{@"title":@"专业培训",@"icon":@"ce_l_04.png",@"iconbig":@"senario_02_15.png"},
-                       @{@"title":@"讨论会议",@"icon":@"ce_l_05.png",@"iconbig":@"senario_02_18.png"},
-                       @{@"title":@"离开模式",@"icon":@"ce_l_06.png",@"iconbig":@"senario_02_20.png"},
-                       @{@"title":@"洽谈",@"icon":@"ce_l_07.png",@"iconbig":@"senario_02_20.png"},
-                       @{@"title":@"影音模式",@"icon":@"ce_l_08.png",@"iconbig":@"senario_02_23.png"},
-                       @{@"title":@"娱乐",@"icon":@"ce_l_09.png",@"iconbig":@"senario_02_26.png"},
-                       @{@"title":@"商务",@"icon":@"ce_l_10.png",@"iconbig":@"senario_02_28.png"}];
+    //    self.scens = @[@{@"icon_nor":@"user_training_n.png",@"icon_sel":@"user_training_s.png",
+    //                     @"title":@"专业培训",@"title_en":@"Training"},
+    //                   @{@"icon_nor":@"envirement_control_n.png",@"icon_sel":@"envirement_control_s.png",
+    //                     @"title":@"环境控制",@"title_en":@"Environmental control"},
+    //                   @{@"icon_nor":@"guest_reception_n.png",@"icon_sel":@"guest_reception_s.png",
+    //                     @"title":@"宾客接待",@"title_en":@"Guests reception"},
+    //                   @{@"icon_nor":@"envirement_light_n.png",@"icon_sel":@"envirement_light_s.png",
+    //                     @"title":@"环境照明",@"title_en":@"Ambient lighting"},
+    //                   @{@"icon_nor":@"meeting_discuss_n.png",@"icon_sel":@"meeting_discuss_s.png",
+    //                     @"title":@"讨论会议",@"title_en":@"Meeting"},
+    //                   @{@"icon_nor":@"close_system_n.png",@"icon_sel":@"close_system_s.png",
+    //                     @"title":@"离开会场",@"title_en":@"Close system"}];
+    //
+    
+    
+    self._icondata = @[@{@"title":@"环境照明",@"icon":@"ce_l_01.png",
+                         @"iconbig":@"senario_02_03.png",
+                         @"icon_user":@"senario_02_03_big.png",
+                         @"en_name":@"Ambient lighting"
+                         },
+                       @{@"title":@"环境控制",@"icon":@"ce_l_02.png",
+                         @"iconbig":@"senario_02_07.png",
+                         @"icon_user":@"senario_02_07_big.png",
+                         @"en_name":@"Environmental control"
+                         },
+                       @{@"title":@"宾客接待",@"icon":@"ce_l_03.png",
+                         @"iconbig":@"senario_02_11.png",
+                         @"icon_user":@"senario_02_11_big.png",
+                         @"en_name":@"Guests reception"
+                         },
+                       @{@"title":@"专业培训",@"icon":@"ce_l_04.png",
+                         @"iconbig":@"senario_02_15.png",
+                         @"icon_user":@"senario_02_15_big.png",
+                         @"en_name":@"Training"
+                         },
+                       @{@"title":@"讨论会议",@"icon":@"ce_l_05.png",
+                         @"iconbig":@"senario_02_18.png",
+                         @"icon_user":@"senario_02_18_big.png",
+                         @"en_name":@"Meeting"
+                         },
+                       @{@"title":@"离开模式",@"icon":@"ce_l_06.png",
+                         @"iconbig":@"senario_02_20.png",
+                         @"icon_user":@"senario_02_20_big.png",
+                         @"en_name":@"Close system"
+                         },
+                       @{@"title":@"洽谈",@"icon":@"ce_l_07.png",
+                         @"iconbig":@"senario_02_26.png",
+                         @"icon_user":@"senario_02_26_big.png",
+                         @"en_name":@"Talk"
+                         },
+                       @{@"title":@"影音模式",@"icon":@"ce_l_08.png",
+                         @"iconbig":@"senario_02_23.png",
+                         @"icon_user":@"senario_02_23_big.png",
+                         @"en_name":@"Video"
+                         },
+//                       @{@"title":@"娱乐",@"icon":@"ce_l_09.png",
+//                         @"iconbig":@"senario_02_26.png",
+//                         @"icon_user":@"senario_02_26_big.png"
+//                         },
+                       @{@"title":@"商务",@"icon":@"ce_l_10.png",
+                         @"iconbig":@"senario_02_28.png",
+                         @"icon_user":@"senario_02_28_big.png",
+                         @"en_name":@"Bussiness"
+                         }];
 }
 
 - (id) initWithFrame:(CGRect)frame

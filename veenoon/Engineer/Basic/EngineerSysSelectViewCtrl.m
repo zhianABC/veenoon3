@@ -150,7 +150,7 @@
     [self containerView];
     
     self._regulus_gateway_id = [_meetingRoomDic objectForKey:@"regulus_id"];
-    self._regulus_user_id = @"RGS_EOC500_01_3";//[[NSUserDefaults standardUserDefaults] objectForKey:@"user_id"];
+    self._regulus_user_id = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_id"];
     
     self._sceneDrivers = [NSMutableArray array];
     

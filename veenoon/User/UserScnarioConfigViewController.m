@@ -22,6 +22,7 @@
 #import "UserMonitorSettingsViewCtrl.h"
 
 #import "IconCenterTextButton.h"
+#import "Scenario.h"
 
 @interface UserScnarioConfigViewController () {
     IconCenterTextButton *_audioSysBtn;
@@ -143,7 +144,7 @@
     [self.view addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:36];
     titleL.textColor  = [UIColor whiteColor];
-    titleL.text = [_data objectForKey:@"title"];
+    titleL.text = [[_data senarioData] objectForKey:@"name"];
     
     UILabel* titleL2 = [[UILabel alloc] initWithFrame:CGRectMake(60, SCREEN_HEIGHT-209, SCREEN_WIDTH, 40)];
     titleL2.backgroundColor = [UIColor clearColor];
@@ -151,7 +152,7 @@
     titleL2.font = [UIFont boldSystemFontOfSize:24];
     titleL2.textColor  = [UIColor whiteColor];
     titleL2.alpha = 0.5;
-    titleL2.text = [_data objectForKey:@"title_en"];
+    titleL2.text = [[_data senarioData] objectForKey:@"en_name"];
 }
 
 - (void) backAction:(id)sender{
