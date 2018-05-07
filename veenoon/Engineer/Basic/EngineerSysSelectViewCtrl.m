@@ -52,14 +52,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.view.backgroundColor = RGB(1, 138, 182);
-    
+    self.view.backgroundColor = BLACK_COLOR;
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
     bottomBar.backgroundColor = [UIColor grayColor];
     bottomBar.userInteractionEnabled = YES;
-    bottomBar.image = [UIImage imageNamed:@"botomo_icon.png"];
+    bottomBar.image = [UIImage imageNamed:@"botomo_icon_black.png"];
     
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     cancelBtn.frame = CGRectMake(0, 0, 160, 50);
@@ -72,8 +71,7 @@
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *login = [UIButton buttonWithColor:[UIColor whiteColor]
-                                       selColor:LINE_COLOR];
+    UIButton *login = [UIButton buttonWithColor:nil selColor:[UIColor whiteColor]];
     login.frame = CGRectMake(SCREEN_WIDTH/2 - 180, SCREEN_HEIGHT/2 - 80, 360, 44);
     login.layer.cornerRadius = 8;
     login.layer.borderWidth = 1;
@@ -81,7 +79,8 @@
     login.clipsToBounds = YES;
     [self.view addSubview:login];
     [login setTitle:@"设置新的系统" forState:UIControlStateNormal];
-    [login setTitleColor:RGB(1, 138, 182) forState:UIControlStateNormal];
+    [login setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [login setTitleColor:BLACK_COLOR forState:UIControlStateHighlighted];
     login.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     
     [login addTarget:self
@@ -97,7 +96,7 @@
     [self.view addSubview:signup];
     [signup setTitle:@"链接已有系统" forState:UIControlStateNormal];
     [signup setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [signup setTitleColor:RGB(1, 138, 182) forState:UIControlStateHighlighted];
+    [signup setTitleColor:BLACK_COLOR forState:UIControlStateHighlighted];
     signup.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     
     [signup addTarget:self

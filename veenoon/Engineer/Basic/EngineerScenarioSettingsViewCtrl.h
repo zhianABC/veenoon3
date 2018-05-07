@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 
-@interface EngineerScenarioSettingsViewCtrl : BaseViewController {
+@interface EngineerScenarioSettingsViewCtrl : UIViewController {
     
 }
 @property (nonatomic, assign) int _room_id;

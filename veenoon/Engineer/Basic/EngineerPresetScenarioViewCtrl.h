@@ -12,7 +12,7 @@
 
 @class Scenario;
 
-@interface EngineerPresetScenarioViewCtrl : BaseViewController {
+@interface EngineerPresetScenarioViewCtrl : UIViewController {
     NSMutableDictionary *_meetingRoomDic;
     NSString *_scenarioName;
     

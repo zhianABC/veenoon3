@@ -9,7 +9,7 @@
 #import "BaseViewController.h"
 
 
-@interface EngineerMeetingRoomListViewCtrl : BaseViewController {
+@interface EngineerMeetingRoomListViewCtrl : UIViewController {
     
 }
 

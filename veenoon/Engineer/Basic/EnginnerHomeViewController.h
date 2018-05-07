@@ -9,7 +9,7 @@
 #import "BaseViewController.h"
 
 
-@interface EnginnerHomeViewController : BaseViewController <UITextFieldDelegate> {
+@interface EnginnerHomeViewController : UIViewController <UITextFieldDelegate> {
     
 }
 

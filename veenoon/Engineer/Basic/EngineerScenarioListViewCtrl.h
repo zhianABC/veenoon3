@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 
-@interface EngineerScenarioListViewCtrl : BaseViewController {
+@interface EngineerScenarioListViewCtrl : UIViewController {
     NSMutableDictionary *_meetingRoomDic;
 }
 @property (nonatomic,strong) NSMutableDictionary *_meetingRoomDic;

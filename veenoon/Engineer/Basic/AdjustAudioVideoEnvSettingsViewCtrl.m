@@ -25,6 +25,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.view.backgroundColor = BLACK_COLOR;
+    
     UILabel *centerTitleL = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-100, 25, 200, 30)];
     centerTitleL.textColor = [UIColor whiteColor];
     centerTitleL.backgroundColor = [UIColor clearColor];
@@ -48,7 +50,7 @@
     //缺切图，把切图贴上即可。
     bottomBar.backgroundColor = [UIColor grayColor];
     bottomBar.userInteractionEnabled = YES;
-    bottomBar.image = [UIImage imageNamed:@"botomo_icon.png"];
+    bottomBar.image = [UIImage imageNamed:@"botomo_icon_black.png"];
     
     UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);

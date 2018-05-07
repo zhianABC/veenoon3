@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 
-@interface AdjustAudioVideoEnvSettingsViewCtrl : BaseViewController {
+@interface AdjustAudioVideoEnvSettingsViewCtrl : UIViewController {
     NSMutableDictionary *selectedSysDic;
 }
 @property (nonatomic, strong) NSMutableDictionary *selectedSysDic;

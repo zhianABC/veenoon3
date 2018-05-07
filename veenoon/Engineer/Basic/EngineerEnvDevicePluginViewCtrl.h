@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 
-@interface EngineerEnvDevicePluginViewCtrl : BaseViewController {
+@interface EngineerEnvDevicePluginViewCtrl : UIViewController {
     NSMutableDictionary *_meetingRoomDic;
     NSMutableDictionary *_selectedSysDic;
 }

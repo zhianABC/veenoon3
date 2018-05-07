@@ -49,7 +49,7 @@ EPlusLayerViewDelegate>
         
         _tableView.clipsToBounds = NO;
         
-        self.backgroundColor = RGB(0, 89, 118);
+        self.backgroundColor = DARK_GRAY_COLOR;
         
 //        _maskView = [[UIView alloc] initWithFrame:_tableView.frame];
 //        [self addSubview:_maskView];
