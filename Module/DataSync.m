@@ -116,6 +116,25 @@ static DataSync* dSyncInstance = nil;
 #endif
 }
 
+- (void) logoutCurrentRegulus{
+    
+    /*
+    if(_currentReglusLogged)
+    {
+        NSString *regulus_gateway_id = [_currentReglusLogged objectForKey:@"gw_id"];
+        NSString *regulus_user_id = [_currentReglusLogged objectForKey:@"user_id"];
+        
+        if(regulus_user_id && regulus_gateway_id)
+        {
+            [[RegulusSDK sharedRegulusSDK] Logout:regulus_user_id
+                                            gw_id:regulus_gateway_id completion:nil];
+            
+            [DataSync sharedDataSync]._currentReglusLogged = nil;
+        }
+    }
+     */
+}
+
 - (void) syncCurrentArea{
     
 #ifdef OPEN_REG_LIB_DEF

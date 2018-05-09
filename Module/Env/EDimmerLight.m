@@ -217,9 +217,8 @@
             [commands addObject:cmdDic];
             
             [cmdDic setObject:[NSNumber numberWithInteger:vprj._deviceId] forKey:@"proxy_id"];
-//            [cmdDic setObject:vprj._power forKey:@"power"];
-//            [cmdDic setObject:vprj._input forKey:@"input"];
-//            
+            [cmdDic setObject:[vprj getChLevelRecords] forKey:@"ch_level"];
+           
             [cmdDic setObject:[vprj getScenarioSliceLocatedShadow]
                        forKey:@"RgsSceneDeviceOperation"];
             

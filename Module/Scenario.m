@@ -21,6 +21,9 @@
 #import "VTouyingjiSet.h"
 #import "VProjectProxys.h"
 
+#import "EDimmerLight.h"
+#import "EDimmerLightProxys.h"
+
 #import "DataBase.h"
 
 @interface Scenario ()
@@ -119,6 +122,7 @@
     self._AProcessorPlugs = [NSMutableArray array];
     self._VCameraSettings = [NSMutableArray array];
     self._VTouyingji = [NSMutableArray array];
+    self._EDimmerLights = [NSMutableArray array];
     
     NSArray *audios = [data objectForKey:@"audio"];
     for(NSDictionary *a in audios){
@@ -157,6 +161,11 @@
         Class someClass = NSClassFromString(classname);
         BasePlugElement * obj = [[someClass alloc] init];
         [obj jsonToObject:env];
+        
+        if([obj isKindOfClass:[EDimmerLight class]])
+        {
+            [_EDimmerLights addObject:obj];
+        }
     }
     
     
@@ -375,6 +384,11 @@
         [self createVideoProjectScenario];
     }
     
+    //照明
+    if([self._EDimmerLights count])
+    {
+        [self createEvnLightScenario];
+    }
     
 }
 
@@ -498,6 +512,30 @@
     }
 }
 
+- (void) createEvnLightScenario{
+    
+    NSMutableArray *evns = [_scenarioData objectForKey:@"environment"];
+    
+    for(EDimmerLight *vprj in self._EDimmerLights)
+    {
+        
+        EDimmerLightProxys *proj = vprj._proxyObj;
+        if([proj isSetChanged])
+        {
+            NSArray *rsps = [proj generateEventOperation_ChLevel];
+            if(rsps && [rsps count])
+            {
+                for(id rsp in rsps)
+                {
+                    [self addEventOperation:rsp];
+                }
+            }
+        }
+        
+        NSDictionary *data = [vprj objectToJson];
+        [evns addObject:data];
+    }
+}
 
 
 @end

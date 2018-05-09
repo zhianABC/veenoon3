@@ -40,5 +40,6 @@
 - (RgsDriverInfo *) driverInfoByUUID:(NSString*)uuid;
 
 - (void) reloginRegulus;
+- (void) logoutCurrentRegulus;
 
 @end

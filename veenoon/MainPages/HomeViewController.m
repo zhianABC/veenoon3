@@ -15,6 +15,7 @@
 #import "VNSettingsView.h"
 #import "JCActionView.h"
 #import "AppDelegate.h"
+#import "DataSync.h"
 
 @interface HomeViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate, JCActionViewDelegate> {
     
@@ -56,6 +57,9 @@
                                             selector:@selector(updateTime)
                                             userInfo:nil
                                              repeats:NO];
+    
+    
+    [[DataSync sharedDataSync] logoutCurrentRegulus];
 
 }
 

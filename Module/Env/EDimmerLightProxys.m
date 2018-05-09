@@ -18,7 +18,7 @@
 @property (nonatomic, strong) NSArray *_rgsCommands;
 @property (nonatomic, strong) NSMutableDictionary *_cmdMap;
 @property (nonatomic, strong) NSMutableDictionary *_RgsSceneDeviceOperationShadow;
-
+@property (nonatomic, strong) NSMutableDictionary* _channelsMap;
 
 @end
 
@@ -31,19 +31,34 @@
 @synthesize _deviceId;
 @synthesize _RgsSceneDeviceOperationShadow;
 
-@synthesize _ch;
+@synthesize _channelsMap;
+
 @synthesize _level;
 
 - (id) init
 {
     if(self = [super init])
     {
-        self._ch = 1;
         self._level = 0;
+        
+        self._channelsMap = [NSMutableDictionary dictionary];
+        
         self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionary];
+        
+       
     }
     
     return self;
+}
+
+- (BOOL) isSetChanged{
+    
+    return _isSetOK;
+}
+
+- (NSDictionary *)getChLevelRecords{
+    
+    return _channelsMap;
 }
 
 - (NSDictionary *)getScenarioSliceLocatedShadow{
@@ -57,6 +72,9 @@
     NSInteger proxy_id = [[data objectForKey:@"proxy_id"] intValue];
     if(proxy_id == _deviceId)
     {
+        NSDictionary *ch_level = [data objectForKey:@"ch_level"];
+        if(ch_level)
+            self._channelsMap = [NSMutableDictionary dictionaryWithDictionary:ch_level];
         
         if([data objectForKey:@"RgsSceneDeviceOperation"]){
             self._RgsSceneDeviceOperationShadow = [data objectForKey:@"RgsSceneDeviceOperation"];
@@ -134,14 +152,23 @@
         }
     }
     
+    //不要初始化了，没有操控的channel就不需要执行
+//    for(int i = 0; i < max; i++){
+//
+//        [_channelsMap setObject:@0 forKey:[NSNumber numberWithInt:i]];
+//    }
+    
     return max;
 }
 
-- (void) controlDeviceLightLevel:(int)levelValue{
+- (void) controlDeviceLightLevel:(int)levelValue ch:(int)ch{
     
     RgsCommandInfo *cmd = nil;
     cmd = [_cmdMap objectForKey:@"SET_CH_LEVEL"];
     self._level = levelValue;
+    
+    [self._channelsMap setObject:[NSNumber numberWithInt:_level]
+                          forKey:[NSNumber numberWithInt:ch]];
     
     if(cmd)
     {
@@ -152,7 +179,7 @@
             {
                 if([param_info.name isEqualToString:@"CH"])
                 {
-                    [param setObject:[NSString stringWithFormat:@"%d", _ch]
+                    [param setObject:[NSString stringWithFormat:@"%d", ch]
                               forKey:param_info.name];
                 }
                 else if([param_info.name isEqualToString:@"LEVEL"])
@@ -167,7 +194,7 @@
         {
             _deviceId = _rgsProxyObj.m_id;
         }
-        
+        if(_deviceId)
         [[RegulusSDK sharedRegulusSDK] ControlDevice:_deviceId
                                                  cmd:cmd.name
                                                param:param completion:^(BOOL result, NSError *error) {
@@ -179,6 +206,95 @@
                                                    }
                                                }];
     }
+}
+
+- (NSArray*) generateEventOperation_ChLevel{
+    
+    RgsCommandInfo *cmd = nil;
+    
+    if(_cmdMap)
+        cmd = [_cmdMap objectForKey:@"SET_CH_LEVEL"];
+    
+    if(cmd)
+    {
+        NSMutableArray *event_opts = [NSMutableArray array];
+        NSMutableArray *event_opts_slice = [NSMutableArray array];
+        for(id chkey in [_channelsMap allKeys])
+        {
+            
+            int iCh = [chkey intValue];
+            int iLevel = [[_channelsMap objectForKey:chkey] intValue];
+            
+            NSMutableDictionary * param = [NSMutableDictionary dictionary];
+            if([cmd.params count])
+            {
+                for(RgsCommandParamInfo *param_info in cmd.params)
+                {
+                    if([param_info.name isEqualToString:@"CH"])
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%d", iCh]
+                                  forKey:param_info.name];
+                    }
+                    else if([param_info.name isEqualToString:@"LEVEL"])
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%d", iLevel]
+                                  forKey:param_info.name];
+                    }
+                }
+            }
+            
+            if(_rgsProxyObj)
+            {
+                _deviceId = _rgsProxyObj.m_id;
+            }
+            RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc]init];
+            scene_opt.dev_id = _deviceId;
+            scene_opt.cmd = cmd.name;
+            scene_opt.param = param;
+            
+            //用于保存还原
+            NSMutableDictionary *slice = [NSMutableDictionary dictionary];
+            [slice setObject:[NSNumber numberWithInteger:_deviceId] forKey:@"dev_id"];
+            [slice setObject:cmd.name forKey:@"cmd"];
+            [slice setObject:param forKey:@"param"];
+            [event_opts_slice addObject:slice];
+            
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
+                                                                              cmd:scene_opt.cmd
+                                                                            param:scene_opt.param];
+            
+            [event_opts addObject:opt];
+        }
+        
+          [_RgsSceneDeviceOperationShadow setObject:event_opts_slice
+                                             forKey:@"SET_CH_LEVEL"];
+        
+        
+        return event_opts;
+    }
+    else
+    {
+        NSArray *cmdsRevs = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_CH_LEVEL"];
+        if(cmdsRevs && [cmdsRevs count])
+        {
+            NSMutableArray *event_opts = [NSMutableArray array];
+            
+            for(NSDictionary *cmdsRev in cmdsRevs)
+            {
+                RgsSceneOperation * opt = [[RgsSceneOperation alloc]
+                                           initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
+                                           cmd:[cmdsRev objectForKey:@"cmd"]
+                                           param:[cmdsRev objectForKey:@"param"]];
+                
+                [event_opts addObject:opt];
+            }
+           
+            
+            return event_opts;
+        }
+    }
+    
+    return nil;
 }
 
 @end

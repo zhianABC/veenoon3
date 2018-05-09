@@ -315,7 +315,7 @@
         
         //用于保存还原
         NSMutableDictionary *slice = [NSMutableDictionary dictionary];
-        [slice setObject:[NSNumber numberWithInteger:_rgsProxyObj.m_id] forKey:@"dev_id"];
+        [slice setObject:[NSNumber numberWithInteger:_deviceId] forKey:@"dev_id"];
         [slice setObject:cmd.name forKey:@"cmd"];
         [slice setObject:param forKey:@"param"];
         [_RgsSceneDeviceOperationShadow setObject:slice forKey:@"SET_INPUT"];

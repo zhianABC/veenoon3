@@ -148,6 +148,8 @@
     int space = ENGINEER_VIEW_COLUMN_GAP;
     
     
+    NSDictionary *chLevelMap = [(EDimmerLightProxys*)_curProcessor._proxyObj getChLevelRecords];
+    
     for (int i = 0; i < self._number; i++) {
         
         int row = index/colNumber;
@@ -160,6 +162,15 @@
         btn.delegate = self;
         [_proxysView addSubview:btn];
         
+        id key = [NSNumber numberWithInt:i+1];
+        if([chLevelMap objectForKey:key])
+        {
+            int level = [[chLevelMap objectForKey:key] intValue];
+            float f = level/100.0;
+            [btn setCircleValue:f];
+        }
+        
+    
         UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2-40, 0, 80, 20)];
         titleL.backgroundColor = [UIColor clearColor];
         titleL.textAlignment = NSTextAlignmentCenter;
@@ -219,10 +230,20 @@
     
     RgsDriverObj *driver = _curProcessor._driver;
     
-    EDimmerLightProxys *vpro = [[EDimmerLightProxys alloc] init];
+    id proxy = _curProcessor._proxyObj;
+    
+    EDimmerLightProxys *vpro = nil;
+    if(proxy && [proxy isKindOfClass:[EDimmerLightProxys class]])
+    {
+        vpro = proxy;
+    }
+    else
+    {
+        vpro = [[EDimmerLightProxys alloc] init];
+    }
+    
     vpro._deviceId = driver.m_id;
     [vpro checkRgsProxyCommandLoad:cmds];
-    
     if([_curProcessor._localSavedCommands count])
     {
         NSDictionary *local = [_curProcessor._localSavedCommands objectAtIndex:0];
@@ -244,10 +265,10 @@
         [button setCircleValue:circleValue];
         
         EDimmerLightProxys *vpro = self._curProcessor._proxyObj;
-        vpro._ch = (int)button.tag + 1;
+        int ch = (int)button.tag + 1;
         if([vpro isKindOfClass:[EDimmerLightProxys class]])
         {
-            [vpro controlDeviceLightLevel:(int)value];
+            [vpro controlDeviceLightLevel:(int)value ch:ch];
             
             
         }
@@ -259,10 +280,10 @@
     int circleValue = value*100.0f;
     
     EDimmerLightProxys *vpro = self._curProcessor._proxyObj;
-    vpro._ch = (int)slbtn.tag + 1;
+    int ch = (int)slbtn.tag + 1;
     if([vpro isKindOfClass:[EDimmerLightProxys class]])
     {
-        [vpro controlDeviceLightLevel:circleValue];
+        [vpro controlDeviceLightLevel:circleValue ch:ch];
     }
     
     [_zengyiSlider setScaleValue:circleValue];

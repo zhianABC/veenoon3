@@ -196,6 +196,13 @@
     if(_curProcessor == nil)
         return;
     
+    //如果有，就不需要重新请求了
+    if([_curProcessor._inAudioProxys count] && [_curProcessor._outAudioProxys count])
+    {
+        [self initChannels];
+        return;
+    }
+    
 #ifdef OPEN_REG_LIB_DEF
     
     IMP_BLOCK_SELF(EngineerAudioProcessViewCtrl);
@@ -221,9 +228,6 @@
 
 - (void) initChannels{
     
-    //清空一下
-    self._inputProxys = [NSMutableArray array];
-    self._outputProxys = [NSMutableArray array];
     [[_proxysView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     [_inputBtnArray removeAllObjects];
@@ -253,29 +257,41 @@
     int leftRight = ENGINEER_VIEW_LEFT;
     int space = 8;
     
-    for(RgsProxyObj *proxy in _proxys)
+    if(_curProcessor._inAudioProxys == nil ||
+       _curProcessor._outAudioProxys == nil)
     {
-        if([proxy.type isEqualToString:@"Audio In"])
+        self._inputProxys = [NSMutableArray array];
+        self._outputProxys = [NSMutableArray array];
+        
+        for(RgsProxyObj *proxy in _proxys)
         {
-            VAProcessorProxys *vap = [[VAProcessorProxys alloc] init];
-            vap._rgsProxyObj = proxy;
-            [_inputProxys addObject:vap];
-            
-            //[vap checkRgsProxyCommandLoad];
+            if([proxy.type isEqualToString:@"Audio In"])
+            {
+                VAProcessorProxys *vap = [[VAProcessorProxys alloc] init];
+                vap._rgsProxyObj = proxy;
+                [_inputProxys addObject:vap];
+                
+                //[vap checkRgsProxyCommandLoad];
+            }
+            else if([proxy.type isEqualToString:@"Audio Out"])
+            {
+                VAProcessorProxys *vap = [[VAProcessorProxys alloc] init];
+                vap._rgsProxyObj = proxy;
+                [_outputProxys addObject:vap];
+                
+                //[vap checkRgsProxyCommandLoad];
+            }
         }
-        else if([proxy.type isEqualToString:@"Audio Out"])
-        {
-            VAProcessorProxys *vap = [[VAProcessorProxys alloc] init];
-            vap._rgsProxyObj = proxy;
-            [_outputProxys addObject:vap];
-            
-            //[vap checkRgsProxyCommandLoad];
-        }
+        _curProcessor._inAudioProxys = _inputProxys;
+        _curProcessor._outAudioProxys = _outputProxys;
+        
     }
-    
-    _curProcessor._inAudioProxys = _inputProxys;
-    _curProcessor._outAudioProxys = _outputProxys;
-    
+    else
+    {
+        self._inputProxys = _curProcessor._inAudioProxys;
+        self._outputProxys = _curProcessor._outAudioProxys;
+        
+    }
     for (int i = 0; i < [_inputProxys count]; i++) {
         
         VAProcessorProxys *vap = [_inputProxys objectAtIndex:i];

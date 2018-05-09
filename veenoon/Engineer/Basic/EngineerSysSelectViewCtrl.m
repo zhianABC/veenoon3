@@ -71,16 +71,16 @@
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *login = [UIButton buttonWithColor:nil selColor:[UIColor whiteColor]];
+    UIButton *login = [UIButton buttonWithColor:[UIColor whiteColor] selColor:LINE_COLOR];
     login.frame = CGRectMake(SCREEN_WIDTH/2 - 180, SCREEN_HEIGHT/2 - 80, 360, 44);
     login.layer.cornerRadius = 8;
-    login.layer.borderWidth = 1;
-    login.layer.borderColor = [UIColor whiteColor].CGColor;
+    //login.layer.borderWidth = 1;
+    //login.layer.borderColor = [UIColor whiteColor].CGColor;
     login.clipsToBounds = YES;
     [self.view addSubview:login];
     [login setTitle:@"设置新的系统" forState:UIControlStateNormal];
-    [login setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [login setTitleColor:BLACK_COLOR forState:UIControlStateHighlighted];
+    //[login setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [login setTitleColor:BLACK_COLOR forState:UIControlStateNormal];
     login.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     
     [login addTarget:self
@@ -235,7 +235,7 @@
     [DataSync sharedDataSync]._currentReglusLogged = @{@"gw_id":_regulus_gateway_id,
                                                        @"user_id":_regulus_user_id
                                                        };
-    
+    //[KVNProgress showSuccess];
     [self checkArea];
     
 }
@@ -436,11 +436,12 @@
     
     if([DataSync sharedDataSync]._currentReglusLogged)
     {
+//        sender.enabled = YES;
+//        //test
+//        [self setNewProject];
+//
         
-        //test
-        [self setNewProject];
         
-        /*
         IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
 
         [[RegulusSDK sharedRegulusSDK] NewProject:@"Veenoon" completion:^(BOOL result, NSError *error) {
@@ -456,7 +457,7 @@
                 NSLog(@"%@", [error description]);
             }
         }];
-         */
+        
 
     }
     else
@@ -476,6 +477,9 @@
 
 - (void) setNewProject{
     
+    [[DataBase sharedDatabaseInstance] deleteScenarioByRoom:1];
+    [_sceneDrivers removeAllObjects];
+    
     EngineerToUseTeslariViewCtrl *ctrl = [[EngineerToUseTeslariViewCtrl alloc] init];
     ctrl._meetingRoomDic = self._meetingRoomDic;
     [self.navigationController pushViewController:ctrl animated:YES];
@@ -483,6 +487,8 @@
 }
 
 - (void) cancelAction:(id)sender{
+    
+   // [[DataSync sharedDataSync] logoutCurrentRegulus];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

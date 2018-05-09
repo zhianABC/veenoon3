@@ -118,7 +118,7 @@
     _numberBtn.layer.borderWidth = 2;
     _numberBtn.layer.borderColor = [UIColor clearColor].CGColor;;
     _numberBtn.clipsToBounds = YES;
-    [_numberBtn setTitle:@"0" forState:UIControlStateNormal];
+    [_numberBtn setTitle:@"1" forState:UIControlStateNormal];
     [_numberBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateNormal];
     [_numberBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
     _numberBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
@@ -485,7 +485,18 @@
 
 - (void) loadedCameraProxy:(NSArray*)proxys{
     
-    VCameraProxys *vcam = [[VCameraProxys alloc] init];
+    id proxy = self._currentObj._proxyObj;
+    
+    VCameraProxys *vcam = nil;
+    if(proxy && [proxy isKindOfClass:[VCameraProxys class]])
+    {
+        vcam = proxy;
+    }
+    else
+    {
+        vcam = [[VCameraProxys alloc] init];
+    }
+    
     vcam._rgsProxyObj = [proxys objectAtIndex:0];
     [vcam checkRgsProxyCommandLoad];
     
@@ -495,6 +506,11 @@
         [vcam recoverWithDictionary:local];
         
         [_numberBtn setTitle:[NSString stringWithFormat:@"%d", vcam._load]
+                    forState:UIControlStateNormal];
+    }
+    else
+    {
+        [_numberBtn setTitle:[NSString stringWithFormat:@"%d", vcam._save]
                     forState:UIControlStateNormal];
     }
     
@@ -539,7 +555,7 @@
 - (void) minusAction:(id)sender{
     NSString *currentValue = _numberBtn.titleLabel.text;
     int value = [currentValue intValue];
-    if (value == 0) {
+    if (value <= 1) {
         return;
     }
     value--;

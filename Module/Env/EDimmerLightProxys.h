@@ -17,16 +17,22 @@
 @property (nonatomic, strong) RgsProxyObj *_rgsProxyObj;
 @property (nonatomic, assign) NSUInteger _deviceId;
 
-@property (nonatomic, assign) int _ch;
+
 @property (nonatomic, assign) int _level;
 
+- (NSDictionary *)getChLevelRecords;
 
 - (NSDictionary *)getScenarioSliceLocatedShadow;
 - (void) checkRgsProxyCommandLoad:(NSArray*)cmds;
 
 - (int)getNumberOfLights;
 
-- (void) controlDeviceLightLevel:(int)levelValue;
+- (void) controlDeviceLightLevel:(int)levelValue ch:(int)ch;
+
+- (BOOL) isSetChanged;
+
+////生成场景片段
+- (NSArray*) generateEventOperation_ChLevel;
 
 /////场景还原
 - (void) recoverWithDictionary:(NSDictionary*)data;

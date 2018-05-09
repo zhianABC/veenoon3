@@ -334,7 +334,18 @@
     
     RgsDriverObj *driver = _currentObj._driver;
     
-    VProjectProxys *vpro = [[VProjectProxys alloc] init];
+    id proxy = self._currentObj._proxyObj;
+    
+    VProjectProxys *vpro = nil;
+    if(proxy && [proxy isKindOfClass:[VProjectProxys class]])
+    {
+        vpro = proxy;
+    }
+    else
+    {
+        vpro = [[VProjectProxys alloc] init];
+    }
+
     vpro._deviceId = driver.m_id;
     [vpro checkRgsProxyCommandLoad:cmds];
     

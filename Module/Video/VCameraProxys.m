@@ -46,8 +46,8 @@
 {
     if(self = [super init])
     {
-        _save = 0;
-        _load = 0;
+        _save = 1;
+        _load = 1;
         
         self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionary];
     }

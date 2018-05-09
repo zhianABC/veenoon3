@@ -346,6 +346,28 @@ static DataBase* sharedInstance = nil;
     return 0;
 }
 
+- (void) deleteScenarioByRoom:(int)room_id{
+ 
+    const char *sqlStatement = "delete from tblCachedScenario where room_id=?";
+    sqlite3_stmt *statement;
+    
+    int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
+    if (success != SQLITE_OK) {
+        NSLog(@"Error: failed to delete: tblCachedScenario");
+        return;
+    }
+
+    sqlite3_bind_int(statement, 1, room_id);
+    
+    success = sqlite3_step(statement);
+    sqlite3_finalize(statement);
+    
+    if (success == SQLITE_ERROR) {
+        NSLog(@"Error: failed to insert into tblCachedScenario with message.");
+        return;
+    }
+    return;
+}
 
 
 

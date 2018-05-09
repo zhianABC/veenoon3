@@ -9,6 +9,7 @@
 #import "EngineerMeetingRoomListViewCtrl.h"
 #import "EngineerSysSelectViewCtrl.h"
 #import "JCActionView.h"
+#import "DataSync.h"
 #import "AppDelegate.h"
 
 #ifdef OPEN_REG_LIB_DEF
@@ -238,6 +239,9 @@
 }
 
 - (void) backAction:(id)sender{
+    
+    //[[DataSync sharedDataSync] logoutCurrentRegulus];
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 

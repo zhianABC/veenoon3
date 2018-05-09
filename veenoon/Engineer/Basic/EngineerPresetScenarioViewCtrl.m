@@ -491,6 +491,21 @@
         {
             [self addComponentToEnd:_videoScroll dataDic:[map objectForKey:video_touying_name]];
         }
+        
+        //Env
+        NSDictionary *envDic = [data objectAtIndex:2];
+        items = [envDic objectForKey:@"items"];
+        map = [NSMutableDictionary dictionary];
+        for(NSDictionary *item in items)
+        {
+            [map setObject:item forKey:[item objectForKey:@"name"]];
+        }
+        
+        if([_scenario._EDimmerLights count])
+        {
+            [self addComponentToEnd:_envScroll dataDic:[map objectForKey:env_dimmer_light]];
+        }
+        
     }
     
 }
