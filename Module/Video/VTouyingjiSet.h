@@ -26,9 +26,6 @@
 
 @property (nonatomic, strong) NSArray *_localSavedCommands;
 
-- (void) syncDriverIPProperty;
-- (void) uploadDriverIPProperty;
-
 - (void) syncDriverComs;
 
 - (void) removeDriver;

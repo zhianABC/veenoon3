@@ -12,6 +12,8 @@
 #import "VTouyingjiSet.h"
 #import "EDimmerLight.h"
 #import "UIButton+Color.h"
+#import "RegulusSDK.h"
+#import "KVNProgress.h"
 
 @interface DriverPropertyView () <UITextFieldDelegate>
 {
@@ -136,7 +138,68 @@
 
 - (void) recoverSetting{
     
+    if(_plugDriver._ipaddress == nil)
+    {
+        _iptitleL.alpha = 0.5;
+        ipTextField.alpha = 0.5;
+        ipTextField.text = @"";
+        ipTextField.userInteractionEnabled = NO;
+        
+        return;
+    }
+    else
+    {
+        _iptitleL.alpha = 1;
+        ipTextField.alpha = 1;
+        ipTextField.text = @"";
+        ipTextField.userInteractionEnabled = YES;
+        
+    }
+    if(_plugDriver._driver_ip_property)
+    {
+        ipTextField.text = _plugDriver._ipaddress;
+        return;
+    }
+    
+    if(_plugDriver._driver && [_plugDriver._driver isKindOfClass:[RgsDriverObj class]])
+    {
+        IMP_BLOCK_SELF(DriverPropertyView);
+        
+        [KVNProgress show];
+        RgsDriverObj *rd = (RgsDriverObj*)_plugDriver._driver;
+        [[RegulusSDK sharedRegulusSDK] GetDriverProperties:rd.m_id completion:^(BOOL result, NSArray *properties, NSError *error) {
+            if (result) {
+                if ([properties count]) {
+                    
+                    [block_self updateDriverProperty:properties];
+                
+                }
+            }
+            else
+            {
+                [KVNProgress showErrorWithStatus:@"加载失败，请重试"];
+            }
+        }];
+    }
+    
+    
+}
+
+- (void) updateDriverProperty:(NSArray*)properties{
+    
+    for(RgsPropertyObj *pro in properties)
+    {
+        if([pro.name isEqualToString:@"IP"])
+        {
+            _plugDriver._driver_ip_property = pro;
+            _plugDriver._ipaddress = pro.value;
+        }
+    }
+    
+    _plugDriver._properties = properties;
     ipTextField.text = _plugDriver._ipaddress;
+    
+    [KVNProgress dismiss];
 }
 
 @end

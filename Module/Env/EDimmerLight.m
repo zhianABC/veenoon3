@@ -17,7 +17,6 @@
 {
     
 }
-@property (nonatomic, strong) RgsPropertyObj *_driver_ip_Property;
 
 
 @end
@@ -27,7 +26,6 @@
     
 }
 
-@synthesize _driver_ip_Property;
 @synthesize _localSavedCommands;
 
 @synthesize _proxyObj;
@@ -51,9 +49,9 @@
 
 - (void) syncDriverIPProperty{
     
-    if(_driver_ip_Property)
+    if(_driver_ip_property)
     {
-        self._ipaddress = _driver_ip_Property.value;
+        self._ipaddress = _driver_ip_property.value;
         return;
     }
     
@@ -70,7 +68,7 @@
                     {
                         if([pro.name isEqualToString:@"IP"])
                         {
-                            block_self._driver_ip_Property = pro;
+                            block_self._driver_ip_property = pro;
                             block_self._ipaddress = pro.value;
                         }
                     }
@@ -88,22 +86,22 @@
 {
     if(_driver
        && [_driver isKindOfClass:[RgsDriverObj class]]
-       && _driver_ip_Property)
+       && _driver_ip_property)
     {
-        IMP_BLOCK_SELF(EDimmerLight);
+        //IMP_BLOCK_SELF(EDimmerLight);
         
         RgsDriverObj *rd = (RgsDriverObj*)_driver;
         
         //保存到内存
-        _driver_ip_Property.value = self._ipaddress;
+        _driver_ip_property.value = self._ipaddress;
         
         [[RegulusSDK sharedRegulusSDK] SetDriverProperty:rd.m_id
-                                           property_name:_driver_ip_Property.name
+                                           property_name:_driver_ip_property.name
                                           property_value:self._ipaddress
                                               completion:^(BOOL result, NSError *error) {
                                                   if (result) {
                                                       
-                                                      [block_self saveProject];
+                                                      //[block_self saveProject];
                                                   }
                                                   else{
                                                       
@@ -114,21 +112,21 @@
 
 - (void) saveProject{
     
-    [KVNProgress show];
-    
-    [[RegulusSDK sharedRegulusSDK] ReloadProject:^(BOOL result, NSError *error) {
-        if(result)
-        {
-            NSLog(@"reload project.");
-            
-            [KVNProgress showSuccess];
-        }
-        else{
-            NSLog(@"%@",[error description]);
-            
-            [KVNProgress showSuccess];
-        }
-    }];
+//    [KVNProgress show];
+//    
+//    [[RegulusSDK sharedRegulusSDK] ReloadProject:^(BOOL result, NSError *error) {
+//        if(result)
+//        {
+//            NSLog(@"reload project.");
+//            
+//            [KVNProgress showSuccess];
+//        }
+//        else{
+//            NSLog(@"%@",[error description]);
+//            
+//            [KVNProgress showSuccess];
+//        }
+//    }];
 }
 
 - (void) createDriver{
@@ -139,6 +137,7 @@
         RgsDriverInfo *info = _driverInfo;
         
         IMP_BLOCK_SELF(EDimmerLight);
+        [KVNProgress show];
         [[RegulusSDK sharedRegulusSDK] CreateDriver:area.m_id
                                              serial:info.serial
                                          completion:^(BOOL result, RgsDriverObj *driver, NSError *error) {
@@ -146,7 +145,7 @@
                                                  
                                                  block_self._driver = driver;
                                              }
-                                             
+                                             [KVNProgress dismiss];
                                          }];
     }
 }

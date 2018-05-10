@@ -20,9 +20,6 @@
 @property (nonatomic, strong) id _proxyObj;
 
 
-- (void) syncDriverIPProperty;
-- (void) uploadDriverIPProperty;
-
 - (void) removeDriver;
 
 - (NSString*) deviceName;
