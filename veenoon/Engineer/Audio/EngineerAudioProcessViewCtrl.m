@@ -572,7 +572,6 @@
         }
         
         _rightView._processor = _curProcessor;
-        [_rightView recoverSetting];
         
         [self.view addSubview:_rightView];
         [okBtn setTitle:@"保存" forState:UIControlStateNormal];
@@ -584,8 +583,6 @@
         }
         [okBtn setTitle:@"设置" forState:UIControlStateNormal];
         isSettings = NO;
-        
-        [_rightView saveCurrentSetting];
         
         [_curProcessor uploadDriverIPProperty];
     }

@@ -27,6 +27,5 @@
 @property (nonatomic, assign) int _curentDeviceIndex;
 
 -(void) refreshView:(VVideoProcessSet*) vVideoProcessSet;
--(void) layoutDevicePannel;
 
 @end

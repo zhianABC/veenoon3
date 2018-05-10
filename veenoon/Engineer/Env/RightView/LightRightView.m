@@ -7,7 +7,6 @@
 //
 
 #import "LightRightView.h"
-#import "ComSettingView.h"
 #import "CustomPickerView.h"
 #import "UIButton+Color.h"
 #import "GroupsPickerView.h"
@@ -21,8 +20,6 @@
 @interface LightRightView () <UITableViewDelegate,
 UITableViewDataSource, UITextFieldDelegate,
 CustomPickerViewDelegate, GroupsPickerViewDelegate> {
-    
-    ComSettingView *_com;
     
     UITableView *_tableView;
     
@@ -43,8 +40,6 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
     NSMutableArray *_btns;
     
     BOOL _isPower;
-    
-    UITextField *ipTextField;
     
     NSMutableArray *_selectedBtnArray;
 }
@@ -89,43 +84,11 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
     if(self = [super initWithFrame:frame]) {
         self.backgroundColor = RGB(0, 89, 118);
         
-        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(10, 25, 40, 30)];
-        titleL.textColor = [UIColor whiteColor];
-        titleL.backgroundColor = [UIColor clearColor];
-        [self addSubview:titleL];
-        titleL.font = [UIFont systemFontOfSize:13];
-        titleL.text = @"IP地址";
-        
-        ipTextField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(titleL.frame)+30, 25, self.bounds.size.width - 35 - CGRectGetMaxX(titleL.frame), 30)];
-        ipTextField.delegate = self;
-        ipTextField.backgroundColor = [UIColor clearColor];
-        ipTextField.returnKeyType = UIReturnKeyDone;
-        ipTextField.text = @"192.168.1.100";
-        ipTextField.textColor = [UIColor whiteColor];
-        ipTextField.borderStyle = UITextBorderStyleRoundedRect;
-        ipTextField.textAlignment = NSTextAlignmentRight;
-        ipTextField.font = [UIFont systemFontOfSize:13];
-        ipTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-        [self addSubview:ipTextField];
-        
         self._value = [NSMutableDictionary dictionary];
         
         _btns = [[NSMutableArray alloc] init];
         _selectedBtnArray = [[NSMutableArray alloc] init];
-        
-        UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 30)];
-        [self addSubview:headView];
-        
-        UISwipeGestureRecognizer *swip = [[UISwipeGestureRecognizer alloc] initWithTarget:self
-                                                                                   action:@selector(switchComSetting)];
-        swip.direction = UISwipeGestureRecognizerDirectionDown;
-        
-        
-        [headView addGestureRecognizer:swip];
-        
-        _com = [[ComSettingView alloc] initWithFrame:self.bounds];
-        
-        
+
         _curIndex = -1;
         _curSectionIndex = -1;
         
@@ -190,27 +153,6 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
     }
     
     return self;
-}
-
-- (void) switchComSetting{
-    
-    if([_com superview])
-        return;
-    
-    CGRect rc = _com.frame;
-    rc.origin.y = 0-rc.size.height;
-    
-    _com.frame = rc;
-    [self addSubview:_com];
-    [UIView animateWithDuration:0.25
-                     animations:^{
-                         
-                         _com.frame = self.bounds;
-                         
-                     } completion:^(BOOL finished) {
-                         
-                     }];
-    
 }
 
 - (void)createFooter{
@@ -374,14 +316,12 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
 -(void) refreshView:(EDimmerLight*) dimmer {
     
     self._currentObj = dimmer;
-    ipTextField.text = dimmer._ipaddress;
 
 }
 
 
 - (void) saveCurrentSetting{
     
-    _currentObj._ipaddress = ipTextField.text;
 }
 
 
@@ -727,21 +667,6 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     
-    if(textField == ipTextField)
-    {
-        NSString *ipaddress = textField.text;
-        BOOL valid = [IPValidate isValidIP:ipaddress];
-        if (valid) {
-            _currentObj._ipaddress = textField.text;
-        } else {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                                            message:@"请输入正确的ip地址."
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil, nil];
-            [alert show];
-        }
-    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{

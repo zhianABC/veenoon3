@@ -501,7 +501,6 @@
         
         //创建底部设备切换按钮
         _rightSetView._numOfDevice = (int)[_wirelessYaoBaoSysArray count];
-        [_rightSetView layoutDevicePannel];
         
         
         IMP_BLOCK_SELF(EngineerWirlessYaoBaoViewCtrl);

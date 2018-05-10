@@ -29,9 +29,7 @@
 #import "EngineerNewWindViewCtrl.h"
 #import "EngineerFloorWarmViewCtrl.h"
 #import "EngineerAirCleanViewCtrl.h"
-#import "EngineerCleanWaterViewCtrl.h"
 #import "EngineerAddWetViewCtrl.h"
-#import "EngineerDoorAccessViewCtrl.h"
 #import "EngineerMonitorViewCtrl.h"
 #import "EngineerInfoCollectViewCtrl.h"
 #import "EngineerScenarioSettingsViewCtrl.h"
@@ -886,23 +884,9 @@
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
-        if ([name isEqualToString:@"净水"]) {
-            EngineerCleanWaterViewCtrl *ctrl = [[EngineerCleanWaterViewCtrl alloc] init];
-            ctrl._cleanWaterSysArray= nil;//[NSMutableArray arrayWithObject:data];
-            ctrl._number=8;
-            [self.navigationController pushViewController:ctrl animated:YES];
-        }
-        // wuxian array
         if ([name isEqualToString:@"加湿器"]) {
             EngineerAddWetViewCtrl *ctrl = [[EngineerAddWetViewCtrl alloc] init];
             ctrl._addWetSysArray= nil;// [NSMutableArray arrayWithObject:data];
-            ctrl._number=8;
-            [self.navigationController pushViewController:ctrl animated:YES];
-        }
-        // wuxian array
-        if ([name isEqualToString:@"门禁"]) {
-            EngineerDoorAccessViewCtrl *ctrl = [[EngineerDoorAccessViewCtrl alloc] init];
-            ctrl._doorAccessSysArray = nil;// [NSMutableArray arrayWithObject:data];
             ctrl._number=8;
             [self.navigationController pushViewController:ctrl animated:YES];
         }

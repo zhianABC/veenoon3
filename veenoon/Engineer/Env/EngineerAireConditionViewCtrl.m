@@ -9,7 +9,6 @@
 #import "EngineerAireConditionViewCtrl.h"
 #import "UIButton+Color.h"
 #import "CustomPickerView.h"
-#import "AirConditionRightView.h"
 
 @interface EngineerAireConditionViewCtrl () <CustomPickerViewDelegate>{
     
@@ -20,7 +19,6 @@
     NSMutableArray *_nameLabelArray;
     
     BOOL isSettings;
-    AirConditionRightView *_rightView;
     UIButton *okBtn;
     
     NSMutableArray *buttonArray;
@@ -204,22 +202,7 @@
 
 
 - (void) okAction:(id)sender{
-    if (!isSettings) {
-        _rightView = [[AirConditionRightView alloc]
-                      initWithFrame:CGRectMake(SCREEN_WIDTH-300,
-                                               64, 300, SCREEN_HEIGHT-114)];
-        [self.view addSubview:_rightView];
-        
-        [okBtn setTitle:@"保存" forState:UIControlStateNormal];
-        
-        isSettings = YES;
-    } else {
-        if (_rightView) {
-            [_rightView removeFromSuperview];
-        }
-        [okBtn setTitle:@"设置" forState:UIControlStateNormal];
-        isSettings = NO;
-    }
+    
 }
 
 - (void) cancelAction:(id)sender{

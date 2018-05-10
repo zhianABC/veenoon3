@@ -8,14 +8,12 @@
 
 #import "UserMonitorSettingsViewCtrl.h"
 #import "UIButton+Color.h"
-#import "MonitorRightView.h"
 
 @interface UserMonitorSettingsViewCtrl () {
     
     UIButton *_selectSysBtn;
     
     BOOL isSettings;
-    MonitorRightView *_rightView;
     UIButton *okBtn;
     
     NSMutableArray *cityBtnArray;

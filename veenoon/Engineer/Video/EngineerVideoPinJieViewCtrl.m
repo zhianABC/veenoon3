@@ -211,7 +211,6 @@
         
         //创建底部设备切换按钮
         _rightView._numOfDevice = (int)[_pinjieSysArray count];
-        [_rightView layoutDevicePannel];
         
         
         IMP_BLOCK_SELF(EngineerVideoPinJieViewCtrl);

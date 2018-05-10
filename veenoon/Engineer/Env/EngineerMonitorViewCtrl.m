@@ -9,7 +9,6 @@
 #import "EngineerMonitorViewCtrl.h"
 #import "UIButton+Color.h"
 #import "CustomPickerView.h"
-#import "MonitorRightView.h"
 
 @interface EngineerMonitorViewCtrl () <CustomPickerViewDelegate>{
     
@@ -18,7 +17,6 @@
     CustomPickerView *_customPicker;
     
     BOOL isSettings;
-    MonitorRightView *_rightView;
     UIButton *okBtn;
     
     NSMutableArray *cityBtnArray;
@@ -240,22 +238,7 @@
 }
 
 - (void) okAction:(id)sender{
-    if (!isSettings) {
-        _rightView = [[MonitorRightView alloc]
-                      initWithFrame:CGRectMake(SCREEN_WIDTH-300,
-                                               64, 300, SCREEN_HEIGHT-114)];
-        [self.view addSubview:_rightView];
-        
-        [okBtn setTitle:@"保存" forState:UIControlStateNormal];
-        
-        isSettings = YES;
-    } else {
-        if (_rightView) {
-            [_rightView removeFromSuperview];
-        }
-        [okBtn setTitle:@"设置" forState:UIControlStateNormal];
-        isSettings = NO;
-    }
+    
 }
 
 - (void) cancelAction:(id)sender{

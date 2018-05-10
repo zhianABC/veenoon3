@@ -392,7 +392,6 @@
 		EB09EF531FD9A9AE00C968CA /* engineer_gongfang_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB09EF511FD9A9AD00C968CA /* engineer_gongfang_n@2x.png */; };
 		EB09EF541FD9A9AE00C968CA /* engineer_gongfang_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB09EF521FD9A9AD00C968CA /* engineer_gongfang_s@2x.png */; };
 		EB164747203AC95D00E71483 /* WirelessMeetingView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB164746203AC95D00E71483 /* WirelessMeetingView.m */; };
-		EB16474A203ACD6300E71483 /* GongLvFangDaQiView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB164749203ACD6300E71483 /* GongLvFangDaQiView.m */; };
 		EB17178D1FF5DF6B00CBDB81 /* EngineerTVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB17178C1FF5DF6B00CBDB81 /* EngineerTVViewController.m */; };
 		EB1717901FF5E44B00CBDB81 /* EngineerLuBoJiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB17178F1FF5E44B00CBDB81 /* EngineerLuBoJiViewController.m */; };
 		EB1717931FF5E6B600CBDB81 /* EngineerTouYingJiViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1717921FF5E6B600CBDB81 /* EngineerTouYingJiViewCtrl.m */; };
@@ -402,9 +401,7 @@
 		EB1717A01FF613EC00CBDB81 /* EngineerNewWindViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB17179F1FF613EC00CBDB81 /* EngineerNewWindViewCtrl.m */; };
 		EB1717A31FF6141A00CBDB81 /* EngineerFloorWarmViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1717A21FF6141A00CBDB81 /* EngineerFloorWarmViewCtrl.m */; };
 		EB1717A61FF6143600CBDB81 /* EngineerAirCleanViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1717A51FF6143600CBDB81 /* EngineerAirCleanViewCtrl.m */; };
-		EB1717A91FF6145100CBDB81 /* EngineerCleanWaterViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1717A81FF6145100CBDB81 /* EngineerCleanWaterViewCtrl.m */; };
 		EB1717AC1FF6147200CBDB81 /* EngineerAddWetViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1717AB1FF6147200CBDB81 /* EngineerAddWetViewCtrl.m */; };
-		EB1717AF1FF6149C00CBDB81 /* EngineerDoorAccessViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1717AE1FF6149C00CBDB81 /* EngineerDoorAccessViewCtrl.m */; };
 		EB1717B21FF614BB00CBDB81 /* EngineerMonitorViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1717B11FF614BB00CBDB81 /* EngineerMonitorViewCtrl.m */; };
 		EB1717B51FF614DB00CBDB81 /* EngineerInfoCollectViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1717B41FF614DB00CBDB81 /* EngineerInfoCollectViewCtrl.m */; };
 		EB1717B81FF6150400CBDB81 /* EngineerScenarioSettingsViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1717B71FF6150400CBDB81 /* EngineerScenarioSettingsViewCtrl.m */; };
@@ -624,7 +621,6 @@
 		EB3B73B91FE63F10001941CF /* wireless_slide_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB3B73B71FE63F10001941CF /* wireless_slide_s@2x.png */; };
 		EB3B73BB1FE6428C001941CF /* jslide_thumb_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB3B73BA1FE6428C001941CF /* jslide_thumb_n@2x.png */; };
 		EB3B73BD1FE642FA001941CF /* v_slider_road_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB3B73BC1FE642F9001941CF /* v_slider_road_n@2x.png */; };
-		EB478FF9205FF74000EDCD64 /* InforCollectRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB478FF8205FF74000EDCD64 /* InforCollectRightView.m */; };
 		EB478FFC2061341F00EDCD64 /* UserBaseViewControllor.m in Sources */ = {isa = PBXBuildFile; fileRef = EB478FFB2061341F00EDCD64 /* UserBaseViewControllor.m */; };
 		EB479001206145C000EDCD64 /* UserDVDSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB479000206145C000EDCD64 /* UserDVDSettingsViewController.m */; };
 		EB479005206146D500EDCD64 /* user_corner_sd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB479002206146D400EDCD64 /* user_corner_sd@2x.png */; };
@@ -664,10 +660,7 @@
 		EB5F7F981FD59D8400351888 /* EngineerDNSSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5F7F971FD59D8400351888 /* EngineerDNSSettingView.m */; };
 		EB7333F1204102DF00AE60B8 /* FloorWarmRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333F0204102DF00AE60B8 /* FloorWarmRightView.m */; };
 		EB7333F42041046400AE60B8 /* AirCleanRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333F32041046400AE60B8 /* AirCleanRightView.m */; };
-		EB7333F72041071D00AE60B8 /* CleanWaterRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333F62041071D00AE60B8 /* CleanWaterRightView.m */; };
 		EB7333FA204108B000AE60B8 /* AddWetRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333F9204108B000AE60B8 /* AddWetRightView.m */; };
-		EB7333FD20410A7E00AE60B8 /* MonitorRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333FC20410A7E00AE60B8 /* MonitorRightView.m */; };
-		EB73340020410B5100AE60B8 /* DoorAccessRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333FF20410B5100AE60B8 /* DoorAccessRightView.m */; };
 		EB733402204112C500AE60B8 /* remote_video_filled_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB733401204112C500AE60B8 /* remote_video_filled_s@2x.png */; };
 		EB795B422042DA33005D1F47 /* AudioProcessRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB795B412042DA33005D1F47 /* AudioProcessRightView.m */; };
 		EB795B452042DD2B005D1F47 /* AudioInputSettingViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB795B442042DD2B005D1F47 /* AudioInputSettingViewCtrl.m */; };
@@ -755,30 +748,21 @@
 		EBBCBBE22063DDDD00A7771A /* user_corner_video@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBBCBBE02063DDDD00A7771A /* user_corner_video@2x.png */; };
 		EBBCBBE52063E0C800A7771A /* IconCenterTextButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EBBCBBE42063E0C800A7771A /* IconCenterTextButton.m */; };
 		EBBCBBED20673ECE00A7771A /* VeenoonConstatns.m in Sources */ = {isa = PBXBuildFile; fileRef = EBBCBBEC20673ECE00A7771A /* VeenoonConstatns.m */; };
-		EBC71AFF203AF4EE00DD0A98 /* DVDRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71AFE203AF4EE00DD0A98 /* DVDRightView.m */; };
-		EBC71B05203AF72D00DD0A98 /* CameraRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B04203AF72D00DD0A98 /* CameraRightView.m */; };
-		EBC71B08203AF74100DD0A98 /* RemoteVideoRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B07203AF74100DD0A98 /* RemoteVideoRightView.m */; };
 		EBC71B0B203AF90700DD0A98 /* VideoProcessRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B0A203AF90700DD0A98 /* VideoProcessRightView.m */; };
 		EBC71B0F203AFF6600DD0A98 /* icon.plist in Resources */ = {isa = PBXBuildFile; fileRef = EBC71B0E203AFF6600DD0A98 /* icon.plist */; };
 		EBC71B11203B01BB00DD0A98 /* v_icon_22@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC71B10203B01BB00DD0A98 /* v_icon_22@2x.png */; };
 		EBC71B14203C3A3200DD0A98 /* PinJiePingRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B13203C3A3200DD0A98 /* PinJiePingRightView.m */; };
-		EBC71B17203C487000DD0A98 /* TVViewRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B16203C487000DD0A98 /* TVViewRightView.m */; };
-		EBC71B1A203C496500DD0A98 /* LuBoJiRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B19203C496500DD0A98 /* LuBoJiRightView.m */; };
 		EBC71B1D203C497500DD0A98 /* TouYingJiRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B1C203C497500DD0A98 /* TouYingJiRightView.m */; };
 		EBC71B20203EEB8600DD0A98 /* LightRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B1F203EEB8600DD0A98 /* LightRightView.m */; };
-		EBC71B23203F011E00DD0A98 /* AirConditionRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B22203F011E00DD0A98 /* AirConditionRightView.m */; };
-		EBC71B26203F058100DD0A98 /* AirConditionComIRView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B25203F058100DD0A98 /* AirConditionComIRView.m */; };
 		EBC71B29204100A200DD0A98 /* ElectronicAutoRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B28204100A200DD0A98 /* ElectronicAutoRightView.m */; };
 		EBC71B2C204100DD00DD0A98 /* NewWindRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B2B204100DD00DD0A98 /* NewWindRightView.m */; };
 		EBCA834B1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCA834A1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m */; };
 		EBCD01C62090C0AF00787D48 /* IPValidate.m in Sources */ = {isa = PBXBuildFile; fileRef = EBCD01C52090C0AF00787D48 /* IPValidate.m */; };
 		EBCD01CE20A09EEE00787D48 /* left_back_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBCD01CD20A09EED00787D48 /* left_back_bg@2x.png */; };
 		EBCD01D020A0A17100787D48 /* botomo_icon_black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBCD01CF20A0A17100787D48 /* botomo_icon_black@2x.png */; };
-		EBD009B0208C744900920849 /* DVDComIRView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009AF208C744900920849 /* DVDComIRView.m */; };
 		EBD009B3208CB12900920849 /* VCameraSettingSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009B2208CB12900920849 /* VCameraSettingSet.m */; };
 		EBD009B6208CB88300920849 /* VRemoteSettingsSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009B5208CB88300920849 /* VRemoteSettingsSet.m */; };
 		EBD009B9208CBD8100920849 /* VRemoteVideoSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009B8208CBD8100920849 /* VRemoteVideoSet.m */; };
-		EBD009BC208CC2C800920849 /* RemoteCOMIRView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009BB208CC2C800920849 /* RemoteCOMIRView.m */; };
 		EBD009BF2090613C00920849 /* VVideoProcessSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009BE2090613C00920849 /* VVideoProcessSet.m */; };
 		EBD009C22090639100920849 /* VVideoProcessInOut.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009C12090639100920849 /* VVideoProcessInOut.m */; };
 		EBD009C520906AB800920849 /* VPinJieSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009C420906AB800920849 /* VPinJieSet.m */; };
@@ -786,8 +770,6 @@
 		EBD009CB20907E8C00920849 /* VLuBoJiSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009CA20907E8C00920849 /* VLuBoJiSet.m */; };
 		EBD009CE2090A9D200920849 /* VTouyingjiSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009CD2090A9D200920849 /* VTouyingjiSet.m */; };
 		EBD79C0F204BBC2400FD534C /* YinPinProcessCodeUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD79C0E204BBC2400FD534C /* YinPinProcessCodeUIView.m */; };
-		EBDB4535205AB0F6000ABAB0 /* PlayerRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBDB4534205AB0F6000ABAB0 /* PlayerRightView.m */; };
-		EBDB4538205D4C44000ABAB0 /* TVSettingsRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBDB4537205D4C44000ABAB0 /* TVSettingsRightView.m */; };
 		EBDB453F205D510B000ABAB0 /* engineer_lobo_fa_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDB4539205D510A000ABAB0 /* engineer_lobo_fa_n@2x.png */; };
 		EBDB4540205D510B000ABAB0 /* engineer_lobo_fa_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDB453A205D510A000ABAB0 /* engineer_lobo_fa_s@2x.png */; };
 		EBDB4541205D510B000ABAB0 /* engineer_lobo_lu_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBDB453B205D510B000ABAB0 /* engineer_lobo_lu_s@2x.png */; };
@@ -1484,8 +1466,6 @@
 		EB09EF521FD9A9AD00C968CA /* engineer_gongfang_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_gongfang_s@2x.png"; sourceTree = "<group>"; };
 		EB164745203AC95D00E71483 /* WirelessMeetingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WirelessMeetingView.h; sourceTree = "<group>"; };
 		EB164746203AC95D00E71483 /* WirelessMeetingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WirelessMeetingView.m; sourceTree = "<group>"; };
-		EB164748203ACD6300E71483 /* GongLvFangDaQiView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GongLvFangDaQiView.h; sourceTree = "<group>"; };
-		EB164749203ACD6300E71483 /* GongLvFangDaQiView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GongLvFangDaQiView.m; sourceTree = "<group>"; };
 		EB17178B1FF5DF6B00CBDB81 /* EngineerTVViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerTVViewController.h; sourceTree = "<group>"; };
 		EB17178C1FF5DF6B00CBDB81 /* EngineerTVViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerTVViewController.m; sourceTree = "<group>"; };
 		EB17178E1FF5E44B00CBDB81 /* EngineerLuBoJiViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerLuBoJiViewController.h; sourceTree = "<group>"; };
@@ -1504,12 +1484,8 @@
 		EB1717A21FF6141A00CBDB81 /* EngineerFloorWarmViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerFloorWarmViewCtrl.m; sourceTree = "<group>"; };
 		EB1717A41FF6143600CBDB81 /* EngineerAirCleanViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerAirCleanViewCtrl.h; sourceTree = "<group>"; };
 		EB1717A51FF6143600CBDB81 /* EngineerAirCleanViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerAirCleanViewCtrl.m; sourceTree = "<group>"; };
-		EB1717A71FF6145100CBDB81 /* EngineerCleanWaterViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerCleanWaterViewCtrl.h; sourceTree = "<group>"; };
-		EB1717A81FF6145100CBDB81 /* EngineerCleanWaterViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerCleanWaterViewCtrl.m; sourceTree = "<group>"; };
 		EB1717AA1FF6147200CBDB81 /* EngineerAddWetViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerAddWetViewCtrl.h; sourceTree = "<group>"; };
 		EB1717AB1FF6147200CBDB81 /* EngineerAddWetViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerAddWetViewCtrl.m; sourceTree = "<group>"; };
-		EB1717AD1FF6149C00CBDB81 /* EngineerDoorAccessViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerDoorAccessViewCtrl.h; sourceTree = "<group>"; };
-		EB1717AE1FF6149C00CBDB81 /* EngineerDoorAccessViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerDoorAccessViewCtrl.m; sourceTree = "<group>"; };
 		EB1717B01FF614BB00CBDB81 /* EngineerMonitorViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerMonitorViewCtrl.h; sourceTree = "<group>"; };
 		EB1717B11FF614BB00CBDB81 /* EngineerMonitorViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerMonitorViewCtrl.m; sourceTree = "<group>"; };
 		EB1717B31FF614DB00CBDB81 /* EngineerInfoCollectViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerInfoCollectViewCtrl.h; sourceTree = "<group>"; };
@@ -1759,8 +1735,6 @@
 		EB3B73B71FE63F10001941CF /* wireless_slide_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wireless_slide_s@2x.png"; sourceTree = "<group>"; };
 		EB3B73BA1FE6428C001941CF /* jslide_thumb_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jslide_thumb_n@2x.png"; sourceTree = "<group>"; };
 		EB3B73BC1FE642F9001941CF /* v_slider_road_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "v_slider_road_n@2x.png"; sourceTree = "<group>"; };
-		EB478FF7205FF74000EDCD64 /* InforCollectRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InforCollectRightView.h; sourceTree = "<group>"; };
-		EB478FF8205FF74000EDCD64 /* InforCollectRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InforCollectRightView.m; sourceTree = "<group>"; };
 		EB478FFA2061341F00EDCD64 /* UserBaseViewControllor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserBaseViewControllor.h; sourceTree = "<group>"; };
 		EB478FFB2061341F00EDCD64 /* UserBaseViewControllor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserBaseViewControllor.m; sourceTree = "<group>"; };
 		EB478FFF206145C000EDCD64 /* UserDVDSettingsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserDVDSettingsViewController.h; sourceTree = "<group>"; };
@@ -1818,14 +1792,8 @@
 		EB7333F0204102DF00AE60B8 /* FloorWarmRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FloorWarmRightView.m; sourceTree = "<group>"; };
 		EB7333F22041046400AE60B8 /* AirCleanRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirCleanRightView.h; sourceTree = "<group>"; };
 		EB7333F32041046400AE60B8 /* AirCleanRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AirCleanRightView.m; sourceTree = "<group>"; };
-		EB7333F52041071D00AE60B8 /* CleanWaterRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CleanWaterRightView.h; sourceTree = "<group>"; };
-		EB7333F62041071D00AE60B8 /* CleanWaterRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CleanWaterRightView.m; sourceTree = "<group>"; };
 		EB7333F8204108B000AE60B8 /* AddWetRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddWetRightView.h; sourceTree = "<group>"; };
 		EB7333F9204108B000AE60B8 /* AddWetRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddWetRightView.m; sourceTree = "<group>"; };
-		EB7333FB20410A7E00AE60B8 /* MonitorRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MonitorRightView.h; sourceTree = "<group>"; };
-		EB7333FC20410A7E00AE60B8 /* MonitorRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MonitorRightView.m; sourceTree = "<group>"; };
-		EB7333FE20410B5100AE60B8 /* DoorAccessRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DoorAccessRightView.h; sourceTree = "<group>"; };
-		EB7333FF20410B5100AE60B8 /* DoorAccessRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DoorAccessRightView.m; sourceTree = "<group>"; };
 		EB733401204112C500AE60B8 /* remote_video_filled_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "remote_video_filled_s@2x.png"; sourceTree = "<group>"; };
 		EB795B402042DA33005D1F47 /* AudioProcessRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioProcessRightView.h; sourceTree = "<group>"; };
 		EB795B412042DA33005D1F47 /* AudioProcessRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioProcessRightView.m; sourceTree = "<group>"; };
@@ -1935,30 +1903,16 @@
 		EBBCBBE42063E0C800A7771A /* IconCenterTextButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IconCenterTextButton.m; sourceTree = "<group>"; };
 		EBBCBBEB20673ECE00A7771A /* VeenoonConstatns.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VeenoonConstatns.h; sourceTree = "<group>"; };
 		EBBCBBEC20673ECE00A7771A /* VeenoonConstatns.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VeenoonConstatns.m; sourceTree = "<group>"; };
-		EBC71AFD203AF4EE00DD0A98 /* DVDRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVDRightView.h; sourceTree = "<group>"; };
-		EBC71AFE203AF4EE00DD0A98 /* DVDRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DVDRightView.m; sourceTree = "<group>"; };
-		EBC71B03203AF72D00DD0A98 /* CameraRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraRightView.h; sourceTree = "<group>"; };
-		EBC71B04203AF72D00DD0A98 /* CameraRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraRightView.m; sourceTree = "<group>"; };
-		EBC71B06203AF74100DD0A98 /* RemoteVideoRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemoteVideoRightView.h; sourceTree = "<group>"; };
-		EBC71B07203AF74100DD0A98 /* RemoteVideoRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemoteVideoRightView.m; sourceTree = "<group>"; };
 		EBC71B09203AF90700DD0A98 /* VideoProcessRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoProcessRightView.h; sourceTree = "<group>"; };
 		EBC71B0A203AF90700DD0A98 /* VideoProcessRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoProcessRightView.m; sourceTree = "<group>"; };
 		EBC71B0E203AFF6600DD0A98 /* icon.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = icon.plist; sourceTree = "<group>"; };
 		EBC71B10203B01BB00DD0A98 /* v_icon_22@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "v_icon_22@2x.png"; sourceTree = "<group>"; };
 		EBC71B12203C3A3200DD0A98 /* PinJiePingRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PinJiePingRightView.h; sourceTree = "<group>"; };
 		EBC71B13203C3A3200DD0A98 /* PinJiePingRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PinJiePingRightView.m; sourceTree = "<group>"; };
-		EBC71B15203C487000DD0A98 /* TVViewRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TVViewRightView.h; sourceTree = "<group>"; };
-		EBC71B16203C487000DD0A98 /* TVViewRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TVViewRightView.m; sourceTree = "<group>"; };
-		EBC71B18203C496500DD0A98 /* LuBoJiRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LuBoJiRightView.h; sourceTree = "<group>"; };
-		EBC71B19203C496500DD0A98 /* LuBoJiRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LuBoJiRightView.m; sourceTree = "<group>"; };
 		EBC71B1B203C497500DD0A98 /* TouYingJiRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TouYingJiRightView.h; sourceTree = "<group>"; };
 		EBC71B1C203C497500DD0A98 /* TouYingJiRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TouYingJiRightView.m; sourceTree = "<group>"; };
 		EBC71B1E203EEB8600DD0A98 /* LightRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LightRightView.h; sourceTree = "<group>"; };
 		EBC71B1F203EEB8600DD0A98 /* LightRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LightRightView.m; sourceTree = "<group>"; };
-		EBC71B21203F011E00DD0A98 /* AirConditionRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirConditionRightView.h; sourceTree = "<group>"; };
-		EBC71B22203F011E00DD0A98 /* AirConditionRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AirConditionRightView.m; sourceTree = "<group>"; };
-		EBC71B24203F058100DD0A98 /* AirConditionComIRView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirConditionComIRView.h; sourceTree = "<group>"; };
-		EBC71B25203F058100DD0A98 /* AirConditionComIRView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AirConditionComIRView.m; sourceTree = "<group>"; };
 		EBC71B27204100A200DD0A98 /* ElectronicAutoRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElectronicAutoRightView.h; sourceTree = "<group>"; };
 		EBC71B28204100A200DD0A98 /* ElectronicAutoRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElectronicAutoRightView.m; sourceTree = "<group>"; };
 		EBC71B2A204100DD00DD0A98 /* NewWindRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewWindRightView.h; sourceTree = "<group>"; };
@@ -1969,16 +1923,12 @@
 		EBCD01C52090C0AF00787D48 /* IPValidate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IPValidate.m; sourceTree = "<group>"; };
 		EBCD01CD20A09EED00787D48 /* left_back_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_back_bg@2x.png"; sourceTree = "<group>"; };
 		EBCD01CF20A0A17100787D48 /* botomo_icon_black@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "botomo_icon_black@2x.png"; sourceTree = "<group>"; };
-		EBD009AE208C744900920849 /* DVDComIRView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVDComIRView.h; sourceTree = "<group>"; };
-		EBD009AF208C744900920849 /* DVDComIRView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DVDComIRView.m; sourceTree = "<group>"; };
 		EBD009B1208CB12900920849 /* VCameraSettingSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VCameraSettingSet.h; sourceTree = "<group>"; };
 		EBD009B2208CB12900920849 /* VCameraSettingSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VCameraSettingSet.m; sourceTree = "<group>"; };
 		EBD009B4208CB88300920849 /* VRemoteSettingsSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VRemoteSettingsSet.h; sourceTree = "<group>"; };
 		EBD009B5208CB88300920849 /* VRemoteSettingsSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VRemoteSettingsSet.m; sourceTree = "<group>"; };
 		EBD009B7208CBD8100920849 /* VRemoteVideoSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VRemoteVideoSet.h; sourceTree = "<group>"; };
 		EBD009B8208CBD8100920849 /* VRemoteVideoSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VRemoteVideoSet.m; sourceTree = "<group>"; };
-		EBD009BA208CC2C800920849 /* RemoteCOMIRView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemoteCOMIRView.h; sourceTree = "<group>"; };
-		EBD009BB208CC2C800920849 /* RemoteCOMIRView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemoteCOMIRView.m; sourceTree = "<group>"; };
 		EBD009BD2090613C00920849 /* VVideoProcessSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VVideoProcessSet.h; sourceTree = "<group>"; };
 		EBD009BE2090613C00920849 /* VVideoProcessSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VVideoProcessSet.m; sourceTree = "<group>"; };
 		EBD009C02090639100920849 /* VVideoProcessInOut.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VVideoProcessInOut.h; sourceTree = "<group>"; };
@@ -1993,10 +1943,6 @@
 		EBD009CD2090A9D200920849 /* VTouyingjiSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VTouyingjiSet.m; sourceTree = "<group>"; };
 		EBD79C0D204BBC2400FD534C /* YinPinProcessCodeUIView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YinPinProcessCodeUIView.h; sourceTree = "<group>"; };
 		EBD79C0E204BBC2400FD534C /* YinPinProcessCodeUIView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YinPinProcessCodeUIView.m; sourceTree = "<group>"; };
-		EBDB4533205AB0F6000ABAB0 /* PlayerRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerRightView.h; sourceTree = "<group>"; };
-		EBDB4534205AB0F6000ABAB0 /* PlayerRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayerRightView.m; sourceTree = "<group>"; };
-		EBDB4536205D4C44000ABAB0 /* TVSettingsRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TVSettingsRightView.h; sourceTree = "<group>"; };
-		EBDB4537205D4C44000ABAB0 /* TVSettingsRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TVSettingsRightView.m; sourceTree = "<group>"; };
 		EBDB4539205D510A000ABAB0 /* engineer_lobo_fa_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_lobo_fa_n@2x.png"; sourceTree = "<group>"; };
 		EBDB453A205D510A000ABAB0 /* engineer_lobo_fa_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_lobo_fa_s@2x.png"; sourceTree = "<group>"; };
 		EBDB453B205D510B000ABAB0 /* engineer_lobo_lu_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_lobo_lu_s@2x.png"; sourceTree = "<group>"; };
@@ -3393,12 +3339,8 @@
 				EB1717A21FF6141A00CBDB81 /* EngineerFloorWarmViewCtrl.m */,
 				EB1717A41FF6143600CBDB81 /* EngineerAirCleanViewCtrl.h */,
 				EB1717A51FF6143600CBDB81 /* EngineerAirCleanViewCtrl.m */,
-				EB1717A71FF6145100CBDB81 /* EngineerCleanWaterViewCtrl.h */,
-				EB1717A81FF6145100CBDB81 /* EngineerCleanWaterViewCtrl.m */,
 				EB1717AA1FF6147200CBDB81 /* EngineerAddWetViewCtrl.h */,
 				EB1717AB1FF6147200CBDB81 /* EngineerAddWetViewCtrl.m */,
-				EB1717AD1FF6149C00CBDB81 /* EngineerDoorAccessViewCtrl.h */,
-				EB1717AE1FF6149C00CBDB81 /* EngineerDoorAccessViewCtrl.m */,
 				EB1717B01FF614BB00CBDB81 /* EngineerMonitorViewCtrl.h */,
 				EB1717B11FF614BB00CBDB81 /* EngineerMonitorViewCtrl.m */,
 				EB1717B31FF614DB00CBDB81 /* EngineerInfoCollectViewCtrl.h */,
@@ -3529,8 +3471,8 @@
 				EB4E39DE20273B9000533575 /* RIghtView */,
 				EB0968BD1FE2B4BE00CF422F /* EngineerElectronicSysConfigViewCtrl.h */,
 				EB0968BE1FE2B4C900CF422F /* EngineerElectronicSysConfigViewCtrl.m */,
-				EB3B73991FE61B18001941CF /* EngineerPlayerSettingsViewCtrl.m */,
 				EB3B739B1FE61B2B001941CF /* EngineerPlayerSettingsViewCtrl.h */,
+				EB3B73991FE61B18001941CF /* EngineerPlayerSettingsViewCtrl.m */,
 				EB3B73B01FE63822001941CF /* EngineerWirlessYaoBaoViewCtrl.h */,
 				EB3B73B11FE6382F001941CF /* EngineerWirlessYaoBaoViewCtrl.m */,
 				EB4EC11A1FE7F164000B3101 /* EngineerHunYinSysViewController.h */,
@@ -3576,8 +3518,6 @@
 		EB4E39DE20273B9000533575 /* RIghtView */ = {
 			isa = PBXGroup;
 			children = (
-				EBDB4533205AB0F6000ABAB0 /* PlayerRightView.h */,
-				EBDB4534205AB0F6000ABAB0 /* PlayerRightView.m */,
 				EB795B502042E7E7005D1F47 /* AudioProcess */,
 				3425E98D1FE575A4003559F7 /* PlayerSettingsPannel.h */,
 				3425E98E1FE575A4003559F7 /* PlayerSettingsPannel.m */,
@@ -3593,8 +3533,6 @@
 				3425E9941FE57675003559F7 /* MixVoiceSettingsView.m */,
 				EB164745203AC95D00E71483 /* WirelessMeetingView.h */,
 				EB164746203AC95D00E71483 /* WirelessMeetingView.m */,
-				EB164748203ACD6300E71483 /* GongLvFangDaQiView.h */,
-				EB164749203ACD6300E71483 /* GongLvFangDaQiView.m */,
 				EB795B402042DA33005D1F47 /* AudioProcessRightView.h */,
 				EB795B412042DA33005D1F47 /* AudioProcessRightView.m */,
 				EB795B432042DD2B005D1F47 /* AudioInputSettingViewCtrl.h */,
@@ -3616,26 +3554,10 @@
 		EB4E39DF20273C9D00533575 /* RightView */ = {
 			isa = PBXGroup;
 			children = (
-				EBC71AFD203AF4EE00DD0A98 /* DVDRightView.h */,
-				EBC71AFE203AF4EE00DD0A98 /* DVDRightView.m */,
-				EBD009AE208C744900920849 /* DVDComIRView.h */,
-				EBD009AF208C744900920849 /* DVDComIRView.m */,
-				EBC71B03203AF72D00DD0A98 /* CameraRightView.h */,
-				EBC71B04203AF72D00DD0A98 /* CameraRightView.m */,
-				EBD009BA208CC2C800920849 /* RemoteCOMIRView.h */,
-				EBD009BB208CC2C800920849 /* RemoteCOMIRView.m */,
-				EBC71B06203AF74100DD0A98 /* RemoteVideoRightView.h */,
-				EBC71B07203AF74100DD0A98 /* RemoteVideoRightView.m */,
 				EBC71B09203AF90700DD0A98 /* VideoProcessRightView.h */,
 				EBC71B0A203AF90700DD0A98 /* VideoProcessRightView.m */,
 				EBC71B12203C3A3200DD0A98 /* PinJiePingRightView.h */,
 				EBC71B13203C3A3200DD0A98 /* PinJiePingRightView.m */,
-				EBDB4536205D4C44000ABAB0 /* TVSettingsRightView.h */,
-				EBDB4537205D4C44000ABAB0 /* TVSettingsRightView.m */,
-				EBC71B15203C487000DD0A98 /* TVViewRightView.h */,
-				EBC71B16203C487000DD0A98 /* TVViewRightView.m */,
-				EBC71B18203C496500DD0A98 /* LuBoJiRightView.h */,
-				EBC71B19203C496500DD0A98 /* LuBoJiRightView.m */,
 				EBC71B1B203C497500DD0A98 /* TouYingJiRightView.h */,
 				EBC71B1C203C497500DD0A98 /* TouYingJiRightView.m */,
 			);
@@ -3647,10 +3569,6 @@
 			children = (
 				EBC71B1E203EEB8600DD0A98 /* LightRightView.h */,
 				EBC71B1F203EEB8600DD0A98 /* LightRightView.m */,
-				EBC71B21203F011E00DD0A98 /* AirConditionRightView.h */,
-				EBC71B22203F011E00DD0A98 /* AirConditionRightView.m */,
-				EBC71B24203F058100DD0A98 /* AirConditionComIRView.h */,
-				EBC71B25203F058100DD0A98 /* AirConditionComIRView.m */,
 				EBC71B27204100A200DD0A98 /* ElectronicAutoRightView.h */,
 				EBC71B28204100A200DD0A98 /* ElectronicAutoRightView.m */,
 				EBC71B2A204100DD00DD0A98 /* NewWindRightView.h */,
@@ -3659,16 +3577,8 @@
 				EB7333F0204102DF00AE60B8 /* FloorWarmRightView.m */,
 				EB7333F22041046400AE60B8 /* AirCleanRightView.h */,
 				EB7333F32041046400AE60B8 /* AirCleanRightView.m */,
-				EB7333F52041071D00AE60B8 /* CleanWaterRightView.h */,
-				EB7333F62041071D00AE60B8 /* CleanWaterRightView.m */,
 				EB7333F8204108B000AE60B8 /* AddWetRightView.h */,
 				EB7333F9204108B000AE60B8 /* AddWetRightView.m */,
-				EB7333FE20410B5100AE60B8 /* DoorAccessRightView.h */,
-				EB7333FF20410B5100AE60B8 /* DoorAccessRightView.m */,
-				EB7333FB20410A7E00AE60B8 /* MonitorRightView.h */,
-				EB7333FC20410A7E00AE60B8 /* MonitorRightView.m */,
-				EB478FF7205FF74000EDCD64 /* InforCollectRightView.h */,
-				EB478FF8205FF74000EDCD64 /* InforCollectRightView.m */,
 			);
 			path = RightView;
 			sourceTree = "<group>";
@@ -4520,7 +4430,6 @@
 				342A2F4020411B6900BE4071 /* GroupsPickerView.m in Sources */,
 				04DE1E8C1AD6AEE000D49E2F /* RRScrollView.m in Sources */,
 				34686C9F1ED025CB001749A1 /* DesUtil.m in Sources */,
-				EBC71B08203AF74100DD0A98 /* RemoteVideoRightView.m in Sources */,
 				045850191B08CF42002BC23C /* BookCache.m in Sources */,
 				EB217FB81FD42188003F5A8F /* UserFloorWarmViewCtrl.m in Sources */,
 				0477DC531DA9F3CC0077FA52 /* SHA1.m in Sources */,
@@ -4534,11 +4443,9 @@
 				04D719771DADD3A4002153D7 /* SSUser.m in Sources */,
 				04DE1FE71AD6B52400D49E2F /* CMNavigationController.m in Sources */,
 				04DE1DDB1AD68C5E00D49E2F /* AppDelegate.m in Sources */,
-				EBDB4538205D4C44000ABAB0 /* TVSettingsRightView.m in Sources */,
 				3496B75A1FCAF3C5005F4857 /* SignalView.m in Sources */,
 				EBF5D4311FCC591A0014D5F0 /* UserHuiYinViewController.m in Sources */,
 				04DE1E9E1AD6AEE000D49E2F /* HttpFileGetter.m in Sources */,
-				EBC71AFF203AF4EE00DD0A98 /* DVDRightView.m in Sources */,
 				EB3686011FC07A9C009973A3 /* SettingsAccountView.m in Sources */,
 				04DE1EAE1AD6AEE000D49E2F /* SDWebImageDecoder.m in Sources */,
 				04DE1EA61AD6AEE000D49E2F /* SBJson4StreamTokeniser.m in Sources */,
@@ -4555,7 +4462,6 @@
 				04DE1EB11AD6AEE000D49E2F /* SDWebImageManager.m in Sources */,
 				3425E98F1FE575A4003559F7 /* PlayerSettingsPannel.m in Sources */,
 				04DE1EAA1AD6AEE000D49E2F /* MKAnnotationView+WebCache.m in Sources */,
-				EB1717A91FF6145100CBDB81 /* EngineerCleanWaterViewCtrl.m in Sources */,
 				0479345B1DB0A7AA0066BABC /* JCShareView.m in Sources */,
 				3454276E2046DED100E1A436 /* FilterGraphView.swift in Sources */,
 				04DE1E861AD6AEE000D49E2F /* ConfigureSetting.m in Sources */,
@@ -4569,7 +4475,6 @@
 				04D719781DADD3A4002153D7 /* WSUser.m in Sources */,
 				EB795B682042E8C1005D1F47 /* XinHaoFaShengQi_UIView.m in Sources */,
 				04D9A0EB1DAF83E0008DF2E6 /* AudioPlayer.m in Sources */,
-				EBD009B0208C744900920849 /* DVDComIRView.m in Sources */,
 				EBD009C22090639100920849 /* VVideoProcessInOut.m in Sources */,
 				04DE1E971AD6AEE000D49E2F /* ASIDownloadCache.m in Sources */,
 				EB3B73B21FE6382F001941CF /* EngineerWirlessYaoBaoViewCtrl.m in Sources */,
@@ -4584,7 +4489,6 @@
 				EB09C4A21FD3A00200776540 /* UserAirConditionViewCtrl.m in Sources */,
 				EB478FFC2061341F00EDCD64 /* UserBaseViewControllor.m in Sources */,
 				EB1717931FF5E6B600CBDB81 /* EngineerTouYingJiViewCtrl.m in Sources */,
-				EBC71B23203F011E00DD0A98 /* AirConditionRightView.m in Sources */,
 				EBDB4547205D56D5000ABAB0 /* LightSliderButton.m in Sources */,
 				04DE1EAD1AD6AEE000D49E2F /* SDWebImageCompat.m in Sources */,
 				34DC473F1FD6984400ACB589 /* ColumnView.m in Sources */,
@@ -4597,14 +4501,12 @@
 				EB29820C1FD57FC2007B5C20 /* EngineerShootQRCode.m in Sources */,
 				EB09C47C1FD25B4300776540 /* UserLightConfigViewCtrl.m in Sources */,
 				345492FC1FE638F300793E2E /* SlideButton.m in Sources */,
-				EB16474A203ACD6300E71483 /* GongLvFangDaQiView.m in Sources */,
 				EB795B622042E890005D1F47 /* HuiShengXiaoChu_UIView.m in Sources */,
 				345487C8204BE4F60068126B /* APBaseView.m in Sources */,
 				EB1A55F41FEF80D7000B18E6 /* EngineerRemoteVideoViewCtrl.m in Sources */,
 				EB5CF0411FD3DDE3007958C9 /* UserInfoCollectViewCtrl.m in Sources */,
 				EB1A56151FEF8F29000B18E6 /* EngineerVideoProcessViewCtrl.m in Sources */,
 				04D719881DADE7D4002153D7 /* ActivityViewController.m in Sources */,
-				EB7333FD20410A7E00AE60B8 /* MonitorRightView.m in Sources */,
 				EB17179A1FF60C2600CBDB81 /* EngineerAireConditionViewCtrl.m in Sources */,
 				341CE4A820A428D9009DBC01 /* ComDriver.m in Sources */,
 				04DE1E8A1AD6AEE000D49E2F /* MaskRender.m in Sources */,
@@ -4643,8 +4545,6 @@
 				EBC71B1D203C497500DD0A98 /* TouYingJiRightView.m in Sources */,
 				EB1717901FF5E44B00CBDB81 /* EngineerLuBoJiViewController.m in Sources */,
 				EBECD4542053AF5000F5474D /* CenterCustomerPickerView.m in Sources */,
-				EB1717AF1FF6149C00CBDB81 /* EngineerDoorAccessViewCtrl.m in Sources */,
-				EBC71B26203F058100DD0A98 /* AirConditionComIRView.m in Sources */,
 				EB5F7F951FD59D6B00351888 /* EngineerPortSettingView.m in Sources */,
 				EBC71B20203EEB8600DD0A98 /* LightRightView.m in Sources */,
 				EB795B6B2042E8D3005D1F47 /* DianPing_UIView.m in Sources */,
@@ -4656,14 +4556,12 @@
 				04DE1E8B1AD6AEE000D49E2F /* Progress7View.m in Sources */,
 				EB09EF311FD97CB500C968CA /* EngineerAudioDevicePluginViewCtrl.m in Sources */,
 				04DE1EB41AD6AEE000D49E2F /* UIImage+GIF.m in Sources */,
-				EBC71B05203AF72D00DD0A98 /* CameraRightView.m in Sources */,
 				EB3B73B51FE6395C001941CF /* EngineerSliderView.m in Sources */,
 				04DE1EA21AD6AEE000D49E2F /* Reachability.m in Sources */,
 				EB1717971FF5F5AB00CBDB81 /* EngineerLightViewController.m in Sources */,
 				EB17178D1FF5DF6B00CBDB81 /* EngineerTVViewController.m in Sources */,
 				04DE1EA91AD6AEE000D49E2F /* SBJson4Writer.m in Sources */,
 				349DADE5206E8D02001593DE /* AudioEWirlessMeetingSys.m in Sources */,
-				EBC71B1A203C496500DD0A98 /* LuBoJiRightView.m in Sources */,
 				EBD79C0F204BBC2400FD534C /* YinPinProcessCodeUIView.m in Sources */,
 				EBBCBBED20673ECE00A7771A /* VeenoonConstatns.m in Sources */,
 				3429E2B5205AAAFD00F87AC3 /* VNSettingsView.m in Sources */,
@@ -4684,11 +4582,8 @@
 				04DE1E901AD6AEE000D49E2F /* UIImage+ImageEffects.m in Sources */,
 				EB795B5F2042E87C005D1F47 /* YanShiQi_UIView.m in Sources */,
 				04DE1EBF1AD6AF7900D49E2F /* User.m in Sources */,
-				EBC71B17203C487000DD0A98 /* TVViewRightView.m in Sources */,
 				EB5A47F42073C2FE00564C06 /* AdjustAudioVideoEnvSettingsViewCtrl.m in Sources */,
 				EB1717A01FF613EC00CBDB81 /* EngineerNewWindViewCtrl.m in Sources */,
-				EB7333F72041071D00AE60B8 /* CleanWaterRightView.m in Sources */,
-				EB73340020410B5100AE60B8 /* DoorAccessRightView.m in Sources */,
 				EB4EC1221FE7FC3B000B3101 /* EngineerWirelessMeetingViewCtrl.m in Sources */,
 				EB4E39E320273F6100533575 /* HandtoHandSettingsView.m in Sources */,
 				3448D96C2073C5070055D48F /* TwoIconAndTitleView.m in Sources */,
@@ -4698,10 +4593,7 @@
 				EB1A55C21FE93CD4000B18E6 /* EngineerAudioProcessViewCtrl.m in Sources */,
 				04DE1EA81AD6AEE000D49E2F /* SBJson4StreamWriterState.m in Sources */,
 				341671881FBA97BD001D33D0 /* HomeViewController.m in Sources */,
-				EB478FF9205FF74000EDCD64 /* InforCollectRightView.m in Sources */,
-				EBDB4535205AB0F6000ABAB0 /* PlayerRightView.m in Sources */,
 				EBC71B2C204100DD00DD0A98 /* NewWindRightView.m in Sources */,
-				EBD009BC208CC2C800920849 /* RemoteCOMIRView.m in Sources */,
 				342814231FE34BF100170D11 /* PowerSettingView.m in Sources */,
 				EBEA7C221FBCAF260028F0E8 /* AreaPickView.m in Sources */,
 				04DE1E9F1AD6AEE000D49E2F /* iHttpAdmin.m in Sources */,

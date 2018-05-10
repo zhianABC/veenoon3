@@ -202,7 +202,6 @@
                                            64, 300, SCREEN_HEIGHT-114)];
     _rightView.delegate = self;
     _rightView._numOfDevice = (int) [_videoProcessArray count];
-    [_rightView layoutDevicePannel];
     
     IMP_BLOCK_SELF(EngineerVideoProcessViewCtrl);
     _rightView._callback = ^(int deviceIndex) {
@@ -335,7 +334,6 @@
         
         //创建底部设备切换按钮
         _rightView._numOfDevice = (int)[_videoProcessArray count];
-        [_rightView layoutDevicePannel];
         
         
         IMP_BLOCK_SELF(EngineerVideoProcessViewCtrl);

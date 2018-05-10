@@ -16,6 +16,7 @@
 #import "JCActionView.h"
 #import "AppDelegate.h"
 #import "DataSync.h"
+#import "EngineerPresetScenarioViewCtrl.h"
 
 @interface HomeViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate, JCActionViewDelegate> {
     

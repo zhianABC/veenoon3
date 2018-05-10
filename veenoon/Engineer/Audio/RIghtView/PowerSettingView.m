@@ -23,10 +23,6 @@
     
     UIView *_chooseBg;
     
-    ComSettingView *_com;
-    
-    UITextField *ipTextField;
-    
     CenterCustomerPickerView *levelSetting;
 }
 
@@ -52,28 +48,6 @@
         self.backgroundColor = RGB(0, 89, 118);
         self.clipsToBounds = YES;
         
-        UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 100)];
-        [self addSubview:headView];
-        
-        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(10, 25, 40, 30)];
-        titleL.textColor = [UIColor whiteColor];
-        titleL.backgroundColor = [UIColor clearColor];
-        [self addSubview:titleL];
-        titleL.font = [UIFont systemFontOfSize:13];
-        titleL.text = @"IP地址";
-        
-        ipTextField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(titleL.frame)+30, 25, self.bounds.size.width - 35 - CGRectGetMaxX(titleL.frame), 30)];
-        ipTextField.delegate = self;
-        ipTextField.backgroundColor = [UIColor clearColor];
-        ipTextField.returnKeyType = UIReturnKeyDone;
-        ipTextField.text = @"192.168.1.100";
-        ipTextField.textColor = [UIColor whiteColor];
-        ipTextField.borderStyle = UITextBorderStyleRoundedRect;
-        ipTextField.textAlignment = NSTextAlignmentRight;
-        ipTextField.font = [UIFont systemFontOfSize:13];
-        ipTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-        [self addSubview:ipTextField];
-        
         UILabel* line = [[UILabel alloc] initWithFrame:CGRectMake(0, 60, frame.size.width, 1)];
         line.backgroundColor = RGB(1, 138, 182);
         [self addSubview:line];
@@ -83,7 +57,7 @@
         [self addSubview:line];
         
         
-        titleL = [[UILabel alloc] initWithFrame:CGRectMake(40, 70, frame.size.width, 20)];
+        UILabel *titleL = [[UILabel alloc] initWithFrame:CGRectMake(40, 70, frame.size.width, 20)];
         titleL.backgroundColor = [UIColor clearColor];
         [self addSubview:titleL];
         titleL.font = [UIFont systemFontOfSize:13];
@@ -166,39 +140,8 @@
         [_chooseBg addSubview:line];
         
         
-        UISwipeGestureRecognizer *swip = [[UISwipeGestureRecognizer alloc] initWithTarget:self
-                                                                                   action:@selector(switchComSetting)];
-        swip.direction = UISwipeGestureRecognizerDirectionDown;
-        
-        
-        [headView addGestureRecognizer:swip];
-        
-        _com = [[ComSettingView alloc] initWithFrame:self.bounds];
-        
-        
     }
     return self;
-}
-
-- (void) switchComSetting{
-    
-    if([_com superview])
-        return;
-    
-    CGRect rc = _com.frame;
-    rc.origin.y = 0-rc.size.height;
-    
-    _com.frame = rc;
-    [self addSubview:_com];
-    [UIView animateWithDuration:0.25
-                     animations:^{
-                         
-                         _com.frame = self.bounds;
-                         
-                     } completion:^(BOOL finished) {
-                         
-                     }];
-    
 }
     
 - (void) didPickerValue:(NSDictionary*)values{
@@ -288,8 +231,6 @@
         [self checkClicked:0];
     }
     
-    ipTextField.text = _objSet._ipaddress;
-    
     for(int i = 0; i < 8; i++)
     {
         UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(xx, yy, 50, 50)];
@@ -347,8 +288,6 @@
     {
         [self checkClicked:0];
     }
-    
-    ipTextField.text = _objSet._ipaddress;
     
     for(int i = 0; i < 16; i++)
     {
