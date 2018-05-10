@@ -216,6 +216,9 @@
             id key = [device objectForKey:@"driver"];
             obj._driverInfo = [[DataSync sharedDataSync] driverInfoByUUID:key];
             
+            obj._plugicon = [device objectForKey:@"icon"];
+            obj._plugicon_s = [device objectForKey:@"icon_s"];
+            
             //根据此类型的插件，创建自己的驱动，上传到中控
             [obj createDriver];
             
@@ -242,6 +245,9 @@
             id key = [device objectForKey:@"driver"];
             obj._driverInfo = [[DataSync sharedDataSync] driverInfoByUUID:key];
             
+            obj._plugicon = [device objectForKey:@"icon"];
+            obj._plugicon_s = [device objectForKey:@"icon_s"];
+            
             //根据此类型的插件，创建自己的驱动，上传到中控
             [obj createDriver];
             
@@ -264,6 +270,9 @@
             id key = [device objectForKey:@"driver"];
             obj._driverInfo = [[DataSync sharedDataSync] driverInfoByUUID:key];
             
+            obj._plugicon = [device objectForKey:@"icon"];
+            obj._plugicon_s = [device objectForKey:@"icon_s"];
+            
             //根据此类型的插件，创建自己的驱动，上传到中控
             [obj createDriver];
             
@@ -285,6 +294,9 @@
             
             id key = [device objectForKey:@"driver"];
             obj._driverInfo = [[DataSync sharedDataSync] driverInfoByUUID:key];
+            
+            obj._plugicon = [device objectForKey:@"icon"];
+            obj._plugicon_s = [device objectForKey:@"icon_s"];
             
             //根据此类型的插件，创建自己的驱动，上传到中控
             [obj createDriver];
@@ -399,8 +411,8 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
-    _indexSec = indexPath.section;
-    _indexSel = indexPath.row;
+    _indexSec = (int)indexPath.section;
+    _indexSel = (int)indexPath.row;
     
     BasePlugElement *data = nil;
     if(indexPath.section == 0)
@@ -421,7 +433,15 @@
     }
     
     _propertyView._plugDriver = data;
+    
+    if(data._driver == nil)
+    {
+        [data createDriver];
+        
+    }
     [_propertyView recoverSetting];
+    
+    _propertyView.hidden = NO;
     
     [_tableView reloadData];
 }

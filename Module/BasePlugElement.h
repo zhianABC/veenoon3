@@ -8,11 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+@class RgsPropertyObj;
+
 @interface BasePlugElement : NSObject
 {
     
     id _driverInfo;
     id _driver;
+    
+    RgsPropertyObj *_driver_ip_property;
 }
 
 @property (nonatomic, strong) NSString *_name;
@@ -34,10 +38,16 @@
 
 @property (nonatomic, assign) BOOL _isViewed;
 
+
 @property (nonatomic, strong) id _driverInfo;
 @property (nonatomic, strong) id _driver;
+@property (nonatomic, strong) RgsPropertyObj *_driver_ip_property;
+@property (nonatomic, strong) NSArray *_properties;
 
 - (void) createDriver;
+
+- (void) syncDriverIPProperty;
+- (void) uploadDriverIPProperty;
 
 - (NSString*) showName;
 - (NSString*) deviceName;

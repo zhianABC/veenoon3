@@ -22,8 +22,7 @@
 //<VAProcessorProxys>
 @property (nonatomic, strong) NSMutableArray *_outAudioProxys;
 
-- (void) syncDriverIPProperty;
-- (void) uploadDriverIPProperty;
+
 
 
 - (void) removeDriver;

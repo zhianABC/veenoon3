@@ -9,5 +9,15 @@
 #import "BasePlugElement.h"
 
 @interface ComDriver : BasePlugElement
+{
+    
+}
+
+//<RgsConnectionObj>
+
+@property (nonatomic, strong) NSArray *_comConnections;
+
+@property (nonatomic, strong) NSArray *_localSavedProxys;
+
 
 @end

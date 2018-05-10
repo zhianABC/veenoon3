@@ -338,7 +338,7 @@
     [DataCenter defaultDataCenter]._roomData = _meetingRoomDic;
     [_meetingRoomDic setObject:_regulus_user_id forKey:@"user_id"];
     
-    [KVNProgress showSuccess];
+    [KVNProgress dismiss];
     
     [DataSync sharedDataSync]._currentReglusLogged = @{@"gw_id":_regulus_gateway_id,
                                                        @"user_id":_regulus_user_id

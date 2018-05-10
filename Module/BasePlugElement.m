@@ -27,6 +27,9 @@
 @synthesize _driver;
 @synthesize _driverInfo;
 
+@synthesize _driver_ip_property;
+@synthesize _properties;
+
 - (id) init
 {
     if(self = [super init])
@@ -69,6 +72,13 @@
 }
 
 - (void) createDriver{
+    
+}
+
+- (void) syncDriverIPProperty{
+    
+}
+- (void) uploadDriverIPProperty{
     
 }
 @end
