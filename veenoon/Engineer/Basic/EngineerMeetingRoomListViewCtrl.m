@@ -12,6 +12,8 @@
 #import "DataSync.h"
 #import "AppDelegate.h"
 
+#import "KVNProgress.h"
+#import "DataCenter.h"
 #ifdef OPEN_REG_LIB_DEF
 #import "RegulusSDK.h"
 #endif
@@ -26,10 +28,17 @@
 }
 @property (nonatomic, strong) NSMutableArray *roomList;
 
+@property (nonatomic, strong) NSString *_regulus_user_id;
+@property (nonatomic, strong) NSString *_regulus_gateway_id;
+@property (nonatomic, strong) NSMutableDictionary *_meetingRoomDic;
 @end
 
 @implementation EngineerMeetingRoomListViewCtrl
 @synthesize roomList;
+@synthesize _meetingRoomDic;
+
+@synthesize _regulus_user_id;
+@synthesize _regulus_gateway_id;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -189,17 +198,6 @@
                 action:@selector(backAction:)
       forControlEvents:UIControlEventTouchUpInside];
     
-    
-#ifdef OPEN_REG_LIB_DEF
-    NSString* _regulus_gateway_id = [[NSUserDefaults standardUserDefaults] objectForKey:@"gateway_id"];
-    NSString* _regulus_user_id = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_id"];
-    
-    if(_regulus_gateway_id && _regulus_user_id)
-    {
-        //[[RegulusSDK sharedRegulusSDK] Logout:_regulus_user_id
-                                        //gw_id:_regulus_gateway_id completion:nil];
-    }
-#endif
 }
 
 
@@ -249,10 +247,109 @@
     long index = gestureRecognizer.view.tag;
     NSMutableDictionary *dic = [roomList objectAtIndex:index];
     
+    self._meetingRoomDic = dic;
+    
+    [self tryLoginRegulus];
+   
+}
+
+- (void) tryLoginRegulus{
+    
+    self._regulus_gateway_id = [_meetingRoomDic objectForKey:@"regulus_id"];
+    self._regulus_user_id = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_id"];
+
+    
+#if LOGIN_REGULUS
+    [KVNProgress showWithStatus:@"登录中..."];
+    
+    
+    if(_regulus_gateway_id && _regulus_user_id)
+    {
+        [self loginCtrlDevice];
+    }
+    else
+    {
+        self._regulus_gateway_id = @"RGS_EOC500_01";
+        [self regCtrlDevice];
+    }
+#endif
+}
+
+
+
+- (void) regCtrlDevice{
+    
+#ifdef OPEN_REG_LIB_DEF
+    
+    IMP_BLOCK_SELF(EngineerMeetingRoomListViewCtrl);
+    
+    //[KVNProgress showWithStatus:@"登录中..."];
+    
+    [[RegulusSDK sharedRegulusSDK] RequestJoinGateWay:_regulus_gateway_id
+                                           completion:^(NSString *user_id, BOOL is_init, NSError * aError) {
+                                               if (aError) {
+                                                   
+                                                   [KVNProgress showErrorWithStatus:[aError description]];
+                                                   
+                                                   [DataSync sharedDataSync]._currentReglusLogged = nil;
+                                               }
+                                               else{
+                                                   
+                                                   block_self._regulus_user_id = user_id;
+                                                   //NSLog(@"user_id:%@,gw:%@\n",user_id,_gw_id.text);
+                                                   [[NSUserDefaults standardUserDefaults] setObject:@"RGS_EOC500_01" forKey:@"gateway_id"];
+                                                   [[NSUserDefaults standardUserDefaults] setObject:user_id forKey:@"user_id"];
+                                                   
+                                                   [[NSUserDefaults standardUserDefaults] synchronize];
+                                                   
+                                                   [block_self loginCtrlDevice];
+                                               }
+                                           }];
+#endif
+    
+}
+
+- (void) loginCtrlDevice{
+    
+#ifdef OPEN_REG_LIB_DEF
+    
+    IMP_BLOCK_SELF(EngineerMeetingRoomListViewCtrl);
+    
+    [[RegulusSDK sharedRegulusSDK] Login:self._regulus_user_id
+                                   gw_id:_regulus_gateway_id
+                                password:@"111111"
+                                   level:1 completion:^(BOOL result, NSInteger level, NSError *error) {
+                                       if (result) {
+                                           [block_self enterRoom];
+                                       }
+                                       else
+                                       {
+                                           [DataSync sharedDataSync]._currentReglusLogged = nil;
+                                           [KVNProgress showErrorWithStatus:[error description]];
+                                       }
+                                   }];
+    
+#endif
+    
+}
+
+- (void) enterRoom{
+    
+    [DataCenter defaultDataCenter]._roomData = _meetingRoomDic;
+    [_meetingRoomDic setObject:_regulus_user_id forKey:@"user_id"];
+    
+    [KVNProgress showSuccess];
+    
+    [DataSync sharedDataSync]._currentReglusLogged = @{@"gw_id":_regulus_gateway_id,
+                                                       @"user_id":_regulus_user_id
+                                                       };
+   
     EngineerSysSelectViewCtrl *lctrl = [[EngineerSysSelectViewCtrl alloc] init];
-    lctrl._meetingRoomDic = dic;
+    lctrl._meetingRoomDic = _meetingRoomDic;
     
     [self.navigationController pushViewController:lctrl animated:YES];
+
+    
 }
 
 - (void) cameraAction:(id)sender {

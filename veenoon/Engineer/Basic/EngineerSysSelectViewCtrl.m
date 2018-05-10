@@ -36,15 +36,11 @@
     
     UIImageView *_aniWaitDialog;
 }
-@property (nonatomic, strong) NSString *_regulus_user_id;
-@property (nonatomic, strong) NSString *_regulus_gateway_id;
 @property (nonatomic, strong) NSMutableArray *_sceneDrivers;
 @end
 
 @implementation EngineerSysSelectViewCtrl
 @synthesize _meetingRoomDic;
-@synthesize _regulus_user_id;
-@synthesize _regulus_gateway_id;
 @synthesize _sceneDrivers;
 
 
@@ -148,97 +144,12 @@
     
     [self containerView];
     
-    self._regulus_gateway_id = [_meetingRoomDic objectForKey:@"regulus_id"];
-    self._regulus_user_id = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_id"];
-    
     self._sceneDrivers = [NSMutableArray array];
     
-
-#if LOGIN_REGULUS
-    [KVNProgress show];
-    
-    
-    if(_regulus_gateway_id && _regulus_user_id)
-    {
-        [self loginCtrlDevice];
-    }
-    else
-    {
-        self._regulus_gateway_id = @"RGS_EOC500_01";
-        [self regCtrlDevice];
-    }
-#endif
-    
-}
-
-- (void) regCtrlDevice{
-    
-#ifdef OPEN_REG_LIB_DEF
-    
-    IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
-    
-    [KVNProgress showWithStatus:@"登录中..."];
-    
-    [[RegulusSDK sharedRegulusSDK] RequestJoinGateWay:_regulus_gateway_id
-                                           completion:^(NSString *user_id, BOOL is_init, NSError * aError) {
-        if (aError) {
-            
-            [KVNProgress showErrorWithStatus:[aError description]];
-            
-            [DataSync sharedDataSync]._currentReglusLogged = nil;
-        }
-        else{
-            
-            block_self._regulus_user_id = user_id;
-            //NSLog(@"user_id:%@,gw:%@\n",user_id,_gw_id.text);
-            [[NSUserDefaults standardUserDefaults] setObject:@"RGS_EOC500_01" forKey:@"gateway_id"];
-            [[NSUserDefaults standardUserDefaults] setObject:user_id forKey:@"user_id"];
-            
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            
-            [block_self loginCtrlDevice];
-        }
-    }];
-#endif
-    
-}
-
-- (void) loginCtrlDevice{
-    
-#ifdef OPEN_REG_LIB_DEF
-    
-    IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
-
-    [[RegulusSDK sharedRegulusSDK] Login:self._regulus_user_id
-                                   gw_id:_regulus_gateway_id
-                                password:@"111111"
-                                   level:1 completion:^(BOOL result, NSInteger level, NSError *error) {
-        if (result) {
-            [block_self update];
-        }
-        else
-        {
-            [DataSync sharedDataSync]._currentReglusLogged = nil;
-            [KVNProgress showErrorWithStatus:[error description]];
-        }
-    }];
-    
-#endif
-    
-}
-
-- (void) update{
-    
-    [DataCenter defaultDataCenter]._roomData = _meetingRoomDic;
-    [_meetingRoomDic setObject:_regulus_user_id forKey:@"user_id"];
-    
-    [DataSync sharedDataSync]._currentReglusLogged = @{@"gw_id":_regulus_gateway_id,
-                                                       @"user_id":_regulus_user_id
-                                                       };
-    //[KVNProgress showSuccess];
     [self checkArea];
     
 }
+
 
 - (void) checkArea{
     
@@ -279,10 +190,7 @@
             }
         }];
     }
-    else
-    {
-        [KVNProgress showSuccess];
-    }
+
     
     
 #endif
@@ -316,8 +224,7 @@
         }
     }
     
-    
-    [KVNProgress showSuccess];
+
 }
 
 
@@ -430,20 +337,49 @@
 
 - (void) renewSysAction:(UIButton*)sender{
     
+    if([_sceneDrivers count])
+    {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil
+                                                                       message:@"您确定要清空已保存的场景，设置新系统吗？"
+                                                                preferredStyle:UIAlertControllerStyleActionSheet];
+        
+        
+        IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
+        UIAlertAction *takeAction = [UIAlertAction
+                                     actionWithTitle:@"确定"
+                                     style:UIAlertActionStyleDefault
+                                     handler:^(UIAlertAction * _Nonnull action) {
+                                         [block_self clearAndNewProject:sender];
+                                     }];
+        [alert addAction:takeAction];
+
+        
+        UIAlertAction *cancelAction = [UIAlertAction
+                                       actionWithTitle:@"取消"
+                                       style:UIAlertActionStyleCancel handler:nil];
+        [alert addAction:cancelAction];
+        
+        
+        [self presentViewController:alert animated:YES
+                         completion:nil];
+    }
+    else{
+        
+        [self setNewProject];
+    }
+
+}
+
+- (void) clearAndNewProject:(UIButton*)sender{
+    
 #if LOGIN_REGULUS
     
     sender.enabled = NO;
     
     if([DataSync sharedDataSync]._currentReglusLogged)
     {
-//        sender.enabled = YES;
-//        //test
-//        [self setNewProject];
-//
-        
-        
         IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
-
+        
         [[RegulusSDK sharedRegulusSDK] NewProject:@"Veenoon" completion:^(BOOL result, NSError *error) {
             
             sender.enabled = YES;
@@ -458,7 +394,7 @@
             }
         }];
         
-
+        
     }
     else
     {
@@ -470,7 +406,6 @@
 #else
     [self setNewProject];
 #endif
-    
 }
 
 

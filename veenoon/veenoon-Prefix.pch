@@ -63,6 +63,8 @@
 #define BLUE_DOWN_COLOR         RGB(0, 47, 62)
 #define DARK_GRAY_COLOR         RGB(31, 31, 31)
 #define BLACK_COLOR             RGB(18, 18, 18)
+#define B_GRAY_COLOR             RGB(63, 58, 55)
+
 
 #define ImageFromResource(x)    [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:x ofType:nil]]
 
@@ -118,6 +120,7 @@
 #define UUID_CANON_WUX450       @"e084c393-19a3-47a1-aada-efc12869a965"
 #define UUID_Regulus_Scene      @"f8f84c9c-4246-4ef2-b7fd-cdb76f8b08a3"
 #define UUID_6CH_Dimmer_Light   @"b836539a-376c-4fae-86d0-d7d580e7a626"
+#define UUID_Audio_Processor    @"a3508fda-8775-4561-a26f-3df071f78b09"
 
 #define LOGIN_REGULUS 1
 

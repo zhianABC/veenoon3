@@ -171,6 +171,10 @@
 		341C610B1FDD0DBF003A5490 /* a_room_4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 341C60ED1FDD0DBF003A5490 /* a_room_4@2x.png */; };
 		341C784A2050184300DD1677 /* SIconSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = 341C78492050184200DD1677 /* SIconSelectView.m */; };
 		341C784D2050185200DD1677 /* IconLayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 341C784B2050185200DD1677 /* IconLayerView.m */; };
+		341CE49A20A3E90A009DBC01 /* ChooseDriverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 341CE49820A3E908009DBC01 /* ChooseDriverViewController.m */; };
+		341CE49E20A3F000009DBC01 /* buy_food@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 341CE49B20A3EFFC009DBC01 /* buy_food@2x.png */; };
+		341CE49F20A3F000009DBC01 /* buy_food@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 341CE49C20A3EFFE009DBC01 /* buy_food@3x.png */; };
+		341CE4A020A3F000009DBC01 /* adddetail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 341CE49D20A3F000009DBC01 /* adddetail@2x.png */; };
 		341E75E4209BF94C00E69DB2 /* VAProcessorProxys.m in Sources */ = {isa = PBXBuildFile; fileRef = 341E75E3209BF94C00E69DB2 /* VAProcessorProxys.m */; };
 		341E7BE5205BFD7400E2DEA0 /* back_white_ico@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 341E7BE4205BFD7300E2DEA0 /* back_white_ico@2x.png */; };
 		3421561820597293005205D6 /* slide_btn_light_nokd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3421561620597292005205D6 /* slide_btn_light_nokd@2x.png */; };
@@ -1171,6 +1175,11 @@
 		341C78492050184200DD1677 /* SIconSelectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIconSelectView.m; sourceTree = "<group>"; };
 		341C784B2050185200DD1677 /* IconLayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconLayerView.m; sourceTree = "<group>"; };
 		341C784C2050185200DD1677 /* IconLayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconLayerView.h; sourceTree = "<group>"; };
+		341CE49820A3E908009DBC01 /* ChooseDriverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseDriverViewController.m; sourceTree = "<group>"; };
+		341CE49920A3E90A009DBC01 /* ChooseDriverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseDriverViewController.h; sourceTree = "<group>"; };
+		341CE49B20A3EFFC009DBC01 /* buy_food@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buy_food@2x.png"; sourceTree = "<group>"; };
+		341CE49C20A3EFFE009DBC01 /* buy_food@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buy_food@3x.png"; sourceTree = "<group>"; };
+		341CE49D20A3F000009DBC01 /* adddetail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "adddetail@2x.png"; sourceTree = "<group>"; };
 		341E75E2209BF94C00E69DB2 /* VAProcessorProxys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VAProcessorProxys.h; sourceTree = "<group>"; };
 		341E75E3209BF94C00E69DB2 /* VAProcessorProxys.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VAProcessorProxys.m; sourceTree = "<group>"; };
 		341E7BE4205BFD7300E2DEA0 /* back_white_ico@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_white_ico@2x.png"; sourceTree = "<group>"; };
@@ -2578,6 +2587,9 @@
 		04DE1ECB1AD6B3BA00D49E2F /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
+				341CE49D20A3F000009DBC01 /* adddetail@2x.png */,
+				341CE49B20A3EFFC009DBC01 /* buy_food@2x.png */,
+				341CE49C20A3EFFE009DBC01 /* buy_food@3x.png */,
 				EBCD01CF20A0A17100787D48 /* botomo_icon_black@2x.png */,
 				EBCD01CD20A09EED00787D48 /* left_back_bg@2x.png */,
 				3456C17D20A034D9001FAB61 /* SenarioIcon */,
@@ -3476,6 +3488,8 @@
 				EB5F7F971FD59D8400351888 /* EngineerDNSSettingView.m */,
 				EB09EF2D1FD978BD00C968CA /* EngineerToUseTeslariViewCtrl.h */,
 				EB09EF2E1FD978C700C968CA /* EngineerToUseTeslariViewCtrl.m */,
+				341CE49920A3E90A009DBC01 /* ChooseDriverViewController.h */,
+				341CE49820A3E908009DBC01 /* ChooseDriverViewController.m */,
 				EB09EF321FD97CBE00C968CA /* EngineerAudioDevicePluginViewCtrl.h */,
 				EB09EF301FD97CB500C968CA /* EngineerAudioDevicePluginViewCtrl.m */,
 				EB09EF331FD97FF900C968CA /* EngineerVedioDevicePluginViewCtrl.h */,
@@ -3974,6 +3988,7 @@
 				3456C18C20A034D9001FAB61 /* senario_02_28@2x.png in Resources */,
 				EB03F52D1FBDC83100865541 /* home_background@2x.png in Resources */,
 				3451A53B2052DCC600AE02B4 /* slide_btn_light@2x.png in Resources */,
+				341CE49E20A3F000009DBC01 /* buy_food@2x.png in Resources */,
 				3448D95E2073B9590055D48F /* videop_remotevideo_w@2x.png in Resources */,
 				EBAE5B631FDD046A00C10C4D /* engineer_confirm_bt_n@2x.png in Resources */,
 				EBAE5B851FDD07BE00C10C4D /* engineer_video_touyingji_s@2x.png in Resources */,
@@ -4179,6 +4194,7 @@
 				34190EF1205D536C009A519C /* v_icon_9_sel@2x.png in Resources */,
 				EBF5D4411FCC60240014D5F0 /* shedingzhuxi_n@2x.png in Resources */,
 				EB5F7F901FD598ED00351888 /* engineer_port_n@2x.png in Resources */,
+				341CE4A020A3F000009DBC01 /* adddetail@2x.png in Resources */,
 				EBDF1C151FC5C6C900A756EA /* envirement_control_n@2x.png in Resources */,
 				34CC7857209AE0D10057A2C1 /* KVNProgressView.xib in Resources */,
 				EB1A55E01FEF5691000B18E6 /* engineer_zoom_add_s@2x.png in Resources */,
@@ -4290,6 +4306,7 @@
 				34238A572060DD260004C6D9 /* right_white_ico@2x.png in Resources */,
 				EB217FD21FD4275E003F5A8F /* user_add_wet_s@2x.png in Resources */,
 				EB235015204D9BB2008F6CA2 /* wsDB.sqlite in Resources */,
+				341CE49F20A3F000009DBC01 /* buy_food@3x.png in Resources */,
 				EB05FFA3205012DA0099B9FE /* info_collect_d@2x.png in Resources */,
 				EB19B66F20581D2C003F1546 /* audio_corner_huatong@2x.png in Resources */,
 				EBDF1C451FC5D5CF00A756EA /* add_wet_sys_n@2x.png in Resources */,
@@ -4599,6 +4616,7 @@
 				04DE1EA51AD6AEE000D49E2F /* SBJson4StreamParserState.m in Sources */,
 				341C60C41FDCF1EA003A5490 /* ECPlusSelectView.m in Sources */,
 				04DE1E931AD6AEE000D49E2F /* Utilities.m in Sources */,
+				341CE49A20A3E90A009DBC01 /* ChooseDriverViewController.m in Sources */,
 				EB1A04601FC7156C007CC1F2 /* UserAudioConfigViewController.m in Sources */,
 				3456C175209EACD1001FAB61 /* VCameraProxys.m in Sources */,
 				349DADE0206E8D02001593DE /* AudioEWirlessMike.m in Sources */,

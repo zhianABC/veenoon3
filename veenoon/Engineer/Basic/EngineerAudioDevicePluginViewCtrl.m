@@ -339,7 +339,7 @@
     
     self._currentBrands = @[@"Teslaria"];
     self._currentTypes = @[@"Teslaria Audio Processor"];
-    self._driverUdids = @[@"a3508fda-8775-4561-a26f-3df071f78b09"];
+    self._driverUdids = @[UUID_Audio_Processor];
     
     _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
     _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
