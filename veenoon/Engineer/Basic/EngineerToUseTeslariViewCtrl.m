@@ -11,16 +11,22 @@
 #import "ChooseDriverViewController.h"
 #import "DataSync.h"
 #import "UIButton+Color.h"
+#import "DriverPropertyView.h"
+#import "BasePlugElement.h"
 
 @interface EngineerToUseTeslariViewCtrl () <UITableViewDelegate, UITableViewDataSource> {
     
-    UITableView *_tableView;
+    UITableView             *_tableView;
     
-    int tableWidth;
+    int                     tableWidth;
+    UIPopoverController     *_deviceSelector;
     
-    UIPopoverController *_deviceSelector;
+    UIImageView             *bottomBar;
     
-    UIImageView *bottomBar;
+    DriverPropertyView      *_propertyView;
+    
+    int                     _indexSel;
+    int                     _indexSec;
 }
 @property (nonatomic, strong) NSArray *_driver_objs;
 @property (nonatomic, strong) NSMutableDictionary *_mapDrivers;
@@ -73,6 +79,9 @@
     self._envDrivers = [NSMutableArray array];
     self._othersDrivers = [NSMutableArray array];
     
+    _indexSel = -1;
+    _indexSec = -1;
+    
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT,
                                                               top,
                                                               tableWidth,
@@ -85,8 +94,9 @@
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableView];
     
+    
     UIButton *btnSave = [UIButton buttonWithColor:YELLOW_COLOR selColor:nil];
-    btnSave.frame = CGRectMake(SCREEN_WIDTH - 100, top-40, 80, 40);
+    btnSave.frame = CGRectMake(SCREEN_WIDTH - 100, top-50, 80, 40);
     [self.view addSubview:btnSave];
     btnSave.layer.cornerRadius = 5;
     btnSave.clipsToBounds = YES;
@@ -100,6 +110,18 @@
     spLine.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
     [self.view addSubview:spLine];
     
+    spLine = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT-1, top, 1, CGRectGetHeight(_tableView.frame))];
+    spLine.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
+    [self.view addSubview:spLine];
+    
+    int w = SCREEN_WIDTH - CGRectGetWidth(_tableView.frame) - 2*ENGINEER_VIEW_LEFT - 30;
+    
+    _propertyView = [[DriverPropertyView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_tableView.frame)+30,
+                                                             top,
+                                                            w, CGRectGetHeight(_tableView.frame)-60)];
+    
+    [self.view addSubview:_propertyView];
+    _propertyView.hidden = YES;
     
     bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
@@ -132,11 +154,13 @@
     forControlEvents:UIControlEventTouchUpInside];
     
 #if LOGIN_REGULUS
+    
     //创建Area
     [[DataSync sharedDataSync] syncCurrentArea];
     
     //获取Regulus支持的插件
     [[DataSync sharedDataSync] syncRegulusDrivers];
+    
 #endif
 }
 
@@ -176,14 +200,98 @@
 - (void) didAddDevice:(NSDictionary*)device{
     
     NSString *type = [device objectForKey:@"type"];
-    if([type isEqualToString:@"audio"])
-        [_audioDrivers addObject:device];
+    if([type isEqualToString:@"audio"]){
+        
+        NSString *classname = [device objectForKey:@"driver_class"];
+        Class someClass = NSClassFromString(classname);
+        BasePlugElement * obj = [[someClass alloc] init];
+  
+        if(obj)
+        {
+            obj._name = [device objectForKey:@"name"];
+            obj._brand = [device objectForKey:@"brand"];
+            obj._type = [device objectForKey:@"ptype"];
+            obj._driverUUID = [device objectForKey:@"brand"];
+            
+            id key = [device objectForKey:@"driver"];
+            obj._driverInfo = [[DataSync sharedDataSync] driverInfoByUUID:key];
+            
+            //根据此类型的插件，创建自己的驱动，上传到中控
+            [obj createDriver];
+            
+            [_audioDrivers addObject:obj];
+        }
+        
+        
+        
+        
+    }
     else if([type isEqualToString:@"video"])
-        [_videoDrivers addObject:device];
+    {
+        NSString *classname = [device objectForKey:@"driver_class"];
+        Class someClass = NSClassFromString(classname);
+        BasePlugElement * obj = [[someClass alloc] init];
+        
+        if(obj)
+        {
+            obj._name = [device objectForKey:@"name"];
+            obj._brand = [device objectForKey:@"brand"];
+            obj._type = [device objectForKey:@"ptype"];
+            obj._driverUUID = [device objectForKey:@"brand"];
+            
+            id key = [device objectForKey:@"driver"];
+            obj._driverInfo = [[DataSync sharedDataSync] driverInfoByUUID:key];
+            
+            //根据此类型的插件，创建自己的驱动，上传到中控
+            [obj createDriver];
+            
+            [_videoDrivers addObject:obj];
+        }
+    }
     else if([type isEqualToString:@"env"])
-        [_envDrivers addObject:device];
+    {
+        NSString *classname = [device objectForKey:@"driver_class"];
+        Class someClass = NSClassFromString(classname);
+        BasePlugElement * obj = [[someClass alloc] init];
+        
+        if(obj)
+        {
+            obj._name = [device objectForKey:@"name"];
+            obj._brand = [device objectForKey:@"brand"];
+            obj._type = [device objectForKey:@"ptype"];
+            obj._driverUUID = [device objectForKey:@"brand"];
+            
+            id key = [device objectForKey:@"driver"];
+            obj._driverInfo = [[DataSync sharedDataSync] driverInfoByUUID:key];
+            
+            //根据此类型的插件，创建自己的驱动，上传到中控
+            [obj createDriver];
+            
+            [_envDrivers addObject:obj];
+        }
+    }
     else
-        [_othersDrivers addObject:device];
+    {
+        NSString *classname = [device objectForKey:@"driver_class"];
+        Class someClass = NSClassFromString(classname);
+        BasePlugElement * obj = [[someClass alloc] init];
+        
+        if(obj)
+        {
+            obj._name = [device objectForKey:@"name"];
+            obj._brand = [device objectForKey:@"brand"];
+            obj._type = [device objectForKey:@"ptype"];
+            obj._driverUUID = [device objectForKey:@"brand"];
+            
+            id key = [device objectForKey:@"driver"];
+            obj._driverInfo = [[DataSync sharedDataSync] driverInfoByUUID:key];
+            
+            //根据此类型的插件，创建自己的驱动，上传到中控
+            [obj createDriver];
+            
+            [_othersDrivers addObject:obj];
+        }
+    }
     
     [_tableView reloadData];
 }
@@ -226,7 +334,7 @@
     cell.backgroundColor = [UIColor clearColor];
     
     
-    NSDictionary *data = nil;
+    BasePlugElement *data = nil;
     if(indexPath.section == 0)
     {
         data = [_audioDrivers objectAtIndex:indexPath.row];
@@ -244,7 +352,7 @@
         data = [_othersDrivers objectAtIndex:indexPath.row];
     }
     
-    UIImage *img = [UIImage imageNamed:[data objectForKey:@"icon"]];
+    UIImage *img = [UIImage imageNamed:data._plugicon];
     UIImageView *iconImage = [[UIImageView alloc] initWithImage:img];
     iconImage.frame = CGRectMake(tableWidth-30, 12, 16, 16);
     [cell.contentView addSubview:iconImage];
@@ -268,14 +376,21 @@
     subL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
     
     
-    titleL.text = [data objectForKey:@"name"];
+    titleL.text = data._name;
     subL.text = [NSString stringWithFormat:@"%@ %@",
-                 [data objectForKey:@"brand"],
-                 [data objectForKey:@"ptype"]];
+                 data._brand,
+                 data._type];
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 59, tableWidth, 1)];
     line.backgroundColor =  [UIColor colorWithWhite:1.0 alpha:0.2];
     [cell.contentView addSubview:line];
+    
+    if(_indexSec == indexPath.section && _indexSel == indexPath.row)
+    {
+        UILabel *lineSel = [[UILabel alloc] initWithFrame:CGRectMake(tableWidth-3, 0, 3, 60)];
+        lineSel.backgroundColor =  YELLOW_COLOR;
+        [cell.contentView addSubview:lineSel];
+    }
     
     return cell;
 }
@@ -283,6 +398,32 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    
+    _indexSec = indexPath.section;
+    _indexSel = indexPath.row;
+    
+    BasePlugElement *data = nil;
+    if(indexPath.section == 0)
+    {
+        data = [_audioDrivers objectAtIndex:indexPath.row];
+    }
+    else if(indexPath.section == 1)
+    {
+        data = [_videoDrivers objectAtIndex:indexPath.row];
+    }
+    else if(indexPath.section == 2)
+    {
+        data = [_envDrivers objectAtIndex:indexPath.row];
+    }
+    else if(indexPath.section == 3)
+    {
+        data = [_othersDrivers objectAtIndex:indexPath.row];
+    }
+    
+    _propertyView._plugDriver = data;
+    [_propertyView recoverSetting];
+    
+    [_tableView reloadData];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{

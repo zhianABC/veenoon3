@@ -24,13 +24,12 @@
 
 @implementation VCameraSettingSet
 
-@synthesize _driver;
-@synthesize _driverInfo;
 @synthesize _driver_ip_Property;
 @synthesize _comDriver;
 @synthesize _comDriverInfo;
+
 @synthesize _proxyObj;
-@synthesize _comConnections;
+//@synthesize _comConnections;
 @synthesize _cameraConnections;
 
 @synthesize _localSavedProxys;
@@ -55,6 +54,7 @@
 
 - (void) syncDriverIPProperty{
     
+    /*
     if(_driver_ip_Property)
     {
         self._ipaddress = _driver_ip_Property.value;
@@ -86,10 +86,11 @@
             }
         }];
     }
+     */
 }
 
 - (void) syncDriverComs{
-    
+    /*
     if(_comDriver
        && [_comDriver isKindOfClass:[RgsDriverObj class]]
        && ![_comConnections count])
@@ -120,6 +121,7 @@
         }];
     
     }
+     */
     
     if(_driver
        && [_driver isKindOfClass:[RgsDriverObj class]]
@@ -147,6 +149,7 @@
 
 - (void) uploadDriverIPProperty
 {
+    /*
     if(_comDriver
        && [_comDriver isKindOfClass:[RgsDriverObj class]]
        && _driver_ip_Property)
@@ -171,6 +174,7 @@
                                                   }
                                               }];
     }
+     */
 }
 
 - (void) saveProject{
@@ -197,6 +201,7 @@
     RgsAreaObj *area = [DataSync sharedDataSync]._currentArea;
     
     //串口服务器驱动
+    /*不需要了
     if(area && _comDriverInfo && !_comDriver)
     {
         RgsDriverInfo *info = _comDriverInfo;
@@ -212,6 +217,7 @@
                                              
                                          }];
     }
+     */
     
     //Camera驱动
     if(area && _driverInfo && !_driver)
@@ -235,6 +241,7 @@
 
 - (void) removeDriver{
     
+    /*不需要了
     if(_comDriver)
     {
         RgsDriverObj *dr = _comDriver;
@@ -243,6 +250,7 @@
                                              
                                          }];
     }
+     */
     
     if(_driver)
     {
@@ -256,14 +264,12 @@
     
 }
 
-- (void) createConnection{
+- (void) createConnection:(RgsConnectionObj*)target{
     
-    if([_comConnections count]
-       && self._comIdx < [_comConnections count]
-       && [_cameraConnections count])
+    if(target && [_cameraConnections count])
     {
         
-        RgsConnectionObj * com_connt_obj = [_comConnections objectAtIndex:self._comIdx];
+        RgsConnectionObj * com_connt_obj = target;
         RgsConnectionObj * cam_connt_obj = [_cameraConnections objectAtIndex:0];
         
         [com_connt_obj Connect:cam_connt_obj completion:^(BOOL result, NSError *error) {
@@ -317,6 +323,7 @@
         RgsDriverObj *dr = _driver;
         [allData setObject:[NSNumber numberWithInteger:dr.m_id] forKey:@"driver_id"];
     }
+    
     if(_comDriverInfo)
     {
         RgsDriverInfo *info = _comDriverInfo;

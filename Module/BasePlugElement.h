@@ -9,6 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @interface BasePlugElement : NSObject
+{
+    
+    id _driverInfo;
+    id _driver;
+}
 
 @property (nonatomic, strong) NSString *_name;
 @property (nonatomic, strong) NSString *_brand;
@@ -18,6 +23,9 @@
 @property (nonatomic, strong) NSString *_deviceid;
 @property (nonatomic, strong) NSString *_ipaddress;
 
+@property (nonatomic, strong) NSString *_plugicon;
+@property (nonatomic, strong) NSString *_plugicon_s;
+
 //connection
 @property (nonatomic, assign) int _comIdx;
 @property (nonatomic, strong) NSArray *_comArray;
@@ -26,7 +34,13 @@
 
 @property (nonatomic, assign) BOOL _isViewed;
 
+@property (nonatomic, strong) id _driverInfo;
+@property (nonatomic, strong) id _driver;
+
+- (void) createDriver;
+
 - (NSString*) showName;
+- (NSString*) deviceName;
 
 - (NSDictionary *)objectToJson;
 - (void) jsonToObject:(NSDictionary*)json;

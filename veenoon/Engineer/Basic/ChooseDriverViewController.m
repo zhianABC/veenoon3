@@ -94,6 +94,7 @@
                              @"brand":@"Teslaria",
                              @"icon":@"engineer_yinpinchuli_n.png",
                              @"icon_s":@"engineer_yinpinchuli_s.png",
+                             @"driver_class":@"AudioEProcessor",
                              @"ptype":@"Audio Processor"
                              }];
     
@@ -103,6 +104,7 @@
                              @"brand":@"Teslaria",
                              @"icon":@"engineer_video_shexiangji_n.png",
                              @"icon_s":@"engineer_video_shexiangji_s.png",
+                             @"driver_class":@"VCameraSettingSet",
                              @"ptype":@"Camera"
                              },
                            @{@"type":@"video",
@@ -111,15 +113,17 @@
                              @"brand":@"Canon",
                              @"icon":@"engineer_video_touyingji_n.png",
                              @"icon_s":@"engineer_video_touyingji_s.png",
+                             @"driver_class":@"VTouyingjiSet",
                              @"ptype":@"WUX450"
                              }];
     
     self._envDrivers = @[@{@"type":@"env",
-                             @"name":@"Dimmer Light",
+                             @"name":@"照明",
                              @"driver":UUID_6CH_Dimmer_Light,
                              @"brand":@"Teslaria",
                              @"icon":@"engineer_env_zhaoming_n.png",
                            @"icon_s":@"engineer_env_zhaoming_s.png",
+                           @"driver_class":@"EDimmerLight",
                              @"ptype":@"6 CH Dimmer Light"
                              }];
 
@@ -129,6 +133,7 @@
                                @"brand":@"Teslaria",
                              @"icon":@"engineer_video_xinxihe_n.png",
                              @"icon_s":@"engineer_video_xinxihe_s.png",
+                             @"driver_class":@"ComDriver",
                                @"ptype":@"Com"
                                }];
     

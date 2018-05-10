@@ -193,7 +193,7 @@
 
 - (void) didChoosedComVal:(NSString*)val{
     
-    [_currentObj createConnection];
+    //[_currentObj createConnection];
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{

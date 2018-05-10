@@ -21,6 +21,12 @@
 @synthesize _driverUUID;
 @synthesize _isViewed;
 
+@synthesize _plugicon;
+@synthesize _plugicon_s;
+
+@synthesize _driver;
+@synthesize _driverInfo;
+
 - (id) init
 {
     if(self = [super init])
@@ -48,6 +54,11 @@
     return name;
 }
 
+- (NSString*) deviceName
+{
+    return _name;
+}
+
 - (NSDictionary *)objectToJson{
     
     return nil;
@@ -57,4 +68,7 @@
  
 }
 
+- (void) createDriver{
+    
+}
 @end

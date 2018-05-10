@@ -175,6 +175,9 @@
 		341CE49E20A3F000009DBC01 /* buy_food@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 341CE49B20A3EFFC009DBC01 /* buy_food@2x.png */; };
 		341CE49F20A3F000009DBC01 /* buy_food@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 341CE49C20A3EFFE009DBC01 /* buy_food@3x.png */; };
 		341CE4A020A3F000009DBC01 /* adddetail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 341CE49D20A3F000009DBC01 /* adddetail@2x.png */; };
+		341CE4A320A4165C009DBC01 /* DriverPropertyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 341CE4A220A4165C009DBC01 /* DriverPropertyView.m */; };
+		341CE4A520A42016009DBC01 /* connect_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 341CE4A420A42015009DBC01 /* connect_icon@2x.png */; };
+		341CE4A820A428D9009DBC01 /* ComDriver.m in Sources */ = {isa = PBXBuildFile; fileRef = 341CE4A720A428D9009DBC01 /* ComDriver.m */; };
 		341E75E4209BF94C00E69DB2 /* VAProcessorProxys.m in Sources */ = {isa = PBXBuildFile; fileRef = 341E75E3209BF94C00E69DB2 /* VAProcessorProxys.m */; };
 		341E7BE5205BFD7400E2DEA0 /* back_white_ico@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 341E7BE4205BFD7300E2DEA0 /* back_white_ico@2x.png */; };
 		3421561820597293005205D6 /* slide_btn_light_nokd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3421561620597292005205D6 /* slide_btn_light_nokd@2x.png */; };
@@ -1180,6 +1183,11 @@
 		341CE49B20A3EFFC009DBC01 /* buy_food@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buy_food@2x.png"; sourceTree = "<group>"; };
 		341CE49C20A3EFFE009DBC01 /* buy_food@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "buy_food@3x.png"; sourceTree = "<group>"; };
 		341CE49D20A3F000009DBC01 /* adddetail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "adddetail@2x.png"; sourceTree = "<group>"; };
+		341CE4A120A4165C009DBC01 /* DriverPropertyView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DriverPropertyView.h; sourceTree = "<group>"; };
+		341CE4A220A4165C009DBC01 /* DriverPropertyView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DriverPropertyView.m; sourceTree = "<group>"; };
+		341CE4A420A42015009DBC01 /* connect_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "connect_icon@2x.png"; sourceTree = "<group>"; };
+		341CE4A620A428D9009DBC01 /* ComDriver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComDriver.h; sourceTree = "<group>"; };
+		341CE4A720A428D9009DBC01 /* ComDriver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComDriver.m; sourceTree = "<group>"; };
 		341E75E2209BF94C00E69DB2 /* VAProcessorProxys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VAProcessorProxys.h; sourceTree = "<group>"; };
 		341E75E3209BF94C00E69DB2 /* VAProcessorProxys.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VAProcessorProxys.m; sourceTree = "<group>"; };
 		341E7BE4205BFD7300E2DEA0 /* back_white_ico@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_white_ico@2x.png"; sourceTree = "<group>"; };
@@ -2559,6 +2567,8 @@
 			children = (
 				348FC8CC208AF80600F7DB3D /* BasePlugElement.h */,
 				348FC8CB208AF80100F7DB3D /* BasePlugElement.m */,
+				341CE4A620A428D9009DBC01 /* ComDriver.h */,
+				341CE4A720A428D9009DBC01 /* ComDriver.m */,
 				349DADD0206E8D02001593DE /* Audio */,
 				341AEB62206A5B7A00E01D03 /* Env */,
 				EB18B7252067D4A6000BDEAB /* Video */,
@@ -2587,6 +2597,7 @@
 		04DE1ECB1AD6B3BA00D49E2F /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
+				341CE4A420A42015009DBC01 /* connect_icon@2x.png */,
 				341CE49D20A3F000009DBC01 /* adddetail@2x.png */,
 				341CE49B20A3EFFC009DBC01 /* buy_food@2x.png */,
 				341CE49C20A3EFFE009DBC01 /* buy_food@3x.png */,
@@ -3488,6 +3499,8 @@
 				EB5F7F971FD59D8400351888 /* EngineerDNSSettingView.m */,
 				EB09EF2D1FD978BD00C968CA /* EngineerToUseTeslariViewCtrl.h */,
 				EB09EF2E1FD978C700C968CA /* EngineerToUseTeslariViewCtrl.m */,
+				341CE4A120A4165C009DBC01 /* DriverPropertyView.h */,
+				341CE4A220A4165C009DBC01 /* DriverPropertyView.m */,
 				341CE49920A3E90A009DBC01 /* ChooseDriverViewController.h */,
 				341CE49820A3E908009DBC01 /* ChooseDriverViewController.m */,
 				EB09EF321FD97CBE00C968CA /* EngineerAudioDevicePluginViewCtrl.h */,
@@ -4262,6 +4275,7 @@
 				EB3B73B91FE63F10001941CF /* wireless_slide_s@2x.png in Resources */,
 				EBAE5BA11FDD20C400C10C4D /* engineer_env_jingshui_s@2x.png in Resources */,
 				EBDF1C131FC5C6C900A756EA /* user_training_n@2x.png in Resources */,
+				341CE4A520A42016009DBC01 /* connect_icon@2x.png in Resources */,
 				EB09EF4C1FD9A8EA00C968CA /* enginner_fankuiyizhi_n@2x.png in Resources */,
 				34190F20205D538E009A519C /* dy_16@2x.png in Resources */,
 				EB5A47EC2073B3E500564C06 /* huisedianchi@2x.png in Resources */,
@@ -4592,6 +4606,7 @@
 				04D719881DADE7D4002153D7 /* ActivityViewController.m in Sources */,
 				EB7333FD20410A7E00AE60B8 /* MonitorRightView.m in Sources */,
 				EB17179A1FF60C2600CBDB81 /* EngineerAireConditionViewCtrl.m in Sources */,
+				341CE4A820A428D9009DBC01 /* ComDriver.m in Sources */,
 				04DE1E8A1AD6AEE000D49E2F /* MaskRender.m in Sources */,
 				EBC71B0B203AF90700DD0A98 /* VideoProcessRightView.m in Sources */,
 				04DE1EB21AD6AEE000D49E2F /* SDWebImagePrefetcher.m in Sources */,
@@ -4697,6 +4712,7 @@
 				34217A721FCE9C160006701C /* StickerLayerView.m in Sources */,
 				EB03F53F1FBDE8FB00865541 /* SettingsViewController.m in Sources */,
 				341C784A2050184300DD1677 /* SIconSelectView.m in Sources */,
+				341CE4A320A4165C009DBC01 /* DriverPropertyView.m in Sources */,
 				EB03F54D1FBDEC6000865541 /* UserHomeViewController.m in Sources */,
 				04DE1E951AD6AEE000D49E2F /* ASIDataCompressor.m in Sources */,
 				04DE1EAF1AD6AEE000D49E2F /* SDWebImageDownloader.m in Sources */,

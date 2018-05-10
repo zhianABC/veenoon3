@@ -26,8 +26,7 @@
 {
     
 }
-@synthesize _driverInfo;
-@synthesize _driver;
+
 @synthesize _driver_ip_Property;
 @synthesize _localSavedCommands;
 

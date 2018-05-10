@@ -28,8 +28,6 @@
 @implementation AudioEProcessor
 
 //中控上对应的数据
-@synthesize _driver;
-@synthesize _driverInfo;
 @synthesize _driver_ip_Property;
 @synthesize _inAudioProxys;
 @synthesize _outAudioProxys;

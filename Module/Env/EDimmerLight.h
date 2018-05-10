@@ -14,8 +14,6 @@
     
 }
 
-@property (nonatomic, strong) id _driverInfo;
-@property (nonatomic, strong) id _driver;
 @property (nonatomic, strong) NSArray *_localSavedCommands;
 
 //<EDimmerLightProxys>
@@ -25,7 +23,6 @@
 - (void) syncDriverIPProperty;
 - (void) uploadDriverIPProperty;
 
-- (void) createDriver;
 - (void) removeDriver;
 
 - (NSString*) deviceName;

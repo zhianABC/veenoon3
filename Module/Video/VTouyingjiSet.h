@@ -9,10 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "BasePlugElement.h"
 
+@class RgsConnectionObj;
+
 @interface VTouyingjiSet : BasePlugElement
 
-@property (nonatomic, strong) id _driverInfo;
-@property (nonatomic, strong) id _driver;
 
 @property (nonatomic, strong) id _comDriverInfo;
 @property (nonatomic, strong) id _comDriver;
@@ -21,7 +21,7 @@
 @property (nonatomic, strong) id _proxyObj;
 
 //<RgsConnectionObj>
-@property (nonatomic, strong) NSArray *_comConnections;
+//@property (nonatomic, strong) NSArray *_comConnections;
 @property (nonatomic, strong) NSArray *_cameraConnections;
 
 @property (nonatomic, strong) NSArray *_localSavedCommands;
@@ -31,11 +31,9 @@
 
 - (void) syncDriverComs;
 
-
-- (void) createDriver;
 - (void) removeDriver;
 
-- (void) createConnection;
+- (void) createConnection:(RgsConnectionObj*)target;
 
 - (NSString*) deviceName;
 
