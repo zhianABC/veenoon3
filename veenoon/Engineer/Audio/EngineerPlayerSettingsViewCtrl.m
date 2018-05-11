@@ -9,7 +9,6 @@
 #import "EngineerPlayerSettingsViewCtrl.h"
 #import "UIButton+Color.h"
 #import "CustomPickerView.h"
-#import "PlayerRightView.h"
 #import "AudioEPlayer.h"
 
 @interface EngineerPlayerSettingsViewCtrl () <CustomPickerViewDelegate>{
@@ -29,9 +28,6 @@
     UIButton *_luboBtn;
     UIButton *_tanchuBtn;
     
-    BOOL isSettings;
-    
-    PlayerRightView *_psv;
     UIButton *okBtn;
 }
 @property (nonatomic, strong) AudioEPlayer *_curPalyer;
@@ -47,8 +43,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    isSettings = NO;
     
     [super setTitleAndImage:@"audio_corner_bofangqi.png" withTitle:@"CD"];
     
@@ -248,31 +242,7 @@
 }
 
 - (void) okAction:(id)sender{
-    if (!isSettings) {
-       
-        if(_psv == nil)
-        {
-            _psv = [[PlayerRightView alloc]
-                    initWithFrame:CGRectMake(SCREEN_WIDTH-300,
-                                             64, 300, SCREEN_HEIGHT-114)];
-            
-        }
-        
-        _psv._playerPlug = _curPalyer;
-        [self.view addSubview:_psv];
-        
-        [okBtn setTitle:@"保存" forState:UIControlStateNormal];
-        
-        isSettings = YES;
-        
-        [_psv recoverShow];
-    } else {
-        if (_psv) {
-            [_psv removeFromSuperview];
-        }
-        [okBtn setTitle:@"设置" forState:UIControlStateNormal];
-        isSettings = NO;
-    }
+    
 }
 
 - (void) cancelAction:(id)sender{

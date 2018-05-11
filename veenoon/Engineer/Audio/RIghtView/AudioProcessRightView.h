@@ -22,8 +22,4 @@
 @property (nonatomic, weak) id  <AudioProcessRightViewDelegate> delegate_;
 @property (nonatomic, strong) AudioEProcessor *_processor;
 
-- (void) recoverSetting;
-
-- (void) saveCurrentSetting;
-
 @end

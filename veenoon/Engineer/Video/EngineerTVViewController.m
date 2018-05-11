@@ -9,7 +9,6 @@
 #import "EngineerTVViewController.h"
 #import "UIButton+Color.h"
 #import "CustomPickerView.h"
-#import "TVSettingsRightView.h"
 #import "VTVSet.h"
 #import "PlugsCtrlTitleHeader.h"
 #import "BrandCategoryNoUtil.h"
@@ -24,7 +23,6 @@
     UIButton *_tanchuBtn;
     
     BOOL isSettings;
-    TVSettingsRightView *_rightView;
     UIButton *okBtn;
 }
 @end
@@ -212,10 +210,6 @@
     NSString *nameStr = [BrandCategoryNoUtil generatePickerValue:_currentObj._brand withCategory:_currentObj._type withNo:_currentObj._deviceno];
     [_selectSysBtn setShowText:nameStr];
     
-    if ([_rightView superview]) {
-        _rightView._currentObj = _currentObj;
-        [_rightView refreshView:_currentObj];
-    }
     
 }
 
@@ -250,57 +244,7 @@
 }
 
 - (void) settingsAction:(id)sender{
-    //检查是否需要创建
-    if (_rightView == nil) {
-        _rightView = [[TVSettingsRightView alloc]
-                      initWithFrame:CGRectMake(SCREEN_WIDTH-300,
-                                               64, 300, SCREEN_HEIGHT-114)];
-        
-        //创建底部设备切换按钮
-        _rightView._numOfDevice = (int)[_videoTVArray count];
-        [_rightView layoutDevicePannel];
-        
-        
-        IMP_BLOCK_SELF(EngineerTVViewController);
-        _rightView._callback = ^(int deviceIndex) {
-            
-            [block_self chooseDeviceAtIndex:deviceIndex];
-        };
-    }
     
-    //如果在显示，消失
-    if([_rightView superview])
-    {
-        
-        //写入中控
-        //......
-        
-        [okBtn setTitle:@"设置" forState:UIControlStateNormal];
-        
-        [UIView animateWithDuration:0.25
-                         animations:^{
-                             
-                             _rightView.frame  = CGRectMake(SCREEN_WIDTH,
-                                                            64, 300, SCREEN_HEIGHT-114);
-                         } completion:^(BOOL finished) {
-                             [_rightView removeFromSuperview];
-                         }];
-    }
-    else//如果没显示，显示
-    {
-        _rightView._currentObj = _currentObj;
-        [_rightView refreshView:_currentObj];
-        
-        
-        [self.view addSubview:_rightView];
-        [okBtn setTitle:@"保存" forState:UIControlStateNormal];
-        
-        
-        [UIView beginAnimations:nil context:nil];
-        _rightView.frame  = CGRectMake(SCREEN_WIDTH-300,
-                                       64, 300, SCREEN_HEIGHT-114);
-        [UIView commitAnimations];
-    }
 }
 
 - (void) cancelAction:(id)sender{

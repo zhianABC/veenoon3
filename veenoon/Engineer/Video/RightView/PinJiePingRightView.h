@@ -20,6 +20,5 @@
 @property (nonatomic, assign) int _curentDeviceIndex;
 
 -(void) refreshView:(VPinJieSet*) dvdPlayerSet;
--(void) layoutDevicePannel;
 
 @end

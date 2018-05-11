@@ -17,7 +17,6 @@
 @property (nonatomic, strong) AudioEWirlessMike *_audioMike;
 @property (nonatomic, copy) RightSetViewCallbackBlock _callback;
 
-- (void) layoutDevicePannel;
 - (void) showData;
 
 @end

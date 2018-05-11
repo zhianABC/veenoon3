@@ -11,7 +11,6 @@
 #import "UIButton+Color.h"
 #import "NSDate-Helper.h"
 #import "CircleProgressView.h"
-#import "InforCollectRightView.h"
 
 @interface EngineerInfoCollectViewCtrl () <
 UIScrollViewDelegate>{
@@ -32,7 +31,6 @@ UIScrollViewDelegate>{
     CircleProgressView *circle;
     CircleProgressView *circleA;
     
-    InforCollectRightView *_rightView;
     BOOL isSettings;
     
     UIButton *okBtn;
@@ -468,22 +466,7 @@ UIScrollViewDelegate>{
 }
 - (void) okAction:(id)sender{
     
-    if (!isSettings) {
-        _rightView = [[InforCollectRightView alloc]
-                      initWithFrame:CGRectMake(SCREEN_WIDTH-300,
-                                               64, 300, SCREEN_HEIGHT-114)];
-        [self.view addSubview:_rightView];
-        
-        [okBtn setTitle:@"保存" forState:UIControlStateNormal];
-        
-        isSettings = YES;
-    } else {
-        if (_rightView) {
-            [_rightView removeFromSuperview];
-        }
-        [okBtn setTitle:@"设置" forState:UIControlStateNormal];
-        isSettings = NO;
-    }
+    
 }
 
 - (void) cancelAction:(id)sender{
