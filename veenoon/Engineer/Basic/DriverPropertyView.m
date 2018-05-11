@@ -14,6 +14,7 @@
 #import "UIButton+Color.h"
 #import "RegulusSDK.h"
 #import "KVNProgress.h"
+#import "DriverConnectionsView.h"
 
 @interface DriverPropertyView () <UITextFieldDelegate>
 {
@@ -28,6 +29,8 @@
     UIButton *btnConnect;
     
     UIButton *btnSave;
+    
+    DriverConnectionsView   *_connectionView;
 }
 
 @end
@@ -98,6 +101,9 @@
         [self addSubview:btnConnect];
         [btnConnect setImage:[UIImage imageNamed:@"connect_icon.png"]
                     forState:UIControlStateNormal];
+        [btnConnect addTarget:self
+                       action:@selector(connectionSet:)
+             forControlEvents:UIControlEventTouchUpInside];
         
         top = CGRectGetMaxY(_comField.frame)+60;
         btnSave = [UIButton buttonWithColor:YELLOW_COLOR selColor:nil];
@@ -110,6 +116,20 @@
     }
     
     return self;
+}
+
+- (void) connectionSet:(UIButton*)sender{
+    
+    if(_connectionView == nil)
+    {
+        _connectionView = [[DriverConnectionsView alloc] initWithFrame:self.bounds];
+        
+    }
+    [self addSubview:_connectionView];
+    
+    _connectionView._plug = _plugDriver;
+    [_connectionView showFromPoint:CGPointMake(CGRectGetMaxX(sender.frame),
+                                               CGRectGetMidY(sender.frame))];
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
@@ -133,10 +153,22 @@
 - (void) saveCurrentSetting{
     
     _plugDriver._ipaddress = ipTextField.text;
+    
+    
 
 }
 
+- (void) updateConnectionSet{
+    
+    if(_plugDriver._com)
+    {
+        _comField.text = _plugDriver._com.name;
+    }
+}
+
 - (void) recoverSetting{
+    
+    [_connectionView removeFromSuperview];
     
     if(_plugDriver._ipaddress == nil)
     {
@@ -144,6 +176,12 @@
         ipTextField.alpha = 0.5;
         ipTextField.text = @"";
         ipTextField.userInteractionEnabled = NO;
+        
+        _comField.alpha = 1;
+        _connectionL.alpha = 1;
+        btnConnect.enabled = YES;
+        
+        [_plugDriver syncDriverComs];
         
         return;
     }
@@ -154,7 +192,17 @@
         ipTextField.text = @"";
         ipTextField.userInteractionEnabled = YES;
         
+        _comField.text = @"";
+        _comField.alpha = 0.5;
+        _connectionL.alpha = 0.5;
+        btnConnect.enabled = NO;
     }
+    
+    if(_plugDriver._com)
+    {
+        _comField.text = _plugDriver._com.name;
+    }
+    
     if(_plugDriver._driver_ip_property)
     {
         ipTextField.text = _plugDriver._ipaddress;

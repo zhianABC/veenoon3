@@ -269,6 +269,7 @@
 		3456C1A520A08CD3001FAB61 /* gohome_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3456C1A320A08CD3001FAB61 /* gohome_icon@2x.png */; };
 		3456C1A820A0A32A001FAB61 /* EDimmerLight.m in Sources */ = {isa = PBXBuildFile; fileRef = 3456C1A720A0A32A001FAB61 /* EDimmerLight.m */; };
 		3456C1AB20A0A382001FAB61 /* EDimmerLightProxys.m in Sources */ = {isa = PBXBuildFile; fileRef = 3456C1AA20A0A382001FAB61 /* EDimmerLightProxys.m */; };
+		345B3E3820A55A5900BFF0F0 /* DriverConnectionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 345B3E3720A55A5900BFF0F0 /* DriverConnectionsView.m */; };
 		34615F091FC9BD7B002DFCE0 /* JSlideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34615F051FC9BD7B002DFCE0 /* JSlideView.m */; };
 		34615F0A1FC9BD7B002DFCE0 /* jslide_bk@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34615F061FC9BD7B002DFCE0 /* jslide_bk@2x.png */; };
 		34615F0B1FC9BD7B002DFCE0 /* jslide_thumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34615F071FC9BD7B002DFCE0 /* jslide_thumb@2x.png */; };
@@ -1305,6 +1306,8 @@
 		3456C1A720A0A32A001FAB61 /* EDimmerLight.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EDimmerLight.m; sourceTree = "<group>"; };
 		3456C1A920A0A382001FAB61 /* EDimmerLightProxys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EDimmerLightProxys.h; sourceTree = "<group>"; };
 		3456C1AA20A0A382001FAB61 /* EDimmerLightProxys.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EDimmerLightProxys.m; sourceTree = "<group>"; };
+		345B3E3620A55A5900BFF0F0 /* DriverConnectionsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DriverConnectionsView.h; sourceTree = "<group>"; };
+		345B3E3720A55A5900BFF0F0 /* DriverConnectionsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DriverConnectionsView.m; sourceTree = "<group>"; };
 		34615F051FC9BD7B002DFCE0 /* JSlideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSlideView.m; sourceTree = "<group>"; };
 		34615F061FC9BD7B002DFCE0 /* jslide_bk@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jslide_bk@2x.png"; sourceTree = "<group>"; };
 		34615F071FC9BD7B002DFCE0 /* jslide_thumb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "jslide_thumb@2x.png"; sourceTree = "<group>"; };
@@ -3501,6 +3504,8 @@
 				EB09EF2E1FD978C700C968CA /* EngineerToUseTeslariViewCtrl.m */,
 				341CE4A120A4165C009DBC01 /* DriverPropertyView.h */,
 				341CE4A220A4165C009DBC01 /* DriverPropertyView.m */,
+				345B3E3620A55A5900BFF0F0 /* DriverConnectionsView.h */,
+				345B3E3720A55A5900BFF0F0 /* DriverConnectionsView.m */,
 				341CE49920A3E90A009DBC01 /* ChooseDriverViewController.h */,
 				341CE49820A3E908009DBC01 /* ChooseDriverViewController.m */,
 				EB09EF321FD97CBE00C968CA /* EngineerAudioDevicePluginViewCtrl.h */,
@@ -4730,6 +4735,7 @@
 				04DE1EB51AD6AEE000D49E2F /* UIImageView+WebCache.m in Sources */,
 				34DC47421FD6DD9300ACB589 /* CircleProgressView.m in Sources */,
 				348FC8D3208B748B00F7DB3D /* DActionView.m in Sources */,
+				345B3E3820A55A5900BFF0F0 /* DriverConnectionsView.m in Sources */,
 				04DE1E8E1AD6AEE000D49E2F /* UIButton+Color.m in Sources */,
 				EB795B5C2042E861005D1F47 /* YaXianQi_UIView.m in Sources */,
 				341671841FBA9765001D33D0 /* SignupViewController.m in Sources */,

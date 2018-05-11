@@ -144,6 +144,8 @@
                                              if (result) {
                                                  
                                                  block_self._driver = driver;
+                                                 
+                                                 [[NSNotificationCenter defaultCenter] postNotificationName:@"NotifyRefreshTableWithCom" object:nil];
                                              }
                                              [KVNProgress dismiss];
                                          }];

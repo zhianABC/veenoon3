@@ -19,4 +19,6 @@
 - (void) saveCurrentSetting;
 - (void) recoverSetting;
 
+- (void) updateConnectionSet;
+
 @end

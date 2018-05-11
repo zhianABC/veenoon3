@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @class RgsPropertyObj;
+@class RgsConnectionObj;
+@class ComDriver;
 
 @interface BasePlugElement : NSObject
 {
@@ -17,6 +19,7 @@
     id _driver;
     
     RgsPropertyObj *_driver_ip_property;
+    NSArray *_connections;
 }
 
 @property (nonatomic, strong) NSString *_name;
@@ -44,10 +47,18 @@
 @property (nonatomic, strong) RgsPropertyObj *_driver_ip_property;
 @property (nonatomic, strong) NSArray *_properties;
 
+@property (nonatomic, strong) NSArray *_connections;
+@property (nonatomic, strong) RgsConnectionObj *_com;
+@property (nonatomic, strong) ComDriver *_comDriver;
+
+
 - (void) createDriver;
 
 - (void) syncDriverIPProperty;
 - (void) uploadDriverIPProperty;
+
+- (void) syncDriverComs;
+- (void) createConnection:(RgsConnectionObj*)target;
 
 - (NSString*) showName;
 - (NSString*) deviceName;

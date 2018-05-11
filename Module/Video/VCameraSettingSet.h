@@ -21,17 +21,9 @@
 @property (nonatomic, strong) id _proxyObj;
 
 //<RgsConnectionObj>
-//@property (nonatomic, strong) NSArray *_comConnections;
-@property (nonatomic, strong) NSArray *_cameraConnections;
-
 @property (nonatomic, strong) NSArray *_localSavedProxys;
 
-- (void) syncDriverComs;
-
-
 - (void) removeDriver;
-
-- (void) createConnection:(RgsConnectionObj*)target;
 
 - (NSString*) deviceName;
 

@@ -26,8 +26,6 @@
 @synthesize _comDriverInfo;
 
 @synthesize _proxyObj;
-//@synthesize _comConnections;
-@synthesize _cameraConnections;
 
 @synthesize _localSavedProxys;
 
@@ -122,7 +120,7 @@
     
     if(_driver
        && [_driver isKindOfClass:[RgsDriverObj class]]
-       && ![_cameraConnections count])
+       && ![_connections count])
     {
         IMP_BLOCK_SELF(VCameraSettingSet);
         
@@ -132,7 +130,7 @@
                                                   if (result) {
                                                       if ([connects count]) {
                                                           
-                                                          block_self._cameraConnections = connects;
+                                                          block_self._connections = connects;
                                                       }
                                                   }
                                                   else
@@ -229,6 +227,8 @@
                                              if (result) {
                                                  
                                                  block_self._driver = driver;
+                                                 
+                                                 [[NSNotificationCenter defaultCenter] postNotificationName:@"NotifyRefreshTableWithCom" object:nil];
                                              }
                                              [KVNProgress dismiss];
                                          }];
@@ -264,16 +264,20 @@
 
 - (void) createConnection:(RgsConnectionObj*)target{
     
-    if(target && [_cameraConnections count])
+    if(target && [_connections count])
     {
         
         RgsConnectionObj * com_connt_obj = target;
-        RgsConnectionObj * cam_connt_obj = [_cameraConnections objectAtIndex:0];
+        RgsConnectionObj * cam_connt_obj = [_connections objectAtIndex:0];
+        
+        IMP_BLOCK_SELF(VCameraSettingSet);
         
         [com_connt_obj Connect:cam_connt_obj completion:^(BOOL result, NSError *error) {
             if(result)
             {
+                block_self._com = target;
                 
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"NotifyRefreshTableWithCom" object:nil];
             }
         }];
     }

@@ -13,6 +13,7 @@
 #import "UIButton+Color.h"
 #import "DriverPropertyView.h"
 #import "BasePlugElement.h"
+#import "RegulusSDK.h"
 
 @interface EngineerToUseTeslariViewCtrl () <UITableViewDelegate, UITableViewDataSource> {
     
@@ -27,6 +28,8 @@
     
     int                     _indexSel;
     int                     _indexSec;
+    
+    
 }
 @property (nonatomic, strong) NSArray *_driver_objs;
 @property (nonatomic, strong) NSMutableDictionary *_mapDrivers;
@@ -36,6 +39,7 @@
 @property (nonatomic, strong) NSMutableArray *_videoDrivers;
 @property (nonatomic, strong) NSMutableArray *_envDrivers;
 @property (nonatomic, strong) NSMutableArray *_othersDrivers;
+@property (nonatomic, strong) NSMutableDictionary *_mapFlash;
 @end
 
 @implementation EngineerToUseTeslariViewCtrl
@@ -48,6 +52,12 @@
 @synthesize _videoDrivers;
 @synthesize _envDrivers;
 @synthesize _othersDrivers;
+@synthesize _mapFlash;
+
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -81,6 +91,8 @@
     
     _indexSel = -1;
     _indexSec = -1;
+    
+    self._mapFlash = [NSMutableDictionary dictionary];
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT,
                                                               top,
@@ -162,6 +174,19 @@
     [[DataSync sharedDataSync] syncRegulusDrivers];
     
 #endif
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(notifyRefreshTable:)
+                                                 name:@"NotifyRefreshTableWithCom"
+                                               object:nil];
+}
+
+- (void) notifyRefreshTable:(id)sender{
+    
+    if([_propertyView superview])
+        [_propertyView updateConnectionSet];
+    
+    [_tableView reloadData];
 }
 
 - (void) saveAction:(UIButton*)sender{
@@ -329,6 +354,25 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
 
+    BasePlugElement *data = nil;
+    if(indexPath.section == 0)
+    {
+        data = [_audioDrivers objectAtIndex:indexPath.row];
+    }
+    else if(indexPath.section == 1)
+    {
+        data = [_videoDrivers objectAtIndex:indexPath.row];
+    }
+    else if(indexPath.section == 2)
+    {
+        data = [_envDrivers objectAtIndex:indexPath.row];
+    }
+    
+    if(data && data._com)
+    {
+        return 120;
+    }
+    
     return 60;
 }
 
@@ -397,13 +441,82 @@
     line.backgroundColor =  [UIColor colorWithWhite:1.0 alpha:0.2];
     [cell.contentView addSubview:line];
     
+    
+    if(data._driver)
+    {
+        UILabel* driverIDL = [[UILabel alloc] initWithFrame:CGRectMake(10,
+                                                                  30,
+                                                                  tableWidth-20, 20)];
+        driverIDL.backgroundColor = [UIColor clearColor];
+        [cell.contentView addSubview:driverIDL];
+        driverIDL.font = [UIFont systemFontOfSize:12];
+        driverIDL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+        driverIDL.textAlignment = NSTextAlignmentRight;
+        driverIDL.text = [NSString stringWithFormat:@"ID: %d",
+                          ((RgsDriverObj*)data._driver).m_id];
+        
+    }
+    int lh = 60;
+    if(data._com)
+    {
+        lh = 120;
+        
+        titleL = [[UILabel alloc] initWithFrame:CGRectMake(10,
+                                                           60+10,
+                                                           tableWidth-20, 20)];
+        titleL.backgroundColor = [UIColor clearColor];
+        [cell.contentView addSubview:titleL];
+        titleL.font = [UIFont boldSystemFontOfSize:16];
+        titleL.textColor  = [UIColor colorWithWhite:1.0 alpha:0.5];
+        
+        UILabel* subL = [[UILabel alloc] initWithFrame:CGRectMake(10,
+                                                                  60+30,
+                                                                  tableWidth-35, 20)];
+        subL.backgroundColor = [UIColor clearColor];
+        [cell.contentView addSubview:subL];
+        subL.font = [UIFont systemFontOfSize:14];
+        subL.textColor  = [UIColor colorWithWhite:1.0 alpha:0.5];
+        
+        
+        titleL.text = @"串口服务器";
+        subL.text = [NSString stringWithFormat:@"%d: %@",
+                     data._com.driver_id,
+                     data._com.driver_name];
+        
+        
+        
+        line = [[UILabel alloc] initWithFrame:CGRectMake(0, 119, tableWidth, 1)];
+        line.backgroundColor =  [UIColor colorWithWhite:1.0 alpha:0.2];
+        [cell.contentView addSubview:line];
+        
+        
+        UIImageView *linkImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"connect_icon.png"]];
+        linkImage.frame = CGRectMake(tableWidth-60, 45, 30, 30);
+        [cell.contentView addSubview:linkImage];
+        linkImage.contentMode = UIViewContentModeScaleAspectFit;
+        
+    }
+    
+    id key = [NSString stringWithFormat:@"%d-%d", indexPath.section, indexPath.row];
+    if(![_mapFlash objectForKey:key])
+    {
+        [_mapFlash setObject:@"1" forKey:key];
+        
+        cell.transform = CGAffineTransformMakeTranslation(0, 40);
+        [UIView animateWithDuration:0.5 animations:^{
+            
+            cell.transform = CGAffineTransformIdentity;
+        }];
+    }
+    
     if(_indexSec == indexPath.section && _indexSel == indexPath.row)
     {
-        UILabel *lineSel = [[UILabel alloc] initWithFrame:CGRectMake(tableWidth-3, 0, 3, 60)];
+        UILabel *lineSel = [[UILabel alloc] initWithFrame:CGRectMake(tableWidth-3, 0, 3, lh)];
         lineSel.backgroundColor =  YELLOW_COLOR;
         [cell.contentView addSubview:lineSel];
     }
     
+
     return cell;
 }
 
@@ -434,11 +547,15 @@
     
     _propertyView._plugDriver = data;
     
+    //检查，如果插件的Driver没添加上，再补一下
     if(data._driver == nil)
     {
         [data createDriver];
         
     }
+    
+    //在这里加载插件的属性，如果差价没有IP属性，加载插件的connection
+    //为后面做链接做准备
     [_propertyView recoverSetting];
     
     _propertyView.hidden = NO;

@@ -29,6 +29,9 @@
 
 @synthesize _driver_ip_property;
 @synthesize _properties;
+@synthesize _connections;
+@synthesize _com;
+@synthesize _comDriver;
 
 - (id) init
 {
@@ -79,6 +82,13 @@
     
 }
 - (void) uploadDriverIPProperty{
+    
+}
+
+- (void) syncDriverComs{
+    
+}
+- (void) createConnection:(RgsConnectionObj*)target{
     
 }
 @end
