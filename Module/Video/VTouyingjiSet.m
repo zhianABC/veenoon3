@@ -35,6 +35,8 @@
         
         //不需要ip
         self._ipaddress = nil;
+        self._show_icon_name = @"v_icon_9.png";
+        self._show_icon_sel_name = @"v_icon_9_sel.png";
         
     }
     

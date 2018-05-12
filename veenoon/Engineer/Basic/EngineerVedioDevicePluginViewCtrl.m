@@ -493,7 +493,7 @@
     
     
     self._currentBrands = @[@"Teslaria"];
-    self._currentTypes = @[@"录播摄像机"];
+    self._currentTypes = @[@"摄像机"];
     self._driverUdids = @[UUID_NetCamera];
     
     _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];

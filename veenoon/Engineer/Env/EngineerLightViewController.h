@@ -11,10 +11,10 @@
 #import "EngineerSliderView.h"
 
 @interface EngineerLightViewController< EngineerSliderViewDelegate> : BaseViewController {
-    NSMutableArray *_lightSysArray;
+    NSArray *_lightSysArray;
     
     int _number;
 }
-@property (nonatomic,strong) NSMutableArray *_lightSysArray;
+@property (nonatomic,strong) NSArray *_lightSysArray;
 @property (nonatomic,assign) int _number;
 @end

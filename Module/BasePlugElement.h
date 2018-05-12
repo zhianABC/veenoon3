@@ -14,7 +14,6 @@
 
 @interface BasePlugElement : NSObject
 {
-    
     id _driverInfo;
     id _driver;
     
@@ -33,6 +32,8 @@
 @property (nonatomic, strong) NSString *_plugicon;
 @property (nonatomic, strong) NSString *_plugicon_s;
 
+@property (nonatomic, strong) NSString *_show_icon_name;
+@property (nonatomic, strong) NSString *_show_icon_sel_name;
 //connection
 @property (nonatomic, assign) int _comIdx;
 @property (nonatomic, strong) NSArray *_comArray;
@@ -51,6 +52,8 @@
 @property (nonatomic, strong) RgsConnectionObj *_com;
 @property (nonatomic, strong) ComDriver *_comDriver;
 
+
+- (int) getID;
 
 - (void) createDriver;
 

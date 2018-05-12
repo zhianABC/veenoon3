@@ -11,11 +11,11 @@
 #import "EngineerSliderView.h"
 
 @interface EngineerAudioProcessViewCtrl< EngineerSliderViewDelegate> : BaseViewController {
-    NSMutableArray *_audioProcessArray;
+    NSArray *_audioProcessArray;
     
     int _inputNumber;
     int _outputNumber;
 }
-@property (nonatomic,strong) NSMutableArray *_audioProcessArray;
+@property (nonatomic,strong) NSArray *_audioProcessArray;
 
 @end

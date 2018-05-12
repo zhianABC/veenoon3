@@ -113,6 +113,9 @@
         [self addSubview:btnSave];
         [btnSave setTitle:@"保存" forState:UIControlStateNormal];
         btnSave.titleLabel.font = [UIFont systemFontOfSize:15];
+        [btnSave addTarget:self
+                    action:@selector(saveCurrentSetting)
+          forControlEvents:UIControlEventTouchUpInside];
     }
     
     return self;
@@ -153,8 +156,8 @@
 - (void) saveCurrentSetting{
     
     _plugDriver._ipaddress = ipTextField.text;
-    
-    
+
+    [_plugDriver uploadDriverIPProperty];
 
 }
 

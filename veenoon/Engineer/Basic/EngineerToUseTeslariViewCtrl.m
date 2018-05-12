@@ -14,6 +14,7 @@
 #import "DriverPropertyView.h"
 #import "BasePlugElement.h"
 #import "RegulusSDK.h"
+#import "EngineerPresetScenarioViewCtrl.h"
 
 @interface EngineerToUseTeslariViewCtrl () <UITableViewDelegate, UITableViewDataSource> {
     
@@ -191,6 +192,20 @@
 
 - (void) saveAction:(UIButton*)sender{
     
+    EngineerPresetScenarioViewCtrl *ctrl = [[EngineerPresetScenarioViewCtrl alloc] init];
+    ctrl._meetingRoomDic = self._meetingRoomDic;
+    
+    NSMutableDictionary *selectedSysDic = [[NSMutableDictionary alloc] init];
+    
+    [selectedSysDic setObject:_audioDrivers forKey:@"audio"];
+    [selectedSysDic setObject:_videoDrivers forKey:@"video"];
+    [selectedSysDic setObject:_envDrivers forKey:@"env"];
+    [selectedSysDic setObject:_othersDrivers forKey:@"others"];
+    
+    ctrl._selectedDevices = selectedSysDic;
+    
+    [self.navigationController pushViewController:ctrl animated:YES];
+
 }
 
 - (void) addDeviceAction:(UIButton*)sender{
@@ -453,7 +468,7 @@
         driverIDL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
         driverIDL.textAlignment = NSTextAlignmentRight;
         driverIDL.text = [NSString stringWithFormat:@"ID: %d",
-                          ((RgsDriverObj*)data._driver).m_id];
+                          (int)((RgsDriverObj*)data._driver).m_id];
         
     }
     int lh = 60;
@@ -480,7 +495,7 @@
         
         titleL.text = @"串口服务器";
         subL.text = [NSString stringWithFormat:@"%d: %@",
-                     data._com.driver_id,
+                     (int)data._com.driver_id,
                      data._com.driver_name];
         
         
@@ -497,7 +512,9 @@
         
     }
     
-    id key = [NSString stringWithFormat:@"%d-%d", indexPath.section, indexPath.row];
+    id key = [NSString stringWithFormat:@"%d-%d",
+              (int)indexPath.section,
+              (int)indexPath.row];
     if(![_mapFlash objectForKey:key])
     {
         [_mapFlash setObject:@"1" forKey:key];
@@ -610,11 +627,17 @@
 
 - (void) okAction:(id)sender{
     
-    EngineerAudioDevicePluginViewCtrl *ctrl = [[EngineerAudioDevicePluginViewCtrl alloc] init];
+    EngineerPresetScenarioViewCtrl *ctrl = [[EngineerPresetScenarioViewCtrl alloc] init];
     ctrl._meetingRoomDic = self._meetingRoomDic;
     
     NSMutableDictionary *selectedSysDic = [[NSMutableDictionary alloc] init];
-    ctrl._selectedSysDic = selectedSysDic;
+    
+    [selectedSysDic setObject:_audioDrivers forKey:@"audio"];
+    [selectedSysDic setObject:_videoDrivers forKey:@"video"];
+    [selectedSysDic setObject:_envDrivers forKey:@"env"];
+    [selectedSysDic setObject:_othersDrivers forKey:@"others"];
+    
+    ctrl._selectedDevices = selectedSysDic;
     
     [self.navigationController pushViewController:ctrl animated:YES];
 }

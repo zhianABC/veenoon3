@@ -37,6 +37,9 @@
         
         self._ipaddress = @"192.168.1.100";
         
+        self._show_icon_name = @"hj_icon_1.png";
+        self._show_icon_sel_name = @"hj_icon_1_sel.png";
+        
     }
     
     return self;

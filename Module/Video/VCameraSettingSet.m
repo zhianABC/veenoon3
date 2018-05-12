@@ -35,6 +35,8 @@
     {
         
         self._ipaddress = nil;
+        self._show_icon_name = @"v_icon_2.png";
+        self._show_icon_sel_name = @"v_icon_2_sel.png";
         
     }
     
@@ -43,7 +45,7 @@
 
 - (NSString*) deviceName{
     
-    return @"录播摄像机";
+    return @"摄像机";
 }
 
 

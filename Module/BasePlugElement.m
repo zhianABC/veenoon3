@@ -7,6 +7,7 @@
 //
 
 #import "BasePlugElement.h"
+#import "RegulusSDK.h"
 
 @implementation BasePlugElement
 @synthesize _name;
@@ -33,6 +34,9 @@
 @synthesize _com;
 @synthesize _comDriver;
 
+@synthesize _show_icon_name;
+@synthesize _show_icon_sel_name;
+
 - (id) init
 {
     if(self = [super init])
@@ -58,6 +62,16 @@
     self._isViewed = YES;
     
     return name;
+}
+
+- (int) getID{
+    
+    int myid = 0;
+    if(_driver)
+    {
+        myid = ((RgsDriverObj*)_driver).m_id;
+    }
+    return myid;
 }
 
 - (NSString*) deviceName

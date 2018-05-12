@@ -69,7 +69,6 @@
 
 
 @interface EngineerPresetScenarioViewCtrl()  <ECPlusSelectViewDelegate>{
-    ECPlusSelectView *ecp;
     
     UIScrollView *_audioScroll;
     UIScrollView *_videoScroll;
@@ -131,58 +130,11 @@
     self._buttonTagWithDataMap = [NSMutableDictionary dictionary];
  
     
-    self._aDataCheckTestMap = [NSMutableDictionary dictionary];
-    self._vDataCheckTestMap = [NSMutableDictionary dictionary];
-    self._eDataCheckTestMap = [NSMutableDictionary dictionary];
-    
     if (_meetingRoomDic) {
         [_meetingRoomDic removeAllObjects];
     } else {
         _meetingRoomDic = [[NSMutableDictionary alloc] init];
     }
-    
-    NSMutableArray *scenarioArray = [_meetingRoomDic objectForKey:@"scenarioArray"];
-    if (scenarioArray == nil) {
-        NSMutableArray *scenarioArray = [[NSMutableArray alloc] init];
-        [_meetingRoomDic setObject:scenarioArray forKey:@"scenarioArray"];
-        
-    }
-    
-    if (_scenarioName == nil) {
-        _scenarioName = @"";
-        NSMutableDictionary *scenarioDic = [[NSMutableDictionary alloc] init];
-        [scenarioDic setObject:_scenarioName forKey:@"scenarioName"];
-        [scenarioArray addObject:scenarioDic];
-        
-        _curScenario = scenarioDic;
-    } else {
-        for (id dic in scenarioArray) {
-            NSString *sName = [dic objectForKey:@"scenarioName"];
-            if ([sName isEqualToString:_scenarioName]) {
-                _curScenario = dic;
-                break;
-            }
-        }
-    }
-    NSMutableArray *audioArray = [_curScenario objectForKey:@"audioArray"];
-    if (audioArray == nil) {
-        NSMutableArray *audioArray = [[NSMutableArray alloc] init];
-        [_curScenario setObject:audioArray forKey:@"audioArray"];
-    }
-    
-    NSMutableArray *videoArray = [_curScenario objectForKey:@"videoArray"];
-    if (videoArray == nil) {
-        NSMutableArray *videoArray = [[NSMutableArray alloc] init];
-        [_curScenario setObject:videoArray forKey:@"videoArray"];
-    }
-    
-    NSMutableArray *envArray = [_curScenario objectForKey:@"envArray"];
-    if (envArray == nil) {
-        NSMutableArray *envArray = [[NSMutableArray alloc] init];
-        [_curScenario setObject:envArray forKey:@"envArray"];
-    }
-    
-    
     
     if(_scenario == nil)
     {
@@ -281,14 +233,7 @@
     
     [[DataSync sharedDataSync] loadingLocalDrivers];
     
-    ecp = [[ECPlusSelectView alloc]
-                             initWithFrame:CGRectMake(SCREEN_WIDTH-300,
-                                                      64, 300, SCREEN_HEIGHT-114)];
-    ecp.delegate = self;
-    
-    ecp._data = [DataSync sharedDataSync]._plugTypes;
-    [ecp reloadData];
-    
+
     
     UIView *topbar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 64)];
     topbar.backgroundColor = BLACK_COLOR;
@@ -339,8 +284,6 @@
                                           150);
     _audioScroll.userInteractionEnabled=YES;
     
-    [self addComponentToEnd:_audioScroll dataDic:nil];
-    
     
     portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT+50,
                                                              ENGINEER_VIEW_TOP+255,
@@ -361,7 +304,7 @@
     _videoScroll.userInteractionEnabled=YES;
     int videoCount = (int)[[_curScenario objectForKey:@"videoArray"] count] + 1;
     _videoScroll.contentSize = CGSizeMake(audioStartX + videoCount*(E_CELL_WIDTH+space), 150);
-    [self addComponentToEnd:_videoScroll dataDic:nil];
+  
     
     portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT+50,
                                                              ENGINEER_VIEW_TOP+440,
@@ -381,7 +324,7 @@
     _envScroll.userInteractionEnabled=YES;
     int envCount = (int)[[_curScenario objectForKey:@"envArray"] count] + 1;
     _envScroll.contentSize = CGSizeMake(audioStartX + envCount*(E_CELL_WIDTH+space), 150);
-    [self addComponentToEnd:_envScroll dataDic:nil];
+  
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0,
                                                                            SCREEN_HEIGHT-50,
@@ -404,36 +347,6 @@
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    _setBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _setBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
-    [bottomBar addSubview:_setBtn];
-    [_setBtn setTitle:@"设置" forState:UIControlStateNormal];
-    [_setBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_setBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
-    _setBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-    [_setBtn addTarget:self
-              action:@selector(okAction:)
-    forControlEvents:UIControlEventTouchUpInside];
-    
-    _doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _doneBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
-    [bottomBar addSubview:_doneBtn];
-    [_doneBtn setTitle:@"完成" forState:UIControlStateNormal];
-    [_doneBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_doneBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
-    _doneBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-    [_doneBtn addTarget:self
-                action:@selector(doneAction:)
-      forControlEvents:UIControlEventTouchUpInside];
-    _doneBtn.hidden = YES;
-
-    
-    UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
-    tapGesture.cancelsTouchesInView =  YES;
-    tapGesture.numberOfTapsRequired = 1;
-    [self.view addGestureRecognizer:tapGesture];
- 
-    [self.view addSubview:ecp];
     
     [self.view addSubview:topbar];
     [self.view addSubview:bottomBar];
@@ -449,92 +362,157 @@
     {
         [self recoverScrollThumbCells];
     }
+    else
+    {
+        [self layoutChoosedDevices];
+    }
 }
 
 - (void) recoverScrollThumbCells{
     
-    NSArray *data = ecp._data;
-    
-    if([data count] == 3)
-    {
-        //Audio
-        NSDictionary *audioDic = [data objectAtIndex:0];
-        NSArray *items = [audioDic objectForKey:@"items"];
-        NSMutableDictionary *map = [NSMutableDictionary dictionary];
-        for(NSDictionary *item in items)
-        {
-            [map setObject:item forKey:[item objectForKey:@"name"]];
-        }
-        
-        if([_scenario._AProcessorPlugs count])
-        {
-            [self addComponentToEnd:_audioScroll dataDic:[map objectForKey:audio_process_name]];
-        }
-        
-        
-        //Video
-        NSDictionary *videoDic = [data objectAtIndex:1];
-        items = [videoDic objectForKey:@"items"];
-        map = [NSMutableDictionary dictionary];
-        for(NSDictionary *item in items)
-        {
-            [map setObject:item forKey:[item objectForKey:@"name"]];
-        }
-        
-        if([_scenario._VCameraSettings count])
-        {
-            [self addComponentToEnd:_videoScroll dataDic:[map objectForKey:video_camera_name]];
-        }
-        if([_scenario._VTouyingji count])
-        {
-            [self addComponentToEnd:_videoScroll dataDic:[map objectForKey:video_touying_name]];
-        }
-        
-        //Env
-        NSDictionary *envDic = [data objectAtIndex:2];
-        items = [envDic objectForKey:@"items"];
-        map = [NSMutableDictionary dictionary];
-        for(NSDictionary *item in items)
-        {
-            [map setObject:item forKey:[item objectForKey:@"name"]];
-        }
-        
-        if([_scenario._EDimmerLights count])
-        {
-            [self addComponentToEnd:_envScroll dataDic:[map objectForKey:env_dimmer_light]];
-        }
-        
-    }
-    
-}
-
-
-- (void) addDriver:(AudioEProcessor*)adp{
-    
-#ifdef OPEN_REG_LIB_DEF
-    
-    RgsDriverInfo *info = adp._driverInfo;
-    
-    NSMutableArray *drivers = [DataSync sharedDataSync]._currentAreaDrivers;
-    for(RgsDriverObj *odr in drivers)
-    {
-        if([odr.info.serial isEqualToString:info.serial])
-        {
-            adp._driver = odr;
-            
-            //同步一下IP地址
-            [adp syncDriverIPProperty];
-            return;
-        }
-    }
-
-//    [[WaitDialog sharedAlertDialog] setTitle:@"未找到对应设备的驱动"];
-//    [[WaitDialog sharedAlertDialog] animateShow];
+//    NSArray *data = [DataSync sharedDataSync]._plugTypes;
 //
-#endif
+//    if([data count] == 3)
+//    {
+//        //Audio
+//        NSDictionary *audioDic = [data objectAtIndex:0];
+//        NSArray *items = [audioDic objectForKey:@"items"];
+//        NSMutableDictionary *map = [NSMutableDictionary dictionary];
+//        for(NSDictionary *item in items)
+//        {
+//            [map setObject:item forKey:[item objectForKey:@"name"]];
+//        }
+//
+//        if([_scenario._AProcessorPlugs count])
+//        {
+//            [self addComponentToEnd:_audioScroll dataDic:[map objectForKey:audio_process_name]];
+//        }
+//
+//
+//        //Video
+//        NSDictionary *videoDic = [data objectAtIndex:1];
+//        items = [videoDic objectForKey:@"items"];
+//        map = [NSMutableDictionary dictionary];
+//        for(NSDictionary *item in items)
+//        {
+//            [map setObject:item forKey:[item objectForKey:@"name"]];
+//        }
+//
+//        if([_scenario._VCameraSettings count])
+//        {
+//            [self addComponentToEnd:_videoScroll dataDic:[map objectForKey:video_camera_name]];
+//        }
+//        if([_scenario._VTouyingji count])
+//        {
+//            [self addComponentToEnd:_videoScroll dataDic:[map objectForKey:video_touying_name]];
+//        }
+//
+//        //Env
+//        NSDictionary *envDic = [data objectAtIndex:2];
+//        items = [envDic objectForKey:@"items"];
+//        map = [NSMutableDictionary dictionary];
+//        for(NSDictionary *item in items)
+//        {
+//            [map setObject:item forKey:[item objectForKey:@"name"]];
+//        }
+//
+//        if([_scenario._EDimmerLights count])
+//        {
+//            [self addComponentToEnd:_envScroll dataDic:[map objectForKey:env_dimmer_light]];
+//        }
+//
+//    }
+    
+}
+
+- (void) layoutChoosedDevices{
+    
+    NSArray *audios = [_selectedDevices objectForKey:@"audio"];
+    [self showCells:1000 datas:audios];
+    
+    NSArray *videos = [_selectedDevices objectForKey:@"video"];
+    [self showCells:2000 datas:videos];
+    
+    NSArray *envs = [_selectedDevices objectForKey:@"env"];
+    [self showCells:3000 datas:envs];
+   
 }
 
 
+- (void) showCells:(int)tagBase datas:(NSArray*)datas{
+    
+    UIScrollView * scroll = nil;
+    NSMutableArray *btncells = nil;
+    if(tagBase == 1000){
+        scroll = _audioScroll;
+        btncells = _audioCells;
+    }
+    if(tagBase == 2000){
+        scroll = _videoScroll;
+        btncells = _videoCells;
+    }
+    if(tagBase == 3000){
+        scroll = _envScroll;
+        btncells = _envCells;
+    }
+    
+    int x = audioStartX;
+    
+    for(int i = 0; i < [datas count]; i++)
+    {
+        BasePlugElement *plug = [datas objectAtIndex:i];
+        
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setObject:[NSNumber numberWithInteger:[plug getID]] forKey:@"id"];
+        [dic setObject:[plug deviceName] forKey:@"name"];
+        if(plug._show_icon_name)
+            [dic setObject:plug._show_icon_name forKey:@"icon"];
+        if(plug._show_icon_sel_name)
+            [dic setObject:plug._show_icon_sel_name forKey:@"icon_sel"];
+        
+        
+        NSString *imageStr = [dic objectForKey:@"icon"];
+        UIImage *eImg = [UIImage imageNamed:imageStr];
+        
+        DevicePlugButton *cellBtn = [[DevicePlugButton alloc] initWithFrame:CGRectMake(x,
+                                                                                       audioStartY,
+                                                                                       E_CELL_WIDTH,
+                                                                                       E_CELL_WIDTH)];
+        cellBtn.tag = tagBase+i;
+        cellBtn._mydata = dic;
+        [cellBtn addMyObserver];
+        
+        
+        
+        [_buttonTagWithDataMap setObject:dic
+                                  forKey:[NSNumber numberWithInteger:cellBtn.tag]];
+        
+        [cellBtn setBackgroundImage:eImg forState:UIControlStateNormal];
+        
+        [scroll addSubview:cellBtn];
+        [cellBtn addTarget:self
+                    action:@selector(buttonAction:)
+          forControlEvents:UIControlEventTouchUpInside];
+        
+        UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(btnlongPressed:)];
+        [cellBtn addGestureRecognizer:longPress];
+        
+        [btncells addObject:cellBtn];
+        
+        
+        if(_isEditingScenario)
+        {
+            [cellBtn setEditChanged];
+        }
+        
+        x+=E_CELL_WIDTH;
+        x+=space;
+        
+    }
+    scroll.contentSize = CGSizeMake(x+E_CELL_WIDTH, 150);
+    
+    
+}
 
 
 - (void) createScenarioAction:(UIButton*) sender{
@@ -596,89 +574,25 @@
     }
 }
 
-- (void) handleTapGesture:(UIGestureRecognizer*)sender{
-    
-    CGPoint pt = [sender locationInView:self.view];
-    
-    if(pt.x < SCREEN_WIDTH-300)
-    {
-        CGRect rc = ecp.frame;
-        rc.origin.x = SCREEN_WIDTH;
-        
-        [UIView animateWithDuration:0.25
-                         animations:^{
-                             
-                             ecp.frame = rc;
-                             
-                         } completion:^(BOOL finished) {
-                             
-                         }];
-    }
-}
-
--(void) okAction:(id)sender {
-    
-    CGRect rc = ecp.frame;
-    if(rc.origin.x < SCREEN_WIDTH)
-    {
-        rc.origin.x = SCREEN_WIDTH;
-    }
-    else
-    {
-        rc.origin.x = SCREEN_WIDTH-300;
-    }
-    
-    [UIView animateWithDuration:0.25
-                     animations:^{
-                         
-                         ecp.frame = rc;
-                         
-                     } completion:^(BOOL finished) {
-                         
-                     }];
-    
-//    EngineerScenarioSettingsViewCtrl *ctrl = [[EngineerScenarioSettingsViewCtrl alloc] init];
-//
-//    [self.navigationController pushViewController:ctrl animated:YES];
-}
-
-- (void) addAction:(UIButton*)sender{
-    
-    if(_isEditMode)
-        return;
-    
-    [ecp expandSection:(int)sender.tag];
-    
-    CGRect rc = ecp.frame;
-    rc.origin.x = SCREEN_WIDTH-300;
-    
-    [UIView animateWithDuration:0.25
-                     animations:^{
-                         
-                         ecp.frame = rc;
-                         
-                     } completion:^(BOOL finished) {
-                         
-                     }];
-}
-
 -(void)buttonAction:(DevicePlugButton*)cellBtn{
     
     int tag = (int)cellBtn.tag;
     int baseTag = tag/1000;
     
-    NSArray *dataArray = nil;
+    int index = tag%1000;
+    
+    NSArray *devices = nil;
     if(baseTag == 1)//音频
     {
-        dataArray = [_curScenario objectForKey:@"audioArray"];
+        devices = [_selectedDevices objectForKey:@"audio"];
     }
     else if(baseTag == 2)//视频
     {
-        dataArray = [_curScenario objectForKey:@"videoArray"];
+        devices = [_selectedDevices objectForKey:@"video"];
     }
     else
     {
-        dataArray = [_curScenario objectForKey:@"envArray"];
+        devices = [_selectedDevices objectForKey:@"env"];
     }
     
     if(_isEditMode)//删除模式
@@ -700,6 +614,8 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:notifykey
                                                         object:nil];
     /////////
+    
+    BasePlugElement *plug = [devices objectAtIndex:index];
 
     if ([name isEqualToString:@"8路电源管理"]) {
         
@@ -765,7 +681,7 @@
         // wuxian array
         if ([name isEqualToString:audio_process_name]) {
             EngineerAudioProcessViewCtrl *ctrl = [[EngineerAudioProcessViewCtrl alloc] init];
-            ctrl._audioProcessArray = _scenario._AProcessorPlugs;
+            ctrl._audioProcessArray = @[plug];
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
@@ -792,7 +708,7 @@
         if ([name isEqualToString:video_camera_name]) {
             EngineerCameraViewController *ctrl = [[EngineerCameraViewController alloc] init];
             
-            ctrl._cameraSysArray = _scenario._VCameraSettings;
+            ctrl._cameraSysArray = @[plug];
             
             [self.navigationController pushViewController:ctrl animated:YES];
         }
@@ -836,7 +752,7 @@
         // wuxian array
         if ([name isEqualToString:video_touying_name]) {
             EngineerTouYingJiViewCtrl *ctrl = [[EngineerTouYingJiViewCtrl alloc] init];
-            ctrl._touyingjiArray = _scenario._VTouyingji;
+            ctrl._touyingjiArray = @[plug];
             [self.navigationController pushViewController:ctrl animated:YES];
         }
     }
@@ -845,7 +761,7 @@
         if ([name isEqualToString:@"照明"]) {
             
             EngineerLightViewController *ctrl = [[EngineerLightViewController alloc] init];
-            ctrl._lightSysArray = _scenario._EDimmerLights;// [NSMutableArray arrayWithObject:data];
+            ctrl._lightSysArray = @[plug];// [NSMutableArray arrayWithObject:data];
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
@@ -1023,6 +939,7 @@
     }
 }
 - (void) initVRemoteSettings {
+    
     if([_scenario._VRemoteSettings count] == 0)
     {
         NSMutableArray *powers = [NSMutableArray array];
@@ -1229,21 +1146,8 @@
     }
 }
 
-- (void) checkAreaHaveDriver{
-    
-    for(AudioEProcessor *a in _scenario._AProcessorPlugs)
-    {
-        if(a._driverInfo)
-        {
-            [self addDriver:a];
-        }
-    }
-    
-}
-
 // if dataDic == nil, refresh scroll view
 - (void) addComponentToEnd:(UIScrollView*) scrollView dataDic:(NSDictionary*)dataDic {
-    
     
     NSMutableArray *dataArray = nil;
     NSMutableArray *btnCells = nil;
@@ -1265,12 +1169,6 @@
         
         if(name)
         {
-            if([_aDataCheckTestMap objectForKey:name])
-            {
-                return;
-            }
-            [_aDataCheckTestMap setObject:dataDic forKey:name];
-            
             if([name isEqualToString:@"8路电源管理"])
             {
                 [self init8Powers];
@@ -1445,19 +1343,6 @@
         
     }
     
-    UIButton *addElem = [UIButton buttonWithType:UIButtonTypeCustom];
-    addElem.frame = CGRectMake(x, audioStartY, E_CELL_WIDTH, E_CELL_WIDTH);
-    [addElem setImage:[UIImage imageNamed:@"engineer_scenario_add_n.png"] forState:UIControlStateNormal];
-    addElem.tag = addTag;
-    [scrollView addSubview:addElem];
-    
-    [addElem addTarget:self
-                    action:@selector(addAction:)
-          forControlEvents:UIControlEventTouchUpInside];
-
-    
-    [btnCells addObject:addElem];
-    
     scrollView.contentSize = CGSizeMake(x+E_CELL_WIDTH, 150);
     
 }
@@ -1558,7 +1443,7 @@
         }
     }
     
-    [self handleTapGesture:nil];
+   
 }
 
 - (void) delButton:(UIButton*)cellBtn{
@@ -1632,24 +1517,6 @@
     [_buttonTagWithDataMap removeObjectForKey:key];
 }
 
-
-
-- (void) didEndDragingElecCell:(NSDictionary *)data pt:(CGPoint)pt {
-    
-    CGPoint viewPoint = [self.view convertPoint:pt fromView:ecp];
-    NSString *type = [data objectForKey:@"type"];
-    BOOL isInAudio = CGRectContainsPoint(_audioScroll.frame, viewPoint);
-    BOOL isInVideo = CGRectContainsPoint(_videoScroll.frame, viewPoint);
-    BOOL isInEnv = CGRectContainsPoint(_envScroll.frame, viewPoint);
-    
-    if (([type isEqualToString:@"音频插件"] || [type isEqualToString:@"电源插件"]) && isInAudio) {
-        [self addComponentToEnd:_audioScroll dataDic:data];
-    } else if (([type isEqualToString:@"视频插件"] || [type isEqualToString:@"电源插件"]) && isInVideo) {
-        [self addComponentToEnd:_videoScroll dataDic:data];
-    } else if ([type isEqualToString:@"环境插件"] && isInEnv) {
-        [self addComponentToEnd:_envScroll dataDic:data];
-    }
-}
 
 - (void) cancelAction:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];

@@ -44,6 +44,9 @@
         
         self._inchannels = [NSMutableArray array];
         self._outchannels = [NSMutableArray array];
+        
+        self._show_icon_name = @"a_icon_7.png";
+        self._show_icon_sel_name = @"a_icon_7_sel.png";
     }
     
     return self;

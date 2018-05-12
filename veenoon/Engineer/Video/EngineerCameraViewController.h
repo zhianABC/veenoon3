@@ -10,10 +10,10 @@
 #import "BaseViewController.h"
 
 @interface EngineerCameraViewController : BaseViewController {
-    NSMutableArray *_cameraSysArray;
+    NSArray *_cameraSysArray;
     
     int _number;
 }
-@property (nonatomic,strong) NSMutableArray *_cameraSysArray;
+@property (nonatomic,strong) NSArray *_cameraSysArray;
 @property (nonatomic,assign) int _number;
 @end

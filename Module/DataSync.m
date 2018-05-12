@@ -162,7 +162,16 @@ static DataSync* dSyncInstance = nil;
     
     IMP_BLOCK_SELF(DataSync);
     
-    if([RgsAreaObjs count] == 0)
+    for(RgsAreaObj *area in RgsAreaObjs)
+    {
+        if([area.name isEqualToString:VEENOON_AREA_NAME])
+        {
+            self._currentArea = area;
+            break;
+        }
+    }
+    
+    if(_currentArea == nil)
     {
         [[RegulusSDK sharedRegulusSDK] CreateArea:VEENOON_AREA_NAME completion:^(BOOL result, RgsAreaObj *area, NSError *error) {
             if (result) {
@@ -171,10 +180,6 @@ static DataSync* dSyncInstance = nil;
             else
                 [KVNProgress showErrorWithStatus:@"创建Area出错!"];
         }];
-    }
-    else
-    {
-        self._currentArea = [RgsAreaObjs objectAtIndex:0];;
     }
 #endif
 }
