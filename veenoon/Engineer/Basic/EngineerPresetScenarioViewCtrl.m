@@ -238,23 +238,23 @@
     UIView *topbar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 64)];
     topbar.backgroundColor = BLACK_COLOR;
     
-    scenarioButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    scenarioButton.frame = CGRectMake(SCREEN_WIDTH-120, 20, 100, 44);
-    [topbar addSubview:scenarioButton];
-    [scenarioButton setTitle:@"生成场景" forState:UIControlStateNormal];
-    [scenarioButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [scenarioButton setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
-    scenarioButton.titleLabel.font = [UIFont boldSystemFontOfSize:17];
-    [scenarioButton addTarget:self
-                 action:@selector(createScenarioAction:)
-       forControlEvents:UIControlEventTouchUpInside];
-    
-    if(_isEditingScenario)
-    {
-        [scenarioButton setTitle:@"保存场景" forState:UIControlStateNormal];
-    }
-    scenarioButton.enabled = NO;
-    scenarioButton.alpha = 0.7;
+//    scenarioButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    scenarioButton.frame = CGRectMake(SCREEN_WIDTH-120, 20, 100, 44);
+//    [topbar addSubview:scenarioButton];
+//    [scenarioButton setTitle:@"生成场景" forState:UIControlStateNormal];
+//    [scenarioButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [scenarioButton setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+//    scenarioButton.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+//    [scenarioButton addTarget:self
+//                 action:@selector(createScenarioAction:)
+//       forControlEvents:UIControlEventTouchUpInside];
+//
+//    if(_isEditingScenario)
+//    {
+//        [scenarioButton setTitle:@"保存场景" forState:UIControlStateNormal];
+//    }
+//    scenarioButton.enabled = NO;
+//    scenarioButton.alpha = 0.7;
     
     
     UILabel *centerTitleL = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-100, 25, 200, 30)];
@@ -262,7 +262,7 @@
     centerTitleL.backgroundColor = [UIColor clearColor];
     centerTitleL.textAlignment = NSTextAlignmentCenter;
     [topbar addSubview:centerTitleL];
-    centerTitleL.text = @"设置场景";
+    centerTitleL.text = @"设备调试";
     
     UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT+50, ENGINEER_VIEW_TOP+70, SCREEN_WIDTH-80, 30)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
