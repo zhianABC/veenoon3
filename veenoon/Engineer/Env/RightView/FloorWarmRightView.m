@@ -50,7 +50,7 @@
 - (id)initWithFrame:(CGRect)frame {
     
     if(self = [super initWithFrame:frame]) {
-        self.backgroundColor = RGB(0, 89, 118);
+        self.backgroundColor = BLACK_COLOR;
         
         
         _btns = [[NSMutableArray alloc] init];
@@ -129,14 +129,13 @@
                                                            self.frame.size.width,
                                                            180)];
     [self addSubview:_footerView];
-    _footerView.backgroundColor = M_GREEN_COLOR;
+    _footerView.backgroundColor = RIGHT_VIEW_CORNER_COLOR;
     
     int colNumber = 4;
     int space = 5;
     int cellWidth = 115/2;
     int cellHeight = 115/2;
     int leftRight = (self.frame.size.width - 4*cellWidth - 3*5)/2;
-    UIColor *rectColor = RGB(0, 146, 174);
     
     int top = 40;
     
@@ -146,7 +145,7 @@
         int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+top;
         
-        UIButton *scenarioBtn = [UIButton buttonWithColor:rectColor selColor:BLUE_DOWN_COLOR];
+        UIButton *scenarioBtn = [UIButton buttonWithColor:RIGHT_VIEW_CORNER_BTN_COLOR selColor:RIGHT_VIEW_CORNER_SD_COLOR];
         scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
         scenarioBtn.clipsToBounds = YES;
         scenarioBtn.layer.cornerRadius = 5;
@@ -283,7 +282,7 @@
     }
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 43, self.frame.size.width, 1)];
-    line.backgroundColor =  M_GREEN_LINE;
+    line.backgroundColor =  TITLE_LINE_COLOR;
     [cell.contentView addSubview:line];
     
     if(_curIndex == indexPath.row) {

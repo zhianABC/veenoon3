@@ -11,7 +11,7 @@
 #import "CMNavigationController.h"
 #import "WellcomeViewController.h"
 #import "HomeViewController.h"
-#import "EngineerWirelessMeetingViewCtrl.h"
+#import "EngineerMonitorViewCtrl.h"
 #import "DataSync.h"
 
 @interface AppDelegate ()
@@ -31,7 +31,7 @@
     [session setActive:YES error:nil];
     [session setCategory:AVAudioSessionCategoryPlayback error:nil];
     
-    EngineerWirelessMeetingViewCtrl *wellcome = [[EngineerWirelessMeetingViewCtrl alloc] init];
+    HomeViewController *wellcome = [[HomeViewController alloc] init];
     _naviRoot = [[CMNavigationController alloc] initWithRootViewController:wellcome];
     _naviRoot.navigationBarHidden = YES;
     self.window.rootViewController = _naviRoot;
