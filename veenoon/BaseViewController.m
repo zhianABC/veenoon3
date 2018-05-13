@@ -55,10 +55,10 @@
         
     }
     
-    self.view.backgroundColor = RGB(1, 138, 182);
+    self.view.backgroundColor = DARK_GRAY_COLOR;
     
     _topBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 64)];
-    _topBar.backgroundColor = THEME_COLOR;
+    _topBar.backgroundColor = DARK_GRAY_COLOR;
     [self.view addSubview:_topBar];
     
     titleIcon = [[UIImageView alloc] init];
@@ -78,7 +78,7 @@
     [_topBar addSubview:centerTitleLabel];
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 63, SCREEN_WIDTH, 1)];
-    line.backgroundColor = RGB(75, 163, 202);
+    line.backgroundColor = TITLE_LINE_COLOR;
     [_topBar addSubview:line];
     
 
