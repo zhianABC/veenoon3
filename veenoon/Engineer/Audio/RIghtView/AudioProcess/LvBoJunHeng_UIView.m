@@ -24,6 +24,8 @@
     UILabel *fazhiL;
     UILabel *huifushijianL;
     UILabel *qidongshijianL;
+    
+    FilterGraphView *fglm;
 }
 
 @property (nonatomic, strong) NSMutableArray *_boduanChannelBtns;
@@ -78,9 +80,11 @@
         
         
         rc = CGRectMake(10, 20, frame.size.width-20, 260);
-        FilterGraphView *lm = [[FilterGraphView alloc] initWithFrame:rc];
-        lm.backgroundColor = [UIColor clearColor];
-        [self addSubview:lm];
+        fglm = [[FilterGraphView alloc] initWithFrame:rc];
+        fglm.backgroundColor = [UIColor clearColor];
+        [self addSubview:fglm];
+        
+        //[fglm drawRect:CGRectZero];
         
         
     }
@@ -388,11 +392,16 @@
         NSString *valueStr= [NSString stringWithFormat:@"%dB", k];
         
         fazhiL.text = valueStr;
+        
+        
     } else if (tag == 4) {
-        int k = (value *2000)-1000;
+        int k = (value *40)-20;
         NSString *valueStr= [NSString stringWithFormat:@"%d", k];
         
         qidongshijianL.text = valueStr;
+        
+        [fglm setPEQWithBand:4 gain:k];
+        
     } else {
         int k = (value *2000)-1000;
         NSString *valueStr= [NSString stringWithFormat:@"%d", k];

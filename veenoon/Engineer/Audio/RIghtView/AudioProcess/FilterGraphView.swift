@@ -1037,11 +1037,11 @@ class FilterGraphView: UIView {
         }
         updateCurve()
     }
-    func setPEQ(band: UInt8, freq: Float) {
+   public func setPEQ(band: UInt8, freq: Float) {
         eq_freq[Int(band)] = freq
         updateCurve()
     }
-    func setPEQ(band: UInt8, gain: Float) {
+    @objc func setPEQ(band: UInt8, gain: Float) {
         eq_gain[Int(band)] = gain
         updateCurve()
     }
