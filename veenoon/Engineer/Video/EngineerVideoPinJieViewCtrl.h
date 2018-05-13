@@ -17,7 +17,7 @@
     
     VPinJieSet *_currentObj;
 }
-@property (nonatomic,strong) NSMutableArray *_pinjieSysArray;
+@property (nonatomic,strong) NSArray *_pinjieSysArray;
 @property (nonatomic,assign) int _rowNumber;
 @property (nonatomic,assign) int _colNumber;
 @property (nonatomic,strong) VPinJieSet *_currentObj;

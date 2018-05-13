@@ -15,7 +15,7 @@
     NSMutableArray *_cameraArray;
     VRemoteSettingsSet *_currentObj;
 }
-@property (nonatomic,strong) NSMutableArray *_cameraArray;
+@property (nonatomic,strong) NSArray *_cameraArray;
 @property (nonatomic,strong) VRemoteSettingsSet *_currentObj;
 
 

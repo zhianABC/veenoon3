@@ -15,6 +15,6 @@
     
     int _number;
 }
-@property (nonatomic,strong) NSMutableArray *_handToHandSysArray;
+@property (nonatomic,strong) NSArray *_handToHandSysArray;
 
 @end

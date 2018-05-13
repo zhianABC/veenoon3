@@ -15,6 +15,6 @@
     
     int _number;
 }
-@property (nonatomic,strong) NSMutableArray *_wirelessYaoBaoSysArray;
+@property (nonatomic,strong) NSArray *_wirelessYaoBaoSysArray;
 @property (nonatomic,assign) int _number;
 @end

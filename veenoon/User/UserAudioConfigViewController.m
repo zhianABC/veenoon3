@@ -105,11 +105,7 @@
     [okBtn addTarget:self
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
-    
-    if([_scenario._AProcessorPlugs count])
-    {
-        self._curProcessor = [_scenario._AProcessorPlugs objectAtIndex:0];
-    }
+
     
     self._iconBtns = [NSMutableArray array];
     

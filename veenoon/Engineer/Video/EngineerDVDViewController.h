@@ -16,6 +16,6 @@
     
     int _number;
 }
-@property (nonatomic,strong) NSMutableArray *_dvdSysArray;
+@property (nonatomic,strong) NSArray *_dvdSysArray;
 @property (nonatomic,assign) int _number;
 @end

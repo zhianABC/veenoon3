@@ -15,7 +15,7 @@
     
     int _number;
 }
-@property (nonatomic,strong) NSMutableArray *_electronicSysArray;
+@property (nonatomic,strong) NSArray *_electronicSysArray;
 @property (nonatomic,assign) int _number;
 
 
