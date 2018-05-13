@@ -109,7 +109,7 @@
     
     
     UIButton *btnSave = [UIButton buttonWithColor:YELLOW_COLOR selColor:nil];
-    btnSave.frame = CGRectMake(SCREEN_WIDTH - 100, top-50, 80, 40);
+    btnSave.frame = CGRectMake(SCREEN_WIDTH - 100, 84, 80, 40);
     [self.view addSubview:btnSave];
     btnSave.layer.cornerRadius = 5;
     btnSave.clipsToBounds = YES;

@@ -61,7 +61,7 @@
 #import "DataCenter.h"
 
 #import "CreateScenarioViewController.h"
-
+#import "UIButton+Color.h"
 
 #ifdef OPEN_REG_LIB_DEF
 #import "RegulusSDK.h"
@@ -331,23 +331,27 @@
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    scenarioButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    scenarioButton.frame = CGRectMake(SCREEN_WIDTH-120, 20, 100, 44);
-    [topbar addSubview:scenarioButton];
-    [scenarioButton setTitle:@"生成场景" forState:UIControlStateNormal];
-    [scenarioButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [scenarioButton setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
-    scenarioButton.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    
+    
+    [self.view addSubview:topbar];
+    [self.view addSubview:bottomBar];
+
+    
+    scenarioButton = [UIButton buttonWithColor:YELLOW_COLOR selColor:nil];
+    scenarioButton.frame = CGRectMake(SCREEN_WIDTH-120, 84, 100, 40);
+    [self.view addSubview:scenarioButton];
+    scenarioButton.layer.cornerRadius = 3;
+    scenarioButton.clipsToBounds = YES;
+    [scenarioButton setTitle:@"创建场景" forState:UIControlStateNormal];
+    [scenarioButton setTitleColor:B_GRAY_COLOR forState:UIControlStateNormal];
+    //[scenarioButton setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    scenarioButton.titleLabel.font = [UIFont boldSystemFontOfSize:16];
     [scenarioButton addTarget:self
                        action:@selector(createScenarioAction:)
              forControlEvents:UIControlEventTouchUpInside];
     
     scenarioButton.enabled = NO;
     scenarioButton.alpha = 0.5;
-    
-    
-    [self.view addSubview:topbar];
-    [self.view addSubview:bottomBar];
 
     
     [[NSNotificationCenter defaultCenter] addObserver:self

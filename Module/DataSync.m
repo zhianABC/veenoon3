@@ -181,6 +181,11 @@ static DataSync* dSyncInstance = nil;
                 [KVNProgress showErrorWithStatus:@"创建Area出错!"];
         }];
     }
+    else
+    {
+//        [[RegulusSDK sharedRegulusSDK] DeleteArea:_currentArea.m_id
+//                                       completion:nil];
+    }
 #endif
 }
 
