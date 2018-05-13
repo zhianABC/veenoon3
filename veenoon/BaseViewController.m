@@ -8,10 +8,12 @@
 
 #import "BaseViewController.h"
 #import "UIImage+Color.h"
+#import "PlugsCtrlTitleHeader.h"
+#import "BasePlugElement.h"
+#import "RegulusSDK.h"
 
-@interface BaseViewController ()
-{
-    
+@interface BaseViewController () {
+    PlugsCtrlTitleHeader *_selectSysBtn;
 }
 @end
 
@@ -39,8 +41,7 @@
     
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
@@ -85,6 +86,28 @@
     _http = [[WebClient alloc] initWithDelegate:self];
     _http._httpMethod = @"GET";
     
+    _selectSysBtn = [[PlugsCtrlTitleHeader alloc] initWithFrame:CGRectMake(50, 100, 80, 30)];
+    _selectSysBtn.userInteractionEnabled=NO;
+    [self.view addSubview:_selectSysBtn];
+}
+
+- (void) showBasePluginName:(BasePlugElement*) basePlugElement {
+    if (basePlugElement) {
+        NSString *ipAddress = @"Unk";
+        NSString *nameStr = basePlugElement._ipaddress;
+        RgsDriverObj *driver = basePlugElement._driver;
+        NSString *idStr = @"Unk";
+        if (driver != nil) {
+            idStr = [NSString stringWithFormat:@"%d", (int) driver.m_id];
+        }
+        
+        if (nameStr != nil) {
+            ipAddress = nameStr;
+        }
+        
+        NSString *showText = [[idStr stringByAppendingString:@" - "] stringByAppendingString:ipAddress];
+        [_selectSysBtn setShowText:showText];
+    }
 }
 
 - (void) setCenterTitle:(NSString*)centerTitle {

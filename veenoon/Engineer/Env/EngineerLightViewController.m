@@ -61,6 +61,8 @@
     if([_lightSysArray count])
         self._curProcessor = [_lightSysArray objectAtIndex:0];
     
+    [super showBasePluginName:self._curProcessor];
+    
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
     
