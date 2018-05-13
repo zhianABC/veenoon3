@@ -753,7 +753,6 @@
 		EBC71B0F203AFF6600DD0A98 /* icon.plist in Resources */ = {isa = PBXBuildFile; fileRef = EBC71B0E203AFF6600DD0A98 /* icon.plist */; };
 		EBC71B11203B01BB00DD0A98 /* v_icon_22@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC71B10203B01BB00DD0A98 /* v_icon_22@2x.png */; };
 		EBC71B14203C3A3200DD0A98 /* PinJiePingRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B13203C3A3200DD0A98 /* PinJiePingRightView.m */; };
-		EBC71B1D203C497500DD0A98 /* TouYingJiRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B1C203C497500DD0A98 /* TouYingJiRightView.m */; };
 		EBC71B20203EEB8600DD0A98 /* LightRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B1F203EEB8600DD0A98 /* LightRightView.m */; };
 		EBC71B29204100A200DD0A98 /* ElectronicAutoRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B28204100A200DD0A98 /* ElectronicAutoRightView.m */; };
 		EBC71B2C204100DD00DD0A98 /* NewWindRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B2B204100DD00DD0A98 /* NewWindRightView.m */; };
@@ -1912,8 +1911,6 @@
 		EBC71B10203B01BB00DD0A98 /* v_icon_22@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "v_icon_22@2x.png"; sourceTree = "<group>"; };
 		EBC71B12203C3A3200DD0A98 /* PinJiePingRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PinJiePingRightView.h; sourceTree = "<group>"; };
 		EBC71B13203C3A3200DD0A98 /* PinJiePingRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PinJiePingRightView.m; sourceTree = "<group>"; };
-		EBC71B1B203C497500DD0A98 /* TouYingJiRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TouYingJiRightView.h; sourceTree = "<group>"; };
-		EBC71B1C203C497500DD0A98 /* TouYingJiRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TouYingJiRightView.m; sourceTree = "<group>"; };
 		EBC71B1E203EEB8600DD0A98 /* LightRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LightRightView.h; sourceTree = "<group>"; };
 		EBC71B1F203EEB8600DD0A98 /* LightRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LightRightView.m; sourceTree = "<group>"; };
 		EBC71B27204100A200DD0A98 /* ElectronicAutoRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElectronicAutoRightView.h; sourceTree = "<group>"; };
@@ -3563,8 +3560,6 @@
 				EBC71B0A203AF90700DD0A98 /* VideoProcessRightView.m */,
 				EBC71B12203C3A3200DD0A98 /* PinJiePingRightView.h */,
 				EBC71B13203C3A3200DD0A98 /* PinJiePingRightView.m */,
-				EBC71B1B203C497500DD0A98 /* TouYingJiRightView.h */,
-				EBC71B1C203C497500DD0A98 /* TouYingJiRightView.m */,
 			);
 			path = RightView;
 			sourceTree = "<group>";
@@ -4547,7 +4542,6 @@
 				EB7333FA204108B000AE60B8 /* AddWetRightView.m in Sources */,
 				04DE1DD81AD68C5E00D49E2F /* main.m in Sources */,
 				04DE1EA11AD6AEE000D49E2F /* NetworkChecker.m in Sources */,
-				EBC71B1D203C497500DD0A98 /* TouYingJiRightView.m in Sources */,
 				EB1717901FF5E44B00CBDB81 /* EngineerLuBoJiViewController.m in Sources */,
 				EBECD4542053AF5000F5474D /* CenterCustomerPickerView.m in Sources */,
 				EB5F7F951FD59D6B00351888 /* EngineerPortSettingView.m in Sources */,

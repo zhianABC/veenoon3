@@ -15,10 +15,6 @@
 #import "BrandCategoryNoUtil.h"
 
 @interface EngineerVideoPinJieViewCtrl ()<CustomPickerViewDelegate> {
-    PlugsCtrlTitleHeader *_selectSysBtn;
-    
-    CustomPickerView *_customPicker;
-    
     NSMutableArray *_inPutBtnArray;
     
     BOOL isSettings;
@@ -26,6 +22,8 @@
     UIButton *okBtn;
     
     UIScrollView *_scroolView;
+    
+    UIView *_proxysView;
 }
 
 @end
@@ -81,20 +79,47 @@
               action:@selector(settingsAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
-    _selectSysBtn = [[PlugsCtrlTitleHeader alloc] initWithFrame:CGRectMake(50, 100, 80, 30)];
-    [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_selectSysBtn];
-    
-    if (_currentObj) {
-        NSString *nameStr = [BrandCategoryNoUtil generatePickerValue:_currentObj._brand withCategory:_currentObj._type withNo:_currentObj._deviceno];
-        [_selectSysBtn setShowText:nameStr];
-    }
-    
     
     [self refreshScrollView:self._rowNumber withColumn:self._colNumber];
     
+    int height = 150;
+    
+    _proxysView = [[UIView alloc] initWithFrame:CGRectMake(0,
+                                                           height-5,
+                                                           SCREEN_WIDTH,
+                                                           SCREEN_HEIGHT-height-60)];
+    [self.view addSubview:_proxysView];
+    
+    UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+    tapGesture.cancelsTouchesInView =  NO;
+    tapGesture.numberOfTapsRequired = 1;
+    [_proxysView addGestureRecognizer:tapGesture];
 }
 
+- (void) handleTapGesture:(UIGestureRecognizer*)sender{
+    
+    CGPoint pt = [sender locationInView:self.view];
+    
+    if(pt.x < SCREEN_WIDTH-300)
+    {
+        
+        CGRect rc = _rightView.frame;
+        rc.origin.x = SCREEN_WIDTH;
+        
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             
+                             _rightView.frame = rc;
+                             
+                         } completion:^(BOOL finished) {
+                             
+                         }];
+        
+        
+        okBtn.hidden = NO;
+        isSettings = NO;
+    }
+}
 - (void) refreshScrollView:(int)row withColumn:(int) column {
     int labelHeight = SCREEN_HEIGHT - 600;
     int cellHeight = 80;
@@ -151,57 +176,6 @@
     
 }
 
-- (void) selectCurrentMike:(VPinJieSet*)mike{
-    
-    
-    self._currentObj = mike;
-    
-    
-    [self updateCurrentMikeState:mike._deviceno];
-}
-
-- (void) updateCurrentMikeState:(NSString *)deviceno{
-    
-    NSString *nameStr = [BrandCategoryNoUtil generatePickerValue:_currentObj._brand withCategory:_currentObj._type withNo:_currentObj._deviceno];
-    [_selectSysBtn setShowText:nameStr];
-    
-    if ([_rightView superview]) {
-        _rightView._currentObj = _currentObj;
-        [_rightView refreshView:_currentObj];
-    }
-    
-}
-
-- (void) sysSelectAction:(id)sender{
-    
-    [self.view addSubview:_dActionView];
-    
-    IMP_BLOCK_SELF(EngineerVideoPinJieViewCtrl);
-    _dActionView._callback = ^(int tagIndex, id obj)
-    {
-        [block_self selectCurrentMike:obj];
-    };
-    
-    
-    
-    NSMutableArray *arr = [NSMutableArray array];
-    for(VPinJieSet *mike in _pinjieSysArray) {
-        NSString *nameStr = [BrandCategoryNoUtil generatePickerValue:mike._brand withCategory:mike._type withNo:mike._deviceno];
-        [arr addObject:@{@"object":mike,@"name":nameStr}];
-    }
-    
-    _dActionView._selectIndex = _currentObj._index;
-    [_dActionView setSelectDatas:arr];
-}
-
-- (void) chooseDeviceAtIndex:(int)idx{
-    
-    self._currentObj = [_pinjieSysArray objectAtIndex:idx];
-    
-    [self updateCurrentMikeState:_currentObj._deviceno];
-    
-}
-
 - (void) settingsAction:(id)sender{
     //检查是否需要创建
     if (_rightView == nil) {
@@ -212,12 +186,6 @@
         //创建底部设备切换按钮
         _rightView._numOfDevice = (int)[_pinjieSysArray count];
         
-        
-        IMP_BLOCK_SELF(EngineerVideoPinJieViewCtrl);
-        _rightView._callback = ^(int deviceIndex) {
-            
-            [block_self chooseDeviceAtIndex:deviceIndex];
-        };
     }
     
     //如果在显示，消失

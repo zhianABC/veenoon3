@@ -15,10 +15,6 @@
 #import "VRemoteVideoSet.h"
 
 @interface EngineerRemoteVideoViewCtrl () <CustomPickerViewDelegate>{
-    PlugsCtrlTitleHeader *_selectSysBtn;
-    
-    CustomPickerView *_customPicker;
-    
     UIButton *_luboBtn;
     UIButton *_tanchuBtn;
     UIButton *_addressBtn;
@@ -81,15 +77,6 @@
     [okBtn addTarget:self
               action:@selector(settingsAction:)
     forControlEvents:UIControlEventTouchUpInside];
-    
-    _selectSysBtn = [[PlugsCtrlTitleHeader alloc] initWithFrame:CGRectMake(50, 100, 80, 30)];
-    [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_selectSysBtn];
-    
-    if (_currentObj) {
-        NSString *nameStr = [BrandCategoryNoUtil generatePickerValue:_currentObj._brand withCategory:_currentObj._type withNo:_currentObj._deviceno];
-        [_selectSysBtn setShowText:nameStr];
-    }
     
     _luboBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
     _luboBtn.frame = CGRectMake(70, SCREEN_HEIGHT-140, 60, 60);
@@ -657,53 +644,6 @@
     
 }
 - (void) yuanchengAction:(id)sender{
-    
-}
-
-- (void) selectCurrentMike:(VRemoteSettingsSet*)mike{
-    
-    
-    self._currentObj = mike;
-    
-    
-    [self updateCurrentMikeState:mike._deviceno];
-}
-
-- (void) updateCurrentMikeState:(NSString *)deviceno{
-    
-    NSString *nameStr = [BrandCategoryNoUtil generatePickerValue:_currentObj._brand withCategory:_currentObj._type withNo:_currentObj._deviceno];
-    [_selectSysBtn setShowText:nameStr];
-    
-    
-}
-
-- (void) sysSelectAction:(id)sender{
-    
-    [self.view addSubview:_dActionView];
-    
-    IMP_BLOCK_SELF(EngineerRemoteVideoViewCtrl);
-    _dActionView._callback = ^(int tagIndex, id obj)
-    {
-        [block_self selectCurrentMike:obj];
-    };
-    
-    
-    
-    NSMutableArray *arr = [NSMutableArray array];
-    for(VRemoteSettingsSet *mike in _cameraArray) {
-        NSString *nameStr = [BrandCategoryNoUtil generatePickerValue:mike._brand withCategory:mike._type withNo:mike._deviceno];
-        [arr addObject:@{@"object":mike,@"name":nameStr}];
-    }
-    
-    _dActionView._selectIndex = _currentObj._index;
-    [_dActionView setSelectDatas:arr];
-    
-}
-- (void) chooseDeviceAtIndex:(int)idx{
-    
-    self._currentObj = [_cameraArray objectAtIndex:idx];
-    
-    [self updateCurrentMikeState:_currentObj._deviceno];
     
 }
 
