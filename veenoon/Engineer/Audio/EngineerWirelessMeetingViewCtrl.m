@@ -15,10 +15,6 @@
 
 @interface EngineerWirelessMeetingViewCtrl () <EngineerSliderViewDelegate, CustomPickerViewDelegate> {
     
-    UIButton *_selectSysBtn;
-    
-    CustomPickerView *_customPicker;
-    
     UIButton *_luboBtn;
     
     EngineerSliderView *_zengyiSlider;
@@ -26,6 +22,8 @@
     
     WirelessMeetingView *_rightView;
     UIButton *okBtn;
+    
+    UIView *_proxysView;
 }
 @end
 
@@ -67,19 +65,6 @@
     [okBtn addTarget:self
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
-    
-    _selectSysBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _selectSysBtn.frame = CGRectMake(50, 100, 80, 30);
-    [_selectSysBtn setImage:[UIImage imageNamed:@"engineer_sys_select_down_n.png"] forState:UIControlStateNormal];
-    [_selectSysBtn setTitle:@"001" forState:UIControlStateNormal];
-    _selectSysBtn.titleLabel.font = [UIFont systemFontOfSize:16];
-    [_selectSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_selectSysBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _selectSysBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [_selectSysBtn setTitleEdgeInsets:UIEdgeInsetsMake(0,0,0,_selectSysBtn.imageView.bounds.size.width)];
-    [_selectSysBtn setImageEdgeInsets:UIEdgeInsetsMake(0,_selectSysBtn.titleLabel.bounds.size.width+35,0,0)];
-    [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_selectSysBtn];
     
     int index = 0;
     int top = ENGINEER_VIEW_COMPONENT_TOP;
@@ -195,6 +180,38 @@
     _zengyiSlider.delegate = self;
     [_zengyiSlider resetScale];
     _zengyiSlider.center = CGPointMake(SCREEN_WIDTH - 150, SCREEN_HEIGHT/2);
+    
+    int height = 150;
+    
+    _proxysView = [[UIView alloc] initWithFrame:CGRectMake(0,
+                                                           height-5,
+                                                           SCREEN_WIDTH,
+                                                           SCREEN_HEIGHT-height-60)];
+    [self.view addSubview:_proxysView];
+    
+    UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+    tapGesture.cancelsTouchesInView =  NO;
+    tapGesture.numberOfTapsRequired = 1;
+    [_proxysView addGestureRecognizer:tapGesture];
+}
+
+- (void) handleTapGesture:(id)sender{
+    
+    if ([_rightView superview]) {
+        
+        CGRect rc = _rightView.frame;
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             _rightView.frame = CGRectMake(SCREEN_WIDTH,
+                                                              rc.origin.y,
+                                                              rc.size.width,
+                                                              rc.size.height);
+                         } completion:^(BOOL finished) {
+                             [_rightView removeFromSuperview];
+                         }];
+    }
+    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+    isSettings = NO;
 }
 
 - (void) didSliderValueChanged:(float)value object:(id)object {
@@ -221,40 +238,6 @@
     
     NSString *value = [@"Channel " stringByAppendingString:[dataDic objectForKey:@"name"]];
     titleL.text = value;
-}
-
-- (void) sysSelectAction:(id)sender{
-    
-    if(_customPicker == nil)
-    _customPicker = [[CustomPickerView alloc]
-                     initWithFrame:CGRectMake(_selectSysBtn.frame.origin.x, _selectSysBtn.frame.origin.y, _selectSysBtn.frame.size.width, 120) withGrayOrLight:@"gray"];
-    
-    
-    NSMutableArray *arr = [NSMutableArray array];
-    for(int i = 1; i< 2; i++)
-    {
-        [arr addObject:[NSString stringWithFormat:@"00%d", i]];
-    }
-    
-    _customPicker._pickerDataArray = @[@{@"values":arr}];
-    
-    
-    _customPicker._selectColor = [UIColor orangeColor];
-    _customPicker._rowNormalColor = [UIColor whiteColor];
-    [self.view addSubview:_customPicker];
-    _customPicker.delegate_ = self;
-}
-
-- (void) didChangedPickerValue:(NSDictionary*)value{
-    
-    if (_customPicker) {
-        [_customPicker removeFromSuperview];
-    }
-    NSDictionary *dic = [value objectForKey:@0];
-    NSString *title =  [dic objectForKey:@"value"];
-    
-    [_selectSysBtn setTitle:title forState:UIControlStateNormal];
-    
 }
 
 - (void) scenarioAction:(id)sender{
