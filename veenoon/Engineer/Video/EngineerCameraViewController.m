@@ -18,10 +18,6 @@
 
 @interface EngineerCameraViewController () <CustomPickerViewDelegate>{
     
-    PlugsCtrlTitleHeader *_selectSysBtn;
-    
-    CustomPickerView *_customPicker;
-    
     UIButton *_numberBtn;
     
     UIButton *_volumnMinus;
@@ -82,15 +78,6 @@
     [okBtn addTarget:self
               action:@selector(settingsAction:)
     forControlEvents:UIControlEventTouchUpInside];
-    
-    _selectSysBtn = [[PlugsCtrlTitleHeader alloc] initWithFrame:CGRectMake(50, 100, 80, 30)];
-    [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_selectSysBtn];
-    
-    if (_currentObj) {
-        NSString *nameStr = [BrandCategoryNoUtil generatePickerValue:_currentObj._brand withCategory:_currentObj._type withNo:_currentObj._deviceno];
-        [_selectSysBtn setShowText:nameStr];
-    }
     
     int playerLeft = -60;
     int playerHeight = 50;
@@ -587,61 +574,6 @@
         [vcam controlDeviceLoadPostion];
     }
 }
-
-- (void) selectCurrentMike:(VCameraSettingSet*)mike{
-    
-    self._currentObj = mike;
-    [self updateCurrentMikeState:mike._deviceno];
-}
-
-- (void) updateCurrentMikeState:(NSString *)deviceno{
-    
-    NSString *nameStr = [BrandCategoryNoUtil generatePickerValue:_currentObj._brand withCategory:_currentObj._type withNo:_currentObj._deviceno];
-    [_selectSysBtn setShowText:nameStr];
-
-}
-
-- (void) sysSelectAction:(id)sender{
-    
-    [self.view addSubview:_dActionView];
-    
-    IMP_BLOCK_SELF(EngineerCameraViewController);
-    _dActionView._callback = ^(int tagIndex, id obj)
-    {
-        [block_self selectCurrentMike:obj];
-    };
-    
-    
-    
-    NSMutableArray *arr = [NSMutableArray array];
-    for(VCameraSettingSet *mike in _cameraSysArray) {
-        NSString *nameStr = [BrandCategoryNoUtil generatePickerValue:mike._brand withCategory:mike._type withNo:mike._deviceno];
-        [arr addObject:@{@"object":mike,@"name":nameStr}];
-    }
-    
-    _dActionView._selectIndex = _currentObj._index;
-    [_dActionView setSelectDatas:arr];
-    
-}
-- (void) chooseDeviceAtIndex:(int)idx{
-    
-    self._currentObj = [_cameraSysArray objectAtIndex:idx];
-    
-    [self updateCurrentMikeState:_currentObj._deviceno];
-    
-}
-
-#pragma mark -- Right View Delegate ---
-- (void) dissmissSettingView{
-    [self handleTapGesture:nil];
-}
-
-
-- (void) handleTapGesture:(id)sender{
-    
-    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
-}
-
 
 - (void) settingsAction:(id)sender{
     

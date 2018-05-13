@@ -45,15 +45,15 @@
     if(self = [super initWithFrame:frame])
     {
         
-        self.backgroundColor = RGB(0, 89, 118);
+        self.backgroundColor = BLACK_COLOR;
         self.clipsToBounds = YES;
         
         UILabel* line = [[UILabel alloc] initWithFrame:CGRectMake(0, 60, frame.size.width, 1)];
-        line.backgroundColor = RGB(1, 138, 182);
+        line.backgroundColor = TITLE_LINE_COLOR;
         [self addSubview:line];
         
         line = [[UILabel alloc] initWithFrame:CGRectMake(0, 100, frame.size.width, 1)];
-        line.backgroundColor = RGB(1, 138, 182);
+        line.backgroundColor = TITLE_LINE_COLOR;
         [self addSubview:line];
         
         

@@ -17,10 +17,6 @@
 #import "BrandCategoryNoUtil.h"
 
 @interface EngineerLuBoJiViewController ()<CustomPickerViewDelegate, DragCellViewDelegate> {
-    PlugsCtrlTitleHeader *_selectSysBtn;
-    
-    CustomPickerView *_customPicker;
-    
     UIView *_outputScreenView;
     
     int showType;
@@ -86,15 +82,6 @@
     [okBtn addTarget:self
               action:@selector(settingsAction:)
     forControlEvents:UIControlEventTouchUpInside];
-    
-    _selectSysBtn = [[PlugsCtrlTitleHeader alloc] initWithFrame:CGRectMake(50, 100, 80, 30)];
-    [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_selectSysBtn];
-    
-    if (_currentObj) {
-        NSString *nameStr = [BrandCategoryNoUtil generatePickerValue:_currentObj._brand withCategory:_currentObj._type withNo:_currentObj._deviceno];
-        [_selectSysBtn setShowText:nameStr];
-    }
     
     _outputScreenView  = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 400, 300)];
     _outputScreenView.backgroundColor = RGB(0, 89, 118);
@@ -606,52 +593,6 @@
         }
         
     }
-}
-
-- (void) selectCurrentMike:(VLuBoJiSet*)mike{
-    
-    
-    self._currentObj = mike;
-    
-    
-    [self updateCurrentMikeState:mike._deviceno];
-}
-
-- (void) updateCurrentMikeState:(NSString *)deviceno{
-    
-    NSString *nameStr = [BrandCategoryNoUtil generatePickerValue:_currentObj._brand withCategory:_currentObj._type withNo:_currentObj._deviceno];
-    [_selectSysBtn setShowText:nameStr];
-    
-    
-}
-- (void) sysSelectAction:(id)sender{
-    
-    [self.view addSubview:_dActionView];
-    
-    IMP_BLOCK_SELF(EngineerLuBoJiViewController);
-    _dActionView._callback = ^(int tagIndex, id obj)
-    {
-        [block_self selectCurrentMike:obj];
-    };
-    
-    
-    
-    NSMutableArray *arr = [NSMutableArray array];
-    for(VLuBoJiSet *mike in _lubojiArray) {
-        NSString *nameStr = [BrandCategoryNoUtil generatePickerValue:mike._brand withCategory:mike._type withNo:mike._deviceno];
-        [arr addObject:@{@"object":mike,@"name":nameStr}];
-    }
-    
-    _dActionView._selectIndex = _currentObj._index;
-    [_dActionView setSelectDatas:arr];
-}
-
-- (void) chooseDeviceAtIndex:(int)idx{
-    
-    self._currentObj = [_lubojiArray objectAtIndex:idx];
-    
-    [self updateCurrentMikeState:_currentObj._deviceno];
-    
 }
 
 - (void) settingsAction:(id)sender{

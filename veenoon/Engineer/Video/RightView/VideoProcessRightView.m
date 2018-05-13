@@ -53,7 +53,7 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
         
         [self initData];
         
-        self.backgroundColor = RGB(0, 89, 118);
+        self.backgroundColor = BLACK_COLOR;
         
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,
                                                                    0,
@@ -74,8 +74,6 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
 
 -(void) refreshView:(VVideoProcessSet*) vVideoProcessSet {
     self._currentObj = vVideoProcessSet;
-    
-    
     
     self._curentDeviceIndex = _currentObj._index;
 }

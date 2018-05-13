@@ -47,7 +47,7 @@ UITableViewDataSource,AudioIconSettingViewDelegate, EPlusLayerViewDelegate> {
         
         [self initData];
         
-        self.backgroundColor = RGB(0, 89, 118);
+        self.backgroundColor = BLACK_COLOR;
         
         UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 10)];
         

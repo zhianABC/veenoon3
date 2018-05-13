@@ -82,7 +82,7 @@ UITableViewDataSource, UITextFieldDelegate, GroupsPickerViewDelegate> {
 - (id)initWithFrame:(CGRect)frame {
     
     if(self = [super initWithFrame:frame]) {
-        self.backgroundColor = RGB(0, 89, 118);
+        self.backgroundColor = BLACK_COLOR;
         
         _btns4 = [[NSMutableArray alloc] init];
         self._numOfChannel = 8;
@@ -192,7 +192,7 @@ UITableViewDataSource, UITextFieldDelegate, GroupsPickerViewDelegate> {
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(headerView.frame)-1,
                                                               self.frame.size.width,
                                                               1)];
-    line.backgroundColor =  M_GREEN_LINE;
+    line.backgroundColor =  TITLE_LINE_COLOR;
     [headerView addSubview:line];
     
     _tableView.tableHeaderView = headerView;
@@ -489,7 +489,7 @@ UITableViewDataSource, UITextFieldDelegate, GroupsPickerViewDelegate> {
     }
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, height-1, self.frame.size.width, 1)];
-    line.backgroundColor =  M_GREEN_LINE;
+    line.backgroundColor =  TITLE_LINE_COLOR;
     [header addSubview:line];
     
     return header;

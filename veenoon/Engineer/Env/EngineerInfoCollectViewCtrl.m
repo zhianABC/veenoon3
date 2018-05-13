@@ -15,8 +15,6 @@
 @interface EngineerInfoCollectViewCtrl () <
 UIScrollViewDelegate>{
     
-    UIButton *_selectSysBtn;
-    
     
     ColumnsView *colYear;
     ColumnsView *colMonth;

@@ -16,9 +16,6 @@
 #import "BrandCategoryNoUtil.h"
 
 @interface EngineerVideoProcessViewCtrl () <CustomPickerViewDelegate, VideoProcessRightViewDelegate, TwoIconAndTitleViewDelegate>{
-    PlugsCtrlTitleHeader *_selectSysBtn;
-    
-    CustomPickerView *_customPicker;
     
     NSMutableArray *_inPutBtnArray;
     NSMutableArray *_outPutBtnArray;
@@ -117,16 +114,6 @@
       forControlEvents:UIControlEventTouchUpInside];
     saveBtn.hidden = YES;
     
-    _selectSysBtn = [[PlugsCtrlTitleHeader alloc] initWithFrame:CGRectMake(50, 100, 80, 30)];
-    [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_selectSysBtn];
-    
-    if (_currentObj) {
-        NSString *nameStr = [BrandCategoryNoUtil generatePickerValue:_currentObj._brand withCategory:_currentObj._type withNo:_currentObj._deviceno];
-        [_selectSysBtn setShowText:nameStr];
-    }
-    
-    
     int labelHeight = 180;
     
     UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, labelHeight, SCREEN_WIDTH-125*2, 20)];
@@ -194,7 +181,7 @@
     
     
     _topView = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-300, 0, 300, 64)];
-    _topView.backgroundColor = THEME_COLOR;
+    _topView.backgroundColor = DARK_GRAY_COLOR;
     [self.view addSubview:_topView];
     
     _rightView = [[VideoProcessRightView alloc]
@@ -202,12 +189,6 @@
                                            64, 300, SCREEN_HEIGHT-114)];
     _rightView.delegate = self;
     _rightView._numOfDevice = (int) [_videoProcessArray count];
-    
-    IMP_BLOCK_SELF(EngineerVideoProcessViewCtrl);
-    _rightView._callback = ^(int deviceIndex) {
-        
-        [block_self chooseDeviceAtIndex:deviceIndex];
-    };
     
     [self.view insertSubview:_rightView belowSubview:_topView];
     
@@ -259,66 +240,6 @@
     
 }
 
-- (void) selectCurrentMike:(VVideoProcessSet*)mike{
-    
-    self._currentObj = mike;
-    [self updateCurrentMikeState:mike._deviceno];
-}
-
-- (void) updateCurrentMikeState:(NSString *)deviceno{
-    
-    NSString *nameStr = [BrandCategoryNoUtil generatePickerValue:_currentObj._brand withCategory:_currentObj._type withNo:_currentObj._deviceno];
-    [_selectSysBtn setShowText:nameStr];
-    
-    if ([_rightView superview]) {
-        _rightView._currentObj = _currentObj;
-        [_rightView refreshView:_currentObj];
-    }
-    
-}
-
-- (void) sysSelectAction:(id)sender{
-    [self.view addSubview:_dActionView];
-    
-    IMP_BLOCK_SELF(EngineerVideoProcessViewCtrl);
-    _dActionView._callback = ^(int tagIndex, id obj)
-    {
-        [block_self selectCurrentMike:obj];
-    };
-    
-    
-    
-    NSMutableArray *arr = [NSMutableArray array];
-    for(VVideoProcessSet *mike in _videoProcessArray) {
-        NSString *nameStr = [BrandCategoryNoUtil generatePickerValue:mike._brand withCategory:mike._type withNo:mike._deviceno];
-        [arr addObject:@{@"object":mike,@"name":nameStr}];
-    }
-    
-    _dActionView._selectIndex = _currentObj._index;
-    [_dActionView setSelectDatas:arr];
-    
-}
-
-- (void) didChangedPickerValue:(NSDictionary*)value{
-    
-    if (_customPicker) {
-        [_customPicker removeFromSuperview];
-    }
-    
-    NSDictionary *dic = [value objectForKey:@0];
-    NSString *title =  [dic objectForKey:@"value"];
-    [_selectSysBtn setTitle:title forState:UIControlStateNormal];
-    
-}
-
-- (void) chooseDeviceAtIndex:(int)idx{
-    
-    self._currentObj = [_videoProcessArray objectAtIndex:idx];
-    
-    [self updateCurrentMikeState:_currentObj._deviceno];
-    
-}
-
 - (void) saveAction:(id)sender{
     
     [self handleTapGesture:nil];
@@ -335,12 +256,6 @@
         //创建底部设备切换按钮
         _rightView._numOfDevice = (int)[_videoProcessArray count];
         
-        
-        IMP_BLOCK_SELF(EngineerVideoProcessViewCtrl);
-        _rightView._callback = ^(int deviceIndex) {
-            
-            [block_self chooseDeviceAtIndex:deviceIndex];
-        };
     }
     
     //如果在显示，消失

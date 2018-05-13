@@ -18,8 +18,6 @@
 #import "PlugsCtrlTitleHeader.h"
 
 @interface EngineerWirlessYaoBaoViewCtrl () <CustomPickerViewDelegate, EngineerSliderViewDelegate, SlideButtonDelegate> {
-    
-    PlugsCtrlTitleHeader *_selectSysBtn;
 
     EngineerSliderView *_zengyiSlider;
     
@@ -41,6 +39,8 @@
     UIButton *okBtn;
     
     NSMutableArray *signalArray;
+    
+    UIView *_proxysView;
 }
 
 @property (nonatomic, strong) AudioEWirlessMike *_curMike;
@@ -113,15 +113,6 @@
     [okBtn addTarget:self
               action:@selector(settingAction:)
     forControlEvents:UIControlEventTouchUpInside];
-    
-    _selectSysBtn = [[PlugsCtrlTitleHeader alloc] initWithFrame:CGRectMake(50, 100, 80, 30)];
-     [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_selectSysBtn];
-    
-    if(_curMike)
-        [_selectSysBtn setShowText:[_curMike showName]];
-    
-
     
     _zengyiSlider = [[EngineerSliderView alloc]
                        initWithSliderBg:[UIImage imageNamed:@"engineer_zengyi_n.png"]
@@ -256,9 +247,37 @@
             index++;
         }
     }
-  
+    int height = 150;
+    
+    _proxysView = [[UIView alloc] initWithFrame:CGRectMake(0,
+                                                           height-5,
+                                                           SCREEN_WIDTH,
+                                                           SCREEN_HEIGHT-height-60)];
+    [self.view addSubview:_proxysView];
+    
+    UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+    tapGesture.cancelsTouchesInView =  NO;
+    tapGesture.numberOfTapsRequired = 1;
+    [_proxysView addGestureRecognizer:tapGesture];
 }
-
+- (void) handleTapGesture:(id)sender{
+    
+    if ([_rightSetView superview]) {
+        
+        CGRect rc = _rightSetView.frame;
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             _rightSetView.frame = CGRectMake(SCREEN_WIDTH,
+                                                     rc.origin.y,
+                                                     rc.size.width,
+                                                     rc.size.height);
+                         } completion:^(BOOL finished) {
+                             [_rightSetView removeFromSuperview];
+                         }];
+    }
+    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+    
+}
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
     int circleValue = value * 40.0f - 20;
@@ -305,8 +324,6 @@
 }
 
 - (void) updateCurrentMikeState:(NSString *)deviceno{
-    
-    [_selectSysBtn setShowText:[_curMike showName]];
     
     if([_rightSetView superview])
     {
@@ -457,30 +474,6 @@
     
     
     [self updateCurrentMikeState:mike._deviceno];
-}
-
-- (void) sysSelectAction:(id)sender{
-    
-    
-    [self.view addSubview:_dActionView];
-    
-    IMP_BLOCK_SELF(EngineerWirlessYaoBaoViewCtrl);
-    _dActionView._callback = ^(int tagIndex, id obj)
-    {
-        [block_self selectCurrentMike:obj];
-    };
-    
-    
-    
-    NSMutableArray *arr = [NSMutableArray array];
-    for(AudioEWirlessMike *mike in _wirelessYaoBaoSysArray)
-    {
-        [arr addObject:@{@"object":mike,@"name":[mike showName]}];
-    }
-   
-    _dActionView._selectIndex = _curMike._index;
-    [_dActionView setSelectDatas:arr];
-   
 }
 
 - (void) chooseDeviceAtIndex:(int)idx{
