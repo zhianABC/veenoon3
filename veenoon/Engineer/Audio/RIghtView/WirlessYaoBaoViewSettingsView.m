@@ -43,10 +43,10 @@
     
     if(self = [super initWithFrame:frame])
     {
-        self.backgroundColor = RGB(0, 89, 118);
+        self.backgroundColor = BLACK_COLOR;
         
         UILabel* line = [[UILabel alloc] initWithFrame:CGRectMake(0, 60, frame.size.width, 1)];
-        line.backgroundColor = RGB(1, 138, 182);
+        line.backgroundColor = TITLE_LINE_COLOR;
         [self addSubview:line];
         
         _curIndex = -1;
@@ -83,8 +83,7 @@
     return self;
 }
 
-- (void) showData{
-    
+- (void) showData {
     self._rows = [NSMutableArray array];
     self._map = [NSMutableDictionary dictionary];
     
