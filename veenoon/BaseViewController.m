@@ -16,7 +16,7 @@
 @end
 
 @implementation BaseViewController
-
+@synthesize delegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

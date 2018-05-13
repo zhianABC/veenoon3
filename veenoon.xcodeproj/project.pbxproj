@@ -180,6 +180,8 @@
 		341CE4A820A428D9009DBC01 /* ComDriver.m in Sources */ = {isa = PBXBuildFile; fileRef = 341CE4A720A428D9009DBC01 /* ComDriver.m */; };
 		341E75E4209BF94C00E69DB2 /* VAProcessorProxys.m in Sources */ = {isa = PBXBuildFile; fileRef = 341E75E3209BF94C00E69DB2 /* VAProcessorProxys.m */; };
 		341E7BE5205BFD7400E2DEA0 /* back_white_ico@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 341E7BE4205BFD7300E2DEA0 /* back_white_ico@2x.png */; };
+		3421001D20A807DD008497FF /* CreateScenarioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3421001C20A807DD008497FF /* CreateScenarioViewController.m */; };
+		3421002020A80AE2008497FF /* DeviceCmdSlice.m in Sources */ = {isa = PBXBuildFile; fileRef = 3421001F20A80AE2008497FF /* DeviceCmdSlice.m */; };
 		3421561820597293005205D6 /* slide_btn_light_nokd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3421561620597292005205D6 /* slide_btn_light_nokd@2x.png */; };
 		3421561920597293005205D6 /* slide_btn_gray_nokd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3421561720597292005205D6 /* slide_btn_gray_nokd@2x.png */; };
 		34217A6F1FCE98200006701C /* UserVideoConfigView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34217A6E1FCE98200006701C /* UserVideoConfigView.m */; };
@@ -1174,6 +1176,10 @@
 		341E75E2209BF94C00E69DB2 /* VAProcessorProxys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VAProcessorProxys.h; sourceTree = "<group>"; };
 		341E75E3209BF94C00E69DB2 /* VAProcessorProxys.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VAProcessorProxys.m; sourceTree = "<group>"; };
 		341E7BE4205BFD7300E2DEA0 /* back_white_ico@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_white_ico@2x.png"; sourceTree = "<group>"; };
+		3421001B20A807DD008497FF /* CreateScenarioViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CreateScenarioViewController.h; sourceTree = "<group>"; };
+		3421001C20A807DD008497FF /* CreateScenarioViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreateScenarioViewController.m; sourceTree = "<group>"; };
+		3421001E20A80AE2008497FF /* DeviceCmdSlice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeviceCmdSlice.h; sourceTree = "<group>"; };
+		3421001F20A80AE2008497FF /* DeviceCmdSlice.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeviceCmdSlice.m; sourceTree = "<group>"; };
 		3421561620597292005205D6 /* slide_btn_light_nokd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slide_btn_light_nokd@2x.png"; sourceTree = "<group>"; };
 		3421561720597292005205D6 /* slide_btn_gray_nokd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slide_btn_gray_nokd@2x.png"; sourceTree = "<group>"; };
 		34217A6D1FCE98200006701C /* UserVideoConfigView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserVideoConfigView.h; sourceTree = "<group>"; };
@@ -2535,6 +2541,8 @@
 				34DE8E9520663E840061B48D /* MeetingRoom.m */,
 				34DE8E972066408C0061B48D /* Scenario.h */,
 				34DE8E982066408C0061B48D /* Scenario.m */,
+				3421001E20A80AE2008497FF /* DeviceCmdSlice.h */,
+				3421001F20A80AE2008497FF /* DeviceCmdSlice.m */,
 				EBBCBBEB20673ECE00A7771A /* VeenoonConstatns.h */,
 				EBBCBBEC20673ECE00A7771A /* VeenoonConstatns.m */,
 				EB5A47F82084D9F300564C06 /* SystemIRSet.h */,
@@ -3466,6 +3474,8 @@
 				EB1717B71FF6150400CBDB81 /* EngineerScenarioSettingsViewCtrl.m */,
 				EBAE5BBC1FE0071C00C10C4D /* EngineerPresetScenarioViewCtrl.h */,
 				EBAE5BBA1FE0070600C10C4D /* EngineerPresetScenarioViewCtrl.m */,
+				3421001B20A807DD008497FF /* CreateScenarioViewController.h */,
+				3421001C20A807DD008497FF /* CreateScenarioViewController.m */,
 			);
 			path = Basic;
 			sourceTree = "<group>";
@@ -4528,6 +4538,7 @@
 				34141699204BC3D5002E0B00 /* AudioMatrixView.m in Sources */,
 				349DADE1206E8D02001593DE /* AudioEMix.m in Sources */,
 				3425E98C1FE571CE003559F7 /* ComSettingView.m in Sources */,
+				3421002020A80AE2008497FF /* DeviceCmdSlice.m in Sources */,
 				EB3B739A1FE61B18001941CF /* EngineerPlayerSettingsViewCtrl.m in Sources */,
 				3456C178209ED2F1001FAB61 /* VProjectProxys.m in Sources */,
 				0477DC581DA9F4700077FA52 /* Base64.m in Sources */,
@@ -4620,6 +4631,7 @@
 				3421EA301FC4161300DC5378 /* ColumnsView.m in Sources */,
 				04DE1EA31AD6AEE000D49E2F /* SBJson4Parser.m in Sources */,
 				3425E9921FE5763B003559F7 /* WirlessYaoBaoViewSettingsView.m in Sources */,
+				3421001D20A807DD008497FF /* CreateScenarioViewController.m in Sources */,
 				EBA16C622046EA6700FC6E1F /* JunHengQi_UIView.m in Sources */,
 				EB1A55C71FEA919C000B18E6 /* EngineerPVExpendViewCtrl.m in Sources */,
 				EBCA834B1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m in Sources */,

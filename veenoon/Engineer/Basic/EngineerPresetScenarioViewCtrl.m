@@ -60,6 +60,8 @@
 #import "DevicePlugButton.h"
 #import "DataCenter.h"
 
+#import "CreateScenarioViewController.h"
+
 
 #ifdef OPEN_REG_LIB_DEF
 #import "RegulusSDK.h"
@@ -213,7 +215,7 @@
     else
     {
         scenarioButton.enabled = NO;
-        scenarioButton.alpha = 0.7;
+        scenarioButton.alpha = 0.5;
     }
 }
 
@@ -341,7 +343,7 @@
              forControlEvents:UIControlEventTouchUpInside];
     
     scenarioButton.enabled = NO;
-    scenarioButton.alpha = 0.7;
+    scenarioButton.alpha = 0.5;
     
     
     [self.view addSubview:topbar];
@@ -507,7 +509,6 @@
     }
     scroll.contentSize = CGSizeMake(x+E_CELL_WIDTH, 150);
     
-    
 }
 
 
@@ -525,6 +526,16 @@
 //    {
 //        [_scenario createEventScenario];
 //    }
+    
+    CreateScenarioViewController *cr = [[CreateScenarioViewController alloc] init];
+    cr._selectedDevices = _selectedDevices;
+    UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:cr];
+    navi.navigationBarHidden = YES;
+    
+    [self presentViewController:navi
+                       animated:YES
+                     completion:nil];
+    
 }
 
 - (void) notifyScenarioResult:(NSNotification*)notify{

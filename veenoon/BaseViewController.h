@@ -11,6 +11,14 @@
 #import "WebClient.h"
 #import "DActionView.h"
 
+@class BasePlugElement;
+
+@protocol PlugDeviceCtrlDelegate <NSObject>
+
+@optional
+- (void) didAddToScenarioSlice:(BasePlugElement*)plug cmds:(NSArray*)cmds;
+
+@end
 
 @interface BaseViewController : UIViewController
 {
@@ -25,6 +33,7 @@
     
     DActionView *_dActionView;
 }
+@property (nonatomic, weak) id <PlugDeviceCtrlDelegate> delegate;
 
 - (CGSize )lengthString:(NSString *)text  withFont:(UIFont *)font; //根据字符串、字体计算长度
 - (void) setTitleAndImage:(NSString*)imageName withTitle:(NSString*)title;

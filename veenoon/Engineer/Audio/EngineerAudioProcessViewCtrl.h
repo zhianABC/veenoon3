@@ -10,12 +10,17 @@
 #import "BaseViewController.h"
 #import "EngineerSliderView.h"
 
+
+
 @interface EngineerAudioProcessViewCtrl< EngineerSliderViewDelegate> : BaseViewController {
     NSArray *_audioProcessArray;
     
     int _inputNumber;
     int _outputNumber;
 }
+
 @property (nonatomic,strong) NSArray *_audioProcessArray;
+
+@property (nonatomic, assign) BOOL _isChoosedCmdToScenario;
 
 @end

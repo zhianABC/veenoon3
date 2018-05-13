@@ -25,6 +25,9 @@
 #import "RegulusSDK.h"
 #endif
 
+#import "DeviceCmdSlice.h"
+#import "WaitDialog.h"
+
 @interface EngineerAudioProcessViewCtrl () <EngineerSliderViewDelegate, CustomPickerViewDelegate, AudioProcessRightViewDelegate, AudioIconSettingViewDelegate, SlideButtonDelegate> {
     UIButton *_selectSysBtn;
     
@@ -67,7 +70,7 @@
 @synthesize _inputProxys;
 @synthesize _outputProxys;
 
-
+@synthesize _isChoosedCmdToScenario;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -164,7 +167,62 @@
     [_proxysView addGestureRecognizer:tapGesture];
     
     
+    if(_isChoosedCmdToScenario)
+    {
+        UIButton* scenarioButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        scenarioButton.frame = CGRectMake(SCREEN_WIDTH-120, 20, 100, 44);
+        [self.view addSubview:scenarioButton];
+        [scenarioButton setTitle:@"添加到场景" forState:UIControlStateNormal];
+        [scenarioButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [scenarioButton setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+        scenarioButton.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+        [scenarioButton addTarget:self
+                           action:@selector(addToScenarioAction:)
+                 forControlEvents:UIControlEventTouchUpInside];
+        
+    }
+    
+    
     [self getCurrentDeviceDriverProxys];
+}
+
+- (void) addToScenarioAction:(id)sender{
+    
+    if(self.delegate && [self.delegate respondsToSelector:@selector(didAddToScenarioSlice:cmds:)])
+    {
+        
+        if(_curProcessor)
+        {
+            NSMutableArray *values = [NSMutableArray array];
+            
+            for (SlideButton *button in _selectedBtnArray) {
+                
+                id data = button.data;
+                if([data isKindOfClass:[VAProcessorProxys class]])
+                {
+                    id opt = [(VAProcessorProxys*)data generateEventOperation_AnalogyGain];
+                    
+                    DeviceCmdSlice *dcmd = [[DeviceCmdSlice alloc] init];
+                    dcmd._opt = opt;
+                    dcmd._cmdNickName = @"设置输入音量";
+                    dcmd._deviceName = [_curProcessor deviceName];
+                    dcmd._proxyName = ((VAProcessorProxys*)data)._rgsProxyObj.name;
+                    dcmd._plug = _curProcessor;
+                    dcmd.dev_id = ((VAProcessorProxys*)data)._rgsProxyObj.m_id;
+                    dcmd._value = [NSString stringWithFormat:@"%0.1f",
+                                   [(VAProcessorProxys*)data getAnalogyGain]];
+                    [values addObject:dcmd];
+                }
+                
+            }
+            
+            [self.delegate didAddToScenarioSlice:_curProcessor
+                                            cmds:values];
+            
+            [[WaitDialog sharedAlertDialog] setTitle:@"已添加"];
+            [[WaitDialog sharedAlertDialog] animateShow];
+        }
+    }
 }
 
 - (void) handleTapGesture:(id)sender{
