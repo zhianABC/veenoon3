@@ -16,6 +16,6 @@
     
     VLuBoJiSet *_currentObj;
 }
-@property (nonatomic,strong) NSMutableArray *_lubojiArray;
+@property (nonatomic,strong) NSArray *_lubojiArray;
 @property (nonatomic,strong) VLuBoJiSet *_currentObj;
 @end

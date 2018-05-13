@@ -46,25 +46,9 @@
 @synthesize _rgsScene;
 @synthesize _rgsDriver;
 
-@synthesize _A8PowerPlugs;
-@synthesize _A16PowerPlugs;
-@synthesize _VDVDPlayers;
-@synthesize _AWirelessMikePlugs;
-@synthesize _AHand2HandPlugs;
-@synthesize _AProcessorPlugs;
-
-
-@synthesize _VCameraSettings;
-@synthesize _VRemoteSettings;
-@synthesize _VVideoProcess;
-@synthesize _VPinJie;
-@synthesize _VTV;
-@synthesize _VLuBoJi;
-@synthesize _VTouyingji;
-
-@synthesize _APlayerPlugs;
-
-@synthesize _EDimmerLights;
+@synthesize _audioDevices;
+@synthesize _videoDevices;
+@synthesize _envDevices;
 
 @synthesize _areas;
 
@@ -89,6 +73,10 @@
     
     self._eventOperations = [NSMutableArray array];
     self._scenarioData = [NSMutableDictionary dictionary];
+    
+    self._audioDevices = [NSMutableArray array];
+    self._videoDevices = [NSMutableArray array];
+    self._envDevices = [NSMutableArray array];
     
     NSMutableArray *audio = [NSMutableArray array];
     [_scenarioData setObject:audio forKey:@"audio"];
@@ -119,11 +107,6 @@
     _rgsDriver.m_id = [[data objectForKey:@"s_driver_id"] intValue];
     
     
-    self._AProcessorPlugs = [NSMutableArray array];
-    self._VCameraSettings = [NSMutableArray array];
-    self._VTouyingji = [NSMutableArray array];
-    self._EDimmerLights = [NSMutableArray array];
-    
     NSArray *audios = [data objectForKey:@"audio"];
     for(NSDictionary *a in audios){
         
@@ -132,10 +115,7 @@
         BasePlugElement * obj = [[someClass alloc] init];
         [obj jsonToObject:a];
         
-        if([obj isKindOfClass:[AudioEProcessor class]])
-        {
-            [_AProcessorPlugs addObject:obj];
-        }
+        [_audioDevices addObject:obj];
     }
     NSArray *videos = [data objectForKey:@"video"];
     for(NSDictionary *v in videos){
@@ -145,14 +125,7 @@
         BasePlugElement * obj = [[someClass alloc] init];
         [obj jsonToObject:v];
         
-        if([obj isKindOfClass:[VCameraSettingSet class]])
-        {
-            [_VCameraSettings addObject:obj];
-        }
-        else if([obj isKindOfClass:[VTouyingjiSet class]])
-        {
-            [_VTouyingji addObject:obj];
-        }
+        [_videoDevices addObject:obj];
     }
     NSArray *envs = [data objectForKey:@"environment"];
     for(NSDictionary *env in envs){
@@ -162,10 +135,7 @@
         BasePlugElement * obj = [[someClass alloc] init];
         [obj jsonToObject:env];
         
-        if([obj isKindOfClass:[EDimmerLight class]])
-        {
-            [_EDimmerLights addObject:obj];
-        }
+        [_envDevices addObject:obj];
     }
     
     
@@ -367,7 +337,7 @@
     NSMutableArray *env = [NSMutableArray array];
     [_scenarioData setObject:env forKey:@"environment"];
     
-    
+    /*
     //音频处理
     if([self._AProcessorPlugs count])
     {
@@ -389,13 +359,13 @@
     {
         [self createEvnLightScenario];
     }
-    
+    */
 }
 
 #pragma mark -----Create 场景 ---
 
 - (void) createAudioProcessScenario{
-    
+    /*
     NSMutableArray *audios = [_scenarioData objectForKey:@"audio"];
    
 
@@ -461,10 +431,12 @@
         [audios addObject:data];
         
     }
+     */
 }
 
 - (void) createVideoCameraScenario{
     
+    /*
     NSMutableArray *videos = [_scenarioData objectForKey:@"video"];
     
     for(VCameraSettingSet *vcam in self._VCameraSettings)
@@ -483,10 +455,12 @@
         NSDictionary *data = [vcam objectToJson];
         [videos addObject:data];
     }
+     */
 }
 
 - (void) createVideoProjectScenario{
     
+    /*
     NSMutableArray *videos = [_scenarioData objectForKey:@"video"];
     
     for(VTouyingjiSet *vprj in self._VTouyingji)
@@ -510,10 +484,12 @@
         NSDictionary *data = [vprj objectToJson];
         [videos addObject:data];
     }
+     */
 }
 
 - (void) createEvnLightScenario{
     
+    /*
     NSMutableArray *evns = [_scenarioData objectForKey:@"environment"];
     
     for(EDimmerLight *vprj in self._EDimmerLights)
@@ -535,6 +511,7 @@
         NSDictionary *data = [vprj objectToJson];
         [evns addObject:data];
     }
+     */
 }
 
 

@@ -11,5 +11,5 @@
 @interface EngineerHunYinSysViewController : BaseViewController {
     NSMutableArray *_hunyinSysArray;
 }
-@property (nonatomic,strong) NSMutableArray *_hunyinSysArray;
+@property (nonatomic,strong) NSArray *_hunyinSysArray;
 @end

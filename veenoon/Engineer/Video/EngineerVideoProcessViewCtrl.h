@@ -25,5 +25,5 @@
 @property (nonatomic,assign) int _inNumber;
 @property (nonatomic,assign) int _outNumber;
 @property (nonatomic,strong) VVideoProcessSet *_currentObj;
-@property (nonatomic,strong) NSMutableArray *_videoProcessArray;
+@property (nonatomic,strong) NSArray *_videoProcessArray;
 @end

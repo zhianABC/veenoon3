@@ -15,6 +15,6 @@
     
     VTVSet *_currentObj;
 }
-@property (nonatomic,strong) NSMutableArray *_videoTVArray;
+@property (nonatomic,strong) NSArray *_videoTVArray;
 @property (nonatomic,strong) VTVSet *_currentObj;
 @end

@@ -14,6 +14,6 @@
     
     int _number;
 }
-@property (nonatomic,strong) NSMutableArray *_playerSysArray;
+@property (nonatomic,strong) NSArray *_playerSysArray;
 @property (nonatomic,assign) int _number;
 @end
