@@ -72,6 +72,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    if([_audioProcessArray count])
+        self._curProcessor = [_audioProcessArray objectAtIndex:0];
+    
     isIcon = NO;
     isSettings = NO;
     _buttonArray = [[NSMutableArray alloc] init];
@@ -86,9 +89,6 @@
 
     bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
-    
-    if([_audioProcessArray count])
-        self._curProcessor = [_audioProcessArray objectAtIndex:0];
     
     //缺切图，把切图贴上即可。
     bottomBar.backgroundColor = [UIColor grayColor];

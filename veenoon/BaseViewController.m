@@ -10,6 +10,7 @@
 #import "UIImage+Color.h"
 #import "PlugsCtrlTitleHeader.h"
 #import "BasePlugElement.h"
+#import "RegulusSDK.h"
 
 @interface BaseViewController () {
     PlugsCtrlTitleHeader *_selectSysBtn;
@@ -92,10 +93,19 @@
 
 - (void) showBasePluginName:(BasePlugElement*) basePlugElement {
     if (basePlugElement) {
+        NSString *ipAddress = @"Unk";
         NSString *nameStr = basePlugElement._ipaddress;
-        NSString *idStr = basePlugElement._deviceid;
+        RgsDriverObj *driver = basePlugElement._driver;
+        NSString *idStr = @"Unk";
+        if (driver != nil) {
+            idStr = [NSString stringWithFormat:@"%d", (int) driver.m_id];
+        }
         
-        NSString *showText = [[idStr stringByAppendingString:@" - "] stringByAppendingString:nameStr];
+        if (nameStr != nil) {
+            ipAddress = nameStr;
+        }
+        
+        NSString *showText = [[idStr stringByAppendingString:@" - "] stringByAppendingString:ipAddress];
         [_selectSysBtn setShowText:showText];
     }
 }
