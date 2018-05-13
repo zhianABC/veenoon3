@@ -65,7 +65,10 @@
 #define BLACK_COLOR             RGB(18, 18, 18)
 #define B_GRAY_COLOR            RGB(63, 58, 55)
 #define TITLE_LINE_COLOR        RGB(65, 65, 65)
-
+#define RIGHT_VIEW_CORNER_COLOR        RGB(71, 71, 71)
+#define RIGHT_VIEW_CORNER_BTN_COLOR        RGB(124, 124, 124)
+#define RIGHT_VIEW_CORNER_SD_COLOR        RGB(36, 37, 39)
+#define RIGHT_VIEW_CORNER_DB_COLOR        RGB(60, 61, 61)
 
 #define ImageFromResource(x)    [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:x ofType:nil]]
 

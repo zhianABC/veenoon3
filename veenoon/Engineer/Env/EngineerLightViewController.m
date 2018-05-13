@@ -19,10 +19,6 @@
 
 @interface EngineerLightViewController () <CustomPickerViewDelegate, EngineerSliderViewDelegate, LightSliderButtonDelegate>{
     
-    UIButton *_selectSysBtn;
-    
-    CustomPickerView *_customPicker;
-    
     NSMutableArray *_buttonArray;
     
     NSMutableArray *_buttonSeideArray;
@@ -95,19 +91,6 @@
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
-    _selectSysBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _selectSysBtn.frame = CGRectMake(50, 100, 80, 30);
-    [_selectSysBtn setImage:[UIImage imageNamed:@"engineer_sys_select_down_n.png"] forState:UIControlStateNormal];
-    [_selectSysBtn setTitle:@"001" forState:UIControlStateNormal];
-    _selectSysBtn.titleLabel.font = [UIFont systemFontOfSize:16];
-    [_selectSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_selectSysBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
-    _selectSysBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [_selectSysBtn setTitleEdgeInsets:UIEdgeInsetsMake(0,0,0,_selectSysBtn.imageView.bounds.size.width)];
-    [_selectSysBtn setImageEdgeInsets:UIEdgeInsetsMake(0,_selectSysBtn.titleLabel.bounds.size.width+35,0,0)];
-    [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_selectSysBtn];
-    
     
     _proxysView = [[UIView alloc] initWithFrame:CGRectMake(0,
                                                            64,
@@ -133,6 +116,35 @@
     
     [self getCurrentDeviceDriverProxys];
     
+    UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture2:)];
+    tapGesture.cancelsTouchesInView =  NO;
+    tapGesture.numberOfTapsRequired = 1;
+    [_proxysView addGestureRecognizer:tapGesture];
+}
+
+- (void) handleTapGesture2:(UIGestureRecognizer*)sender{
+    
+    CGPoint pt = [sender locationInView:self.view];
+    
+    if(pt.x < SCREEN_WIDTH-300)
+    {
+        
+        CGRect rc = _rightView.frame;
+        rc.origin.x = SCREEN_WIDTH;
+        
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             
+                             _rightView.frame = rc;
+                             
+                         } completion:^(BOOL finished) {
+                             
+                         }];
+        
+        
+        okBtn.hidden = NO;
+        isSettings = NO;
+    }
 }
 
 - (void) layoutChannels{
@@ -345,41 +357,6 @@
     }
 }
 
-- (void) sysSelectAction:(id)sender{
-    if(_customPicker == nil)
-    _customPicker = [[CustomPickerView alloc]
-                     initWithFrame:CGRectMake(_selectSysBtn.frame.origin.x, _selectSysBtn.frame.origin.y, _selectSysBtn.frame.size.width, 120) withGrayOrLight:@"gray"];
-    
-    
-    NSMutableArray *arr = [NSMutableArray array];
-    for(int i = 1; i< 8; i++)
-    {
-        [arr addObject:[NSString stringWithFormat:@"00%d", i]];
-    }
-    
-    _customPicker._pickerDataArray = @[@{@"values":arr}];
-    
-    
-    _customPicker._selectColor = [UIColor orangeColor];
-    _customPicker._rowNormalColor = [UIColor whiteColor];
-    [self.view addSubview:_customPicker];
-    _customPicker.delegate_ = self;
-}
-
-- (void) didChangedPickerValue:(NSDictionary*)value{
-    
-    if (_customPicker) {
-        [_customPicker removeFromSuperview];
-    }
-    
-    NSDictionary *dic = [value objectForKey:@0];
-    NSString *title =  [dic objectForKey:@"value"];
-    [_selectSysBtn setTitle:title forState:UIControlStateNormal];
-    
-}
-- (void) didConfirmPickerValue:(NSString*) pickerValue {
-    
-}
 - (void) okAction:(id)sender{
     if (!isSettings) {
         
@@ -388,6 +365,11 @@
         _rightView = [[LightRightView alloc]
                       initWithFrame:CGRectMake(SCREEN_WIDTH-300,
                                                64, 300, SCREEN_HEIGHT-114)];
+        } else {
+            [UIView beginAnimations:nil context:nil];
+            _rightView.frame  = CGRectMake(SCREEN_WIDTH-300,
+                                     64, 300, SCREEN_HEIGHT-114);
+            [UIView commitAnimations];
         }
         [self.view addSubview:_rightView];
         
