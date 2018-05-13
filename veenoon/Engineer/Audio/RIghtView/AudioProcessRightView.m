@@ -33,7 +33,7 @@
 - (id)initWithFrame:(CGRect)frame {
     
     if(self = [super initWithFrame:frame]) {
-        self.backgroundColor = RGB(0, 89, 118);
+        self.backgroundColor = BLACK_COLOR;
         
         UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 100)];
         [self addSubview:headView];
@@ -183,7 +183,7 @@
     icon.layer.contentsGravity = kCAGravityResizeAspect;
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 43, self.frame.size.width, 1)];
-    line.backgroundColor =  M_GREEN_LINE;
+    line.backgroundColor =  TITLE_LINE_COLOR;
     [cell.contentView addSubview:line];
     
     return cell;
