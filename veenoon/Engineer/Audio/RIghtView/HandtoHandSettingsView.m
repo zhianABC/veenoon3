@@ -37,7 +37,7 @@
     
     if(self = [super initWithFrame:frame])
     {
-        self.backgroundColor = RGB(0, 89, 118);
+        self.backgroundColor = BLACK_COLOR;
         
         _curIndex = -1;
         
@@ -196,8 +196,9 @@
     }
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 43, self.frame.size.width, 1)];
-    line.backgroundColor =  M_GREEN_LINE;
+    line.backgroundColor =  TITLE_LINE_COLOR;
     [cell.contentView addSubview:line];
+    
     if(_curIndex == indexPath.row) {
         line.frame = CGRectMake(0, 163, self.frame.size.width, 1);
         

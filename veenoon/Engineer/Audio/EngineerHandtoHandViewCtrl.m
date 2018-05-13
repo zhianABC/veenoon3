@@ -16,10 +16,6 @@
 
 @interface EngineerHandtoHandViewCtrl () <CustomPickerViewDelegate, EngineerSliderViewDelegate> {
     
-    PlugsCtrlTitleHeader *_selectSysBtn;
-    
-    CustomPickerView *_customPicker;
-    
     EngineerSliderView *_zengyiSlider;
     
     NSMutableArray *_imageViewArray;
@@ -36,6 +32,8 @@
     UIButton *okBtn;
     
     UIView *_channelView;
+    
+    UIView *_proxysView;
 }
 @property (nonatomic,assign) int _number;
 @property (nonatomic, strong) AudioEHand2Hand *_curH2H;
@@ -96,13 +94,6 @@
     [okBtn addTarget:self
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
-    
-    _selectSysBtn = [[PlugsCtrlTitleHeader alloc] initWithFrame:CGRectMake(50, 100, 80, 30)];
-    [_selectSysBtn addTarget:self action:@selector(sysSelectAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_selectSysBtn];
-    
-    if(_curH2H)
-        [_selectSysBtn setShowText:[_curH2H showName]];
     
 
     _zengyiSlider = [[EngineerSliderView alloc]
@@ -183,6 +174,38 @@
         
         index++;
     }
+    
+    int height = 150;
+    
+    _proxysView = [[UIView alloc] initWithFrame:CGRectMake(0,
+                                                           height-5,
+                                                           SCREEN_WIDTH,
+                                                           SCREEN_HEIGHT-height-60)];
+    [self.view addSubview:_proxysView];
+    
+    UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+    tapGesture.cancelsTouchesInView =  NO;
+    tapGesture.numberOfTapsRequired = 1;
+    [_proxysView addGestureRecognizer:tapGesture];
+}
+
+- (void) handleTapGesture:(id)sender{
+    
+    if ([_rightSetView superview]) {
+        
+        CGRect rc = _rightSetView.frame;
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             _rightSetView.frame = CGRectMake(SCREEN_WIDTH,
+                                                           rc.origin.y,
+                                                           rc.size.width,
+                                                           rc.size.height);
+                         } completion:^(BOOL finished) {
+                             [_rightSetView removeFromSuperview];
+                         }];
+    }
+    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+    isSettings = NO;
 }
 
 - (void) createBtnLabel:(UIButton*)sender dataDic:(NSMutableDictionary*) dataDic{
@@ -244,18 +267,6 @@
 }
 
 - (void) sysSelectAction:(id)sender{
-    
-}
-
-- (void) didChangedPickerValue:(NSDictionary*)value{
-    
-    if (_customPicker) {
-        [_customPicker removeFromSuperview];
-    }
-    NSDictionary *dic = [value objectForKey:@0];
-    NSString *title =  [dic objectForKey:@"value"];
-    
-    [_selectSysBtn setTitle:title forState:UIControlStateNormal];
     
 }
 
