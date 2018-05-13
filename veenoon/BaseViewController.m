@@ -8,10 +8,11 @@
 
 #import "BaseViewController.h"
 #import "UIImage+Color.h"
+#import "PlugsCtrlTitleHeader.h"
+#import "BasePlugElement.h"
 
-@interface BaseViewController ()
-{
-    
+@interface BaseViewController () {
+    PlugsCtrlTitleHeader *_selectSysBtn;
 }
 @end
 
@@ -39,8 +40,7 @@
     
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
@@ -85,6 +85,19 @@
     _http = [[WebClient alloc] initWithDelegate:self];
     _http._httpMethod = @"GET";
     
+    _selectSysBtn = [[PlugsCtrlTitleHeader alloc] initWithFrame:CGRectMake(50, 100, 80, 30)];
+    _selectSysBtn.userInteractionEnabled=NO;
+    [self.view addSubview:_selectSysBtn];
+}
+
+- (void) showBasePluginName:(BasePlugElement*) basePlugElement {
+    if (basePlugElement) {
+        NSString *nameStr = basePlugElement._ipaddress;
+        NSString *idStr = basePlugElement._deviceid;
+        
+        NSString *showText = [[idStr stringByAppendingString:@" - "] stringByAppendingString:nameStr];
+        [_selectSysBtn setShowText:showText];
+    }
 }
 
 - (void) setCenterTitle:(NSString*)centerTitle {
