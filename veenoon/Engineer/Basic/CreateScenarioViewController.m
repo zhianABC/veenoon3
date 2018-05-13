@@ -38,6 +38,8 @@
 #import "EngineerInfoCollectViewCtrl.h"
 #import "EngineerScenarioSettingsViewCtrl.h"
 
+#import "UIButton+Color.h"
+
 
 @interface CreateScenarioViewController () <UITableViewDelegate, UITableViewDataSource, PlugDeviceCtrlDelegate>
 {
@@ -97,6 +99,19 @@
 
     tableWidth = 320;
     
+    UIButton* scenarioButton = [UIButton buttonWithColor:YELLOW_COLOR selColor:nil];
+    scenarioButton.frame = CGRectMake(SCREEN_WIDTH-120, 84, 100, 40);
+    [self.view addSubview:scenarioButton];
+    scenarioButton.layer.cornerRadius = 3;
+    scenarioButton.clipsToBounds = YES;
+    [scenarioButton setTitle:@"生成场景" forState:UIControlStateNormal];
+    [scenarioButton setTitleColor:B_GRAY_COLOR forState:UIControlStateNormal];
+    //[scenarioButton setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    scenarioButton.titleLabel.font = [UIFont boldSystemFontOfSize:16];
+    [scenarioButton addTarget:self
+                       action:@selector(createScenarioAction:)
+             forControlEvents:UIControlEventTouchUpInside];
+    
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT,
                                                                top,
                                                                tableWidth,
@@ -124,12 +139,17 @@
     _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_tableView.frame)+30,
                                                                          top,
                                                                          w,
-                                                                 CGRectGetHeight(_tableView.frame)-60)];
+                                                                 CGRectGetHeight(_tableView.frame))];
     
     [self.view addSubview:_scrollView];
     
     
     [self showDevices];
+}
+
+- (void) createScenarioAction:(id)sender{
+    
+    
 }
 
 - (void) showDevices{
@@ -208,13 +228,13 @@
             x = 60;
             _top+=CELL_WIDTH;
             _top+=space;
-            _top+=150;
+            
         }
         
     }
     
     _top+=CELL_WIDTH;
-    _top+=space;
+    _top+=CELL_WIDTH;
     
     _scrollView.contentSize = CGSizeMake(_scrollView.frame.size.width,
                                          _top);
