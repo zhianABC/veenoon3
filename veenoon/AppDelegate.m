@@ -13,8 +13,9 @@
 #import "HomeViewController.h"
 #import "EngineerMonitorViewCtrl.h"
 #import "DataSync.h"
+#import "RegulusSDK.h"
 
-@interface AppDelegate ()
+@interface AppDelegate () <RegulusSDKDelegate>
 {
     UIView *_maskView;
     UIActivityIndicatorView *_wait;
@@ -30,6 +31,8 @@
     AVAudioSession *session = [AVAudioSession sharedInstance];
     [session setActive:YES error:nil];
     [session setCategory:AVAudioSessionCategoryPlayback error:nil];
+    
+    [RegulusSDK sharedRegulusSDK].delegate = self;
     
     HomeViewController *wellcome = [[HomeViewController alloc] init];
     _naviRoot = [[CMNavigationController alloc] initWithRootViewController:wellcome];
@@ -53,6 +56,29 @@
     
     return YES;
 }
+
+
+//Regulus SDK delegate
+-(void)onConnectChanged:(BOOL)connect
+{
+    
+}
+
+-(void)onRecvDeviceNotify:(RgsDeviceNoteObj *)notify
+{
+    NSLog(@"dev:%ld,notify:%@,param:%@\n",notify.device_id,notify.notify,notify.param);
+}
+
+-(void)onDowningTopology:(float)persen
+{
+    //[KVNProgress showProgress:persen];
+}
+
+-(void)onDownDoneTopology
+{
+    //[KVNProgress dismiss];
+}
+
 
 +(AppDelegate*)shareAppDelegate{
     

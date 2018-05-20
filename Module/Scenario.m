@@ -291,23 +291,8 @@
 
 - (void) reloadProject{
 
-     IMP_BLOCK_SELF(Scenario);
+     //IMP_BLOCK_SELF(Scenario);
     
-    [[RegulusSDK sharedRegulusSDK] ReloadProject:^(BOOL result, NSError *error) {
-        if(result)
-        {
-            NSLog(@"---------------------reload project.");
-            
-            [KVNProgress showSuccess];
-            [block_self postCreateScenarioNotifyResult:YES];
-        }
-        else{
-            NSLog(@"%@",[error description]);
-            
-            [KVNProgress showErrorWithStatus:[error description]];
-            [block_self postCreateScenarioNotifyResult:NO];
-        }
-    }];
 }
 
 

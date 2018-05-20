@@ -286,25 +286,26 @@
     //[KVNProgress showWithStatus:@"登录中..."];
     
     [[RegulusSDK sharedRegulusSDK] RequestJoinGateWay:_regulus_gateway_id
-                                           completion:^(NSString *user_id, BOOL is_init, NSError * aError) {
-                                               if (aError) {
-                                                   
-                                                   [KVNProgress showErrorWithStatus:[aError description]];
-                                                   
-                                                   [DataSync sharedDataSync]._currentReglusLogged = nil;
-                                               }
-                                               else{
-                                                   
-                                                   block_self._regulus_user_id = user_id;
-                                                   //NSLog(@"user_id:%@,gw:%@\n",user_id,_gw_id.text);
-                                                   [[NSUserDefaults standardUserDefaults] setObject:@"RGS_EOC500_01" forKey:@"gateway_id"];
-                                                   [[NSUserDefaults standardUserDefaults] setObject:user_id forKey:@"user_id"];
-                                                   
-                                                   [[NSUserDefaults standardUserDefaults] synchronize];
-                                                   
-                                                   [block_self loginCtrlDevice];
-                                               }
-                                           }];
+                                           completion:^(BOOL result,
+                                                        NSString *client_id, NSError *error) {
+        if (result) {
+            
+            block_self._regulus_user_id = client_id;
+            //NSLog(@"user_id:%@,gw:%@\n",user_id,_gw_id.text);
+            [[NSUserDefaults standardUserDefaults] setObject:@"RGS_EOC500_01" forKey:@"gateway_id"];
+            [[NSUserDefaults standardUserDefaults] setObject:client_id forKey:@"user_id"];
+            
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            [block_self loginCtrlDevice];
+        }
+        else{
+            [KVNProgress showErrorWithStatus:[error description]];
+            
+            [DataSync sharedDataSync]._currentReglusLogged = nil;
+        }
+    }];
+    
 #endif
     
 }

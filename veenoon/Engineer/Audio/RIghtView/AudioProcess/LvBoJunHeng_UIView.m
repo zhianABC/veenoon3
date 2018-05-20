@@ -26,6 +26,8 @@
     UILabel *qidongshijianL;
     
     FilterGraphView *fglm;
+    
+    int _channelSelIndex;
 }
 
 @property (nonatomic, strong) NSMutableArray *_boduanChannelBtns;
@@ -219,6 +221,8 @@
     int bw = 40;
     int bh = 25;
     
+    _channelSelIndex = 0;
+    
     float spx = (view.frame.size.width - bw * 8 - x *2)/7;
     if(spx > 10)
         spx = 10;
@@ -331,6 +335,8 @@
     qidongshijian.tag = 4;
     [view addSubview:qidongshijian];
     
+    [qidongshijian setCircleValue:0.5];
+    
     qidongshijianL = [[UILabel alloc] initWithFrame:CGRectMake(startX+gap, labelY+labelBtnGap+95, 120, 20)];
     qidongshijianL.text = @"-12dB";
     qidongshijianL.textAlignment = NSTextAlignmentCenter;
@@ -388,8 +394,9 @@
         
         xielvL2.text = valueStr;
     } else if (tag == 3) {
-        int k = (value *24)-12;
-        NSString *valueStr= [NSString stringWithFormat:@"%dB", k];
+        int k = (value *(10000-10))-10;
+        
+        NSString *valueStr= [NSString stringWithFormat:@"%dHz", k];
         
         fazhiL.text = valueStr;
         
@@ -400,7 +407,7 @@
         
         qidongshijianL.text = valueStr;
         
-        [fglm setPEQWithBand:4 gain:k];
+        [fglm setPEQWithBand:_channelSelIndex gain:k];
         
     } else {
         int k = (value *2000)-1000;
@@ -537,6 +544,8 @@
 }
 
 - (void) boduanChannelBtnAction:(UIButton*)sender{
+    
+    _channelSelIndex = (int)sender.tag;
     
     for(UIButton * btn in _boduanChannelBtns)
     {

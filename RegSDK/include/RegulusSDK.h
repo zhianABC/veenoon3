@@ -130,13 +130,13 @@
        completion:(void(^)(BOOL result,NSError * error)) completion;
 
 /*!
- @since 3.0.0
+ @since 3.3.1
  @brief 向网关添加用户请求
  @discussion APP在首次登录中控前，应该先向该中控调用本函数申请。获取中控返回的可用客户ID。APP开发者应保存中控返回的客户ID以方便登录使用。
  @param gw_id    网关ID 扫描二维码获取中控设备ID
- @param completion 回调block，正常时返回分配的(in_gw_id)用户名以及(is_init)是否已被初始化
+ @param completion 回调block，result:添加结果,client_id: 登陆使用的ID
  */
--(void)RequestJoinGateWay:(NSString *)gw_id completion:(void (^)(NSString * in_gw_id, BOOL is_init,NSError * error))completion;
+-(void)RequestJoinGateWay:(NSString *)gw_id completion:(void (^)(BOOL result,NSString * client_id,NSError * error))completion;
 
 /*!
    @since 3.0.0
@@ -393,12 +393,12 @@
  */
 -(void)GetSystemDrivers:(void(^)(BOOL result,NSArray * drivers,NSError * error)) completion;
 
-/*!
- @since 3.0.0
- @brief 重新加载工程
- @param completion       回调block 正常时返回YES
- */
--(void)ReloadProject:(void(^)(BOOL result,NSError * error)) completion;
+///*!
+// @since 3.0.0
+// @brief 重新加载工程
+// @param completion       回调block 正常时返回YES
+// */
+//-(void)ReloadProject:(void(^)(BOOL result,NSError * error)) completion;
 
 @end
 
