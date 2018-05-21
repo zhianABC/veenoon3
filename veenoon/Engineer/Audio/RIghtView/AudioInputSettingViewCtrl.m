@@ -17,6 +17,7 @@
 #import "YinPinProcessCodeUIView.h"
 #import "ZiDongHunYin_UIView.h"
 #import "AudioEProcessor.h"
+#import "FanKuiYiZhiView.h"
 
 @interface AudioInputSettingViewCtrl () <HuiShengXiaoChu_UIViewDelegate> {
     YaXianQi_UIView *yxq;
@@ -25,7 +26,7 @@
     YanShiQi_UIView *yanshiView;
     HuiShengXiaoChu_UIView *huishengView;
     ZiDongHunYin_UIView *zidonghunyinView;
-    
+    FanKuiYiZhiView *fankuiyizhiView;
     LvBoJunHeng_UIView *lvbo;
     
     UIButton *zengyiBtn;
@@ -35,6 +36,7 @@
     UIButton *huishengxiaochuBtn;
     UIButton *lvbojunhengBtn;
     UIButton *zidonghunyinBtn;
+    UIButton *fankuiyizhiBtn;
 }
 @property (nonatomic, strong) UIButton *_curSelectBtn;
 
@@ -193,6 +195,21 @@
                        action:@selector(zidonghunyinAction:)
              forControlEvents:UIControlEventTouchUpInside];
     
+    fankuiyizhiBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+    fankuiyizhiBtn.frame = CGRectMake(CGRectGetMaxX(zidonghunyinBtn.frame) + gap, startY, bw, bh);
+    fankuiyizhiBtn.clipsToBounds = YES;
+    fankuiyizhiBtn.layer.cornerRadius = 5;
+    fankuiyizhiBtn.layer.borderWidth = 2;
+    fankuiyizhiBtn.layer.borderColor = [UIColor clearColor].CGColor;
+    fankuiyizhiBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    [fankuiyizhiBtn setTitle:@"反馈抑制" forState:UIControlStateNormal];
+    [fankuiyizhiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [fankuiyizhiBtn setTitleColor:YELLOW_COLOR forState:UIControlStateHighlighted];
+    [self.view addSubview:fankuiyizhiBtn];
+    [fankuiyizhiBtn addTarget:self
+                        action:@selector(fankuiyizhiAction:)
+              forControlEvents:UIControlEventTouchUpInside];
+    
     
     CGRect vrc = CGRectMake(60, 140, SCREEN_WIDTH-120, SCREEN_HEIGHT-140-60);
     
@@ -212,6 +229,7 @@
     yanshiView = [[YanShiQi_UIView alloc] initWithFrame:vrc];
     [self.view addSubview:yanshiView];
     yanshiView.hidden = YES;
+    
     lvbo = [[LvBoJunHeng_UIView alloc] initWithFrame:vrc];
     [self.view addSubview:lvbo];
     lvbo.hidden = YES;
@@ -225,6 +243,10 @@
     [self.view addSubview:zidonghunyinView];
     zidonghunyinView.hidden = YES;
     
+    fankuiyizhiView = [[FanKuiYiZhiView alloc] initWithFrame:vrc];
+    [self.view addSubview:fankuiyizhiView];
+    fankuiyizhiView.hidden = YES;
+    
     self._curSelectBtn = zengyiBtn;
     [zengyiBtn changeNormalColor:BLUE_DOWN_COLOR];
     
@@ -233,6 +255,26 @@
     zengyiView._proxys = _processor._inAudioProxys;
     [zengyiView layoutChannelBtns:numProxys];
     
+    zaoshengView._proxys = _processor._inAudioProxys;
+    [zaoshengView layoutChannelBtns:numProxys];
+    
+    yanshiView._proxys = _processor._inAudioProxys;
+    [yanshiView layoutChannelBtns:numProxys];
+    
+    lvbo._proxys = _processor._inAudioProxys;
+    [lvbo layoutChannelBtns:numProxys];
+    
+    huishengView._proxys = _processor._inAudioProxys;
+    [huishengView layoutChannelBtns:numProxys];
+    
+    yxq._proxys = _processor._inAudioProxys;
+    [yxq layoutChannelBtns:numProxys];
+    
+    zidonghunyinView._proxys = _processor._inAudioProxys;
+    [zidonghunyinView layoutChannelBtns:numProxys];
+    
+    fankuiyizhiView._proxys = _processor._inAudioProxys;
+    [fankuiyizhiView layoutChannelBtns:numProxys];
     
 }
 - (void) zidonghunyinAction:(UIButton*)sender{
@@ -257,6 +299,32 @@
     yanshiView.hidden = YES;
     lvbo.hidden = YES;
     zidonghunyinView.hidden=NO;
+    fankuiyizhiView.hidden=YES;
+}
+
+- (void) fankuiyizhiAction:(UIButton*)sender{
+    
+    if(_curSelectBtn == sender)
+    {
+        return;
+    }
+    
+    [_curSelectBtn changeNormalColor:RGB(0, 89, 118)];
+    [_curSelectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    [sender setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+    [sender changeNormalColor:BLUE_DOWN_COLOR];
+    
+    self._curSelectBtn = sender;
+    
+    zengyiView.hidden = YES;
+    yxq.hidden = YES;
+    zaoshengView.hidden = YES;
+    huishengView.hidden = YES;
+    yanshiView.hidden = YES;
+    lvbo.hidden = YES;
+    zidonghunyinView.hidden=YES;
+    fankuiyizhiView.hidden=NO;
 }
 
 - (void) huishengxiaochuAction:(UIButton*)sender{
@@ -281,6 +349,7 @@
     yanshiView.hidden = YES;
     lvbo.hidden=YES;
     zidonghunyinView.hidden=YES;
+    fankuiyizhiView.hidden=YES;
 }
 - (void) yanshiqiAction:(UIButton*)sender{
     
@@ -304,6 +373,7 @@
     yanshiView.hidden = NO;
     lvbo.hidden=YES;
     zidonghunyinView.hidden=YES;
+    fankuiyizhiView.hidden=YES;
 }
 - (void) yaxianqiAction:(UIButton*)sender{
     
@@ -327,6 +397,7 @@
     yanshiView.hidden = YES;
     lvbo.hidden=YES;
     zidonghunyinView.hidden=YES;
+    fankuiyizhiView.hidden=YES;
     
 }
 - (void) lvbojunhengAction:(UIButton*)sender{
@@ -351,6 +422,7 @@
     yanshiView.hidden = YES;
     lvbo.hidden=NO;
     zidonghunyinView.hidden=YES;
+    fankuiyizhiView.hidden=YES;
 }
 - (void) zaoshengmenAction:(UIButton*)sender{
    
@@ -374,6 +446,7 @@
     yanshiView.hidden = YES;
     lvbo.hidden=YES;
     zidonghunyinView.hidden=YES;
+    fankuiyizhiView.hidden=YES;
 }
 - (void) zengyiAction:(UIButton*)sender{
     
@@ -397,6 +470,7 @@
     yanshiView.hidden = YES;
     lvbo.hidden=YES;
     zidonghunyinView.hidden=YES;
+    fankuiyizhiView.hidden=YES;
 }
 - (void) didAecButtonAction {
     YinPinProcessCodeUIView *uiView = [[YinPinProcessCodeUIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
