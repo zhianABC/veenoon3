@@ -17,14 +17,19 @@
 #import "FanKuiYiZhiView.h"
 #import "UIButton+Color.h"
 #import "SlideButton.h"
+#import "VAProcessorProxys.h"
+#import "RegulusSDK.h"
 
 @interface FanKuiYiZhiView() <SlideButtonDelegate> {
     UIButton *channelBtn;
+    
+    UIButton *fankuiyizhiBtn;
 }
-
+@property (nonatomic, strong) VAProcessorProxys *_curProxy;
 @end
 
 @implementation FanKuiYiZhiView
+@synthesize _curProxy;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -50,9 +55,6 @@
 
 - (void) channelBtnAction:(UIButton*)sender{
     
-    int tag = (int)sender.tag+1;
-    [channelBtn setTitle:[NSString stringWithFormat:@"In %d", tag] forState:UIControlStateNormal];
-    
     for(UIButton * btn in _channelBtns)
     {
         if(btn == sender)
@@ -64,25 +66,52 @@
             [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }
     }
+    
+    int idx = (int)sender.tag;
+    self._curProxy = [self._proxys objectAtIndex:idx];
+    
+    NSString *name = _curProxy._rgsProxyObj.name;
+    [channelBtn setTitle:name forState:UIControlStateNormal];
 }
 
 - (void) contentViewComps {
     
-    UIButton *zhitongBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
-    zhitongBtn.frame = CGRectMake(contentView.frame.size.width/2 - 25, contentView.frame.size.height/2 - 15, 50, 30);
-    zhitongBtn.layer.cornerRadius = 5;
-    zhitongBtn.layer.borderWidth = 2;
-    zhitongBtn.layer.borderColor = [UIColor clearColor].CGColor;;
-    zhitongBtn.clipsToBounds = YES;
-    [zhitongBtn setTitle:@"启用" forState:UIControlStateNormal];
-    zhitongBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-    [zhitongBtn addTarget:self
+    fankuiyizhiBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    fankuiyizhiBtn.frame = CGRectMake(contentView.frame.size.width/2 - 25, contentView.frame.size.height/2 - 15, 50, 30);
+    fankuiyizhiBtn.layer.cornerRadius = 5;
+    fankuiyizhiBtn.layer.borderWidth = 2;
+    fankuiyizhiBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    fankuiyizhiBtn.clipsToBounds = YES;
+    [fankuiyizhiBtn setTitle:@"启用" forState:UIControlStateNormal];
+    fankuiyizhiBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    [fankuiyizhiBtn addTarget:self
                    action:@selector(zhitongBtnAction:)
          forControlEvents:UIControlEventTouchUpInside];
-    [contentView addSubview:zhitongBtn];
+    [contentView addSubview:fankuiyizhiBtn];
 }
 - (void) zhitongBtnAction:(id) sender {
+    if(_curProxy == nil)
+        return;
     
+    BOOL isMute = [_curProxy isFanKuiYiZhiStarted];
+    
+    [_curProxy controlFanKuiYiZhi:!isMute];
+    
+    [self updateMuteButtonState];
+}
+
+- (void) updateMuteButtonState{
+    
+    BOOL isFanKuiYiZhi = [_curProxy isFanKuiYiZhiStarted];
+    
+    if(isFanKuiYiZhi)
+    {
+        [fankuiyizhiBtn changeNormalColor:THEME_RED_COLOR];
+    }
+    else
+    {
+        [fankuiyizhiBtn changeNormalColor:RGB(75, 163, 202)];
+    }
 }
 
 @end

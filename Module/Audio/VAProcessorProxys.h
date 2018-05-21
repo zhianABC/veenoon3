@@ -16,7 +16,7 @@
 }
 @property (nonatomic, strong) NSString *_icon_name;
 @property (nonatomic, strong) NSDictionary *_voiceInDevice;
-
+@property (nonatomic, assign) BOOL _isFanKuiYiZhiStarted;
 @property (nonatomic, strong) RgsProxyObj *_rgsProxyObj;
 
 //Property
@@ -52,6 +52,7 @@
 - (float) getDigitalGain;
 - (float) getAnalogyGain;
 - (BOOL) getInverted;
+- (BOOL) isFanKuiYiZhiStarted;
 
 - (NSArray*)getModeOptions;
 - (NSArray*)getMicDbOptions;
@@ -61,6 +62,8 @@
 
 - (void) controlDeviceDigitalGain:(float)digVal;
 - (void) controlDigtalMute:(BOOL)isMute;
+
+- (void) controlFanKuiYiZhi:(BOOL)isFanKuiYiZhiStarted;
 
 - (void) controlDeviceMode:(NSString*)mode;
 
