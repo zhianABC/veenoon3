@@ -283,7 +283,7 @@
 		348FC8D0208B203E00F7DB3D /* PlugsCtrlTitleHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 348FC8CF208B203E00F7DB3D /* PlugsCtrlTitleHeader.m */; };
 		348FC8D3208B748B00F7DB3D /* DActionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 348FC8D2208B748B00F7DB3D /* DActionView.m */; };
 		34928A9A1EC1BD330089F429 /* ReaderCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34928A991EC1BD330089F429 /* ReaderCodeViewController.m */; };
-		3494583020B68338006D1D05 /* EngineerNewTeslariViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3494582E20B68338006D1D05 /* EngineerNewTeslariViewCtrl.m */; };
+		3494583320B6E248006D1D05 /* EngineerNewTeslariViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3494583120B6E247006D1D05 /* EngineerNewTeslariViewCtrl.m */; };
 		3496B75A1FCAF3C5005F4857 /* SignalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3496B7591FCAF3C5005F4857 /* SignalView.m */; };
 		349DADDF206E8D02001593DE /* AudioEHand2Hand.m in Sources */ = {isa = PBXBuildFile; fileRef = 349DADD1206E8D02001593DE /* AudioEHand2Hand.m */; };
 		349DADE0206E8D02001593DE /* AudioEWirlessMike.m in Sources */ = {isa = PBXBuildFile; fileRef = 349DADD3206E8D02001593DE /* AudioEWirlessMike.m */; };
@@ -1315,8 +1315,8 @@
 		348FC8D2208B748B00F7DB3D /* DActionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DActionView.m; sourceTree = "<group>"; };
 		34928A981EC1BD330089F429 /* ReaderCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderCodeViewController.h; sourceTree = "<group>"; };
 		34928A991EC1BD330089F429 /* ReaderCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderCodeViewController.m; sourceTree = "<group>"; };
-		3494582E20B68338006D1D05 /* EngineerNewTeslariViewCtrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EngineerNewTeslariViewCtrl.m; path = "未命名文件夹/EngineerNewTeslariViewCtrl.m"; sourceTree = "<group>"; };
-		3494582F20B68338006D1D05 /* EngineerNewTeslariViewCtrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EngineerNewTeslariViewCtrl.h; path = "未命名文件夹/EngineerNewTeslariViewCtrl.h"; sourceTree = "<group>"; };
+		3494583120B6E247006D1D05 /* EngineerNewTeslariViewCtrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EngineerNewTeslariViewCtrl.m; sourceTree = "<group>"; };
+		3494583220B6E248006D1D05 /* EngineerNewTeslariViewCtrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EngineerNewTeslariViewCtrl.h; sourceTree = "<group>"; };
 		3496B7581FCAF3C5005F4857 /* SignalView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignalView.h; sourceTree = "<group>"; };
 		3496B7591FCAF3C5005F4857 /* SignalView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignalView.m; sourceTree = "<group>"; };
 		349DADD1206E8D02001593DE /* AudioEHand2Hand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioEHand2Hand.m; sourceTree = "<group>"; };
@@ -3455,8 +3455,8 @@
 				EB5F7F971FD59D8400351888 /* EngineerDNSSettingView.m */,
 				EB09EF2D1FD978BD00C968CA /* EngineerToUseTeslariViewCtrl.h */,
 				EB09EF2E1FD978C700C968CA /* EngineerToUseTeslariViewCtrl.m */,
-				3494582F20B68338006D1D05 /* EngineerNewTeslariViewCtrl.h */,
-				3494582E20B68338006D1D05 /* EngineerNewTeslariViewCtrl.m */,
+				3494583220B6E248006D1D05 /* EngineerNewTeslariViewCtrl.h */,
+				3494583120B6E247006D1D05 /* EngineerNewTeslariViewCtrl.m */,
 				341CE4A120A4165C009DBC01 /* DriverPropertyView.h */,
 				341CE4A220A4165C009DBC01 /* DriverPropertyView.m */,
 				345B3E3620A55A5900BFF0F0 /* DriverConnectionsView.h */,
@@ -4601,7 +4601,7 @@
 				EBF831ED1FD03EFA0096E6EC /* UserVideoLuBoJiViewCtrl.m in Sources */,
 				34217A6F1FCE98200006701C /* UserVideoConfigView.m in Sources */,
 				04DE1E901AD6AEE000D49E2F /* UIImage+ImageEffects.m in Sources */,
-				3494583020B68338006D1D05 /* EngineerNewTeslariViewCtrl.m in Sources */,
+				3494583320B6E248006D1D05 /* EngineerNewTeslariViewCtrl.m in Sources */,
 				EB795B5F2042E87C005D1F47 /* YanShiQi_UIView.m in Sources */,
 				04DE1EBF1AD6AF7900D49E2F /* User.m in Sources */,
 				EB5A47F42073C2FE00564C06 /* AdjustAudioVideoEnvSettingsViewCtrl.m in Sources */,
