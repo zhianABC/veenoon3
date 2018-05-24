@@ -71,6 +71,7 @@
     _userNameField.font = [UIFont systemFontOfSize:14];
     _userNameField.placeholder=@"ID";
     _userNameField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    [_userNameField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
     [self.view addSubview:_userNameField];
     
     
@@ -82,9 +83,10 @@
     _userPwdField.borderStyle = UITextBorderStyleRoundedRect;
     _userPwdField.textAlignment = NSTextAlignmentCenter;
     _userPwdField.placeholder=@"Password";
-    _userPwdField.font = [UIFont systemFontOfSize:14];
+    _userPwdField.font = [UIFont systemFontOfSize:16];
     _userPwdField.secureTextEntry=YES;
     _userPwdField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    [_userPwdField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
     [self.view addSubview:_userPwdField];
     
     
