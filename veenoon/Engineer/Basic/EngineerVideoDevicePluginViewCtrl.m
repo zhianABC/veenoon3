@@ -1,12 +1,12 @@
 //
-//  EngineerPortDNSViewCtrl.m
+//  EngineerVideoDevicePluginViewCtrl.h
 //  veenoon
 //
 //  Created by 安志良 on 2017/12/4.
 //  Copyright © 2017年 jack. All rights reserved.
 //
 
-#import "EngineerVedioDevicePluginViewCtrl.h"
+#import "EngineerVideoDevicePluginViewCtrl.h"
 #import "EngineerEnvDevicePluginViewCtrl.h"
 #import "CenterCustomerPickerView.h"
 #import "UIButton+Color.h"
@@ -15,7 +15,7 @@
 #import "DataSync.h"
 #import "VTouyingjiSet.h"
 
-@interface EngineerVedioDevicePluginViewCtrl ()<CenterCustomerPickerViewDelegate> {
+@interface EngineerVideoDevicePluginViewCtrl ()<CenterCustomerPickerViewDelegate> {
     IconCenterTextButton *_dianyuanguanliBtn;
     IconCenterTextButton *_shipinbofangBtn;
     IconCenterTextButton *_shexiangjiBtn;
@@ -30,16 +30,17 @@
     CenterCustomerPickerView *_productTypePikcer;
     CenterCustomerPickerView *_brandPicker;
     CenterCustomerPickerView *_productCategoryPicker;
-    CenterCustomerPickerView *_numberPicker;
 }
 @property (nonatomic, strong) NSArray *_currentBrands;
 @property (nonatomic, strong) NSArray *_currentTypes;
 @property (nonatomic, strong) NSArray *_driverUdids;
 
+@property (nonatomic, strong) NSMutableDictionary *_mapDrivers;
+@property (nonatomic, strong) NSMutableArray *_videoDrivers;
 
 @end
 
-@implementation EngineerVedioDevicePluginViewCtrl
+@implementation EngineerVideoDevicePluginViewCtrl
 @synthesize _meetingRoomDic;
 @synthesize _selectedSysDic;
 
@@ -47,10 +48,43 @@
 @synthesize _currentTypes;
 @synthesize _driverUdids;
 
+@synthesize _mapDrivers;
+@synthesize _videoDrivers;
+
+- (void) prepareDrivers{
+    
+    self._mapDrivers = [NSMutableDictionary dictionary];
+
+    NSDictionary *camera = @{@"type":@"video",
+                             @"name":@"摄像机",
+                             @"driver":UUID_NetCamera,
+                             @"brand":@"Teslaria",
+                             @"icon":@"engineer_video_shexiangji_n.png",
+                             @"icon_s":@"engineer_video_shexiangji_s.png",
+                             @"driver_class":@"VCameraSettingSet",
+                             @"ptype":@"Camera"
+                             };
+    [_mapDrivers setObject:camera forKey:UUID_NetCamera];
+    
+    NSDictionary *ty = @{@"type":@"video",
+                         @"name":@"投影机",
+                         @"driver":UUID_CANON_WUX450,
+                         @"brand":@"Canon",
+                         @"icon":@"engineer_video_touyingji_n.png",
+                         @"icon_s":@"engineer_video_touyingji_s.png",
+                         @"driver_class":@"VTouyingjiSet",
+                         @"ptype":@"WUX450"
+                         };
+    [_mapDrivers setObject:ty forKey:UUID_CANON_WUX450];
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.view.backgroundColor = BLACK_COLOR;
+    
+    [self prepareDrivers];
     
     UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, ENGINEER_VIEW_TOP+10, SCREEN_WIDTH-80, 30)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
@@ -152,7 +186,7 @@
     [self.view addSubview:_touyingjiBtn];
     
     int maxWidth = 120;
-    float labelStartX = (SCREEN_WIDTH - maxWidth*3 - 60 - 15)/2.0;
+    float labelStartX = (SCREEN_WIDTH - maxWidth*2 - 60 - 15)/2.0;
     int labelStartY = 480;
     
     
@@ -218,42 +252,21 @@
     _productCategoryPicker._rowNormalColor = [UIColor whiteColor];
     [self.view addSubview:_productCategoryPicker];
     
+    UIButton *addBtn = [UIButton buttonWithColor:YELLOW_COLOR selColor:nil];
+    addBtn.frame = CGRectMake(SCREEN_WIDTH/2-50, labelStartY+120+55, 100, 40);
+    addBtn.layer.cornerRadius = 5;
+    addBtn.layer.borderWidth = 2;
+    addBtn.layer.borderColor = [UIColor clearColor].CGColor;
+    addBtn.clipsToBounds = YES;
+    [self.view addSubview:addBtn];
+    [addBtn setTitle:@"添加" forState:UIControlStateNormal];
+    [addBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [addBtn setTitleColor:RGB(1, 138, 182) forState:UIControlStateHighlighted];
+    addBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [addBtn addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
     
-    x1 = CGRectGetMaxX(titleL.frame)+5;
-    
-    titleL = [[UILabel alloc] initWithFrame:CGRectMake(x1,
-                                                       labelStartY,
-                                                       60, 20)];
-    titleL.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:titleL];
-    titleL.font = [UIFont boldSystemFontOfSize:16];
-    titleL.textAlignment = NSTextAlignmentCenter;
-    titleL.textColor  = [UIColor whiteColor];
-    titleL.text = @"数量";
-    
-    _numberPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(x1,
-                                                                               labelStartY+20,
-                                                                               60,
-                                                                               160)];
-    [_numberPicker removeArray];
-    _numberPicker._pickerDataArray = @[@{@"values":@[@"1",@"2",@"3"]}];
-    [_numberPicker selectRow:0 inComponent:0];
-    _numberPicker._selectColor = RGB(253, 180, 0);
-    _numberPicker._rowNormalColor = [UIColor whiteColor];
-    [self.view addSubview:_numberPicker];
-    
-    UIButton *signup = [UIButton buttonWithColor:YELLOW_COLOR selColor:nil];
-    signup.frame = CGRectMake(SCREEN_WIDTH/2-50, labelStartY+120+55, 100, 40);
-    signup.layer.cornerRadius = 5;
-    signup.layer.borderWidth = 2;
-    signup.layer.borderColor = [UIColor clearColor].CGColor;
-    signup.clipsToBounds = YES;
-    [self.view addSubview:signup];
-    [signup setTitle:@"确认" forState:UIControlStateNormal];
-    [signup setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [signup setTitleColor:RGB(1, 138, 182) forState:UIControlStateHighlighted];
-    signup.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-    [signup addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
+    self._videoDrivers = [NSMutableArray array];
+    [self._selectedSysDic setObject:_videoDrivers forKey:@"video"];
 }
 
 - (void) initBrandAndTypes{
@@ -269,63 +282,43 @@
     [_productTypePikcer selectRow:0 inComponent:0];
 }
 
-- (void) confirmAction:(id)sender{
+- (void) addDriverToCenter:(NSDictionary*)device{
     
-    NSString *productType = _productTypePikcer._unitString;
-    NSString *brand = _brandPicker._unitString;
-    NSString *productCategory = _productCategoryPicker._unitString;
-    NSString *number = _numberPicker._unitString;
+    NSString *classname = [device objectForKey:@"driver_class"];
+    Class someClass = NSClassFromString(classname);
+    BasePlugElement * obj = [[someClass alloc] init];
     
-    
-    NSMutableArray *devices = [self._selectedSysDic objectForKey:@"video"];
-    if (devices == nil) {
-        devices = [[NSMutableArray alloc] init];
-        [self._selectedSysDic setObject:devices forKey:@"video"];
+    if(obj)
+    {
+        obj._name = [device objectForKey:@"name"];
+        obj._brand = [device objectForKey:@"brand"];
+        obj._type = [device objectForKey:@"ptype"];
+        obj._driverUUID = [device objectForKey:@"brand"];
+        
+        id key = [device objectForKey:@"driver"];
+        obj._driverInfo = [[DataSync sharedDataSync] driverInfoByUUID:key];
+        
+        obj._plugicon = [device objectForKey:@"icon"];
+        obj._plugicon_s = [device objectForKey:@"icon_s"];
+        
+        //根据此类型的插件，创建自己的驱动，上传到中控
+        [obj createDriver];
+        
+        [_videoDrivers addObject:obj];
     }
-    
+}
+
+
+- (void) confirmAction:(id)sender{
+
     NSDictionary *val = [_productCategoryPicker._values objectForKey:@0];
-    
     int idx = [[val objectForKey:@"index"] intValue];
-    
     
     if(idx < [_driverUdids count])
     {
         id key = [_driverUdids objectAtIndex:idx];
-        
-        for(int i = 0; i < [number intValue]; i++)
-        {
-            //创建number个Device
-            if([productType isEqualToString:video_camera_name])
-            {
-                VCameraSettingSet *device = [[VCameraSettingSet alloc] init];
-                
-                device._brand = brand;
-                device._type = productCategory;
-                device._driverUUID = key;
-                device._driverInfo = [[DataSync sharedDataSync] driverInfoByUUID:key];
-                device._comDriverInfo = [[DataSync sharedDataSync] driverInfoByUUID:UUID_Serial_Com];
-                
-                //根据此类型的插件，创建自己的驱动，上传到中控
-                [device createDriver];
-                
-                [devices addObject:device];
-            }
-            else if([productType isEqualToString:@"投影机"])
-            {
-                VTouyingjiSet *device = [[VTouyingjiSet alloc] init];
-                
-                device._brand = brand;
-                device._type = productCategory;
-                device._driverUUID = key;
-                device._driverInfo = [[DataSync sharedDataSync] driverInfoByUUID:key];
-                device._comDriverInfo = [[DataSync sharedDataSync] driverInfoByUUID:UUID_Serial_Com];
-                
-                //根据此类型的插件，创建自己的驱动，上传到中控
-                [device createDriver];
-                
-                [devices addObject:device];
-            }
-        }
+        NSDictionary *device =  [_mapDrivers objectForKey:key];
+        [self addDriverToCenter:device];
     }
 }
 - (void) touyingjiAction:(id)sender{

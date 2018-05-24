@@ -10,7 +10,7 @@
 #import "UIButton+Color.h"
 #import "EngineerPortSettingView.h"
 #import "EngineerDNSSettingView.h"
-#import "EngineerToUseTeslariViewCtrl.h"
+#import "EngineerNewTeslariViewCtrl.h"
 #import "KVNProgress.h"
 #import "DataSync.h"
 #import "WaitDialog.h"
@@ -415,7 +415,7 @@
     [[DataBase sharedDatabaseInstance] deleteScenarioByRoom:1];
     [_sceneDrivers removeAllObjects];
     
-    EngineerToUseTeslariViewCtrl *ctrl = [[EngineerToUseTeslariViewCtrl alloc] init];
+    EngineerNewTeslariViewCtrl *ctrl = [[EngineerNewTeslariViewCtrl alloc] init];
     ctrl._meetingRoomDic = self._meetingRoomDic;
     [self.navigationController pushViewController:ctrl animated:YES];
 

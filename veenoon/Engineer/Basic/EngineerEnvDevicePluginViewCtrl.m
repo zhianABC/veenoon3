@@ -13,6 +13,8 @@
 #import "AdjustAudioVideoEnvSettingsViewCtrl.h"
 #import "EDimmerLight.h"
 #import "DataSync.h"
+#import "EngineerToUseTeslariViewCtrl.h"
+
 
 @interface EngineerEnvDevicePluginViewCtrl () <CenterCustomerPickerViewDelegate> {
     IconCenterTextButton *_zhaomingBtn;
@@ -30,12 +32,13 @@
     CenterCustomerPickerView *_productTypePikcer;
     CenterCustomerPickerView *_brandPicker;
     CenterCustomerPickerView *_productCategoryPicker;
-    CenterCustomerPickerView *_numberPicker;
 }
 @property (nonatomic, strong) NSArray *_currentBrands;
 @property (nonatomic, strong) NSArray *_currentTypes;
 @property (nonatomic, strong) NSArray *_driverUdids;
 
+@property (nonatomic, strong) NSMutableDictionary *_mapDrivers;
+@property (nonatomic, strong) NSMutableArray *_envDrivers;
 
 @end
 
@@ -47,22 +50,35 @@
 @synthesize _currentTypes;
 @synthesize _driverUdids;
 
+@synthesize _mapDrivers;
+@synthesize _envDrivers;
+
+
+- (void) prepareDrivers{
+    
+    self._mapDrivers = [NSMutableDictionary dictionary];
+    
+    NSDictionary *light = @{@"type":@"env",
+                             @"name":@"照明",
+                             @"driver":UUID_6CH_Dimmer_Light,
+                             @"brand":@"Teslaria",
+                             @"icon":@"engineer_env_zhaoming_n.png",
+                             @"icon_s":@"engineer_env_zhaoming_s.png",
+                             @"driver_class":@"EDimmerLight",
+                             @"ptype":@"6 CH Dimmer Light"
+                             };
+    
+    [_mapDrivers setObject:light forKey:UUID_6CH_Dimmer_Light];
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.view.backgroundColor = BLACK_COLOR;
     
-    UIButton *scenarioButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    scenarioButton.frame = CGRectMake(SCREEN_WIDTH-120, 20, 100, 44);
-//    [_topBar addSubview:scenarioButton];
-    [scenarioButton setTitle:@"修改配置" forState:UIControlStateNormal];
-    [scenarioButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [scenarioButton setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
-    scenarioButton.titleLabel.font = [UIFont boldSystemFontOfSize:17];
-    [scenarioButton addTarget:self
-                       action:@selector(adjustSettings:)
-             forControlEvents:UIControlEventTouchUpInside];
-    
+    [self prepareDrivers];
+
     UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, ENGINEER_VIEW_TOP+10, SCREEN_WIDTH-80, 30)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
@@ -163,7 +179,7 @@
     [self.view addSubview:_nenghaotongjiBtn];
     
     int maxWidth = 120;
-    float labelStartX = (SCREEN_WIDTH - maxWidth*3 - 60 - 15)/2.0;
+    float labelStartX = (SCREEN_WIDTH - maxWidth*2 - 60 - 15)/2.0;
     int labelStartY = 480;
     
     UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(labelStartX,
@@ -223,34 +239,48 @@
     _productCategoryPicker._rowNormalColor = [UIColor whiteColor];
     [self.view addSubview:_productCategoryPicker];
     
-    x1 = CGRectGetMaxX(titleL.frame)+5;
+ 
+    UIButton *addBtn = [UIButton buttonWithColor:YELLOW_COLOR selColor:nil];
+    addBtn.frame = CGRectMake(SCREEN_WIDTH/2-50, labelStartY+120+55, 100, 40);
+    addBtn.layer.cornerRadius = 5;
+    addBtn.layer.borderWidth = 2;
+    addBtn.layer.borderColor = [UIColor clearColor].CGColor;
+    addBtn.clipsToBounds = YES;
+    [self.view addSubview:addBtn];
+    [addBtn setTitle:@"添加" forState:UIControlStateNormal];
+    [addBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [addBtn setTitleColor:RGB(1, 138, 182) forState:UIControlStateHighlighted];
+    addBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [addBtn addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
     
-    titleL = [[UILabel alloc] initWithFrame:CGRectMake(x1, labelStartY, 60, 20)];
-    titleL.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:titleL];
-    titleL.font = [UIFont boldSystemFontOfSize:16];
-    titleL.textAlignment = NSTextAlignmentCenter;
-    titleL.textColor  = [UIColor whiteColor];
-    titleL.text = @"数量";
+    self._envDrivers = [NSMutableArray array];
+    [self._selectedSysDic setObject:_envDrivers forKey:@"env"];
+}
+
+- (void) addDriverToCenter:(NSDictionary*)device{
     
-    _numberPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(x1, labelStartY+20, 60, 160)];
-    [_numberPicker removeArray];
-    _numberPicker._pickerDataArray = @[@{@"values":@[@"1",@"2",@"3"]}];
-    [_numberPicker selectRow:0 inComponent:0];
-    _numberPicker._selectColor = RGB(253, 180, 0);
-    _numberPicker._rowNormalColor = [UIColor whiteColor];
-    [self.view addSubview:_numberPicker];
+    NSString *classname = [device objectForKey:@"driver_class"];
+    Class someClass = NSClassFromString(classname);
+    BasePlugElement * obj = [[someClass alloc] init];
     
-    UIButton *signup = [UIButton buttonWithColor:YELLOW_COLOR selColor:nil];
-    signup.frame = CGRectMake(SCREEN_WIDTH/2-50, labelStartY+120+55, 100, 40);
-    signup.layer.cornerRadius = 5;
-    signup.clipsToBounds = YES;
-    [self.view addSubview:signup];
-    [signup setTitle:@"确认" forState:UIControlStateNormal];
-    [signup setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [signup setTitleColor:RGB(1, 138, 182) forState:UIControlStateHighlighted];
-    signup.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-    [signup addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
+    if(obj)
+    {
+        obj._name = [device objectForKey:@"name"];
+        obj._brand = [device objectForKey:@"brand"];
+        obj._type = [device objectForKey:@"ptype"];
+        obj._driverUUID = [device objectForKey:@"brand"];
+        
+        id key = [device objectForKey:@"driver"];
+        obj._driverInfo = [[DataSync sharedDataSync] driverInfoByUUID:key];
+        
+        obj._plugicon = [device objectForKey:@"icon"];
+        obj._plugicon_s = [device objectForKey:@"icon_s"];
+        
+        //根据此类型的插件，创建自己的驱动，上传到中控
+        [obj createDriver];
+        
+        [_envDrivers addObject:obj];
+    }
 }
 
 - (void) initBrandAndTypes{
@@ -505,52 +535,22 @@
 }
 - (void) okAction:(id)sender{
     
-    AdjustAudioVideoEnvSettingsViewCtrl *ctrl = [[AdjustAudioVideoEnvSettingsViewCtrl alloc] init];
-    ctrl.selectedSysDic = self._selectedSysDic;
+    EngineerToUseTeslariViewCtrl *ctrl = [[EngineerToUseTeslariViewCtrl alloc] init];
+    ctrl._selectedDevices = self._selectedSysDic;
+    ctrl._meetingRoomDic = _meetingRoomDic;
     [self.navigationController pushViewController:ctrl animated:YES];
     
 }
 - (void) confirmAction:(id)sender{
     
-    NSString *productType = _productTypePikcer._unitString;
-    NSString *brand = _brandPicker._unitString;
-    NSString *productCategory = _productCategoryPicker._unitString;
-    NSString *number = _numberPicker._unitString;
-    
-    
-    NSMutableArray *devices = [self._selectedSysDic objectForKey:@"env"];
-    if (devices == nil) {
-        devices = [[NSMutableArray alloc] init];
-        [self._selectedSysDic setObject:devices forKey:@"env"];
-    }
-    
     NSDictionary *val = [_productCategoryPicker._values objectForKey:@0];
-    
     int idx = [[val objectForKey:@"index"] intValue];
-    
     
     if(idx < [_driverUdids count])
     {
         id key = [_driverUdids objectAtIndex:idx];
-        
-        for(int i = 0; i < [number intValue]; i++)
-        {
-            //创建number个Device
-            if([productType isEqualToString:env_dimmer_light])
-            {
-                EDimmerLight *device = [[EDimmerLight alloc] init];
-                
-                device._brand = brand;
-                device._type = productCategory;
-                device._driverUUID = key;
-                device._driverInfo = [[DataSync sharedDataSync] driverInfoByUUID:key];
-                
-                //根据此类型的插件，创建自己的驱动，上传到中控
-                [device createDriver];
-                
-                [devices addObject:device];
-            }
-        }
+        NSDictionary *device =  [_mapDrivers objectForKey:key];
+        [self addDriverToCenter:device];
     }
     
 }

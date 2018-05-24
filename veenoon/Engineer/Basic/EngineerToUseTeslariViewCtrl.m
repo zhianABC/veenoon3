@@ -44,7 +44,7 @@
 @end
 
 @implementation EngineerToUseTeslariViewCtrl
-@synthesize _meetingRoomDic;
+@synthesize _selectedDevices;
 @synthesize _mapDrivers;
 @synthesize _driver_objs;
 @synthesize _area_objs;
@@ -54,6 +54,8 @@
 @synthesize _envDrivers;
 @synthesize _othersDrivers;
 @synthesize _mapFlash;
+
+@synthesize _meetingRoomDic;
 
 - (void) dealloc
 {
@@ -85,10 +87,26 @@
     
     tableWidth = 400;
     
-    self._audioDrivers = [NSMutableArray array];
+    
+    if(_selectedDevices)
+    {
+        self._audioDrivers = [_selectedDevices objectForKey:@"audio"];
+        self._videoDrivers = [_selectedDevices objectForKey:@"video"];
+        self._envDrivers = [_selectedDevices objectForKey:@"env"];
+    }
+    
+    if(_audioDrivers == nil)
+        self._audioDrivers = [NSMutableArray array];
+    
+    if(_videoDrivers == nil)
     self._videoDrivers = [NSMutableArray array];
+    
+    if(_envDrivers == nil)
     self._envDrivers = [NSMutableArray array];
+    
+    if(_othersDrivers == nil)
     self._othersDrivers = [NSMutableArray array];
+    
     
     _indexSel = -1;
     _indexSec = -1;
@@ -166,15 +184,7 @@
               action:@selector(addDeviceAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
-#if LOGIN_REGULUS
-    
-    //创建Area
-    [[DataSync sharedDataSync] syncCurrentArea];
-    
-    //获取Regulus支持的插件
-    [[DataSync sharedDataSync] syncRegulusDrivers];
-    
-#endif
+
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(notifyRefreshTable:)
@@ -264,10 +274,7 @@
             
             [_audioDrivers addObject:obj];
         }
-        
-        
-        
-        
+
     }
     else if([type isEqualToString:@"video"])
     {

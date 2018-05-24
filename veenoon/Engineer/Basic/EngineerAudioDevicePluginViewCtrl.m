@@ -7,7 +7,7 @@
 //
 
 #import "EngineerAudioDevicePluginViewCtrl.h"
-#import "EngineerVedioDevicePluginViewCtrl.h"
+#import "EngineerVideoDevicePluginViewCtrl.h"
 #import "CenterCustomerPickerView.h"
 #import "UIButton+Color.h"
 
@@ -28,11 +28,12 @@
     CenterCustomerPickerView *_productTypePikcer;
     CenterCustomerPickerView *_brandPicker;
     CenterCustomerPickerView *_productCategoryPicker;
-    CenterCustomerPickerView *_numberPicker;
 }
 @property (nonatomic, strong) NSArray *_currentBrands;
 @property (nonatomic, strong) NSArray *_currentTypes;
 @property (nonatomic, strong) NSArray *_driverUdids;
+@property (nonatomic, strong) NSMutableDictionary *_mapDrivers;
+@property (nonatomic, strong) NSMutableArray *_audioDrivers;
 
 @end
 
@@ -43,11 +44,34 @@
 @synthesize _currentBrands;
 @synthesize _currentTypes;
 @synthesize _driverUdids;
+@synthesize _mapDrivers;
+@synthesize _audioDrivers;
+
+
+- (void) prepareDrivers{
+    
+    self._mapDrivers = [NSMutableDictionary dictionary];
+    
+    NSDictionary *audioDic = @{@"type":@"audio",
+                               @"name":@"音频处理器",
+                               @"driver":UUID_Audio_Processor,
+                               @"brand":@"Teslaria",
+                               @"icon":@"engineer_yinpinchuli_n.png",
+                               @"icon_s":@"engineer_yinpinchuli_s.png",
+                               @"driver_class":@"AudioEProcessor",
+                               @"ptype":@"Audio Processor"
+                               };
+    
+    [_mapDrivers setObject:audioDic forKey:UUID_Audio_Processor];
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.view.backgroundColor = BLACK_COLOR;
+    
+    [self prepareDrivers];
     
     UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, ENGINEER_VIEW_TOP+10, SCREEN_WIDTH-80, 30)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
@@ -133,8 +157,9 @@
     [_floorWarmBtn addTarget:self action:@selector(gongfangAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_floorWarmBtn];
     
+ 
     int maxWidth = 120;
-    float labelStartX = (SCREEN_WIDTH - maxWidth*3 - 60 - 15)/2.0;
+    float labelStartX = (SCREEN_WIDTH - maxWidth*2 - 60 - 15)/2.0;
     int labelStartY = 480;
     
     
@@ -209,86 +234,61 @@
     _productCategoryPicker._rowNormalColor = [UIColor whiteColor];
     [self.view addSubview:_productCategoryPicker];
     
-    x1 = CGRectGetMaxX(titleL.frame)+5;
+    UIButton *addBtn = [UIButton buttonWithColor:YELLOW_COLOR selColor:nil];
+    addBtn.frame = CGRectMake(SCREEN_WIDTH/2-50, labelStartY+120+55, 100, 40);
+    addBtn.layer.cornerRadius = 5;
+    addBtn.layer.borderWidth = 2;
+    addBtn.layer.borderColor = [UIColor clearColor].CGColor;
+    addBtn.clipsToBounds = YES;
+    [self.view addSubview:addBtn];
+    [addBtn setTitle:@"添加" forState:UIControlStateNormal];
+    [addBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [addBtn setTitleColor:RGB(1, 138, 182) forState:UIControlStateHighlighted];
+    addBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [addBtn addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
     
-    titleL = [[UILabel alloc] initWithFrame:CGRectMake(x1, labelStartY, 60, 20)];
-    titleL.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:titleL];
-    titleL.font = [UIFont boldSystemFontOfSize:16];
-    titleL.textAlignment = NSTextAlignmentCenter;
-    titleL.textColor  = [UIColor whiteColor];
-    titleL.text = @"数量";
+    //[[DataSync sharedDataSync] syncAreaHasDrivers];
     
-    _numberPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(x1,
-                                                                               labelStartY+20,
-                                                                               60, 160)];
-    _numberPicker.tag=104;
-    [_numberPicker removeArray];
-    _numberPicker._pickerDataArray = @[@{@"values":@[@"1",@"2",@"3",@"4",@"5",@"6"]}];
-    [_numberPicker selectRow:0 inComponent:0];
-    _numberPicker._selectColor = RGB(253, 180, 0);
-    _numberPicker._rowNormalColor = [UIColor whiteColor];
-    [self.view addSubview:_numberPicker];
+    self._audioDrivers = [NSMutableArray array];
+    [self._selectedSysDic setObject:_audioDrivers forKey:@"audio"];
+}
+
+- (void) addDriverToCenter:(NSDictionary*)device{
     
-    UIButton *signup = [UIButton buttonWithColor:YELLOW_COLOR selColor:nil];
-    signup.frame = CGRectMake(SCREEN_WIDTH/2-50, labelStartY+120+55, 100, 40);
-    signup.layer.cornerRadius = 5;
-    signup.layer.borderWidth = 2;
-    signup.layer.borderColor = [UIColor clearColor].CGColor;
-    signup.clipsToBounds = YES;
-    [self.view addSubview:signup];
-    [signup setTitle:@"确认" forState:UIControlStateNormal];
-    [signup setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [signup setTitleColor:RGB(1, 138, 182) forState:UIControlStateHighlighted];
-    signup.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-    [signup addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
+    NSString *classname = [device objectForKey:@"driver_class"];
+    Class someClass = NSClassFromString(classname);
+    BasePlugElement * obj = [[someClass alloc] init];
     
-    [[DataSync sharedDataSync] syncAreaHasDrivers];
+    if(obj)
+    {
+        obj._name = [device objectForKey:@"name"];
+        obj._brand = [device objectForKey:@"brand"];
+        obj._type = [device objectForKey:@"ptype"];
+        obj._driverUUID = [device objectForKey:@"brand"];
+        
+        id key = [device objectForKey:@"driver"];
+        obj._driverInfo = [[DataSync sharedDataSync] driverInfoByUUID:key];
+        
+        obj._plugicon = [device objectForKey:@"icon"];
+        obj._plugicon_s = [device objectForKey:@"icon_s"];
+        
+        //根据此类型的插件，创建自己的驱动，上传到中控
+        [obj createDriver];
+        
+        [_audioDrivers addObject:obj];
+    }
 }
 
 - (void) confirmAction:(id)sender{
     
-    NSString *productType = _productTypePikcer._unitString;
-    NSString *brand = _brandPicker._unitString;
-    NSString *productCategory = _productCategoryPicker._unitString;
-    NSString *number = _numberPicker._unitString;
-    
-    
-    NSMutableArray *audioArray = [self._selectedSysDic objectForKey:@"audio"];
-    if (audioArray == nil) {
-        audioArray = [[NSMutableArray alloc] init];
-        [self._selectedSysDic setObject:audioArray forKey:@"audio"];
-    }
-    
     NSDictionary *val = [_productCategoryPicker._values objectForKey:@0];
-    
     int idx = [[val objectForKey:@"index"] intValue];
     
-
     if(idx < [_driverUdids count])
     {
         id key = [_driverUdids objectAtIndex:idx];
-       
-        for(int i = 0; i < [number intValue]; i++)
-        {
-            //创建number个Device
-            if([productType isEqualToString:audio_process_name])
-            {
-                AudioEProcessor *device = [[AudioEProcessor alloc] init];
-                
-                device._brand = brand;
-                device._type = productCategory;
-                device._driverUUID = key;
-                device._driverInfo = [[DataSync sharedDataSync] driverInfoByUUID:key];
-                
-                //根据此类型的插件，创建自己的驱动，上传到中控
-                [device createDriver];
-                
-                [audioArray addObject:device];
-            }
-            //else if([productType isEqualToString:@"电源"])
-          
-        }
+        NSDictionary *device =  [_mapDrivers objectForKey:key];
+        [self addDriverToCenter:device];
     }
     
 }
@@ -338,7 +338,7 @@
     [self setBrandValue:btnText];
     
     self._currentBrands = @[@"Teslaria"];
-    self._currentTypes = @[@"Teslaria Audio Processor"];
+    self._currentTypes = @[@"Audio Processor"];
     self._driverUdids = @[UUID_Audio_Processor];
     
     _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
@@ -467,7 +467,7 @@
 
 - (void) okAction:(id)sender{
     
-    EngineerVedioDevicePluginViewCtrl *ctrl = [[EngineerVedioDevicePluginViewCtrl alloc] init];
+    EngineerVideoDevicePluginViewCtrl *ctrl = [[EngineerVideoDevicePluginViewCtrl alloc] init];
     ctrl._meetingRoomDic = self._meetingRoomDic;
     ctrl._selectedSysDic = self._selectedSysDic;
     

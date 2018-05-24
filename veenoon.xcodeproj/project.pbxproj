@@ -283,6 +283,7 @@
 		348FC8D0208B203E00F7DB3D /* PlugsCtrlTitleHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 348FC8CF208B203E00F7DB3D /* PlugsCtrlTitleHeader.m */; };
 		348FC8D3208B748B00F7DB3D /* DActionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 348FC8D2208B748B00F7DB3D /* DActionView.m */; };
 		34928A9A1EC1BD330089F429 /* ReaderCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34928A991EC1BD330089F429 /* ReaderCodeViewController.m */; };
+		3494583020B68338006D1D05 /* EngineerNewTeslariViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3494582E20B68338006D1D05 /* EngineerNewTeslariViewCtrl.m */; };
 		3496B75A1FCAF3C5005F4857 /* SignalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3496B7591FCAF3C5005F4857 /* SignalView.m */; };
 		349DADDF206E8D02001593DE /* AudioEHand2Hand.m in Sources */ = {isa = PBXBuildFile; fileRef = 349DADD1206E8D02001593DE /* AudioEHand2Hand.m */; };
 		349DADE0206E8D02001593DE /* AudioEWirlessMike.m in Sources */ = {isa = PBXBuildFile; fileRef = 349DADD3206E8D02001593DE /* AudioEWirlessMike.m */; };
@@ -378,7 +379,7 @@
 		EB09C4B11FD3B27200776540 /* MapMarkerLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = EB09C4B01FD3B27200776540 /* MapMarkerLayer.m */; };
 		EB09EF2F1FD978C700C968CA /* EngineerToUseTeslariViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB09EF2E1FD978C700C968CA /* EngineerToUseTeslariViewCtrl.m */; };
 		EB09EF311FD97CB500C968CA /* EngineerAudioDevicePluginViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB09EF301FD97CB500C968CA /* EngineerAudioDevicePluginViewCtrl.m */; };
-		EB09EF351FD9800300C968CA /* EngineerVedioDevicePluginViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB09EF341FD9800300C968CA /* EngineerVedioDevicePluginViewCtrl.m */; };
+		EB09EF351FD9800300C968CA /* EngineerVideoDevicePluginViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB09EF341FD9800300C968CA /* EngineerVideoDevicePluginViewCtrl.m */; };
 		EB09EF371FD9801400C968CA /* EngineerEnvDevicePluginViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB09EF361FD9801400C968CA /* EngineerEnvDevicePluginViewCtrl.m */; };
 		EB09EF3B1FD9A6BE00C968CA /* engineer_dianyuanguanli_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB09EF391FD9A6BD00C968CA /* engineer_dianyuanguanli_n@2x.png */; };
 		EB09EF3C1FD9A6BE00C968CA /* engineer_dianyuanguanli_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB09EF3A1FD9A6BE00C968CA /* engineer_dianyuanguanli_s@2x.png */; };
@@ -1314,6 +1315,8 @@
 		348FC8D2208B748B00F7DB3D /* DActionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DActionView.m; sourceTree = "<group>"; };
 		34928A981EC1BD330089F429 /* ReaderCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReaderCodeViewController.h; sourceTree = "<group>"; };
 		34928A991EC1BD330089F429 /* ReaderCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderCodeViewController.m; sourceTree = "<group>"; };
+		3494582E20B68338006D1D05 /* EngineerNewTeslariViewCtrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EngineerNewTeslariViewCtrl.m; path = "未命名文件夹/EngineerNewTeslariViewCtrl.m"; sourceTree = "<group>"; };
+		3494582F20B68338006D1D05 /* EngineerNewTeslariViewCtrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EngineerNewTeslariViewCtrl.h; path = "未命名文件夹/EngineerNewTeslariViewCtrl.h"; sourceTree = "<group>"; };
 		3496B7581FCAF3C5005F4857 /* SignalView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignalView.h; sourceTree = "<group>"; };
 		3496B7591FCAF3C5005F4857 /* SignalView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignalView.m; sourceTree = "<group>"; };
 		349DADD1206E8D02001593DE /* AudioEHand2Hand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioEHand2Hand.m; sourceTree = "<group>"; };
@@ -1455,8 +1458,8 @@
 		EB09EF2E1FD978C700C968CA /* EngineerToUseTeslariViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerToUseTeslariViewCtrl.m; sourceTree = "<group>"; };
 		EB09EF301FD97CB500C968CA /* EngineerAudioDevicePluginViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerAudioDevicePluginViewCtrl.m; sourceTree = "<group>"; };
 		EB09EF321FD97CBE00C968CA /* EngineerAudioDevicePluginViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerAudioDevicePluginViewCtrl.h; sourceTree = "<group>"; };
-		EB09EF331FD97FF900C968CA /* EngineerVedioDevicePluginViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerVedioDevicePluginViewCtrl.h; sourceTree = "<group>"; };
-		EB09EF341FD9800300C968CA /* EngineerVedioDevicePluginViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerVedioDevicePluginViewCtrl.m; sourceTree = "<group>"; };
+		EB09EF331FD97FF900C968CA /* EngineerVideoDevicePluginViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerVideoDevicePluginViewCtrl.h; sourceTree = "<group>"; };
+		EB09EF341FD9800300C968CA /* EngineerVideoDevicePluginViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerVideoDevicePluginViewCtrl.m; sourceTree = "<group>"; };
 		EB09EF361FD9801400C968CA /* EngineerEnvDevicePluginViewCtrl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerEnvDevicePluginViewCtrl.m; sourceTree = "<group>"; };
 		EB09EF381FD9801D00C968CA /* EngineerEnvDevicePluginViewCtrl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerEnvDevicePluginViewCtrl.h; sourceTree = "<group>"; };
 		EB09EF391FD9A6BD00C968CA /* engineer_dianyuanguanli_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_dianyuanguanli_n@2x.png"; sourceTree = "<group>"; };
@@ -3452,6 +3455,8 @@
 				EB5F7F971FD59D8400351888 /* EngineerDNSSettingView.m */,
 				EB09EF2D1FD978BD00C968CA /* EngineerToUseTeslariViewCtrl.h */,
 				EB09EF2E1FD978C700C968CA /* EngineerToUseTeslariViewCtrl.m */,
+				3494582F20B68338006D1D05 /* EngineerNewTeslariViewCtrl.h */,
+				3494582E20B68338006D1D05 /* EngineerNewTeslariViewCtrl.m */,
 				341CE4A120A4165C009DBC01 /* DriverPropertyView.h */,
 				341CE4A220A4165C009DBC01 /* DriverPropertyView.m */,
 				345B3E3620A55A5900BFF0F0 /* DriverConnectionsView.h */,
@@ -3460,8 +3465,8 @@
 				341CE49820A3E908009DBC01 /* ChooseDriverViewController.m */,
 				EB09EF321FD97CBE00C968CA /* EngineerAudioDevicePluginViewCtrl.h */,
 				EB09EF301FD97CB500C968CA /* EngineerAudioDevicePluginViewCtrl.m */,
-				EB09EF331FD97FF900C968CA /* EngineerVedioDevicePluginViewCtrl.h */,
-				EB09EF341FD9800300C968CA /* EngineerVedioDevicePluginViewCtrl.m */,
+				EB09EF331FD97FF900C968CA /* EngineerVideoDevicePluginViewCtrl.h */,
+				EB09EF341FD9800300C968CA /* EngineerVideoDevicePluginViewCtrl.m */,
 				EB09EF381FD9801D00C968CA /* EngineerEnvDevicePluginViewCtrl.h */,
 				EB09EF361FD9801400C968CA /* EngineerEnvDevicePluginViewCtrl.m */,
 				EB5A47F22073C2FE00564C06 /* AdjustAudioVideoEnvSettingsViewCtrl.h */,
@@ -4596,6 +4601,7 @@
 				EBF831ED1FD03EFA0096E6EC /* UserVideoLuBoJiViewCtrl.m in Sources */,
 				34217A6F1FCE98200006701C /* UserVideoConfigView.m in Sources */,
 				04DE1E901AD6AEE000D49E2F /* UIImage+ImageEffects.m in Sources */,
+				3494583020B68338006D1D05 /* EngineerNewTeslariViewCtrl.m in Sources */,
 				EB795B5F2042E87C005D1F47 /* YanShiQi_UIView.m in Sources */,
 				04DE1EBF1AD6AF7900D49E2F /* User.m in Sources */,
 				EB5A47F42073C2FE00564C06 /* AdjustAudioVideoEnvSettingsViewCtrl.m in Sources */,
@@ -4656,7 +4662,7 @@
 				EBF831E71FD03E4B0096E6EC /* UserVideoRemoteShiXunViewCtrl.m in Sources */,
 				0477DC5B1DA9F4BA0077FA52 /* WaitDialog.m in Sources */,
 				EB1A55D21FEAA10E000B18E6 /* EngineerDVDViewController.m in Sources */,
-				EB09EF351FD9800300C968CA /* EngineerVedioDevicePluginViewCtrl.m in Sources */,
+				EB09EF351FD9800300C968CA /* EngineerVideoDevicePluginViewCtrl.m in Sources */,
 				EB5CF03F1FD3DC92007958C9 /* UserNewWindViewCtrl.m in Sources */,
 				EB7333F42041046400AE60B8 /* AirCleanRightView.m in Sources */,
 				34A8965320443184007934E1 /* GradeLineView.m in Sources */,

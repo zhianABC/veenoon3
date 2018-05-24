@@ -145,6 +145,10 @@
         
         _isEditingScenario = NO;
         
+        _scenario._audioDevices = [_selectedDevices objectForKey:@"audio"];
+        _scenario._videoDevices = [_selectedDevices objectForKey:@"video"];
+        _scenario._envDevices = [_selectedDevices objectForKey:@"env"];
+        
         [DataCenter defaultDataCenter]._scenario = nil;
     }
     else
@@ -342,7 +346,7 @@
     [self.view addSubview:scenarioButton];
     scenarioButton.layer.cornerRadius = 3;
     scenarioButton.clipsToBounds = YES;
-    [scenarioButton setTitle:@"创建场景" forState:UIControlStateNormal];
+    [scenarioButton setTitle:@"生成场景" forState:UIControlStateNormal];
     [scenarioButton setTitleColor:B_GRAY_COLOR forState:UIControlStateNormal];
     //[scenarioButton setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
     scenarioButton.titleLabel.font = [UIFont boldSystemFontOfSize:16];
@@ -518,27 +522,27 @@
 
 - (void) createScenarioAction:(UIButton*) sender{
     
-//    sender.enabled = NO;
-//
-//    [_scenario prepareSenarioSlice];
-//
-//    if(_isEditingScenario)
-//    {
-//        [_scenario saveEventScenario];
-//    }
-//    else
-//    {
-//        [_scenario createEventScenario];
-//    }
+    sender.enabled = NO;
+
+    [_scenario prepareSenarioSlice];
+
+    if(_isEditingScenario)
+    {
+        [_scenario saveEventScenario];
+    }
+    else
+    {
+        [_scenario createEventScenario];
+    }
     
-    CreateScenarioViewController *cr = [[CreateScenarioViewController alloc] init];
-    cr._selectedDevices = _selectedDevices;
-    UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:cr];
-    navi.navigationBarHidden = YES;
-    
-    [self presentViewController:navi
-                       animated:YES
-                     completion:nil];
+//    CreateScenarioViewController *cr = [[CreateScenarioViewController alloc] init];
+//    cr._selectedDevices = _selectedDevices;
+//    UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:cr];
+//    navi.navigationBarHidden = YES;
+//
+//    [self presentViewController:navi
+//                       animated:YES
+//                     completion:nil];
     
 }
 
