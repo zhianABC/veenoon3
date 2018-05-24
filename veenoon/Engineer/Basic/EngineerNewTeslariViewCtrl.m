@@ -52,7 +52,7 @@
     [self.view addSubview:portDNSLabel];
     portDNSLabel.font = [UIFont systemFontOfSize:18];
     portDNSLabel.textColor  = [UIColor colorWithWhite:1.0 alpha:0.9];
-    portDNSLabel.text = @"音频> 视频> 环境> 其他";
+    portDNSLabel.text = @"音频> 视频> 环境> 传感器> 串口> 其他";
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];

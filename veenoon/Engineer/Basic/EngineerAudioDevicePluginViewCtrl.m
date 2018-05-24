@@ -85,7 +85,7 @@
     [self.view addSubview:portDNSLabel];
     portDNSLabel.font = [UIFont systemFontOfSize:18];
     portDNSLabel.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
-    portDNSLabel.text = @"选择您所需要设置的设备类型 > 品牌 > 型号 > 数量";
+    portDNSLabel.text = @"选择您所需要设置的设备类型 > 品牌 > 型号";
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
@@ -117,8 +117,8 @@
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
-    int left = 150;
-    int rowGap = (SCREEN_WIDTH - left * 2)/5 - 10;
+    int left = 100;
+    int rowGap = (SCREEN_WIDTH - left * 2)/6 - 10;
     int height = 200;
     
     _electronicSysBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left, height,80, 110)];
@@ -152,7 +152,7 @@
     [_yinpinchuliBtn addTarget:self action:@selector(yinpinchuliAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_yinpinchuliBtn];
     
-    _floorWarmBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left, height+120,80, 110)];
+    _floorWarmBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*6, height,80, 110)];
     [_floorWarmBtn  buttonWithIcon:[UIImage imageNamed:@"engineer_gongfang_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_gongfang_s.png"] text:@"功放" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_floorWarmBtn addTarget:self action:@selector(gongfangAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_floorWarmBtn];

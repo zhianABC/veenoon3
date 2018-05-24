@@ -39,7 +39,8 @@
 @property (nonatomic, strong) NSMutableArray *_audioDrivers;
 @property (nonatomic, strong) NSMutableArray *_videoDrivers;
 @property (nonatomic, strong) NSMutableArray *_envDrivers;
-@property (nonatomic, strong) NSMutableArray *_othersDrivers;
+@property (nonatomic, strong) NSMutableArray *_chuanganDrivers;
+@property (nonatomic, strong) NSMutableArray *_portDrivers;
 @property (nonatomic, strong) NSMutableDictionary *_mapFlash;
 @end
 
@@ -52,7 +53,8 @@
 @synthesize _audioDrivers;
 @synthesize _videoDrivers;
 @synthesize _envDrivers;
-@synthesize _othersDrivers;
+@synthesize _chuanganDrivers;
+@synthesize _portDrivers;
 @synthesize _mapFlash;
 
 @synthesize _meetingRoomDic;
@@ -93,6 +95,8 @@
         self._audioDrivers = [_selectedDevices objectForKey:@"audio"];
         self._videoDrivers = [_selectedDevices objectForKey:@"video"];
         self._envDrivers = [_selectedDevices objectForKey:@"env"];
+        self._chuanganDrivers = [_selectedDevices objectForKey:@"chuangan"];
+        self._portDrivers = [_selectedDevices objectForKey:@"port"];
     }
     
     if(_audioDrivers == nil)
@@ -104,8 +108,11 @@
     if(_envDrivers == nil)
     self._envDrivers = [NSMutableArray array];
     
-    if(_othersDrivers == nil)
-    self._othersDrivers = [NSMutableArray array];
+    if(_chuanganDrivers == nil)
+    self._chuanganDrivers = [NSMutableArray array];
+    
+    if(_portDrivers == nil)
+        self._portDrivers = [NSMutableArray array];
     
     
     _indexSel = -1;
@@ -210,7 +217,8 @@
     [selectedSysDic setObject:_audioDrivers forKey:@"audio"];
     [selectedSysDic setObject:_videoDrivers forKey:@"video"];
     [selectedSysDic setObject:_envDrivers forKey:@"env"];
-    [selectedSysDic setObject:_othersDrivers forKey:@"others"];
+    [selectedSysDic setObject:_chuanganDrivers forKey:@"chuangan"];
+    [selectedSysDic setObject:_portDrivers forKey:@"port"];
     
     ctrl._selectedDevices = selectedSysDic;
     
@@ -326,7 +334,7 @@
             [_envDrivers addObject:obj];
         }
     }
-    else
+    else if ([type isEqualToString:@"chuangan"])
     {
         NSString *classname = [device objectForKey:@"driver_class"];
         Class someClass = NSClassFromString(classname);
@@ -348,7 +356,32 @@
             //根据此类型的插件，创建自己的驱动，上传到中控
             [obj createDriver];
             
-            [_othersDrivers addObject:obj];
+            [_chuanganDrivers addObject:obj];
+        }
+    }
+    else if ([type isEqualToString:@"port"])
+    {
+        NSString *classname = [device objectForKey:@"driver_class"];
+        Class someClass = NSClassFromString(classname);
+        BasePlugElement * obj = [[someClass alloc] init];
+        
+        if(obj)
+        {
+            obj._name = [device objectForKey:@"name"];
+            obj._brand = [device objectForKey:@"brand"];
+            obj._type = [device objectForKey:@"ptype"];
+            obj._driverUUID = [device objectForKey:@"brand"];
+            
+            id key = [device objectForKey:@"driver"];
+            obj._driverInfo = [[DataSync sharedDataSync] driverInfoByUUID:key];
+            
+            obj._plugicon = [device objectForKey:@"icon"];
+            obj._plugicon_s = [device objectForKey:@"icon_s"];
+            
+            //根据此类型的插件，创建自己的驱动，上传到中控
+            [obj createDriver];
+            
+            [_portDrivers addObject:obj];
         }
     }
     
@@ -360,7 +393,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    return 4;
+    return 5;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
@@ -370,8 +403,11 @@
         return [_videoDrivers count];
     if(section == 2)
         return [_envDrivers count];
-    
-    return [_othersDrivers count];
+    if(section == 3)
+        return [_chuanganDrivers count];
+    if(section == 4)
+        return [_portDrivers count];
+    return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -388,6 +424,12 @@
     else if(indexPath.section == 2)
     {
         data = [_envDrivers objectAtIndex:indexPath.row];
+    } else if(indexPath.section == 3)
+    {
+        data = [_chuanganDrivers objectAtIndex:indexPath.row];
+    } else if(indexPath.section == 4)
+    {
+        data = [_portDrivers objectAtIndex:indexPath.row];
     }
     
     if(data && data._com)
@@ -427,7 +469,11 @@
     }
     else if(indexPath.section == 3)
     {
-        data = [_othersDrivers objectAtIndex:indexPath.row];
+        data = [_chuanganDrivers objectAtIndex:indexPath.row];
+    }
+    else if(indexPath.section == 4)
+    {
+        data = [_portDrivers objectAtIndex:indexPath.row];
     }
     
     UIImage *img = [UIImage imageNamed:data._plugicon];
@@ -566,7 +612,11 @@
     }
     else if(indexPath.section == 3)
     {
-        data = [_othersDrivers objectAtIndex:indexPath.row];
+        data = [_chuanganDrivers objectAtIndex:indexPath.row];
+    }
+    else if(indexPath.section == 4)
+    {
+        data = [_portDrivers objectAtIndex:indexPath.row];
     }
     
     _propertyView._plugDriver = data;
@@ -622,8 +672,10 @@
         rowL.text = @"视频设备";
     else if(section == 2)
         rowL.text = @"环境设备";
+    else if(section == 3)
+        rowL.text = @"传感器设备";
     else
-        rowL.text = @"辅助设备";
+        rowL.text = @"串口设备";
     
     [header addSubview:rowL];
     
@@ -642,7 +694,8 @@
     [selectedSysDic setObject:_audioDrivers forKey:@"audio"];
     [selectedSysDic setObject:_videoDrivers forKey:@"video"];
     [selectedSysDic setObject:_envDrivers forKey:@"env"];
-    [selectedSysDic setObject:_othersDrivers forKey:@"others"];
+    [selectedSysDic setObject:_chuanganDrivers forKey:@"chuangan"];
+    [selectedSysDic setObject:_portDrivers forKey:@"port"];
     
     ctrl._selectedDevices = selectedSysDic;
     

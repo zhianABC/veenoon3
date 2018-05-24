@@ -52,7 +52,7 @@
                                                         self.frame.size.height - 30,
                                                         self.frame.size.width, 20)];
     _titleL.backgroundColor = [UIColor clearColor];
-    _titleL.font = [UIFont systemFontOfSize:18];
+    _titleL.font = [UIFont systemFontOfSize:16];
     _titleL.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_titleL];
     _titleL.textColor = _normalColor;

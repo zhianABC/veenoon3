@@ -13,7 +13,7 @@
 #import "AdjustAudioVideoEnvSettingsViewCtrl.h"
 #import "EDimmerLight.h"
 #import "DataSync.h"
-#import "EngineerToUseTeslariViewCtrl.h"
+#import "EnginnerChuanGanDevicePluginViewCtrl.h"
 
 
 @interface EngineerEnvDevicePluginViewCtrl () <CenterCustomerPickerViewDelegate> {
@@ -91,7 +91,7 @@
     [self.view addSubview:portDNSLabel];
     portDNSLabel.font = [UIFont systemFontOfSize:18];
     portDNSLabel.textColor  = [UIColor colorWithWhite:1.0 alpha:0.9];
-    portDNSLabel.text = @"选择您所需要设置的设备类型> 品牌 > 型号> 数量";
+    portDNSLabel.text = @"选择您所需要设置的设备类型> 品牌 > 型号";
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
@@ -115,7 +115,7 @@
     UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
     [bottomBar addSubview:okBtn];
-    [okBtn setTitle:@"完成配置" forState:UIControlStateNormal];
+    [okBtn setTitle:@"下一步 >" forState:UIControlStateNormal];
     [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
     okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
@@ -124,7 +124,7 @@
     forControlEvents:UIControlEventTouchUpInside];
     
     int left = 150;
-    int rowGap = (SCREEN_WIDTH - left * 2)/5 -10;
+    int rowGap = (SCREEN_WIDTH - left * 2)/6 -10;
     int height = 200;
     
     _zhaomingBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left, height, 80, 110)];
@@ -163,17 +163,17 @@
     [self.view addSubview:_kongqijinghuaBtn];
     
     
-    _jiashiqiBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left, height+120, 80, 110)];
+    _jiashiqiBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*6, height, 80, 110)];
     [_jiashiqiBtn buttonWithIcon:[UIImage imageNamed:@"engineer_env_jiashi_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_env_jiashi_s.png"] text:@"加湿器" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_jiashiqiBtn addTarget:self action:@selector(jiashiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_jiashiqiBtn];
     
-    _jiankongBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap, height+120, 80, 110)];
+    _jiankongBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left, height+120, 80, 110)];
     [_jiankongBtn buttonWithIcon:[UIImage imageNamed:@"engineer_env_jiankong_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_env_jiankong_s.png"] text:@"监控" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_jiankongBtn addTarget:self action:@selector(jiankongAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_jiankongBtn];
     
-    _nenghaotongjiBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*2, height+120, 80, 110)];
+    _nenghaotongjiBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*1, height+120, 80, 110)];
     [_nenghaotongjiBtn buttonWithIcon:[UIImage imageNamed:@"engineer_env_nenghao_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_env_nenghao_s.png"] text:@"能耗统计" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_nenghaotongjiBtn addTarget:self action:@selector(nenghaotongjiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_nenghaotongjiBtn];
@@ -535,8 +535,8 @@
 }
 - (void) okAction:(id)sender{
     
-    EngineerToUseTeslariViewCtrl *ctrl = [[EngineerToUseTeslariViewCtrl alloc] init];
-    ctrl._selectedDevices = self._selectedSysDic;
+    EnginnerChuanGanDevicePluginViewCtrl *ctrl = [[EnginnerChuanGanDevicePluginViewCtrl alloc] init];
+    ctrl._selectedSysDic = self._selectedSysDic;
     ctrl._meetingRoomDic = _meetingRoomDic;
     [self.navigationController pushViewController:ctrl animated:YES];
     
