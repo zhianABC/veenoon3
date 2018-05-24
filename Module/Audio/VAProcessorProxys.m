@@ -42,6 +42,7 @@
     BOOL _isSetOK;
     
     BOOL _isFanKuiYiZhiStarted;
+    BOOL _isZiDongHunYinStarted;
 }
 @property (nonatomic, strong) NSArray *_rgsCommands;
 @property (nonatomic, strong) NSMutableDictionary *_cmdMap;
@@ -63,6 +64,7 @@
 @synthesize _is48V;
 @synthesize _micDb;
 @synthesize _isFanKuiYiZhiStarted;
+@synthesize _isZiDongHunYinStarted;
 
 @synthesize _RgsSceneDeviceOperationShadow;
 
@@ -86,6 +88,7 @@
         _isSetOK = NO;
         
         _isFanKuiYiZhiStarted = YES;
+        _isZiDongHunYinStarted = YES;
         
         self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionary];
     }
@@ -180,6 +183,11 @@
 - (BOOL) isFanKuiYiZhiStarted{
     
     return _isFanKuiYiZhiStarted;
+}
+
+- (BOOL) isZiDongHunYinStarted{
+    
+    return _isZiDongHunYinStarted;
 }
 
 - (BOOL) isProxyDigitalMute{
@@ -389,6 +397,9 @@
 }
 - (void) controlFanKuiYiZhi:(BOOL)isFanKuiYiZhiStarted { 
     _isFanKuiYiZhiStarted = isFanKuiYiZhiStarted;
+}
+- (void) controlZiDongHunYin:(BOOL)isZiDongHunYinStarted {
+    _isZiDongHunYinStarted = isZiDongHunYinStarted;
 }
 - (void) controlDigtalMute:(BOOL)isMute{
     

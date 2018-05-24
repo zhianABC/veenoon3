@@ -9,6 +9,8 @@
 #import "ZiDongHunYin_UIView.h"
 #import "UIButton+Color.h"
 #import "SlideButton.h"
+#import "VAProcessorProxys.h"
+#import "RegulusSDK.h"
 
 @interface ZiDongHunYin_UIView() <SlideButtonDelegate> {
     UIButton *channelBtn;
@@ -16,11 +18,14 @@
     SlideButton *zengyi;
     
     UILabel *labelL1;
+    
+    UIButton *qidongBtn;
 }
-
+@property (nonatomic, strong) VAProcessorProxys *_curProxy;
 @end
 
 @implementation ZiDongHunYin_UIView
+@synthesize _curProxy;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -60,6 +65,11 @@
             [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }
     }
+    int idx = (int)sender.tag;
+    self._curProxy = [self._proxys objectAtIndex:idx];
+    
+    NSString *name = _curProxy._rgsProxyObj.name;
+    [channelBtn setTitle:name forState:UIControlStateNormal];
 }
 
 - (void) contentViewComps{
@@ -85,35 +95,56 @@
     [contentView addSubview:zengyi];
     
     labelL1 = [[UILabel alloc] initWithFrame:CGRectMake(startX+gap, labelY+labelBtnGap+80, 120, 120)];
-    labelL1.text = @"-12dB";
+    labelL1.text = @"-20dB";
     labelL1.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:labelL1];
     labelL1.font = [UIFont systemFontOfSize:13];
     labelL1.textColor = YELLOW_COLOR;
     
-    UIButton *zhitongBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
-    zhitongBtn.frame = CGRectMake(contentView.frame.size.width/2 - 25, contentView.frame.size.height - 40, 50, 30);
-    zhitongBtn.layer.cornerRadius = 5;
-    zhitongBtn.layer.borderWidth = 2;
-    zhitongBtn.layer.borderColor = [UIColor clearColor].CGColor;;
-    zhitongBtn.clipsToBounds = YES;
-    [zhitongBtn setTitle:@"自动" forState:UIControlStateNormal];
-    zhitongBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-    [zhitongBtn addTarget:self
-                   action:@selector(zhitongBtnAction:)
+    qidongBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    qidongBtn.frame = CGRectMake(contentView.frame.size.width/2 - 25, contentView.frame.size.height - 40, 50, 30);
+    qidongBtn.layer.cornerRadius = 5;
+    qidongBtn.layer.borderWidth = 2;
+    qidongBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    qidongBtn.clipsToBounds = YES;
+    [qidongBtn setTitle:@"启用" forState:UIControlStateNormal];
+    qidongBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    [qidongBtn addTarget:self
+                   action:@selector(qiyongBtnAction:)
          forControlEvents:UIControlEventTouchUpInside];
-    [contentView addSubview:zhitongBtn];
+    [contentView addSubview:qidongBtn];
 }
 
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
-    int k = (value *24)-12;
+    int k = (value *40)-20;
     NSString *valueStr= [NSString stringWithFormat:@"%dB", k];
     
     labelL1.text = valueStr;
 }
-- (void) zhitongBtnAction:(id) sender {
+- (void) qiyongBtnAction:(id) sender {
+    if(_curProxy == nil)
+        return;
     
+    BOOL isMute = [_curProxy isZiDongHunYinStarted];
+    
+    [_curProxy controlZiDongHunYin:!isMute];
+    
+    [self updateMuteButtonState];
+}
+
+- (void) updateMuteButtonState{
+    
+    BOOL isZiDongHunYin = [_curProxy isZiDongHunYinStarted];
+    
+    if(isZiDongHunYin)
+    {
+        [qidongBtn changeNormalColor:THEME_RED_COLOR];
+    }
+    else
+    {
+        [qidongBtn changeNormalColor:RGB(75, 163, 202)];
+    }
 }
 
 @end
