@@ -16,8 +16,8 @@
 }
 @property (nonatomic, strong) NSString *_icon_name;
 @property (nonatomic, strong) NSDictionary *_voiceInDevice;
-@property (nonatomic, assign) BOOL _isFanKuiYiZhiStarted;
-@property (nonatomic, assign) BOOL _isZiDongHunYinStarted;
+
+
 @property (nonatomic, strong) RgsProxyObj *_rgsProxyObj;
 
 //Property
@@ -25,7 +25,11 @@
 @property (nonatomic, assign) BOOL _is48V;
 @property (nonatomic, strong) NSString *_micDb;
 
-
+//fankuiyizhi
+@property (nonatomic, assign) BOOL _isFanKuiYiZhiStarted;
+//zidonghunyin
+@property (nonatomic, assign) BOOL _isZiDongHunYinStarted;
+@property (nonatomic, strong) NSString *_zidonghunyinZengYi;
 
 /*
  SET_MUTE
@@ -53,8 +57,6 @@
 - (float) getDigitalGain;
 - (float) getAnalogyGain;
 - (BOOL) getInverted;
-- (BOOL) isFanKuiYiZhiStarted;
-- (BOOL) isZiDongHunYinStarted;
 
 - (NSArray*)getModeOptions;
 - (NSArray*)getMicDbOptions;
@@ -65,8 +67,15 @@
 - (void) controlDeviceDigitalGain:(float)digVal;
 - (void) controlDigtalMute:(BOOL)isMute;
 
+//fankuiyizhi
 - (void) controlFanKuiYiZhi:(BOOL)isFanKuiYiZhiStarted;
+- (BOOL) isFanKuiYiZhiStarted;
+
+//zidonghuiyin
 - (void) controlZiDongHunYin:(BOOL)isZiDongHunYinStarted;
+- (BOOL) isZiDongHunYinStarted;
+- (NSString*) getZidonghuiyinZengYi;
+- (void) controlZiDongHunYinZengYi:(NSString*) zengyiDB;
 
 - (void) controlDeviceMode:(NSString*)mode;
 

@@ -10,5 +10,6 @@
 #import "APBaseView.h"
 
 @interface FanKuiYiZhiView : APBaseView
+- (id)initWithFrameProxys:(CGRect)frame withProxys:(NSArray*) proxys;
 
 @end

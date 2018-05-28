@@ -31,16 +31,24 @@
 @implementation FanKuiYiZhiView
 @synthesize _curProxy;
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithFrameProxys:(CGRect)frame withProxys:(NSArray*) proxys;
 {
+    self._proxys = proxys;
+    
     if(self = [super initWithFrame:frame])
     {
+        if (_curProxy == nil) {
+            if (self._proxys) {
+                _curProxy = [self._proxys objectAtIndex:0];
+            }
+        }
         channelBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
         channelBtn.frame = CGRectMake(0, 50, 70, 36);
         channelBtn.clipsToBounds = YES;
         channelBtn.layer.cornerRadius = 5;
         channelBtn.titleLabel.font = [UIFont systemFontOfSize:15];
-        [channelBtn setTitle:@"In 1" forState:UIControlStateNormal];
+        NSString *currentName = _curProxy._rgsProxyObj.name;
+        [channelBtn setTitle:currentName forState:UIControlStateNormal];
         [channelBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
         [self addSubview:channelBtn];
         
@@ -72,6 +80,8 @@
     
     NSString *name = _curProxy._rgsProxyObj.name;
     [channelBtn setTitle:name forState:UIControlStateNormal];
+    
+    [self updateMuteButtonState];
 }
 
 - (void) contentViewComps {

@@ -239,11 +239,11 @@
     [self.view addSubview:huishengView];
     huishengView.hidden = YES;
     
-    zidonghunyinView = [[ZiDongHunYin_UIView alloc] initWithFrame:vrc];
+    zidonghunyinView = [[ZiDongHunYin_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._inAudioProxys];
     [self.view addSubview:zidonghunyinView];
     zidonghunyinView.hidden = YES;
     
-    fankuiyizhiView = [[FanKuiYiZhiView alloc] initWithFrame:vrc];
+    fankuiyizhiView = [[FanKuiYiZhiView alloc] initWithFrameProxys:vrc withProxys:_processor._inAudioProxys];
     [self.view addSubview:fankuiyizhiView];
     fankuiyizhiView.hidden = YES;
     
@@ -270,10 +270,8 @@
     yxq._proxys = _processor._inAudioProxys;
     [yxq layoutChannelBtns:numProxys];
     
-    zidonghunyinView._proxys = _processor._inAudioProxys;
     [zidonghunyinView layoutChannelBtns:numProxys];
     
-    fankuiyizhiView._proxys = _processor._inAudioProxys;
     [fankuiyizhiView layoutChannelBtns:numProxys];
     
 }

@@ -65,6 +65,7 @@
 @synthesize _micDb;
 @synthesize _isFanKuiYiZhiStarted;
 @synthesize _isZiDongHunYinStarted;
+@synthesize _zidonghunyinZengYi;
 
 @synthesize _RgsSceneDeviceOperationShadow;
 
@@ -89,6 +90,7 @@
         
         _isFanKuiYiZhiStarted = YES;
         _isZiDongHunYinStarted = YES;
+        _zidonghunyinZengYi = @"12.0";
         
         self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionary];
     }
@@ -398,8 +400,15 @@
 - (void) controlFanKuiYiZhi:(BOOL)isFanKuiYiZhiStarted { 
     _isFanKuiYiZhiStarted = isFanKuiYiZhiStarted;
 }
+
 - (void) controlZiDongHunYin:(BOOL)isZiDongHunYinStarted {
     _isZiDongHunYinStarted = isZiDongHunYinStarted;
+}
+- (NSString*) getZidonghuiyinZengYi {
+    return _zidonghunyinZengYi;
+}
+- (void) controlZiDongHunYinZengYi:(NSString*) zengyiDB {
+    _zidonghunyinZengYi = zengyiDB;
 }
 - (void) controlDigtalMute:(BOOL)isMute{
     

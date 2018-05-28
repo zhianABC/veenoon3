@@ -27,10 +27,17 @@
 @implementation ZiDongHunYin_UIView
 @synthesize _curProxy;
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithFrameProxys:(CGRect)frame withProxys:(NSArray *)proxys
 {
+    self._proxys = proxys;
+    
     if(self = [super initWithFrame:frame])
     {
+        if (_curProxy == nil) {
+            if (self._proxys) {
+                _curProxy = [self._proxys objectAtIndex:0];
+            }
+        }
         channelBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
         channelBtn.frame = CGRectMake(0, 50, 70, 36);
         channelBtn.clipsToBounds = YES;
@@ -70,6 +77,9 @@
     
     NSString *name = _curProxy._rgsProxyObj.name;
     [channelBtn setTitle:name forState:UIControlStateNormal];
+    
+    [self updateMuteButtonState];
+    [self updateZengYiSlide];
 }
 
 - (void) contentViewComps{
@@ -86,16 +96,20 @@
     addLabel2.frame = CGRectMake(startX+gap+weiYi, labelY-20, 120, 20);
     [contentView addSubview:addLabel2];
     
-    SlideButton *zengyi = [[SlideButton alloc] initWithFrame:CGRectMake(startX+gap, labelY+labelBtnGap, 120, 120)];
+    zengyi = [[SlideButton alloc] initWithFrame:CGRectMake(startX+gap, labelY+labelBtnGap, 120, 120)];
     zengyi._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
     zengyi._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
     [zengyi enableValueSet:YES];
     zengyi.delegate = self;
     zengyi.tag = 3;
     [contentView addSubview:zengyi];
+    NSString *zengyiDB = [_curProxy getZidonghuiyinZengYi];
+    float value = [zengyiDB floatValue];
+    float f = (value+12.0)/24.0;
+    [zengyi setCircleValue:f];
     
     labelL1 = [[UILabel alloc] initWithFrame:CGRectMake(startX+gap, labelY+labelBtnGap+80, 120, 120)];
-    labelL1.text = @"-20dB";
+    labelL1.text = [[_curProxy getZidonghuiyinZengYi] stringByAppendingString:@" dB"];
     labelL1.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:labelL1];
     labelL1.font = [UIFont systemFontOfSize:13];
@@ -117,10 +131,12 @@
 
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
-    int k = (value *40)-20;
-    NSString *valueStr= [NSString stringWithFormat:@"%dB", k];
+    int k = (value *24)-12.0;
+    NSString *valueStr= [[NSString stringWithFormat:@"%d", k] stringByAppendingString:@" dB"];
     
     labelL1.text = valueStr;
+    NSString *zengyiStr = [NSString stringWithFormat:@"%d", k];
+    [_curProxy controlZiDongHunYinZengYi:zengyiStr];
 }
 - (void) qiyongBtnAction:(id) sender {
     if(_curProxy == nil)
@@ -145,6 +161,15 @@
     {
         [qidongBtn changeNormalColor:RGB(75, 163, 202)];
     }
+}
+
+- (void) updateZengYiSlide {
+    NSString *zengyiDB = [_curProxy getZidonghuiyinZengYi];
+    float value = [zengyiDB floatValue];
+    float f = (value+12.0)/24.0;
+    [zengyi setCircleValue:f];
+    
+    labelL1.text = [[_curProxy getZidonghuiyinZengYi] stringByAppendingString:@" dB"];
 }
 
 @end
