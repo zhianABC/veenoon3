@@ -18,4 +18,7 @@
 @interface HuiShengXiaoChu_UIView : APBaseView
 
 @property (nonatomic, weak) id  <HuiShengXiaoChu_UIViewDelegate> delegate_;
+
+- (id)initWithFrameProxys:(CGRect)frame withProxys:(NSArray*) proxys;
+
 @end

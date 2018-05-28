@@ -30,6 +30,8 @@
 //zidonghunyin
 @property (nonatomic, assign) BOOL _isZiDongHunYinStarted;
 @property (nonatomic, strong) NSString *_zidonghunyinZengYi;
+//huishengxiaochu
+@property (nonatomic, assign) BOOL _isHuiShengXiaoChu;
 
 /*
  SET_MUTE
@@ -76,6 +78,11 @@
 - (BOOL) isZiDongHunYinStarted;
 - (NSString*) getZidonghuiyinZengYi;
 - (void) controlZiDongHunYinZengYi:(NSString*) zengyiDB;
+
+//huishengxiaochu
+- (void) controlHuiShengXiaoChu:(BOOL)isHuiShengXiaoChu;
+- (BOOL) isHuiShengXiaoChuStarted;
+
 
 - (void) controlDeviceMode:(NSString*)mode;
 

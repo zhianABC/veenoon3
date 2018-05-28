@@ -9,22 +9,25 @@
 #import "HuiShengXiaoChu_UIView.h"
 #import "UIButton+Color.h"
 #import "SlideButton.h"
+#import "VAProcessorProxys.h"
+#import "RegulusSDK.h"
 
 @interface HuiShengXiaoChu_UIView() {
     
     UIButton *channelBtn;
     
+    UIButton *qidongBtn;
     
     UIButton *aecButton;
 }
 //@property (nonatomic, strong) NSMutableArray *_channelBtns;
-
+@property (nonatomic, strong) VAProcessorProxys *_curProxy;
 @end
 
 
 @implementation HuiShengXiaoChu_UIView
-
 @synthesize delegate_;
+@synthesize _curProxy;
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.
@@ -33,16 +36,24 @@
  }
  */
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithFrameProxys:(CGRect)frame withProxys:(NSArray*) proxys;
 {
+    self._proxys = proxys;
+    
     if(self = [super initWithFrame:frame])
     {
+        if (self._curProxy == nil) {
+            if (self._proxys) {
+                self._curProxy = [self._proxys objectAtIndex:0];
+            }
+        }
+        
         channelBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
         channelBtn.frame = CGRectMake(0, 50, 70, 36);
         channelBtn.clipsToBounds = YES;
         channelBtn.layer.cornerRadius = 5;
         channelBtn.titleLabel.font = [UIFont systemFontOfSize:15];
-        [channelBtn setTitle:@"In 1" forState:UIControlStateNormal];
+        [channelBtn setTitle:_curProxy._rgsProxyObj.name forState:UIControlStateNormal];
         [channelBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
         [self addSubview:channelBtn];
         
@@ -71,7 +82,31 @@
             [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }
     }
+    
+    int idx = (int)sender.tag;
+    self._curProxy = [self._proxys objectAtIndex:idx];
+    
+    NSString *name = _curProxy._rgsProxyObj.name;
+    [channelBtn setTitle:name forState:UIControlStateNormal];
+    
+    [self updateMuteButtonState];
+    
 }
+
+- (void) updateMuteButtonState{
+    
+    BOOL isZiDongHunYin = [_curProxy isHuiShengXiaoChuStarted];
+    
+    if(isZiDongHunYin)
+    {
+        [qidongBtn changeNormalColor:THEME_RED_COLOR];
+    }
+    else
+    {
+        [qidongBtn changeNormalColor:RGB(75, 163, 202)];
+    }
+}
+
 
 - (void) createContentViewBtns {
     UIImage *roomImage = [UIImage imageNamed:@"huishengxiaochu.png"];
@@ -80,18 +115,20 @@
     roomeImageView.contentMode = UIViewContentModeScaleAspectFill;
     roomeImageView.frame = CGRectMake(100, 25, contentView.frame.size.width-200, contentView.frame.size.height-50);
     
-    [contentView addSubview:roomeImageView];UIButton *zhitongBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
-    zhitongBtn.frame = CGRectMake(contentView.frame.size.width/2 - 25, contentView.frame.size.height - 40, 50, 30);
-    zhitongBtn.layer.cornerRadius = 5;
-    zhitongBtn.layer.borderWidth = 2;
-    zhitongBtn.layer.borderColor = [UIColor clearColor].CGColor;;
-    zhitongBtn.clipsToBounds = YES;
-    [zhitongBtn setTitle:@"启用" forState:UIControlStateNormal];
-    zhitongBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-    [zhitongBtn addTarget:self
+    [contentView addSubview:roomeImageView];
+    
+    qidongBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    qidongBtn.frame = CGRectMake(contentView.frame.size.width/2 - 25, contentView.frame.size.height - 40, 50, 30);
+    qidongBtn.layer.cornerRadius = 5;
+    qidongBtn.layer.borderWidth = 2;
+    qidongBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    qidongBtn.clipsToBounds = YES;
+    [qidongBtn setTitle:@"启用" forState:UIControlStateNormal];
+    qidongBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    [qidongBtn addTarget:self
                    action:@selector(zhitongBtnAction:)
          forControlEvents:UIControlEventTouchUpInside];
-    [contentView addSubview:zhitongBtn];
+    [contentView addSubview:qidongBtn];
     
     aecButton = [UIButton buttonWithColor:nil selColor:nil];
     aecButton.frame = CGRectMake(350, 150, 50, 75);
@@ -108,7 +145,14 @@
     }
 }
 - (void) zhitongBtnAction:(id) sender {
+    if(_curProxy == nil)
+        return;
     
+    BOOL isMute = [_curProxy isHuiShengXiaoChuStarted];
+    
+    [_curProxy controlHuiShengXiaoChu:!isMute];
+    
+    [self updateMuteButtonState];
 }
 
 @end

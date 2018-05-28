@@ -234,7 +234,7 @@
     [self.view addSubview:lvbo];
     lvbo.hidden = YES;
     
-    huishengView = [[HuiShengXiaoChu_UIView alloc] initWithFrame:vrc];
+    huishengView = [[HuiShengXiaoChu_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._inAudioProxys];
     huishengView.delegate_ = self;
     [self.view addSubview:huishengView];
     huishengView.hidden = YES;
@@ -264,7 +264,6 @@
     lvbo._proxys = _processor._inAudioProxys;
     [lvbo layoutChannelBtns:numProxys];
     
-    huishengView._proxys = _processor._inAudioProxys;
     [huishengView layoutChannelBtns:numProxys];
     
     yxq._proxys = _processor._inAudioProxys;

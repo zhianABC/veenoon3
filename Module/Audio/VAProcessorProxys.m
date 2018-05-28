@@ -66,6 +66,7 @@
 @synthesize _isFanKuiYiZhiStarted;
 @synthesize _isZiDongHunYinStarted;
 @synthesize _zidonghunyinZengYi;
+@synthesize _isHuiShengXiaoChu;
 
 @synthesize _RgsSceneDeviceOperationShadow;
 
@@ -91,6 +92,7 @@
         _isFanKuiYiZhiStarted = YES;
         _isZiDongHunYinStarted = YES;
         _zidonghunyinZengYi = @"12.0";
+        _isHuiShengXiaoChu = YES;
         
         self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionary];
     }
@@ -397,6 +399,15 @@
                                                }];
     }
 }
+
+- (void) controlHuiShengXiaoChu:(BOOL)isHuiShengXiaoChu {
+    _isHuiShengXiaoChu = isHuiShengXiaoChu;
+}
+- (BOOL) isHuiShengXiaoChuStarted {
+    return _isHuiShengXiaoChu;
+}
+
+
 - (void) controlFanKuiYiZhi:(BOOL)isFanKuiYiZhiStarted { 
     _isFanKuiYiZhiStarted = isFanKuiYiZhiStarted;
 }
