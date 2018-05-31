@@ -49,6 +49,7 @@
 @synthesize _audioDevices;
 @synthesize _videoDevices;
 @synthesize _envDevices;
+@synthesize _comDevices;
 
 @synthesize _areas;
 
@@ -293,6 +294,9 @@
 
      //IMP_BLOCK_SELF(Scenario);
     
+    [KVNProgress showSuccess];
+    [self postCreateScenarioNotifyResult:YES];
+    
 }
 
 
@@ -322,181 +326,174 @@
     NSMutableArray *env = [NSMutableArray array];
     [_scenarioData setObject:env forKey:@"environment"];
     
-    /*
+    
     //音频处理
-    if([self._AProcessorPlugs count])
+    if([self._audioDevices count])
     {
-        [self createAudioProcessScenario];
+        [self createAudioScenario];
     }
     //摄像机
-    if([self._VCameraSettings count])
+    if([self._videoDevices count])
     {
-        [self createVideoCameraScenario];
+        [self createVideoScenario];
     }
-    //投影机
-    if([self._VTouyingji count])
+    //环境
+    if([self._envDevices count])
     {
-        [self createVideoProjectScenario];
+        [self createEvnScenario];
     }
     
-    //照明
-    if([self._EDimmerLights count])
-    {
-        [self createEvnLightScenario];
-    }
-    */
 }
 
 #pragma mark -----Create 场景 ---
 
-- (void) createAudioProcessScenario{
-    /*
+- (void) createAudioScenario{
+
     NSMutableArray *audios = [_scenarioData objectForKey:@"audio"];
-   
-
-    for(AudioEProcessor *ap in self._AProcessorPlugs)
-    {
     
-        NSArray *audioIn = ap._inAudioProxys;
-        //NSArray *audioOut = ap._outAudioProxys;
+    for(id ap in _audioDevices)
+    {
         
-        for(VAProcessorProxys *vap in audioIn)
+        if([ap isKindOfClass:[AudioEProcessor class]])
         {
-            if([vap isSetChanged])
+            NSArray *audioIn = ((AudioEProcessor*)ap)._inAudioProxys;
+            
+            for(VAProcessorProxys *vap in audioIn)
             {
-                RgsSceneOperation *rsp = [vap generateEventOperation_AnalogyGain];
-                if(rsp)
+                if([vap isSetChanged])
                 {
-                    [self addEventOperation:rsp];
-                }
-                rsp = [vap generateEventOperation_Mute];
-                if(rsp)
-                {
-                    [self addEventOperation:rsp];
-                }
-                rsp = [vap generateEventOperation_DigitalGain];
-                if(rsp)
-                {
-                    [self addEventOperation:rsp];
-                }
-                
-                rsp = [vap generateEventOperation_DigitalMute];
-                if(rsp)
-                {
-                    [self addEventOperation:rsp];
-                }
-                
-                rsp = [vap generateEventOperation_Mode];
-                if(rsp)
-                {
-                    [self addEventOperation:rsp];
-                }
-                
-                rsp = [vap generateEventOperation_48v];
-                if(rsp)
-                {
-                    [self addEventOperation:rsp];
-                }
-                
-                rsp = [vap generateEventOperation_MicDb];
-                if(rsp)
-                {
-                    [self addEventOperation:rsp];
-                }
-                
-                rsp = [vap generateEventOperation_Inverted];
-                if(rsp)
-                {
-                    [self addEventOperation:rsp];
+                    RgsSceneOperation *rsp = [vap generateEventOperation_AnalogyGain];
+                    if(rsp)
+                    {
+                        [self addEventOperation:rsp];
+                    }
+                    rsp = [vap generateEventOperation_Mute];
+                    if(rsp)
+                    {
+                        [self addEventOperation:rsp];
+                    }
+                    rsp = [vap generateEventOperation_DigitalGain];
+                    if(rsp)
+                    {
+                        [self addEventOperation:rsp];
+                    }
+                    
+                    rsp = [vap generateEventOperation_DigitalMute];
+                    if(rsp)
+                    {
+                        [self addEventOperation:rsp];
+                    }
+                    
+                    rsp = [vap generateEventOperation_Mode];
+                    if(rsp)
+                    {
+                        [self addEventOperation:rsp];
+                    }
+                    
+                    rsp = [vap generateEventOperation_48v];
+                    if(rsp)
+                    {
+                        [self addEventOperation:rsp];
+                    }
+                    
+                    rsp = [vap generateEventOperation_MicDb];
+                    if(rsp)
+                    {
+                        [self addEventOperation:rsp];
+                    }
+                    
+                    rsp = [vap generateEventOperation_Inverted];
+                    if(rsp)
+                    {
+                        [self addEventOperation:rsp];
+                    }
                 }
             }
+            
+            NSDictionary *data = [ap objectToJson];
+            [audios addObject:data];
         }
-       
-        NSDictionary *data = [ap objectToJson];
-        [audios addObject:data];
         
     }
-     */
+    
 }
 
-- (void) createVideoCameraScenario{
+- (void) createVideoScenario{
     
-    /*
+    
     NSMutableArray *videos = [_scenarioData objectForKey:@"video"];
     
-    for(VCameraSettingSet *vcam in self._VCameraSettings)
+    for(id dev in self._videoDevices)
     {
-        
-        VCameraProxys *cam = vcam._proxyObj;
-        if([cam isSetChanged])
+        if([dev isKindOfClass:[VCameraSettingSet class]])
         {
-            RgsSceneOperation *rsp = [cam generateEventOperation_Postion];
-            if(rsp)
+            VCameraProxys *cam = ((VCameraSettingSet*)dev)._proxyObj;
+            if([cam isSetChanged])
             {
-                [self addEventOperation:rsp];
+                RgsSceneOperation *rsp = [cam generateEventOperation_Postion];
+                if(rsp)
+                {
+                    [self addEventOperation:rsp];
+                }
             }
+            
+            NSDictionary *data = [dev objectToJson];
+            [videos addObject:data];
+        }
+        else if([dev isKindOfClass:[VTouyingjiSet class]])
+        {
+            VProjectProxys *proj = ((VTouyingjiSet*)dev)._proxyObj;
+            if([proj isSetChanged])
+            {
+                RgsSceneOperation* rsp = [proj generateEventOperation_Power];
+                if(rsp)
+                {
+                    [self addEventOperation:rsp];
+                }
+                
+                rsp = [proj generateEventOperation_Input];
+                if(rsp)
+                {
+                    [self addEventOperation:rsp];
+                }
+                
+            }
+            
+            NSDictionary *data = [dev objectToJson];
+            [videos addObject:data];
         }
         
-        NSDictionary *data = [vcam objectToJson];
-        [videos addObject:data];
     }
-     */
+    
 }
 
-- (void) createVideoProjectScenario{
+- (void) createEvnScenario{
     
-    /*
-    NSMutableArray *videos = [_scenarioData objectForKey:@"video"];
     
-    for(VTouyingjiSet *vprj in self._VTouyingji)
-    {
-        
-        VProjectProxys *proj = vprj._proxyObj;
-        if([proj isSetChanged])
-        {
-            RgsSceneOperation *rsp = [proj generateEventOperation_Input];
-            if(rsp)
-            {
-                [self addEventOperation:rsp];
-            }
-            rsp = [proj generateEventOperation_Power];
-            if(rsp)
-            {
-                [self addEventOperation:rsp];
-            }
-        }
-        
-        NSDictionary *data = [vprj objectToJson];
-        [videos addObject:data];
-    }
-     */
-}
-
-- (void) createEvnLightScenario{
-    
-    /*
     NSMutableArray *evns = [_scenarioData objectForKey:@"environment"];
     
-    for(EDimmerLight *vprj in self._EDimmerLights)
+    for(id dev in self._envDevices)
     {
-        
-        EDimmerLightProxys *proj = vprj._proxyObj;
-        if([proj isSetChanged])
+        if([dev isKindOfClass:[EDimmerLight class]])
         {
-            NSArray *rsps = [proj generateEventOperation_ChLevel];
-            if(rsps && [rsps count])
+            EDimmerLightProxys *proj = ((EDimmerLight*)dev)._proxyObj;
+            if([proj isSetChanged])
             {
-                for(id rsp in rsps)
+                NSArray *rsps = [proj generateEventOperation_ChLevel];
+                if(rsps && [rsps count])
                 {
-                    [self addEventOperation:rsp];
+                    for(id rsp in rsps)
+                    {
+                        [self addEventOperation:rsp];
+                    }
                 }
             }
+            
+            NSDictionary *data = [dev objectToJson];
+            [evns addObject:data];
         }
-        
-        NSDictionary *data = [vprj objectToJson];
-        [evns addObject:data];
     }
-     */
+    
 }
 
 

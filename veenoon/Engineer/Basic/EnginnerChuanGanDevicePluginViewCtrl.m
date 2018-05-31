@@ -258,6 +258,7 @@
 
 
 - (void) rentichuangangAction:(id)sender{
+    
     [_rentichuanganBtn setBtnHighlited:YES];
     [_wenshiduBtn setBtnHighlited:NO];
     [_kongqizhiliangBtn setBtnHighlited:NO];
@@ -276,9 +277,9 @@
     [_brandPicker selectRow:0 inComponent:0];
     [_productCategoryPicker selectRow:0 inComponent:0];
     
-    
 }
 - (void) wenshiduchuanganAction:(id)sender{
+    
     [_rentichuanganBtn setBtnHighlited:NO];
     [_wenshiduBtn setBtnHighlited:YES];
     [_kongqizhiliangBtn setBtnHighlited:NO];
@@ -348,7 +349,9 @@
     
 }
 - (void) cancelAction:(id)sender{
+    
     [self.navigationController popViewControllerAnimated:YES];
+    
 }
 @end
 

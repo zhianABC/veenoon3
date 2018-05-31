@@ -51,17 +51,17 @@
     
     self._mapDrivers = [NSMutableDictionary dictionary];
     
-    NSDictionary *light = @{@"type":@"env",
-                            @"name":@"照明",
-                            @"driver":UUID_6CH_Dimmer_Light,
+    NSDictionary *com = @{@"type":@"other",
+                            @"name":@"串口服务器",
+                            @"driver":UUID_Serial_Com,
                             @"brand":@"Teslaria",
-                            @"icon":@"engineer_env_zhaoming_n.png",
-                            @"icon_s":@"engineer_env_zhaoming_s.png",
-                            @"driver_class":@"EDimmerLight",
-                            @"ptype":@"6 CH Dimmer Light"
+                            @"icon":@"engineer_video_xinxihe_n.png",
+                            @"icon_s":@"engineer_video_xinxihe_s.png",
+                            @"driver_class":@"ComDriver",
+                            @"ptype":@"Com"
                             };
     
-    [_mapDrivers setObject:light forKey:UUID_6CH_Dimmer_Light];
+    [_mapDrivers setObject:com forKey:UUID_Serial_Com];
     
 }
 
@@ -274,8 +274,8 @@
     [self setBrandValue:btnText];
     
     self._currentBrands = @[@"TESLARIA"];
-    self._currentTypes = @[@"Dimmer-6"];
-    self._driverUdids = @[UUID_6CH_Dimmer_Light];
+    self._currentTypes = @[@"Serical"];
+    self._driverUdids = @[UUID_Serial_Com];
     
     _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
     _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];

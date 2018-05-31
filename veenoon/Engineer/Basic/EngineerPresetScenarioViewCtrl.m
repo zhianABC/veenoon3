@@ -376,6 +376,15 @@
 
 - (void) recoverScrollThumbCells{
     
+    NSArray *audios = _scenario._audioDevices;
+    [self showCells:1000 datas:audios];
+    
+    NSArray *videos = _scenario._videoDevices;
+    [self showCells:2000 datas:videos];
+    
+    NSArray *envs = _scenario._envDevices;
+    [self showCells:3000 datas:envs];
+    
 //    NSArray *data = [DataSync sharedDataSync]._plugTypes;
 //
 //    if([data count] == 3)
@@ -599,15 +608,36 @@
     NSArray *devices = nil;
     if(baseTag == 1)//音频
     {
-        devices = [_selectedDevices objectForKey:@"audio"];
+        if(_isEditingScenario)
+        {
+            devices = _scenario._audioDevices;
+        }
+        else
+        {
+            devices = [_selectedDevices objectForKey:@"audio"];
+        }
     }
     else if(baseTag == 2)//视频
     {
+        if(_isEditingScenario)
+        {
+            devices = _scenario._videoDevices;
+        }
+        else
+        {
         devices = [_selectedDevices objectForKey:@"video"];
+        }
     }
     else
     {
+        if(_isEditingScenario)
+        {
+            devices = _scenario._envDevices;
+        }
+        else
+        {
         devices = [_selectedDevices objectForKey:@"env"];
+        }
     }
     
     if(_isEditMode)//删除模式

@@ -178,8 +178,14 @@
     IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
     
     RgsAreaObj *areaObj = nil;
-    if([RgsAreaObjs count])
-        areaObj = [RgsAreaObjs objectAtIndex:0];
+    for(RgsAreaObj *obj in RgsAreaObjs)
+    {
+        if([obj.name isEqualToString:VEENOON_AREA_NAME])
+        {
+            areaObj = obj;
+            break;
+        }
+    }
     if(areaObj)
     {
         [[RegulusSDK sharedRegulusSDK] GetAreaScenes:areaObj.m_id
