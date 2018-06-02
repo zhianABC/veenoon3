@@ -32,6 +32,11 @@
 @property (nonatomic, strong) NSString *_zidonghunyinZengYi;
 //huishengxiaochu
 @property (nonatomic, assign) BOOL _isHuiShengXiaoChu;
+//yanshiqi
+@property (nonatomic, strong) NSString *_yanshiqiSlide;
+@property (nonatomic, strong) NSString *_yanshiqiYingChi;
+@property (nonatomic, strong) NSString *_yanshiqiMi;
+@property (nonatomic, strong) NSString *_yanshiqiHaoMiao;
 
 /*
  SET_MUTE
@@ -82,6 +87,16 @@
 //huishengxiaochu
 - (void) controlHuiShengXiaoChu:(BOOL)isHuiShengXiaoChu;
 - (BOOL) isHuiShengXiaoChuStarted;
+
+//yanshiqi
+- (NSString*) getYanshiqiSlide;
+- (void) controlYanshiqiSlide:(NSString*) yanshiqiSlide;
+- (NSString*) getYanshiqiYingChi;
+- (void) controlYanshiqiYingChi:(NSString*) yanshiqiYingChi;
+- (NSString*) getYanshiqiMi;
+- (void) controlYanshiqiMi:(NSString*) yanshiqiMi;
+- (NSString*) getYanshiqiHaoMiao;
+- (void) controlYanshiqiHaoMiao:(NSString*) yanshiqiHaoMiao;
 
 
 - (void) controlDeviceMode:(NSString*)mode;

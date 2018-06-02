@@ -67,6 +67,10 @@
 @synthesize _isZiDongHunYinStarted;
 @synthesize _zidonghunyinZengYi;
 @synthesize _isHuiShengXiaoChu;
+@synthesize _yanshiqiSlide;
+@synthesize _yanshiqiYingChi;
+@synthesize _yanshiqiMi;
+@synthesize _yanshiqiHaoMiao;
 
 @synthesize _RgsSceneDeviceOperationShadow;
 
@@ -93,6 +97,11 @@
         _isZiDongHunYinStarted = YES;
         _zidonghunyinZengYi = @"12.0";
         _isHuiShengXiaoChu = YES;
+        
+        _yanshiqiHaoMiao = @"3333";
+        _yanshiqiMi = @"2222";
+        _yanshiqiYingChi = @"1111";
+        _yanshiqiSlide = @"0";
         
         self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionary];
     }
@@ -399,7 +408,30 @@
                                                }];
     }
 }
-
+- (NSString*) getYanshiqiSlide {
+    return _yanshiqiSlide;
+}
+- (void) controlYanshiqiSlide:(NSString*) yanshiqiSlide {
+    _yanshiqiSlide = yanshiqiSlide;
+}
+- (NSString*) getYanshiqiYingChi {
+    return _yanshiqiYingChi;
+}
+- (void) controlYanshiqiYingChi:(NSString*) yanshiqiYingChi {
+    _yanshiqiYingChi = yanshiqiYingChi;
+}
+- (NSString*) getYanshiqiMi {
+    return _yanshiqiMi;
+}
+- (void) controlYanshiqiMi:(NSString*) yanshiqiMi {
+    _yanshiqiMi = yanshiqiMi;
+}
+- (NSString*) getYanshiqiHaoMiao {
+    return _yanshiqiHaoMiao;
+}
+- (void) controlYanshiqiHaoMiao:(NSString*) yanshiqiHaoMiao {
+    _yanshiqiHaoMiao = yanshiqiHaoMiao;
+}
 - (void) controlHuiShengXiaoChu:(BOOL)isHuiShengXiaoChu {
     _isHuiShengXiaoChu = isHuiShengXiaoChu;
 }
