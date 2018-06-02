@@ -226,7 +226,7 @@
     [self.view addSubview:zaoshengView];
     zaoshengView.hidden = YES;
     
-    yanshiView = [[YanShiQi_UIView alloc] initWithFrame:vrc];
+    yanshiView = [[YanShiQi_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._inAudioProxys];
     [self.view addSubview:yanshiView];
     yanshiView.hidden = YES;
     

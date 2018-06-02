@@ -9,6 +9,8 @@
 #import "YanShiQi_UIView.h"
 #import "UIButton+Color.h"
 #import "SlideButton.h"
+#import "VAProcessorProxys.h"
+#import "RegulusSDK.h"
 
 @interface YanShiQi_UIView() <UITextFieldDelegate, SlideButtonDelegate>{
     
@@ -20,15 +22,18 @@
     UITextField *miField;
     UITextField *yingchiFiedld;
     
+    SlideButton *xielvSlider3;
+    
     UILabel *labelL1;
 }
 //@property (nonatomic, strong) NSMutableArray *_channelBtns;
-
+@property (nonatomic, strong) VAProcessorProxys *_curProxy;
 @end
 
 
 @implementation YanShiQi_UIView
 //@synthesize _channelBtns;
+@synthesize _curProxy;
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.
@@ -37,16 +42,23 @@
  }
  */
 
-- (id)initWithFrame:(CGRect)frame
-{
-    if(self = [super initWithFrame:frame])
-    {
+- (id)initWithFrameProxys:(CGRect)frame withProxys:(NSArray*) proxys {
+    
+    self._proxys = proxys;
+    
+    if(self = [super initWithFrame:frame]) {
+        if (self._curProxy == nil) {
+            if (self._proxys) {
+                self._curProxy = [self._proxys objectAtIndex:0];
+            }
+        }
+        
         channelBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
         channelBtn.frame = CGRectMake(0, 50, 70, 36);
         channelBtn.clipsToBounds = YES;
         channelBtn.layer.cornerRadius = 5;
         channelBtn.titleLabel.font = [UIFont systemFontOfSize:15];
-        [channelBtn setTitle:@"In 1" forState:UIControlStateNormal];
+        [channelBtn setTitle:_curProxy._rgsProxyObj.name forState:UIControlStateNormal];
         [channelBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
         [self addSubview:channelBtn];
         
@@ -78,9 +90,18 @@
             [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }
     }
+    
+    int idx = (int)sender.tag;
+    self._curProxy = [self._proxys objectAtIndex:idx];
+    
+    NSString *name = _curProxy._rgsProxyObj.name;
+    [channelBtn setTitle:name forState:UIControlStateNormal];
+    
+    [self updateZengYiSlide];
+    [self updateTextfield];
 }
 
-- (void) contentViewComps{
+- (void) contentViewComps {
     
     UILabel *addLabel = [[UILabel alloc] init];
     addLabel.text = @"毫秒 (ms)";
@@ -89,28 +110,26 @@
     addLabel.frame = CGRectMake(700, 90, 120, 20);
     [contentView addSubview:addLabel];
     
-    SlideButton *xielvSlider3 = [[SlideButton alloc] initWithFrame:CGRectMake(670, 105, 120, 120)];
+    xielvSlider3 = [[SlideButton alloc] initWithFrame:CGRectMake(670, 105, 120, 120)];
     xielvSlider3._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
     xielvSlider3._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
     [xielvSlider3 enableValueSet:YES];
     xielvSlider3.delegate = self;
     xielvSlider3.tag = 3;
     [contentView addSubview:xielvSlider3];
+    NSString *zengyiDB = [_curProxy getYanshiqiSlide];
+    float value = [zengyiDB floatValue];
+    float f = (value+1000)/2000;
+    [xielvSlider3 setCircleValue:f];
     
     labelL1 = [[UILabel alloc] initWithFrame:CGRectMake(670, 105+120, 120, 20)];
-    labelL1.text = @"0";
+    labelL1.text = zengyiDB;
     labelL1.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:labelL1];
     labelL1.font = [UIFont systemFontOfSize:13];
     labelL1.textColor = YELLOW_COLOR;
 }
-- (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
-    
-    int k = (value *2000)-1000;
-    NSString *valueStr= [NSString stringWithFormat:@"%d", k];
-    
-    labelL1.text = valueStr;
-}
+
 - (void) createContentViewBtns {
     int btnStartX = 100;
     int btnY = 150;
@@ -128,6 +147,8 @@
     haomiaoField.font = [UIFont systemFontOfSize:13];
     haomiaoField.clearButtonMode = UITextFieldViewModeWhileEditing;
     [contentView addSubview:haomiaoField];
+    haomiaoField.text = [_curProxy getYanshiqiHaoMiao];
+    haomiaoField.tag = 1;
     
     UILabel *addLabel = [[UILabel alloc] init];
     addLabel.text = @"毫秒";
@@ -147,6 +168,8 @@
     miField.font = [UIFont systemFontOfSize:13];
     miField.clearButtonMode = UITextFieldViewModeWhileEditing;
     [contentView addSubview:miField];
+    miField.text = [_curProxy getYanshiqiMi];
+    miField.tag = 2;
     
     UILabel *addLabel2 = [[UILabel alloc] init];
     addLabel2.text = @"米";
@@ -166,6 +189,8 @@
     yingchiFiedld.font = [UIFont systemFontOfSize:13];
     yingchiFiedld.clearButtonMode = UITextFieldViewModeWhileEditing;
     [contentView addSubview:yingchiFiedld];
+    yingchiFiedld.text = [_curProxy getYanshiqiYingChi];
+    yingchiFiedld.tag = 3;
     
     UILabel *addLabel3 = [[UILabel alloc] init];
     addLabel3.text = @"英尺";
@@ -189,12 +214,17 @@
 }
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     
-    //_curIndex = (int)textField.tag;
-    
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
-    
+    int index = (int) textField.tag;
+    if (index == 1) {
+        [_curProxy controlYanshiqiHaoMiao:textField.text];
+    } else if (index == 2) {
+        [_curProxy controlYanshiqiMi:textField.text];
+    } else if (index == 3) {
+        [_curProxy controlYanshiqiYingChi:textField.text];
+    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
@@ -202,6 +232,31 @@
     [textField resignFirstResponder];
     
     return YES;
+}
+
+- (void) updateTextfield {
+    haomiaoField.text = [_curProxy getYanshiqiHaoMiao];
+    miField.text = [_curProxy getYanshiqiMi];
+    yingchiFiedld.text = [_curProxy getYanshiqiYingChi];
+}
+
+- (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
+    
+    int k = (value *2000)-1000;
+    NSString *valueStr= [NSString stringWithFormat:@"%d", k];
+    
+    labelL1.text = valueStr;
+    NSString *zengyiStr = [NSString stringWithFormat:@"%d", k];
+    [_curProxy controlYanshiqiSlide:zengyiStr];
+}
+
+- (void) updateZengYiSlide {
+    NSString *zengyiDB = [_curProxy getYanshiqiSlide];
+    float value = [zengyiDB floatValue];
+    float f = (value+1000)/2000;
+    [xielvSlider3 setCircleValue:f];
+    
+    labelL1.text = [_curProxy getYanshiqiSlide];
 }
 @end
 
