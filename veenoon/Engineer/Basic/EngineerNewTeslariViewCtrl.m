@@ -10,6 +10,7 @@
 #import "EngineerAudioDevicePluginViewCtrl.h"
 
 #import "DataSync.h"
+#import "DataCenter.h"
 
 
 @interface EngineerNewTeslariViewCtrl () {
@@ -93,6 +94,8 @@
     [[DataSync sharedDataSync] syncRegulusDrivers];
     
 #endif
+    
+    
     
 }
 

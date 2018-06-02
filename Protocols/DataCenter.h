@@ -17,10 +17,14 @@
 @property (nonatomic, strong) NSMutableDictionary *_selectedDevice;
 @property (nonatomic, strong) NSMutableDictionary *_roomData;
 
+@property (nonatomic, strong) NSMutableDictionary *_mapDrivers;
+
 @property (nonatomic, strong) Scenario *_scenario;
 
 + (DataCenter*)defaultDataCenter;
 
+- (void) prepareDrivers;
+- (NSDictionary *)driverWithKey:(NSString *)key;
 - (void) cacheScenarioOnLocalDB;
 
 @end

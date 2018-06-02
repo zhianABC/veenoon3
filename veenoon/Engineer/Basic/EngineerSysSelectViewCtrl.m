@@ -144,6 +144,8 @@
     
     [self containerView];
     
+    [[DataCenter defaultDataCenter] prepareDrivers];
+    
     self._sceneDrivers = [NSMutableArray array];
     
     [self checkArea];
@@ -188,6 +190,8 @@
     }
     if(areaObj)
     {
+        [DataSync sharedDataSync]._currentArea = areaObj;
+        
         [[RegulusSDK sharedRegulusSDK] GetAreaScenes:areaObj.m_id
                                           completion:^(BOOL result, NSArray *scenes, NSError *error) {
             if (result) {
@@ -196,7 +200,10 @@
             }
         }];
     }
-
+    else
+    {
+        //[[DataSync sharedDataSync] syncCurrentArea];
+    }
     
     
 #endif
