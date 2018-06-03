@@ -95,7 +95,7 @@
 @property (nonatomic, strong) NSMutableArray *_envCells;
 
 @property (nonatomic, strong) NSMutableArray *_deleteCells;
-@property (nonatomic, strong) NSMutableDictionary *_buttonTagWithDataMap;
+//@property (nonatomic, strong) NSMutableDictionary *_buttonTagWithDataMap;
 
 @property (nonatomic, strong) NSMutableDictionary *_aDataCheckTestMap;
 @property (nonatomic, strong) NSMutableDictionary *_vDataCheckTestMap;
@@ -112,7 +112,7 @@
 @synthesize _envCells;
 
 @synthesize _deleteCells;
-@synthesize _buttonTagWithDataMap;
+//@synthesize _buttonTagWithDataMap;
 
 @synthesize _scenario;
 @synthesize _aDataCheckTestMap;
@@ -129,8 +129,7 @@
     self._videoCells = [NSMutableArray array];
     self._envCells = [NSMutableArray array];
     self._deleteCells = [NSMutableArray array];
-    self._buttonTagWithDataMap = [NSMutableDictionary dictionary];
- 
+  
     
     if (_meetingRoomDic) {
         [_meetingRoomDic removeAllObjects];
@@ -145,9 +144,12 @@
         
         _isEditingScenario = NO;
         
+        if(_selectedDevices)
+        {
         _scenario._audioDevices = [_selectedDevices objectForKey:@"audio"];
         _scenario._videoDevices = [_selectedDevices objectForKey:@"video"];
         _scenario._envDevices = [_selectedDevices objectForKey:@"env"];
+        }
         
         [DataCenter defaultDataCenter]._scenario = nil;
     }
@@ -358,6 +360,18 @@
     scenarioButton.alpha = 0.5;
 
     
+    _doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _doneBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
+    [bottomBar addSubview:_doneBtn];
+    [_doneBtn setTitle:@"完成" forState:UIControlStateNormal];
+    [_doneBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_doneBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    _doneBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [_doneBtn addTarget:self
+                 action:@selector(doneAction:)
+       forControlEvents:UIControlEventTouchUpInside];
+    _doneBtn.hidden = YES;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(notifyScenarioResult:)
                                                  name:@"Notify_Scenario_Create_Result"
@@ -442,15 +456,121 @@
 
 - (void) layoutChoosedDevices{
     
-    NSArray *audios = [_selectedDevices objectForKey:@"audio"];
-    [self showCells:1000 datas:audios];
-    
-    NSArray *videos = [_selectedDevices objectForKey:@"video"];
-    [self showCells:2000 datas:videos];
-    
-    NSArray *envs = [_selectedDevices objectForKey:@"env"];
-    [self showCells:3000 datas:envs];
+    if(_selectedDevices == nil || [_selectedDevices count] == 0)
+    {
+        self._selectedDevices = [NSMutableDictionary dictionary];
+        [self getDriversFromVeenoon];
+    }
+    else
+    {
+        NSArray *audios = [_selectedDevices objectForKey:@"audio"];
+        [self showCells:1000 datas:audios];
+        
+        NSArray *videos = [_selectedDevices objectForKey:@"video"];
+        [self showCells:2000 datas:videos];
+        
+        NSArray *envs = [_selectedDevices objectForKey:@"env"];
+        [self showCells:3000 datas:envs];
+    }
    
+}
+
+- (void) getDriversFromVeenoon{
+    
+    IMP_BLOCK_SELF(EngineerPresetScenarioViewCtrl);
+    
+    RgsAreaObj *areaObj = [DataSync sharedDataSync]._currentArea;
+    if(areaObj)
+    {
+        [KVNProgress show];
+        [[RegulusSDK sharedRegulusSDK] GetDrivers:areaObj.m_id
+                                       completion:^(BOOL result, NSArray *drivers, NSError *error) {
+                                           
+                                           if (error) {
+                                               
+                                               [KVNProgress dismiss];
+                                           }
+                                           else
+                                           {
+                                               
+                                               [block_self prepareCurrentAreaDrivers:drivers];
+                                               
+                                               [KVNProgress dismiss];
+                                           }
+                                       }];
+    }
+    
+}
+
+- (void) prepareCurrentAreaDrivers:(NSArray*)drivers{
+    
+    NSMutableArray *audios = [NSMutableArray array];
+    NSMutableArray *videos = [NSMutableArray array];
+    NSMutableArray *envs = [NSMutableArray array];
+    
+    NSMutableDictionary *result = [NSMutableDictionary dictionary];
+    [result setObject:audios forKey:@"audio"];
+    [result setObject:videos forKey:@"video"];
+    [result setObject:envs forKey:@"env"];
+    
+    self._selectedDevices = result;
+    
+    for(RgsDriverObj *driver in drivers)
+    {
+        RgsDriverInfo *info = driver.info;
+        
+        NSDictionary *device = [[DataCenter defaultDataCenter] driverWithKey:info.serial];
+        
+        if(device)
+        {
+            NSString *classname = [device objectForKey:@"driver_class"];
+            Class someClass = NSClassFromString(classname);
+            BasePlugElement * obj = [[someClass alloc] init];
+            
+            if(obj)
+            {
+                obj._name = [device objectForKey:@"name"];
+                obj._brand = [device objectForKey:@"brand"];
+                obj._type = [device objectForKey:@"ptype"];
+                obj._driverUUID = [device objectForKey:@"brand"];
+                
+                obj._driverInfo = info;
+                
+                obj._plugicon = [device objectForKey:@"icon"];
+                obj._plugicon_s = [device objectForKey:@"icon_s"];
+                
+                obj._driver = driver;
+                
+                
+                
+                NSString *type = [device objectForKey:@"type"];
+                if([type isEqualToString:@"audio"])
+                {
+                    [audios addObject:obj];
+                }
+                else if([type isEqualToString:@"video"])
+                {
+                    [videos addObject:obj];
+                }
+                else if([type isEqualToString:@"env"])
+                {
+                    [envs addObject:obj];
+                }
+            }
+
+        }
+        
+    }
+
+    [self showCells:1000 datas:audios];
+    [self showCells:2000 datas:videos];
+    [self showCells:3000 datas:envs];
+    
+    
+    _scenario._audioDevices = audios;
+    _scenario._videoDevices = videos;
+    _scenario._envDevices = envs;
+    
 }
 
 
@@ -497,10 +617,6 @@
         cellBtn._mydata = dic;
         [cellBtn addMyObserver];
         
-        
-        
-        [_buttonTagWithDataMap setObject:dic
-                                  forKey:[NSNumber numberWithInteger:cellBtn.tag]];
         
         [cellBtn setBackgroundImage:eImg forState:UIControlStateNormal];
         
@@ -645,10 +761,8 @@
         return;
     }
     
-    id  key = [NSNumber numberWithInteger:cellBtn.tag];
-    NSMutableDictionary *data = [_buttonTagWithDataMap
-                                  objectForKey:key];
     
+    NSMutableDictionary *data = cellBtn._mydata;
     NSString *name = [data objectForKey:@"name"];
     
     /////////
@@ -872,7 +986,6 @@
     
     _isEditMode = NO;
     
-    _setBtn.hidden = NO;
     _doneBtn.hidden = YES;
     
     for(UIButton *btn in _deleteCells)
@@ -890,7 +1003,6 @@
         return;
     _isEditMode = YES;
     
-    _setBtn.hidden = YES;
     _doneBtn.hidden = NO;
     
     [_deleteCells removeAllObjects];
@@ -969,36 +1081,37 @@
 
 - (void) delButton:(UIButton*)cellBtn{
     
-    int tag = (int)cellBtn.tag;
+    UIView *supBtn = cellBtn.superview;
+    
+    int tag = (int)supBtn.tag;
     int baseTag = tag/1000;
+    int idx = tag%1000;
     
     NSMutableArray *dataArray = nil;
     NSMutableArray *btnCells = nil;
     if(baseTag == 1)//音频
     {
-        dataArray = [_curScenario objectForKey:@"audioArray"];
+        dataArray = [_selectedDevices objectForKey:@"audio"];
         btnCells = _audioCells;
     }
     else if(baseTag == 2)//视频
     {
-        dataArray = [_curScenario objectForKey:@"videoArray"];
+        dataArray = [_selectedDevices objectForKey:@"video"];
         btnCells = _videoCells;
     }
     else//环境
     {
-        dataArray = [_curScenario objectForKey:@"envArray"];
+        dataArray = [_selectedDevices objectForKey:@"env"];
         btnCells = _envCells;
     }
-    
-    id  key = [NSNumber numberWithInteger:cellBtn.tag];
-    NSDictionary *selectedData = [_buttonTagWithDataMap
-                                  objectForKey:key];
-    
 
-    [dataArray removeObject:selectedData];
- 
+    BasePlugElement *plug = [dataArray objectAtIndex:idx];
+    [plug removeDriver];
     
-    UIView *supBtn = cellBtn.superview;
+    [dataArray removeObjectAtIndex:idx];
+
+
+    
     [UIView animateWithDuration:0.25
                      animations:^{
                          
@@ -1031,11 +1144,12 @@
         
         [UIView commitAnimations];
         
+        b.tag = baseTag*1000+i;
+        
         x+=E_CELL_WIDTH;
         x+=space;
     }
     
-    [_buttonTagWithDataMap removeObjectForKey:key];
 }
 
 

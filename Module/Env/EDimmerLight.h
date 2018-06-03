@@ -19,9 +19,6 @@
 //<EDimmerLightProxys>
 @property (nonatomic, strong) id _proxyObj;
 
-
-- (void) removeDriver;
-
 - (NSString*) deviceName;
 
 

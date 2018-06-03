@@ -22,11 +22,6 @@
 //<VAProcessorProxys>
 @property (nonatomic, strong) NSMutableArray *_outAudioProxys;
 
-
-
-
-- (void) removeDriver;
-
 - (NSMutableDictionary *)inputChannelAtIndex:(int)index;
 - (NSMutableDictionary *)outChannelAtIndex:(int)index;
 

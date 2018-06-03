@@ -218,6 +218,9 @@ static DataSync* dSyncInstance = nil;
 
 - (void) syncRegulusDrivers{
     
+    if(self._mapDrivers)
+        return;
+    
 #ifdef OPEN_REG_LIB_DEF
         
         IMP_BLOCK_SELF(DataSync);

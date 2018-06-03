@@ -136,6 +136,10 @@
         [self loadSenseFromRegulusCtrl];
     }
     
+    //获取Regulus支持的插件
+    [[DataSync sharedDataSync] syncRegulusDrivers];
+    
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(notifyReloadScenario:)
                                                  name:@"Notify_Reload_Senario"
@@ -441,10 +445,15 @@
         }
         else
         {
-            EngineerToUseTeslariViewCtrl *ctrl = [[EngineerToUseTeslariViewCtrl alloc] init];
-            ctrl._meetingRoomDic = roomDic;
+//            EngineerToUseTeslariViewCtrl *ctrl = [[EngineerToUseTeslariViewCtrl alloc] init];
+//            ctrl._meetingRoomDic = roomDic;
+//            [self.navigationController pushViewController:ctrl animated:YES];
+
+            EngineerPresetScenarioViewCtrl *ctrl = [[EngineerPresetScenarioViewCtrl alloc] init];
+            ctrl._meetingRoomDic =roomDic;
             [self.navigationController pushViewController:ctrl animated:YES];
 
+            
         }
         
     }

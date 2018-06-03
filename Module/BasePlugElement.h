@@ -56,6 +56,7 @@
 - (int) getID;
 
 - (void) createDriver;
+- (void) removeDriver;
 
 - (void) syncDriverIPProperty;
 - (void) uploadDriverIPProperty;
