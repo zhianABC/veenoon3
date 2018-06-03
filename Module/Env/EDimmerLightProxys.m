@@ -168,7 +168,7 @@
     self._level = levelValue;
     
     [self._channelsMap setObject:[NSNumber numberWithInt:_level]
-                          forKey:[NSNumber numberWithInt:ch]];
+                          forKey:[NSString stringWithFormat:@"%d", ch]];
     
     if(cmd)
     {

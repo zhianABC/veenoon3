@@ -13,6 +13,8 @@
 #import "Scenario.h"
 #import "EDimmerLight.h"
 #import "EDimmerLightProxys.h"
+#import "RegulusSDK.h"
+#import "KVNProgress.h"
 
 @interface UserLightConfigViewCtrl () {
     IconCenterTextButton *_backBiDengBtn;
@@ -233,6 +235,64 @@
     }
     
 }
+
+- (void) getCurrentDeviceDriverProxys{
+    
+    if(_curProcessor == nil)
+        return;
+    
+#ifdef OPEN_REG_LIB_DEF
+    
+    IMP_BLOCK_SELF(UserLightConfigViewCtrl);
+    
+    RgsDriverObj *driver = _curProcessor._driver;
+    if([driver isKindOfClass:[RgsDriverObj class]])
+    {
+        
+        [[RegulusSDK sharedRegulusSDK] GetDriverCommands:driver.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
+            if (result) {
+                if ([commands count]) {
+                    [block_self loadedLightCommands:commands];
+                }
+            }
+            else{
+                [KVNProgress showErrorWithStatus:@"中控链接断开！"];
+            }
+        }];
+    }
+#endif
+}
+
+- (void) loadedLightCommands:(NSArray*)cmds{
+    
+    RgsDriverObj *driver = _curProcessor._driver;
+    
+    id proxy = _curProcessor._proxyObj;
+    
+    EDimmerLightProxys *vpro = nil;
+    if(proxy && [proxy isKindOfClass:[EDimmerLightProxys class]])
+    {
+        vpro = proxy;
+    }
+    else
+    {
+        vpro = [[EDimmerLightProxys alloc] init];
+    }
+    
+    vpro._deviceId = driver.m_id;
+    [vpro checkRgsProxyCommandLoad:cmds];
+    if([_curProcessor._localSavedCommands count])
+    {
+        NSDictionary *local = [_curProcessor._localSavedCommands objectAtIndex:0];
+        [vpro recoverWithDictionary:local];
+    }
+    
+    self._curProcessor._proxyObj = vpro;
+   
+    //self._number = [vpro getNumberOfLights];
+    //[self layoutChannels];
+}
+
 - (void) tongdengAction3:(id)sender{
     [_backBiDengBtn setBtnHighlited:NO];
     [_houpaidengdai2Btn setBtnHighlited:NO];
