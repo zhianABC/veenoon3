@@ -211,6 +211,7 @@
 
 - (void) lightSysAction:(id)sender{
     UserLightConfigViewCtrl *ctrl = [[UserLightConfigViewCtrl alloc] init];
+    ctrl._scenario = _data;
     [self.navigationController pushViewController:ctrl animated:YES];
 }
 

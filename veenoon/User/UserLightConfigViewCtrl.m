@@ -10,6 +10,9 @@
 #import "JLightSliderView.h"
 #import "UIButton+Color.h"
 #import "IconCenterTextButton.h"
+#import "Scenario.h"
+#import "EDimmerLight.h"
+#import "EDimmerLightProxys.h"
 
 @interface UserLightConfigViewCtrl () {
     IconCenterTextButton *_backBiDengBtn;
@@ -30,9 +33,13 @@
     JLightSliderView *_tongdengSlider2;
     JLightSliderView *_tongdengSlider3;
 }
+@property (nonatomic, strong) EDimmerLight *_curProcessor;
+
 @end
 
 @implementation UserLightConfigViewCtrl
+@synthesize _scenario;
+@synthesize _curProcessor;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -214,6 +221,17 @@
     _tongdengSlider3.minValue = 0;
     [_tongdengSlider3 resetScale];
     _tongdengSlider3.center = CGPointMake(sliderLeftRight+rowGap*8, sliderHeight);
+    
+    
+    if([_scenario._envDevices count])
+    {
+        for(BasePlugElement *plug in _scenario._envDevices)
+        {
+            if([plug isKindOfClass:[EDimmerLight class]])
+                self._curProcessor = (EDimmerLight*)plug;
+        }
+    }
+    
 }
 - (void) tongdengAction3:(id)sender{
     [_backBiDengBtn setBtnHighlited:NO];

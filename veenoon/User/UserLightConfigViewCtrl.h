@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "UserBaseViewControllor.h"
+
+@class Scenario;
+
 @interface UserLightConfigViewCtrl : UserBaseViewControllor {
     
 }
+@property (nonatomic, strong) Scenario *_scenario;
 
 @end
