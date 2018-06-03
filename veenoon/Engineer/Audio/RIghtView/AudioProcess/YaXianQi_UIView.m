@@ -10,6 +10,8 @@
 #import "UIButton+Color.h"
 #import "SlideButton.h"
 #import "GradeLineView.h"
+#import "VAProcessorProxys.h"
+#import "RegulusSDK.h"
 
 @interface YaXianQi_UIView() <SlideButtonDelegate>
 {
@@ -20,12 +22,18 @@
     UILabel *lableL3;
     UILabel *lableL4;
     
+    SlideButton *xielvSlide;
+    SlideButton *qidongshijianSlide;
+    SlideButton *huifushijianSlide;
+    SlideButton *fazhiSlider;
+    
 }
-
+@property (nonatomic, strong) VAProcessorProxys *_curProxy;
 @end
 
 
 @implementation YaXianQi_UIView
+@synthesize _curProxy;
 //@synthesize _channelBtns;
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -35,16 +43,23 @@
 }
 */
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithFrameProxys:(CGRect)frame withProxys:(NSArray*) proxys
 {
+    self._proxys = proxys;
     if(self = [super initWithFrame:frame])
     {
+        if (self._curProxy == nil) {
+            if (self._proxys) {
+                self._curProxy = [self._proxys objectAtIndex:0];
+            }
+        }
+        
         channelBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
         channelBtn.frame = CGRectMake(0, 50, 70, 36);
         channelBtn.clipsToBounds = YES;
         channelBtn.layer.cornerRadius = 5;
         channelBtn.titleLabel.font = [UIFont systemFontOfSize:15];
-        [channelBtn setTitle:@"In 1" forState:UIControlStateNormal];
+        [channelBtn setTitle:_curProxy._rgsProxyObj.name forState:UIControlStateNormal];
         [channelBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
         [self addSubview:channelBtn];
     
@@ -73,6 +88,47 @@
             [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }
     }
+    
+    int idx = (int)sender.tag;
+    self._curProxy = [self._proxys objectAtIndex:idx];
+    
+    NSString *name = _curProxy._rgsProxyObj.name;
+    [channelBtn setTitle:name forState:UIControlStateNormal];
+    
+    [self updateYaXianQi];
+}
+
+-(void) updateYaXianQi {
+    NSString *zengyiDB = [_curProxy getYaxianFazhi];
+    float value = [zengyiDB floatValue];
+    float f = (value+12.0)/24.0;
+    [fazhiSlider setCircleValue:f];
+    
+    lableL1.text = [zengyiDB stringByAppendingString:@" dB"];
+    
+    
+    NSString *xielv = [_curProxy getYaxianXielv];
+    float xielvValue = [xielv floatValue];
+    float fXieLv = (xielvValue+10)/20;
+    [xielvSlide setCircleValue:fXieLv];
+    
+    lableL2.text = xielv;
+    
+    
+    NSString *startTime = [_curProxy getYaxianStartTime];
+    float startTimeValue = [startTime floatValue];
+    float fstartTimeValue = (startTimeValue+1000)/2000;
+    [qidongshijianSlide setCircleValue:fstartTimeValue];
+    
+    lableL3.text = startTime;
+    
+    
+    NSString *huifuTime = [_curProxy getYaxianRecoveryTime];
+    float huifuTimeValue = [huifuTime floatValue];
+    float fhuifuTimeValue = (huifuTimeValue+1000)/2000;
+    [huifushijianSlide setCircleValue:fhuifuTimeValue];
+    
+    lableL4.text = huifuTime;
 }
 
 - (void) contentViewComps{
@@ -104,16 +160,21 @@
     tL.font = [UIFont systemFontOfSize:13];
     tL.textColor = [UIColor whiteColor];
     
-    SlideButton *xielvSlider1 = [[SlideButton alloc] initWithFrame:CGRectMake(x, y+20, 120, 120)];
-    xielvSlider1._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
-    xielvSlider1._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
-    [xielvSlider1 enableValueSet:YES];
-    xielvSlider1.delegate = self;
-    xielvSlider1.tag = 1;
-    [contentView addSubview:xielvSlider1];
+    fazhiSlider = [[SlideButton alloc] initWithFrame:CGRectMake(x, y+20, 120, 120)];
+    fazhiSlider._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+    fazhiSlider._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+    [fazhiSlider enableValueSet:YES];
+    fazhiSlider.delegate = self;
+    fazhiSlider.tag = 1;
+    [contentView addSubview:fazhiSlider];
+    NSString *zengyiDB = [_curProxy getYaxianFazhi];
+    float value = [zengyiDB floatValue];
+    float f = (value+12.0)/24.0;
+    [fazhiSlider setCircleValue:f];
+    
     
     lableL1 = [[UILabel alloc] initWithFrame:CGRectMake(x, y+20+120, 120, 20)];
-    lableL1.text = @"-12dB";
+    lableL1.text = [zengyiDB stringByAppendingString:@" dB"];
     lableL1.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:lableL1];
     lableL1.font = [UIFont systemFontOfSize:13];
@@ -129,16 +190,21 @@
     tL.font = [UIFont systemFontOfSize:13];
     tL.textColor = [UIColor whiteColor];
 
-    SlideButton *xielvSlider2 = [[SlideButton alloc] initWithFrame:CGRectMake(x, y+20, 120, 120)];
-    xielvSlider2._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
-    xielvSlider2._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
-    [xielvSlider2 enableValueSet:YES];
-    xielvSlider2.delegate = self;
-    xielvSlider2.tag = 2;
-    [contentView addSubview:xielvSlider2];
+    xielvSlide = [[SlideButton alloc] initWithFrame:CGRectMake(x, y+20, 120, 120)];
+    xielvSlide._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+    xielvSlide._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+    [xielvSlide enableValueSet:YES];
+    xielvSlide.delegate = self;
+    xielvSlide.tag = 2;
+    [contentView addSubview:xielvSlide];
+    
+    NSString *xielv = [_curProxy getYaxianXielv];
+    float xielvValue = [xielv floatValue];
+    float fXieLv = (xielvValue+10)/20;
+    [xielvSlide setCircleValue:fXieLv];
 
     lableL2 = [[UILabel alloc] initWithFrame:CGRectMake(x, y+20+120, 120, 20)];
-    lableL2.text = @"-12dB";
+    lableL2.text = xielv;
     lableL2.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:lableL2];
     lableL2.font = [UIFont systemFontOfSize:13];
@@ -154,16 +220,21 @@
     tL.font = [UIFont systemFontOfSize:13];
     tL.textColor = [UIColor whiteColor];
     
-    SlideButton *xielvSlider3 = [[SlideButton alloc] initWithFrame:CGRectMake(x, y+20, 120, 120)];
-    xielvSlider3._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
-    xielvSlider3._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
-    [xielvSlider3 enableValueSet:YES];
-    xielvSlider3.delegate = self;
-    xielvSlider3.tag = 3;
-    [contentView addSubview:xielvSlider3];
+    qidongshijianSlide = [[SlideButton alloc] initWithFrame:CGRectMake(x, y+20, 120, 120)];
+    qidongshijianSlide._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+    qidongshijianSlide._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+    [qidongshijianSlide enableValueSet:YES];
+    qidongshijianSlide.delegate = self;
+    qidongshijianSlide.tag = 3;
+    [contentView addSubview:qidongshijianSlide];
+    
+    NSString *startTime = [_curProxy getYaxianStartTime];
+    float startTimeValue = [startTime floatValue];
+    float fstartTimeValue = (startTimeValue+1000)/2000;
+    [qidongshijianSlide setCircleValue:fstartTimeValue];
 
     lableL3 = [[UILabel alloc] initWithFrame:CGRectMake(x, y+20+120, 120, 20)];
-    lableL3.text = @"0";
+    lableL3.text = startTime;
     lableL3.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:lableL3];
     lableL3.font = [UIFont systemFontOfSize:13];
@@ -179,16 +250,21 @@
     tL.font = [UIFont systemFontOfSize:13];
     tL.textColor = [UIColor whiteColor];
     
-    SlideButton *xielvSlider4 = [[SlideButton alloc] initWithFrame:CGRectMake(x, y+20, 120, 120)];
-    xielvSlider4._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
-    xielvSlider4._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
-    [xielvSlider4 enableValueSet:YES];
-    xielvSlider4.delegate = self;
-    xielvSlider4.tag = 3;
-    [contentView addSubview:xielvSlider4];
+    huifushijianSlide = [[SlideButton alloc] initWithFrame:CGRectMake(x, y+20, 120, 120)];
+    huifushijianSlide._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+    huifushijianSlide._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+    [huifushijianSlide enableValueSet:YES];
+    huifushijianSlide.delegate = self;
+    huifushijianSlide.tag = 4;
+    [contentView addSubview:huifushijianSlide];
+    
+    NSString *huifuTime = [_curProxy getYaxianRecoveryTime];
+    float huifuTimeValue = [huifuTime floatValue];
+    float fhuifuTimeValue = (huifuTimeValue+1000)/2000;
+    [huifushijianSlide setCircleValue:fhuifuTimeValue];
     
     lableL4 = [[UILabel alloc] initWithFrame:CGRectMake(x, y+20+120, 120, 20)];
-    lableL4.text = @"0";
+    lableL4.text = huifuTime;
     lableL4.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:lableL4];
     lableL4.font = [UIFont systemFontOfSize:13];
@@ -200,24 +276,32 @@
     int tag = (int) slbtn.tag;
     if (tag == 1) {
         int k = (value *24)-12;
-        NSString *valueStr= [NSString stringWithFormat:@"%dB", k];
+        NSString *valueStr= [NSString stringWithFormat:@"%d dB", k];
         
         lableL1.text = valueStr;
+        
+        [_curProxy controlYaxianFazhi:[NSString stringWithFormat:@"%d", k]];
     } else if (tag == 2) {
-        int k = (value *24)-12;
-        NSString *valueStr= [NSString stringWithFormat:@"%dB", k];
+        int k = (value *20)-10;
+        NSString *valueStr= [NSString stringWithFormat:@"%d", k];
         
         lableL2.text = valueStr;
+        
+        [_curProxy controlYaxianXielv:valueStr];
     } else if (tag == 3) {
-        int k = (value *1000)-500;
+        int k = (value *2000)-1000;
         NSString *valueStr= [NSString stringWithFormat:@"%d", k];
         
         lableL3.text = valueStr;
+        
+        [_curProxy controlYaxianStartTime:valueStr];
     } else {
         int k = (value *2000)-1000;
         NSString *valueStr= [NSString stringWithFormat:@"%d", k];
         
         lableL4.text = valueStr;
+        
+        [_curProxy controlYaxianRecoveryTime:valueStr];
     }
 }
 @end

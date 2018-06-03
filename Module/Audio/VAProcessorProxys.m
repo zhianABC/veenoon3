@@ -71,6 +71,11 @@
 @synthesize _yanshiqiYingChi;
 @synthesize _yanshiqiMi;
 @synthesize _yanshiqiHaoMiao;
+@synthesize _yaxianFazhi;
+@synthesize _yaxianXielv;
+@synthesize _yaxianStartTime;
+@synthesize _yaxianRecoveryTime;
+
 
 @synthesize _RgsSceneDeviceOperationShadow;
 
@@ -102,6 +107,11 @@
         _yanshiqiMi = @"2222";
         _yanshiqiYingChi = @"1111";
         _yanshiqiSlide = @"0";
+        
+        _yaxianFazhi = @"10";
+        _yaxianXielv = @"4";
+        _yaxianStartTime = @"1111";
+        _yaxianRecoveryTime = @"0";
         
         self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionary];
     }
@@ -453,6 +463,33 @@
 - (void) controlZiDongHunYinZengYi:(NSString*) zengyiDB {
     _zidonghunyinZengYi = zengyiDB;
 }
+
+- (NSString*) getYaxianFazhi {
+    return _yaxianFazhi;
+}
+- (void) controlYaxianFazhi:(NSString*) yaxianFazhi {
+    _yaxianFazhi = yaxianFazhi;
+}
+- (NSString*) getYaxianXielv {
+    return _yaxianXielv;
+}
+- (void) controlYaxianXielv:(NSString*) yaxianXielv {
+    _yaxianXielv = yaxianXielv;
+}
+- (NSString*) getYaxianStartTime {
+    return _yaxianStartTime;
+}
+- (void) controlYaxianStartTime:(NSString*) yaxianStartTime {
+    _yaxianStartTime = yaxianStartTime;
+}
+- (NSString*) getYaxianRecoveryTime {
+    return _yaxianRecoveryTime;
+}
+- (void) controlYaxianRecoveryTime:(NSString*) yaxianRecoveryTime {
+    _yaxianRecoveryTime = yaxianRecoveryTime;
+}
+
+
 - (void) controlDigtalMute:(BOOL)isMute{
     
     RgsCommandInfo *cmd = nil;
