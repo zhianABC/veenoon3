@@ -213,7 +213,7 @@
     
     CGRect vrc = CGRectMake(60, 140, SCREEN_WIDTH-120, SCREEN_HEIGHT-140-60);
     
-    yxq = [[YaXianQi_UIView alloc] initWithFrame:vrc];
+    yxq = [[YaXianQi_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._inAudioProxys];
     [self.view addSubview:yxq];
     yxq.hidden = YES;
     

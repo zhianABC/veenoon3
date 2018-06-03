@@ -37,6 +37,11 @@
 @property (nonatomic, strong) NSString *_yanshiqiYingChi;
 @property (nonatomic, strong) NSString *_yanshiqiMi;
 @property (nonatomic, strong) NSString *_yanshiqiHaoMiao;
+//yaxianqi
+@property (nonatomic, strong) NSString *_yaxianFazhi;
+@property (nonatomic, strong) NSString *_yaxianXielv;
+@property (nonatomic, strong) NSString *_yaxianStartTime;
+@property (nonatomic, strong) NSString *_yaxianRecoveryTime;
 
 /*
  SET_MUTE
@@ -97,6 +102,16 @@
 - (void) controlYanshiqiMi:(NSString*) yanshiqiMi;
 - (NSString*) getYanshiqiHaoMiao;
 - (void) controlYanshiqiHaoMiao:(NSString*) yanshiqiHaoMiao;
+
+//yaxianqi
+- (NSString*) getYaxianFazhi;
+- (void) controlYaxianFazhi:(NSString*) yaxianFazhi;
+- (NSString*) getYaxianXielv;
+- (void) controlYaxianXielv:(NSString*) yaxianXielv;
+- (NSString*) getYaxianStartTime;
+- (void) controlYaxianStartTime:(NSString*) yaxianStartTime;
+- (NSString*) getYaxianRecoveryTime;
+- (void) controlYaxianRecoveryTime:(NSString*) yaxianRecoveryTime;
 
 
 - (void) controlDeviceMode:(NSString*)mode;
