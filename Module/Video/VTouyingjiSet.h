@@ -22,8 +22,6 @@
 
 @property (nonatomic, strong) NSArray *_localSavedCommands;
 
-- (void) removeDriver;
-
 
 - (NSString*) deviceName;
 

@@ -198,95 +198,11 @@
                                              selector:@selector(notifyRefreshTable:)
                                                  name:@"NotifyRefreshTableWithCom"
                                                object:nil];
-    
-    
-    if(_selectedDevices == nil)
-    {
-        [self getDriversFromVeenoon];
-    }
+
     
 }
 
-- (void) getDriversFromVeenoon{
-    
-    IMP_BLOCK_SELF(EngineerToUseTeslariViewCtrl);
-    
-    RgsAreaObj *areaObj = [DataSync sharedDataSync]._currentArea;
-    if(areaObj)
-    {
-        [[RegulusSDK sharedRegulusSDK] GetDrivers:areaObj.m_id
-                                       completion:^(BOOL result, NSArray *drivers, NSError *error) {
-                                           
-                                           if (error) {
-                                               //[KVNProgress showErrorWithStatus:[error localizedDescription]];
-                                           }
-                                           else{
-                                            
-                                               [block_self prepareCurrentAreaDrivers:drivers];
-                                           }
-                                       }];
-    }
-    
-}
 
-- (void) prepareCurrentAreaDrivers:(NSArray*)drivers{
-    
-    for(RgsDriverObj *driver in drivers)
-    {
-        RgsDriverInfo *info = driver.info;
-        
-        NSDictionary *device = [[DataCenter defaultDataCenter] driverWithKey:info.serial];
-        
-        if(device)
-        {
-            NSString *classname = [device objectForKey:@"driver_class"];
-            Class someClass = NSClassFromString(classname);
-            BasePlugElement * obj = [[someClass alloc] init];
-            
-            if(obj)
-            {
-                obj._name = [device objectForKey:@"name"];
-                obj._brand = [device objectForKey:@"brand"];
-                obj._type = [device objectForKey:@"ptype"];
-                obj._driverUUID = [device objectForKey:@"brand"];
-                
-                obj._driverInfo = info;
-                
-                obj._plugicon = [device objectForKey:@"icon"];
-                obj._plugicon_s = [device objectForKey:@"icon_s"];
-                
-                obj._driver = driver;
-                
-                
-                
-                NSString *type = [device objectForKey:@"type"];
-                if([type isEqualToString:@"audio"])
-                {
-                    [_audioDrivers addObject:obj];
-                }
-                else if([type isEqualToString:@"video"])
-                {
-                    [_videoDrivers addObject:obj];
-                }
-                else if([type isEqualToString:@"env"])
-                {
-                    [_envDrivers addObject:obj];
-                }
-                else if([type isEqualToString:@"other"])
-                {
-                    [_portDrivers addObject:obj];
-                }
-                
-            }
-            
-            
-        }
-        
-    }
-    
-    [_tableView reloadData];
-    
-}
 
 - (void) notifyRefreshTable:(id)sender{
     

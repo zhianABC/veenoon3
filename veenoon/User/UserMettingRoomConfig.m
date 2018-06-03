@@ -233,7 +233,7 @@
     }
     else
     {
-        [KVNProgress showSuccess];
+        [KVNProgress dismiss];
     }
     
     
@@ -269,7 +269,7 @@
     }
     
     
-    [KVNProgress showSuccess];
+    [KVNProgress dismiss];
     
     [self layoutScenarios];
 }

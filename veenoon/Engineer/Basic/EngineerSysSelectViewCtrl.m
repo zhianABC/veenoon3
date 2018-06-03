@@ -354,7 +354,7 @@
     {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil
                                                                        message:@"您确定要清空已保存的场景，设置新系统吗？"
-                                                                preferredStyle:UIAlertControllerStyleActionSheet];
+                                                                preferredStyle:UIAlertControllerStyleAlert];
         
         
         IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);

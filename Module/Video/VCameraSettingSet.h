@@ -23,7 +23,7 @@
 //<RgsConnectionObj>
 @property (nonatomic, strong) NSArray *_localSavedProxys;
 
-- (void) removeDriver;
+
 
 - (NSString*) deviceName;
 

@@ -106,6 +106,14 @@
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
 
+    if([_scenario._audioDevices count])
+    {
+        for(BasePlugElement *plug in _scenario._audioDevices)
+        {
+            if([plug isKindOfClass:[AudioEProcessor class]])
+                self._curProcessor = (AudioEProcessor*)plug;
+        }
+    }
     
     self._iconBtns = [NSMutableArray array];
     
