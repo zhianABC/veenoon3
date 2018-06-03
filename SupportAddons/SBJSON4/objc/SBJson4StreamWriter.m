@@ -87,12 +87,19 @@ static NSNumber *kNegativeInfinity;
 	}
 
 	for (id k in keys) {
-		if (![k isKindOfClass:[NSString class]]) {
+        
+        id kk = k;
+        if([k isKindOfClass:[NSNumber class]])
+        {
+            kk = [NSString stringWithFormat:@"%d", [k intValue]];
+        }
+        
+		if (![kk isKindOfClass:[NSString class]]) {
 			self.error = [NSString stringWithFormat:@"JSON object key must be string: %@", k];
 			return NO;
 		}
 
-		if (![self writeString:k])
+		if (![self writeString:kk])
 			return NO;
 		if (![self writeValue:[dict objectForKey:k]])
 			return NO;

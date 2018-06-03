@@ -18,6 +18,7 @@
 #import "DataBase.h"
 #import "Scenario.h"
 #import "DataCenter.h"
+#import "SBJson4.h"
 
 #ifdef OPEN_REG_LIB_DEF
 #import "RegulusSDK.h"
@@ -212,6 +213,7 @@
 - (void) checkSceneDriver:(NSArray*)scenes{
     
     NSArray* savedScenarios = [[DataBase sharedDatabaseInstance] getSavedScenario:1];
+    
 
     NSMutableDictionary *map = [NSMutableDictionary dictionary];
     for(NSMutableDictionary *senario in savedScenarios)
@@ -219,8 +221,6 @@
         int s_driver_id = [[senario objectForKey:@"s_driver_id"] intValue];
         [map setObject:senario forKey:[NSNumber numberWithInt:s_driver_id]];
     }
-    
-    
     
     for(RgsSceneObj *dr in scenes)
     {

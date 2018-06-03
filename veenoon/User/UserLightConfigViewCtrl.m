@@ -13,6 +13,8 @@
 #import "Scenario.h"
 #import "EDimmerLight.h"
 #import "EDimmerLightProxys.h"
+#import "RegulusSDK.h"
+#import "KVNProgress.h"
 
 @interface UserLightConfigViewCtrl () <JLightSliderViewDelegate>{
     
@@ -81,14 +83,76 @@
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
+    
+    
+    [self getCurrentDeviceDriverProxys];
+    
+}
+
+
+- (void) getCurrentDeviceDriverProxys{
+    
+    if(_curProcessor == nil)
+        return;
+    
+#ifdef OPEN_REG_LIB_DEF
+    
+    IMP_BLOCK_SELF(UserLightConfigViewCtrl);
+    
+    RgsDriverObj *driver = _curProcessor._driver;
+    if([driver isKindOfClass:[RgsDriverObj class]])
+    {
+        
+        [[RegulusSDK sharedRegulusSDK] GetDriverCommands:driver.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
+            if (result) {
+                if ([commands count]) {
+                    [block_self loadedLightCommands:commands];
+                }
+            }
+            else{
+                [KVNProgress showErrorWithStatus:@"中控链接断开！"];
+            }
+        }];
+    }
+#endif
+}
+
+- (void) loadedLightCommands:(NSArray*)cmds{
+    
+    RgsDriverObj *driver = _curProcessor._driver;
+    
+    id proxy = _curProcessor._proxyObj;
+    
+    EDimmerLightProxys *vpro = nil;
+    if(proxy && [proxy isKindOfClass:[EDimmerLightProxys class]])
+    {
+        vpro = proxy;
+    }
+    else
+    {
+        vpro = [[EDimmerLightProxys alloc] init];
+    }
+    
+    vpro._deviceId = driver.m_id;
+    [vpro checkRgsProxyCommandLoad:cmds];
+    if([_curProcessor._localSavedCommands count])
+    {
+        NSDictionary *local = [_curProcessor._localSavedCommands objectAtIndex:0];
+        [vpro recoverWithDictionary:local];
+    }
+    
+    self._curProcessor._proxyObj = vpro;
+    
+    int count = [vpro getNumberOfLights];
+    //[self layoutChannels];
+    
+    
+    
     int sliderHeight = 475-64;
     int sliderLeftRight = 90;
     
     int buttonHeight = 50+64;
     int width = 60;
-    
-    //int count = (int)[_inputProxys count];
-    int count = 14;
     
     int pages = count/8;
     if (count % 8 > 0) {
@@ -101,15 +165,20 @@
             sliderLeftRight = i/8 * SCREEN_WIDTH+90;
         }
         
+        NSString *txt = [NSString stringWithFormat:@"CH %02d", i+1];
+        
         IconCenterTextButton *lightBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(sliderLeftRight-30, buttonHeight, width, width*2)];
         
-        [lightBtn buttonWithIcon:[UIImage imageNamed:@"user_light_bg_n.png"] selectedIcon:[UIImage imageNamed:@"user_light_bg_s.png"] text:@"name 01" normalColor:SINGAL_COLOR selColor:RGB(230, 151, 50)];
+        [lightBtn buttonWithIcon:[UIImage imageNamed:@"user_light_bg_n.png"] selectedIcon:[UIImage imageNamed:@"user_light_bg_s.png"]
+                            text:txt
+                     normalColor:SINGAL_COLOR
+                        selColor:RGB(230, 151, 50)];
         [_proxysView addSubview:lightBtn];
         lightBtn.tag = i;
         
         JLightSliderView *lightSlider = [[JLightSliderView alloc]
-                                 initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light2.png"]
-                                 frame:CGRectZero];
+                                         initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light2.png"]
+                                         frame:CGRectZero];
         [_proxysView addSubview:lightSlider];
         [lightSlider setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
         lightSlider.topEdge = 60;
@@ -120,19 +189,29 @@
         lightSlider.center = CGPointMake(sliderLeftRight, sliderHeight);
         lightSlider.tag = i;
         
+        //lightSlider
+        
+        
         sliderLeftRight+=120;
         
         [_buttonArray addObject:lightBtn];
     }
-    
-    int ww1 = pages*SCREEN_WIDTH;
-    
-    _proxysView.contentSize = CGSizeMake(ww1, _proxysView.frame.size.height);
-    _proxysView.pagingEnabled = YES;
-    
 }
 
-- (void) didSliderValueChanged:(float)value object:(id)object {
+- (void) didSliderValueChanged:(float)value object:(id)object{
+    
+    int circleValue = value*100.0f;
+    
+    EDimmerLightProxys *vpro = self._curProcessor._proxyObj;
+    int ch = 1;
+    
+    if([object isKindOfClass:[JLightSliderView class]])
+        ch = (int)((JLightSliderView*)object).tag + 1;
+    
+    if([vpro isKindOfClass:[EDimmerLightProxys class]])
+    {
+        [vpro controlDeviceLightLevel:circleValue ch:ch];
+    }
     
 }
 
