@@ -8,6 +8,7 @@
 
 #import "UserLightConfigViewCtrl.h"
 #import "JLightSliderView.h"
+#import "JSlideView.h"
 #import "UIButton+Color.h"
 #import "IconCenterTextButton.h"
 #import "Scenario.h"
@@ -180,7 +181,7 @@
                                          initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light2.png"]
                                          frame:CGRectZero];
         [_proxysView addSubview:lightSlider];
-        [lightSlider setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
+        [lightSlider setRoadImage:[UIImage imageNamed:@"v_slider_bg_light2.png"]];
         lightSlider.topEdge = 60;
         lightSlider.bottomEdge = 55;
         lightSlider.maxValue = 100;

@@ -81,9 +81,14 @@
     return self;
 }
 
+- (void) setShowIconImage:(UIImage *)image{
+    
+    
+}
+
 - (void) setRoadImage:(UIImage *)image{
     
-    
+    //roadSlider.image = image;
 }
 
 - (void) resetScalValue:(float) scalValue {
