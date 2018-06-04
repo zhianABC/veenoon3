@@ -10,6 +10,10 @@
 #import "veenoon-Swift.h"
 #import "UIButton+Color.h"
 #import "SlideButton.h"
+#import "VAProcessorProxys.h"
+#import "RegulusSDK.h"
+#import "LvBoJunHeng_Chooser.h"
+
 
 @interface LvBoJunHeng_UIView() <SlideButtonDelegate>{
     SlideButton *xielvSlider;
@@ -28,13 +32,21 @@
     FilterGraphView *fglm;
     
     int _channelSelIndex;
+    
+    UIButton *leixingBtn;
+    
+    UIPopoverController    *_deviceSelector;
 }
 
 @property (nonatomic, strong) NSMutableArray *_boduanChannelBtns;
+@property (nonatomic, strong) VAProcessorProxys *_curProxy;
+
 @end
 
 @implementation LvBoJunHeng_UIView
 @synthesize _boduanChannelBtns;
+@synthesize _curProxy;
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -43,8 +55,16 @@
 }
 */
 
-- (id)initWithFrame:(CGRect)frame {
+- (id)initWithFrameProxys:(CGRect)frame withProxys:(NSArray*) proxys {
+    self._proxys = proxys;
+    
     if (self = [super initWithFrame:frame]) {
+        
+        if (self._curProxy == nil) {
+            if (self._proxys) {
+                self._curProxy = [self._proxys objectAtIndex:0];
+            }
+        }
         
         CGRect rc = CGRectMake(0, 10, frame.size.width, 280);
         UIView *bgv = [[UIView alloc] initWithFrame:rc];
@@ -112,13 +132,14 @@
     
     int btnStartX = 10;
     int btnY = 50;
-    UIButton *leixingBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    leixingBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
     leixingBtn.frame = CGRectMake(btnStartX+60, btnY-20, 100, 30);
     leixingBtn.layer.cornerRadius = 5;
     leixingBtn.layer.borderWidth = 2;
     leixingBtn.layer.borderColor = [UIColor clearColor].CGColor;;
     leixingBtn.clipsToBounds = YES;
-    [leixingBtn setTitle:@"  巴特沃斯" forState:UIControlStateNormal];
+    NSString *dispaly = [@"   " stringByAppendingString:[_curProxy getGaoTongType]];
+    [leixingBtn setTitle:dispaly  forState:UIControlStateNormal];
     leixingBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     leixingBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     UIImageView *icon = [[UIImageView alloc]
@@ -206,7 +227,49 @@
     
 }
 
-- (void) leixingBtnAction:(id) sender {
+- (void) leixingBtnAction:(UIButton*) sender {
+    
+    if ([_deviceSelector isPopoverVisible]) {
+        [_deviceSelector dismissPopoverAnimated:NO];
+    }
+    
+    LvBoJunHeng_Chooser *sel = [[LvBoJunHeng_Chooser alloc] init];
+    sel._dataArray = [_curProxy getLvBoGaoTongArray];
+    sel._type = 0;
+    
+    sel.preferredContentSize = CGSizeMake(150, 350);
+    sel._size = CGSizeMake(150, 350);
+    
+    IMP_BLOCK_SELF(LvBoJunHeng_UIView);
+    sel._block = ^(id object)
+    {
+        [block_self didAddDevice:object];
+    };
+    
+    CGRect rect = [self convertRect:sender.frame
+                                fromView:sender];
+    
+    _deviceSelector = [[UIPopoverController alloc] initWithContentViewController:sel];
+    _deviceSelector.popoverContentSize = sel.preferredContentSize;
+    
+    [_deviceSelector presentPopoverFromRect:rect
+                                     inView:self
+                   permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    
+    
+}
+
+- (void) didAddDevice:(NSString*)device{
+    
+    NSString *dispaly = [@"   " stringByAppendingString:device];
+    
+    [leixingBtn setTitle:dispaly forState:UIControlStateNormal];
+    
+    [_curProxy controlGaoTongType:device];
+    
+    if ([_deviceSelector isPopoverVisible]) {
+        [_deviceSelector dismissPopoverAnimated:NO];
+    }
     
 }
 

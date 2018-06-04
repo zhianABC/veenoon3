@@ -79,7 +79,7 @@
 @synthesize _zaoshengHuifuTime;
 @synthesize _zaoshengStartTime;
 @synthesize _isZaoshengStarted;
-
+@synthesize _lvbojunhengGaotongType;
 
 @synthesize _RgsSceneDeviceOperationShadow;
 
@@ -121,7 +121,10 @@
         _zaoshengStartTime = @"222";
         _zaoshengHuifuTime = @"333";
         _isZaoshengStarted = YES;
-    
+        
+        
+        _lvbojunhengGaotongType = @"巴特沃斯";
+        __lvboGaotongArray = [NSArray arrayWithObjects:@"巴特沃斯", @"科沃斯", @"巴塞罗那", nil];
         
         self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionary];
     }
@@ -524,6 +527,17 @@
     self._zaoshengHuifuTime = zaoshengHuifuTime;
 }
 
+
+- (NSString*) getGaoTongType {
+    return self._lvbojunhengGaotongType;
+}
+- (void) controlGaoTongType:(NSString*) gaotongType {
+    self._lvbojunhengGaotongType = gaotongType;
+}
+
+- (NSArray*) getLvBoGaoTongArray {
+    return self._lvboGaotongArray;
+}
 
 - (void) controlDigtalMute:(BOOL)isMute{
     

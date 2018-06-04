@@ -48,6 +48,9 @@
 @property (nonatomic, strong) NSString *_zaoshengHuifuTime;
 @property (nonatomic, assign) BOOL _isZaoshengStarted;
 
+//lvbojunheng
+@property (nonatomic, strong) NSString *_lvbojunhengGaotongType;
+@property (nonatomic, strong) NSArray *_lvboGaotongArray;
 /*
  SET_MUTE
  SET_UNMUTE
@@ -127,6 +130,12 @@
 - (void) controlZaoshengStartTime:(NSString*) zaoshengStartTime;
 - (NSString*) getZaoshengRecoveryTime;
 - (void) controlZaoshengRecoveryTime:(NSString*) zaoshengHuifuTime;
+
+//lvbojunheng
+- (NSString*) getGaoTongType;
+- (void) controlGaoTongType:(NSString*) gaotongType;
+- (NSArray*) getLvBoGaoTongArray;
+
 
 - (void) controlDeviceMode:(NSString*)mode;
 
