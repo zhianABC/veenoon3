@@ -130,6 +130,17 @@
          forControlEvents:UIControlEventTouchUpInside];
     [contentView addSubview:qidongBtn];
     
+    BOOL isZiDongHunYin = [_curProxy isHuiShengXiaoChuStarted];
+    
+    if(isZiDongHunYin)
+    {
+        [qidongBtn changeNormalColor:THEME_RED_COLOR];
+    }
+    else
+    {
+        [qidongBtn changeNormalColor:RGB(75, 163, 202)];
+    }
+    
     aecButton = [UIButton buttonWithColor:nil selColor:nil];
     aecButton.frame = CGRectMake(350, 150, 50, 75);
     aecButton.clipsToBounds = YES;
