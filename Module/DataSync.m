@@ -96,7 +96,7 @@ static DataSync* dSyncInstance = nil;
 
 
 - (void) reloginRegulus{
-    
+    /*
 #ifdef OPEN_REG_LIB_DEF
     
     NSString *regulus_gateway_id = [_currentReglusLogged objectForKey:@"gw_id"];
@@ -112,8 +112,10 @@ static DataSync* dSyncInstance = nil;
                                        
                                    }];
     }
+     
     
 #endif
+     */
 }
 
 - (void) logoutCurrentRegulus{
