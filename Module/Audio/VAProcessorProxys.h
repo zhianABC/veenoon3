@@ -51,6 +51,14 @@
 //lvbojunheng
 @property (nonatomic, strong) NSString *_lvbojunhengGaotongType;
 @property (nonatomic, strong) NSArray *_lvboGaotongArray;
+@property (nonatomic, strong) NSString *_lvbojunhengGaotongXielv;
+@property (nonatomic, strong) NSArray *_lvboGaotongXielvArray;
+@property (nonatomic, strong) NSString *_lvbojunhengDitongType;
+@property (nonatomic, strong) NSArray *_lvboDitongArray;
+@property (nonatomic, strong) NSString *_lvbojunhengDitongXielv;
+@property (nonatomic, strong) NSArray *_lvboDitongXielvArray;
+@property (nonatomic, strong) NSString *_lvbojunhengBoduanType;
+@property (nonatomic, strong) NSArray *_lvboBoDuanArray;
 /*
  SET_MUTE
  SET_UNMUTE
@@ -135,6 +143,23 @@
 - (NSString*) getGaoTongType;
 - (void) controlGaoTongType:(NSString*) gaotongType;
 - (NSArray*) getLvBoGaoTongArray;
+
+- (NSString*) getGaoTongXieLv;
+- (void) controlGaoTongXieLv:(NSString*) gaotongxielv;
+- (NSArray*) getLvBoGaoTongXielvArray;
+
+- (NSString*) getDiTongType;
+- (void) controlDiTongType:(NSString*) ditongtype;
+- (NSArray*) getLvBoDiTongArray;
+
+- (NSString*) getDiTongXieLv;
+- (void) controlDiTongXieLv:(NSString*) ditongxielv;
+- (NSArray*) getLvBoDiTongXielvArray;
+
+- (NSString*) getBoduanType;
+- (void) controlBoduanType:(NSString*) boduanType;
+- (NSArray*) getLvBoBoDuanArray;
+
 
 
 - (void) controlDeviceMode:(NSString*)mode;

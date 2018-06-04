@@ -53,6 +53,10 @@
     titleL.textAlignment = NSTextAlignmentCenter;
     if (_type == 0) {
         titleL.text = @"选择高通类型";
+    } else if (_type == 1) {
+        titleL.text = @"选择低通类型";
+    } else if (_type == 2) {
+        titleL.text = @"选择高通斜率";
     }
     titleL.textColor = [UIColor whiteColor];
     [titleV addSubview:titleL];
