@@ -42,6 +42,11 @@
 @property (nonatomic, strong) NSString *_yaxianXielv;
 @property (nonatomic, strong) NSString *_yaxianStartTime;
 @property (nonatomic, strong) NSString *_yaxianRecoveryTime;
+//zaoshengmen
+@property (nonatomic, strong) NSString *_zaoshengFazhi;
+@property (nonatomic, strong) NSString *_zaoshengStartTime;
+@property (nonatomic, strong) NSString *_zaoshengHuifuTime;
+@property (nonatomic, assign) BOOL _isZaoshengStarted;
 
 /*
  SET_MUTE
@@ -113,6 +118,15 @@
 - (NSString*) getYaxianRecoveryTime;
 - (void) controlYaxianRecoveryTime:(NSString*) yaxianRecoveryTime;
 
+//zaosheng
+- (BOOL) isZaoshengStarted;
+- (void) controlZaoshengStarted:(BOOL)isZaoshengStarted;
+- (NSString*) getZaoshengFazhi;
+- (void) controlZaoshengFazhi:(NSString*) zaoshengFazhi;
+- (NSString*) getZaoshengStartTime;
+- (void) controlZaoshengStartTime:(NSString*) zaoshengStartTime;
+- (NSString*) getZaoshengRecoveryTime;
+- (void) controlZaoshengRecoveryTime:(NSString*) zaoshengHuifuTime;
 
 - (void) controlDeviceMode:(NSString*)mode;
 

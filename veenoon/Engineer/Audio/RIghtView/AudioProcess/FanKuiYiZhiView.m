@@ -98,6 +98,17 @@
                    action:@selector(zhitongBtnAction:)
          forControlEvents:UIControlEventTouchUpInside];
     [contentView addSubview:fankuiyizhiBtn];
+    
+    BOOL isFanKuiYiZhi = [_curProxy isFanKuiYiZhiStarted];
+    
+    if(isFanKuiYiZhi)
+    {
+        [fankuiyizhiBtn changeNormalColor:THEME_RED_COLOR];
+    }
+    else
+    {
+        [fankuiyizhiBtn changeNormalColor:RGB(75, 163, 202)];
+    }
 }
 - (void) zhitongBtnAction:(id) sender {
     if(_curProxy == nil)

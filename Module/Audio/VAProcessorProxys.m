@@ -75,6 +75,10 @@
 @synthesize _yaxianXielv;
 @synthesize _yaxianStartTime;
 @synthesize _yaxianRecoveryTime;
+@synthesize _zaoshengFazhi;
+@synthesize _zaoshengHuifuTime;
+@synthesize _zaoshengStartTime;
+@synthesize _isZaoshengStarted;
 
 
 @synthesize _RgsSceneDeviceOperationShadow;
@@ -112,6 +116,12 @@
         _yaxianXielv = @"4";
         _yaxianStartTime = @"1111";
         _yaxianRecoveryTime = @"0";
+        
+        _zaoshengFazhi = @"9";
+        _zaoshengStartTime = @"222";
+        _zaoshengHuifuTime = @"333";
+        _isZaoshengStarted = YES;
+    
         
         self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionary];
     }
@@ -487,6 +497,31 @@
 }
 - (void) controlYaxianRecoveryTime:(NSString*) yaxianRecoveryTime {
     _yaxianRecoveryTime = yaxianRecoveryTime;
+}
+
+- (BOOL) isZaoshengStarted {
+    return _isZaoshengStarted;
+}
+- (void) controlZaoshengStarted:(BOOL)isZaoshengStarted {
+    self._isZaoshengStarted = isZaoshengStarted;
+}
+- (NSString*) getZaoshengFazhi {
+    return _zaoshengFazhi;
+}
+- (void) controlZaoshengFazhi:(NSString*) zaoshengFazhi {
+    self._zaoshengFazhi = zaoshengFazhi;
+}
+- (NSString*) getZaoshengStartTime {
+    return self._zaoshengStartTime;
+}
+- (void) controlZaoshengStartTime:(NSString*) zaoshengStartTime {
+    self._zaoshengStartTime = zaoshengStartTime;
+}
+- (NSString*) getZaoshengRecoveryTime {
+    return self._zaoshengHuifuTime;
+}
+- (void) controlZaoshengRecoveryTime:(NSString*) zaoshengHuifuTime {
+    self._zaoshengHuifuTime = zaoshengHuifuTime;
 }
 
 

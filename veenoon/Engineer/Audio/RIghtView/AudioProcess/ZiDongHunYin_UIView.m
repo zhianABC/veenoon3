@@ -127,6 +127,17 @@
                    action:@selector(qiyongBtnAction:)
          forControlEvents:UIControlEventTouchUpInside];
     [contentView addSubview:qidongBtn];
+    
+    BOOL isZiDongHunYin = [_curProxy isZiDongHunYinStarted];
+    
+    if(isZiDongHunYin)
+    {
+        [qidongBtn changeNormalColor:THEME_RED_COLOR];
+    }
+    else
+    {
+        [qidongBtn changeNormalColor:RGB(75, 163, 202)];
+    }
 }
 
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{

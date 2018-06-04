@@ -9,6 +9,8 @@
 #import "ZaoShengMen_UIView.h"
 #import "UIButton+Color.h"
 #import "SlideButton.h"
+#import "VAProcessorProxys.h"
+#import "RegulusSDK.h"
 
 @interface ZaoShengMen_UIView() <SlideButtonDelegate>{
     
@@ -21,13 +23,15 @@
     UILabel *fazhiL;
     UILabel *qidongshijianL;
     UILabel *huifushijianL;
+    
+    UIButton *zhitongBtn;
 }
-
+@property (nonatomic, strong) VAProcessorProxys *_curProxy;
 @end
 
 
 @implementation ZaoShengMen_UIView
-
+@synthesize _curProxy;
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.
@@ -36,16 +40,24 @@
  }
  */
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithFrameProxys:(CGRect)frame withProxys:(NSArray*) proxys
 {
+    self._proxys = proxys;
+    
     if(self = [super initWithFrame:frame])
     {
+        if (self._curProxy == nil) {
+            if (self._proxys) {
+                self._curProxy = [self._proxys objectAtIndex:0];
+            }
+        }
+        
         channelBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
         channelBtn.frame = CGRectMake(0, 50, 70, 36);
         channelBtn.clipsToBounds = YES;
         channelBtn.layer.cornerRadius = 5;
         channelBtn.titleLabel.font = [UIFont systemFontOfSize:15];
-        [channelBtn setTitle:@"In 1" forState:UIControlStateNormal];
+        [channelBtn setTitle:_curProxy._rgsProxyObj.name forState:UIControlStateNormal];
         [channelBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
         [self addSubview:channelBtn];
         
@@ -75,6 +87,14 @@
             [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }
     }
+    
+    int idx = (int)sender.tag;
+    self._curProxy = [self._proxys objectAtIndex:idx];
+    
+    NSString *name = _curProxy._rgsProxyObj.name;
+    [channelBtn setTitle:name forState:UIControlStateNormal];
+    
+    
 }
 
 - (void) contentViewComps{
@@ -99,8 +119,13 @@
     fazhi.tag = 1;
     [contentView addSubview:fazhi];
     
+    NSString *zengyiDB = [_curProxy getZaoshengFazhi];
+    float value = [zengyiDB floatValue];
+    float f = (value+12.0)/24.0;
+    [fazhi setCircleValue:f];
+    
     fazhiL = [[UILabel alloc] initWithFrame:CGRectMake(startX, labelY+labelBtnGap+120, 120, 20)];
-    fazhiL.text = @"-12dB";
+    fazhiL.text = [zengyiDB stringByAppendingString:@" dB"];
     fazhiL.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:fazhiL];
     fazhiL.font = [UIFont systemFontOfSize:13];
@@ -121,8 +146,13 @@
     qidongshijian.tag = 2;
     [contentView addSubview:qidongshijian];
     
+    NSString *startTime = [_curProxy getZaoshengStartTime];
+    float startTimeV = [startTime floatValue];
+    float fstartTimeV = (startTimeV+1000)/2000;
+    [qidongshijian setCircleValue:fstartTimeV];
+    
     qidongshijianL = [[UILabel alloc] initWithFrame:CGRectMake(startX+gap, labelY+labelBtnGap+120, 120, 20)];
-    qidongshijianL.text = @"-12dB";
+    qidongshijianL.text = startTime;
     qidongshijianL.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:qidongshijianL];
     qidongshijianL.font = [UIFont systemFontOfSize:13];
@@ -143,15 +173,20 @@
     huifushijian.tag = 3;
     [contentView addSubview:huifushijian];
     
+    NSString *huifuTime = [_curProxy getZaoshengStartTime];
+    float huifuTimeV = [huifuTime floatValue];
+    float fhuifuTimeV = (huifuTimeV+1000)/2000;
+    [huifushijian setCircleValue:fhuifuTimeV];
+    
     huifushijianL = [[UILabel alloc] initWithFrame:CGRectMake(startX+gap*2, labelY+labelBtnGap+120, 120, 20)];
-    huifushijianL.text = @"-12dB";
+    huifushijianL.text = huifuTime;
     huifushijianL.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:huifushijianL];
     huifushijianL.font = [UIFont systemFontOfSize:13];
     huifushijianL.textColor = YELLOW_COLOR;
     
     
-    UIButton *zhitongBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    zhitongBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
     zhitongBtn.frame = CGRectMake(contentView.frame.size.width/2 - 25, contentView.frame.size.height - 40, 50, 30);
     zhitongBtn.layer.cornerRadius = 5;
     zhitongBtn.layer.borderWidth = 2;
@@ -163,6 +198,52 @@
                 action:@selector(zhitongBtnAction:)
       forControlEvents:UIControlEventTouchUpInside];
     [contentView addSubview:zhitongBtn];
+    
+    BOOL isFanKuiYiZhi = [_curProxy isZaoshengStarted];
+    
+    if(isFanKuiYiZhi)
+    {
+        [zhitongBtn changeNormalColor:THEME_RED_COLOR];
+    }
+    else
+    {
+        [zhitongBtn changeNormalColor:RGB(75, 163, 202)];
+    }
+}
+
+-(void) updateViewState {
+    NSString *zengyiDB = [_curProxy getZaoshengFazhi];
+    float value = [zengyiDB floatValue];
+    float f = (value+12.0)/24.0;
+    [fazhi setCircleValue:f];
+    
+    fazhiL.text = [zengyiDB stringByAppendingString:@" dB"];
+    
+    NSString *startTime = [_curProxy getZaoshengStartTime];
+    float startTimeV = [startTime floatValue];
+    float fstartTimeV = (startTimeV+1000)/2000;
+    [qidongshijian setCircleValue:fstartTimeV];
+    
+    qidongshijianL.text = startTime;
+    
+    NSString *huifuTime = [_curProxy getZaoshengStartTime];
+    float huifuTimeV = [huifuTime floatValue];
+    float fhuifuTimeV = (huifuTimeV+1000)/2000;
+    [huifushijian setCircleValue:fhuifuTimeV];
+    
+    huifushijianL.text = huifuTime;
+    
+    
+    BOOL isFanKuiYiZhi = [_curProxy isZaoshengStarted];
+    
+    if(isFanKuiYiZhi)
+    {
+        [zhitongBtn changeNormalColor:THEME_RED_COLOR];
+    }
+    else
+    {
+        [zhitongBtn changeNormalColor:RGB(75, 163, 202)];
+    }
 }
 
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
@@ -172,21 +253,48 @@
         int k = (value *24)-12;
         NSString *valueStr= [NSString stringWithFormat:@"%d", k];
         
-        fazhiL.text = valueStr;
+        fazhiL.text = [valueStr stringByAppendingString:@" dB"];
+        
+        [_curProxy controlZaoshengFazhi:valueStr];
     } else if (tag == 2) {
         int k = (value *2000)-1000;
         NSString *valueStr= [NSString stringWithFormat:@"%d", k];
         
         qidongshijianL.text = valueStr;
+        
+        [_curProxy controlZaoshengStartTime:valueStr];
     } else {
         int k = (value *2000)-1000;
         NSString *valueStr= [NSString stringWithFormat:@"%d", k];
         
         huifushijianL.text = valueStr;
+        
+        [_curProxy controlZaoshengRecoveryTime:valueStr];
     }
 }
 - (void) zhitongBtnAction:(id) sender {
+    if(_curProxy == nil)
+        return;
     
+    BOOL isMute = [_curProxy isZaoshengStarted];
+    
+    [_curProxy controlZaoshengStarted:!isMute];
+    
+    [self updateMuteButtonState];
+}
+
+- (void) updateMuteButtonState{
+    
+    BOOL isFanKuiYiZhi = [_curProxy isZaoshengStarted];
+    
+    if(isFanKuiYiZhi)
+    {
+        [zhitongBtn changeNormalColor:THEME_RED_COLOR];
+    }
+    else
+    {
+        [zhitongBtn changeNormalColor:RGB(75, 163, 202)];
+    }
 }
 @end
 

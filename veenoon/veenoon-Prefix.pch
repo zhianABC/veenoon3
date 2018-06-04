@@ -118,7 +118,7 @@
 #define HENG_XIAN @"-"
 
 #define OPEN_REG_LIB_DEF  1
-#define VEENOON_AREA_NAME @"veenoon_room"
+#define VEENOON_AREA_NAME @"veenoon_room_dl"
 
 #define UUID_Serial_Com         @"714c6c57-7ff2-47cd-8b67-dc8d370eb3f6"
 #define UUID_NetCamera          @"08b3fbff-118b-457c-adea-2c81cad47ebb"
