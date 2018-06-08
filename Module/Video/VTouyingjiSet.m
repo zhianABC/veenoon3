@@ -137,6 +137,10 @@
                                                       if ([connects count]) {
                                                           
                                                           block_self._connections = connects;
+                                                          if([connects count])
+                                                          {
+                                                              block_self._com = [connects objectAtIndex:0];
+                                                          }
                                                       }
                                                   }
                                                   else

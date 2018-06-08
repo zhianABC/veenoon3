@@ -16,6 +16,7 @@
 #import "RegulusSDK.h"
 #import "EngineerPresetScenarioViewCtrl.h"
 #import "DataCenter.h"
+#import "KVNProgress.h"
 
 @interface EngineerToUseTeslariViewCtrl () <UITableViewDelegate, UITableViewDataSource> {
     
@@ -68,37 +69,39 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = B_GRAY_COLOR;
+    self.view.backgroundColor = BLACK_COLOR;
     
-    UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, 40, SCREEN_WIDTH-80, 30)];
+    UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT,
+                                                                      ENGINEER_VIEW_TOP+10,
+                                                                      SCREEN_WIDTH-80, 30)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
     portDNSLabel.font = [UIFont boldSystemFontOfSize:20];
     portDNSLabel.textColor  = [UIColor whiteColor];
-    portDNSLabel.text = @"欢迎使用TESLARIA";
+    portDNSLabel.text = @"产品驱动属性设置";
     
-    portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT,
-                                                             CGRectGetMaxY(portDNSLabel.frame),
-                                                             SCREEN_WIDTH-80, 30)];
-    portDNSLabel.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont systemFontOfSize:15];
-    portDNSLabel.textColor  = [UIColor colorWithWhite:1.0 alpha:0.9];
-    portDNSLabel.text = @"TESLARIA将引导您完成整个系统的设置过程";
-    
+//    portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT,
+//                                                             CGRectGetMaxY(portDNSLabel.frame),
+//                                                             SCREEN_WIDTH-80, 30)];
+//    portDNSLabel.backgroundColor = [UIColor clearColor];
+//    [self.view addSubview:portDNSLabel];
+//    portDNSLabel.font = [UIFont systemFontOfSize:15];
+//    portDNSLabel.textColor  = [UIColor colorWithWhite:1.0 alpha:0.9];
+//    portDNSLabel.text = @"TESLARIA将引导您完成整个系统的设置过程";
+//
     int top = CGRectGetMaxY(portDNSLabel.frame)+10;
     
-    tableWidth = 400;
+    tableWidth = 440;
     
     
-    if(_selectedDevices)
-    {
-        self._audioDrivers = [_selectedDevices objectForKey:@"audio"];
-        self._videoDrivers = [_selectedDevices objectForKey:@"video"];
-        self._envDrivers = [_selectedDevices objectForKey:@"env"];
-        self._chuanganDrivers = [_selectedDevices objectForKey:@"chuangan"];
-        self._portDrivers = [_selectedDevices objectForKey:@"port"];
-    }
+//    if(_selectedDevices)
+//    {
+//        self._audioDrivers = [_selectedDevices objectForKey:@"audio"];
+//        self._videoDrivers = [_selectedDevices objectForKey:@"video"];
+//        self._envDrivers = [_selectedDevices objectForKey:@"env"];
+//        self._chuanganDrivers = [_selectedDevices objectForKey:@"chuangan"];
+//        self._portDrivers = [_selectedDevices objectForKey:@"port"];
+//    }
     
     if(_audioDrivers == nil)
         self._audioDrivers = [NSMutableArray array];
@@ -121,8 +124,20 @@
     
     self._mapFlash = [NSMutableDictionary dictionary];
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT,
-                                                              top,
+    UIView *fr = [[UIView alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT,
+                                                          top,
+                                                          tableWidth,
+                                                          SCREEN_HEIGHT-top-50+10)];
+    
+    [self.view addSubview:fr];
+    fr.layer.cornerRadius = 5;
+    fr.clipsToBounds = YES;
+    fr.layer.borderColor = B_GRAY_COLOR.CGColor;
+    fr.layer.borderWidth = 1;
+    
+    
+     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,
+                                                              0,
                                                               tableWidth,
                                                               SCREEN_HEIGHT-top-50)
                                               style:UITableViewStylePlain];
@@ -131,33 +146,15 @@
     _tableView.backgroundColor = [UIColor clearColor];
     _tableView.separatorColor = [UIColor clearColor];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.view addSubview:_tableView];
-    
-    
-    UIButton *btnSave = [UIButton buttonWithColor:YELLOW_COLOR selColor:nil];
-    btnSave.frame = CGRectMake(SCREEN_WIDTH - 100, 84, 80, 40);
-    [self.view addSubview:btnSave];
-    btnSave.layer.cornerRadius = 5;
-    btnSave.clipsToBounds = YES;
-    [btnSave setTitle:@"保存设计" forState:UIControlStateNormal];
-    btnSave.titleLabel.font = [UIFont boldSystemFontOfSize:15];
-    [btnSave setTitleColor:B_GRAY_COLOR forState:UIControlStateNormal];
-    [btnSave addTarget:self action:@selector(saveAction:) forControlEvents:UIControlEventTouchUpInside];
+    [fr addSubview:_tableView];
 
+
+    int w = SCREEN_WIDTH - CGRectGetWidth(_tableView.frame) - 2*ENGINEER_VIEW_LEFT - 50;
     
-    UILabel *spLine = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT+tableWidth, top, 1, CGRectGetHeight(_tableView.frame))];
-    spLine.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-    [self.view addSubview:spLine];
-    
-    spLine = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT-1, top, 1, CGRectGetHeight(_tableView.frame))];
-    spLine.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-    [self.view addSubview:spLine];
-    
-    int w = SCREEN_WIDTH - CGRectGetWidth(_tableView.frame) - 2*ENGINEER_VIEW_LEFT - 30;
-    
-    _propertyView = [[DriverPropertyView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_tableView.frame)+30,
+    int xx = CGRectGetMaxX(fr.frame)+50;
+    _propertyView = [[DriverPropertyView alloc] initWithFrame:CGRectMake(xx,
                                                              top,
-                                                            w, CGRectGetHeight(_tableView.frame)-60)];
+                                                            w, CGRectGetHeight(fr.frame))];
     
     [self.view addSubview:_propertyView];
     _propertyView.hidden = YES;
@@ -184,22 +181,128 @@
     UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
     [bottomBar addSubview:okBtn];
-    [okBtn setTitle:@"添加设备" forState:UIControlStateNormal];
+    [okBtn setTitle:@"生成系统" forState:UIControlStateNormal];
     [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
     okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [okBtn addTarget:self
-              action:@selector(addDeviceAction:)
+              action:@selector(saveAction:)
     forControlEvents:UIControlEventTouchUpInside];
-    
+   
 
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(notifyRefreshTable:)
                                                  name:@"NotifyRefreshTableWithCom"
                                                object:nil];
+    
+    
+    [self getDriversFromVeenoon];
 
     
+}
+
+
+- (void) getDriversFromVeenoon{
+    
+    IMP_BLOCK_SELF(EngineerToUseTeslariViewCtrl);
+    
+    RgsAreaObj *areaObj = [DataSync sharedDataSync]._currentArea;
+    if(areaObj)
+    {
+        [KVNProgress show];
+        [[RegulusSDK sharedRegulusSDK] GetDrivers:areaObj.m_id
+                                       completion:^(BOOL result, NSArray *drivers, NSError *error) {
+                                           
+                                           if (error) {
+                                               
+                                               [KVNProgress dismiss];
+                                           }
+                                           else
+                                           {
+                                               
+                                               [block_self prepareCurrentAreaDrivers:drivers];
+                                               
+                                               [KVNProgress dismiss];
+                                           }
+                                       }];
+    }
+    
+}
+
+- (void) prepareCurrentAreaDrivers:(NSArray*)drivers{
+    
+    NSMutableArray *audios = [NSMutableArray array];
+    NSMutableArray *videos = [NSMutableArray array];
+    NSMutableArray *envs = [NSMutableArray array];
+    NSMutableArray *ports = [NSMutableArray array];
+    
+    NSMutableDictionary *result = [NSMutableDictionary dictionary];
+    [result setObject:audios forKey:@"audio"];
+    [result setObject:videos forKey:@"video"];
+    [result setObject:envs forKey:@"env"];
+    [result setObject:ports forKey:@"port"];
+    
+    self._selectedDevices = result;
+    
+    for(RgsDriverObj *driver in drivers)
+    {
+        RgsDriverInfo *info = driver.info;
+        
+        NSDictionary *device = [[DataCenter defaultDataCenter] driverWithKey:info.serial];
+        
+        if(device)
+        {
+            NSString *classname = [device objectForKey:@"driver_class"];
+            Class someClass = NSClassFromString(classname);
+            BasePlugElement * obj = [[someClass alloc] init];
+            
+            if(obj)
+            {
+                obj._name = [device objectForKey:@"name"];
+                obj._brand = [device objectForKey:@"brand"];
+                obj._type = [device objectForKey:@"ptype"];
+                obj._driverUUID = [device objectForKey:@"brand"];
+                
+                obj._driverInfo = info;
+                
+                obj._plugicon = [device objectForKey:@"icon"];
+                obj._plugicon_s = [device objectForKey:@"icon_s"];
+                
+                obj._driver = driver;
+                
+                
+                
+                NSString *type = [device objectForKey:@"type"];
+                if([type isEqualToString:@"audio"])
+                {
+                    [audios addObject:obj];
+                }
+                else if([type isEqualToString:@"video"])
+                {
+                    [videos addObject:obj];
+                }
+                else if([type isEqualToString:@"env"])
+                {
+                    [envs addObject:obj];
+                }
+                else if([type isEqualToString:@"other"])
+                {
+                    [ports addObject:obj];
+                }
+            }
+            
+        }
+        
+    }
+
+    
+    self._audioDrivers = audios;
+    self._videoDrivers = videos;
+    self._envDrivers = envs;
+    self._portDrivers = ports;
+    
+    [_tableView reloadData];
 }
 
 
@@ -437,10 +540,10 @@
         data = [_portDrivers objectAtIndex:indexPath.row];
     }
     
-    if(data && data._com)
-    {
-        return 120;
-    }
+//    if(data && data._com)
+//    {
+//        return 120;
+//    }
     
     return 60;
 }
@@ -493,7 +596,7 @@
                                                                 tableWidth-20, 20)];
     titleL.backgroundColor = [UIColor clearColor];
     [cell.contentView addSubview:titleL];
-    titleL.font = [UIFont boldSystemFontOfSize:16];
+    titleL.font = [UIFont systemFontOfSize:15];
     titleL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
     
     UILabel* subL = [[UILabel alloc] initWithFrame:CGRectMake(10,
@@ -511,7 +614,7 @@
                  data._type];
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 59, tableWidth, 1)];
-    line.backgroundColor =  [UIColor colorWithWhite:1.0 alpha:0.2];
+    line.backgroundColor =  B_GRAY_COLOR;
     [cell.contentView addSubview:line];
     
     
@@ -530,6 +633,7 @@
         
     }
     int lh = 60;
+    /*
     if(data._com)
     {
         lh = 120;
@@ -559,7 +663,7 @@
         
         
         line = [[UILabel alloc] initWithFrame:CGRectMake(0, 119, tableWidth, 1)];
-        line.backgroundColor =  [UIColor colorWithWhite:1.0 alpha:0.2];
+        line.backgroundColor =  B_GRAY_COLOR;
         [cell.contentView addSubview:line];
         
         
@@ -569,6 +673,7 @@
         linkImage.contentMode = UIViewContentModeScaleAspectFit;
         
     }
+     */
     
     id key = [NSString stringWithFormat:@"%d-%d",
               (int)indexPath.section,
@@ -651,14 +756,65 @@
     
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    return YES;
+    
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if(editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        
+        BasePlugElement *data = nil;
+        NSMutableArray *ma = nil;
+        if(indexPath.section == 0)
+        {
+            data = [_audioDrivers objectAtIndex:indexPath.row];
+            ma = _audioDrivers;
+        }
+        else if(indexPath.section == 1)
+        {
+            data = [_videoDrivers objectAtIndex:indexPath.row];
+            ma = _videoDrivers;
+        }
+        else if(indexPath.section == 2)
+        {
+            data = [_envDrivers objectAtIndex:indexPath.row];
+            ma = _envDrivers;
+        }
+        else if(indexPath.section == 3)
+        {
+            data = [_chuanganDrivers objectAtIndex:indexPath.row];
+            ma = _chuanganDrivers;
+        }
+        else if(indexPath.section == 4)
+        {
+            data = [_portDrivers objectAtIndex:indexPath.row];
+            ma = _portDrivers;
+        }
+        
+        if(data._driver)
+        {
+            [data removeDriver];
+        }
+        
+        [ma removeObject:data];
+        
+        [_tableView reloadData];
+ 
+    }
+}
+
 
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
     UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0,
                                                               _tableView.frame.size.width, 40)];
-    header.backgroundColor = DARK_GRAY_COLOR;
+    header.backgroundColor = RGB(0x2b, 0x2b, 0x2c);
 
-    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 40, tableWidth, 2)];
+    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 40, tableWidth, 1)];
     line.backgroundColor =  B_GRAY_COLOR;
     [header addSubview:line];
 
@@ -667,7 +823,7 @@
                                                               CGRectGetWidth(_tableView.frame)-20, 20)];
     rowL.backgroundColor = [UIColor clearColor];
     [header addSubview:rowL];
-    rowL.font = [UIFont systemFontOfSize:13];
+    rowL.font = [UIFont boldSystemFontOfSize:14];
     rowL.textColor  = [UIColor whiteColor];
     
     
