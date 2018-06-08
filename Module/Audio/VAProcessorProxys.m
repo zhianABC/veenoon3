@@ -79,9 +79,18 @@
 @synthesize _zaoshengHuifuTime;
 @synthesize _zaoshengStartTime;
 @synthesize _isZaoshengStarted;
-
-
+@synthesize _lvbojunhengGaotongType;
+@synthesize _lvboDitongArray;
+@synthesize _lvboGaotongArray;
+@synthesize _lvbojunhengDitongType;
 @synthesize _RgsSceneDeviceOperationShadow;
+@synthesize _lvboGaotongXielvArray;
+@synthesize _lvbojunhengGaotongXielv;
+@synthesize _lvboDitongXielvArray;
+@synthesize _lvbojunhengDitongXielv;
+@synthesize _lvboBoDuanArray;
+@synthesize _lvbojunhengBoduanType;
+
 
 - (id) init
 {
@@ -121,7 +130,22 @@
         _zaoshengStartTime = @"222";
         _zaoshengHuifuTime = @"333";
         _isZaoshengStarted = YES;
-    
+        
+        
+        _lvbojunhengGaotongType = @"巴特沃斯";
+        _lvboGaotongArray = [NSArray arrayWithObjects:@"巴特沃斯", @"科沃斯", @"巴塞罗那", nil];
+        
+        _lvbojunhengDitongType = @"皇马";
+        _lvboDitongArray = [NSArray arrayWithObjects:@"曼联", @"利物浦", @"切尔西", nil];
+        
+        _lvboGaotongXielvArray = [NSArray arrayWithObjects:@"黄蜂", @"湖人", @"火箭", nil];
+        _lvbojunhengGaotongXielv = @"雷霆";
+        
+        _lvboDitongXielvArray = [NSArray arrayWithObjects:@"快船", @"公牛", @"骑士", nil];
+        _lvbojunhengDitongXielv = @"活塞";
+        
+        _lvbojunhengBoduanType = @"山猫";
+        _lvboBoDuanArray = [NSArray arrayWithObjects:@"76人", @"小牛", @"太阳", nil];
         
         self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionary];
     }
@@ -524,6 +548,57 @@
     self._zaoshengHuifuTime = zaoshengHuifuTime;
 }
 
+
+- (NSString*) getGaoTongType {
+    return self._lvbojunhengGaotongType;
+}
+- (void) controlGaoTongType:(NSString*) gaotongType {
+    self._lvbojunhengGaotongType = gaotongType;
+}
+
+- (NSArray*) getLvBoGaoTongArray {
+    return self._lvboGaotongArray;
+}
+
+- (NSString*) getDiTongType {
+    return self._lvbojunhengDitongType;
+}
+- (void) controlDiTongType:(NSString*) ditongtype {
+    self._lvbojunhengDitongType = ditongtype;
+}
+- (NSArray*) getLvBoDiTongArray {
+    return self._lvboDitongArray;
+}
+
+- (NSString*) getGaoTongXieLv {
+    return self._lvbojunhengGaotongXielv;
+}
+- (void) controlGaoTongXieLv:(NSString*) gaotongxielv {
+    self._lvbojunhengGaotongXielv = gaotongxielv;
+}
+- (NSArray*) getLvBoGaoTongXielvArray {
+    return self._lvboGaotongXielvArray;
+}
+
+- (NSString*) getDiTongXieLv {
+    return self._lvbojunhengDitongXielv;
+}
+- (void) controlDiTongXieLv:(NSString*) ditongxielv {
+    self._lvbojunhengDitongXielv = ditongxielv;
+}
+- (NSArray*) getLvBoDiTongXielvArray {
+    return _lvboDitongXielvArray;
+}
+
+- (NSString*) getBoduanType {
+    return _lvbojunhengBoduanType;
+}
+- (void) controlBoduanType:(NSString*) boduanType {
+    self._lvbojunhengBoduanType = boduanType;
+}
+- (NSArray*) getLvBoBoDuanArray {
+    return _lvboBoDuanArray;
+}
 
 - (void) controlDigtalMute:(BOOL)isMute{
     

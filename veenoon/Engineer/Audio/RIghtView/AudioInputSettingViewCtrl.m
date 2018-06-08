@@ -230,7 +230,7 @@
     [self.view addSubview:yanshiView];
     yanshiView.hidden = YES;
     
-    lvbo = [[LvBoJunHeng_UIView alloc] initWithFrame:vrc];
+    lvbo = [[LvBoJunHeng_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._inAudioProxys];
     [self.view addSubview:lvbo];
     lvbo.hidden = YES;
     

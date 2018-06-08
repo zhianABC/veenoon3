@@ -10,6 +10,10 @@
 #import "veenoon-Swift.h"
 #import "UIButton+Color.h"
 #import "SlideButton.h"
+#import "VAProcessorProxys.h"
+#import "RegulusSDK.h"
+#import "LvBoJunHeng_Chooser.h"
+
 
 @interface LvBoJunHeng_UIView() <SlideButtonDelegate>{
     SlideButton *xielvSlider;
@@ -28,13 +32,29 @@
     FilterGraphView *fglm;
     
     int _channelSelIndex;
+    
+    UIButton *gaotongTypeBtn;
+    
+    UIPopoverController *_deviceSelector;
+    
+    UIButton *ditongTypeBtn;
+    
+    UIButton *gaotongXielvBtn;
+    
+    UIButton *boduanleixingBtn;
+    
+    UIButton *ditongxielvBtn;
 }
 
 @property (nonatomic, strong) NSMutableArray *_boduanChannelBtns;
+@property (nonatomic, strong) VAProcessorProxys *_curProxy;
+
 @end
 
 @implementation LvBoJunHeng_UIView
 @synthesize _boduanChannelBtns;
+@synthesize _curProxy;
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -43,8 +63,16 @@
 }
 */
 
-- (id)initWithFrame:(CGRect)frame {
+- (id)initWithFrameProxys:(CGRect)frame withProxys:(NSArray*) proxys {
+    self._proxys = proxys;
+    
     if (self = [super initWithFrame:frame]) {
+        
+        if (self._curProxy == nil) {
+            if (self._proxys) {
+                self._curProxy = [self._proxys objectAtIndex:0];
+            }
+        }
         
         CGRect rc = CGRectMake(0, 10, frame.size.width, 280);
         UIView *bgv = [[UIView alloc] initWithFrame:rc];
@@ -112,32 +140,33 @@
     
     int btnStartX = 10;
     int btnY = 50;
-    UIButton *leixingBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
-    leixingBtn.frame = CGRectMake(btnStartX+60, btnY-20, 100, 30);
-    leixingBtn.layer.cornerRadius = 5;
-    leixingBtn.layer.borderWidth = 2;
-    leixingBtn.layer.borderColor = [UIColor clearColor].CGColor;;
-    leixingBtn.clipsToBounds = YES;
-    [leixingBtn setTitle:@"  巴特沃斯" forState:UIControlStateNormal];
-    leixingBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-    leixingBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    gaotongTypeBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    gaotongTypeBtn.frame = CGRectMake(btnStartX+60, btnY-20, 100, 30);
+    gaotongTypeBtn.layer.cornerRadius = 5;
+    gaotongTypeBtn.layer.borderWidth = 2;
+    gaotongTypeBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    gaotongTypeBtn.clipsToBounds = YES;
+    NSString *dispaly = [@"   " stringByAppendingString:[_curProxy getGaoTongType]];
+    [gaotongTypeBtn setTitle:dispaly  forState:UIControlStateNormal];
+    gaotongTypeBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    gaotongTypeBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     UIImageView *icon = [[UIImageView alloc]
-                         initWithFrame:CGRectMake(leixingBtn.frame.size.width - 20, 10, 10, 10)];
+                         initWithFrame:CGRectMake(gaotongTypeBtn.frame.size.width - 20, 10, 10, 10)];
     icon.image = [UIImage imageNamed:@"remote_video_down.png"];
-    [leixingBtn addSubview:icon];
+    [gaotongTypeBtn addSubview:icon];
     icon.alpha = 0.8;
     icon.layer.contentsGravity = kCAGravityResizeAspect;
-    [leixingBtn addTarget:self
+    [gaotongTypeBtn addTarget:self
                 action:@selector(leixingBtnAction:)
       forControlEvents:UIControlEventTouchUpInside];
-    [view addSubview:leixingBtn];
+    [view addSubview:gaotongTypeBtn];
     
     
     UILabel *addLabel3 = [[UILabel alloc] init];
     addLabel3.text = @"频率 (HZ)";
     addLabel3.font = [UIFont systemFontOfSize: 13];
     addLabel3.textColor = [UIColor whiteColor];
-    addLabel3.frame = CGRectMake(CGRectGetMaxX(leixingBtn.frame)-35, btnY+20, 75, 25);
+    addLabel3.frame = CGRectMake(CGRectGetMaxX(gaotongTypeBtn.frame)-35, btnY+20, 75, 25);
     [view addSubview:addLabel3];
     
     btnY+=35;
@@ -150,25 +179,26 @@
     [view addSubview:addLabel22];
     
     btnY+=30;
-    UIButton *xielvBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
-    xielvBtn.frame = CGRectMake(btnStartX, btnY, 100, 30);
-    xielvBtn.layer.cornerRadius = 5;
-    xielvBtn.layer.borderWidth = 2;
-    xielvBtn.layer.borderColor = [UIColor clearColor].CGColor;;
-    xielvBtn.clipsToBounds = YES;
-    [xielvBtn setTitle:@"  -48dB/oct" forState:UIControlStateNormal];
-    xielvBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-    xielvBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    gaotongXielvBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    gaotongXielvBtn.frame = CGRectMake(btnStartX, btnY, 100, 30);
+    gaotongXielvBtn.layer.cornerRadius = 5;
+    gaotongXielvBtn.layer.borderWidth = 2;
+    gaotongXielvBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    gaotongXielvBtn.clipsToBounds = YES;
+    NSString *gaotongXieLv = [@"  " stringByAppendingString:[_curProxy getGaoTongXieLv]];
+    [gaotongXielvBtn setTitle:gaotongXieLv forState:UIControlStateNormal];
+    gaotongXielvBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    gaotongXielvBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     UIImageView *icon2 = [[UIImageView alloc]
-                         initWithFrame:CGRectMake(xielvBtn.frame.size.width - 20, 10, 10, 10)];
+                         initWithFrame:CGRectMake(gaotongXielvBtn.frame.size.width - 20, 10, 10, 10)];
     icon2.image = [UIImage imageNamed:@"remote_video_down.png"];
-    [xielvBtn addSubview:icon2];
+    [gaotongXielvBtn addSubview:icon2];
     icon2.alpha = 0.8;
     icon2.layer.contentsGravity = kCAGravityResizeAspect;
-    [xielvBtn addTarget:self
-                   action:@selector(xielvBtnAction:)
+    [gaotongXielvBtn addTarget:self
+                   action:@selector(gaotongxielvAction:)
          forControlEvents:UIControlEventTouchUpInside];
-    [view addSubview:xielvBtn];
+    [view addSubview:gaotongXielvBtn];
     
     xielvSlider = [[SlideButton alloc] initWithFrame:CGRectMake(100, 70, 120, 120)];
     xielvSlider._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
@@ -202,11 +232,90 @@
 - (void) zhitongBtn1Action:(id) sender {
     
 }
-- (void) xielvBtnAction:(id) sender {
+- (void) gaotongxielvAction:(UIButton*) sender {
+    if ([_deviceSelector isPopoverVisible]) {
+        [_deviceSelector dismissPopoverAnimated:NO];
+    }
+    
+    LvBoJunHeng_Chooser *sel = [[LvBoJunHeng_Chooser alloc] init];
+    sel._dataArray = [_curProxy getLvBoGaoTongXielvArray];
+    sel._type = 2;
+    
+    sel.preferredContentSize = CGSizeMake(150, 350);
+    sel._size = CGSizeMake(150, 350);
+    
+    IMP_BLOCK_SELF(LvBoJunHeng_UIView);
+    sel._block = ^(id object)
+    {
+        [block_self chooseGaotongXieLv:object];
+    };
+    
+    CGRect rect = [self convertRect:sender.frame
+                           fromView:sender];
+    
+    _deviceSelector = [[UIPopoverController alloc] initWithContentViewController:sel];
+    _deviceSelector.popoverContentSize = sel.preferredContentSize;
+    
+    [_deviceSelector presentPopoverFromRect:rect
+                                     inView:self
+                   permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+}
+
+- (void) chooseGaotongXieLv:(NSString*)device{
+    
+    NSString *dispaly = [@"   " stringByAppendingString:device];
+    
+    [gaotongXielvBtn setTitle:dispaly forState:UIControlStateNormal];
+    
+    [_curProxy controlGaoTongXieLv:device];
+    
+    if ([_deviceSelector isPopoverVisible]) {
+        [_deviceSelector dismissPopoverAnimated:NO];
+    }
     
 }
 
-- (void) leixingBtnAction:(id) sender {
+- (void) leixingBtnAction:(UIButton*) sender {
+    
+    if ([_deviceSelector isPopoverVisible]) {
+        [_deviceSelector dismissPopoverAnimated:NO];
+    }
+    
+    LvBoJunHeng_Chooser *sel = [[LvBoJunHeng_Chooser alloc] init];
+    sel._dataArray = [_curProxy getLvBoGaoTongArray];
+    sel._type = 0;
+    
+    sel.preferredContentSize = CGSizeMake(150, 350);
+    sel._size = CGSizeMake(150, 350);
+    
+    IMP_BLOCK_SELF(LvBoJunHeng_UIView);
+    sel._block = ^(id object)
+    {
+        [block_self chooseGaotong:object];
+    };
+    
+    CGRect rect = [self convertRect:sender.frame
+                                fromView:sender];
+    
+    _deviceSelector = [[UIPopoverController alloc] initWithContentViewController:sel];
+    _deviceSelector.popoverContentSize = sel.preferredContentSize;
+    
+    [_deviceSelector presentPopoverFromRect:rect
+                                     inView:self
+                   permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+}
+
+- (void) chooseGaotong:(NSString*)device{
+    
+    NSString *dispaly = [@"   " stringByAppendingString:device];
+    
+    [gaotongTypeBtn setTitle:dispaly forState:UIControlStateNormal];
+    
+    [_curProxy controlGaoTongType:device];
+    
+    if ([_deviceSelector isPopoverVisible]) {
+        [_deviceSelector dismissPopoverAnimated:NO];
+    }
     
 }
 
@@ -271,25 +380,26 @@
     
     int btnStartX = 10;
     int btnY = 125;
-    UIButton *leixingBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
-    leixingBtn.frame = CGRectMake(btnStartX, btnY, 100, 30);
-    leixingBtn.layer.cornerRadius = 5;
-    leixingBtn.layer.borderWidth = 2;
-    leixingBtn.layer.borderColor = [UIColor clearColor].CGColor;;
-    leixingBtn.clipsToBounds = YES;
-    [leixingBtn setTitle:@"  参量均衡" forState:UIControlStateNormal];
-    leixingBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-    leixingBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    boduanleixingBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    boduanleixingBtn.frame = CGRectMake(btnStartX, btnY, 100, 30);
+    boduanleixingBtn.layer.cornerRadius = 5;
+    boduanleixingBtn.layer.borderWidth = 2;
+    boduanleixingBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    boduanleixingBtn.clipsToBounds = YES;
+    NSString *boduanType = [@"  " stringByAppendingString:[_curProxy getBoduanType]];
+    [boduanleixingBtn setTitle:boduanType forState:UIControlStateNormal];
+    boduanleixingBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    boduanleixingBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     UIImageView *icon = [[UIImageView alloc]
-                         initWithFrame:CGRectMake(leixingBtn.frame.size.width - 20, 10, 10, 10)];
+                         initWithFrame:CGRectMake(boduanleixingBtn.frame.size.width - 20, 10, 10, 10)];
     icon.image = [UIImage imageNamed:@"remote_video_down.png"];
-    [leixingBtn addSubview:icon];
+    [boduanleixingBtn addSubview:icon];
     icon.alpha = 0.8;
     icon.layer.contentsGravity = kCAGravityResizeAspect;
-    [leixingBtn addTarget:self
-                   action:@selector(leixingBtn2Action:)
+    [boduanleixingBtn addTarget:self
+                   action:@selector(boduantypeAction:)
          forControlEvents:UIControlEventTouchUpInside];
-    [view addSubview:leixingBtn];
+    [view addSubview:boduanleixingBtn];
     
     
     int startX = 120;
@@ -417,10 +527,48 @@
     }
 }
 
-- (void) leixingBtn2Action:(id)sender {
+- (void) boduantypeAction:(UIButton*)sender {
+    if ([_deviceSelector isPopoverVisible]) {
+        [_deviceSelector dismissPopoverAnimated:NO];
+    }
     
+    LvBoJunHeng_Chooser *sel = [[LvBoJunHeng_Chooser alloc] init];
+    sel._dataArray = [_curProxy getLvBoBoDuanArray];
+    sel._type = 2;
+    
+    sel.preferredContentSize = CGSizeMake(150, 350);
+    sel._size = CGSizeMake(150, 350);
+    
+    IMP_BLOCK_SELF(LvBoJunHeng_UIView);
+    sel._block = ^(id object)
+    {
+        [block_self chooseBoduanType:object];
+    };
+    
+    CGRect rect = [self convertRect:sender.frame
+                           fromView:sender];
+    
+    _deviceSelector = [[UIPopoverController alloc] initWithContentViewController:sel];
+    _deviceSelector.popoverContentSize = sel.preferredContentSize;
+    
+    [_deviceSelector presentPopoverFromRect:rect
+                                     inView:self
+                   permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 }
 
+- (void) chooseBoduanType:(NSString*)device{
+    
+    NSString *dispaly = [@"   " stringByAppendingString:device];
+    
+    [boduanleixingBtn setTitle:dispaly forState:UIControlStateNormal];
+    
+    [_curProxy controlBoduanType:device];
+    
+    if ([_deviceSelector isPopoverVisible]) {
+        [_deviceSelector dismissPopoverAnimated:NO];
+    }
+    
+}
 
 - (void) zhitongBtn2Action:(id)sender {
     
@@ -445,32 +593,33 @@
     
     int btnStartX = 10;
     int btnY = 50;
-    UIButton *leixingBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
-    leixingBtn.frame = CGRectMake(btnStartX+60, btnY-20, 100, 30);
-    leixingBtn.layer.cornerRadius = 5;
-    leixingBtn.layer.borderWidth = 2;
-    leixingBtn.layer.borderColor = [UIColor clearColor].CGColor;;
-    leixingBtn.clipsToBounds = YES;
-    [leixingBtn setTitle:@"  巴特沃斯" forState:UIControlStateNormal];
-    leixingBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-    leixingBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    ditongTypeBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    ditongTypeBtn.frame = CGRectMake(btnStartX+60, btnY-20, 100, 30);
+    ditongTypeBtn.layer.cornerRadius = 5;
+    ditongTypeBtn.layer.borderWidth = 2;
+    ditongTypeBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    ditongTypeBtn.clipsToBounds = YES;
+    NSString *dispaly = [@"   " stringByAppendingString:[_curProxy getDiTongType]];
+    [ditongTypeBtn setTitle:dispaly forState:UIControlStateNormal];
+    ditongTypeBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    ditongTypeBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     UIImageView *icon = [[UIImageView alloc]
-                         initWithFrame:CGRectMake(leixingBtn.frame.size.width - 20, 10, 10, 10)];
+                         initWithFrame:CGRectMake(ditongTypeBtn.frame.size.width - 20, 10, 10, 10)];
     icon.image = [UIImage imageNamed:@"remote_video_down.png"];
-    [leixingBtn addSubview:icon];
+    [ditongTypeBtn addSubview:icon];
     icon.alpha = 0.8;
     icon.layer.contentsGravity = kCAGravityResizeAspect;
-    [leixingBtn addTarget:self
-                   action:@selector(leixingBtn3Action:)
+    [ditongTypeBtn addTarget:self
+                   action:@selector(ditongTypeAction:)
          forControlEvents:UIControlEventTouchUpInside];
-    [view addSubview:leixingBtn];
+    [view addSubview:ditongTypeBtn];
     
     
     UILabel *addLabel3 = [[UILabel alloc] init];
     addLabel3.text = @"频率 (HZ)";
     addLabel3.font = [UIFont systemFontOfSize: 13];
     addLabel3.textColor = [UIColor whiteColor];
-    addLabel3.frame = CGRectMake(CGRectGetMaxX(leixingBtn.frame)-35, btnY+20, 75, 25);
+    addLabel3.frame = CGRectMake(CGRectGetMaxX(ditongTypeBtn.frame)-35, btnY+20, 75, 25);
     [view addSubview:addLabel3];
     
     btnY+=35;
@@ -483,25 +632,26 @@
     [view addSubview:addLabel22];
     
     btnY+=30;
-    UIButton *xielvBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
-    xielvBtn.frame = CGRectMake(btnStartX, btnY, 100, 30);
-    xielvBtn.layer.cornerRadius = 5;
-    xielvBtn.layer.borderWidth = 2;
-    xielvBtn.layer.borderColor = [UIColor clearColor].CGColor;;
-    xielvBtn.clipsToBounds = YES;
-    [xielvBtn setTitle:@"  -48dB/oct" forState:UIControlStateNormal];
-    xielvBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-    xielvBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    ditongxielvBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    ditongxielvBtn.frame = CGRectMake(btnStartX, btnY, 100, 30);
+    ditongxielvBtn.layer.cornerRadius = 5;
+    ditongxielvBtn.layer.borderWidth = 2;
+    ditongxielvBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    ditongxielvBtn.clipsToBounds = YES;
+    NSString *ditongXielvStr = [@"  " stringByAppendingString:[_curProxy getDiTongXieLv]];
+    [ditongxielvBtn setTitle:ditongXielvStr forState:UIControlStateNormal];
+    ditongxielvBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    ditongxielvBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     UIImageView *icon2 = [[UIImageView alloc]
-                          initWithFrame:CGRectMake(xielvBtn.frame.size.width - 20, 10, 10, 10)];
+                          initWithFrame:CGRectMake(ditongxielvBtn.frame.size.width - 20, 10, 10, 10)];
     icon2.image = [UIImage imageNamed:@"remote_video_down.png"];
-    [xielvBtn addSubview:icon2];
+    [ditongxielvBtn addSubview:icon2];
     icon2.alpha = 0.8;
     icon2.layer.contentsGravity = kCAGravityResizeAspect;
-    [xielvBtn addTarget:self
-                 action:@selector(xielvBtn2Action:)
+    [ditongxielvBtn addTarget:self
+                 action:@selector(ditongxielvAction:)
        forControlEvents:UIControlEventTouchUpInside];
-    [view addSubview:xielvBtn];
+    [view addSubview:ditongxielvBtn];
     
     xielvSlider2 = [[SlideButton alloc] initWithFrame:CGRectMake(100, 70, 120, 120)];
     xielvSlider2._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
@@ -531,11 +681,89 @@
           forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:zhitongBtn1];
 }
--(void) leixingBtn3Action:(id)sender {
+-(void) ditongTypeAction:(UIButton*)sender {
+    if ([_deviceSelector isPopoverVisible]) {
+        [_deviceSelector dismissPopoverAnimated:NO];
+    }
+    
+    LvBoJunHeng_Chooser *sel = [[LvBoJunHeng_Chooser alloc] init];
+    sel._dataArray = [_curProxy getLvBoDiTongArray];
+    sel._type = 1;
+    
+    sel.preferredContentSize = CGSizeMake(150, 350);
+    sel._size = CGSizeMake(150, 350);
+    
+    IMP_BLOCK_SELF(LvBoJunHeng_UIView);
+    sel._block = ^(id object)
+    {
+        [block_self chooseDitong:object];
+    };
+    
+    CGRect rect = [self convertRect:sender.frame
+                           fromView:sender];
+    
+    _deviceSelector = [[UIPopoverController alloc] initWithContentViewController:sel];
+    _deviceSelector.popoverContentSize = sel.preferredContentSize;
+    
+    [_deviceSelector presentPopoverFromRect:rect
+                                     inView:self
+                   permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+}
+
+- (void) chooseDitong:(NSString*)device{
+    
+    NSString *dispaly = [@"   " stringByAppendingString:device];
+    
+    [ditongTypeBtn setTitle:dispaly forState:UIControlStateNormal];
+    
+    [_curProxy controlDiTongType:device];
+    
+    if ([_deviceSelector isPopoverVisible]) {
+        [_deviceSelector dismissPopoverAnimated:NO];
+    }
     
 }
 
--(void) xielvBtn2Action:(id)sender {
+-(void) ditongxielvAction:(UIButton*)sender {
+    if ([_deviceSelector isPopoverVisible]) {
+        [_deviceSelector dismissPopoverAnimated:NO];
+    }
+    
+    LvBoJunHeng_Chooser *sel = [[LvBoJunHeng_Chooser alloc] init];
+    sel._dataArray = [_curProxy getLvBoDiTongXielvArray];
+    sel._type = 2;
+    
+    sel.preferredContentSize = CGSizeMake(150, 350);
+    sel._size = CGSizeMake(150, 350);
+    
+    IMP_BLOCK_SELF(LvBoJunHeng_UIView);
+    sel._block = ^(id object)
+    {
+        [block_self chooseDitongXieLv:object];
+    };
+    
+    CGRect rect = [self convertRect:sender.frame
+                           fromView:sender];
+    
+    _deviceSelector = [[UIPopoverController alloc] initWithContentViewController:sel];
+    _deviceSelector.popoverContentSize = sel.preferredContentSize;
+    
+    [_deviceSelector presentPopoverFromRect:rect
+                                     inView:self
+                   permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+}
+
+- (void) chooseDitongXieLv:(NSString*)device{
+    
+    NSString *dispaly = [@"   " stringByAppendingString:device];
+    
+    [ditongxielvBtn setTitle:dispaly forState:UIControlStateNormal];
+    
+    [_curProxy controlDiTongXieLv:device];
+    
+    if ([_deviceSelector isPopoverVisible]) {
+        [_deviceSelector dismissPopoverAnimated:NO];
+    }
     
 }
 
