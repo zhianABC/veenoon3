@@ -287,42 +287,44 @@ static DataBase* sharedInstance = nil;
 
 - (NSMutableArray*) getSavedScenario:(int)room_id{
     
-//    NSString *s = [NSString stringWithFormat:@"select data from tblCachedScenario where room_id = ?"];
-//    const char *sqlStatement = [s UTF8String];
-//    sqlite3_stmt *statement;
-//
-//    int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
-//    if (success != SQLITE_OK) {
-//        NSLog(@"Error: failed to access:tblCachedScenario");
-//        return nil;
-//    }
-//
-//    sqlite3_bind_int(statement, 1, room_id);
-//
-//    NSMutableArray *objs = [[NSMutableArray alloc] init];
-//    while (sqlite3_step(statement) == SQLITE_ROW) {
-//
-//        const void* achievement_id       = sqlite3_column_blob(statement, 0);
-//        int achievement_idSize           = sqlite3_column_bytes(statement, 0);
-//
-//        if(achievement_id)
-//        {
-//            NSData *data = [[NSData alloc] initWithBytes:achievement_id length:achievement_idSize];
-//            NSDictionary * dic = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-//            NSMutableDictionary *mdic = [NSMutableDictionary dictionaryWithDictionary:dic];
-//            [objs addObject:mdic];
-//        }
-//
-//    }
-//    sqlite3_finalize(statement);
+    NSString *s = [NSString stringWithFormat:@"select data from tblCachedScenario where room_id = ?"];
+    const char *sqlStatement = [s UTF8String];
+    sqlite3_stmt *statement;
+
+    int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
+    if (success != SQLITE_OK) {
+        NSLog(@"Error: failed to access:tblCachedScenario");
+        return nil;
+    }
+
+    sqlite3_bind_int(statement, 1, room_id);
+
+    NSMutableArray *objs = [[NSMutableArray alloc] init];
+    while (sqlite3_step(statement) == SQLITE_ROW) {
+
+        const void* achievement_id       = sqlite3_column_blob(statement, 0);
+        int achievement_idSize           = sqlite3_column_bytes(statement, 0);
+
+        if(achievement_id)
+        {
+            NSData *data = [[NSData alloc] initWithBytes:achievement_id length:achievement_idSize];
+            NSDictionary * dic = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+            NSMutableDictionary *mdic = [NSMutableDictionary dictionaryWithDictionary:dic];
+            [objs addObject:mdic];
+        }
+
+    }
+    sqlite3_finalize(statement);
     
+    /*
     NSData *JSONData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"999" ofType:@"txt"]];
     
     NSMutableArray *dataArray = [NSJSONSerialization JSONObjectWithData:JSONData options:NSJSONReadingAllowFragments error:nil];
     
     return dataArray;
+     */
 	
-//    return objs;
+    return objs;
     
 }
 
