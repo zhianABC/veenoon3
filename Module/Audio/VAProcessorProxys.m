@@ -156,6 +156,10 @@
         
         _lvbojunhengGaotongXielv = @"-10";
         _lvboGaotongPinLv = @"8";
+        _lvboDitongPinlv = @"2";
+        _lvboBoduanQ = @"4";
+        _lvboBoduanZengyi = @"5";
+        _lvboBoduanPinlv = @"6";
         
         self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionary];
     }

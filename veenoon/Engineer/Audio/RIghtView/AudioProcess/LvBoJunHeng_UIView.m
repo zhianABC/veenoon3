@@ -17,17 +17,17 @@
 
 @interface LvBoJunHeng_UIView() <SlideButtonDelegate>{
     SlideButton *xielvSlider;
-    SlideButton *xielvSlider2;
+    SlideButton *ditongXielvSlider;
     
-    SlideButton *fazhi;
-    SlideButton *qidongshijian;
-    SlideButton *huifushijian;
+    SlideButton *boduanPinLvSlider;
+    SlideButton *boduanZengyiSlider;
+    SlideButton *boduanQSlider;
     
     UILabel *xielvL1;
-    UILabel *xielvL2;
-    UILabel *fazhiL;
-    UILabel *huifushijianL;
-    UILabel *qidongshijianL;
+    UILabel *ditongXielvL;
+    UILabel *boduanPinlvL;
+    UILabel *boduanQL;
+    UILabel *boduanZengyiL;
     
     FilterGraphView *fglm;
     
@@ -452,20 +452,25 @@
     addLabel.frame = CGRectMake(startX+weiYi+12, labelY, 120, 20);
     [view addSubview:addLabel];
     
-    fazhi = [[SlideButton alloc] initWithFrame:CGRectMake(startX, labelY+labelBtnGap, 120, 120)];
-    fazhi._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
-    fazhi._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
-    [fazhi enableValueSet:YES];
-    fazhi.delegate = self;
-    fazhi.tag = 3;
-    [view addSubview:fazhi];
+    boduanPinLvSlider = [[SlideButton alloc] initWithFrame:CGRectMake(startX, labelY+labelBtnGap, 120, 120)];
+    boduanPinLvSlider._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+    boduanPinLvSlider._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+    [boduanPinLvSlider enableValueSet:YES];
+    boduanPinLvSlider.delegate = self;
+    boduanPinLvSlider.tag = 3;
+    [view addSubview:boduanPinLvSlider];
     
-    fazhiL = [[UILabel alloc] initWithFrame:CGRectMake(startX, labelY+labelBtnGap+95, 120, 20)];
-    fazhiL.text = @"-12dB";
-    fazhiL.textAlignment = NSTextAlignmentCenter;
-    [view addSubview:fazhiL];
-    fazhiL.font = [UIFont systemFontOfSize:13];
-    fazhiL.textColor = YELLOW_COLOR;
+    NSString *boduanPinlv = [_curProxy getlvboBoduanPinlv];
+    float boduanPinlvvalue = [boduanPinlv floatValue];
+    float boduanPinlvvaluef = (boduanPinlvvalue+12.0)/24.0;
+    [boduanPinLvSlider setCircleValue:boduanPinlvvaluef];
+    
+    boduanPinlvL = [[UILabel alloc] initWithFrame:CGRectMake(startX, labelY+labelBtnGap+95, 120, 20)];
+    boduanPinlvL.text = [boduanPinlv stringByAppendingString:@" Hz"];
+    boduanPinlvL.textAlignment = NSTextAlignmentCenter;
+    [view addSubview:boduanPinlvL];
+    boduanPinlvL.font = [UIFont systemFontOfSize:13];
+    boduanPinlvL.textColor = YELLOW_COLOR;
     
     UILabel *addLabel23 = [[UILabel alloc] init];
     addLabel23.text = @"增益 (dB)";
@@ -474,22 +479,25 @@
     addLabel23.frame = CGRectMake(startX+gap+weiYi+10, labelY, 120, 20);
     [view addSubview:addLabel23];
     
-    qidongshijian = [[SlideButton alloc] initWithFrame:CGRectMake(startX+gap, labelY+labelBtnGap, 120, 120)];
-    qidongshijian._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
-    qidongshijian._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
-    [qidongshijian enableValueSet:YES];
-    qidongshijian.delegate = self;
-    qidongshijian.tag = 4;
-    [view addSubview:qidongshijian];
+    boduanZengyiSlider = [[SlideButton alloc] initWithFrame:CGRectMake(startX+gap, labelY+labelBtnGap, 120, 120)];
+    boduanZengyiSlider._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+    boduanZengyiSlider._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+    [boduanZengyiSlider enableValueSet:YES];
+    boduanZengyiSlider.delegate = self;
+    boduanZengyiSlider.tag = 4;
+    [view addSubview:boduanZengyiSlider];
     
-    [qidongshijian setCircleValue:0.5];
+    NSString *boduanZengYi = [_curProxy getlvboBoduanZengyi];
+    float boduanZengYivalue = [boduanZengYi floatValue];
+    float boduanZengYivaluef = (boduanZengYivalue+12.0)/24.0;
+    [boduanPinLvSlider setCircleValue:boduanZengYivaluef];
     
-    qidongshijianL = [[UILabel alloc] initWithFrame:CGRectMake(startX+gap, labelY+labelBtnGap+95, 120, 20)];
-    qidongshijianL.text = @"-12dB";
-    qidongshijianL.textAlignment = NSTextAlignmentCenter;
-    [view addSubview:qidongshijianL];
-    qidongshijianL.font = [UIFont systemFontOfSize:13];
-    qidongshijianL.textColor = YELLOW_COLOR;
+    boduanZengyiL = [[UILabel alloc] initWithFrame:CGRectMake(startX+gap, labelY+labelBtnGap+95, 120, 20)];
+    boduanZengyiL.text = [boduanZengYi stringByAppendingString:@" dB"];
+    boduanZengyiL.textAlignment = NSTextAlignmentCenter;
+    [view addSubview:boduanZengyiL];
+    boduanZengyiL.font = [UIFont systemFontOfSize:13];
+    boduanZengyiL.textColor = YELLOW_COLOR;
     
     UILabel *addLabel224= [[UILabel alloc] init];
     addLabel224.text = @"Q";
@@ -498,35 +506,69 @@
     addLabel224.frame = CGRectMake(startX+gap*2+weiYi+33, labelY, 120, 20);
     [view addSubview:addLabel224];
     
-    huifushijian = [[SlideButton alloc] initWithFrame:CGRectMake(startX+gap*2, labelY+labelBtnGap, 120, 120)];
-    huifushijian._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
-    huifushijian._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
-    [huifushijian enableValueSet:YES];
-    huifushijian.delegate = self;
-    huifushijian.tag = 5;
-    [view addSubview:huifushijian];
+    boduanQSlider = [[SlideButton alloc] initWithFrame:CGRectMake(startX+gap*2, labelY+labelBtnGap, 120, 120)];
+    boduanQSlider._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+    boduanQSlider._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+    [boduanQSlider enableValueSet:YES];
+    boduanQSlider.delegate = self;
+    boduanQSlider.tag = 5;
+    [view addSubview:boduanQSlider];
     
-    huifushijianL = [[UILabel alloc] initWithFrame:CGRectMake(startX+gap*2, labelY+labelBtnGap+95, 120, 20)];
-    huifushijianL.text = @"-12dB";
-    huifushijianL.textAlignment = NSTextAlignmentCenter;
-    [view addSubview:huifushijianL];
-    huifushijianL.font = [UIFont systemFontOfSize:13];
-    huifushijianL.textColor = YELLOW_COLOR;
+    NSString *boduanQ = [_curProxy getlvboBoduanZengyi];
+    float boduanQvalue = [boduanQ floatValue];
+    float boduanQvaluef = (boduanQvalue+12.0)/24.0;
+    [boduanQSlider setCircleValue:boduanQvaluef];
     
-    UIButton *zhitongBtn1 = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
-    zhitongBtn1.frame = CGRectMake(10, view.frame.size.height - 30, 50, 25);
-    zhitongBtn1.layer.cornerRadius = 5;
-    zhitongBtn1.layer.borderWidth = 2;
-    zhitongBtn1.layer.borderColor = [UIColor clearColor].CGColor;;
-    zhitongBtn1.clipsToBounds = YES;
-    [zhitongBtn1 setTitle:@"启用" forState:UIControlStateNormal];
-    zhitongBtn1.titleLabel.font = [UIFont systemFontOfSize:13];
-    [zhitongBtn1 addTarget:self
-                    action:@selector(zhitongBtn2Action:)
+    boduanQL = [[UILabel alloc] initWithFrame:CGRectMake(startX+gap*2, labelY+labelBtnGap+95, 120, 20)];
+    boduanQL.text = [boduanQ stringByAppendingString:@" dB"];
+    boduanQL.textAlignment = NSTextAlignmentCenter;
+    [view addSubview:boduanQL];
+    boduanQL.font = [UIFont systemFontOfSize:13];
+    boduanQL.textColor = YELLOW_COLOR;
+    
+    buduanStartBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    buduanStartBtn.frame = CGRectMake(10, view.frame.size.height - 30, 50, 25);
+    buduanStartBtn.layer.cornerRadius = 5;
+    buduanStartBtn.layer.borderWidth = 2;
+    buduanStartBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    buduanStartBtn.clipsToBounds = YES;
+    [buduanStartBtn setTitle:@"启用" forState:UIControlStateNormal];
+    buduanStartBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    [buduanStartBtn addTarget:self
+                    action:@selector(boduanStartBtnAction:)
           forControlEvents:UIControlEventTouchUpInside];
-    [view addSubview:zhitongBtn1];
+    [view addSubview:buduanStartBtn];
+    
+    BOOL isBoDuanStarted = [_curProxy islvboBoduanStart];
+    
+    if(isBoDuanStarted)
+    {
+        [buduanStartBtn changeNormalColor:THEME_RED_COLOR];
+    }
+    else
+    {
+        [buduanStartBtn changeNormalColor:RGB(75, 163, 202)];
+    }
 }
-
+- (void) boduanStartBtnAction:(id)sender {
+    if(_curProxy == nil)
+        return;
+    
+    BOOL isMute = [_curProxy islvboBoduanStart];
+    
+    [_curProxy controllvboBoduanStart:!isMute];
+    
+    BOOL isFanKuiYiZhi = [_curProxy islvboBoduanStart];
+    
+    if(isFanKuiYiZhi)
+    {
+        [buduanStartBtn changeNormalColor:THEME_RED_COLOR];
+    }
+    else
+    {
+        [buduanStartBtn changeNormalColor:RGB(75, 163, 202)];
+    }
+}
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
     int tag = (int) slbtn.tag;
@@ -541,28 +583,34 @@
         int k = (value *24)-12;
         NSString *valueStr= [NSString stringWithFormat:@"%d dB", k];
         
-        xielvL2.text = valueStr;
+        ditongXielvL.text = valueStr;
+        
+        [_curProxy controllvboDitongPinlv:[NSString stringWithFormat:@"%d", k]];
     } else if (tag == 3) {
         int k = (value *(10000-10))-10;
         
         NSString *valueStr= [NSString stringWithFormat:@"%d Hz", k];
         
-        fazhiL.text = valueStr;
+        boduanPinlvL.text = valueStr;
         
+        [_curProxy controllvboBoduanPinlv:[NSString stringWithFormat:@"%d", k]];
         
     } else if (tag == 4) {
         int k = (value *40)-20;
         NSString *valueStr= [NSString stringWithFormat:@"%d", k];
         
-        qidongshijianL.text = valueStr;
+        boduanZengyiL.text = valueStr;
         
         [fglm setPEQWithBand:_channelSelIndex gain:k];
+        [_curProxy controllvboBoduanZengyi:[NSString stringWithFormat:@"%d", k]];
         
     } else {
         int k = (value *2000)-1000;
         NSString *valueStr= [NSString stringWithFormat:@"%d", k];
         
-        huifushijianL.text = valueStr;
+        boduanQL.text = valueStr;
+        
+        [_curProxy controllvboBoduanQ:[NSString stringWithFormat:@"%d", k]];
     }
 }
 
@@ -692,33 +740,68 @@
        forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:ditongxielvBtn];
     
-    xielvSlider2 = [[SlideButton alloc] initWithFrame:CGRectMake(100, 70, 120, 120)];
-    xielvSlider2._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
-    xielvSlider2._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
-    [xielvSlider2 enableValueSet:YES];
-    xielvSlider2.delegate = self;
-    xielvSlider2.tag = 2;
-    [view addSubview:xielvSlider2];
+    ditongXielvSlider = [[SlideButton alloc] initWithFrame:CGRectMake(100, 70, 120, 120)];
+    ditongXielvSlider._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+    ditongXielvSlider._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+    [ditongXielvSlider enableValueSet:YES];
+    ditongXielvSlider.delegate = self;
+    ditongXielvSlider.tag = 2;
+    [view addSubview:ditongXielvSlider];
     
-    xielvL2 = [[UILabel alloc] initWithFrame:CGRectMake(100, 180, 120, 20)];
-    xielvL2.text = @"-12dB";
-    xielvL2.textAlignment = NSTextAlignmentCenter;
-    [view addSubview:xielvL2];
-    xielvL2.font = [UIFont systemFontOfSize:13];
-    xielvL2.textColor = YELLOW_COLOR;
+    NSString *ditongPinlv = [_curProxy getlvboDitongPinlv];
+    float ditongPinlvvalue = [ditongPinlv floatValue];
+    float ditongPinlvvaluef = (ditongPinlvvalue+12.0)/24.0;
+    [ditongXielvSlider setCircleValue:ditongPinlvvaluef];
     
-    UIButton *zhitongBtn1 = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
-    zhitongBtn1.frame = CGRectMake(10, view.frame.size.height - 30, 50, 25);
-    zhitongBtn1.layer.cornerRadius = 5;
-    zhitongBtn1.layer.borderWidth = 2;
-    zhitongBtn1.layer.borderColor = [UIColor clearColor].CGColor;;
-    zhitongBtn1.clipsToBounds = YES;
-    [zhitongBtn1 setTitle:@"启用" forState:UIControlStateNormal];
-    zhitongBtn1.titleLabel.font = [UIFont systemFontOfSize:13];
-    [zhitongBtn1 addTarget:self
-                    action:@selector(zhitongBtn3Action:)
+    ditongXielvL = [[UILabel alloc] initWithFrame:CGRectMake(100, 180, 120, 20)];
+    ditongXielvL.text = [ditongPinlv stringByAppendingString:@" dB"];
+    ditongXielvL.textAlignment = NSTextAlignmentCenter;
+    [view addSubview:ditongXielvL];
+    ditongXielvL.font = [UIFont systemFontOfSize:13];
+    ditongXielvL.textColor = YELLOW_COLOR;
+    
+    ditongStartBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    ditongStartBtn.frame = CGRectMake(10, view.frame.size.height - 30, 50, 25);
+    ditongStartBtn.layer.cornerRadius = 5;
+    ditongStartBtn.layer.borderWidth = 2;
+    ditongStartBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    ditongStartBtn.clipsToBounds = YES;
+    [ditongStartBtn setTitle:@"启用" forState:UIControlStateNormal];
+    ditongStartBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    [ditongStartBtn addTarget:self
+                    action:@selector(ditongStartBtnAction:)
           forControlEvents:UIControlEventTouchUpInside];
-    [view addSubview:zhitongBtn1];
+    [view addSubview:ditongStartBtn];
+    
+    BOOL isDiTongStarted = [_curProxy islvboDitongStart];
+    
+    if(isDiTongStarted)
+    {
+        [ditongStartBtn changeNormalColor:THEME_RED_COLOR];
+    }
+    else
+    {
+        [ditongStartBtn changeNormalColor:RGB(75, 163, 202)];
+    }
+}
+- (void) ditongStartBtnAction:(id) sender {
+    if(_curProxy == nil)
+        return;
+    
+    BOOL isMute = [_curProxy _islvboDitongStart];
+    
+    [_curProxy controllvboDitongStart:!isMute];
+    
+    BOOL isFanKuiYiZhi = [_curProxy _islvboDitongStart];
+    
+    if(isFanKuiYiZhi)
+    {
+        [ditongStartBtn changeNormalColor:THEME_RED_COLOR];
+    }
+    else
+    {
+        [ditongStartBtn changeNormalColor:RGB(75, 163, 202)];
+    }
 }
 -(void) ditongTypeAction:(UIButton*)sender {
     if ([_deviceSelector isPopoverVisible]) {
@@ -844,6 +927,8 @@
     self._curProxy = [self._proxys objectAtIndex:idx];
     
     [self updateGaoTong];
+    [self updateBoDuan];
+    [self updateDiTong];
 }
 
 - (void) updateGaoTong {
@@ -874,11 +959,68 @@
 }
 
 - (void) updateBoDuan {
+    NSString *dispaly = [@"   " stringByAppendingString:[_curProxy getBoduanType]];
+    [boduanleixingBtn setTitle:dispaly  forState:UIControlStateNormal];
+    
+    NSString *boduanPinlv = [_curProxy getlvboBoduanPinlv];
+    float boduanPinlvvalue = [boduanPinlv floatValue];
+    float boduanPinlvvaluef = (boduanPinlvvalue+12.0)/24.0;
+    [boduanPinLvSlider setCircleValue:boduanPinlvvaluef];
+    
+    boduanPinlvL.text = [boduanPinlv stringByAppendingString:@" Hz"];
+    
+    NSString *boduanZengyi = [_curProxy getlvboBoduanZengyi];
+    float boduanZengyivalue = [boduanZengyi floatValue];
+    float boduanZengyivaluef = (boduanZengyivalue+12.0)/24.0;
+    [boduanZengyiSlider setCircleValue:boduanZengyivaluef];
+    
+    boduanZengyiL.text = [boduanZengyi stringByAppendingString:@" Hz"];
+    
+    NSString *boduanQ = [_curProxy getlvboBoduanQ];
+    float boduanQvalue = [boduanQ floatValue];
+    float boduanQvaluef = (boduanQvalue+12.0)/24.0;
+    [boduanQSlider setCircleValue:boduanQvaluef];
+    
+    boduanQL.text = [boduanQ stringByAppendingString:@" Hz"];
+    
+    BOOL isBoduanStart = [_curProxy islvboBoduanStart];
+    
+    if(isBoduanStart)
+    {
+        [buduanStartBtn changeNormalColor:THEME_RED_COLOR];
+    }
+    else
+    {
+        [buduanStartBtn changeNormalColor:RGB(75, 163, 202)];
+    }
+    
     
 }
 
 -(void) updateDiTong {
+    NSString *dispaly = [@"   " stringByAppendingString:[_curProxy getDiTongType]];
+    [ditongTypeBtn setTitle:dispaly  forState:UIControlStateNormal];
     
+    NSString *ditongXielv = [@"  " stringByAppendingString:[_curProxy getDiTongXieLv]];
+    [ditongxielvBtn setTitle:ditongXielv forState:UIControlStateNormal];
+    
+    NSString *ditongPinlv = [_curProxy getlvboDitongPinlv];
+    float ditongPinlvvalue = [ditongPinlv floatValue];
+    float ditongPinlvvaluef = (ditongPinlvvalue+12.0)/24.0;
+    [ditongXielvSlider setCircleValue:ditongPinlvvaluef];
+    
+    ditongXielvL.text = [ditongPinlv stringByAppendingString:@" Hz"];
+    
+    BOOL isDitongStart = [_curProxy _islvboDitongStart];
+    
+    if(isDitongStart)
+    {
+        [ditongStartBtn changeNormalColor:THEME_RED_COLOR];
+    }
+    else
+    {
+        [ditongStartBtn changeNormalColor:RGB(75, 163, 202)];
+    }
 }
 
 @end
