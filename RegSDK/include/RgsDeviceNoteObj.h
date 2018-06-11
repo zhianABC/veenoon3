@@ -21,10 +21,10 @@
 //设备id
 @property NSInteger device_id;
 
-//通知标题
+//通知参数
 @property NSDictionary * param;
 
-//通知参数
+//通知标题
 @property NSString * notify;
 
 @end

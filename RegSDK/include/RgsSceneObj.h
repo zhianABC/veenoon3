@@ -12,7 +12,7 @@
 
 /*!
  @class RgsSceneObj
- @since 3.0.0
+ @since 3.4.1
  @brief 情景对象
  */
 
@@ -32,10 +32,5 @@
  情景执行后使用标记
  */
 @property BOOL enable;
-
-/*!
- 情景执行后跳转设备
- */
-@property NSInteger JumpToDev;
 
 @end

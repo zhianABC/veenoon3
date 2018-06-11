@@ -9,6 +9,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "RgsConstants.h"
 
 /*!
  @class RgsDriverInfo
@@ -21,6 +22,11 @@
  名字
  */
 @property NSString * name;
+
+/*！
+ 类型
+ */
+@property RgsDriverType type;
 
 /*!
  品牌

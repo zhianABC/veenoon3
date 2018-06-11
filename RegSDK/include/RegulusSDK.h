@@ -393,12 +393,81 @@
  */
 -(void)GetSystemDrivers:(void(^)(BOOL result,NSArray * drivers,NSError * error)) completion;
 
-///*!
-// @since 3.0.0
-// @brief 重新加载工程
-// @param completion       回调block 正常时返回YES
-// */
-//-(void)ReloadProject:(void(^)(BOOL result,NSError * error)) completion;
+/*!
+ @since 3.4.1
+ @brief 获取情景重复计划对象
+ @param scene_id 情景ID
+ @param completion 回调block 正常时返回YES schedulers为RgsSchedulerObj对象列表,为nil时则该情景没有重复计划
+ @see RgsSchedulerObj
+ */
+-(void)GetSceneScheduler:(NSInteger)scene_id
+              completion:(void(^)(BOOL result,RgsSchedulerObj * scheduler,NSError * error)) completion;
+
+/*!
+ @since 3.4.1
+ @brief 删除指定获取情景重复计划
+ @param scene_id 情景ID
+ @param completion 回调block 正常时返回YES
+ @see RgsSchedulerObj
+ */
+-(void)DelScheduler:(NSInteger)scene_id
+         completion:(void(^)(BOOL result,NSError * error)) completion;
+
+/*!
+ @since 3.4.1
+ @brief 设置情景重复计划
+ @param scene_id 执行的情景ID
+ @param exce_time 执行时间
+ @param week_items @[@"Sun",@"Mon",@"Tues",@"Wed",@"Thurs",@"Fri",@"Sat"]中的组成。如@[@"Sun",@"Fri",@"Sat"] 表示周日、周五、周六执行
+ @param completion 回调block 正常时返回YES schedulers为创建的对象
+ @see RgsSchedulerObj
+ */
+-(void)SetScheduler:(NSInteger)scene_id
+             exce_time:(NSDate *)exce_time
+             week_items:(NSArray *)week_items
+            completion:(void(^)(BOOL result,RgsSchedulerObj * scheduler ,NSError * error)) completion;
+
+/*!
+ @since 3.5.1
+ @brief 向U盘或SD卡导出工程文件
+ @param name 导出的文件名字
+ @param completion 回调block 正常时返回YES
+ */
+-(void)ExportProjectToUdisc:(NSString *)name
+                 completion:(void(^)(BOOL result,NSError * error)) completion;
+
+/*!
+ @since 3.5.1
+ @brief 查询U盘或SD卡工程文件
+ @param completion 回调block 正常时返回YES names为工程文件名列表
+ */
+-(void)GetProjectsFromUdisc:(void(^)(BOOL result,NSArray * names,NSError * error)) completion;
+
+/*!
+ @since 3.5.1
+ @brief 从U盘或SD卡导入工程文件
+ @param name 导入的文件名字
+ @param completion 回调block 正常时返回YES
+ */
+-(void)ImportProjectFromUdisc:(NSString *)name
+                 completion:(void(^)(BOOL result,NSError * error)) completion;
+
+/*!
+ @since 3.5.1
+ @brief 获取当前手机使用的WI-FI的SSID
+ @return SSID
+ */
++(NSString *)GetWifiSSID;
+
+
+/*!
+ @since 3.5.1
+ @param psd WiFi密码
+ @param taskCount the expect result count(if expectTaskResultCount <= 0, expectTaskResultCount = INT32_MAX)
+ @param itmeIntevel 超时值
+ @param callback 结果回调
+ */
++(void)RgsWifiConfWithPassword:(NSString *)psd taskCount:(int)taskCount timeIntevel:(int)itmeIntevel callback:(void(^)(NSError *error))callback;
 
 @end
 

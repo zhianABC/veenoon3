@@ -342,7 +342,6 @@
     [self.view addSubview:topbar];
     [self.view addSubview:bottomBar];
 
-    
     scenarioButton = [UIButton buttonWithColor:YELLOW_COLOR selColor:nil];
     scenarioButton.frame = CGRectMake(SCREEN_WIDTH-120, 84, 100, 40);
     [self.view addSubview:scenarioButton];
@@ -709,7 +708,7 @@
     }
     
     
-    NSMutableDictionary *data = cellBtn._mydata;
+    NSMutableDictionary *data = (NSMutableDictionary*)cellBtn._mydata;
     NSString *name = [data objectForKey:@"name"];
     
     /////////
@@ -1052,13 +1051,11 @@
         btnCells = _envCells;
     }
 
-    BasePlugElement *plug = [dataArray objectAtIndex:idx];
-    [plug removeDriver];
-    
+//    BasePlugElement *plug = [dataArray objectAtIndex:idx];
+//    [plug removeDriver];
+
     [dataArray removeObjectAtIndex:idx];
 
-
-    
     [UIView animateWithDuration:0.25
                      animations:^{
                          

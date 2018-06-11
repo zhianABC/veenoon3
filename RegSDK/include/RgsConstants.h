@@ -14,19 +14,6 @@
 #define RegulusErrorDomain @"com.regulus.sdk"
 
 
-/*!
- 错误枚举
- */
-typedef NS_ENUM(NSInteger,RgsErrorCode){
-    RGS_ADD_TO_GATEWAY_FAILED = 4000001,    //向网关注册客户端信息失败
-    RGS_LOGIN_PASSWORD_FAILED,              //登录密码错误
-    RGS_LOGIN_MOVED_FAILED,                 //注册信息被移除
-    RGS_LOGIN_TIMEOUT_FAILED,               //登录超时
-    RGS_NO_HANDLER,                         //未获取句柄
-    RGS_REQ_TIME_OUT,                       //请求超时
-    RGS_SET_PASSWORD_FAILED,                //设置密码失败
-};
-
 
 /*!
  指令参数类型枚举
@@ -39,6 +26,9 @@ typedef NS_ENUM(NSInteger,RgsParamType)
     RGS_PARAM_TYPE_LIST,       //单选列表类型
     RGS_PARAM_TYPE_FLOAT,      //浮点类型
     RGS_PARAM_TYPE_MULLIST,    //多选列表类型
+    RGS_PARAM_TYPE_DATE,       //日期类型
+    RGS_PARAM_TYPE_IP,         //IP类型
+    RGS_PARAM_TYPE_TIME,       //时间类型
 };
 
 /*!
@@ -52,6 +42,16 @@ typedef NS_ENUM(NSInteger,RgsFrequencyType)
     RGS_FREQUENCY_WEEKLY,      //周重复
     RGS_FREQUENCY_MONTHLY,     //月重复
     RGS_FREQUENCY_YEARLY,      //年重复
+};
+
+/*!
+ 驱动类型
+ */
+typedef NS_ENUM(NSInteger,RgsDriverType)
+{
+    RGS_DRIVER_TYPE_PHYSICAL=1,
+    RGS_DRIVER_TYPE_PROXY,
+    RGS_DRIVER_TYPE_FUNCTION,
 };
 
 

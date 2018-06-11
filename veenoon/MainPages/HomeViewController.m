@@ -60,7 +60,7 @@
                                              repeats:NO];
     
     
-    [[DataSync sharedDataSync] logoutCurrentRegulus];
+    //[[DataSync sharedDataSync] logoutCurrentRegulus];
 
 }
 

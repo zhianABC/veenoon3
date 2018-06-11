@@ -13,36 +13,22 @@
 
 /*!
  @class RgsSchedulerObj
- @since 3.0.0
- @brief 日程预约对象
+ @since 3.4.1
+ @brief 重复计划对象
  */
 
 @interface RgsSchedulerObj : NSObject
-
-/*!
- 日程id
- */
-@property NSInteger m_id;
 
 /*!
  关联情景id
  */
 @property NSInteger scene_id;
 
-/*!
- 起始日期
- */
-@property NSDate * start_date;
 
 /*!
  执行时间
  */
 @property NSDate * exce_time;
-
-/*!
- 结束日期
- */
-@property NSDate * end_date;
 
 /*!
  重复类型
@@ -55,8 +41,8 @@
 @property NSInteger rate;
 
 /*!
- 周重复掩码
+ 周重复
  */
-@property NSInteger mask;
+@property NSArray * week_items;
 
 @end
