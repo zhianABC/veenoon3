@@ -154,6 +154,9 @@
         _lvbojunhengBoduanType = @"山猫";
         _lvboBoDuanArray = [NSArray arrayWithObjects:@"76人", @"小牛", @"太阳", nil];
         
+        _lvbojunhengGaotongXielv = @"-10";
+        _lvboGaotongPinLv = @"8";
+        
         self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionary];
     }
     

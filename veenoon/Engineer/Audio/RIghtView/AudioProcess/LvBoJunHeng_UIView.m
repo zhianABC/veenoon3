@@ -44,6 +44,10 @@
     UIButton *boduanleixingBtn;
     
     UIButton *ditongxielvBtn;
+    
+    UIButton *gaotongStartBtn;
+    UIButton *buduanStartBtn;
+    UIButton *ditongStartBtn;
 }
 
 @property (nonatomic, strong) NSMutableArray *_boduanChannelBtns;
@@ -208,29 +212,62 @@
     xielvSlider.tag = 1;
     [view addSubview:xielvSlider];
     
+    NSString *gaotongXielv = [_curProxy getLvboGaotongPinlv];
+    float gaotongxielvvalue = [gaotongXielv floatValue];
+    float gaotongxielvf = (gaotongxielvvalue+12.0)/24.0;
+    [xielvSlider setCircleValue:gaotongxielvf];
+    
+    
     xielvL1 = [[UILabel alloc] initWithFrame:CGRectMake(100, 180, 120, 20)];
-    xielvL1.text = @"-12dB";
+    xielvL1.text = [gaotongXielv stringByAppendingString:@" Hz"];
     xielvL1.textAlignment = NSTextAlignmentCenter;
     [view addSubview:xielvL1];
     xielvL1.font = [UIFont systemFontOfSize:13];
     xielvL1.textColor = YELLOW_COLOR;
     
     
-    UIButton *zhitongBtn1 = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
-    zhitongBtn1.frame = CGRectMake(10, view.frame.size.height - 30, 50, 25);
-    zhitongBtn1.layer.cornerRadius = 5;
-    zhitongBtn1.layer.borderWidth = 2;
-    zhitongBtn1.layer.borderColor = [UIColor clearColor].CGColor;;
-    zhitongBtn1.clipsToBounds = YES;
-    [zhitongBtn1 setTitle:@"启用" forState:UIControlStateNormal];
-    zhitongBtn1.titleLabel.font = [UIFont systemFontOfSize:13];
-    [zhitongBtn1 addTarget:self
-                   action:@selector(zhitongBtn1Action:)
+    gaotongStartBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    gaotongStartBtn.frame = CGRectMake(10, view.frame.size.height - 30, 50, 25);
+    gaotongStartBtn.layer.cornerRadius = 5;
+    gaotongStartBtn.layer.borderWidth = 2;
+    gaotongStartBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    gaotongStartBtn.clipsToBounds = YES;
+    [gaotongStartBtn setTitle:@"启用" forState:UIControlStateNormal];
+    gaotongStartBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    [gaotongStartBtn addTarget:self
+                   action:@selector(gaotongStartBtnAction:)
          forControlEvents:UIControlEventTouchUpInside];
-    [view addSubview:zhitongBtn1];
-}
-- (void) zhitongBtn1Action:(id) sender {
+    [view addSubview:gaotongStartBtn];
     
+    BOOL isGaoTongStarted = [_curProxy isLvboGaotongStart];
+    
+    if(isGaoTongStarted)
+    {
+        [gaotongStartBtn changeNormalColor:THEME_RED_COLOR];
+    }
+    else
+    {
+        [gaotongStartBtn changeNormalColor:RGB(75, 163, 202)];
+    }
+}
+- (void) gaotongStartBtnAction:(id) sender {
+    if(_curProxy == nil)
+        return;
+    
+    BOOL isMute = [_curProxy isLvboGaotongStart];
+    
+    [_curProxy controlLVboGaotongStart:!isMute];
+    
+    BOOL isFanKuiYiZhi = [_curProxy isLvboGaotongStart];
+    
+    if(isFanKuiYiZhi)
+    {
+        [gaotongStartBtn changeNormalColor:THEME_RED_COLOR];
+    }
+    else
+    {
+        [gaotongStartBtn changeNormalColor:RGB(75, 163, 202)];
+    }
 }
 - (void) gaotongxielvAction:(UIButton*) sender {
     if ([_deviceSelector isPopoverVisible]) {
@@ -368,7 +405,7 @@
             x+=spx;
         }
         
-        [_channelBtns addObject:btn];
+        [_boduanChannelBtns addObject:btn];
     }
     
     UILabel *addLabel2 = [[UILabel alloc] init];
@@ -495,18 +532,20 @@
     int tag = (int) slbtn.tag;
     if (tag == 1) {
         int k = (value *24)-12;
-        NSString *valueStr= [NSString stringWithFormat:@"%dB", k];
+        NSString *valueStr= [NSString stringWithFormat:@"%d Hz", k];
         
         xielvL1.text = valueStr;
+        
+        [_curProxy controlLvBoGaotongPinlv:[NSString stringWithFormat:@"%d", k]];
     } else if (tag == 2) {
         int k = (value *24)-12;
-        NSString *valueStr= [NSString stringWithFormat:@"%dB", k];
+        NSString *valueStr= [NSString stringWithFormat:@"%d dB", k];
         
         xielvL2.text = valueStr;
     } else if (tag == 3) {
         int k = (value *(10000-10))-10;
         
-        NSString *valueStr= [NSString stringWithFormat:@"%dHz", k];
+        NSString *valueStr= [NSString stringWithFormat:@"%d Hz", k];
         
         fazhiL.text = valueStr;
         
@@ -800,6 +839,46 @@
             [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }
     }
+    
+    int idx = (int)sender.tag;
+    self._curProxy = [self._proxys objectAtIndex:idx];
+    
+    [self updateGaoTong];
+}
+
+- (void) updateGaoTong {
+    NSString *dispaly = [@"   " stringByAppendingString:[_curProxy getGaoTongType]];
+    [gaotongTypeBtn setTitle:dispaly  forState:UIControlStateNormal];
+    
+    NSString *gaotongXieLv = [@"  " stringByAppendingString:[_curProxy getGaoTongXieLv]];
+    [gaotongXielvBtn setTitle:gaotongXieLv forState:UIControlStateNormal];
+    
+    NSString *gaotongPinlv = [_curProxy getLvboGaotongPinlv];
+    float gaotongPinlvvalue = [gaotongPinlv floatValue];
+    float gaotongPinlvf = (gaotongPinlvvalue+12.0)/24.0;
+    [xielvSlider setCircleValue:gaotongPinlvf];
+    
+    xielvL1.text = [gaotongPinlv stringByAppendingString:@" Hz"];
+    
+    BOOL isGaoTongStarted = [_curProxy isLvboGaotongStart];
+    
+    if(isGaoTongStarted)
+    {
+        [gaotongStartBtn changeNormalColor:THEME_RED_COLOR];
+    }
+    else
+    {
+        [gaotongStartBtn changeNormalColor:RGB(75, 163, 202)];
+    }
+    
+}
+
+- (void) updateBoDuan {
+    
+}
+
+-(void) updateDiTong {
+    
 }
 
 @end
