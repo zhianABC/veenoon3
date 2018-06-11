@@ -59,6 +59,14 @@
 @property (nonatomic, strong) NSArray *_lvboDitongXielvArray;
 @property (nonatomic, strong) NSString *_lvbojunhengBoduanType;
 @property (nonatomic, strong) NSArray *_lvboBoDuanArray;
+@property (nonatomic, assign) BOOL _islvboGaotongStart;
+@property (nonatomic, assign) BOOL _islvboBoduanStart;
+@property (nonatomic, assign) BOOL _islvboDitongStart;
+@property (nonatomic, strong) NSString *_lvboGaotongPinLv;
+@property (nonatomic, strong) NSString *_lvboBoduanPinlv;
+@property (nonatomic, strong) NSString *_lvboBoduanZengyi;
+@property (nonatomic, strong) NSString *_lvboBoduanQ;
+@property (nonatomic, strong) NSString *_lvboDitongPinlv;
 /*
  SET_MUTE
  SET_UNMUTE
@@ -160,6 +168,29 @@
 - (void) controlBoduanType:(NSString*) boduanType;
 - (NSArray*) getLvBoBoDuanArray;
 
+- (BOOL) isLvboGaotongStart;
+- (void) controlLVboGaotongStart:(BOOL) lvboGaotongStart;
+
+- (NSString*) getLvboGaotongPinlv;
+- (void) controlLvBoGaotongPinlv:(NSString*) lvbogaotongPinlv;
+
+- (BOOL) islvboBoduanStart;
+- (void) controllvboBoduanStart:(BOOL) lvboBoduanStart;
+
+- (NSString*) getlvboBoduanPinlv;
+- (void) controllvboBoduanPinlv:(NSString*) lvboBoduanPinlv;
+
+- (NSString*) getlvboBoduanZengyi;
+- (void) controllvboBoduanZengyi:(NSString*) lvboBoduanZengyi;
+
+-(NSString*) getlvboBoduanQ;
+-(void) controllvboBoduanQ:(NSString*) lvboBoduanQ;
+
+-(BOOL) islvboDitongStart;
+-(void) controllvboDitongStart:(BOOL) lvboDitongStart;
+
+-(NSString*) getlvboDitongPinlv;
+-(void) controllvboDitongPinlv:(NSString*)lvboDitongPinlv;
 
 
 - (void) controlDeviceMode:(NSString*)mode;

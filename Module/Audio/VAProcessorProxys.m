@@ -90,7 +90,14 @@
 @synthesize _lvbojunhengDitongXielv;
 @synthesize _lvboBoDuanArray;
 @synthesize _lvbojunhengBoduanType;
-
+@synthesize _islvboGaotongStart;
+@synthesize _islvboBoduanStart;
+@synthesize _islvboDitongStart;
+@synthesize _lvboGaotongPinLv;
+@synthesize _lvboBoduanPinlv;
+@synthesize _lvboBoduanZengyi;
+@synthesize _lvboBoduanQ;
+@synthesize _lvboDitongPinlv;
 
 - (id) init
 {
@@ -598,6 +605,62 @@
 }
 - (NSArray*) getLvBoBoDuanArray {
     return _lvboBoDuanArray;
+}
+
+- (BOOL) isLvboGaotongStart {
+    return self._islvboGaotongStart;
+}
+- (void) controlLVboGaotongStart:(BOOL) lvboGaotongStart {
+    self._islvboGaotongStart = lvboGaotongStart;
+}
+
+- (NSString*) getLvboGaotongPinlv {
+    return self._lvboGaotongPinLv;
+}
+- (void) controlLvBoGaotongPinlv:(NSString*) lvbogaotongPinlv {
+    self._lvboGaotongPinLv = lvbogaotongPinlv;
+}
+
+- (BOOL) islvboBoduanStart {
+    return self._islvboBoduanStart;
+}
+- (void) controllvboBoduanStart:(BOOL) lvboBoduanStart {
+    self._islvboBoduanStart = lvboBoduanStart;
+}
+
+- (NSString*) getlvboBoduanPinlv {
+    return self._lvboBoduanPinlv;
+}
+- (void) controllvboBoduanPinlv:(NSString*) lvboBoduanPinlv {
+    self._lvboBoduanPinlv = lvboBoduanPinlv;
+}
+
+- (NSString*) getlvboBoduanZengyi {
+    return self._lvboBoduanZengyi;
+}
+- (void) controllvboBoduanZengyi:(NSString*) lvboBoduanZengyi {
+    self._lvboBoduanZengyi = lvboBoduanZengyi;
+}
+
+-(NSString*) getlvboBoduanQ {
+    return self._lvboBoduanQ;
+}
+-(void) controllvboBoduanQ:(NSString*) lvboBoduanQ {
+    self._lvboBoduanQ = lvboBoduanQ;
+}
+
+-(BOOL) islvboDitongStart {
+    return self._islvboDitongStart;
+}
+-(void) controllvboDitongStart:(BOOL) lvboDitongStart {
+    self._islvboDitongStart = lvboDitongStart;
+}
+
+-(NSString*) getlvboDitongPinlv {
+    return self._lvboDitongPinlv;
+}
+-(void) controllvboDitongPinlv:(NSString*) lvboDitongPinlv {
+    self._lvboDitongPinlv = lvboDitongPinlv;
 }
 
 - (void) controlDigtalMute:(BOOL)isMute{
