@@ -37,6 +37,7 @@
 - (id) initWithSliderBg:(UIImage*)sliderBg frame:(CGRect)frame;
 
 - (void) setRoadImage:(UIImage *)image;
+//- (void) setShowIconImage:(UIImage *)norImage hightImage:(UIImage*)hightImage;
 - (void) resetScale;
 - (void) setScaleValue:(float)value;
 

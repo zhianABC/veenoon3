@@ -376,8 +376,8 @@
         [self presentViewController:alert animated:YES
                          completion:nil];
     }
-    else{
-        
+    else
+    {
         [self setNewProject];
     }
 
@@ -393,7 +393,8 @@
     {
         IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
         
-        [[RegulusSDK sharedRegulusSDK] NewProject:@"Veenoon" completion:^(BOOL result, NSError *error) {
+        [[RegulusSDK sharedRegulusSDK] NewProject:VEENOON_AREA_NAME
+                                       completion:^(BOOL result, NSError *error) {
             
             sender.enabled = YES;
             

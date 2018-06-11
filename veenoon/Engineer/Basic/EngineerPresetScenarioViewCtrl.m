@@ -399,59 +399,6 @@
     NSArray *envs = _scenario._envDevices;
     [self showCells:3000 datas:envs];
     
-//    NSArray *data = [DataSync sharedDataSync]._plugTypes;
-//
-//    if([data count] == 3)
-//    {
-//        //Audio
-//        NSDictionary *audioDic = [data objectAtIndex:0];
-//        NSArray *items = [audioDic objectForKey:@"items"];
-//        NSMutableDictionary *map = [NSMutableDictionary dictionary];
-//        for(NSDictionary *item in items)
-//        {
-//            [map setObject:item forKey:[item objectForKey:@"name"]];
-//        }
-//
-//        if([_scenario._AProcessorPlugs count])
-//        {
-//            [self addComponentToEnd:_audioScroll dataDic:[map objectForKey:audio_process_name]];
-//        }
-//
-//
-//        //Video
-//        NSDictionary *videoDic = [data objectAtIndex:1];
-//        items = [videoDic objectForKey:@"items"];
-//        map = [NSMutableDictionary dictionary];
-//        for(NSDictionary *item in items)
-//        {
-//            [map setObject:item forKey:[item objectForKey:@"name"]];
-//        }
-//
-//        if([_scenario._VCameraSettings count])
-//        {
-//            [self addComponentToEnd:_videoScroll dataDic:[map objectForKey:video_camera_name]];
-//        }
-//        if([_scenario._VTouyingji count])
-//        {
-//            [self addComponentToEnd:_videoScroll dataDic:[map objectForKey:video_touying_name]];
-//        }
-//
-//        //Env
-//        NSDictionary *envDic = [data objectAtIndex:2];
-//        items = [envDic objectForKey:@"items"];
-//        map = [NSMutableDictionary dictionary];
-//        for(NSDictionary *item in items)
-//        {
-//            [map setObject:item forKey:[item objectForKey:@"name"]];
-//        }
-//
-//        if([_scenario._EDimmerLights count])
-//        {
-//            [self addComponentToEnd:_envScroll dataDic:[map objectForKey:env_dimmer_light]];
-//        }
-//
-//    }
-    
 }
 
 - (void) layoutChoosedDevices{

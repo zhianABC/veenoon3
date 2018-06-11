@@ -99,26 +99,31 @@ static DataSync* dSyncInstance = nil;
     
 #ifdef OPEN_REG_LIB_DEF
     
-    NSString *regulus_gateway_id = [_currentReglusLogged objectForKey:@"gw_id"];
-    NSString *regulus_user_id = [_currentReglusLogged objectForKey:@"user_id"];
-   
-    if(regulus_user_id && regulus_gateway_id)
+    if(_currentReglusLogged)
     {
-    [[RegulusSDK sharedRegulusSDK] Login:regulus_user_id
-                                   gw_id:regulus_gateway_id
-                                password:@"111111"
-                                   level:1
-                              completion:^(BOOL result, NSInteger level, NSError *error) {
-                                       
-                                   }];
+        NSString *regulus_gateway_id = [_currentReglusLogged objectForKey:@"gw_id"];
+        NSString *regulus_user_id = [_currentReglusLogged objectForKey:@"user_id"];
+        
+        if(regulus_user_id && regulus_gateway_id)
+        {
+            [[RegulusSDK sharedRegulusSDK] Login:regulus_user_id
+                                           gw_id:regulus_gateway_id
+                                        password:@"111111"
+                                           level:1
+                                      completion:^(BOOL result, NSInteger level, NSError *error) {
+                                          
+                                      }];
+        }
     }
+     
     
 #endif
+    
 }
 
 - (void) logoutCurrentRegulus{
     
-    /*
+    
     if(_currentReglusLogged)
     {
         NSString *regulus_gateway_id = [_currentReglusLogged objectForKey:@"gw_id"];
@@ -129,10 +134,10 @@ static DataSync* dSyncInstance = nil;
             [[RegulusSDK sharedRegulusSDK] Logout:regulus_user_id
                                             gw_id:regulus_gateway_id completion:nil];
             
-            [DataSync sharedDataSync]._currentReglusLogged = nil;
+            //[DataSync sharedDataSync]._currentReglusLogged = nil;
         }
     }
-     */
+    
 }
 
 - (void) syncCurrentArea{
