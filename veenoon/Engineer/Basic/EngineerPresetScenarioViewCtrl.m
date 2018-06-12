@@ -379,6 +379,8 @@
     
     if(_isEditingScenario)
     {
+        [scenarioButton setTitle:@"保存场景" forState:UIControlStateNormal];
+        
         [self recoverScrollThumbCells];
     }
     else

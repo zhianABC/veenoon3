@@ -341,7 +341,8 @@
     if(_comDriverInfo)
     {
         RgsDriverInfo *info = _comDriverInfo;
-        [allData setObject:info.serial forKey:@"com_driver_info_uuid"];
+        if(info.serial)
+            [allData setObject:info.serial forKey:@"com_driver_info_uuid"];
     }
     if(_comDriver)
     {
