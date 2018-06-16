@@ -229,7 +229,7 @@
     
     [zerodbBtn setTitle:dispaly forState:UIControlStateNormal];
     
-    [_curProxy controlZhengxuanbo:device];
+    [_curProxy controlXinhaoZhengxuanbo:device];
     
     if ([_deviceSelector isPopoverVisible]) {
         [_deviceSelector dismissPopoverAnimated:NO];
