@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 
-typedef void (^LvBoJunHeng_ChooserBlock)(id object);
+typedef void (^LvBoJunHeng_ChooserBlock)(id object, int index);
 
 
 @interface LvBoJunHeng_Chooser : UIViewController<UITableViewDataSource, UITableViewDelegate>

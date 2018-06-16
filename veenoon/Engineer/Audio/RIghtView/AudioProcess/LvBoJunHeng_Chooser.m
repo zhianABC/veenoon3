@@ -129,6 +129,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     NSDictionary *data = nil;
+    int idx = indexPath.row;
     if(indexPath.section == 0)
     {
         data = [_dataArray objectAtIndex:indexPath.row];
@@ -136,7 +137,7 @@
     
     if(_block)
     {
-        _block(data);
+        _block(data, idx);
     }
     
 }

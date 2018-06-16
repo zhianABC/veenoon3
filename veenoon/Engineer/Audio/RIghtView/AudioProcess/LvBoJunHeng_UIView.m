@@ -263,17 +263,18 @@
     sel._dataArray = [_curProxy getLvBoGaoTongXielvArray];
     sel._type = 2;
     
-    sel.preferredContentSize = CGSizeMake(150, 350);
-    sel._size = CGSizeMake(150, 350);
+    int h = [sel._dataArray count]*30 + 50;
+    sel.preferredContentSize = CGSizeMake(150, h);
+    sel._size = CGSizeMake(150, h);
     
     IMP_BLOCK_SELF(LvBoJunHeng_UIView);
-    sel._block = ^(id object)
+    sel._block = ^(id object, int index)
     {
-        [block_self chooseGaotongXieLv:object];
+        [block_self chooseGaotongXieLv:object idx:index];
     };
     
     CGRect rect = [self convertRect:sender.frame
-                           fromView:sender];
+                           fromView:[sender superview]];
     
     _deviceSelector = [[UIPopoverController alloc] initWithContentViewController:sel];
     _deviceSelector.popoverContentSize = sel.preferredContentSize;
@@ -283,7 +284,8 @@
                    permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 }
 
-- (void) chooseGaotongXieLv:(NSString*)device{
+- (void) chooseGaotongXieLv:(NSString*)device idx:(int)index{
+    
     if (device == nil) {
         return;
     }
@@ -294,6 +296,8 @@
     
     //控制
     [_curProxy controlGaoTongXieLv:device];
+    
+    [fglm setHPFilterWithSlope:index];
     
     if ([_deviceSelector isPopoverVisible]) {
         [_deviceSelector dismissPopoverAnimated:NO];
@@ -311,17 +315,19 @@
     sel._dataArray = [_curProxy getLvBoGaoTongArray];
     sel._type = 0;
     
-    sel.preferredContentSize = CGSizeMake(150, 350);
-    sel._size = CGSizeMake(150, 350);
+    int h = [sel._dataArray count]*30 + 50;
+    
+    sel.preferredContentSize = CGSizeMake(150, h);
+    sel._size = CGSizeMake(150, h);
     
     IMP_BLOCK_SELF(LvBoJunHeng_UIView);
-    sel._block = ^(id object)
+    sel._block = ^(id object, int index)
     {
-        [block_self chooseGaotong:object];
+        [block_self chooseGaotong:object idx:index];
     };
     
     CGRect rect = [self convertRect:sender.frame
-                                fromView:sender];
+                                fromView:[sender superview]];
     
     _deviceSelector = [[UIPopoverController alloc] initWithContentViewController:sel];
     _deviceSelector.popoverContentSize = sel.preferredContentSize;
@@ -331,7 +337,7 @@
                    permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 }
 
-- (void) chooseGaotong:(NSString*)device{
+- (void) chooseGaotong:(NSString*)device idx:(int)index{
     if (device == nil) {
         return;
     }
@@ -340,6 +346,8 @@
     [gaotongTypeBtn setTitle:dispaly forState:UIControlStateNormal];
     
     [_curProxy controlGaoTongType:device];
+    
+    [fglm setHPFilterWithType:index];
     
     if ([_deviceSelector isPopoverVisible]) {
         [_deviceSelector dismissPopoverAnimated:NO];
@@ -415,12 +423,7 @@
     boduanleixingBtn.layer.borderWidth = 2;
     boduanleixingBtn.layer.borderColor = [UIColor clearColor].CGColor;;
     boduanleixingBtn.clipsToBounds = YES;
-    NSString *boduanType= @"";
-    if ([_curProxy getBoduanType]) {
-         boduanType = [@"  " stringByAppendingString:[_curProxy getBoduanType]];
-    }
-    
-    [boduanleixingBtn setTitle:boduanType forState:UIControlStateNormal];
+   
     boduanleixingBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     boduanleixingBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     UIImageView *icon = [[UIImageView alloc]
@@ -588,7 +591,10 @@
 
         [_curProxy controlLvBoGaotongPinlv:[NSString stringWithFormat:@"%d", feq]];
         
+        [fglm setHPFilterWithFreq:feq];
+        
     } else if (tag == 2) {
+        
         int k = (value *24)-12;
         NSString *valueStr= [NSString stringWithFormat:@"%d dB", k];
         
@@ -632,17 +638,18 @@
     sel._dataArray = [_curProxy getLvBoBoDuanArray];
     sel._type = 2;
     
-    sel.preferredContentSize = CGSizeMake(150, 350);
-    sel._size = CGSizeMake(150, 350);
+    int h = [sel._dataArray count] * 30 + 50;
+    sel.preferredContentSize = CGSizeMake(150, h);
+    sel._size = CGSizeMake(150, h);
     
     IMP_BLOCK_SELF(LvBoJunHeng_UIView);
-    sel._block = ^(id object)
+    sel._block = ^(id object, int index)
     {
         [block_self chooseBoduanType:object];
     };
     
     CGRect rect = [self convertRect:sender.frame
-                           fromView:sender];
+                           fromView:[sender superview]];
     
     _deviceSelector = [[UIPopoverController alloc] initWithContentViewController:sel];
     _deviceSelector.popoverContentSize = sel.preferredContentSize;
@@ -807,6 +814,7 @@
     }
 }
 - (void) ditongStartBtnAction:(id) sender {
+    
     if(_curProxy == nil)
         return;
     
@@ -826,6 +834,7 @@
     }
 }
 -(void) ditongTypeAction:(UIButton*)sender {
+    
     if ([_deviceSelector isPopoverVisible]) {
         [_deviceSelector dismissPopoverAnimated:NO];
     }
@@ -838,7 +847,7 @@
     sel._size = CGSizeMake(150, 350);
     
     IMP_BLOCK_SELF(LvBoJunHeng_UIView);
-    sel._block = ^(id object)
+    sel._block = ^(id object, int index)
     {
         [block_self chooseDitong:object];
     };
@@ -883,7 +892,7 @@
     sel._size = CGSizeMake(150, 350);
     
     IMP_BLOCK_SELF(LvBoJunHeng_UIView);
-    sel._block = ^(id object)
+    sel._block = ^(id object, int index)
     {
         [block_self chooseDitongXieLv:object];
     };
@@ -1093,6 +1102,13 @@
     {
         [gaotongStartBtn changeNormalColor:RGB(75, 163, 202)];
     }
+    
+    
+    NSString *boduanType= @"";
+    if ([_curProxy getBoduanType]) {
+        boduanType = [@"  " stringByAppendingString:[_curProxy getBoduanType]];
+    }
+    [boduanleixingBtn setTitle:boduanType forState:UIControlStateNormal];
 }
 
 @end

@@ -162,14 +162,14 @@
         self._lvboGaotongXielvArray = [NSArray array];
         _lvbojunhengGaotongXielv = @"";
         
-        _lvboDitongXielvArray = [NSArray arrayWithObjects:@"快船", @"公牛", @"骑士", nil];
-        _lvbojunhengDitongXielv = @"活塞";
+        self._lvboDitongXielvArray = [NSArray array];
+        _lvbojunhengDitongXielv = @"";
         
-        _lvbojunhengBoduanType = @"山猫";
-        _lvboBoDuanArray = [NSArray arrayWithObjects:@"76人", @"小牛", @"太阳", nil];
+        _lvbojunhengBoduanType = @"";
+        self._lvboBoDuanArray = [NSArray array];
         
         _lvbojunhengGaotongXielv = @"-10";
-        _lvboGaotongPinLv = @"8";
+        _lvboGaotongPinLv = @"20";
         _lvboDitongPinlv = @"2";
         _lvboBoduanQ = @"4";
         _lvboBoduanZengyi = @"5";
@@ -419,6 +419,32 @@
     return result;
 }
 
+- (NSArray*)getWaveTypes{
+    
+    NSMutableArray *result = [NSMutableArray array];
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_PEQ"];
+    if(cmd)
+    {
+        if([cmd.params count])
+        {
+            
+            for( RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"TYPE"])
+                {
+                    [result addObjectsFromArray:param_info.available];
+                    break;
+                }
+                
+            }
+        }
+    }
+    
+    return result;
+}
+
 - (BOOL) isProxyMute{
     
     return _isMute;
@@ -471,10 +497,17 @@
     self._lvboGaotongArray = [self getHighFilters];
     self._lvboGaotongXielvArray = [self getHighSL];
     
+    if([self._lvboGaotongArray count])
+        self._lvbojunhengGaotongType = [self._lvboGaotongArray objectAtIndex:0];
+    
     if([self._lvboGaotongXielvArray count])
     {
         self._lvbojunhengGaotongXielv = [_lvboGaotongXielvArray objectAtIndex:0];
     }
+    
+    self._lvboBoDuanArray = [self getWaveTypes];
+    if([self._lvboBoDuanArray count])
+        self._lvbojunhengBoduanType = [self._lvboBoDuanArray objectAtIndex:0];
     
 }
 

@@ -973,15 +973,15 @@ class FilterGraphView: UIView {
         hpf_byp = byp
         updateCurve()
     }
-    func setHPFilter(type: UInt8) {
+   @objc func setHPFilter(type: UInt8) {
         hpf_type = hlpf_type(rawValue: Int(type))!
         updateCurve()
     }
-    func setHPFilter(slope: UInt8) {
+   @objc func setHPFilter(slope: UInt8) {
         hpf_slope = hlpf_slope(rawValue: Int(slope))!
         updateCurve()
     }
-    func setHPFilter(freq: Float) {
+   @objc func setHPFilter(freq: Float) {
         hpf_freq = freq
         updateCurve()
     }

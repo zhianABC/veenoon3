@@ -126,6 +126,8 @@
 - (NSArray*)getHighSL;
 - (NSDictionary*)getHighRateRange;
 
+- (NSArray*)getWaveTypes;
+
 - (void) controlDeviceDb:(float)db force:(BOOL)force;
 - (void) controlDeviceMute:(BOOL)isMute;
 
