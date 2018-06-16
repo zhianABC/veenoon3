@@ -130,10 +130,10 @@
         _yanshiqiYingChi = @"1111";
         _yanshiqiSlide = @"0";
         
-        _yaxianFazhi = @"0";
-        _yaxianXielv = @"4";
-        _yaxianStartTime = @"1111";
-        _yaxianRecoveryTime = @"0";
+        _yaxianFazhi = @"-50";
+        _yaxianXielv = @"5";
+        _yaxianStartTime = @"20";
+        _yaxianRecoveryTime = @"20";
         
         _zaoshengFazhi = @"9";
         _zaoshengStartTime = @"222";
@@ -579,32 +579,32 @@
     return _zidonghunyinZengYi;
 }
 - (void) controlZiDongHunYinZengYi:(NSString*) zengyiDB {
-    _zidonghunyinZengYi = zengyiDB;
+    self._zidonghunyinZengYi = zengyiDB;
 }
 
 - (NSString*) getYaxianFazhi {
     return _yaxianFazhi;
 }
 - (void) controlYaxianFazhi:(NSString*) yaxianFazhi {
-    _yaxianFazhi = yaxianFazhi;
+    self._yaxianFazhi = yaxianFazhi;
 }
 - (NSString*) getYaxianXielv {
     return _yaxianXielv;
 }
 - (void) controlYaxianXielv:(NSString*) yaxianXielv {
-    _yaxianXielv = yaxianXielv;
+    self._yaxianXielv = yaxianXielv;
 }
 - (NSString*) getYaxianStartTime {
     return _yaxianStartTime;
 }
 - (void) controlYaxianStartTime:(NSString*) yaxianStartTime {
-    _yaxianStartTime = yaxianStartTime;
+    self._yaxianStartTime = yaxianStartTime;
 }
 - (NSString*) getYaxianRecoveryTime {
     return _yaxianRecoveryTime;
 }
 - (void) controlYaxianRecoveryTime:(NSString*) yaxianRecoveryTime {
-    _yaxianRecoveryTime = yaxianRecoveryTime;
+    self._yaxianRecoveryTime = yaxianRecoveryTime;
 }
 
 - (BOOL) isZaoshengStarted {
