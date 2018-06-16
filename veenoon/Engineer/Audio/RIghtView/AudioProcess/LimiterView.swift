@@ -110,6 +110,14 @@ class LimiterView: UIView {
         
         xreso = Double(m_ValidRect.width) / Double(m_BufferLen)
         
+        // 画线
+        context?.setStrokeColor(UIColor(red: 128/255.0, green: 128/255.0, blue: 128/255.0, alpha: 1.0).cgColor)
+        context?.setLineWidth(1)
+        context?.move(to: CGPoint(x: m_ValidRect.origin.x, y: m_ValidRect.origin.y+m_ValidRect.height))
+        context?.addLine(to: CGPoint(x: m_ValidRect.origin.x+m_ValidRect.width, y: m_ValidRect.origin.y))
+        context?.drawPath(using: .stroke)
+        
+        
         j = 0
         for n in 0 ..< m_BufferLen {
             limiter_val = m_Buffer[n]
@@ -131,6 +139,7 @@ class LimiterView: UIView {
             cor_x = Int(m_ValidRect.origin.x)
             cor_y = Int(m_ValidRect.origin.y + m_ValidRect.height)
         }
+        
         
         pt[0].x = m_ValidRect.origin.x
         pt[0].y = m_ValidRect.origin.y + m_ValidRect.height
@@ -198,12 +207,7 @@ class LimiterView: UIView {
             text.draw(at: CGPoint(x: m_rectCtrl.origin.x + CGFloat((i+1)*w+18), y: CGFloat(LimiterView.DTEXT_YOFFSET)+m_ValidRect.origin.y+m_ValidRect.height+CGFloat(3)), withAttributes: [NSAttributedStringKey.foregroundColor: UIColor(red: 192.0/255.0, green: 192.0/255.0, blue: 192.0/255.0, alpha: 1.0), NSAttributedStringKey.font: UIFont.systemFont(ofSize: 12)])
         }
         
-        // 画线
-        context?.setStrokeColor(yellowC.cgColor)
-        context?.setLineWidth(1)
-        context?.move(to: CGPoint(x: m_ValidRect.origin.x, y: m_ValidRect.origin.y+m_ValidRect.height))
-        context?.addLine(to: CGPoint(x: m_ValidRect.origin.x+m_ValidRect.width, y: m_ValidRect.origin.y))
-        context?.drawPath(using: .stroke)
+        
         
         context?.restoreGState()
     }

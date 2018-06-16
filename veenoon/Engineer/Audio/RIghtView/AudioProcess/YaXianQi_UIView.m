@@ -34,6 +34,15 @@
     
     int maxTh;
     int minTh;
+    
+    int minRadio;
+    int maxRadio;
+    
+    int minStartDur;
+    int maxStartDur;
+    
+    int minRecoveDur;
+    int maxRecoveDur;
 }
 @property (nonatomic, strong) VAProcessorProxys *_curProxy;
 @end
@@ -118,7 +127,7 @@
     
     NSString *zengyiDB = [_curProxy getYaxianFazhi];
     float value = [zengyiDB floatValue];
-    int max = (maxTh- minTh);
+    float max = (maxTh - minTh);
     if(max)
     {
         float f = (value - minTh)/max;
@@ -126,32 +135,55 @@
         [fazhiSlider setCircleValue:f];
     }
     
+    [_limiter setThresHoldWithR:value];
+    
     if (zengyiDB) {
         lableL1.text = [zengyiDB stringByAppendingString:@" dB"];
     }
     
+    //////
     NSString *xielv = [_curProxy getYaxianXielv];
     float xielvValue = [xielv floatValue];
-    float fXieLv = (xielvValue+10)/20;
-    [xielvSlide setCircleValue:fXieLv];
     
+    float maxR = (maxRadio- minRadio);
+    if(maxR)
+    {
+        float f = (xielvValue - minRadio)/maxR;
+        f = fabsf(f);
+        [xielvSlide setCircleValue:f];
+    }
+    
+    [_limiter setRatioWithR:xielvValue];
+
     lableL2.text = xielv;
     
     
     NSString *startTime = [_curProxy getYaxianStartTime];
     float startTimeValue = [startTime floatValue];
-    float fstartTimeValue = (startTimeValue+1000)/2000;
-    [qidongshijianSlide setCircleValue:fstartTimeValue];
     
-    lableL3.text = startTime;
+    max = (maxStartDur - minStartDur);
+    if(max)
+    {
+        float f = (startTimeValue - minStartDur)/max;
+        f = fabsf(f);
+        [qidongshijianSlide setCircleValue:f];
+    }
+    
+    lableL3.text = [NSString stringWithFormat:@"%0.0f ms", startTimeValue];
     
     
     NSString *huifuTime = [_curProxy getYaxianRecoveryTime];
     float huifuTimeValue = [huifuTime floatValue];
-    float fhuifuTimeValue = (huifuTimeValue+1000)/2000;
-    [huifushijianSlide setCircleValue:fhuifuTimeValue];
     
-    lableL4.text = huifuTime;
+    max = (maxRecoveDur - minRecoveDur);
+    if(max)
+    {
+        float f = (huifuTimeValue - minRecoveDur)/max;
+        f = fabsf(f);
+        [huifushijianSlide setCircleValue:f];
+    }
+    
+    lableL4.text = [NSString stringWithFormat:@"%0.0f ms", huifuTimeValue];
 }
 
 - (void) contentViewComps{
@@ -185,22 +217,9 @@
     fazhiSlider.delegate = self;
     fazhiSlider.tag = 1;
     [contentView addSubview:fazhiSlider];
-    NSString *zengyiDB = [_curProxy getYaxianFazhi];
-    float value = [zengyiDB floatValue];
-    int max = (maxTh- minTh);
-    if(max)
-    {
-        float f = (value - minTh)/max;
-        f = fabsf(f);
-        [fazhiSlider setCircleValue:f];
-    }
     
-    
+
     lableL1 = [[UILabel alloc] initWithFrame:CGRectMake(x, y+20+120, 120, 20)];
-    if (zengyiDB) {
-        lableL1.text = [zengyiDB stringByAppendingString:@" dB"];
-    }
-    
     lableL1.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:lableL1];
     lableL1.font = [UIFont systemFontOfSize:13];
@@ -223,14 +242,8 @@
     xielvSlide.delegate = self;
     xielvSlide.tag = 2;
     [contentView addSubview:xielvSlide];
-    
-    NSString *xielv = [_curProxy getYaxianXielv];
-    float xielvValue = [xielv floatValue];
-    float fXieLv = (xielvValue+10)/20;
-    [xielvSlide setCircleValue:fXieLv];
 
     lableL2 = [[UILabel alloc] initWithFrame:CGRectMake(x, y+20+120, 120, 20)];
-    lableL2.text = xielv;
     lableL2.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:lableL2];
     lableL2.font = [UIFont systemFontOfSize:13];
@@ -254,13 +267,7 @@
     qidongshijianSlide.tag = 3;
     [contentView addSubview:qidongshijianSlide];
     
-    NSString *startTime = [_curProxy getYaxianStartTime];
-    float startTimeValue = [startTime floatValue];
-    float fstartTimeValue = (startTimeValue+1000)/2000;
-    [qidongshijianSlide setCircleValue:fstartTimeValue];
-
     lableL3 = [[UILabel alloc] initWithFrame:CGRectMake(x, y+20+120, 120, 20)];
-    lableL3.text = startTime;
     lableL3.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:lableL3];
     lableL3.font = [UIFont systemFontOfSize:13];
@@ -284,13 +291,7 @@
     huifushijianSlide.tag = 4;
     [contentView addSubview:huifushijianSlide];
     
-    NSString *huifuTime = [_curProxy getYaxianRecoveryTime];
-    float huifuTimeValue = [huifuTime floatValue];
-    float fhuifuTimeValue = (huifuTimeValue+1000)/2000;
-    [huifushijianSlide setCircleValue:fhuifuTimeValue];
-    
     lableL4 = [[UILabel alloc] initWithFrame:CGRectMake(x, y+20+120, 120, 20)];
-    lableL4.text = huifuTime;
     lableL4.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:lableL4];
     lableL4.font = [UIFont systemFontOfSize:13];
@@ -314,14 +315,31 @@
     
     maxTh = [[result objectForKey:@"TH_max"] intValue];
     minTh = [[result objectForKey:@"TH_min"] intValue];
-    
     [_limiter setMaxThresholdWithThreshold:maxTh];
     [_limiter setMinThresholdWithThreshold:minTh];
     
     NSString *zengyiDB = [_curProxy getYaxianFazhi];
     int value = [zengyiDB intValue];
     [_limiter setThresHoldWithR:value];
+    
+    /////
+    maxRadio = [[result objectForKey:@"SL_max"] intValue];
+    minRadio = [[result objectForKey:@"SL_min"] intValue];
+    
+    NSString *xielv = [_curProxy getYaxianXielv];
+    float xielvValue = [xielv floatValue];
+    [_limiter setRatioWithR:xielvValue];
+    
+    ////
+    maxStartDur = [[result objectForKey:@"START_DUR_max"] intValue];
+    minStartDur = [[result objectForKey:@"START_DUR_min"] intValue];
 
+    
+    ////
+    maxRecoveDur = [[result objectForKey:@"RECOVER_DUR_max"] intValue];
+    minRecoveDur = [[result objectForKey:@"RECOVER_DUR_min"] intValue];
+
+    [self updateYaXianQi];
     
 }
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
@@ -337,27 +355,29 @@
         
         [_curProxy controlYaxianFazhi:[NSString stringWithFormat:@"%d", k]];
 
-        
-        
     } else if (tag == 2) {
-        int k = (value *20)-10;
-        NSString *valueStr= [NSString stringWithFormat:@"%d", k];
+        float k = (value * (maxRadio - minRadio)) + minRadio;
+        NSString *valueStr = [NSString stringWithFormat:@"%0.1f", k];
         
         lableL2.text = valueStr;
         
+        if(maxRadio > 0)
+            [_limiter setRatioWithR:k];
+        
         [_curProxy controlYaxianXielv:valueStr];
     } else if (tag == 3) {
-        int k = (value *2000)-1000;
+        
+        int k = (value *(maxStartDur - minStartDur)) + minStartDur;
         NSString *valueStr= [NSString stringWithFormat:@"%d", k];
         
-        lableL3.text = valueStr;
+        lableL3.text = [NSString stringWithFormat:@"%@ ms",valueStr];
         
         [_curProxy controlYaxianStartTime:valueStr];
     } else {
-        int k = (value *2000)-1000;
+        int k = (value *(maxRecoveDur - minRecoveDur)) + minRecoveDur;
         NSString *valueStr= [NSString stringWithFormat:@"%d", k];
         
-        lableL4.text = valueStr;
+        lableL4.text = [NSString stringWithFormat:@"%@ ms",valueStr];
         
         [_curProxy controlYaxianRecoveryTime:valueStr];
     }
