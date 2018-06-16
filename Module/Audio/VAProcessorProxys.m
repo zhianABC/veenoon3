@@ -53,6 +53,8 @@
 @end
 
 @implementation VAProcessorProxys
+@synthesize delegate;
+
 @synthesize _icon_name;
 @synthesize _voiceInDevice;
 
@@ -246,6 +248,55 @@
     return nil;
 }
 
+- (NSDictionary*)getPressLimitOptions{
+    
+    NSMutableDictionary *result = [NSMutableDictionary dictionary];
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_PRESS_LIMIT"];
+    if(cmd)
+    {
+        if([cmd.params count])
+        {
+            
+            for( RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"TH"])
+                {
+                    if(param_info.max)
+                        [result setObject:param_info.max forKey:@"TH_max"];
+                    if(param_info.min)
+                        [result setObject:param_info.min forKey:@"TH_min"];
+                }
+                else if([param_info.name isEqualToString:@"SL"])
+                {
+                    if(param_info.max)
+                        [result setObject:param_info.max forKey:@"SL_max"];
+                    if(param_info.min)
+                        [result setObject:param_info.min forKey:@"SL_min"];
+                }
+                else if([param_info.name isEqualToString:@"START_DUR"])
+                {
+                    if(param_info.max)
+                        [result setObject:param_info.max forKey:@"START_DUR_max"];
+                    if(param_info.min)
+                        [result setObject:param_info.min forKey:@"START_DUR_min"];
+                }
+                else if([param_info.name isEqualToString:@"RECOVERY_DUR"])
+                {
+                    if(param_info.max)
+                        [result setObject:param_info.max forKey:@"RECOVERY_DUR_max"];
+                    if(param_info.min)
+                        [result setObject:param_info.min forKey:@"RECOVERY_DUR_min"];
+                }
+            }
+        }
+    }
+    
+    return result;
+}
+
+
 - (BOOL) isProxyMute{
     
     return _isMute;
@@ -285,16 +336,36 @@
     return _isSetOK;
 }
 
+- (void) callDelegateDidLoad{
+    
+    if(delegate && [delegate respondsToSelector:@selector(didLoadedProxyCommand)])
+    {
+        [delegate didLoadedProxyCommand];
+    }
+}
+
 - (void) checkRgsProxyCommandLoad{
     
-    if(_rgsProxyObj == nil || _rgsCommands)
+    if(_rgsProxyObj == nil || _rgsCommands){
+        
+        if(delegate && [delegate respondsToSelector:@selector(didLoadedProxyCommand)])
+        {
+            [delegate didLoadedProxyCommand];
+        }
+        
         return;
+    }
     
     self._cmdMap = [NSMutableDictionary dictionary];
     
     IMP_BLOCK_SELF(VAProcessorProxys);
     
+    [KVNProgress show];
+    
     [[RegulusSDK sharedRegulusSDK] GetProxyCommands:_rgsProxyObj.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
+        
+        [KVNProgress dismiss];
+        
         if (result)
         {
             if ([commands count]) {
@@ -306,6 +377,8 @@
                 }
                 
                 _isSetOK = YES;
+                
+                [block_self callDelegateDidLoad];
             }
         }
         else
@@ -314,6 +387,10 @@
                                [error description], (int)_rgsProxyObj.m_id];
             
             [KVNProgress showErrorWithStatus:errorMsg];
+            
+            [block_self callDelegateDidLoad];
+            
+            [KVNProgress dismiss];
         }
        
     }];
@@ -321,17 +398,10 @@
 
 
 
+
 //SET_ANALOGY_GRAIN
 - (void) controlDeviceDb:(float)db force:(BOOL)force{
-    
-//    if(!force)
-//    {
-//        int iv = _voiceDb;
-//        int now = db;
-//        
-//        if(iv == now)
-//            return;
-//    }
+
     _voiceDb = db;
     
     RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_ANALOGY_GRAIN"];

@@ -12,8 +12,10 @@
 #import "GradeLineView.h"
 #import "VAProcessorProxys.h"
 #import "RegulusSDK.h"
+#import "veenoon-Swift.h"
 
-@interface YaXianQi_UIView() <SlideButtonDelegate>
+
+@interface YaXianQi_UIView() <SlideButtonDelegate, VAProcessorProxysDelegate>
 {
     UIButton *channelBtn;
     
@@ -27,6 +29,8 @@
     SlideButton *huifushijianSlide;
     SlideButton *fazhiSlider;
     
+    
+    LimiterView *_limiter;
 }
 @property (nonatomic, strong) VAProcessorProxys *_curProxy;
 @end
@@ -42,6 +46,11 @@
     // Drawing code
 }
 */
+
+- (void) dealloc
+{
+    _curProxy.delegate = nil;
+}
 
 - (id)initWithFrameProxys:(CGRect)frame withProxys:(NSArray*) proxys
 {
@@ -74,7 +83,9 @@
 
 - (void) channelBtnAction:(UIButton*)sender{
     
-    int tag = (int)sender.tag+1;
+    int idx = (int)sender.tag;
+    int tag = idx + 1;
+    
     [channelBtn setTitle:[NSString stringWithFormat:@"In %d", tag] forState:UIControlStateNormal];
     
     for(UIButton * btn in _channelBtns)
@@ -89,7 +100,6 @@
         }
     }
     
-    int idx = (int)sender.tag;
     self._curProxy = [self._proxys objectAtIndex:idx];
     
     NSString *name = _curProxy._rgsProxyObj.name;
@@ -99,6 +109,7 @@
 }
 
 -(void) updateYaXianQi {
+    
     NSString *zengyiDB = [_curProxy getYaxianFazhi];
     float value = [zengyiDB floatValue];
     float f = (value+12.0)/24.0;
@@ -139,17 +150,12 @@
     
     int y = (CGRectGetHeight(contentView.frame) - w)/2;
     CGRect rc = CGRectMake(50, y+20, w, w);
-    GradeLineView *g = [[GradeLineView alloc] initWithFrame:rc];
     
-    [contentView addSubview:g];
+    _limiter = [[LimiterView alloc] initWithFrame:rc];
+    [contentView addSubview:_limiter];
+    _limiter.backgroundColor = [UIColor clearColor];
     
-    [g drawXY:@[@"-100",@"-77",@"-54",@"-31",@"-8",@"15"]
-            y:@[@"15",@"-8",@"-31",@"-54",@"-77"]];
-    [g processValueToPoints];
-    
-    g.backgroundColor = [UIColor clearColor];
-    
-    int x = CGRectGetMaxX(g.frame);
+    int x = CGRectGetMaxX(_limiter.frame);
     y = CGRectGetHeight(contentView.frame)/2-50;
     x+=10;
     
@@ -269,7 +275,24 @@
     [contentView addSubview:lableL4];
     lableL4.font = [UIFont systemFontOfSize:13];
     lableL4.textColor = YELLOW_COLOR;
+    
+   
+}
 
+- (void) updateProxyCommandValIsLoaded
+{
+    _curProxy.delegate = self;
+    [_curProxy checkRgsProxyCommandLoad];
+
+}
+
+- (void) didLoadedProxyCommand{
+    
+    _curProxy.delegate = nil;
+ 
+    NSDictionary *result = [_curProxy getPressLimitOptions];
+    
+    
 }
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     

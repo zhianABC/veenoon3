@@ -10,10 +10,19 @@
 
 @class RgsProxyObj;
 
+@protocol VAProcessorProxysDelegate <NSObject>
+
+@optional
+- (void) didLoadedProxyCommand;
+
+@end
+
 @interface VAProcessorProxys : NSObject
 {
     
 }
+@property (nonatomic, weak) id <VAProcessorProxysDelegate> delegate;
+
 @property (nonatomic, strong) NSString *_icon_name;
 @property (nonatomic, strong) NSDictionary *_voiceInDevice;
 
@@ -96,6 +105,8 @@
 
 - (NSArray*)getModeOptions;
 - (NSArray*)getMicDbOptions;
+- (NSDictionary*)getPressLimitOptions;
+
 
 - (void) controlDeviceDb:(float)db force:(BOOL)force;
 - (void) controlDeviceMute:(BOOL)isMute;
