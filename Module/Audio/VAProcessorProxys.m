@@ -72,6 +72,7 @@
 @synthesize _yanshiqiSlide;
 @synthesize _yanshiqiYingChi;
 @synthesize _yanshiqiMi;
+@synthesize _isYanshiStarted;
 @synthesize _yanshiqiHaoMiao;
 @synthesize _yaxianFazhi;
 @synthesize _yaxianXielv;
@@ -665,6 +666,13 @@
 }
 - (void) controlYanshiqiHaoMiao:(NSString*) yanshiqiHaoMiao {
     _yanshiqiHaoMiao = yanshiqiHaoMiao;
+}
+
+- (BOOL) isYanshiStart {
+    return _isYanshiStarted;
+}
+- (void) controlYanshiStart:(BOOL)yanshiStart {
+    self._isYanshiStarted = yanshiStart;
 }
 - (void) controlHuiShengXiaoChu:(BOOL)isHuiShengXiaoChu {
     _isHuiShengXiaoChu = isHuiShengXiaoChu;

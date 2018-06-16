@@ -94,8 +94,39 @@
             [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }
     }
+    int idx = (int)sender.tag;
+    self._curProxy = [self._proxys objectAtIndex:idx];
+    
+    NSString *name = _curProxy._rgsProxyObj.name;
+    [channelBtn setTitle:name forState:UIControlStateNormal];
+    
+    [self udpateXinhaofasheng];
 }
 
+-(void) udpateXinhaofasheng {
+    [xinhaoPinLvBtn setTitle:@"  1000" forState:UIControlStateNormal];
+    [zerodbBtn setTitle:@"  正弦波" forState:UIControlStateNormal];
+    
+    BOOL isXinhaoMute = [_curProxy isXinhaofashengMute];
+    
+    if(isXinhaoMute)
+    {
+        [xinhaoMuteBtn changeNormalColor:THEME_RED_COLOR];
+    }
+    else
+    {
+        [xinhaoMuteBtn changeNormalColor:RGB(75, 163, 202)];
+    }
+    
+    NSString *zengyiDB = [_curProxy getZidonghuiyinZengYi];
+    float value = [zengyiDB floatValue];
+    float f = (value+12.0)/24.0;
+    [xinhaoZengyiSlider setCircleValue:f];
+    
+    labelL1.text = [[_curProxy getZidonghuiyinZengYi] stringByAppendingString:@" dB"];
+    
+    
+}
 - (void) contentViewComps{
     int btnStartX = 250;
     int btnY = 150;

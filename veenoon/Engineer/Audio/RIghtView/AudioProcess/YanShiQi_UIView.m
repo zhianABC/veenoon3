@@ -12,7 +12,7 @@
 #import "VAProcessorProxys.h"
 #import "RegulusSDK.h"
 
-@interface YanShiQi_UIView() <UITextFieldDelegate, SlideButtonDelegate>{
+@interface YanShiQi_UIView() <UITextFieldDelegate, SlideButtonDelegate, VAProcessorProxysDelegate>{
     
     UIButton *channelBtn;
     
@@ -25,6 +25,11 @@
     SlideButton *xielvSlider3;
     
     UILabel *labelL1;
+    
+    int maxDuration;
+    int minDuration;
+    
+    UIButton  *_enableStartBtn;
 }
 //@property (nonatomic, strong) NSMutableArray *_channelBtns;
 @property (nonatomic, strong) VAProcessorProxys *_curProxy;
@@ -65,6 +70,9 @@
         int y = CGRectGetMaxY(channelBtn.frame)+20;
         contentView.frame = CGRectMake(0, y, frame.size.width, 340);
         
+        minDuration = 0;
+        maxDuration = 1000;
+        
         [self contentViewComps];
         
         [self createContentViewBtns];
@@ -97,8 +105,7 @@
     NSString *name = _curProxy._rgsProxyObj.name;
     [channelBtn setTitle:name forState:UIControlStateNormal];
     
-    [self updateZengYiSlide];
-    [self updateTextfield];
+    [self updateYanshiqi];
 }
 
 - (void) contentViewComps {
@@ -117,13 +124,8 @@
     xielvSlider3.delegate = self;
     xielvSlider3.tag = 3;
     [contentView addSubview:xielvSlider3];
-    NSString *zengyiDB = [_curProxy getYanshiqiSlide];
-    float value = [zengyiDB floatValue];
-    float f = (value+1000)/2000;
-    [xielvSlider3 setCircleValue:f];
     
     labelL1 = [[UILabel alloc] initWithFrame:CGRectMake(670, 105+120, 120, 20)];
-    labelL1.text = zengyiDB;
     labelL1.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:labelL1];
     labelL1.font = [UIFont systemFontOfSize:13];
@@ -147,7 +149,6 @@
     haomiaoField.font = [UIFont systemFontOfSize:13];
     haomiaoField.clearButtonMode = UITextFieldViewModeWhileEditing;
     [contentView addSubview:haomiaoField];
-    haomiaoField.text = [_curProxy getYanshiqiHaoMiao];
     haomiaoField.tag = 1;
     
     UILabel *addLabel = [[UILabel alloc] init];
@@ -168,7 +169,6 @@
     miField.font = [UIFont systemFontOfSize:13];
     miField.clearButtonMode = UITextFieldViewModeWhileEditing;
     [contentView addSubview:miField];
-    miField.text = [_curProxy getYanshiqiMi];
     miField.tag = 2;
     
     UILabel *addLabel2 = [[UILabel alloc] init];
@@ -189,7 +189,6 @@
     yingchiFiedld.font = [UIFont systemFontOfSize:13];
     yingchiFiedld.clearButtonMode = UITextFieldViewModeWhileEditing;
     [contentView addSubview:yingchiFiedld];
-    yingchiFiedld.text = [_curProxy getYanshiqiYingChi];
     yingchiFiedld.tag = 3;
     
     UILabel *addLabel3 = [[UILabel alloc] init];
@@ -198,20 +197,87 @@
     addLabel3.textColor = [UIColor whiteColor];
     addLabel3.frame = CGRectMake(CGRectGetMaxX(yingchiFiedld.frame)+10, btnY, 50, 30);
     [contentView addSubview:addLabel3];
-}
--(void) fanxiangAction:(id) sender {
     
+    _enableStartBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    _enableStartBtn.frame = CGRectMake(contentView.frame.size.width/2 - 25, contentView.frame.size.height - 40, 50, 30);
+    _enableStartBtn.layer.cornerRadius = 5;
+    _enableStartBtn.layer.borderWidth = 2;
+    _enableStartBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    _enableStartBtn.clipsToBounds = YES;
+    [_enableStartBtn setTitle:@"启用" forState:UIControlStateNormal];
+    _enableStartBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    [_enableStartBtn addTarget:self
+                   action:@selector(enableStartBtnAction:)
+         forControlEvents:UIControlEventTouchUpInside];
+    [contentView addSubview:_enableStartBtn];
 }
--(void) bianzuAction:(id) sender {
+
+-(void) updateYanshiqi {
+    NSString *zengyiDB = [_curProxy getYanshiqiSlide];
+    float value = [zengyiDB floatValue];
+    float max = (maxDuration - minDuration);
+    if(max)
+    {
+        float f = (value - minDuration)/max;
+        f = fabsf(f);
+        [xielvSlider3 setCircleValue:f];
+    }
+    if (zengyiDB) {
+        labelL1.text = [zengyiDB stringByAppendingString:@" dB"];
+    }
     
+    yingchiFiedld.text = [_curProxy getYanshiqiYingChi];
+    
+    miField.text = [_curProxy getYanshiqiMi];
+    
+    haomiaoField.text = [_curProxy getYanshiqiHaoMiao];
+    
+    BOOL isYanshiEnable = [_curProxy isYanshiStart];
+    
+    if(isYanshiEnable)
+    {
+        [_enableStartBtn changeNormalColor:THEME_RED_COLOR];
+    }
+    else
+    {
+        [_enableStartBtn changeNormalColor:RGB(75, 163, 202)];
+    }
 }
--(void) lineBtnAction:(id) sender {
+
+- (void) updateProxyCommandValIsLoaded
+{
+    _curProxy.delegate = self;
+    [_curProxy checkRgsProxyCommandLoad];
     
 }
 
--(void) muteBtnAction:(id) sender {
+- (void) didLoadedProxyCommand{
     
+    _curProxy.delegate = nil;
+    
+    NSDictionary *result = [_curProxy getPressLimitOptions];
+    
+    maxDuration = [[result objectForKey:@"TH_max"] intValue];
+    minDuration = [[result objectForKey:@"TH_min"] intValue];
+    
+    [self updateYanshiqi];
 }
+
+-(void) enableStartBtnAction:(id) sender {
+    BOOL isYanshiStarted = [_curProxy isYanshiStart];
+    
+    if(isYanshiStarted)
+    {
+        [_enableStartBtn changeNormalColor:THEME_RED_COLOR];
+    }
+    else
+    {
+        [_enableStartBtn changeNormalColor:RGB(75, 163, 202)];
+    }
+    
+    [_curProxy controlYanshiStart:!isYanshiStarted];
+}
+
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     
 }
@@ -234,30 +300,16 @@
     return YES;
 }
 
-- (void) updateTextfield {
-    haomiaoField.text = [_curProxy getYanshiqiHaoMiao];
-    miField.text = [_curProxy getYanshiqiMi];
-    yingchiFiedld.text = [_curProxy getYanshiqiYingChi];
-}
-
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
-    int k = (value *2000)-1000;
-    NSString *valueStr= [NSString stringWithFormat:@"%d", k];
+    float k = (value *(maxDuration-minDuration)) + minDuration;
+    NSString *valueStr= [NSString stringWithFormat:@"%0.1f dB", k];
     
     labelL1.text = valueStr;
-    NSString *zengyiStr = [NSString stringWithFormat:@"%d", k];
-    [_curProxy controlYanshiqiSlide:zengyiStr];
+    
+    [_curProxy controlYanshiqiSlide:[NSString stringWithFormat:@"%0.1f", k]];
 }
 
-- (void) updateZengYiSlide {
-    NSString *zengyiDB = [_curProxy getYanshiqiSlide];
-    float value = [zengyiDB floatValue];
-    float f = (value+1000)/2000;
-    [xielvSlider3 setCircleValue:f];
-    
-    labelL1.text = [_curProxy getYanshiqiSlide];
-}
 @end
 
 
