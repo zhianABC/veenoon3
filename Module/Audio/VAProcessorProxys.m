@@ -586,25 +586,229 @@
     return _yaxianFazhi;
 }
 - (void) controlYaxianFazhi:(NSString*) yaxianFazhi {
+    
     self._yaxianFazhi = yaxianFazhi;
+    
+    RgsCommandInfo *cmd = nil;
+    RgsCommandParamInfo * cmd_param_info = nil;
+    cmd = [_cmdMap objectForKey:@"SET_PRESS_LIMIT"];
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            
+            for( RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"TH"])
+                {
+                    cmd_param_info = param_info;
+                    break;
+                }
+                
+            }
+            
+            if(cmd_param_info)
+            {
+                if(cmd_param_info.type == RGS_PARAM_TYPE_FLOAT)
+                {
+                    [param setObject:[NSString stringWithFormat:@"%0.1f",
+                                      [yaxianFazhi floatValue]]
+                              forKey:cmd_param_info.name];
+                }
+                else if(cmd_param_info.type == RGS_PARAM_TYPE_INT)
+                {
+                    [param setObject:[NSString stringWithFormat:@"%0.0f",
+                                      [yaxianFazhi floatValue]]
+                              forKey:cmd_param_info.name];
+                }
+                
+                [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+                                                         cmd:cmd.name
+                                                       param:param completion:^(BOOL result, NSError *error) {
+                                                           if (result) {
+                                                               
+                                                           }
+                                                           else{
+                                                               
+                                                           }
+                                                       }];
+            }
+            
+        }
+    }
+    
 }
 - (NSString*) getYaxianXielv {
     return _yaxianXielv;
 }
 - (void) controlYaxianXielv:(NSString*) yaxianXielv {
+    
     self._yaxianXielv = yaxianXielv;
+    
+    RgsCommandInfo *cmd = nil;
+    RgsCommandParamInfo * cmd_param_info = nil;
+    cmd = [_cmdMap objectForKey:@"SET_PRESS_LIMIT"];
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            
+            for( RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"SL"])
+                {
+                    cmd_param_info = param_info;
+                    break;
+                }
+                
+            }
+            
+            if(cmd_param_info)
+            {
+                if(cmd_param_info.type == RGS_PARAM_TYPE_FLOAT)
+                {
+                    [param setObject:[NSString stringWithFormat:@"%0.1f",
+                                      [yaxianXielv floatValue]]
+                              forKey:cmd_param_info.name];
+                }
+                else if(cmd_param_info.type == RGS_PARAM_TYPE_INT)
+                {
+                    [param setObject:[NSString stringWithFormat:@"%0.0f",
+                                      [yaxianXielv floatValue]]
+                              forKey:cmd_param_info.name];
+                }
+                
+                [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+                                                         cmd:cmd.name
+                                                       param:param completion:^(BOOL result, NSError *error) {
+                                                           if (result) {
+                                                               
+                                                           }
+                                                           else{
+                                                               
+                                                           }
+                                                       }];
+            }
+            
+        }
+    }
+    
 }
 - (NSString*) getYaxianStartTime {
     return _yaxianStartTime;
 }
 - (void) controlYaxianStartTime:(NSString*) yaxianStartTime {
+    
     self._yaxianStartTime = yaxianStartTime;
+    
+    RgsCommandInfo *cmd = nil;
+    RgsCommandParamInfo * cmd_param_info = nil;
+    cmd = [_cmdMap objectForKey:@"SET_PRESS_LIMIT"];
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            
+            for( RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"START_DUR"])
+                {
+                    cmd_param_info = param_info;
+                    break;
+                }
+                
+            }
+            
+            if(cmd_param_info)
+            {
+                if(cmd_param_info.type == RGS_PARAM_TYPE_FLOAT)
+                {
+                    [param setObject:[NSString stringWithFormat:@"%0.1f",
+                                      [yaxianStartTime floatValue]]
+                              forKey:cmd_param_info.name];
+                }
+                else if(cmd_param_info.type == RGS_PARAM_TYPE_INT)
+                {
+                    [param setObject:[NSString stringWithFormat:@"%0.0f",
+                                      [yaxianStartTime floatValue]]
+                              forKey:cmd_param_info.name];
+                }
+                
+                [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+                                                         cmd:cmd.name
+                                                       param:param completion:^(BOOL result, NSError *error) {
+                                                           if (result) {
+                                                               
+                                                           }
+                                                           else{
+                                                               
+                                                           }
+                                                       }];
+            }
+            
+        }
+    }
+    
 }
 - (NSString*) getYaxianRecoveryTime {
     return _yaxianRecoveryTime;
 }
 - (void) controlYaxianRecoveryTime:(NSString*) yaxianRecoveryTime {
+    
     self._yaxianRecoveryTime = yaxianRecoveryTime;
+    
+    RgsCommandInfo *cmd = nil;
+    RgsCommandParamInfo * cmd_param_info = nil;
+    cmd = [_cmdMap objectForKey:@"SET_PRESS_LIMIT"];
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            
+            for( RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"RECOVER_DUR"])
+                {
+                    cmd_param_info = param_info;
+                    break;
+                }
+                
+            }
+            
+            if(cmd_param_info)
+            {
+                if(cmd_param_info.type == RGS_PARAM_TYPE_FLOAT)
+                {
+                    [param setObject:[NSString stringWithFormat:@"%0.1f",
+                                      [yaxianRecoveryTime floatValue]]
+                              forKey:cmd_param_info.name];
+                }
+                else if(cmd_param_info.type == RGS_PARAM_TYPE_INT)
+                {
+                    [param setObject:[NSString stringWithFormat:@"%0.0f",
+                                      [yaxianRecoveryTime floatValue]]
+                              forKey:cmd_param_info.name];
+                }
+                
+                [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+                                                         cmd:cmd.name
+                                                       param:param completion:^(BOOL result, NSError *error) {
+                                                           if (result) {
+                                                               
+                                                           }
+                                                           else{
+                                                               
+                                                           }
+                                                       }];
+            }
+            
+        }
+    }
+    
 }
 
 - (BOOL) isZaoshengStarted {
