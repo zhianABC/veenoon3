@@ -15,15 +15,16 @@
 #import "LvBoJunHeng_Chooser.h"
 
 
-@interface LvBoJunHeng_UIView() <SlideButtonDelegate>{
-    SlideButton *xielvSlider;
+@interface LvBoJunHeng_UIView() <SlideButtonDelegate, VAProcessorProxysDelegate>{
+    
+    SlideButton *gaotongFeqSlider;
     SlideButton *ditongXielvSlider;
     
     SlideButton *boduanPinLvSlider;
     SlideButton *boduanZengyiSlider;
     SlideButton *boduanQSlider;
     
-    UILabel *xielvL1;
+    UILabel *gaotongFeqL;
     UILabel *ditongXielvL;
     UILabel *boduanPinlvL;
     UILabel *boduanQL;
@@ -66,6 +67,11 @@
     // Drawing code
 }
 */
+
+- (void) dealloc
+{
+    _curProxy.delegate = nil;
+}
 
 - (id)initWithFrameProxys:(CGRect)frame withProxys:(NSArray*) proxys {
     self._proxys = proxys;
@@ -118,15 +124,13 @@
         fglm.backgroundColor = [UIColor clearColor];
         [self addSubview:fglm];
         
-        //[fglm drawRect:CGRectZero];
-        
-        
     }
     
     return self;
 }
 
 - (void) createGaoTong:(UIView*)view {
+    
     UILabel *addLabel = [[UILabel alloc] init];
     addLabel.text = @"高通";
     addLabel.textAlignment = NSTextAlignmentCenter;
@@ -150,12 +154,6 @@
     gaotongTypeBtn.layer.borderWidth = 2;
     gaotongTypeBtn.layer.borderColor = [UIColor clearColor].CGColor;;
     gaotongTypeBtn.clipsToBounds = YES;
-    NSString *dispaly = @"";
-    if ([_curProxy getGaoTongType]) {
-         dispaly = [@"   " stringByAppendingString:[_curProxy getGaoTongType]];
-    }
-    
-    [gaotongTypeBtn setTitle:dispaly  forState:UIControlStateNormal];
     gaotongTypeBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     gaotongTypeBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     UIImageView *icon = [[UIImageView alloc]
@@ -193,12 +191,6 @@
     gaotongXielvBtn.layer.borderWidth = 2;
     gaotongXielvBtn.layer.borderColor = [UIColor clearColor].CGColor;;
     gaotongXielvBtn.clipsToBounds = YES;
-    NSString *gaotongXieLv = @"";
-    if ([_curProxy getGaoTongXieLv]) {
-        gaotongXieLv = [@"  " stringByAppendingString:[_curProxy getGaoTongXieLv]];
-    }
-    
-    [gaotongXielvBtn setTitle:gaotongXieLv forState:UIControlStateNormal];
     gaotongXielvBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     gaotongXielvBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     UIImageView *icon2 = [[UIImageView alloc]
@@ -212,29 +204,19 @@
          forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:gaotongXielvBtn];
     
-    xielvSlider = [[SlideButton alloc] initWithFrame:CGRectMake(100, 70, 120, 120)];
-    xielvSlider._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
-    xielvSlider._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
-    [xielvSlider enableValueSet:YES];
-    xielvSlider.delegate = self;
-    xielvSlider.tag = 1;
-    [view addSubview:xielvSlider];
-    
-    NSString *gaotongXielv = [_curProxy getLvboGaotongPinlv];
-    float gaotongxielvvalue = [gaotongXielv floatValue];
-    float gaotongxielvf = (gaotongxielvvalue+12.0)/24.0;
-    [xielvSlider setCircleValue:gaotongxielvf];
-    
-    
-    xielvL1 = [[UILabel alloc] initWithFrame:CGRectMake(100, 180, 120, 20)];
-    if (gaotongXielv) {
-        xielvL1.text = [gaotongXielv stringByAppendingString:@" Hz"];
-    }
-    
-    xielvL1.textAlignment = NSTextAlignmentCenter;
-    [view addSubview:xielvL1];
-    xielvL1.font = [UIFont systemFontOfSize:13];
-    xielvL1.textColor = YELLOW_COLOR;
+    gaotongFeqSlider = [[SlideButton alloc] initWithFrame:CGRectMake(100, 70, 120, 120)];
+    gaotongFeqSlider._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+    gaotongFeqSlider._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+    [gaotongFeqSlider enableValueSet:YES];
+    gaotongFeqSlider.delegate = self;
+    gaotongFeqSlider.tag = 1;
+    [view addSubview:gaotongFeqSlider];
+
+    gaotongFeqL = [[UILabel alloc] initWithFrame:CGRectMake(100, 180, 120, 20)];
+    gaotongFeqL.textAlignment = NSTextAlignmentCenter;
+    [view addSubview:gaotongFeqL];
+    gaotongFeqL.font = [UIFont systemFontOfSize:13];
+    gaotongFeqL.textColor = YELLOW_COLOR;
     
     
     gaotongStartBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
@@ -250,16 +232,7 @@
          forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:gaotongStartBtn];
     
-    BOOL isGaoTongStarted = [_curProxy isLvboGaotongStart];
-    
-    if(isGaoTongStarted)
-    {
-        [gaotongStartBtn changeNormalColor:THEME_RED_COLOR];
-    }
-    else
-    {
-        [gaotongStartBtn changeNormalColor:RGB(75, 163, 202)];
-    }
+   
 }
 - (void) gaotongStartBtnAction:(id) sender {
     if(_curProxy == nil)
@@ -281,6 +254,7 @@
     }
 }
 - (void) gaotongxielvAction:(UIButton*) sender {
+    
     if ([_deviceSelector isPopoverVisible]) {
         [_deviceSelector dismissPopoverAnimated:NO];
     }
@@ -313,10 +287,12 @@
     if (device == nil) {
         return;
     }
-    NSString *dispaly = [@"   " stringByAppendingString:device];
-    
+   
+    //Show
+    NSString *dispaly = [NSString stringWithFormat:@"  %@",device];
     [gaotongXielvBtn setTitle:dispaly forState:UIControlStateNormal];
     
+    //控制
     [_curProxy controlGaoTongXieLv:device];
     
     if ([_deviceSelector isPopoverVisible]) {
@@ -387,6 +363,7 @@
     float spx = (view.frame.size.width - bw * 8 - x *2)/7;
     if(spx > 10)
         spx = 10;
+    
     for(int i = 0; i < num; i++) {
         UIButton *btn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
         btn.frame = CGRectMake(x+15, y, bw, bh);
@@ -600,13 +577,17 @@
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
     int tag = (int) slbtn.tag;
-    if (tag == 1) {
-        int k = (value *24)-12;
-        NSString *valueStr= [NSString stringWithFormat:@"%d Hz", k];
+    if (slbtn == gaotongFeqSlider) {
         
-        xielvL1.text = valueStr;
+        NSDictionary *range = [_curProxy getHighRateRange];
+        int max = [[range objectForKey:@"RATE_max"] intValue];
+        int min = [[range objectForKey:@"RATE_min"] intValue];
         
-        [_curProxy controlLvBoGaotongPinlv:[NSString stringWithFormat:@"%d", k]];
+        int feq = value * (max - min) + min;
+        gaotongFeqL.text = [NSString stringWithFormat:@"%d Hz", feq];
+
+        [_curProxy controlLvBoGaotongPinlv:[NSString stringWithFormat:@"%d", feq]];
+        
     } else if (tag == 2) {
         int k = (value *24)-12;
         NSString *valueStr= [NSString stringWithFormat:@"%d dB", k];
@@ -971,46 +952,7 @@
     int idx = (int)sender.tag;
     self._curProxy = [self._proxys objectAtIndex:idx];
     
-    [self updateGaoTong];
-    [self updateBoDuan];
-    [self updateDiTong];
-}
-
-- (void) updateGaoTong {
-    NSString *dispaly = @"";
-    if ([_curProxy getGaoTongType]) {
-        dispaly = [@"   " stringByAppendingString:[_curProxy getGaoTongType]];
-    }
-    
-    [gaotongTypeBtn setTitle:dispaly  forState:UIControlStateNormal];
-    
-    NSString *gaotongXieLv= @"";
-    if ([_curProxy getGaoTongXieLv]) {
-        gaotongXieLv = [@"  " stringByAppendingString:[_curProxy getGaoTongXieLv]];
-    }
-    
-    [gaotongXielvBtn setTitle:gaotongXieLv forState:UIControlStateNormal];
-    
-    NSString *gaotongPinlv = [_curProxy getLvboGaotongPinlv];
-    float gaotongPinlvvalue = [gaotongPinlv floatValue];
-    float gaotongPinlvf = (gaotongPinlvvalue+12.0)/24.0;
-    [xielvSlider setCircleValue:gaotongPinlvf];
-    
-    if (gaotongPinlv) {
-        xielvL1.text = [gaotongPinlv stringByAppendingString:@" Hz"];
-    }
-    
-    BOOL isGaoTongStarted = [_curProxy isLvboGaotongStart];
-    
-    if(isGaoTongStarted)
-    {
-        [gaotongStartBtn changeNormalColor:THEME_RED_COLOR];
-    }
-    else
-    {
-        [gaotongStartBtn changeNormalColor:RGB(75, 163, 202)];
-    }
-    
+    [self updateProxyCommandValIsLoaded];
 }
 
 - (void) updateBoDuan {
@@ -1091,6 +1033,65 @@
     else
     {
         [ditongStartBtn changeNormalColor:RGB(75, 163, 202)];
+    }
+}
+
+- (void) updateProxyCommandValIsLoaded
+{
+    _curProxy.delegate = self;
+    [_curProxy checkRgsProxyCommandLoad];
+    
+}
+
+- (void) didLoadedProxyCommand{
+    
+    _curProxy.delegate = nil;
+    
+    
+    [self updateUICtrlVals];
+    
+    
+}
+
+- (void) updateUICtrlVals{
+    
+    NSString *dispaly = @"";
+    if ([_curProxy getGaoTongType]) {
+        dispaly = [NSString stringWithFormat:@"   %@",[_curProxy getGaoTongType]];
+    }
+    [gaotongTypeBtn setTitle:dispaly  forState:UIControlStateNormal];
+    
+    NSString *gaotongXieLv = @"";
+    if ([_curProxy getGaoTongXieLv]) {
+        gaotongXieLv = [NSString stringWithFormat:@"  %@",[_curProxy getGaoTongXieLv]];
+    }
+    [gaotongXielvBtn setTitle:gaotongXieLv forState:UIControlStateNormal];
+
+    NSString *gaotongPinLv = [_curProxy getLvboGaotongPinlv];
+    float value = [gaotongPinLv floatValue];
+    
+    NSDictionary *range = [_curProxy getHighRateRange];
+    int max = [[range objectForKey:@"RATE_max"] intValue];
+    int min = [[range objectForKey:@"RATE_min"] intValue];
+    if(max)
+    {
+        float gtVal = (value - min)/(max - min);
+        [gaotongFeqSlider setCircleValue:gtVal];
+    }
+    
+    if (gaotongPinLv) {
+        gaotongFeqL.text = [NSString stringWithFormat:@"%@ Hz", gaotongPinLv];
+    }
+    
+    BOOL isGaoTongStarted = [_curProxy isLvboGaotongStart];
+    
+    if(isGaoTongStarted)
+    {
+        [gaotongStartBtn changeNormalColor:THEME_RED_COLOR];
+    }
+    else
+    {
+        [gaotongStartBtn changeNormalColor:RGB(75, 163, 202)];
     }
 }
 

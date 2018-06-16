@@ -120,7 +120,9 @@
 - (NSArray*)getModeOptions;
 - (NSArray*)getMicDbOptions;
 - (NSDictionary*)getPressLimitOptions;
-
+- (NSArray*)getHighFilters;
+- (NSArray*)getHighSL;
+- (NSDictionary*)getHighRateRange;
 
 - (void) controlDeviceDb:(float)db force:(BOOL)force;
 - (void) controlDeviceMute:(BOOL)isMute;

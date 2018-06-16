@@ -120,7 +120,7 @@
     NSString *name = _curProxy._rgsProxyObj.name;
     [channelBtn setTitle:name forState:UIControlStateNormal];
     
-    [self updateYaXianQi];
+    [self updateProxyCommandValIsLoaded];
 }
 
 -(void) updateYaXianQi {

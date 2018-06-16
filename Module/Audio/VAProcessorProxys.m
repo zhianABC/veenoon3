@@ -152,14 +152,14 @@
         _isZaoshengStarted = YES;
         
         
-        _lvbojunhengGaotongType = @"巴特沃斯";
-        _lvboGaotongArray = [NSArray arrayWithObjects:@"巴特沃斯", @"科沃斯", @"巴塞罗那", nil];
+        _lvbojunhengGaotongType = @"Bessel";
+        self._lvboGaotongArray = [NSArray array];
         
-        _lvbojunhengDitongType = @"皇马";
-        _lvboDitongArray = [NSArray arrayWithObjects:@"曼联", @"利物浦", @"切尔西", nil];
+        _lvbojunhengDitongType = @"";
+        self._lvboDitongArray = [NSArray array];
         
-        _lvboGaotongXielvArray = [NSArray arrayWithObjects:@"黄蜂", @"湖人", @"火箭", nil];
-        _lvbojunhengGaotongXielv = @"雷霆";
+        self._lvboGaotongXielvArray = [NSArray array];
+        _lvbojunhengGaotongXielv = @"";
         
         _lvboDitongXielvArray = [NSArray arrayWithObjects:@"快船", @"公牛", @"骑士", nil];
         _lvbojunhengDitongXielv = @"活塞";
@@ -308,6 +308,87 @@
 }
 
 
+- (NSArray*)getHighFilters{
+    
+    NSMutableArray *result = [NSMutableArray array];
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_HIGH_FILTER"];
+    if(cmd)
+    {
+        if([cmd.params count])
+        {
+            
+            for( RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"TYPE"])
+                {
+                    [result addObjectsFromArray:param_info.available];
+                    break;
+                }
+                
+            }
+        }
+    }
+    
+    return result;
+}
+
+- (NSArray*)getHighSL{
+    
+    NSMutableArray *result = [NSMutableArray array];
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_HIGH_FILTER"];
+    if(cmd)
+    {
+        if([cmd.params count])
+        {
+            
+            for( RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"SL"])
+                {
+                    [result addObjectsFromArray:param_info.available];
+                    break;
+                }
+                
+            }
+        }
+    }
+    
+    return result;
+}
+
+- (NSDictionary*)getHighRateRange{
+    
+    NSMutableDictionary *result = [NSMutableDictionary dictionary];
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_HIGH_FILTER"];
+    if(cmd)
+    {
+        if([cmd.params count])
+        {
+            
+            for( RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"RATE"])
+                {
+                    if(param_info.max)
+                        [result setObject:param_info.max forKey:@"RATE_max"];
+                    if(param_info.min)
+                        [result setObject:param_info.min forKey:@"RATE_min"];
+                    break;
+                }
+                
+            }
+        }
+    }
+    
+    return result;
+}
+
 - (BOOL) isProxyMute{
     
     return _isMute;
@@ -355,6 +436,18 @@
     }
 }
 
+- (void) initDatasAfterPullData{
+    
+    self._lvboGaotongArray = [self getHighFilters];
+    self._lvboGaotongXielvArray = [self getHighSL];
+    
+    if([self._lvboGaotongXielvArray count])
+    {
+        self._lvbojunhengGaotongXielv = [_lvboGaotongXielvArray objectAtIndex:0];
+    }
+    
+}
+
 - (void) checkRgsProxyCommandLoad{
     
     if(_rgsProxyObj == nil || _rgsCommands){
@@ -389,6 +482,8 @@
                 
                 _isSetOK = YES;
                 
+                
+                [block_self initDatasAfterPullData];
                 [block_self callDelegateDidLoad];
             }
         }

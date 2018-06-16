@@ -219,6 +219,8 @@
     yaxianView.hidden = NO;
     lvbojunhengView.hidden = YES;
     dianpingView.hidden = YES;
+    
+    [yaxianView updateProxyCommandValIsLoaded];
 }
 - (void) lvbojunhengAction:(id)sender{
     [xinhaofashengqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -234,6 +236,7 @@
     dianpingView.hidden = YES;
 }
 - (void) dianpingAction:(id)sender{
+    
     [xinhaofashengqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [yanshiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [yaxianBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -247,6 +250,7 @@
     dianpingView.hidden = NO;
 }
 - (void) xinhaofashengqiAction:(id)sender{
+    
     [xinhaofashengqiBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
     [yanshiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [yaxianBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
