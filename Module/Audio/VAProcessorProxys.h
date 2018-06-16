@@ -121,6 +121,7 @@
 - (NSArray*)getModeOptions;
 - (NSArray*)getMicDbOptions;
 - (NSDictionary*)getPressLimitOptions;
+- (NSDictionary*)getSetDelayOptions;
 - (NSArray*)getHighFilters;
 - (NSArray*)getHighSL;
 - (NSDictionary*)getHighRateRange;

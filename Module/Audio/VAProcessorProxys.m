@@ -260,6 +260,35 @@
     return nil;
 }
 
+- (NSDictionary*)getSetDelayOptions{
+    
+    NSMutableDictionary *result = [NSMutableDictionary dictionary];
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_DELAY"];
+    if(cmd)
+    {
+        if([cmd.params count])
+        {
+            
+            for( RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"DUR"])
+                {
+                    if(param_info.max)
+                        [result setObject:param_info.max forKey:@"max"];
+                    if(param_info.min)
+                        [result setObject:param_info.min forKey:@"min"];
+                    
+                    break;
+                }
+            }
+        }
+    }
+    
+    return result;
+}
+
 - (NSDictionary*)getPressLimitOptions{
     
     NSMutableDictionary *result = [NSMutableDictionary dictionary];
@@ -647,7 +676,58 @@
     return _yanshiqiSlide;
 }
 - (void) controlYanshiqiSlide:(NSString*) yanshiqiSlide {
+    
     _yanshiqiSlide = yanshiqiSlide;
+    
+    RgsCommandInfo *cmd = nil;
+    RgsCommandParamInfo * cmd_param_info = nil;
+    cmd = [_cmdMap objectForKey:@"SET_DELAY"];
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            
+            for( RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"DUR"])
+                {
+                    cmd_param_info = param_info;
+                    break;
+                }
+                
+            }
+            
+            if(cmd_param_info)
+            {
+                if(cmd_param_info.type == RGS_PARAM_TYPE_FLOAT)
+                {
+                    [param setObject:[NSString stringWithFormat:@"%0.1f",
+                                      [yanshiqiSlide floatValue]]
+                              forKey:cmd_param_info.name];
+                }
+                else if(cmd_param_info.type == RGS_PARAM_TYPE_INT)
+                {
+                    [param setObject:[NSString stringWithFormat:@"%0.0f",
+                                      [yanshiqiSlide floatValue]]
+                              forKey:cmd_param_info.name];
+                }
+                
+                [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+                                                         cmd:cmd.name
+                                                       param:param completion:^(BOOL result, NSError *error) {
+                                                           if (result) {
+                                                               
+                                                           }
+                                                           else{
+                                                               
+                                                           }
+                                                       }];
+            }
+            
+        }
+    }
+    
 }
 - (NSString*) getYanshiqiYingChi {
     return _yanshiqiYingChi;

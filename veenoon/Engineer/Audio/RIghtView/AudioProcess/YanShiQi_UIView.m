@@ -105,7 +105,7 @@
     NSString *name = _curProxy._rgsProxyObj.name;
     [channelBtn setTitle:name forState:UIControlStateNormal];
     
-    [self updateYanshiqi];
+    [self updateProxyCommandValIsLoaded];
 }
 
 - (void) contentViewComps {
@@ -213,6 +213,7 @@
 }
 
 -(void) updateYanshiqi {
+    
     NSString *zengyiDB = [_curProxy getYanshiqiSlide];
     float value = [zengyiDB floatValue];
     float max = (maxDuration - minDuration);
@@ -255,10 +256,10 @@
     
     _curProxy.delegate = nil;
     
-    NSDictionary *result = [_curProxy getPressLimitOptions];
+    NSDictionary *result = [_curProxy getSetDelayOptions];
     
-    maxDuration = [[result objectForKey:@"TH_max"] intValue];
-    minDuration = [[result objectForKey:@"TH_min"] intValue];
+    maxDuration = [[result objectForKey:@"max"] intValue];
+    minDuration = [[result objectForKey:@"min"] intValue];
     
     [self updateYanshiqi];
 }
@@ -303,7 +304,7 @@
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
     float k = (value *(maxDuration-minDuration)) + minDuration;
-    NSString *valueStr= [NSString stringWithFormat:@"%0.1f dB", k];
+    NSString *valueStr= [NSString stringWithFormat:@"%0.1f ms", k];
     
     labelL1.text = valueStr;
     

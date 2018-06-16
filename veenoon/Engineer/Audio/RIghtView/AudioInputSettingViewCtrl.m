@@ -371,6 +371,8 @@
     lvbo.hidden=YES;
     zidonghunyinView.hidden=YES;
     fankuiyizhiView.hidden=YES;
+    
+    [yanshiView updateProxyCommandValIsLoaded];
 }
 - (void) yaxianqiAction:(UIButton*)sender{
     
