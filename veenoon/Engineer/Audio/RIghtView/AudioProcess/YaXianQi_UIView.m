@@ -346,14 +346,14 @@
     
     int tag = (int) slbtn.tag;
     if (tag == 1) {
-        int k = (value *(maxTh-minTh))+minTh;
-        NSString *valueStr= [NSString stringWithFormat:@"%d dB", k];
+        float k = (value *(maxTh-minTh)) + minTh;
+        NSString *valueStr= [NSString stringWithFormat:@"%0.1f dB", k];
         
         lableL1.text = valueStr;
         
         [_limiter setThresHoldWithR:k];
         
-        [_curProxy controlYaxianFazhi:[NSString stringWithFormat:@"%d", k]];
+        [_curProxy controlYaxianFazhi:[NSString stringWithFormat:@"%0.1f", k]];
 
     } else if (tag == 2) {
         float k = (value * (maxRadio - minRadio)) + minRadio;
@@ -365,6 +365,7 @@
             [_limiter setRatioWithR:k];
         
         [_curProxy controlYaxianXielv:valueStr];
+        
     } else if (tag == 3) {
         
         int k = (value *(maxStartDur - minStartDur)) + minStartDur;
