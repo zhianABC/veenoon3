@@ -10,6 +10,7 @@
 #import "UIButton+Color.h"
 #import "AudioMatrixView.h"
 #import "SlideButton.h"
+#import "AudioEProcessor.h"
 
 @interface AudioMatrixSettingViewCtrl () <AudioMatrixViewDelegate, UIScrollViewDelegate, SlideButtonDelegate>
 {
@@ -39,7 +40,7 @@
 
 @implementation AudioMatrixSettingViewCtrl
 @synthesize _selectedPage;
-
+@synthesize _processor;
 
 - (void)viewDidLoad {
     [super viewDidLoad];

@@ -163,9 +163,15 @@
     [self.view addSubview:xinhaoView];
     xinhaoView.hidden = NO;
     
+    xinhaoView._proxys = _processor._outAudioProxys;
+    [xinhaoView layoutChannelBtns:numProxys];
+    
     dianpingView = [[DianPing_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._outAudioProxys];
     [self.view addSubview:dianpingView];
     dianpingView.hidden = YES;
+    
+    dianpingView._proxys = _processor._outAudioProxys;
+    [dianpingView layoutChannelBtns:numProxys];
     
     lvbojunhengView = [[LvBoJunHeng_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._outAudioProxys];
     [self.view addSubview:lvbojunhengView];
