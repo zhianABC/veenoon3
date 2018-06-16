@@ -150,7 +150,11 @@
     gaotongTypeBtn.layer.borderWidth = 2;
     gaotongTypeBtn.layer.borderColor = [UIColor clearColor].CGColor;;
     gaotongTypeBtn.clipsToBounds = YES;
-    NSString *dispaly = [@"   " stringByAppendingString:[_curProxy getGaoTongType]];
+    NSString *dispaly = @"";
+    if ([_curProxy getGaoTongType]) {
+         dispaly = [@"   " stringByAppendingString:[_curProxy getGaoTongType]];
+    }
+    
     [gaotongTypeBtn setTitle:dispaly  forState:UIControlStateNormal];
     gaotongTypeBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     gaotongTypeBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -189,7 +193,11 @@
     gaotongXielvBtn.layer.borderWidth = 2;
     gaotongXielvBtn.layer.borderColor = [UIColor clearColor].CGColor;;
     gaotongXielvBtn.clipsToBounds = YES;
-    NSString *gaotongXieLv = [@"  " stringByAppendingString:[_curProxy getGaoTongXieLv]];
+    NSString *gaotongXieLv = @"";
+    if ([_curProxy getGaoTongXieLv]) {
+        gaotongXieLv = [@"  " stringByAppendingString:[_curProxy getGaoTongXieLv]];
+    }
+    
     [gaotongXielvBtn setTitle:gaotongXieLv forState:UIControlStateNormal];
     gaotongXielvBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     gaotongXielvBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -219,7 +227,10 @@
     
     
     xielvL1 = [[UILabel alloc] initWithFrame:CGRectMake(100, 180, 120, 20)];
-    xielvL1.text = [gaotongXielv stringByAppendingString:@" Hz"];
+    if (gaotongXielv) {
+        xielvL1.text = [gaotongXielv stringByAppendingString:@" Hz"];
+    }
+    
     xielvL1.textAlignment = NSTextAlignmentCenter;
     [view addSubview:xielvL1];
     xielvL1.font = [UIFont systemFontOfSize:13];
@@ -299,7 +310,9 @@
 }
 
 - (void) chooseGaotongXieLv:(NSString*)device{
-    
+    if (device == nil) {
+        return;
+    }
     NSString *dispaly = [@"   " stringByAppendingString:device];
     
     [gaotongXielvBtn setTitle:dispaly forState:UIControlStateNormal];
@@ -343,7 +356,9 @@
 }
 
 - (void) chooseGaotong:(NSString*)device{
-    
+    if (device == nil) {
+        return;
+    }
     NSString *dispaly = [@"   " stringByAppendingString:device];
     
     [gaotongTypeBtn setTitle:dispaly forState:UIControlStateNormal];
@@ -423,7 +438,11 @@
     boduanleixingBtn.layer.borderWidth = 2;
     boduanleixingBtn.layer.borderColor = [UIColor clearColor].CGColor;;
     boduanleixingBtn.clipsToBounds = YES;
-    NSString *boduanType = [@"  " stringByAppendingString:[_curProxy getBoduanType]];
+    NSString *boduanType= @"";
+    if ([_curProxy getBoduanType]) {
+         boduanType = [@"  " stringByAppendingString:[_curProxy getBoduanType]];
+    }
+    
     [boduanleixingBtn setTitle:boduanType forState:UIControlStateNormal];
     boduanleixingBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     boduanleixingBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -466,7 +485,10 @@
     [boduanPinLvSlider setCircleValue:boduanPinlvvaluef];
     
     boduanPinlvL = [[UILabel alloc] initWithFrame:CGRectMake(startX, labelY+labelBtnGap+95, 120, 20)];
-    boduanPinlvL.text = [boduanPinlv stringByAppendingString:@" Hz"];
+    if (boduanPinlv) {
+        boduanPinlvL.text = [boduanPinlv stringByAppendingString:@" Hz"];
+    }
+    
     boduanPinlvL.textAlignment = NSTextAlignmentCenter;
     [view addSubview:boduanPinlvL];
     boduanPinlvL.font = [UIFont systemFontOfSize:13];
@@ -493,7 +515,10 @@
     [boduanPinLvSlider setCircleValue:boduanZengYivaluef];
     
     boduanZengyiL = [[UILabel alloc] initWithFrame:CGRectMake(startX+gap, labelY+labelBtnGap+95, 120, 20)];
-    boduanZengyiL.text = [boduanZengYi stringByAppendingString:@" dB"];
+    if (boduanZengYi) {
+        boduanZengyiL.text = [boduanZengYi stringByAppendingString:@" dB"];
+    }
+    
     boduanZengyiL.textAlignment = NSTextAlignmentCenter;
     [view addSubview:boduanZengyiL];
     boduanZengyiL.font = [UIFont systemFontOfSize:13];
@@ -520,7 +545,10 @@
     [boduanQSlider setCircleValue:boduanQvaluef];
     
     boduanQL = [[UILabel alloc] initWithFrame:CGRectMake(startX+gap*2, labelY+labelBtnGap+95, 120, 20)];
-    boduanQL.text = [boduanQ stringByAppendingString:@" dB"];
+    if (boduanQ) {
+        boduanQL.text = [boduanQ stringByAppendingString:@" dB"];
+    }
+    
     boduanQL.textAlignment = NSTextAlignmentCenter;
     [view addSubview:boduanQL];
     boduanQL.font = [UIFont systemFontOfSize:13];
@@ -644,7 +672,9 @@
 }
 
 - (void) chooseBoduanType:(NSString*)device{
-    
+    if (device == nil) {
+        return;
+    }
     NSString *dispaly = [@"   " stringByAppendingString:device];
     
     [boduanleixingBtn setTitle:dispaly forState:UIControlStateNormal];
@@ -686,7 +716,11 @@
     ditongTypeBtn.layer.borderWidth = 2;
     ditongTypeBtn.layer.borderColor = [UIColor clearColor].CGColor;;
     ditongTypeBtn.clipsToBounds = YES;
-    NSString *dispaly = [@"   " stringByAppendingString:[_curProxy getDiTongType]];
+    NSString *dispaly = @"";
+    if ([_curProxy getDiTongType]) {
+        dispaly = [@"   " stringByAppendingString:[_curProxy getDiTongType]];
+    }
+    
     [ditongTypeBtn setTitle:dispaly forState:UIControlStateNormal];
     ditongTypeBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     ditongTypeBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -725,7 +759,11 @@
     ditongxielvBtn.layer.borderWidth = 2;
     ditongxielvBtn.layer.borderColor = [UIColor clearColor].CGColor;;
     ditongxielvBtn.clipsToBounds = YES;
-    NSString *ditongXielvStr = [@"  " stringByAppendingString:[_curProxy getDiTongXieLv]];
+    NSString *ditongXielvStr = @"";
+    if ([_curProxy getDiTongXieLv]) {
+        ditongXielvStr = [@"  " stringByAppendingString:[_curProxy getDiTongXieLv]];
+    }
+    
     [ditongxielvBtn setTitle:ditongXielvStr forState:UIControlStateNormal];
     ditongxielvBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     ditongxielvBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -754,7 +792,10 @@
     [ditongXielvSlider setCircleValue:ditongPinlvvaluef];
     
     ditongXielvL = [[UILabel alloc] initWithFrame:CGRectMake(100, 180, 120, 20)];
-    ditongXielvL.text = [ditongPinlv stringByAppendingString:@" dB"];
+    if (ditongPinlv) {
+        ditongXielvL.text = [ditongPinlv stringByAppendingString:@" dB"];
+    }
+    
     ditongXielvL.textAlignment = NSTextAlignmentCenter;
     [view addSubview:ditongXielvL];
     ditongXielvL.font = [UIFont systemFontOfSize:13];
@@ -833,7 +874,9 @@
 }
 
 - (void) chooseDitong:(NSString*)device{
-    
+    if (device == nil) {
+        return;
+    }
     NSString *dispaly = [@"   " stringByAppendingString:device];
     
     [ditongTypeBtn setTitle:dispaly forState:UIControlStateNormal];
@@ -876,7 +919,9 @@
 }
 
 - (void) chooseDitongXieLv:(NSString*)device{
-    
+    if (device == nil) {
+        return;
+    }
     NSString *dispaly = [@"   " stringByAppendingString:device];
     
     [ditongxielvBtn setTitle:dispaly forState:UIControlStateNormal];
@@ -932,10 +977,18 @@
 }
 
 - (void) updateGaoTong {
-    NSString *dispaly = [@"   " stringByAppendingString:[_curProxy getGaoTongType]];
+    NSString *dispaly = @"";
+    if ([_curProxy getGaoTongType]) {
+        dispaly = [@"   " stringByAppendingString:[_curProxy getGaoTongType]];
+    }
+    
     [gaotongTypeBtn setTitle:dispaly  forState:UIControlStateNormal];
     
-    NSString *gaotongXieLv = [@"  " stringByAppendingString:[_curProxy getGaoTongXieLv]];
+    NSString *gaotongXieLv= @"";
+    if ([_curProxy getGaoTongXieLv]) {
+        gaotongXieLv = [@"  " stringByAppendingString:[_curProxy getGaoTongXieLv]];
+    }
+    
     [gaotongXielvBtn setTitle:gaotongXieLv forState:UIControlStateNormal];
     
     NSString *gaotongPinlv = [_curProxy getLvboGaotongPinlv];
@@ -943,7 +996,9 @@
     float gaotongPinlvf = (gaotongPinlvvalue+12.0)/24.0;
     [xielvSlider setCircleValue:gaotongPinlvf];
     
-    xielvL1.text = [gaotongPinlv stringByAppendingString:@" Hz"];
+    if (gaotongPinlv) {
+        xielvL1.text = [gaotongPinlv stringByAppendingString:@" Hz"];
+    }
     
     BOOL isGaoTongStarted = [_curProxy isLvboGaotongStart];
     
@@ -959,29 +1014,36 @@
 }
 
 - (void) updateBoDuan {
-    NSString *dispaly = [@"   " stringByAppendingString:[_curProxy getBoduanType]];
+    NSString *dispaly;
+    if ([_curProxy getBoduanType]) {
+        dispaly = [@"   " stringByAppendingString:[_curProxy getBoduanType]];
+    }
+    
     [boduanleixingBtn setTitle:dispaly  forState:UIControlStateNormal];
     
     NSString *boduanPinlv = [_curProxy getlvboBoduanPinlv];
     float boduanPinlvvalue = [boduanPinlv floatValue];
     float boduanPinlvvaluef = (boduanPinlvvalue+12.0)/24.0;
     [boduanPinLvSlider setCircleValue:boduanPinlvvaluef];
-    
-    boduanPinlvL.text = [boduanPinlv stringByAppendingString:@" Hz"];
+    if (boduanPinlv) {
+        boduanPinlvL.text = [boduanPinlv stringByAppendingString:@" Hz"];
+    }
     
     NSString *boduanZengyi = [_curProxy getlvboBoduanZengyi];
     float boduanZengyivalue = [boduanZengyi floatValue];
     float boduanZengyivaluef = (boduanZengyivalue+12.0)/24.0;
     [boduanZengyiSlider setCircleValue:boduanZengyivaluef];
-    
-    boduanZengyiL.text = [boduanZengyi stringByAppendingString:@" Hz"];
+    if (boduanZengyi) {
+        boduanZengyiL.text = [boduanZengyi stringByAppendingString:@" Hz"];
+    }
     
     NSString *boduanQ = [_curProxy getlvboBoduanQ];
     float boduanQvalue = [boduanQ floatValue];
     float boduanQvaluef = (boduanQvalue+12.0)/24.0;
     [boduanQSlider setCircleValue:boduanQvaluef];
-    
-    boduanQL.text = [boduanQ stringByAppendingString:@" Hz"];
+    if (boduanQ) {
+        boduanQL.text = [boduanQ stringByAppendingString:@" Hz"];
+    }
     
     BOOL isBoduanStart = [_curProxy islvboBoduanStart];
     
@@ -998,10 +1060,17 @@
 }
 
 -(void) updateDiTong {
-    NSString *dispaly = [@"   " stringByAppendingString:[_curProxy getDiTongType]];
+    NSString *dispaly = @"";
+    if ([_curProxy getDiTongType]) {
+        dispaly = [@"   " stringByAppendingString:[_curProxy getDiTongType]];
+    }
+   
     [ditongTypeBtn setTitle:dispaly  forState:UIControlStateNormal];
+    NSString *ditongXielv = @"";
+    if ([_curProxy getDiTongXieLv]) {
+        ditongXielv = [@"  " stringByAppendingString:[_curProxy getDiTongXieLv]];
+    }
     
-    NSString *ditongXielv = [@"  " stringByAppendingString:[_curProxy getDiTongXieLv]];
     [ditongxielvBtn setTitle:ditongXielv forState:UIControlStateNormal];
     
     NSString *ditongPinlv = [_curProxy getlvboDitongPinlv];
@@ -1009,7 +1078,9 @@
     float ditongPinlvvaluef = (ditongPinlvvalue+12.0)/24.0;
     [ditongXielvSlider setCircleValue:ditongPinlvvaluef];
     
-    ditongXielvL.text = [ditongPinlv stringByAppendingString:@" Hz"];
+    if (ditongPinlv) {
+        ditongXielvL.text = [ditongPinlv stringByAppendingString:@" Hz"];
+    }
     
     BOOL isDitongStart = [_curProxy _islvboDitongStart];
     

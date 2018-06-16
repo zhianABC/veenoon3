@@ -104,8 +104,9 @@
     float f = (value+12.0)/24.0;
     [fazhiSlider setCircleValue:f];
     
-    lableL1.text = [zengyiDB stringByAppendingString:@" dB"];
-    
+    if (zengyiDB) {
+        lableL1.text = [zengyiDB stringByAppendingString:@" dB"];
+    }
     
     NSString *xielv = [_curProxy getYaxianXielv];
     float xielvValue = [xielv floatValue];
@@ -174,7 +175,10 @@
     
     
     lableL1 = [[UILabel alloc] initWithFrame:CGRectMake(x, y+20+120, 120, 20)];
-    lableL1.text = [zengyiDB stringByAppendingString:@" dB"];
+    if (zengyiDB) {
+        lableL1.text = [zengyiDB stringByAppendingString:@" dB"];
+    }
+    
     lableL1.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:lableL1];
     lableL1.font = [UIFont systemFontOfSize:13];

@@ -109,7 +109,9 @@
     [zengyi setCircleValue:f];
     
     labelL1 = [[UILabel alloc] initWithFrame:CGRectMake(startX+gap, labelY+labelBtnGap+80, 120, 120)];
-    labelL1.text = [[_curProxy getZidonghuiyinZengYi] stringByAppendingString:@" dB"];
+    if ([_curProxy getZidonghuiyinZengYi]) {
+        labelL1.text = [[_curProxy getZidonghuiyinZengYi] stringByAppendingString:@" dB"];
+    }
     labelL1.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:labelL1];
     labelL1.font = [UIFont systemFontOfSize:13];

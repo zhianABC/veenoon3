@@ -10,5 +10,6 @@
 #import "APBaseView.h"
 
 @interface DianPing_UIView : APBaseView
+- (id)initWithFrameProxys:(CGRect)frame withProxys:(NSArray*) proxys;
 
 @end

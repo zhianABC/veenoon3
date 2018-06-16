@@ -9,6 +9,8 @@
 #import "DianPing_UIView.h"
 #import "UIButton+Color.h"
 #import "SlideButton.h"
+#import "VAProcessorProxys.h"
+#import "RegulusSDK.h"
 
 @interface DianPing_UIView() <SlideButtonDelegate>{
     
@@ -17,7 +19,7 @@
     UILabel *labelL1;
     
 }
-
+@property (nonatomic, strong) VAProcessorProxys *_curProxy;
 @end
 
 
@@ -31,16 +33,29 @@
  }
  */
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithFrameProxys:(CGRect)frame withProxys:(NSArray*) proxys
 {
+    self._proxys = proxys;
+    
     if(self = [super initWithFrame:frame])
     {
+        if (self._curProxy == nil) {
+            if (self._proxys) {
+                self._curProxy = [self._proxys objectAtIndex:0];
+            }
+        }
+        
         channelBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
         channelBtn.frame = CGRectMake(0, 50, 70, 36);
         channelBtn.clipsToBounds = YES;
         channelBtn.layer.cornerRadius = 5;
         channelBtn.titleLabel.font = [UIFont systemFontOfSize:15];
-        [channelBtn setTitle:@"Out 1" forState:UIControlStateNormal];
+        if (self._curProxy && self._curProxy._rgsProxyObj) {
+            [channelBtn setTitle:self._curProxy._rgsProxyObj.name forState:UIControlStateNormal];
+        } else {
+            [channelBtn setTitle:@"Out 1" forState:UIControlStateNormal];
+        }
+        
         [channelBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
         [self addSubview:channelBtn];
         

@@ -13,6 +13,7 @@
 #import "LvBoJunHeng_UIView.h"
 #import "YaXianQi_UIView.h"
 #import "YanShiQi_UIView.h"
+#import "AudioEProcessor.h"
 
 @interface AudioOutputSettingViewCtrl () {
     
@@ -35,6 +36,7 @@
 @end
 
 @implementation AudioOutputSettingViewCtrl
+@synthesize _processor;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -154,26 +156,37 @@
                     action:@selector(yanshiqiAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
+    int numProxys = (int)[_processor._outAudioProxys count];
+    
     CGRect vrc = CGRectMake(60, 140, SCREEN_WIDTH-120, SCREEN_HEIGHT-140-60);
-    xinhaoView = [[XinHaoFaShengQi_UIView alloc] initWithFrame:vrc];
+    xinhaoView = [[XinHaoFaShengQi_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._outAudioProxys];
     [self.view addSubview:xinhaoView];
     xinhaoView.hidden = NO;
     
-    dianpingView = [[DianPing_UIView alloc] initWithFrame:vrc];
+    dianpingView = [[DianPing_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._outAudioProxys];
     [self.view addSubview:dianpingView];
     dianpingView.hidden = YES;
     
-    lvbojunhengView = [[LvBoJunHeng_UIView alloc] initWithFrame:vrc];
+    lvbojunhengView = [[LvBoJunHeng_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._outAudioProxys];
     [self.view addSubview:lvbojunhengView];
     lvbojunhengView.hidden = YES;
     
-    yaxianView = [[YaXianQi_UIView alloc] initWithFrame:vrc];
+    lvbojunhengView._proxys = _processor._outAudioProxys;
+    [lvbojunhengView layoutChannelBtns:numProxys];
+    
+    yaxianView = [[YaXianQi_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._outAudioProxys];
     [self.view addSubview:yaxianView];
     yaxianView.hidden = YES;
     
-    yanshiView = [[YanShiQi_UIView alloc] initWithFrame:vrc];
+    yaxianView._proxys = _processor._outAudioProxys;
+    [yaxianView layoutChannelBtns:numProxys];
+    
+    yanshiView = [[YanShiQi_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._outAudioProxys];
     [self.view addSubview:yanshiView];
     yanshiView.hidden = YES;
+    
+    yanshiView._proxys = _processor._outAudioProxys;
+    [yanshiView layoutChannelBtns:numProxys];
 }
 - (void) yanshiqiAction:(id)sender{
     [xinhaofashengqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -252,15 +265,5 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

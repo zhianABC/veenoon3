@@ -245,8 +245,11 @@
         if (i % 2 == 0) {
             huatongType = @"huabao";
         }
+        NSString *huatongName =@"";
+        if (name) {
+            huatongName = [name stringByAppendingString:[NSString stringWithFormat:@"%d",i]];
+        }
         
-        NSString *huatongName = [name stringByAppendingString:[NSString stringWithFormat:@"%d",i]];
         NSString *dianliangStr = [NSString stringWithFormat:@"%d",dianliang];
         NSString *signalStr = [NSString stringWithFormat:@"%d",signal];
         

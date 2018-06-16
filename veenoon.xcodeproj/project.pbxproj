@@ -4794,6 +4794,7 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sz1.veenoon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "14aab912-70c2-4e34-bd90-7264cd22ac4d";
 				PROVISIONING_PROFILE_SPECIFIER = DevTest;
 				SWIFT_OBJC_BRIDGING_HEADER = "veenoon/Engineer/Audio/RIghtView/AudioProcess/veenoon-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
