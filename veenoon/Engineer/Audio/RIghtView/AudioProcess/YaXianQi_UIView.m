@@ -31,6 +31,9 @@
     
     
     LimiterView *_limiter;
+    
+    int maxTh;
+    int minTh;
 }
 @property (nonatomic, strong) VAProcessorProxys *_curProxy;
 @end
@@ -75,6 +78,9 @@
         int y = CGRectGetMaxY(channelBtn.frame)+20;
         contentView.frame = CGRectMake(0, y, frame.size.width, 340);
         
+        maxTh = 0;
+        minTh = -120;
+        
         [self contentViewComps];
     }
     
@@ -112,8 +118,13 @@
     
     NSString *zengyiDB = [_curProxy getYaxianFazhi];
     float value = [zengyiDB floatValue];
-    float f = (value+12.0)/24.0;
-    [fazhiSlider setCircleValue:f];
+    int max = (maxTh- minTh);
+    if(max)
+    {
+        float f = (value - minTh)/max;
+        f = fabsf(f);
+        [fazhiSlider setCircleValue:f];
+    }
     
     if (zengyiDB) {
         lableL1.text = [zengyiDB stringByAppendingString:@" dB"];
@@ -176,8 +187,13 @@
     [contentView addSubview:fazhiSlider];
     NSString *zengyiDB = [_curProxy getYaxianFazhi];
     float value = [zengyiDB floatValue];
-    float f = (value+12.0)/24.0;
-    [fazhiSlider setCircleValue:f];
+    int max = (maxTh- minTh);
+    if(max)
+    {
+        float f = (value - minTh)/max;
+        f = fabsf(f);
+        [fazhiSlider setCircleValue:f];
+    }
     
     
     lableL1 = [[UILabel alloc] initWithFrame:CGRectMake(x, y+20+120, 120, 20)];
@@ -296,18 +312,33 @@
  
     NSDictionary *result = [_curProxy getPressLimitOptions];
     
+    maxTh = [[result objectForKey:@"TH_max"] intValue];
+    minTh = [[result objectForKey:@"TH_min"] intValue];
+    
+    [_limiter setMaxThresholdWithThreshold:maxTh];
+    [_limiter setMinThresholdWithThreshold:minTh];
+    
+    NSString *zengyiDB = [_curProxy getYaxianFazhi];
+    int value = [zengyiDB intValue];
+    [_limiter setThresHoldWithR:value];
+
     
 }
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
     int tag = (int) slbtn.tag;
     if (tag == 1) {
-        int k = (value *24)-12;
+        int k = (value *(maxTh-minTh))+minTh;
         NSString *valueStr= [NSString stringWithFormat:@"%d dB", k];
         
         lableL1.text = valueStr;
         
+        [_limiter setThresHoldWithR:k];
+        
         [_curProxy controlYaxianFazhi:[NSString stringWithFormat:@"%d", k]];
+
+        
+        
     } else if (tag == 2) {
         int k = (value *20)-10;
         NSString *valueStr= [NSString stringWithFormat:@"%d", k];

@@ -130,7 +130,7 @@
         _yanshiqiYingChi = @"1111";
         _yanshiqiSlide = @"0";
         
-        _yaxianFazhi = @"10";
+        _yaxianFazhi = @"0";
         _yaxianXielv = @"4";
         _yaxianStartTime = @"1111";
         _yaxianRecoveryTime = @"0";
@@ -282,12 +282,12 @@
                     if(param_info.min)
                         [result setObject:param_info.min forKey:@"START_DUR_min"];
                 }
-                else if([param_info.name isEqualToString:@"RECOVERY_DUR"])
+                else if([param_info.name isEqualToString:@"RECOVER_DUR"])
                 {
                     if(param_info.max)
-                        [result setObject:param_info.max forKey:@"RECOVERY_DUR_max"];
+                        [result setObject:param_info.max forKey:@"RECOVER_DUR_max"];
                     if(param_info.min)
-                        [result setObject:param_info.min forKey:@"RECOVERY_DUR_min"];
+                        [result setObject:param_info.min forKey:@"RECOVER_DUR_min"];
                 }
             }
         }
