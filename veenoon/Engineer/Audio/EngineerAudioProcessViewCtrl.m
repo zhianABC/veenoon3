@@ -613,12 +613,15 @@
     else if ([@"输出设置" isEqualToString:value])
     {
         AudioOutputSettingViewCtrl *ctrl = [[AudioOutputSettingViewCtrl alloc] init];
+        ctrl._processor = _curProcessor;
         [self.navigationController pushViewController:ctrl animated:YES];
         
     }
     else if ([@"矩阵路由" isEqualToString:value])
     {
         AudioMatrixSettingViewCtrl *ctrl = [[AudioMatrixSettingViewCtrl alloc] init];
+        ctrl._processor = _curProcessor;
+        
         [self.navigationController pushViewController:ctrl animated:YES];
     }
     else

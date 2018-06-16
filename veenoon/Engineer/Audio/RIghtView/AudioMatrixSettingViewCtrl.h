@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
+@class AudioEProcessor;
 
 @interface AudioMatrixSettingViewCtrl : BaseViewController
+@property (nonatomic, strong) AudioEProcessor *_processor;
 
 @end
