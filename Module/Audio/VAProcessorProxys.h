@@ -46,6 +46,7 @@
 @property (nonatomic, strong) NSString *_yanshiqiYingChi;
 @property (nonatomic, strong) NSString *_yanshiqiMi;
 @property (nonatomic, strong) NSString *_yanshiqiHaoMiao;
+@property (nonatomic, assign) BOOL _isYanshiStarted;
 //yaxianqi
 @property (nonatomic, strong) NSString *_yaxianFazhi;
 @property (nonatomic, strong) NSString *_yaxianXielv;
@@ -151,6 +152,8 @@
 - (void) controlYanshiqiMi:(NSString*) yanshiqiMi;
 - (NSString*) getYanshiqiHaoMiao;
 - (void) controlYanshiqiHaoMiao:(NSString*) yanshiqiHaoMiao;
+- (BOOL) isYanshiStart;
+- (void) controlYanshiStart:(BOOL)yanshiStart;
 
 //yaxianqi
 - (NSString*) getYaxianFazhi;
