@@ -101,6 +101,17 @@
 @synthesize _lvboBoduanQ;
 @synthesize _lvboDitongPinlv;
 
+@synthesize _xinhaofashengPinlv;
+@synthesize _xinhaofashengZengyi;
+@synthesize _xinhaofashengPinlvArray;
+@synthesize _isXinhaofashengMute;
+@synthesize _dianpingPinlv;
+@synthesize _dianpingZengyi;
+@synthesize _dianpingfanxiang;
+@synthesize _isdianpingMute;
+@synthesize _xinhaozhengxuanbo;
+@synthesize _xinhaozhengxuanArray;
+
 - (id) init
 {
     if(self = [super init])
@@ -738,6 +749,62 @@
 }
 -(void) controllvboDitongPinlv:(NSString*) lvboDitongPinlv {
     self._lvboDitongPinlv = lvboDitongPinlv;
+}
+
+-(NSString*) getXinhaofashengPinlv {
+    return _xinhaofashengPinlv;
+}
+-(void) controlXinHaofashengPinlv:(NSString*)xinhaofashengPinlv {
+    self._xinhaofashengPinlv = xinhaofashengPinlv;
+}
+-(NSArray*) getXinhaofashengPinlvArray {
+    return self._xinhaofashengPinlvArray;
+}
+-(NSString*) getXinhaoZhengxuanbo {
+    return self._xinhaozhengxuanbo;
+}
+-(void) controlXinhaoZhengxuanbo:(NSString*)zhengxuanbo {
+    self._xinhaozhengxuanbo = zhengxuanbo;
+}
+-(NSArray*) getXinhaofashengZhengxuanArray {
+    return self._xinhaozhengxuanArray;
+}
+-(BOOL) isXinhaofashengMute {
+    return self._isXinhaofashengMute;
+}
+-(void) controlXinhaofashengMute:(BOOL)xinhaofashengMute {
+    self._isXinhaofashengMute = xinhaofashengMute;
+}
+-(NSString*) getXinhaofashengZengyi {
+    return _xinhaofashengZengyi;
+}
+-(void) controlXinhaofashengZengyi:(NSString*)xinhaofashengZengyi {
+    self._xinhaofashengZengyi = xinhaofashengZengyi;
+}
+
+-(NSString*) getDianpingPinlv {
+    return _dianpingPinlv;
+}
+-(void) controlDianpingPinlv:(NSString*)dianpingPinlv {
+    self._dianpingPinlv = dianpingPinlv;
+}
+-(NSString*) getDianpingfanxiang {
+    return _dianpingfanxiang;
+}
+-(void) controlDianpingfanxian:(NSString*)dianpingfanxiang {
+    self._dianpingfanxiang = dianpingfanxiang;
+}
+-(BOOL) isDianpingMute {
+    return self._isdianpingMute;
+}
+-(void) controlDianpingMute:(BOOL)dianpingMute {
+    self._isdianpingMute = dianpingMute;
+}
+-(NSString*) getDianpingZengyi {
+    return self._dianpingZengyi;
+}
+-(void) controlDianpingZengyi:(NSString*)dianpingZengyi {
+    self._dianpingZengyi = dianpingZengyi;
 }
 
 - (void) controlDigtalMute:(BOOL)isMute{

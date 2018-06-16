@@ -79,7 +79,9 @@
 
 //xinhaofasheng
 @property (nonatomic, strong) NSString* _xinhaofashengPinlv;
-@property (nonatomic, strong) NSString* _zhengxuanbo;
+@property (nonatomic, strong) NSArray * _xinhaofashengPinlvArray;
+@property (nonatomic, strong) NSString* _xinhaozhengxuanbo;
+@property (nonatomic, strong) NSArray *_xinhaozhengxuanArray;
 @property (nonatomic, assign) BOOL _isXinhaofashengMute;
 @property (nonatomic, strong) NSString* _xinhaofashengZengyi;
 
@@ -218,8 +220,10 @@
 //信号发生器
 -(NSString*) getXinhaofashengPinlv;
 -(void) controlXinHaofashengPinlv:(NSString*)xinhaofashengPinlv;
--(NSString*) getZhengxuanbo;
--(void) controlZhengxuanbo:(NSString*)zhengxuanbo;
+-(NSArray*) getXinhaofashengPinlvArray;
+-(NSString*) getXinhaoZhengxuanbo;
+-(void) controlXinhaoZhengxuanbo:(NSString*)zhengxuanbo;
+-(NSArray*) getXinhaofashengZhengxuanArray;
 -(BOOL) isXinhaofashengMute;
 -(void) controlXinhaofashengMute:(BOOL)xinhaofashengMute;
 -(NSString*) getXinhaofashengZengyi;

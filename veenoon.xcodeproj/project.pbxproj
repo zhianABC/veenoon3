@@ -648,6 +648,7 @@
 		EB5F7F921FD598ED00351888 /* engineer_port_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB5F7F8E1FD598ED00351888 /* engineer_port_s@2x.png */; };
 		EB5F7F951FD59D6B00351888 /* EngineerPortSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5F7F941FD59D6B00351888 /* EngineerPortSettingView.m */; };
 		EB5F7F981FD59D8400351888 /* EngineerDNSSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB5F7F971FD59D8400351888 /* EngineerDNSSettingView.m */; };
+		EB62DF7420D4DC2500144EE0 /* XinHaoFaShengQi_Chooser.m in Sources */ = {isa = PBXBuildFile; fileRef = EB62DF7320D4DC2500144EE0 /* XinHaoFaShengQi_Chooser.m */; };
 		EB7333F1204102DF00AE60B8 /* FloorWarmRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333F0204102DF00AE60B8 /* FloorWarmRightView.m */; };
 		EB7333F42041046400AE60B8 /* AirCleanRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333F32041046400AE60B8 /* AirCleanRightView.m */; };
 		EB7333FA204108B000AE60B8 /* AddWetRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333F9204108B000AE60B8 /* AddWetRightView.m */; };
@@ -1775,6 +1776,8 @@
 		EB5F7F941FD59D6B00351888 /* EngineerPortSettingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerPortSettingView.m; sourceTree = "<group>"; };
 		EB5F7F961FD59D7B00351888 /* EngineerDNSSettingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EngineerDNSSettingView.h; sourceTree = "<group>"; };
 		EB5F7F971FD59D8400351888 /* EngineerDNSSettingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerDNSSettingView.m; sourceTree = "<group>"; };
+		EB62DF7220D4DC2500144EE0 /* XinHaoFaShengQi_Chooser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XinHaoFaShengQi_Chooser.h; sourceTree = "<group>"; };
+		EB62DF7320D4DC2500144EE0 /* XinHaoFaShengQi_Chooser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XinHaoFaShengQi_Chooser.m; sourceTree = "<group>"; };
 		EB7333EF204102DF00AE60B8 /* FloorWarmRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FloorWarmRightView.h; sourceTree = "<group>"; };
 		EB7333F0204102DF00AE60B8 /* FloorWarmRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FloorWarmRightView.m; sourceTree = "<group>"; };
 		EB7333F22041046400AE60B8 /* AirCleanRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirCleanRightView.h; sourceTree = "<group>"; };
@@ -3587,6 +3590,8 @@
 				EB795B642042E8A1005D1F47 /* ZiDongHunYin_UIView.m */,
 				EB9986D720B2F9A4007E4770 /* FanKuiYiZhiView.h */,
 				EB9986D820B2F9A4007E4770 /* FanKuiYiZhiView.m */,
+				EB62DF7220D4DC2500144EE0 /* XinHaoFaShengQi_Chooser.h */,
+				EB62DF7320D4DC2500144EE0 /* XinHaoFaShengQi_Chooser.m */,
 				EB795B662042E8C1005D1F47 /* XinHaoFaShengQi_UIView.h */,
 				EB795B672042E8C1005D1F47 /* XinHaoFaShengQi_UIView.m */,
 				EB795B692042E8D3005D1F47 /* DianPing_UIView.h */,
@@ -4456,6 +4461,7 @@
 				341C60C91FDCFD7D003A5490 /* EPlusLayerView.m in Sources */,
 				EB4E39E62027423D00533575 /* HandtoHandLineCheckView.m in Sources */,
 				EB0968BF1FE2B4C900CF422F /* EngineerElectronicSysConfigViewCtrl.m in Sources */,
+				EB62DF7420D4DC2500144EE0 /* XinHaoFaShengQi_Chooser.m in Sources */,
 				04DE1EB11AD6AEE000D49E2F /* SDWebImageManager.m in Sources */,
 				3425E98F1FE575A4003559F7 /* PlayerSettingsPannel.m in Sources */,
 				04DE1EAA1AD6AEE000D49E2F /* MKAnnotationView+WebCache.m in Sources */,
