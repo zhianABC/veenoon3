@@ -125,7 +125,10 @@
     [fazhi setCircleValue:f];
     
     fazhiL = [[UILabel alloc] initWithFrame:CGRectMake(startX, labelY+labelBtnGap+120, 120, 20)];
-    fazhiL.text = [zengyiDB stringByAppendingString:@" dB"];
+    if (zengyiDB) {
+        fazhiL.text = [zengyiDB stringByAppendingString:@" dB"];
+    }
+    
     fazhiL.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:fazhiL];
     fazhiL.font = [UIFont systemFontOfSize:13];
@@ -217,7 +220,9 @@
     float f = (value+12.0)/24.0;
     [fazhi setCircleValue:f];
     
-    fazhiL.text = [zengyiDB stringByAppendingString:@" dB"];
+    if (zengyiDB) {
+        fazhiL.text = [zengyiDB stringByAppendingString:@" dB"];
+    }
     
     NSString *startTime = [_curProxy getZaoshengStartTime];
     float startTimeV = [startTime floatValue];
@@ -253,7 +258,9 @@
         int k = (value *24)-12;
         NSString *valueStr= [NSString stringWithFormat:@"%d", k];
         
-        fazhiL.text = [valueStr stringByAppendingString:@" dB"];
+        if (valueStr) {
+            fazhiL.text = [valueStr stringByAppendingString:@" dB"];
+        }
         
         [_curProxy controlZaoshengFazhi:valueStr];
     } else if (tag == 2) {

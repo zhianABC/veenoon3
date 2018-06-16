@@ -76,6 +76,18 @@
 @property (nonatomic, strong) NSString *_lvboBoduanZengyi;
 @property (nonatomic, strong) NSString *_lvboBoduanQ;
 @property (nonatomic, strong) NSString *_lvboDitongPinlv;
+
+//xinhaofasheng
+@property (nonatomic, strong) NSString* _xinhaofashengPinlv;
+@property (nonatomic, strong) NSString* _zhengxuanbo;
+@property (nonatomic, assign) BOOL _isXinhaofashengMute;
+@property (nonatomic, strong) NSString* _xinhaofashengZengyi;
+
+//dianping
+@property (nonatomic, strong) NSString* _dianpingPinlv;
+@property (nonatomic, strong) NSString* _dianpingfanxiang;
+@property (nonatomic, assign) BOOL _isdianpingMute;
+@property (nonatomic, strong) NSString* _dianpingZengyi;
 /*
  SET_MUTE
  SET_UNMUTE
@@ -202,6 +214,25 @@
 
 -(NSString*) getlvboDitongPinlv;
 -(void) controllvboDitongPinlv:(NSString*)lvboDitongPinlv;
+
+//信号发生器
+-(NSString*) getXinhaofashengPinlv;
+-(void) controlXinHaofashengPinlv:(NSString*)xinhaofashengPinlv;
+-(NSString*) getZhengxuanbo;
+-(void) controlZhengxuanbo:(NSString*)zhengxuanbo;
+-(BOOL) isXinhaofashengMute;
+-(void) controlXinhaofashengMute:(BOOL)xinhaofashengMute;
+-(NSString*) getXinhaofashengZengyi;
+-(void) controlXinhaofashengZengyi:(NSString*)xinhaofashengZengyi;
+
+-(NSString*) getDianpingPinlv;
+-(void) controlDianpingPinlv:(NSString*)dianpingPinlv;
+-(NSString*) getDianpingfanxiang;
+-(void) controlDianpingfanxian:(NSString*)dianpingfanxiang;
+-(BOOL) isDianpingMute;
+-(void) controlDianpingMute:(BOOL)dianpingMute;
+-(NSString*) getDianpingZengyi;
+-(void) controlDianpingZengyi:(NSString*)dianpingZengyi;
 
 
 - (void) controlDeviceMode:(NSString*)mode;
