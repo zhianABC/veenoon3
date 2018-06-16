@@ -12,8 +12,10 @@
 #import "GradeLineView.h"
 #import "VAProcessorProxys.h"
 #import "RegulusSDK.h"
+#import "veenoon-Swift.h"
 
-@interface YaXianQi_UIView() <SlideButtonDelegate>
+
+@interface YaXianQi_UIView() <SlideButtonDelegate, VAProcessorProxysDelegate>
 {
     UIButton *channelBtn;
     
@@ -27,6 +29,11 @@
     SlideButton *huifushijianSlide;
     SlideButton *fazhiSlider;
     
+    
+    LimiterView *_limiter;
+    
+    int maxTh;
+    int minTh;
 }
 @property (nonatomic, strong) VAProcessorProxys *_curProxy;
 @end
@@ -42,6 +49,11 @@
     // Drawing code
 }
 */
+
+- (void) dealloc
+{
+    _curProxy.delegate = nil;
+}
 
 - (id)initWithFrameProxys:(CGRect)frame withProxys:(NSArray*) proxys
 {
@@ -66,6 +78,9 @@
         int y = CGRectGetMaxY(channelBtn.frame)+20;
         contentView.frame = CGRectMake(0, y, frame.size.width, 340);
         
+        maxTh = 0;
+        minTh = -120;
+        
         [self contentViewComps];
     }
     
@@ -74,7 +89,9 @@
 
 - (void) channelBtnAction:(UIButton*)sender{
     
-    int tag = (int)sender.tag+1;
+    int idx = (int)sender.tag;
+    int tag = idx + 1;
+    
     [channelBtn setTitle:[NSString stringWithFormat:@"In %d", tag] forState:UIControlStateNormal];
     
     for(UIButton * btn in _channelBtns)
@@ -89,7 +106,6 @@
         }
     }
     
-    int idx = (int)sender.tag;
     self._curProxy = [self._proxys objectAtIndex:idx];
     
     NSString *name = _curProxy._rgsProxyObj.name;
@@ -99,10 +115,16 @@
 }
 
 -(void) updateYaXianQi {
+    
     NSString *zengyiDB = [_curProxy getYaxianFazhi];
     float value = [zengyiDB floatValue];
-    float f = (value+12.0)/24.0;
-    [fazhiSlider setCircleValue:f];
+    int max = (maxTh- minTh);
+    if(max)
+    {
+        float f = (value - minTh)/max;
+        f = fabsf(f);
+        [fazhiSlider setCircleValue:f];
+    }
     
     if (zengyiDB) {
         lableL1.text = [zengyiDB stringByAppendingString:@" dB"];
@@ -140,17 +162,12 @@
     
     int y = (CGRectGetHeight(contentView.frame) - w)/2;
     CGRect rc = CGRectMake(50, y+20, w, w);
-    GradeLineView *g = [[GradeLineView alloc] initWithFrame:rc];
     
-    [contentView addSubview:g];
+    _limiter = [[LimiterView alloc] initWithFrame:rc];
+    [contentView addSubview:_limiter];
+    _limiter.backgroundColor = [UIColor clearColor];
     
-    [g drawXY:@[@"-100",@"-77",@"-54",@"-31",@"-8",@"15"]
-            y:@[@"15",@"-8",@"-31",@"-54",@"-77"]];
-    [g processValueToPoints];
-    
-    g.backgroundColor = [UIColor clearColor];
-    
-    int x = CGRectGetMaxX(g.frame);
+    int x = CGRectGetMaxX(_limiter.frame);
     y = CGRectGetHeight(contentView.frame)/2-50;
     x+=10;
     
@@ -170,8 +187,13 @@
     [contentView addSubview:fazhiSlider];
     NSString *zengyiDB = [_curProxy getYaxianFazhi];
     float value = [zengyiDB floatValue];
-    float f = (value+12.0)/24.0;
-    [fazhiSlider setCircleValue:f];
+    int max = (maxTh- minTh);
+    if(max)
+    {
+        float f = (value - minTh)/max;
+        f = fabsf(f);
+        [fazhiSlider setCircleValue:f];
+    }
     
     
     lableL1 = [[UILabel alloc] initWithFrame:CGRectMake(x, y+20+120, 120, 20)];
@@ -273,18 +295,50 @@
     [contentView addSubview:lableL4];
     lableL4.font = [UIFont systemFontOfSize:13];
     lableL4.textColor = YELLOW_COLOR;
+    
+   
+}
 
+- (void) updateProxyCommandValIsLoaded
+{
+    _curProxy.delegate = self;
+    [_curProxy checkRgsProxyCommandLoad];
+
+}
+
+- (void) didLoadedProxyCommand{
+    
+    _curProxy.delegate = nil;
+ 
+    NSDictionary *result = [_curProxy getPressLimitOptions];
+    
+    maxTh = [[result objectForKey:@"TH_max"] intValue];
+    minTh = [[result objectForKey:@"TH_min"] intValue];
+    
+    [_limiter setMaxThresholdWithThreshold:maxTh];
+    [_limiter setMinThresholdWithThreshold:minTh];
+    
+    NSString *zengyiDB = [_curProxy getYaxianFazhi];
+    int value = [zengyiDB intValue];
+    [_limiter setThresHoldWithR:value];
+
+    
 }
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
     int tag = (int) slbtn.tag;
     if (tag == 1) {
-        int k = (value *24)-12;
+        int k = (value *(maxTh-minTh))+minTh;
         NSString *valueStr= [NSString stringWithFormat:@"%d dB", k];
         
         lableL1.text = valueStr;
         
+        [_limiter setThresHoldWithR:k];
+        
         [_curProxy controlYaxianFazhi:[NSString stringWithFormat:@"%d", k]];
+
+        
+        
     } else if (tag == 2) {
         int k = (value *20)-10;
         NSString *valueStr= [NSString stringWithFormat:@"%d", k];

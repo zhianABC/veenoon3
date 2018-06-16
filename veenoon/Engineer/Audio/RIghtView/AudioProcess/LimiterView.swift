@@ -82,7 +82,7 @@ class LimiterView: UIView {
         var cor_y = 0
         var pt = [CGPoint](repeating: CGPoint(x: 0.0, y: 0.0), count: 4)
         var msg: String
-        let bkCor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
+        let bkCor = UIColor.clear;
         var text: NSString
         
         f_step = fabs(m_HL-m_LL) / 5
@@ -100,7 +100,10 @@ class LimiterView: UIView {
         h = Int(Double(m_ValidRect.height) / 5.0)
         
         // 画有效矩形框区域不填充
-        context?.setStrokeColor(UIColor(red: 128.0/255.0, green: 128.0/255.0, blue: 128.0/255.0, alpha: 1.0).cgColor)
+        
+        let yellowC = UIColor(red: 255/255.0, green: 180/255.0, blue: 0/255.0, alpha: 1.0);
+        
+        context?.setStrokeColor(yellowC.cgColor)
         context?.setLineWidth(1)
         context?.addRect(m_ValidRect)
         context?.drawPath(using: .stroke)
@@ -140,8 +143,8 @@ class LimiterView: UIView {
         
         // 画四边形，描边并填充
         //context?.setStrokeColor(UIColor(red: 128.0/255.0, green: 128.0/255.0, blue: 128.0/255.0, alpha: 1.0).cgColor)
-        context?.setStrokeColor(UIColor(red: 229.0/255.0, green: 229.0/255.0, blue: 229.0/255.0, alpha: 1.0).cgColor)
-        context?.setFillColor(UIColor(red: 64.0/255.0, green: 64.0/255.0, blue: 64.0/255.0, alpha: 1.0).cgColor)
+        context?.setStrokeColor(yellowC.cgColor)
+        context?.setFillColor(UIColor(red: 1/255.0, green: 138/255.0, blue: 182/255.0, alpha: 0.3).cgColor)
         context?.move(to: pt[0])
         context?.addLine(to: pt[1])
         context?.addLine(to: pt[2])
@@ -158,7 +161,7 @@ class LimiterView: UIView {
         // 绘制纵坐标标线及文字：-8,-31,-54,-77,-100
         for i in 0 ..< 5 {
             if i < 4 {
-                context?.setStrokeColor(UIColor(red: 128.0/255.0, green: 128.0/255.0, blue: 128.0/255.0, alpha: 1.0).cgColor)
+                context?.setStrokeColor(yellowC.cgColor)
                 context?.setLineWidth(1)
                 context?.move(to: CGPoint(x: Double(m_ValidRect.origin.x), y: Double(m_ValidRect.origin.y)+Double((i+1)*h)))
                 context?.addLine(to: CGPoint(x: m_ValidRect.origin.x+m_ValidRect.width, y: m_ValidRect.origin.y+CGFloat((i+1)*h)))
@@ -179,7 +182,7 @@ class LimiterView: UIView {
         db = Int(m_LL)
         for i in 0 ..< 5 {
             if i < 4 {
-                context?.setStrokeColor(UIColor(red: 128.0/255.0, green: 128.0/255.0, blue: 128.0/255.0, alpha: 1.0).cgColor)
+                context?.setStrokeColor(yellowC.cgColor)
                 context?.setLineWidth(1)
                 context?.move(to: CGPoint(x: Double(m_ValidRect.origin.x)+Double((i+1)*w), y: Double(m_ValidRect.origin.y)))
                 context?.addLine(to: CGPoint(x: m_ValidRect.origin.x+CGFloat((i+1)*w), y: m_ValidRect.origin.y+m_ValidRect.height))
@@ -196,7 +199,7 @@ class LimiterView: UIView {
         }
         
         // 画线
-        context?.setStrokeColor(UIColor(red: 128.0/255.0, green: 128.0/255.0, blue: 128.0/255.0, alpha: 1.0).cgColor)
+        context?.setStrokeColor(yellowC.cgColor)
         context?.setLineWidth(1)
         context?.move(to: CGPoint(x: m_ValidRect.origin.x, y: m_ValidRect.origin.y+m_ValidRect.height))
         context?.addLine(to: CGPoint(x: m_ValidRect.origin.x+m_ValidRect.width, y: m_ValidRect.origin.y))
@@ -256,25 +259,25 @@ class LimiterView: UIView {
     }
     
     // 外部接口函数：设置斜率
-    func setRatio(r: Double) {
+   @objc func setRatio(r: Double) {
         m_Ratio = r
         GeneralLimitWave()
         setNeedsDisplay()
     }
     
     // 外部接口函数：设置阈值
-    func setThresHold(r: Double) {
+   @objc func setThresHold(r: Double) {
         m_LimitLevel = r
         GeneralLimitWave()
         setNeedsDisplay()
     }
     
-    func setMaxThreshold(threshold: Double) {
+   @objc func setMaxThreshold(threshold: Double) {
         m_HL = threshold
         setNeedsDisplay()
     }
     
-    func setMinThreshold(threshold: Double) {
+   @objc func setMinThreshold(threshold: Double) {
         m_LL = threshold
         setNeedsDisplay()
     }

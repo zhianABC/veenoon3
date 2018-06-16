@@ -396,6 +396,9 @@
     zidonghunyinView.hidden=YES;
     fankuiyizhiView.hidden=YES;
     
+    //将插件数据匹配到UI控件
+    [yxq updateProxyCommandValIsLoaded];
+    
 }
 - (void) lvbojunhengAction:(UIButton*)sender{
     
