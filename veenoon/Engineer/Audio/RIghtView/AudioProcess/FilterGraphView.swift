@@ -998,7 +998,7 @@ class FilterGraphView: UIView {
         lpf_byp = byp
         updateCurve()
     }
-    func setLPFilter(type: UInt8) {
+   @objc func setLPFilter(type: UInt8) {
         lpf_type = hlpf_type(rawValue: Int(type))!
         updateCurve()
     }

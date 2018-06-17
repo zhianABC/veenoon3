@@ -556,34 +556,40 @@
           forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:buduanStartBtn];
     
-    BOOL isBoDuanStarted = [_curProxy islvboBoduanStart];
-    
-    if(isBoDuanStarted)
-    {
-        [buduanStartBtn changeNormalColor:THEME_RED_COLOR];
-    }
-    else
-    {
-        [buduanStartBtn changeNormalColor:RGB(75, 163, 202)];
-    }
+
 }
 - (void) boduanStartBtnAction:(id)sender {
+    
     if(_curProxy == nil)
         return;
     
-    BOOL isMute = [_curProxy islvboBoduanStart];
+    NSMutableArray *waves16_feq_gain_q = _curProxy.waves16_feq_gain_q;
     
-    [_curProxy controlBandFreq:!isMute];
-    
-    BOOL isFanKuiYiZhi = [_curProxy islvboBoduanStart];
-    
-    if(isFanKuiYiZhi)
+    if(_channelSelIndex < [waves16_feq_gain_q count])
     {
-        [buduanStartBtn changeNormalColor:THEME_RED_COLOR];
-    }
-    else
-    {
-        [buduanStartBtn changeNormalColor:RGB(75, 163, 202)];
+        //取出旧的数据
+        NSDictionary *data = [waves16_feq_gain_q objectAtIndex:_channelSelIndex];
+        NSString *enable = [data objectForKey:@"enable"];
+        BOOL isEnabled = YES;
+        if([enable isEqualToString:@"False"])
+        {
+            isEnabled = NO;
+        }
+        
+        //改变
+        isEnabled = !isEnabled;
+        
+        [_curProxy controlBandEnabled:isEnabled
+                                 band:_channelSelIndex];
+        
+        if(isEnabled)
+        {
+            [buduanStartBtn changeNormalColor:THEME_RED_COLOR];
+        }
+        else
+        {
+            [buduanStartBtn changeNormalColor:RGB(75, 163, 202)];
+        }
     }
 }
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
@@ -655,6 +661,7 @@
 }
 
 - (void) boduantypeAction:(UIButton*)sender {
+    
     if ([_deviceSelector isPopoverVisible]) {
         [_deviceSelector dismissPopoverAnimated:NO];
     }
@@ -670,7 +677,7 @@
     IMP_BLOCK_SELF(LvBoJunHeng_UIView);
     sel._block = ^(id object, int index)
     {
-        [block_self chooseBoduanType:object];
+        [block_self chooseBandType:object];
     };
     
     CGRect rect = [self convertRect:sender.frame
@@ -684,15 +691,16 @@
                    permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 }
 
-- (void) chooseBoduanType:(NSString*)device{
+- (void) chooseBandType:(NSString*)device{
+    
     if (device == nil) {
         return;
     }
-    NSString *dispaly = [@"   " stringByAppendingString:device];
     
+    NSString *dispaly = [@"   " stringByAppendingString:device];
     [boduanleixingBtn setTitle:dispaly forState:UIControlStateNormal];
     
-    [_curProxy controlBoduanType:device];
+    [_curProxy controlBandLineType:device band:_channelSelIndex];
     
     if ([_deviceSelector isPopoverVisible]) {
         [_deviceSelector dismissPopoverAnimated:NO];
@@ -729,12 +737,7 @@
     ditongTypeBtn.layer.borderWidth = 2;
     ditongTypeBtn.layer.borderColor = [UIColor clearColor].CGColor;;
     ditongTypeBtn.clipsToBounds = YES;
-    NSString *dispaly = @"";
-    if ([_curProxy getDiTongType]) {
-        dispaly = [@"   " stringByAppendingString:[_curProxy getDiTongType]];
-    }
     
-    [ditongTypeBtn setTitle:dispaly forState:UIControlStateNormal];
     ditongTypeBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     ditongTypeBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     UIImageView *icon = [[UIImageView alloc]
@@ -865,7 +868,7 @@
     }
     
     LvBoJunHeng_Chooser *sel = [[LvBoJunHeng_Chooser alloc] init];
-    sel._dataArray = [_curProxy getLvBoDiTongArray];
+    sel._dataArray = [_curProxy getLowFilters];
     sel._type = 1;
     
     sel.preferredContentSize = CGSizeMake(150, 350);
@@ -874,7 +877,7 @@
     IMP_BLOCK_SELF(LvBoJunHeng_UIView);
     sel._block = ^(id object, int index)
     {
-        [block_self chooseDitong:object];
+        [block_self chooseDitong:object idx:index];
     };
     
     CGRect rect = [self convertRect:sender.frame
@@ -888,13 +891,15 @@
                    permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 }
 
-- (void) chooseDitong:(NSString*)device{
+- (void) chooseDitong:(NSString*)device idx:(int)index{
     if (device == nil) {
         return;
     }
     NSString *dispaly = [@"   " stringByAppendingString:device];
     
     [ditongTypeBtn setTitle:dispaly forState:UIControlStateNormal];
+    
+    [fglm setLPFilterWithType:index];
     
     [_curProxy controlDiTongType:device];
     
@@ -905,6 +910,7 @@
 }
 
 -(void) ditongxielvAction:(UIButton*)sender {
+    
     if ([_deviceSelector isPopoverVisible]) {
         [_deviceSelector dismissPopoverAnimated:NO];
     }
@@ -992,51 +998,6 @@
     [self updateProxyCommandValIsLoaded];
 }
 
-- (void) updateBoDuan {
-    NSString *dispaly;
-    if ([_curProxy getBoduanType]) {
-        dispaly = [@"   " stringByAppendingString:[_curProxy getBoduanType]];
-    }
-    
-    [boduanleixingBtn setTitle:dispaly  forState:UIControlStateNormal];
-    
-    NSString *boduanPinlv = [_curProxy getlvboBoduanPinlv];
-    float boduanPinlvvalue = [boduanPinlv floatValue];
-    float boduanPinlvvaluef = (boduanPinlvvalue+12.0)/24.0;
-    [bandFreqSlider setCircleValue:boduanPinlvvaluef];
-    if (boduanPinlv) {
-        boduanPinlvL.text = [boduanPinlv stringByAppendingString:@" Hz"];
-    }
-    
-    NSString *boduanZengyi = [_curProxy getlvboBoduanZengyi];
-    float boduanZengyivalue = [boduanZengyi floatValue];
-    float boduanZengyivaluef = (boduanZengyivalue+12.0)/24.0;
-    [bandGainSlider setCircleValue:boduanZengyivaluef];
-    if (boduanZengyi) {
-        boduanZengyiL.text = [boduanZengyi stringByAppendingString:@" Hz"];
-    }
-    
-    NSString *boduanQ = [_curProxy getlvboBoduanQ];
-    float boduanQvalue = [boduanQ floatValue];
-    float boduanQvaluef = (boduanQvalue+12.0)/24.0;
-    [boduanQSlider setCircleValue:boduanQvaluef];
-    if (boduanQ) {
-        boduanQL.text = [boduanQ stringByAppendingString:@" Hz"];
-    }
-    
-    BOOL isBoduanStart = [_curProxy islvboBoduanStart];
-    
-    if(isBoduanStart)
-    {
-        [buduanStartBtn changeNormalColor:THEME_RED_COLOR];
-    }
-    else
-    {
-        [buduanStartBtn changeNormalColor:RGB(75, 163, 202)];
-    }
-    
-    
-}
 
 -(void) updateDiTong {
     NSString *dispaly = @"";
@@ -1131,12 +1092,15 @@
         [gaotongStartBtn changeNormalColor:RGB(75, 163, 202)];
     }
     
-    
-    NSString *boduanType= @"";
-    if ([_curProxy getBoduanType]) {
-        boduanType = [@"  " stringByAppendingString:[_curProxy getBoduanType]];
+    ////
+    dispaly = @"";
+    if ([_curProxy getDiTongType]) {
+        dispaly = [@"   " stringByAppendingString:[_curProxy getDiTongType]];
     }
-    [boduanleixingBtn setTitle:boduanType forState:UIControlStateNormal];
+    [ditongTypeBtn setTitle:dispaly forState:UIControlStateNormal];
+
+    ///
+    
     
     NSDictionary *set = [_curProxy getWaveOptions];
     
@@ -1150,10 +1114,50 @@
     minQ = [[set objectForKey:@"Q_min"] intValue];
     
     
+    [self updateAllBand];
     [self updateCurrentBrand];
     
 }
 
+- (void) updateAllBand{
+    
+    NSMutableArray *waves16_feq_gain_q = _curProxy.waves16_feq_gain_q;
+    
+    for(NSDictionary *data in waves16_feq_gain_q)
+    {
+        int freq = [[data objectForKey:@"freq"] intValue];
+        float gain = [[data objectForKey:@"gain"] floatValue];
+        float qval = [[data objectForKey:@"q_val"] floatValue];
+        int q = [[data objectForKey:@"q"] intValue];
+        int band = [[data objectForKey:@"band"] intValue];
+        
+        [fglm setPEQWithBand:band-1 gain:gain];
+        [fglm setPEQWithBand:band-1 Q:qval];
+        [fglm setPEQWithBand:band-1 freq:freq];
+        
+        if(maxRate)
+        {
+            float boduanPinlvvaluef = (freq - minRate)/(maxRate - minRate);
+            [bandFreqSlider setCircleValue:boduanPinlvvaluef];
+            boduanPinlvL.text = [NSString stringWithFormat:@"%d Hz", freq];
+            
+        }
+        
+        if(maxGain)
+        {
+            float boduanZengYivaluef = (gain - minGain)/(maxGain - minGain);
+            [bandGainSlider setCircleValue:boduanZengYivaluef];
+            boduanZengyiL.text = [NSString stringWithFormat:@"%0.1f dB", gain];
+        }
+        
+        if(maxQ)
+        {
+            float boduanQvaluef = (float)(q - minQ)/(maxQ - minQ);
+            [boduanQSlider setCircleValue:boduanQvaluef];
+            boduanQL.text = [NSString stringWithFormat:@"%0.2f", qval];
+        }
+    }
+}
 
 - (void) updateCurrentBrand{
     
@@ -1167,6 +1171,30 @@
         float gain = [[data objectForKey:@"gain"] floatValue];
         float qval = [[data objectForKey:@"q_val"] floatValue];
         int q = [[data objectForKey:@"q"] intValue];
+        NSString *enable = [data objectForKey:@"enable"];
+        NSString *type = [data objectForKey:@"type"];
+        
+        
+        BOOL isEnabled = YES;
+        if([enable isEqualToString:@"False"])
+        {
+            isEnabled = NO;
+        }
+        if(isEnabled)
+        {
+            [buduanStartBtn changeNormalColor:THEME_RED_COLOR];
+        }
+        else
+        {
+            [buduanStartBtn changeNormalColor:RGB(75, 163, 202)];
+        }
+        
+        NSString *boduanType= @"";
+        if (type) {
+            boduanType = [@"  " stringByAppendingString:type];
+        }
+        [boduanleixingBtn setTitle:boduanType forState:UIControlStateNormal];
+        
         
         [fglm setPEQWithBand:_channelSelIndex gain:gain];
         [fglm setPEQWithBand:_channelSelIndex Q:qval];
@@ -1222,7 +1250,7 @@
             if(maxGain)
             {
                 float boduanZengYivaluef = (gain - minGain)/(maxGain - minGain);
-                [bandFreqSlider setCircleValue:boduanZengYivaluef];
+                [bandGainSlider setCircleValue:boduanZengYivaluef];
                 boduanZengyiL.text = [NSString stringWithFormat:@"%0.1f dB", gain];
             }
         }
@@ -1249,6 +1277,24 @@
             }
         }
     }
+    
+}
+
+- (void)filterGraphViewHPFilterChangedWithFreq:(float)freq{
+    
+    gaotongFeqL.text = [NSString stringWithFormat:@"%0.0f Hz", freq];
+    [_curProxy controlHighFilterFreq:[NSString stringWithFormat:@"%0.0f", freq]];
+    
+    NSDictionary *range = [_curProxy getHighRateRange];
+    int max = [[range objectForKey:@"RATE_max"] intValue];
+    int min = [[range objectForKey:@"RATE_min"] intValue];
+    if(max)
+    {
+        float gtVal = (freq - min)/(max - min);
+        [gaotongFeqSlider setCircleValue:gtVal];
+    }
+}
+- (void)filterGraphViewLPFilterChangedWithFreq:(float)freq{
     
 }
 

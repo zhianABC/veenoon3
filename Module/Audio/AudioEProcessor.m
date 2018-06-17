@@ -130,12 +130,14 @@
        && [_driver isKindOfClass:[RgsDriverObj class]]
        && _driver_ip_property)
     {
-        //IMP_BLOCK_SELF(AudioEProcessor);
+        IMP_BLOCK_SELF(AudioEProcessor);
         
         RgsDriverObj *rd = (RgsDriverObj*)_driver;
         
         //保存到内存
         _driver_ip_property.value = self._ipaddress;
+        
+        [KVNProgress show];
         
         [[RegulusSDK sharedRegulusSDK] SetDriverProperty:rd.m_id
                                           property_name:_driver_ip_property.name
@@ -143,16 +145,19 @@
                                              completion:^(BOOL result, NSError *error) {
             if (result) {
                 
-                //[block_self saveProject];
+                [block_self saveProject];
             }
             else{
                 
+                [KVNProgress dismiss];
             }
         }];
     }
 }
 
 - (void) saveProject{
+    
+    [KVNProgress showSuccess];
     
 //    [KVNProgress show];
 //
@@ -274,6 +279,9 @@
             [proxyDic setObject:[NSNumber numberWithInteger:proxy.m_id]
                          forKey:@"proxy_id"];
             
+            [proxyDic setObject:[NSNumber numberWithInteger:proxy.name]
+                         forKey:@"proxy_name"];
+            
             [proxyDic setObject:[NSString stringWithFormat:@"%0.1f", [vap getAnalogyGain]]
                          forKey:@"analogy_gain"];
             
@@ -323,6 +331,9 @@
             
             [proxyDic setObject:[NSNumber numberWithInteger:proxy.m_id]
                          forKey:@"proxy_id"];
+            
+            [proxyDic setObject:[NSNumber numberWithInteger:proxy.name]
+                         forKey:@"proxy_name"];
             
             [proxyDic setObject:[NSString stringWithFormat:@"%0.1f", [vap getAnalogyGain]]
                          forKey:@"analogy_gain"];

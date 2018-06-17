@@ -67,10 +67,8 @@
 @property (nonatomic, strong) NSArray *_lvboDitongArray;
 @property (nonatomic, strong) NSString *_lvbojunhengDitongXielv;
 @property (nonatomic, strong) NSArray *_lvboDitongXielvArray;
-@property (nonatomic, strong) NSString *_lvbojunhengBoduanType;
 @property (nonatomic, strong) NSArray *_lvboBoDuanArray;
 @property (nonatomic, assign) BOOL _islvboGaotongStart;
-@property (nonatomic, assign) BOOL _islvboBoduanStart;
 @property (nonatomic, assign) BOOL _islvboDitongStart;
 @property (nonatomic, strong) NSString *_lvboGaotongPinLv;
 @property (nonatomic, strong) NSString *_lvboBoduanPinlv;
@@ -194,14 +192,13 @@
 
 - (NSString*) getDiTongType;
 - (void) controlDiTongType:(NSString*) ditongtype;
-- (NSArray*) getLvBoDiTongArray;
+- (NSArray*)getLowFilters;
 
 - (NSString*) getDiTongXieLv;
 - (void) controlDiTongXieLv:(NSString*) ditongxielv;
 - (NSArray*) getLvBoDiTongXielvArray;
 
-- (NSString*) getBoduanType;
-- (void) controlBoduanType:(NSString*) boduanType;
+- (void) controlBandLineType:(NSString*) lineType band:(int)band;
 - (NSArray*) getLvBoBoDuanArray;
 
 - (BOOL) isLvboGaotongStart;
@@ -210,19 +207,13 @@
 - (NSString*) getLvboGaotongPinlv;
 - (void) controlHighFilterFreq:(NSString*) freq;
 
-- (BOOL) islvboBoduanStart;
-- (void) controlBandFreq:(BOOL) isBandMute;
 
-- (NSString*) getlvboBoduanPinlv;
+- (void) controlBandEnabled:(BOOL) enable band:(int)band;
 - (void) controlBrandFreq:(NSString*) freq brand:(int)brand;
-
-- (NSString*) getlvboBoduanZengyi;
 - (void) controlBrandGain:(NSString*) gain  brand:(int)brand;
-
 - (void) controlBrandFreqAndGain:(NSString*) freq gain:(NSString*)gain brand:(int)brand;
+- (void) controlBrandQ:(NSString*)qIndex qVal:(NSString*)qVal brand:(int)brand;
 
--(NSString*) getlvboBoduanQ;
--(void) controlBrandQ:(NSString*)qIndex qVal:(NSString*)qVal brand:(int)brand;
 
 -(BOOL) islvboDitongStart;
 -(void) controllvboDitongStart:(BOOL) lvboDitongStart;
