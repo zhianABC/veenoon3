@@ -425,6 +425,8 @@
     lvbo.hidden=NO;
     zidonghunyinView.hidden=YES;
     fankuiyizhiView.hidden=YES;
+    
+    [lvbo updateProxyCommandValIsLoaded];
 }
 - (void) zaoshengmenAction:(UIButton*)sender{
    

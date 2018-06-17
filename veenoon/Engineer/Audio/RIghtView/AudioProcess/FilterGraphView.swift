@@ -16,7 +16,7 @@ class DataModel: NSObject {
                                      10.10, 10.70, 11.30, 12.00, 12.70, 13.50, 14.00, 15.00, 16.00, 17.00, 18.00, 19.00, 20.00]
 }
 
-protocol FilterGraphViewDelegate: NSObjectProtocol {
+@objc protocol FilterGraphViewDelegate: NSObjectProtocol {
     func filterGraphViewHPFilterChanged(freq: Float)
     func filterGraphViewLPFilterChanged(freq: Float)
     func filterGraphViewPEQFilterChanged(band: Int, freq: Float, gain: Float)
@@ -170,7 +170,7 @@ class FilterGraphView: UIView {
     private var d_factor = [Double](repeating: 0.0, count: 3)
     private var n_factor = [Double](repeating: 0.0, count: 3)
     
-    weak var delegate: FilterGraphViewDelegate?
+    @objc weak var delegate: FilterGraphViewDelegate?
     
     private var pinchBandIndex: Int = -1
     private let pinchGestureBeganScale: CGFloat = 1.0
@@ -1037,7 +1037,7 @@ class FilterGraphView: UIView {
         }
         updateCurve()
     }
-   public func setPEQ(band: UInt8, freq: Float) {
+   @objc func setPEQ(band: UInt8, freq: Float) {
         eq_freq[Int(band)] = freq
         updateCurve()
     }
@@ -1045,7 +1045,7 @@ class FilterGraphView: UIView {
         eq_gain[Int(band)] = gain
         updateCurve()
     }
-    func setPEQ(band: UInt8, Q: Float) {
+    @objc func setPEQ(band: UInt8, Q: Float) {
         if eq_type[Int(band)] == filter_type.type_PEQ.rawValue {
             eq_Q[Int(band)] = Q
         } else {

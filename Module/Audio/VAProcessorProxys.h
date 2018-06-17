@@ -78,6 +78,8 @@
 @property (nonatomic, strong) NSString *_lvboBoduanQ;
 @property (nonatomic, strong) NSString *_lvboDitongPinlv;
 
+@property (nonatomic, strong) NSMutableArray *waves16_feq_gain_q;
+
 //xinhaofasheng
 @property (nonatomic, strong) NSString* _xinhaofashengPinlv;
 @property (nonatomic, strong) NSArray * _xinhaofashengPinlvArray;
@@ -127,6 +129,7 @@
 - (NSDictionary*)getHighRateRange;
 
 - (NSArray*)getWaveTypes;
+- (NSDictionary*)getWaveOptions;
 
 - (void) controlDeviceDb:(float)db force:(BOOL)force;
 - (void) controlDeviceMute:(BOOL)isMute;
@@ -205,19 +208,21 @@
 - (void) controlLVboGaotongStart:(BOOL) lvboGaotongStart;
 
 - (NSString*) getLvboGaotongPinlv;
-- (void) controlLvBoGaotongPinlv:(NSString*) lvbogaotongPinlv;
+- (void) controlHighFilterFreq:(NSString*) freq;
 
 - (BOOL) islvboBoduanStart;
-- (void) controllvboBoduanStart:(BOOL) lvboBoduanStart;
+- (void) controlBandFreq:(BOOL) isBandMute;
 
 - (NSString*) getlvboBoduanPinlv;
-- (void) controllvboBoduanPinlv:(NSString*) lvboBoduanPinlv;
+- (void) controlBrandFreq:(NSString*) freq brand:(int)brand;
 
 - (NSString*) getlvboBoduanZengyi;
-- (void) controllvboBoduanZengyi:(NSString*) lvboBoduanZengyi;
+- (void) controlBrandGain:(NSString*) gain  brand:(int)brand;
+
+- (void) controlBrandFreqAndGain:(NSString*) freq gain:(NSString*)gain brand:(int)brand;
 
 -(NSString*) getlvboBoduanQ;
--(void) controllvboBoduanQ:(NSString*) lvboBoduanQ;
+-(void) controlBrandQ:(NSString*)qIndex qVal:(NSString*)qVal brand:(int)brand;
 
 -(BOOL) islvboDitongStart;
 -(void) controllvboDitongStart:(BOOL) lvboDitongStart;

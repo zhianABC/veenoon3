@@ -15,13 +15,13 @@
 #import "LvBoJunHeng_Chooser.h"
 
 
-@interface LvBoJunHeng_UIView() <SlideButtonDelegate, VAProcessorProxysDelegate>{
+@interface LvBoJunHeng_UIView() <SlideButtonDelegate, VAProcessorProxysDelegate, FilterGraphViewDelegate>{
     
     SlideButton *gaotongFeqSlider;
     SlideButton *ditongXielvSlider;
     
-    SlideButton *boduanPinLvSlider;
-    SlideButton *boduanZengyiSlider;
+    SlideButton *bandFreqSlider;
+    SlideButton *bandGainSlider;
     SlideButton *boduanQSlider;
     
     UILabel *gaotongFeqL;
@@ -49,16 +49,29 @@
     UIButton *gaotongStartBtn;
     UIButton *buduanStartBtn;
     UIButton *ditongStartBtn;
+    
+    int maxRate;
+    int minRate;
+    
+    int maxGain;
+    int minGain;
+    
+    int maxQ;
+    int minQ;
 }
 
 @property (nonatomic, strong) NSMutableArray *_boduanChannelBtns;
 @property (nonatomic, strong) VAProcessorProxys *_curProxy;
+
+@property (nonatomic, strong) NSArray *peqQTable;
 
 @end
 
 @implementation LvBoJunHeng_UIView
 @synthesize _boduanChannelBtns;
 @synthesize _curProxy;
+
+@synthesize peqQTable;
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -123,6 +136,23 @@
         fglm = [[FilterGraphView alloc] initWithFrame:rc];
         fglm.backgroundColor = [UIColor clearColor];
         [self addSubview:fglm];
+        fglm.delegate = self;
+        
+        
+        //Q Index: 0....64
+        self.peqQTable = @[@0.50, @0.53, @0.56, @0.59, @0.63, @0.67,
+                           @0.71, @0.75, @0.79, @0.84, @0.89, @0.94,
+                           @1.00, @1.06, @1.12, @1.19, @1.26, @1.30,
+                           @1.40, @1.50, @1.60, @1.70, @1.80, @1.90,
+                           @2.00, @2.10, @2.20, @2.40, @2.50, @2.70,
+                           @2.80, @3.00, @3.20, @3.40, @3.60, @3.80,
+                           @4.00, @4.20, @4.50, @4.80, @5.00, @5.30,
+                           @5.70, @6.00, @6.30, @6.70, @7.10, @7.60,
+                           @8.00, @8.50, @9.00, @9.50,
+                           @10.10, @10.70, @11.30, @12.00, @12.70,
+                           @13.50, @14.00, @15.00, @16.00, @17.00,
+                           @18.00, @19.00, @20.00];
+
         
     }
     
@@ -163,7 +193,7 @@
     icon.alpha = 0.8;
     icon.layer.contentsGravity = kCAGravityResizeAspect;
     [gaotongTypeBtn addTarget:self
-                action:@selector(leixingBtnAction:)
+                action:@selector(highFilterTypeAction:)
       forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:gaotongTypeBtn];
     
@@ -263,7 +293,7 @@
     sel._dataArray = [_curProxy getLvBoGaoTongXielvArray];
     sel._type = 2;
     
-    int h = [sel._dataArray count]*30 + 50;
+    int h = (int)[sel._dataArray count]*30 + 50;
     sel.preferredContentSize = CGSizeMake(150, h);
     sel._size = CGSizeMake(150, h);
     
@@ -305,7 +335,7 @@
     
 }
 
-- (void) leixingBtnAction:(UIButton*) sender {
+- (void) highFilterTypeAction:(UIButton*) sender {
     
     if ([_deviceSelector isPopoverVisible]) {
         [_deviceSelector dismissPopoverAnimated:NO];
@@ -315,7 +345,7 @@
     sel._dataArray = [_curProxy getLvBoGaoTongArray];
     sel._type = 0;
     
-    int h = [sel._dataArray count]*30 + 50;
+    int h = (int)[sel._dataArray count]*30 + 50;
     
     sel.preferredContentSize = CGSizeMake(150, h);
     sel._size = CGSizeMake(150, h);
@@ -451,23 +481,17 @@
     addLabel.frame = CGRectMake(startX+weiYi+12, labelY, 120, 20);
     [view addSubview:addLabel];
     
-    boduanPinLvSlider = [[SlideButton alloc] initWithFrame:CGRectMake(startX, labelY+labelBtnGap, 120, 120)];
-    boduanPinLvSlider._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
-    boduanPinLvSlider._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
-    [boduanPinLvSlider enableValueSet:YES];
-    boduanPinLvSlider.delegate = self;
-    boduanPinLvSlider.tag = 3;
-    [view addSubview:boduanPinLvSlider];
+    bandFreqSlider = [[SlideButton alloc] initWithFrame:CGRectMake(startX, labelY+labelBtnGap, 120, 120)];
+    bandFreqSlider._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+    bandFreqSlider._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+    [bandFreqSlider enableValueSet:YES];
+    bandFreqSlider.delegate = self;
+    bandFreqSlider.tag = 3;
+    [view addSubview:bandFreqSlider];
     
-    NSString *boduanPinlv = [_curProxy getlvboBoduanPinlv];
-    float boduanPinlvvalue = [boduanPinlv floatValue];
-    float boduanPinlvvaluef = (boduanPinlvvalue+12.0)/24.0;
-    [boduanPinLvSlider setCircleValue:boduanPinlvvaluef];
     
     boduanPinlvL = [[UILabel alloc] initWithFrame:CGRectMake(startX, labelY+labelBtnGap+95, 120, 20)];
-    if (boduanPinlv) {
-        boduanPinlvL.text = [boduanPinlv stringByAppendingString:@" Hz"];
-    }
+    
     
     boduanPinlvL.textAlignment = NSTextAlignmentCenter;
     [view addSubview:boduanPinlvL];
@@ -481,24 +505,18 @@
     addLabel23.frame = CGRectMake(startX+gap+weiYi+10, labelY, 120, 20);
     [view addSubview:addLabel23];
     
-    boduanZengyiSlider = [[SlideButton alloc] initWithFrame:CGRectMake(startX+gap, labelY+labelBtnGap, 120, 120)];
-    boduanZengyiSlider._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
-    boduanZengyiSlider._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
-    [boduanZengyiSlider enableValueSet:YES];
-    boduanZengyiSlider.delegate = self;
-    boduanZengyiSlider.tag = 4;
-    [view addSubview:boduanZengyiSlider];
+    bandGainSlider = [[SlideButton alloc] initWithFrame:CGRectMake(startX+gap, labelY+labelBtnGap, 120, 120)];
+    bandGainSlider._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+    bandGainSlider._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+    [bandGainSlider enableValueSet:YES];
+    bandGainSlider.delegate = self;
+    bandGainSlider.tag = 4;
+    [view addSubview:bandGainSlider];
     
-    NSString *boduanZengYi = [_curProxy getlvboBoduanZengyi];
-    float boduanZengYivalue = [boduanZengYi floatValue];
-    float boduanZengYivaluef = (boduanZengYivalue+12.0)/24.0;
-    [boduanPinLvSlider setCircleValue:boduanZengYivaluef];
     
     boduanZengyiL = [[UILabel alloc] initWithFrame:CGRectMake(startX+gap, labelY+labelBtnGap+95, 120, 20)];
-    if (boduanZengYi) {
-        boduanZengyiL.text = [boduanZengYi stringByAppendingString:@" dB"];
-    }
     
+ 
     boduanZengyiL.textAlignment = NSTextAlignmentCenter;
     [view addSubview:boduanZengyiL];
     boduanZengyiL.font = [UIFont systemFontOfSize:13];
@@ -519,16 +537,7 @@
     boduanQSlider.tag = 5;
     [view addSubview:boduanQSlider];
     
-    NSString *boduanQ = [_curProxy getlvboBoduanZengyi];
-    float boduanQvalue = [boduanQ floatValue];
-    float boduanQvaluef = (boduanQvalue+12.0)/24.0;
-    [boduanQSlider setCircleValue:boduanQvaluef];
-    
     boduanQL = [[UILabel alloc] initWithFrame:CGRectMake(startX+gap*2, labelY+labelBtnGap+95, 120, 20)];
-    if (boduanQ) {
-        boduanQL.text = [boduanQ stringByAppendingString:@" dB"];
-    }
-    
     boduanQL.textAlignment = NSTextAlignmentCenter;
     [view addSubview:boduanQL];
     boduanQL.font = [UIFont systemFontOfSize:13];
@@ -564,7 +573,7 @@
     
     BOOL isMute = [_curProxy islvboBoduanStart];
     
-    [_curProxy controllvboBoduanStart:!isMute];
+    [_curProxy controlBandFreq:!isMute];
     
     BOOL isFanKuiYiZhi = [_curProxy islvboBoduanStart];
     
@@ -589,7 +598,7 @@
         int feq = value * (max - min) + min;
         gaotongFeqL.text = [NSString stringWithFormat:@"%d Hz", feq];
 
-        [_curProxy controlLvBoGaotongPinlv:[NSString stringWithFormat:@"%d", feq]];
+        [_curProxy controlHighFilterFreq:[NSString stringWithFormat:@"%d", feq]];
         
         [fglm setHPFilterWithFreq:feq];
         
@@ -601,31 +610,47 @@
         ditongXielvL.text = valueStr;
         
         [_curProxy controllvboDitongPinlv:[NSString stringWithFormat:@"%d", k]];
-    } else if (tag == 3) {
-        int k = (value *(10000-10))-10;
         
-        NSString *valueStr= [NSString stringWithFormat:@"%d Hz", k];
+    } else if (tag == 3) {
+        
+        int k = (value * (maxRate - minRate)) + minRate;
+        
+        NSString *valueStr = [NSString stringWithFormat:@"%d Hz", k];
+        
+        [fglm setPEQWithBand:_channelSelIndex freq:k];
         
         boduanPinlvL.text = valueStr;
         
-        [_curProxy controllvboBoduanPinlv:[NSString stringWithFormat:@"%d", k]];
+        [_curProxy controlBrandFreq:[NSString stringWithFormat:@"%d", k]
+                                    brand:_channelSelIndex];
         
     } else if (tag == 4) {
-        int k = (value *40)-20;
-        NSString *valueStr= [NSString stringWithFormat:@"%d", k];
+        
+        float k = (value *(maxGain - minGain)) + minGain;
+        NSString *valueStr= [NSString stringWithFormat:@"%0.1f db", k];
         
         boduanZengyiL.text = valueStr;
         
         [fglm setPEQWithBand:_channelSelIndex gain:k];
-        [_curProxy controllvboBoduanZengyi:[NSString stringWithFormat:@"%d", k]];
+        [_curProxy controlBrandGain:[NSString stringWithFormat:@"%0.1f", k]
+                                     brand:_channelSelIndex];
         
     } else {
-        int k = (value *2000)-1000;
-        NSString *valueStr= [NSString stringWithFormat:@"%d", k];
         
-        boduanQL.text = valueStr;
+        int k = (value *(maxQ - minQ)) + minQ;
         
-        [_curProxy controllvboBoduanQ:[NSString stringWithFormat:@"%d", k]];
+        if(k < [peqQTable count])
+        {
+            float q = [[peqQTable objectAtIndex:k] floatValue];
+            NSString *valueStr = [NSString stringWithFormat:@"%0.2f", q];
+            boduanQL.text = valueStr;
+            
+            [fglm setPEQWithBand:_channelSelIndex Q:q];
+            
+            [_curProxy controlBrandQ:[NSString stringWithFormat:@"%d", k]
+                                qVal:valueStr
+                               brand:_channelSelIndex];
+        }
     }
 }
 
@@ -638,7 +663,7 @@
     sel._dataArray = [_curProxy getLvBoBoDuanArray];
     sel._type = 2;
     
-    int h = [sel._dataArray count] * 30 + 50;
+    int h = (int)[sel._dataArray count] * 30 + 50;
     sel.preferredContentSize = CGSizeMake(150, h);
     sel._size = CGSizeMake(150, h);
     
@@ -943,6 +968,9 @@
             [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }
     }
+    
+    [self updateCurrentBrand];
+    
 }
 - (void) channelBtnAction:(UIButton*)sender{
     
@@ -975,7 +1003,7 @@
     NSString *boduanPinlv = [_curProxy getlvboBoduanPinlv];
     float boduanPinlvvalue = [boduanPinlv floatValue];
     float boduanPinlvvaluef = (boduanPinlvvalue+12.0)/24.0;
-    [boduanPinLvSlider setCircleValue:boduanPinlvvaluef];
+    [bandFreqSlider setCircleValue:boduanPinlvvaluef];
     if (boduanPinlv) {
         boduanPinlvL.text = [boduanPinlv stringByAppendingString:@" Hz"];
     }
@@ -983,7 +1011,7 @@
     NSString *boduanZengyi = [_curProxy getlvboBoduanZengyi];
     float boduanZengyivalue = [boduanZengyi floatValue];
     float boduanZengyivaluef = (boduanZengyivalue+12.0)/24.0;
-    [boduanZengyiSlider setCircleValue:boduanZengyivaluef];
+    [bandGainSlider setCircleValue:boduanZengyivaluef];
     if (boduanZengyi) {
         boduanZengyiL.text = [boduanZengyi stringByAppendingString:@" Hz"];
     }
@@ -1109,6 +1137,119 @@
         boduanType = [@"  " stringByAppendingString:[_curProxy getBoduanType]];
     }
     [boduanleixingBtn setTitle:boduanType forState:UIControlStateNormal];
+    
+    NSDictionary *set = [_curProxy getWaveOptions];
+    
+    maxRate = [[set objectForKey:@"RATE_max"] intValue];
+    minRate = [[set objectForKey:@"RATE_min"] intValue];
+    
+    maxGain = [[set objectForKey:@"GAIN_max"] intValue];
+    minGain = [[set objectForKey:@"GAIN_min"] intValue];
+    
+    maxQ = [[set objectForKey:@"Q_max"] intValue];
+    minQ = [[set objectForKey:@"Q_min"] intValue];
+    
+    
+    [self updateCurrentBrand];
+    
+}
+
+
+- (void) updateCurrentBrand{
+    
+    NSMutableArray *waves16_feq_gain_q = _curProxy.waves16_feq_gain_q;
+    
+    if(_channelSelIndex < [waves16_feq_gain_q count])
+    {
+        NSDictionary *data = [waves16_feq_gain_q objectAtIndex:_channelSelIndex];
+        
+        int freq = [[data objectForKey:@"freq"] intValue];
+        float gain = [[data objectForKey:@"gain"] floatValue];
+        float qval = [[data objectForKey:@"q_val"] floatValue];
+        int q = [[data objectForKey:@"q"] intValue];
+        
+        [fglm setPEQWithBand:_channelSelIndex gain:gain];
+        [fglm setPEQWithBand:_channelSelIndex Q:qval];
+        [fglm setPEQWithBand:_channelSelIndex freq:freq];
+        
+        if(maxRate)
+        {
+            float boduanPinlvvaluef = (freq - minRate)/(maxRate - minRate);
+            [bandFreqSlider setCircleValue:boduanPinlvvaluef];
+            boduanPinlvL.text = [NSString stringWithFormat:@"%d Hz", freq];
+            
+        }
+        
+        if(maxGain)
+        {
+            float boduanZengYivaluef = (gain - minGain)/(maxGain - minGain);
+            [bandGainSlider setCircleValue:boduanZengYivaluef];
+            boduanZengyiL.text = [NSString stringWithFormat:@"%0.1f dB", gain];
+        }
+        
+        if(maxQ)
+        {
+            float boduanQvaluef = (float)(q - minQ)/(maxQ - minQ);
+            [boduanQSlider setCircleValue:boduanQvaluef];
+            boduanQL.text = [NSString stringWithFormat:@"%0.2f", qval];
+        }
+    }
+}
+
+- (void)filterGraphViewPEQFilterChangedWithBand:(NSInteger)band freq:(float)freq gain:(float)gain{
+    
+    NSMutableArray *waves16_feq_gain_q = _curProxy.waves16_feq_gain_q;
+    
+    if(band < [waves16_feq_gain_q count])
+    {
+        //NSLog(@"%0.1f - %0.0f", gain, freq);
+        
+        [_curProxy controlBrandFreqAndGain:[NSString stringWithFormat:@"%0.0f", freq]
+                                      gain:[NSString stringWithFormat:@"%0.1f", gain]
+                                     brand:(int)band];
+       
+        
+        if(band == _channelSelIndex)
+        {
+            if(maxRate)
+            {
+                float boduanPinlvvaluef = (freq - minRate)/(maxRate - minRate);
+                [bandFreqSlider setCircleValue:boduanPinlvvaluef];
+                boduanPinlvL.text = [NSString stringWithFormat:@"%0.0f Hz", freq];
+                
+            }
+            
+            if(maxGain)
+            {
+                float boduanZengYivaluef = (gain - minGain)/(maxGain - minGain);
+                [bandFreqSlider setCircleValue:boduanZengYivaluef];
+                boduanZengyiL.text = [NSString stringWithFormat:@"%0.1f dB", gain];
+            }
+        }
+    }
+        
+}
+- (void)filterGraphViewPEQFilterChangedWithBand:(NSInteger)band qIndex:(NSInteger)qIndex qValue:(float)qValue{
+    
+    NSMutableArray *waves16_feq_gain_q = _curProxy.waves16_feq_gain_q;
+    
+    if(band < [waves16_feq_gain_q count])
+    {
+        [_curProxy controlBrandQ:[NSString stringWithFormat:@"%d", (int)qIndex]
+                            qVal:[NSString stringWithFormat:@"%0.2f", qValue]
+                           brand:(int)band];
+        
+        if(band == _channelSelIndex)
+        {
+            if(maxQ)
+            {
+                float boduanQvaluef = (float)(qIndex - minQ)/(maxQ - minQ);
+                [boduanQSlider setCircleValue:boduanQvaluef];
+                boduanQL.text = [NSString stringWithFormat:@"%0.2f", qValue];
+            }
+        }
+    }
+    
 }
 
 @end
