@@ -43,6 +43,8 @@
     
     int minRecoveDur;
     int maxRecoveDur;
+    
+    UIButton  *_enableStartBtn;
 }
 @property (nonatomic, strong) VAProcessorProxys *_curProxy;
 @end
@@ -297,7 +299,33 @@
     lableL4.font = [UIFont systemFontOfSize:13];
     lableL4.textColor = YELLOW_COLOR;
     
-   
+    _enableStartBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    _enableStartBtn.frame = CGRectMake(contentView.frame.size.width/2 - 25, contentView.frame.size.height - 40, 50, 30);
+    _enableStartBtn.layer.cornerRadius = 5;
+    _enableStartBtn.layer.borderWidth = 2;
+    _enableStartBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    _enableStartBtn.clipsToBounds = YES;
+    [_enableStartBtn setTitle:@"启用" forState:UIControlStateNormal];
+    _enableStartBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    [_enableStartBtn addTarget:self
+                        action:@selector(enableStartBtnAction:)
+              forControlEvents:UIControlEventTouchUpInside];
+    [contentView addSubview:_enableStartBtn];
+}
+
+-(void) enableStartBtnAction:(id) sender {
+    BOOL isYaXianStarted = [_curProxy isYaXianStarted];
+    
+    if(isYaXianStarted)
+    {
+        [_enableStartBtn changeNormalColor:THEME_RED_COLOR];
+    }
+    else
+    {
+        [_enableStartBtn changeNormalColor:RGB(75, 163, 202)];
+    }
+    
+    [_curProxy controlYaXianStarted:!isYaXianStarted];
 }
 
 - (void) updateProxyCommandValIsLoaded

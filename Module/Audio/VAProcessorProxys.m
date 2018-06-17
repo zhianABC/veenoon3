@@ -114,6 +114,7 @@
 @synthesize _isdianpingMute;
 @synthesize _xinhaozhengxuanbo;
 @synthesize _xinhaozhengxuanArray;
+@synthesize _isyaxianStart;
 
 - (id) init
 {
@@ -928,6 +929,13 @@
     }
     
 }
+- (BOOL) isYaXianStarted {
+    return _isyaxianStart;
+}
+- (void) controlYaXianStarted:(BOOL)isyaxianstarted {
+    _isyaxianStart = isyaxianstarted;
+}
+
 - (NSString*) getYaxianXielv {
     return _yaxianXielv;
 }
