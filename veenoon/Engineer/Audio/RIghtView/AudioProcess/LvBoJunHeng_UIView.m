@@ -18,14 +18,14 @@
 @interface LvBoJunHeng_UIView() <SlideButtonDelegate, VAProcessorProxysDelegate, FilterGraphViewDelegate>{
     
     SlideButton *gaotongFeqSlider;
-    SlideButton *ditongXielvSlider;
+    SlideButton *ditongFreqSlider;
     
     SlideButton *bandFreqSlider;
     SlideButton *bandGainSlider;
     SlideButton *boduanQSlider;
     
     UILabel *gaotongFeqL;
-    UILabel *ditongXielvL;
+    UILabel *ditongFreqL;
     UILabel *boduanPinlvL;
     UILabel *boduanQL;
     UILabel *boduanZengyiL;
@@ -179,7 +179,7 @@
     int btnStartX = 10;
     int btnY = 50;
     gaotongTypeBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
-    gaotongTypeBtn.frame = CGRectMake(btnStartX+60, btnY-20, 100, 30);
+    gaotongTypeBtn.frame = CGRectMake(btnStartX+60, btnY-20, 120, 30);
     gaotongTypeBtn.layer.cornerRadius = 5;
     gaotongTypeBtn.layer.borderWidth = 2;
     gaotongTypeBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -268,13 +268,13 @@
     if(_curProxy == nil)
         return;
     
-    BOOL isMute = [_curProxy isLvboGaotongStart];
+    BOOL isEnable = [_curProxy isLvboGaotongStart];
     
-    [_curProxy controlLVboGaotongStart:!isMute];
+    isEnable = !isEnable;
     
-    BOOL isFanKuiYiZhi = [_curProxy isLvboGaotongStart];
-    
-    if(isFanKuiYiZhi)
+    [_curProxy controlLVboGaotongStart:isEnable];
+
+    if(isEnable)
     {
         [gaotongStartBtn changeNormalColor:THEME_RED_COLOR];
     }
@@ -610,12 +610,16 @@
         
     } else if (tag == 2) {
         
-        int k = (value *24)-12;
-        NSString *valueStr= [NSString stringWithFormat:@"%d dB", k];
+        NSDictionary *range = [_curProxy getLowRateRange];
+        int max = [[range objectForKey:@"RATE_max"] intValue];
+        int min = [[range objectForKey:@"RATE_min"] intValue];
         
-        ditongXielvL.text = valueStr;
+        int feq = value * (max - min) + min;
+        ditongFreqL.text = [NSString stringWithFormat:@"%d Hz", feq];
+
+        [fglm setLPFilterWithFreq:feq];
         
-        [_curProxy controllvboDitongPinlv:[NSString stringWithFormat:@"%d", k]];
+        [_curProxy controlLowFilterFreq:[NSString stringWithFormat:@"%d", feq]];
         
     } else if (tag == 3) {
         
@@ -732,7 +736,7 @@
     int btnStartX = 10;
     int btnY = 50;
     ditongTypeBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
-    ditongTypeBtn.frame = CGRectMake(btnStartX+60, btnY-20, 100, 30);
+    ditongTypeBtn.frame = CGRectMake(btnStartX+60, btnY-20, 120, 30);
     ditongTypeBtn.layer.cornerRadius = 5;
     ditongTypeBtn.layer.borderWidth = 2;
     ditongTypeBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -775,12 +779,6 @@
     ditongxielvBtn.layer.borderWidth = 2;
     ditongxielvBtn.layer.borderColor = [UIColor clearColor].CGColor;;
     ditongxielvBtn.clipsToBounds = YES;
-    NSString *ditongXielvStr = @"";
-    if ([_curProxy getDiTongXieLv]) {
-        ditongXielvStr = [@"  " stringByAppendingString:[_curProxy getDiTongXieLv]];
-    }
-    
-    [ditongxielvBtn setTitle:ditongXielvStr forState:UIControlStateNormal];
     ditongxielvBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     ditongxielvBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     UIImageView *icon2 = [[UIImageView alloc]
@@ -794,28 +792,19 @@
        forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:ditongxielvBtn];
     
-    ditongXielvSlider = [[SlideButton alloc] initWithFrame:CGRectMake(100, 70, 120, 120)];
-    ditongXielvSlider._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
-    ditongXielvSlider._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
-    [ditongXielvSlider enableValueSet:YES];
-    ditongXielvSlider.delegate = self;
-    ditongXielvSlider.tag = 2;
-    [view addSubview:ditongXielvSlider];
+    ditongFreqSlider = [[SlideButton alloc] initWithFrame:CGRectMake(100, 70, 120, 120)];
+    ditongFreqSlider._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+    ditongFreqSlider._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+    [ditongFreqSlider enableValueSet:YES];
+    ditongFreqSlider.delegate = self;
+    ditongFreqSlider.tag = 2;
+    [view addSubview:ditongFreqSlider];
     
-    NSString *ditongPinlv = [_curProxy getlvboDitongPinlv];
-    float ditongPinlvvalue = [ditongPinlv floatValue];
-    float ditongPinlvvaluef = (ditongPinlvvalue+12.0)/24.0;
-    [ditongXielvSlider setCircleValue:ditongPinlvvaluef];
-    
-    ditongXielvL = [[UILabel alloc] initWithFrame:CGRectMake(100, 180, 120, 20)];
-    if (ditongPinlv) {
-        ditongXielvL.text = [ditongPinlv stringByAppendingString:@" dB"];
-    }
-    
-    ditongXielvL.textAlignment = NSTextAlignmentCenter;
-    [view addSubview:ditongXielvL];
-    ditongXielvL.font = [UIFont systemFontOfSize:13];
-    ditongXielvL.textColor = YELLOW_COLOR;
+    ditongFreqL = [[UILabel alloc] initWithFrame:CGRectMake(100, 180, 120, 20)];
+    ditongFreqL.textAlignment = NSTextAlignmentCenter;
+    [view addSubview:ditongFreqL];
+    ditongFreqL.font = [UIFont systemFontOfSize:13];
+    ditongFreqL.textColor = YELLOW_COLOR;
     
     ditongStartBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
     ditongStartBtn.frame = CGRectMake(10, view.frame.size.height - 30, 50, 25);
@@ -830,29 +819,20 @@
           forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:ditongStartBtn];
     
-    BOOL isDiTongStarted = [_curProxy islvboDitongStart];
     
-    if(isDiTongStarted)
-    {
-        [ditongStartBtn changeNormalColor:THEME_RED_COLOR];
-    }
-    else
-    {
-        [ditongStartBtn changeNormalColor:RGB(75, 163, 202)];
-    }
 }
 - (void) ditongStartBtnAction:(id) sender {
     
     if(_curProxy == nil)
         return;
     
-    BOOL isMute = [_curProxy _islvboDitongStart];
+    BOOL isEnabled = _curProxy._islvboDitongStart;
     
-    [_curProxy controllvboDitongStart:!isMute];
+    isEnabled = !isEnabled;
     
-    BOOL isFanKuiYiZhi = [_curProxy _islvboDitongStart];
-    
-    if(isFanKuiYiZhi)
+    [_curProxy controllvboDitongStart:isEnabled];
+
+    if(isEnabled)
     {
         [ditongStartBtn changeNormalColor:THEME_RED_COLOR];
     }
@@ -860,6 +840,7 @@
     {
         [ditongStartBtn changeNormalColor:RGB(75, 163, 202)];
     }
+    
 }
 -(void) ditongTypeAction:(UIButton*)sender {
     
@@ -871,8 +852,10 @@
     sel._dataArray = [_curProxy getLowFilters];
     sel._type = 1;
     
-    sel.preferredContentSize = CGSizeMake(150, 350);
-    sel._size = CGSizeMake(150, 350);
+    int h = (int)[sel._dataArray count]*30 + 50;
+    
+    sel.preferredContentSize = CGSizeMake(150, h);
+    sel._size = CGSizeMake(150, h);
     
     IMP_BLOCK_SELF(LvBoJunHeng_UIView);
     sel._block = ^(id object, int index)
@@ -881,7 +864,7 @@
     };
     
     CGRect rect = [self convertRect:sender.frame
-                           fromView:sender];
+                           fromView:[sender superview]];
     
     _deviceSelector = [[UIPopoverController alloc] initWithContentViewController:sel];
     _deviceSelector.popoverContentSize = sel.preferredContentSize;
@@ -919,17 +902,20 @@
     sel._dataArray = [_curProxy getLvBoDiTongXielvArray];
     sel._type = 2;
     
-    sel.preferredContentSize = CGSizeMake(150, 350);
-    sel._size = CGSizeMake(150, 350);
+    int h = (int)[sel._dataArray count]*30 + 50;
+    
+    
+    sel.preferredContentSize = CGSizeMake(150, h);
+    sel._size = CGSizeMake(150, h);
     
     IMP_BLOCK_SELF(LvBoJunHeng_UIView);
     sel._block = ^(id object, int index)
     {
-        [block_self chooseDitongXieLv:object];
+        [block_self chooseDitongXieLv:object idx:index];
     };
     
     CGRect rect = [self convertRect:sender.frame
-                           fromView:sender];
+                           fromView:[sender superview]];
     
     _deviceSelector = [[UIPopoverController alloc] initWithContentViewController:sel];
     _deviceSelector.popoverContentSize = sel.preferredContentSize;
@@ -939,13 +925,15 @@
                    permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 }
 
-- (void) chooseDitongXieLv:(NSString*)device{
+- (void) chooseDitongXieLv:(NSString*)device idx:(int)index{
     if (device == nil) {
         return;
     }
     NSString *dispaly = [@"   " stringByAppendingString:device];
     
     [ditongxielvBtn setTitle:dispaly forState:UIControlStateNormal];
+    
+    [fglm setLPFilterWithSlope:index];
     
     [_curProxy controlDiTongXieLv:device];
     
@@ -998,42 +986,6 @@
     [self updateProxyCommandValIsLoaded];
 }
 
-
--(void) updateDiTong {
-    NSString *dispaly = @"";
-    if ([_curProxy getDiTongType]) {
-        dispaly = [@"   " stringByAppendingString:[_curProxy getDiTongType]];
-    }
-   
-    [ditongTypeBtn setTitle:dispaly  forState:UIControlStateNormal];
-    NSString *ditongXielv = @"";
-    if ([_curProxy getDiTongXieLv]) {
-        ditongXielv = [@"  " stringByAppendingString:[_curProxy getDiTongXieLv]];
-    }
-    
-    [ditongxielvBtn setTitle:ditongXielv forState:UIControlStateNormal];
-    
-    NSString *ditongPinlv = [_curProxy getlvboDitongPinlv];
-    float ditongPinlvvalue = [ditongPinlv floatValue];
-    float ditongPinlvvaluef = (ditongPinlvvalue+12.0)/24.0;
-    [ditongXielvSlider setCircleValue:ditongPinlvvaluef];
-    
-    if (ditongPinlv) {
-        ditongXielvL.text = [ditongPinlv stringByAppendingString:@" Hz"];
-    }
-    
-    BOOL isDitongStart = [_curProxy _islvboDitongStart];
-    
-    if(isDitongStart)
-    {
-        [ditongStartBtn changeNormalColor:THEME_RED_COLOR];
-    }
-    else
-    {
-        [ditongStartBtn changeNormalColor:RGB(75, 163, 202)];
-    }
-}
-
 - (void) updateProxyCommandValIsLoaded
 {
     _curProxy.delegate = self;
@@ -1082,7 +1034,6 @@
     }
     
     BOOL isGaoTongStarted = [_curProxy isLvboGaotongStart];
-    
     if(isGaoTongStarted)
     {
         [gaotongStartBtn changeNormalColor:THEME_RED_COLOR];
@@ -1099,6 +1050,36 @@
     }
     [ditongTypeBtn setTitle:dispaly forState:UIControlStateNormal];
 
+    NSString *ditongXielvStr = @"";
+    if ([_curProxy getDiTongXieLv]) {
+        ditongXielvStr = [@"  " stringByAppendingString:[_curProxy getDiTongXieLv]];
+    }
+    [ditongxielvBtn setTitle:ditongXielvStr forState:UIControlStateNormal];
+    
+    /////
+    NSString *freq = [_curProxy getLowFilterFreq];
+    float low_value = [freq floatValue];
+    range = [_curProxy getLowRateRange];
+    max = [[range objectForKey:@"RATE_max"] intValue];
+    min = [[range objectForKey:@"RATE_min"] intValue];
+    if(max)
+    {
+        float gtVal = (value - min)/(max - min);
+        [ditongFreqSlider setCircleValue:gtVal];
+    }
+    ditongFreqL.text = [NSString stringWithFormat:@"%0.0f Hz", low_value];
+    ////
+    
+    
+    BOOL isDiTongStarted = [_curProxy islvboDitongStart];
+    if(isDiTongStarted)
+    {
+        [ditongStartBtn changeNormalColor:THEME_RED_COLOR];
+    }
+    else
+    {
+        [ditongStartBtn changeNormalColor:RGB(75, 163, 202)];
+    }
     ///
     
     
@@ -1296,6 +1277,17 @@
 }
 - (void)filterGraphViewLPFilterChangedWithFreq:(float)freq{
     
+    ditongFreqL.text = [NSString stringWithFormat:@"%0.0f Hz", freq];
+    [_curProxy controlLowFilterFreq:[NSString stringWithFormat:@"%0.0f", freq]];
+    
+    NSDictionary *range = [_curProxy getLowRateRange];
+    int max = [[range objectForKey:@"RATE_max"] intValue];
+    int min = [[range objectForKey:@"RATE_min"] intValue];
+    if(max)
+    {
+        float gtVal = (freq - min)/(max - min);
+        [ditongFreqSlider setCircleValue:gtVal];
+    }
 }
 
 @end

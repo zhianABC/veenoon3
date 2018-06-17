@@ -66,7 +66,6 @@
 @property (nonatomic, strong) NSArray *_lvboGaotongXielvArray;
 @property (nonatomic, strong) NSString *_lvbojunhengDitongType;
 @property (nonatomic, strong) NSArray *_lvboDitongArray;
-@property (nonatomic, strong) NSString *_lvbojunhengDitongXielv;
 @property (nonatomic, strong) NSArray *_lvboDitongXielvArray;
 @property (nonatomic, strong) NSArray *_lvboBoDuanArray;
 @property (nonatomic, assign) BOOL _islvboGaotongStart;
@@ -75,7 +74,8 @@
 @property (nonatomic, strong) NSString *_lvboBoduanPinlv;
 @property (nonatomic, strong) NSString *_lvboBoduanZengyi;
 @property (nonatomic, strong) NSString *_lvboBoduanQ;
-@property (nonatomic, strong) NSString *_lvboDitongPinlv;
+@property (nonatomic, strong) NSString *_lvboDitongFreq;
+@property (nonatomic, strong) NSString *_lvboDitongSL;
 
 @property (nonatomic, strong) NSMutableArray *waves16_feq_gain_q;
 
@@ -220,8 +220,10 @@
 -(BOOL) islvboDitongStart;
 -(void) controllvboDitongStart:(BOOL) lvboDitongStart;
 
--(NSString*) getlvboDitongPinlv;
--(void) controllvboDitongPinlv:(NSString*)lvboDitongPinlv;
+-(NSString*) getLowFilterFreq;
+-(void) controlLowFilterFreq:(NSString*)lvboDitongPinlv;
+
+- (NSDictionary*)getLowRateRange;
 
 //信号发生器
 -(NSString*) getXinhaofashengPinlv;

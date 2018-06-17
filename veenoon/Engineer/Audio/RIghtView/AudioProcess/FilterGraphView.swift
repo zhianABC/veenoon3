@@ -1002,11 +1002,11 @@ class FilterGraphView: UIView {
         lpf_type = hlpf_type(rawValue: Int(type))!
         updateCurve()
     }
-    func setLPFilter(slope: UInt8) {
+   @objc func setLPFilter(slope: UInt8) {
         lpf_slope = hlpf_slope(rawValue: Int(slope))!
         updateCurve()
     }
-    func setLPFilter(freq: Float) {
+   @objc func setLPFilter(freq: Float) {
         lpf_freq = freq
         updateCurve()
     }

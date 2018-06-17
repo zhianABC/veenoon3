@@ -89,8 +89,7 @@
 @synthesize _RgsSceneDeviceOperationShadow;
 @synthesize _lvboGaotongXielvArray;
 @synthesize _lvbojunhengGaotongXielv;
-@synthesize _lvboDitongXielvArray;
-@synthesize _lvbojunhengDitongXielv;
+
 @synthesize _lvboBoDuanArray;
 @synthesize _islvboGaotongStart;
 @synthesize _islvboDitongStart;
@@ -98,7 +97,10 @@
 @synthesize _lvboBoduanPinlv;
 @synthesize _lvboBoduanZengyi;
 @synthesize _lvboBoduanQ;
-@synthesize _lvboDitongPinlv;
+
+@synthesize _lvboDitongFreq;
+@synthesize _lvboDitongXielvArray;
+@synthesize _lvboDitongSL;
 
 @synthesize waves16_feq_gain_q;
 
@@ -135,47 +137,47 @@
         
         _isFanKuiYiZhiStarted = YES;
         _isZiDongHunYinStarted = YES;
-        _zidonghunyinZengYi = @"12.0";
+        self._zidonghunyinZengYi = @"12.0";
         _isHuiShengXiaoChu = YES;
         
-        _yanshiqiHaoMiao = @"3333";
-        _yanshiqiMi = @"2222";
-        _yanshiqiYingChi = @"1111";
-        _yanshiqiSlide = @"0";
+        self._yanshiqiHaoMiao = @"3333";
+        self._yanshiqiMi = @"2222";
+        self._yanshiqiYingChi = @"1111";
+        self._yanshiqiSlide = @"0";
         
         _isyaxianStart = YES;
-        _yaxianFazhi = @"0";
-        _yaxianXielv = @"2";
-        _yaxianStartTime = @"20";
-        _yaxianRecoveryTime = @"20";
+        self._yaxianFazhi = @"0";
+        self._yaxianXielv = @"2";
+        self._yaxianStartTime = @"20";
+        self._yaxianRecoveryTime = @"20";
         
-        _zaoshengFazhi = @"9";
-        _zaoshengStartTime = @"222";
-        _zaoshengHuifuTime = @"333";
-        _isZaoshengStarted = YES;
+        self._zaoshengFazhi = @"9";
+        self._zaoshengStartTime = @"222";
+        self._zaoshengHuifuTime = @"333";
+        self._isZaoshengStarted = YES;
         
         
-        _lvbojunhengGaotongType = @"Bessel";
+        self._lvbojunhengGaotongType = @"Bessel";
         self._lvboGaotongArray = [NSArray array];
         
-        _lvbojunhengDitongType = @"";
+        self._lvbojunhengDitongType = @"";
         self._lvboDitongArray = [NSArray array];
         
         self._lvboGaotongXielvArray = [NSArray array];
-        _lvbojunhengGaotongXielv = @"";
+        self._lvbojunhengGaotongXielv = @"0";
         
         self._lvboDitongXielvArray = [NSArray array];
-        _lvbojunhengDitongXielv = @"";
-        
+        self._lvboDitongSL = @"-6db";
        
         self._lvboBoDuanArray = [NSArray array];
         
-        _lvbojunhengGaotongXielv = @"-10";
-        _lvboGaotongPinLv = @"20";
-        _lvboDitongPinlv = @"2";
-        _lvboBoduanQ = @"4";
-        _lvboBoduanZengyi = @"5";
-        _lvboBoduanPinlv = @"6";
+        self._lvboGaotongPinLv = @"20";
+        self._lvboDitongFreq = @"20000";
+        
+        
+        self._lvboBoduanQ = @"4";
+        self._lvboBoduanZengyi = @"5";
+        self._lvboBoduanPinlv = @"6";
         
         self.waves16_feq_gain_q = [NSMutableArray array];
         
@@ -446,7 +448,7 @@
     
     self._lvboGaotongArray = [self getHighFilters];
     self._lvboGaotongXielvArray = [self getHighSL];
-    self._lvboDitongArray = [self getLowFilters];
+    
     
     if([self._lvboGaotongArray count])
         self._lvbojunhengGaotongType = [self._lvboGaotongArray objectAtIndex:0];
@@ -457,9 +459,13 @@
     }
     
     
+    self._lvboDitongArray = [self getLowFilters];
     if([self._lvboDitongArray count])
         self._lvbojunhengDitongType = [self._lvboDitongArray objectAtIndex:0];
     
+    self._lvboDitongXielvArray = [self getLowSL];
+    if([self._lvboDitongXielvArray count])
+        self._lvboDitongSL = [self._lvboDitongXielvArray objectAtIndex:0];
     
     
     self._lvboBoDuanArray = [self getWaveTypes];
@@ -1005,6 +1011,24 @@
 
 #pragma mark ----- GaoTong High Filter -----
 
+- (BOOL) isLvboGaotongStart {
+    return self._islvboGaotongStart;
+}
+- (void) controlLVboGaotongStart:(BOOL) lvboGaotongStart {
+    
+    self._islvboGaotongStart = lvboGaotongStart;
+    [self sendHighFilterCmd];
+}
+
+- (NSString*) getLvboGaotongPinlv {
+    return self._lvboGaotongPinLv;
+}
+- (void) controlHighFilterFreq:(NSString*) freq {
+    
+    self._lvboGaotongPinLv = freq;
+    [self sendHighFilterCmd];
+}
+
 
 - (NSArray*)getHighFilters{
     
@@ -1095,42 +1119,7 @@
     
     self._lvbojunhengGaotongType = gaotongType;
     
-    
-    RgsCommandInfo *cmd = nil;
-    cmd = [_cmdMap objectForKey:@"SET_HIGH_FILTER"];
-    if(cmd)
-    {
-        NSMutableDictionary * param = [NSMutableDictionary dictionary];
-        if([cmd.params count])
-        {
-            
-            for( RgsCommandParamInfo * param_info in cmd.params)
-            {
-                if([param_info.name isEqualToString:@"TYPE"])
-                {
-                    [param setObject:gaotongType
-                              forKey:param_info.name];
-                    
-                    break;
-                }
-            }
-            
-            if([param count])
-            {
-                [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
-                                                         cmd:cmd.name
-                                                       param:param completion:^(BOOL result, NSError *error) {
-                                                           if (result) {
-                                                               
-                                                           }
-                                                           else{
-                                                               
-                                                           }
-                                                       }];
-            }
-            
-        }
-    }
+    [self sendHighFilterCmd];
 }
 
 - (NSArray*) getLvBoGaoTongArray {
@@ -1146,22 +1135,67 @@
    
     self._lvbojunhengGaotongXielv = gaotongxielv;
     
+    [self sendHighFilterCmd];
+    
+}
+- (NSArray*) getLvBoGaoTongXielvArray {
+    return self._lvboGaotongXielvArray;
+}
+
+- (void) sendHighFilterCmd{
+    
     RgsCommandInfo *cmd = nil;
     cmd = [_cmdMap objectForKey:@"SET_HIGH_FILTER"];
     if(cmd)
     {
+        NSString* tureOrFalse = @"False";
+        if(_islvboGaotongStart)
+        {
+            tureOrFalse = @"True";
+        }
+        else
+        {
+            tureOrFalse = @"False";
+        }
+    
         NSMutableDictionary * param = [NSMutableDictionary dictionary];
         if([cmd.params count])
         {
             
             for( RgsCommandParamInfo * param_info in cmd.params)
             {
-                if([param_info.name isEqualToString:@"SL"])
+                if([param_info.name isEqualToString:@"TYPE"])
                 {
-                    [param setObject:gaotongxielv
+                    [param setObject:_lvbojunhengGaotongType
+                              forKey:param_info.name];
+                }
+                else if([param_info.name isEqualToString:@"SL"])
+                {
+                    [param setObject:_lvbojunhengGaotongXielv
                               forKey:param_info.name];
                     
-                    break;
+                }
+                else if([param_info.name isEqualToString:@"RATE"])
+                {
+                    if(param_info.type == RGS_PARAM_TYPE_FLOAT)
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%0.1f",
+                                          [_lvboGaotongPinLv floatValue]]
+                                  forKey:param_info.name];
+                    }
+                    else if(param_info.type == RGS_PARAM_TYPE_INT)
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%0.0f",
+                                          [_lvboGaotongPinLv floatValue]]
+                                  forKey:param_info.name];
+                        
+                    }
+                }
+                else if([param_info.name isEqualToString:@"ENABLE"])
+                {
+                    [param setObject:tureOrFalse
+                              forKey:param_info.name];
+                    
                 }
             }
             
@@ -1181,11 +1215,8 @@
             
         }
     }
-    
 }
-- (NSArray*) getLvBoGaoTongXielvArray {
-    return self._lvboGaotongXielvArray;
-}
+
 
 #pragma mark -----Low Filter------
 
@@ -1216,89 +1247,58 @@
     return result;
 }
 
-- (NSString*) getDiTongXieLv {
-    return self._lvbojunhengDitongXielv;
-}
-- (void) controlDiTongXieLv:(NSString*) ditongxielv {
-    self._lvbojunhengDitongXielv = ditongxielv;
-}
-- (NSArray*) getLvBoDiTongXielvArray {
-    return _lvboDitongXielvArray;
-}
-
-
-- (NSArray*) getLvBoBoDuanArray {
-    return _lvboBoDuanArray;
-}
-
-#pragma mark ----High Filter-------
-
-- (BOOL) isLvboGaotongStart {
-    return self._islvboGaotongStart;
-}
-- (void) controlLVboGaotongStart:(BOOL) lvboGaotongStart {
+- (NSArray*)getLowSL{
     
-    self._islvboGaotongStart = lvboGaotongStart;
-    
-    NSString* tureOrFalse = @"False";
-    if(_islvboGaotongStart)
-    {
-        tureOrFalse = @"True";
-    }
-    else
-    {
-        tureOrFalse = @"False";
-    }
+    NSMutableArray *result = [NSMutableArray array];
     
     RgsCommandInfo *cmd = nil;
-    cmd = [_cmdMap objectForKey:@"SET_HIGH_FILTER"];
+    cmd = [_cmdMap objectForKey:@"SET_LOW_FILTER"];
     if(cmd)
     {
-        NSMutableDictionary * param = [NSMutableDictionary dictionary];
         if([cmd.params count])
         {
             
             for( RgsCommandParamInfo * param_info in cmd.params)
             {
-                if([param_info.name isEqualToString:@"ENABLE"])
+                if([param_info.name isEqualToString:@"SL"])
                 {
-                    [param setObject:tureOrFalse
-                              forKey:param_info.name];
-                    
+                    [result addObjectsFromArray:param_info.available];
                     break;
                 }
+                
             }
-            
-            if([param count])
-            {
-                [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
-                                                         cmd:cmd.name
-                                                       param:param completion:^(BOOL result, NSError *error) {
-                                                           if (result) {
-                                                               
-                                                           }
-                                                           else{
-                                                               
-                                                           }
-                                                       }];
-            }
-            
         }
     }
+    
+    return result;
 }
 
-- (NSString*) getLvboGaotongPinlv {
-    return self._lvboGaotongPinLv;
-}
-- (void) controlHighFilterFreq:(NSString*) freq {
+- (NSString*) getDiTongXieLv {
     
-    self._lvboGaotongPinLv = freq;
+    return self._lvboDitongSL;
+    
+}
+- (void) controlDiTongXieLv:(NSString*) ditongxielv {
+    
+    self._lvboDitongSL = ditongxielv;
+    
+    [self sendLowFilterCmd];
+    
+}
+- (NSArray*) getLvBoDiTongXielvArray {
+    
+    return _lvboDitongXielvArray;
+    
+}
+
+- (NSDictionary*)getLowRateRange{
+    
+    NSMutableDictionary *result = [NSMutableDictionary dictionary];
     
     RgsCommandInfo *cmd = nil;
-    cmd = [_cmdMap objectForKey:@"SET_HIGH_FILTER"];
+    cmd = [_cmdMap objectForKey:@"SET_LOW_FILTER"];
     if(cmd)
     {
-        NSMutableDictionary * param = [NSMutableDictionary dictionary];
         if([cmd.params count])
         {
             
@@ -1306,21 +1306,104 @@
             {
                 if([param_info.name isEqualToString:@"RATE"])
                 {
+                    if(param_info.max)
+                        [result setObject:param_info.max forKey:@"RATE_max"];
+                    if(param_info.min)
+                        [result setObject:param_info.min forKey:@"RATE_min"];
+                    break;
+                }
+                
+            }
+        }
+    }
+    
+    return result;
+}
+
+
+- (NSString*) getDiTongType {
+    return self._lvbojunhengDitongType;
+}
+- (void) controlDiTongType:(NSString*) ditongtype {
+    
+    self._lvbojunhengDitongType = ditongtype;
+    [self sendLowFilterCmd];
+}
+
+-(BOOL) islvboDitongStart {
+    return self._islvboDitongStart;
+}
+-(void) controllvboDitongStart:(BOOL) lvboDitongStart {
+    
+    self._islvboDitongStart = lvboDitongStart;
+    [self sendLowFilterCmd];
+}
+
+-(NSString*) getLowFilterFreq {
+    return self._lvboDitongFreq;
+}
+-(void) controlLowFilterFreq:(NSString*) lvboDitongPinlv {
+    
+    self._lvboDitongFreq = lvboDitongPinlv;
+    [self sendLowFilterCmd];
+}
+
+
+
+- (void) sendLowFilterCmd{
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_LOW_FILTER"];
+    if(cmd)
+    {
+        NSString* tureOrFalse = @"False";
+        if(_islvboDitongStart)
+        {
+            tureOrFalse = @"True";
+        }
+        else
+        {
+            tureOrFalse = @"False";
+        }
+        
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            
+            for( RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"TYPE"])
+                {
+                    [param setObject:_lvbojunhengDitongType
+                              forKey:param_info.name];
+                }
+                else if([param_info.name isEqualToString:@"SL"])
+                {
+                    [param setObject:_lvboDitongSL
+                              forKey:param_info.name];
+                    
+                }
+                else if([param_info.name isEqualToString:@"RATE"])
+                {
                     if(param_info.type == RGS_PARAM_TYPE_FLOAT)
                     {
                         [param setObject:[NSString stringWithFormat:@"%0.1f",
-                                          [freq floatValue]]
+                                          [_lvboDitongFreq floatValue]]
                                   forKey:param_info.name];
                     }
                     else if(param_info.type == RGS_PARAM_TYPE_INT)
                     {
                         [param setObject:[NSString stringWithFormat:@"%0.0f",
-                                          [freq floatValue]]
+                                          [_lvboDitongFreq floatValue]]
                                   forKey:param_info.name];
                         
                     }
+                }
+                else if([param_info.name isEqualToString:@"ENABLE"])
+                {
+                    [param setObject:tureOrFalse
+                              forKey:param_info.name];
                     
-                    break;
                 }
             }
             
@@ -1342,9 +1425,12 @@
     }
 }
 
-
-
 #pragma mark --- Brand -----
+
+- (NSArray*) getLvBoBoDuanArray {
+    return _lvboBoDuanArray;
+}
+
 
 - (void) controlBandLineType:(NSString*) lineType band:(int)band {
 
@@ -1540,65 +1626,6 @@
     }
 }
 
-#pragma mark -----Low Filter------
-
-- (NSString*) getDiTongType {
-    return self._lvbojunhengDitongType;
-}
-- (void) controlDiTongType:(NSString*) ditongtype {
-    
-    self._lvbojunhengDitongType = ditongtype;
-    
-    RgsCommandInfo *cmd = nil;
-    cmd = [_cmdMap objectForKey:@"SET_LOW_FILTER"];
-    if(cmd)
-    {
-        NSMutableDictionary * param = [NSMutableDictionary dictionary];
-        if([cmd.params count])
-        {
-            
-            for( RgsCommandParamInfo * param_info in cmd.params)
-            {
-                if([param_info.name isEqualToString:@"TYPE"])
-                {
-                    [param setObject:ditongtype
-                              forKey:param_info.name];
-                    
-                    break;
-                }
-            }
-            
-            if([param count])
-            {
-                [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
-                                                         cmd:cmd.name
-                                                       param:param completion:^(BOOL result, NSError *error) {
-                                                           if (result) {
-                                                               
-                                                           }
-                                                           else{
-                                                               
-                                                           }
-                                                       }];
-            }
-            
-        }
-    }
-}
-
--(BOOL) islvboDitongStart {
-    return self._islvboDitongStart;
-}
--(void) controllvboDitongStart:(BOOL) lvboDitongStart {
-    self._islvboDitongStart = lvboDitongStart;
-}
-
--(NSString*) getlvboDitongPinlv {
-    return self._lvboDitongPinlv;
-}
--(void) controllvboDitongPinlv:(NSString*) lvboDitongPinlv {
-    self._lvboDitongPinlv = lvboDitongPinlv;
-}
 
 -(NSString*) getXinhaofashengPinlv {
     return _xinhaofashengPinlv;
