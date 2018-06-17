@@ -216,7 +216,7 @@
     NSString *miString = [NSString stringWithFormat:@"%.3f", mi];
     miField.text = miString;
     
-    float yingchi = mi * 3.2808399;
+    float yingchi = mi * 3.280797;
     NSString *yingchiString = [NSString stringWithFormat:@"%.3f", yingchi];
     yingchiFiedld.text = yingchiString;
     
@@ -254,13 +254,13 @@
         [_curProxy controlYanshiqiSlide:haomiaoStr];
         haomiaoField.text = haomiaoStr;
         
-        float haomiao = [textField.text floatValue];
+        float haomiao = roundf([textField.text floatValue]);
         
         float mi = haomiao/1000*340;
         NSString *miString = [NSString stringWithFormat:@"%.3f", mi];
         miField.text = miString;
         
-        float yingchi = mi * 3.2808399;
+        float yingchi = mi * 3.280797;
         NSString *yingchiString = [NSString stringWithFormat:@"%.3f", yingchi];
         yingchiFiedld.text = yingchiString;
         
@@ -268,22 +268,22 @@
         NSString *miString = textField.text;
         float mi = [miString floatValue];
         
-        float haomiao = mi/340*1000;
+        float haomiao = roundf(mi/340*1000);
         NSString *haomiaoString = [NSString stringWithFormat:@"%.2f", haomiao];
         [_curProxy controlYanshiqiSlide:haomiaoString];
         haomiaoField.text = haomiaoString;
         
-        float yingchi = mi * 3.2808399;
+        float yingchi = mi * 3.280797;
         NSString *yingchiString = [NSString stringWithFormat:@"%.3f", yingchi];
         yingchiFiedld.text = yingchiString;
     } else if (index == 3) {
         float yingchi = [textField.text floatValue];
         
-        float mi = yingchi/3.2808399;
+        float mi = yingchi/3.280797;
         NSString *miString = [NSString stringWithFormat:@"%.3f", mi];
         miField.text = miString;
         
-        float haomiao = mi/340*1000;
+        float haomiao = roundf(mi/340*1000);
         NSString *haomiaoString = [NSString stringWithFormat:@"%.2f", haomiao];
         [_curProxy controlYanshiqiSlide:haomiaoString];
         haomiaoField.text = haomiaoString;
@@ -314,7 +314,7 @@
 
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
-    float k = (value *(maxDuration-minDuration)) + minDuration;
+    float k = roundf((value *(maxDuration-minDuration)) + minDuration);
     NSString *valueStr= [NSString stringWithFormat:@"%0.2f ms", k];
     
     labelL1.text = valueStr;
