@@ -316,6 +316,8 @@
 -(void) enableStartBtnAction:(id) sender {
     BOOL isYaXianStarted = [_curProxy isYaXianStarted];
     
+    isYaXianStarted = !isYaXianStarted;
+    
     if(isYaXianStarted)
     {
         [_enableStartBtn changeNormalColor:THEME_RED_COLOR];
@@ -325,7 +327,7 @@
         [_enableStartBtn changeNormalColor:RGB(75, 163, 202)];
     }
     
-    [_curProxy controlYaXianStarted:!isYaXianStarted];
+    [_curProxy controlYaXianStarted:isYaXianStarted];
 }
 
 - (void) updateProxyCommandValIsLoaded

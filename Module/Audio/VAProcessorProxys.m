@@ -143,6 +143,7 @@
         _yanshiqiYingChi = @"1111";
         _yanshiqiSlide = @"0";
         
+        _isyaxianStart = YES;
         _yaxianFazhi = @"0";
         _yaxianXielv = @"2";
         _yaxianStartTime = @"20";
