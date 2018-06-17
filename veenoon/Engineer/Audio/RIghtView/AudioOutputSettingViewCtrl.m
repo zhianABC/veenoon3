@@ -234,6 +234,8 @@
     yaxianView.hidden = YES;
     lvbojunhengView.hidden = NO;
     dianpingView.hidden = YES;
+    
+    [lvbojunhengView updateProxyCommandValIsLoaded];
 }
 - (void) dianpingAction:(id)sender{
     
