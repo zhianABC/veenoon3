@@ -52,6 +52,7 @@
 @property (nonatomic, strong) NSString *_yaxianXielv;
 @property (nonatomic, strong) NSString *_yaxianStartTime;
 @property (nonatomic, strong) NSString *_yaxianRecoveryTime;
+@property (nonatomic, assign) BOOL _isyaxianStart;
 //zaoshengmen
 @property (nonatomic, strong) NSString *_zaoshengFazhi;
 @property (nonatomic, strong) NSString *_zaoshengStartTime;
@@ -170,7 +171,8 @@
 - (void) controlYaxianStartTime:(NSString*) yaxianStartTime;
 - (NSString*) getYaxianRecoveryTime;
 - (void) controlYaxianRecoveryTime:(NSString*) yaxianRecoveryTime;
-
+- (BOOL) isYaXianStarted;
+- (void) controlYaXianStarted:(BOOL)isyaxianstarted;
 //zaosheng
 - (BOOL) isZaoshengStarted;
 - (void) controlZaoshengStarted:(BOOL)isZaoshengStarted;
