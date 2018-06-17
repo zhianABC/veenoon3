@@ -28,8 +28,6 @@
     
     int maxDuration;
     int minDuration;
-    
-    UIButton  *_enableStartBtn;
 }
 //@property (nonatomic, strong) NSMutableArray *_channelBtns;
 @property (nonatomic, strong) VAProcessorProxys *_curProxy;
@@ -197,19 +195,6 @@
     addLabel3.textColor = [UIColor whiteColor];
     addLabel3.frame = CGRectMake(CGRectGetMaxX(yingchiFiedld.frame)+10, btnY, 50, 30);
     [contentView addSubview:addLabel3];
-    
-    _enableStartBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
-    _enableStartBtn.frame = CGRectMake(contentView.frame.size.width/2 - 25, contentView.frame.size.height - 40, 50, 30);
-    _enableStartBtn.layer.cornerRadius = 5;
-    _enableStartBtn.layer.borderWidth = 2;
-    _enableStartBtn.layer.borderColor = [UIColor clearColor].CGColor;;
-    _enableStartBtn.clipsToBounds = YES;
-    [_enableStartBtn setTitle:@"启用" forState:UIControlStateNormal];
-    _enableStartBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-    [_enableStartBtn addTarget:self
-                   action:@selector(enableStartBtnAction:)
-         forControlEvents:UIControlEventTouchUpInside];
-    [contentView addSubview:_enableStartBtn];
 }
 
 -(void) updateYanshiqi {
@@ -224,25 +209,19 @@
         [xielvSlider3 setCircleValue:f];
     }
     if (zengyiDB) {
-        labelL1.text = [zengyiDB stringByAppendingString:@" dB"];
+        labelL1.text = [zengyiDB stringByAppendingString:@" ms"];
     }
     
-    yingchiFiedld.text = [_curProxy getYanshiqiYingChi];
+    float mi = value / 1000 * 340;
+    NSString *miString = [NSString stringWithFormat:@"%.3f", mi];
+    miField.text = miString;
     
-    miField.text = [_curProxy getYanshiqiMi];
+    float yingchi = mi * 3.2808399;
+    NSString *yingchiString = [NSString stringWithFormat:@"%.3f", yingchi];
+    yingchiFiedld.text = yingchiString;
     
-    haomiaoField.text = [_curProxy getYanshiqiHaoMiao];
-    
-    BOOL isYanshiEnable = [_curProxy isYanshiStart];
-    
-    if(isYanshiEnable)
-    {
-        [_enableStartBtn changeNormalColor:THEME_RED_COLOR];
-    }
-    else
-    {
-        [_enableStartBtn changeNormalColor:RGB(75, 163, 202)];
-    }
+    NSString *haomiaoStr = [NSString stringWithFormat:@"%.2f", value];
+    haomiaoField.text = haomiaoStr;
 }
 
 - (void) updateProxyCommandValIsLoaded
@@ -264,21 +243,6 @@
     [self updateYanshiqi];
 }
 
--(void) enableStartBtnAction:(id) sender {
-    BOOL isYanshiStarted = [_curProxy isYanshiStart];
-    
-    if(isYanshiStarted)
-    {
-        [_enableStartBtn changeNormalColor:THEME_RED_COLOR];
-    }
-    else
-    {
-        [_enableStartBtn changeNormalColor:RGB(75, 163, 202)];
-    }
-    
-    [_curProxy controlYanshiStart:!isYanshiStarted];
-}
-
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     
 }
@@ -286,11 +250,58 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     int index = (int) textField.tag;
     if (index == 1) {
-        [_curProxy controlYanshiqiHaoMiao:textField.text];
+        NSString *haomiaoStr = textField.text;
+        [_curProxy controlYanshiqiSlide:haomiaoStr];
+        haomiaoField.text = haomiaoStr;
+        
+        float haomiao = [textField.text floatValue];
+        
+        float mi = haomiao/1000*340;
+        NSString *miString = [NSString stringWithFormat:@"%.3f", mi];
+        miField.text = miString;
+        
+        float yingchi = mi * 3.2808399;
+        NSString *yingchiString = [NSString stringWithFormat:@"%.3f", yingchi];
+        yingchiFiedld.text = yingchiString;
+        
     } else if (index == 2) {
-        [_curProxy controlYanshiqiMi:textField.text];
+        NSString *miString = textField.text;
+        float mi = [miString floatValue];
+        
+        float haomiao = mi/340*1000;
+        NSString *haomiaoString = [NSString stringWithFormat:@"%.2f", haomiao];
+        [_curProxy controlYanshiqiSlide:haomiaoString];
+        haomiaoField.text = haomiaoString;
+        
+        float yingchi = mi * 3.2808399;
+        NSString *yingchiString = [NSString stringWithFormat:@"%.3f", yingchi];
+        yingchiFiedld.text = yingchiString;
     } else if (index == 3) {
-        [_curProxy controlYanshiqiYingChi:textField.text];
+        float yingchi = [textField.text floatValue];
+        
+        float mi = yingchi/3.2808399;
+        NSString *miString = [NSString stringWithFormat:@"%.3f", mi];
+        miField.text = miString;
+        
+        float haomiao = mi/340*1000;
+        NSString *haomiaoString = [NSString stringWithFormat:@"%.2f", haomiao];
+        [_curProxy controlYanshiqiSlide:haomiaoString];
+        haomiaoField.text = haomiaoString;
+        [_curProxy controlYanshiqiSlide:haomiaoString];
+        
+    }
+    
+    NSString *zengyiDB = [_curProxy getYanshiqiSlide];
+    float value = [zengyiDB floatValue];
+    float max = (maxDuration - minDuration);
+    if(max)
+    {
+        float f = (value - minDuration)/max;
+        f = fabsf(f);
+        [xielvSlider3 setCircleValue:f];
+    }
+    if (zengyiDB) {
+        labelL1.text = [zengyiDB stringByAppendingString:@" ms"];
     }
 }
 
@@ -304,11 +315,13 @@
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
     float k = (value *(maxDuration-minDuration)) + minDuration;
-    NSString *valueStr= [NSString stringWithFormat:@"%0.1f ms", k];
+    NSString *valueStr= [NSString stringWithFormat:@"%0.2f ms", k];
     
     labelL1.text = valueStr;
     
-    [_curProxy controlYanshiqiSlide:[NSString stringWithFormat:@"%0.1f", k]];
+    [_curProxy controlYanshiqiSlide:[NSString stringWithFormat:@"%0.2f", k]];
+    
+    [self updateYanshiqi];
 }
 
 @end
