@@ -61,6 +61,10 @@
         titleL.text = @"选择频率";
     } else if (_type == 4) {
         titleL.text = @"选择波段";
+    } else if (_type == 5) {
+        titleL.text = @"线路";
+    } else if (_type == 6) {
+        titleL.text = @"话筒";
     }
     titleL.textColor = [UIColor whiteColor];
     [titleV addSubview:titleL];
