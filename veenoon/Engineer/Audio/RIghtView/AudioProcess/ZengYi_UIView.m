@@ -11,12 +11,14 @@
 #import "SlideButton.h"
 #import "RegulusSDK.h"
 #import "VAProcessorProxys.h"
-#import "CenterCustomerPickerView.h"
+#import "TeslariaComboChooser.h"
 
-@interface ZengYi_UIView() <SlideButtonDelegate, CenterCustomerPickerViewDelegate>{
+@interface ZengYi_UIView() <SlideButtonDelegate>{
     
     UIButton *channelBtn;
     SlideButton *btnJH2;
+    
+    UIPopoverController *_deviceSelector;
     
     UILabel *zaoshengL;
     UIButton *muteBtn;
@@ -25,9 +27,6 @@
     UIButton *foureivBtn;
     UIButton *bianzuBtn;
     UIButton *zerodbBtn;
-    
-    CenterCustomerPickerView *_lineSelect;
-    CenterCustomerPickerView *_micDbSelect;
     
     int _curSelectorIndex;
 }
@@ -349,111 +348,113 @@
 
 - (void) micDbBtnAction:(UIButton*) sender {
 
-    
-    if([_micDbSelect superview])
-    {
-        [_micDbSelect removeFromSuperview];
-        return;
+    if ([_deviceSelector isPopoverVisible]) {
+        [_deviceSelector dismissPopoverAnimated:NO];
     }
     
-    NSArray *options = [_curProxy getMicDbOptions];
+    TeslariaComboChooser *sel = [[TeslariaComboChooser alloc] init];
+    sel._dataArray = [_curProxy getMicDbOptions];;
+    sel._type = 6;
     
-    if([options count])
+    int h = (int)[sel._dataArray count]*30 + 50;
+    
+    sel.preferredContentSize = CGSizeMake(150, h);
+    sel._size = CGSizeMake(150, h);
+    
+    IMP_BLOCK_SELF(ZengYi_UIView);
+    sel._block = ^(id object, int index)
     {
-        
-        if(_micDbSelect == nil)
-        {
-            _micDbSelect = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(0, 0, 100, 150)];
-            _micDbSelect._selectColor = RGB(253, 180, 0);
-            _micDbSelect._rowNormalColor = RGB(117, 165, 186);
-            _micDbSelect.delegate_= self;
-            
-            _micDbSelect._pickerDataArray = @[@{@"values":options}];
-            [_micDbSelect selectRow:0 inComponent:0];
-        }
-        
-        _curSelectorIndex = 1;
-        _micDbSelect.center = CGPointMake(sender.center.x, CGRectGetMaxY(sender.frame)+75);
-        [contentView addSubview:_micDbSelect];
+        [block_self chooseMic:object idx:index];
+    };
+    
+    CGRect rect = [self convertRect:sender.frame
+                           fromView:[sender superview]];
+    
+    _deviceSelector = [[UIPopoverController alloc] initWithContentViewController:sel];
+    _deviceSelector.popoverContentSize = sel.preferredContentSize;
+    
+    [_deviceSelector presentPopoverFromRect:rect
+                                     inView:self
+                   permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    
+}
+
+- (void) chooseMic:(NSString*)device idx:(int)index {
+    [zerodbBtn setTitle:device forState:UIControlStateNormal];
+    
+    if(_curProxy)
+    {
+        [_curProxy controlDeviceMicDb:device];
     }
     
+    if ([_deviceSelector isPopoverVisible]) {
+        [_deviceSelector dismissPopoverAnimated:NO];
+    }
 }
 
 
 
 -(void) lineBtnAction:(UIButton*) sender {
     
-    if([_lineSelect superview])
-    {
-        [_lineSelect removeFromSuperview];
-        return;
+    if ([_deviceSelector isPopoverVisible]) {
+        [_deviceSelector dismissPopoverAnimated:NO];
     }
     
-    NSArray *options = [_curProxy getModeOptions];
+    TeslariaComboChooser *sel = [[TeslariaComboChooser alloc] init];
+    sel._dataArray = [_curProxy getModeOptions];;
+    sel._type = 5;
     
-    if([options count])
+    int h = (int)[sel._dataArray count]*30 + 50;
+    
+    sel.preferredContentSize = CGSizeMake(150, h);
+    sel._size = CGSizeMake(150, h);
+    
+    IMP_BLOCK_SELF(ZengYi_UIView);
+    sel._block = ^(id object, int index)
     {
-        
-        if(_lineSelect == nil)
-        {
-            _lineSelect = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(0, 0, 100, 150)];
-            _lineSelect._selectColor = RGB(253, 180, 0);
-            _lineSelect._rowNormalColor = RGB(117, 165, 186);
-            _lineSelect.delegate_= self;
-            
-            _lineSelect._pickerDataArray = @[@{@"values":options}];
-            [_lineSelect selectRow:0 inComponent:0];
-        }
-        
-        _curSelectorIndex = 0;
-        _lineSelect.center = CGPointMake(sender.center.x, CGRectGetMaxY(sender.frame)+75);
-        [contentView addSubview:_lineSelect];
-    }
+        [block_self chooseLine:object idx:index];
+    };
+    
+    CGRect rect = [self convertRect:sender.frame
+                           fromView:[sender superview]];
+    
+    _deviceSelector = [[UIPopoverController alloc] initWithContentViewController:sel];
+    _deviceSelector.popoverContentSize = sel.preferredContentSize;
+    
+    [_deviceSelector presentPopoverFromRect:rect
+                                     inView:self
+                   permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 }
 
-- (void) didChangedPickerValue:(NSDictionary*)value{
+- (void) chooseLine:(NSString*)device idx:(int)index {
+    [zerodbBtn setTitle:device forState:UIControlStateNormal];
     
-    NSDictionary *val = [value objectForKey:@0];
-    if(val)
+    [lineBtn setTitle:device forState:UIControlStateNormal];
+    
+    if(_curProxy)
     {
-        //Mode select
-        if(_curSelectorIndex == 0)
-        {
-            NSString *vtx = [val objectForKey:@"value"];
-            [lineBtn setTitle:vtx forState:UIControlStateNormal];
-            
-            if(_curProxy)
-            {
-                [_curProxy controlDeviceMode:vtx];
-            }
-            
-            if([vtx isEqualToString:@"MIC"])
-            {
-                foureivBtn.alpha = 1;
-                foureivBtn.enabled = YES;
-                
-                zerodbBtn.alpha = 1;
-                zerodbBtn.enabled = YES;
-            }
-            else
-            {
-                foureivBtn.alpha = 0.8;
-                foureivBtn.enabled = NO;
-                
-                zerodbBtn.alpha = 0.8;
-                zerodbBtn.enabled = NO;
-            }
-        }
-        else//Mic db select
-        {
-            NSString *vtx = [val objectForKey:@"value"];
-            [zerodbBtn setTitle:vtx forState:UIControlStateNormal];
-            
-            if(_curProxy)
-            {
-                [_curProxy controlDeviceMicDb:vtx];
-            }
-        }
+        [_curProxy controlDeviceMode:device];
+    }
+    
+    if([device isEqualToString:@"MIC"])
+    {
+        foureivBtn.alpha = 1;
+        foureivBtn.enabled = YES;
+        
+        zerodbBtn.alpha = 1;
+        zerodbBtn.enabled = YES;
+    }
+    else
+    {
+        foureivBtn.alpha = 0.8;
+        foureivBtn.enabled = NO;
+        
+        zerodbBtn.alpha = 0.8;
+        zerodbBtn.enabled = NO;
+    }
+    
+    if ([_deviceSelector isPopoverVisible]) {
+        [_deviceSelector dismissPopoverAnimated:NO];
     }
 }
 
