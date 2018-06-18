@@ -117,6 +117,7 @@
 
 - (NSArray*)getModeOptions;
 - (NSArray*)getMicDbOptions;
+- (NSDictionary*)getNoiseGateOptions;
 - (NSDictionary*)getPressLimitOptions;
 - (NSDictionary*)getSetDelayOptions;
 - (NSArray*)getHighFilters;

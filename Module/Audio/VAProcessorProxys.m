@@ -144,10 +144,10 @@
         self._yaxianStartTime = @"20";
         self._yaxianRecoveryTime = @"20";
         
-        self._zaoshengFazhi = @"9";
-        self._zaoshengStartTime = @"222";
-        self._zaoshengHuifuTime = @"333";
-        self._isZaoshengStarted = YES;
+        self._zaoshengFazhi = @"0";
+        self._zaoshengStartTime = @"20";
+        self._zaoshengHuifuTime = @"20";
+        self._isZaoshengStarted = NO;
         
         
         self._lvbojunhengGaotongType = @"Bessel";
@@ -950,32 +950,172 @@
     }
 }
 
+#pragma mark ---- 噪声门 ----
+
+- (NSDictionary*)getNoiseGateOptions {
+    NSMutableDictionary *result = [NSMutableDictionary dictionary];
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_NOISE_GATE"];
+    if(cmd)
+    {
+        if([cmd.params count])
+        {
+            
+            for( RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"TH"])
+                {
+                    if(param_info.max)
+                        [result setObject:param_info.max forKey:@"TH_max"];
+                    if(param_info.min)
+                        [result setObject:param_info.min forKey:@"TH_min"];
+                }
+                else if([param_info.name isEqualToString:@"START_DUR"])
+                {
+                    if(param_info.max)
+                        [result setObject:param_info.max forKey:@"START_DUR_max"];
+                    if(param_info.min)
+                        [result setObject:param_info.min forKey:@"START_DUR_min"];
+                }
+                else if([param_info.name isEqualToString:@"RECOVER_DUR"])
+                {
+                    if(param_info.max)
+                        [result setObject:param_info.max forKey:@"RECOVER_DUR_max"];
+                    if(param_info.min)
+                        [result setObject:param_info.min forKey:@"RECOVER_DUR_min"];
+                }
+            }
+        }
+    }
+    
+    return result;
+}
+
 - (BOOL) isZaoshengStarted {
     return _isZaoshengStarted;
 }
 - (void) controlZaoshengStarted:(BOOL)isZaoshengStarted {
     self._isZaoshengStarted = isZaoshengStarted;
+    
+    [self sendNoiseGate];
 }
 - (NSString*) getZaoshengFazhi {
     return _zaoshengFazhi;
 }
 - (void) controlZaoshengFazhi:(NSString*) zaoshengFazhi {
     self._zaoshengFazhi = zaoshengFazhi;
+    
+    [self sendNoiseGate];
 }
 - (NSString*) getZaoshengStartTime {
     return self._zaoshengStartTime;
 }
 - (void) controlZaoshengStartTime:(NSString*) zaoshengStartTime {
     self._zaoshengStartTime = zaoshengStartTime;
+    
+    [self sendNoiseGate];
 }
 - (NSString*) getZaoshengRecoveryTime {
     return self._zaoshengHuifuTime;
 }
 - (void) controlZaoshengRecoveryTime:(NSString*) zaoshengHuifuTime {
     self._zaoshengHuifuTime = zaoshengHuifuTime;
+    
+    [self sendNoiseGate];
 }
 
-
+-(void) sendNoiseGate {
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_NOISE_GATE"];
+    if(cmd)
+    {
+        NSString* tureOrFalse = @"False";
+        if(_isZaoshengStarted)
+        {
+            tureOrFalse = @"True";
+        }
+        else
+        {
+            tureOrFalse = @"False";
+        }
+        
+        
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            for( RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"ENABLE"])
+                {
+                    [param setObject:tureOrFalse
+                              forKey:param_info.name];
+                }
+                else if([param_info.name isEqualToString:@"TH"])
+                {
+                    if(param_info.type == RGS_PARAM_TYPE_FLOAT)
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%0.1f",
+                                          [_zaoshengFazhi floatValue]]
+                                  forKey:param_info.name];
+                    }
+                    else if(param_info.type == RGS_PARAM_TYPE_INT)
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%0.0f",
+                                          [_zaoshengFazhi floatValue]]
+                                  forKey:param_info.name];
+                    }
+                }
+                else if([param_info.name isEqualToString:@"START_DUR"])
+                {
+                    if(param_info.type == RGS_PARAM_TYPE_FLOAT)
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%0.1f",
+                                          [_zaoshengStartTime floatValue]]
+                                  forKey:param_info.name];
+                    }
+                    else if(param_info.type == RGS_PARAM_TYPE_INT)
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%0.0f",
+                                          [_zaoshengStartTime floatValue]]
+                                  forKey:param_info.name];
+                    }
+                }
+                else if([param_info.name isEqualToString:@"RECOVER_DUR"])
+                {
+                    if(param_info.type == RGS_PARAM_TYPE_FLOAT)
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%0.1f",
+                                          [_zaoshengHuifuTime floatValue]]
+                                  forKey:param_info.name];
+                    }
+                    else if(param_info.type == RGS_PARAM_TYPE_INT)
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%0.0f",
+                                          [_zaoshengHuifuTime floatValue]]
+                                  forKey:param_info.name];
+                    }
+                }
+            }
+            
+            if([param count])
+            {
+                [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+                                                         cmd:cmd.name
+                                                       param:param completion:^(BOOL result, NSError *error) {
+                                                           if (result) {
+                                                               
+                                                           }
+                                                           else{
+                                                               
+                                                           }
+                                                       }];
+            }
+            
+        }
+    }
+}
 
 
 #pragma mark ----- GaoTong High Filter -----
