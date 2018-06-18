@@ -131,7 +131,7 @@
         
         _isSetOK = NO;
         
-        _isFanKuiYiZhiStarted = YES;
+        _isFanKuiYiZhiStarted = NO;
         _isZiDongHunYinStarted = YES;
         self._zidonghunyinZengYi = @"12.0";
         
@@ -360,11 +360,6 @@
 - (BOOL) isProxyMute{
     
     return _isMute;
-}
-
-- (BOOL) isFanKuiYiZhiStarted{
-    
-    return _isFanKuiYiZhiStarted;
 }
 
 - (BOOL) isZiDongHunYinStarted{
@@ -723,14 +718,72 @@
     }
     
 }
+#pragma mark ---- 反馈抑制 ----
+
+- (BOOL) isFanKuiYiZhiStarted{
+    
+    return _isFanKuiYiZhiStarted;
+}
 
 - (void) controlFanKuiYiZhi:(BOOL)isFanKuiYiZhiStarted { 
     _isFanKuiYiZhiStarted = isFanKuiYiZhiStarted;
+    
+    [self sendFBCallBack];
 }
+
+-(void) sendFBCallBack {
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_FB_CTRL"];
+    if(cmd)
+    {
+        NSString* tureOrFalse = @"False";
+        if(_isFanKuiYiZhiStarted)
+        {
+            tureOrFalse = @"True";
+        }
+        else
+        {
+            tureOrFalse = @"False";
+        }
+        
+        
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            for( RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"ENABLE"])
+                {
+                    [param setObject:tureOrFalse
+                              forKey:param_info.name];
+                }
+            }
+            
+            if([param count])
+            {
+                [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+                                                         cmd:cmd.name
+                                                       param:param completion:^(BOOL result, NSError *error) {
+                                                           if (result) {
+                                                               
+                                                           }
+                                                           else{
+                                                               
+                                                           }
+                                                       }];
+            }
+            
+        }
+    }
+}
+
+#pragma mark ---- 自动混音 ----
 
 - (void) controlZiDongHunYin:(BOOL)isZiDongHunYinStarted {
     _isZiDongHunYinStarted = isZiDongHunYinStarted;
 }
+
 - (NSString*) getZidonghuiyinZengYi {
     return _zidonghunyinZengYi;
 }
