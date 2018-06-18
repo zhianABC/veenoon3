@@ -186,6 +186,17 @@
     }
     
     lableL4.text = [NSString stringWithFormat:@"%0.0f ms", huifuTimeValue];
+    
+    BOOL isYaXianStarted = [_curProxy isYaXianStarted];
+    
+    if(isYaXianStarted)
+    {
+        [_enableStartBtn changeNormalColor:THEME_RED_COLOR];
+    }
+    else
+    {
+        [_enableStartBtn changeNormalColor:RGB(75, 163, 202)];
+    }
 }
 
 - (void) contentViewComps{

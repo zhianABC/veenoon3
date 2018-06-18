@@ -15,20 +15,24 @@
 
 @interface AudioEProcessor ()
 {
-    
+    BOOL _isSetOK;
 }
 //以后实现
 @property (nonatomic, strong) NSMutableArray *_inchannels;
 @property (nonatomic, strong) NSMutableArray *_outchannels;
-
+@property (nonatomic, strong) NSArray *_rgsCommands;
+@property (nonatomic, strong) NSMutableDictionary *_cmdMap;
 
 @end
 
 @implementation AudioEProcessor
-
+@synthesize _isHuiShengXiaoChu;
 //中控上对应的数据
 @synthesize _inAudioProxys;
 @synthesize _outAudioProxys;
+@synthesize delegate;
+@synthesize _rgsCommands;
+@synthesize _cmdMap;
 
 //配置数据，保存从中控数据结构转换来的数据
 //以后实现
@@ -39,6 +43,7 @@
 {
     if(self = [super init])
     {
+        _isHuiShengXiaoChu = NO;
         
         self._ipaddress = @"192.168.1.100";
         
@@ -47,9 +52,85 @@
         
         self._show_icon_name = @"a_icon_7.png";
         self._show_icon_sel_name = @"a_icon_7_sel.png";
+        
+        _isSetOK = NO;
     }
     
     return self;
+}
+
+- (void) checkRgsProxyCommandLoad{
+    
+    if(_rgsCommands){
+        
+        if(delegate && [delegate respondsToSelector:@selector(didLoadedProxyCommand)])
+        {
+            [delegate didLoadedProxyCommand];
+        }
+        
+        return;
+    }
+    
+    self._cmdMap = [NSMutableDictionary dictionary];
+    
+    IMP_BLOCK_SELF(AudioEProcessor);
+    
+    [KVNProgress show];
+    
+    [[RegulusSDK sharedRegulusSDK] GetDriverCommands:((RgsDriverObj*)_driver).m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
+        
+        [KVNProgress dismiss];
+        
+        if (result)
+        {
+            if ([commands count]) {
+                
+                block_self._rgsCommands = commands;
+                for(RgsCommandInfo *cmd in commands)
+                {
+                    [block_self._cmdMap setObject:cmd forKey:cmd.name];
+                }
+                
+                _isSetOK = YES;
+                
+                
+                [block_self initDatasAfterPullData];
+                [block_self callDelegateDidLoad];
+            }
+        }
+        else
+        {
+            NSString *errorMsg = [NSString stringWithFormat:@"%@ - proxyid:%d",
+                                  [error description], (int)((RgsDriverObj*)_driver).m_id];
+            
+            [KVNProgress showErrorWithStatus:errorMsg];
+            
+            [block_self callDelegateDidLoad];
+            
+            [KVNProgress dismiss];
+        }
+        
+    }];
+}
+
+- (void) callDelegateDidLoad{
+    
+    if(delegate && [delegate respondsToSelector:@selector(didLoadedProxyCommand)])
+    {
+        [delegate didLoadedProxyCommand];
+    }
+}
+
+- (void) initDatasAfterPullData{
+    
+    
+}
+
+- (void) controlHuiShengXiaoChu:(BOOL)isHuiShengXiaoChu {
+    _isHuiShengXiaoChu = isHuiShengXiaoChu;
+}
+- (BOOL) isHuiShengXiaoChuStarted {
+    return _isHuiShengXiaoChu;
 }
 
 - (NSString*) deviceName{

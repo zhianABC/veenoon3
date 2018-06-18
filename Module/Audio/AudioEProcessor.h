@@ -9,20 +9,36 @@
 #import <Foundation/Foundation.h>
 #import "BasePlugElement.h"
 
+@class RgsProxyObj;
+
+@protocol AudioEProcessorDelegate <NSObject>
+
+@optional
+- (void) didLoadedProxyCommand;
+
+@end
 
 @interface AudioEProcessor : BasePlugElement
 {
     
 }
 
+@property (nonatomic, weak) id <AudioEProcessorDelegate> delegate;
 
 //<VAProcessorProxys>
 @property (nonatomic, strong) NSMutableArray *_inAudioProxys;
-
+//huishengxiaochu
+@property (nonatomic, assign) BOOL _isHuiShengXiaoChu;
 //<VAProcessorProxys>
 @property (nonatomic, strong) NSMutableArray *_outAudioProxys;
 
+- (void) checkRgsProxyCommandLoad;
+
 - (NSMutableDictionary *)inputChannelAtIndex:(int)index;
 - (NSMutableDictionary *)outChannelAtIndex:(int)index;
+
+//huishengxiaochu
+- (void) controlHuiShengXiaoChu:(BOOL)isHuiShengXiaoChu;
+- (BOOL) isHuiShengXiaoChuStarted;
 
 @end
