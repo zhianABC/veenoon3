@@ -20,7 +20,7 @@
 #import "VAProcessorProxys.h"
 #import "RegulusSDK.h"
 
-@interface FanKuiYiZhiView() <SlideButtonDelegate> {
+@interface FanKuiYiZhiView() <SlideButtonDelegate, VAProcessorProxysDelegate> {
     UIButton *channelBtn;
     
     UIButton *fankuiyizhiBtn;
@@ -61,6 +61,19 @@
     return self;
 }
 
+-(void) updateFankuiyizhi {
+    BOOL isFanKuiYiZhi = [_curProxy isFanKuiYiZhiStarted];
+    
+    if(isFanKuiYiZhi)
+    {
+        [fankuiyizhiBtn changeNormalColor:THEME_RED_COLOR];
+    }
+    else
+    {
+        [fankuiyizhiBtn changeNormalColor:RGB(75, 163, 202)];
+    }
+}
+
 - (void) channelBtnAction:(UIButton*)sender{
     
     for(UIButton * btn in _channelBtns)
@@ -81,7 +94,12 @@
     NSString *name = _curProxy._rgsProxyObj.name;
     [channelBtn setTitle:name forState:UIControlStateNormal];
     
-    [self updateMuteButtonState];
+    [self updateProxyCommandValIsLoaded];
+}
+
+- (void) updateProxyCommandValIsLoaded {
+    _curProxy.delegate = self;
+    [_curProxy checkRgsProxyCommandLoad];
 }
 
 - (void) contentViewComps {
@@ -98,17 +116,6 @@
                    action:@selector(zhitongBtnAction:)
          forControlEvents:UIControlEventTouchUpInside];
     [contentView addSubview:fankuiyizhiBtn];
-    
-    BOOL isFanKuiYiZhi = [_curProxy isFanKuiYiZhiStarted];
-    
-    if(isFanKuiYiZhi)
-    {
-        [fankuiyizhiBtn changeNormalColor:THEME_RED_COLOR];
-    }
-    else
-    {
-        [fankuiyizhiBtn changeNormalColor:RGB(75, 163, 202)];
-    }
 }
 - (void) zhitongBtnAction:(id) sender {
     if(_curProxy == nil)
@@ -116,23 +123,11 @@
     
     BOOL isMute = [_curProxy isFanKuiYiZhiStarted];
     
-    [_curProxy controlFanKuiYiZhi:!isMute];
+    isMute = !isMute;
     
-    [self updateMuteButtonState];
-}
-
-- (void) updateMuteButtonState{
+    [_curProxy controlFanKuiYiZhi:isMute];
     
-    BOOL isFanKuiYiZhi = [_curProxy isFanKuiYiZhiStarted];
-    
-    if(isFanKuiYiZhi)
-    {
-        [fankuiyizhiBtn changeNormalColor:THEME_RED_COLOR];
-    }
-    else
-    {
-        [fankuiyizhiBtn changeNormalColor:RGB(75, 163, 202)];
-    }
+    [self updateFankuiyizhi];
 }
 
 @end

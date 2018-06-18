@@ -11,9 +11,9 @@
 #import "SlideButton.h"
 #import "VAProcessorProxys.h"
 #import "RegulusSDK.h"
-#import "XinHaoFaShengQi_Chooser.h"
+#import "TeslariaComboChooser.h"
 
-@interface XinHaoFaShengQi_UIView()<SlideButtonDelegate> {
+@interface XinHaoFaShengQi_UIView()<SlideButtonDelegate, VAProcessorProxysDelegate> {
     
     UIButton *channelBtn;
     
@@ -28,6 +28,11 @@
     SlideButton *xinhaoZengyiSlider;
     
     UIButton *xinhaoMuteBtn;
+    
+    int maxTH;
+    int minTH;
+    int maxDuration;
+    int minDuration;
     
 }
 //@property (nonatomic, strong) NSMutableArray *_channelBtns;
@@ -76,7 +81,22 @@
     return self;
 }
 
+- (void) updateProxyCommandValIsLoaded {
+    _curProxy.delegate = self;
+    [_curProxy checkRgsProxyCommandLoad];
+}
 
+- (void) didLoadedProxyCommand {
+    
+    _curProxy.delegate = nil;
+    
+    NSDictionary *result = [_curProxy getSetDelayOptions];
+    
+    maxDuration = [[result objectForKey:@"max"] intValue];
+    minDuration = [[result objectForKey:@"min"] intValue];
+    
+    [self udpateXinhaofasheng];
+}
 
 - (void) channelBtnAction:(UIButton*)sender{
     
@@ -100,7 +120,7 @@
     NSString *name = _curProxy._rgsProxyObj.name;
     [channelBtn setTitle:name forState:UIControlStateNormal];
     
-    [self udpateXinhaofasheng];
+    [self updateProxyCommandValIsLoaded];
 }
 
 -(void) udpateXinhaofasheng {
@@ -228,7 +248,7 @@
 }
 
 -(void) zhengxuanboAction:(UIButton*) sender {
-    XinHaoFaShengQi_Chooser *sel = [[XinHaoFaShengQi_Chooser alloc] init];
+    TeslariaComboChooser *sel = [[TeslariaComboChooser alloc] init];
     sel._dataArray = [_curProxy getXinhaofashengZhengxuanArray];
     sel._type = 1;
     
@@ -236,7 +256,7 @@
     sel._size = CGSizeMake(150, 350);
     
     IMP_BLOCK_SELF(XinHaoFaShengQi_UIView);
-    sel._block = ^(id object)
+    sel._block = ^(id object, int index)
     {
         [block_self chooseXinhaoZhengxuan:object];
     };
@@ -269,7 +289,7 @@
 }
 
 -(void) xinhaoPinLvBtnAction:(UIButton*) sender {
-    XinHaoFaShengQi_Chooser *sel = [[XinHaoFaShengQi_Chooser alloc] init];
+    TeslariaComboChooser *sel = [[TeslariaComboChooser alloc] init];
     sel._dataArray = [_curProxy getXinhaofashengPinlvArray];
     sel._type = 0;
     
@@ -277,7 +297,7 @@
     sel._size = CGSizeMake(150, 350);
     
     IMP_BLOCK_SELF(XinHaoFaShengQi_UIView);
-    sel._block = ^(id object)
+    sel._block = ^(id object, int index)
     {
         [block_self chooseXinhaoPinLv:object];
     };

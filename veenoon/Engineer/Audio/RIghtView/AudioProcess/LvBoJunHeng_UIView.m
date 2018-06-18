@@ -12,7 +12,7 @@
 #import "SlideButton.h"
 #import "VAProcessorProxys.h"
 #import "RegulusSDK.h"
-#import "LvBoJunHeng_Chooser.h"
+#import "TeslariaComboChooser.h"
 
 
 @interface LvBoJunHeng_UIView() <SlideButtonDelegate, VAProcessorProxysDelegate, FilterGraphViewDelegate>{
@@ -289,7 +289,7 @@
         [_deviceSelector dismissPopoverAnimated:NO];
     }
     
-    LvBoJunHeng_Chooser *sel = [[LvBoJunHeng_Chooser alloc] init];
+    TeslariaComboChooser *sel = [[TeslariaComboChooser alloc] init];
     sel._dataArray = [_curProxy getLvBoGaoTongXielvArray];
     sel._type = 2;
     
@@ -341,7 +341,7 @@
         [_deviceSelector dismissPopoverAnimated:NO];
     }
     
-    LvBoJunHeng_Chooser *sel = [[LvBoJunHeng_Chooser alloc] init];
+    TeslariaComboChooser *sel = [[TeslariaComboChooser alloc] init];
     sel._dataArray = [_curProxy getLvBoGaoTongArray];
     sel._type = 0;
     
@@ -670,7 +670,7 @@
         [_deviceSelector dismissPopoverAnimated:NO];
     }
     
-    LvBoJunHeng_Chooser *sel = [[LvBoJunHeng_Chooser alloc] init];
+    TeslariaComboChooser *sel = [[TeslariaComboChooser alloc] init];
     sel._dataArray = [_curProxy getLvBoBoDuanArray];
     sel._type = 2;
     
@@ -848,7 +848,7 @@
         [_deviceSelector dismissPopoverAnimated:NO];
     }
     
-    LvBoJunHeng_Chooser *sel = [[LvBoJunHeng_Chooser alloc] init];
+    TeslariaComboChooser *sel = [[TeslariaComboChooser alloc] init];
     sel._dataArray = [_curProxy getLowFilters];
     sel._type = 1;
     
@@ -898,7 +898,7 @@
         [_deviceSelector dismissPopoverAnimated:NO];
     }
     
-    LvBoJunHeng_Chooser *sel = [[LvBoJunHeng_Chooser alloc] init];
+    TeslariaComboChooser *sel = [[TeslariaComboChooser alloc] init];
     sel._dataArray = [_curProxy getLvBoDiTongXielvArray];
     sel._type = 2;
     

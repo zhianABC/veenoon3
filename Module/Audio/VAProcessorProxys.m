@@ -131,7 +131,7 @@
         
         _isSetOK = NO;
         
-        _isFanKuiYiZhiStarted = YES;
+        _isFanKuiYiZhiStarted = NO;
         _isZiDongHunYinStarted = YES;
         self._zidonghunyinZengYi = @"12.0";
         
@@ -360,11 +360,6 @@
 - (BOOL) isProxyMute{
     
     return _isMute;
-}
-
-- (BOOL) isFanKuiYiZhiStarted{
-    
-    return _isFanKuiYiZhiStarted;
 }
 
 - (BOOL) isZiDongHunYinStarted{
@@ -723,14 +718,153 @@
     }
     
 }
+#pragma mark ---- 反馈抑制 ----
+
+- (BOOL) isFanKuiYiZhiStarted{
+    
+    return _isFanKuiYiZhiStarted;
+}
 
 - (void) controlFanKuiYiZhi:(BOOL)isFanKuiYiZhiStarted { 
     _isFanKuiYiZhiStarted = isFanKuiYiZhiStarted;
+    
+    [self sendFBCallBack];
 }
+
+-(void) sendFBCallBack {
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_FB_CTRL"];
+    if(cmd)
+    {
+        NSString* tureOrFalse = @"False";
+        if(_isFanKuiYiZhiStarted)
+        {
+            tureOrFalse = @"True";
+        }
+        else
+        {
+            tureOrFalse = @"False";
+        }
+        
+        
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            for( RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"ENABLE"])
+                {
+                    [param setObject:tureOrFalse
+                              forKey:param_info.name];
+                }
+            }
+            
+            if([param count])
+            {
+                [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+                                                         cmd:cmd.name
+                                                       param:param completion:^(BOOL result, NSError *error) {
+                                                           if (result) {
+                                                               
+                                                           }
+                                                           else{
+                                                               
+                                                           }
+                                                       }];
+            }
+            
+        }
+    }
+}
+
+#pragma mark ---- 信号发生器 ----
+
+- (NSDictionary*)getSigOuccorOptions{
+    
+    NSMutableDictionary *result = [NSMutableDictionary dictionary];
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_PRESS_LIMIT"];
+    if(cmd)
+    {
+        if([cmd.params count])
+        {
+            
+            for( RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"TH"])
+                {
+                    if(param_info.max)
+                        [result setObject:param_info.max forKey:@"TH_max"];
+                    if(param_info.min)
+                        [result setObject:param_info.min forKey:@"TH_min"];
+                }
+                else if([param_info.name isEqualToString:@"SL"])
+                {
+                    if(param_info.max)
+                        [result setObject:param_info.max forKey:@"SL_max"];
+                    if(param_info.min)
+                        [result setObject:param_info.min forKey:@"SL_min"];
+                }
+                else if([param_info.name isEqualToString:@"START_DUR"])
+                {
+                    if(param_info.max)
+                        [result setObject:param_info.max forKey:@"START_DUR_max"];
+                    if(param_info.min)
+                        [result setObject:param_info.min forKey:@"START_DUR_min"];
+                }
+                else if([param_info.name isEqualToString:@"RECOVER_DUR"])
+                {
+                    if(param_info.max)
+                        [result setObject:param_info.max forKey:@"RECOVER_DUR_max"];
+                    if(param_info.min)
+                        [result setObject:param_info.min forKey:@"RECOVER_DUR_min"];
+                }
+            }
+        }
+    }
+    
+    return result;
+}
+
+-(NSString*) getXinhaofashengPinlv {
+    return _xinhaofashengPinlv;
+}
+-(void) controlXinHaofashengPinlv:(NSString*)xinhaofashengPinlv {
+    self._xinhaofashengPinlv = xinhaofashengPinlv;
+}
+-(NSArray*) getXinhaofashengPinlvArray {
+    return self._xinhaofashengPinlvArray;
+}
+-(NSString*) getXinhaoZhengxuanbo {
+    return self._xinhaozhengxuanbo;
+}
+-(void) controlXinhaoZhengxuanbo:(NSString*)zhengxuanbo {
+    self._xinhaozhengxuanbo = zhengxuanbo;
+}
+-(NSArray*) getXinhaofashengZhengxuanArray {
+    return self._xinhaozhengxuanArray;
+}
+-(BOOL) isXinhaofashengMute {
+    return self._isXinhaofashengMute;
+}
+-(void) controlXinhaofashengMute:(BOOL)xinhaofashengMute {
+    self._isXinhaofashengMute = xinhaofashengMute;
+}
+-(NSString*) getXinhaofashengZengyi {
+    return _xinhaofashengZengyi;
+}
+-(void) controlXinhaofashengZengyi:(NSString*)xinhaofashengZengyi {
+    self._xinhaofashengZengyi = xinhaofashengZengyi;
+}
+
+#pragma mark ---- 自动混音 ----
 
 - (void) controlZiDongHunYin:(BOOL)isZiDongHunYinStarted {
     _isZiDongHunYinStarted = isZiDongHunYinStarted;
 }
+
 - (NSString*) getZidonghuiyinZengYi {
     return _zidonghunyinZengYi;
 }
@@ -787,7 +921,6 @@
     
     return result;
 }
-
 
 - (NSString*) getYaxianFazhi {
     return _yaxianFazhi;
@@ -1724,38 +1857,6 @@
         
         [self sendBandControlCmd:brand];
     }
-}
-
-
--(NSString*) getXinhaofashengPinlv {
-    return _xinhaofashengPinlv;
-}
--(void) controlXinHaofashengPinlv:(NSString*)xinhaofashengPinlv {
-    self._xinhaofashengPinlv = xinhaofashengPinlv;
-}
--(NSArray*) getXinhaofashengPinlvArray {
-    return self._xinhaofashengPinlvArray;
-}
--(NSString*) getXinhaoZhengxuanbo {
-    return self._xinhaozhengxuanbo;
-}
--(void) controlXinhaoZhengxuanbo:(NSString*)zhengxuanbo {
-    self._xinhaozhengxuanbo = zhengxuanbo;
-}
--(NSArray*) getXinhaofashengZhengxuanArray {
-    return self._xinhaozhengxuanArray;
-}
--(BOOL) isXinhaofashengMute {
-    return self._isXinhaofashengMute;
-}
--(void) controlXinhaofashengMute:(BOOL)xinhaofashengMute {
-    self._isXinhaofashengMute = xinhaofashengMute;
-}
--(NSString*) getXinhaofashengZengyi {
-    return _xinhaofashengZengyi;
-}
--(void) controlXinhaofashengZengyi:(NSString*)xinhaofashengZengyi {
-    self._xinhaofashengZengyi = xinhaofashengZengyi;
 }
 
 -(NSString*) getDianpingPinlv {
