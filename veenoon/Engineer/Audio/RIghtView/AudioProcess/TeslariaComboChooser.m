@@ -6,13 +6,13 @@
 //
 //
 
-#import "LvBoJunHeng_Chooser.h"
+#import "TeslariaComboChooser.h"
 #import "SBJson4.h"
 #import "DataCenter.h"
 #import "UserDefaultsKV.h"
 #import "BookCache.h"
 
-@interface LvBoJunHeng_Chooser () <UISearchBarDelegate>
+@interface TeslariaComboChooser () <UISearchBarDelegate>
 {
     UISearchBar *searchBar_;
     UIView *maskView;
@@ -20,7 +20,7 @@
 
 @end
 
-@implementation LvBoJunHeng_Chooser
+@implementation TeslariaComboChooser
 @synthesize _dataArray;
 @synthesize _type;
 @synthesize _block;
@@ -57,6 +57,10 @@
         titleL.text = @"选择低通类型";
     } else if (_type == 2) {
         titleL.text = @"选择高通斜率";
+    } else if (_type == 3) {
+        titleL.text = @"选择频率";
+    } else if (_type == 4) {
+        titleL.text = @"选择波段";
     }
     titleL.textColor = [UIColor whiteColor];
     [titleV addSubview:titleL];
@@ -156,3 +160,4 @@
 }
 
 @end
+
