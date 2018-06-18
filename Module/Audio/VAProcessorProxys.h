@@ -39,8 +39,6 @@
 //zidonghunyin
 @property (nonatomic, assign) BOOL _isZiDongHunYinStarted;
 @property (nonatomic, strong) NSString *_zidonghunyinZengYi;
-//huishengxiaochu
-@property (nonatomic, assign) BOOL _isHuiShengXiaoChu;
 //yanshiqi
 @property (nonatomic, strong) NSString *_yanshiqiSlide;
 //yaxianqi
@@ -142,10 +140,6 @@
 - (BOOL) isZiDongHunYinStarted;
 - (NSString*) getZidonghuiyinZengYi;
 - (void) controlZiDongHunYinZengYi:(NSString*) zengyiDB;
-
-//huishengxiaochu
-- (void) controlHuiShengXiaoChu:(BOOL)isHuiShengXiaoChu;
-- (BOOL) isHuiShengXiaoChuStarted;
 
 //yanshiqi
 - (NSString*) getYanshiqiSlide;

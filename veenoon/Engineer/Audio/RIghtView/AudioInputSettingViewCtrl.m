@@ -234,7 +234,7 @@
     [self.view addSubview:lvbo];
     lvbo.hidden = YES;
     
-    huishengView = [[HuiShengXiaoChu_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._inAudioProxys];
+    huishengView = [[HuiShengXiaoChu_UIView alloc] initWithFrameProxys:vrc withProxys:_processor];
     huishengView.delegate_ = self;
     [self.view addSubview:huishengView];
     huishengView.hidden = YES;
@@ -263,8 +263,6 @@
     
     lvbo._proxys = _processor._inAudioProxys;
     [lvbo layoutChannelBtns:numProxys];
-    
-    [huishengView layoutChannelBtns:numProxys];
     
     yxq._proxys = _processor._inAudioProxys;
     [yxq layoutChannelBtns:numProxys];
@@ -347,6 +345,8 @@
     lvbo.hidden=YES;
     zidonghunyinView.hidden=YES;
     fankuiyizhiView.hidden=YES;
+    
+    [huishengView updateProxyCommandValIsLoaded];
 }
 - (void) yanshiqiAction:(UIButton*)sender{
     
@@ -451,6 +451,8 @@
     lvbo.hidden=YES;
     zidonghunyinView.hidden=YES;
     fankuiyizhiView.hidden=YES;
+    
+    [zaoshengView updateProxyCommandValIsLoaded];
 }
 - (void) zengyiAction:(UIButton*)sender{
     

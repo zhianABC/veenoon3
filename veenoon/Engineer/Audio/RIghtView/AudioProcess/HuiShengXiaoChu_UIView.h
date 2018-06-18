@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "APBaseView.h"
+#import "AudioEProcessor.h"
 
 @protocol HuiShengXiaoChu_UIViewDelegate <NSObject>
 
@@ -19,6 +20,7 @@
 
 @property (nonatomic, weak) id  <HuiShengXiaoChu_UIViewDelegate> delegate_;
 
-- (id)initWithFrameProxys:(CGRect)frame withProxys:(NSArray*) proxys;
+- (id)initWithFrameProxys:(CGRect)frame withProxys:(AudioEProcessor*) proxy;
+- (void) updateProxyCommandValIsLoaded;
 
 @end

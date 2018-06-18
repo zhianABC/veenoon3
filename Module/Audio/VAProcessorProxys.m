@@ -68,7 +68,7 @@
 @synthesize _isFanKuiYiZhiStarted;
 @synthesize _isZiDongHunYinStarted;
 @synthesize _zidonghunyinZengYi;
-@synthesize _isHuiShengXiaoChu;
+
 @synthesize _yanshiqiSlide;
 @synthesize _yaxianFazhi;
 @synthesize _yaxianXielv;
@@ -134,7 +134,6 @@
         _isFanKuiYiZhiStarted = YES;
         _isZiDongHunYinStarted = YES;
         self._zidonghunyinZengYi = @"12.0";
-        _isHuiShengXiaoChu = YES;
         
         self._yanshiqiSlide = @"0.00";
         
@@ -724,14 +723,6 @@
     }
     
 }
-
-- (void) controlHuiShengXiaoChu:(BOOL)isHuiShengXiaoChu {
-    _isHuiShengXiaoChu = isHuiShengXiaoChu;
-}
-- (BOOL) isHuiShengXiaoChuStarted {
-    return _isHuiShengXiaoChu;
-}
-
 
 - (void) controlFanKuiYiZhi:(BOOL)isFanKuiYiZhiStarted { 
     _isFanKuiYiZhiStarted = isFanKuiYiZhiStarted;
