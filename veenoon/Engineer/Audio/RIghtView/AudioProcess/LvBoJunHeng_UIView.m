@@ -1116,7 +1116,7 @@
         [fglm setPEQWithBand:band-1 Q:qval];
         [fglm setPEQWithBand:band-1 freq:freq];
         
-        if(maxRate)
+        if(maxRate - minRate)
         {
             float boduanPinlvvaluef = (freq - minRate)/(maxRate - minRate);
             [bandFreqSlider setCircleValue:boduanPinlvvaluef];
@@ -1124,14 +1124,14 @@
             
         }
         
-        if(maxGain)
+        if(maxGain - minGain)
         {
             float boduanZengYivaluef = (gain - minGain)/(maxGain - minGain);
             [bandGainSlider setCircleValue:boduanZengYivaluef];
             boduanZengyiL.text = [NSString stringWithFormat:@"%0.1f dB", gain];
         }
         
-        if(maxQ)
+        if(maxQ - minQ)
         {
             float boduanQvaluef = (float)(q - minQ)/(maxQ - minQ);
             [boduanQSlider setCircleValue:boduanQvaluef];
@@ -1181,7 +1181,7 @@
         [fglm setPEQWithBand:_channelSelIndex Q:qval];
         [fglm setPEQWithBand:_channelSelIndex freq:freq];
         
-        if(maxRate)
+        if(maxRate - minRate)
         {
             float boduanPinlvvaluef = (freq - minRate)/(maxRate - minRate);
             [bandFreqSlider setCircleValue:boduanPinlvvaluef];
@@ -1189,14 +1189,14 @@
             
         }
         
-        if(maxGain)
+        if(maxGain - minGain)
         {
             float boduanZengYivaluef = (gain - minGain)/(maxGain - minGain);
             [bandGainSlider setCircleValue:boduanZengYivaluef];
             boduanZengyiL.text = [NSString stringWithFormat:@"%0.1f dB", gain];
         }
         
-        if(maxQ)
+        if(maxQ - minQ)
         {
             float boduanQvaluef = (float)(q - minQ)/(maxQ - minQ);
             [boduanQSlider setCircleValue:boduanQvaluef];
@@ -1220,7 +1220,7 @@
         
         if(band == _channelSelIndex)
         {
-            if(maxRate)
+            if(maxRate - minRate)
             {
                 float boduanPinlvvaluef = (freq - minRate)/(maxRate - minRate);
                 [bandFreqSlider setCircleValue:boduanPinlvvaluef];
@@ -1228,7 +1228,7 @@
                 
             }
             
-            if(maxGain)
+            if(maxGain - minGain)
             {
                 float boduanZengYivaluef = (gain - minGain)/(maxGain - minGain);
                 [bandGainSlider setCircleValue:boduanZengYivaluef];
@@ -1250,7 +1250,7 @@
         
         if(band == _channelSelIndex)
         {
-            if(maxQ)
+            if(maxQ - minQ)
             {
                 float boduanQvaluef = (float)(qIndex - minQ)/(maxQ - minQ);
                 [boduanQSlider setCircleValue:boduanQvaluef];

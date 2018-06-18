@@ -27,10 +27,17 @@
     UIView *_maskView;
     
     UILabel *_dbValue;
+    
+    int maxDb;
+    int minDb;
+    
+    SlideButton *dbbtn;
 }
 @property (nonatomic, strong) UIView* _selectedPage;
 @property (nonatomic, strong) NSMutableDictionary *_map;
-@property (nonatomic, strong) NSMutableDictionary *_outpus;;
+@property (nonatomic, strong) NSMutableDictionary *_outpus;
+
+@property (nonatomic, strong) UIButton *_selectBtn;
 
 @end
 
@@ -39,6 +46,8 @@
 @synthesize _processor;
 @synthesize _map;
 @synthesize _outpus;
+
+@synthesize _selectBtn;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -114,7 +123,7 @@
     int cx = SCREEN_WIDTH/2;
     int cy = SCREEN_HEIGHT/2;
     
-    SlideButton *dbbtn = [[SlideButton alloc] initWithFrame:CGRectMake(0, 140, 120, 120)];
+    dbbtn = [[SlideButton alloc] initWithFrame:CGRectMake(0, 140, 120, 120)];
     [_maskView addSubview:dbbtn];
     dbbtn.delegate = self;
     [dbbtn enableValueSet:YES];
@@ -140,11 +149,11 @@
     
     
 
-    _dbValue = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(dbbtn.frame)+10, 120, 20)];
+    _dbValue = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(dbbtn.frame)+10, 120, 24)];
     _dbValue.text = @"0.0";
     _dbValue.textAlignment = NSTextAlignmentCenter;
     [_maskView addSubview:_dbValue];
-    _dbValue.font = [UIFont systemFontOfSize:16];
+    _dbValue.font = [UIFont systemFontOfSize:13];
     _dbValue.textColor = [UIColor whiteColor];
     _dbValue.layer.cornerRadius = 5;
     _dbValue.clipsToBounds = YES;
@@ -155,15 +164,28 @@
     _muteBtn = [UIButton buttonWithColor:RGB(0, 146, 174) selColor:nil];
     _muteBtn.frame = CGRectMake(50, CGRectGetMaxY(_dbValue.frame)+10, 70, 30);
     _muteBtn.clipsToBounds = YES;
-    _muteBtn.layer.cornerRadius = 8;
+    _muteBtn.layer.cornerRadius = 3;
     _muteBtn.titleLabel.font = [UIFont systemFontOfSize:15];
-    [_muteBtn setTitle:@"静音" forState:UIControlStateNormal];
-    _muteBtn.userInteractionEnabled = NO;
-    //[_inBtn setTitleColor: forState:UIControlStateNormal];
+    [_muteBtn setTitle:@"复位" forState:UIControlStateNormal];
     [_maskView addSubview:_muteBtn];
+    [_muteBtn addTarget:self
+                 action:@selector(clearAction:)
+       forControlEvents:UIControlEventTouchUpInside];
     
-    _muteBtn.center = CGPointMake(cx, _muteBtn.center.y);
+    _muteBtn.center = CGPointMake(cx-40, _muteBtn.center.y);
     
+    UIButton *doneBtn = [UIButton buttonWithColor:RGB(0, 146, 174) selColor:nil];
+    doneBtn.frame = CGRectMake(50, CGRectGetMaxY(_dbValue.frame)+10, 70, 30);
+    doneBtn.clipsToBounds = YES;
+    doneBtn.layer.cornerRadius = 3;
+    doneBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    [doneBtn setTitle:@"确认" forState:UIControlStateNormal];
+    [_maskView addSubview:doneBtn];
+    [doneBtn addTarget:self
+                 action:@selector(doneAction:)
+       forControlEvents:UIControlEventTouchUpInside];
+    
+    doneBtn.center = CGPointMake(cx+40, _muteBtn.center.y);
     
     
 }
@@ -173,8 +195,8 @@
     NSMutableArray *audio_ins = _processor._inAudioProxys;
     NSMutableArray *audio_outs = _processor._outAudioProxys;
     
-    int maxOut = [audio_outs count];
-    int maxIn = [audio_ins count];
+    int maxOut = (int)[audio_outs count];
+    int maxIn = (int)[audio_ins count];
     
     
     int w = 50;
@@ -234,18 +256,54 @@
     
 }
 
+- (void) doneAction:(id)sender{
+    
+    self._selectBtn = nil;
+    [_maskView removeFromSuperview];
+    
+}
+
+- (void) clearAction:(id)sender{
+    
+    
+}
+
 - (void) longPressedAction:(UIGestureRecognizer*)sender{
     
-    UIView *view = sender.view;
-    id key = [NSNumber numberWithInteger:view.tag];
+    UIButton *btn = (UIButton*)sender.view;
     
-    long_press_tag = view.tag;
-    
-    if([_map objectForKey:key])
+    if([btn isKindOfClass:[UIButton class]])
     {
+        id key = [NSNumber numberWithInteger:btn.tag];
         
-        [self.view addSubview:_maskView];
+        long_press_tag = (int)btn.tag;
         
+        self._selectBtn = btn;
+        
+        if([_map objectForKey:key])
+        {
+            
+            [self.view addSubview:_maskView];
+            
+            int output_idx = long_press_tag/1000;
+            VAProcessorProxys *outproxy = [_processor._outAudioProxys objectAtIndex:output_idx];
+            NSDictionary *dic = [outproxy getMatrixCmdSettings];
+            
+            maxDb = [[dic objectForKey:@"max"] intValue];
+            minDb = [[dic objectForKey:@"min"] intValue];
+            
+            int max = (maxDb - minDb);
+            float v = [_selectBtn.titleLabel.text floatValue];
+            if(max)
+            {
+                float f = (v - minDb)/max;
+                _dbValue.text = _selectBtn.titleLabel.text;
+                
+                [dbbtn setCircleValue:f];
+            }
+            
+            
+        }
     }
 }
 
@@ -253,7 +311,7 @@
     
     id key = [NSNumber numberWithInteger:sender.tag];
     
-    int index = sender.tag;
+    int index = (int)sender.tag;
     int output_idx = index/1000;
     int input_idx = index%1000;
     
@@ -267,8 +325,8 @@
         
         if(output_idx < [_processor._outAudioProxys count])
         {
-            VAProcessorProxys *proxy = [_processor._outAudioProxys objectAtIndex:output_idx];
-            id okey = [NSNumber numberWithInt:proxy._rgsProxyObj.m_id];
+            VAProcessorProxys *outproxy = [_processor._outAudioProxys objectAtIndex:output_idx];
+            id okey = [NSNumber numberWithInt:(int)outproxy._rgsProxyObj.m_id];
             NSMutableArray *arr = [_outpus objectForKey:okey];
             if(arr == nil){
                 arr = [NSMutableArray array];
@@ -281,6 +339,9 @@
             [mdic setObject:@"0.0" forKey:@"TH"];
             
             [arr addObject:mdic];
+            
+            
+            [outproxy checkRgsProxyCommandLoad];
         }
         
     }
@@ -295,7 +356,7 @@
         if(output_idx < [_processor._outAudioProxys count])
         {
             VAProcessorProxys *proxy = [_processor._outAudioProxys objectAtIndex:output_idx];
-            id okey = [NSNumber numberWithInt:proxy._rgsProxyObj.m_id];
+            id okey = [NSNumber numberWithInt:(int)proxy._rgsProxyObj.m_id];
             NSMutableArray *arr = [_outpus objectForKey:okey];
             if(arr)
             {
@@ -316,12 +377,37 @@
     }
 }
 
-- (void) didSlideButtonValueChanged:(float)value{
-    
-    float fv = (value * 10.0);
-    if([self._selectedPage isKindOfClass:[AudioMatrixView class]])
+
+
+- (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
+   
+    if(_selectBtn)
     {
-        [((AudioMatrixView*)_selectedPage) changeValue:fv];
+        int index = (int)_selectBtn.tag;
+        int output_idx = index/1000;
+        int input_idx = index%1000;
+        
+        float th = value * (maxDb - minDb) + minDb;
+        
+        _dbValue.text = [NSString stringWithFormat:@"%0.1f", th];
+        [_selectBtn setTitle:_dbValue.text forState:UIControlStateNormal];
+        
+        VAProcessorProxys *proxy = [_processor._outAudioProxys objectAtIndex:output_idx];
+        id okey = [NSNumber numberWithInt:(int)proxy._rgsProxyObj.m_id];
+        NSMutableArray *arr = [_outpus objectForKey:okey];
+        if(arr)
+        {
+            VAProcessorProxys *inSelrPoxy = [_processor._inAudioProxys objectAtIndex:input_idx];
+            for(NSMutableDictionary *mdic in arr)
+            {
+                VAProcessorProxys *inproxy = [mdic objectForKey:@"proxy"];
+                if(inproxy._rgsProxyObj.m_id == inSelrPoxy._rgsProxyObj.m_id)
+                {
+                    [mdic setObject:[NSString stringWithFormat:@"%0.1f",th]
+                             forKey:@"TH"];
+                }
+            }
+        }
     }
 }
 

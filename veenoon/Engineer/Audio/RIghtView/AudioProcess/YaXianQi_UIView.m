@@ -402,8 +402,7 @@
         
         lableL2.text = valueStr;
         
-        if(maxRadio > 0)
-            [_limiter setRatioWithR:k];
+        [_limiter setRatioWithR:k];
         
         [_curProxy controlYaxianXielv:valueStr];
         

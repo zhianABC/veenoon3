@@ -208,6 +208,9 @@
 
 - (NSDictionary*)getLowRateRange;
 
+//矩阵路由
+- (NSDictionary*)getMatrixCmdSettings;
+
 //信号发生器
 -(NSString*) getXinhaofashengPinlv;
 -(void) controlXinHaofashengPinlv:(NSString*)xinhaofashengPinlv;
