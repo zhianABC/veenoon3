@@ -329,7 +329,10 @@
             id okey = [NSNumber numberWithInt:(int)outproxy._rgsProxyObj.m_id];
             NSMutableArray *arr = [_outpus objectForKey:okey];
             if(arr == nil){
+                
                 arr = [NSMutableArray array];
+                outproxy._setMixSrc = arr;
+                
                 [_outpus setObject:arr forKey:okey];
             }
            
@@ -337,11 +340,11 @@
             VAProcessorProxys *inproxy = [_processor._inAudioProxys objectAtIndex:input_idx];
             [mdic setObject:inproxy forKey:@"proxy"];
             [mdic setObject:@"0.0" forKey:@"TH"];
-            
             [arr addObject:mdic];
-            
-            
+        
             [outproxy checkRgsProxyCommandLoad];
+            
+            [outproxy controlMatrixSrc];
         }
         
     }
@@ -355,8 +358,8 @@
         
         if(output_idx < [_processor._outAudioProxys count])
         {
-            VAProcessorProxys *proxy = [_processor._outAudioProxys objectAtIndex:output_idx];
-            id okey = [NSNumber numberWithInt:(int)proxy._rgsProxyObj.m_id];
+            VAProcessorProxys *outproxy = [_processor._outAudioProxys objectAtIndex:output_idx];
+            id okey = [NSNumber numberWithInt:(int)outproxy._rgsProxyObj.m_id];
             NSMutableArray *arr = [_outpus objectForKey:okey];
             if(arr)
             {
@@ -368,6 +371,7 @@
                     if(inproxy._rgsProxyObj.m_id == inSelrPoxy._rgsProxyObj.m_id)
                     {
                         [arr removeObject:dic];
+                        [outproxy controlMatrixSrc];
                         break;
                     }
                 }
@@ -405,6 +409,9 @@
                 {
                     [mdic setObject:[NSString stringWithFormat:@"%0.1f",th]
                              forKey:@"TH"];
+                    
+                    [proxy controlMatrixSrcValue:inproxy th:th];
+                    break;
                 }
             }
         }

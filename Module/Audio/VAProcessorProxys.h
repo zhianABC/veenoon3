@@ -86,6 +86,10 @@
 @property (nonatomic, strong) NSString* _dianpingfanxiang;
 @property (nonatomic, assign) BOOL _isdianpingMute;
 @property (nonatomic, strong) NSString* _dianpingZengyi;
+
+//矩阵
+@property (nonatomic, strong) NSMutableArray *_setMixSrc;
+
 /*
  SET_MUTE
  SET_UNMUTE
@@ -211,6 +215,8 @@
 
 //矩阵路由
 - (NSDictionary*)getMatrixCmdSettings;
+- (void) controlMatrixSrc;
+- (void) controlMatrixSrcValue:(VAProcessorProxys *)proxy th:(float)th;
 
 //信号发生器
 -(NSString*) getXinhaofashengPinlv;

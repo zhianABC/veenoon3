@@ -112,6 +112,8 @@
 @synthesize _xinhaozhengxuanArray;
 @synthesize _isyaxianStart;
 
+@synthesize _setMixSrc;
+
 - (id) init
 {
     if(self = [super init])
@@ -2066,6 +2068,109 @@
     return result;
 }
 
+- (void) controlMatrixSrc{
+    
+    
+    RgsCommandInfo *cmd = nil;
+    
+    if(_cmdMap)
+        cmd = [_cmdMap objectForKey:@"SET_MIX_SOURCE"];
+  
+    
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
+            
+            NSString *val = @"";
+            for(NSDictionary *dic in _setMixSrc)
+            {
+                VAProcessorProxys *vap = [dic objectForKey:@"proxy"];
+                NSString *name = vap._rgsProxyObj.name;
+                name = [name stringByReplacingOccurrencesOfString:@" " withString:@""];
+                
+                if([val length])
+                    val = [NSString stringWithFormat:@"%@ %@",val, name];
+                else
+                    val = name;
+            }
+            
+            [param setObject:val forKey:param_info.name];
+        }
+        
+        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+                                                 cmd:cmd.name
+                                               param:param completion:^(BOOL result, NSError *error) {
+                                                   if (result) {
+                                                       
+                                                   }
+                                                   else{
+                                                       
+                                                   }
+                                               }];
+    }
+    
+}
+
+- (void) controlMatrixSrcValue:(VAProcessorProxys *)proxy th:(float)th{
+    
+    RgsCommandInfo *cmd = nil;
+    
+    if(_cmdMap)
+        cmd = [_cmdMap objectForKey:@"SET_MIX_VALUE"];
+    
+    
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+           
+            for(RgsCommandParamInfo * param_info in cmd.params)
+            {
+            
+                if([param_info.name isEqualToString:@"SRC"])
+                {
+                    NSString *name = proxy._rgsProxyObj.name;
+                    name = [name stringByReplacingOccurrencesOfString:@" " withString:@""];
+                    [param setObject:name forKey:param_info.name];
+                }
+                else if([param_info.name isEqualToString:@"VALUE"])
+                {
+                    if(param_info.type == RGS_PARAM_TYPE_FLOAT)
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%0.1f",
+                                          th]
+                                  forKey:param_info.name];
+                    }
+                    else if(param_info.type == RGS_PARAM_TYPE_INT)
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%0.0f",
+                                          th]
+                                  forKey:param_info.name];
+                        
+                    }
+                }
+            }
+           
+        }
+        
+        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+                                                 cmd:cmd.name
+                                               param:param completion:^(BOOL result, NSError *error) {
+                                                   if (result) {
+                                                       
+                                                   }
+                                                   else{
+                                                       
+                                                   }
+                                               }];
+    }
+}
+
+#pragma mark ----生成场景片段------
 
 - (id) generateEventOperation_AnalogyGain
 {
