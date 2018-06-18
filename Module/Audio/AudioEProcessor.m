@@ -123,14 +123,61 @@
 
 - (void) initDatasAfterPullData{
     
-    
 }
 
 - (void) controlHuiShengXiaoChu:(BOOL)isHuiShengXiaoChu {
     _isHuiShengXiaoChu = isHuiShengXiaoChu;
+    
+    [self sendEchoCancle];
 }
 - (BOOL) isHuiShengXiaoChuStarted {
     return _isHuiShengXiaoChu;
+}
+
+-(void) sendEchoCancle {
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"ECHO_CANCLE"];
+    if(cmd)
+    {
+        NSString* tureOrFalse = @"False";
+        if(_isHuiShengXiaoChu)
+        {
+            tureOrFalse = @"True";
+        }
+        else
+        {
+            tureOrFalse = @"False";
+        }
+        
+        
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            for( RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"ENABLE"])
+                {
+                    [param setObject:tureOrFalse
+                              forKey:param_info.name];
+                }
+            }
+            
+            if([param count])
+            {
+                [[RegulusSDK sharedRegulusSDK] ControlDevice:((RgsDriverObj*) _driver).m_id
+                                                         cmd:cmd.name
+                                                       param:param completion:^(BOOL result, NSError *error) {
+                                                           if (result) {
+                                                               
+                                                           }
+                                                           else{
+                                                               
+                                                           }
+                                                       }];
+            }
+            
+        }
+    }
 }
 
 - (NSString*) deviceName{
