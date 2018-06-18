@@ -11,5 +11,6 @@
 
 @interface XinHaoFaShengQi_UIView : APBaseView
 - (id)initWithFrameProxys:(CGRect)frame withProxys:(NSArray*) proxys;
+- (void) updateProxyCommandValIsLoaded;
 
 @end

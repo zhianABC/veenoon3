@@ -13,7 +13,7 @@
 #import "RegulusSDK.h"
 #import "XinHaoFaShengQi_Chooser.h"
 
-@interface XinHaoFaShengQi_UIView()<SlideButtonDelegate> {
+@interface XinHaoFaShengQi_UIView()<SlideButtonDelegate, VAProcessorProxysDelegate> {
     
     UIButton *channelBtn;
     
@@ -28,6 +28,9 @@
     SlideButton *xinhaoZengyiSlider;
     
     UIButton *xinhaoMuteBtn;
+    
+    int maxTH;
+    int minTH;
     
 }
 //@property (nonatomic, strong) NSMutableArray *_channelBtns;
@@ -76,7 +79,22 @@
     return self;
 }
 
+- (void) updateProxyCommandValIsLoaded {
+    _curProxy.delegate = self;
+    [_curProxy checkRgsProxyCommandLoad];
+}
 
+- (void) didLoadedProxyCommand {
+    
+    _curProxy.delegate = nil;
+    
+    NSDictionary *result = [_curProxy getSetDelayOptions];
+    
+    maxDuration = [[result objectForKey:@"max"] intValue];
+    minDuration = [[result objectForKey:@"min"] intValue];
+    
+    [self udpateXinhaofasheng];
+}
 
 - (void) channelBtnAction:(UIButton*)sender{
     
@@ -100,7 +118,7 @@
     NSString *name = _curProxy._rgsProxyObj.name;
     [channelBtn setTitle:name forState:UIControlStateNormal];
     
-    [self udpateXinhaofasheng];
+    [self updateProxyCommandValIsLoaded];
 }
 
 -(void) udpateXinhaofasheng {

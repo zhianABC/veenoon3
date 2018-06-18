@@ -778,6 +778,87 @@
     }
 }
 
+#pragma mark ---- 信号发生器 ----
+
+- (NSDictionary*)getSigOuccorOptions{
+    
+    NSMutableDictionary *result = [NSMutableDictionary dictionary];
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_PRESS_LIMIT"];
+    if(cmd)
+    {
+        if([cmd.params count])
+        {
+            
+            for( RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"TH"])
+                {
+                    if(param_info.max)
+                        [result setObject:param_info.max forKey:@"TH_max"];
+                    if(param_info.min)
+                        [result setObject:param_info.min forKey:@"TH_min"];
+                }
+                else if([param_info.name isEqualToString:@"SL"])
+                {
+                    if(param_info.max)
+                        [result setObject:param_info.max forKey:@"SL_max"];
+                    if(param_info.min)
+                        [result setObject:param_info.min forKey:@"SL_min"];
+                }
+                else if([param_info.name isEqualToString:@"START_DUR"])
+                {
+                    if(param_info.max)
+                        [result setObject:param_info.max forKey:@"START_DUR_max"];
+                    if(param_info.min)
+                        [result setObject:param_info.min forKey:@"START_DUR_min"];
+                }
+                else if([param_info.name isEqualToString:@"RECOVER_DUR"])
+                {
+                    if(param_info.max)
+                        [result setObject:param_info.max forKey:@"RECOVER_DUR_max"];
+                    if(param_info.min)
+                        [result setObject:param_info.min forKey:@"RECOVER_DUR_min"];
+                }
+            }
+        }
+    }
+    
+    return result;
+}
+
+-(NSString*) getXinhaofashengPinlv {
+    return _xinhaofashengPinlv;
+}
+-(void) controlXinHaofashengPinlv:(NSString*)xinhaofashengPinlv {
+    self._xinhaofashengPinlv = xinhaofashengPinlv;
+}
+-(NSArray*) getXinhaofashengPinlvArray {
+    return self._xinhaofashengPinlvArray;
+}
+-(NSString*) getXinhaoZhengxuanbo {
+    return self._xinhaozhengxuanbo;
+}
+-(void) controlXinhaoZhengxuanbo:(NSString*)zhengxuanbo {
+    self._xinhaozhengxuanbo = zhengxuanbo;
+}
+-(NSArray*) getXinhaofashengZhengxuanArray {
+    return self._xinhaozhengxuanArray;
+}
+-(BOOL) isXinhaofashengMute {
+    return self._isXinhaofashengMute;
+}
+-(void) controlXinhaofashengMute:(BOOL)xinhaofashengMute {
+    self._isXinhaofashengMute = xinhaofashengMute;
+}
+-(NSString*) getXinhaofashengZengyi {
+    return _xinhaofashengZengyi;
+}
+-(void) controlXinhaofashengZengyi:(NSString*)xinhaofashengZengyi {
+    self._xinhaofashengZengyi = xinhaofashengZengyi;
+}
+
 #pragma mark ---- 自动混音 ----
 
 - (void) controlZiDongHunYin:(BOOL)isZiDongHunYinStarted {
@@ -840,7 +921,6 @@
     
     return result;
 }
-
 
 - (NSString*) getYaxianFazhi {
     return _yaxianFazhi;
@@ -1777,38 +1857,6 @@
         
         [self sendBandControlCmd:brand];
     }
-}
-
-
--(NSString*) getXinhaofashengPinlv {
-    return _xinhaofashengPinlv;
-}
--(void) controlXinHaofashengPinlv:(NSString*)xinhaofashengPinlv {
-    self._xinhaofashengPinlv = xinhaofashengPinlv;
-}
--(NSArray*) getXinhaofashengPinlvArray {
-    return self._xinhaofashengPinlvArray;
-}
--(NSString*) getXinhaoZhengxuanbo {
-    return self._xinhaozhengxuanbo;
-}
--(void) controlXinhaoZhengxuanbo:(NSString*)zhengxuanbo {
-    self._xinhaozhengxuanbo = zhengxuanbo;
-}
--(NSArray*) getXinhaofashengZhengxuanArray {
-    return self._xinhaozhengxuanArray;
-}
--(BOOL) isXinhaofashengMute {
-    return self._isXinhaofashengMute;
-}
--(void) controlXinhaofashengMute:(BOOL)xinhaofashengMute {
-    self._isXinhaofashengMute = xinhaofashengMute;
-}
--(NSString*) getXinhaofashengZengyi {
-    return _xinhaofashengZengyi;
-}
--(void) controlXinhaofashengZengyi:(NSString*)xinhaofashengZengyi {
-    self._xinhaofashengZengyi = xinhaofashengZengyi;
 }
 
 -(NSString*) getDianpingPinlv {

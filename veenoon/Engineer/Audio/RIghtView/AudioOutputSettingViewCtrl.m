@@ -206,6 +206,8 @@
     yaxianView.hidden = YES;
     lvbojunhengView.hidden = YES;
     dianpingView.hidden = YES;
+    
+    [yanshiView updateProxyCommandValIsLoaded];
 }
 - (void) yaxianqiAction:(id)sender{
     [xinhaofashengqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -264,6 +266,8 @@
     yaxianView.hidden = YES;
     lvbojunhengView.hidden = YES;
     dianpingView.hidden = YES;
+    
+    [xinhaoView updateProxyCommandValIsLoaded];
 }
 
 - (void) okAction:(id)sender{
