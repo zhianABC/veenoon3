@@ -91,6 +91,17 @@ static DataCenter *_globalDataInstanse;
     
     [_mapDrivers setObject:com forKey:UUID_Serial_Com];
     
+    
+    NSDictionary *audiMixer = @{@"type":@"audio",
+                                @"name":@"会议",
+                                @"driver":UUID_Audio_Mixer,
+                                @"brand":@"Teslaria",
+                                @"icon":@"engineer_huiyi_n.png",
+                                @"icon_s":@"engineer_huiyi_s.png",
+                                @"driver_class":@"AudioEMix",
+                                @"ptype":@"Audio Mixer"
+                                };
+    [_mapDrivers setObject:audiMixer forKey:UUID_Audio_Mixer];
 }
 
 - (NSDictionary *)driverWithKey:(NSString *)key{

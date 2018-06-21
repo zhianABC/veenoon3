@@ -30,38 +30,9 @@
 
 @implementation EngineerHunYinSysViewController
 @synthesize _hunyinSysArray;
-- (void) inintData {
-    if (_hunyinSysArray) {
-        [_hunyinSysArray removeAllObjects];
-    } else {
-        _hunyinSysArray = [[NSMutableArray alloc] init];
-    }
-    NSMutableDictionary *wuxianDic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"huangliurong", @"name",
-                                       @"off", @"status",
-                                       @"1", @"singnal",
-                                       @"huatong", @"type",
-                                       @"100", @"dianliang", nil];
-    NSMutableDictionary *wuxianDic2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"huangliurong2", @"name",
-                                       @"off", @"status",
-                                       @"1", @"singnal",
-                                       @"yaobao", @"type",
-                                       @"100", @"dianliang", nil];
-    NSMutableDictionary *wuxianDic3 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"huangliurong3", @"name",
-                                       @"off", @"status",
-                                       @"1", @"singnal",
-                                       @"huatong", @"type",
-                                       @"90", @"dianliang", nil];
-    
-    NSMutableArray *array1 = [NSMutableArray arrayWithObjects:wuxianDic1, wuxianDic2, wuxianDic3, wuxianDic1, wuxianDic2, wuxianDic3, wuxianDic1, wuxianDic2, wuxianDic3, nil];
-    NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                 @"001", @"name",
-                                 array1, @"value", nil];
-    [_hunyinSysArray addObject:dic1];
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self inintData];
     
     isSettings = NO;
     
@@ -121,40 +92,33 @@
     int cellHeight = 92;
     int colNumber = ENGINEER_VIEW_COLUMN_N;
     int space = ENGINEER_VIEW_COLUMN_GAP;
-    
-    NSMutableDictionary *dataDic = [_hunyinSysArray objectAtIndex:0];
-    NSMutableArray *dataArray = [dataDic objectForKey:@"value"];
-    
-    if ([dataArray count] == 0) {
-        int nameStart = 1;
-    } else {
-        for (int i = 0; i < [dataArray count]; i++) {
-            NSMutableDictionary *dataDic = [dataArray objectAtIndex:i];
-            
-            int row = index/colNumber;
-            int col = index%colNumber;
-            int startX = col*cellWidth+col*space+leftRight;
-            int startY = row*cellHeight+space*row+top;
-            
-            
-            UIImage *image = [UIImage imageNamed:@"slide_btn.png"];
-            
-            UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-            imageView.backgroundColor = [UIColor clearColor];
-            imageView.layer.cornerRadius = 10;
-            imageView.layer.borderWidth = 0;
-            imageView.layer.borderColor = DARK_BLUE_COLOR.CGColor;
-            imageView.clipsToBounds = YES;
-            
-            imageView.frame = CGRectMake(startX, startY, 100, 100);
-            imageView.tag = index;
-            imageView.userInteractionEnabled=YES;
-            imageView.layer.contentsGravity = kCAGravityCenter;
-            [self.view addSubview:imageView];
-            
-            index++;
-        }
+
+    for (int i = 0; i < 8; i++) {
+        
+        int row = index/colNumber;
+        int col = index%colNumber;
+        int startX = col*cellWidth+col*space+leftRight;
+        int startY = row*cellHeight+space*row+top;
+        
+        
+        UIImage *image = [UIImage imageNamed:@"slide_btn.png"];
+        
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+        imageView.backgroundColor = [UIColor clearColor];
+        imageView.layer.cornerRadius = 10;
+        imageView.layer.borderWidth = 0;
+        imageView.layer.borderColor = DARK_BLUE_COLOR.CGColor;
+        imageView.clipsToBounds = YES;
+        
+        imageView.frame = CGRectMake(startX, startY, 100, 100);
+        imageView.tag = index;
+        imageView.userInteractionEnabled=YES;
+        imageView.layer.contentsGravity = kCAGravityCenter;
+        [self.view addSubview:imageView];
+        
+        index++;
     }
+    
     int height = 150;
     
     _proxysView = [[UIView alloc] initWithFrame:CGRectMake(0,

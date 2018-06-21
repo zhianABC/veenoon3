@@ -764,7 +764,7 @@
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
-        if ([name isEqualToString:@"混音系统"]) {
+        if ([name isEqualToString:audio_mixer_name]) {
             EngineerHunYinSysViewController *ctrl = [[EngineerHunYinSysViewController alloc] init];
             ctrl._hunyinSysArray = @[plug];
             [self.navigationController pushViewController:ctrl animated:YES];
