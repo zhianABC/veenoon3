@@ -62,8 +62,18 @@
                                @"ptype":@"Audio Processor"
                                };
     
-    [_mapDrivers setObject:audioDic forKey:UUID_Audio_Processor];
+    NSDictionary *audioDic2 = @{@"type":@"audio",
+                               @"name":@"会议",
+                               @"driver":UUID_Audio_Mixer,
+                               @"brand":@"Teslaria",
+                               @"icon":@"engineer_huiyi_n.png",
+                               @"icon_s":@"engineer_huiyi_s.png",
+                               @"driver_class":@"AudioEMix",
+                               @"ptype":@"Audio Mixer"
+                               };
     
+    [_mapDrivers setObject:audioDic forKey:UUID_Audio_Processor];
+    [_mapDrivers setObject:audioDic2 forKey:UUID_Audio_Mixer];
 }
 
 - (void)viewDidLoad {
@@ -181,7 +191,7 @@
     _productTypePikcer._pickerDataArray = @[@{@"values":@[@"电源管理",
                                                           @"音乐播放",
                                                           @"无线话筒",
-                                                          @"会议",
+                                                          audio_mixer_name,
                                                           @"反馈抑制",
                                                           audio_process_name,
                                                           @"功放"]}];
@@ -375,11 +385,19 @@
     [_yinpinchuliBtn setBtnHighlited:NO];
     [_floorWarmBtn setBtnHighlited:NO];
     
+    self._currentBrands = @[@"Teslaria"];
+    self._currentTypes = @[@"Audio Mixer"];
+    self._driverUdids = @[UUID_Audio_Mixer];
+    
     IconCenterTextButton *btn = (IconCenterTextButton*) sender;
     NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
     
-    [self initBrandAndTypes];
+    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
+    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
+    
+    [_brandPicker selectRow:0 inComponent:0];
+    [_productCategoryPicker selectRow:0 inComponent:0];
 }
 
 - (void) wuxianhuatongAction:(id)sender{
@@ -437,7 +455,7 @@
         [self musicPlayAction:_musicPlayBtn];
     } else if ([@"无线话筒" isEqualToString:brand]) {
         [self wuxianhuatongAction:_wuxianhuatongBtn];
-    } else if ([@"会议" isEqualToString:brand]) {
+    } else if ([audio_mixer_name isEqualToString:brand]) {
         [self huiyiAction:_huiyiBtn];
     } else if ([@"反馈抑制" isEqualToString:brand]) {
         [self fankuiyizhiAction:_fankuiyizhiBtn];
