@@ -32,6 +32,9 @@
 
 //zidonghunyin
 @property (nonatomic, strong) NSString *_zidonghunyinZengYi;
+@property (nonatomic, strong) NSMutableArray *_zidonghunyinInputChanels;
+@property (nonatomic, strong) NSMutableArray *_zidonghunyinOutputChanels;
+
 
 //<VAProcessorProxys>
 @property (nonatomic, strong) NSMutableArray *_outAudioProxys;
@@ -48,5 +51,9 @@
 //zidonghunyin
 - (NSString*) getZidonghuiyinZengYi;
 - (void) controlZiDongHunYinZengYi:(NSString*) zengyiDB;
+- (NSMutableArray*) getZidonghunyinInputChanels;
+- (void) controlZidonghunyinInputChanels:(NSMutableArray*)zidonghunyinInputChanels;
+- (NSMutableArray*) getZidonghunyinOutputChanels;
+- (void) controlZidonghunyinOutputChanels:(NSMutableArray*)zidonghunyinOutputChanels;
 
 @end

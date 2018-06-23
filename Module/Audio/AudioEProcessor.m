@@ -41,6 +41,8 @@
 
 //zidonghunyin
 @synthesize _zidonghunyinZengYi;
+@synthesize _zidonghunyinInputChanels;
+@synthesize _zidonghunyinOutputChanels;
 
 - (id) init
 {
@@ -192,6 +194,19 @@
 }
 - (void) controlZiDongHunYinZengYi:(NSString*) zengyiDB {
     self._zidonghunyinZengYi = zengyiDB;
+}
+
+- (NSMutableArray*) getZidonghunyinInputChanels {
+    return _zidonghunyinInputChanels;
+}
+- (void) controlZidonghunyinInputChanels:(NSMutableArray*)zidonghunyinInputChanels {
+    self._zidonghunyinInputChanels = zidonghunyinInputChanels;
+}
+- (NSMutableArray*) getZidonghunyinOutputChanels {
+    return _zidonghunyinOutputChanels;
+}
+- (void) controlZidonghunyinOutputChanels:(NSMutableArray*)zidonghunyinOutputChanels {
+    self._zidonghunyinOutputChanels = _zidonghunyinOutputChanels;
 }
 
 
