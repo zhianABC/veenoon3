@@ -57,4 +57,7 @@
 - (NSMutableArray*) getZidonghunyinOutputChanels;
 - (void) controlZidonghunyinOutputChanels:(NSMutableArray*)zidonghunyinOutputChanels;
 
+- (void) prepareAllAudioInCmds;
+- (void) prepareAllAudioOutCmds;
+
 @end

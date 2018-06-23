@@ -427,6 +427,14 @@
     
 }
 
+- (BOOL) haveProxyCommandLoaded{
+    
+    if(_rgsCommands)
+        return YES;
+    
+    return NO;
+    
+}
 - (void) checkRgsProxyCommandLoad{
     
     if(_rgsProxyObj == nil || _rgsCommands){
@@ -491,6 +499,7 @@
             [self._cmdMap setObject:cmd forKey:cmd.name];
         }
     
+        [self initDatasAfterPullData];
     }
 }
 

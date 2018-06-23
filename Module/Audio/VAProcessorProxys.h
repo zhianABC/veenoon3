@@ -111,6 +111,7 @@
 
 //批量获取后，赋值
 - (void) prepareLoadCommand:(NSArray*)cmds;
+- (BOOL) haveProxyCommandLoaded;
 
 - (BOOL) isProxyMute;
 - (BOOL) isProxyDigitalMute;

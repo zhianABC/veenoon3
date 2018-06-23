@@ -328,6 +328,10 @@
         _curProcessor._inAudioProxys = _inputProxys;
         _curProcessor._outAudioProxys = _outputProxys;
         
+        ///加载输出输出Proxy的Commands数据
+        [_curProcessor prepareAllAudioInCmds];
+        [_curProcessor prepareAllAudioOutCmds];
+        
     }
     else
     {
@@ -414,7 +418,7 @@
         
         index++;
     }
-    [_curProcessor syncDriverIPProperty];
+    //[_curProcessor syncDriverIPProperty];
 }
 
 //value = 0....1
@@ -591,8 +595,7 @@
         }
         [okBtn setTitle:@"设置" forState:UIControlStateNormal];
         isSettings = NO;
-        
-        [_curProcessor uploadDriverIPProperty];
+    
     }
 }
 
