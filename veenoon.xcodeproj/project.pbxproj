@@ -1776,6 +1776,7 @@
 		EB5F7F971FD59D8400351888 /* EngineerDNSSettingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EngineerDNSSettingView.m; sourceTree = "<group>"; };
 		EB62DF7520D7A04D00144EE0 /* TeslariaComboChooser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TeslariaComboChooser.h; sourceTree = "<group>"; };
 		EB62DF7620D7A04D00144EE0 /* TeslariaComboChooser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TeslariaComboChooser.m; sourceTree = "<group>"; };
+		EB62DFC120DE400500144EE0 /* RgsSystemInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RgsSystemInfo.h; sourceTree = "<group>"; };
 		EB7333EF204102DF00AE60B8 /* FloorWarmRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FloorWarmRightView.h; sourceTree = "<group>"; };
 		EB7333F0204102DF00AE60B8 /* FloorWarmRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FloorWarmRightView.m; sourceTree = "<group>"; };
 		EB7333F22041046400AE60B8 /* AirCleanRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirCleanRightView.h; sourceTree = "<group>"; };
@@ -3093,6 +3094,7 @@
 		34766E9920CE1E77006B9E82 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				EB62DFC120DE400500144EE0 /* RgsSystemInfo.h */,
 				34766E9A20CE1E77006B9E82 /* RgsCommandParamInfo.h */,
 				34766E9B20CE1E77006B9E82 /* RgsDriverObj.h */,
 				34766E9C20CE1E77006B9E82 /* RegulusSDK.h */,
