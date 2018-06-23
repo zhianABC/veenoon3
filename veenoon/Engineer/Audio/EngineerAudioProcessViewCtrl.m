@@ -324,6 +324,19 @@
                 
                 //[vap checkRgsProxyCommandLoad];
             }
+            else if ([proxy.type isEqualToString:@"Signal"])
+            {
+                AudioEProcessorSignalProxy *vap = [[AudioEProcessorSignalProxy alloc] init];
+                vap._rgsProxyObj = proxy;
+                
+                _curProcessor._singalProxy = vap;
+            }
+            else if ([proxy.type isEqualToString:@"Auto Mix"]) {
+                AudioEProcessorAutoMixProxy *vap = [[AudioEProcessorAutoMixProxy alloc] init];
+                vap._rgsProxyObj = proxy;
+                
+                _curProcessor._autoMixProxy = vap;
+            }
         }
         _curProcessor._inAudioProxys = _inputProxys;
         _curProcessor._outAudioProxys = _outputProxys;

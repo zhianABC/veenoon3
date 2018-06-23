@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "BasePlugElement.h"
+#import "AudioEProcessorSignalProxy.h"
+#import "AudioEProcessorAutoMixProxy.h"
 
 @class RgsProxyObj;
 
@@ -30,11 +32,8 @@
 //huishengxiaochu
 @property (nonatomic, assign) BOOL _isHuiShengXiaoChu;
 
-//zidonghunyin
-@property (nonatomic, strong) NSString *_zidonghunyinZengYi;
-@property (nonatomic, strong) NSMutableArray *_zidonghunyinInputChanels;
-@property (nonatomic, strong) NSMutableArray *_zidonghunyinOutputChanels;
-
+@property (nonatomic, strong) AudioEProcessorAutoMixProxy *_autoMixProxy;
+@property (nonatomic, strong) AudioEProcessorSignalProxy *_singalProxy;
 
 //<VAProcessorProxys>
 @property (nonatomic, strong) NSMutableArray *_outAudioProxys;
@@ -47,14 +46,5 @@
 //huishengxiaochu
 - (void) controlHuiShengXiaoChu:(BOOL)isHuiShengXiaoChu;
 - (BOOL) isHuiShengXiaoChuStarted;
-
-//zidonghunyin
-- (NSDictionary*)getAutoMixCmdSettings;
-- (NSString*) getZidonghuiyinZengYi;
-- (void) controlZiDongHunYinZengYi:(NSString*) zengyiDB;
-- (NSMutableArray*) getZidonghunyinInputChanels;
-- (void) controlZidonghunyinInputChanels:(NSMutableArray*)zidonghunyinInputChanels;
-- (NSMutableArray*) getZidonghunyinOutputChanels;
-- (void) controlZidonghunyinOutputChanels:(NSMutableArray*)zidonghunyinOutputChanels;
 
 @end

@@ -11,9 +11,10 @@
 #import "SlideButton.h"
 #import "VAProcessorProxys.h"
 #import "RegulusSDK.h"
+#import "AudioEProcessorAutoMixProxy.h"
 #import "AudioEProcessor.h"
 
-@interface ZiDongHunYin_UIView() <SlideButtonDelegate, AudioEProcessorDelegate> {
+@interface ZiDongHunYin_UIView() <SlideButtonDelegate, AudioEProcessorAutoMixProxyDelegate> {
     UIButton *channelBtn;
     
     SlideButton *zengyi;
@@ -30,15 +31,17 @@
     int valueMax;
     int valueMin;
 }
-@property (nonatomic, strong) AudioEProcessor *_currentProxy;
+@property (nonatomic, strong) AudioEProcessorAutoMixProxy *_currentProxy;
+@property (nonatomic, strong) AudioEProcessor *_currentAodio;
 @end
 
 @implementation ZiDongHunYin_UIView
 @synthesize _currentProxy;
 
-- (id)initWithFrameProxy:(CGRect)frame withProxy:(AudioEProcessor*) proxy
+- (id)initWithFrameProxy:(CGRect)frame withAudio:(AudioEProcessor*) audioProcessor withProxy:(AudioEProcessorAutoMixProxy*) proxy
 {
     self._currentProxy = proxy;
+    self._currentAodio = audioProcessor;
     
     if(self = [super initWithFrame:frame]) {
         inputChanels = [NSMutableArray array];
@@ -104,7 +107,7 @@
     
     labelL.text = @"输入";
     
-    int num = (int) [self._currentProxy._inAudioProxys count];
+    int num = (int) [self._currentAodio._inAudioProxys count];
     if (num <= 0) {
         return;
     }
@@ -213,7 +216,7 @@
     
     labelL.text = @"输出";
     
-    int num = (int) [self._currentProxy._outAudioProxys count];
+    int num = (int) [self._currentAodio._outAudioProxys count];
     if (num <= 0) {
         return;
     }
