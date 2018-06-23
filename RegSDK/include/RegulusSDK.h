@@ -31,11 +31,13 @@
 #import "RgsConnectionObj.h"
 #import "RgsPropertyObj.h"
 #import "RgsProxyStateInfo.h"
+#import "RgsSystemInfo.h"
 
 
 @protocol RegulusSDKDelegate <NSObject>
 @required -(void) onConnectChanged:(BOOL)connect;
 @required -(void) onRecvDeviceNotify:(RgsDeviceNoteObj *) notify;
+@optional -(void) onIrcodeRecord:(NSString *)serial key:(NSString *)key status:(RgsIrRecordStatus)status;
 @optional -(void) onDowningTopology:(float) persen;
 @optional -(void) onDownDoneTopology;
 @end
@@ -469,6 +471,120 @@
  */
 +(void)RgsWifiConfWithPassword:(NSString *)psd taskCount:(int)taskCount timeIntevel:(int)itmeIntevel callback:(void(^)(NSError *error))callback;
 
+
+/*!
+ @since 3.6.1
+ @brief 请求物理类型设备驱动信息
+ @param completion      回调block 正常时返回YES driver_infos为RgsDriverInfo列表
+ @see RgsDriverInfo
+ */
+-(void)RequestPhysicalDriverInfos:(void(^)(BOOL result,NSArray * driver_infos,NSError * error)) completion;
+
+/*!
+ @since 3.6.1
+ @brief 请求代理设备驱动信息
+ @param completion      回调block 正常时返回YES driver_infos为RgsDriverInfo列表
+ @see RgsDriverInfo
+ */
+-(void)RequestProxyDriverInfos:(void(^)(BOOL result,NSArray * driver_infos,NSError * error)) completion;
+
+/*!
+ @since 3.6.1
+ @brief 请求功能设备驱动信息
+ @param completion      回调block 正常时返回YES driver_infos为RgsDriverInfo列表
+ @see RgsDriverInfo
+ */
+-(void)RequestFunctionDriverInfos:(void(^)(BOOL result,NSArray * driver_infos,NSError * error)) completion;
+
+
+/*!
+ @since 3.6.1
+ @brief 创建红外控制器设备驱动
+ @param model 红外控制器类型
+ @param name 创建的驱动名称
+ @param completion 回调block 正常时返回YES driver_info为创建后的RgsDriverInfo
+ */
+-(void)MakeIrDriverWithIrModel:(RgsIrModel)model name:(NSString *)name completion:(void(^)(BOOL result,RgsDriverInfo * driver_info,NSError * error))completion;
+
+
+/*!
+ @since 3.6.1
+ @brief 获取红外控制器设备驱动红外码KEY值列表
+ @param serial 红外驱动序列号
+ @param completion 回调block 正常时返回YES code_key为红外码的KEY和是否录制了的值
+ */
+-(void)GetIrDriverIrcodeKey:(NSString *)serial completion:(void(^)(BOOL result,NSDictionary * code_key,NSError * error))completion;
+
+/*!
+ @since 3.6.1
+ @brief 录制红外控制器红外码
+ @param serial 红外驱动序列号
+ @param key 红外码的键名
+ @param completion 回调block 正常时返回YES 返回为NO
+ */
+-(void)RecordIrcode:(NSString *)serial cmd:(NSString *)key completion:(void(^)(BOOL result,NSError * error))completion;
+
+/*!
+ @since 3.6.1
+ @brief 删除红外设备驱动信息
+ @param serial 红外驱动序列号
+ @param completion 回调block 正常时返回YES 返回为NO
+ */
+-(void)DeleteIrDriver:(NSString *)serial completion:(void(^)(BOOL result,NSError * error))completion;
+
+/*!
+ @since 3.6.1
+ @brief 设置系统时间
+ @param date 设置的系统时间
+ @param completion 回调block 正常时返回YES 返回为NO
+ */
+-(void)SetDate:(NSDate *)date completion:(void(^)(BOOL result,NSError * error))completion;
+
+/*!
+ @since 3.6.1
+ @brief 设置系统IP自动获取,重启系统后生效
+ @param completion 回调block 正常时返回YES 返回为NO
+ */
+-(void)SetIPAuto:(void(^)(BOOL result,NSError * error))completion;
+
+
+/*!
+ @since 3.6.1
+ @brief 设置系统IP，重启系统后生效
+ @param ip IP地址
+ @param mask 网络掩码
+ @param gateway 网关
+ @param completion 回调block 正常时返回YES 返回为NO
+ */
+-(void)SetIPManual:(NSString *)ip
+              mask:(NSString *)mask
+           gateway:(NSString *)gateway
+        completion:(void(^)(BOOL result,NSError * error))completion;
+
+/*!
+ @since 3.6.1
+ @brief 获取系统信息
+ @param completion      回调block 正常时返回YES sys_info系统信息对象
+ @see RgsSystemInfo
+ */
+-(void)GetSystemInfo:(void(^)(BOOL result,RgsSystemInfo * sys_info,NSError * error))completion;
+
+/*!
+ @since 3.6.1
+ @brief 重启系统
+ @param completion 回调block 正常时返回YES 返回为NO
+ */
+-(void)RebootSystem:(void(^)(BOOL result,NSError * error))completion;
+
+
+/*!
+ @since 3.6.1
+ @brief 获取多个代理命令
+ @param proxy_ids 为NSNUmber数组。NSNUmber内容为要查询的Proxy id
+ @param completion      回调block 正常时返回YES commd_dict的KEY为proxy id的字符。value为该proxy的命令列表
+ @see RgsCommandInfo
+ */
+-(void)GetProxyCommandDict:(NSArray *)proxy_ids completion:(void(^)(BOOL result,NSDictionary * commd_dict,NSError * error)) completion;
 @end
 
 

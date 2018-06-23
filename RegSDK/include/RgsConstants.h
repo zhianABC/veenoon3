@@ -49,9 +49,29 @@ typedef NS_ENUM(NSInteger,RgsFrequencyType)
  */
 typedef NS_ENUM(NSInteger,RgsDriverType)
 {
+    RGS_DRIVER_TYPE_NONE=0,
     RGS_DRIVER_TYPE_PHYSICAL=1,
     RGS_DRIVER_TYPE_PROXY,
     RGS_DRIVER_TYPE_FUNCTION,
+};
+
+/*!
+ 红外控制器模版
+ */
+typedef NS_ENUM(NSInteger,RgsIrModel){
+   RGS_IR_M_TV=1,
+   RGS_IR_M_DVD,
+   RGS_IR_M_VIDEOBOX,
+   RGS_IR_M_AC,
+};
+
+/*!
+ 红外录码状态
+ */
+typedef NS_ENUM(NSInteger,RgsIrRecordStatus){
+    RGS_IR_RECORD_WAIT=0,
+    RGS_IR_RECORD_DONE,
+    RGS_IR_RECORD_TIMEOUT,
 };
 
 
