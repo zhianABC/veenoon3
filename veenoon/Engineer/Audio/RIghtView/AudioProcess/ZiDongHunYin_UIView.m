@@ -227,7 +227,7 @@
     int btnIndex = (int) sender.tag;
     
     UIButton *selectedBtn = nil;
-    for (UIButton *btn in inputSelectedBtns) {
+    for (UIButton *btn in outputSelectedBtns) {
         if (btnIndex == btn.tag) {
             selectedBtn = btn;
             break;
