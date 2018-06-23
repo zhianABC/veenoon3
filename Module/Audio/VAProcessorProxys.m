@@ -493,6 +493,8 @@
     
     if ([cmds count]) {
         
+        self._cmdMap = [NSMutableDictionary dictionary];
+        
         self._rgsCommands = cmds;
         for(RgsCommandInfo *cmd in cmds)
         {
