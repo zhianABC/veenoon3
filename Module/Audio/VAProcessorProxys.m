@@ -42,7 +42,6 @@
     BOOL _isSetOK;
     
     BOOL _isFanKuiYiZhiStarted;
-    BOOL _isZiDongHunYinStarted;
 }
 @property (nonatomic, strong) NSArray *_rgsCommands;
 @property (nonatomic, strong) NSMutableDictionary *_cmdMap;
@@ -66,8 +65,6 @@
 @synthesize _is48V;
 @synthesize _micDb;
 @synthesize _isFanKuiYiZhiStarted;
-@synthesize _isZiDongHunYinStarted;
-@synthesize _zidonghunyinZengYi;
 
 @synthesize _yanshiqiSlide;
 @synthesize _yaxianFazhi;
@@ -134,8 +131,6 @@
         _isSetOK = NO;
         
         _isFanKuiYiZhiStarted = NO;
-        _isZiDongHunYinStarted = YES;
-        self._zidonghunyinZengYi = @"12.0";
         
         self._yanshiqiSlide = @"0.00";
         
@@ -362,11 +357,6 @@
 - (BOOL) isProxyMute{
     
     return _isMute;
-}
-
-- (BOOL) isZiDongHunYinStarted{
-    
-    return _isZiDongHunYinStarted;
 }
 
 - (BOOL) isProxyDigitalMute{
@@ -859,19 +849,6 @@
 }
 -(void) controlXinhaofashengZengyi:(NSString*)xinhaofashengZengyi {
     self._xinhaofashengZengyi = xinhaofashengZengyi;
-}
-
-#pragma mark ---- 自动混音 ----
-
-- (void) controlZiDongHunYin:(BOOL)isZiDongHunYinStarted {
-    _isZiDongHunYinStarted = isZiDongHunYinStarted;
-}
-
-- (NSString*) getZidonghuiyinZengYi {
-    return _zidonghunyinZengYi;
-}
-- (void) controlZiDongHunYinZengYi:(NSString*) zengyiDB {
-    self._zidonghunyinZengYi = zengyiDB;
 }
 
 #pragma mark ---- 压限器 ----

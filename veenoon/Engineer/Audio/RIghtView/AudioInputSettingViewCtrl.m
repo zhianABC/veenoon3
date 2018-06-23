@@ -239,7 +239,7 @@
     [self.view addSubview:huishengView];
     huishengView.hidden = YES;
     
-    zidonghunyinView = [[ZiDongHunYin_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._inAudioProxys];
+    zidonghunyinView = [[ZiDongHunYin_UIView alloc] initWithFrameProxy:vrc withProxy:_processor];
     [self.view addSubview:zidonghunyinView];
     zidonghunyinView.hidden = YES;
     
@@ -266,8 +266,6 @@
     
     yxq._proxys = _processor._inAudioProxys;
     [yxq layoutChannelBtns:numProxys];
-    
-    [zidonghunyinView layoutChannelBtns:numProxys];
     
     [fankuiyizhiView layoutChannelBtns:numProxys];
     

@@ -29,6 +29,10 @@
 @property (nonatomic, strong) NSMutableArray *_inAudioProxys;
 //huishengxiaochu
 @property (nonatomic, assign) BOOL _isHuiShengXiaoChu;
+
+//zidonghunyin
+@property (nonatomic, strong) NSString *_zidonghunyinZengYi;
+
 //<VAProcessorProxys>
 @property (nonatomic, strong) NSMutableArray *_outAudioProxys;
 
@@ -40,5 +44,9 @@
 //huishengxiaochu
 - (void) controlHuiShengXiaoChu:(BOOL)isHuiShengXiaoChu;
 - (BOOL) isHuiShengXiaoChuStarted;
+
+//zidonghunyin
+- (NSString*) getZidonghuiyinZengYi;
+- (void) controlZiDongHunYinZengYi:(NSString*) zengyiDB;
 
 @end

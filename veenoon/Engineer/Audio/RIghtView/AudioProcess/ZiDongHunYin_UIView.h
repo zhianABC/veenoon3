@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "APBaseView.h"
+#import "AudioEProcessor.h"
 
 @interface ZiDongHunYin_UIView : APBaseView
-- (id)initWithFrameProxys:(CGRect)frame withProxys:(NSArray*) proxys;
+- (id)initWithFrameProxy:(CGRect)frame withProxy:(AudioEProcessor*) proxy;
 
 @end

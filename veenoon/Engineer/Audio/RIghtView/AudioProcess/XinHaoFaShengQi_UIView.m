@@ -138,12 +138,12 @@
         [xinhaoMuteBtn changeNormalColor:RGB(75, 163, 202)];
     }
     
-    NSString *zengyiDB = [_curProxy getZidonghuiyinZengYi];
+    NSString *zengyiDB = [_curProxy getXinhaofashengZengyi];
     float value = [zengyiDB floatValue];
     float f = (value+12.0)/24.0;
     [xinhaoZengyiSlider setCircleValue:f];
     
-    labelL1.text = [[_curProxy getZidonghuiyinZengYi] stringByAppendingString:@" dB"];
+    labelL1.text = [[_curProxy getXinhaofashengZengyi] stringByAppendingString:@" dB"];
     
     
 }

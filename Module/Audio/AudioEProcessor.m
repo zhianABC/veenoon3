@@ -39,6 +39,9 @@
 @synthesize _inchannels;
 @synthesize _outchannels;
 
+//zidonghunyin
+@synthesize _zidonghunyinZengYi;
+
 - (id) init
 {
     if(self = [super init])
@@ -52,6 +55,8 @@
         
         self._show_icon_name = @"a_icon_7.png";
         self._show_icon_sel_name = @"a_icon_7_sel.png";
+        
+        _zidonghunyinZengYi = @"2";
         
         _isSetOK = NO;
     }
@@ -179,6 +184,16 @@
         }
     }
 }
+
+#pragma mark ---- 自动混音 ----
+
+- (NSString*) getZidonghuiyinZengYi {
+    return _zidonghunyinZengYi;
+}
+- (void) controlZiDongHunYinZengYi:(NSString*) zengyiDB {
+    self._zidonghunyinZengYi = zengyiDB;
+}
+
 
 - (NSString*) deviceName{
     
