@@ -49,6 +49,7 @@
 - (BOOL) isHuiShengXiaoChuStarted;
 
 //zidonghunyin
+- (NSDictionary*)getAutoMixCmdSettings;
 - (NSString*) getZidonghuiyinZengYi;
 - (void) controlZiDongHunYinZengYi:(NSString*) zengyiDB;
 - (NSMutableArray*) getZidonghunyinInputChanels;
