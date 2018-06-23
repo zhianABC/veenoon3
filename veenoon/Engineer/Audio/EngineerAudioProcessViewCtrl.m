@@ -324,14 +324,14 @@
                 
                 //[vap checkRgsProxyCommandLoad];
             }
-            else if ([proxy.type isEqualToString:@"Signal"])
+            else if ([proxy.type isEqualToString:@"Audio Signal"])
             {
                 AudioEProcessorSignalProxy *vap = [[AudioEProcessorSignalProxy alloc] init];
                 vap._rgsProxyObj = proxy;
                 
                 _curProcessor._singalProxy = vap;
             }
-            else if ([proxy.type isEqualToString:@"Auto Mix"]) {
+            else if ([proxy.type isEqualToString:@"Audio AutoMix"]) {
                 AudioEProcessorAutoMixProxy *vap = [[AudioEProcessorAutoMixProxy alloc] init];
                 vap._rgsProxyObj = proxy;
                 
