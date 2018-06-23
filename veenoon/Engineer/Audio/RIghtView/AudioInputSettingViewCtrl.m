@@ -293,6 +293,8 @@
     lvbo.hidden = YES;
     zidonghunyinView.hidden=NO;
     fankuiyizhiView.hidden=YES;
+    
+    [zidonghunyinView updateProxyCommandValIsLoaded];
 }
 
 - (void) fankuiyizhiAction:(UIButton*)sender{

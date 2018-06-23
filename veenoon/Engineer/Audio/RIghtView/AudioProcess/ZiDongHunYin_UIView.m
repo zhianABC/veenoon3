@@ -13,7 +13,7 @@
 #import "RegulusSDK.h"
 #import "AudioEProcessor.h"
 
-@interface ZiDongHunYin_UIView() <SlideButtonDelegate> {
+@interface ZiDongHunYin_UIView() <SlideButtonDelegate, AudioEProcessorDelegate> {
     UIButton *channelBtn;
     
     SlideButton *zengyi;
@@ -26,6 +26,9 @@
     
     NSMutableArray *inputSelectedBtns;
     NSMutableArray *outputSelectedBtns;
+    
+    int valueMax;
+    int valueMin;
 }
 @property (nonatomic, strong) AudioEProcessor *_currentProxy;
 @end
@@ -84,6 +87,13 @@
     [self createOutPutComps];
 }
 
+- (void) updateProxyCommandValIsLoaded
+{
+    _currentProxy.delegate = self;
+    [_currentProxy checkRgsProxyCommandLoad];
+    
+}
+
 - (void) createInPutComps {
     
     UILabel *labelL = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, 120, 120)];
@@ -139,6 +149,35 @@
         x+=spx;
         
         [inputChanels addObject:btn];
+    }
+    
+}
+
+- (void) didLoadedProxyCommand {
+    _currentProxy.delegate = nil;
+    
+    NSDictionary *result = [_currentProxy getAutoMixCmdSettings];
+    
+    valueMax = [[result objectForKey:@"max"] intValue];
+    valueMin = [[result objectForKey:@"min"] intValue];
+    
+    [self updateZidonghunyin];
+}
+
+- (void) updateZidonghunyin {
+    
+    NSString *zengyiDB = [_currentProxy getZidonghuiyinZengYi];
+    float value = [zengyiDB floatValue];
+    float max = (valueMax - valueMin);
+    if(max)
+    {
+        float f = (value - valueMin)/max;
+        f = fabsf(f);
+        [zengyi setCircleValue:f];
+    }
+    
+    if (zengyiDB) {
+        labelL1.text = [zengyiDB stringByAppendingString:@" dB"];
     }
     
 }

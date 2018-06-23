@@ -12,5 +12,5 @@
 
 @interface ZiDongHunYin_UIView : APBaseView
 - (id)initWithFrameProxy:(CGRect)frame withProxy:(AudioEProcessor*) proxy;
-
+- (void) updateProxyCommandValIsLoaded;
 @end

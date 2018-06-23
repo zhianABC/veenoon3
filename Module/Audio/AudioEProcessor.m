@@ -189,6 +189,35 @@
 
 #pragma mark ---- 自动混音 ----
 
+- (NSDictionary*)getAutoMixCmdSettings{
+    
+    NSMutableDictionary *result = [NSMutableDictionary dictionary];
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_A_VALUE"];
+    if(cmd)
+    {
+        if([cmd.params count])
+        {
+            
+            for( RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"VALUE"])
+                {
+                    if(param_info.max)
+                        [result setObject:param_info.max forKey:@"max"];
+                    if(param_info.min)
+                        [result setObject:param_info.min forKey:@"min"];
+                    break;
+                }
+                
+            }
+        }
+    }
+    
+    return result;
+}
+
 - (NSString*) getZidonghuiyinZengYi {
     return _zidonghunyinZengYi;
 }
