@@ -560,4 +560,78 @@
     }
 }
 
+- (void) prepareAllAudioInCmds
+{
+    
+    if([_inAudioProxys count])
+    {
+        NSMutableArray *proxyids = [NSMutableArray array];
+        //只读取一个，因为所有的Channel的commands相同
+        VAProcessorProxys *vap = [_inAudioProxys objectAtIndex:0];
+        [proxyids addObject:[NSNumber numberWithInt:vap._rgsProxyObj.m_id]];
+    
+        IMP_BLOCK_SELF(AudioEProcessor);
+        
+        [[RegulusSDK sharedRegulusSDK] GetProxyCommandDict:proxyids
+                                                completion:^(BOOL result, NSDictionary *commd_dict, NSError *error) {
+                                                    
+                                                    [block_self loadAudioInCommands:commd_dict];
+                                                    
+                                                }];
+    }
+    
+}
+
+- (void) loadAudioInCommands:(NSDictionary*)commd_dict{
+    
+    NSMutableArray *audio_channels = _inAudioProxys;
+    
+    if([[commd_dict allValues] count])
+    {
+        NSArray *cmds = [[commd_dict allValues] objectAtIndex:0];
+        
+        for(VAProcessorProxys *vap in audio_channels)
+        {
+            [vap prepareLoadCommand:cmds];
+        }
+    }
+
+}
+
+- (void) prepareAllAudioOutCmds{
+    
+    if([_outAudioProxys count])
+    {
+        NSMutableArray *proxyids = [NSMutableArray array];
+        //只读取一个，因为所有的Channel的commands相同
+        VAProcessorProxys *vap = [_outAudioProxys objectAtIndex:0];
+        [proxyids addObject:[NSNumber numberWithInt:vap._rgsProxyObj.m_id]];
+        
+        IMP_BLOCK_SELF(AudioEProcessor);
+        
+        [[RegulusSDK sharedRegulusSDK] GetProxyCommandDict:proxyids
+                                                completion:^(BOOL result, NSDictionary *commd_dict, NSError *error) {
+                                                    
+                                                    [block_self loadAudioOutCommands:commd_dict];
+                                                    
+                                                }];
+    }
+}
+
+- (void) loadAudioOutCommands:(NSDictionary*)commd_dict{
+    
+    NSMutableArray *audio_channels = _outAudioProxys;
+    
+    if([[commd_dict allValues] count])
+    {
+        NSArray *cmds = [[commd_dict allValues] objectAtIndex:0];
+        
+        for(VAProcessorProxys *vap in audio_channels)
+        {
+            [vap prepareLoadCommand:cmds];
+        }
+    }
+    
+}
+
 @end

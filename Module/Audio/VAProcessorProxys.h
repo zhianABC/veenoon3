@@ -109,6 +109,10 @@
 
 - (void) checkRgsProxyCommandLoad;
 
+//批量获取后，赋值
+- (void) prepareLoadCommand:(NSArray*)cmds;
+- (BOOL) haveProxyCommandLoaded;
+
 - (BOOL) isProxyMute;
 - (BOOL) isProxyDigitalMute;
 - (float) getDigitalGain;
@@ -207,7 +211,7 @@
 
 //矩阵路由
 - (NSDictionary*)getMatrixCmdSettings;
-- (void) controlMatrixSrc;
+- (void) controlMatrixSrc:(VAProcessorProxys *)proxy selected:(BOOL)selected;
 - (void) controlMatrixSrcValue:(VAProcessorProxys *)proxy th:(float)th;
 
 //信号发生器

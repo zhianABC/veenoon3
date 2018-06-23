@@ -13,6 +13,7 @@
 #import "AudioEProcessor.h"
 #import "VAProcessorProxys.h"
 #import "RegulusSDK.h"
+#import "KVNProgress.h"
 
 @interface AudioMatrixSettingViewCtrl () <AudioMatrixViewDelegate, UIScrollViewDelegate, SlideButtonDelegate>
 {
@@ -192,9 +193,11 @@
 
 - (void) showMatrix{
     
+
     NSMutableArray *audio_ins = _processor._inAudioProxys;
     NSMutableArray *audio_outs = _processor._outAudioProxys;
     
+
     int maxOut = (int)[audio_outs count];
     int maxIn = (int)[audio_ins count];
     
@@ -208,6 +211,9 @@
     
     int x = 0;
     int y = 0;
+    
+    NSMutableArray *proxyids = [NSMutableArray array];
+    
     for(int i = 0; i < maxOut; i++)
     {
          y = top + i*h;
@@ -219,7 +225,8 @@
         tL.font = [UIFont systemFontOfSize:13];
         tL.textColor = [UIColor whiteColor];
         
-        [vap checkRgsProxyCommandLoad];
+        //[vap checkRgsProxyCommandLoad];
+        
         
         for(int j = 0; j < maxIn; j++)
         {
@@ -253,8 +260,48 @@
             
         }
     }
+
+    IMP_BLOCK_SELF(AudioMatrixSettingViewCtrl);
+    
+    if([audio_outs count])
+    {
+        //只读取一个，因为所有的out的commands相同
+        VAProcessorProxys *vap = [audio_outs objectAtIndex:0];
+        [proxyids addObject:[NSNumber numberWithInt:vap._rgsProxyObj.m_id]];
+        
+        if(![vap haveProxyCommandLoaded])
+        {
+        [KVNProgress show];
+        [[RegulusSDK sharedRegulusSDK] GetProxyCommandDict:proxyids
+                                                completion:^(BOOL result, NSDictionary *commd_dict, NSError *error) {
+                                                    
+                                                    [block_self loadAllCommands:commd_dict];
+                                                    
+                                                }];
+        }
+    }
+    
     
 }
+
+
+- (void) loadAllCommands:(NSDictionary*)commd_dict{
+    
+    NSMutableArray *audio_outs = _processor._outAudioProxys;
+    
+    if([[commd_dict allValues] count])
+    {
+        NSArray *cmds = [[commd_dict allValues] objectAtIndex:0];
+        
+        for(VAProcessorProxys *vap in audio_outs)
+        {
+            [vap prepareLoadCommand:cmds];
+        }
+    }
+    
+    [KVNProgress dismiss];
+}
+
 
 - (void) doneAction:(id)sender{
     
@@ -344,7 +391,7 @@
         
             [outproxy checkRgsProxyCommandLoad];
             
-            [outproxy controlMatrixSrc];
+            [outproxy controlMatrixSrc:inproxy selected:YES];
         }
         
     }
@@ -371,7 +418,7 @@
                     if(inproxy._rgsProxyObj.m_id == inSelrPoxy._rgsProxyObj.m_id)
                     {
                         [arr removeObject:dic];
-                        [outproxy controlMatrixSrc];
+                        [outproxy controlMatrixSrc:inproxy selected:NO];
                         break;
                     }
                 }

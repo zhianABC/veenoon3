@@ -427,6 +427,14 @@
     
 }
 
+- (BOOL) haveProxyCommandLoaded{
+    
+    if(_rgsCommands)
+        return YES;
+    
+    return NO;
+    
+}
 - (void) checkRgsProxyCommandLoad{
     
     if(_rgsProxyObj == nil || _rgsCommands){
@@ -481,7 +489,21 @@
     }];
 }
 
-
+- (void) prepareLoadCommand:(NSArray*)cmds{
+    
+    if ([cmds count]) {
+        
+        self._cmdMap = [NSMutableDictionary dictionary];
+        
+        self._rgsCommands = cmds;
+        for(RgsCommandInfo *cmd in cmds)
+        {
+            [self._cmdMap setObject:cmd forKey:cmd.name];
+        }
+    
+        [self initDatasAfterPullData];
+    }
+}
 
 
 //SET_ANALOGY_GRAIN
@@ -2045,7 +2067,7 @@
     return result;
 }
 
-- (void) controlMatrixSrc{
+- (void) controlMatrixSrc:(VAProcessorProxys *)proxy selected:(BOOL)selected{
     
     
     RgsCommandInfo *cmd = nil;
@@ -2061,20 +2083,20 @@
         {
             RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
             
-            NSString *val = @"";
-            for(NSDictionary *dic in _setMixSrc)
+            NSString *name = proxy._rgsProxyObj.name;
+            name = [name stringByReplacingOccurrencesOfString:@" " withString:@""];
+            
+            [param setObject:name forKey:param_info.name];
+            
+            if(selected)
             {
-                VAProcessorProxys *vap = [dic objectForKey:@"proxy"];
-                NSString *name = vap._rgsProxyObj.name;
-                name = [name stringByReplacingOccurrencesOfString:@" " withString:@""];
-                
-                if([val length])
-                    val = [NSString stringWithFormat:@"%@ %@",val, name];
-                else
-                    val = name;
+                [param setObject:@"True" forKey:@"ENABLE"];
+            }
+            else
+            {
+                [param setObject:@"False" forKey:@"ENABLE"];
             }
             
-            [param setObject:val forKey:param_info.name];
         }
         
         [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
