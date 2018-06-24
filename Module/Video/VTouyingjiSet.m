@@ -137,10 +137,6 @@
                                                       if ([connects count]) {
                                                           
                                                           block_self._connections = connects;
-                                                          if([connects count])
-                                                          {
-                                                              block_self._com = [connects objectAtIndex:0];
-                                                          }
                                                       }
                                                   }
                                                   else
@@ -275,20 +271,20 @@
     
 }
 
-- (void) createConnection:(RgsConnectionObj*)target{
+- (void) createConnection:(RgsConnectionObj*)source withConnect:(RgsConnectionObj*)target{
     
-    if(target && [_connections count])
+    if(target && source)
     {
         
         RgsConnectionObj * com_connt_obj = target;
-        RgsConnectionObj * cam_connt_obj = [_connections objectAtIndex:0];
+        RgsConnectionObj * cam_connt_obj = source;
         
-        IMP_BLOCK_SELF(VTouyingjiSet);
+        //IMP_BLOCK_SELF(VDVDPlayerSet);
         
         [com_connt_obj Connect:cam_connt_obj completion:^(BOOL result, NSError *error) {
             if(result)
             {
-                block_self._com = target;
+                //block_self._com = target;
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"NotifyRefreshTableWithCom" object:nil];
             }

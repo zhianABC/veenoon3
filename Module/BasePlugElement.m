@@ -31,7 +31,7 @@
 @synthesize _driver_ip_property;
 @synthesize _properties;
 @synthesize _connections;
-@synthesize _com;
+//@synthesize _com;
 @synthesize _comDriver;
 
 @synthesize _show_icon_name;
@@ -106,7 +106,7 @@
 - (void) syncDriverComs{
     
 }
-- (void) createConnection:(RgsConnectionObj*)target{
+- (void) createConnection:(RgsConnectionObj*)source withConnect:(RgsConnectionObj*)target{
     
 }
 @end

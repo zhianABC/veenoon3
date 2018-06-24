@@ -31,7 +31,7 @@
 @synthesize _driver;
 @synthesize _plug;
 @synthesize _canconnects;
-
+@synthesize _connectIdx;
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -47,6 +47,7 @@
        // self.backgroundColor = RGBA(0, 0, 0, 0.3);
         
         tableWidth = 300;
+        _connectIdx = 0;
         
         UIView *mask = [[UIView alloc] initWithFrame:self.bounds];
         [self addSubview:mask];
@@ -92,16 +93,17 @@
     cy = pt.y;
     cx = pt.x;
     
-   if([_plug._connections count])//如果插件有connection
+   if(_connectIdx < [_plug._connections count])//如果插件有connection
    {
        //获取可以链接的connection
        
        IMP_BLOCK_SELF(DriverConnectionsView);
-       RgsConnectionObj *connect = [_plug._connections objectAtIndex:0];
+       RgsConnectionObj *connect = [_plug._connections objectAtIndex:_connectIdx];
        
        [connect GetCanConnect:^(BOOL result, NSArray *connections, NSError *error) {
            
            if (result) {
+               
                block_self._canconnects = connections;
                
                [block_self layoutDatas];
@@ -210,8 +212,9 @@
     
     RgsConnectionObj *data = nil;
     data = [self._canconnects objectAtIndex:indexPath.row];
+    RgsConnectionObj *connect = [_plug._connections objectAtIndex:_connectIdx];
     
-    [_plug createConnection:data];
+    [_plug createConnection:connect withConnect:data];
     
 }
 

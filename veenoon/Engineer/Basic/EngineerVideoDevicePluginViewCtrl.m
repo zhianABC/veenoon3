@@ -77,6 +77,19 @@
                          };
     [_mapDrivers setObject:ty forKey:UUID_CANON_WUX450];
     
+    
+    NSDictionary *pdvd = @{@"type":@"video",
+                           @"name":@"Philips DVD",
+                           @"driver":UUID_Philips_DVD,
+                           @"brand":@"Philips",
+                           @"icon":@"engineer_video_dvd_n.png",
+                           @"icon_s":@"engineer_video_dvd_s.png",
+                           @"driver_class":@"VDVDPlayerSet",
+                           @"ptype":@"DVD"
+                           };
+    
+    [_mapDrivers setObject:pdvd forKey:UUID_Philips_DVD];
+    
 }
 
 - (void)viewDidLoad {
@@ -369,6 +382,7 @@
     [self initBrandAndTypes];
 }
 - (void) yejingdianshiAction:(id)sender{
+    
     [_dianyuanguanliBtn setBtnHighlited:NO];
     [_shipinbofangBtn setBtnHighlited:NO];
     [_shexiangjiBtn setBtnHighlited:NO];
@@ -498,6 +512,7 @@
 }
 
 - (void) shipinbofangAction:(id)sender{
+    
     [_dianyuanguanliBtn setBtnHighlited:NO];
     [_shipinbofangBtn setBtnHighlited:YES];
     [_shexiangjiBtn setBtnHighlited:NO];
@@ -515,6 +530,17 @@
     [self setBrandValue:btnText];
     
     [self initBrandAndTypes];
+    
+    self._currentBrands = @[@"Philips"];
+    self._currentTypes = @[@"DVD"];
+    self._driverUdids = @[UUID_Philips_DVD];
+    
+    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
+    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
+    
+    [_brandPicker selectRow:0 inComponent:0];
+    [_productCategoryPicker selectRow:0 inComponent:0];
+
 }
 
 - (void) dianyuanguanliAction:(id)sender{

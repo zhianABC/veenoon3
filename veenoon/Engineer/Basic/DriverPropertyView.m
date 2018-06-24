@@ -17,6 +17,127 @@
 #import "DriverConnectionsView.h"
 #import "AppDelegate.h"
 
+@interface ConnectionRowCell: UIView
+{
+    UILabel *_connectionL;
+    UITextField *_conField;
+    UIButton *btnConnect;
+}
+@property (nonatomic, readonly) UIButton *btnConnect;
+@property (nonatomic, strong) RgsConnectionObj *_connectObj;
+@end
+
+@implementation ConnectionRowCell
+@synthesize btnConnect;
+@synthesize _connectObj;
+
+
+- (id) initWithFrame:(CGRect)frame
+{
+    
+    if(self = [super initWithFrame:frame])
+    {
+        _connectionL = [[UILabel alloc] initWithFrame:CGRectMake(0, 15, 200, 30)];
+        _connectionL.textColor = [UIColor whiteColor];
+        _connectionL.backgroundColor = [UIColor clearColor];
+        [self addSubview:_connectionL];
+        _connectionL.font = [UIFont systemFontOfSize:15];
+        _connectionL.text = @"串口号: ";
+        
+        _conField = [[UITextField alloc] initWithFrame:CGRectMake(80,
+                                                                  15,
+                                                                  frame.size.width - 140, 30)];
+        _conField.backgroundColor = [UIColor clearColor];
+        _conField.returnKeyType = UIReturnKeyDone;
+        _conField.text = @"";
+        _conField.textColor = [UIColor whiteColor];
+        _conField.borderStyle = UITextBorderStyleNone;
+        _conField.textAlignment = NSTextAlignmentLeft;
+        _conField.font = [UIFont systemFontOfSize:15];
+        _conField.keyboardType = UIKeyboardTypeNumberPad;
+        _conField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        _conField.userInteractionEnabled = NO;
+        [self addSubview:_conField];
+        
+        
+        
+        btnConnect = [UIButton buttonWithType:UIButtonTypeCustom];
+        btnConnect.frame = CGRectMake(CGRectGetMaxX(_conField.frame), 5, 60, 50);
+        [self addSubview:btnConnect];
+        [btnConnect setImage:[UIImage imageNamed:@"connect_icon.png"]
+                    forState:UIControlStateNormal];
+        
+        
+        UILabel* line = [[UILabel alloc] initWithFrame:CGRectMake(0, frame.size.height-1, frame.size.width, 1)];
+        line.backgroundColor =  B_GRAY_COLOR;
+        [self addSubview:line];
+        
+    }
+    
+    return self;
+}
+
+- (void) fillComConnection:(RgsConnectionObj *)connect{
+    
+    _connectionL.text = @"串口号: ";
+    self._connectObj = connect;
+    
+    if(connect)
+    {
+        IMP_BLOCK_SELF(ConnectionRowCell);
+        [connect GetBoundings:^(BOOL result, NSArray *connections, NSError *error) {
+            
+            [block_self queryConnectionResult:connections];
+        }];
+    }
+}
+
+- (void) fillIRConnection:(RgsConnectionObj *)connect{
+    
+     self._connectObj = connect;
+    
+    if(connect)
+    {
+        _connectionL.text = connect.name;
+        
+        IMP_BLOCK_SELF(ConnectionRowCell);
+        [connect GetBoundings:^(BOOL result, NSArray *connections, NSError *error) {
+            
+            [block_self queryConnectionResult:connections];
+        }];
+    }
+}
+
+- (void) queryConnectionResult:(NSArray *)connections{
+    
+    if([connections count])
+    {
+        RgsConnectionObj *connect = [connections objectAtIndex:0];
+        
+        _conField.text = [NSString stringWithFormat:@"%d:%@ %@",
+                          connect.driver_id,
+                          connect.driver_name,
+                          connect.name];
+    }
+    
+}
+
+- (void) updateConnection{
+    
+    if(_connectObj)
+    {
+    IMP_BLOCK_SELF(ConnectionRowCell);
+    [_connectObj GetBoundings:^(BOOL result, NSArray *connections, NSError *error) {
+        
+        [block_self queryConnectionResult:connections];
+    }];
+    }
+}
+    
+
+@end
+
+
 @interface DriverPropertyView () <UITextFieldDelegate>
 {
     UITextField *ipTextField;
@@ -24,20 +145,19 @@
     int leftx;
     
     UILabel* _iptitleL;
-    UILabel *_connectionL;
-    
-    UITextField *_comField;
-    UIButton *btnConnect;
-    
     UIButton *btnSave;
     
     DriverConnectionsView   *_connectionView;
+    
+    UIView *_connectionTableView;
 }
+@property (nonatomic, strong) NSMutableArray *_connection_cells;
 
 @end
 
 @implementation DriverPropertyView
 @synthesize _plugDriver;
+@synthesize _connection_cells;
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -117,46 +237,14 @@
         
         top = CGRectGetMaxY(line.frame);
         
-        _connectionL = [[UILabel alloc] initWithFrame:CGRectMake(leftx, top+15, 200, 30)];
-        _connectionL.textColor = [UIColor whiteColor];
-        _connectionL.backgroundColor = [UIColor clearColor];
-        [self addSubview:_connectionL];
-        _connectionL.font = [UIFont systemFontOfSize:15];
-        _connectionL.text = @"串口号: ";
-        
-        _comField = [[UITextField alloc] initWithFrame:CGRectMake(leftx+80,
-                                                                    top+15,
-                                                                    200, 30)];
-        _comField.backgroundColor = [UIColor clearColor];
-        _comField.returnKeyType = UIReturnKeyDone;
-        _comField.text = @"";
-        _comField.textColor = [UIColor whiteColor];
-        _comField.borderStyle = UITextBorderStyleNone;
-        _comField.textAlignment = NSTextAlignmentLeft;
-        _comField.font = [UIFont systemFontOfSize:15];
-        _comField.keyboardType = UIKeyboardTypeNumberPad;
-        _comField.clearButtonMode = UITextFieldViewModeWhileEditing;
-        _comField.userInteractionEnabled = NO;
-        [self addSubview:_comField];
-        
-        btnConnect = [UIButton buttonWithType:UIButtonTypeCustom];
-        btnConnect.frame = CGRectMake(CGRectGetMaxX(_comField.frame), top+5, 60, 50);
-        [self addSubview:btnConnect];
-        [btnConnect setImage:[UIImage imageNamed:@"connect_icon.png"]
-                    forState:UIControlStateNormal];
-        [btnConnect addTarget:self
-                       action:@selector(connectionSet:)
-             forControlEvents:UIControlEventTouchUpInside];
+        _connectionTableView = [[UIView alloc] initWithFrame:CGRectMake(leftx, top,
+                                                                   frame.size.width-leftx,
+                                                                   60)];
         
         
-        top = CGRectGetMaxY(_connectionL.frame)+15;
+        [self addSubview:_connectionTableView];
+    
         
-        line = [[UILabel alloc] initWithFrame:CGRectMake(0, top, frame.size.width, 1)];
-        line.backgroundColor =  B_GRAY_COLOR;
-        [self addSubview:line];
-        
-        top = CGRectGetMaxY(line.frame);
-
         
         btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
         btnSave.frame = CGRectMake(frame.size.width - 15 - 70, 0, 70, 44);
@@ -182,6 +270,7 @@
     [self addSubview:_connectionView];
     
     _connectionView._plug = _plugDriver;
+    _connectionView._connectIdx = (int)sender.tag;
     [_connectionView showFromPoint:CGPointMake(CGRectGetMidX(self.bounds),
                                                CGRectGetMidY(self.bounds))];
 }
@@ -214,15 +303,28 @@
 
 - (void) updateConnectionSet{
     
-    if(_plugDriver._com)
+    if([_connectionView superview])
+        [_connectionView removeFromSuperview];
+    
+    for(ConnectionRowCell *cell in _connection_cells)
     {
-        _comField.text = _plugDriver._com.name;
+        [cell updateConnection];
     }
 }
 
 - (void) recoverSetting{
     
     [_connectionView removeFromSuperview];
+    
+    [[_connectionTableView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+    RgsDriverInfo * info = _plugDriver._driverInfo;
+    
+    BOOL _isIR = NO;
+    if([info.classify isEqualToString:@"IR Controller"])
+    {
+        _isIR = YES;
+    }
     
     if(_plugDriver._ipaddress == nil)
     {
@@ -231,17 +333,49 @@
         ipTextField.text = @"";
         ipTextField.userInteractionEnabled = NO;
         
-        _comField.alpha = 1;
-        _connectionL.alpha = 1;
-        btnConnect.enabled = YES;
+        _connectionTableView.hidden = NO;
         
-        if(_plugDriver._com)
+        if([_plugDriver._connections count] == 0)
         {
-            _comField.text = _plugDriver._com.name;
-        }
-        else{
             [self syncCurrentDriverComs];
         }
+        else
+        {
+            self._connection_cells = [NSMutableArray array];
+            
+            int y = 0;
+            for(int i = 0; i < [_plugDriver._connections count]; i++)
+            {
+                RgsConnectionObj *connect = [_plugDriver._connections objectAtIndex:i];
+                
+                CGRect rc = CGRectMake(0, y, _connectionTableView.frame.size.width, 60);
+                
+                ConnectionRowCell *cell = [[ConnectionRowCell alloc] initWithFrame:rc];
+                [_connectionTableView addSubview:cell];
+                if(_isIR)
+                {
+                    [cell fillIRConnection:connect];
+                }
+                else
+                {
+                    [cell fillComConnection:connect];
+                }
+                
+                cell.btnConnect.tag = i;
+                [cell.btnConnect addTarget:self
+                                    action:@selector(connectionSet:)
+                          forControlEvents:UIControlEventTouchUpInside];
+                
+                y = CGRectGetMaxY(cell.frame);
+                
+                [self._connection_cells addObject:cell];
+            }
+            
+            CGRect rc = _connectionTableView.frame;
+            rc.size.height = y;
+            _connectionTableView.frame = rc;
+        }
+        
         
         return;
     }
@@ -252,15 +386,7 @@
         ipTextField.text = @"";
         ipTextField.userInteractionEnabled = YES;
         
-        _comField.text = @"";
-        _comField.alpha = 0.5;
-        _connectionL.alpha = 0.5;
-        btnConnect.enabled = NO;
-    }
-    
-    if(_plugDriver._com)
-    {
-        _comField.text = _plugDriver._com.name;
+        _connectionTableView.hidden = YES;
     }
     
     if(_plugDriver._driver_ip_property)
@@ -346,8 +472,51 @@
 - (void) updateDriverConnections:(NSArray *)connects{
     
     _plugDriver._connections = connects;
-    _plugDriver._com = [connects objectAtIndex:0];
-    _comField.text = _plugDriver._com.name;
+    //_plugDriver._com = [connects objectAtIndex:0];
+    ///_comField.text = _plugDriver._com.name;
+    
+    RgsDriverInfo * info = _plugDriver._driverInfo;
+    
+    BOOL _isIR = NO;
+    if([info.classify isEqualToString:@"IR Controller"])
+    {
+        _isIR = YES;
+    }
+    
+    self._connection_cells = [NSMutableArray array];
+    
+    int y = 0;
+    for(int i = 0; i < [_plugDriver._connections count]; i++)
+    {
+        RgsConnectionObj *connect = [_plugDriver._connections objectAtIndex:i];
+        
+        CGRect rc = CGRectMake(0, y, _connectionTableView.frame.size.width, 60);
+        
+        ConnectionRowCell *cell = [[ConnectionRowCell alloc] initWithFrame:rc];
+        [_connectionTableView addSubview:cell];
+        if(_isIR)
+        {
+            [cell fillIRConnection:connect];
+        }
+        else
+        {
+            [cell fillComConnection:connect];
+        }
+        
+        cell.btnConnect.tag = i;
+        [cell.btnConnect addTarget:self
+                       action:@selector(connectionSet:)
+             forControlEvents:UIControlEventTouchUpInside];
+
+        
+        y = CGRectGetMaxY(cell.frame);
+        
+        [self._connection_cells addObject:cell];
+    }
+    
+    CGRect rc = _connectionTableView.frame;
+    rc.size.height = y;
+    _connectionTableView.frame = rc;
 }
 
 @end

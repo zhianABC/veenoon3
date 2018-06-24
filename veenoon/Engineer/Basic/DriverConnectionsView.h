@@ -17,6 +17,7 @@
 }
 @property (nonatomic, strong) RgsDriverObj *_driver;
 @property (nonatomic, strong) BasePlugElement *_plug;
+@property (nonatomic, assign) int _connectIdx;
 
 - (void) showFromPoint:(CGPoint)pt;
 

@@ -633,47 +633,6 @@
         
     }
     int lh = 60;
-    /*
-    if(data._com)
-    {
-        lh = 120;
-        
-        titleL = [[UILabel alloc] initWithFrame:CGRectMake(10,
-                                                           60+10,
-                                                           tableWidth-20, 20)];
-        titleL.backgroundColor = [UIColor clearColor];
-        [cell.contentView addSubview:titleL];
-        titleL.font = [UIFont boldSystemFontOfSize:16];
-        titleL.textColor  = [UIColor colorWithWhite:1.0 alpha:0.5];
-        
-        UILabel* subL = [[UILabel alloc] initWithFrame:CGRectMake(10,
-                                                                  60+30,
-                                                                  tableWidth-35, 20)];
-        subL.backgroundColor = [UIColor clearColor];
-        [cell.contentView addSubview:subL];
-        subL.font = [UIFont systemFontOfSize:14];
-        subL.textColor  = [UIColor colorWithWhite:1.0 alpha:0.5];
-        
-        
-        titleL.text = @"串口服务器";
-        subL.text = [NSString stringWithFormat:@"%d: %@",
-                     (int)data._com.driver_id,
-                     data._com.driver_name];
-        
-        
-        
-        line = [[UILabel alloc] initWithFrame:CGRectMake(0, 119, tableWidth, 1)];
-        line.backgroundColor =  B_GRAY_COLOR;
-        [cell.contentView addSubview:line];
-        
-        
-        UIImageView *linkImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"connect_icon.png"]];
-        linkImage.frame = CGRectMake(tableWidth-60, 45, 30, 30);
-        [cell.contentView addSubview:linkImage];
-        linkImage.contentMode = UIViewContentModeScaleAspectFit;
-        
-    }
-     */
     
     id key = [NSString stringWithFormat:@"%d-%d",
               (int)indexPath.section,

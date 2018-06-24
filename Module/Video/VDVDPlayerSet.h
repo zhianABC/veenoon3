@@ -10,11 +10,18 @@
 #import "BasePlugElement.h"
 
 @interface VDVDPlayerSet : BasePlugElement
-@property (nonatomic, strong) NSString *_brand;
-@property (nonatomic, strong) NSString *_type;
-@property (nonatomic, strong) NSString *_deviceno;
-@property (nonatomic, strong) NSString *_ipaddress;
-@property (nonatomic, strong) NSString *_com;
-@property (nonatomic, strong) NSMutableArray *_irArray;
+
+@property (nonatomic, strong) id _IRDriverInfo;
+@property (nonatomic, strong) id _IRDriver;
+
+//<VDVDPlayerProxy>
+@property (nonatomic, strong) id _proxyObj;
+
+//<RgsConnectionObj>
+@property (nonatomic, strong) NSArray *_localSavedProxys;
+
+
+
+- (NSString*) deviceName;
 
 @end

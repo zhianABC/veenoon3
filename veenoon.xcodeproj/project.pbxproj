@@ -292,6 +292,8 @@
 		34CC7856209AE0D10057A2C1 /* KVNProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 34CC7850209AE0D10057A2C1 /* KVNProgress.m */; };
 		34CC7857209AE0D10057A2C1 /* KVNProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34CC7851209AE0D10057A2C1 /* KVNProgressView.xib */; };
 		34CC7858209AE0D10057A2C1 /* UIImage+KVNEmpty.m in Sources */ = {isa = PBXBuildFile; fileRef = 34CC7852209AE0D10057A2C1 /* UIImage+KVNEmpty.m */; };
+		34D34F3C20DF510800CC7897 /* IRDirver.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D34F3B20DF510800CC7897 /* IRDirver.m */; };
+		34D34F3F20DF5BA800CC7897 /* VDVDPlayerProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D34F3E20DF5BA800CC7897 /* VDVDPlayerProxy.m */; };
 		34DC473F1FD6984400ACB589 /* ColumnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DC473E1FD6984400ACB589 /* ColumnView.m */; };
 		34DC47421FD6DD9300ACB589 /* CircleProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DC47401FD6DD9300ACB589 /* CircleProgressView.m */; };
 		34DE8E9620663E840061B48D /* MeetingRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DE8E9520663E840061B48D /* MeetingRoom.m */; };
@@ -1344,6 +1346,10 @@
 		34CC7852209AE0D10057A2C1 /* UIImage+KVNEmpty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+KVNEmpty.m"; sourceTree = "<group>"; };
 		34CC7853209AE0D10057A2C1 /* UIImage+KVNImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+KVNImageEffects.h"; sourceTree = "<group>"; };
 		34CC7854209AE0D10057A2C1 /* KVNProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVNProgress.h; sourceTree = "<group>"; };
+		34D34F3A20DF510800CC7897 /* IRDirver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRDirver.h; sourceTree = "<group>"; };
+		34D34F3B20DF510800CC7897 /* IRDirver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IRDirver.m; sourceTree = "<group>"; };
+		34D34F3D20DF5BA800CC7897 /* VDVDPlayerProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VDVDPlayerProxy.h; sourceTree = "<group>"; };
+		34D34F3E20DF5BA800CC7897 /* VDVDPlayerProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VDVDPlayerProxy.m; sourceTree = "<group>"; };
 		34DC473D1FD6984400ACB589 /* ColumnView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColumnView.h; sourceTree = "<group>"; };
 		34DC473E1FD6984400ACB589 /* ColumnView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ColumnView.m; sourceTree = "<group>"; };
 		34DC47401FD6DD9300ACB589 /* CircleProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleProgressView.m; sourceTree = "<group>"; };
@@ -2467,6 +2473,8 @@
 				348FC8CB208AF80100F7DB3D /* BasePlugElement.m */,
 				341CE4A620A428D9009DBC01 /* ComDriver.h */,
 				341CE4A720A428D9009DBC01 /* ComDriver.m */,
+				34D34F3A20DF510800CC7897 /* IRDirver.h */,
+				34D34F3B20DF510800CC7897 /* IRDirver.m */,
 				349DADD0206E8D02001593DE /* Audio */,
 				341AEB62206A5B7A00E01D03 /* Env */,
 				EB18B7252067D4A6000BDEAB /* Video */,
@@ -3338,6 +3346,8 @@
 			children = (
 				EB5A47F52084D83500564C06 /* VDVDPlayerSet.h */,
 				EB5A47F62084D83500564C06 /* VDVDPlayerSet.m */,
+				34D34F3D20DF5BA800CC7897 /* VDVDPlayerProxy.h */,
+				34D34F3E20DF5BA800CC7897 /* VDVDPlayerProxy.m */,
 				EBD009B1208CB12900920849 /* VCameraSettingSet.h */,
 				EBD009B2208CB12900920849 /* VCameraSettingSet.m */,
 				3456C174209EACD1001FAB61 /* VCameraProxys.h */,
@@ -4592,6 +4602,7 @@
 				04DE1EBF1AD6AF7900D49E2F /* User.m in Sources */,
 				EB5A47F42073C2FE00564C06 /* AdjustAudioVideoEnvSettingsViewCtrl.m in Sources */,
 				EB1717A01FF613EC00CBDB81 /* EngineerNewWindViewCtrl.m in Sources */,
+				34D34F3F20DF5BA800CC7897 /* VDVDPlayerProxy.m in Sources */,
 				EB4EC1221FE7FC3B000B3101 /* EngineerWirelessMeetingViewCtrl.m in Sources */,
 				EB4E39E320273F6100533575 /* HandtoHandSettingsView.m in Sources */,
 				3448D96C2073C5070055D48F /* TwoIconAndTitleView.m in Sources */,
@@ -4614,6 +4625,7 @@
 				341C784A2050184300DD1677 /* SIconSelectView.m in Sources */,
 				341CE4A320A4165C009DBC01 /* DriverPropertyView.m in Sources */,
 				EB03F54D1FBDEC6000865541 /* UserHomeViewController.m in Sources */,
+				34D34F3C20DF510800CC7897 /* IRDirver.m in Sources */,
 				EB9986DC20B6E93C007E4770 /* EnginnerChuanGanDevicePluginViewCtrl.m in Sources */,
 				04DE1EAF1AD6AEE000D49E2F /* SDWebImageDownloader.m in Sources */,
 				EBC71B14203C3A3200DD0A98 /* PinJiePingRightView.m in Sources */,
