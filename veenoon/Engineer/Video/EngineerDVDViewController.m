@@ -247,6 +247,8 @@
     [volumnDownBtn addTarget:self
                       action:@selector(volumnMinusAction:)
             forControlEvents:UIControlEventTouchUpInside];
+    
+    
 }
 - (void) okPlayAction:(id)sender {
     

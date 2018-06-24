@@ -63,6 +63,20 @@
     
     [_mapDrivers setObject:com forKey:UUID_Serial_Com];
     
+    NSDictionary *ir = @{@"type":@"other",
+                          @"name":@"Regulus IR Sender",
+                          @"driver":UUID_IR_Sender,
+                          @"brand":@"Teslaria",
+                          @"icon":@"hongwaishebei_n.png",
+                          @"icon_s":@"hongwaishebei_s.png",
+                          @"driver_class":@"IRDirver",
+                          @"ptype":@"IR"
+                          };
+    
+    [_mapDrivers setObject:ir forKey:UUID_IR_Sender];
+    
+    
+    
 }
 
 - (void)viewDidLoad {
@@ -264,6 +278,7 @@
 
 
 - (void) chuankouAction:(id)sender{
+    
     [_chuankoufuwuqiBtn setBtnHighlited:YES];
     [_wangkoufuwuqiBtn setBtnHighlited:NO];
     [_hongwaizhuanhuanqiBtn setBtnHighlited:NO];
@@ -297,6 +312,7 @@
     
 }
 - (void) hongwaiAction:(id)sender{
+    
     [_chuankoufuwuqiBtn setBtnHighlited:NO];
     [_wangkoufuwuqiBtn setBtnHighlited:NO];
     [_hongwaizhuanhuanqiBtn setBtnHighlited:YES];
@@ -305,6 +321,16 @@
     IconCenterTextButton *btn = (IconCenterTextButton*) sender;
     NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
+    
+    self._currentBrands = @[@"TESLARIA"];
+    self._currentTypes = @[@"IR Sender"];
+    self._driverUdids = @[UUID_IR_Sender];
+    
+    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
+    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
+    
+    [_brandPicker selectRow:0 inComponent:0];
+    [_productCategoryPicker selectRow:0 inComponent:0];
     
 }
 - (void) chumopingAction:(id)sender{

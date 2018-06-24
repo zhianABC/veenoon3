@@ -804,9 +804,6 @@
         // wuxian array
         if ([name isEqualToString:@"视频播放器"]) {
             EngineerDVDViewController *ctrl = [[EngineerDVDViewController alloc] init];
-            ctrl._dvdSysArray = nil;// [NSMutableArray arrayWithObject:data];
-            ctrl._number=16;
-                
             ctrl._dvdSysArray = @[plug];
             
             [self.navigationController pushViewController:ctrl animated:YES];

@@ -56,6 +56,17 @@ static DataCenter *_globalDataInstanse;
                              };
     [_mapDrivers setObject:camera forKey:UUID_NetCamera];
     
+    NSDictionary *pdvd = @{@"type":@"video",
+                             @"name":@"Philips DVD",
+                             @"driver":UUID_Philips_DVD,
+                             @"brand":@"Philips",
+                             @"icon":@"engineer_video_dvd_n.png",
+                             @"icon_s":@"engineer_video_dvd_s.png",
+                             @"driver_class":@"VDVDPlayerSet",
+                             @"ptype":@"DVD"
+                             };
+    [_mapDrivers setObject:pdvd forKey:UUID_Philips_DVD];
+
     NSDictionary *ty = @{@"type":@"video",
                          @"name":@"投影机",
                          @"driver":UUID_CANON_WUX450,
@@ -102,6 +113,19 @@ static DataCenter *_globalDataInstanse;
                                 @"ptype":@"Audio Mixer"
                                 };
     [_mapDrivers setObject:audiMixer forKey:UUID_Audio_Mixer];
+    
+    NSDictionary *ir = @{@"type":@"other",
+                         @"name":@"Regulus IR Sender",
+                         @"driver":UUID_IR_Sender,
+                         @"brand":@"Teslaria",
+                         @"icon":@"hongwaishebei_n.png",
+                         @"icon_s":@"hongwaishebei_s.png",
+                         @"driver_class":@"IRDirver",
+                         @"ptype":@"IR"
+                         };
+    
+    [_mapDrivers setObject:ir forKey:UUID_IR_Sender];
+
 }
 
 - (NSDictionary *)driverWithKey:(NSString *)key{
