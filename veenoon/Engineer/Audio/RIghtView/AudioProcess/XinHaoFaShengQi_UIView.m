@@ -12,36 +12,49 @@
 #import "VAProcessorProxys.h"
 #import "RegulusSDK.h"
 #import "TeslariaComboChooser.h"
+#import "AudioEProcessor.h"
+#import "AudioEProcessorSignalProxy.h"
 
-@interface XinHaoFaShengQi_UIView()<SlideButtonDelegate, VAProcessorProxysDelegate> {
+@interface XinHaoFaShengQi_UIView()<SlideButtonDelegate, AudioEProcessorSignalProxyDelegate> {
     
     UIButton *channelBtn;
     
-    UILabel *labelL1;
+    UILabel *zhengxuanboL;
+    
+    UILabel *zengyiL;
     
     UIPopoverController *_deviceSelector;
     
-    UIButton *xinhaoPinLvBtn;
+    TeslariaComboChooser *sel;
     
     UIButton *zerodbBtn;
     
     SlideButton *xinhaoZengyiSlider;
     
+    SlideButton *xinhaoPinlvSlider;
+    
+    NSMutableArray *outputChanels;
+    
+    NSMutableArray *outputSelectedBtns;
+    
     UIButton *xinhaoMuteBtn;
     
-    int maxTH;
-    int minTH;
-    int maxDuration;
-    int minDuration;
+    int maxRate;
+    int minRate;
     
+    int maxZengyi;
+    int minZengyi;
+    
+    NSArray *_zhengxuanboArray;
 }
-//@property (nonatomic, strong) NSMutableArray *_channelBtns;
-@property (nonatomic, strong) VAProcessorProxys *_curProxy;
+@property (nonatomic, strong) AudioEProcessorSignalProxy *_currentSignalProxy;
+@property (nonatomic, strong) AudioEProcessor *_currentAudio;
 @end
 
 
 @implementation XinHaoFaShengQi_UIView
-@synthesize _curProxy;
+@synthesize _currentSignalProxy;
+@synthesize _currentAudio;
 //@synthesize _channelBtns;
 /*
  // Only override drawRect: if you perform custom drawing.
@@ -51,29 +64,20 @@
  }
  */
 
-- (id)initWithFrameProxys:(CGRect)frame withProxys:(NSArray*) proxys
-{
-    self._proxys = proxys;
+- (id)initWithFrameProxy:(CGRect)frame withAudio:(AudioEProcessor*) audioProcessor withProxy:(AudioEProcessorSignalProxy*) proxy {
+    
+    self._currentAudio = audioProcessor;
+    
+    self._currentSignalProxy = proxy;
+    
     
     if(self = [super initWithFrame:frame])
     {
-        if (self._curProxy == nil) {
-            if (self._proxys) {
-                self._curProxy = [self._proxys objectAtIndex:0];
-            }
-        }
+//        contentView.frame  = CGRectMake(0, 90, frame.size.width, 340);
         
-        channelBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
-        channelBtn.frame = CGRectMake(0, 50, 70, 36);
-        channelBtn.clipsToBounds = YES;
-        channelBtn.layer.cornerRadius = 5;
-        channelBtn.titleLabel.font = [UIFont systemFontOfSize:15];
-        [channelBtn setTitle:self._curProxy._rgsProxyObj.name forState:UIControlStateNormal];
-        [channelBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-        [self addSubview:channelBtn];
+        outputChanels = [NSMutableArray array];
         
-        int y = CGRectGetMaxY(channelBtn.frame)+20;
-        contentView.frame = CGRectMake(0, y, frame.size.width, 340);
+        outputSelectedBtns = [NSMutableArray array];
         
         [self contentViewComps];
     }
@@ -82,54 +86,67 @@
 }
 
 - (void) updateProxyCommandValIsLoaded {
-    _curProxy.delegate = self;
-    [_curProxy checkRgsProxyCommandLoad];
+    _currentSignalProxy.delegate = self;
+    [_currentSignalProxy checkRgsProxyCommandLoad];
 }
 
 - (void) didLoadedProxyCommand {
     
-    _curProxy.delegate = nil;
+    _currentSignalProxy.delegate = nil;
     
-    NSDictionary *result = [_curProxy getSetDelayOptions];
+    _zhengxuanboArray = [_currentSignalProxy getSignalType];
     
-    maxDuration = [[result objectForKey:@"max"] intValue];
-    minDuration = [[result objectForKey:@"min"] intValue];
+    NSDictionary *rateDic = [_currentSignalProxy getSignalRateSettings];
+    
+    maxRate = [[rateDic objectForKey:@"max"] intValue];
+    minRate = [[rateDic objectForKey:@"min"] intValue];
+    
+    NSDictionary *zengyiDic = [_currentSignalProxy getSignalGainSettings];
+    
+    maxZengyi = [[zengyiDic objectForKey:@"max"] intValue];
+    minZengyi = [[zengyiDic objectForKey:@"min"] intValue];
     
     [self udpateXinhaofasheng];
 }
 
-- (void) channelBtnAction:(UIButton*)sender{
-    
-    int tag = (int)sender.tag+1;
-    [channelBtn setTitle:[NSString stringWithFormat:@"Out %d", tag] forState:UIControlStateNormal];
-    
-    for(UIButton * btn in _channelBtns)
-    {
-        if(btn == sender)
-        {
-            [btn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-        }
-        else
-        {
-            [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        }
-    }
-    int idx = (int)sender.tag;
-    self._curProxy = [self._proxys objectAtIndex:idx];
-    
-    NSString *name = _curProxy._rgsProxyObj.name;
-    [channelBtn setTitle:name forState:UIControlStateNormal];
-    
-    [self updateProxyCommandValIsLoaded];
-}
+
 
 -(void) udpateXinhaofasheng {
-    [xinhaoPinLvBtn setTitle:@"  1000" forState:UIControlStateNormal];
-    [zerodbBtn setTitle:@"  正弦波" forState:UIControlStateNormal];
     
-    BOOL isXinhaoMute = [_curProxy isXinhaofashengMute];
+    NSString *zengyiDB = [_currentSignalProxy getXinhaofashengZengYi];
+    float value = [zengyiDB floatValue];
+    float max = (maxZengyi - minZengyi);
+    if(max)
+    {
+        float f = (value - minZengyi)/max;
+        f = fabsf(f);
+        [xinhaoZengyiSlider setCircleValue:f];
+    }
     
-    if(isXinhaoMute)
+    if (zengyiDB) {
+        zengyiL.text = [zengyiDB stringByAppendingString:@" dB"];
+    }
+    
+    NSString *pinlvDB = [_currentSignalProxy getXinhaofashengPinlv];
+    float value2 = [pinlvDB floatValue];
+    float max2 = (maxRate - minRate);
+    if(max2)
+    {
+        float f2 = (value2 - minRate)/max2;
+        f2 = fabsf(f2);
+        [xinhaoZengyiSlider setCircleValue:f2];
+    }
+    
+    if (pinlvDB) {
+        zhengxuanboL.text = [pinlvDB stringByAppendingString:@" Hz"];
+    }
+    
+    NSString *zhengxuan = [_currentSignalProxy getXinhaofashengZhengXuan];
+    [zerodbBtn setTitle:[@" " stringByAppendingString:zhengxuan] forState:UIControlStateNormal];
+    
+    BOOL isXinhaofashengMute = [_currentSignalProxy isXinhaofashengMute];
+    
+    if(isXinhaofashengMute)
     {
         [xinhaoMuteBtn changeNormalColor:THEME_RED_COLOR];
     }
@@ -137,49 +154,37 @@
     {
         [xinhaoMuteBtn changeNormalColor:RGB(75, 163, 202)];
     }
-    
-    NSString *zengyiDB = [_curProxy getXinhaofashengZengyi];
-    float value = [zengyiDB floatValue];
-    float f = (value+12.0)/24.0;
-    [xinhaoZengyiSlider setCircleValue:f];
-    
-    labelL1.text = [[_curProxy getXinhaofashengZengyi] stringByAppendingString:@" dB"];
-    
-    
 }
 - (void) contentViewComps{
-    int btnStartX = 250;
+    
     int btnY = 150;
+    int btnX = 200;
     
     UILabel *addLabel2 = [[UILabel alloc] init];
     addLabel2.text = @"频率 (Hz)";
-    addLabel2.font = [UIFont boldSystemFontOfSize: 14];
+    addLabel2.font = [UIFont boldSystemFontOfSize: 13];
     addLabel2.textColor = [UIColor whiteColor];
-    addLabel2.frame = CGRectMake(btnStartX, btnY -30, 120, 20);
-    [contentView addSubview:addLabel2];
+    addLabel2.frame = CGRectMake(btnX+30, 120, 120, 20);
+    [self addSubview:addLabel2];
     
-    xinhaoPinLvBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
-    xinhaoPinLvBtn.frame = CGRectMake(btnStartX, btnY, 120, 30);
-    xinhaoPinLvBtn.layer.cornerRadius = 5;
-    xinhaoPinLvBtn.layer.borderWidth = 2;
-    xinhaoPinLvBtn.layer.borderColor = [UIColor clearColor].CGColor;;
-    xinhaoPinLvBtn.clipsToBounds = YES;
-    [xinhaoPinLvBtn setTitle:@"  1000" forState:UIControlStateNormal];
-    xinhaoPinLvBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-    xinhaoPinLvBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    UIImageView *icon = [[UIImageView alloc]
-                         initWithFrame:CGRectMake(xinhaoPinLvBtn.frame.size.width - 20, 10, 10, 10)];
-    icon.image = [UIImage imageNamed:@"remote_video_down.png"];
-    [xinhaoPinLvBtn addSubview:icon];
-    icon.alpha = 0.8;
-    icon.layer.contentsGravity = kCAGravityResizeAspect;
-    [xinhaoPinLvBtn addTarget:self
-                action:@selector(xinhaoPinLvBtnAction:)
-      forControlEvents:UIControlEventTouchUpInside];
-    [contentView addSubview:xinhaoPinLvBtn];
+    xinhaoPinlvSlider = [[SlideButton alloc] initWithFrame:CGRectMake(btnX, 135, 120, 120)];
+    xinhaoPinlvSlider._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+    xinhaoPinlvSlider._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+    [xinhaoPinlvSlider enableValueSet:YES];
+    xinhaoPinlvSlider.delegate = self;
+    xinhaoPinlvSlider.tag = 3;
+    [self addSubview:xinhaoPinlvSlider];
+    
+    zhengxuanboL = [[UILabel alloc] initWithFrame:CGRectMake(btnX, 135+100, 120, 20)];
+    zhengxuanboL.text = @"0";
+    zhengxuanboL.textAlignment = NSTextAlignmentCenter;
+    [self addSubview:zhengxuanboL];
+    zhengxuanboL.font = [UIFont systemFontOfSize:13];
+    zhengxuanboL.textColor = YELLOW_COLOR;
+    
     
     zerodbBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
-    zerodbBtn.frame = CGRectMake(CGRectGetMaxX(xinhaoPinLvBtn.frame)+20, btnY, 120, 30);
+    zerodbBtn.frame = CGRectMake(CGRectGetMaxX(zhengxuanboL.frame)+40, btnY+30, 120, 30);
     zerodbBtn.layer.cornerRadius = 5;
     zerodbBtn.layer.borderWidth = 2;
     zerodbBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -197,11 +202,11 @@
     
     icon2.alpha = 0.8;
     icon2.layer.contentsGravity = kCAGravityResizeAspect;
-    [contentView addSubview:zerodbBtn];
+    [self addSubview:zerodbBtn];
     
     
     xinhaoMuteBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
-    xinhaoMuteBtn.frame = CGRectMake(CGRectGetMaxX(zerodbBtn.frame)+10, btnY, 50, 30);
+    xinhaoMuteBtn.frame = CGRectMake(CGRectGetMaxX(zerodbBtn.frame)+10, btnY+30, 50, 30);
     xinhaoMuteBtn.layer.cornerRadius = 5;
     xinhaoMuteBtn.layer.borderWidth = 2;
     xinhaoMuteBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -211,49 +216,159 @@
     [xinhaoMuteBtn addTarget:self
                 action:@selector(muteBtnAction:)
       forControlEvents:UIControlEventTouchUpInside];
-    [contentView addSubview:xinhaoMuteBtn];
+    [self addSubview:xinhaoMuteBtn];
     
     
     UILabel *addLabel = [[UILabel alloc] init];
     addLabel.text = @"增益 (dB)";
     addLabel.font = [UIFont boldSystemFontOfSize: 13];
     addLabel.textColor = [UIColor whiteColor];
-    addLabel.frame = CGRectMake(630, 120, 120, 20);
-    [contentView addSubview:addLabel];
+    addLabel.frame = CGRectMake(660, 120, 120, 20);
+    [self addSubview:addLabel];
     
-    xinhaoZengyiSlider = [[SlideButton alloc] initWithFrame:CGRectMake(600, 135, 120, 120)];
+    xinhaoZengyiSlider = [[SlideButton alloc] initWithFrame:CGRectMake(630, 135, 120, 120)];
     xinhaoZengyiSlider._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
     xinhaoZengyiSlider._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
     [xinhaoZengyiSlider enableValueSet:YES];
     xinhaoZengyiSlider.delegate = self;
-    xinhaoZengyiSlider.tag = 3;
-    [contentView addSubview:xinhaoZengyiSlider];
+    xinhaoZengyiSlider.tag = 2;
+    [self addSubview:xinhaoZengyiSlider];
     
-    labelL1 = [[UILabel alloc] initWithFrame:CGRectMake(600, 135+120, 120, 20)];
-    labelL1.text = @"0";
-    labelL1.textAlignment = NSTextAlignmentCenter;
-    [contentView addSubview:labelL1];
-    labelL1.font = [UIFont systemFontOfSize:13];
-    labelL1.textColor = YELLOW_COLOR;
+    zengyiL = [[UILabel alloc] initWithFrame:CGRectMake(630, 135+100, 120, 20)];
+    zengyiL.text = @"1";
+    zengyiL.textAlignment = NSTextAlignmentCenter;
+    [self addSubview:zengyiL];
+    zengyiL.font = [UIFont systemFontOfSize:13];
+    zengyiL.textColor = YELLOW_COLOR;
+    
+    [self createOutPutComps];
 }
 
+
+- (void) createOutPutComps {
+    
+    UILabel *labelL = [[UILabel alloc] initWithFrame:CGRectMake(0, 320, 120, 120)];
+    labelL.textAlignment = NSTextAlignmentLeft;
+    [self addSubview:labelL];
+    labelL.font = [UIFont systemFontOfSize:13];
+    labelL.textColor = YELLOW_COLOR;
+    
+    labelL.text = @"输出";
+    
+    int num = (int) [self._currentAudio._outAudioProxys count];
+    if (num <= 0) {
+        return;
+    }
+    
+    if(outputChanels && [outputChanels count])
+    {
+        [outputChanels makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    }
+    
+    outputChanels = [NSMutableArray array];
+    
+    if(outputSelectedBtns && [outputSelectedBtns count])
+    {
+        [outputSelectedBtns makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    }
+    
+    outputSelectedBtns = [NSMutableArray array];
+    
+    float x = 0;
+    int y = CGRectGetHeight(self.frame)-150;
+    
+    float spx = (CGRectGetWidth(self.frame) - num*50.0)/(num-1);
+    if(spx > 10)
+        spx = 10;
+    for(int i = 0; i < num; i++)
+    {
+        VAProcessorProxys *vProxy = [self._currentAudio._outAudioProxys objectAtIndex:i];
+        
+        UIButton *btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+        btn.frame = CGRectMake(x, y, 50, 50);
+        btn.clipsToBounds = YES;
+        btn.layer.cornerRadius = 5;
+        btn.titleLabel.font = [UIFont systemFontOfSize:15];
+        [btn setTitle:vProxy._rgsProxyObj.name forState:UIControlStateNormal];
+        btn.tag = i;
+        [self addSubview:btn];
+        
+        [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [btn setTitleColor:YELLOW_COLOR forState:UIControlStateHighlighted];
+        
+        [btn addTarget:self
+                action:@selector(outputChanelBtnAction:) forControlEvents:UIControlEventTouchUpInside];
+        
+        x+=50;
+        x+=spx;
+        
+        [outputChanels addObject:btn];
+    }
+}
+
+
+- (void) outputChanelBtnAction:(UIButton*) sender {
+    int btnIndex = (int) sender.tag;
+    
+    UIButton *selectedBtn = nil;
+    for (UIButton *btn in outputSelectedBtns) {
+        if (btnIndex == btn.tag) {
+            selectedBtn = btn;
+            break;
+        }
+    }
+    BOOL isEnable;
+    if (selectedBtn) {
+        [selectedBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        
+        [outputSelectedBtns removeObject:selectedBtn];
+        
+        isEnable = NO;
+    } else {
+        [sender setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+        
+        [outputSelectedBtns addObject:sender];
+        
+        isEnable = YES;
+    }
+    
+    NSString *proxyName = sender.titleLabel.text;
+    
+    [_currentSignalProxy controlSignalWithOutState:proxyName withState:isEnable];
+}
+
+
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
-    
-    int k = (value *24)-12;
-    NSString *valueStr= [NSString stringWithFormat:@"%d", k];
-    
-    [_curProxy controlXinhaofashengZengyi:valueStr];
-    
-    labelL1.text = valueStr;
+    int tag = (int) slbtn.tag;
+    if (tag == 2) {
+        float k = roundf((value *(maxZengyi-minZengyi)) + minZengyi);
+        NSString *valueStr= [NSString stringWithFormat:@"%.f ms", k];
+        
+        zengyiL.text = valueStr;
+        
+        [_currentSignalProxy controlXinhaofashengZengYi:[NSString stringWithFormat:@"%.f", k]];
+    } else {
+        float k = roundf((value *(maxRate-minRate)) + minRate);
+        NSString *valueStr= [NSString stringWithFormat:@"%.f ms", k];
+        
+        zhengxuanboL.text = valueStr;
+        
+        [_currentSignalProxy controlXinhaofashengPinlv:[NSString stringWithFormat:@"%.f", k]];
+    }
 }
 
 -(void) zhengxuanboAction:(UIButton*) sender {
-    TeslariaComboChooser *sel = [[TeslariaComboChooser alloc] init];
-    sel._dataArray = [_curProxy getXinhaofashengZhengxuanArray];
-    sel._type = 1;
+    if ([_deviceSelector isPopoverVisible]) {
+        [_deviceSelector dismissPopoverAnimated:NO];
+    }
     
-    sel.preferredContentSize = CGSizeMake(150, 350);
-    sel._size = CGSizeMake(150, 350);
+    sel = [[TeslariaComboChooser alloc] init];
+    sel._dataArray = [_currentSignalProxy getSignalType];
+    sel._type = 2;
+    
+    int h = (int)[sel._dataArray count] * 30 + 50;
+    sel.preferredContentSize = CGSizeMake(150, h);
+    sel._size = CGSizeMake(150, h);
     
     IMP_BLOCK_SELF(XinHaoFaShengQi_UIView);
     sel._block = ^(id object, int index)
@@ -262,7 +377,7 @@
     };
     
     CGRect rect = [self convertRect:sender.frame
-                           fromView:sender];
+                           fromView:[sender superview]];
     
     _deviceSelector = [[UIPopoverController alloc] initWithContentViewController:sel];
     _deviceSelector.popoverContentSize = sel.preferredContentSize;
@@ -280,7 +395,7 @@
     
     [zerodbBtn setTitle:dispaly forState:UIControlStateNormal];
     
-    [_curProxy controlXinhaoZhengxuanbo:device];
+    [_currentSignalProxy controlXinhaofashengZhengxuan:device];
     
     if ([_deviceSelector isPopoverVisible]) {
         [_deviceSelector dismissPopoverAnimated:NO];
@@ -288,60 +403,22 @@
     
 }
 
--(void) xinhaoPinLvBtnAction:(UIButton*) sender {
-    TeslariaComboChooser *sel = [[TeslariaComboChooser alloc] init];
-    sel._dataArray = [_curProxy getXinhaofashengPinlvArray];
-    sel._type = 0;
-    
-    sel.preferredContentSize = CGSizeMake(150, 350);
-    sel._size = CGSizeMake(150, 350);
-    
-    IMP_BLOCK_SELF(XinHaoFaShengQi_UIView);
-    sel._block = ^(id object, int index)
-    {
-        [block_self chooseXinhaoPinLv:object];
-    };
-    
-    CGRect rect = [self convertRect:sender.frame
-                           fromView:sender];
-    
-    _deviceSelector = [[UIPopoverController alloc] initWithContentViewController:sel];
-    _deviceSelector.popoverContentSize = sel.preferredContentSize;
-    
-    [_deviceSelector presentPopoverFromRect:rect
-                                     inView:self
-                   permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-}
-
-- (void) chooseXinhaoPinLv:(NSString*)device{
-    if (device == nil) {
-        return;
-    }
-    NSString *dispaly = [@"   " stringByAppendingString:device];
-    
-    [xinhaoPinLvBtn setTitle:dispaly forState:UIControlStateNormal];
-    
-    [_curProxy controlXinHaofashengPinlv:device];
-    
-    if ([_deviceSelector isPopoverVisible]) {
-        [_deviceSelector dismissPopoverAnimated:NO];
-    }
-    
-}
 
 -(void) muteBtnAction:(id) sender {
-    if(_curProxy == nil)
+    if(_currentSignalProxy == nil)
         return;
     
-    BOOL isMute = [_curProxy isXinhaofashengMute];
+    BOOL isMute = [_currentSignalProxy isXinhaofashengMute];
     
-    [_curProxy controlXinhaofashengMute:!isMute];
+    isMute = !isMute;
+    
+    [_currentSignalProxy controlXinhaofashengMute:isMute];
     
     [self updateMuteButtonState];
 }
 - (void) updateMuteButtonState{
     
-    BOOL isXinhaoMute = [_curProxy isXinhaofashengMute];
+    BOOL isXinhaoMute = [_currentSignalProxy isXinhaofashengMute];
     
     if(isXinhaoMute)
     {

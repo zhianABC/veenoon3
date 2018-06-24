@@ -159,12 +159,11 @@
     int numProxys = (int)[_processor._outAudioProxys count];
     
     CGRect vrc = CGRectMake(60, 140, SCREEN_WIDTH-120, SCREEN_HEIGHT-140-60);
-    xinhaoView = [[XinHaoFaShengQi_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._outAudioProxys];
+    xinhaoView = [[XinHaoFaShengQi_UIView alloc] initWithFrameProxy:vrc withAudio:_processor withProxy:self._processor._singalProxy];
     [self.view addSubview:xinhaoView];
     xinhaoView.hidden = NO;
     
-    xinhaoView._proxys = _processor._outAudioProxys;
-    [xinhaoView layoutChannelBtns:numProxys];
+    [xinhaoView updateProxyCommandValIsLoaded];
     
     dianpingView = [[DianPing_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._outAudioProxys];
     [self.view addSubview:dianpingView];
