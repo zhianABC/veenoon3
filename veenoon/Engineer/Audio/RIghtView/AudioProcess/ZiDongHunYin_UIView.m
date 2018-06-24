@@ -79,9 +79,9 @@
     [self addSubview:zengyi];
     
     
-    labelL1 = [[UILabel alloc] initWithFrame:CGRectMake(startX+gap, labelY+labelBtnGap+80, 120, 120)];
+    labelL1 = [[UILabel alloc] initWithFrame:CGRectMake(startX+gap, labelY+labelBtnGap+50, 120, 120)];
     labelL1.textAlignment = NSTextAlignmentCenter;
-    [contentView addSubview:labelL1];
+    [self addSubview:labelL1];
     labelL1.font = [UIFont systemFontOfSize:13];
     labelL1.textColor = YELLOW_COLOR;
     
@@ -134,12 +134,13 @@
         spx = 10;
     for(int i = 0; i < num; i++)
     {
+        VAProcessorProxys *vProxy = [self._currentAodio._inAudioProxys objectAtIndex:i];
         UIButton *btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
         btn.frame = CGRectMake(x, y, 50, 50);
         btn.clipsToBounds = YES;
         btn.layer.cornerRadius = 5;
         btn.titleLabel.font = [UIFont systemFontOfSize:15];
-        [btn setTitle:[NSString stringWithFormat:@"%d", i+1] forState:UIControlStateNormal];
+        [btn setTitle:vProxy._rgsProxyObj.name forState:UIControlStateNormal];
         btn.tag = i;
         [self addSubview:btn];
         
@@ -195,15 +196,23 @@
             break;
         }
     }
+    BOOL isEnable;
     if (selectedBtn) {
         [selectedBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         
         [inputSelectedBtns removeObject:selectedBtn];
+        
+        isEnable = NO;
     } else {
         [sender setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
         
         [inputSelectedBtns addObject:sender];
+        isEnable = YES;
     }
+    
+    NSString *proxyName = sender.titleLabel.text;
+    
+    [_currentProxy controlZidongHunyinBtn:proxyName withType:0 withState:isEnable];
 }
 
 - (void) createOutPutComps {
@@ -243,12 +252,14 @@
         spx = 10;
     for(int i = 0; i < num; i++)
     {
+        VAProcessorProxys *vProxy = [self._currentAodio._outAudioProxys objectAtIndex:i];
+        
         UIButton *btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
         btn.frame = CGRectMake(x, y, 50, 50);
         btn.clipsToBounds = YES;
         btn.layer.cornerRadius = 5;
         btn.titleLabel.font = [UIFont systemFontOfSize:15];
-        [btn setTitle:[NSString stringWithFormat:@"%d", i+1] forState:UIControlStateNormal];
+        [btn setTitle:vProxy._rgsProxyObj.name forState:UIControlStateNormal];
         btn.tag = i;
         [self addSubview:btn];
         
@@ -275,37 +286,33 @@
             break;
         }
     }
+    BOOL isEnable;
     if (selectedBtn) {
         [selectedBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         
         [outputSelectedBtns removeObject:selectedBtn];
+        
+        isEnable = NO;
     } else {
         [sender setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
         
         [outputSelectedBtns addObject:sender];
+        
+        isEnable = YES;
     }
+    
+    NSString *proxyName = sender.titleLabel.text;
+    
+    [_currentProxy controlZidongHunyinBtn:proxyName withType:1 withState:isEnable];
 }
 
-- (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
-    
-    int k = (value *24)-12.0;
-    NSString *valueStr= [[NSString stringWithFormat:@"%d", k] stringByAppendingString:@" dB"];
+- (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn {
+    float k = roundf((value *(valueMax-valueMin)) + valueMin);
+    NSString *valueStr= [NSString stringWithFormat:@"%.f dB", k];
     
     labelL1.text = valueStr;
-    NSString *zengyiStr = [NSString stringWithFormat:@"%d", k];
-}
-- (void) qiyongBtnAction:(id) sender {
     
-    [self updateMuteButtonState];
-}
-
-- (void) updateMuteButtonState{
-    
-    
-}
-
-- (void) updateZengYiSlide {
-    
+    [_currentProxy controlZiDongHunYinZengYi:[NSString stringWithFormat:@"%f", k]];
 }
 
 @end
