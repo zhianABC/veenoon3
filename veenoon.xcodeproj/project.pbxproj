@@ -653,6 +653,7 @@
 		EB62DF7720D7A04D00144EE0 /* TeslariaComboChooser.m in Sources */ = {isa = PBXBuildFile; fileRef = EB62DF7620D7A04D00144EE0 /* TeslariaComboChooser.m */; };
 		EB62DFF920DE85CE00144EE0 /* AudioEProcessorSignalProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = EB62DFF820DE85CE00144EE0 /* AudioEProcessorSignalProxy.m */; };
 		EB62DFFC20DE85E300144EE0 /* AudioEProcessorAutoMixProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = EB62DFFB20DE85E300144EE0 /* AudioEProcessorAutoMixProxy.m */; };
+		EB62DFFF20DF853900144EE0 /* VVideoProcessSetProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = EB62DFFE20DF853900144EE0 /* VVideoProcessSetProxy.m */; };
 		EB7333F1204102DF00AE60B8 /* FloorWarmRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333F0204102DF00AE60B8 /* FloorWarmRightView.m */; };
 		EB7333F42041046400AE60B8 /* AirCleanRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333F32041046400AE60B8 /* AirCleanRightView.m */; };
 		EB7333FA204108B000AE60B8 /* AddWetRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333F9204108B000AE60B8 /* AddWetRightView.m */; };
@@ -1789,6 +1790,8 @@
 		EB62DFF820DE85CE00144EE0 /* AudioEProcessorSignalProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioEProcessorSignalProxy.m; sourceTree = "<group>"; };
 		EB62DFFA20DE85E300144EE0 /* AudioEProcessorAutoMixProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioEProcessorAutoMixProxy.h; sourceTree = "<group>"; };
 		EB62DFFB20DE85E300144EE0 /* AudioEProcessorAutoMixProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioEProcessorAutoMixProxy.m; sourceTree = "<group>"; };
+		EB62DFFD20DF853900144EE0 /* VVideoProcessSetProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VVideoProcessSetProxy.h; sourceTree = "<group>"; };
+		EB62DFFE20DF853900144EE0 /* VVideoProcessSetProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VVideoProcessSetProxy.m; sourceTree = "<group>"; };
 		EB7333EF204102DF00AE60B8 /* FloorWarmRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FloorWarmRightView.h; sourceTree = "<group>"; };
 		EB7333F0204102DF00AE60B8 /* FloorWarmRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FloorWarmRightView.m; sourceTree = "<group>"; };
 		EB7333F22041046400AE60B8 /* AirCleanRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirCleanRightView.h; sourceTree = "<group>"; };
@@ -3362,6 +3365,8 @@
 				EBD009B8208CBD8100920849 /* VRemoteVideoSet.m */,
 				EBD009BD2090613C00920849 /* VVideoProcessSet.h */,
 				EBD009BE2090613C00920849 /* VVideoProcessSet.m */,
+				EB62DFFD20DF853900144EE0 /* VVideoProcessSetProxy.h */,
+				EB62DFFE20DF853900144EE0 /* VVideoProcessSetProxy.m */,
 				EBD009C02090639100920849 /* VVideoProcessInOut.h */,
 				EBD009C12090639100920849 /* VVideoProcessInOut.m */,
 				EBD009C320906AB800920849 /* VPinJieSet.h */,
@@ -4614,6 +4619,7 @@
 				341671881FBA97BD001D33D0 /* HomeViewController.m in Sources */,
 				EBC71B2C204100DD00DD0A98 /* NewWindRightView.m in Sources */,
 				342814231FE34BF100170D11 /* PowerSettingView.m in Sources */,
+				EB62DFFF20DF853900144EE0 /* VVideoProcessSetProxy.m in Sources */,
 				EBEA7C221FBCAF260028F0E8 /* AreaPickView.m in Sources */,
 				04DE1E9F1AD6AEE000D49E2F /* iHttpAdmin.m in Sources */,
 				049ECAC21C8D694400A611D8 /* DataMatrix.mm in Sources */,
