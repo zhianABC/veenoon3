@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "APBaseView.h"
+#import "AudioEProcessor.h"
+#import "AudioEProcessorSignalProxy.h"
 
 @interface XinHaoFaShengQi_UIView : APBaseView
-- (id)initWithFrameProxys:(CGRect)frame withProxys:(NSArray*) proxys;
+- (id)initWithFrameProxy:(CGRect)frame withAudio:(AudioEProcessor*) audioProcessor withProxy:(AudioEProcessorSignalProxy*) proxy;
 - (void) updateProxyCommandValIsLoaded;
-
 @end

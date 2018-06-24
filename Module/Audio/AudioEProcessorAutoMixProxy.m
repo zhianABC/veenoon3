@@ -36,6 +36,10 @@
 {
     if(self = [super init])
     {
+        _zidonghunyinZengYi = @"2";
+        
+        _zidonghunyinInputChanels = [NSMutableArray array];
+        _zidonghunyinOutputChanels = [NSMutableArray array];
         
     }
     return self;
@@ -138,11 +142,131 @@
     return result;
 }
 
+- (void) controlZidongHunyinBtn:(NSString*) proxyName withType:(int)type withState:(BOOL)state {
+    if (type == 0) {
+        if (state) {
+            [_zidonghunyinInputChanels addObject:proxyName];
+        } else {
+            [_zidonghunyinInputChanels removeObject:proxyName];
+        }
+    } else {
+        if (state) {
+            [_zidonghunyinOutputChanels addObject:proxyName];
+        } else {
+            [_zidonghunyinOutputChanels removeObject:proxyName];
+        }
+    }
+    [self controlAutoMixProxySelected:proxyName withType:type withState:state];
+    
+}
+
+- (void) controlAutoMixProxySelected:(NSString*) proxyName withType:(int)type withState:(BOOL)state {
+    NSString *inputOrOutPut = @"SET_INPUT";
+    if (type == 1) {
+        inputOrOutPut = @"SET_OUTPUT";
+    }
+    
+    RgsCommandInfo *cmd = nil;
+    
+    if(_cmdMap)
+        cmd = [_cmdMap objectForKey:inputOrOutPut];
+    
+    
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
+            
+            NSString *name = [proxyName stringByReplacingOccurrencesOfString:@" " withString:@""];
+            
+            [param setObject:name forKey:param_info.name];
+            
+            if(state)
+            {
+                [param setObject:@"True" forKey:@"ENABLE"];
+            }
+            else
+            {
+                [param setObject:@"False" forKey:@"ENABLE"];
+            }
+            
+        }
+        
+        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+                                                 cmd:cmd.name
+                                               param:param completion:^(BOOL result, NSError *error) {
+                                                   if (result) {
+                                                       
+                                                   }
+                                                   else{
+                                                       
+                                                   }
+                                               }];
+    }
+    
+}
+
 - (NSString*) getZidonghuiyinZengYi {
     return _zidonghunyinZengYi;
 }
 - (void) controlZiDongHunYinZengYi:(NSString*) zengyiDB {
     self._zidonghunyinZengYi = zengyiDB;
+    
+    [self controlAutoMixZengyi];
+}
+
+- (void) controlAutoMixZengyi {
+    
+    RgsCommandInfo *cmd = nil;
+    
+    if(_cmdMap)
+        cmd = [_cmdMap objectForKey:@"SET_A_VALUE"];
+    
+    
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            double zidonghunyinZengyi = [_zidonghunyinZengYi doubleValue];
+            
+            for(RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"VALUE"])
+                {
+                    if(param_info.type == RGS_PARAM_TYPE_FLOAT)
+                    {
+                        
+                        [param setObject:[NSString stringWithFormat:@"%0.1f",
+                                          zidonghunyinZengyi]
+                                  forKey:param_info.name];
+                    }
+                    else if(param_info.type == RGS_PARAM_TYPE_INT)
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%0.0f",
+                                          zidonghunyinZengyi]
+                                  forKey:param_info.name];
+                        
+                    }
+                }
+            }
+            
+        }
+        
+        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+                                                 cmd:cmd.name
+                                               param:param completion:^(BOOL result, NSError *error) {
+                                                   if (result) {
+                                                       
+                                                   }
+                                                   else{
+                                                       
+                                                   }
+                                               }];
+    }
+    
 }
 
 - (NSMutableArray*) getZidonghunyinInputChanels {

@@ -23,27 +23,31 @@
 @property (nonatomic, weak) id <AudioEProcessorSignalProxyDelegate> delegate;
 
 @property (nonatomic, strong) RgsProxyObj *_rgsProxyObj;
-//zidonghunyin
-@property (nonatomic, strong) NSString *_zidonghunyinZengYi;
-@property (nonatomic, strong) NSString *_zidonghunyinPinlv;
-@property (nonatomic, strong) NSString *_zidonghunyinZhengxuan;
-@property (nonatomic, assign) BOOL _isZidonghunyinMute;
-@property (nonatomic, strong) NSMutableArray *_zidonghunyinOutputChanels;
+//xinhaofasheng
+@property (nonatomic, strong) NSString *_xinhaofashengZengYi;
+@property (nonatomic, strong) NSString *_xinhaofashengPinlv;
+@property (nonatomic, strong) NSString *_xinhaofashengZhengxuan;
+@property (nonatomic, assign) BOOL _isXinhaofashengMute;
+@property (nonatomic, strong) NSMutableArray *_xinhaofashengOutputChanels;
 
 - (void) checkRgsProxyCommandLoad;
 
 
 //zidonghunyin
-- (NSDictionary*)getSignalCmdSettings;
-- (NSString*) getZidonghuiyinZengYi;
-- (void) controlZiDongHunYinZengYi:(NSString*) zengyiDB;
-- (NSMutableArray*) getZidonghunyinOutputChanels;
-- (void) controlZidonghunyinOutputChanels:(NSMutableArray*)zidonghunyinOutputChanels;
-- (NSString*) getZidonghuiyinPinlv;
-- (void) controlZiDongHunYinPinlv:(NSString*) pinlv;
-- (NSString*) getZidonghuiyinZhengXuan;
-- (void) controlZiDongHunYinZhengxuan:(NSString*) zhengxuan;
-- (BOOL) isZidonghunyinMute;
-- (void) controlZidonghunyinMute:(BOOL)isMute;
+- (NSString*) getXinhaofashengZengYi;
+- (void) controlXinhaofashengZengYi:(NSString*) zengyiDB;
+- (NSMutableArray*) getXinhaofashengOutputChanels;
+- (void) controlXinhaofashengOutputChanels:(NSMutableArray*)xinhaofashengOutputChanels;
+- (NSString*) getXinhaofashengPinlv;
+- (void) controlXinhaofashengPinlv:(NSString*) pinlv;
+- (NSString*) getXinhaofashengZhengXuan;
+- (void) controlXinhaofashengZhengxuan:(NSString*) zhengxuan;
+- (BOOL) isXinhaofashengMute;
+- (void) controlXinhaofashengMute:(BOOL)isMute;
+- (NSArray*) getSignalType;
+- (NSDictionary*) getSignalGainSettings;
+- (NSDictionary*) getSignalRateSettings;
+
+- (void) controlSignalWithOutState:(NSString*) proxyName withState:(BOOL)state;
 @end
 

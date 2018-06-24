@@ -39,6 +39,6 @@
 - (void) controlZidonghunyinInputChanels:(NSMutableArray*)zidonghunyinInputChanels;
 - (NSMutableArray*) getZidonghunyinOutputChanels;
 - (void) controlZidonghunyinOutputChanels:(NSMutableArray*)zidonghunyinOutputChanels;
-
+- (void) controlZidongHunyinBtn:(NSString*) proxyName withType:(int)type withState:(BOOL)state;
 
 @end
