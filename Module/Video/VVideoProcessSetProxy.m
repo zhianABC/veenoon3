@@ -94,4 +94,62 @@
 - (void) initDatasAfterPullData{
     
 }
+
+- (NSDictionary*)getVideoProcessInputSettings {
+    
+    NSMutableDictionary *result = [NSMutableDictionary dictionary];
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_P2P"];
+    if(cmd)
+    {
+        if([cmd.params count])
+        {
+            
+            for( RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"INPUT"])
+                {
+                    if(param_info.max)
+                        [result setObject:param_info.max forKey:@"max"];
+                    if(param_info.min)
+                        [result setObject:param_info.min forKey:@"min"];
+                    break;
+                }
+                
+            }
+        }
+    }
+    
+    return result;
+}
+
+- (NSDictionary*)getVideoProcessOutputSettings {
+    
+    NSMutableDictionary *result = [NSMutableDictionary dictionary];
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_P2P"];
+    if(cmd)
+    {
+        if([cmd.params count])
+        {
+            
+            for( RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"OUT"])
+                {
+                    if(param_info.max)
+                        [result setObject:param_info.max forKey:@"max"];
+                    if(param_info.min)
+                        [result setObject:param_info.min forKey:@"min"];
+                    break;
+                }
+                
+            }
+        }
+    }
+    
+    return result;
+}
 @end

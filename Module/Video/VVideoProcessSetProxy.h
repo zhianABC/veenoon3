@@ -24,4 +24,6 @@
 @property (nonatomic, weak) id <VVideoProcessSetProxyDelegate> delegate;
 - (void) checkRgsProxyCommandLoad;
 
+- (NSDictionary*)getVideoProcessInputSettings;
+- (NSDictionary*)getVideoProcessOutputSettings;
 @end
