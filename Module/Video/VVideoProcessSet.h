@@ -1,5 +1,5 @@
 //
-//  VVideoProcessSet.h
+//  VTouyingjiSet.h
 //  veenoon
 //
 //  Created by 安志良 on 2018/4/25.
@@ -8,10 +8,23 @@
 
 #import <Foundation/Foundation.h>
 #import "BasePlugElement.h"
-@interface VVideoProcessSet : BasePlugElement {
-    NSMutableArray *_inputArray;
-    NSMutableArray *_outputArray;
-}
-@property (nonatomic,strong) NSMutableArray *_inputArray;
-@property (nonatomic,strong) NSMutableArray *_outputArray;
+
+@class RgsConnectionObj;
+
+@interface VVideoProcessSet : BasePlugElement
+
+
+@property (nonatomic, strong) id _comDriverInfo;
+@property (nonatomic, strong) id _comDriver;
+
+//<VProjectProxy>
+@property (nonatomic, strong) id _proxyObj;
+
+@property (nonatomic, strong) NSArray *_localSavedCommands;
+
+
+- (NSString*) deviceName;
+
 @end
+
+
