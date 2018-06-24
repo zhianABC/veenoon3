@@ -34,7 +34,7 @@
     {
         
         //不需要ip
-        self._ipaddress = nil;
+        self._ipaddress = @"192.168.1.1";
         self._show_icon_name = @"v_icon_5.png";
         self._show_icon_sel_name = @"v_icon_5_sel.png";
         
@@ -45,146 +45,76 @@
 
 - (NSString*) deviceName{
     
-    return @"视频处理";
+    return video_process_name;
 }
-
 
 - (void) syncDriverIPProperty{
     
-    /*
-     if(_driver_ip_property)
-     {
-     self._ipaddress = _driver_ip_property.value;
-     return;
-     }
-     
-     if(_comDriver && [_comDriver isKindOfClass:[RgsDriverObj class]])
-     {
-     IMP_BLOCK_SELF(VTouyingjiSet);
-     
-     RgsDriverObj *rd = (RgsDriverObj*)_comDriver;
-     [[RegulusSDK sharedRegulusSDK] GetDriverProperties:rd.m_id completion:^(BOOL result, NSArray *properties, NSError *error) {
-     if (result) {
-     if ([properties count]) {
-     
-     for(RgsPropertyObj *pro in properties)
-     {
-     if([pro.name isEqualToString:@"IP"])
-     {
-     block_self._driver_ip_property = pro;
-     block_self._ipaddress = pro.value;
-     }
-     }
-     }
-     }
-     else
-     {
-     
-     }
-     }];
-     }
-     */
-}
-
-- (void) syncDriverComs{
-    /*
-     if(_comDriver
-     && [_comDriver isKindOfClass:[RgsDriverObj class]]
-     && ![_comConnections count])
-     {
-     IMP_BLOCK_SELF(VTouyingjiSet);
-     
-     RgsDriverObj *comd = _comDriver;
-     [[RegulusSDK sharedRegulusSDK] GetDriverConnects:comd.m_id
-     completion:^(BOOL result, NSArray *connects, NSError *error) {
-     if (result) {
-     if ([connects count]) {
-     
-     block_self._comConnections = connects;
-     NSMutableArray *coms = [NSMutableArray array];
-     for(int i = 0; i < [connects count]; i++)
-     {
-     RgsConnectionObj *obj = [connects objectAtIndex:i];
-     [coms addObject:obj.name];
-     }
-     
-     block_self._comArray = coms;
-     }
-     }
-     else
-     {
-     NSLog(@"+++++++++++++");
-     NSLog(@"+++++++++++++");
-     NSLog(@"sync com Driver Connection Error");
-     NSLog(@"+++++++++++++");
-     NSLog(@"+++++++++++++");
-     //[KVNProgress showErrorWithStatus:[error description]];
-     }
-     }];
-     
-     }
-     */
-    if(_driver
-       && [_driver isKindOfClass:[RgsDriverObj class]]
-       && ![_connections count])
+    if(_driver_ip_property)
+    {
+        self._ipaddress = _driver_ip_property.value;
+        return;
+    }
+    
+    if(_driver && [_driver isKindOfClass:[RgsDriverObj class]])
     {
         IMP_BLOCK_SELF(VVideoProcessSet);
         
-        RgsDriverObj *comd = _driver;
-        [[RegulusSDK sharedRegulusSDK] GetDriverConnects:comd.m_id
-                                              completion:^(BOOL result, NSArray *connects, NSError *error) {
-                                                  if (result) {
-                                                      if ([connects count]) {
-                                                          
-                                                          block_self._connections = connects;
-                                                      }
-                                                  }
-                                                  else
-                                                  {
-                                                      NSLog(@"+++++++++++++");
-                                                      NSLog(@"+++++++++++++");
-                                                      NSLog(@"sync Driver Connection Error");
-                                                      NSLog(@"+++++++++++++");
-                                                      NSLog(@"+++++++++++++");
-                                                      
-                                                      //[KVNProgress showErrorWithStatus:[error description]];
-                                                  }
-                                              }];
-        
+        RgsDriverObj *rd = (RgsDriverObj*)_driver;
+        [[RegulusSDK sharedRegulusSDK] GetDriverProperties:rd.m_id completion:^(BOOL result, NSArray *properties, NSError *error) {
+            if (result) {
+                if ([properties count]) {
+                    
+                    for(RgsPropertyObj *pro in properties)
+                    {
+                        if([pro.name isEqualToString:@"IP"])
+                        {
+                            block_self._driver_ip_property = pro;
+                            block_self._ipaddress = pro.value;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                
+            }
+        }];
     }
 }
 
-- (void) uploadDriverIPProperty
-{
-    /*
-     if(_comDriver
-     && [_comDriver isKindOfClass:[RgsDriverObj class]]
-     && _driver_ip_property)
-     {
-     IMP_BLOCK_SELF(VTouyingjiSet);
-     
-     RgsDriverObj *rd = (RgsDriverObj*)_comDriver;
-     
-     //保存到内存
-     _driver_ip_property.value = self._ipaddress;
-     
-     [[RegulusSDK sharedRegulusSDK] SetDriverProperty:rd.m_id
-     property_name:_driver_ip_property.name
-     property_value:self._ipaddress
-     completion:^(BOOL result, NSError *error) {
-     if (result) {
-     
-     [block_self saveProject];
-     }
-     else{
-     
-     }
-     }];
-     }
-     */
+- (void) uploadDriverIPProperty {
+    if(_driver
+       && [_driver isKindOfClass:[RgsDriverObj class]]
+       && _driver_ip_property)
+    {
+        IMP_BLOCK_SELF(VVideoProcessSet);
+        
+        RgsDriverObj *rd = (RgsDriverObj*)_driver;
+        
+        //保存到内存
+        _driver_ip_property.value = self._ipaddress;
+        
+        [KVNProgress show];
+        
+        [[RegulusSDK sharedRegulusSDK] SetDriverProperty:rd.m_id
+                                           property_name:_driver_ip_property.name
+                                          property_value:self._ipaddress
+                                              completion:^(BOOL result, NSError *error) {
+                                                  if (result) {
+                                                      
+                                                      [block_self saveProject];
+                                                  }
+                                                  else{
+                                                      [KVNProgress dismiss];
+                                                  }
+                                              }];
+    }
 }
 
 - (void) saveProject{
+    
+    [KVNProgress showSuccess];
     
     //    [KVNProgress show];
     //
@@ -206,26 +136,6 @@
 - (void) createDriver{
     
     RgsAreaObj *area = [DataSync sharedDataSync]._currentArea;
-    
-    //串口服务器驱动
-    /*
-     if(area && _comDriverInfo && !_comDriver)
-     {
-     RgsDriverInfo *info = _comDriverInfo;
-     
-     IMP_BLOCK_SELF(VTouyingjiSet);
-     [[RegulusSDK sharedRegulusSDK] CreateDriver:area.m_id
-     serial:info.serial
-     completion:^(BOOL result, RgsDriverObj *driver, NSError *error) {
-     if (result) {
-     
-     block_self._comDriver = driver;
-     }
-     
-     }];
-     }
-     */
-    //Camera驱动
     if(area && _driverInfo && !_driver)
     {
         RgsDriverInfo *info = _driverInfo;
@@ -244,21 +154,10 @@
                                              [KVNProgress dismiss];
                                          }];
     }
-    
-    
 }
 
 - (void) removeDriver{
-    /*
-     if(_comDriver)
-     {
-     RgsDriverObj *dr = _comDriver;
-     [[RegulusSDK sharedRegulusSDK] DeleteDriver:dr.m_id
-     completion:^(BOOL result, NSError *error) {
-     
-     }];
-     }
-     */
+    
     if(_driver)
     {
         RgsDriverObj *dr = _driver;
@@ -267,31 +166,7 @@
                                              
                                          }];
     }
-    
-    
 }
-
-- (void) createConnection:(RgsConnectionObj*)source withConnect:(RgsConnectionObj*)target{
-    
-    if(target && source)
-    {
-        
-        RgsConnectionObj * com_connt_obj = target;
-        RgsConnectionObj * cam_connt_obj = source;
-        
-        //IMP_BLOCK_SELF(VDVDPlayerSet);
-        
-        [com_connt_obj Connect:cam_connt_obj completion:^(BOOL result, NSError *error) {
-            if(result)
-            {
-                //block_self._com = target;
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"NotifyRefreshTableWithCom" object:nil];
-            }
-        }];
-    }
-}
-
 
 - (NSDictionary *)objectToJson{
     
@@ -334,38 +209,7 @@
         RgsDriverObj *dr = _driver;
         [allData setObject:[NSNumber numberWithInteger:dr.m_id] forKey:@"driver_id"];
     }
-    if(_comDriverInfo)
-    {
-        RgsDriverInfo *info = _comDriverInfo;
-        if(info.serial)
-            [allData setObject:info.serial forKey:@"com_driver_info_uuid"];
-    }
-    if(_comDriver)
-    {
-        RgsDriverObj *dr = _comDriver;
-        [allData setObject:[NSNumber numberWithInteger:dr.m_id] forKey:@"com_driver_id"];
-    }
     
-    if(_proxyObj)
-    {
-        VProjectProxys *vprj = _proxyObj;
-        
-        if(vprj._deviceId)
-        {
-            NSMutableArray *commands = [NSMutableArray array];
-            NSMutableDictionary *cmdDic = [NSMutableDictionary dictionary];
-            [commands addObject:cmdDic];
-            
-            [cmdDic setObject:[NSNumber numberWithInteger:vprj._deviceId] forKey:@"proxy_id"];
-            [cmdDic setObject:vprj._power forKey:@"power"];
-            [cmdDic setObject:vprj._input forKey:@"input"];
-            
-            [cmdDic setObject:[vprj getScenarioSliceLocatedShadow]
-                       forKey:@"RgsSceneDeviceOperation"];
-            
-            [allData setObject:commands forKey:@"commands"];
-        }
-    }
     
     //    NSError *error = nil;
     //    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:allData
@@ -414,30 +258,9 @@
     dr.m_id = [[json objectForKey:@"driver_id"] integerValue];
     self._driver = dr;
     
-    RgsDriverInfo *comdrinfo = [[RgsDriverInfo alloc] init];
-    comdrinfo.serial = [json objectForKey:@"com_driver_info_uuid"];
-    self._comDriverInfo = comdrinfo;
-    
-    RgsDriverObj *comdr = [[RgsDriverObj alloc] init];
-    comdr.m_id = [[json objectForKey:@"com_driver_id"] integerValue];
-    self._comDriver = comdr;
-    
-    
     self._localSavedCommands = [json objectForKey:@"commands"];
-    
-    if([_localSavedCommands count])
-    {
-        RgsDriverObj *driver = self._driver;
-        VProjectProxys *vpro = [[VProjectProxys alloc] init];
-        vpro._deviceId = driver.m_id;
-        NSDictionary *local = [self._localSavedCommands objectAtIndex:0];
-        [vpro recoverWithDictionary:local];
-        self._proxyObj = vpro;
-    }
+
     
 }
 
-
 @end
-
-

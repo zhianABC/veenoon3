@@ -602,7 +602,7 @@
         [self xinxiheAction:_xinxiheBtn];
     } else if ([@"远程视讯" isEqualToString:brand]) {
         [self yuanchengshixunAction:_yuanchengshixunBtn];
-    } else if ([@"视频处理" isEqualToString:brand]) {
+    } else if ([video_process_name isEqualToString:brand]) {
         [self shipinchuliAction:_shipinchuliBtn];
     } else if ([@"拼接屏" isEqualToString:brand]) {
         [self pinjiepingAction:_pinjiepingBtn];

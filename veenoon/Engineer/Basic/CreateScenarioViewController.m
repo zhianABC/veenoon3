@@ -374,7 +374,7 @@
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
-        if ([name isEqualToString:@"视频处理"]) {
+        if ([name isEqualToString:video_process_name]) {
             EngineerVideoProcessViewCtrl *ctrl = [[EngineerVideoProcessViewCtrl alloc] init];
             ctrl._videoProcessArray = @[plug];
             

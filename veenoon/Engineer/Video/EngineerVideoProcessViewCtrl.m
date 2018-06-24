@@ -11,7 +11,6 @@
 #import "CustomPickerView.h"
 #import "VideoProcessRightView.h"
 #import "TwoIconAndTitleView.h"
-#import "VVideoProcessInOut.h"
 #import "PlugsCtrlTitleHeader.h"
 #import "BrandCategoryNoUtil.h"
 

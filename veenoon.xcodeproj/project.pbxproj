@@ -778,7 +778,6 @@
 		EBD009B6208CB88300920849 /* VRemoteSettingsSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009B5208CB88300920849 /* VRemoteSettingsSet.m */; };
 		EBD009B9208CBD8100920849 /* VRemoteVideoSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009B8208CBD8100920849 /* VRemoteVideoSet.m */; };
 		EBD009BF2090613C00920849 /* VVideoProcessSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009BE2090613C00920849 /* VVideoProcessSet.m */; };
-		EBD009C22090639100920849 /* VVideoProcessInOut.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009C12090639100920849 /* VVideoProcessInOut.m */; };
 		EBD009C520906AB800920849 /* VPinJieSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009C420906AB800920849 /* VPinJieSet.m */; };
 		EBD009C820907B0700920849 /* VTVSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009C720907B0700920849 /* VTVSet.m */; };
 		EBD009CB20907E8C00920849 /* VLuBoJiSet.m in Sources */ = {isa = PBXBuildFile; fileRef = EBD009CA20907E8C00920849 /* VLuBoJiSet.m */; };
@@ -1954,8 +1953,6 @@
 		EBD009B8208CBD8100920849 /* VRemoteVideoSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VRemoteVideoSet.m; sourceTree = "<group>"; };
 		EBD009BD2090613C00920849 /* VVideoProcessSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VVideoProcessSet.h; sourceTree = "<group>"; };
 		EBD009BE2090613C00920849 /* VVideoProcessSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VVideoProcessSet.m; sourceTree = "<group>"; };
-		EBD009C02090639100920849 /* VVideoProcessInOut.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VVideoProcessInOut.h; sourceTree = "<group>"; };
-		EBD009C12090639100920849 /* VVideoProcessInOut.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VVideoProcessInOut.m; sourceTree = "<group>"; };
 		EBD009C320906AB800920849 /* VPinJieSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VPinJieSet.h; sourceTree = "<group>"; };
 		EBD009C420906AB800920849 /* VPinJieSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VPinJieSet.m; sourceTree = "<group>"; };
 		EBD009C620907B0700920849 /* VTVSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VTVSet.h; sourceTree = "<group>"; };
@@ -3367,8 +3364,6 @@
 				EBD009BE2090613C00920849 /* VVideoProcessSet.m */,
 				EB62DFFD20DF853900144EE0 /* VVideoProcessSetProxy.h */,
 				EB62DFFE20DF853900144EE0 /* VVideoProcessSetProxy.m */,
-				EBD009C02090639100920849 /* VVideoProcessInOut.h */,
-				EBD009C12090639100920849 /* VVideoProcessInOut.m */,
 				EBD009C320906AB800920849 /* VPinJieSet.h */,
 				EBD009C420906AB800920849 /* VPinJieSet.m */,
 				EBD009C620907B0700920849 /* VTVSet.h */,
@@ -4499,7 +4494,6 @@
 				04D719781DADD3A4002153D7 /* WSUser.m in Sources */,
 				EB795B682042E8C1005D1F47 /* XinHaoFaShengQi_UIView.m in Sources */,
 				04D9A0EB1DAF83E0008DF2E6 /* AudioPlayer.m in Sources */,
-				EBD009C22090639100920849 /* VVideoProcessInOut.m in Sources */,
 				EB3B73B21FE6382F001941CF /* EngineerWirlessYaoBaoViewCtrl.m in Sources */,
 				EB09C4B11FD3B27200776540 /* MapMarkerLayer.m in Sources */,
 				3419283D1FD3CC760014695B /* DragCellView.m in Sources */,
