@@ -29,7 +29,7 @@
     
     [super viewDidLoad];
     
-    isSettings=NO;
+    isSettings = NO;
     
     if (_airSysArray == nil) {
         _airSysArray = [[NSMutableArray alloc] init];
