@@ -28,6 +28,8 @@
 
 @synthesize _localSavedCommands;
 
+@synthesize _localSavedProxys;
+
 - (id) init
 {
     if(self = [super init])

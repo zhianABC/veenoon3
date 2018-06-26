@@ -237,44 +237,24 @@
 
 - (void) loadedCameraProxy:(NSArray*)proxys{
     
-//    id proxy = self._currentObj._proxyObj;
-//    
-//    VVideoProcessSetProxy *vcam = nil;
-//    if(proxy && [proxy isKindOfClass:[VVideoProcessSetProxy class]])
-//    {
-//        vcam = proxy;
-//    }
-//    else
-//    {
-//        vcam = [[VVideoProcessSetProxy alloc] init];
-//    }
-//    
-//    vcam._rgsProxyObj = [proxys objectAtIndex:0];
-//    [vcam checkRgsProxyCommandLoad];
-//    
-//    if([_currentObj._localSavedProxys count])
-//    {
-//        NSDictionary *local = [_currentObj._localSavedProxys objectAtIndex:0];
-//        [vcam recoverWithDictionary:local];
-//        
-//        [_numberBtn setTitle:[NSString stringWithFormat:@"%d", vcam._load]
-//                    forState:UIControlStateNormal];
-//    }
-//    else
-//    {
-//        [_numberBtn setTitle:[NSString stringWithFormat:@"%d", vcam._save]
-//                    forState:UIControlStateNormal];
-//    }
-//    
-//    self._currentObj._proxyObj = vcam;
-//    [_currentObj syncDriverIPProperty];
-//    [_currentObj syncDriverComs];
-}
+    id proxy = self._currentObj._proxyObj;
 
-- (void) updateProxyCommandValIsLoaded {
+    if(proxy && [proxy isKindOfClass:[VVideoProcessSetProxy class]])
+    {
+        _currentProxy = proxy;
+    }
+    else
+    {
+        _currentProxy = [[VVideoProcessSetProxy alloc] init];
+    }
     _currentProxy.delegate = self;
-    [_currentProxy checkRgsProxyCommandLoad];
     
+    _currentProxy._rgsProxyObj = [proxys objectAtIndex:0];
+    [_currentProxy checkRgsProxyCommandLoad];
+
+    self._currentObj._proxyObj = _currentProxy;
+    [_currentObj syncDriverIPProperty];
+    [_currentObj syncDriverComs];
 }
 
 - (void) didLoadedProxyCommand {

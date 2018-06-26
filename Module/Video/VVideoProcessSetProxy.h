@@ -26,4 +26,8 @@
 
 - (NSDictionary*)getVideoProcessInputSettings;
 - (NSDictionary*)getVideoProcessOutputSettings;
+
+/////场景还原
+- (void) recoverWithDictionary:(NSDictionary*)data;
+
 @end

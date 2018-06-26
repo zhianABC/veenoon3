@@ -23,6 +23,9 @@
 @property (nonatomic, strong) NSArray *_localSavedCommands;
 
 
+//<RgsConnectionObj>
+@property (nonatomic, strong) NSArray *_localSavedProxys;
+
 - (NSString*) deviceName;
 
 @end

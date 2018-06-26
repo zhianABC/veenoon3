@@ -828,8 +828,6 @@
             EngineerVideoProcessViewCtrl *ctrl = [[EngineerVideoProcessViewCtrl alloc] init];
             ctrl._videoProcessArray = @[plug];
             
-            [ctrl updateProxyCommandValIsLoaded];
-            
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         
