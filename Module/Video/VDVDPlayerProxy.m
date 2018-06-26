@@ -94,10 +94,11 @@
     }];
 }
 
-- (void) controlDeviceDirection:(NSString*)direct{
+
+- (void) controlDeviceMenu:(NSString*)menuName{
     
     RgsCommandInfo *cmd = nil;
-    cmd = [_cmdMap objectForKey:@"MOVE"];
+    cmd = [_cmdMap objectForKey:menuName];
     
     if(cmd)
     {
@@ -105,10 +106,7 @@
         if([cmd.params count])
         {
             RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
-            if(param_info.type == RGS_PARAM_TYPE_LIST)
-            {
-                [param setObject:direct forKey:param_info.name];
-            }
+            [param setObject:menuName forKey:param_info.name];
             
         }
         [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
