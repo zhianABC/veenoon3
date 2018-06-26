@@ -21,6 +21,8 @@
 
 - (void) checkRgsProxyCommandLoad;
 
+- (void) controlDeviceMenu:(NSString*)menuName;
+
 /////场景还原
 - (void) recoverWithDictionary:(NSDictionary*)data;
 

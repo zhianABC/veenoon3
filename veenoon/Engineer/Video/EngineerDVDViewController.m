@@ -12,6 +12,9 @@
 #import "VDVDPlayerSet.h"
 #import "BrandCategoryNoUtil.h"
 #import "PlugsCtrlTitleHeader.h"
+#import "RegulusSDK.h"
+#import "KVNProgress.h"
+#import "VDVDPlayerProxy.h"
 
 @interface EngineerDVDViewController () <CustomPickerViewDelegate>{
     
@@ -94,7 +97,7 @@
     _volumnMinus.center = CGPointMake(SCREEN_WIDTH/2 - 200, height);
     [_volumnMinus setImage:[UIImage imageNamed:@"audio_player_r_minus_n.png"] forState:UIControlStateNormal];
     [_volumnMinus setImage:[UIImage imageNamed:@"audio_player_minus_s.png"] forState:UIControlStateHighlighted];
-    [_volumnMinus addTarget:self action:@selector(volumnMinusAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_volumnMinus addTarget:self action:@selector(menuVoiceSub:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_volumnMinus];
     
     _lastSing = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -102,15 +105,15 @@
     _lastSing.center = CGPointMake(SCREEN_WIDTH/2 - 100, height);
     [_lastSing setImage:[UIImage imageNamed:@"audio_player_r_last_n.png"] forState:UIControlStateNormal];
     [_lastSing setImage:[UIImage imageNamed:@"audio_player_last_s.png"] forState:UIControlStateHighlighted];
-    [_lastSing addTarget:self action:@selector(lastSingAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_lastSing addTarget:self action:@selector(menuPrevAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_lastSing];
     
     isplay = NO;
     _playOrHold = [UIButton buttonWithType:UIButtonTypeCustom];
     _playOrHold.frame = CGRectMake(0, 0, width, width);
     _playOrHold.center = CGPointMake(SCREEN_WIDTH/2, height);
-    [_playOrHold setImage:[UIImage imageNamed:@"audio_player_r_hold.png"] forState:UIControlStateNormal];
-    [_playOrHold setImage:[UIImage imageNamed:@"audio_player_play.png"] forState:UIControlStateHighlighted];
+    [_playOrHold setImage:[UIImage imageNamed:@"audio_player_play.png"] forState:UIControlStateNormal];
+    [_playOrHold setImage:[UIImage imageNamed:@"audio_player_r_hold.png"] forState:UIControlStateHighlighted];
     [_playOrHold addTarget:self action:@selector(audioPlayHoldAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_playOrHold];
     
@@ -119,7 +122,7 @@
     _nextSing.center = CGPointMake(SCREEN_WIDTH/2 + 100, height);
     [_nextSing setImage:[UIImage imageNamed:@"audio_player_r_next_n.png"] forState:UIControlStateNormal];
     [_nextSing setImage:[UIImage imageNamed:@"audio_player_next_s.png"] forState:UIControlStateHighlighted];
-    [_nextSing addTarget:self action:@selector(nextSingAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_nextSing addTarget:self action:@selector(menuNextAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_nextSing];
     
     _volumnAdd = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -127,7 +130,7 @@
     _volumnAdd.center = CGPointMake(SCREEN_WIDTH/2 + 200, height);
     [_volumnAdd setImage:[UIImage imageNamed:@"audio_layer_r_next_n.png"] forState:UIControlStateNormal];
     [_volumnAdd setImage:[UIImage imageNamed:@"audio_layer_next_s.png"] forState:UIControlStateHighlighted];
-    [_volumnAdd addTarget:self action:@selector(volumnAddAction:) forControlEvents:UIControlEventTouchUpInside];
+    [_volumnAdd addTarget:self action:@selector(menuVoiceAdd:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_volumnAdd];
     
     
@@ -142,7 +145,7 @@
     [self.view addSubview:_luboBtn];
     
     [_luboBtn addTarget:self
-                 action:@selector(luboAction:)
+                 action:@selector(powerAction:)
        forControlEvents:UIControlEventTouchUpInside];
     
     
@@ -171,7 +174,7 @@
     [self.view addSubview:_addressBtn];
     
     [_addressBtn addTarget:self
-                   action:@selector(addressAction:)
+                   action:@selector(detailAction:)
          forControlEvents:UIControlEventTouchUpInside];
     
     int playerLeft = 155;
@@ -188,7 +191,7 @@
     [self.view addSubview:lastVideoUpBtn];
     
     [lastVideoUpBtn addTarget:self
-                       action:@selector(lastSingAction:)
+                       action:@selector(menuLeftAction:)
              forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *okPlayerBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
@@ -197,7 +200,7 @@
     okPlayerBtn.layer.borderWidth = 2;
     okPlayerBtn.layer.borderColor = [UIColor clearColor].CGColor;;
     okPlayerBtn.clipsToBounds = YES;
-    [okPlayerBtn setTitle:@"ok" forState:UIControlStateNormal];
+    [okPlayerBtn setTitle:@"OK" forState:UIControlStateNormal];
     [okPlayerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [okPlayerBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
     okPlayerBtn.titleLabel.font = [UIFont boldSystemFontOfSize:24];
@@ -217,7 +220,7 @@
     [self.view addSubview:volumnUpBtn];
     
     [volumnUpBtn addTarget:self
-                    action:@selector(volumnAddAction:)
+                    action:@selector(menuUpAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *nextPlayBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
@@ -231,7 +234,7 @@
     [self.view addSubview:nextPlayBtn];
     
     [nextPlayBtn addTarget:self
-                    action:@selector(nextSingAction:)
+                    action:@selector(menuRightAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *volumnDownBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
@@ -245,47 +248,165 @@
     [self.view addSubview:volumnDownBtn];
     
     [volumnDownBtn addTarget:self
-                      action:@selector(volumnMinusAction:)
+                      action:@selector(menuDownAction:)
             forControlEvents:UIControlEventTouchUpInside];
     
     
+    [self getCurrentDeviceDriverProxys];
+
 }
-- (void) okPlayAction:(id)sender {
+
+
+- (void) getCurrentDeviceDriverProxys{
+    
+    if(_currentObj == nil)
+        return;
+    
+#ifdef OPEN_REG_LIB_DEF
+    
+    IMP_BLOCK_SELF(EngineerDVDViewController);
+    
+    RgsDriverObj *driver = _currentObj._driver;
+    if([driver isKindOfClass:[RgsDriverObj class]])
+    {
+        [[RegulusSDK sharedRegulusSDK] GetDriverProxys:driver.m_id completion:^(BOOL result, NSArray *proxys, NSError *error) {
+            if (result) {
+                if ([proxys count]) {
+                    
+                    [block_self loadedDVDDriverProxy:proxys];
+                    
+                }
+            }
+            else{
+                [KVNProgress showErrorWithStatus:@"中控链接断开！"];
+            }
+        }];
+    }
+#endif
+}
+
+- (void) loadedDVDDriverProxy:(NSArray*)proxys{
+    
+    id proxy = self._currentObj._proxyObj;
+    
+    VDVDPlayerProxy *vcam = nil;
+    if(proxy && [proxy isKindOfClass:[VDVDPlayerProxy class]])
+    {
+        vcam = proxy;
+    }
+    else
+    {
+        vcam = [[VDVDPlayerProxy alloc] init];
+    }
+    
+    vcam._rgsProxyObj = [proxys objectAtIndex:0];
+    [vcam checkRgsProxyCommandLoad];
+    
+    if([_currentObj._localSavedProxys count])
+    {
+        NSDictionary *local = [_currentObj._localSavedProxys objectAtIndex:0];
+        [vcam recoverWithDictionary:local];
+        
+    }
+    
+    self._currentObj._proxyObj = vcam;
     
 }
-- (void) luboAction:(id)sender{
+
+
+- (void) okPlayAction:(id)sender {
+    
+    
 }
+- (void) powerAction:(id)sender{
+    
+    VDVDPlayerProxy *vcam = _currentObj._proxyObj;
+    if(vcam)
+        [vcam controlDeviceMenu:@"Power"];
+}
+
+- (void) menuVoiceSub:(id)sender{
+    
+    
+}
+- (void) menuVoiceAdd:(id)sender{
+    
+    
+}
+- (void) menuPrevAction:(id)sender{
+    
+    VDVDPlayerProxy *vcam = _currentObj._proxyObj;
+    if(vcam)
+        [vcam controlDeviceMenu:@"PREV"];
+}
+- (void) menuNextAction:(id)sender{
+    
+    VDVDPlayerProxy *vcam = _currentObj._proxyObj;
+    if(vcam)
+        [vcam controlDeviceMenu:@"NEXT"];
+}
+
 
 - (void) tanchuAction:(id)sender{
     
+    VDVDPlayerProxy *vcam = _currentObj._proxyObj;
+    if(vcam)
+        [vcam controlDeviceMenu:@"DISC_OPEN"];
 }
-- (void) addressAction:(id)sender{
+- (void) detailAction:(id)sender{
     
+    VDVDPlayerProxy *vcam = _currentObj._proxyObj;
+    if(vcam)
+        [vcam controlDeviceMenu:@"DETAIL"];
 }
-- (void) nextSingAction:(id)sender{
-    
-}
+
 
 - (void) audioPlayHoldAction:(id)sender{
     if (isplay) {
-        [_playOrHold setImage:[UIImage imageNamed:@"audio_player_r_hold.png"] forState:UIControlStateNormal];
-        isplay = NO;
-    } else {
         [_playOrHold setImage:[UIImage imageNamed:@"audio_player_play.png"] forState:UIControlStateNormal];
+        isplay = NO;
+        
+        VDVDPlayerProxy *vcam = _currentObj._proxyObj;
+        if(vcam)
+            [vcam controlDeviceMenu:@"PAUSE"];
+        
+    } else {
+        [_playOrHold setImage:[UIImage imageNamed:@"audio_player_r_hold.png"] forState:UIControlStateNormal];
         isplay = YES;
+        
+        VDVDPlayerProxy *vcam = _currentObj._proxyObj;
+        if(vcam)
+            [vcam controlDeviceMenu:@"PLAY"];
     }
 }
 
-- (void) lastSingAction:(id)sender{
+
+- (void) menuUpAction:(id)sender{
     
+    VDVDPlayerProxy *vcam = _currentObj._proxyObj;
+    if(vcam)
+        [vcam controlDeviceMenu:@"UP"];
 }
 
-- (void) volumnMinusAction:(id)sender{
+- (void) menuRightAction:(id)sender{
     
+    VDVDPlayerProxy *vcam = _currentObj._proxyObj;
+    if(vcam)
+        [vcam controlDeviceMenu:@"RIGHT"];
 }
 
-- (void) volumnAddAction:(id)sender{
+- (void) menuDownAction:(id)sender{
     
+    VDVDPlayerProxy *vcam = _currentObj._proxyObj;
+    if(vcam)
+        [vcam controlDeviceMenu:@"DOWN"];
+}
+
+- (void) menuLeftAction:(id)sender{
+    
+    VDVDPlayerProxy *vcam = _currentObj._proxyObj;
+    if(vcam)
+        [vcam controlDeviceMenu:@"LEFT"];
 }
 
 - (void) settingsAction:(id)sender{
