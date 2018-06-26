@@ -125,6 +125,18 @@ static DataCenter *_globalDataInstanse;
                          };
     
     [_mapDrivers setObject:ir forKey:UUID_IR_Sender];
+    
+    NSDictionary *videoSwitch = @{@"type":@"video",
+                                  @"name":@"Teslaria Video Switch",
+                                  @"driver":UUID_Video_Switch,
+                                  @"brand":@"Teslaria",
+                                  @"icon":@"engineer_video_shipinchuli_n.png",
+                                  @"icon_s":@"engineer_video_shipinchuli_s.png",
+                                  @"driver_class":@"VVideoProcessSet",
+                                  @"ptype":@"Video Switch"
+                                  };
+    
+    [_mapDrivers setObject:videoSwitch forKey:UUID_Video_Switch];
 
 }
 

@@ -11,11 +11,13 @@
 #import "CustomPickerView.h"
 #import "VideoProcessRightView.h"
 #import "TwoIconAndTitleView.h"
-#import "VVideoProcessInOut.h"
 #import "PlugsCtrlTitleHeader.h"
 #import "BrandCategoryNoUtil.h"
+#import "VVideoProcessSetProxy.h"
+#import "RegulusSDK.h"
+#import "KVNProgress.h"
 
-@interface EngineerVideoProcessViewCtrl () <CustomPickerViewDelegate, VideoProcessRightViewDelegate, TwoIconAndTitleViewDelegate>{
+@interface EngineerVideoProcessViewCtrl () <CustomPickerViewDelegate, VideoProcessRightViewDelegate, TwoIconAndTitleViewDelegate, VVideoProcessSetProxyDelegate>{
     
     NSMutableArray *_inPutBtnArray;
     NSMutableArray *_outPutBtnArray;
@@ -30,10 +32,13 @@
     
     UIScrollView *scroolViewIn;
     UIScrollView *scroolViewOut;
+    
+    
 }
 @property (nonatomic, strong) NSMutableDictionary *_selectedDataMap;
 @property (nonatomic, strong) NSMutableDictionary *_outDataMap;
 @property (nonatomic, strong) TwoIconAndTitleView *_current;
+@property (nonatomic, strong) VVideoProcessSetProxy *_currentProxy;
 @end
 
 @implementation EngineerVideoProcessViewCtrl
@@ -46,6 +51,7 @@
 @synthesize _current;
 @synthesize _currentObj;
 @synthesize _videoProcessArray;
+@synthesize _currentProxy;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -198,7 +204,93 @@
     tapGesture.numberOfTapsRequired = 1;
     [mask addGestureRecognizer:tapGesture];
 
+    [self getCurrentDeviceDriverProxys];
 }
+
+- (void) getCurrentDeviceDriverProxys{
+    
+    if(_currentObj == nil)
+        return;
+    
+#ifdef OPEN_REG_LIB_DEF
+    
+    IMP_BLOCK_SELF(EngineerVideoProcessViewCtrl);
+    
+    RgsDriverObj *driver = _currentObj._driver;
+    if([driver isKindOfClass:[RgsDriverObj class]])
+    {
+        [[RegulusSDK sharedRegulusSDK] GetDriverProxys:driver.m_id completion:^(BOOL result, NSArray *proxys, NSError *error) {
+            if (result) {
+                if ([proxys count]) {
+                    
+                    [block_self loadedCameraProxy:proxys];
+                    
+                }
+            }
+            else{
+                [KVNProgress showErrorWithStatus:@"中控链接断开！"];
+            }
+        }];
+    }
+#endif
+}
+
+- (void) loadedCameraProxy:(NSArray*)proxys{
+    
+//    id proxy = self._currentObj._proxyObj;
+//    
+//    VVideoProcessSetProxy *vcam = nil;
+//    if(proxy && [proxy isKindOfClass:[VVideoProcessSetProxy class]])
+//    {
+//        vcam = proxy;
+//    }
+//    else
+//    {
+//        vcam = [[VVideoProcessSetProxy alloc] init];
+//    }
+//    
+//    vcam._rgsProxyObj = [proxys objectAtIndex:0];
+//    [vcam checkRgsProxyCommandLoad];
+//    
+//    if([_currentObj._localSavedProxys count])
+//    {
+//        NSDictionary *local = [_currentObj._localSavedProxys objectAtIndex:0];
+//        [vcam recoverWithDictionary:local];
+//        
+//        [_numberBtn setTitle:[NSString stringWithFormat:@"%d", vcam._load]
+//                    forState:UIControlStateNormal];
+//    }
+//    else
+//    {
+//        [_numberBtn setTitle:[NSString stringWithFormat:@"%d", vcam._save]
+//                    forState:UIControlStateNormal];
+//    }
+//    
+//    self._currentObj._proxyObj = vcam;
+//    [_currentObj syncDriverIPProperty];
+//    [_currentObj syncDriverComs];
+}
+
+- (void) updateProxyCommandValIsLoaded {
+    _currentProxy.delegate = self;
+    [_currentProxy checkRgsProxyCommandLoad];
+    
+}
+
+- (void) didLoadedProxyCommand {
+    _currentProxy.delegate = nil;
+    
+    NSDictionary *inputSettings = [_currentProxy getVideoProcessInputSettings];
+    
+    NSDictionary *outputSettings = [_currentProxy getVideoProcessOutputSettings];
+    
+    [self updateView];
+}
+
+- (void) updateView {
+    
+}
+
 
 - (void) handleTapGesture:(UIGestureRecognizer*)sender{
     

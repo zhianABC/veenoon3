@@ -90,6 +90,18 @@
     
     [_mapDrivers setObject:pdvd forKey:UUID_Philips_DVD];
     
+    NSDictionary *videoSwitch = @{@"type":@"video",
+                           @"name":@"Teslaria Video Switch",
+                           @"driver":UUID_Video_Switch,
+                           @"brand":@"Teslaria",
+                           @"icon":@"engineer_video_shipinchuli_n.png",
+                           @"icon_s":@"engineer_video_shipinchuli_s.png",
+                           @"driver_class":@"VVideoProcessSet",
+                           @"ptype":@"Video Switch"
+                           };
+    
+    [_mapDrivers setObject:videoSwitch forKey:UUID_Video_Switch];
+    
 }
 
 - (void)viewDidLoad {
@@ -438,7 +450,15 @@
     NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
     
-    [self initBrandAndTypes];
+    self._currentBrands = @[@"Teslaria"];
+    self._currentTypes = @[@"Video Switch"];
+    self._driverUdids = @[UUID_Video_Switch];
+    
+    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
+    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
+    
+    [_brandPicker selectRow:0 inComponent:0];
+    [_productCategoryPicker selectRow:0 inComponent:0];
 }
 
 - (void) yuanchengshixunAction:(id)sender{
@@ -582,7 +602,7 @@
         [self xinxiheAction:_xinxiheBtn];
     } else if ([@"远程视讯" isEqualToString:brand]) {
         [self yuanchengshixunAction:_yuanchengshixunBtn];
-    } else if ([@"视频处理" isEqualToString:brand]) {
+    } else if ([video_process_name isEqualToString:brand]) {
         [self shipinchuliAction:_shipinchuliBtn];
     } else if ([@"拼接屏" isEqualToString:brand]) {
         [self pinjiepingAction:_pinjiepingBtn];

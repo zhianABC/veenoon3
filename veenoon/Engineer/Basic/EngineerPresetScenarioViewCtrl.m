@@ -44,7 +44,6 @@
 #import "VRemoteVideoSet.h"
 #import "AudioEHand2Hand.h"
 #import "VVideoProcessSet.h"
-#import "VVideoProcessInOut.h"
 #import "VPinJieSet.h"
 #import "DataSync.h"
 #import "KVNProgress.h"
@@ -825,9 +824,11 @@
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
-        if ([name isEqualToString:@"视频处理"]) {
+        if ([name isEqualToString:video_process_name]) {
             EngineerVideoProcessViewCtrl *ctrl = [[EngineerVideoProcessViewCtrl alloc] init];
             ctrl._videoProcessArray = @[plug];
+            
+            [ctrl updateProxyCommandValIsLoaded];
             
             [self.navigationController pushViewController:ctrl animated:YES];
         }

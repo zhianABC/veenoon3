@@ -26,4 +26,8 @@
 @property (nonatomic,assign) int _outNumber;
 @property (nonatomic,strong) VVideoProcessSet *_currentObj;
 @property (nonatomic,strong) NSArray *_videoProcessArray;
+
+- (void) updateProxyCommandValIsLoaded;
+
+
 @end
