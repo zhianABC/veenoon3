@@ -21,6 +21,7 @@
     
 }
 @property (nonatomic, weak) id <TwoIconAndTitleViewDelegate> delegate;
+@property (nonatomic, strong) UILabel *_textLabel;
 
 - (void) fillData:(NSDictionary*)data;
 - (void) fillRelatedData:(NSDictionary*)data;

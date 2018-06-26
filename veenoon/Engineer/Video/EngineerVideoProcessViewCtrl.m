@@ -33,7 +33,13 @@
     UIScrollView *scroolViewIn;
     UIScrollView *scroolViewOut;
     
+    int inputMin;
+    int inputMax;
+    int outputMin;
+    int outputMax;
     
+    TwoIconAndTitleView *_inputSelected;
+    TwoIconAndTitleView *_outPutSelected;
 }
 @property (nonatomic, strong) NSMutableDictionary *_selectedDataMap;
 @property (nonatomic, strong) NSMutableDictionary *_outDataMap;
@@ -57,6 +63,14 @@
     [super viewDidLoad];
     
     isSettings = NO;
+    
+    inputMin = 1;
+    inputMax = 9;
+    outputMin = 1;
+    outputMax = 9;
+    
+    _inputSelected = nil;
+    _outPutSelected = nil;
     
     if ([_videoProcessArray count]) {
         self._currentObj = [_videoProcessArray objectAtIndex:0];
@@ -172,8 +186,6 @@
     [_outPutBtnArray addObject:ocameraBtn];
     
     
-    
-    
     titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, labelHeight+210, SCREEN_WIDTH-125*2, 40)];
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
@@ -263,7 +275,13 @@
     
     NSDictionary *inputSettings = [_currentProxy getVideoProcessInputSettings];
     
+    inputMin = [[inputSettings objectForKey:@"min"] intValue];
+    inputMax = [[inputSettings objectForKey:@"min"] intValue];
+
     NSDictionary *outputSettings = [_currentProxy getVideoProcessOutputSettings];
+    
+    outputMin = [[outputSettings objectForKey:@"min"] intValue];
+    outputMax = [[outputSettings objectForKey:@"min"] intValue];
     
     [self updateView];
 }
@@ -381,6 +399,8 @@
                 if(to != t)
                 {
                     [to unselected];
+                } else {
+                    _inputSelected = t;
                 }
             }
         }
@@ -390,13 +410,31 @@
         if(_current)
         {
             [t fillRelatedData:[_current getMyData]];
+            _outPutSelected = t;
+            [self controlAddOutDevice];
         }
         else
         {
             [t unselected];
+            _outPutSelected = t;
+            
+            [self controlRemoveOutDevice];
         }
     }
 }
+
+- (void) controlAddOutDevice {
+    if (_inputSelected == nil || _outPutSelected == nil) {
+        return;
+    }
+}
+
+- (void) controlRemoveOutDevice {
+    if (_inputSelected == nil || _outPutSelected == nil) {
+        return;
+    }
+}
+
 - (void) didCancelTouchedTIA:(id)tia{
     
     TwoIconAndTitleView *t = tia;
@@ -435,7 +473,7 @@
     [scroolViewIn addSubview:iBtn];
     
     
-    NSString *titleStr = [NSString stringWithFormat:@"Channel %02d", idx+1];
+    NSString *titleStr = [NSString stringWithFormat:@"In%d", idx+1];
     [iBtn setTitle:titleStr];
    
 //    [iBtn addTarget:self
@@ -477,7 +515,7 @@
     
     iBtn.delegate = self;
     
-    NSString *titleStr = [NSString stringWithFormat:@"Channel %02d", idx+1];
+    NSString *titleStr = [NSString stringWithFormat:@"Out%d", idx+1];
     [iBtn setTitle:titleStr];
     
     //    [iBtn addTarget:self

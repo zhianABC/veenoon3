@@ -12,7 +12,7 @@
 {
     UIImageView *bigIcon;
     UIImageView *smallIcon;
-    UILabel *textLabel;
+    
     
     BOOL _isSelected;
 }
@@ -26,7 +26,7 @@
 @synthesize delegate;
 @synthesize _data;
 @synthesize _inputdata;
-
+@synthesize _textLabel;
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -42,14 +42,14 @@
         
         self.backgroundColor = [UIColor clearColor];
         
-        textLabel = [[UILabel alloc]
+        _textLabel = [[UILabel alloc]
                           initWithFrame:CGRectMake(0,
                                                    0,
                                                    frame.size.width, 20)];
-        [self addSubview:textLabel];
-        textLabel.textAlignment = NSTextAlignmentCenter;
-        textLabel.font = [UIFont systemFontOfSize:12];
-        textLabel.textColor = [UIColor whiteColor];
+        [self addSubview:_textLabel];
+        _textLabel.textAlignment = NSTextAlignmentCenter;
+        _textLabel.font = [UIFont systemFontOfSize:12];
+        _textLabel.textColor = [UIColor whiteColor];
 
         
         bigIcon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 25, frame.size.width, 50)];
@@ -88,7 +88,7 @@
 
 - (void) setTitle:(NSString *)title{
     
-    textLabel.text = title;
+    _textLabel.text = title;
 }
 
 - (void) fillData:(NSDictionary*)data{
@@ -111,7 +111,7 @@
     NSString *icon = [_data objectForKey:@"icon_sel"];
     [bigIcon setImage:[UIImage imageNamed:icon]];
     
-    textLabel.textColor = YELLOW_COLOR;
+    _textLabel.textColor = YELLOW_COLOR;
     
 }
 - (void) unselected{
@@ -121,7 +121,7 @@
     NSString *icon = [_data objectForKey:@"icon"];
     [bigIcon setImage:[UIImage imageNamed:icon]];
     
-    textLabel.textColor = [UIColor whiteColor];
+    _textLabel.textColor = [UIColor whiteColor];
     
     [UIView beginAnimations:nil context:nil];
     smallIcon.alpha = 0;
