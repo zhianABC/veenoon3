@@ -137,7 +137,7 @@
             
             for( RgsCommandParamInfo * param_info in cmd.params)
             {
-                if([param_info.name isEqualToString:@"OUT"])
+                if([param_info.name isEqualToString:@"OUTPUT"])
                 {
                     if(param_info.max)
                         [result setObject:param_info.max forKey:@"max"];
