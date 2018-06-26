@@ -39,7 +39,7 @@
     int outputMax;
     
     TwoIconAndTitleView *_inputSelected;
-    NSMutableArray *_outPutSelected;
+    TwoIconAndTitleView *_outPutSelected;
 }
 @property (nonatomic, strong) NSMutableDictionary *_selectedDataMap;
 @property (nonatomic, strong) NSMutableDictionary *_outDataMap;
@@ -70,7 +70,7 @@
     outputMax = 9;
     
     _inputSelected = nil;
-    _outPutSelected = [NSMutableArray array];
+    _outPutSelected = nil;
     
     if ([_videoProcessArray count]) {
         self._currentObj = [_videoProcessArray objectAtIndex:0];
@@ -400,7 +400,6 @@
                     [to unselected];
                 } else {
                     _inputSelected = t;
-                    [_outPutSelected removeAllObjects];
                 }
             }
         }
@@ -410,20 +409,31 @@
         if(_current)
         {
             [t fillRelatedData:[_current getMyData]];
-            [_outPutSelected addObject:t._textLabel.text];
+            _outPutSelected = t;
+            [self controlAddOutDevice];
         }
         else
         {
             [t unselected];
-            [_outPutSelected removeObject:t._textLabel.text];
+            _outPutSelected = t;
+            
+            [self controlRemoveOutDevice];
         }
-        
-        [self controlOutDevice];
     }
 }
-- (void) controlOutDevice {
-    
+
+- (void) controlAddOutDevice {
+    if (_inputSelected == nil || _outPutSelected == nil) {
+        return;
+    }
 }
+
+- (void) controlRemoveOutDevice {
+    if (_inputSelected == nil || _outPutSelected == nil) {
+        return;
+    }
+}
+
 - (void) didCancelTouchedTIA:(id)tia{
     
     TwoIconAndTitleView *t = tia;
