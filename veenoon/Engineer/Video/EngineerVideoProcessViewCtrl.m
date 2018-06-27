@@ -270,6 +270,7 @@
 }
 
 - (void) didLoadedProxyCommand {
+    
     _currentProxy.delegate = nil;
     
     NSDictionary *inputSettings = [_currentProxy getVideoProcessInputSettings];

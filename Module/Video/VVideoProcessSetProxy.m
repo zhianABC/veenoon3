@@ -207,10 +207,10 @@
             {
                 if([param_info.name isEqualToString:@"INPUT"])
                 {
-                    [param setObject:@"5" forKey:param_info.name];
+                    [param setObject:inputName forKey:param_info.name];
                 } else if ([param_info.name isEqualToString:@"OUTPUT"])
                 {
-                    [param setObject:@"5" forKey:param_info.name];
+                    [param setObject:outputName forKey:param_info.name];
                 }
             }
         }
