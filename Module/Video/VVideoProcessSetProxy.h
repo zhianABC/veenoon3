@@ -30,4 +30,6 @@
 /////场景还原
 - (void) recoverWithDictionary:(NSDictionary*)data;
 
+- (void) controlDeviceAdd:(NSString*)inputName withOutDevice:(NSString*)outputName;
+
 @end
