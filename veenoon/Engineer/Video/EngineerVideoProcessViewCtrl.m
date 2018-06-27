@@ -426,6 +426,11 @@
     if (_inputSelected == nil || _outPutSelected == nil) {
         return;
     }
+    
+    NSString *inputDeviceName = _inputSelected._textLabel.text;
+    NSString *outputDeviceName = _outPutSelected._textLabel.text;
+    
+    [_currentProxy controlDeviceAdd:inputDeviceName withOutDevice:outputDeviceName];
 }
 
 - (void) controlRemoveOutDevice {
@@ -472,7 +477,7 @@
     [scroolViewIn addSubview:iBtn];
     
     
-    NSString *titleStr = [NSString stringWithFormat:@"In%d", idx+1];
+    NSString *titleStr = [NSString stringWithFormat:@"%d", idx+1];
     [iBtn setTitle:titleStr];
    
 //    [iBtn addTarget:self
@@ -514,7 +519,7 @@
     
     iBtn.delegate = self;
     
-    NSString *titleStr = [NSString stringWithFormat:@"Out%d", idx+1];
+    NSString *titleStr = [NSString stringWithFormat:@"%d", idx+1];
     [iBtn setTitle:titleStr];
     
     //    [iBtn addTarget:self

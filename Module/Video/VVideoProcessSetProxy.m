@@ -15,6 +15,8 @@
     
     BOOL _isSetOK;
     
+    NSMutableDictionary *_deviceMatcherDic;
+    
 }
 
 @property (nonatomic, strong) NSArray *_rgsCommands;
@@ -28,6 +30,19 @@
 @synthesize _rgsProxyObj;
 @synthesize _cmdMap;
 @synthesize delegate;
+
+- (id) init
+{
+    if(self = [super init])
+    {
+        
+        _deviceMatcherDic = [NSMutableDictionary dictionary];
+        
+    }
+    
+    return self;
+}
+
 
 - (void) checkRgsProxyCommandLoad{
     
@@ -161,6 +176,55 @@
         
     }
     
+}
+
+- (void) controlDeviceAdd:(NSString*)inputName withOutDevice:(NSString*)outputName {
+    NSMutableArray *outPutArray = [_deviceMatcherDic objectForKey:inputName];
+    if (outPutArray) {
+        if (![outPutArray containsObject:outputName]) {
+            [outPutArray addObject:outputName];
+        }
+    } else {
+        outPutArray = [NSMutableArray array];
+        [_deviceMatcherDic setObject:outPutArray forKey:inputName];
+        
+        [outPutArray addObject:outputName];
+    }
+    
+    [self sendAddDviceToCenter:inputName withOutDevice:outputName];
+}
+
+- (void) sendAddDviceToCenter:(NSString*)inputName withOutDevice:(NSString*)outputName {
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_P2P"];
+    
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            for( RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"INPUT"])
+                {
+                    [param setObject:@"5" forKey:param_info.name];
+                } else if ([param_info.name isEqualToString:@"OUTPUT"])
+                {
+                    [param setObject:@"5" forKey:param_info.name];
+                }
+            }
+        }
+        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+                                                 cmd:cmd.name
+                                               param:param completion:^(BOOL result, NSError *error) {
+                                                   if (result) {
+                                                       
+                                                   }
+                                                   else{
+                                                       
+                                                   }
+                                               }];
+    }
 }
 
 @end
