@@ -292,6 +292,7 @@
     TeslariaComboChooser *sel = [[TeslariaComboChooser alloc] init];
     sel._dataArray = [_curProxy getLvBoGaoTongXielvArray];
     sel._type = 2;
+    sel._unit = @"/oct";
     
     int h = (int)[sel._dataArray count]*30 + 50;
     sel.preferredContentSize = CGSizeMake(150, h);
@@ -321,7 +322,7 @@
     }
    
     //Show
-    NSString *dispaly = [NSString stringWithFormat:@"  %@",device];
+    NSString *dispaly = [NSString stringWithFormat:@"  %@/oct",device];
     [gaotongXielvBtn setTitle:dispaly forState:UIControlStateNormal];
     
     //控制
@@ -901,6 +902,7 @@
     TeslariaComboChooser *sel = [[TeslariaComboChooser alloc] init];
     sel._dataArray = [_curProxy getLvBoDiTongXielvArray];
     sel._type = 2;
+    sel._unit = @"/oct";
     
     int h = (int)[sel._dataArray count]*30 + 50;
     
@@ -929,8 +931,7 @@
     if (device == nil) {
         return;
     }
-    NSString *dispaly = [@"   " stringByAppendingString:device];
-    
+    NSString *dispaly = [NSString stringWithFormat:@"  %@/oct",device];
     [ditongxielvBtn setTitle:dispaly forState:UIControlStateNormal];
     
     [fglm setLPFilterWithSlope:index];
@@ -1013,7 +1014,7 @@
     
     NSString *gaotongXieLv = @"";
     if ([_curProxy getGaoTongXieLv]) {
-        gaotongXieLv = [NSString stringWithFormat:@"  %@",[_curProxy getGaoTongXieLv]];
+        gaotongXieLv = [NSString stringWithFormat:@"  %@/oct",[_curProxy getGaoTongXieLv]];
     }
     [gaotongXielvBtn setTitle:gaotongXieLv forState:UIControlStateNormal];
 
@@ -1052,7 +1053,7 @@
 
     NSString *ditongXielvStr = @"";
     if ([_curProxy getDiTongXieLv]) {
-        ditongXielvStr = [@"  " stringByAppendingString:[_curProxy getDiTongXieLv]];
+        ditongXielvStr = [NSString stringWithFormat:@"  %@/oct",[_curProxy getDiTongXieLv]];
     }
     [ditongxielvBtn setTitle:ditongXielvStr forState:UIControlStateNormal];
     

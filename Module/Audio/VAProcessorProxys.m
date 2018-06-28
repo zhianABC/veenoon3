@@ -1695,7 +1695,13 @@
     {
         NSMutableDictionary *dic = [waves16_feq_gain_q objectAtIndex:band];
         [dic setObject:tureOrFalse forKey:@"enable"];
+        
+        [self sendBandControlCmd:band];
+        
     }
+    
+    
+    
     
 }
 

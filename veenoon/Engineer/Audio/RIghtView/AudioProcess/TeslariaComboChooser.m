@@ -25,6 +25,7 @@
 @synthesize _type;
 @synthesize _block;
 @synthesize _size;
+@synthesize _unit;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -111,6 +112,10 @@
     titleL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
     
     titleL.text = data;
+    if(_unit)
+    {
+        titleL.text = [NSString stringWithFormat:@"%@%@",data,_unit];
+    }
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, _size.width, 1)];
     line.backgroundColor =  [UIColor colorWithWhite:1.0 alpha:0.2];
