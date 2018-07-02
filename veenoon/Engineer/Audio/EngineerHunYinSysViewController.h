@@ -8,8 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
+#import "AudioEMix.h"
+
 @interface EngineerHunYinSysViewController : BaseViewController {
     NSMutableArray *_hunyinSysArray;
+    
+    AudioEMix *_currentObj;
 }
 @property (nonatomic,strong) NSArray *_hunyinSysArray;
+@property (nonatomic,strong) AudioEMix *_currentObj;
 @end

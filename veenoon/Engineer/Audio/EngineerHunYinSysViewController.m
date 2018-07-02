@@ -15,6 +15,9 @@
 #import "SignalView.h"
 #import "MixVoiceSettingsView.h"
 #import "HunyinYinpinchuliViewCtrl.h"
+#import "RegulusSDK.h"
+#import "KVNProgress.h"
+#import "AudioEMixProxy.h"
 
 
 @interface EngineerHunYinSysViewController () <CustomPickerViewDelegate, EngineerSliderViewDelegate, MixVoiceSettingsViewDelegate>{
@@ -30,11 +33,17 @@
 
 @implementation EngineerHunYinSysViewController
 @synthesize _hunyinSysArray;
+@synthesize _currentObj;
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    isSettings = NO;
+    if ([_hunyinSysArray count]) {
+        self._currentObj = [_hunyinSysArray objectAtIndex:0];
+    }
+    [super showBasePluginName:self._currentObj];
+    
     
     [super setTitleAndImage:@"audio_corner_hunyin.png" withTitle:@"混音会议"];
     
@@ -131,7 +140,83 @@
     tapGesture.cancelsTouchesInView =  NO;
     tapGesture.numberOfTapsRequired = 1;
     [_proxysView addGestureRecognizer:tapGesture];
+    
+    [self getCurrentDeviceDriverProxys];
 }
+
+- (void) getCurrentDeviceDriverProxys{
+    
+    if(_currentObj == nil)
+        return;
+    
+#ifdef OPEN_REG_LIB_DEF
+    
+    IMP_BLOCK_SELF(EngineerHunYinSysViewController);
+    
+    RgsDriverObj *driver = _currentObj._driver;
+    if([driver isKindOfClass:[RgsDriverObj class]])
+    {
+        /*混音会议 - 没有Proxy，直接访问Commands
+         [[RegulusSDK sharedRegulusSDK] GetDriverProxys:driver.m_id completion:^(BOOL result, NSArray *proxys, NSError *error) {
+         if (result) {
+         if ([proxys count]) {
+         
+         [block_self loadedCameraProxy:proxys];
+         
+         }
+         }
+         else{
+         [KVNProgress showErrorWithStatus:@"中控链接断开！"];
+         }
+         }];
+         */
+        
+        [[RegulusSDK sharedRegulusSDK] GetDriverCommands:driver.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
+            if (result) {
+                if ([commands count]) {
+                    [block_self loadedHunyinCommands:commands];
+                }
+            }
+            else{
+                [KVNProgress showErrorWithStatus:@"中控链接断开！"];
+            }
+        }];
+    }
+#endif
+}
+
+
+- (void) loadedHunyinCommands:(NSArray*)cmds{
+    
+    RgsDriverObj *driver = _currentObj._driver;
+    
+    id proxy = self._currentObj._proxyObj;
+    
+    AudioEMixProxy *vpro = nil;
+    if(proxy && [proxy isKindOfClass:[AudioEMixProxy class]])
+    {
+        vpro = proxy;
+    }
+    else
+    {
+        vpro = [[AudioEMixProxy alloc] init];
+    }
+    
+    vpro._deviceId = driver.m_id;
+    [vpro checkRgsProxyCommandLoad:cmds];
+    
+    if([_currentObj._localSavedCommands count])
+    {
+        NSDictionary *local = [_currentObj._localSavedCommands objectAtIndex:0];
+        [vpro recoverWithDictionary:local];
+    }
+    
+    self._currentObj._proxyObj = vpro;
+    [_currentObj syncDriverIPProperty];
+    [_currentObj syncDriverComs];
+}
+
+
 - (void) handleTapGesture:(id)sender{
     
     if ([_rightView superview]) {

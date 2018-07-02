@@ -1,14 +1,29 @@
 //
-//  AudioEMix.h
+//  VTouyingjiSet.h
 //  veenoon
 //
-//  Created by chen jack on 2018/3/27.
+//  Created by 安志良 on 2018/4/25.
 //  Copyright © 2018年 jack. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import "BasePlugElement.h"
 
+@class RgsConnectionObj;
+
 @interface AudioEMix : BasePlugElement
 
+
+@property (nonatomic, strong) id _comDriverInfo;
+@property (nonatomic, strong) id _comDriver;
+
+//<VProjectProxy>
+@property (nonatomic, strong) id _proxyObj;
+
+@property (nonatomic, strong) NSArray *_localSavedCommands;
+
+
+- (NSString*) deviceName;
+
 @end
+
