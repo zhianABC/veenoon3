@@ -265,6 +265,8 @@
 		34766EB020CE2033006B9E82 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 34766EAF20CE2033006B9E82 /* libstdc++.tbd */; };
 		34766EB220CE203D006B9E82 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 34766EB120CE203D006B9E82 /* libstdc++.tbd */; };
 		34766EBC20CE2237006B9E82 /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 34766EBA20CE2237006B9E82 /* Base64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		34890CA520E4AC0C00C8505D /* AirConditionPlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 34890CA420E4AC0C00C8505D /* AirConditionPlug.m */; };
+		34890CA820E4AC2A00C8505D /* AirConditionProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 34890CA720E4AC2A00C8505D /* AirConditionProxy.m */; };
 		348FC8CD208AF80600F7DB3D /* BasePlugElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 348FC8CB208AF80100F7DB3D /* BasePlugElement.m */; };
 		348FC8D0208B203E00F7DB3D /* PlugsCtrlTitleHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 348FC8CF208B203E00F7DB3D /* PlugsCtrlTitleHeader.m */; };
 		348FC8D3208B748B00F7DB3D /* DActionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 348FC8D2208B748B00F7DB3D /* DActionView.m */; };
@@ -1301,6 +1303,10 @@
 		34766EB920CE2237006B9E82 /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
 		34766EBA20CE2237006B9E82 /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
 		34766EBB20CE2237006B9E82 /* Base64Defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64Defines.h; sourceTree = "<group>"; };
+		34890CA320E4AC0C00C8505D /* AirConditionPlug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirConditionPlug.h; sourceTree = "<group>"; };
+		34890CA420E4AC0C00C8505D /* AirConditionPlug.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AirConditionPlug.m; sourceTree = "<group>"; };
+		34890CA620E4AC2A00C8505D /* AirConditionProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirConditionProxy.h; sourceTree = "<group>"; };
+		34890CA720E4AC2A00C8505D /* AirConditionProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AirConditionProxy.m; sourceTree = "<group>"; };
 		348FC8CB208AF80100F7DB3D /* BasePlugElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasePlugElement.m; sourceTree = "<group>"; };
 		348FC8CC208AF80600F7DB3D /* BasePlugElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasePlugElement.h; sourceTree = "<group>"; };
 		348FC8CE208B203E00F7DB3D /* PlugsCtrlTitleHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlugsCtrlTitleHeader.h; sourceTree = "<group>"; };
@@ -2961,6 +2967,10 @@
 				3456C1A720A0A32A001FAB61 /* EDimmerLight.m */,
 				3456C1A920A0A382001FAB61 /* EDimmerLightProxys.h */,
 				3456C1AA20A0A382001FAB61 /* EDimmerLightProxys.m */,
+				34890CA320E4AC0C00C8505D /* AirConditionPlug.h */,
+				34890CA420E4AC0C00C8505D /* AirConditionPlug.m */,
+				34890CA620E4AC2A00C8505D /* AirConditionProxy.h */,
+				34890CA720E4AC2A00C8505D /* AirConditionProxy.m */,
 			);
 			path = Env;
 			sourceTree = "<group>";
@@ -4549,6 +4559,7 @@
 				04DE1E9D1AD6AEE000D49E2F /* DataCenter.m in Sources */,
 				04DE1EA51AD6AEE000D49E2F /* SBJson4StreamParserState.m in Sources */,
 				341C60C41FDCF1EA003A5490 /* ECPlusSelectView.m in Sources */,
+				34890CA820E4AC2A00C8505D /* AirConditionProxy.m in Sources */,
 				04DE1E931AD6AEE000D49E2F /* Utilities.m in Sources */,
 				341CE49A20A3E90A009DBC01 /* ChooseDriverViewController.m in Sources */,
 				EB1A04601FC7156C007CC1F2 /* UserAudioConfigViewController.m in Sources */,
@@ -4658,6 +4669,7 @@
 				EBF6A7481FC861D400260FF0 /* UserWuXianHuaTongViewCtrl.m in Sources */,
 				EB235016204D9BB2008F6CA2 /* wsDB.m in Sources */,
 				341671811FBA974C001D33D0 /* WellcomeViewController.m in Sources */,
+				34890CA520E4AC0C00C8505D /* AirConditionPlug.m in Sources */,
 				04DE1E911AD6AEE000D49E2F /* UILabel+ContentSize.m in Sources */,
 				EBF831E71FD03E4B0096E6EC /* UserVideoRemoteShiXunViewCtrl.m in Sources */,
 				0477DC5B1DA9F4BA0077FA52 /* WaitDialog.m in Sources */,

@@ -17,5 +17,7 @@ typedef void (^TeslariaComboChooserBlock)(id object, int index);
 @property (nonatomic, assign) CGSize _size;
 @property (nonatomic, strong) NSArray *_dataArray;
 @property (nonatomic, assign) int _type;
+@property (nonatomic, strong) NSString* _unit;
+
 @end
 
