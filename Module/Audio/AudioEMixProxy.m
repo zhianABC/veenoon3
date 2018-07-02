@@ -33,8 +33,9 @@
 @synthesize _rgsProxyObj;
 @synthesize _cmdMap;
 
-@synthesize _power;
-@synthesize _input;
+@synthesize _deviceVol;
+@synthesize _currentCameraPol;
+@synthesize _cameraPol;
 
 @synthesize _deviceId;
 @synthesize _RgsSceneDeviceOperationShadow;
@@ -44,10 +45,9 @@
 {
     if(self = [super init])
     {
-        self._power = @"ON";
-        self._input = @"HDMI";
-        
+        _deviceVol = 20.0f;
         self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionary];
+        _cameraPol = [NSMutableArray array];
     }
     
     return self;
@@ -58,13 +58,38 @@
     return _RgsSceneDeviceOperationShadow;
 }
 
+
+- (NSMutableArray*)getCameraPol{
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_CAM_POL"];
+    if(cmd)
+    {
+        if([cmd.params count])
+        {
+            
+            for( RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"POL"])
+                {
+                    if (param_info.available) {
+                        [_cameraPol addObjectsFromArray:param_info.available];
+                    }
+                    break;
+                }
+            }
+        }
+    }
+    
+    return _cameraPol;
+}
+
+
 - (void) recoverWithDictionary:(NSDictionary*)data{
     
     NSInteger proxy_id = [[data objectForKey:@"proxy_id"] intValue];
     if(proxy_id == _deviceId)
     {
-        self._input = [data objectForKey:@"input"];
-        self._power = [data objectForKey:@"power"];
         
         if([data objectForKey:@"RgsSceneDeviceOperation"]){
             self._RgsSceneDeviceOperationShadow = [data objectForKey:@"RgsSceneDeviceOperation"];
@@ -75,25 +100,63 @@
     }
     
 }
-
-- (NSArray*)getDirectOptions{
+- (void) controlDeviceCameraPol:(NSString*)cameraPol {
+    _currentCameraPol = cameraPol;
     
-    RgsCommandInfo *cmd = nil;
-    cmd = [_cmdMap objectForKey:@"SET_INPUT"];
+    RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_CAM_POL"];
     if(cmd)
     {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
         if([cmd.params count])
         {
             RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
+            if(param_info.type == RGS_PARAM_TYPE_FLOAT)
+            {
+                [param setObject:_currentCameraPol forKey:param_info.name];
+            }
+        }
+        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+                                                 cmd:cmd.name
+                                               param:param completion:^(BOOL result, NSError *error) {
+                                                   if (result) {
+                                                       
+                                                   }
+                                                   else{
+                                                       
+                                                   }
+                                               }];
+    }
+}
+//SET_VOL
+- (void) controlDeviceVol:(float)db force:(BOOL)force{
+    
+    _deviceVol = db;
+    
+    RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_VOL"];
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
+            
             if(param_info.type == RGS_PARAM_TYPE_LIST)
             {
-                return param_info.available;
+                [param setObject:[NSString stringWithFormat:@"%0.1f",_deviceVol]
+                          forKey:param_info.name];
             }
-            
         }
+        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+                                                 cmd:cmd.name
+                                               param:param completion:^(BOOL result, NSError *error) {
+                                                   if (result) {
+                                                       
+                                                   }
+                                                   else{
+                                                       
+                                                   }
+                                               }];
     }
-    
-    return nil;
 }
 
 - (void) checkRgsProxyCommandLoad:(NSArray*)cmds{
@@ -146,201 +209,9 @@
     
 }
 
-- (void) controlDeviceInput:(NSString*)input{
-    
-    RgsCommandInfo *cmd = nil;
-    cmd = [_cmdMap objectForKey:@"SET_INPUT"];
-    self._input = input;
-    
-    if(cmd)
-    {
-        NSMutableDictionary * param = [NSMutableDictionary dictionary];
-        if([cmd.params count])
-        {
-            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
-            if(param_info.type == RGS_PARAM_TYPE_LIST)
-            {
-                [param setObject:input forKey:param_info.name];
-            }
-            
-        }
-        
-        if(_rgsProxyObj)
-        {
-            _deviceId = _rgsProxyObj.m_id;
-        }
-        
-        [[RegulusSDK sharedRegulusSDK] ControlDevice:_deviceId
-                                                 cmd:cmd.name
-                                               param:param completion:^(BOOL result, NSError *error) {
-                                                   if (result) {
-                                                       
-                                                   }
-                                                   else{
-                                                       
-                                                   }
-                                               }];
-    }
-}
-
-- (void) controlDevicePower:(NSString*)power{
-    
-    RgsCommandInfo *cmd = nil;
-    cmd = [_cmdMap objectForKey:@"SET_POWER"];
-    self._power = power;
-    
-    if(cmd)
-    {
-        NSMutableDictionary * param = [NSMutableDictionary dictionary];
-        if([cmd.params count])
-        {
-            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
-            if(param_info.type == RGS_PARAM_TYPE_LIST)
-            {
-                [param setObject:power forKey:param_info.name];
-            }
-            
-        }
-        
-        if(_rgsProxyObj)
-        {
-            _deviceId = _rgsProxyObj.m_id;
-        }
-        
-        [[RegulusSDK sharedRegulusSDK] ControlDevice:_deviceId
-                                                 cmd:cmd.name
-                                               param:param completion:^(BOOL result, NSError *error) {
-                                                   if (result) {
-                                                       
-                                                   }
-                                                   else{
-                                                       
-                                                   }
-                                               }];
-    }
-}
-
 - (BOOL) isSetChanged{
     
     return _isSetOK;
-}
-
-- (id) generateEventOperation_Power{
-    
-    RgsCommandInfo *cmd = nil;
-    
-    if(_cmdMap)
-        cmd = [_cmdMap objectForKey:@"SET_POWER"];
-    
-    if(cmd)
-    {
-        NSMutableDictionary * param = [NSMutableDictionary dictionary];
-        if([cmd.params count])
-        {
-            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
-            if(param_info.type == RGS_PARAM_TYPE_LIST)
-            {
-                [param setObject:_power forKey:param_info.name];
-            }
-            
-        }
-        
-        if(_rgsProxyObj)
-        {
-            _deviceId = _rgsProxyObj.m_id;
-        }
-        RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc]init];
-        scene_opt.dev_id = _deviceId;
-        scene_opt.cmd = cmd.name;
-        scene_opt.param = param;
-        
-        //用于保存还原
-        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
-        [slice setObject:[NSNumber numberWithInteger:_rgsProxyObj.m_id] forKey:@"dev_id"];
-        [slice setObject:cmd.name forKey:@"cmd"];
-        [slice setObject:param forKey:@"param"];
-        [_RgsSceneDeviceOperationShadow setObject:slice forKey:@"SET_POWER"];
-        
-        
-        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
-                                                                          cmd:scene_opt.cmd
-                                                                        param:scene_opt.param];
-        
-        return opt;
-    }
-    else
-    {
-        NSDictionary *cmdsRev = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_POWER"];
-        if(cmdsRev)
-        {
-            RgsSceneOperation * opt = [[RgsSceneOperation alloc]
-                                       initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
-                                       cmd:[cmdsRev objectForKey:@"cmd"]
-                                       param:[cmdsRev objectForKey:@"param"]];
-            
-            return opt;
-        }
-    }
-    return nil;
-}
-
-- (id) generateEventOperation_Input{
-    
-    RgsCommandInfo *cmd = nil;
-    
-    if(_cmdMap)
-        cmd = [_cmdMap objectForKey:@"SET_INPUT"];
-    
-    if(cmd)
-    {
-        NSMutableDictionary * param = [NSMutableDictionary dictionary];
-        if([cmd.params count])
-        {
-            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
-            if(param_info.type == RGS_PARAM_TYPE_LIST)
-            {
-                [param setObject:_input forKey:param_info.name];
-            }
-            
-        }
-        
-        if(_rgsProxyObj)
-        {
-            _deviceId = _rgsProxyObj.m_id;
-        }
-        RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc]init];
-        scene_opt.dev_id = _deviceId;
-        scene_opt.cmd = cmd.name;
-        scene_opt.param = param;
-        
-        //用于保存还原
-        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
-        [slice setObject:[NSNumber numberWithInteger:_deviceId] forKey:@"dev_id"];
-        [slice setObject:cmd.name forKey:@"cmd"];
-        [slice setObject:param forKey:@"param"];
-        [_RgsSceneDeviceOperationShadow setObject:slice forKey:@"SET_INPUT"];
-        
-        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
-                                                                          cmd:scene_opt.cmd
-                                                                        param:scene_opt.param];
-        
-        return opt;
-    }
-    else
-    {
-        NSDictionary *cmdsRev = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_INPUT"];
-        if(cmdsRev)
-        {
-            RgsSceneOperation * opt = [[RgsSceneOperation alloc]
-                                       initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
-                                       cmd:[cmdsRev objectForKey:@"cmd"]
-                                       param:[cmdsRev objectForKey:@"param"]];
-            
-            return opt;
-        }
-    }
-    
-    return nil;
 }
 
 

@@ -18,8 +18,9 @@
 @property (nonatomic, assign) NSUInteger _deviceId;
 
 //Property
-@property (nonatomic, strong) NSString *_power;
-@property (nonatomic, strong) NSString *_input;
+@property (nonatomic, assign) float _deviceVol;
+@property (nonatomic, strong) NSString *_currentCameraPol;
+@property (nonatomic, strong) NSMutableArray *_cameraPol;
 
 /*
  //set_mode 语音激励，或者是标准发言
@@ -39,18 +40,17 @@
  */
 
 - (NSDictionary *)getScenarioSliceLocatedShadow;
+- (NSMutableArray*)getCameraPol;
+
+
+
 
 - (void) checkRgsProxyCommandLoad:(NSArray*)cmds;
 
-- (NSArray*)getDirectOptions;
-
-- (void) controlDevicePower:(NSString*)power;
-- (void) controlDeviceInput:(NSString*)input;
+- (void) controlDeviceVol:(float)db force:(BOOL)force;
+- (void) controlDeviceCameraPol:(NSString*)cameraPol;
 
 - (BOOL) isSetChanged;
-////生成场景片段
-- (id) generateEventOperation_Power;
-- (id) generateEventOperation_Input;
 
 /////场景还原
 - (void) recoverWithDictionary:(NSDictionary*)data;

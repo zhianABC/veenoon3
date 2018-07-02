@@ -26,8 +26,6 @@
     UIButton *okBtn;
     BOOL isSettings;
     MixVoiceSettingsView *_rightView;
-    
-    UIView *_proxysView;
 }
 @end
 
@@ -128,19 +126,6 @@
         index++;
     }
     
-    int height = 150;
-    
-    _proxysView = [[UIView alloc] initWithFrame:CGRectMake(0,
-                                                           height-5,
-                                                           SCREEN_WIDTH,
-                                                           SCREEN_HEIGHT-height-60)];
-    [self.view addSubview:_proxysView];
-    
-    UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
-    tapGesture.cancelsTouchesInView =  NO;
-    tapGesture.numberOfTapsRequired = 1;
-    [_proxysView addGestureRecognizer:tapGesture];
-    
     [self getCurrentDeviceDriverProxys];
 }
 
@@ -236,7 +221,9 @@
     isSettings = NO;
 }
 - (void) didSliderValueChanged:(float)value object:(id)object {
+    float circleValue = value;
     
+    [_currentObj._proxyObj controlDeviceVol:circleValue force:YES];
 }
 
 - (void) didSliderEndChanged:(id)object {
@@ -248,7 +235,7 @@
         if (_rightView == nil) {
             _rightView = [[MixVoiceSettingsView alloc]
                              initWithFrame:CGRectMake(SCREEN_WIDTH-300,
-                                                      64, 300, SCREEN_HEIGHT-114)];
+                                                      64, 300, SCREEN_HEIGHT-114) withAudioMixSet:_currentObj];
             _rightView.delegate_=self;
         } else {
             [UIView beginAnimations:nil context:nil];

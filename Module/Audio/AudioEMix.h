@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "BasePlugElement.h"
+#import "AudioEMixProxy.h"
 
 @class RgsConnectionObj;
 
@@ -18,7 +19,7 @@
 @property (nonatomic, strong) id _comDriver;
 
 //<VProjectProxy>
-@property (nonatomic, strong) id _proxyObj;
+@property (nonatomic, strong) AudioEMixProxy *_proxyObj;
 
 @property (nonatomic, strong) NSArray *_localSavedCommands;
 

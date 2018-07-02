@@ -7,11 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AudioEMix.h"
+
 @protocol MixVoiceSettingsViewDelegate <NSObject>
 
 @optional
 - (void) didSelectButtonAction:(NSString*)value;
 @end
+
 @interface MixVoiceSettingsView : UIView
 @property (nonatomic, weak) id  <MixVoiceSettingsViewDelegate> delegate_;
+@property (nonatomic, strong) AudioEMix *_currentObj;
+
+
+- (id)initWithFrame:(CGRect)frame withAudioMixSet:(AudioEMix*) audioEMix;
 @end

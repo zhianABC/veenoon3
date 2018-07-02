@@ -9,7 +9,7 @@
 #import "MixVoiceSettingsView.h"
 #import "UIButton+Color.h"
 #import "CustomPickerView.h"
-#import "ComSettingView.h"
+#import "AudioEMix.h"
 
 @interface MixVoiceSettingsView () <UITableViewDelegate, UITableViewDataSource,CustomPickerViewDelegate, UITextFieldDelegate>
 {
@@ -26,7 +26,7 @@
     UIButton *_shedingzhuxiBtn;
     UIButton *_fayanrenshuBtn;
     UIButton *_shexiangxieyiBtn;
-    CustomPickerView *levelSetting;
+    CustomPickerView *_picker;
     
     int shedingzhuxiNumber;
     int fayanrenshuNumber;
@@ -41,6 +41,8 @@
 @synthesize delegate_;
 @synthesize _btns;
 @synthesize _numOfChannel;
+@synthesize _currentObj;
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -49,8 +51,9 @@
 }
 */
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithFrame:(CGRect)frame withAudioMixSet:(AudioEMix*) audioEMix
 {
+    self._currentObj = audioEMix;
     
     if(self = [super initWithFrame:frame])
     {
@@ -222,42 +225,46 @@
     _shexiangxieyiBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     
     
-    levelSetting = [[CustomPickerView alloc]
-                                      initWithFrame:CGRectMake(x, 160, self.frame.size.width-2*x, 120) withGrayOrLight:@"gray"];
+    _picker = [[CustomPickerView alloc]
+               initWithFrame:CGRectMake(_shexiangzhuizongView.frame.size.width/2-100, 130, 200, 120) withGrayOrLight:@"picker_player.png"];
+    
+    NSMutableArray *dataArray = [_currentObj._proxyObj getCameraPol];
+    _picker._pickerDataArray = @[@{@"values":dataArray}];
     
     
-    NSMutableArray *arr = [NSMutableArray array];
-    [arr addObject:@"VISCA"];
-    [arr addObject:@"PELCO_D"];
-    [arr addObject:@"PELCO_P"];
-    [arr addObject:@"VISCA"];
+    _picker._selectColor = YELLOW_COLOR;
+    _picker._rowNormalColor = [UIColor whiteColor];
+    _picker.delegate_ = self;
+    _picker.tag = 1;
+    [_picker selectRow:0 inComponent:0];
+    IMP_BLOCK_SELF(MixVoiceSettingsView);
+    _picker._selectionBlock = ^(NSDictionary *values)
+    {
+        [block_self didPickerValue:values];
+    };
     
+    [_shexiangzhuizongView addSubview:_picker];
+    _picker.hidden = YES;
     
-    levelSetting._pickerDataArray = @[@{@"values":arr}];
-    levelSetting.delegate_ = self;
-    
-    levelSetting._selectColor = [UIColor orangeColor];
-    levelSetting._rowNormalColor = [UIColor whiteColor];
-    [_shexiangzhuizongView addSubview:levelSetting];
-    levelSetting.hidden = YES;
     _shexiangzhuizongView.hidden=YES;
 }
 -(void) shexiangxieyiAction:(id)sender {
-    if (levelSetting.hidden) {
-        levelSetting.hidden = NO;
+    if (_picker.hidden) {
+        _picker.hidden = NO;
     } else {
-        levelSetting.hidden=YES;
+        _picker.hidden=YES;
     }
 }
 
-- (void) didChangedPickerValue:(NSDictionary*)value{
-
-    NSDictionary *dic = [value objectForKey:@0];
-    NSString *title =  [dic objectForKey:@"value"];
+- (void) didPickerValue:(NSDictionary *)values{
     
-    [_shexiangxieyiBtn setTitle:title forState:UIControlStateNormal];
+    if(_picker.tag == 1)
+    {
+        [_shexiangxieyiBtn setTitle:_picker._unitString forState:UIControlStateNormal];
+    }
     
-    levelSetting.hidden=YES;
+    _picker.hidden = YES;
+    
 }
 
 - (void) createYuYinJiLiView {
