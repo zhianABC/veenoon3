@@ -128,7 +128,8 @@
 #define UUID_Audio_Processor    @"a3508fda-8775-4561-a26f-3df071f78b09"
 #define UUID_Audio_Mixer        @"6151c576-b8d8-41a2-9567-10fbda2d3674"
 #define UUID_IR_Sender          @"6de6a96e-8cbc-4a97-ba27-4b9ad7c87e7e"
-#define UUID_Philips_DVD        @"97cd61c4-0601-41a3-ae0b-9669e4b662cc"
+#define UUID_Philips_DVD        @"a7a90394-7a80-11e8-8933-412548ace8fb"
+#define UUID_Gree_AC            @"12ac8404-7a6d-11e8-8933-412548ace8fb"
 #define UUID_Video_Switch       @"2872dee1-4327-416f-bc64-d5770e927882"
 
 #define LOGIN_REGULUS 1

@@ -28,8 +28,8 @@
     {
         
         self._ipaddress = nil;
-        self._show_icon_name = @"v_icon_1.png";
-        self._show_icon_sel_name = @"v_icon_1_sel.png";
+        self._show_icon_name = @"hj_icon_2.png";
+        self._show_icon_sel_name = @"hj_icon_2_sel.png";
         
     }
     

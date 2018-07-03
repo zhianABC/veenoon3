@@ -213,6 +213,7 @@
 		3448D9672073B9590055D48F /* videop_dvd_w@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3448D9552073B9590055D48F /* videop_dvd_w@2x.png */; };
 		3448D9692073C42D0055D48F /* engineer_scenario_add_small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3448D9682073C42D0055D48F /* engineer_scenario_add_small@2x.png */; };
 		3448D96C2073C5070055D48F /* TwoIconAndTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3448D96B2073C5070055D48F /* TwoIconAndTitleView.m */; };
+		344F5F5620EBBA24007CAB97 /* AirConditionRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = 344F5F5520EBBA24007CAB97 /* AirConditionRightView.m */; };
 		3451A53B2052DCC600AE02B4 /* slide_btn_light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3451A5392052DCC500AE02B4 /* slide_btn_light@2x.png */; };
 		3451A53C2052DCC600AE02B4 /* slide_btn_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3451A53A2052DCC600AE02B4 /* slide_btn_gray@2x.png */; };
 		3454276E2046DED100E1A436 /* FilterGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3454276D2046DED100E1A436 /* FilterGraphView.swift */; };
@@ -1222,6 +1223,8 @@
 		3448D9682073C42D0055D48F /* engineer_scenario_add_small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_scenario_add_small@2x.png"; sourceTree = "<group>"; };
 		3448D96A2073C5070055D48F /* TwoIconAndTitleView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TwoIconAndTitleView.h; sourceTree = "<group>"; };
 		3448D96B2073C5070055D48F /* TwoIconAndTitleView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TwoIconAndTitleView.m; sourceTree = "<group>"; };
+		344F5F5420EBBA21007CAB97 /* AirConditionRightView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AirConditionRightView.h; sourceTree = "<group>"; };
+		344F5F5520EBBA24007CAB97 /* AirConditionRightView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AirConditionRightView.m; sourceTree = "<group>"; };
 		3451A5392052DCC500AE02B4 /* slide_btn_light@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "slide_btn_light@2x.png"; path = "ImageAssets/slide_btn_light@2x.png"; sourceTree = SOURCE_ROOT; };
 		3451A53A2052DCC600AE02B4 /* slide_btn_gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "slide_btn_gray@2x.png"; path = "ImageAssets/slide_btn_gray@2x.png"; sourceTree = SOURCE_ROOT; };
 		3454276C2046DED000E1A436 /* veenoon-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "veenoon-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -3596,6 +3599,8 @@
 				EB7333F32041046400AE60B8 /* AirCleanRightView.m */,
 				EB7333F8204108B000AE60B8 /* AddWetRightView.h */,
 				EB7333F9204108B000AE60B8 /* AddWetRightView.m */,
+				344F5F5420EBBA21007CAB97 /* AirConditionRightView.h */,
+				344F5F5520EBBA24007CAB97 /* AirConditionRightView.m */,
 			);
 			path = RightView;
 			sourceTree = "<group>";
@@ -4663,6 +4668,7 @@
 				345B3E3820A55A5900BFF0F0 /* DriverConnectionsView.m in Sources */,
 				04DE1E8E1AD6AEE000D49E2F /* UIButton+Color.m in Sources */,
 				EB795B5C2042E861005D1F47 /* YaXianQi_UIView.m in Sources */,
+				344F5F5620EBBA24007CAB97 /* AirConditionRightView.m in Sources */,
 				341671841FBA9765001D33D0 /* SignupViewController.m in Sources */,
 				EB03F5491FBDEB8900865541 /* EnginnerHomeViewController.m in Sources */,
 				EB62DFFC20DE85E300144EE0 /* AudioEProcessorAutoMixProxy.m in Sources */,

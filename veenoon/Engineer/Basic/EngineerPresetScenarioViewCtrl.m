@@ -864,13 +864,13 @@
         if ([name isEqualToString:@"照明"]) {
             
             EngineerLightViewController *ctrl = [[EngineerLightViewController alloc] init];
-            ctrl._lightSysArray = @[plug];// [NSMutableArray arrayWithObject:data];
+            ctrl._lightSysArray = @[plug];
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
         if ([name isEqualToString:@"空调"]) {
             EngineerAireConditionViewCtrl *ctrl = [[EngineerAireConditionViewCtrl alloc] init];
-            ctrl._airSysArray= nil;// [NSMutableArray arrayWithObject:data];
+            ctrl._airSysArray = @[plug];
             ctrl._number=8;
             [self.navigationController pushViewController:ctrl animated:YES];
         }

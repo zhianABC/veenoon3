@@ -8,39 +8,52 @@
 
 #import "EngineerAireConditionViewCtrl.h"
 #import "UIButton+Color.h"
+#import "AirConditionRightView.h"
 #import "CustomPickerView.h"
+#import "AirConditionPlug.h"
+#import "RegulusSDK.h"
+#import "AirConditionProxy.h"
+
 
 @interface EngineerAireConditionViewCtrl () <CustomPickerViewDelegate>{
     
-    NSMutableArray *_nameLabelArray;
+    NSMutableArray  *_nameLabelArray;
     
-    BOOL isSettings;
-    UIButton *okBtn;
+    BOOL            isSettings;
+    UIButton        *okBtn;
     
-    NSMutableArray *buttonArray;
-    NSMutableArray *selectedBtnArray;
+    NSMutableArray  *buttonArray;
+    NSMutableArray  *selectedBtnArray;
+    
+    AirConditionRightView *_settingView;
 }
+@property (nonatomic, strong) AirConditionPlug *_currentObj;
 @end
 
 @implementation EngineerAireConditionViewCtrl
 @synthesize _airSysArray;
 @synthesize _number;
+@synthesize _currentObj;
+
 - (void)viewDidLoad {
     
     [super viewDidLoad];
     
     isSettings = NO;
     
-    if (_airSysArray == nil) {
-        _airSysArray = [[NSMutableArray alloc] init];
+    if ([_airSysArray count]) {
+        self._currentObj = [_airSysArray objectAtIndex:0];
     }
+    
+    if(_currentObj == nil) {
+        self._currentObj = [[AirConditionPlug alloc] init];
+    }
+    
     _nameLabelArray = [[NSMutableArray alloc] init];
     buttonArray = [[NSMutableArray alloc] init];
     selectedBtnArray = [[NSMutableArray alloc] init];
-    for (int i = 0; i < self._number; i++) {
-        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-        [_airSysArray addObject:dic];
-    }
+    
+   
     [super setTitleAndImage:@"env_corner_kongtiao.png" withTitle:@"空调"];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
@@ -70,7 +83,7 @@
     [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
     okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [okBtn addTarget:self
-              action:@selector(okAction:)
+              action:@selector(settingAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
     int index = 0;
@@ -83,7 +96,7 @@
     int colNumber = ENGINEER_VIEW_COLUMN_N;
     int space = ENGINEER_VIEW_COLUMN_GAP;
     
-    for (int i = 0; i < self._number; i++) {
+    for (int i = 0; i < 1; i++) {
         
         int row = index/colNumber;
         int col = index%colNumber;
@@ -149,8 +162,26 @@
     [_nameLabelArray addObject:titleL];
 }
 
-- (void) okAction:(id)sender{
+- (void) settingAction:(id)sender{
     
+    if(_settingView == nil)
+    {
+        _settingView = [[AirConditionRightView alloc]
+                        initWithFrame:CGRectMake(SCREEN_WIDTH-300,
+                                                 64, 300, SCREEN_HEIGHT-114)];
+    }
+    
+    if([_settingView superview])
+    {
+        [_settingView removeFromSuperview];
+        [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+    }
+    else
+    {
+       [self.view addSubview:_settingView];
+        [okBtn setTitle:@"保存" forState:UIControlStateNormal];
+    }
+
 }
 
 - (void) cancelAction:(id)sender{

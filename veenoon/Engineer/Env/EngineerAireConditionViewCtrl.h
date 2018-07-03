@@ -10,10 +10,9 @@
 #import "BaseViewController.h"
 
 @interface EngineerAireConditionViewCtrl : BaseViewController {
-    NSMutableArray *_airSysArray;
     
     int _number;
 }
-@property (nonatomic,strong) NSMutableArray *_airSysArray;
+@property (nonatomic,strong) NSArray *_airSysArray;
 @property (nonatomic,assign) int _number;
 @end
