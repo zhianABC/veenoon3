@@ -14,6 +14,7 @@
 #import "EDimmerLight.h"
 #import "DataSync.h"
 #import "EnginnerChuanGanDevicePluginViewCtrl.h"
+#import "AirConditionPlug.h"
 
 
 @interface EngineerEnvDevicePluginViewCtrl () <CenterCustomerPickerViewDelegate> {
@@ -70,6 +71,18 @@
     
     [_mapDrivers setObject:light forKey:UUID_6CH_Dimmer_Light];
     
+    NSDictionary *greeac = @{@"type":@"env",
+                            @"name":@"空调",
+                            @"driver":UUID_Gree_AC,
+                            @"brand":@"Gree",
+                            @"icon":@"engineer_env_kongtiao_n.png",
+                            @"icon_s":@"engineer_env_kongtiao_s.png",
+                            @"driver_class":@"AirConditionPlug",
+                            @"ptype":@"Gree AC"
+                            };
+    
+    [_mapDrivers setObject:greeac forKey:UUID_Gree_AC];
+
 }
 
 - (void)viewDidLoad {
@@ -339,7 +352,18 @@
     NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
     
-    [self initBrandAndTypes];
+    //[self initBrandAndTypes];
+    
+    self._currentBrands = @[@"GREE"];
+    self._currentTypes = @[@"空调"];
+    self._driverUdids = @[UUID_Gree_AC];
+    
+    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
+    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
+    
+    [_brandPicker selectRow:0 inComponent:0];
+    [_productCategoryPicker selectRow:0 inComponent:0];
+
 }
 - (void) diandongmadaAction:(id)sender{
     [_zhaomingBtn setBtnHighlited:NO];

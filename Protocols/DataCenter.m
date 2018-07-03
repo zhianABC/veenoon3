@@ -137,6 +137,18 @@ static DataCenter *_globalDataInstanse;
                                   };
     
     [_mapDrivers setObject:videoSwitch forKey:UUID_Video_Switch];
+    
+    NSDictionary *greeac = @{@"type":@"env",
+                             @"name":@"空调",
+                             @"driver":UUID_Gree_AC,
+                             @"brand":@"Gree",
+                             @"icon":@"engineer_env_kongtiao_n.png",
+                             @"icon_s":@"engineer_env_kongtiao_s.png",
+                             @"driver_class":@"AirConditionPlug",
+                             @"ptype":@"Gree AC"
+                             };
+    
+    [_mapDrivers setObject:greeac forKey:UUID_Gree_AC];
 
 }
 
