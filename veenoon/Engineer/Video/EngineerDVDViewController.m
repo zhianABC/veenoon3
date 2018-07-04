@@ -56,6 +56,7 @@
         self._currentObj = [[VDVDPlayerSet alloc] init];
     }
     
+    [super showBasePluginName:self._currentObj];
     
     [super setTitleAndImage:@"video_corner_dvd.png" withTitle:@"DVD"];
     
