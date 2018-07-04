@@ -49,6 +49,7 @@
 @property (nonatomic, strong) NSArray *_properties;
 
 @property (nonatomic, strong) NSArray *_connections;
+@property (nonatomic, strong) NSArray *_irCodeKeys;
 //@property (nonatomic, strong) RgsConnectionObj *_com;
 @property (nonatomic, strong) ComDriver *_comDriver;
 

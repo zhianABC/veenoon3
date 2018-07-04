@@ -108,6 +108,27 @@
     self.window.rootViewController = _naviRoot;
 }
 
+-(void) onIrcodeRecord:(NSString *)serial key:(NSString *)key status:(RgsIrRecordStatus)status{
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setObject:serial forKey:@"uuid"];
+    [dic setObject:key forKey:@"key"];
+    if(status == RGS_IR_RECORD_DONE)
+    {
+        [dic setObject:@1 forKey:@"result"];
+    }
+    else
+    {
+        [dic setObject:@0 forKey:@"result"];
+    }
+    
+    if(status != RGS_IR_RECORD_WAIT)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"Notify_Study_IR"
+                                                            object:dic];
+    }
+}
+
 -(UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleLightContent;
 }
