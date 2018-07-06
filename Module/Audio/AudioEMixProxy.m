@@ -138,13 +138,33 @@
         NSMutableDictionary * param = [NSMutableDictionary dictionary];
         if([cmd.params count])
         {
-            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
             
-            if(param_info.type == RGS_PARAM_TYPE_LIST)
+            for( RgsCommandParamInfo * param_info in cmd.params)
             {
-                [param setObject:[NSString stringWithFormat:@"%0.1f",_deviceVol]
-                          forKey:param_info.name];
+                if([param_info.name isEqualToString:@"VOL"])
+                {
+                    if(param_info.type == RGS_PARAM_TYPE_FLOAT)
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%0.1f",
+                                          db]
+                                  forKey:param_info.name];
+                    }
+                    else if(param_info.type == RGS_PARAM_TYPE_INT)
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%0.0f",
+                                          db]
+                                  forKey:param_info.name];
+                        
+                    }
+                }
+                else if([param_info.name isEqualToString:@"TARGET"])
+                {
+                    [param setObject:@"Local"
+                              forKey:param_info.name];
+                }
+                
             }
+            
         }
         [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
                                                  cmd:cmd.name

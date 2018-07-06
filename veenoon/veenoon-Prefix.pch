@@ -132,6 +132,8 @@
 #define UUID_Gree_AC            @"12ac8404-7a6d-11e8-8933-412548ace8fb"
 #define UUID_Video_Switch       @"2872dee1-4327-416f-bc64-d5770e927882"
 
+#define UUID_8CH_Dimmer_Light   @"c2ce8874-d422-4fb2-90ff-7caf8344bee4"
+
 #define LOGIN_REGULUS 1
 
 typedef void (^RightSetViewCallbackBlock)(int deviceIndex);
