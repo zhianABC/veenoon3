@@ -302,6 +302,8 @@
 		34DE8E9620663E840061B48D /* MeetingRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DE8E9520663E840061B48D /* MeetingRoom.m */; };
 		34DE8E992066408C0061B48D /* Scenario.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DE8E982066408C0061B48D /* Scenario.m */; };
 		34E105E9209AD73200C7F337 /* libRegulusSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34E105D7209AD73100C7F337 /* libRegulusSDK.a */; };
+		34F2660020EFA6720070D91D /* EDimmerSwitchLight.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F265FC20EFA6710070D91D /* EDimmerSwitchLight.m */; };
+		34F2660120EFA6720070D91D /* EDimmerSwitchLightProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F265FF20EFA6720070D91D /* EDimmerSwitchLightProxy.m */; };
 		34F27A51205121EF0045D765 /* ce_l_06_big.png in Resources */ = {isa = PBXBuildFile; fileRef = 34F27A3D205121EF0045D765 /* ce_l_06_big.png */; };
 		34F27A52205121EF0045D765 /* ce_l_09@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34F27A3E205121EF0045D765 /* ce_l_09@2x.png */; };
 		34F27A53205121EF0045D765 /* ce_l_05@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34F27A3F205121EF0045D765 /* ce_l_05@2x.png */; };
@@ -1369,6 +1371,10 @@
 		34DE8E972066408C0061B48D /* Scenario.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Scenario.h; sourceTree = "<group>"; };
 		34DE8E982066408C0061B48D /* Scenario.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Scenario.m; sourceTree = "<group>"; };
 		34E105D7209AD73100C7F337 /* libRegulusSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libRegulusSDK.a; sourceTree = "<group>"; };
+		34F265FC20EFA6710070D91D /* EDimmerSwitchLight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDimmerSwitchLight.m; sourceTree = "<group>"; };
+		34F265FD20EFA6710070D91D /* EDimmerSwitchLightProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDimmerSwitchLightProxy.h; sourceTree = "<group>"; };
+		34F265FE20EFA6720070D91D /* EDimmerSwitchLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDimmerSwitchLight.h; sourceTree = "<group>"; };
+		34F265FF20EFA6720070D91D /* EDimmerSwitchLightProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDimmerSwitchLightProxy.m; sourceTree = "<group>"; };
 		34F27A3D205121EF0045D765 /* ce_l_06_big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ce_l_06_big.png; sourceTree = "<group>"; };
 		34F27A3E205121EF0045D765 /* ce_l_09@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ce_l_09@2x.png"; sourceTree = "<group>"; };
 		34F27A3F205121EF0045D765 /* ce_l_05@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ce_l_05@2x.png"; sourceTree = "<group>"; };
@@ -2973,6 +2979,10 @@
 				3456C1A720A0A32A001FAB61 /* EDimmerLight.m */,
 				3456C1A920A0A382001FAB61 /* EDimmerLightProxys.h */,
 				3456C1AA20A0A382001FAB61 /* EDimmerLightProxys.m */,
+				34F265FE20EFA6720070D91D /* EDimmerSwitchLight.h */,
+				34F265FC20EFA6710070D91D /* EDimmerSwitchLight.m */,
+				34F265FD20EFA6710070D91D /* EDimmerSwitchLightProxy.h */,
+				34F265FF20EFA6720070D91D /* EDimmerSwitchLightProxy.m */,
 				34890CA320E4AC0C00C8505D /* AirConditionPlug.h */,
 				34890CA420E4AC0C00C8505D /* AirConditionPlug.m */,
 				34890CA620E4AC2A00C8505D /* AirConditionProxy.h */,
@@ -4517,6 +4527,7 @@
 				EB3B73B21FE6382F001941CF /* EngineerWirlessYaoBaoViewCtrl.m in Sources */,
 				EB09C4B11FD3B27200776540 /* MapMarkerLayer.m in Sources */,
 				3419283D1FD3CC760014695B /* DragCellView.m in Sources */,
+				34F2660120EFA6720070D91D /* EDimmerSwitchLightProxy.m in Sources */,
 				EB2982151FD58699007B5C20 /* EngineerMeetingRoomListViewCtrl.m in Sources */,
 				EB795B562042E838005D1F47 /* ZaoShengMen_UIView.m in Sources */,
 				EB948A49204EE3550018C80A /* JLightSliderView.m in Sources */,
@@ -4646,6 +4657,7 @@
 				341C784A2050184300DD1677 /* SIconSelectView.m in Sources */,
 				341CE4A320A4165C009DBC01 /* DriverPropertyView.m in Sources */,
 				EB03F54D1FBDEC6000865541 /* UserHomeViewController.m in Sources */,
+				34F2660020EFA6720070D91D /* EDimmerSwitchLight.m in Sources */,
 				34D34F3C20DF510800CC7897 /* IRDirver.m in Sources */,
 				EB9986DC20B6E93C007E4770 /* EnginnerChuanGanDevicePluginViewCtrl.m in Sources */,
 				04DE1EAF1AD6AEE000D49E2F /* SDWebImageDownloader.m in Sources */,
