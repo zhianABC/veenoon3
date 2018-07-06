@@ -8,6 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+@class AirConditionProxy;
+
 @interface AirConditionRightView : UIView
+{
+    
+}
+@property (nonatomic, strong) AirConditionProxy *_proxy;
+
+@property (nonatomic, strong) NSArray *_models;
+@property (nonatomic, strong) NSArray *_degress;
+@property (nonatomic, strong) NSArray *_winds;
+
+- (void) reloadData;
 
 @end

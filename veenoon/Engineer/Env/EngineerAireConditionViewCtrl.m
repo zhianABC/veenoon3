@@ -13,9 +13,10 @@
 #import "AirConditionPlug.h"
 #import "RegulusSDK.h"
 #import "AirConditionProxy.h"
+#import "KVNProgress.h"
 
 
-@interface EngineerAireConditionViewCtrl () <CustomPickerViewDelegate>{
+@interface EngineerAireConditionViewCtrl () <CustomPickerViewDelegate, AirConditionProxyDelegate>{
     
     NSMutableArray  *_nameLabelArray;
     
@@ -76,16 +77,16 @@
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
-    [bottomBar addSubview:okBtn];
-    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
-    [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
-    okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-    [okBtn addTarget:self
-              action:@selector(settingAction:)
-    forControlEvents:UIControlEventTouchUpInside];
+//    okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
+//    [bottomBar addSubview:okBtn];
+//    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+//    [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+//    okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+//    [okBtn addTarget:self
+//              action:@selector(settingAction:)
+//    forControlEvents:UIControlEventTouchUpInside];
     
     int index = 0;
     int top = ENGINEER_VIEW_COMPONENT_TOP;
@@ -127,7 +128,89 @@
         [self createBtnLabel:scenarioBtn dataDic:dataDic];
         index++;
     }
+    
+    if(_settingView == nil)
+    {
+        _settingView = [[AirConditionRightView alloc]
+                        initWithFrame:CGRectMake(SCREEN_WIDTH-300,
+                                                 64, 300, SCREEN_HEIGHT-114)];
+    }
+    
+    [self.view addSubview:_settingView];
+    //[okBtn setTitle:@"保存" forState:UIControlStateNormal];
+    
+    [self getCurrentDeviceDriverProxys];
 }
+
+- (void) getCurrentDeviceDriverProxys{
+    
+    if(_currentObj == nil)
+        return;
+    
+#ifdef OPEN_REG_LIB_DEF
+    
+    IMP_BLOCK_SELF(EngineerAireConditionViewCtrl);
+    
+    RgsDriverObj *driver = _currentObj._driver;
+    if([driver isKindOfClass:[RgsDriverObj class]])
+    {
+        [[RegulusSDK sharedRegulusSDK] GetDriverProxys:driver.m_id completion:^(BOOL result, NSArray *proxys, NSError *error) {
+            if (result) {
+                if ([proxys count]) {
+                    
+                    [block_self loadedACDriverProxy:proxys];
+                    
+                }
+            }
+            else{
+                [KVNProgress showErrorWithStatus:@"中控链接断开！"];
+            }
+        }];
+    }
+#endif
+}
+
+- (void) loadedACDriverProxy:(NSArray*)proxys{
+    
+    id proxy = self._currentObj._proxyObj;
+    
+    AirConditionProxy *vcam = nil;
+    if(proxy && [proxy isKindOfClass:[AirConditionProxy class]])
+    {
+        vcam = proxy;
+    }
+    else
+    {
+        vcam = [[AirConditionProxy alloc] init];
+    }
+    
+    vcam._rgsProxyObj = [proxys objectAtIndex:0];
+    vcam.delegate = self;
+    
+    [vcam checkRgsProxyCommandLoad];
+    
+    if([_currentObj._localSavedProxys count])
+    {
+        NSDictionary *local = [_currentObj._localSavedProxys objectAtIndex:0];
+        [vcam recoverWithDictionary:local];
+        
+    }
+    
+    self._currentObj._proxyObj = vcam;
+    
+}
+
+- (void) didLoadedProxyCommand{
+    
+    AirConditionProxy *proxy = self._currentObj._proxyObj;
+    proxy.delegate = nil;
+    
+    _settingView._models = [proxy acModeSets];
+    _settingView._winds = [proxy acWindSets];
+    
+    [_settingView reloadData];
+}
+
 - (void) scenarioAction:(id)sender{
     UIButton *btn = (UIButton*) sender;
     int tag = (int) btn.tag;

@@ -238,8 +238,6 @@
 
 - (void) backAction:(id)sender{
     
-    //[[DataSync sharedDataSync] logoutCurrentRegulus];
-    
     [self.navigationController popViewControllerAnimated:YES];
 }
 

@@ -773,7 +773,7 @@
     
     NSDictionary *obj = notify.object;
     NSString *uuid = [obj objectForKey:@"uuid"];
-    NSString *name = [obj objectForKey:@"name"];
+    NSString *name = [obj objectForKey:@"key"];
     NSNumber *result = [obj objectForKey:@"result"];
     if([uuid isEqualToString:_plugDriver._driverUUID])
     {
@@ -839,7 +839,9 @@
         NSString *name = [dic objectForKey:@"name"];
         [[RegulusSDK sharedRegulusSDK] RecordIrcode:_plugDriver._driverUUID
                                                 cmd:name
-                                         completion:nil];
+                                         completion:^(BOOL result, NSError *error) {
+                                             
+                                         }];
         
     }
     else
