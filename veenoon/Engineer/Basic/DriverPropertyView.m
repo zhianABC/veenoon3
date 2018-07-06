@@ -37,16 +37,16 @@
     
     if(self = [super initWithFrame:frame])
     {
-        _connectionL = [[UILabel alloc] initWithFrame:CGRectMake(0, 15, 200, 30)];
+        _connectionL = [[UILabel alloc] initWithFrame:CGRectMake(30, 15, 200, 30)];
         _connectionL.textColor = [UIColor whiteColor];
         _connectionL.backgroundColor = [UIColor clearColor];
         [self addSubview:_connectionL];
         _connectionL.font = [UIFont systemFontOfSize:15];
         _connectionL.text = @"串口号: ";
         
-        _conField = [[UITextField alloc] initWithFrame:CGRectMake(80,
+        _conField = [[UITextField alloc] initWithFrame:CGRectMake(30+80,
                                                                   15,
-                                                                  frame.size.width - 140, 30)];
+                                                                  frame.size.width - 140-30, 30)];
         _conField.backgroundColor = [UIColor clearColor];
         _conField.returnKeyType = UIReturnKeyDone;
         _conField.text = @"";
@@ -138,7 +138,7 @@
 @end
 
 
-@interface DriverPropertyView () <UITextFieldDelegate>
+@interface DriverPropertyView () <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource>
 {
     UITextField *ipTextField;
     
@@ -150,14 +150,25 @@
     DriverConnectionsView   *_connectionView;
     
     UIView *_connectionTableView;
+    
+    UITableView *_tableView;
+    UIView      *_tabHeader;
+    
+    int         _curIndex;
+    BOOL        _studying;
+    
+    BOOL        _isIR;
 }
 @property (nonatomic, strong) NSMutableArray *_connection_cells;
+@property (nonatomic, strong) NSArray *_studyItems;
 
 @end
 
 @implementation DriverPropertyView
 @synthesize _plugDriver;
 @synthesize _connection_cells;
+@synthesize _studyItems;
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -206,16 +217,20 @@
         
         int top = 44;
         
-        _iptitleL = [[UILabel alloc] initWithFrame:CGRectMake(leftx, top+15, 200, 30)];
+        CGRect rc = CGRectMake(0, top, frame.size.width, frame.size.height - 44);
+        
+        _tabHeader = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 150)];
+        
+        _iptitleL = [[UILabel alloc] initWithFrame:CGRectMake(leftx, 15, 200, 30)];
         _iptitleL.textColor = [UIColor whiteColor];
         _iptitleL.backgroundColor = [UIColor clearColor];
-        [self addSubview:_iptitleL];
+        [_tabHeader addSubview:_iptitleL];
         _iptitleL.font = [UIFont systemFontOfSize:15];
         _iptitleL.text = @"IP地址: ";
         
         
         ipTextField = [[UITextField alloc] initWithFrame:CGRectMake(leftx+80,
-                                                                    top+15,
+                                                                    15,
                                                                     200, 30)];
         ipTextField.delegate = self;
         ipTextField.backgroundColor = [UIColor clearColor];
@@ -227,23 +242,34 @@
         ipTextField.font = [UIFont systemFontOfSize:15];
         ipTextField.keyboardType = UIKeyboardTypeNumberPad;
         ipTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-        [self addSubview:ipTextField];
+        [_tabHeader addSubview:ipTextField];
         
         top = CGRectGetMaxY(_iptitleL.frame)+15;
         
         UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, top, frame.size.width, 1)];
         line.backgroundColor =  B_GRAY_COLOR;
-        [self addSubview:line];
+        [_tabHeader addSubview:line];
         
         top = CGRectGetMaxY(line.frame);
         
-        _connectionTableView = [[UIView alloc] initWithFrame:CGRectMake(leftx, top,
-                                                                   frame.size.width-leftx,
+        _connectionTableView = [[UIView alloc] initWithFrame:CGRectMake(0, top,
+                                                                   frame.size.width,
                                                                    60)];
         
         
-        [self addSubview:_connectionTableView];
+        [_tabHeader addSubview:_connectionTableView];
     
+        _curIndex = -1;
+        _isIR = NO;
+        
+        _tableView = [[UITableView alloc] initWithFrame:rc];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        _tableView.backgroundColor = [UIColor clearColor];
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        [self addSubview:_tableView];
+        
+        _tableView.tableHeaderView = _tabHeader;
         
         
         btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -254,9 +280,20 @@
         [btnSave addTarget:self
                     action:@selector(saveCurrentSetting)
           forControlEvents:UIControlEventTouchUpInside];
+        
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(notifyIRRecord:)
+                                                     name:@"Notify_Study_IR"
+                                                   object:nil];
     }
     
     return self;
+}
+
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void) connectionSet:(UIButton*)sender{
@@ -296,7 +333,6 @@
 - (void) saveCurrentSetting{
     
     _plugDriver._ipaddress = ipTextField.text;
-
     [_plugDriver uploadDriverIPProperty];
 
 }
@@ -320,74 +356,95 @@
     
     RgsDriverInfo * info = _plugDriver._driverInfo;
     
-    BOOL _isIR = NO;
+    _isIR = NO;
     if([info.classify isEqualToString:@"IR Controller"])
     {
         _isIR = YES;
     }
     
-    if(_plugDriver._ipaddress == nil)
+    if(_isIR)
     {
-        _iptitleL.alpha = 0.5;
-        ipTextField.alpha = 0.5;
-        ipTextField.text = @"";
-        ipTextField.userInteractionEnabled = NO;
-        
-        _connectionTableView.hidden = NO;
-        
-        if([_plugDriver._connections count] == 0)
+        if(_plugDriver._irCodeKeys == nil)
         {
-            [self syncCurrentDriverComs];
+            [self syncIRDriverCodeKeys];
         }
         else
         {
-            self._connection_cells = [NSMutableArray array];
-            
-            int y = 0;
-            for(int i = 0; i < [_plugDriver._connections count]; i++)
-            {
-                RgsConnectionObj *connect = [_plugDriver._connections objectAtIndex:i];
-                
-                CGRect rc = CGRectMake(0, y, _connectionTableView.frame.size.width, 60);
-                
-                ConnectionRowCell *cell = [[ConnectionRowCell alloc] initWithFrame:rc];
-                [_connectionTableView addSubview:cell];
-                if(_isIR)
-                {
-                    [cell fillIRConnection:connect];
-                }
-                else
-                {
-                    [cell fillComConnection:connect];
-                }
-                
-                cell.btnConnect.tag = i;
-                [cell.btnConnect addTarget:self
-                                    action:@selector(connectionSet:)
-                          forControlEvents:UIControlEventTouchUpInside];
-                
-                y = CGRectGetMaxY(cell.frame);
-                
-                [self._connection_cells addObject:cell];
-            }
-            
-            CGRect rc = _connectionTableView.frame;
-            rc.size.height = y;
-            _connectionTableView.frame = rc;
+            self._studyItems = _plugDriver._irCodeKeys;
         }
-        
-        
-        return;
+    }
+    
+    _connectionTableView.hidden = NO;
+    
+
+    if([_plugDriver._connections count] == 0)
+    {
+        [self syncCurrentDriverComs];
     }
     else
     {
-        _iptitleL.alpha = 1;
-        ipTextField.alpha = 1;
-        ipTextField.text = @"";
-        ipTextField.userInteractionEnabled = YES;
+        self._connection_cells = [NSMutableArray array];
         
-        _connectionTableView.hidden = YES;
+        int y = 0;
+        for(int i = 0; i < [_plugDriver._connections count]; i++)
+        {
+            RgsConnectionObj *connect = [_plugDriver._connections objectAtIndex:i];
+            
+            CGRect rc = CGRectMake(0, y, _connectionTableView.frame.size.width-30, 60);
+            
+            ConnectionRowCell *cell = [[ConnectionRowCell alloc] initWithFrame:rc];
+            [_connectionTableView addSubview:cell];
+            if(_isIR)
+            {
+                [cell fillIRConnection:connect];
+            }
+            else
+            {
+                [cell fillComConnection:connect];
+            }
+            
+            cell.btnConnect.tag = i;
+            [cell.btnConnect addTarget:self
+                                action:@selector(connectionSet:)
+                      forControlEvents:UIControlEventTouchUpInside];
+            
+            y = CGRectGetMaxY(cell.frame);
+            
+            [self._connection_cells addObject:cell];
+        }
+        
+        CGRect rc = _connectionTableView.frame;
+        rc.size.height = y;
+        _connectionTableView.frame = rc;
+        
+        rc = _tabHeader.frame;
+        rc.size.height = CGRectGetMaxY(_connectionTableView.frame);
+        _tabHeader.frame = rc;
+        [_tableView reloadData];
+        
     }
+    
+    
+//    if(_plugDriver._ipaddress == nil)
+//    {
+////        _iptitleL.alpha = 0.5;
+////        ipTextField.alpha = 0.5;
+////        ipTextField.text = @"";
+////        ipTextField.userInteractionEnabled = NO;
+//
+//
+//
+//        return;
+//    }
+//    else
+//    {
+//        _iptitleL.alpha = 1;
+//        ipTextField.alpha = 1;
+//        ipTextField.text = @"";
+//        ipTextField.userInteractionEnabled = YES;
+//
+//        _connectionTableView.hidden = YES;
+//    }
     
     if(_plugDriver._driver_ip_property)
     {
@@ -469,12 +526,59 @@
     }
 }
 
+- (void) syncIRDriverCodeKeys{
+    
+    if(_plugDriver._driver
+       && [_plugDriver._driver isKindOfClass:[RgsDriverObj class]])
+    {
+        IMP_BLOCK_SELF(DriverPropertyView);
+        
+        [[RegulusSDK sharedRegulusSDK] GetIrDriverIrcodeKey:_plugDriver._driverUUID
+                                                 completion:^(BOOL result,
+                                                              NSDictionary *code_key,
+                                                              NSError *error) {
+                                                     
+                                                     [block_self prepareIRCodeKeys:code_key];
+                                                     
+                                                 }];
+        
+    }
+}
+
+- (void) prepareIRCodeKeys:(NSDictionary*)code_key{
+    
+    NSMutableArray *codeKeys = [NSMutableArray array];
+    
+    NSArray *keys = [code_key allKeys];
+    for(id key in keys)
+    {
+        NSMutableDictionary *row = [NSMutableDictionary dictionary];
+        [row setObject:key forKey:@"name"];
+        [row setObject:[code_key objectForKey:key] forKey:@"result"];
+        BOOL result = [[code_key objectForKey:key] boolValue];
+        if(result)
+        {
+            [row setObject:@"已学习" forKey:@"state"];
+        }
+        else
+        {
+            [row setObject:@"未学习" forKey:@"state"];
+        }
+        
+        [codeKeys addObject:row];
+        
+    }
+    
+    self._studyItems = codeKeys;
+    _plugDriver._irCodeKeys = codeKeys;
+    
+    [_tableView reloadData];
+}
+
 - (void) updateDriverConnections:(NSArray *)connects{
     
     _plugDriver._connections = connects;
-    //_plugDriver._com = [connects objectAtIndex:0];
-    ///_comField.text = _plugDriver._com.name;
-    
+     
     RgsDriverInfo * info = _plugDriver._driverInfo;
     
     BOOL _isIR = NO;
@@ -517,6 +621,271 @@
     CGRect rc = _connectionTableView.frame;
     rc.size.height = y;
     _connectionTableView.frame = rc;
+    
+    rc = _tabHeader.frame;
+    rc.size.height = CGRectGetMaxY(_connectionTableView.frame);
+    _tabHeader.frame = rc;
+    [_tableView reloadData];
 }
+
+
+
+#pragma mark -
+#pragma mark Table View DataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+   return [_studyItems count];
+    
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    return 44;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    static NSString *kCellID = @"listCell";
+    
+    UITableViewCell *cell = (UITableViewCell*)[tableView dequeueReusableCellWithIdentifier:kCellID];
+    if(cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kCellID];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        //cell.editing = NO;
+    }
+    [[cell.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    cell.backgroundColor = [UIColor clearColor];
+    
+
+    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(110,
+                                                                12,
+                                                                CGRectGetWidth(self.frame)/2-70, 20)];
+    titleL.backgroundColor = [UIColor clearColor];
+    [cell.contentView addSubview:titleL];
+    titleL.font = [UIFont systemFontOfSize:13];
+    titleL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+    
+    UILabel* valueL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame)/2,
+                                                                12,
+                                                                CGRectGetWidth(self.frame)/2-70, 20)];
+    valueL.backgroundColor = [UIColor clearColor];
+    [cell.contentView addSubview:valueL];
+    valueL.font = [UIFont systemFontOfSize:13];
+    valueL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+    valueL.textAlignment = NSTextAlignmentRight;
+    
+    
+    NSDictionary *dic = [_studyItems objectAtIndex:indexPath.row];
+    titleL.text = [dic objectForKey:@"name"];
+    valueL.text = [dic objectForKey:@"state"];
+    valueL.textColor = YELLOW_COLOR;
+    
+    if(_curIndex == indexPath.row)
+    {
+        valueL.text = @"等待学习...";
+    }
+    
+    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 1)];
+    line.backgroundColor =  B_GRAY_COLOR;
+    [cell.contentView addSubview:line];
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    
+    if(_isIR)
+        return 44;
+    
+    return 0;
+}
+
+
+- (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    
+    if(!_isIR)
+        return nil;
+    
+    UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0,
+                                                              self.frame.size.width, 44)];
+    header.backgroundColor = RGB(0x2b, 0x2b, 0x2c);
+    
+    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 43,
+                                                              self.frame.size.width, 1)];
+    line.backgroundColor =  B_GRAY_COLOR;
+    [header addSubview:line];
+
+    
+    UILabel *rowL = [[UILabel alloc] initWithFrame:CGRectMake(30,
+                                                     12,
+                                                     CGRectGetWidth(self.frame)-20, 20)];
+    rowL.backgroundColor = [UIColor clearColor];
+    [header addSubview:rowL];
+    rowL.font = [UIFont systemFontOfSize:13];
+    rowL.textColor  = [UIColor whiteColor];
+    
+    if(_studying)
+    {
+        rowL.text = @"正在学习";
+    }
+    else
+    {
+        rowL.text = @"开始学习";
+    }
+    
+    rowL.textColor  = YELLOW_COLOR;
+    
+    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(110,
+                                                                12,
+                                                                CGRectGetWidth(self.frame)/2-70, 20)];
+    titleL.backgroundColor = [UIColor clearColor];
+    [header addSubview:titleL];
+    titleL.font = [UIFont systemFontOfSize:13];
+    titleL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+    
+    UILabel* valueL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame)/2,
+                                                                12,
+                                                                CGRectGetWidth(self.frame)/2-70, 20)];
+    valueL.backgroundColor = [UIColor clearColor];
+    [header addSubview:valueL];
+    valueL.font = [UIFont systemFontOfSize:13];
+    valueL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+    valueL.textAlignment = NSTextAlignmentRight;
+    
+    titleL.text = @"功能";
+    valueL.text = @"状态";
+    
+    UIButton *btnStudy = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnStudy.frame = CGRectMake(0, 0, 120, 44);
+    [header addSubview:btnStudy];
+    [btnStudy addTarget:self
+                 action:@selector(buttonStudy:)
+       forControlEvents:UIControlEventTouchUpInside];
+    
+    if(_studying)
+    {
+        btnStudy.enabled = NO;
+    }
+    else
+    {
+        btnStudy.enabled = YES;
+    }
+    
+    return header;
+}
+
+- (void) notifyIRRecord:(NSNotification*)notify{
+    
+    NSDictionary *obj = notify.object;
+    NSString *uuid = [obj objectForKey:@"uuid"];
+    NSString *name = [obj objectForKey:@"key"];
+    NSNumber *result = [obj objectForKey:@"result"];
+    if([uuid isEqualToString:_plugDriver._driverUUID])
+    {
+        if(_curIndex < [_studyItems count])
+        {
+            NSMutableDictionary *dic = [_studyItems objectAtIndex:_curIndex];
+            NSString *key = [dic objectForKey:@"name"];
+            if([key isEqualToString:name])
+            {
+                [dic setObject:result forKey:@"result"];
+                if([result intValue] == 1)
+                {
+                    [dic setObject:@"已学习" forKey:@"state"];
+                }
+                else
+                {
+                    [dic setObject:@"未学习" forKey:@"state"];
+                }
+            }
+            
+            [NSTimer scheduledTimerWithTimeInterval:1.5
+                                             target:self
+                                           selector:@selector(tryNextKey:)
+                                           userInfo:nil
+                                            repeats:NO];
+            
+        }
+    }
+    
+    [_tableView reloadData];
+    
+}
+
+- (void) tryNextKey:(id)sender{
+    
+    [self findNextNeedStudy];
+    [self tryToStudyNextIRKey];
+}
+
+- (void) buttonStudy:(UIButton*)sender{
+    
+    _curIndex = -1;
+    _studying = YES;
+
+    [self findNextNeedStudy];
+    [self tryToStudyNextIRKey];
+}
+
+- (void) findNextNeedStudy{
+    
+    for(int i = 0; i < [_studyItems count]; i++)
+    {
+        NSDictionary *dic = [_studyItems objectAtIndex:i];
+        BOOL result = [[dic objectForKey:@"result"] boolValue];
+        if(!result)
+        {
+            _curIndex = i;
+            break;
+        }
+    }
+}
+
+- (void) tryToStudyNextIRKey{
+    
+    if(_curIndex >= 0 && _curIndex < [_studyItems count])
+    {
+        
+        NSIndexPath *current = [NSIndexPath indexPathForRow:_curIndex inSection:0];
+        CGRect rc = [_tableView rectForRowAtIndexPath:current];
+        if(CGRectGetMaxY(rc) > _tableView.contentOffset.y + CGRectGetHeight(_tableView.frame))
+        {
+            [_tableView scrollToRowAtIndexPath:current
+                              atScrollPosition:UITableViewScrollPositionBottom
+                                      animated:YES];
+        }
+        
+        [_tableView reloadData];
+        
+        
+        NSDictionary *dic = [_studyItems objectAtIndex:_curIndex];
+        NSString *name = [dic objectForKey:@"name"];
+        [[RegulusSDK sharedRegulusSDK] RecordIrcode:_plugDriver._driverUUID
+                                                cmd:name
+                                         completion:^(BOOL result, NSError *error) {
+                                             
+                                         }];
+        
+    }
+    else
+    {
+        _studying = NO;
+        [_tableView reloadData];
+    }
+}
+
 
 @end

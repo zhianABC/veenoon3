@@ -262,7 +262,7 @@
                 obj._name = [device objectForKey:@"name"];
                 obj._brand = [device objectForKey:@"brand"];
                 obj._type = [device objectForKey:@"ptype"];
-                obj._driverUUID = [device objectForKey:@"brand"];
+                obj._driverUUID = [device objectForKey:@"driver"];
                 
                 obj._driverInfo = info;
                 
@@ -377,7 +377,7 @@
             obj._name = [device objectForKey:@"name"];
             obj._brand = [device objectForKey:@"brand"];
             obj._type = [device objectForKey:@"ptype"];
-            obj._driverUUID = [device objectForKey:@"brand"];
+            obj._driverUUID = [device objectForKey:@"driver"];
             
             id key = [device objectForKey:@"driver"];
             obj._driverInfo = [[DataSync sharedDataSync] driverInfoByUUID:key];
@@ -403,7 +403,7 @@
             obj._name = [device objectForKey:@"name"];
             obj._brand = [device objectForKey:@"brand"];
             obj._type = [device objectForKey:@"ptype"];
-            obj._driverUUID = [device objectForKey:@"brand"];
+            obj._driverUUID = [device objectForKey:@"driver"];
             
             id key = [device objectForKey:@"driver"];
             obj._driverInfo = [[DataSync sharedDataSync] driverInfoByUUID:key];
@@ -428,7 +428,7 @@
             obj._name = [device objectForKey:@"name"];
             obj._brand = [device objectForKey:@"brand"];
             obj._type = [device objectForKey:@"ptype"];
-            obj._driverUUID = [device objectForKey:@"brand"];
+            obj._driverUUID = [device objectForKey:@"driver"];
             
             id key = [device objectForKey:@"driver"];
             obj._driverInfo = [[DataSync sharedDataSync] driverInfoByUUID:key];
@@ -453,7 +453,7 @@
             obj._name = [device objectForKey:@"name"];
             obj._brand = [device objectForKey:@"brand"];
             obj._type = [device objectForKey:@"ptype"];
-            obj._driverUUID = [device objectForKey:@"brand"];
+            obj._driverUUID = [device objectForKey:@"driver"];
             
             id key = [device objectForKey:@"driver"];
             obj._driverInfo = [[DataSync sharedDataSync] driverInfoByUUID:key];
@@ -478,7 +478,7 @@
             obj._name = [device objectForKey:@"name"];
             obj._brand = [device objectForKey:@"brand"];
             obj._type = [device objectForKey:@"ptype"];
-            obj._driverUUID = [device objectForKey:@"brand"];
+            obj._driverUUID = [device objectForKey:@"driver"];
             
             id key = [device objectForKey:@"driver"];
             obj._driverInfo = [[DataSync sharedDataSync] driverInfoByUUID:key];

@@ -24,7 +24,7 @@
 
 @implementation AirConditionProxy
 
-
+@synthesize delegate;
 @synthesize _rgsCommands;
 @synthesize _rgsProxyObj;
 @synthesize _cmdMap;
@@ -62,10 +62,85 @@
     
 }
 
+
+- (void) callDelegateDidLoad{
+    
+    if(delegate && [delegate respondsToSelector:@selector(didLoadedProxyCommand)])
+    {
+        [delegate didLoadedProxyCommand];
+    }
+}
+
+- (void) initDatasAfterPullData{
+    
+}
+
+- (NSArray *)acModeSets{
+    
+    NSMutableArray *result = [NSMutableArray array];
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_MODE_HVAC"];
+    if(cmd)
+    {
+        if([cmd.params count])
+        {
+            
+            for( RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"MODE"])
+                {
+                    [result addObjectsFromArray:param_info.available];
+                    break;
+                }
+                
+            }
+        }
+    }
+    
+    return result;
+}
+
+- (NSArray *)acWindSets{
+   
+    NSMutableArray *result = [NSMutableArray array];
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_MODE_FAN"];
+    if(cmd)
+    {
+        if([cmd.params count])
+        {
+            
+            for( RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"MODE"])
+                {
+                    [result addObjectsFromArray:param_info.available];
+                    break;
+                }
+                
+            }
+        }
+    }
+    
+    return result;
+}
+
 - (void) checkRgsProxyCommandLoad{
     
-    if(_rgsProxyObj == nil || _rgsCommands)
+    if(_rgsProxyObj == nil)
         return;
+    
+    if(_rgsCommands){
+        
+        if(delegate && [delegate respondsToSelector:@selector(didLoadedProxyCommand)])
+        {
+            [delegate didLoadedProxyCommand];
+        }
+        
+        return;
+    }
     
     self._cmdMap = [NSMutableDictionary dictionary];
     
@@ -82,6 +157,9 @@
                 }
                 
                 _isSetOK = YES;
+                
+                [block_self initDatasAfterPullData];
+                [block_self callDelegateDidLoad];
             }
         }
         else
@@ -123,6 +201,102 @@
     }
 }
 
+- (void) controlACTemprature:(int)temp{
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_SETPOINT_COOL"];
+    
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            for(RgsCommandParamInfo *param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"SETPOINT"])
+                {
+                    [param setObject:[NSString stringWithFormat:@"%d", temp]
+                              forKey:param_info.name];
+                }
+            }
+        }
+        
+        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+                                                 cmd:cmd.name
+                                               param:param completion:^(BOOL result, NSError *error) {
+                                                   if (result) {
+                                                       
+                                                   }
+                                                   else{
+                                                       
+                                                   }
+                                               }];
+    }
+}
+
+- (void) controlACMode:(NSString*)mode{
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_MODE_HVAC"];
+    
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            for(RgsCommandParamInfo *param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"MODE"])
+                {
+                    [param setObject:mode
+                              forKey:param_info.name];
+                }
+            }
+        }
+        
+        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+                                                 cmd:cmd.name
+                                               param:param completion:^(BOOL result, NSError *error) {
+                                                   if (result) {
+                                                       
+                                                   }
+                                                   else{
+                                                       
+                                                   }
+                                               }];
+    }
+}
+- (void) controlACWindMode:(NSString*)windmode{
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_MODE_FAN"];
+    
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            for(RgsCommandParamInfo *param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"MODE"])
+                {
+                    [param setObject:windmode
+                              forKey:param_info.name];
+                }
+            }
+        }
+        
+        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+                                                 cmd:cmd.name
+                                               param:param completion:^(BOOL result, NSError *error) {
+                                                   if (result) {
+                                                       
+                                                   }
+                                                   else{
+                                                       
+                                                   }
+                                               }];
+    }
+}
 
 - (BOOL) isSetChanged{
     

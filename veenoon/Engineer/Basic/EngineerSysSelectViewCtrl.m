@@ -437,7 +437,6 @@
 
 - (void) cancelAction:(id)sender{
     
-   // [[DataSync sharedDataSync] logoutCurrentRegulus];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

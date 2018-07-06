@@ -16,6 +16,7 @@
 #import "VTouyingjiSet.h"
 
 @interface EngineerVideoDevicePluginViewCtrl ()<CenterCustomerPickerViewDelegate> {
+    
     IconCenterTextButton *_dianyuanguanliBtn;
     IconCenterTextButton *_shipinbofangBtn;
     IconCenterTextButton *_shexiangjiBtn;
@@ -318,7 +319,7 @@
         obj._name = [device objectForKey:@"name"];
         obj._brand = [device objectForKey:@"brand"];
         obj._type = [device objectForKey:@"ptype"];
-        obj._driverUUID = [device objectForKey:@"brand"];
+        obj._driverUUID = [device objectForKey:@"driver"];
         
         id key = [device objectForKey:@"driver"];
         obj._driverInfo = [[DataSync sharedDataSync] driverInfoByUUID:key];
@@ -375,6 +376,7 @@
 
 }
 - (void) lubojiAction:(id)sender{
+   
     [_dianyuanguanliBtn setBtnHighlited:NO];
     [_shipinbofangBtn setBtnHighlited:NO];
     [_shexiangjiBtn setBtnHighlited:NO];
@@ -414,6 +416,7 @@
     [self initBrandAndTypes];
 }
 - (void) pinjiepingAction:(id)sender{
+    
     [_dianyuanguanliBtn setBtnHighlited:NO];
     [_shipinbofangBtn setBtnHighlited:NO];
     [_shexiangjiBtn setBtnHighlited:NO];

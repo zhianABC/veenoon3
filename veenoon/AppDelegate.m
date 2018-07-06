@@ -108,6 +108,27 @@
     self.window.rootViewController = _naviRoot;
 }
 
+-(void) onIrcodeRecord:(NSString *)serial key:(NSString *)key status:(RgsIrRecordStatus)status{
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setObject:serial forKey:@"uuid"];
+    [dic setObject:key forKey:@"key"];
+    if(status == RGS_IR_RECORD_DONE)
+    {
+        [dic setObject:@1 forKey:@"result"];
+    }
+    else
+    {
+        [dic setObject:@0 forKey:@"result"];
+    }
+    
+    if(status != RGS_IR_RECORD_WAIT)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"Notify_Study_IR"
+                                                            object:dic];
+    }
+}
+
 -(UIStatusBarStyle)preferredStatusBarStyle{
     return UIStatusBarStyleLightContent;
 }
@@ -127,13 +148,13 @@
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     
-    //[[DataSync sharedDataSync] logoutCurrentRegulus];
+    [[DataSync sharedDataSync] logoutCurrentRegulus];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     
-    //[[DataSync sharedDataSync] reloginRegulus];
+    [[DataSync sharedDataSync] reloginRegulus];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

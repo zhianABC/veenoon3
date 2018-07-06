@@ -31,6 +31,7 @@
 @synthesize _driver_ip_property;
 @synthesize _properties;
 @synthesize _connections;
+@synthesize _irCodeKeys;
 //@synthesize _com;
 @synthesize _comDriver;
 

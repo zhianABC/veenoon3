@@ -132,7 +132,9 @@ static DataSync* dSyncInstance = nil;
         if(regulus_user_id && regulus_gateway_id)
         {
             [[RegulusSDK sharedRegulusSDK] Logout:regulus_user_id
-                                            gw_id:regulus_gateway_id completion:nil];
+                                            gw_id:regulus_gateway_id completion:^(BOOL result, NSError *error) {
+                                                
+                                            }];
             
             //[DataSync sharedDataSync]._currentReglusLogged = nil;
         }
@@ -256,6 +258,11 @@ static DataSync* dSyncInstance = nil;
     }
     
 #endif
+}
+
+- (void) addDriver:(id)driverInfo key:(NSString*)key{
+    
+    [_mapDrivers setObject:driverInfo forKey:key];
 }
 
 - (RgsDriverInfo *) driverInfoByUUID:(NSString*)uuid{

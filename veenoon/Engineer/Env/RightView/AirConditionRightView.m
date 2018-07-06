@@ -9,6 +9,7 @@
 #import "AirConditionRightView.h"
 #import "CustomPickerView.h"
 #import "UIButton+Color.h"
+#import "AirConditionProxy.h"
 
 @interface AirConditionRightView () <UITableViewDelegate, UITableViewDataSource, CustomPickerViewDelegate> {
     
@@ -26,9 +27,6 @@
     
     NSMutableArray *_selectedBtns;
 }
-@property (nonatomic, strong) NSMutableArray *_coms;
-@property (nonatomic, strong) NSMutableArray *_brands;
-@property (nonatomic, strong) NSMutableArray *_brands2;
 
 @property (nonatomic, strong) NSDictionary *_selectedBrand;
 @property (nonatomic, strong) NSDictionary *_selectedType;
@@ -36,9 +34,10 @@
 
 
 @implementation AirConditionRightView
-@synthesize _coms;
-@synthesize _brands;
-@synthesize _brands2;
+@synthesize _models;
+@synthesize _degress;
+@synthesize _winds;
+@synthesize _proxy;
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.
@@ -113,23 +112,13 @@
 
 - (void) initData{
     
-    if(self._brands == nil)
+    if(self._models == nil)
     {
-        self._brands = [NSMutableArray array];
-        self._brands2 = [NSMutableArray array];
-        self._coms = [NSMutableArray array];
+        self._models = [NSMutableArray array];
+        self._degress = [NSMutableArray array];
+        self._winds = [NSMutableArray array];
         
-        [_coms addObject:@"1"];
-        [_coms addObject:@"2"];
-        [_coms addObject:@"3"];
-        
-        [_brands addObject:@"1"];
-        [_brands addObject:@"2"];
-        [_brands addObject:@"3"];
-        
-        [_brands2 addObject:@"1"];
-        [_brands2 addObject:@"2"];
-        [_brands2 addObject:@"3"];
+       
         
         
         [_tableView reloadData];
@@ -138,6 +127,9 @@
     
 }
 
+- (void) reloadData{
+    [_tableView reloadData];
+}
 
 - (void) buttonAction:(id)sender{
     for (UIButton *button in _selectedBtns) {
@@ -164,8 +156,17 @@
     
     if(_picker.tag == 1) {
         _selRow1 = [[values objectForKey:@"row"] intValue];
+        
+        NSString *val = [values objectForKey:@0];
+        
+        [_proxy controlACMode:val];
+        
     } else if(_picker.tag == 3) {
         _selRow3 = [[values objectForKey:@"row"] intValue];
+        
+        NSString *val = [values objectForKey:@0];
+        
+        [_proxy controlACWindMode:val];
     }
     
     _tableView.scrollEnabled = YES;
@@ -241,7 +242,7 @@
         titleL.text = @"空调模式";
         valueL.text = @"自动";
         if (_selRow1 > 0) {
-            valueL.text = [_coms objectAtIndex:_selRow1];
+            valueL.text = [_models objectAtIndex:_selRow1];
         }
         
     } else if (indexPath.row == 1) {
@@ -260,9 +261,7 @@
         imageView.frame = CGRectMake(160, 16, 12, 8);
         [cell addSubview:imageView];
         
-        if (_selRow2 > 0) {
-            wenduL.text = [_brands objectAtIndex:_selRow2];
-        }
+        
         UIColor *rectColor = RGB(0, 146, 174);
         
         UIButton *addBtn = [UIButton buttonWithColor:rectColor selColor:BLUE_DOWN_COLOR];
@@ -289,7 +288,7 @@
         valueL.text = @"自动";
         
         if (_selRow3 > 0) {
-            valueL.text = [_brands2 objectAtIndex:_selRow3];
+            valueL.text = [_winds objectAtIndex:_selRow3];
         }
     }
     
@@ -304,11 +303,11 @@
     
     if(_curIndex == 0) {
         _picker.tag = 1;
-        _picker._pickerDataArray = @[@{@"values":_coms}];
+        _picker._pickerDataArray = @[@{@"values":_models}];
         [_picker selectRow:_selRow1 inComponent:0];
     }  else if(_curIndex == 2) {
         _picker.tag = 3;
-        _picker._pickerDataArray = @[@{@"values":_brands2}];
+        _picker._pickerDataArray = @[@{@"values":_winds}];
         [_picker selectRow:_selRow3 inComponent:0];
     }
     
@@ -320,7 +319,12 @@
     int value = [wenduStr intValue];
     value++;
     
+    if(value > 32)
+        value = 32;
+    
     wenduStr = [NSString stringWithFormat:@"%d", value];
+    
+    [_proxy controlACTemprature:value];
     
     wenduL.text = wenduStr;
 }
@@ -330,7 +334,12 @@
     int value = [wenduStr intValue];
     value--;
     
+    if(value < 16)
+        value = 16;
+    
     wenduStr = [NSString stringWithFormat:@"%d", value];
+    
+    [_proxy controlACTemprature:value];
     
     wenduL.text = wenduStr;
 }

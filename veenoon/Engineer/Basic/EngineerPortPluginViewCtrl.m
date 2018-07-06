@@ -14,6 +14,9 @@
 #import "EDimmerLight.h"
 #import "DataSync.h"
 #import "EngineerToUseTeslariViewCtrl.h"
+#import "TeslariaComboChooser.h"
+#import "RegulusSDK.h"
+#import "DataCenter.h"
 
 
 @interface EngineerPortPluginViewCtrl () <CenterCustomerPickerViewDelegate> {
@@ -25,6 +28,8 @@
     CenterCustomerPickerView *_productTypePikcer;
     CenterCustomerPickerView *_brandPicker;
     CenterCustomerPickerView *_productCategoryPicker;
+    
+    
 }
 @property (nonatomic, strong) NSArray *_currentBrands;
 @property (nonatomic, strong) NSArray *_currentTypes;
@@ -237,6 +242,7 @@
     [self._selectedSysDic setObject:_portDrivers forKey:@"port"];
 }
 
+
 - (void) addDriverToCenter:(NSDictionary*)device{
     
     NSString *classname = [device objectForKey:@"driver_class"];
@@ -248,7 +254,7 @@
         obj._name = [device objectForKey:@"name"];
         obj._brand = [device objectForKey:@"brand"];
         obj._type = [device objectForKey:@"ptype"];
-        obj._driverUUID = [device objectForKey:@"brand"];
+        obj._driverUUID = [device objectForKey:@"driver"];
         
         id key = [device objectForKey:@"driver"];
         obj._driverInfo = [[DataSync sharedDataSync] driverInfoByUUID:key];
