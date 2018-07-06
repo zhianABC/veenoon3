@@ -35,6 +35,7 @@
 - (void) loadingLocalDrivers;
 - (void) syncAreaHasDrivers;
 - (void) syncRegulusDrivers;
+- (void) addDriver:(id)driverInfo key:(NSString*)key;
 
 - (void) addCurrentSelectDriverToCurrentArea:(NSString*)mapkey;
 - (RgsDriverInfo *) driverInfoByUUID:(NSString*)uuid;

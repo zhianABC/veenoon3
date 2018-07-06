@@ -156,6 +156,8 @@
     
     int         _curIndex;
     BOOL        _studying;
+    
+    BOOL        _isIR;
 }
 @property (nonatomic, strong) NSMutableArray *_connection_cells;
 @property (nonatomic, strong) NSArray *_studyItems;
@@ -258,6 +260,7 @@
         [_tabHeader addSubview:_connectionTableView];
     
         _curIndex = -1;
+        _isIR = NO;
         
         _tableView = [[UITableView alloc] initWithFrame:rc];
         _tableView.delegate = self;
@@ -353,7 +356,7 @@
     
     RgsDriverInfo * info = _plugDriver._driverInfo;
     
-    BOOL _isIR = NO;
+    _isIR = NO;
     if([info.classify isEqualToString:@"IR Controller"])
     {
         _isIR = YES;
@@ -371,73 +374,77 @@
         }
     }
     
-    if(_plugDriver._ipaddress == nil)
+    _connectionTableView.hidden = NO;
+    
+
+    if([_plugDriver._connections count] == 0)
     {
-        _iptitleL.alpha = 0.5;
-        ipTextField.alpha = 0.5;
-        ipTextField.text = @"";
-        ipTextField.userInteractionEnabled = NO;
-        
-        _connectionTableView.hidden = NO;
-        
-        if([_plugDriver._connections count] == 0)
-        {
-            [self syncCurrentDriverComs];
-        }
-        else
-        {
-            self._connection_cells = [NSMutableArray array];
-            
-            int y = 0;
-            for(int i = 0; i < [_plugDriver._connections count]; i++)
-            {
-                RgsConnectionObj *connect = [_plugDriver._connections objectAtIndex:i];
-                
-                CGRect rc = CGRectMake(0, y, _connectionTableView.frame.size.width-30, 60);
-                
-                ConnectionRowCell *cell = [[ConnectionRowCell alloc] initWithFrame:rc];
-                [_connectionTableView addSubview:cell];
-                if(_isIR)
-                {
-                    [cell fillIRConnection:connect];
-                }
-                else
-                {
-                    [cell fillComConnection:connect];
-                }
-                
-                cell.btnConnect.tag = i;
-                [cell.btnConnect addTarget:self
-                                    action:@selector(connectionSet:)
-                          forControlEvents:UIControlEventTouchUpInside];
-                
-                y = CGRectGetMaxY(cell.frame);
-                
-                [self._connection_cells addObject:cell];
-            }
-            
-            CGRect rc = _connectionTableView.frame;
-            rc.size.height = y;
-            _connectionTableView.frame = rc;
-            
-            rc = _tabHeader.frame;
-            rc.size.height = CGRectGetMaxY(_connectionTableView.frame);
-            _tabHeader.frame = rc;
-            [_tableView reloadData];
-            
-        }
-        
-        return;
+        [self syncCurrentDriverComs];
     }
     else
     {
-        _iptitleL.alpha = 1;
-        ipTextField.alpha = 1;
-        ipTextField.text = @"";
-        ipTextField.userInteractionEnabled = YES;
+        self._connection_cells = [NSMutableArray array];
         
-        _connectionTableView.hidden = YES;
+        int y = 0;
+        for(int i = 0; i < [_plugDriver._connections count]; i++)
+        {
+            RgsConnectionObj *connect = [_plugDriver._connections objectAtIndex:i];
+            
+            CGRect rc = CGRectMake(0, y, _connectionTableView.frame.size.width-30, 60);
+            
+            ConnectionRowCell *cell = [[ConnectionRowCell alloc] initWithFrame:rc];
+            [_connectionTableView addSubview:cell];
+            if(_isIR)
+            {
+                [cell fillIRConnection:connect];
+            }
+            else
+            {
+                [cell fillComConnection:connect];
+            }
+            
+            cell.btnConnect.tag = i;
+            [cell.btnConnect addTarget:self
+                                action:@selector(connectionSet:)
+                      forControlEvents:UIControlEventTouchUpInside];
+            
+            y = CGRectGetMaxY(cell.frame);
+            
+            [self._connection_cells addObject:cell];
+        }
+        
+        CGRect rc = _connectionTableView.frame;
+        rc.size.height = y;
+        _connectionTableView.frame = rc;
+        
+        rc = _tabHeader.frame;
+        rc.size.height = CGRectGetMaxY(_connectionTableView.frame);
+        _tabHeader.frame = rc;
+        [_tableView reloadData];
+        
     }
+    
+    
+//    if(_plugDriver._ipaddress == nil)
+//    {
+////        _iptitleL.alpha = 0.5;
+////        ipTextField.alpha = 0.5;
+////        ipTextField.text = @"";
+////        ipTextField.userInteractionEnabled = NO;
+//
+//
+//
+//        return;
+//    }
+//    else
+//    {
+//        _iptitleL.alpha = 1;
+//        ipTextField.alpha = 1;
+//        ipTextField.text = @"";
+//        ipTextField.userInteractionEnabled = YES;
+//
+//        _connectionTableView.hidden = YES;
+//    }
     
     if(_plugDriver._driver_ip_property)
     {
@@ -571,9 +578,7 @@
 - (void) updateDriverConnections:(NSArray *)connects{
     
     _plugDriver._connections = connects;
-    //_plugDriver._com = [connects objectAtIndex:0];
-    //_comField.text = _plugDriver._com.name;
-    
+     
     RgsDriverInfo * info = _plugDriver._driverInfo;
     
     BOOL _isIR = NO;
@@ -702,12 +707,17 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     
-    return 44;
+    if(_isIR)
+        return 44;
+    
+    return 0;
 }
 
 
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
+    if(!_isIR)
+        return nil;
     
     UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0,
                                                               self.frame.size.width, 44)];
@@ -726,7 +736,15 @@
     [header addSubview:rowL];
     rowL.font = [UIFont systemFontOfSize:13];
     rowL.textColor  = [UIColor whiteColor];
-    rowL.text = @"开始学习";
+    
+    if(_studying)
+    {
+        rowL.text = @"正在学习";
+    }
+    else
+    {
+        rowL.text = @"开始学习";
+    }
     
     rowL.textColor  = YELLOW_COLOR;
     
@@ -784,15 +802,33 @@
             if([key isEqualToString:name])
             {
                 [dic setObject:result forKey:@"result"];
+                if([result intValue] == 1)
+                {
+                    [dic setObject:@"已学习" forKey:@"state"];
+                }
+                else
+                {
+                    [dic setObject:@"未学习" forKey:@"state"];
+                }
             }
             
-            [self findNextNeedStudy];
-            [self tryToStudyNextIRKey];
+            [NSTimer scheduledTimerWithTimeInterval:1.5
+                                             target:self
+                                           selector:@selector(tryNextKey:)
+                                           userInfo:nil
+                                            repeats:NO];
+            
         }
     }
     
+    [_tableView reloadData];
     
+}
+
+- (void) tryNextKey:(id)sender{
     
+    [self findNextNeedStudy];
+    [self tryToStudyNextIRKey];
 }
 
 - (void) buttonStudy:(UIButton*)sender{

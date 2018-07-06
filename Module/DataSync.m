@@ -260,6 +260,11 @@ static DataSync* dSyncInstance = nil;
 #endif
 }
 
+- (void) addDriver:(id)driverInfo key:(NSString*)key{
+    
+    [_mapDrivers setObject:driverInfo forKey:key];
+}
+
 - (RgsDriverInfo *) driverInfoByUUID:(NSString*)uuid{
     
     return [_mapDrivers objectForKey:uuid];

@@ -15,7 +15,9 @@
 #import "DataSync.h"
 #import "EnginnerChuanGanDevicePluginViewCtrl.h"
 #import "AirConditionPlug.h"
-
+#import "DataCenter.h"
+#import "RegulusSDK.h"
+#import "TeslariaComboChooser.h"
 
 @interface EngineerEnvDevicePluginViewCtrl () <CenterCustomerPickerViewDelegate> {
     IconCenterTextButton *_zhaomingBtn;
@@ -33,6 +35,8 @@
     CenterCustomerPickerView *_productTypePikcer;
     CenterCustomerPickerView *_brandPicker;
     CenterCustomerPickerView *_productCategoryPicker;
+    
+    UIPopoverController *_dataSelector;
 }
 @property (nonatomic, strong) NSArray *_currentBrands;
 @property (nonatomic, strong) NSArray *_currentTypes;
@@ -191,6 +195,17 @@
     [_nenghaotongjiBtn addTarget:self action:@selector(nenghaotongjiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_nenghaotongjiBtn];
     
+    
+    UIButton *btnAdd = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnAdd.frame = CGRectMake(left+rowGap*2, height+120, 80, 80);
+    [btnAdd setImage:[UIImage imageNamed:@"engineer_scenario_add_small.png"]
+            forState:UIControlStateNormal];
+    [self.view addSubview:btnAdd];
+    [btnAdd addTarget:self
+               action:@selector(addNewIR:)
+     forControlEvents:UIControlEventTouchUpInside];
+
+    
     int maxWidth = 120;
     float labelStartX = (SCREEN_WIDTH - maxWidth*2 - 60 - 15)/2.0;
     int labelStartY = 480;
@@ -270,6 +285,111 @@
     [self._selectedSysDic setObject:_envDrivers forKey:@"env"];
 }
 
+
+- (void) addNewIR:(UIButton*)sender{
+    
+    if ([_dataSelector isPopoverVisible]) {
+        [_dataSelector dismissPopoverAnimated:NO];
+    }
+    
+    TeslariaComboChooser *sel = [[TeslariaComboChooser alloc] init];
+    sel._dataArray = @[@"TV", @"DVD", @"Video Box", @"AC"];
+    sel._type = 2;
+    sel._unit = @"";
+    
+    int h = (int)[sel._dataArray count]*30 + 50;
+    sel.preferredContentSize = CGSizeMake(150, h);
+    sel._size = CGSizeMake(150, h);
+    
+    IMP_BLOCK_SELF(EngineerEnvDevicePluginViewCtrl);
+    sel._block = ^(id object, int index)
+    {
+        [block_self chooseIRType:object idx:index];
+    };
+    
+    CGRect rect = sender.frame;
+    
+    _dataSelector = [[UIPopoverController alloc] initWithContentViewController:sel];
+    _dataSelector.popoverContentSize = sel.preferredContentSize;
+    
+    [_dataSelector presentPopoverFromRect:rect
+                                   inView:self.view
+                 permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    
+}
+
+- (void) chooseIRType:(NSString*)device idx:(int)index {
+    
+    RgsIrModel rgs = RGS_IR_M_TV;
+    NSString *unit = @"";
+    if(index == 0)
+    {
+        rgs = RGS_IR_M_TV;
+        
+        unit = @"TV";
+    }
+    else if(index == 1)
+    {
+        rgs = RGS_IR_M_DVD;
+        
+        unit = @"DVD";
+    }
+    else if(index == 2)
+    {
+        rgs = RGS_IR_M_VIDEOBOX;
+        
+        unit = @"VIDEOBOX";
+    }
+    else if(index == 3)
+    {
+        rgs = RGS_IR_M_AC;
+        
+        unit = @"AC";
+    }
+    
+    int dd = [[NSDate date] timeIntervalSince1970];
+    NSString *name = [NSString stringWithFormat:@"%@-%d",unit, dd];
+    
+    IMP_BLOCK_SELF(EngineerEnvDevicePluginViewCtrl);
+    
+    [[RegulusSDK sharedRegulusSDK] MakeIrDriverWithIrModel:rgs
+                                                      name:name
+                                                completion:^(BOOL result, RgsDriverInfo *driver_info, NSError *error) {
+                                                    
+                                                    if(result)
+                                                    {
+                                                        [block_self saveNewIRDriver:driver_info name:name];
+                                                    }
+                                                    
+                                                }];
+    
+    
+    
+    if ([_dataSelector isPopoverVisible]) {
+        [_dataSelector dismissPopoverAnimated:NO];
+    }
+}
+
+- (void) saveNewIRDriver:(RgsDriverInfo*)driver_info name:(NSString*)name{
+    
+    NSDictionary *greeac = @{@"type":@"env",
+                             @"name":@"空调",
+                             @"driver":driver_info.serial,
+                             @"brand":@"Unknown",
+                             @"icon":@"engineer_env_kongtiao_n.png",
+                             @"icon_s":@"engineer_env_kongtiao_s.png",
+                             @"driver_class":@"AirConditionPlug",
+                             @"ptype":@"Define"
+                             };
+    
+    [[DataCenter defaultDataCenter] saveDriver:greeac];
+    [[DataSync sharedDataSync] addDriver:driver_info
+                                     key:driver_info.serial];
+    
+    [self addDriverToCenter:greeac];
+    
+}
+
 - (void) addDriverToCenter:(NSDictionary*)device{
     
     NSString *classname = [device objectForKey:@"driver_class"];
@@ -305,12 +425,15 @@
     _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
     _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
     
-    [_brandPicker selectRow:0 inComponent:0];
-    [_productTypePikcer selectRow:0 inComponent:0];
+    [_brandPicker selectRow:0
+                inComponent:0];
+    [_productTypePikcer selectRow:0
+                      inComponent:0];
 }
 
 
 - (void) zhaomingAction:(id)sender{
+    
     [_zhaomingBtn setBtnHighlited:YES];
     [_kongtiaoBtn setBtnHighlited:NO];
     [_diandongmadaBtn setBtnHighlited:NO];
@@ -332,12 +455,15 @@
     _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
     _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
     
-    [_brandPicker selectRow:0 inComponent:0];
-    [_productCategoryPicker selectRow:0 inComponent:0];
+    [_brandPicker selectRow:0
+                inComponent:0];
+    [_productCategoryPicker selectRow:0
+                          inComponent:0];
 
     
 }
 - (void) kongtiaoAction:(id)sender{
+    
     [_zhaomingBtn setBtnHighlited:NO];
     [_kongtiaoBtn setBtnHighlited:YES];
     [_diandongmadaBtn setBtnHighlited:NO];
@@ -361,11 +487,14 @@
     _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
     _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
     
-    [_brandPicker selectRow:0 inComponent:0];
-    [_productCategoryPicker selectRow:0 inComponent:0];
+    [_brandPicker selectRow:0
+                inComponent:0];
+    [_productCategoryPicker selectRow:0
+                          inComponent:0];
 
 }
 - (void) diandongmadaAction:(id)sender{
+    
     [_zhaomingBtn setBtnHighlited:NO];
     [_kongtiaoBtn setBtnHighlited:NO];
     [_diandongmadaBtn setBtnHighlited:YES];
@@ -519,6 +648,7 @@
     [self initBrandAndTypes];
 }
 -(void) didScrollPickerValue:(NSString*)brand {
+    
     if ([@"照明" isEqualToString:brand]) {
         [self zhaomingAction:_zhaomingBtn];
     } else if ([@"空调" isEqualToString:brand]) {
@@ -541,6 +671,7 @@
 }
 
 -(void) setBrandValue:(NSString*)brand {
+    
     if (brand == nil) {
         return;
     }

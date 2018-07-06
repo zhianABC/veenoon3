@@ -25,6 +25,7 @@
 
 - (void) prepareDrivers;
 - (NSDictionary *)driverWithKey:(NSString *)key;
+- (void) saveDriver:(NSDictionary *)driver;
 - (void) cacheScenarioOnLocalDB;
 
 @end

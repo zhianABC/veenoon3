@@ -16,6 +16,7 @@
 #import "VTouyingjiSet.h"
 
 @interface EngineerVideoDevicePluginViewCtrl ()<CenterCustomerPickerViewDelegate> {
+    
     IconCenterTextButton *_dianyuanguanliBtn;
     IconCenterTextButton *_shipinbofangBtn;
     IconCenterTextButton *_shexiangjiBtn;
@@ -375,6 +376,7 @@
 
 }
 - (void) lubojiAction:(id)sender{
+   
     [_dianyuanguanliBtn setBtnHighlited:NO];
     [_shipinbofangBtn setBtnHighlited:NO];
     [_shexiangjiBtn setBtnHighlited:NO];
@@ -414,6 +416,7 @@
     [self initBrandAndTypes];
 }
 - (void) pinjiepingAction:(id)sender{
+    
     [_dianyuanguanliBtn setBtnHighlited:NO];
     [_shipinbofangBtn setBtnHighlited:NO];
     [_shexiangjiBtn setBtnHighlited:NO];
