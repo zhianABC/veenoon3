@@ -87,6 +87,18 @@
     
     [_mapDrivers setObject:greeac forKey:UUID_Gree_AC];
 
+    NSDictionary *light8sch = @{@"type":@"env",
+                                @"name":@"照明",
+                                @"driver":UUID_8CH_Dimmer_Light,
+                                @"brand":@"Teslaria",
+                                @"icon":@"engineer_env_zhaoming_n.png",
+                                @"icon_s":@"engineer_env_zhaoming_s.png",
+                                @"driver_class":@"EDimmerSwitchLight",
+                                @"ptype":@"Dimmer 8 Switch"
+                                };
+    
+    [_mapDrivers setObject:light8sch forKey:UUID_8CH_Dimmer_Light];
+    
 }
 
 - (void)viewDidLoad {
