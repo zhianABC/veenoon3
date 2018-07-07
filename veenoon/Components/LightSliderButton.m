@@ -139,6 +139,23 @@
     
 }
 
+- (void) hiddenProgress{
+    
+    progress.hidden = YES;
+}
+
+- (void) turnOnOff:(BOOL)isON{
+    
+    if(isON)
+    {
+        _radioImgV.image = _lightBackgroundImage;
+    }
+    else
+    {
+        _radioImgV.image = _grayBackgroundImage;
+    }
+}
+
 - (void) changeButtonBackgroundImage:(UIImage *)image{
     
     _radioImgV.image = image;

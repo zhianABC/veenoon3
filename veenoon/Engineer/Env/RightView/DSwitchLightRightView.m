@@ -1,23 +1,23 @@
 //
-//  PlayerSettingsPannel.m
+//  DSwitchLightRightView.m
 //  veenoon
 //
 //  Created by chen jack on 2017/12/16.
 //  Copyright © 2017年 jack. All rights reserved.
 //
 
-#import "LightRightView.h"
+#import "DSwitchLightRightView.h"
 #import "CustomPickerView.h"
 #import "UIButton+Color.h"
 #import "GroupsPickerView.h"
 #import "JHSlideView.h"
 #import "UIImage+Color.h"
-#import "EDimmerLight.h"
+#import "EDimmerSwitchLight.h"
 #import "IPValidate.h"
 
 #define LIGHT_MAX_NUM   6
 
-@interface LightRightView () <UITableViewDelegate,
+@interface DSwitchLightRightView () <UITableViewDelegate,
 UITableViewDataSource, UITextFieldDelegate,
 CustomPickerViewDelegate, GroupsPickerViewDelegate> {
     
@@ -56,7 +56,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
 @end
 
 
-@implementation LightRightView
+@implementation DSwitchLightRightView
 @synthesize _studyItems;
 @synthesize _bianzuArrays;
 @synthesize _value;
@@ -119,7 +119,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
         _picker._rowNormalColor = [UIColor whiteColor];
         _picker.delegate_ = self;
         [_picker selectRow:0 inComponent:0];
-        IMP_BLOCK_SELF(LightRightView);
+        IMP_BLOCK_SELF(DSwitchLightRightView);
         _picker._selectionBlock = ^(NSDictionary *values)
         {
             [block_self didPickerValue:values];
@@ -174,7 +174,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
         int row = index/colNumber;
         int col = index%colNumber;
         int startX = col*cellWidth+col*space+leftRight;
-        int startY = row*cellHeight+space*row+top;
+        int startY = row*cellHeight+20*row+top;
         
         UIButton *scenarioBtn = [UIButton buttonWithColor:RIGHT_VIEW_CORNER_BTN_COLOR selColor:RIGHT_VIEW_CORNER_SD_COLOR];
         scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
@@ -246,6 +246,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
     
     _tableView.tableHeaderView = headerView;
     
+    
 }
 
 - (void) addGroup:(id)sender{
@@ -298,7 +299,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
 }
 
 
--(void) refreshView:(EDimmerLight*) dimmer {
+-(void) refreshView:(EDimmerSwitchLight*) dimmer {
     
     self._currentObj = dimmer;
 
@@ -316,7 +317,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
-    return 3;
+    return 2;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
@@ -433,69 +434,23 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
     valueL.textColor  = [UIColor whiteColor];
     valueL.textAlignment = NSTextAlignmentRight;
     
+
     if(section == 1)
     {
-        rowLT.text = @"OFF";
+        rowLT.text = @"电源";
         
-        JHSlideView *slider = [[JHSlideView alloc] initWithSliderBg:nil
-                                                              frame:CGRectMake(10+40,
-                                                                               0,
-                                                                               230,
-                                                                               42)];
-        [header addSubview:slider];
-        slider.minValue = 1;
-        slider.maxValue = 10;
-        slider.maxL.text = @"HIGH";
-        slider._isShowValue = NO;
-        [slider setScaleValue:5];
-    }
-    else if(section == 2)
-    {
-        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        btn.frame = header.bounds;
-        [header addSubview:btn];
-        btn.tag = section;
-        [btn addTarget:self
-                action:@selector(clickHeader:)
-      forControlEvents:UIControlEventTouchUpInside];
-        
-        
-        rowLT.text = @"延时";
-        valueL.text = @"00:00";
-        
-        if([_selectedSecs count])
-        {
-            NSString *m = [_selectedSecs objectForKey:@0];
-            NSString *s = [_selectedSecs objectForKey:@1];
-            
-            if(m == nil)
-                m = @"00";
-            if(s == nil)
-                s = @"00";
-            
-            valueL.text = [NSString stringWithFormat:@"%@:%@", m, s];
-        }
-        
-        UIImageView *icon = [[UIImageView alloc]
-                             initWithFrame:CGRectMake(CGRectGetMaxX(valueL.frame)+5, 16, 10, 10)];
-        icon.image = [UIImage imageNamed:@"remote_video_down.png"];
-        [header addSubview:icon];
-        icon.alpha = 0.8;
-        icon.layer.contentsGravity = kCAGravityResizeAspect;
-        
-        if(_curSectionIndex == section)
-        {
-            [header addSubview:_secsGroup];
-            
-            height = 164;
-        }
-        
+        UISwitch* powerOffOn = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+        powerOffOn.center = CGPointMake(CGRectGetWidth(_tableView.frame) - 35, 22);
+        [powerOffOn addTarget:self
+                       action:@selector(changePowerSwitch:)
+             forControlEvents:UIControlEventValueChanged];
+        [header addSubview:powerOffOn];
+        [powerOffOn setOn:_isPower];
     }
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, height-1, self.frame.size.width, 1)];
     line.backgroundColor =  TITLE_LINE_COLOR;
     [header addSubview:line];
-    
     
     
     return header;

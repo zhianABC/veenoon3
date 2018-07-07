@@ -160,7 +160,7 @@ static DataCenter *_globalDataInstanse;
         
         
         NSDictionary *light8sch = @{@"type":@"env",
-                                 @"name":@"照明",
+                                 @"name":@"开关照明",
                                  @"driver":UUID_8CH_Dimmer_Light,
                                  @"brand":@"Teslaria",
                                  @"icon":@"engineer_env_zhaoming_n.png",
@@ -178,6 +178,23 @@ static DataCenter *_globalDataInstanse;
         
     }
 
+}
+
+- (NSArray*) driversWithType:(NSString*)type{
+    
+    NSMutableArray *results = [NSMutableArray array];
+    
+    for(NSDictionary *dr in [_mapDrivers allValues])
+    {
+        NSString *tpe = [dr objectForKey:@"type"];
+        if([tpe isEqualToString:type])
+        {
+            [results addObject:dr];
+        }
+    }
+    
+    return results;
+    
 }
 
 - (void) saveDriver:(NSDictionary *)driver{

@@ -273,6 +273,8 @@
 		348FC8D3208B748B00F7DB3D /* DActionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 348FC8D2208B748B00F7DB3D /* DActionView.m */; };
 		34928A9A1EC1BD330089F429 /* ReaderCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34928A991EC1BD330089F429 /* ReaderCodeViewController.m */; };
 		3494583320B6E248006D1D05 /* EngineerNewTeslariViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3494583120B6E247006D1D05 /* EngineerNewTeslariViewCtrl.m */; };
+		3495267E20F091E700A6BF00 /* EngineerDimmerSwitchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3495267D20F091E700A6BF00 /* EngineerDimmerSwitchViewController.m */; };
+		3495268120F0C5B700A6BF00 /* DSwitchLightRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3495267F20F0C5B700A6BF00 /* DSwitchLightRightView.m */; };
 		3496B75A1FCAF3C5005F4857 /* SignalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3496B7591FCAF3C5005F4857 /* SignalView.m */; };
 		349DADDF206E8D02001593DE /* AudioEHand2Hand.m in Sources */ = {isa = PBXBuildFile; fileRef = 349DADD1206E8D02001593DE /* AudioEHand2Hand.m */; };
 		349DADE0206E8D02001593DE /* AudioEWirlessMike.m in Sources */ = {isa = PBXBuildFile; fileRef = 349DADD3206E8D02001593DE /* AudioEWirlessMike.m */; };
@@ -1323,6 +1325,10 @@
 		34928A991EC1BD330089F429 /* ReaderCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReaderCodeViewController.m; sourceTree = "<group>"; };
 		3494583120B6E247006D1D05 /* EngineerNewTeslariViewCtrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EngineerNewTeslariViewCtrl.m; sourceTree = "<group>"; };
 		3494583220B6E248006D1D05 /* EngineerNewTeslariViewCtrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EngineerNewTeslariViewCtrl.h; sourceTree = "<group>"; };
+		3495267C20F091E700A6BF00 /* EngineerDimmerSwitchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EngineerDimmerSwitchViewController.h; sourceTree = "<group>"; };
+		3495267D20F091E700A6BF00 /* EngineerDimmerSwitchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EngineerDimmerSwitchViewController.m; sourceTree = "<group>"; };
+		3495267F20F0C5B700A6BF00 /* DSwitchLightRightView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSwitchLightRightView.m; sourceTree = "<group>"; };
+		3495268020F0C5B700A6BF00 /* DSwitchLightRightView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSwitchLightRightView.h; sourceTree = "<group>"; };
 		3496B7581FCAF3C5005F4857 /* SignalView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignalView.h; sourceTree = "<group>"; };
 		3496B7591FCAF3C5005F4857 /* SignalView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignalView.m; sourceTree = "<group>"; };
 		349DADD1206E8D02001593DE /* AudioEHand2Hand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioEHand2Hand.m; sourceTree = "<group>"; };
@@ -3349,6 +3355,8 @@
 				EB4E39E020273CAE00533575 /* RightView */,
 				EB1717951FF5F5AB00CBDB81 /* EngineerLightViewController.h */,
 				EB1717961FF5F5AB00CBDB81 /* EngineerLightViewController.m */,
+				3495267C20F091E700A6BF00 /* EngineerDimmerSwitchViewController.h */,
+				3495267D20F091E700A6BF00 /* EngineerDimmerSwitchViewController.m */,
 				EB1717981FF60C2600CBDB81 /* EngineerAireConditionViewCtrl.h */,
 				EB1717991FF60C2600CBDB81 /* EngineerAireConditionViewCtrl.m */,
 				EB17179B1FF60C6900CBDB81 /* EngineerElectronicAutoViewCtrl.h */,
@@ -3599,6 +3607,8 @@
 			children = (
 				EBC71B1E203EEB8600DD0A98 /* LightRightView.h */,
 				EBC71B1F203EEB8600DD0A98 /* LightRightView.m */,
+				3495268020F0C5B700A6BF00 /* DSwitchLightRightView.h */,
+				3495267F20F0C5B700A6BF00 /* DSwitchLightRightView.m */,
 				EBC71B27204100A200DD0A98 /* ElectronicAutoRightView.h */,
 				EBC71B28204100A200DD0A98 /* ElectronicAutoRightView.m */,
 				EBC71B2A204100DD00DD0A98 /* NewWindRightView.h */,
@@ -4544,6 +4554,7 @@
 				EB5F7F871FD593F800351888 /* EngineerSysSelectViewCtrl.m in Sources */,
 				04DE1EAC1AD6AEE000D49E2F /* SDImageCache.m in Sources */,
 				EBDF1BFF1FC5BA0900A756EA /* UserMettingRoomConfig.m in Sources */,
+				3495268120F0C5B700A6BF00 /* DSwitchLightRightView.m in Sources */,
 				EB09EF371FD9801400C968CA /* EngineerEnvDevicePluginViewCtrl.m in Sources */,
 				04D27A2A1AF8470100305E39 /* SelDataViewController.m in Sources */,
 				EB29820C1FD57FC2007B5C20 /* EngineerShootQRCode.m in Sources */,
@@ -4607,6 +4618,7 @@
 				EB3B73B51FE6395C001941CF /* EngineerSliderView.m in Sources */,
 				04DE1EA21AD6AEE000D49E2F /* Reachability.m in Sources */,
 				EB1717971FF5F5AB00CBDB81 /* EngineerLightViewController.m in Sources */,
+				3495267E20F091E700A6BF00 /* EngineerDimmerSwitchViewController.m in Sources */,
 				EB17178D1FF5DF6B00CBDB81 /* EngineerTVViewController.m in Sources */,
 				04DE1EA91AD6AEE000D49E2F /* SBJson4Writer.m in Sources */,
 				349DADE5206E8D02001593DE /* AudioEWirlessMeetingSys.m in Sources */,

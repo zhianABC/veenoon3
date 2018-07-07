@@ -24,6 +24,7 @@
 + (DataCenter*)defaultDataCenter;
 
 - (void) prepareDrivers;
+- (NSArray*) driversWithType:(NSString*)type;
 - (NSDictionary *)driverWithKey:(NSString *)key;
 - (void) saveDriver:(NSDictionary *)driver;
 - (void) cacheScenarioOnLocalDB;

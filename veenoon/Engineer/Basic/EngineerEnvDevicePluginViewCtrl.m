@@ -63,42 +63,12 @@
     
     self._mapDrivers = [NSMutableDictionary dictionary];
     
-    NSDictionary *light = @{@"type":@"env",
-                             @"name":@"照明",
-                             @"driver":UUID_6CH_Dimmer_Light,
-                             @"brand":@"Teslaria",
-                             @"icon":@"engineer_env_zhaoming_n.png",
-                             @"icon_s":@"engineer_env_zhaoming_s.png",
-                             @"driver_class":@"EDimmerLight",
-                             @"ptype":@"6 CH Dimmer Light"
-                             };
+    NSArray *drivers = [[DataCenter defaultDataCenter] driversWithType:@"env"];
     
-    [_mapDrivers setObject:light forKey:UUID_6CH_Dimmer_Light];
-    
-    NSDictionary *greeac = @{@"type":@"env",
-                            @"name":@"空调",
-                            @"driver":UUID_Gree_AC,
-                            @"brand":@"Gree",
-                            @"icon":@"engineer_env_kongtiao_n.png",
-                            @"icon_s":@"engineer_env_kongtiao_s.png",
-                            @"driver_class":@"AirConditionPlug",
-                            @"ptype":@"Gree AC"
-                            };
-    
-    [_mapDrivers setObject:greeac forKey:UUID_Gree_AC];
-
-    NSDictionary *light8sch = @{@"type":@"env",
-                                @"name":@"照明",
-                                @"driver":UUID_8CH_Dimmer_Light,
-                                @"brand":@"Teslaria",
-                                @"icon":@"engineer_env_zhaoming_n.png",
-                                @"icon_s":@"engineer_env_zhaoming_s.png",
-                                @"driver_class":@"EDimmerSwitchLight",
-                                @"ptype":@"Dimmer 8 Switch"
-                                };
-    
-    [_mapDrivers setObject:light8sch forKey:UUID_8CH_Dimmer_Light];
-    
+    for(NSDictionary *dr in drivers)
+    {
+        [self._mapDrivers setObject:dr forKey:[dr objectForKey:@"driver"]];
+    }
 }
 
 - (void)viewDidLoad {
@@ -461,8 +431,8 @@
     [self setBrandValue:btnText];
     
     self._currentBrands = @[@"TESLARIA"];
-    self._currentTypes = @[@"Dimmer-6"];
-    self._driverUdids = @[UUID_6CH_Dimmer_Light];
+    self._currentTypes = @[@"Dimmer-6", @"Dimmer Switch"];
+    self._driverUdids = @[UUID_6CH_Dimmer_Light, UUID_8CH_Dimmer_Light];
     
     _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
     _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];

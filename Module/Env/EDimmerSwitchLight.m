@@ -47,7 +47,7 @@
 
 - (NSString*) deviceName{
     
-    return env_dimmer_light;
+    return @"开关照明";
 }
 
 - (void) syncDriverIPProperty{
