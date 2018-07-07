@@ -11,12 +11,10 @@
 
 @class APowerESet;
 @interface EngineerElectronicSysConfigViewCtrl : BaseViewController {
-    NSMutableArray *_electronicSysArray;
     
-    int _number;
 }
 @property (nonatomic,strong) NSArray *_electronicSysArray;
+@property (nonatomic,strong) APowerESet *_currentObj;
 @property (nonatomic,assign) int _number;
-
 
 @end

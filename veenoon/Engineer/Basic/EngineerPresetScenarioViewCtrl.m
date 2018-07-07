@@ -724,7 +724,7 @@
     
     BasePlugElement *plug = [devices objectAtIndex:index];
 
-    if ([name isEqualToString:@"8路电源管理"]) {
+    if ([name isEqualToString:audio_power_sequencer]) {
         
         EngineerElectronicSysConfigViewCtrl *ctrl = [[EngineerElectronicSysConfigViewCtrl alloc] init];
         ctrl._number = 8;

@@ -172,6 +172,18 @@ static DataCenter *_globalDataInstanse;
         [_mapDrivers setObject:light8sch forKey:UUID_8CH_Dimmer_Light];
         
         
+        NSDictionary *powerSequencer = @{@"type":@"audio",
+                                    @"name":@"电源管理",
+                                    @"driver":UUID_Power_Sequencer,
+                                    @"brand":@"Teslaria",
+                                    @"icon":@"engineer_dianyuanguanli_n.png",
+                                    @"icon_s":@"engineer_dianyuanguanli_s.png",
+                                    @"driver_class":@"APowerESet",
+                                    @"ptype":@"Power Sequencer"
+                                    };
+        
+        [_mapDrivers setObject:powerSequencer forKey:UUID_Power_Sequencer];
+        
         [[NSUserDefaults standardUserDefaults] setObject:_mapDrivers forKey:@"all_drivers"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         

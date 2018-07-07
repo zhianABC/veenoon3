@@ -18,5 +18,7 @@
 
 - (void) show8Labs;
 - (void) show16Labs;
+-(void) refreshView:(APowerESet*) powerSet;
+- (void) saveCurrentSetting;
 
 @end

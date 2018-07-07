@@ -60,8 +60,7 @@
     {
         [self._mapDrivers setObject:dr forKey:[dr objectForKey:@"driver"]];
     }
-    
-    
+
 }
 
 - (void)viewDidLoad {
@@ -176,7 +175,7 @@
     _productTypePikcer.delegate_=self;
     _productTypePikcer.tag = 101;
     _productTypePikcer.fontSize=14;
-    _productTypePikcer._pickerDataArray = @[@{@"values":@[@"电源管理",
+    _productTypePikcer._pickerDataArray = @[@{@"values":@[audio_power_sequencer,
                                                           @"音乐播放",
                                                           @"无线话筒",
                                                           audio_mixer_name,
@@ -433,7 +432,15 @@
     NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
     
-    [self initBrandAndTypes];
+    self._currentBrands = @[@"Teslaria"];
+    self._currentTypes = @[@"Power Sequencer"];
+    self._driverUdids = @[UUID_Power_Sequencer];
+    
+    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
+    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
+    
+    [_brandPicker selectRow:0 inComponent:0];
+    [_productCategoryPicker selectRow:0 inComponent:0];
 }
 -(void) didScrollPickerValue:(NSString*)brand {
     

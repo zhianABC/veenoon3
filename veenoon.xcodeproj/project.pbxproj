@@ -772,6 +772,7 @@
 		EBBCBBE52063E0C800A7771A /* IconCenterTextButton.m in Sources */ = {isa = PBXBuildFile; fileRef = EBBCBBE42063E0C800A7771A /* IconCenterTextButton.m */; };
 		EBBCBBED20673ECE00A7771A /* VeenoonConstatns.m in Sources */ = {isa = PBXBuildFile; fileRef = EBBCBBEC20673ECE00A7771A /* VeenoonConstatns.m */; };
 		EBBFD3B220EA5227002ADD3C /* AudioEMixProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = EBBFD3B120EA5227002ADD3C /* AudioEMixProxy.m */; };
+		EBBFD3B520F0DDA3002ADD3C /* APowerESetProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = EBBFD3B420F0DDA3002ADD3C /* APowerESetProxy.m */; };
 		EBC71B0B203AF90700DD0A98 /* VideoProcessRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EBC71B0A203AF90700DD0A98 /* VideoProcessRightView.m */; };
 		EBC71B0F203AFF6600DD0A98 /* icon.plist in Resources */ = {isa = PBXBuildFile; fileRef = EBC71B0E203AFF6600DD0A98 /* icon.plist */; };
 		EBC71B11203B01BB00DD0A98 /* v_icon_22@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBC71B10203B01BB00DD0A98 /* v_icon_22@2x.png */; };
@@ -1954,6 +1955,8 @@
 		EBBCBBEC20673ECE00A7771A /* VeenoonConstatns.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VeenoonConstatns.m; sourceTree = "<group>"; };
 		EBBFD3B020EA5227002ADD3C /* AudioEMixProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioEMixProxy.h; sourceTree = "<group>"; };
 		EBBFD3B120EA5227002ADD3C /* AudioEMixProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioEMixProxy.m; sourceTree = "<group>"; };
+		EBBFD3B320F0DDA3002ADD3C /* APowerESetProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APowerESetProxy.h; sourceTree = "<group>"; };
+		EBBFD3B420F0DDA3002ADD3C /* APowerESetProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APowerESetProxy.m; sourceTree = "<group>"; };
 		EBC71B09203AF90700DD0A98 /* VideoProcessRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VideoProcessRightView.h; sourceTree = "<group>"; };
 		EBC71B0A203AF90700DD0A98 /* VideoProcessRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoProcessRightView.m; sourceTree = "<group>"; };
 		EBC71B0E203AFF6600DD0A98 /* icon.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = icon.plist; sourceTree = "<group>"; };
@@ -3201,6 +3204,8 @@
 				349DADDD206E8D02001593DE /* AudioEWirlessMeetingSys.m */,
 				349DADE6206E8D5C001593DE /* APowerESet.h */,
 				349DADE7206E8D5C001593DE /* APowerESet.m */,
+				EBBFD3B320F0DDA3002ADD3C /* APowerESetProxy.h */,
+				EBBFD3B420F0DDA3002ADD3C /* APowerESetProxy.m */,
 			);
 			path = Audio;
 			sourceTree = "<group>";
@@ -4629,6 +4634,7 @@
 				04DE1EA91AD6AEE000D49E2F /* SBJson4Writer.m in Sources */,
 				349DADE5206E8D02001593DE /* AudioEWirlessMeetingSys.m in Sources */,
 				EBD79C0F204BBC2400FD534C /* YinPinProcessCodeUIView.m in Sources */,
+				EBBFD3B520F0DDA3002ADD3C /* APowerESetProxy.m in Sources */,
 				EBBCBBED20673ECE00A7771A /* VeenoonConstatns.m in Sources */,
 				3429E2B5205AAAFD00F87AC3 /* VNSettingsView.m in Sources */,
 				EBD009C820907B0700920849 /* VTVSet.m in Sources */,

@@ -249,7 +249,8 @@
     {
         RgsDriverInfo *info = driver.info;
         
-        NSDictionary *device = [[DataCenter defaultDataCenter] driverWithKey:info.serial];
+        NSString *serialStr = info.serial;
+        NSDictionary *device = [[DataCenter defaultDataCenter] driverWithKey:serialStr];
         
         if(device)
         {
