@@ -264,6 +264,8 @@
     if(_picker.tag == 1)
     {
         [_shexiangxieyiBtn setTitle:_picker._unitString forState:UIControlStateNormal];
+        
+        [_currentObj._proxyObj controlDeviceCameraPol:_picker._unitString];
     }
     
     _picker.hidden = YES;
