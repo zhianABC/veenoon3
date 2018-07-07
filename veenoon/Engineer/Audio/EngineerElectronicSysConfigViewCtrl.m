@@ -273,8 +273,13 @@
 
 - (void) didTappedMSelf:(LightSliderButton*)slbtn{
     
-    EDimmerSwitchLightProxy *vpro = self._currentObj._proxyObj;
-    int ch = (int)slbtn.tag + 1;
+    int idx = (int)slbtn.tag;
+    
+    APowerESetProxy *proxyObj = nil;
+    if(idx < [_powerProxys count])
+    {
+        proxyObj = [_powerProxys objectAtIndex:idx];
+    }
     
     // want to choose it
     if (![_selectedBtnArray containsObject:slbtn]) {
@@ -286,9 +291,11 @@
         
         [slbtn enableValueSet:YES];
         
-        if([vpro isKindOfClass:[EDimmerSwitchLightProxy class]])
+        
+        
+        if(proxyObj && [proxyObj isKindOfClass:[APowerESetProxy class]])
         {
-            [vpro controlDeviceLightPower:1 ch:ch];
+            //控制 开
         }
         
     } else {
@@ -300,9 +307,9 @@
         
         [slbtn enableValueSet:NO];
         
-        if([vpro isKindOfClass:[EDimmerSwitchLightProxy class]])
+        if(proxyObj && [proxyObj isKindOfClass:[APowerESetProxy class]])
         {
-            [vpro controlDeviceLightPower:0 ch:ch];
+            //控制 关
         }
     }
 }
