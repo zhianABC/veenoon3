@@ -17,6 +17,8 @@
 @property (nonatomic, strong) NSMutableArray *_lines;
 @property (nonatomic, strong) id _proxyObj;
 @property (nonatomic, strong) NSArray *_localSavedCommands;
+//<VAProcessorProxys>
+@property (nonatomic, strong) NSMutableArray *_proxys;
 
 - (NSString*) deviceName;
 
@@ -27,5 +29,7 @@
 - (NSDictionary *)getLabValueWithIndex:(int)index;
 
 - (int) checkIsSameSeconds;
+- (void) prepareAllCmds;
+- (NSMutableDictionary *)inputChannelAtIndex:(int)index;
 
 @end

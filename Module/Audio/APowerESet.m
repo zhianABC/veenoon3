@@ -24,6 +24,7 @@
 @synthesize _lines;
 @synthesize _proxyObj;
 @synthesize _localSavedCommands;
+@synthesize _proxys;
 
 - (id) init
 {
@@ -272,6 +273,44 @@
     }
     
     return res;
+}
+
+- (void) prepareAllCmds
+{
+    
+    if([_proxys count])
+    {
+        NSMutableArray *proxyids = [NSMutableArray array];
+        //只读取一个，因为所有的Channel的commands相同
+        APowerESetProxy *vap = [_proxys objectAtIndex:0];
+        [proxyids addObject:[NSNumber numberWithInt:vap._rgsProxyObj.m_id]];
+        
+        IMP_BLOCK_SELF(APowerESet);
+        
+        [[RegulusSDK sharedRegulusSDK] GetProxyCommandDict:proxyids
+                                                completion:^(BOOL result, NSDictionary *commd_dict, NSError *error) {
+                                                    
+                                                    [block_self loadCommands:commd_dict];
+                                                    
+                                                }];
+    }
+    
+}
+
+- (void) loadCommands:(NSDictionary*)commd_dict{
+    
+    NSMutableArray *audio_channels = _proxys;
+    
+    if([[commd_dict allValues] count])
+    {
+        NSArray *cmds = [[commd_dict allValues] objectAtIndex:0];
+        
+        for(APowerESetProxy *vap in audio_channels)
+        {
+            [vap prepareLoadCommand:cmds];
+        }
+    }
+    
 }
 
 @end
