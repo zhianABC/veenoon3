@@ -22,6 +22,11 @@
     
     SlideButton *btnJH1;
     SlideButton *btnJH2;
+    
+    int _pressMin;
+    int _pressMax;
+    int _noiseMin;
+    int _noiseMax;
 }
 @property (nonatomic, strong) NSMutableArray *_channelBtns;
 
@@ -30,6 +35,7 @@
 
 @implementation ZaoShengYaXian_UIView
 @synthesize _channelBtns;
+@synthesize _currentObj;
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.
@@ -38,10 +44,12 @@
  }
  */
 
-- (id)initWithFrame:(CGRect)frame
+-(id) initWithFrame:(CGRect)frame withAudiMix:(AudioEMix*) audioMix
 {
     if(self = [super initWithFrame:frame])
     {
+        _currentObj = audioMix;
+        
         channelBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
         channelBtn.frame = CGRectMake(0, 50, 70, 36);
         channelBtn.clipsToBounds = YES;
@@ -49,7 +57,7 @@
         channelBtn.titleLabel.font = [UIFont systemFontOfSize:15];
         [channelBtn setTitle:@"In 1" forState:UIControlStateNormal];
         [channelBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-        [self addSubview:channelBtn];
+//        [self addSubview:channelBtn];
         
         int y = CGRectGetMaxY(channelBtn.frame)+20;
         contentView = [[UIView alloc] initWithFrame:CGRectMake(0, y, frame.size.width, 340)];
@@ -58,7 +66,7 @@
         contentView.clipsToBounds = YES;
         contentView.backgroundColor = RGB(0, 89, 118);
         
-        [self layoutChannelBtns:16];
+//        [self layoutChannelBtns:16];
         [self contentViewComps];
     }
     
@@ -164,8 +172,23 @@
     btnJH1.tag = 1;
     [self addSubview:btnJH1];
     
+    NSMutableDictionary *pressDic = [_currentObj._proxyObj getPressMinMax];
+    _pressMax = [[pressDic objectForKey:@"max"] intValue];
+    _pressMin = [[pressDic objectForKey:@"min"] intValue];
+    
+    
+    NSString *pressStr = _currentObj._proxyObj._mixPress;
+    float pressValue = [pressStr floatValue];
+    float pressMax = (_pressMax - _pressMin);
+    if(pressMax)
+    {
+        float f = (pressValue - _pressMin)/pressMax;
+        f = fabsf(f);
+        [btnJH1 setCircleValue:f];
+    }
+    
     yaxianL = [[UILabel alloc] initWithFrame:CGRectMake(x, y+100, 120, 120)];
-    yaxianL.text = @"-12dB";
+    yaxianL.text = [pressStr stringByAppendingString:@" dB"];
     yaxianL.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:yaxianL];
     yaxianL.font = [UIFont systemFontOfSize:13];
@@ -189,8 +212,23 @@
     btnJH2.tag = 2;
     [self addSubview:btnJH2];
     
+    NSMutableDictionary *noiseDic = [_currentObj._proxyObj getNoiseMinMax];
+    _noiseMax = [[noiseDic objectForKey:@"max"] intValue];
+    _noiseMin = [[noiseDic objectForKey:@"min"] intValue];
+    
+    
+    NSString *noiseStr = _currentObj._proxyObj._mixNoise;
+    float noiseValue = [noiseStr floatValue];
+    float noiseMax = (_noiseMax - _noiseMin);
+    if(noiseMax)
+    {
+        float f = (noiseValue - _pressMin)/noiseMax;
+        f = fabsf(f);
+        [btnJH2 setCircleValue:f];
+    }
+    
     zaoshengL = [[UILabel alloc] initWithFrame:CGRectMake(x, y+100, 120, 120)];
-    zaoshengL.text = @"-12dB";
+    zaoshengL.text = [noiseStr stringByAppendingString:@" dB"];
     zaoshengL.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:zaoshengL];
     zaoshengL.font = [UIFont systemFontOfSize:13];
@@ -200,14 +238,19 @@
 
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
-    int k = (value *24)-12;
-    NSString *valueStr= [NSString stringWithFormat:@"%dB", k];
-    
     int tag = (int) slbtn.tag;
     if (tag == 1) {
+        int k = (value *(_pressMax-_pressMin)) + _pressMin;
+        NSString *valueStr= [NSString stringWithFormat:@"%d dB", k];
         yaxianL.text = valueStr;
+        
+        [_currentObj._proxyObj controlMixPress:[NSString stringWithFormat:@"%d", k]];
     } else {
+        int k = (value *(_noiseMax-_noiseMin)) + _noiseMin;
+        NSString *valueStr= [NSString stringWithFormat:@"%d dB", k];
         zaoshengL.text = valueStr;
+        
+        [_currentObj._proxyObj controlMixNoise:[NSString stringWithFormat:@"%d", k]];
     }
 }
 

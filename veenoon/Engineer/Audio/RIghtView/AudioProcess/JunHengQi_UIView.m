@@ -15,15 +15,22 @@
     UILabel *gaotongL2;
     
     SlideButton *btnJH;
+    
+    NSMutableArray *_peqRateArray;
+    int _peqMin;
+    int _peqMax;
 }
 @end
 
 @implementation JunHengQi_UIView
+@synthesize _currentObj;
 
-- (id)initWithFrame:(CGRect)frame
+-(id) initWithFrame:(CGRect)frame withAudiMix:(AudioEMix*) audioMix
 {
     if(self = [super initWithFrame:frame])
     {
+        _currentObj = audioMix;
+        
         CGRect rc = CGRectMake(0, 40, frame.size.width, 320);
         UIView *bgv = [[UIView alloc] initWithFrame:rc];
         [self addSubview:bgv];
@@ -63,8 +70,24 @@
         btnJH.delegate = self;
         [self addSubview:btnJH];
         
+        NSMutableDictionary *peqDic = [_currentObj._proxyObj getPEQMinMax];
+        _peqRateArray = [peqDic objectForKey:@"RATE"];
+        
+        _peqMax = [[peqDic objectForKey:@"max"] intValue];
+        _peqMin = [[peqDic objectForKey:@"min"] intValue];
+        
+        NSString *peqStr = _currentObj._proxyObj._mixPEQ;
+        float highValue = [peqStr floatValue];
+        float highMax = (_peqMax - _peqMin);
+        if(highMax)
+        {
+            float f = (highValue - _peqMin)/highMax;
+            f = fabsf(f);
+            [btnJH setCircleValue:f];
+        }
+        
         gaotongL = [[UILabel alloc] init];
-        gaotongL.text = @"-12dB";
+        gaotongL.text = [peqStr stringByAppendingString:@" dB"];
         gaotongL.font = [UIFont systemFontOfSize: 13];
         gaotongL.textColor = [UIColor whiteColor];
         gaotongL.frame = CGRectMake(0, CGRectGetMaxY(btnJH.frame), 60, 20);
@@ -82,9 +105,10 @@
 
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
-    int k = (value *24)-12;
-    gaotongL.text = [NSString stringWithFormat:@"%dB", k];
+    int k = (value *(_peqMax-_peqMin)) + _peqMin;
+    gaotongL.text = [NSString stringWithFormat:@"%d dB", k];
     
+    [_currentObj._proxyObj controlMixPEQ:[NSString stringWithFormat:@"%d", k] withRate:@"180"];
 }
 
 

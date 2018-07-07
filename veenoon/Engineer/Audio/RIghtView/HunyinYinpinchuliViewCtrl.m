@@ -25,6 +25,7 @@
 @end
 
 @implementation HunyinYinpinchuliViewCtrl
+@synthesize _currentObj;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -118,15 +119,15 @@
     
     CGRect vrc = CGRectMake(60, 140, SCREEN_WIDTH-120, SCREEN_HEIGHT-140-60);
     
-    fenpinqi = [[Fenpinqi_UIView alloc] initWithFrame:vrc];
+    fenpinqi = [[Fenpinqi_UIView alloc] initWithFrame:vrc withAudiMix:_currentObj];
     [self.view addSubview:fenpinqi];
     fenpinqi.hidden = NO;
     
-    junhengqi = [[JunHengQi_UIView alloc] initWithFrame:vrc];
+    junhengqi = [[JunHengQi_UIView alloc] initWithFrame:vrc withAudiMix:_currentObj];
     [self.view addSubview:junhengqi];
     junhengqi.hidden = YES;
     
-    zaoshengView = [[ZaoShengYaXian_UIView alloc] initWithFrame:vrc];
+    zaoshengView = [[ZaoShengYaXian_UIView alloc] initWithFrame:vrc withAudiMix:_currentObj];
     [self.view addSubview:zaoshengView];
     zaoshengView.hidden = YES;
     

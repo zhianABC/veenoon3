@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AudioEMix.h"
+@interface JunHengQi_UIView : UIView {
+    AudioEMix *_currentObj;
+}
+@property (nonatomic, strong) AudioEMix *_currentObj;
 
-@interface JunHengQi_UIView : UIView
+-(id) initWithFrame:(CGRect)frame withAudiMix:(AudioEMix*) audioMix;
 
 @end

@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
+#import "AudioEMix.h"
 
-@interface HunyinYinpinchuliViewCtrl : BaseViewController
-
+@interface HunyinYinpinchuliViewCtrl : BaseViewController {
+    AudioEMix *_currentObj;
+}
+@property (nonatomic, strong) AudioEMix *_currentObj;
 @end

@@ -12,18 +12,37 @@
 
 
 @interface Fenpinqi_UIView ()<SlideButtonDelegate> {
-    UILabel *gaotongL;
-    UILabel *gaotongL2;
+    UILabel *_highFilterL;
+    UILabel *_lowFilgerL;
     
-    SlideButton *btnHight;
-    SlideButton *btnLow;
+    SlideButton *_highFilterSlider;
+    SlideButton *_lowFilterSlider;
+    
+    int _highFilterMin;
+    int _highFilterMax;
+    int _lowFilterMin;
+    int _lowFilterMax;
 }
 @end
 
 @implementation Fenpinqi_UIView
+@synthesize _currentObj;
 
-- (id)initWithFrame:(CGRect)frame {
+-(id) initWithFrame:(CGRect)frame withAudiMix:(AudioEMix*) audioMix {
     if(self = [super initWithFrame:frame]) {
+        
+        _currentObj = audioMix;
+        
+        NSDictionary *highFilterDic = [_currentObj._proxyObj getHighFilterMinMax];
+        _highFilterMin = [[highFilterDic objectForKey:@"min"] intValue];
+        _highFilterMax = [[highFilterDic objectForKey:@"max"] intValue];
+        
+        
+        NSDictionary *lowFilterDic = [_currentObj._proxyObj getLowFilterMinMax];
+        _lowFilterMin = [[lowFilterDic objectForKey:@"min"] intValue];
+        _lowFilterMax = [[lowFilterDic objectForKey:@"max"] intValue];
+        
+        
         CGRect rc = CGRectMake(0, 40, frame.size.width, 320);
         UIView *bgv = [[UIView alloc] initWithFrame:rc];
         [self addSubview:bgv];
@@ -49,26 +68,37 @@
         
 
         //50 - 250
-        btnHight = [[SlideButton alloc] initWithFrame:CGRectMake(startX-33,
+        _highFilterSlider = [[SlideButton alloc] initWithFrame:CGRectMake(startX-33,
                                                                  CGRectGetMaxY(addLabel.frame),
                                                                  120, 120)];
-        btnHight._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
-        btnHight._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
-        [btnHight enableValueSet:YES];
-        btnHight.delegate = self;
-        [self addSubview:btnHight];
+        _highFilterSlider._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+        _highFilterSlider._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+        [_highFilterSlider enableValueSet:YES];
+        _highFilterSlider.delegate = self;
+        [self addSubview:_highFilterSlider];
         
-        gaotongL = [[UILabel alloc] init];
-        gaotongL.text = @"50KHz";
-        gaotongL.font = [UIFont systemFontOfSize: 13];
-        gaotongL.textColor = [UIColor whiteColor];
-        gaotongL.frame = CGRectMake(0, CGRectGetMaxY(btnHight.frame), 60, 20);
-        [self addSubview:gaotongL];
-        gaotongL.textAlignment = NSTextAlignmentCenter;
-        gaotongL.layer.cornerRadius = 5;
-        gaotongL.backgroundColor = RGB(0, 89, 118);
-        gaotongL.center = CGPointMake(btnHight.center.x, gaotongL.center.y);
-        gaotongL.clipsToBounds = YES;
+        NSString *hightFilter = _currentObj._proxyObj._mixHighFilter;
+        float highValue = [hightFilter floatValue];
+        float highMax = (_highFilterMax - _highFilterMin);
+        if(highMax)
+        {
+            float f = (highValue - _highFilterMin)/highMax;
+            f = fabsf(f);
+            [_highFilterSlider setCircleValue:f];
+        }
+        
+        
+        _highFilterL = [[UILabel alloc] init];
+        _highFilterL.text = [hightFilter stringByAppendingString:@" KHz"];
+        _highFilterL.font = [UIFont systemFontOfSize: 13];
+        _highFilterL.textColor = [UIColor whiteColor];
+        _highFilterL.frame = CGRectMake(0, CGRectGetMaxY(_highFilterSlider.frame), 60, 20);
+        [self addSubview:_highFilterL];
+        _highFilterL.textAlignment = NSTextAlignmentCenter;
+        _highFilterL.layer.cornerRadius = 5;
+        _highFilterL.backgroundColor = RGB(0, 89, 118);
+        _highFilterL.center = CGPointMake(_highFilterSlider.center.x, _highFilterL.center.y);
+        _highFilterL.clipsToBounds = YES;
         
         int gap = 450;
         
@@ -81,26 +111,36 @@
         
       
         //8 - 20
-        btnLow = [[SlideButton alloc] initWithFrame:CGRectMake(startX-33+gap,
+        _lowFilterSlider = [[SlideButton alloc] initWithFrame:CGRectMake(startX-33+gap,
                                                                CGRectGetMaxY(addLabel2.frame),
                                                                120, 120)];
-        btnLow._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
-        btnLow._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
-        [btnLow enableValueSet:YES];
-        [self addSubview:btnLow];
-        btnLow.delegate = self;
+        _lowFilterSlider._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+        _lowFilterSlider._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+        [_lowFilterSlider enableValueSet:YES];
+        [self addSubview:_lowFilterSlider];
+        _lowFilterSlider.delegate = self;
         
-        gaotongL2 = [[UILabel alloc] init];
-        gaotongL2.text = @"8KHz";
-        gaotongL2.font = [UIFont systemFontOfSize: 13];
-        gaotongL2.textColor = [UIColor whiteColor];
-        gaotongL2.frame = CGRectMake(0, CGRectGetMaxY(btnLow.frame), 60, 20);
-        [self addSubview:gaotongL2];
-        gaotongL2.textAlignment = NSTextAlignmentCenter;
-        gaotongL2.layer.cornerRadius = 5;
-        gaotongL2.backgroundColor = RGB(0, 89, 118);
-        gaotongL2.center = CGPointMake(btnLow.center.x, gaotongL2.center.y);
-        gaotongL2.clipsToBounds = YES;
+        NSString *lowFilter = _currentObj._proxyObj._mixLowFilter;
+        float lowWalue = [lowFilter floatValue];
+        float lowMax = (_lowFilterMax - _lowFilterMin);
+        if(lowMax)
+        {
+            float f = (lowWalue - _lowFilterMin)/lowMax;
+            f = fabsf(f);
+            [_lowFilterSlider setCircleValue:f];
+        }
+        
+        _lowFilgerL = [[UILabel alloc] init];
+        _lowFilgerL.text = [lowFilter stringByAppendingString:@" KHz"];
+        _lowFilgerL.font = [UIFont systemFontOfSize: 13];
+        _lowFilgerL.textColor = [UIColor whiteColor];
+        _lowFilgerL.frame = CGRectMake(0, CGRectGetMaxY(_lowFilterSlider.frame), 60, 20);
+        [self addSubview:_lowFilgerL];
+        _lowFilgerL.textAlignment = NSTextAlignmentCenter;
+        _lowFilgerL.layer.cornerRadius = 5;
+        _lowFilgerL.backgroundColor = RGB(0, 89, 118);
+        _lowFilgerL.center = CGPointMake(_lowFilterSlider.center.x, _lowFilgerL.center.y);
+        _lowFilgerL.clipsToBounds = YES;
         
         
     }
@@ -108,18 +148,24 @@
     return self;
 }
 
+
+
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
-    if(slbtn == btnHight)
+    if(slbtn == _highFilterSlider)
     {
-        int k = (value *(250-50))+50;
-        gaotongL.text = [NSString stringWithFormat:@"%dKHz", k];
+        int k = (value *(_highFilterMax-_highFilterMin)) + _highFilterMin;
+        _highFilterL.text = [NSString stringWithFormat:@"%d KHz", k];
+        
+        [_currentObj._proxyObj controlHighFilter:[NSString stringWithFormat:@"%d", k]];
     }
     else
-        if(slbtn == btnLow)
+        if(slbtn == _lowFilterSlider)
         {
-            int k = (value *(20-8))+8;
-            gaotongL2.text = [NSString stringWithFormat:@"%dKHz", k];
+            int k = (value *(_lowFilterMax-_lowFilterMin)) + _lowFilterMin;
+            _lowFilgerL.text = [NSString stringWithFormat:@"%d KHz", k];
+            
+            [_currentObj._proxyObj controlLowFilter:[NSString stringWithFormat:@"%d", k]];
         }
 }
 
