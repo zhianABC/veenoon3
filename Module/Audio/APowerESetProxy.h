@@ -20,14 +20,10 @@
 
 @property (nonatomic, assign) int _level;
 
-- (NSDictionary *)getChLevelRecords;
+- (void) prepareLoadCommand:(NSArray*)cmds;
 
 - (NSDictionary *)getScenarioSliceLocatedShadow;
 - (void) checkRgsProxyCommandLoad:(NSArray*)cmds;
-
-- (int)getNumberOfLights;
-
-- (void) controlDeviceLightLevel:(int)levelValue ch:(int)ch;
 
 - (BOOL) isSetChanged;
 

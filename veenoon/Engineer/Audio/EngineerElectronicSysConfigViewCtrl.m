@@ -34,7 +34,8 @@
     
     UIView *_proxysView;
 }
-
+@property (nonatomic, strong) NSArray *_proxys;
+@property (nonatomic, strong) NSMutableArray * _powerProxys;
 
 @end
 
@@ -42,6 +43,9 @@
 @synthesize _electronicSysArray;
 @synthesize _currentObj;
 @synthesize _number;
+@synthesize _powerProxys;
+
+@synthesize _proxys;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -54,7 +58,7 @@
     _buttonNumberArray = [[NSMutableArray alloc] init];
     _selectedBtnArray = [[NSMutableArray alloc] init];
     
-    [self setTitleAndImage:@"env_corner_light.png" withTitle:@"照明"];
+    [self setTitleAndImage:@"env_corner_dianyuanguanli.png" withTitle:@"电源管理"];
     
     if([_electronicSysArray count])
         self._currentObj = [_electronicSysArray objectAtIndex:0];
@@ -149,9 +153,6 @@
     int colNumber = 6;
     int space = ENGINEER_VIEW_COLUMN_GAP;
     
-    
-    NSDictionary *chLevelMap = [(APowerESetProxy*)self._currentObj._proxyObj getChLevelRecords];
-    
     for (int i = 0; i < self._number; i++) {
         
         int row = index/colNumber;
@@ -172,14 +173,6 @@
         
         [btn turnOnOff:NO];
         
-        id key = [NSNumber numberWithInt:i+1];
-        if([chLevelMap objectForKey:key])
-        {
-            BOOL power = [[chLevelMap objectForKey:key] boolValue];
-            [btn turnOnOff:power];
-        }
-        
-        
         UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2-40, 0, 80, 20)];
         titleL.backgroundColor = [UIColor clearColor];
         titleL.textAlignment = NSTextAlignmentCenter;
@@ -196,10 +189,17 @@
     
 }
 
-- (void) getCurrentDeviceDriverProxys{
+- (void) getCurrentDeviceDriverProxys {
     
     if(_currentObj == nil)
         return;
+    
+    //如果有，就不需要重新请求了
+    if([_currentObj._proxys count])
+    {
+        [self layoutChannels];
+        return;
+    }
     
 #ifdef OPEN_REG_LIB_DEF
     
@@ -208,11 +208,12 @@
     RgsDriverObj *driver = _currentObj._driver;
     if([driver isKindOfClass:[RgsDriverObj class]])
     {
-        
-        [[RegulusSDK sharedRegulusSDK] GetDriverCommands:driver.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
+        [[RegulusSDK sharedRegulusSDK] GetDriverProxys:driver.m_id completion:^(BOOL result, NSArray *proxys, NSError *error) {
             if (result) {
-                if ([commands count]) {
-                    [block_self loadedLightCommands:commands];
+                if ([proxys count]) {
+                    
+                    block_self._proxys = proxys;
+                    [block_self layoutChannels];
                 }
             }
             else{
@@ -221,37 +222,6 @@
         }];
     }
 #endif
-}
-
-- (void) loadedLightCommands:(NSArray*)cmds{
-    
-    RgsDriverObj *driver = _currentObj._driver;
-    
-    id proxy = _currentObj._proxyObj;
-    
-    EDimmerSwitchLightProxy *vpro = nil;
-    if(proxy && [proxy isKindOfClass:[EDimmerSwitchLightProxy class]])
-    {
-        vpro = proxy;
-    }
-    else
-    {
-        vpro = [[EDimmerSwitchLightProxy alloc] init];
-    }
-    
-    vpro._deviceId = driver.m_id;
-    [vpro checkRgsProxyCommandLoad:cmds];
-    if([_currentObj._localSavedCommands count])
-    {
-        NSDictionary *local = [_currentObj._localSavedCommands objectAtIndex:0];
-        [vpro recoverWithDictionary:local];
-    }
-    
-    self._currentObj._proxyObj = vpro;
-    [_currentObj syncDriverIPProperty];
-    
-    self._number = [vpro getNumberOfLights];
-    [self layoutChannels];
 }
 
 - (void) didTappedMSelf:(LightSliderButton*)slbtn{
