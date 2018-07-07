@@ -844,7 +844,6 @@
         if ([name isEqualToString:@"液晶电视"]) {
             EngineerTVViewController *ctrl = [[EngineerTVViewController alloc] init];
             ctrl._videoTVArray = @[plug];
-            
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array

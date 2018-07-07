@@ -460,11 +460,8 @@
         RgsDriverObj *rd = (RgsDriverObj*)_plugDriver._driver;
         [[RegulusSDK sharedRegulusSDK] GetDriverProperties:rd.m_id completion:^(BOOL result, NSArray *properties, NSError *error) {
             if (result) {
-                if ([properties count]) {
-                    
-                    [block_self updateDriverProperty:properties];
                 
-                }
+                [block_self updateDriverProperty:properties];
             }
             else
             {
@@ -478,17 +475,20 @@
 
 - (void) updateDriverProperty:(NSArray*)properties{
     
-    for(RgsPropertyObj *pro in properties)
+    if([properties count])
     {
-        if([pro.name isEqualToString:@"IP"])
+        for(RgsPropertyObj *pro in properties)
         {
-            _plugDriver._driver_ip_property = pro;
-            _plugDriver._ipaddress = pro.value;
+            if([pro.name isEqualToString:@"IP"])
+            {
+                _plugDriver._driver_ip_property = pro;
+                _plugDriver._ipaddress = pro.value;
+            }
         }
+        
+        _plugDriver._properties = properties;
+        ipTextField.text = _plugDriver._ipaddress;
     }
-    
-    _plugDriver._properties = properties;
-    ipTextField.text = _plugDriver._ipaddress;
     
     [KVNProgress dismiss];
 }

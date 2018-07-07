@@ -14,6 +14,10 @@
 #import "VCameraSettingSet.h"
 #import "DataSync.h"
 #import "VTouyingjiSet.h"
+#import "TeslariaComboChooser.h"
+#import "RegulusSDK.h"
+#import "DataCenter.h"
+
 
 @interface EngineerVideoDevicePluginViewCtrl ()<CenterCustomerPickerViewDelegate> {
     
@@ -31,6 +35,8 @@
     CenterCustomerPickerView *_productTypePikcer;
     CenterCustomerPickerView *_brandPicker;
     CenterCustomerPickerView *_productCategoryPicker;
+    
+    UIPopoverController *_dataSelector;
 }
 @property (nonatomic, strong) NSArray *_currentBrands;
 @property (nonatomic, strong) NSArray *_currentTypes;
@@ -55,53 +61,13 @@
 - (void) prepareDrivers{
     
     self._mapDrivers = [NSMutableDictionary dictionary];
-
-    NSDictionary *camera = @{@"type":@"video",
-                             @"name":@"摄像机",
-                             @"driver":UUID_NetCamera,
-                             @"brand":@"Teslaria",
-                             @"icon":@"engineer_video_shexiangji_n.png",
-                             @"icon_s":@"engineer_video_shexiangji_s.png",
-                             @"driver_class":@"VCameraSettingSet",
-                             @"ptype":@"Camera"
-                             };
-    [_mapDrivers setObject:camera forKey:UUID_NetCamera];
     
-    NSDictionary *ty = @{@"type":@"video",
-                         @"name":@"投影机",
-                         @"driver":UUID_CANON_WUX450,
-                         @"brand":@"Canon",
-                         @"icon":@"engineer_video_touyingji_n.png",
-                         @"icon_s":@"engineer_video_touyingji_s.png",
-                         @"driver_class":@"VTouyingjiSet",
-                         @"ptype":@"WUX450"
-                         };
-    [_mapDrivers setObject:ty forKey:UUID_CANON_WUX450];
+    NSArray *drivers = [[DataCenter defaultDataCenter] driversWithType:@"video"];
     
-    
-    NSDictionary *pdvd = @{@"type":@"video",
-                           @"name":@"Philips DVD",
-                           @"driver":UUID_Philips_DVD,
-                           @"brand":@"Philips",
-                           @"icon":@"engineer_video_dvd_n.png",
-                           @"icon_s":@"engineer_video_dvd_s.png",
-                           @"driver_class":@"VDVDPlayerSet",
-                           @"ptype":@"DVD"
-                           };
-    
-    [_mapDrivers setObject:pdvd forKey:UUID_Philips_DVD];
-    
-    NSDictionary *videoSwitch = @{@"type":@"video",
-                           @"name":@"Teslaria Video Switch",
-                           @"driver":UUID_Video_Switch,
-                           @"brand":@"Teslaria",
-                           @"icon":@"engineer_video_shipinchuli_n.png",
-                           @"icon_s":@"engineer_video_shipinchuli_s.png",
-                           @"driver_class":@"VVideoProcessSet",
-                           @"ptype":@"Video Switch"
-                           };
-    
-    [_mapDrivers setObject:videoSwitch forKey:UUID_Video_Switch];
+    for(NSDictionary *dr in drivers)
+    {
+        [self._mapDrivers setObject:dr forKey:[dr objectForKey:@"driver"]];
+    }
     
 }
 
@@ -211,6 +177,26 @@
     [_touyingjiBtn addTarget:self action:@selector(touyingjiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_touyingjiBtn];
     
+    
+    UIButton *btnAdd = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnAdd.frame = CGRectMake(left+rowGap*3, height+120, 80, 80);
+    [btnAdd setImage:[UIImage imageNamed:@"engineer_scenario_add_small.png"]
+            forState:UIControlStateNormal];
+    [self.view addSubview:btnAdd];
+    [btnAdd addTarget:self
+               action:@selector(addNewIR:)
+     forControlEvents:UIControlEventTouchUpInside];
+    UILabel* addTitle = [[UILabel alloc] initWithFrame:CGRectMake(left+rowGap*3-20,
+                                                                  height+120+80,
+                                                                  120, 20)];
+    addTitle.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:addTitle];
+    addTitle.font = [UIFont systemFontOfSize:15];
+    addTitle.textAlignment = NSTextAlignmentCenter;
+    addTitle.textColor  = [UIColor whiteColor];
+    addTitle.text = @"添加红外设备";
+
+    
     int maxWidth = 120;
     float labelStartX = (SCREEN_WIDTH - maxWidth*2 - 60 - 15)/2.0;
     int labelStartY = 480;
@@ -293,6 +279,131 @@
     
     self._videoDrivers = [NSMutableArray array];
     [self._selectedSysDic setObject:_videoDrivers forKey:@"video"];
+}
+
+
+- (void) addNewIR:(UIButton*)sender{
+    
+    if ([_dataSelector isPopoverVisible]) {
+        [_dataSelector dismissPopoverAnimated:NO];
+    }
+    
+    TeslariaComboChooser *sel = [[TeslariaComboChooser alloc] init];
+    sel._dataArray = @[@"TV", @"DVD", @"Video Box"];
+    sel._type = 2;
+    sel._unit = @"";
+    
+    int h = (int)[sel._dataArray count]*30 + 50;
+    sel.preferredContentSize = CGSizeMake(150, h);
+    sel._size = CGSizeMake(150, h);
+    
+    IMP_BLOCK_SELF(EngineerVideoDevicePluginViewCtrl);
+    sel._block = ^(id object, int index)
+    {
+        [block_self chooseIRType:object idx:index];
+    };
+    
+    CGRect rect = sender.frame;
+    
+    _dataSelector = [[UIPopoverController alloc] initWithContentViewController:sel];
+    _dataSelector.popoverContentSize = sel.preferredContentSize;
+    
+    [_dataSelector presentPopoverFromRect:rect
+                                   inView:self.view
+                 permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    
+}
+
+- (void) chooseIRType:(NSString*)device idx:(int)index {
+    
+    RgsIrModel rgs = RGS_IR_M_TV;
+    NSString *unit = @"";
+    if(index == 0)
+    {
+        rgs = RGS_IR_M_TV;
+        
+        unit = @"TV";
+    }
+    else if(index == 1)
+    {
+        rgs = RGS_IR_M_DVD;
+        
+        unit = @"DVD";
+    }
+//    else if(index == 2)
+//    {
+//        rgs = RGS_IR_M_VIDEOBOX;
+//
+//        unit = @"VIDEOBOX";
+//    }
+    
+    int dd = [[NSDate date] timeIntervalSince1970];
+    NSString *name = [NSString stringWithFormat:@"%@-%d",unit, dd];
+    
+    IMP_BLOCK_SELF(EngineerVideoDevicePluginViewCtrl);
+    
+    [[RegulusSDK sharedRegulusSDK] MakeIrDriverWithIrModel:rgs
+                                                      name:name
+                                                completion:^(BOOL result, RgsDriverInfo *driver_info, NSError *error) {
+                                                    
+                                                    if(result)
+                                                    {
+                                                        [block_self saveNewIRDriver:driver_info
+                                                                               name:name
+                                                                         deviceType:unit];
+                                                    }
+                                                    
+                                                }];
+    
+    
+    
+    if ([_dataSelector isPopoverVisible]) {
+        [_dataSelector dismissPopoverAnimated:NO];
+    }
+}
+
+- (void) saveNewIRDriver:(RgsDriverInfo*)driver_info
+                    name:(NSString*)name
+                    deviceType:(NSString*)deviceType{
+    
+    
+    NSString *class_name = @"";
+    NSString *icon_name = @"";
+    NSString *icon_name1 = @"";
+    if([deviceType isEqualToString:@"TV"])
+    {
+        class_name = @"VTVSet";
+        icon_name   = @"engineer_video_yejingdianshi_n.png";
+        icon_name1  = @"engineer_video_yejingdianshi_s.png";
+    }
+    else if([deviceType isEqualToString:@"DVD"])
+    {
+        class_name = @"VDVDPlayerSet";
+        
+        icon_name   = @"engineer_video_dvd_n.png";
+        icon_name1  = @"engineer_video_dvd_s.png";
+    }
+//    else if([deviceType isEqualToString:@"VIDEOBOX"])
+//    {
+//        class_name = @"VDVDPlayerSet";
+//    }
+    
+    NSDictionary *greeac = @{@"type":@"video",
+                             @"name":name,
+                             @"driver":driver_info.serial,
+                             @"brand":@"Unknown",
+                             @"icon":icon_name,
+                             @"icon_s":icon_name1,
+                             @"driver_class":class_name,
+                             @"ptype":@"Define"
+                             };
+    
+    [[DataCenter defaultDataCenter] saveDriver:greeac];
+    [[DataSync sharedDataSync] addDriver:driver_info
+                                     key:driver_info.serial];
+    
+    [self addDriverToCenter:greeac];
+    
 }
 
 - (void) initBrandAndTypes{

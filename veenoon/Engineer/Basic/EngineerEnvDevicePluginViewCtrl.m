@@ -186,6 +186,16 @@
     [btnAdd addTarget:self
                action:@selector(addNewIR:)
      forControlEvents:UIControlEventTouchUpInside];
+    UILabel* addTitle = [[UILabel alloc] initWithFrame:CGRectMake(left+rowGap*2-20,
+                                                                height+120+80,
+                                                                120, 20)];
+    addTitle.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:addTitle];
+    addTitle.font = [UIFont systemFontOfSize:15];
+    addTitle.textAlignment = NSTextAlignmentCenter;
+    addTitle.textColor  = [UIColor whiteColor];
+    addTitle.text = @"添加红外设备";
+    
 
     
     int maxWidth = 120;
@@ -275,7 +285,7 @@
     }
     
     TeslariaComboChooser *sel = [[TeslariaComboChooser alloc] init];
-    sel._dataArray = @[@"TV", @"DVD", @"Video Box", @"AC"];
+    sel._dataArray = @[@"AC"];
     sel._type = 2;
     sel._unit = @"";
     
@@ -305,24 +315,6 @@
     RgsIrModel rgs = RGS_IR_M_TV;
     NSString *unit = @"";
     if(index == 0)
-    {
-        rgs = RGS_IR_M_TV;
-        
-        unit = @"TV";
-    }
-    else if(index == 1)
-    {
-        rgs = RGS_IR_M_DVD;
-        
-        unit = @"DVD";
-    }
-    else if(index == 2)
-    {
-        rgs = RGS_IR_M_VIDEOBOX;
-        
-        unit = @"VIDEOBOX";
-    }
-    else if(index == 3)
     {
         rgs = RGS_IR_M_AC;
         
