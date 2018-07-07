@@ -84,7 +84,7 @@
     [_zengyiSlider setIndicatorImage:[UIImage imageNamed:@"wireless_slide_s.png"]];
     _zengyiSlider.topEdge = 90;
     _zengyiSlider.bottomEdge = 55;
-    _zengyiSlider.maxValue = 79;
+    _zengyiSlider.maxValue = 31;
     _zengyiSlider.minValue = 0;
     _zengyiSlider.delegate = self;
     [_zengyiSlider resetScale];

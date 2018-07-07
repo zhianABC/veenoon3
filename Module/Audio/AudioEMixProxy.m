@@ -97,7 +97,7 @@
             {
                 if([param_info.name isEqualToString:@"MODE"])
                 {
-                    if(param_info.type == RGS_PARAM_TYPE_STRING)
+                    if(param_info.type == RGS_PARAM_TYPE_LIST)
                     {
                         [param setObject:commond
                                   forKey:param_info.name];
@@ -112,16 +112,21 @@
             }
             
         }
-        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
-                                                 cmd:cmd.name
-                                               param:param completion:^(BOOL result, NSError *error) {
-                                                   if (result) {
-                                                       
-                                                   }
-                                                   else{
-                                                       
-                                                   }
-                                               }];
+        if(_rgsProxyObj)
+        {
+            _deviceId = _rgsProxyObj.m_id;
+        }
+        if(_deviceId)
+            [[RegulusSDK sharedRegulusSDK] ControlDevice:_deviceId
+                                                     cmd:cmd.name
+                                                   param:param completion:^(BOOL result, NSError *error) {
+                                                       if (result) {
+                                                           
+                                                       }
+                                                       else{
+                                                           
+                                                       }
+                                                   }];
     }
 }
 
@@ -164,16 +169,21 @@
             }
             
         }
-        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
-                                                 cmd:cmd.name
-                                               param:param completion:^(BOOL result, NSError *error) {
-                                                   if (result) {
-                                                       
-                                                   }
-                                                   else{
-                                                       
-                                                   }
-                                               }];
+        if(_rgsProxyObj)
+        {
+            _deviceId = _rgsProxyObj.m_id;
+        }
+        if(_deviceId)
+            [[RegulusSDK sharedRegulusSDK] ControlDevice:_deviceId
+                                                     cmd:cmd.name
+                                                   param:param completion:^(BOOL result, NSError *error) {
+                                                       if (result) {
+                                                           
+                                                       }
+                                                       else{
+                                                           
+                                                       }
+                                                   }];
     }
 }
 - (void) controlLowFilter:(NSString*)lowFilter {
@@ -215,16 +225,21 @@
             }
             
         }
-        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
-                                                 cmd:cmd.name
-                                               param:param completion:^(BOOL result, NSError *error) {
-                                                   if (result) {
-                                                       
-                                                   }
-                                                   else{
-                                                       
-                                                   }
-                                               }];
+        if(_rgsProxyObj)
+        {
+            _deviceId = _rgsProxyObj.m_id;
+        }
+        if(_deviceId)
+            [[RegulusSDK sharedRegulusSDK] ControlDevice:_deviceId
+                                                     cmd:cmd.name
+                                                   param:param completion:^(BOOL result, NSError *error) {
+                                                       if (result) {
+                                                           
+                                                       }
+                                                       else{
+                                                           
+                                                       }
+                                                   }];
     }
 }
 - (void) controlMixPEQ:(NSString*)mixPEQ withRate:(NSString*)peqRate {
@@ -232,7 +247,6 @@
     _mixPEQRate = peqRate;
     
     float mixPEQFloat = [mixPEQ floatValue];
-    float peqRateFloat = [peqRate floatValue];
     
     RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_PEQ"];
     if(cmd)
@@ -245,19 +259,7 @@
             {
                 if([param_info.name isEqualToString:@"RATE"])
                 {
-                    if(param_info.type == RGS_PARAM_TYPE_FLOAT)
-                    {
-                        [param setObject:[NSString stringWithFormat:@"%0.1f",
-                                          peqRateFloat]
-                                  forKey:param_info.name];
-                    }
-                    else if(param_info.type == RGS_PARAM_TYPE_INT)
-                    {
-                        [param setObject:[NSString stringWithFormat:@"%0.0f",
-                                          peqRateFloat]
-                                  forKey:param_info.name];
-                        
-                    }
+                    [param setObject:_mixPEQRate forKey:param_info.name];
                 }
                 else if ([param_info.name isEqualToString:@"GAIN"])
                 {
@@ -284,16 +286,21 @@
             }
             
         }
-        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
-                                                 cmd:cmd.name
-                                               param:param completion:^(BOOL result, NSError *error) {
-                                                   if (result) {
-                                                       
-                                                   }
-                                                   else{
-                                                       
-                                                   }
-                                               }];
+        if(_rgsProxyObj)
+        {
+            _deviceId = _rgsProxyObj.m_id;
+        }
+        if(_deviceId)
+            [[RegulusSDK sharedRegulusSDK] ControlDevice:_deviceId
+                                                     cmd:cmd.name
+                                                   param:param completion:^(BOOL result, NSError *error) {
+                                                       if (result) {
+                                                           
+                                                       }
+                                                       else{
+                                                           
+                                                       }
+                                                   }];
     }
 }
 - (void) controlMixPress:(NSString*)mixPress {
@@ -335,16 +342,21 @@
             }
             
         }
-        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
-                                                 cmd:cmd.name
-                                               param:param completion:^(BOOL result, NSError *error) {
-                                                   if (result) {
-                                                       
-                                                   }
-                                                   else{
-                                                       
-                                                   }
-                                               }];
+        if(_rgsProxyObj)
+        {
+            _deviceId = _rgsProxyObj.m_id;
+        }
+        if(_deviceId)
+            [[RegulusSDK sharedRegulusSDK] ControlDevice:_deviceId
+                                                     cmd:cmd.name
+                                                   param:param completion:^(BOOL result, NSError *error) {
+                                                       if (result) {
+                                                           
+                                                       }
+                                                       else{
+                                                           
+                                                       }
+                                                   }];
     }
 }
 - (void) controlMixNoise:(NSString*)mixNoise {
@@ -386,16 +398,21 @@
             }
             
         }
-        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
-                                                 cmd:cmd.name
-                                               param:param completion:^(BOOL result, NSError *error) {
-                                                   if (result) {
-                                                       
-                                                   }
-                                                   else{
-                                                       
-                                                   }
-                                               }];
+        if(_rgsProxyObj)
+        {
+            _deviceId = _rgsProxyObj.m_id;
+        }
+        if(_deviceId)
+            [[RegulusSDK sharedRegulusSDK] ControlDevice:_deviceId
+                                                     cmd:cmd.name
+                                                   param:param completion:^(BOOL result, NSError *error) {
+                                                       if (result) {
+                                                           
+                                                       }
+                                                       else{
+                                                           
+                                                       }
+                                                   }];
     }
 }
 
@@ -412,11 +429,11 @@
             
             for( RgsCommandParamInfo * param_info in cmd.params)
             {
-                if([param_info.name isEqualToString:@"POL"])
+                if([param_info.name isEqualToString:@"COUNT"])
                 {
-                    if(param_info.type == RGS_PARAM_TYPE_STRING)
+                    if(param_info.type == RGS_PARAM_TYPE_INT)
                     {
-                        [param setObject:_cameraPol
+                        [param setObject:[NSString stringWithFormat:@"%d", _fayanPriority]
                                   forKey:param_info.name];
                     }
                 }
@@ -429,16 +446,21 @@
             }
             
         }
-        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
-                                                 cmd:cmd.name
-                                               param:param completion:^(BOOL result, NSError *error) {
-                                                   if (result) {
-                                                       
-                                                   }
-                                                   else{
-                                                       
-                                                   }
-                                               }];
+        if(_rgsProxyObj)
+        {
+            _deviceId = _rgsProxyObj.m_id;
+        }
+        if(_deviceId)
+            [[RegulusSDK sharedRegulusSDK] ControlDevice:_deviceId
+                                                     cmd:cmd.name
+                                                   param:param completion:^(BOOL result, NSError *error) {
+                                                       if (result) {
+                                                           
+                                                       }
+                                                       else{
+                                                           
+                                                       }
+                                                   }];
     }
 }
 
@@ -663,9 +685,9 @@
             {
                 if([param_info.name isEqualToString:@"POL"])
                 {
-                    if(param_info.type == RGS_PARAM_TYPE_STRING)
+                    if(param_info.type == RGS_PARAM_TYPE_LIST)
                     {
-                        [param setObject:_cameraPol
+                        [param setObject:_currentCameraPol
                                   forKey:param_info.name];
                     }
                 }
@@ -678,21 +700,26 @@
             }
             
         }
-        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
-                                                 cmd:cmd.name
-                                               param:param completion:^(BOOL result, NSError *error) {
-                                                   if (result) {
-                                                       
-                                                   }
-                                                   else{
-                                                       
-                                                   }
-                                               }];
+        if(_rgsProxyObj)
+        {
+            _deviceId = _rgsProxyObj.m_id;
+        }
+        if(_deviceId)
+            [[RegulusSDK sharedRegulusSDK] ControlDevice:_deviceId
+                                                     cmd:cmd.name
+                                                   param:param completion:^(BOOL result, NSError *error) {
+                                                       if (result) {
+                                                           
+                                                       }
+                                                       else{
+                                                           
+                                                       }
+                                                   }];
     }
 }
 //SET_VOL
 - (void) controlDeviceVol:(float)db force:(BOOL)force{
-    
+   
     _deviceVol = db;
     
     RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_VOL"];
@@ -702,20 +729,20 @@
         if([cmd.params count])
         {
             
-            for( RgsCommandParamInfo * param_info in cmd.params)
+            for (RgsCommandParamInfo * param_info in cmd.params)
             {
                 if([param_info.name isEqualToString:@"VOL"])
                 {
                     if(param_info.type == RGS_PARAM_TYPE_FLOAT)
                     {
                         [param setObject:[NSString stringWithFormat:@"%0.1f",
-                                          db]
+                                          _deviceVol]
                                   forKey:param_info.name];
                     }
                     else if(param_info.type == RGS_PARAM_TYPE_INT)
                     {
                         [param setObject:[NSString stringWithFormat:@"%0.0f",
-                                          db]
+                                          _deviceVol]
                                   forKey:param_info.name];
                         
                     }
@@ -729,16 +756,21 @@
             }
             
         }
-        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
-                                                 cmd:cmd.name
-                                               param:param completion:^(BOOL result, NSError *error) {
-                                                   if (result) {
-                                                       
-                                                   }
-                                                   else{
-                                                       
-                                                   }
-                                               }];
+        if(_rgsProxyObj)
+        {
+            _deviceId = _rgsProxyObj.m_id;
+        }
+        if(_deviceId)
+            [[RegulusSDK sharedRegulusSDK] ControlDevice:_deviceId
+                                                     cmd:cmd.name
+                                                   param:param completion:^(BOOL result, NSError *error) {
+                                                       if (result) {
+                                                           
+                                                       }
+                                                       else{
+                                                           
+                                                       }
+                                                   }];
     }
 }
 
