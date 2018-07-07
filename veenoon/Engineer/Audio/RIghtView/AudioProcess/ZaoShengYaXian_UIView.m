@@ -10,6 +10,7 @@
 #import "UIButton+Color.h"
 #import "SlideButton.h"
 #import "GradeLineView.h"
+#import "veenoon-Swift.h"
 
 @interface ZaoShengYaXian_UIView()<SlideButtonDelegate>
 {
@@ -27,6 +28,8 @@
     int _pressMax;
     int _noiseMin;
     int _noiseMax;
+    
+    LimiterView *_limiter;
 }
 @property (nonatomic, strong) NSMutableArray *_channelBtns;
 
@@ -143,17 +146,13 @@
     
     int y = (CGRectGetHeight(contentView.frame) - w)/2;
     CGRect rc = CGRectMake(120, y+20, w, w);
-    GradeLineView *g = [[GradeLineView alloc] initWithFrame:rc];
     
-    [contentView addSubview:g];
+    _limiter = [[LimiterView alloc] initWithFrame:rc];
+    [contentView addSubview:_limiter];
+    _limiter.backgroundColor = [UIColor clearColor];
     
-    [g drawXY:@[@"-100",@"-77",@"-54",@"-31",@"-8",@"15"]
-            y:@[@"15",@"-8",@"-31",@"-54",@"-77"]];
-    [g processValueToPoints];
+    int x = CGRectGetMaxX(_limiter.frame);
     
-    g.backgroundColor = [UIColor clearColor];
-    
-    int x = CGRectGetMaxX(g.frame);
     y = CGRectGetHeight(contentView.frame)/2-50;
     x+=30;
     
