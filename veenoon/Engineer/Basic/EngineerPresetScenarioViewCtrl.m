@@ -33,6 +33,7 @@
 #import "EngineerMonitorViewCtrl.h"
 #import "EngineerInfoCollectViewCtrl.h"
 #import "EngineerScenarioSettingsViewCtrl.h"
+#import "EngineerDimmerSwitchViewController.h"
 
 #import "Scenario.h"
 #import "APowerESet.h"
@@ -867,6 +868,12 @@
             ctrl._lightSysArray = @[plug];
             [self.navigationController pushViewController:ctrl animated:YES];
         }
+        else if ([name isEqualToString:@"开关照明"]) {
+            
+            EngineerDimmerSwitchViewController *ctrl = [[EngineerDimmerSwitchViewController alloc] init];
+            ctrl._lightSysArray = @[plug];
+            [self.navigationController pushViewController:ctrl animated:YES];
+        }
         // wuxian array
         if ([name isEqualToString:@"空调"]) {
             EngineerAireConditionViewCtrl *ctrl = [[EngineerAireConditionViewCtrl alloc] init];
@@ -1048,9 +1055,6 @@
         dataArray = [_selectedDevices objectForKey:@"env"];
         btnCells = _envCells;
     }
-
-//    BasePlugElement *plug = [dataArray objectAtIndex:idx];
-//    [plug removeDriver];
 
     [dataArray removeObjectAtIndex:idx];
 
