@@ -184,10 +184,10 @@
                 }
                 else if([param_info.name isEqualToString:@"POWER"])
                 {
-                    NSString *onoff = @"ON";
+                    NSString *onoff = @"OFF";
                     if(_power)
                     {
-                        onoff = @"OFF";
+                        onoff = @"ON";
                     }
                     [param setObject:onoff
                               forKey:param_info.name];
@@ -242,10 +242,10 @@
                     }
                     else if([param_info.name isEqualToString:@"POWER"])
                     {
-                        NSString *onoff = @"ON";
+                        NSString *onoff = @"OFF";
                         if(iPower)
                         {
-                            onoff = @"OFF";
+                            onoff = @"ON";
                         }
                         
                         [param setObject:onoff
