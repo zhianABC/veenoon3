@@ -51,6 +51,15 @@
     return self;
 }
 
+- (BOOL) haveProxyCommandLoaded{
+    
+    if(_rgsCommands)
+        return YES;
+    
+    return NO;
+    
+}
+
 - (void) prepareLoadCommand:(NSArray*)cmds{
     
     if ([cmds count]) {

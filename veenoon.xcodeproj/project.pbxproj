@@ -276,6 +276,7 @@
 		3495267E20F091E700A6BF00 /* EngineerDimmerSwitchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3495267D20F091E700A6BF00 /* EngineerDimmerSwitchViewController.m */; };
 		3495268120F0C5B700A6BF00 /* DSwitchLightRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3495267F20F0C5B700A6BF00 /* DSwitchLightRightView.m */; };
 		3495268420F0E07600A6BF00 /* VTVSetProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3495268320F0E07600A6BF00 /* VTVSetProxy.m */; };
+		3495268620F0EE7100A6BF00 /* MixFilterGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3495268520F0EE7000A6BF00 /* MixFilterGraphView.swift */; };
 		3496B75A1FCAF3C5005F4857 /* SignalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3496B7591FCAF3C5005F4857 /* SignalView.m */; };
 		349DADDF206E8D02001593DE /* AudioEHand2Hand.m in Sources */ = {isa = PBXBuildFile; fileRef = 349DADD1206E8D02001593DE /* AudioEHand2Hand.m */; };
 		349DADE0206E8D02001593DE /* AudioEWirlessMike.m in Sources */ = {isa = PBXBuildFile; fileRef = 349DADD3206E8D02001593DE /* AudioEWirlessMike.m */; };
@@ -1333,6 +1334,7 @@
 		3495268020F0C5B700A6BF00 /* DSwitchLightRightView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSwitchLightRightView.h; sourceTree = "<group>"; };
 		3495268220F0E07600A6BF00 /* VTVSetProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VTVSetProxy.h; sourceTree = "<group>"; };
 		3495268320F0E07600A6BF00 /* VTVSetProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VTVSetProxy.m; sourceTree = "<group>"; };
+		3495268520F0EE7000A6BF00 /* MixFilterGraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MixFilterGraphView.swift; sourceTree = "<group>"; };
 		3496B7581FCAF3C5005F4857 /* SignalView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignalView.h; sourceTree = "<group>"; };
 		3496B7591FCAF3C5005F4857 /* SignalView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignalView.m; sourceTree = "<group>"; };
 		349DADD1206E8D02001593DE /* AudioEHand2Hand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioEHand2Hand.m; sourceTree = "<group>"; };
@@ -3662,6 +3664,7 @@
 				EB795B672042E8C1005D1F47 /* XinHaoFaShengQi_UIView.m */,
 				EB795B692042E8D3005D1F47 /* DianPing_UIView.h */,
 				EB795B6A2042E8D3005D1F47 /* DianPing_UIView.m */,
+				3495268520F0EE7000A6BF00 /* MixFilterGraphView.swift */,
 				3454276D2046DED100E1A436 /* FilterGraphView.swift */,
 				3454276F2046DEE800E1A436 /* LimiterView.swift */,
 				3454276C2046DED000E1A436 /* veenoon-Bridging-Header.h */,
@@ -4654,6 +4657,7 @@
 				04DE1E901AD6AEE000D49E2F /* UIImage+ImageEffects.m in Sources */,
 				3494583320B6E248006D1D05 /* EngineerNewTeslariViewCtrl.m in Sources */,
 				EB795B5F2042E87C005D1F47 /* YanShiQi_UIView.m in Sources */,
+				3495268620F0EE7100A6BF00 /* MixFilterGraphView.swift in Sources */,
 				04DE1EBF1AD6AF7900D49E2F /* User.m in Sources */,
 				EB5A47F42073C2FE00564C06 /* AdjustAudioVideoEnvSettingsViewCtrl.m in Sources */,
 				EB1717A01FF613EC00CBDB81 /* EngineerNewWindViewCtrl.m in Sources */,

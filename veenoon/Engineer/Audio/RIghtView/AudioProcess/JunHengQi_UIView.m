@@ -19,6 +19,8 @@
     NSMutableArray *_peqRateArray;
     int _peqMin;
     int _peqMax;
+    
+    MixFilterGraphView *fglm;
 }
 @end
 
@@ -40,11 +42,11 @@
         
         
         rc = CGRectMake(10, 50, frame.size.width-20, 300);
-        FilterGraphView *lm = [[FilterGraphView alloc] initWithFrame:rc];
-        lm.backgroundColor = [UIColor clearColor];
-        [self addSubview:lm];
+        fglm = [[MixFilterGraphView alloc] initWithFrame:rc];
+        fglm.backgroundColor = [UIColor clearColor];
+        [self addSubview:fglm];
         
-        int startH = CGRectGetMaxY(lm.frame);
+        int startH = CGRectGetMaxY(fglm.frame);
         int startX = 420;
         
 //        UILabel *addLabel = [[UILabel alloc] init];
