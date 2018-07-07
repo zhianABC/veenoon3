@@ -21,6 +21,14 @@
 @property (nonatomic, assign) float _deviceVol;
 @property (nonatomic, strong) NSString *_currentCameraPol;
 @property (nonatomic, strong) NSMutableArray *_cameraPol;
+@property (nonatomic, assign) int _fayanPriority;
+@property (nonatomic, strong) NSString *_workMode;
+@property (nonatomic, strong) NSString *_mixHighFilter;
+@property (nonatomic, strong) NSString *_mixLowFilter;
+@property (nonatomic, strong) NSString *_mixPEQ;
+@property (nonatomic, strong) NSString *_mixPEQRate;
+@property (nonatomic, strong) NSString *_mixPress;
+@property (nonatomic, strong) NSString *_mixNoise;
 
 /*
  //set_mode 语音激励，或者是标准发言
@@ -41,14 +49,24 @@
 
 - (NSDictionary *)getScenarioSliceLocatedShadow;
 - (NSMutableArray*)getCameraPol;
-
-
-
+- (NSMutableDictionary*)getPriorityMinMax;
+- (NSMutableDictionary*)getHighFilterMinMax;
+- (NSMutableDictionary*)getLowFilterMinMax;
+- (NSMutableDictionary*)getPEQMinMax;
+- (NSMutableDictionary*)getPressMinMax;
+- (NSMutableDictionary*)getNoiseMinMax;
 
 - (void) checkRgsProxyCommandLoad:(NSArray*)cmds;
 
 - (void) controlDeviceVol:(float)db force:(BOOL)force;
 - (void) controlDeviceCameraPol:(NSString*)cameraPol;
+- (void) controlFayanPriority:(int)fayanPriority;
+- (void) controlWorkMode:(NSString*)workMode;
+- (void) controlHighFilter:(NSString*)highFilter;
+- (void) controlLowFilter:(NSString*)lowFilter;
+- (void) controlMixPEQ:(NSString*)mixPEQ withRate:(NSString*)peqRate;
+- (void) controlMixPress:(NSString*)mixPress;
+- (void) controlMixNoise:(NSString*)mixNoise;
 
 - (BOOL) isSetChanged;
 

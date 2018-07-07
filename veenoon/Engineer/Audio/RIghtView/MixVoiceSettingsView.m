@@ -28,19 +28,16 @@
     UIButton *_shexiangxieyiBtn;
     CustomPickerView *_picker;
     
-    int shedingzhuxiNumber;
-    int fayanrenshuNumber;
-    
     UITableView *_tableView;
+    
+    UIButton *_selectedBtn;
 }
 @property (nonatomic, strong) NSMutableArray *_btns;
-@property (nonatomic) int _numOfChannel;
 @end
 
 @implementation MixVoiceSettingsView
 @synthesize delegate_;
 @synthesize _btns;
-@synthesize _numOfChannel;
 @synthesize _currentObj;
 
 /*
@@ -59,13 +56,9 @@
     {
         self.backgroundColor = BLACK_COLOR;
         
-        shedingzhuxiNumber = 12;
-        fayanrenshuNumber = 5;
-        
         _btns = [[NSMutableArray alloc] init];
-        self._numOfChannel = 8;
         
-        
+        _selectedBtn = nil;
         
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,
                                                                    60,
@@ -185,11 +178,17 @@
     _shexiangzhuizongView.hidden=YES;
     _biaozhunfayanView.hidden=YES;
     _yuyinjiliView.hidden=NO;
+    
+    // control yuyinjili
+    [_currentObj._proxyObj controlWorkMode:@"语音激励"];
 }
 - (void) biaozhunfayanAction:(id)sender{
     _shexiangzhuizongView.hidden=YES;
     _yuyinjiliView.hidden=YES;
     _biaozhunfayanView.hidden=NO;
+    
+    // control biaozhunfayan
+    [_currentObj._proxyObj controlWorkMode:@"标准发言"];
 }
 - (void) yinpinchuliAction:(id)sender{
     
@@ -229,8 +228,12 @@
                initWithFrame:CGRectMake(_shexiangzhuizongView.frame.size.width/2-100, 130, 200, 120) withGrayOrLight:@"picker_player.png"];
     
     NSMutableArray *dataArray = [_currentObj._proxyObj getCameraPol];
-    _picker._pickerDataArray = @[@{@"values":dataArray}];
-    
+    if (dataArray) {
+        _picker._pickerDataArray = @[@{@"values":dataArray}];
+    } else {
+        NSArray *dummyDataArray = [NSArray arrayWithObjects:@"PELCOP", @"PELCOD", @"VISCA", nil];
+        _picker._pickerDataArray = @[@{@"values":dummyDataArray}];
+    }
     
     _picker._selectColor = YELLOW_COLOR;
     _picker._rowNormalColor = [UIColor whiteColor];
@@ -321,7 +324,13 @@
     int cellHeight = 115/2;
     int leftRight = (self.frame.size.width - 4*cellWidth - 3*5)/2;
     int top = _shedingzhuxiBtn.frame.origin.y + 45;
-    for (int index = 0; index < shedingzhuxiNumber; index++) {
+    
+    NSMutableDictionary *minMaxDic = [_currentObj._proxyObj getPriorityMinMax];
+    int min = [[minMaxDic objectForKey:@"min"] intValue];
+    int max = [[minMaxDic objectForKey:@"max"] intValue];
+    
+    int count = (max - min) + 1;
+    for (int index = 0; index < count; index++) {
         int row = index/colNumber;
         int col = index%colNumber;
         int startX = col*cellWidth+col*space+leftRight;
@@ -332,12 +341,39 @@
         scenarioBtn.clipsToBounds = YES;
         scenarioBtn.layer.cornerRadius = 5;
         [_yuyinjiliView addSubview:scenarioBtn];
-        int titleInt = index + 1;
-        NSString *string = [NSString stringWithFormat:@"%d",titleInt];
+        
+        NSString *string = [NSString stringWithFormat:@"%d",min];
         [scenarioBtn setTitle:string forState:UIControlStateNormal];
-        [scenarioBtn addTarget:self action:@selector(shedingzhuxiAction:) forControlEvents:UIControlEventTouchUpInside];
+        [scenarioBtn addTarget:self action:@selector(setPriorityAction:) forControlEvents:UIControlEventTouchUpInside];
         scenarioBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+        
+        min++;
+        
+        scenarioBtn.tag = min + 100;
     }
+}
+- (void) setPriorityAction:(id)sender {
+    UIButton *btn = (UIButton*) sender;
+    NSString *numberStr = btn.titleLabel.text;
+    if (_selectedBtn == nil) {
+        
+        [btn setTitleColor:YELLOW_COLOR
+                  forState:UIControlStateNormal];
+    } else {
+        if (_selectedBtn.tag == btn.tag) {
+            
+        } else {
+            [_selectedBtn setTitleColor:[UIColor whiteColor]
+                      forState:UIControlStateNormal];
+            [btn setTitleColor:YELLOW_COLOR
+                      forState:UIControlStateNormal];
+        }
+    }
+    
+    _selectedBtn = btn;
+    
+    int numberInt = [numberStr intValue];
+    [_currentObj._proxyObj controlFayanPriority:numberInt];
 }
 - (void) fayanrenshuAction:(id)sender{
     [_shedingzhuxiBtn setSelected:NO];
@@ -349,7 +385,14 @@
     int cellHeight = 115/2;
     int leftRight = (self.frame.size.width - 4*cellWidth - 3*5)/2;
     int top = _shedingzhuxiBtn.frame.origin.y + 45;
-    for (int index = 0; index < fayanrenshuNumber; index++) {
+    
+    NSMutableDictionary *minMaxDic = [_currentObj._proxyObj getPriorityMinMax];
+    int min = [[minMaxDic objectForKey:@"min"] intValue];
+    int max = [[minMaxDic objectForKey:@"max"] intValue];
+    
+    int count = (max - min) + 1;
+    
+    for (int index = 0; index < count; index++) {
         int row = index/colNumber;
         int col = index%colNumber;
         int startX = col*cellWidth+col*space+leftRight;
@@ -360,11 +403,15 @@
         scenarioBtn.clipsToBounds = YES;
         scenarioBtn.layer.cornerRadius = 5;
         [_yuyinjiliView addSubview:scenarioBtn];
-        int titleInt = index + 1;
-        NSString *string = [NSString stringWithFormat:@"%d",titleInt];
+        
+        NSString *string = [NSString stringWithFormat:@"%d", min];
         [scenarioBtn setTitle:string forState:UIControlStateNormal];
-        [scenarioBtn addTarget:self action:@selector(shedingzhuxiAction:) forControlEvents:UIControlEventTouchUpInside];
+        [scenarioBtn addTarget:self action:@selector(setPriorityAction:) forControlEvents:UIControlEventTouchUpInside];
         scenarioBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+        
+        min++;
+        
+        scenarioBtn.tag = min;
     }
 }
 @end

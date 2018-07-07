@@ -197,6 +197,8 @@
     }
     
     self._currentObj._proxyObj = vpro;
+    
+    
 }
 
 
@@ -256,6 +258,9 @@
 }
 - (void) didSelectButtonAction:(NSString*)value {
     HunyinYinpinchuliViewCtrl *ctrl = [[HunyinYinpinchuliViewCtrl alloc] init];
+    
+    ctrl._currentObj = _currentObj;
+    
     [self.navigationController pushViewController:ctrl animated:YES];
     
 }
