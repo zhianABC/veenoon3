@@ -1,23 +1,23 @@
 //
-//  EngineerLightViewController.m
+//  EngineerDimmerSwitchViewController.m
 //  veenoon
 //
 //  Created by 安志良 on 2017/12/29.
 //  Copyright © 2017年 jack. All rights reserved.
 //
 
-#import "EngineerLightViewController.h"
+#import "EngineerDimmerSwitchViewController.h"
 #import "UIButton+Color.h"
 #import "CustomPickerView.h"
 #import "LightSliderButton.h"
 #import "EngineerSliderView.h"
-#import "LightRightView.h"
-#import "EDimmerLight.h"
+#import "DSwitchLightRightView.h"
+#import "EDimmerSwitchLight.h"
 #import "RegulusSDK.h"
 #import "KVNProgress.h"
-#import "EDimmerLightProxys.h"
+#import "EDimmerSwitchLightProxy.h"
 
-@interface EngineerLightViewController () <CustomPickerViewDelegate, EngineerSliderViewDelegate, LightSliderButtonDelegate>{
+@interface EngineerDimmerSwitchViewController () <CustomPickerViewDelegate, LightSliderButtonDelegate>{
     
     NSMutableArray *_buttonArray;
     
@@ -27,20 +27,18 @@
     
     NSMutableArray *_selectedBtnArray;
     
-    EngineerSliderView *_zengyiSlider;
-    
     BOOL isSettings;
-    LightRightView *_rightView;
+    DSwitchLightRightView *_rightView;
     UIButton *okBtn;
     
     UIView *_proxysView;
 }
-@property (nonatomic, strong) EDimmerLight *_curProcessor;
+@property (nonatomic, strong) EDimmerSwitchLight *_curProcessor;
 
 
 @end
 
-@implementation EngineerLightViewController
+@implementation EngineerDimmerSwitchViewController
 @synthesize _lightSysArray;
 @synthesize _number;
 @synthesize _curProcessor;
@@ -82,16 +80,18 @@
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
-    [bottomBar addSubview:okBtn];
-    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
-    [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
-    okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-    [okBtn addTarget:self
-              action:@selector(okAction:)
-    forControlEvents:UIControlEventTouchUpInside];
+//    okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
+//    [bottomBar addSubview:okBtn];
+//    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+//    [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+//    okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+//    [okBtn addTarget:self
+//              action:@selector(okAction:)
+//    forControlEvents:UIControlEventTouchUpInside];
+//
+    
     
     
     _proxysView = [[UIView alloc] initWithFrame:CGRectMake(0,
@@ -100,28 +100,35 @@
                                                            SCREEN_HEIGHT-64-50)];
     [self.view addSubview:_proxysView];
     
-    
-    _zengyiSlider = [[EngineerSliderView alloc]
-                     initWithSliderBg:[UIImage imageNamed:@"engineer_zengyi2_n.png"]
-                     frame:CGRectZero];
-    [self.view addSubview:_zengyiSlider];
-    
-    //[_zengyiSlider setRoadImage:[UIImage imageNamed:@"e_v_slider_road.png"]];
-    [_zengyiSlider setIndicatorImage:[UIImage imageNamed:@"wireless_slide_s.png"]];
-    _zengyiSlider.topEdge = 90;
-    _zengyiSlider.bottomEdge = 55;
-    _zengyiSlider.maxValue = 100;
-    _zengyiSlider.minValue = 0;
-    _zengyiSlider.delegate = self;
-    [_zengyiSlider resetScale];
-    _zengyiSlider.center = CGPointMake(SCREEN_WIDTH - 150, SCREEN_HEIGHT/2);
-    
+
     [self getCurrentDeviceDriverProxys];
     
-    UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture2:)];
-    tapGesture.cancelsTouchesInView =  NO;
-    tapGesture.numberOfTapsRequired = 1;
-    [_proxysView addGestureRecognizer:tapGesture];
+//    UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture2:)];
+//    tapGesture.cancelsTouchesInView =  NO;
+//    tapGesture.numberOfTapsRequired = 1;
+//    [_proxysView addGestureRecognizer:tapGesture];
+    
+    [self showRightView];
+}
+
+- (void) showRightView{
+    
+    if(_rightView == nil)
+    {
+        _rightView = [[DSwitchLightRightView alloc]
+                      initWithFrame:CGRectMake(SCREEN_WIDTH-300,
+                                               64, 300, SCREEN_HEIGHT-114)];
+    } else {
+        [UIView beginAnimations:nil context:nil];
+        _rightView.frame  = CGRectMake(SCREEN_WIDTH-300,
+                                       64, 300, SCREEN_HEIGHT-114);
+        [UIView commitAnimations];
+    }
+    [self.view addSubview:_rightView];
+    
+    _rightView._currentObj = _curProcessor;
+    [_rightView refreshView:_curProcessor];
+    
 }
 
 - (void) handleTapGesture2:(UIGestureRecognizer*)sender{
@@ -158,11 +165,11 @@
     
     int cellWidth = 92;
     int cellHeight = 92;
-    int colNumber = ENGINEER_VIEW_COLUMN_N;
+    int colNumber = 6;
     int space = ENGINEER_VIEW_COLUMN_GAP;
     
     
-    NSDictionary *chLevelMap = [(EDimmerLightProxys*)_curProcessor._proxyObj getChLevelRecords];
+    NSDictionary *chLevelMap = [(EDimmerSwitchLightProxy*)_curProcessor._proxyObj getChLevelRecords];
     
     for (int i = 0; i < self._number; i++) {
         
@@ -170,18 +177,25 @@
         int col = index%colNumber;
         int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+top;
+
         
         LightSliderButton *btn = [[LightSliderButton alloc] initWithFrame:CGRectMake(startX, startY, 120, 120)];
         btn.tag = i;
         btn.delegate = self;
         [_proxysView addSubview:btn];
         
+        btn._grayBackgroundImage = [UIImage imageNamed:@"dianyuanshishiqi_n.png"];
+        btn._lightBackgroundImage = [UIImage imageNamed:@"dianyuanshishiqi_s.png"];
+
+        [btn hiddenProgress];
+        
+        [btn turnOnOff:NO];
+        
         id key = [NSNumber numberWithInt:i+1];
         if([chLevelMap objectForKey:key])
         {
-            int level = [[chLevelMap objectForKey:key] intValue];
-            float f = level/100.0;
-            [btn setCircleValue:f];
+            BOOL power = [[chLevelMap objectForKey:key] boolValue];
+            [btn turnOnOff:power];
         }
         
     
@@ -208,23 +222,11 @@
     
 #ifdef OPEN_REG_LIB_DEF
     
-    IMP_BLOCK_SELF(EngineerLightViewController);
+    IMP_BLOCK_SELF(EngineerDimmerSwitchViewController);
     
     RgsDriverObj *driver = _curProcessor._driver;
     if([driver isKindOfClass:[RgsDriverObj class]])
     {
-//        [[RegulusSDK sharedRegulusSDK] GetDriverProxys:driver.m_id completion:^(BOOL result, NSArray *proxys, NSError *error) {
-//            if (result) {
-//                if ([proxys count]) {
-//
-//                   // block_self._proxys = proxys;
-//                   // [block_self initChannels];
-//                }
-//            }
-//            else{
-//                [KVNProgress showErrorWithStatus:@"中控链接断开！"];
-//            }
-//        }];
         
         [[RegulusSDK sharedRegulusSDK] GetDriverCommands:driver.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
             if (result) {
@@ -246,14 +248,14 @@
     
     id proxy = _curProcessor._proxyObj;
     
-    EDimmerLightProxys *vpro = nil;
-    if(proxy && [proxy isKindOfClass:[EDimmerLightProxys class]])
+    EDimmerSwitchLightProxy *vpro = nil;
+    if(proxy && [proxy isKindOfClass:[EDimmerSwitchLightProxy class]])
     {
         vpro = proxy;
     }
     else
     {
-        vpro = [[EDimmerLightProxys alloc] init];
+        vpro = [[EDimmerSwitchLightProxy alloc] init];
     }
     
     vpro._deviceId = driver.m_id;
@@ -271,43 +273,10 @@
     [self layoutChannels];
 }
 
-- (void) didSliderValueChanged:(float)value object:(id)object {
-    
-    float circleValue = (value + 0.0f)/100.0f;
-    for (LightSliderButton *button in _selectedBtnArray) {
-        
-        [button setCircleValue:circleValue];
-        
-        EDimmerLightProxys *vpro = self._curProcessor._proxyObj;
-        int ch = (int)button.tag + 1;
-        if([vpro isKindOfClass:[EDimmerLightProxys class]])
-        {
-            [vpro controlDeviceLightLevel:(int)value ch:ch];
-            
-            
-        }
-    }
-}
-
-- (void) didSlideButtonValueChanged:(float)value slbtn:(LightSliderButton*)slbtn{
-    
-    int circleValue = value*100.0f;
-    
-    EDimmerLightProxys *vpro = self._curProcessor._proxyObj;
-    int ch = (int)slbtn.tag + 1;
-    if([vpro isKindOfClass:[EDimmerLightProxys class]])
-    {
-        [vpro controlDeviceLightLevel:circleValue ch:ch];
-    }
-    
-    [_zengyiSlider setScaleValue:circleValue];
-}
-
-- (void) didSliderEndChanged:(id)object {
-    
-}
-
 - (void) didTappedMSelf:(LightSliderButton*)slbtn{
+
+    EDimmerSwitchLightProxy *vpro = self._curProcessor._proxyObj;
+    int ch = (int)slbtn.tag + 1;
     
     // want to choose it
     if (![_selectedBtnArray containsObject:slbtn]) {
@@ -318,6 +287,12 @@
         numberL.textColor = YELLOW_COLOR;
 
         [slbtn enableValueSet:YES];
+        
+        if([vpro isKindOfClass:[EDimmerSwitchLightProxy class]])
+        {
+            [vpro controlDeviceLightPower:1 ch:ch];
+        }
+        
     } else {
         // remove it
         [_selectedBtnArray removeObject:slbtn];
@@ -326,45 +301,21 @@
         numberL.textColor = [UIColor whiteColor];;
 
         [slbtn enableValueSet:NO];
-    }
-}
-
--(void)handleTapGesture:(UIGestureRecognizer*)gestureRecognizer {
-    int tag = (int) gestureRecognizer.view.tag;
-    
-    LightSliderButton *btn;
-    for (LightSliderButton *button in _selectedBtnArray) {
-        if (button.tag == tag) {
-            btn = button;
-            break;
+        
+        if([vpro isKindOfClass:[EDimmerSwitchLightProxy class]])
+        {
+            [vpro controlDeviceLightPower:0 ch:ch];
         }
-    }
-    // want to choose it
-    if (btn == nil) {
-        LightSliderButton *button = [_buttonArray objectAtIndex:tag];
-        [_selectedBtnArray addObject:button];
-        
-        UILabel *numberL = [_buttonNumberArray objectAtIndex:tag];
-        numberL.textColor = YELLOW_COLOR;
-        
-        [button enableValueSet:YES];
-    } else {
-        // remove it
-        [_selectedBtnArray removeObject:btn];
-        
-        UILabel *numberL = [_buttonNumberArray objectAtIndex:tag];
-        numberL.textColor = [UIColor whiteColor];;
-        
-        [btn enableValueSet:NO];
     }
 }
 
 - (void) okAction:(id)sender{
+    
     if (!isSettings) {
         
         if(_rightView == nil)
         {
-        _rightView = [[LightRightView alloc]
+        _rightView = [[DSwitchLightRightView alloc]
                       initWithFrame:CGRectMake(SCREEN_WIDTH-300,
                                                64, 300, SCREEN_HEIGHT-114)];
         } else {
@@ -383,13 +334,12 @@
         
         isSettings = YES;
     } else {
-        
         if (_rightView) {
             [_rightView removeFromSuperview];
         }
         
-//        [_rightView saveCurrentSetting];
-//        [_curProcessor uploadDriverIPProperty];
+        [_rightView saveCurrentSetting];
+        [_curProcessor uploadDriverIPProperty];
 
         
         [okBtn setTitle:@"设置" forState:UIControlStateNormal];

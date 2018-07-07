@@ -39,5 +39,7 @@
 -(void) setTitle:(NSString*)title;
 -(void) setvalueTitle:(NSString*)title;
 
+- (void) hiddenProgress;
+- (void) turnOnOff:(BOOL)isON;
 @end
 
