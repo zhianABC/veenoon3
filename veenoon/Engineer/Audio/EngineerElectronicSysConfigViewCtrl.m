@@ -155,13 +155,35 @@
     
     self._powerProxys = [NSMutableArray array];
     
-    for (int i = 0; i < [_proxys count]; i++) {
+    if([_currentObj._proxys count])//已经创建过
+    {
+        self._powerProxys = _currentObj._proxys;
+    }
+    else //没创建过
+    {
+        //创建
+        for (int i = 0; i < [_proxys count]; i++) {
+            
+            RgsProxyObj * rgsProxy = [_proxys objectAtIndex:i];
+
+            APowerESetProxy *apxy = [[APowerESetProxy alloc] init];
+            apxy._rgsProxyObj = rgsProxy;
+            [_powerProxys addObject:apxy];
+        }
         
-        RgsProxyObj * rgsProxy = [_proxys objectAtIndex:i];
+        _currentObj._proxys = _powerProxys;
+    }
+    
+    for (int i = 0; i < [_powerProxys count]; i++) {
         
-        APowerESetProxy *apxy = [[APowerESetProxy alloc] init];
-        apxy._rgsProxyObj = rgsProxy;
-        [_powerProxys addObject:apxy];
+        /*如果是从场景还原来的，需要recovery data
+        APowerESetProxy *vap = [_powerProxys objectAtIndex:i];
+        NSDictionary *dic = [_curProcessor inputChannelAtIndex:i];
+        if(dic)
+        {
+            [vap recoverWithDictionary:dic];
+        }
+        */
         
         int row = index/colNumber;
         int col = index%colNumber;

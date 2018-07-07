@@ -17,7 +17,7 @@
 @property (nonatomic, strong) NSMutableArray *_lines;
 @property (nonatomic, strong) id _proxyObj;
 @property (nonatomic, strong) NSArray *_localSavedCommands;
-//<VAProcessorProxys>
+//<APowerSetProxy>
 @property (nonatomic, strong) NSMutableArray *_proxys;
 
 - (NSString*) deviceName;
