@@ -51,6 +51,12 @@
     return self;
 }
 
+- (void) recoverWithDictionary:(NSDictionary *)data
+{
+    
+    
+}
+
 - (BOOL) haveProxyCommandLoaded{
     
     if(_rgsCommands)
