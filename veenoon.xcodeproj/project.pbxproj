@@ -275,6 +275,7 @@
 		3494583320B6E248006D1D05 /* EngineerNewTeslariViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3494583120B6E247006D1D05 /* EngineerNewTeslariViewCtrl.m */; };
 		3495267E20F091E700A6BF00 /* EngineerDimmerSwitchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3495267D20F091E700A6BF00 /* EngineerDimmerSwitchViewController.m */; };
 		3495268120F0C5B700A6BF00 /* DSwitchLightRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3495267F20F0C5B700A6BF00 /* DSwitchLightRightView.m */; };
+		3495268420F0E07600A6BF00 /* VTVSetProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3495268320F0E07600A6BF00 /* VTVSetProxy.m */; };
 		3496B75A1FCAF3C5005F4857 /* SignalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3496B7591FCAF3C5005F4857 /* SignalView.m */; };
 		349DADDF206E8D02001593DE /* AudioEHand2Hand.m in Sources */ = {isa = PBXBuildFile; fileRef = 349DADD1206E8D02001593DE /* AudioEHand2Hand.m */; };
 		349DADE0206E8D02001593DE /* AudioEWirlessMike.m in Sources */ = {isa = PBXBuildFile; fileRef = 349DADD3206E8D02001593DE /* AudioEWirlessMike.m */; };
@@ -1329,6 +1330,8 @@
 		3495267D20F091E700A6BF00 /* EngineerDimmerSwitchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EngineerDimmerSwitchViewController.m; sourceTree = "<group>"; };
 		3495267F20F0C5B700A6BF00 /* DSwitchLightRightView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DSwitchLightRightView.m; sourceTree = "<group>"; };
 		3495268020F0C5B700A6BF00 /* DSwitchLightRightView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DSwitchLightRightView.h; sourceTree = "<group>"; };
+		3495268220F0E07600A6BF00 /* VTVSetProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VTVSetProxy.h; sourceTree = "<group>"; };
+		3495268320F0E07600A6BF00 /* VTVSetProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VTVSetProxy.m; sourceTree = "<group>"; };
 		3496B7581FCAF3C5005F4857 /* SignalView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignalView.h; sourceTree = "<group>"; };
 		3496B7591FCAF3C5005F4857 /* SignalView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignalView.m; sourceTree = "<group>"; };
 		349DADD1206E8D02001593DE /* AudioEHand2Hand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioEHand2Hand.m; sourceTree = "<group>"; };
@@ -3404,6 +3407,8 @@
 				EBD009C420906AB800920849 /* VPinJieSet.m */,
 				EBD009C620907B0700920849 /* VTVSet.h */,
 				EBD009C720907B0700920849 /* VTVSet.m */,
+				3495268220F0E07600A6BF00 /* VTVSetProxy.h */,
+				3495268320F0E07600A6BF00 /* VTVSetProxy.m */,
 				EBD009C920907E8C00920849 /* VLuBoJiSet.h */,
 				EBD009CA20907E8C00920849 /* VLuBoJiSet.m */,
 			);
@@ -4616,6 +4621,7 @@
 				EB09EF311FD97CB500C968CA /* EngineerAudioDevicePluginViewCtrl.m in Sources */,
 				04DE1EB41AD6AEE000D49E2F /* UIImage+GIF.m in Sources */,
 				EB3B73B51FE6395C001941CF /* EngineerSliderView.m in Sources */,
+				3495268420F0E07600A6BF00 /* VTVSetProxy.m in Sources */,
 				04DE1EA21AD6AEE000D49E2F /* Reachability.m in Sources */,
 				EB1717971FF5F5AB00CBDB81 /* EngineerLightViewController.m in Sources */,
 				3495267E20F091E700A6BF00 /* EngineerDimmerSwitchViewController.m in Sources */,

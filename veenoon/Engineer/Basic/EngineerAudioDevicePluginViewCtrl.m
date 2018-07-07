@@ -14,6 +14,8 @@
 #import "IconCenterTextButton.h"
 #import "DataSync.h"
 #import "AudioEProcessor.h"
+#import "DataCenter.h"
+
 
 
 @interface EngineerAudioDevicePluginViewCtrl () <CenterCustomerPickerViewDelegate>{
@@ -52,28 +54,14 @@
     
     self._mapDrivers = [NSMutableDictionary dictionary];
     
-    NSDictionary *audioDic = @{@"type":@"audio",
-                               @"name":@"音频处理器",
-                               @"driver":UUID_Audio_Processor,
-                               @"brand":@"Teslaria",
-                               @"icon":@"engineer_yinpinchuli_n.png",
-                               @"icon_s":@"engineer_yinpinchuli_s.png",
-                               @"driver_class":@"AudioEProcessor",
-                               @"ptype":@"Audio Processor"
-                               };
+    NSArray *drivers = [[DataCenter defaultDataCenter] driversWithType:@"audio"];
     
-    NSDictionary *audioDic2 = @{@"type":@"audio",
-                               @"name":@"会议",
-                               @"driver":UUID_Audio_Mixer,
-                               @"brand":@"Teslaria",
-                               @"icon":@"engineer_huiyi_n.png",
-                               @"icon_s":@"engineer_huiyi_s.png",
-                               @"driver_class":@"AudioEMix",
-                               @"ptype":@"Audio Mixer"
-                               };
+    for(NSDictionary *dr in drivers)
+    {
+        [self._mapDrivers setObject:dr forKey:[dr objectForKey:@"driver"]];
+    }
     
-    [_mapDrivers setObject:audioDic forKey:UUID_Audio_Processor];
-    [_mapDrivers setObject:audioDic2 forKey:UUID_Audio_Mixer];
+    
 }
 
 - (void)viewDidLoad {

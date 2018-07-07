@@ -12,6 +12,9 @@
 #import "VTVSet.h"
 #import "PlugsCtrlTitleHeader.h"
 #import "BrandCategoryNoUtil.h"
+#import "RegulusSDK.h"
+#import "VTVSetProxy.h"
+#import "KVNProgress.h"
 
 @interface EngineerTVViewController () <CustomPickerViewDelegate>{
     NSMutableArray *_inPutBtnArray;
@@ -81,7 +84,7 @@
     [self.view addSubview:_tanchuBtn];
     
     [_tanchuBtn addTarget:self
-                   action:@selector(tanchuAction:)
+                   action:@selector(menuAction:)
          forControlEvents:UIControlEventTouchUpInside];
 
     int playerLeft = 165;
@@ -98,7 +101,7 @@
     [self.view addSubview:lastVideoUpBtn];
     
     [lastVideoUpBtn addTarget:self
-                       action:@selector(lastSingAction:)
+                       action:@selector(leftAction:)
              forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *okPlayerBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
@@ -113,7 +116,7 @@
     okPlayerBtn.titleLabel.font = [UIFont boldSystemFontOfSize:24];
     [self.view addSubview:okPlayerBtn];
     
-    [okPlayerBtn addTarget:self action:@selector(audioPlayHoldAction:)
+    [okPlayerBtn addTarget:self action:@selector(okAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *volumnUpBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
@@ -127,7 +130,7 @@
     [self.view addSubview:volumnUpBtn];
     
     [volumnUpBtn addTarget:self
-                    action:@selector(volumnAddAction:)
+                    action:@selector(upAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *nextPlayBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
@@ -141,7 +144,7 @@
     [self.view addSubview:nextPlayBtn];
     
     [nextPlayBtn addTarget:self
-                    action:@selector(nextSingAction:)
+                    action:@selector(rightAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *volumnDownBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
@@ -155,36 +158,112 @@
     [self.view addSubview:volumnDownBtn];
     
     [volumnDownBtn addTarget:self
-                      action:@selector(volumnMinusAction:)
+                      action:@selector(downAction:)
             forControlEvents:UIControlEventTouchUpInside];
-}
-
-- (void) nextSingAction:(id)sender{
+    
+    
+    [self getCurrentDeviceDriverProxys];
     
 }
 
-- (void) audioPlayHoldAction:(id)sender{
+
+- (void) getCurrentDeviceDriverProxys{
+    
+    if(_currentObj == nil)
+        return;
+    
+#ifdef OPEN_REG_LIB_DEF
+    
+    IMP_BLOCK_SELF(EngineerTVViewController);
+    
+    RgsDriverObj *driver = _currentObj._driver;
+    if([driver isKindOfClass:[RgsDriverObj class]])
+    {
+        [[RegulusSDK sharedRegulusSDK] GetDriverProxys:driver.m_id
+                                            completion:^(BOOL result, NSArray *proxys, NSError *error) {
+            if (result) {
+                if ([proxys count]) {
+                    
+                    [block_self loadedTVDriverProxy:proxys];
+                    
+                }
+            }
+            else{
+                [KVNProgress showErrorWithStatus:@"中控链接断开！"];
+            }
+        }];
+    }
+#endif
+}
+
+- (void) loadedTVDriverProxy:(NSArray*)proxys{
+    
+    id proxy = self._currentObj._proxyObj;
+    
+    VTVSetProxy *vcam = nil;
+    if(proxy && [proxy isKindOfClass:[VTVSetProxy class]])
+    {
+        vcam = proxy;
+    }
+    else
+    {
+        vcam = [[VTVSetProxy alloc] init];
+    }
+    
+    vcam._rgsProxyObj = [proxys objectAtIndex:0];
+    [vcam checkRgsProxyCommandLoad];
+    
+    if([_currentObj._localSavedProxys count])
+    {
+        NSDictionary *local = [_currentObj._localSavedProxys objectAtIndex:0];
+        [vcam recoverWithDictionary:local];
+        
+    }
+    
+    self._currentObj._proxyObj = vcam;
     
 }
 
-- (void) lastSingAction:(id)sender{
+
+- (void) menuAction:(id)sender{
     
+    VTVSetProxy *vcam = _currentObj._proxyObj;
+    if(vcam)
+        [vcam controlDeviceMenu:@"MENU"];
 }
 
-- (void) volumnMinusAction:(id)sender{
+- (void) leftAction:(id)sender{
     
+    VTVSetProxy *vcam = _currentObj._proxyObj;
+    if(vcam)
+        [vcam controlDeviceMenu:@"LEFT"];
 }
 
-- (void) volumnAddAction:(id)sender{
+- (void) rightAction:(id)sender{
     
+    VTVSetProxy *vcam = _currentObj._proxyObj;
+    if(vcam)
+        [vcam controlDeviceMenu:@"RIGHT"];
 }
 
-- (void) tanchuAction:(id)sender{
+- (void) upAction:(id)sender{
     
+    VTVSetProxy *vcam = _currentObj._proxyObj;
+    if(vcam)
+        [vcam controlDeviceMenu:@"UP"];
 }
 
-- (void) settingsAction:(id)sender{
+- (void) downAction:(id)sender{
     
+    VTVSetProxy *vcam = _currentObj._proxyObj;
+    if(vcam)
+        [vcam controlDeviceMenu:@"DOWN"];
+}
+- (void) okAction:(id)sender{
+    
+    VTVSetProxy *vcam = _currentObj._proxyObj;
+    if(vcam)
+        [vcam controlDeviceMenu:@"ENTER"];
 }
 
 - (void) cancelAction:(id)sender{

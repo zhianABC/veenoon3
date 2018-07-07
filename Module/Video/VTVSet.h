@@ -10,5 +10,20 @@
 #import "BasePlugElement.h"
 
 @interface VTVSet : BasePlugElement
+{
+    
+}
+@property (nonatomic, strong) id _IRDriverInfo;
+@property (nonatomic, strong) id _IRDriver;
+
+//<VDVDPlayerProxy>
+@property (nonatomic, strong) id _proxyObj;
+
+//<RgsConnectionObj>
+@property (nonatomic, strong) NSArray *_localSavedProxys;
+
+
+
+- (NSString*) deviceName;
 
 @end
