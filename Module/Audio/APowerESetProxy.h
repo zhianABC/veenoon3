@@ -20,6 +20,8 @@
 
 @property (nonatomic, assign) int _level;
 
+- (BOOL) haveProxyCommandLoaded;
+
 - (void) prepareLoadCommand:(NSArray*)cmds;
 
 - (NSDictionary *)getScenarioSliceLocatedShadow;

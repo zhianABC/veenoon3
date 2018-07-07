@@ -153,7 +153,15 @@
     int colNumber = 6;
     int space = ENGINEER_VIEW_COLUMN_GAP;
     
-    for (int i = 0; i < self._number; i++) {
+    self._powerProxys = [NSMutableArray array];
+    
+    for (int i = 0; i < [_proxys count]; i++) {
+        
+        RgsProxyObj * rgsProxy = [_proxys objectAtIndex:i];
+        
+        APowerESetProxy *apxy = [[APowerESetProxy alloc] init];
+        apxy._rgsProxyObj = rgsProxy;
+        [_powerProxys addObject:apxy];
         
         int row = index/colNumber;
         int col = index%colNumber;
@@ -187,7 +195,46 @@
         index++;
     }
     
+    if([_powerProxys count])
+    {
+        //只读取一个，因为所有的out的commands相同
+        NSMutableArray *proxyids = [NSMutableArray array];
+        APowerESetProxy *ape = [_powerProxys objectAtIndex:0];
+        [proxyids addObject:[NSNumber numberWithInt:ape._rgsProxyObj.m_id]];
+        
+        IMP_BLOCK_SELF(EngineerElectronicSysConfigViewCtrl);
+        
+        if(![ape haveProxyCommandLoaded])
+        {
+            [KVNProgress show];
+            [[RegulusSDK sharedRegulusSDK] GetProxyCommandDict:proxyids
+                                                    completion:^(BOOL result, NSDictionary *commd_dict, NSError *error) {
+                                                        
+                                                        [block_self loadAllCommands:commd_dict];
+                                                        
+                                                    }];
+        }
+    }
+    
+    
 }
+
+
+- (void) loadAllCommands:(NSDictionary*)commd_dict{
+    
+    if([[commd_dict allValues] count])
+    {
+        NSArray *cmds = [[commd_dict allValues] objectAtIndex:0];
+        
+        for(APowerESetProxy *vap in _powerProxys)
+        {
+            [vap prepareLoadCommand:cmds];
+        }
+    }
+    
+    [KVNProgress dismiss];
+}
+
 
 - (void) getCurrentDeviceDriverProxys {
     
