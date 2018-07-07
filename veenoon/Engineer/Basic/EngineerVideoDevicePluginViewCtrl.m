@@ -161,7 +161,7 @@
     int height = 200;
     
     _dianyuanguanliBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left, height,80, 110)];
-    [_dianyuanguanliBtn buttonWithIcon:[UIImage imageNamed:@"engineer_dianyuanguanli_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_dianyuanguanli_s.png"] text:@"电源管理" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
+    [_dianyuanguanliBtn buttonWithIcon:[UIImage imageNamed:@"engineer_dianyuanguanli_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_dianyuanguanli_s.png"] text:audio_power_sequencer normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_dianyuanguanliBtn addTarget:self action:@selector(dianyuanguanliAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_dianyuanguanliBtn];
     
@@ -233,7 +233,7 @@
     [_productTypePikcer removeArray];
     _productTypePikcer.delegate_=self;
     _productTypePikcer.fontSize = 14;
-    _productTypePikcer._pickerDataArray = @[@{@"values":@[@"电源管理",@"视频播放",video_camera_name,@"信息盒",@"远程视讯",@"视频处理",@"拼接屏",@"液晶电视",@"录播机",@"投影机"]}];
+    _productTypePikcer._pickerDataArray = @[@{@"values":@[audio_power_sequencer,@"视频播放",video_camera_name,@"信息盒",@"远程视讯",@"视频处理",@"拼接屏",@"液晶电视",@"录播机",@"投影机"]}];
     [_productTypePikcer selectRow:0 inComponent:0];
     _productTypePikcer._selectColor = RGB(253, 180, 0);
     _productTypePikcer._rowNormalColor = [UIColor whiteColor];
@@ -595,7 +595,7 @@
     NSString *brand = [val objectForKey:@"value"];
             
             
-    if ([@"电源管理" isEqualToString:brand]) {
+    if ([audio_power_sequencer isEqualToString:brand]) {
         [self dianyuanguanliAction:_dianyuanguanliBtn];
     } else if ([@"视频播放" isEqualToString:brand]) {
         [self shipinbofangAction:_shipinbofangBtn];

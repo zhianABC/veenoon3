@@ -133,6 +133,7 @@
 #define UUID_Video_Switch       @"2872dee1-4327-416f-bc64-d5770e927882"
 
 #define UUID_8CH_Dimmer_Light   @"c2ce8874-d422-4fb2-90ff-7caf8344bee4"
+#define UUID_Power_Sequencer    @"90ec882b-150f-438e-8e09-921584bc2e9c"
 
 #define LOGIN_REGULUS 1
 

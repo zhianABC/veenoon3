@@ -72,8 +72,19 @@
                                @"ptype":@"Audio Mixer"
                                };
     
+    NSDictionary *audioDic3 = @{@"type":@"audio",
+                                     @"name":@"电源管理",
+                                     @"driver":UUID_Power_Sequencer,
+                                     @"brand":@"Teslaria",
+                                     @"icon":@"engineer_dianyuanguanli_n.png",
+                                     @"icon_s":@"engineer_dianyuanguanli_s.png",
+                                     @"driver_class":@"APowerESet",
+                                     @"ptype":@"Power Sequencer"
+                                     };
+    
     [_mapDrivers setObject:audioDic forKey:UUID_Audio_Processor];
     [_mapDrivers setObject:audioDic2 forKey:UUID_Audio_Mixer];
+    [_mapDrivers setObject:audioDic3 forKey:UUID_Power_Sequencer];
 }
 
 - (void)viewDidLoad {
@@ -188,7 +199,7 @@
     _productTypePikcer.delegate_=self;
     _productTypePikcer.tag = 101;
     _productTypePikcer.fontSize=14;
-    _productTypePikcer._pickerDataArray = @[@{@"values":@[@"电源管理",
+    _productTypePikcer._pickerDataArray = @[@{@"values":@[audio_power_sequencer,
                                                           @"音乐播放",
                                                           @"无线话筒",
                                                           audio_mixer_name,
@@ -445,7 +456,15 @@
     NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
     
-    [self initBrandAndTypes];
+    self._currentBrands = @[@"Teslaria"];
+    self._currentTypes = @[@"Power Sequencer"];
+    self._driverUdids = @[UUID_Power_Sequencer];
+    
+    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
+    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
+    
+    [_brandPicker selectRow:0 inComponent:0];
+    [_productCategoryPicker selectRow:0 inComponent:0];
 }
 -(void) didScrollPickerValue:(NSString*)brand {
     

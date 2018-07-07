@@ -143,6 +143,16 @@
     }
     return self;
 }
+
+-(void) refreshView:(APowerESet*) powerSet {
+    
+    self._objSet = powerSet;
+    
+}
+
+- (void) saveCurrentSetting{
+    
+}
     
 - (void) didPickerValue:(NSDictionary*)values{
     

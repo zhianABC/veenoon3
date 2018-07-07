@@ -15,7 +15,10 @@
     
 }
 @property (nonatomic, strong) NSMutableArray *_lines;
+@property (nonatomic, strong) id _proxyObj;
+@property (nonatomic, strong) NSArray *_localSavedCommands;
 
+- (NSString*) deviceName;
 
 - (void) initLabs:(int)num;
 
