@@ -35,6 +35,7 @@
 - (id) initWithSliderBg:(UIImage*)sliderBg frame:(CGRect)frame;
 
 - (void) setScaleValue:(int)value;
+- (void) initScaleValue:(int)value;
 
 - (int) getScaleValue;
 

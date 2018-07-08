@@ -16,6 +16,7 @@
 {
     
 }
+@property (nonatomic, strong) NSMutableDictionary *_driverCmdsMap;
 
 
 @end
@@ -25,6 +26,8 @@
 @synthesize _proxyObj;
 @synthesize _localSavedCommands;
 @synthesize _proxys;
+
+@synthesize _driverCmdsMap;
 
 - (id) init
 {
@@ -311,6 +314,77 @@
         }
     }
     
+}
+
+
+- (void) checkRgsDriverCommandLoad{
+    
+    
+    if(_driverCmdsMap && [_driverCmdsMap count])
+    {
+        return;
+    }
+    else
+    {
+        self._driverCmdsMap = [NSMutableDictionary dictionary];
+        
+        IMP_BLOCK_SELF(APowerESet);
+        
+        if(_driver)
+        {
+            RgsDriverObj *obj = _driver;
+            [[RegulusSDK sharedRegulusSDK] GetDriverCommands:obj.m_id
+                                                  completion:^(BOOL result, NSArray *commands, NSError *error) {
+                
+                if (result)
+                {
+                    if ([commands count]) {
+                        //block_self._rgsCommands = commands;
+                        for(RgsCommandInfo *cmd in commands)
+                        {
+                            [block_self._driverCmdsMap setObject:cmd forKey:cmd.name];
+                        }
+                        
+                        //_isSetOK = YES;
+                    }
+                }
+                else
+                {
+                    NSString *errorMsg = [NSString stringWithFormat:@"%@ - proxyid:%d",
+                                          [error description], (int)obj.m_id];
+                    
+                    [KVNProgress showErrorWithStatus:errorMsg];
+                }
+            }];
+        
+        }
+    }
+    
+}
+
+
+- (void) controlPower:(BOOL)isPowerOn{
+     RgsCommandInfo *cmd = [_driverCmdsMap objectForKey:@"ORDER_LINK"];
+    if (!isPowerOn) {
+        cmd = [_driverCmdsMap objectForKey:@"INVERSE_BREAK"];
+    }
+    
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        RgsDriverObj *obj = _driver;
+        
+        [[RegulusSDK sharedRegulusSDK] ControlDevice:obj.m_id
+                                                 cmd:cmd.name
+                                               param:param completion:^(BOOL result, NSError *error) {
+                                                   if (result) {
+                                                       
+                                                   }
+                                                   else{
+                                                       
+                                                   }
+                                               }];
+    }
 }
 
 @end

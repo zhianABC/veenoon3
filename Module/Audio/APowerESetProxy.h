@@ -16,9 +16,15 @@
 }
 @property (nonatomic, strong) RgsProxyObj *_rgsProxyObj;
 @property (nonatomic, assign) NSUInteger _deviceId;
+@property (nonatomic, strong) NSString *_relayStatus;
+@property (nonatomic, assign) int _breakDuration;
+@property (nonatomic, assign) int _linkDuration;
 
 
 @property (nonatomic, assign) int _level;
+
+- (void) controlRelayStatus:(NSString*)relayStatus;
+- (void) controlRelayDuration:(BOOL)isBreak withDuration:(int)duration;
 
 - (BOOL) haveProxyCommandLoaded;
 
@@ -28,9 +34,6 @@
 - (void) checkRgsProxyCommandLoad:(NSArray*)cmds;
 
 - (BOOL) isSetChanged;
-
-////生成场景片段
-- (NSArray*) generateEventOperation_ChLevel;
 
 /////场景还原
 - (void) recoverWithDictionary:(NSDictionary*)data;
