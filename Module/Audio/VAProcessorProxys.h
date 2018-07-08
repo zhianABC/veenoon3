@@ -259,6 +259,12 @@
 
 - (id) generateEventOperation_Inverted;
 
+//高通
+- (id) generateEventOperation_hp;
+
+//低通
+- (id) generateEventOperation_lp;
+
 
 /////场景还原
 - (void) recoverWithDictionary:(NSDictionary*)data;
