@@ -17,6 +17,7 @@ class MDataModel: NSObject {
 }
 
 @objc protocol MixFilterGraphViewDelegate: NSObjectProtocol {
+    func filterGraphViewPEQFilterBandChoosed(band: Int)
     func filterGraphViewPEQFilterChanged(band: Int, freq: Float, gain: Float)
     func filterGraphViewPEQFilterChanged(band: Int, qIndex: Int, qValue: Float)
 }
@@ -168,11 +169,15 @@ class MixFilterGraphView: UIView {
     private var d_factor = [Double](repeating: 0.0, count: 3)
     private var n_factor = [Double](repeating: 0.0, count: 3)
     
-    @objc weak var delegate: FilterGraphViewDelegate?
+    @objc weak var delegate: MixFilterGraphViewDelegate?
     
     private var pinchBandIndex: Int = -1
     private let pinchGestureBeganScale: CGFloat = 1.0
     private var pinchGestureLastScale: CGFloat = 1.0
+    
+    ///
+    private var touch_moved_flag = false
+    private var touched_move_point_i: Int = 0
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -201,6 +206,8 @@ class MixFilterGraphView: UIView {
         var lastX: CGFloat!
         var lastY: CGFloat!
         
+        touch_moved_flag = false
+        
         for touch in touches {
             let touchPoint = touch.location(in: self)
             lastX = touchPoint.x
@@ -210,18 +217,24 @@ class MixFilterGraphView: UIView {
         for i in 0 ..< (m_peqBand+2) {
             if (lastX>(m_moveRect[i].origin.x-5) && lastX<(m_moveRect[i].origin.x+m_moveRect[i].width+5) && lastY>(m_moveRect[i].origin.y-5) && lastY<(m_moveRect[i].origin.y+m_moveRect[i].height+5)) {
                 bPressed[i] = true
+                touched_move_point_i = i;
+                
                 break
             }
             else {
                 bPressed[i] = false
             }
         }
+        
+        delegate?.filterGraphViewPEQFilterBandChoosed(band : touched_move_point_i);
     }
     
     // 触摸移动处理
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         var lastX: CGFloat = 0.0
         var lastY: CGFloat = 0.0
+        
+        touch_moved_flag = true
         
         for touch in touches {
             let touchPoint = touch.location(in: self)
@@ -288,9 +301,21 @@ class MixFilterGraphView: UIView {
     
     // 触摸释放处理
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        for i in 0 ..< (m_peqBand+2) {
-//            bPressed[i] = false
-//        }
+        
+        for i in 0 ..< (m_peqBand+2) {
+            
+            if(touched_move_point_i != i)
+            {
+                bPressed[i] = false
+            }
+        }
+        
+        if(!touch_moved_flag)
+        {
+            updateCurve();
+        }
+        
+        touch_moved_flag = false
     }
     
     // 额外的初始化
@@ -874,6 +899,7 @@ class MixFilterGraphView: UIView {
     
     private func updateCurve() {
         H = Array<Float>(repeating: 0.0, count: MixFilterGraphView.NF)
+        
         
         if (!hpf_byp)
         {

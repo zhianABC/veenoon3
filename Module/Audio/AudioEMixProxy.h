@@ -56,6 +56,8 @@
 - (NSMutableDictionary*)getPressMinMax;
 - (NSMutableDictionary*)getNoiseMinMax;
 
+- (NSString *)gainWithPEQWithBand:(NSString*)bandkey;
+
 - (void) checkRgsProxyCommandLoad:(NSArray*)cmds;
 
 - (void) controlDeviceVol:(float)db force:(BOOL)force;

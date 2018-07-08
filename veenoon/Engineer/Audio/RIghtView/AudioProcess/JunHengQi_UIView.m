@@ -10,7 +10,7 @@
 #import "veenoon-Swift.h"
 #import "SlideButton.h"
 
-@interface JunHengQi_UIView ()<SlideButtonDelegate> {
+@interface JunHengQi_UIView ()<SlideButtonDelegate, MixFilterGraphViewDelegate> {
     UILabel *gaotongL;
     UILabel *gaotongL2;
     
@@ -21,6 +21,8 @@
     int _peqMax;
     
     MixFilterGraphView *fglm;
+    
+    int _curIndex;
 }
 @end
 
@@ -45,6 +47,7 @@
         fglm = [[MixFilterGraphView alloc] initWithFrame:rc];
         fglm.backgroundColor = [UIColor clearColor];
         [self addSubview:fglm];
+        fglm.delegate = self;
         
         int startH = CGRectGetMaxY(fglm.frame);
         int startX = 420;
@@ -74,6 +77,8 @@
         
         NSMutableDictionary *peqDic = [_currentObj._proxyObj getPEQMinMax];
         _peqRateArray = [peqDic objectForKey:@"RATE"];
+        
+        _curIndex = 0;
         
         _peqMax = [[peqDic objectForKey:@"max"] intValue];
         _peqMin = [[peqDic objectForKey:@"min"] intValue];
@@ -107,12 +112,68 @@
 
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
-    int k = (value *(_peqMax-_peqMin)) + _peqMin;
-    gaotongL.text = [NSString stringWithFormat:@"%d dB", k];
+    float k = (value *(_peqMax-_peqMin)) + _peqMin;
+    gaotongL.text = [NSString stringWithFormat:@"%0.0f dB", k];
     
-    [_currentObj._proxyObj controlMixPEQ:[NSString stringWithFormat:@"%d", k] withRate:@"180"];
+    if(_curIndex < [_peqRateArray count])
+    {
+        id rateKey = [_peqRateArray objectAtIndex:_curIndex];
+        [_currentObj._proxyObj controlMixPEQ:[NSString stringWithFormat:@"%0.0f", k]
+                                    withRate:rateKey];
+    }
+    
+    [fglm setPEQWithBand:_curIndex
+                    gain:k];
 }
 
+- (void)filterGraphViewPEQFilterBandChoosedWithBand:(NSInteger)band{
+    
+    _curIndex = band;
+    
+    if(_curIndex < [_peqRateArray count])
+    {
+        id rateKey = [_peqRateArray objectAtIndex:_curIndex];
+        float gain = [[_currentObj._proxyObj gainWithPEQWithBand:rateKey] floatValue];
+    
+        float highMax = (_peqMax - _peqMin);
+        if(highMax)
+        {
+            float f = (gain - _peqMin)/highMax;
+            f = fabsf(f);
+            [btnJH setCircleValue:f];
+            
+            gaotongL.text = [NSString stringWithFormat:@"%0.0f dB", gain];
+        }
+    }
+    
+    
+}
+- (void)filterGraphViewPEQFilterChangedWithBand:(NSInteger)band freq:(float)freq gain:(float)gain{
+    
+    _curIndex = band;
+    
+    if(_curIndex < [_peqRateArray count])
+    {
+        id rateKey = [_peqRateArray objectAtIndex:_curIndex];
 
+        [_currentObj._proxyObj controlMixPEQ:[NSString stringWithFormat:@"%0.0f", gain]
+                                    withRate:rateKey];
+        
+        float highMax = (_peqMax - _peqMin);
+        if(highMax)
+        {
+            float f = (gain - _peqMin)/highMax;
+            f = fabsf(f);
+            [btnJH setCircleValue:f];
+            
+            gaotongL.text = [NSString stringWithFormat:@"%0.0f dB", gain];
+        }
+    }
+}
+
+- (void)filterGraphViewPEQFilterChangedWithBand:(NSInteger)band qIndex:(NSInteger)qIndex qValue:(float)qValue{
+    
+    
+}
 
 @end
