@@ -163,6 +163,7 @@
 		341CE4A820A428D9009DBC01 /* ComDriver.m in Sources */ = {isa = PBXBuildFile; fileRef = 341CE4A720A428D9009DBC01 /* ComDriver.m */; };
 		341E75E4209BF94C00E69DB2 /* VAProcessorProxys.m in Sources */ = {isa = PBXBuildFile; fileRef = 341E75E3209BF94C00E69DB2 /* VAProcessorProxys.m */; };
 		341E7BE5205BFD7400E2DEA0 /* back_white_ico@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 341E7BE4205BFD7300E2DEA0 /* back_white_ico@2x.png */; };
+		341FFA2120F1C8C6008CD558 /* HLFilterGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341FFA2020F1C8C6008CD558 /* HLFilterGraphView.swift */; };
 		3421001D20A807DD008497FF /* CreateScenarioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3421001C20A807DD008497FF /* CreateScenarioViewController.m */; };
 		3421002020A80AE2008497FF /* DeviceCmdSlice.m in Sources */ = {isa = PBXBuildFile; fileRef = 3421001F20A80AE2008497FF /* DeviceCmdSlice.m */; };
 		3421561820597293005205D6 /* slide_btn_light_nokd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3421561620597292005205D6 /* slide_btn_light_nokd@2x.png */; };
@@ -1161,6 +1162,7 @@
 		341E75E2209BF94C00E69DB2 /* VAProcessorProxys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VAProcessorProxys.h; sourceTree = "<group>"; };
 		341E75E3209BF94C00E69DB2 /* VAProcessorProxys.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VAProcessorProxys.m; sourceTree = "<group>"; };
 		341E7BE4205BFD7300E2DEA0 /* back_white_ico@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_white_ico@2x.png"; sourceTree = "<group>"; };
+		341FFA2020F1C8C6008CD558 /* HLFilterGraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HLFilterGraphView.swift; sourceTree = "<group>"; };
 		3421001B20A807DD008497FF /* CreateScenarioViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CreateScenarioViewController.h; sourceTree = "<group>"; };
 		3421001C20A807DD008497FF /* CreateScenarioViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreateScenarioViewController.m; sourceTree = "<group>"; };
 		3421001E20A80AE2008497FF /* DeviceCmdSlice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeviceCmdSlice.h; sourceTree = "<group>"; };
@@ -3667,6 +3669,7 @@
 				3495268520F0EE7000A6BF00 /* MixFilterGraphView.swift */,
 				3454276D2046DED100E1A436 /* FilterGraphView.swift */,
 				3454276F2046DEE800E1A436 /* LimiterView.swift */,
+				341FFA2020F1C8C6008CD558 /* HLFilterGraphView.swift */,
 				3454276C2046DED000E1A436 /* veenoon-Bridging-Header.h */,
 				EBA16C5D2046EA4F00FC6E1F /* Fenpinqi_UIView.h */,
 				EBA16C5E2046EA4F00FC6E1F /* Fenpinqi_UIView.m */,
@@ -4605,6 +4608,7 @@
 				04DE1EA51AD6AEE000D49E2F /* SBJson4StreamParserState.m in Sources */,
 				341C60C41FDCF1EA003A5490 /* ECPlusSelectView.m in Sources */,
 				34890CA820E4AC2A00C8505D /* AirConditionProxy.m in Sources */,
+				341FFA2120F1C8C6008CD558 /* HLFilterGraphView.swift in Sources */,
 				04DE1E931AD6AEE000D49E2F /* Utilities.m in Sources */,
 				341CE49A20A3E90A009DBC01 /* ChooseDriverViewController.m in Sources */,
 				EB1A04601FC7156C007CC1F2 /* UserAudioConfigViewController.m in Sources */,

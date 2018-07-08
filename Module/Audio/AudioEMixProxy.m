@@ -25,6 +25,7 @@
 @property (nonatomic, strong) NSMutableDictionary *_cmdMap;
 @property (nonatomic, strong) NSMutableDictionary *_RgsSceneDeviceOperationShadow;
 
+@property (nonatomic, strong) NSMutableDictionary *_pointsData;
 
 @end
 
@@ -47,6 +48,8 @@
 @synthesize _mixHighFilter;
 
 @synthesize _RgsSceneDeviceOperationShadow;
+
+@synthesize _pointsData;
 
 
 - (id) init
@@ -243,8 +246,14 @@
     }
 }
 - (void) controlMixPEQ:(NSString*)mixPEQ withRate:(NSString*)peqRate {
+   
+    
     _mixPEQ = mixPEQ;
     _mixPEQRate = peqRate;
+    
+    //存储
+    [self._pointsData setObject:mixPEQ forKey:peqRate];
+    
     
     float mixPEQFloat = [mixPEQ floatValue];
     
@@ -538,6 +547,7 @@
                         [result setObject:param_info.min forKey:@"min"];
                     break;
                 } else if ([param_info.name isEqualToString:@"RATE"]) {
+                    
                     [peqRateArray addObjectsFromArray:param_info.available];
                     
                     [result setObject:peqRateArray forKey:@"RATE"];
@@ -547,6 +557,22 @@
     }
     
     return result;
+}
+
+- (void) initPEQDatas{
+    
+    self._pointsData = [NSMutableDictionary dictionary];
+    
+    NSDictionary *dic = [self getPEQMinMax];
+    
+    NSArray *peqRateArray = [dic objectForKey:@"RATE"];
+    if([peqRateArray count])
+    {
+        for(id key in peqRateArray)
+            [_pointsData setObject:@"0.0" forKey:key];
+    }
+    
+    
 }
 
 - (NSMutableDictionary*)getHighFilterMinMax {
@@ -590,10 +616,27 @@
             {
                 if([param_info.name isEqualToString:@"RATE"])
                 {
-                    if(param_info.max)
-                        [result setObject:param_info.max forKey:@"max"];
-                    if(param_info.min)
-                        [result setObject:param_info.min forKey:@"min"];
+                    if(param_info.max){
+                        
+                        float f = [param_info.max floatValue];
+                        if(f < 1000)
+                        {
+                            f = f*1000;
+                        }
+                        
+                        [result setObject:[NSString stringWithFormat:@"%0.0f",f] forKey:@"max"];
+                    }
+                    if(param_info.min){
+                        
+                        float f = [param_info.min floatValue];
+                        if(f < 1000)
+                        {
+                            f = f*1000;
+                        }
+                        
+                        [result setObject:[NSString stringWithFormat:@"%0.0f",f]
+                                   forKey:@"min"];
+                    }
                     break;
                 }
             }
@@ -655,6 +698,15 @@
     return _cameraPol;
 }
 
+- (NSString *)gainWithPEQWithBand:(NSString*)bandkey{
+    
+    if(_pointsData == nil)
+        return nil;
+    
+    NSString *gain = [_pointsData objectForKey:bandkey];
+    
+    return gain;
+}
 
 - (void) recoverWithDictionary:(NSDictionary*)data{
     
@@ -788,6 +840,13 @@
         }
         
         _isSetOK = YES;
+        
+        //初始化数据
+        if(_pointsData == nil)
+        {
+            [self initPEQDatas];
+        }
+        
     }
     else
     {

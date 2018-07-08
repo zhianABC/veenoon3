@@ -1,5 +1,5 @@
 //
-//  MixFilterGraphView.swift
+//  HLFilterGraphView.swift
 //  Mixer
 //
 //  Created by y on 17/5/3.
@@ -8,23 +8,15 @@
 
 import UIKit
 
-class MDataModel: NSObject {
-    static let peqQTable: [Float] = [0.50, 0.53, 0.56, 0.59, 0.63, 0.67, 0.71, 0.75, 0.79, 0.84, 0.89, 0.94, 1.00,
-                                     1.06, 1.12, 1.19, 1.26, 1.30, 1.40, 1.50, 1.60, 1.70, 1.80, 1.90, 2.00, 2.10,
-                                     2.20, 2.40, 2.50, 2.70, 2.80, 3.00, 3.20, 3.40, 3.60, 3.80, 4.00, 4.20, 4.50,
-                                     4.80, 5.00, 5.30, 5.70, 6.00, 6.30, 6.70, 7.10, 7.60, 8.00, 8.50, 9.00, 9.50,
-                                     10.10, 10.70, 11.30, 12.00, 12.70, 13.50, 14.00, 15.00, 16.00, 17.00, 18.00, 19.00, 20.00]
-}
-
-@objc protocol MixFilterGraphViewDelegate: NSObjectProtocol {
+@objc protocol HLFilterGraphViewDelegate: NSObjectProtocol {
     func filterGraphViewPEQFilterBandChoosed(band: Int)
-    func filterGraphViewPEQFilterChanged(band: Int, freq: Float, gain: Float)
-    func filterGraphViewPEQFilterChanged(band: Int, qIndex: Int, qValue: Float)
+    func filterGraphViewHPFilterChanged(freq: Float)
+    func filterGraphViewLPFilterChanged(freq: Float)
 }
 @IBDesignable
-class MixFilterGraphView: UIView {
+class HLFilterGraphView: UIView {
     private static let NF = 420
-    private static let MAX_EQ_BAND = 10//定义EQ段数
+    private static let MAX_EQ_BAND = 0//定义EQ段数
     
     private struct complex {
         var real: Double
@@ -138,8 +130,11 @@ class MixFilterGraphView: UIView {
     private var m_mindB = -12
     
     // 可拖拽的频率范围
-    private let m_validLowFreq: Float = 20
-    private let m_validHighFreq: Float = 20000
+    private var m_validMinLowFreq: Float = 8000
+    private var m_validMaxLowFreq: Float = 20000
+    
+    private var m_validMinHightFreq: Float = 50
+    private var m_validMaxHightFreq: Float = 250
     
     // 可视的频率范围
     private let m_lowFreq: Float = 10
@@ -169,7 +164,7 @@ class MixFilterGraphView: UIView {
     private var d_factor = [Double](repeating: 0.0, count: 3)
     private var n_factor = [Double](repeating: 0.0, count: 3)
     
-    @objc weak var delegate: MixFilterGraphViewDelegate?
+    @objc weak var delegate: HLFilterGraphViewDelegate?
     
     private var pinchBandIndex: Int = -1
     private let pinchGestureBeganScale: CGFloat = 1.0
@@ -246,52 +241,33 @@ class MixFilterGraphView: UIView {
             if bPressed[i] == true {
                 if i == m_peqBand {
                     //高通
-                    /*
+                    
                     hpf_freq = Float(posToFreq(pos: Double(lastX) - Double(m_borderRect.origin.x)))
-                    if (hpf_freq < m_validLowFreq) {
-                        hpf_freq = m_validLowFreq
+                    if (hpf_freq < m_validMinHightFreq) {
+                        hpf_freq = m_validMinHightFreq
                     }
-                    else if (hpf_freq > m_validHighFreq) {
-                        hpf_freq = m_validHighFreq
+                    else if (hpf_freq > m_validMaxHightFreq) {
+                        hpf_freq = m_validMaxHightFreq
                     }
                     
                     delegate?.filterGraphViewHPFilterChanged(freq: hpf_freq)
-                     */
+                    
                 }
                 else if i == (m_peqBand + 1) {
                     //低通
-                     /*
+                    
                     lpf_freq = Float(posToFreq(pos: Double(lastX) - Double(m_borderRect.origin.x)))
-                    if (lpf_freq < m_validLowFreq) {
-                        lpf_freq = m_validLowFreq
+                    if (lpf_freq < m_validMinLowFreq) {
+                        lpf_freq = m_validMinLowFreq
                     }
-                    else if (lpf_freq > m_validHighFreq) {
-                        lpf_freq = m_validHighFreq
+                    else if (lpf_freq > m_validMaxLowFreq) {
+                        lpf_freq = m_validMaxLowFreq
                     }
                     
                     delegate?.filterGraphViewLPFilterChanged(freq: lpf_freq)
-                    */
+                    
                 }
-                else {
-                    //eq_freq[i] = Float(posToFreq(pos: Double(lastX) - Double(m_borderRect.origin.x)))
-                    eq_gain[i] = Float(Double(m_maxdB) - (Double(lastY - m_borderRect.origin.y) * (Double(m_maxdB - m_mindB) / Double(m_borderRect.height))))
-                    
-                    if (eq_gain[i] > Float(m_validMaxdB)) {
-                        eq_gain[i] = Float(m_validMaxdB)
-                    }
-                    else if (eq_gain[i] < Float(m_validMindB)) {
-                        eq_gain[i] = Float(m_validMindB)
-                    }
-                    
-//                    if (eq_freq[i] < m_validLowFreq) {
-//                        eq_freq[i] = m_validLowFreq
-//                    }
-//                    else if (eq_freq[i] > m_validHighFreq) {
-//                        eq_freq[i] = m_validHighFreq
-//                    }
-                    
-                    delegate?.filterGraphViewPEQFilterChanged(band: i, freq: eq_freq[i], gain: eq_gain[i])
-                }
+                
                 updateCurve()
                 return
             }
@@ -320,105 +296,17 @@ class MixFilterGraphView: UIView {
     
     // 额外的初始化
     private func additionnalInit() {
-        for i in 0 ..< MixFilterGraphView.MAX_EQ_BAND {
-            eq_freq[i] = Float(MixFilterGraphView.def_freq[i])
-            eq_gain[i] = 0
-            eq_Q[i] = 6.0
-            eq_type[i] = filter_type.type_PEQ.rawValue
-            eq_byp[i] = false
-        }
         
-        bPressed = Array<Bool>(repeating: false, count: MixFilterGraphView.MAX_EQ_BAND+2)
-        m_peqBand = MixFilterGraphView.MAX_EQ_BAND
+        bPressed = Array<Bool>(repeating: false, count: 2)
+        m_peqBand = HLFilterGraphView.MAX_EQ_BAND
         
-        m_moveRect = Array<CGRect>(repeating: CGRect(), count: MixFilterGraphView.MAX_EQ_BAND+2)
+        m_moveRect = Array<CGRect>(repeating: CGRect(), count: HLFilterGraphView.MAX_EQ_BAND+2)
         
-        H = Array<Float>(repeating: 0.0, count: MixFilterGraphView.NF)
-        
-        // 添加捏合手势
-        let gesture = UIPinchGestureRecognizer(target: self, action: #selector(processPinchGesture))
-        self.addGestureRecognizer(gesture)
+        H = Array<Float>(repeating: 0.0, count: HLFilterGraphView.NF)
+    
     }
     
-    @objc func processPinchGesture(gesture: UIPinchGestureRecognizer) {
-        switch gesture.state {
-        case .began:
-            // 捏合手势开始，确定要控制的PEQ段号
-            if gesture.numberOfTouches >= 2 {
-                for i in 0 ..< m_peqBand+2 {
-                    let startPos = gesture.location(ofTouch: 0, in: self)
-                    let endPos = gesture.location(ofTouch: 1, in: self)
-                    //print("\(startPos.x), \(endPos.x), \(m_moveRect[i].origin.x)")
-                    if startPos.x > endPos.x {
-                        if endPos.x <= m_moveRect[i].origin.x
-                            && startPos.x >= (m_moveRect[i].origin.x+m_moveRect[i].width)
-                            && i < m_peqBand {
-                            for qIndex in 0 ..< MDataModel.peqQTable.count {
-                                if (MDataModel.peqQTable[qIndex] == eq_Q[i]) {
-                                    //print("control peq band\(i)")
-                                    pinchBandIndex = i
-                                    gesture.scale = pinchGestureBeganScale
-                                    break
-                                }
-                            }
-                            break
-                        }
-                    } else {
-                        if startPos.x <= m_moveRect[i].origin.x
-                            && endPos.x >= (m_moveRect[i].origin.x+m_moveRect[i].width)
-                            && i < m_peqBand {
-                            for qIndex in 0 ..< MDataModel.peqQTable.count {
-                                if (MDataModel.peqQTable[qIndex] == eq_Q[i]) {
-                                    //print("control peq band\(i)")
-                                    pinchBandIndex = i
-                                    gesture.scale = pinchGestureBeganScale
-                                    break
-                                }
-                            }
-                            break
-                        }
-                    }
-                }
-            }
-        case .changed:
-            // 捏合手势改变，计算与上一次差值offset
-            if pinchBandIndex >= 0 {
-                //print("control peq band\(pinchBandIndex), scale=\(gesture.scale)")
-                let offset = Int((gesture.scale - pinchGestureLastScale)*100)
-                if offset != 0 {
-                    //print("offset=\(offset)")
-                    for i in 0 ..< MDataModel.peqQTable.count {
-                        if DataModel.peqQTable[i] == eq_Q[pinchBandIndex] {
-                            var newQIndex = i - offset
-                            if newQIndex <= 0 {
-                                newQIndex = 0
-                                //print("min scale=\(gesture.scale)")
-                            } else if newQIndex >= MDataModel.peqQTable.count - 1 {
-                                newQIndex = MDataModel.peqQTable.count - 1
-                                //print("max scale=\(gesture.scale)")
-                            }
-                            if i != newQIndex {
-                                //print("setPEQ band=\(pinchBandIndex), \(newQIndex), \(DataModel.peqQTable[newQIndex])")
-                                setPEQ(band: UInt8(pinchBandIndex), type: eq_type[pinchBandIndex], Q: MDataModel.peqQTable[newQIndex])
-                                delegate?.filterGraphViewPEQFilterChanged(band: pinchBandIndex, qIndex: newQIndex, qValue: MDataModel.peqQTable[newQIndex])
-                            }
-                            
-                            break
-                        }
-                    }
-                    pinchGestureLastScale = gesture.scale
-                }
-            }
-        case .ended:
-            fallthrough
-        case .cancelled:
-            //print("end")
-            pinchBandIndex = -1
-            pinchGestureLastScale = pinchGestureBeganScale
-        default:
-            break
-        }
-    }
+    
     
     // 点坐标限制在矩形里面
     private func CLIP_RGN(x: inout CGFloat, y: inout CGFloat, rect: CGRect) {
@@ -605,7 +493,7 @@ class MixFilterGraphView: UIView {
         context?.saveGState()
         context?.setLineWidth(2.0)
         context?.setStrokeColor(curveCor.cgColor)
-        for n in 0 ..< MixFilterGraphView.NF {
+        for n in 0 ..< HLFilterGraphView.NF {
             sum = Double(H[n])
             //8行,每行6个数值
             k = (sum * Double(m_borderRect.height) / Double(m_maxdB - m_mindB))
@@ -614,7 +502,7 @@ class MixFilterGraphView: UIView {
                 continue
             }
             
-            leftpos = freqToPos(freq: MixFilterGraphView.FreqTable[n]);
+            leftpos = freqToPos(freq: HLFilterGraphView.FreqTable[n]);
             if (leftpos > Double(m_borderRect.width)) {
                 break
             }
@@ -643,10 +531,12 @@ class MixFilterGraphView: UIView {
     
     // 画可拖拽的点
     private func paintMovePoint() {
-        var textOffset: Int
+        var textOffset: Int = 0
         var msg: String
         let context = UIGraphicsGetCurrentContext()
         var text: NSString
+        
+        msg = ""
         
         //print("m_borderRect.orgin.x=\(m_borderRect.origin.x)")
         //print("m_borderRect.orgin.y=\(m_borderRect.origin.y)")
@@ -660,8 +550,7 @@ class MixFilterGraphView: UIView {
                 //print("---\(freqToPos(freq: Double(hpf_freq)))")
                 //print("H: m_moveRect[\(i)].orgin.x=\(m_moveRect[i].origin.x)")
                 //print("H: m_moveRect[\(i)].orgin.y=\(m_moveRect[i].origin.y)")
-                
-                continue
+           
             }
             else if (i == m_peqBand+1) {
                 //低通
@@ -672,21 +561,9 @@ class MixFilterGraphView: UIView {
                 //print("L: m_moveRect[\(i)].orgin.x=\(m_moveRect[i].origin.x)")
                 //print("L: m_moveRect[\(i)].orgin.y=\(m_moveRect[i].origin.y)")
                 
-                continue
+             
             }
-            else {
-                m_moveRect[i].origin.x = m_borderRect.origin.x + CGFloat(freqToPos(freq: Double(eq_freq[i]))) - CGFloat(8)
-                m_moveRect[i].origin.y = m_borderRect.origin.y + CGFloat(Float(m_maxdB)-eq_gain[i]) / (CGFloat(m_maxdB - m_mindB)/m_borderRect.height) - CGFloat(8)
-                msg = String(format: "%d", i + 1)
-                if (msg.lengthOfBytes(using: .ascii) == 1) {
-                    textOffset = 5
-                } else {
-                    textOffset = 2
-                }
-                //print("------\(eq_freq[i])---\(freqToPos(freq: Double(eq_freq[i])))")
-                //print("Other: m_moveRect[\(i)].orgin.x=\(m_moveRect[i].origin.x)")
-                //print("Other: m_moveRect[\(i)].orgin.y=\(m_moveRect[i].origin.y)")
-            }
+            
             //print("1:\(m_moveRect[i].width),\(m_moveRect[i].size.width)")
             m_moveRect[i].size.width = 16 //.setRight(m_moveRect[i].left()+16);
             m_moveRect[i].size.height = 16 //.setBottom(m_moveRect[i].top()+16);
@@ -738,8 +615,8 @@ class MixFilterGraphView: UIView {
         var a0: Double
         var a1: Double
         
-        wc = Double(2) * Double(MixFilterGraphView.PI) * Double(fc)
-        k = wc / tan(Double(fc) * Double(MixFilterGraphView.PI) / Double(MixFilterGraphView.Fs))
+        wc = Double(2) * Double(HLFilterGraphView.PI) * Double(fc)
+        k = wc / tan(Double(fc) * Double(HLFilterGraphView.PI) / Double(HLFilterGraphView.Fs))
         
         if (type == 1)// 'HPF
         {
@@ -772,7 +649,7 @@ class MixFilterGraphView: UIView {
     }
     
     private func secondCoefgen(type: Int, f0: Float, Q: Float, dBgain: Float, aa: inout [Double], bb: inout [Double]) {
-        let w0: Double = Double(2) * MixFilterGraphView.PI * Double(f0) / Double(MixFilterGraphView.Fs)
+        let w0: Double = Double(2) * HLFilterGraphView.PI * Double(f0) / Double(HLFilterGraphView.Fs)
         let alpha: Double = sin(w0) / Double(2 * Q)
         let A: Double = pow(Double(10), (Double(dBgain) / Double(40)))
         var b0: Double
@@ -860,15 +737,15 @@ class MixFilterGraphView: UIView {
         var sb: Double
         var temp: Double
         
-        s = MixFilterGraphView.PI / Double(n)
+        s = HLFilterGraphView.PI / Double(n)
         //只用计算用到的405个点幅值
-        for f in 0 ..< MixFilterGraphView.NF {
-            k = Int(MixFilterGraphView.FreqTable[f] * Double(10))
+        for f in 0 ..< HLFilterGraphView.NF {
+            k = Int(HLFilterGraphView.FreqTable[f] * Double(10))
             
             sf = s * Double(k)
             bsum.real = b[0]
             bsum.imag = 0
-            for i in 1 ..< MixFilterGraphView.lb {
+            for i in 1 ..< HLFilterGraphView.lb {
                 sb = sf * Double(i)
                 z.real = cos(sb)
                 z.imag = sin(sb)
@@ -879,7 +756,7 @@ class MixFilterGraphView: UIView {
             asum.real = 1
             asum.imag = 0
             
-            for i in 1 ..< MixFilterGraphView.la {
+            for i in 1 ..< HLFilterGraphView.la {
                 sa = sf * Double(i)
                 z.real = cos(sa)
                 z.imag = -sin(sa)
@@ -898,7 +775,7 @@ class MixFilterGraphView: UIView {
     }
     
     private func updateCurve() {
-        H = Array<Float>(repeating: 0.0, count: MixFilterGraphView.NF)
+        H = Array<Float>(repeating: 0.0, count: HLFilterGraphView.NF)
         
         
         if (!hpf_byp)
@@ -922,7 +799,7 @@ class MixFilterGraphView: UIView {
     private func calcHLPFCorrespondingValue(lpf: UInt8, type: UInt8, slope: UInt8, freq: Float) {
         var Q: Double
         var numSections: Int
-        var hh: [complex] = Array<complex>(repeating: complex(real: 0.0, imag: 0.0), count: MixFilterGraphView.NF)
+        var hh: [complex] = Array<complex>(repeating: complex(real: 0.0, imag: 0.0), count: HLFilterGraphView.NF)
         
         //lpf = 0;//pCmd[1]  & 0xFF; 低通=1，高通=0
         //type =  0;//(pCmd[1] >> 8) & 0xFF; 对应协议里面的类型
@@ -930,14 +807,14 @@ class MixFilterGraphView: UIView {
         
         //freq = 1000;
         
-        numSections = MixFilterGraphView.numSectionsbuf[Int(slope)]
+        numSections = HLFilterGraphView.numSectionsbuf[Int(slope)]
         
         for i in 0 ..< numSections/2 {
-            Q = Double(MixFilterGraphView.Qbuf[Int(type*5 + slope-1)][i])
+            Q = Double(HLFilterGraphView.Qbuf[Int(type*5 + slope-1)][i])
             secondCoefgen(type: Int(lpf)+1, f0: freq, Q: Float(Q), dBgain: 0, aa: &d_factor, bb: &n_factor);
             
-            freqz(a: &d_factor, b: &n_factor, h: &hh, n: MixFilterGraphView.N); //婊ゆ尝鍣ㄩ鐜囧搷搴旀洸绾跨敓鎴
-            for j in 0 ..< MixFilterGraphView.NF {
+            freqz(a: &d_factor, b: &n_factor, h: &hh, n: HLFilterGraphView.N); //婊ゆ尝鍣ㄩ鐜囧搷搴旀洸绾跨敓鎴
+            for j in 0 ..< HLFilterGraphView.NF {
                 H[j] += 20 * log10(mabs(sum: hh[j])); //绱姞
             }
         }
@@ -946,20 +823,20 @@ class MixFilterGraphView: UIView {
         {
             setFirstOrder(type: Int(lpf+1), fc: freq, a: &d_factor, b: &n_factor);
             
-            freqz(a: &d_factor, b: &n_factor, h: &hh, n: MixFilterGraphView.N); //滤波器频率响应曲线生成
-            for j in 0 ..< MixFilterGraphView.NF {
+            freqz(a: &d_factor, b: &n_factor, h: &hh, n: HLFilterGraphView.N); //滤波器频率响应曲线生成
+            for j in 0 ..< HLFilterGraphView.NF {
                 H[j] += 20 * log10(mabs(sum: hh[j])); //累加
             }
         }
     }
     
     private func calcPEQCorrespondingValue(type: UInt8, freq: Float, gain: Float, Q: Float) {
-        var hh: [complex] = Array<complex>(repeating: complex(real: 0.0, imag: 0.0), count: MixFilterGraphView.NF)
+        var hh: [complex] = Array<complex>(repeating: complex(real: 0.0, imag: 0.0), count: HLFilterGraphView.NF)
         
         secondCoefgen(type: Int(type + 3), f0: freq, Q: Q, dBgain: gain, aa: &d_factor, bb: &n_factor);
         
-        freqz(a: &d_factor, b: &n_factor, h: &hh, n: MixFilterGraphView.N);
-        for j in 0 ..< MixFilterGraphView.NF {
+        freqz(a: &d_factor, b: &n_factor, h: &hh, n: HLFilterGraphView.N);
+        for j in 0 ..< HLFilterGraphView.NF {
             H[j] += 20 * log10(mabs(sum: hh[j]));
             //qDebug("%d-%f:%f:%f",j,H[j],hh[j].real,hh[j].imag);
         }
@@ -1050,47 +927,15 @@ class MixFilterGraphView: UIView {
         updateCurve()
     }
     
-    // 外部接口函数：设置PEQ
-    func setPEQ(band: UInt8, byp: Bool, type: UInt8, freq: Float, gain: Float, Q: Float) {
-        eq_byp[Int(band)] = byp
-        eq_type[Int(band)] = type
-        eq_freq[Int(band)] = freq
-        eq_gain[Int(band)] = gain
-        if type == filter_type.type_PEQ.rawValue {
-            eq_Q[Int(band)] = Q
-        } else {
-            eq_Q[Int(band)] = 0.71
-        }
-        updateCurve()
+    @objc func setLPMaxMinFreq(maxfreq: Float, minfreq: Float) {
+        
+        m_validMaxLowFreq = maxfreq;
+        m_validMinLowFreq = minfreq;
     }
-    func setPEQ(band: UInt8, byp: Bool) {
-        eq_byp[Int(band)] = byp
-        updateCurve()
-    }
-    func setPEQ(band: UInt8, type: UInt8, Q: Float) {
-        eq_type[Int(band)] = type
-        if type == filter_type.type_PEQ.rawValue {
-            eq_Q[Int(band)] = Q
-        } else {
-            eq_Q[Int(band)] = 0.71  //low/high shelf, the Q is 0.71
-        }
-        updateCurve()
-    }
-   @objc func setPEQ(band: UInt8, freq: Float) {
-        eq_freq[Int(band)] = freq
-        updateCurve()
-    }
-    @objc func setPEQ(band: UInt8, gain: Float) {
-        eq_gain[Int(band)] = gain
-        updateCurve()
-    }
-    @objc func setPEQ(band: UInt8, Q: Float) {
-        if eq_type[Int(band)] == filter_type.type_PEQ.rawValue {
-            eq_Q[Int(band)] = Q
-        } else {
-            eq_Q[Int(band)] = 0.71
-        }
-        updateCurve()
+    @objc func setHPMaxMinFreq(maxfreq: Float, minfreq: Float) {
+        
+        m_validMaxHightFreq = maxfreq;
+        m_validMinHightFreq = minfreq;
     }
     
     // 外部接口函数：设置增益范围
@@ -1105,7 +950,7 @@ class MixFilterGraphView: UIView {
         //if band > MixFilterGraphView.MAX_EQ_BAND {
         //band = MixFilterGraphView.MAX_EQ_BAND
         //}
-        m_peqBand = band > MixFilterGraphView.MAX_EQ_BAND ? MixFilterGraphView.MAX_EQ_BAND : band
+        m_peqBand = band > HLFilterGraphView.MAX_EQ_BAND ? HLFilterGraphView.MAX_EQ_BAND : band
         updateCurve()
     }
     
