@@ -184,6 +184,11 @@
         float f = (pressValue - _pressMin)/pressMax;
         f = fabsf(f);
         [btnJH1 setCircleValue:f];
+        
+        [_limiter setMaxThresholdWithThreshold:_pressMax];
+        [_limiter setMinThresholdWithThreshold:_pressMin];
+        
+        [_limiter setThresHoldWithR:pressValue];
     }
     
     yaxianL = [[UILabel alloc] initWithFrame:CGRectMake(x, y+100, 120, 120)];
@@ -244,6 +249,9 @@
         yaxianL.text = valueStr;
         
         [_currentObj._proxyObj controlMixPress:[NSString stringWithFormat:@"%d", k]];
+        
+        [_limiter setThresHoldWithR:k];
+        
     } else {
         int k = (value *(_noiseMax-_noiseMin)) + _noiseMin;
         NSString *valueStr= [NSString stringWithFormat:@"%d dB", k];

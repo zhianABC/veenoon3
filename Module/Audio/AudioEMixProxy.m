@@ -616,10 +616,27 @@
             {
                 if([param_info.name isEqualToString:@"RATE"])
                 {
-                    if(param_info.max)
-                        [result setObject:param_info.max forKey:@"max"];
-                    if(param_info.min)
-                        [result setObject:param_info.min forKey:@"min"];
+                    if(param_info.max){
+                        
+                        float f = [param_info.max floatValue];
+                        if(f < 1000)
+                        {
+                            f = f*1000;
+                        }
+                        
+                        [result setObject:[NSString stringWithFormat:@"%0.0f",f] forKey:@"max"];
+                    }
+                    if(param_info.min){
+                        
+                        float f = [param_info.min floatValue];
+                        if(f < 1000)
+                        {
+                            f = f*1000;
+                        }
+                        
+                        [result setObject:[NSString stringWithFormat:@"%0.0f",f]
+                                   forKey:@"min"];
+                    }
                     break;
                 }
             }

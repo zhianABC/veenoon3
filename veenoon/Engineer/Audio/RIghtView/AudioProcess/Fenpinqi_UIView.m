@@ -11,7 +11,7 @@
 #import "SlideButton.h"
 
 
-@interface Fenpinqi_UIView ()<SlideButtonDelegate, FilterGraphViewDelegate> {
+@interface Fenpinqi_UIView ()<SlideButtonDelegate, HLFilterGraphViewDelegate> {
     UILabel *_highFilterL;
     UILabel *_lowFilgerL;
     
@@ -23,7 +23,7 @@
     int _lowFilterMin;
     int _lowFilterMax;
     
-    FilterGraphView *fglm;
+    HLFilterGraphView *fglm;
 }
 @end
 
@@ -54,7 +54,7 @@
         
         
         rc = CGRectMake(10, 50, frame.size.width-20, 300);
-        fglm = [[FilterGraphView alloc] initWithFrame:rc];
+        fglm = [[HLFilterGraphView alloc] initWithFrame:rc];
         fglm.backgroundColor = [UIColor clearColor];
         [self addSubview:fglm];
         fglm.delegate = self;
@@ -89,11 +89,16 @@
             float f = (highValue - _highFilterMin)/highMax;
             f = fabsf(f);
             [_highFilterSlider setCircleValue:f];
+            
+            [fglm setHPMaxMinFreqWithMaxfreq:_highFilterMax
+                                     minfreq:_highFilterMin];
+            
+            [fglm setHPFilterWithFreq:_highFilterMin];
         }
         
         
         _highFilterL = [[UILabel alloc] init];
-        _highFilterL.text = [hightFilter stringByAppendingString:@" KHz"];
+        _highFilterL.text = [hightFilter stringByAppendingString:@" Hz"];
         _highFilterL.font = [UIFont systemFontOfSize: 13];
         _highFilterL.textColor = [UIColor whiteColor];
         _highFilterL.frame = CGRectMake(0, CGRectGetMaxY(_highFilterSlider.frame), 60, 20);
@@ -132,6 +137,11 @@
             float f = (lowWalue - _lowFilterMin)/lowMax;
             f = fabsf(f);
             [_lowFilterSlider setCircleValue:f];
+            
+            [fglm setLPMaxMinFreqWithMaxfreq:_lowFilterMax
+                                     minfreq:_lowFilterMin];
+            
+            [fglm setLPFilterWithFreq:_lowFilterMax];
         }
         
         _lowFilgerL = [[UILabel alloc] init];
@@ -158,28 +168,62 @@
     
     if(slbtn == _highFilterSlider)
     {
-        int feq = (value *(_highFilterMax-_highFilterMin)) + _highFilterMin;
-        _highFilterL.text = [NSString stringWithFormat:@"%d KHz", feq];
+        float freq = (value *(_highFilterMax-_highFilterMin)) + _highFilterMin;
         
-        [_currentObj._proxyObj controlHighFilter:[NSString stringWithFormat:@"%d", feq]];
+        NSString *hz = @"Hz";
+        float showValue = freq;
+        if(freq > 1000)
+        {
+            hz = @"KHz";
+            showValue = freq/1000;
+        }
         
-        [fglm setHPFilterWithFreq:feq];
+        _highFilterL.text = [NSString stringWithFormat:@"%0.0f %@",
+                             showValue, hz];
+        
+        [_currentObj._proxyObj controlHighFilter:[NSString stringWithFormat:@"%0.0f", freq]];
+        
+        [fglm setHPFilterWithFreq:freq];
     }
     else
         if(slbtn == _lowFilterSlider)
         {
-            int feq = (value *(_lowFilterMax-_lowFilterMin)) + _lowFilterMin;
-            _lowFilgerL.text = [NSString stringWithFormat:@"%d KHz", feq];
+            float freq = (value *(_lowFilterMax-_lowFilterMin)) + _lowFilterMin;
             
-            [_currentObj._proxyObj controlLowFilter:[NSString stringWithFormat:@"%d", feq]];
+            NSString *hz = @"Hz";
+            float showValue = freq;
+            if(freq > 1000)
+            {
+                hz = @"KHz";
+                showValue = freq/1000;
+            }
             
-            [fglm setLPFilterWithFreq:feq];
+            _lowFilgerL.text = [NSString stringWithFormat:@"%0.0f %@",
+                                showValue, hz];
+            
+            [_currentObj._proxyObj controlLowFilter:[NSString stringWithFormat:@"%0.0f", freq]];
+            
+            [fglm setLPFilterWithFreq:freq];
         }
+}
+- (void)filterGraphViewPEQFilterBandChoosedWithBand:(NSInteger)band{
+    
+    
 }
 
 - (void)filterGraphViewHPFilterChangedWithFreq:(float)freq{
     
-    _highFilterL.text = [NSString stringWithFormat:@"%0.0f KHz", freq];
+    NSString *hz = @"Hz";
+    float showValue = freq;
+    if(freq > 1000)
+    {
+        hz = @"KHz";
+        showValue = freq/1000;
+    }
+    
+    _highFilterL.text = [NSString stringWithFormat:@"%0.0f %@",
+                         showValue,
+                         hz];
      [_currentObj._proxyObj controlHighFilter:[NSString stringWithFormat:@"%0.0f", freq]];
     
     float highValue = freq;
@@ -193,7 +237,19 @@
 }
 - (void)filterGraphViewLPFilterChangedWithFreq:(float)freq{
     
-    _lowFilgerL.text = [NSString stringWithFormat:@"%0.0f KHz", freq];
+    NSString *hz = @"Hz";
+    float showValue = freq;
+    if(freq > 1000)
+    {
+        hz = @"KHz";
+        showValue = freq/1000;
+    }
+    
+    _lowFilgerL.text = [NSString stringWithFormat:@"%0.0f %@",
+                        showValue,
+                        hz];
+    
+    
     [_currentObj._proxyObj controlLowFilter:[NSString stringWithFormat:@"%0.0f", freq]];
     
     float lowWalue = freq;
