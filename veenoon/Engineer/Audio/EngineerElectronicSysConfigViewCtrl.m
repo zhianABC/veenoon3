@@ -330,17 +330,19 @@
     for(LightSliderButton *btn in _buttonArray)
     {
         UILabel *numberL = [_buttonNumberArray objectAtIndex:btn.tag];
-        
+        APowerESetProxy *powerProxy = [_powerProxys objectAtIndex:btn.tag];
         
         if(isPowerOn)
         {
             numberL.textColor = YELLOW_COLOR;
             [btn enableValueSet:YES];
+            powerProxy._relayStatus = @"Link";
         }
         else
         {
             numberL.textColor = [UIColor whiteColor];
             [btn enableValueSet:NO];
+            powerProxy._relayStatus = @"Break";
         }
     }
     
