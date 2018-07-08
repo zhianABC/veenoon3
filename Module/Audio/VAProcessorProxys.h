@@ -265,6 +265,8 @@
 //低通
 - (id) generateEventOperation_lp;
 
+//PEQ 0-15
+- (NSArray*) generateEventOperation_peq;
 
 /////场景还原
 - (void) recoverWithDictionary:(NSDictionary*)data;

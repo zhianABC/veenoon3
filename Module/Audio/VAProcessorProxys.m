@@ -2828,4 +2828,147 @@
     return nil;
 }
 
+- (NSArray *) generateEventOperation_peq{
+    
+    NSMutableArray *results = [NSMutableArray array];
+    for(int band = 0; band < [waves16_feq_gain_q count]; band++)
+    {
+        id opt = [self generateEventOperation_peqAtBand:band];
+        
+        if(opt)
+        {
+            [results addObject:opt];
+        }
+    }
+    
+    return results;
+}
+
+- (id) generateEventOperation_peqAtBand:(int)band{
+    
+    NSMutableDictionary *dic = [waves16_feq_gain_q objectAtIndex:band];
+    
+    id freq = [dic objectForKey:@"freq"];
+    id gain = [dic objectForKey:@"gain"];
+    id q = [dic objectForKey:@"q"];
+    id tureOrFalse = [dic objectForKey:@"enable"];
+    id type = [dic objectForKey:@"type"];
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_PEQ"];
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            
+            for( RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"RATE"])
+                {
+                    if(param_info.type == RGS_PARAM_TYPE_FLOAT)
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%0.1f",
+                                          [freq floatValue]]
+                                  forKey:param_info.name];
+                    }
+                    else if(param_info.type == RGS_PARAM_TYPE_INT)
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%0.0f",
+                                          [freq floatValue]]
+                                  forKey:param_info.name];
+                        
+                    }
+                }
+                else if([param_info.name isEqualToString:@"GAIN"])
+                {
+                    if(param_info.type == RGS_PARAM_TYPE_FLOAT)
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%0.1f",
+                                          [gain floatValue]]
+                                  forKey:param_info.name];
+                    }
+                    else if(param_info.type == RGS_PARAM_TYPE_INT)
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%0.0f",
+                                          [gain floatValue]]
+                                  forKey:param_info.name];
+                        
+                    }
+                }
+                else if([param_info.name isEqualToString:@"SEG"])
+                {
+                    [param setObject:[NSString stringWithFormat:@"%d",
+                                      band+1]
+                              forKey:param_info.name];
+                }
+                else if([param_info.name isEqualToString:@"ENABLE"])
+                {
+                    [param setObject:tureOrFalse
+                              forKey:param_info.name];
+                }
+                else if([param_info.name isEqualToString:@"Q"])
+                {
+                    [param setObject:q
+                              forKey:param_info.name];
+                }
+                else if([param_info.name isEqualToString:@"TYPE"])
+                {
+                    [param setObject:type
+                              forKey:param_info.name];
+                }
+                
+            }
+            
+        }
+        
+        RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc]init];
+        scene_opt.dev_id = _rgsProxyObj.m_id;
+        scene_opt.cmd = cmd.name;
+        scene_opt.param = param;
+        
+        //用于保存还原
+        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
+        [slice setObject:[NSNumber numberWithInteger:_rgsProxyObj.m_id] forKey:@"dev_id"];
+        [slice setObject:cmd.name forKey:@"cmd"];
+        [slice setObject:param forKey:@"param"];
+        
+        NSMutableDictionary *peq_map = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_PEQ"];
+        if(peq_map == nil)
+        {
+            peq_map = [NSMutableDictionary dictionary];
+            [_RgsSceneDeviceOperationShadow setObject:peq_map forKey:@"SET_PEQ"];
+        }
+        
+        [peq_map setObject:slice forKey:[NSString stringWithFormat:@"%d", band]];
+        
+        
+        
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
+                                                                          cmd:scene_opt.cmd
+                                                                        param:scene_opt.param];
+        
+        return opt;
+    }
+    else
+    {
+        NSMutableDictionary *peq_map = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_PEQ"];
+        if(peq_map)
+        {
+            NSDictionary *cmdsRev = [peq_map objectForKey:[NSString stringWithFormat:@"%d", band]];
+            if(cmdsRev)
+            {
+                RgsSceneOperation * opt = [[RgsSceneOperation alloc]
+                                           initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
+                                           cmd:[cmdsRev objectForKey:@"cmd"]
+                                           param:[cmdsRev objectForKey:@"param"]];
+                
+                return opt;
+            }
+        }
+    }
+    
+    return nil;
+}
+
 @end

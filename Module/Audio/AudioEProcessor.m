@@ -410,7 +410,7 @@
             [proxyDic setObject:[NSNumber numberWithInteger:proxy.m_id]
                          forKey:@"proxy_id"];
             
-            [proxyDic setObject:[NSNumber numberWithInteger:proxy.name]
+            [proxyDic setObject:proxy.name
                          forKey:@"proxy_name"];
             
             [proxyDic setObject:[NSString stringWithFormat:@"%0.1f", [vap getAnalogyGain]]
@@ -434,6 +434,22 @@
             
             [proxyDic setObject:[NSNumber numberWithBool:[vap getInverted]]
                          forKey:@"inverted"];
+            
+            //高通
+            
+            //低通
+            
+            //PEQ
+            
+            //噪声
+            
+            //压限器
+            
+            //Mix Source 矩阵
+            
+            //Echo
+            
+            //反馈抑制
             
             [proxyDic setObject:[vap getScenarioSliceLocatedShadow]
                          forKey:@"RgsSceneDeviceOperation"];
@@ -463,7 +479,7 @@
             [proxyDic setObject:[NSNumber numberWithInteger:proxy.m_id]
                          forKey:@"proxy_id"];
             
-            [proxyDic setObject:[NSNumber numberWithInteger:proxy.name]
+            [proxyDic setObject:proxy.name
                          forKey:@"proxy_name"];
             
             [proxyDic setObject:[NSString stringWithFormat:@"%0.1f", [vap getAnalogyGain]]
@@ -548,6 +564,16 @@
     self._inAudioProxys = [NSMutableArray array];
     for(NSDictionary *dic in _inchannels)
     {
+        //高通
+        
+        //低通
+        
+        //PEQ
+        
+        //噪声
+        
+        //压限器
+        
         VAProcessorProxys *vap = [[VAProcessorProxys alloc] init];
         [vap recoverWithDictionary:dic];
         [_inAudioProxys addObject:vap];
@@ -555,10 +581,28 @@
     self._outAudioProxys = [NSMutableArray array];
     for(NSDictionary *dic in _outchannels)
     {
+        //高通
+        
+        //低通
+        
+        //PEQ
+        
+        //噪声
+        
+        //压限器
+        
+        //Mix Source 矩阵
+        
+       
+        
         VAProcessorProxys *vap = [[VAProcessorProxys alloc] init];
         [vap recoverWithDictionary:dic];
         [_outAudioProxys addObject:vap];
     }
+
+    //Echo
+    //反馈抑制
+    
 }
 
 - (void) prepareAllAudioInCmds
@@ -569,7 +613,7 @@
         NSMutableArray *proxyids = [NSMutableArray array];
         //只读取一个，因为所有的Channel的commands相同
         VAProcessorProxys *vap = [_inAudioProxys objectAtIndex:0];
-        [proxyids addObject:[NSNumber numberWithInt:vap._rgsProxyObj.m_id]];
+        [proxyids addObject:[NSNumber numberWithInt:(int)vap._rgsProxyObj.m_id]];
     
         IMP_BLOCK_SELF(AudioEProcessor);
         
