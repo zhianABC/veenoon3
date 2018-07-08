@@ -46,6 +46,7 @@
 //huishengxiaochu
 - (void) controlHuiShengXiaoChu:(BOOL)isHuiShengXiaoChu;
 - (BOOL) isHuiShengXiaoChuStarted;
+
 - (void) prepareAllAudioInCmds;
 - (void) prepareAllAudioOutCmds;
 @end
