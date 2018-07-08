@@ -842,6 +842,7 @@
 
 - (void) findNextNeedStudy{
     
+    BOOL find = NO;
     for(int i = 0; i < [_studyItems count]; i++)
     {
         NSDictionary *dic = [_studyItems objectAtIndex:i];
@@ -849,13 +850,19 @@
         if(!result)
         {
             _curIndex = i;
+            find = YES;
             break;
         }
+    }
+    
+    if(!find)
+    {
+        _curIndex = -1;
     }
 }
 
 - (void) tryToStudyNextIRKey{
-    
+    //NSLog(@"%d", _curIndex);
     if(_curIndex >= 0 && _curIndex < [_studyItems count])
     {
         
