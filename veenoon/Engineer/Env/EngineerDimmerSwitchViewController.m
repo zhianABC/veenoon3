@@ -101,14 +101,10 @@
     [self.view addSubview:_proxysView];
     
 
+    [self showRightView];
+    
     [self getCurrentDeviceDriverProxys];
     
-//    UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture2:)];
-//    tapGesture.cancelsTouchesInView =  NO;
-//    tapGesture.numberOfTapsRequired = 1;
-//    [_proxysView addGestureRecognizer:tapGesture];
-    
-    [self showRightView];
 }
 
 - (void) showRightView{

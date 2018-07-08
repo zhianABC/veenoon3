@@ -25,6 +25,7 @@
 @property (nonatomic, weak) id <LightSliderButtonDelegate> delegate;
 @property (nonatomic, readonly) UILabel *_titleLabel;
 @property (nonatomic, readonly) UILabel *_valueLabel;
+@property (nonatomic, assign) BOOL _isEnabel;
 
 @property (nonatomic, strong) UIImage *_grayBackgroundImage;
 @property (nonatomic, strong) UIImage *_lightBackgroundImage;

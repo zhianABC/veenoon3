@@ -18,7 +18,7 @@
 #import "EDimmerSwitchLightProxy.h"
 #import "APowerESetProxy.h"
 
-@interface EngineerElectronicSysConfigViewCtrl () <CustomPickerViewDelegate, LightSliderButtonDelegate>{
+@interface EngineerElectronicSysConfigViewCtrl () <CustomPickerViewDelegate, LightSliderButtonDelegate, PowerSettingViewDelegate>{
     
     NSMutableArray *_buttonArray;
     
@@ -91,9 +91,13 @@
     [self.view addSubview:_proxysView];
     
     
+    [self showRightView];
+    
     [self getCurrentDeviceDriverProxys];
     
-    [self showRightView];
+    if(_currentObj)
+        [_currentObj checkRgsDriverCommandLoad];
+    
 }
 
 - (void) showRightView{
@@ -114,33 +118,8 @@
     _rightView._objSet = _currentObj;
     [_rightView refreshView:_currentObj];
     
+    _rightView._delegate = self;
 }
-
-- (void) handleTapGesture2:(UIGestureRecognizer*)sender{
-    
-    CGPoint pt = [sender locationInView:self.view];
-    
-    if(pt.x < SCREEN_WIDTH-300)
-    {
-        
-        CGRect rc = _rightView.frame;
-        rc.origin.x = SCREEN_WIDTH;
-        
-        [UIView animateWithDuration:0.25
-                         animations:^{
-                             
-                             _rightView.frame = rc;
-                             
-                         } completion:^(BOOL finished) {
-                             
-                         }];
-        
-        
-        okBtn.hidden = NO;
-        isSettings = NO;
-    }
-}
-
 - (void) layoutChannels {
     
     int index = 0;
@@ -238,7 +217,12 @@
         }
     }
     
-    
+    int count = (int) [_currentObj._proxys count];
+    if (count == 8) {
+        [_rightView show8Labs];
+    } else if (count == 16) {
+        [_rightView show16Labs];
+    }
 }
 
 
@@ -318,6 +302,7 @@
         if(proxyObj && [proxyObj isKindOfClass:[APowerESetProxy class]])
         {
             //控制 开
+            [proxyObj controlRelayStatus:@"Link"];
         }
         
     } else {
@@ -332,45 +317,59 @@
         if(proxyObj && [proxyObj isKindOfClass:[APowerESetProxy class]])
         {
             //控制 关
+            [proxyObj controlRelayStatus:@"Break"];
         }
     }
 }
 
-- (void) okAction:(id)sender{
+- (void) didControlSwitchAllPower:(BOOL) isPowerOn{
     
-    if (!isSettings) {
+    if(_currentObj)
+        [_currentObj controlPower:isPowerOn];
+    
+    for(LightSliderButton *btn in _buttonArray)
+    {
+        UILabel *numberL = [_buttonNumberArray objectAtIndex:btn.tag];
         
-        if(_rightView == nil)
+        
+        if(isPowerOn)
         {
-            _rightView = [[PowerSettingView alloc]
-                          initWithFrame:CGRectMake(SCREEN_WIDTH-300,
-                                                   64, 300, SCREEN_HEIGHT-114)];
-        } else {
-            [UIView beginAnimations:nil context:nil];
-            _rightView.frame  = CGRectMake(SCREEN_WIDTH-300,
-                                           64, 300, SCREEN_HEIGHT-114);
-            [UIView commitAnimations];
+            numberL.textColor = YELLOW_COLOR;
+            [btn enableValueSet:YES];
         }
-        [self.view addSubview:_rightView];
-        
-        _rightView._objSet = _currentObj;
-        [_rightView refreshView:_currentObj];
-        
-        
-        [okBtn setTitle:@"保存" forState:UIControlStateNormal];
-        
-        isSettings = YES;
+        else
+        {
+            numberL.textColor = [UIColor whiteColor];
+            [btn enableValueSet:NO];
+        }
+    }
+    
+    
+    
+}
+- (void) didControlRelayDuration:(int)relayIndex withDuration:(int)duration {
+    if (relayIndex == -1) {
+        for (LightSliderButton *slider in _buttonArray) {
+            BOOL isEnabel = !slider._isEnabel;
+            int index = (int) slider.tag;
+            APowerESetProxy *powerProxy = [_powerProxys objectAtIndex:index];
+            if (isEnabel) {
+                [powerProxy controlRelayDuration:YES withDuration:duration];
+            } else {
+                [powerProxy controlRelayDuration:NO withDuration:duration];
+            }
+        }
     } else {
-        if (_rightView) {
-            [_rightView removeFromSuperview];
+        LightSliderButton *slider = [_buttonArray objectAtIndex:relayIndex];
+        
+        BOOL isEnabel = !slider._isEnabel;
+        int index = (int) slider.tag;
+        APowerESetProxy *powerProxy = [_powerProxys objectAtIndex:index];
+        if (isEnabel) {
+            [powerProxy controlRelayDuration:YES withDuration:duration];
+        } else {
+            [powerProxy controlRelayDuration:NO withDuration:duration];
         }
-        
-        [_rightView saveCurrentSetting];
-        [_currentObj uploadDriverIPProperty];
-        
-        
-        [okBtn setTitle:@"设置" forState:UIControlStateNormal];
-        isSettings = NO;
     }
 }
 

@@ -27,12 +27,12 @@
 @synthesize _rgsCommands;
 @synthesize _rgsProxyObj;
 @synthesize _cmdMap;
-
+@synthesize _relayStatus;
 @synthesize _deviceId;
 @synthesize _RgsSceneDeviceOperationShadow;
-
+@synthesize _linkDuration;
 @synthesize _channelsMap;
-
+@synthesize _breakDuration;
 @synthesize _level;
 
 - (id) init
@@ -50,7 +50,105 @@
     
     return self;
 }
+- (void) controlRelayStatus:(NSString*)relayStatus {
+    _relayStatus = relayStatus;
+    
+    RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_RELAY"];
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
+            if(param_info.type == RGS_PARAM_TYPE_LIST && [param_info.name isEqualToString:@"STATUS"])
+            {
+                [param setObject:_relayStatus forKey:param_info.name];
+            }
+        }
+        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+                                                 cmd:cmd.name
+                                               param:param completion:^(BOOL result, NSError *error) {
+                                                   if (result) {
+                                                       
+                                                   }
+                                                   else{
+                                                       
+                                                   }
+                                               }];
+    }
+}
 
+- (void) controlRelayDuration:(BOOL)isBreak withDuration:(int)duration {
+    if (isBreak) {
+        _breakDuration = duration;
+        RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_BREAK_DUR"];
+        if(cmd)
+        {
+            NSMutableDictionary * param = [NSMutableDictionary dictionary];
+            if([cmd.params count])
+            {
+                RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
+                if([param_info.name isEqualToString:@"DUR"])
+                {
+                    if(param_info.type == RGS_PARAM_TYPE_FLOAT)
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%0.1d",_breakDuration]
+                                  forKey:param_info.name];
+                    }
+                    else if(param_info.type == RGS_PARAM_TYPE_INT)
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%0.0d",_breakDuration]
+                                  forKey:param_info.name];
+                    }
+                }
+            }
+            [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+                                                     cmd:cmd.name
+                                                   param:param completion:^(BOOL result, NSError *error) {
+                                                       if (result) {
+                                                           
+                                                       }
+                                                       else{
+                                                           
+                                                       }
+                                                   }];
+        }
+    } else {
+        _linkDuration = duration;
+        RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_LINK_DUR"];
+        if(cmd)
+        {
+            NSMutableDictionary * param = [NSMutableDictionary dictionary];
+            if([cmd.params count])
+            {
+                RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
+                if(param_info.type == RGS_PARAM_TYPE_LIST && [param_info.name isEqualToString:@"DUR"])
+                {
+                    if(param_info.type == RGS_PARAM_TYPE_FLOAT)
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%0.1d",_linkDuration]
+                                  forKey:param_info.name];
+                    }
+                    else if(param_info.type == RGS_PARAM_TYPE_INT)
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%0.0d",_linkDuration]
+                                  forKey:param_info.name];
+                    }
+                }
+            }
+            [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+                                                     cmd:cmd.name
+                                                   param:param completion:^(BOOL result, NSError *error) {
+                                                       if (result) {
+                                                           
+                                                       }
+                                                       else{
+                                                           
+                                                       }
+                                                   }];
+        }
+    }
+}
 - (void) recoverWithDictionary:(NSDictionary *)data
 {
     

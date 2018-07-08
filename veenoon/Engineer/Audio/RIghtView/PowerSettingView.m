@@ -24,6 +24,8 @@
     UIView *_chooseBg;
     
     CenterCustomerPickerView *levelSetting;
+    
+    BOOL _isPower;
 }
 
 
@@ -31,6 +33,7 @@
 
 @implementation PowerSettingView
 @synthesize _objSet;
+@synthesize _delegate;
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -47,6 +50,28 @@
         
         self.backgroundColor = BLACK_COLOR;
         self.clipsToBounds = YES;
+        
+        UILabel* valueL = [[UILabel alloc] initWithFrame:CGRectMake(10,
+                                                                    20,
+                                                                    CGRectGetWidth(self.frame)-35, 20)];
+        valueL.backgroundColor = [UIColor clearColor];
+        [self addSubview:valueL];
+        valueL.font = [UIFont systemFontOfSize:13];
+        valueL.textColor  = [UIColor whiteColor];
+        valueL.textAlignment = NSTextAlignmentLeft;
+        
+        valueL.text = @"开关";
+        
+        UISwitch* powerOffOn = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+        powerOffOn.center = CGPointMake(CGRectGetWidth(self.frame) - 35, 30);
+        [powerOffOn addTarget:self
+                       action:@selector(changePowerSwitch:)
+             forControlEvents:UIControlEventValueChanged];
+        [self addSubview:powerOffOn];
+        [powerOffOn setOn:NO];
+        
+        _isPower = NO;
+        
         
         UILabel* line = [[UILabel alloc] initWithFrame:CGRectMake(0, 60, frame.size.width, 1)];
         line.backgroundColor = TITLE_LINE_COLOR;
@@ -144,6 +169,18 @@
     return self;
 }
 
+- (void) changePowerSwitch:(UISwitch*)swit{
+    
+    _isPower = swit.on;
+    
+    if(_delegate && [_delegate respondsToSelector:@selector(didControlSwitchAllPower:)])
+    {
+        [_delegate didControlSwitchAllPower:_isPower];
+    }
+    
+    //[_tableView reloadData];
+}
+
 -(void) refreshView:(APowerESet*) powerSet {
     
     self._objSet = powerSet;
@@ -164,11 +201,21 @@
     if([_chooseBg superview])
     {
         [_chooseBg removeFromSuperview];
+        
+        NSString *seleted = levelSetting._unitString;
+        NSString *durationStr = [seleted stringByReplacingOccurrencesOfString:@"s" withString:@""];
+        
+        int duration = [durationStr intValue];
+        
+        if(_delegate && [_delegate respondsToSelector:@selector(didControlRelayDuration:withDuration:)])
+        {
+            [_delegate didControlRelayDuration:-1 withDuration:duration];
+        }
     }
     else
     {
     
-    [self addSubview:_chooseBg];
+        [self addSubview:_chooseBg];
     
     
     }
@@ -180,6 +227,8 @@
     {
         [_chooseBg removeFromSuperview];
     }
+    
+    
 }
 
 - (void) didChangedPickerValue:(NSDictionary*)value{
@@ -264,7 +313,7 @@
         NSMutableDictionary *dic = [vals objectAtIndex:i];
         int val = [[dic objectForKey:@"seconds"] intValue];
         
-        [slider setScaleValue:val];
+        [slider initScaleValue:val];
         
         yy+=50;
         
@@ -276,6 +325,11 @@
 - (void) didSlideValueChanged:(int)value index:(int)index{
     
     [_objSet setLabDelaySecs:value withIndex:index];
+    
+    if(_delegate && [_delegate respondsToSelector:@selector(didControlRelayDuration:withDuration:)])
+    {
+        [_delegate didControlRelayDuration:index withDuration:value];
+    }
 }
 
 - (void) show16Labs{

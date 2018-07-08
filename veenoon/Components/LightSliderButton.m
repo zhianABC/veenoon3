@@ -35,7 +35,7 @@
 
 @synthesize _grayBackgroundImage;
 @synthesize _lightBackgroundImage;
-
+@synthesize _isEnabel;
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.
@@ -49,6 +49,7 @@
     
     if(self = [super initWithFrame:frame])
     {
+        _isEnabel = NO;
         _radioImgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"light_slide_btn_gray.png"]];
         [self addSubview:_radioImgV];
         _radioImgV.center = CGPointMake(CGRectGetWidth(frame)/2, CGRectGetHeight(frame)/2);
@@ -105,12 +106,14 @@
         _enabledTouchMove = YES;
         _titleLabel.textColor = YELLOW_COLOR;
         _radioImgV.image = _lightBackgroundImage;
+        _isEnabel = YES;
     }
     else
     {
         _enabledTouchMove = NO;
         _titleLabel.textColor = [UIColor whiteColor];
         _radioImgV.image = _grayBackgroundImage;
+        _isEnabel = NO;
     }
 }
 

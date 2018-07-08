@@ -207,6 +207,28 @@
     [self sliderValueChanged:value];
 }
 
+- (void) initScaleValue:(int)value{
+    
+    CGRect rc = CGRectMake(0, 0,
+                           self.frame.size.width-40,
+                           self.frame.size.height);
+    
+    int w = rc.size.width;
+    float subw = (value - minValue)*w/(maxValue - minValue + 1);
+    
+    _thumb.center = CGPointMake(subw, _thumb.center.y);
+    
+    if(_isShowValue)
+    {
+        valueLabel.text = [NSString stringWithFormat:@"%ds", value];
+        valueLabel.center  = CGPointMake(_thumb.center.x, valueLabel.center.y);
+    }
+    
+    rc = _sliderFr.frame;
+    rc.size.width = _thumb.center.x;
+    _sliderFr.frame = rc;
+}
+
 
 - (void) dealloc
 {
