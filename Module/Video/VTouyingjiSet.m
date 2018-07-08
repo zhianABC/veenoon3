@@ -156,17 +156,18 @@
 
 - (void) uploadDriverIPProperty
 {
-    /*
-    if(_comDriver
-       && [_comDriver isKindOfClass:[RgsDriverObj class]]
+    if(_driver
+       && [_driver isKindOfClass:[RgsDriverObj class]]
        && _driver_ip_property)
     {
         IMP_BLOCK_SELF(VTouyingjiSet);
         
-        RgsDriverObj *rd = (RgsDriverObj*)_comDriver;
+        RgsDriverObj *rd = (RgsDriverObj*)_driver;
         
         //保存到内存
         _driver_ip_property.value = self._ipaddress;
+        
+        [KVNProgress show];
         
         [[RegulusSDK sharedRegulusSDK] SetDriverProperty:rd.m_id
                                            property_name:_driver_ip_property.name
@@ -177,30 +178,16 @@
                                                       [block_self saveProject];
                                                   }
                                                   else{
-                                                      
+                                                      [KVNProgress dismiss];
                                                   }
                                               }];
     }
-     */
 }
 
 - (void) saveProject{
     
-//    [KVNProgress show];
-//    
-//    [[RegulusSDK sharedRegulusSDK] ReloadProject:^(BOOL result, NSError *error) {
-//        if(result)
-//        {
-//            NSLog(@"reload project.");
-//            
-//            [KVNProgress showSuccess];
-//        }
-//        else{
-//            NSLog(@"%@",[error description]);
-//            
-//            [KVNProgress showSuccess];
-//        }
-//    }];
+    [KVNProgress showSuccess];
+    
 }
 
 - (void) createDriver{
