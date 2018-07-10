@@ -74,6 +74,16 @@ typedef NS_ENUM(NSInteger,RgsIrRecordStatus){
     RGS_IR_RECORD_TIMEOUT,
 };
 
+/*!
+ 通知状态
+ */
+typedef NS_ENUM(NSInteger,RgsNotifyStatus){
+    RGS_NOTIFY_STATUS_START=0,
+    RGS_NOTIFY_STATUS_DONE,
+    RGS_NOTIFY_STATUS_FAILED,
+    RGS_NOTIFY_STATUS_TIMEOUT,
+};
+
 
 @interface RgsConstants:NSObject
 @end

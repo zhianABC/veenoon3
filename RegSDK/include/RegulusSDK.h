@@ -38,6 +38,9 @@
 @required -(void) onConnectChanged:(BOOL)connect;
 @required -(void) onRecvDeviceNotify:(RgsDeviceNoteObj *) notify;
 @optional -(void) onIrcodeRecord:(NSString *)serial key:(NSString *)key status:(RgsIrRecordStatus)status;
+@optional -(void) onExportProject:(RgsNotifyStatus) status;
+@optional -(void) onImportProject:(RgsNotifyStatus) status;
+@optional -(void) onDepressUpdatePacket:(RgsNotifyStatus) status persent:(CGFloat)persent error:(NSError *)error;
 @optional -(void) onDowningTopology:(float) persen;
 @optional -(void) onDownDoneTopology;
 @end
@@ -580,12 +583,29 @@
 /*!
  @since 3.6.1
  @brief 获取多个代理命令
- @param proxy_ids 为NSNUmber数组。NSNUmber内容为要查询的Proxy id
+ @param proxy_ids       为NSNUmber数组。NSNUmber内容为要查询的Proxy id
  @param completion      回调block 正常时返回YES commd_dict的KEY为proxy id的字符。value为该proxy的命令列表
  @see RgsCommandInfo
  */
 -(void)GetProxyCommandDict:(NSArray *)proxy_ids completion:(void(^)(BOOL result,NSDictionary * commd_dict,NSError * error)) completion;
+
+/*!
+ @since 3.7.1
+ @brief 查询U盘或SD卡升级包
+ @param completion 回调block 正常时返回YES names为升级包名
+ */
+-(void)GetUpdatePacketFromUdisc:(void(^)(BOOL result,NSArray * names,NSError * error)) completion;
+
+/*!
+ @since 3.7.1
+ @brief 使用更新包进行更新系统
+ @param completion 回调block 正常时返回YES name为升级包名
+ */
+-(void)UpdateFromUdisc:(NSString *)name
+                   completion:(void(^)(BOOL result,NSError * error)) completion;
 @end
+
+
 
 
 
