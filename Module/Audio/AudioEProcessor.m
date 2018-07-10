@@ -434,17 +434,30 @@
             
             [proxyDic setObject:[NSNumber numberWithBool:[vap getInverted]]
                          forKey:@"inverted"];
-            
-            //高通
-            
-            //低通
-            
-            //PEQ
-            
             //噪声
+            [proxyDic setObject:vap._zaoshengFazhi forKey:@"noise_gate_threshold"];
+            [proxyDic setObject:vap._zaoshengStartTime forKey:@"noise_gate_start_time"];
+            [proxyDic setObject:vap._zaoshengHuifuTime forKey:@"noise_gate_recover_time"];
+            [proxyDic setObject:[NSNumber numberWithBool:vap._isZaoshengStarted] forKey:@"is_noise_gate_start"];
+            //高通
+            [proxyDic setObject:vap._lvbojunhengGaotongType forKey:@"high_filter_type"];
+            [proxyDic setObject:vap._lvbojunhengGaotongXielv forKey:@"high_filter_sl"];
+            [proxyDic setObject:vap._lvboGaotongPinLv forKey:@"high_filter_rate"];
+            [proxyDic setObject:[NSNumber numberWithBool:vap._islvboGaotongStart] forKey:@"high_filter_start"];
+            //低通
+            [proxyDic setObject:vap._lvbojunhengDitongType forKey:@"low_filter_type"];
+            [proxyDic setObject:vap._lvboDitongSL forKey:@"low_filter_sl"];
+            [proxyDic setObject:vap._lvboDitongFreq forKey:@"low_filter_rate"];
+            [proxyDic setObject:[NSNumber numberWithBool:vap._islvboDitongStart] forKey:@"low_filter_start"];
+            //PEQ
+            [proxyDic setObject:vap.waves16_feq_gain_q forKey:@"peq_band"];
             
             //压限器
-            
+            [proxyDic setObject:vap._yaxianFazhi forKey:@"press_limit_th"];
+            [proxyDic setObject:vap._yaxianXielv forKey:@"press_limit_sl"];
+            [proxyDic setObject:vap._yaxianStartTime forKey:@"press_limit_start_time"];
+            [proxyDic setObject:vap._yaxianRecoveryTime forKey:@"press_limit_recover_time"];
+            [proxyDic setObject:[NSNumber numberWithBool:vap._isyaxianStart] forKey:@"press_limit_start"];
             //Mix Source 矩阵
             
             //Echo
