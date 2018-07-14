@@ -20,7 +20,7 @@
 @property (nonatomic, strong) NSArray *_rgsCommands;
 @property (nonatomic, strong) NSMutableDictionary *_cmdMap;
 @property (nonatomic, strong) NSMutableDictionary *_RgsSceneDeviceOperationShadow;
-@property (nonatomic, strong) NSMutableDictionary *_deviceMatcherDic;
+
 
 @end
 
