@@ -86,7 +86,8 @@
 @property (nonatomic, strong) NSString* _dianpingZengyi;
 
 //矩阵
-@property (nonatomic, strong) NSMutableArray *_setMixSrc;
+@property (nonatomic, strong) NSMutableDictionary *_setMixSrc;
+@property (nonatomic, strong) NSMutableDictionary *_setMixValue;
 
 /*
  SET_MUTE
@@ -157,6 +158,7 @@
 - (void) controlYaxianRecoveryTime:(NSString*) yaxianRecoveryTime;
 - (BOOL) isYaXianStarted;
 - (void) controlYaXianStarted:(BOOL)isyaxianstarted;
+
 //zaosheng
 - (BOOL) isZaoshengStarted;
 - (void) controlZaoshengStarted:(BOOL)isZaoshengStarted;
@@ -267,6 +269,16 @@
 
 //PEQ 0-15
 - (NSArray*) generateEventOperation_peq;
+
+//压限器
+- (id) generateEventOperation_limitPress;
+
+//矩阵SRC
+- (NSArray* ) generateEventOperation_mixSrc;
+
+//矩阵SRC VALUE
+- (NSArray* ) generateEventOperation_mixValue;
+
 
 /////场景还原
 - (void) recoverWithDictionary:(NSDictionary*)data;

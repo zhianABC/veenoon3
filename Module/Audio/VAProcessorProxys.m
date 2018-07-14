@@ -110,6 +110,7 @@
 @synthesize _isyaxianStart;
 
 @synthesize _setMixSrc;
+@synthesize _setMixValue;
 
 - (id) init
 {
@@ -192,6 +193,9 @@
         }
         
         self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionary];
+        
+        self._setMixSrc = [NSMutableDictionary dictionary];
+        self._setMixValue = [NSMutableDictionary dictionary];
     }
     
     return self;
@@ -2087,6 +2091,9 @@
         NSMutableDictionary * param = [NSMutableDictionary dictionary];
         if([cmd.params count])
         {
+            //缓存自定义数据
+            NSMutableDictionary *val = [NSMutableDictionary dictionary];
+            
             RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
             
             NSString *name = proxy._rgsProxyObj.name;
@@ -2097,11 +2104,23 @@
             if(selected)
             {
                 [param setObject:@"True" forKey:@"ENABLE"];
+                [val setObject:@"True" forKey:@"ENABLE"];
             }
             else
             {
                 [param setObject:@"False" forKey:@"ENABLE"];
+                [val setObject:@"False" forKey:@"ENABLE"];
             }
+            
+            NSString *inputProxyId = [NSString stringWithFormat:@"%d", proxy._rgsProxyObj.m_id];
+            [val setObject:name
+                    forKey:@"name"];
+            [val setObject:inputProxyId
+                    forKey:@"proxy_id"];
+            
+            
+            //保存成词典
+            [_setMixSrc setObject:val forKey:inputProxyId];
             
         }
         
@@ -2132,7 +2151,9 @@
         NSMutableDictionary * param = [NSMutableDictionary dictionary];
         if([cmd.params count])
         {
-           
+            //缓存自定义数据
+            NSMutableDictionary *val = [NSMutableDictionary dictionary];
+            
             for(RgsCommandParamInfo * param_info in cmd.params)
             {
             
@@ -2141,6 +2162,11 @@
                     NSString *name = proxy._rgsProxyObj.name;
                     name = [name stringByReplacingOccurrencesOfString:@" " withString:@""];
                     [param setObject:name forKey:param_info.name];
+                    
+                    
+                    /////for Save json
+                    [val setObject:name forKey:@"name"];
+                    
                 }
                 else if([param_info.name isEqualToString:@"VALUE"])
                 {
@@ -2149,6 +2175,10 @@
                         [param setObject:[NSString stringWithFormat:@"%0.1f",
                                           th]
                                   forKey:param_info.name];
+                        
+                        /////for Save json
+                        [val setObject:[NSString stringWithFormat:@"%0.1f",
+                                        th] forKey:@"value"];
                     }
                     else if(param_info.type == RGS_PARAM_TYPE_INT)
                     {
@@ -2156,9 +2186,21 @@
                                           th]
                                   forKey:param_info.name];
                         
+                        /////for Save json
+                        [val setObject:[NSString stringWithFormat:@"%0.0f",
+                                        th] forKey:@"value"];
+                        
                     }
                 }
+                
             }
+            
+            /////for Save json
+            [val setObject:[NSString stringWithFormat:@"%d",
+                        proxy._rgsProxyObj.m_id] forKey:@"proxy_id"];
+            
+            [_setMixValue setObject:val forKey:[NSString stringWithFormat:@"%d",
+                                                proxy._rgsProxyObj.m_id]];
            
         }
         
@@ -2956,6 +2998,309 @@
         if(peq_map)
         {
             NSDictionary *cmdsRev = [peq_map objectForKey:[NSString stringWithFormat:@"%d", band]];
+            if(cmdsRev)
+            {
+                RgsSceneOperation * opt = [[RgsSceneOperation alloc]
+                                           initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
+                                           cmd:[cmdsRev objectForKey:@"cmd"]
+                                           param:[cmdsRev objectForKey:@"param"]];
+                
+                return opt;
+            }
+        }
+    }
+    
+    return nil;
+}
+
+- (id) generateEventOperation_limitPress{
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_PRESS_LIMIT"];
+    if(cmd)
+    {
+        NSString* tureOrFalse = @"False";
+        if(_isyaxianStart)
+        {
+            tureOrFalse = @"True";
+        }
+        else
+        {
+            tureOrFalse = @"False";
+        }
+        
+        
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            for( RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"ENABLE"])
+                {
+                    [param setObject:tureOrFalse
+                              forKey:param_info.name];
+                }
+                else if([param_info.name isEqualToString:@"TH"])
+                {
+                    if(param_info.type == RGS_PARAM_TYPE_FLOAT)
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%0.1f",
+                                          [_yaxianFazhi floatValue]]
+                                  forKey:param_info.name];
+                    }
+                    else if(param_info.type == RGS_PARAM_TYPE_INT)
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%0.0f",
+                                          [_yaxianFazhi floatValue]]
+                                  forKey:param_info.name];
+                    }
+                }
+                else if([param_info.name isEqualToString:@"SL"])
+                {
+                    if(param_info.type == RGS_PARAM_TYPE_FLOAT)
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%0.1f",
+                                          [_yaxianXielv floatValue]]
+                                  forKey:param_info.name];
+                    }
+                    else if(param_info.type == RGS_PARAM_TYPE_INT)
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%0.0f",
+                                          [_yaxianXielv floatValue]]
+                                  forKey:param_info.name];
+                    }
+                }
+                else if([param_info.name isEqualToString:@"START_DUR"])
+                {
+                    if(param_info.type == RGS_PARAM_TYPE_FLOAT)
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%0.1f",
+                                          [_yaxianStartTime floatValue]]
+                                  forKey:param_info.name];
+                    }
+                    else if(param_info.type == RGS_PARAM_TYPE_INT)
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%0.0f",
+                                          [_yaxianStartTime floatValue]]
+                                  forKey:param_info.name];
+                    }
+                }
+                else if([param_info.name isEqualToString:@"RECOVER_DUR"])
+                {
+                    if(param_info.type == RGS_PARAM_TYPE_FLOAT)
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%0.1f",
+                                          [_yaxianRecoveryTime floatValue]]
+                                  forKey:param_info.name];
+                    }
+                    else if(param_info.type == RGS_PARAM_TYPE_INT)
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%0.0f",
+                                          [_yaxianRecoveryTime floatValue]]
+                                  forKey:param_info.name];
+                    }
+                }
+            }
+        }
+    
+        RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc]init];
+        scene_opt.dev_id = _rgsProxyObj.m_id;
+        scene_opt.cmd = cmd.name;
+        scene_opt.param = param;
+        
+        //用于保存还原
+        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
+        [slice setObject:[NSNumber numberWithInteger:_rgsProxyObj.m_id] forKey:@"dev_id"];
+        [slice setObject:cmd.name forKey:@"cmd"];
+        [slice setObject:param forKey:@"param"];
+        [_RgsSceneDeviceOperationShadow setObject:slice forKey:@"SET_PRESS_LIMIT"];
+    
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
+                                                                          cmd:scene_opt.cmd
+                                                                        param:scene_opt.param];
+        
+        return opt;
+    }
+    else
+    {
+        NSDictionary *cmdsRev = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_PRESS_LIMIT"];
+        if(cmdsRev)
+        {
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc]
+                                       initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
+                                       cmd:[cmdsRev objectForKey:@"cmd"]
+                                       param:[cmdsRev objectForKey:@"param"]];
+            
+            return opt;
+        }
+    }
+    
+    return nil;
+}
+
+//矩阵
+- (NSArray *) generateEventOperation_mixSrc{
+    
+    NSMutableArray *results = [NSMutableArray array];
+    for(NSDictionary *src in [_setMixSrc allValues])
+    {
+        id opt = [self generateEventOperation_matrixSrc:src];
+        
+        if(opt)
+        {
+            [results addObject:opt];
+        }
+    }
+    
+    return results;
+}
+
+- (id) generateEventOperation_matrixSrc:(NSDictionary*)src{
+    
+
+    RgsCommandInfo *cmd = nil;
+    
+    if(_cmdMap)
+        cmd = [_cmdMap objectForKey:@"SET_MIX_SOURCE"];
+    
+    
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
+            [param setObject:[src objectForKey:@"name"] forKey:param_info.name];
+            [param setObject:[src objectForKey:@"ENABLE"] forKey:@"ENABLE"];
+            
+        }
+        
+        RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc]init];
+        scene_opt.dev_id = _rgsProxyObj.m_id;
+        scene_opt.cmd = cmd.name;
+        scene_opt.param = param;
+        
+        //用于保存还原
+        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
+        [slice setObject:[NSNumber numberWithInteger:_rgsProxyObj.m_id] forKey:@"dev_id"];
+        [slice setObject:cmd.name forKey:@"cmd"];
+        [slice setObject:param forKey:@"param"];
+        
+        NSMutableDictionary *src_map = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_MIX_SOURCE"];
+        if(src_map == nil)
+        {
+            src_map = [NSMutableDictionary dictionary];
+            [_RgsSceneDeviceOperationShadow setObject:src_map forKey:@"SET_MIX_SOURCE"];
+        }
+        
+        [src_map setObject:slice forKey:[src objectForKey:@"proxy_id"]];
+        
+    
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
+                                                                          cmd:scene_opt.cmd
+                                                                        param:scene_opt.param];
+        
+        return opt;
+    }
+    else
+    {
+        NSMutableDictionary *src_map = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_MIX_SOURCE"];
+        if(src_map)
+        {
+            NSDictionary *cmdsRev = [src_map objectForKey:[src objectForKey:@"proxy_id"]];
+            if(cmdsRev)
+            {
+                RgsSceneOperation * opt = [[RgsSceneOperation alloc]
+                                           initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
+                                           cmd:[cmdsRev objectForKey:@"cmd"]
+                                           param:[cmdsRev objectForKey:@"param"]];
+                
+                return opt;
+            }
+        }
+    }
+    
+    return nil;
+}
+
+//矩阵SRC VALUE
+- (NSArray* ) generateEventOperation_mixValue{
+    
+    NSMutableArray *results = [NSMutableArray array];
+    for(NSDictionary *src in [_setMixValue allValues])
+    {
+        id opt = [self generateEventOperation_matrixSrcValue:src];
+        
+        if(opt)
+        {
+            [results addObject:opt];
+        }
+    }
+    
+    return results;
+}
+
+- (id) generateEventOperation_matrixSrcValue:(NSDictionary*)src{
+    
+    
+    RgsCommandInfo *cmd = nil;
+    
+    if(_cmdMap)
+        cmd = [_cmdMap objectForKey:@"SET_MIX_VALUE"];
+    
+    
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        for(RgsCommandParamInfo * param_info in cmd.params)
+        {
+            
+            if([param_info.name isEqualToString:@"SRC"])
+            {
+                NSString *name = [src objectForKey:@"name"];
+                [param setObject:name forKey:param_info.name];
+            }
+            else if([param_info.name isEqualToString:@"VALUE"])
+            {
+                [param setObject:[src objectForKey:@"value"]
+                          forKey:param_info.name];
+            }
+            
+        }
+        
+        RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc]init];
+        scene_opt.dev_id = _rgsProxyObj.m_id;
+        scene_opt.cmd = cmd.name;
+        scene_opt.param = param;
+        
+        //用于保存还原
+        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
+        [slice setObject:[NSNumber numberWithInteger:_rgsProxyObj.m_id] forKey:@"dev_id"];
+        [slice setObject:cmd.name forKey:@"cmd"];
+        [slice setObject:param forKey:@"param"];
+        
+        NSMutableDictionary *srcval_map = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_MIX_VALUE"];
+        if(srcval_map == nil)
+        {
+            srcval_map = [NSMutableDictionary dictionary];
+            [_RgsSceneDeviceOperationShadow setObject:srcval_map forKey:@"SET_MIX_VALUE"];
+        }
+        
+        [srcval_map setObject:slice forKey:[src objectForKey:@"proxy_id"]];
+        
+        
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
+                                                                          cmd:scene_opt.cmd
+                                                                        param:scene_opt.param];
+        
+        return opt;
+    }
+    else
+    {
+        NSMutableDictionary *srcval_map = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_MIX_VALUE"];
+        if(srcval_map)
+        {
+            NSDictionary *cmdsRev = [srcval_map objectForKey:[src objectForKey:@"proxy_id"]];
             if(cmdsRev)
             {
                 RgsSceneOperation * opt = [[RgsSceneOperation alloc]
