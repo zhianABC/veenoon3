@@ -351,7 +351,7 @@
 
     NSMutableArray *audios = [_scenarioData objectForKey:@"audio"];
     
-    for(id ap in _audioDevices)
+    for(AudioEProcessor* ap in _audioDevices)
     {
         
         if([ap isKindOfClass:[AudioEProcessor class]])
@@ -407,6 +407,66 @@
                     {
                         [self addEventOperation:rsp];
                     }
+                    
+                    rsp = [vap generateEventOperation_hp];
+                    if(rsp)
+                    {
+                        [self addEventOperation:rsp];
+                    }
+                    
+                    rsp = [vap generateEventOperation_lp];
+                    if(rsp)
+                    {
+                        [self addEventOperation:rsp];
+                    }
+                    
+                    NSArray *rsps = [vap generateEventOperation_peq];
+                    for(id sp in rsps)
+                    {
+                        [self addEventOperation:sp];
+                    }
+                
+                    rsp = [vap generateEventOperation_limitPress];
+                    if(rsp)
+                    {
+                        [self addEventOperation:rsp];
+                    }
+        
+                    rsps = [vap generateEventOperation_mixSrc];
+                    for(id sp in rsps)
+                    {
+                        [self addEventOperation:sp];
+                    }
+                    
+                    rsps = [vap generateEventOperation_mixValue];
+                    for(id sp in rsps)
+                    {
+                        [self addEventOperation:sp];
+                    }
+                
+                    rsp = [vap generateEventOperation_noiseGate];
+                    if(rsp)
+                    {
+                        [self addEventOperation:rsp];
+                    }
+                    
+                    rsp = [vap generateEventOperation_fbLimit];
+                    if(rsp)
+                    {
+                        [self addEventOperation:rsp];
+                    }
+                    
+                    rsp = [vap generateEventOperation_delay];
+                    if(rsp)
+                    {
+                        [self addEventOperation:rsp];
+                    }
+                }
+                
+                id rsp = [ap generateEventOperation_echo];
+                if(rsp)
+                {
+                    [self addEventOperation:rsp];
                 }
             }
             

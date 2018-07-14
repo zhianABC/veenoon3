@@ -23,6 +23,9 @@
 @property (nonatomic, strong) NSArray *_rgsCommands;
 @property (nonatomic, strong) NSMutableDictionary *_cmdMap;
 
+@property (nonatomic, strong) NSMutableDictionary *_RgsSceneDeviceOperationShadow;
+
+
 @end
 
 @implementation AudioEProcessor
@@ -41,6 +44,8 @@
 @synthesize _inchannels;
 @synthesize _outchannels;
 
+@synthesize _RgsSceneDeviceOperationShadow;
+
 - (id) init
 {
     if(self = [super init])
@@ -56,6 +61,8 @@
         self._show_icon_sel_name = @"a_icon_7_sel.png";
         
         _isSetOK = NO;
+        
+        self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionary];
     }
     
     return self;
@@ -819,6 +826,72 @@
         }
     }
     
+}
+
+//回声消除
+- (id) generateEventOperation_echo{
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"ECHO_CANCLE"];
+    if(cmd)
+    {
+        NSString* tureOrFalse = @"False";
+        if(_isHuiShengXiaoChu)
+        {
+            tureOrFalse = @"True";
+        }
+        else
+        {
+            tureOrFalse = @"False";
+        }
+        
+        
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        
+        for( RgsCommandParamInfo * param_info in cmd.params)
+        {
+            if([param_info.name isEqualToString:@"ENABLE"])
+            {
+                [param setObject:tureOrFalse
+                          forKey:param_info.name];
+            }
+        }
+        
+        int proxyid = ((RgsDriverObj*) _driver).m_id;
+        
+        RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc] init];
+        scene_opt.dev_id = proxyid;
+        scene_opt.cmd = cmd.name;
+        scene_opt.param = param;
+        
+        //用于保存还原
+        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
+        [slice setObject:[NSNumber numberWithInteger:proxyid] forKey:@"dev_id"];
+        [slice setObject:cmd.name forKey:@"cmd"];
+        [slice setObject:param forKey:@"param"];
+        [_RgsSceneDeviceOperationShadow setObject:slice forKey:@"ECHO_CANCLE"];
+        
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
+                                                                          cmd:scene_opt.cmd
+                                                                        param:scene_opt.param];
+        
+        return opt;
+    }
+    else
+    {
+        NSDictionary *cmdsRev = [_RgsSceneDeviceOperationShadow objectForKey:@"ECHO_CANCLE"];
+        if(cmdsRev)
+        {
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc]
+                                       initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
+                                       cmd:[cmdsRev objectForKey:@"cmd"]
+                                       param:[cmdsRev objectForKey:@"param"]];
+            
+            return opt;
+        }
+    }
+    
+    return nil;
 }
 
 @end
