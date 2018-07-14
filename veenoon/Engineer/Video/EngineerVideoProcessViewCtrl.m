@@ -145,8 +145,8 @@
     titleL.text = @"输入";
     
 
-    int cellHeight = 80;
-    int cellWidth = 80;
+//    int cellHeight = 80;
+//    int cellWidth = 80;
     
     scroolViewIn = [[UIScrollView alloc] initWithFrame:CGRectMake(100,
                                                                   labelHeight+60,
@@ -155,36 +155,11 @@
     [self.view addSubview:scroolViewIn];
     scroolViewIn.showsHorizontalScrollIndicator = NO;
     
-    UIButton *cameraBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    cameraBtn.frame = CGRectMake(0, 10, cellWidth, cellHeight);
-    cameraBtn.tag = 1000;
-    cameraBtn.clipsToBounds = YES;
-    [cameraBtn setImage:[UIImage imageNamed:@"engineer_scenario_add_small.png"]
-               forState:UIControlStateNormal];
-    [scroolViewIn addSubview:cameraBtn];
-    [cameraBtn addTarget:self
-                  action:@selector(addInputBtnAction:)
-        forControlEvents:UIControlEventTouchUpInside];
-    [_inPutBtnArray addObject:cameraBtn];
-    
-    
     
     scroolViewOut = [[UIScrollView alloc] initWithFrame:CGRectMake(100, labelHeight+260, SCREEN_WIDTH - 175*2, 120)];
     
     [self.view addSubview:scroolViewOut];
-    
-    UIButton *ocameraBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    ocameraBtn.frame = CGRectMake(0, 10, cellWidth, cellHeight);
-    ocameraBtn.tag = 1000;
-    ocameraBtn.clipsToBounds = YES;
-    [ocameraBtn setImage:[UIImage imageNamed:@"engineer_scenario_add_small.png"]
-               forState:UIControlStateNormal];
-    [scroolViewOut addSubview:ocameraBtn];
-    [ocameraBtn addTarget:self
-                   action:@selector(addOutputBtnAction:)
-        forControlEvents:UIControlEventTouchUpInside];
-    [_outPutBtnArray addObject:ocameraBtn];
-    
+
     
     titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, labelHeight+210, SCREEN_WIDTH-125*2, 40)];
     titleL.backgroundColor = [UIColor clearColor];
@@ -265,8 +240,7 @@
     [_currentProxy checkRgsProxyCommandLoad];
 
     self._currentObj._proxyObj = _currentProxy;
-    [_currentObj syncDriverIPProperty];
-    [_currentObj syncDriverComs];
+    
 }
 
 - (void) didLoadedProxyCommand {
@@ -276,17 +250,74 @@
     NSDictionary *inputSettings = [_currentProxy getVideoProcessInputSettings];
     
     inputMin = [[inputSettings objectForKey:@"min"] intValue];
-    inputMax = [[inputSettings objectForKey:@"min"] intValue];
+    inputMax = [[inputSettings objectForKey:@"max"] intValue];
 
     NSDictionary *outputSettings = [_currentProxy getVideoProcessOutputSettings];
     
     outputMin = [[outputSettings objectForKey:@"min"] intValue];
-    outputMax = [[outputSettings objectForKey:@"min"] intValue];
+    outputMax = [[outputSettings objectForKey:@"max"] intValue];
     
     [self updateView];
 }
 
 - (void) updateView {
+    
+    
+    [[scroolViewIn subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+    int x = 10;
+    int y = 0;
+    for(int i = inputMin; i <= inputMax; i++)
+    {
+        CGRect rc = CGRectMake(x, y, 80, 110);
+        
+        TwoIconAndTitleView *iBtn = [[TwoIconAndTitleView alloc] initWithFrame:rc];
+        iBtn.tag = i;
+        //iBtn.delegate = self;
+        iBtn.clipsToBounds = YES;
+        [iBtn fillData:@{@"icon":@"engineer_scenario_add_small.png",@"type":@"0"}];
+        [scroolViewIn addSubview:iBtn];
+        
+        
+        NSString *titleStr = [NSString stringWithFormat:@"%d", i];
+        [iBtn setTitle:titleStr];
+        
+        x = CGRectGetMaxX(rc)+20;
+        
+        [_inPutBtnArray addObject:iBtn];
+    }
+    
+    x+=180;
+    scroolViewIn.contentSize = CGSizeMake(x, CGRectGetHeight(scroolViewIn.frame));
+    
+    
+    
+    [[scroolViewOut subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+    x = 10;
+    y = 0;
+    for(int i = outputMin; i <= outputMax; i++)
+    {
+        CGRect rc = CGRectMake(x, y, 80, 110);
+        
+        TwoIconAndTitleView *iBtn = [[TwoIconAndTitleView alloc] initWithFrame:rc];
+        iBtn.tag = i;
+        //iBtn.delegate = self;
+        iBtn.clipsToBounds = YES;
+        [iBtn fillData:@{@"icon":@"engineer_scenario_add_small.png",@"type":@"0"}];
+        [scroolViewOut addSubview:iBtn];
+        
+        
+        NSString *titleStr = [NSString stringWithFormat:@"%d", i];
+        [iBtn setTitle:titleStr];
+        
+        x = CGRectGetMaxX(rc)+20;
+        
+        [_outPutBtnArray addObject:iBtn];
+    }
+    
+    x+=180;
+    scroolViewOut.contentSize = CGSizeMake(x, CGRectGetHeight(scroolViewOut.frame));
     
 }
 
@@ -315,20 +346,6 @@
         saveBtn.hidden = YES;
         isSettings = NO;
     }
-}
-
-
-- (void) addInputBtnAction:(id)sender{
-}
-- (void) addOutputBtnAction:(id)sender{
-}
-
-
-- (void) inputBtnAction:(id)sender{
-    
-}
-- (void) outputBtnAction:(id)sender{
-    
 }
 
 - (void) saveAction:(id)sender{
@@ -424,6 +441,7 @@
 }
 
 - (void) controlAddOutDevice {
+    
     if (_inputSelected == nil || _outPutSelected == nil) {
         return;
     }
@@ -435,6 +453,7 @@
 }
 
 - (void) controlRemoveOutDevice {
+    
     if (_inputSelected == nil || _outPutSelected == nil) {
         return;
     }
@@ -458,7 +477,7 @@
 }
 
 
-
+/*
 - (void) addInputDevice:(NSDictionary*)data{
     
     
@@ -481,10 +500,7 @@
     NSString *titleStr = [NSString stringWithFormat:@"%d", idx+1];
     [iBtn setTitle:titleStr];
    
-//    [iBtn addTarget:self
-//                  action:@selector(inputBtnAction:)
-//        forControlEvents:UIControlEventTouchUpInside];
-//
+
     CGRect newRC = rc;
     newRC.origin.x = CGRectGetMaxX(rc) + 20;
     newRC.origin.y = 10;
@@ -542,6 +558,7 @@
                          forKey:[NSNumber numberWithInt:idx]];
     
 }
+*/
 
 - (void) didEndDragingElecCell:(NSDictionary *)data pt:(CGPoint)pt {
     
@@ -553,11 +570,33 @@
         int numberInt = [number intValue];
         if (301 <= numberInt && numberInt <= 305) {
             
-            [self addInputDevice:data];
+            CGPoint rpt = [self.view convertPoint:viewPoint toView:scroolViewIn];
+            for(TwoIconAndTitleView * ti in _inPutBtnArray)
+            {
+                if(CGRectContainsPoint(ti.frame, rpt))
+                {
+                    [ti fillData:data];
+                    ti.delegate = self;
+                    break;
+                }
+            }
+            
+           // [self addInputDevice:data];
             
         } else {
             
-            [self addOutputDevice:data];
+            CGPoint rpt = [self.view convertPoint:viewPoint toView:scroolViewOut];
+            for(TwoIconAndTitleView * ti in _outPutBtnArray)
+            {
+                if(CGRectContainsPoint(ti.frame, rpt))
+                {
+                    [ti fillData:data];
+                    ti.delegate = self;
+                    break;
+                }
+            }
+            
+            //[self addOutputDevice:data];
         }
     }
 

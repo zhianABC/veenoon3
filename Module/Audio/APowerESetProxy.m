@@ -56,6 +56,9 @@
     
     self._relayStatus = relayStatus;
     
+    if(_relayStatus == nil)
+        return;
+    
     RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_RELAY"];
     if(cmd)
     {
@@ -255,6 +258,9 @@
 }
 
 - (id) generateEventOperation_status{
+    
+    if(_relayStatus == nil)
+        return nil;
     
     RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_RELAY"];
     if(cmd)

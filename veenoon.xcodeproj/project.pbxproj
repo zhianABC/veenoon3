@@ -3299,8 +3299,8 @@
 			children = (
 				EB478FFA2061341F00EDCD64 /* UserBaseViewControllor.h */,
 				EB478FFB2061341F00EDCD64 /* UserBaseViewControllor.m */,
-				EB03F54C1FBDEC6000865541 /* UserHomeViewController.m */,
 				EB03F54E1FBDEC7400865541 /* UserHomeViewController.h */,
+				EB03F54C1FBDEC6000865541 /* UserHomeViewController.m */,
 				EBDF1BFD1FC5B9F500A756EA /* UserMeetingRoomConfig.h */,
 				EBDF1BFE1FC5BA0900A756EA /* UserMettingRoomConfig.m */,
 				EBDF1C1A1FC5CCEF00A756EA /* UserScnarioConfigViewController.h */,

@@ -333,35 +333,43 @@
         AudioEMixProxy *proxy = _proxyObj;
         
         //proxy id
-        [allData setObject:[NSString stringWithFormat:@"%lu",proxy._deviceId] forKey:@"device_id"];
+        [allData setObject:[NSString stringWithFormat:@"%d",proxy._deviceId] forKey:@"device_id"];
         
         // volumn
         [allData setObject:[NSString stringWithFormat:@"%f",proxy._deviceVol] forKey:@"device_vol"];
         
         //摄像协议
+        if(proxy._currentCameraPol)
         [allData setObject:proxy._currentCameraPol forKey:@"camera_pol"];
         
         //
         [allData setObject:[NSString stringWithFormat:@"%d",proxy._fayanPriority] forKey:@"fayan_priority"];
         //
+        if(proxy._mixHighFilter)
         [allData setObject:proxy._mixHighFilter forKey:@"mix_high_filter"];
         
         //
+        if(proxy._mixLowFilter)
         [allData setObject:proxy._mixLowFilter forKey:@"mix_low_filter"];
         
         //
+        if(proxy._mixNoise)
         [allData setObject:proxy._mixNoise forKey:@"mix_noise"];
         
         //
+        if(proxy._mixPEQ)
         [allData setObject:proxy._mixPEQ forKey:@"mix_peq"];
         
         //
+        if(proxy._mixPress)
         [allData setObject:proxy._mixPress forKey:@"mix_press"];
         
         //
+        if(proxy._mixPEQRate)
         [allData setObject:proxy._mixPEQRate forKey:@"mix_peq_rate"];
         
         //
+        if(proxy._workMode)
         [allData setObject:proxy._workMode forKey:@"work_mode"];
     }
     
@@ -421,7 +429,7 @@
     
     
     //proxy id
-    proxy._deviceId = [[json objectForKey:@"device_id"] longValue];
+    proxy._deviceId = [[json objectForKey:@"device_id"] integerValue];
     
     // volumn
     proxy._deviceVol = [[json objectForKey:@"device_vol"] floatValue];

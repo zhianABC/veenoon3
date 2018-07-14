@@ -507,9 +507,12 @@
             NSMutableDictionary *proxyDic = [NSMutableDictionary dictionary];
             [allData setObject:proxyDic forKey:@"proxy"];
             
-            [proxyDic setObject:[NSString stringWithFormat:@"%lu", vprj._deviceId] forKey:@"proxy_id"];
+            [proxyDic setObject:[NSString stringWithFormat:@"%d", vprj._deviceId] forKey:@"proxy_id"];
             [proxyDic setObject:[NSString stringWithFormat:@"%d", vprj._breakDuration] forKey:@"break_duration"];
-            [proxyDic setObject:vprj._relayStatus forKey:@"relay_status"];
+            
+            if(vprj._relayStatus)
+                [proxyDic setObject:vprj._relayStatus forKey:@"relay_status"];
+            
             [proxyDic setObject:[NSString stringWithFormat:@"%d", vprj._linkDuration] forKey:@"link_duration"];
             [proxyDic setObject:[NSString stringWithFormat:@"%d", vprj._level] forKey:@"level"];
         }
@@ -555,7 +558,7 @@
     
     self._localSavedCommands = [json objectForKey:@"commands"];
     
-    self._power = [json objectForKey:@"power_on_off"];
+    self._power = [[json objectForKey:@"power_on_off"] boolValue];
     
     if(json)
     {

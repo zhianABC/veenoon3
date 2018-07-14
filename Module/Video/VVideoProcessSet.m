@@ -219,7 +219,9 @@
     
     if (_proxyObj) {
         VVideoProcessSetProxy *proxy = (VVideoProcessSetProxy*) _proxyObj;
-        [allData setObject:proxy._deviceMatcherDic forKey:@"video_process"];
+        
+        if(proxy._deviceMatcherDic)
+            [allData setObject:proxy._deviceMatcherDic forKey:@"video_process"];
     }
     
     return allData;

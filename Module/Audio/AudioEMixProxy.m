@@ -57,12 +57,14 @@
     if(self = [super init])
     {
         _deviceVol = 20.0f;
-        _mixLowFilter = @"14";
-        _mixHighFilter = @"60";
-        _mixPEQ = @"4";
-        _mixNoise = @"7";
-        _mixPress = @"5";
-        _mixPEQRate = @"180";
+        self._mixLowFilter = @"14";
+        self._mixHighFilter = @"60";
+        self._mixPEQ = @"4";
+        self._mixNoise = @"7";
+        self._mixPress = @"5";
+        self._mixPEQRate = @"180";
+        self._currentCameraPol = @"VISCA";
+        self._workMode = @"Speak";
         
         self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionary];
         _cameraPol = [NSMutableArray array];
