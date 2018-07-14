@@ -531,6 +531,27 @@
                 }
             }
             
+            AudioEProcessorAutoMixProxy *amixproxy = ((AudioEProcessor*)ap)._autoMixProxy;
+            if(amixproxy)
+            {
+                NSArray* rsps = [amixproxy generateEventOperation_inputs];
+                for(id rsp in rsps)
+                {
+                    [self addEventOperation:rsp];
+                }
+                rsps = [amixproxy generateEventOperation_outpus];
+                for(id rsp in rsps)
+                {
+                    [self addEventOperation:rsp];
+                }
+                
+                id rsp = [amixproxy generateEventOperation_gain];
+                if(rsp)
+                {
+                    [self addEventOperation:rsp];
+                }
+            }
+            
             NSDictionary *data = [ap objectToJson];
             [audios addObject:data];
         }

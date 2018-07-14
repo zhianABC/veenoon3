@@ -25,8 +25,8 @@
 @property (nonatomic, strong) RgsProxyObj *_rgsProxyObj;
 //zidonghunyin
 @property (nonatomic, strong) NSString *_zidonghunyinZengYi;
-@property (nonatomic, strong) NSMutableArray *_zidonghunyinInputChanels;
-@property (nonatomic, strong) NSMutableArray *_zidonghunyinOutputChanels;
+@property (nonatomic, strong) NSMutableDictionary *_inputMap;
+@property (nonatomic, strong) NSMutableDictionary *_outputMap;
 
 - (void) checkRgsProxyCommandLoad;
 
@@ -34,11 +34,12 @@
 //zidonghunyin
 - (NSDictionary*)getAutoMixCmdSettings;
 - (NSString*) getZidonghuiyinZengYi;
-- (void) controlZiDongHunYinZengYi:(NSString*) zengyiDB;
-- (NSMutableArray*) getZidonghunyinInputChanels;
-- (void) controlZidonghunyinInputChanels:(NSMutableArray*)zidonghunyinInputChanels;
-- (NSMutableArray*) getZidonghunyinOutputChanels;
-- (void) controlZidonghunyinOutputChanels:(NSMutableArray*)zidonghunyinOutputChanels;
+
 - (void) controlZidongHunyinBtn:(NSString*) proxyName withType:(int)type withState:(BOOL)state;
+- (void) controlZiDongHunYinZengYi:(NSString*) zengyiDB;
+
+- (NSArray*) generateEventOperation_inputs;
+- (NSArray*) generateEventOperation_outpus;
+- (id) generateEventOperation_gain;
 
 @end
