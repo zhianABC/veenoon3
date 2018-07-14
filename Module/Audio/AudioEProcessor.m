@@ -477,8 +477,8 @@
             
             //自动混音
             [proxyDic setObject:_autoMixProxy._zidonghunyinZengYi forKey:@"auto_mix_sl"];
-            [proxyDic setObject:_autoMixProxy._zidonghunyinInputChanels forKey:@"auto_mix_input"];
-            [proxyDic setObject:_autoMixProxy._zidonghunyinOutputChanels forKey:@"auto_mix_output"];
+            [proxyDic setObject:_autoMixProxy._inputMap forKey:@"auto_mix_input"];
+            [proxyDic setObject:_autoMixProxy._outputMap forKey:@"auto_mix_output"];
             
             //反馈抑制
             [proxyDic setObject:[NSNumber numberWithBool:vap._isFanKuiYiZhiStarted] forKey:@"audio_processor_fb_started"];
@@ -679,8 +679,8 @@
         self._autoMixProxy = audioProxy;
         
         audioProxy._zidonghunyinZengYi = [dic objectForKey:@"auto_mix_sl"];
-        audioProxy._zidonghunyinInputChanels = [dic objectForKey:@"auto_mix_input"];
-        audioProxy._zidonghunyinOutputChanels = [dic objectForKey:@"auto_mix_output"];
+        audioProxy._inputMap = [dic objectForKey:@"auto_mix_input"];
+        audioProxy._outputMap = [dic objectForKey:@"auto_mix_output"];
         
         //反馈抑制
         proxys._isFanKuiYiZhiStarted = [[dic objectForKey:@"audio_processor_fb_started"] boolValue];
