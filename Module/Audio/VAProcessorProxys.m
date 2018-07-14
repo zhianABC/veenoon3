@@ -684,7 +684,7 @@
 
 - (void) controlYanshiqiSlide:(NSString*) yanshiqiSlide {
     
-    _yanshiqiSlide = yanshiqiSlide;
+    self._yanshiqiSlide = yanshiqiSlide;
     
     RgsCommandInfo *cmd = nil;
     RgsCommandParamInfo * cmd_param_info = nil;
@@ -3310,6 +3310,241 @@
                 
                 return opt;
             }
+        }
+    }
+    
+    return nil;
+}
+
+//噪声门
+- (id) generateEventOperation_noiseGate{
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_NOISE_GATE"];
+    if(cmd)
+    {
+        NSString* tureOrFalse = @"False";
+        if(_isZaoshengStarted)
+        {
+            tureOrFalse = @"True";
+        }
+        else
+        {
+            tureOrFalse = @"False";
+        }
+        
+        
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        for( RgsCommandParamInfo * param_info in cmd.params)
+        {
+            if([param_info.name isEqualToString:@"ENABLE"])
+            {
+                [param setObject:tureOrFalse
+                          forKey:param_info.name];
+            }
+            else if([param_info.name isEqualToString:@"TH"])
+            {
+                if(param_info.type == RGS_PARAM_TYPE_FLOAT)
+                {
+                    [param setObject:[NSString stringWithFormat:@"%0.1f",
+                                      [_zaoshengFazhi floatValue]]
+                              forKey:param_info.name];
+                }
+                else if(param_info.type == RGS_PARAM_TYPE_INT)
+                {
+                    [param setObject:[NSString stringWithFormat:@"%0.0f",
+                                      [_zaoshengFazhi floatValue]]
+                              forKey:param_info.name];
+                }
+            }
+            else if([param_info.name isEqualToString:@"START_DUR"])
+            {
+                if(param_info.type == RGS_PARAM_TYPE_FLOAT)
+                {
+                    [param setObject:[NSString stringWithFormat:@"%0.1f",
+                                      [_zaoshengStartTime floatValue]]
+                              forKey:param_info.name];
+                }
+                else if(param_info.type == RGS_PARAM_TYPE_INT)
+                {
+                    [param setObject:[NSString stringWithFormat:@"%0.0f",
+                                      [_zaoshengStartTime floatValue]]
+                              forKey:param_info.name];
+                }
+            }
+            else if([param_info.name isEqualToString:@"RECOVER_DUR"])
+            {
+                if(param_info.type == RGS_PARAM_TYPE_FLOAT)
+                {
+                    [param setObject:[NSString stringWithFormat:@"%0.1f",
+                                      [_zaoshengHuifuTime floatValue]]
+                              forKey:param_info.name];
+                }
+                else if(param_info.type == RGS_PARAM_TYPE_INT)
+                {
+                    [param setObject:[NSString stringWithFormat:@"%0.0f",
+                                      [_zaoshengHuifuTime floatValue]]
+                              forKey:param_info.name];
+                }
+            }
+        }
+        
+        RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc] init];
+        scene_opt.dev_id = _rgsProxyObj.m_id;
+        scene_opt.cmd = cmd.name;
+        scene_opt.param = param;
+        
+        //用于保存还原
+        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
+        [slice setObject:[NSNumber numberWithInteger:_rgsProxyObj.m_id] forKey:@"dev_id"];
+        [slice setObject:cmd.name forKey:@"cmd"];
+        [slice setObject:param forKey:@"param"];
+        [_RgsSceneDeviceOperationShadow setObject:slice forKey:@"SET_NOISE_GATE"];
+        
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
+                                                                          cmd:scene_opt.cmd
+                                                                        param:scene_opt.param];
+        
+        return opt;
+    }
+    else
+    {
+        NSDictionary *cmdsRev = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_NOISE_GATE"];
+        if(cmdsRev)
+        {
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc]
+                                       initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
+                                       cmd:[cmdsRev objectForKey:@"cmd"]
+                                       param:[cmdsRev objectForKey:@"param"]];
+            
+            return opt;
+        }
+    }
+    
+    return nil;
+}
+
+//反馈抑制
+- (id) generateEventOperation_fbLimit{
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_FB_CTRL"];
+    if(cmd)
+    {
+        NSString* tureOrFalse = @"False";
+        if(_isFanKuiYiZhiStarted)
+        {
+            tureOrFalse = @"True";
+        }
+        else
+        {
+            tureOrFalse = @"False";
+        }
+        
+        
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        for( RgsCommandParamInfo * param_info in cmd.params)
+        {
+            if([param_info.name isEqualToString:@"ENABLE"])
+            {
+                [param setObject:tureOrFalse
+                          forKey:param_info.name];
+            }
+        }
+        
+        RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc] init];
+        scene_opt.dev_id = _rgsProxyObj.m_id;
+        scene_opt.cmd = cmd.name;
+        scene_opt.param = param;
+        
+        //用于保存还原
+        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
+        [slice setObject:[NSNumber numberWithInteger:_rgsProxyObj.m_id] forKey:@"dev_id"];
+        [slice setObject:cmd.name forKey:@"cmd"];
+        [slice setObject:param forKey:@"param"];
+        [_RgsSceneDeviceOperationShadow setObject:slice forKey:@"SET_FB_CTRL"];
+        
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
+                                                                          cmd:scene_opt.cmd
+                                                                        param:scene_opt.param];
+        
+        return opt;
+    }
+    else
+    {
+        NSDictionary *cmdsRev = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_FB_CTRL"];
+        if(cmdsRev)
+        {
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc]
+                                       initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
+                                       cmd:[cmdsRev objectForKey:@"cmd"]
+                                       param:[cmdsRev objectForKey:@"param"]];
+            
+            return opt;
+        }
+    }
+    
+    return nil;
+}
+
+//延时器
+- (id) generateEventOperation_delay{
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_DELAY"];
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        for( RgsCommandParamInfo * param_info in cmd.params)
+        {
+            if([param_info.name isEqualToString:@"DUR"])
+            {
+                if(param_info.type == RGS_PARAM_TYPE_FLOAT)
+                {
+                    [param setObject:[NSString stringWithFormat:@"%0.1f",
+                                      [_yanshiqiSlide floatValue]]
+                              forKey:param_info.name];
+                }
+                else if(param_info.type == RGS_PARAM_TYPE_INT)
+                {
+                    [param setObject:[NSString stringWithFormat:@"%0.0f",
+                                      [_yanshiqiSlide floatValue]]
+                              forKey:param_info.name];
+                }
+                
+                break;
+            }
+        }
+        
+        RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc] init];
+        scene_opt.dev_id = _rgsProxyObj.m_id;
+        scene_opt.cmd = cmd.name;
+        scene_opt.param = param;
+        
+        //用于保存还原
+        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
+        [slice setObject:[NSNumber numberWithInteger:_rgsProxyObj.m_id] forKey:@"dev_id"];
+        [slice setObject:cmd.name forKey:@"cmd"];
+        [slice setObject:param forKey:@"param"];
+        [_RgsSceneDeviceOperationShadow setObject:slice forKey:@"SET_DELAY"];
+        
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
+                                                                          cmd:scene_opt.cmd
+                                                                        param:scene_opt.param];
+        
+        return opt;
+    }
+    else
+    {
+        NSDictionary *cmdsRev = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_DELAY"];
+        if(cmdsRev)
+        {
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc]
+                                       initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
+                                       cmd:[cmdsRev objectForKey:@"cmd"]
+                                       param:[cmdsRev objectForKey:@"param"]];
+            
+            return opt;
         }
     }
     

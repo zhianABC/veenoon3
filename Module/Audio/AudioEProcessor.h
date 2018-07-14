@@ -47,6 +47,10 @@
 - (void) controlHuiShengXiaoChu:(BOOL)isHuiShengXiaoChu;
 - (BOOL) isHuiShengXiaoChuStarted;
 
+//回声消除
+- (id) generateEventOperation_echo;
+
+
 - (void) prepareAllAudioInCmds;
 - (void) prepareAllAudioOutCmds;
 @end

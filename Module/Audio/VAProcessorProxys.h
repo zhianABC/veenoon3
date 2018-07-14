@@ -279,6 +279,15 @@
 //矩阵SRC VALUE
 - (NSArray* ) generateEventOperation_mixValue;
 
+//噪声门
+- (id) generateEventOperation_noiseGate;
+
+//反馈抑制
+- (id) generateEventOperation_fbLimit;
+
+//延时器
+- (id) generateEventOperation_delay;
+
 
 /////场景还原
 - (void) recoverWithDictionary:(NSDictionary*)data;
