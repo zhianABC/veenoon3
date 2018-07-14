@@ -614,38 +614,130 @@
     self._inAudioProxys = [NSMutableArray array];
     for(NSDictionary *dic in _inchannels)
     {
+        
+        RgsProxyObj *proxObj = [[RgsProxyObj alloc] init];
+        proxObj.m_id = [[dic objectForKey:@"proxy_id"] integerValue];
+        proxObj.name = [dic objectForKey:@"proxy_name"];
+        
+        VAProcessorProxys *proxys = [[VAProcessorProxys alloc] init];
+        proxys._rgsProxyObj = proxObj;
+        
+        proxys._icon_name = [dic objectForKey:@"icon_name"];
+        
+        //增益
+        proxys._voiceDb = [[dic objectForKey:@"analogy_gain"] floatValue];
+        proxys._isMute = [[dic objectForKey:@"analogy_mute"] boolValue];
+        proxys._digitalGain = [[dic objectForKey:@"digital_gain"] floatValue];
+        proxys._isDigitalMute = [[dic objectForKey:@"digital_mute"] boolValue];
+        proxys._mode = [dic objectForKey:@"mode"];
+        proxys._micDb = [dic objectForKey:@"mic_db"];
+        proxys._is48V = [[dic objectForKey:@"48v"] boolValue];
+        proxys._inverted = [[dic objectForKey:@"inverted"] boolValue];
+        
+        //噪声门
+        proxys._zaoshengFazhi = [dic objectForKey:@"noise_gate_threshold"];
+        proxys._zaoshengStartTime = [dic objectForKey:@"noise_gate_start_time"];
+        proxys._zaoshengHuifuTime = [dic objectForKey:@"noise_gate_recover_time"];
+        proxys._isZaoshengStarted = [[dic objectForKey:@"is_noise_gate_start"] boolValue];
+        
+        //滤波均衡
         //高通
-        
+        proxys._lvbojunhengGaotongType = [dic objectForKey:@"high_filter_type"];
+        proxys._lvbojunhengGaotongXielv = [dic objectForKey:@"high_filter_sl"];
+        proxys._lvboGaotongPinLv = [dic objectForKey:@"high_filter_rate"];
+        proxys._islvboGaotongStart = [[dic objectForKey:@"high_filter_start"] boolValue];
         //低通
-        
+        proxys._lvbojunhengDitongType = [dic objectForKey:@"low_filter_type"];
+        proxys._lvboDitongSL = [dic objectForKey:@"low_filter_sl"];
+        proxys._lvboDitongFreq = [dic objectForKey:@"low_filter_rate"];
+        proxys._islvboDitongStart = [[dic objectForKey:@"low_filter_start"] boolValue];
         //PEQ
-        
-        //噪声
+        proxys.waves16_feq_gain_q = [dic objectForKey:@"peq_band"];
         
         //压限器
+        proxys._yaxianFazhi = [dic objectForKey:@"press_limit_th"];
+        proxys._yaxianXielv = [dic objectForKey:@"press_limit_sl"];
+        proxys._yaxianStartTime = [dic objectForKey:@"press_limit_start_time"];
+        proxys._yaxianRecoveryTime = [dic objectForKey:@"press_limit_recover_time"];
+        proxys._isyaxianStart = [[dic objectForKey:@"press_limit_start"] boolValue];
         
-        VAProcessorProxys *vap = [[VAProcessorProxys alloc] init];
-        [vap recoverWithDictionary:dic];
-        [_inAudioProxys addObject:vap];
+        //延时器
+        proxys._yanshiqiSlide = [dic objectForKey:@"delay_time"];
+        
+        //Echo
+        self._isHuiShengXiaoChu = [[dic objectForKey:@"audio_processor_echo_started"] boolValue];
+        
+        //自动混音
+        AudioEProcessorAutoMixProxy *audioProxy = [[AudioEProcessorAutoMixProxy alloc] init];
+        self._autoMixProxy = audioProxy;
+        
+        audioProxy._zidonghunyinZengYi = [dic objectForKey:@"auto_mix_sl"];
+        audioProxy._zidonghunyinInputChanels = [dic objectForKey:@"auto_mix_input"];
+        audioProxy._zidonghunyinOutputChanels = [dic objectForKey:@"auto_mix_output"];
+        
+        //反馈抑制
+        proxys._isFanKuiYiZhiStarted = [[dic objectForKey:@"audio_processor_fb_started"] boolValue];
+        
+        [proxys recoverWithDictionary:dic];
+        [_inAudioProxys addObject:proxys];
     }
     self._outAudioProxys = [NSMutableArray array];
     for(NSDictionary *dic in _outchannels)
     {
-        //高通
-        
-        //低通
-        
-        //PEQ
-        
-        //噪声
-        
-        //压限器
-        
-        //Mix Source 矩阵
-        
-       
+        RgsProxyObj *proxyObj = [[RgsProxyObj alloc] init];
+        proxyObj.m_id = [[dic objectForKey:@"proxy_id"] integerValue];
+        proxyObj.name = [dic objectForKey:@"proxy_name"];
         
         VAProcessorProxys *vap = [[VAProcessorProxys alloc] init];
+        vap._rgsProxyObj = proxyObj;
+        
+        
+        vap._icon_name = [dic objectForKey:@"icon_name"];
+        
+        //增益
+        vap._voiceDb = [[dic objectForKey:@"analogy_gain"] floatValue];
+        vap._isMute = [[dic objectForKey:@"analogy_mute"] boolValue];
+        vap._digitalGain = [[dic objectForKey:@"digital_gain"] floatValue];
+        vap._isDigitalMute = [[dic objectForKey:@"digital_mute"] boolValue];
+        vap._mode = [dic objectForKey:@"mode"];
+        vap._micDb = [dic objectForKey:@"mic_db"];
+        vap._is48V = [[dic objectForKey:@"48v"] boolValue];
+        vap._inverted = [[dic objectForKey:@"inverted"] boolValue];
+        
+        //信号发生器
+        AudioEProcessorSignalProxy *signalProxy = [[AudioEProcessorSignalProxy alloc] init];
+        self._singalProxy = signalProxy;
+        
+        signalProxy._xinhaofashengPinlv = [dic objectForKey:@"audio_out_signal_freq"];
+        signalProxy._xinhaofashengZhengxuan = [dic objectForKey:@"audio_out_signal_zhengxuan"];
+        signalProxy._xinhaofashengZengYi = [dic objectForKey:@"audio_out_signal_sl"];
+        signalProxy._isXinhaofashengMute = [[dic objectForKey:@"audio_out_signal_started"] boolValue];
+        signalProxy._xinhaofashengOutputChanels = [dic objectForKey:@"audio_out_signal_output"];
+        
+        //高通
+        vap._lvbojunhengGaotongType = [dic objectForKey:@"high_filter_type"];
+        vap._lvbojunhengGaotongXielv = [dic objectForKey:@"high_filter_sl"];
+        vap._lvboGaotongPinLv = [dic objectForKey:@"high_filter_rate"];
+        vap._islvboGaotongStart = [[dic objectForKey:@"high_filter_start"] boolValue];
+        //低通
+        
+        vap._lvbojunhengDitongType = [dic objectForKey:@"low_filter_type"];
+        vap._lvboDitongSL = [dic objectForKey:@"low_filter_sl"];
+        vap._lvboDitongFreq = [dic objectForKey:@"low_filter_rate"];
+        vap._islvboDitongStart = [[dic objectForKey:@"low_filter_start"] boolValue];
+        //PEQ
+        vap.waves16_feq_gain_q = [dic objectForKey:@"peq_band"];
+        
+        //压限器
+        vap._yaxianFazhi = [dic objectForKey:@"press_limit_th"];
+        vap._yaxianXielv = [dic objectForKey:@"press_limit_sl"];
+        vap._yaxianStartTime = [dic objectForKey:@"press_limit_start_time"];
+        vap._yaxianRecoveryTime = [dic objectForKey:@"press_limit_recover_time"];
+        vap._isyaxianStart = [[dic objectForKey:@"press_limit_start"] boolValue];
+        
+        //延时器
+        vap._yanshiqiSlide = [dic objectForKey:@"delay_time"];
+        
         [vap recoverWithDictionary:dic];
         [_outAudioProxys addObject:vap];
     }

@@ -31,14 +31,6 @@
 
 @interface VAProcessorProxys ()
 {
-    float _voiceDb;
-    BOOL _isMute;
-    BOOL _isDigitalMute;
-    float _digitalGain;
-    
-    BOOL _inverted;
-    
-    
     BOOL _isSetOK;
     
     BOOL _isFanKuiYiZhiStarted;
@@ -65,6 +57,11 @@
 @synthesize _is48V;
 @synthesize _micDb;
 @synthesize _isFanKuiYiZhiStarted;
+@synthesize _voiceDb;
+@synthesize _isMute;
+@synthesize _digitalGain;
+@synthesize _isDigitalMute;
+@synthesize _inverted;
 
 @synthesize _yanshiqiSlide;
 @synthesize _yaxianFazhi;

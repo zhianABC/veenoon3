@@ -33,7 +33,11 @@
 @property (nonatomic, strong) NSString *_mode;
 @property (nonatomic, assign) BOOL _is48V;
 @property (nonatomic, strong) NSString *_micDb;
-
+@property (nonatomic, assign) float _voiceDb;
+@property (nonatomic, assign) BOOL _isMute;
+@property (nonatomic, assign) float _digitalGain;
+@property (nonatomic, assign) BOOL _isDigitalMute;
+@property (nonatomic, assign) BOOL _inverted;
 //fankuiyizhi
 @property (nonatomic, assign) BOOL _isFanKuiYiZhiStarted;
 
