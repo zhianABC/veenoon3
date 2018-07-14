@@ -15,13 +15,12 @@
     
     BOOL _isSetOK;
     
-    NSMutableDictionary *_deviceMatcherDic;
-    
 }
 
 @property (nonatomic, strong) NSArray *_rgsCommands;
 @property (nonatomic, strong) NSMutableDictionary *_cmdMap;
-
+@property (nonatomic, strong) NSMutableDictionary *_RgsSceneDeviceOperationShadow;
+@property (nonatomic, strong) NSMutableDictionary *_deviceMatcherDic;
 
 @end
 
@@ -30,14 +29,15 @@
 @synthesize _rgsProxyObj;
 @synthesize _cmdMap;
 @synthesize delegate;
-
+@synthesize _RgsSceneDeviceOperationShadow;
+@synthesize _deviceMatcherDic;
 - (id) init
 {
     if(self = [super init])
     {
         
-        _deviceMatcherDic = [NSMutableDictionary dictionary];
-        
+        self._deviceMatcherDic = [NSMutableDictionary dictionary];
+        self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionary];
     }
     
     return self;
@@ -179,6 +179,7 @@
 }
 
 - (void) controlDeviceAdd:(NSString*)inputName withOutDevice:(NSString*)outputName {
+    
     NSMutableArray *outPutArray = [_deviceMatcherDic objectForKey:inputName];
     if (outPutArray) {
         if (![outPutArray containsObject:outputName]) {
@@ -195,6 +196,7 @@
 }
 
 - (void) sendAddDviceToCenter:(NSString*)inputName withOutDevice:(NSString*)outputName {
+    
     RgsCommandInfo *cmd = nil;
     cmd = [_cmdMap objectForKey:@"SET_P2P"];
     
@@ -226,5 +228,87 @@
                                                }];
     }
 }
+
+//生成场景片段
+- (NSArray* ) generateEventOperation_p2p{
+    
+    NSMutableArray *results = [NSMutableArray array];
+    for(NSString* inSrc in [_deviceMatcherDic allKeys])
+    {
+        NSArray *outSrcs = [_deviceMatcherDic objectForKey:inSrc];
+        
+        for(NSString *outSrc in outSrcs)
+        {
+            id opt = [self generateEventOperation:outSrc inSrc:inSrc];
+            
+            if(opt)
+            {
+                [results addObject:opt];
+            }
+        }
+    }
+    
+    return results;
+}
+
+- (id) generateEventOperation:(NSString*)outSrc inSrc:(NSString*)inSrc{
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_P2P"];
+    
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            for( RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"INPUT"])
+                {
+                    [param setObject:inSrc forKey:param_info.name];
+                } else if ([param_info.name isEqualToString:@"OUTPUT"])
+                {
+                    [param setObject:outSrc forKey:param_info.name];
+                }
+            }
+        }
+    
+        int proxyid = _rgsProxyObj.m_id;
+        
+        RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc] init];
+        scene_opt.dev_id = proxyid;
+        scene_opt.cmd = cmd.name;
+        scene_opt.param = param;
+        
+        //用于保存还原
+        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
+        [slice setObject:[NSNumber numberWithInteger:proxyid] forKey:@"dev_id"];
+        [slice setObject:cmd.name forKey:@"cmd"];
+        [slice setObject:param forKey:@"param"];
+        [_RgsSceneDeviceOperationShadow setObject:slice forKey:@"SET_P2P"];
+        
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
+                                                                          cmd:scene_opt.cmd
+                                                                        param:scene_opt.param];
+        
+        return opt;
+    }
+    else
+    {
+        NSDictionary *cmdsRev = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_P2P"];
+        if(cmdsRev)
+        {
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc]
+                                       initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
+                                       cmd:[cmdsRev objectForKey:@"cmd"]
+                                       param:[cmdsRev objectForKey:@"param"]];
+            
+            return opt;
+        }
+    }
+    
+    return nil;
+}
+
 
 @end

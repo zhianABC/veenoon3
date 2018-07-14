@@ -24,6 +24,15 @@
 #import "EDimmerLight.h"
 #import "EDimmerLightProxys.h"
 
+#import "EDimmerSwitchLight.h"
+#import "EDimmerSwitchLightProxy.h"
+
+#import "VVideoProcessSet.h"
+#import "VVideoProcessSetProxy.h"
+
+#import "APowerESet.h"
+#import "APowerESetProxy.h"
+
 #import "DataBase.h"
 
 @interface Scenario ()
@@ -347,123 +356,170 @@
 
 #pragma mark -----Create 场景 ---
 
+
+- (void)processAudioProcessorProxy:(VAProcessorProxys*)vap{
+    
+    if([vap isSetChanged])
+    {
+        RgsSceneOperation *rsp = [vap generateEventOperation_AnalogyGain];
+        if(rsp)
+        {
+            [self addEventOperation:rsp];
+        }
+        rsp = [vap generateEventOperation_Mute];
+        if(rsp)
+        {
+            [self addEventOperation:rsp];
+        }
+        rsp = [vap generateEventOperation_DigitalGain];
+        if(rsp)
+        {
+            [self addEventOperation:rsp];
+        }
+        
+        rsp = [vap generateEventOperation_DigitalMute];
+        if(rsp)
+        {
+            [self addEventOperation:rsp];
+        }
+        
+        rsp = [vap generateEventOperation_Mode];
+        if(rsp)
+        {
+            [self addEventOperation:rsp];
+        }
+        
+        rsp = [vap generateEventOperation_48v];
+        if(rsp)
+        {
+            [self addEventOperation:rsp];
+        }
+        
+        rsp = [vap generateEventOperation_MicDb];
+        if(rsp)
+        {
+            [self addEventOperation:rsp];
+        }
+        
+        rsp = [vap generateEventOperation_Inverted];
+        if(rsp)
+        {
+            [self addEventOperation:rsp];
+        }
+        
+        rsp = [vap generateEventOperation_hp];
+        if(rsp)
+        {
+            [self addEventOperation:rsp];
+        }
+        
+        rsp = [vap generateEventOperation_lp];
+        if(rsp)
+        {
+            [self addEventOperation:rsp];
+        }
+        
+        NSArray *rsps = [vap generateEventOperation_peq];
+        for(id sp in rsps)
+        {
+            [self addEventOperation:sp];
+        }
+        
+        rsp = [vap generateEventOperation_limitPress];
+        if(rsp)
+        {
+            [self addEventOperation:rsp];
+        }
+        
+        rsps = [vap generateEventOperation_mixSrc];
+        for(id sp in rsps)
+        {
+            [self addEventOperation:sp];
+        }
+        
+        rsps = [vap generateEventOperation_mixValue];
+        for(id sp in rsps)
+        {
+            [self addEventOperation:sp];
+        }
+        
+        rsp = [vap generateEventOperation_noiseGate];
+        if(rsp)
+        {
+            [self addEventOperation:rsp];
+        }
+        
+        rsp = [vap generateEventOperation_fbLimit];
+        if(rsp)
+        {
+            [self addEventOperation:rsp];
+        }
+        
+        rsp = [vap generateEventOperation_delay];
+        if(rsp)
+        {
+            [self addEventOperation:rsp];
+        }
+    }
+}
+
 - (void) createAudioScenario{
 
     NSMutableArray *audios = [_scenarioData objectForKey:@"audio"];
     
-    for(AudioEProcessor* ap in _audioDevices)
+    for(id ap in _audioDevices)
     {
         
         if([ap isKindOfClass:[AudioEProcessor class]])
         {
             NSArray *audioIn = ((AudioEProcessor*)ap)._inAudioProxys;
+            NSArray *audioOut = ((AudioEProcessor*)ap)._outAudioProxys;
             
             for(VAProcessorProxys *vap in audioIn)
             {
-                if([vap isSetChanged])
-                {
-                    RgsSceneOperation *rsp = [vap generateEventOperation_AnalogyGain];
-                    if(rsp)
-                    {
-                        [self addEventOperation:rsp];
-                    }
-                    rsp = [vap generateEventOperation_Mute];
-                    if(rsp)
-                    {
-                        [self addEventOperation:rsp];
-                    }
-                    rsp = [vap generateEventOperation_DigitalGain];
-                    if(rsp)
-                    {
-                        [self addEventOperation:rsp];
-                    }
-                    
-                    rsp = [vap generateEventOperation_DigitalMute];
-                    if(rsp)
-                    {
-                        [self addEventOperation:rsp];
-                    }
-                    
-                    rsp = [vap generateEventOperation_Mode];
-                    if(rsp)
-                    {
-                        [self addEventOperation:rsp];
-                    }
-                    
-                    rsp = [vap generateEventOperation_48v];
-                    if(rsp)
-                    {
-                        [self addEventOperation:rsp];
-                    }
-                    
-                    rsp = [vap generateEventOperation_MicDb];
-                    if(rsp)
-                    {
-                        [self addEventOperation:rsp];
-                    }
-                    
-                    rsp = [vap generateEventOperation_Inverted];
-                    if(rsp)
-                    {
-                        [self addEventOperation:rsp];
-                    }
-                    
-                    rsp = [vap generateEventOperation_hp];
-                    if(rsp)
-                    {
-                        [self addEventOperation:rsp];
-                    }
-                    
-                    rsp = [vap generateEventOperation_lp];
-                    if(rsp)
-                    {
-                        [self addEventOperation:rsp];
-                    }
-                    
-                    NSArray *rsps = [vap generateEventOperation_peq];
-                    for(id sp in rsps)
-                    {
-                        [self addEventOperation:sp];
-                    }
-                
-                    rsp = [vap generateEventOperation_limitPress];
-                    if(rsp)
-                    {
-                        [self addEventOperation:rsp];
-                    }
+                [self processAudioProcessorProxy:vap];
+            }
+            
+            for(VAProcessorProxys *vap in audioOut)
+            {
+                [self processAudioProcessorProxy:vap];
+            }
+            
+            id rsp = [ap generateEventOperation_echo];
+            if(rsp)
+            {
+                [self addEventOperation:rsp];
+            }
+            
+            NSDictionary *data = [ap objectToJson];
+            [audios addObject:data];
+        }
+        else if ([ap isKindOfClass:[APowerESet class]])
+        {
+            NSArray *proxys = ((APowerESet*)ap)._proxys;
+            
+            //全开/全关
+            RgsSceneOperation* rsp = [ap generateEventOperation_power];
+            if(rsp)
+            {
+                [self addEventOperation:rsp];
+            }
         
-                    rsps = [vap generateEventOperation_mixSrc];
-                    for(id sp in rsps)
-                    {
-                        [self addEventOperation:sp];
-                    }
-                    
-                    rsps = [vap generateEventOperation_mixValue];
-                    for(id sp in rsps)
-                    {
-                        [self addEventOperation:sp];
-                    }
-                
-                    rsp = [vap generateEventOperation_noiseGate];
-                    if(rsp)
-                    {
-                        [self addEventOperation:rsp];
-                    }
-                    
-                    rsp = [vap generateEventOperation_fbLimit];
-                    if(rsp)
-                    {
-                        [self addEventOperation:rsp];
-                    }
-                    
-                    rsp = [vap generateEventOperation_delay];
-                    if(rsp)
-                    {
-                        [self addEventOperation:rsp];
-                    }
+            for(APowerESetProxy *proxy in proxys)
+            {
+                RgsSceneOperation* rsp = [proxy generateEventOperation_status];
+                if(rsp)
+                {
+                    [self addEventOperation:rsp];
                 }
                 
-                id rsp = [ap generateEventOperation_echo];
+                rsp = [proxy generateEventOperation_breakDur];
+                if(rsp)
+                {
+                    [self addEventOperation:rsp];
+                }
+                
+                rsp = [proxy generateEventOperation_linkDur];
                 if(rsp)
                 {
                     [self addEventOperation:rsp];
@@ -473,7 +529,6 @@
             NSDictionary *data = [ap objectToJson];
             [audios addObject:data];
         }
-        
     }
     
 }
@@ -522,7 +577,19 @@
             NSDictionary *data = [dev objectToJson];
             [videos addObject:data];
         }
-        
+        else if([dev isKindOfClass:[VVideoProcessSet class]])
+        {
+            VVideoProcessSetProxy *proj = ((VVideoProcessSet*)dev)._proxyObj;
+            
+            NSArray *rsps = [proj generateEventOperation_p2p];
+            for(id rsp in rsps)
+            {
+                [self addEventOperation:rsp];
+            }
+            
+            NSDictionary *data = [dev objectToJson];
+            [videos addObject:data];
+        }
     }
     
 }
@@ -540,6 +607,24 @@
             if([proj isSetChanged])
             {
                 NSArray *rsps = [proj generateEventOperation_ChLevel];
+                if(rsps && [rsps count])
+                {
+                    for(id rsp in rsps)
+                    {
+                        [self addEventOperation:rsp];
+                    }
+                }
+            }
+            
+            NSDictionary *data = [dev objectToJson];
+            [evns addObject:data];
+        }
+        else if([dev isKindOfClass:[EDimmerSwitchLight class]])
+        {
+            EDimmerSwitchLightProxy *proj = ((EDimmerSwitchLight*)dev)._proxyObj;
+            if([proj isSetChanged])
+            {
+                NSArray *rsps = [proj generateEventOperation_ChPower];
                 if(rsps && [rsps count])
                 {
                     for(id rsp in rsps)

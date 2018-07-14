@@ -32,4 +32,8 @@
 
 - (void) controlDeviceAdd:(NSString*)inputName withOutDevice:(NSString*)outputName;
 
+//生成场景片段
+- (NSArray* ) generateEventOperation_p2p;
+
+
 @end

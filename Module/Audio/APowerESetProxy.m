@@ -40,6 +40,8 @@
     if(self = [super init])
     {
         self._level = 0;
+        self._linkDuration = 0;
+        self._breakDuration = 0;
         
         self._channelsMap = [NSMutableDictionary dictionary];
         
@@ -51,7 +53,8 @@
     return self;
 }
 - (void) controlRelayStatus:(NSString*)relayStatus {
-    _relayStatus = relayStatus;
+    
+    self._relayStatus = relayStatus;
     
     RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_RELAY"];
     if(cmd)
@@ -60,7 +63,7 @@
         if([cmd.params count])
         {
             RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
-            if(param_info.type == RGS_PARAM_TYPE_LIST && [param_info.name isEqualToString:@"STATUS"])
+            if([param_info.name isEqualToString:@"STATUS"])
             {
                 [param setObject:_relayStatus forKey:param_info.name];
             }
@@ -122,7 +125,7 @@
             if([cmd.params count])
             {
                 RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
-                if(param_info.type == RGS_PARAM_TYPE_LIST && [param_info.name isEqualToString:@"DUR"])
+                if([param_info.name isEqualToString:@"DUR"])
                 {
                     if(param_info.type == RGS_PARAM_TYPE_FLOAT)
                     {
@@ -249,6 +252,176 @@
         }];
     }
     
+}
+
+- (id) generateEventOperation_status{
+    
+    RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_RELAY"];
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
+            if([param_info.name isEqualToString:@"STATUS"])
+            {
+                [param setObject:_relayStatus forKey:param_info.name];
+            }
+        }
+        int proxyid = _rgsProxyObj.m_id;
+        
+        RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc] init];
+        scene_opt.dev_id = proxyid;
+        scene_opt.cmd = cmd.name;
+        scene_opt.param = param;
+        
+        //用于保存还原
+        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
+        [slice setObject:[NSNumber numberWithInteger:proxyid] forKey:@"dev_id"];
+        [slice setObject:cmd.name forKey:@"cmd"];
+        [slice setObject:param forKey:@"param"];
+        [_RgsSceneDeviceOperationShadow setObject:slice forKey:@"SET_RELAY"];
+        
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
+                                                                          cmd:scene_opt.cmd
+                                                                        param:scene_opt.param];
+        
+        return opt;
+    }
+    else
+    {
+        NSDictionary *cmdsRev = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_RELAY"];
+        if(cmdsRev)
+        {
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc]
+                                       initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
+                                       cmd:[cmdsRev objectForKey:@"cmd"]
+                                       param:[cmdsRev objectForKey:@"param"]];
+            
+            return opt;
+        }
+    }
+    
+    return nil;
+    
+}
+- (id) generateEventOperation_breakDur{
+    
+    RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_BREAK_DUR"];
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
+            if([param_info.name isEqualToString:@"DUR"])
+            {
+                if(param_info.type == RGS_PARAM_TYPE_FLOAT)
+                {
+                    [param setObject:[NSString stringWithFormat:@"%0.1d",_breakDuration]
+                              forKey:param_info.name];
+                }
+                else if(param_info.type == RGS_PARAM_TYPE_INT)
+                {
+                    [param setObject:[NSString stringWithFormat:@"%0.0d",_breakDuration]
+                              forKey:param_info.name];
+                }
+            }
+        }
+        int proxyid = _rgsProxyObj.m_id;
+        
+        RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc] init];
+        scene_opt.dev_id = proxyid;
+        scene_opt.cmd = cmd.name;
+        scene_opt.param = param;
+        
+        //用于保存还原
+        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
+        [slice setObject:[NSNumber numberWithInteger:proxyid] forKey:@"dev_id"];
+        [slice setObject:cmd.name forKey:@"cmd"];
+        [slice setObject:param forKey:@"param"];
+        [_RgsSceneDeviceOperationShadow setObject:slice forKey:@"SET_BREAK_DUR"];
+        
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
+                                                                          cmd:scene_opt.cmd
+                                                                        param:scene_opt.param];
+        
+        return opt;
+    }
+    else
+    {
+        NSDictionary *cmdsRev = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_BREAK_DUR"];
+        if(cmdsRev)
+        {
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc]
+                                       initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
+                                       cmd:[cmdsRev objectForKey:@"cmd"]
+                                       param:[cmdsRev objectForKey:@"param"]];
+            
+            return opt;
+        }
+    }
+    
+    return nil;
+}
+- (id) generateEventOperation_linkDur{
+    
+    RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_LINK_DUR"];
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
+            if([param_info.name isEqualToString:@"DUR"])
+            {
+                if(param_info.type == RGS_PARAM_TYPE_FLOAT)
+                {
+                    [param setObject:[NSString stringWithFormat:@"%0.1d",_linkDuration]
+                              forKey:param_info.name];
+                }
+                else if(param_info.type == RGS_PARAM_TYPE_INT)
+                {
+                    [param setObject:[NSString stringWithFormat:@"%0.0d",_linkDuration]
+                              forKey:param_info.name];
+                }
+            }
+        }
+        int proxyid = _rgsProxyObj.m_id;
+        
+        RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc] init];
+        scene_opt.dev_id = proxyid;
+        scene_opt.cmd = cmd.name;
+        scene_opt.param = param;
+        
+        //用于保存还原
+        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
+        [slice setObject:[NSNumber numberWithInteger:proxyid] forKey:@"dev_id"];
+        [slice setObject:cmd.name forKey:@"cmd"];
+        [slice setObject:param forKey:@"param"];
+        [_RgsSceneDeviceOperationShadow setObject:slice forKey:@"SET_LINK_DUR"];
+        
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
+                                                                          cmd:scene_opt.cmd
+                                                                        param:scene_opt.param];
+        
+        return opt;
+    }
+    else
+    {
+        NSDictionary *cmdsRev = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_LINK_DUR"];
+        if(cmdsRev)
+        {
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc]
+                                       initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
+                                       cmd:[cmdsRev objectForKey:@"cmd"]
+                                       param:[cmdsRev objectForKey:@"param"]];
+            
+            return opt;
+        }
+    }
+    
+    return nil;
 }
 
 @end

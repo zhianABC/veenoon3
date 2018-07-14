@@ -35,6 +35,11 @@
 
 - (BOOL) isSetChanged;
 
+////生成场景片段
+- (id) generateEventOperation_status;
+- (id) generateEventOperation_breakDur;
+- (id) generateEventOperation_linkDur;
+
 /////场景还原
 - (void) recoverWithDictionary:(NSDictionary*)data;
 
