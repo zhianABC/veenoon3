@@ -30,6 +30,7 @@
 @synthesize _cmdMap;
 @synthesize delegate;
 @synthesize _deviceMatcherDic;
+@synthesize _RgsSceneDeviceOperationShadow;
 
 - (id) init
 {

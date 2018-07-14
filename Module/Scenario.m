@@ -14,6 +14,8 @@
 
 #import "AudioEProcessor.h"
 #import "VAProcessorProxys.h"
+#import "AudioEProcessorSignalProxy.h"
+#import "AudioEProcessorAutoMixProxy.h"
 
 #import "VCameraSettingSet.h"
 #import "VCameraProxys.h"
@@ -492,6 +494,41 @@
             if(rsp)
             {
                 [self addEventOperation:rsp];
+            }
+            
+            AudioEProcessorSignalProxy *sinalproxy = ((AudioEProcessor*)ap)._singalProxy;
+            
+            if(sinalproxy)
+            {
+                NSArray* rsps = [sinalproxy generateEventOperation_sigOut];
+                for(id rsp in rsps)
+                {
+                    [self addEventOperation:rsp];
+                }
+                
+                id rsp = [sinalproxy generateEventOperation_sigType];
+                if(rsp)
+                {
+                    [self addEventOperation:rsp];
+                }
+                
+                rsp = [sinalproxy generateEventOperation_sigMute];
+                if(rsp)
+                {
+                    [self addEventOperation:rsp];
+                }
+                
+                rsp = [sinalproxy generateEventOperation_sigGain];
+                if(rsp)
+                {
+                    [self addEventOperation:rsp];
+                }
+                
+                rsp = [sinalproxy generateEventOperation_sigSineRate];
+                if(rsp)
+                {
+                    [self addEventOperation:rsp];
+                }
             }
             
             NSDictionary *data = [ap objectToJson];

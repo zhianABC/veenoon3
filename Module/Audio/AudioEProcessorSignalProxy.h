@@ -28,7 +28,7 @@
 @property (nonatomic, strong) NSString *_xinhaofashengPinlv;
 @property (nonatomic, strong) NSString *_xinhaofashengZhengxuan;
 @property (nonatomic, assign) BOOL _isXinhaofashengMute;
-@property (nonatomic, strong) NSMutableArray *_xinhaofashengOutputChanels;
+@property (nonatomic, strong) NSMutableDictionary *_xinhaofashengOutputChanels;
 
 - (void) checkRgsProxyCommandLoad;
 
@@ -36,8 +36,6 @@
 //zidonghunyin
 - (NSString*) getXinhaofashengZengYi;
 - (void) controlXinhaofashengZengYi:(NSString*) zengyiDB;
-- (NSMutableArray*) getXinhaofashengOutputChanels;
-- (void) controlXinhaofashengOutputChanels:(NSMutableArray*)xinhaofashengOutputChanels;
 - (NSString*) getXinhaofashengPinlv;
 - (void) controlXinhaofashengPinlv:(NSString*) pinlv;
 - (NSString*) getXinhaofashengZhengXuan;
@@ -48,6 +46,14 @@
 - (NSDictionary*) getSignalGainSettings;
 - (NSDictionary*) getSignalRateSettings;
 
+
 - (void) controlSignalWithOutState:(NSString*) proxyName withState:(BOOL)state;
+
+- (NSArray*) generateEventOperation_sigOut;
+- (id) generateEventOperation_sigMute;
+- (id) generateEventOperation_sigType;
+- (id) generateEventOperation_sigSineRate;
+- (id) generateEventOperation_sigGain;
+
 @end
 
