@@ -267,6 +267,8 @@
     
     proxy._deviceMatcherDic = [json objectForKey:@"video_process"];
     
+    NSDictionary *local = [self._localSavedCommands objectAtIndex:0];
+    [proxy recoverWithDictionary:local];
 }
 
 @end
