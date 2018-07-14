@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>id</key>
+		<integer>1</integer>
+		<key>title</key>
+		<string>图标</string>
+		<key>items</key>
+		<array>
+			<dict>
+				<key>id</key>
+				<integer>302</integer>
+				<key>name</key>
+				<string>存储播放器</string>
+				<key>type</key>
+				<string>标识图标</string>
+				<key>icon</key>
+				<string>videop_usb_w.png</string>
+				<key>icon_sel</key>
+				<string>videop_usb_y.png</string>
+			</dict>
+		</array>
+	</dict>
+</array>
+</plist>

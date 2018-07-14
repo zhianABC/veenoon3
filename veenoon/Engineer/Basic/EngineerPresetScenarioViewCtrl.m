@@ -831,6 +831,8 @@
             EngineerVideoProcessViewCtrl *ctrl = [[EngineerVideoProcessViewCtrl alloc] init];
             ctrl._videoProcessArray = @[plug];
             
+            ctrl._currentVideoDevices = _scenario._videoDevices;
+            
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         

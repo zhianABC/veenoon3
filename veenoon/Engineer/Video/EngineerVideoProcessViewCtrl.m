@@ -58,6 +58,7 @@
 @synthesize _currentObj;
 @synthesize _videoProcessArray;
 @synthesize _currentProxy;
+@synthesize _currentVideoDevices;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -179,7 +180,7 @@
     
     _rightView = [[VideoProcessRightView alloc]
                   initWithFrame:CGRectMake(SCREEN_WIDTH-300,
-                                           64, 300, SCREEN_HEIGHT-114)];
+                                           64, 300, SCREEN_HEIGHT-114) withVideoDevices:self._currentVideoDevices];
     _rightView.delegate = self;
     _rightView._numOfDevice = (int) [_videoProcessArray count];
     
@@ -359,11 +360,11 @@
     if (_rightView == nil) {
         _rightView = [[VideoProcessRightView alloc]
                       initWithFrame:CGRectMake(SCREEN_WIDTH-300,
-                                               64, 300, SCREEN_HEIGHT-114)];
+                                               64, 300, SCREEN_HEIGHT-114) withVideoDevices:self._currentVideoDevices];
         
         //创建底部设备切换按钮
         _rightView._numOfDevice = (int)[_videoProcessArray count];
-        
+        _rightView._currentVideoDevices = self._currentVideoDevices;
     }
     
     //如果在显示，消失

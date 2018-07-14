@@ -25,7 +25,8 @@
 @property(nonatomic, assign) int _numOfDevice;
 @property (nonatomic, copy) RightSetViewCallbackBlock _callback;
 @property (nonatomic, assign) int _curentDeviceIndex;
+@property (nonatomic, strong) NSMutableArray *_currentVideoDevices;
 
 -(void) refreshView:(VVideoProcessSet*) vVideoProcessSet;
-
+- (id) initWithFrame:(CGRect)frame withVideoDevices:(NSMutableArray*) videoDevices;
 @end

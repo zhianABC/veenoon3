@@ -10,6 +10,7 @@
 #import "EPlusLayerView.h"
 #import "UIButton+Color.h"
 #import "VVideoProcessSet.h"
+#import "RgsDriverObj.h"
 
 @interface VideoProcessRightView () <UITableViewDelegate,
 UITableViewDataSource,
@@ -31,6 +32,7 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
 @synthesize _numOfDevice;
 @synthesize _callback;
 @synthesize _curentDeviceIndex;
+@synthesize _currentVideoDevices;
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.
@@ -43,11 +45,105 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
 - (void) initData{
     
     NSBundle *bundle = [NSBundle mainBundle];
-    NSString *plistPath = [bundle pathForResource:@"icon" ofType:@"plist"];
-    self._data = [[NSArray alloc] initWithContentsOfFile:plistPath];
+    NSString *plistPath = [bundle pathForResource:@"input_icon" ofType:@"plist"];
+    NSArray *bundelArray = [[NSArray alloc] initWithContentsOfFile:plistPath];
+    
+    NSDictionary *sec = [bundelArray objectAtIndex:0];
+    NSMutableArray *items = [sec objectForKey:@"items"];
+    
+    NSMutableDictionary *inputDic = [NSMutableDictionary dictionary];
+    [inputDic setObject:@"输入设备" forKey:@"name"];
+    NSMutableArray *finalItems = [NSMutableArray array];
+    [finalItems addObject:inputDic];
+    
+    [finalItems addObjectsFromArray:items];
+    
+    int itemID = 302;
+    for (BasePlugElement *basePlugin in self._currentVideoDevices) {
+        NSString *baseName = basePlugin._name;
+        
+        NSMutableDictionary *dataDic = [NSMutableDictionary dictionary];
+        
+        [dataDic setObject:[NSString stringWithFormat:@"%d", itemID] forKey:@"id"];
+        
+        [dataDic setObject:baseName forKey:@"name"];
+        NSString *deviceID = [NSString stringWithFormat:@"%ld", ((RgsDriverObj*)(basePlugin._driver)).m_id];
+        [dataDic setObject:deviceID forKey:@"type"];
+        
+        if ([baseName isEqualToString:@"DVD-1531578979"]) {
+            [dataDic setObject:@"videop_dvd_w.png" forKey:@"icon"];
+            [dataDic setObject:@"videop_dvd_y.png" forKey:@"icon_sel"];
+        } else if([baseName isEqualToString:@"摄像机"])
+        {
+            [dataDic setObject:@"videop_camera_w.png" forKey:@"icon"];
+            [dataDic setObject:@"videop_camera_y.png" forKey:@"icon_sel"];
+        } else if([baseName isEqualToString:@"信息盒"])
+        {
+            [dataDic setObject:@"videop_xinxihe_w.png" forKey:@"icon"];
+            [dataDic setObject:@"videop_xinxihe_y.png" forKey:@"icon_sel"];
+        } else if([baseName isEqualToString:@"远程视讯"])
+        {
+            [dataDic setObject:@"videop_remotevideo_w.png" forKey:@"icon"];
+            [dataDic setObject:@"videop_remotevideo_y.png" forKey:@"icon_sel"];
+        }
+        if ([dataDic objectForKey:@"icon"]) {
+            [finalItems addObject:dataDic];
+        }
+        itemID++;
+    }
+    
+    
+    NSMutableDictionary *outputDic = [NSMutableDictionary dictionary];
+    [outputDic setObject:@"输出设备" forKey:@"name"];
+    [finalItems addObject:outputDic];
+    
+    for (BasePlugElement *basePlugin in self._currentVideoDevices) {
+        NSString *baseName = basePlugin._name;
+        
+        NSMutableDictionary *dataDic = [NSMutableDictionary dictionary];
+        
+        [dataDic setObject:[NSString stringWithFormat:@"%d", itemID] forKey:@"id"];
+        
+        [dataDic setObject:baseName forKey:@"name"];
+        NSString *deviceID = [NSString stringWithFormat:@"%ld", ((RgsDriverObj*)(basePlugin._driver)).m_id];
+        [dataDic setObject:deviceID forKey:@"type"];
+        
+        if ([baseName isEqualToString:@"远程视讯"]) {
+            [dataDic setObject:@"videop_remotevideo_w.png" forKey:@"icon"];
+            [dataDic setObject:@"videop_remotevideo_y.png" forKey:@"icon_sel"];
+        } else if([baseName isEqualToString:@"拼接屏"])
+        {
+            [dataDic setObject:@"videop_screen_w.png" forKey:@"icon"];
+            [dataDic setObject:@"videop_screen_y.png" forKey:@"icon_sel"];
+        } else if([baseName isEqualToString:@"TV-1531578928"])
+        {
+            [dataDic setObject:@"videop_tv_w.png" forKey:@"icon"];
+            [dataDic setObject:@"videop_tv_y.png" forKey:@"icon_sel"];
+        } else if([baseName isEqualToString:@"录播机"])
+        {
+            [dataDic setObject:@"videop_player_w.png" forKey:@"icon"];
+            [dataDic setObject:@"videop_player_y.png" forKey:@"icon_sel"];
+        } else if([baseName isEqualToString:@"投影机"])
+        {
+            [dataDic setObject:@"videop_tscreen_w.png" forKey:@"icon"];
+            [dataDic setObject:@"videop_tscreen_y.png" forKey:@"icon_sel"];
+        }
+        if ([dataDic objectForKey:@"icon"]) {
+            [finalItems addObject:dataDic];
+        }
+    }
+    NSMutableDictionary *dataDic = [NSMutableDictionary dictionary];
+    [dataDic setObject:finalItems forKey:@"items"];
+    
+    [dataDic setObject:@"图标" forKey:@"title"];
+    
+    NSMutableArray *dataArray = [NSMutableArray array];
+    [dataArray addObject:dataDic];
+    self._data = dataArray;
 }
 
-- (id) initWithFrame:(CGRect)frame {
+- (id) initWithFrame:(CGRect)frame withVideoDevices:(NSMutableArray*) videoDevices {
+    self._currentVideoDevices = videoDevices;
     if(self = [super initWithFrame:frame]) {
         _curIndex = 0;
         
