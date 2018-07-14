@@ -11,7 +11,6 @@
 @class RgsAreaObj;
 @class RgsDriverInfo;
 
-
 @interface DataSync : NSObject
 {
     
@@ -26,6 +25,8 @@
 @property (nonatomic, strong) NSMutableDictionary *_mapDrivers;
 @property (nonatomic, strong) RgsAreaObj* _currentArea;
 @property (nonatomic, strong) NSMutableArray* _currentAreaDrivers;
+
+
 
 + (DataSync*)sharedDataSync;
 

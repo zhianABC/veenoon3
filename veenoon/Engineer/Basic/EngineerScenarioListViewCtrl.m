@@ -12,6 +12,7 @@
 #import "SIconSelectView.h"
 #import "DataSync.h"
 #import "RegulusSDK.h"
+#import "EngineerNewTeslariViewCtrl.h"
 
 
 @interface EngineerScenarioListViewCtrl () <SIconSelectViewDelegate>
@@ -162,11 +163,18 @@
 
 - (void) gotoCreateNewScenario{
     
+    
+//    EngineerNewTeslariViewCtrl *ctrl = [[EngineerNewTeslariViewCtrl alloc] init];
+//    ctrl._meetingRoomDic = self._meetingRoomDic;
+//    //ctrl._selectedDevices = _selectedDevices;
+//    [self.navigationController pushViewController:ctrl animated:YES];
+
+    
     EngineerPresetScenarioViewCtrl *ctrl = [[EngineerPresetScenarioViewCtrl alloc] init];
     ctrl._meetingRoomDic = self._meetingRoomDic;
     ctrl._selectedDevices = _selectedDevices;
     [self.navigationController pushViewController:ctrl animated:YES];
-    
+//
 }
 
 - (void) didMoveDragingElecCell:(NSDictionary *)data pt:(CGPoint)pt{

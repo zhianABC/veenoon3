@@ -172,48 +172,48 @@
 - (void) viewWillAppear:(BOOL)animated
 {
     
-    BOOL checkAllEdited = YES;
+    BOOL haveEdited = NO;
     for(DevicePlugButton *btn in _audioCells)
     {
         if([btn isKindOfClass:[DevicePlugButton class]])
         {
-        if(!btn._isEdited)
-        {
-            checkAllEdited = NO;
-            break;
-        }
+            if(btn._isEdited)
+            {
+                haveEdited = YES;
+                break;
+            }
         }
     }
-    if(checkAllEdited)
+    if(!haveEdited)
     {
         for(DevicePlugButton *btn in _videoCells)
         {
             if([btn isKindOfClass:[DevicePlugButton class]])
             {
-            if(!btn._isEdited)
-            {
-                checkAllEdited = NO;
-                break;
-            }
+                if(btn._isEdited)
+                {
+                    haveEdited = YES;
+                    break;
+                }
             }
         }
     }
-    if(checkAllEdited)
+    if(!haveEdited)
     {
         for(DevicePlugButton *btn in _envCells)
         {
             if([btn isKindOfClass:[DevicePlugButton class]])
             {
-            if(!btn._isEdited)
-            {
-                checkAllEdited = NO;
-                break;
-            }
+                if(btn._isEdited)
+                {
+                    haveEdited = NO;
+                    break;
+                }
             }
         }
     }
     
-    if(checkAllEdited)
+    if(haveEdited)
     {
         scenarioButton.enabled = YES;
         scenarioButton.alpha = 1.0;

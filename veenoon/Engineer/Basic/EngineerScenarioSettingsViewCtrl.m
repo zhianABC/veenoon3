@@ -20,6 +20,7 @@
 #import "DataCenter.h"
 #import "EngineerToUseTeslariViewCtrl.h"
 #import "HomeViewController.h"
+#import "EngineerNewTeslariViewCtrl.h"
 
 @interface EngineerScenarioSettingsViewCtrl ()<SIconSelectViewDelegate>{
     
@@ -438,10 +439,16 @@
         NSMutableDictionary *roomDic = [DataCenter defaultDataCenter]._roomData;
         if(devicesSel)
         {
-            EngineerScenarioListViewCtrl *ctrl = [[EngineerScenarioListViewCtrl alloc] init];
-            ctrl._selectedDevices = devicesSel;
+            EngineerNewTeslariViewCtrl *ctrl = [[EngineerNewTeslariViewCtrl alloc] init];
             ctrl._meetingRoomDic = roomDic;
+            //ctrl._selectedDevices = _selectedDevices;
             [self.navigationController pushViewController:ctrl animated:YES];
+
+            
+//            EngineerScenarioListViewCtrl *ctrl = [[EngineerScenarioListViewCtrl alloc] init];
+//            ctrl._selectedDevices = devicesSel;
+//            ctrl._meetingRoomDic = roomDic;
+//            [self.navigationController pushViewController:ctrl animated:YES];
         }
         else
         {
@@ -449,9 +456,16 @@
 //            ctrl._meetingRoomDic = roomDic;
 //            [self.navigationController pushViewController:ctrl animated:YES];
 
-            EngineerPresetScenarioViewCtrl *ctrl = [[EngineerPresetScenarioViewCtrl alloc] init];
-            ctrl._meetingRoomDic =roomDic;
+            EngineerNewTeslariViewCtrl *ctrl = [[EngineerNewTeslariViewCtrl alloc] init];
+            ctrl._meetingRoomDic = roomDic;
+            //ctrl._selectedDevices = _selectedDevices;
             [self.navigationController pushViewController:ctrl animated:YES];
+            
+            
+            
+//            EngineerPresetScenarioViewCtrl *ctrl = [[EngineerPresetScenarioViewCtrl alloc] init];
+//            ctrl._meetingRoomDic =roomDic;
+//            [self.navigationController pushViewController:ctrl animated:YES];
 
             
         }
