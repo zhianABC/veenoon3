@@ -11,6 +11,7 @@
 #import "DataSync.h"
 #import "KVNProgress.h"
 #import "VProjectProxys.h"
+#import "VVideoProcessSetProxy.m"
 
 @interface VVideoProcessSet ()
 {
@@ -212,15 +213,14 @@
         [allData setObject:[NSNumber numberWithInteger:dr.m_id] forKey:@"driver_id"];
     }
     
+    if (_localSavedCommands) {
+        [allData setObject:_localSavedCommands forKey:@"commands"];
+    }
     
-    //    NSError *error = nil;
-    //    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:allData
-    //                                                       options:NSJSONWritingPrettyPrinted
-    //                                                         error: &error];
-    //
-    //    NSString *jsonresult = [[NSString alloc] initWithData:jsonData
-    //                                                 encoding:NSUTF8StringEncoding];
-    
+    if (_proxyObj) {
+        VVideoProcessSetProxy *proxy = (VVideoProcessSetProxy*) _proxyObj;
+        [allData setObject:proxy._deviceMatcherDic forKey:@"video_process"];
+    }
     
     return allData;
 }
@@ -262,6 +262,10 @@
     
     self._localSavedCommands = [json objectForKey:@"commands"];
 
+    VVideoProcessSetProxy *proxy = [[VVideoProcessSetProxy alloc] init];
+    self._proxyObj = proxy;
+    
+    proxy._deviceMatcherDic = [json objectForKey:@"video_process"];
     
 }
 

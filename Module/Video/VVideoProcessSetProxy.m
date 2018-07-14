@@ -15,8 +15,6 @@
     
     BOOL _isSetOK;
     
-    NSMutableDictionary *_deviceMatcherDic;
-    
 }
 
 @property (nonatomic, strong) NSArray *_rgsCommands;
@@ -30,6 +28,7 @@
 @synthesize _rgsProxyObj;
 @synthesize _cmdMap;
 @synthesize delegate;
+@synthesize _deviceMatcherDic;
 
 - (id) init
 {
