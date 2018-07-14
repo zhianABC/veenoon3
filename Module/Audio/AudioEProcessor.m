@@ -407,6 +407,7 @@
                              forKey:@"voiceInDevice"];
             }
             
+            //增益
             [proxyDic setObject:[NSNumber numberWithInteger:proxy.m_id]
                          forKey:@"proxy_id"];
             
@@ -434,11 +435,13 @@
             
             [proxyDic setObject:[NSNumber numberWithBool:[vap getInverted]]
                          forKey:@"inverted"];
-            //噪声
+            //噪声门
             [proxyDic setObject:vap._zaoshengFazhi forKey:@"noise_gate_threshold"];
             [proxyDic setObject:vap._zaoshengStartTime forKey:@"noise_gate_start_time"];
             [proxyDic setObject:vap._zaoshengHuifuTime forKey:@"noise_gate_recover_time"];
             [proxyDic setObject:[NSNumber numberWithBool:vap._isZaoshengStarted] forKey:@"is_noise_gate_start"];
+            
+            //滤波均衡
             //高通
             [proxyDic setObject:vap._lvbojunhengGaotongType forKey:@"high_filter_type"];
             [proxyDic setObject:vap._lvbojunhengGaotongXielv forKey:@"high_filter_sl"];
@@ -458,11 +461,21 @@
             [proxyDic setObject:vap._yaxianStartTime forKey:@"press_limit_start_time"];
             [proxyDic setObject:vap._yaxianRecoveryTime forKey:@"press_limit_recover_time"];
             [proxyDic setObject:[NSNumber numberWithBool:vap._isyaxianStart] forKey:@"press_limit_start"];
-            //Mix Source 矩阵
+            
+            //延时器
+            [proxyDic setObject:vap._yanshiqiSlide forKey:@"delay_time"];
             
             //Echo
+            [proxyDic setObject:[NSNumber numberWithBool:_isHuiShengXiaoChu] forKey:@"audio_processor_echo_started"];
+            
+            //自动混音
+            [proxyDic setObject:_autoMixProxy._zidonghunyinZengYi forKey:@"auto_mix_sl"];
+            [proxyDic setObject:_autoMixProxy._zidonghunyinInputChanels forKey:@"auto_mix_input"];
+            [proxyDic setObject:_autoMixProxy._zidonghunyinOutputChanels forKey:@"auto_mix_output"];
             
             //反馈抑制
+            [proxyDic setObject:[NSNumber numberWithBool:vap._isFanKuiYiZhiStarted] forKey:@"audio_processor_fb_started"];
+            
             
             [proxyDic setObject:[vap getScenarioSliceLocatedShadow]
                          forKey:@"RgsSceneDeviceOperation"];
@@ -489,6 +502,7 @@
                              forKey:@"icon_name"];
             }
             
+            //电平
             [proxyDic setObject:[NSNumber numberWithInteger:proxy.m_id]
                          forKey:@"proxy_id"];
             
@@ -519,19 +533,42 @@
             
             [proxyDic setObject:[vap getScenarioSliceLocatedShadow]
                          forKey:@"RgsSceneDeviceOperation"];
+            
+            //信号发生器
+            [proxyDic setObject:_singalProxy._xinhaofashengPinlv forKey:@"audio_out_signal_freq"];
+            [proxyDic setObject:_singalProxy._xinhaofashengZhengxuan forKey:@"audio_out_signal_zhengxuan"];
+            [proxyDic setObject:_singalProxy._xinhaofashengZengYi forKey:@"audio_out_signal_sl"];
+            [proxyDic setObject:[NSNumber numberWithBool:_singalProxy._isXinhaofashengMute] forKey:@"audio_out_signal_started"];
+            [proxyDic setObject:_singalProxy._xinhaofashengOutputChanels forKey:@"audio_out_signal_output"];
+            
+            //高通
+            [proxyDic setObject:vap._lvbojunhengGaotongType forKey:@"high_filter_type"];
+            [proxyDic setObject:vap._lvbojunhengGaotongXielv forKey:@"high_filter_sl"];
+            [proxyDic setObject:vap._lvboGaotongPinLv forKey:@"high_filter_rate"];
+            [proxyDic setObject:[NSNumber numberWithBool:vap._islvboGaotongStart] forKey:@"high_filter_start"];
+            //低通
+            [proxyDic setObject:vap._lvbojunhengDitongType forKey:@"low_filter_type"];
+            [proxyDic setObject:vap._lvboDitongSL forKey:@"low_filter_sl"];
+            [proxyDic setObject:vap._lvboDitongFreq forKey:@"low_filter_rate"];
+            [proxyDic setObject:[NSNumber numberWithBool:vap._islvboDitongStart] forKey:@"low_filter_start"];
+            //PEQ
+            [proxyDic setObject:vap.waves16_feq_gain_q forKey:@"peq_band"];
+            
+            //压限器
+            [proxyDic setObject:vap._yaxianFazhi forKey:@"press_limit_th"];
+            [proxyDic setObject:vap._yaxianXielv forKey:@"press_limit_sl"];
+            [proxyDic setObject:vap._yaxianStartTime forKey:@"press_limit_start_time"];
+            [proxyDic setObject:vap._yaxianRecoveryTime forKey:@"press_limit_recover_time"];
+            [proxyDic setObject:[NSNumber numberWithBool:vap._isyaxianStart] forKey:@"press_limit_start"];
+            
+            //延时器
+            [proxyDic setObject:vap._yanshiqiSlide forKey:@"delay_time"];
+            
         }
         
         [allData setObject:proxys forKey:@"out_audio_proxys"];
         
     }
-    
-//    NSError *error = nil;
-//    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:allData
-//                                                       options:NSJSONWritingPrettyPrinted
-//                                                         error: &error];
-//
-//    NSString *jsonresult = [[NSString alloc] initWithData:jsonData
-//                                                 encoding:NSUTF8StringEncoding];
     
     
     return allData;
