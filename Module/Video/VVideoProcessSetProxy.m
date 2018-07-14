@@ -29,8 +29,8 @@
 @synthesize _rgsProxyObj;
 @synthesize _cmdMap;
 @synthesize delegate;
-@synthesize _RgsSceneDeviceOperationShadow;
 @synthesize _deviceMatcherDic;
+
 - (id) init
 {
     if(self = [super init])

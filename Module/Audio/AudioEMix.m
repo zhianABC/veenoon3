@@ -10,7 +10,7 @@
 #import "RegulusSDK.h"
 #import "DataSync.h"
 #import "KVNProgress.h"
-#import "VProjectProxys.h"
+#import "AudioEMixProxy.h"
 
 @interface AudioEMix ()
 {
@@ -330,32 +330,40 @@
     
     if(_proxyObj)
     {
-        VProjectProxys *vprj = _proxyObj;
+        AudioEMixProxy *proxy = _proxyObj;
         
-        if(vprj._deviceId)
-        {
-            NSMutableArray *commands = [NSMutableArray array];
-            NSMutableDictionary *cmdDic = [NSMutableDictionary dictionary];
-            [commands addObject:cmdDic];
-            
-            [cmdDic setObject:[NSNumber numberWithInteger:vprj._deviceId] forKey:@"proxy_id"];
-            [cmdDic setObject:vprj._power forKey:@"power"];
-            [cmdDic setObject:vprj._input forKey:@"input"];
-            
-            [cmdDic setObject:[vprj getScenarioSliceLocatedShadow]
-                       forKey:@"RgsSceneDeviceOperation"];
-            
-            [allData setObject:commands forKey:@"commands"];
-        }
+        //proxy id
+        [allData setObject:[NSString stringWithFormat:@"%lu",proxy._deviceId] forKey:@"device_id"];
+        
+        // volumn
+        [allData setObject:[NSString stringWithFormat:@"%f",proxy._deviceVol] forKey:@"device_vol"];
+        
+        //摄像协议
+        [allData setObject:proxy._currentCameraPol forKey:@"camera_pol"];
+        
+        //
+        [allData setObject:[NSString stringWithFormat:@"%d",proxy._fayanPriority] forKey:@"fayan_priority"];
+        //
+        [allData setObject:proxy._mixHighFilter forKey:@"mix_high_filter"];
+        
+        //
+        [allData setObject:proxy._mixLowFilter forKey:@"mix_low_filter"];
+        
+        //
+        [allData setObject:proxy._mixNoise forKey:@"mix_noise"];
+        
+        //
+        [allData setObject:proxy._mixPEQ forKey:@"mix_peq"];
+        
+        //
+        [allData setObject:proxy._mixPress forKey:@"mix_press"];
+        
+        //
+        [allData setObject:proxy._mixPEQRate forKey:@"mix_peq_rate"];
+        
+        //
+        [allData setObject:proxy._workMode forKey:@"work_mode"];
     }
-    
-    //    NSError *error = nil;
-    //    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:allData
-    //                                                       options:NSJSONWritingPrettyPrinted
-    //                                                         error: &error];
-    //
-    //    NSString *jsonresult = [[NSString alloc] initWithData:jsonData
-    //                                                 encoding:NSUTF8StringEncoding];
     
     
     return allData;
@@ -407,16 +415,43 @@
     
     self._localSavedCommands = [json objectForKey:@"commands"];
     
-    if([_localSavedCommands count])
-    {
-        RgsDriverObj *driver = self._driver;
-        VProjectProxys *vpro = [[VProjectProxys alloc] init];
-        vpro._deviceId = driver.m_id;
-        NSDictionary *local = [self._localSavedCommands objectAtIndex:0];
-        [vpro recoverWithDictionary:local];
-        self._proxyObj = vpro;
-    }
     
+    AudioEMixProxy *proxy = [[AudioEMixProxy alloc] init];
+    self._proxyObj  = proxy;
+    
+    
+    //proxy id
+    proxy._deviceId = [[json objectForKey:@"device_id"] longValue];
+    
+    // volumn
+    proxy._deviceVol = [[json objectForKey:@"device_vol"] floatValue];
+    
+    //摄像协议
+    proxy._currentCameraPol = [json objectForKey:@"camera_pol"];
+    
+    //
+    proxy._fayanPriority = [[json objectForKey:@"fayan_priority"] intValue];
+    
+    //
+    proxy._mixHighFilter = [json objectForKey:@"mix_high_filter"];
+    
+    //
+    proxy._mixLowFilter = [json objectForKey:@"mix_low_filter"];
+    
+    //
+    proxy._mixNoise = [json objectForKey:@"mix_noise"];
+    
+    //
+    proxy._mixPEQ = [json objectForKey:@"mix_peq"];
+    
+    //
+    proxy._mixPress = [json objectForKey:@"mix_press"];
+    
+    //
+    proxy._mixPEQRate = [json objectForKey:@"mix_peq_rate"];
+    
+    //
+    proxy._workMode = [json objectForKey:@"work_mode"];
 }
 
 

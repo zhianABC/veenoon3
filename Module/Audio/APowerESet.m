@@ -453,4 +453,129 @@
     return nil;
 }
 
+
+- (NSDictionary *)objectToJson{
+    
+    NSMutableDictionary *allData = [NSMutableDictionary dictionary];
+    
+    [allData setValue:[NSString stringWithFormat:@"%@", [self class]] forKey:@"class"];
+    
+    //基本信息
+    if(self._brand)
+        [allData setObject:self._brand forKey:@"brand"];
+    
+    if(self._type)
+        [allData setObject:self._type forKey:@"type"];
+    
+    if(self._deviceno)
+        [allData setObject:self._deviceno forKey:@"deviceno"];
+    
+    if(self._ipaddress)
+        [allData setObject:self._ipaddress forKey:@"ipaddress"];
+    
+    if(self._deviceid)
+        [allData setObject:self._deviceid forKey:@"deviceid"];
+    
+    if(self._driverUUID)
+        [allData setObject:self._driverUUID forKey:@"driverUUID"];
+    
+    if(self._comIdx)
+        [allData setObject:[NSString stringWithFormat:@"%d",self._comIdx] forKey:@"com"];
+    
+    [allData setObject:[NSString stringWithFormat:@"%d",self._index] forKey:@"index"];
+    
+    
+    if(_driverInfo)
+    {
+        RgsDriverInfo *info = _driverInfo;
+        [allData setObject:info.serial forKey:@"driver_info_uuid"];
+    }
+    if(_driver)
+    {
+        RgsDriverObj *dr = _driver;
+        [allData setObject:[NSNumber numberWithInteger:dr.m_id] forKey:@"driver_id"];
+    }
+    
+    [allData setObject:[NSNumber numberWithBool:_power] forKey:@"power_on_off"];
+    
+    if(_proxyObj)
+    {
+        APowerESetProxy *vprj = _proxyObj;
+        
+        if(vprj._deviceId)
+        {
+            NSMutableDictionary *proxyDic = [NSMutableDictionary dictionary];
+            [allData setObject:proxyDic forKey:@"proxy"];
+            
+            [proxyDic setObject:[NSString stringWithFormat:@"%lu", vprj._deviceId] forKey:@"proxy_id"];
+            [proxyDic setObject:[NSString stringWithFormat:@"%d", vprj._breakDuration] forKey:@"break_duration"];
+            [proxyDic setObject:vprj._relayStatus forKey:@"relay_status"];
+            [proxyDic setObject:[NSString stringWithFormat:@"%d", vprj._linkDuration] forKey:@"link_duration"];
+            [proxyDic setObject:[NSString stringWithFormat:@"%d", vprj._level] forKey:@"level"];
+        }
+    }
+    
+    return allData;
+}
+
+
+- (void) jsonToObject:(NSDictionary*)json{
+    
+    //基本信息
+    if([json objectForKey:@"brand"])
+        self._brand = [json objectForKey:@"brand"];
+    
+    if([json objectForKey:@"type"])
+        self._type = [json objectForKey:@"type"];
+    
+    if([json objectForKey:@"deviceno"])
+        self._deviceno = [json objectForKey:@"deviceno"];
+    
+    if([json objectForKey:@"ipaddress"])
+        self._ipaddress = [json objectForKey:@"ipaddress"];
+    
+    if([json objectForKey:@"deviceid"])
+        self._deviceid = [json objectForKey:@"deviceid"];
+    
+    if([json objectForKey:@"driverUUID"])
+        self._driverUUID = [json objectForKey:@"driverUUID"];
+    
+    if([json objectForKey:@"com"])
+        self._comIdx = [[json objectForKey:@"com"] intValue];
+    
+    self._index = [[json objectForKey:@"index"] intValue];
+    
+    RgsDriverInfo *drinfo = [[RgsDriverInfo alloc] init];
+    drinfo.serial = [json objectForKey:@"driver_info_uuid"];
+    self._driverInfo = drinfo;
+    
+    RgsDriverObj *dr = [[RgsDriverObj alloc] init];
+    dr.m_id = [[json objectForKey:@"driver_id"] integerValue];
+    self._driver = dr;
+    
+    self._localSavedCommands = [json objectForKey:@"commands"];
+    
+    self._power = [json objectForKey:@"power_on_off"];
+    
+    if(json)
+    {
+        APowerESetProxy *vprj = [[APowerESetProxy alloc] init];
+        self._proxyObj = vprj;
+        
+        NSMutableDictionary *proxyDic = [json objectForKey:@"proxy"];
+        if(proxyDic)
+        {
+            vprj._deviceId = [[proxyDic objectForKey:@"proxy_id"] longValue];
+            vprj._breakDuration = [[proxyDic objectForKey:@"break_duration"] intValue];
+            vprj._relayStatus = [proxyDic objectForKey:@"relay_status"];
+            vprj._linkDuration = [[proxyDic objectForKey:@"link_duration"] intValue];
+            vprj._level = [[proxyDic objectForKey:@"level"] intValue];
+        }
+        
+        [vprj recoverWithDictionary:proxyDic];
+    }
+    
+    
+}
+
 @end
