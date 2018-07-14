@@ -30,9 +30,10 @@
 
 - (int) checkIsSameSeconds;
 - (void) prepareAllCmds;
-- (NSMutableDictionary *)inputChannelAtIndex:(int)index;
 
 - (void) controlPower:(BOOL)isPowerOn;
 - (void) checkRgsDriverCommandLoad;
+
+- (id) generateEventOperation_power;
 
 @end

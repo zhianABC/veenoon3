@@ -17,7 +17,8 @@
     
 }
 @property (nonatomic, strong) NSMutableDictionary *_driverCmdsMap;
-
+@property (nonatomic, assign) BOOL _power;
+@property (nonatomic, strong) NSMutableDictionary *_RgsSceneDeviceOperationShadow;
 
 @end
 
@@ -29,6 +30,11 @@
 
 @synthesize _driverCmdsMap;
 
+@synthesize _power;
+
+@synthesize _RgsSceneDeviceOperationShadow;
+
+
 - (id) init
 {
     if(self = [super init])
@@ -38,6 +44,10 @@
         self._ipaddress = @"192.168.3.7";
         self._show_icon_name = @"dy_08.png";
         self._show_icon_sel_name = @"dy_08_sel.png";
+        
+        self._power = NO;
+        
+        self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionary];
         
     }
     
@@ -364,10 +374,13 @@
 
 
 - (void) controlPower:(BOOL)isPowerOn{
+    
      RgsCommandInfo *cmd = [_driverCmdsMap objectForKey:@"ORDER_LINK"];
     if (!isPowerOn) {
         cmd = [_driverCmdsMap objectForKey:@"INVERSE_BREAK"];
     }
+    
+    self._power = isPowerOn;
     
     if(cmd)
     {
@@ -385,6 +398,59 @@
                                                    }
                                                }];
     }
+}
+
+- (id) generateEventOperation_power{
+    
+    NSString *cmdName = @"ORDER_LINK";
+    if (!_power)
+    {
+        cmdName = @"INVERSE_BREAK";
+    }
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_driverCmdsMap objectForKey:cmdName];
+    
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        RgsDriverObj *obj = _driver;
+        
+        int proxyid = obj.m_id;
+        
+        RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc] init];
+        scene_opt.dev_id = proxyid;
+        scene_opt.cmd = cmd.name;
+        scene_opt.param = param;
+        
+        //用于保存还原
+        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
+        [slice setObject:[NSNumber numberWithInteger:proxyid] forKey:@"dev_id"];
+        [slice setObject:cmd.name forKey:@"cmd"];
+        [slice setObject:param forKey:@"param"];
+        [_RgsSceneDeviceOperationShadow setObject:slice forKey:cmdName];
+        
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
+                                                                          cmd:scene_opt.cmd
+                                                                        param:scene_opt.param];
+        
+        return opt;
+    }
+    else
+    {
+        NSDictionary *cmdsRev = [_RgsSceneDeviceOperationShadow objectForKey:cmdName];
+        if(cmdsRev)
+        {
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc]
+                                       initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
+                                       cmd:[cmdsRev objectForKey:@"cmd"]
+                                       param:[cmdsRev objectForKey:@"param"]];
+            
+            return opt;
+        }
+    }
+    
+    return nil;
 }
 
 @end
