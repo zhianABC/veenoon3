@@ -33,6 +33,9 @@
 #import "APowerESet.h"
 #import "APowerESetProxy.h"
 
+#import "AudioEMix.h"
+#import "AudioEMixProxy.h"
+
 #import "DataBase.h"
 
 @interface Scenario ()
@@ -524,6 +527,59 @@
                 {
                     [self addEventOperation:rsp];
                 }
+            }
+            
+            NSDictionary *data = [ap objectToJson];
+            [audios addObject:data];
+        }
+        else if ([ap isKindOfClass:[AudioEMix class]])
+        {
+            AudioEMixProxy *proxy = ((AudioEMix*)ap)._proxyObj;
+            
+            RgsSceneOperation* rsp = [proxy generateEventOperation_mode];
+            if(rsp)
+            {
+                [self addEventOperation:rsp];
+            }
+            rsp = [proxy generateEventOperation_priority];
+            if(rsp)
+            {
+                [self addEventOperation:rsp];
+            }
+            rsp = [proxy generateEventOperation_vol];
+            if(rsp)
+            {
+                [self addEventOperation:rsp];
+            }
+            rsp = [proxy generateEventOperation_camPol];
+            if(rsp)
+            {
+                [self addEventOperation:rsp];
+            }
+            NSArray *rsps = [proxy generateEventOperation_peq];
+            for(id rsp in rsps)
+            {
+                [self addEventOperation:rsp];
+            }
+            rsp = [proxy generateEventOperation_press];
+            if(rsp)
+            {
+                [self addEventOperation:rsp];
+            }
+            rsp = [proxy generateEventOperation_noiseGate];
+            if(rsp)
+            {
+                [self addEventOperation:rsp];
+            }
+            rsp = [proxy generateEventOperation_hp];
+            if(rsp)
+            {
+                [self addEventOperation:rsp];
+            }
+            rsp = [proxy generateEventOperation_lp];
+            if(rsp)
+            {
+                [self addEventOperation:rsp];
             }
             
             NSDictionary *data = [ap objectToJson];

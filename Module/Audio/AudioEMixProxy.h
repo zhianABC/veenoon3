@@ -72,6 +72,18 @@
 
 - (BOOL) isSetChanged;
 
+////生成场景片段
+- (id) generateEventOperation_mode;
+- (id) generateEventOperation_priority;
+- (id) generateEventOperation_vol;
+- (id) generateEventOperation_camPol;
+- (NSArray*) generateEventOperation_peq;
+- (id) generateEventOperation_press;
+- (id) generateEventOperation_noiseGate;
+- (id) generateEventOperation_hp;
+- (id) generateEventOperation_lp;
+
+
 /////场景还原
 - (void) recoverWithDictionary:(NSDictionary*)data;
 
