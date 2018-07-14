@@ -67,6 +67,8 @@
 @synthesize _inputProxys;
 @synthesize _outputProxys;
 
+@synthesize _currentAudioDevices;
+
 @synthesize _isChoosedCmdToScenario;
 
 - (void)viewDidLoad {
@@ -649,7 +651,7 @@
             if (_inconView == nil) {
                 _inconView = [[AudioIconSettingView alloc]
                               initWithFrame:CGRectMake(SCREEN_WIDTH-300,
-                                                       64, 300, SCREEN_HEIGHT-114)];
+                                                       64, 300, SCREEN_HEIGHT-114) withCurrentAudios:_currentAudioDevices];
                 _inconView.delegate = self;
             } else {
                 [UIView beginAnimations:nil context:nil];

@@ -21,5 +21,7 @@
 }
 @property (nonatomic, strong) NSArray *_data;
 @property (nonatomic, weak) id <AudioIconSettingViewDelegate> delegate;
+@property (nonatomic, strong) NSArray *_currentAudioDevices;
 
+- (id) initWithFrame:(CGRect)frame withCurrentAudios:(NSArray*) currentAudioArrays;
 @end

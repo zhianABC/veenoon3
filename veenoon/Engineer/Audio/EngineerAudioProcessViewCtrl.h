@@ -20,6 +20,7 @@
 }
 
 @property (nonatomic,strong) NSArray *_audioProcessArray;
+@property (nonatomic,strong) NSArray *_currentAudioDevices;
 
 @property (nonatomic, assign) BOOL _isChoosedCmdToScenario;
 

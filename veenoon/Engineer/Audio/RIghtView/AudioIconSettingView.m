@@ -9,6 +9,8 @@
 #import "AudioIconSettingView.h"
 #import "EPlusLayerView.h"
 #import "ComSettingView.h"
+#import "RgsDriverObj.h"
+#import "APowerESet.h"
 
 @interface AudioIconSettingView () <UITableViewDelegate,
 UITableViewDataSource,AudioIconSettingViewDelegate, EPlusLayerViewDelegate> {
@@ -16,14 +18,13 @@ UITableViewDataSource,AudioIconSettingViewDelegate, EPlusLayerViewDelegate> {
     UIView     *_maskView;
     
     int _curIndex;
-    
-    ComSettingView *_com;
 }
 @end
 
 @implementation AudioIconSettingView
 @synthesize _data;
 @synthesize delegate;
+@synthesize _currentAudioDevices;
 
 /*
  // Only override drawRect: if you perform custom drawing.
@@ -38,28 +39,91 @@ UITableViewDataSource,AudioIconSettingViewDelegate, EPlusLayerViewDelegate> {
     
     NSBundle *bundle = [NSBundle mainBundle];
     NSString *plistPath = [bundle pathForResource:@"audio_icon" ofType:@"plist"];
-    self._data = [[NSArray alloc] initWithContentsOfFile:plistPath];
+    NSArray *bundelArray = [[NSArray alloc] initWithContentsOfFile:plistPath];
+    
+    NSDictionary *sec = [bundelArray objectAtIndex:0];
+    NSMutableArray *items = [sec objectForKey:@"items"];
+    
+    NSMutableArray *finalItems = [NSMutableArray array];
+    [finalItems addObjectsFromArray:items];
+    
+    int itemID = 304;
+    
+    for (BasePlugElement *basePlugin in _currentAudioDevices) {
+        NSString *name = basePlugin._name;
+        if ([name isEqualToString:@"会议"] || [name isEqualToString:@"无线话筒"]
+            || [name isEqualToString:@"手拉手会议"] || [name isEqualToString:@"无线会议"]) {
+            NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+            
+            [dic setObject:[NSString stringWithFormat:@"%d", itemID] forKey:@"id"];
+            
+            [dic setObject:name forKey:@"name"];
+            NSString *deviceID = [NSString stringWithFormat:@"%ld", ((RgsDriverObj*)(basePlugin._driver)).m_id];
+            [dic setObject:deviceID forKey:@"type"];
+            
+            //set dic
+            [self setDicIcon:name withDic:dic];
+            
+            [finalItems addObject:dic];
+            
+            itemID++;
+        }
+    }
+    
+    NSMutableDictionary *dataDic = [NSMutableDictionary dictionary];
+    [dataDic setObject:finalItems forKey:@"items"];
+    [dataDic setObject:@"图标" forKey:@"title"];
+    
+    self._data = [[NSMutableArray array] arrayByAddingObject:dataDic];
+    
 }
 
-- (id) initWithFrame:(CGRect)frame {
+- (void) setDicIcon:(NSString*)baseName withDic:(NSMutableDictionary*)dataDic {
+    if ([baseName isEqualToString:@"会议"])
+    {
+        [dataDic setObject:@"a_yx_3.png" forKey:@"icon"];
+        [dataDic setObject:@"a_yx_3.png" forKey:@"icon_sel"];
+        [dataDic setObject:@"s3_05.png" forKey:@"icon_s"];
+        [dataDic setObject:@"huiyinhuiyi_player_n.png" forKey:@"user_show_icon"];
+        [dataDic setObject:@"huiyinhuiyi_player_s.png" forKey:@"user_show_icon_s"];
+        
+    } else if ([baseName isEqualToString:@"无线话筒"])
+    {
+        [dataDic setObject:@"a_wx_2.png" forKey:@"icon"];
+        [dataDic setObject:@"a_wx_2.png" forKey:@"icon_sel"];
+        [dataDic setObject:@"s3_03.png" forKey:@"icon_s"];
+        [dataDic setObject:@"huatong_player_n.png" forKey:@"user_show_icon"];
+        [dataDic setObject:@"huatong_player_s.png" forKey:@"user_show_icon_s"];
+        
+    } else if ([baseName isEqualToString:@"手拉手会议"])
+    {
+        [dataDic setObject:@"a_yx_3.png" forKey:@"icon"];
+        [dataDic setObject:@"a_yx_3.png" forKey:@"icon_sel"];
+        [dataDic setObject:@"s3_05.png" forKey:@"icon_s"];
+        [dataDic setObject:@"huiyinhuiyi_player_n.png" forKey:@"user_show_icon"];
+        [dataDic setObject:@"huiyinhuiyi_player_s.png" forKey:@"user_show_icon_s"];
+        
+    } else if ([baseName isEqualToString:@"无线会议"])
+    {
+        [dataDic setObject:@"a_yx_3.png" forKey:@"icon"];
+        [dataDic setObject:@"a_yx_3.png" forKey:@"icon_sel"];
+        [dataDic setObject:@"s3_05.png" forKey:@"icon_s"];
+        [dataDic setObject:@"huiyinhuiyi_player_n.png" forKey:@"user_show_icon"];
+        [dataDic setObject:@"huiyinhuiyi_player_s.png" forKey:@"user_show_icon_s"];
+        
+    }
+    
+}
+
+- (id) initWithFrame:(CGRect)frame withCurrentAudios:(NSArray*) currentAudioArrays {
+    self._currentAudioDevices = currentAudioArrays;
+    
     if(self = [super initWithFrame:frame]) {
         _curIndex = -1;
         
         [self initData];
         
         self.backgroundColor = BLACK_COLOR;
-        
-        UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 10)];
-        
-        
-        UISwipeGestureRecognizer *swip = [[UISwipeGestureRecognizer alloc] initWithTarget:self
-                                                                                   action:@selector(switchComSetting)];
-        swip.direction = UISwipeGestureRecognizerDirectionDown;
-        
-        
-        [headView addGestureRecognizer:swip];
-        
-        _com = [[ComSettingView alloc] initWithFrame:self.bounds];
         
         _tableView = [[UITableView alloc] initWithFrame:self.bounds];
         _tableView.delegate = self;
@@ -69,42 +133,8 @@ UITableViewDataSource,AudioIconSettingViewDelegate, EPlusLayerViewDelegate> {
         [self addSubview:_tableView];
         _tableView.clipsToBounds = NO;
         
-        [_tableView addSubview:headView];
-        
     }
     return self;
-}
-
-- (void) switchComSetting{
-    
-    if([_com superview])
-        return;
-    
-    CGRect rc = _com.frame;
-    rc.origin.y = 0-rc.size.height;
-    
-    _com.frame = rc;
-    [self addSubview:_com];
-    [UIView animateWithDuration:0.25
-                     animations:^{
-                         
-                         _com.frame = self.bounds;
-                         
-                     } completion:^(BOOL finished) {
-                         
-                     }];
-    
-}
-
-- (void) scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    float fy = scrollView.contentOffset.y;
-    
-    if(fy < -40)
-    {
-        [self switchComSetting];
-    }
-    
 }
 
 #pragma mark -

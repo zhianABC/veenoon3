@@ -26,7 +26,7 @@ typedef void(^RequestBlock)(id lParam,id rParam);
 
 static NSString * audio_process_name = @"音频处理";
 static NSString * audio_power_sequencer = @"电源管理";
-static NSString * audio_mixer_name = @"会议";
+static NSString * audio_mixer_name = @"混音会议";
 static NSString * video_touying_name = @"投影机";
 static NSString * video_camera_name = @"摄像机";
 static NSString * env_dimmer_light  = @"照明";

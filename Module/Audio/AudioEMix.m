@@ -45,7 +45,7 @@
 
 - (NSString*) deviceName{
     
-    return @"会议";
+    return audio_mixer_name;
 }
 
 

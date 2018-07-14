@@ -112,7 +112,7 @@ static DataCenter *_globalDataInstanse;
         
         
         NSDictionary *audiMixer = @{@"type":@"audio",
-                                    @"name":@"会议",
+                                    @"name":audio_mixer_name,
                                     @"driver":UUID_Audio_Mixer,
                                     @"brand":@"Teslaria",
                                     @"icon":@"engineer_huiyi_n.png",
