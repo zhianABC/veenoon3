@@ -22,6 +22,7 @@
 
 @property (nonatomic, strong) RgsProxyObj *_rgsProxyObj;
 @property (nonatomic, weak) id <VVideoProcessSetProxyDelegate> delegate;
+@property (nonatomic, strong) NSMutableDictionary *_deviceMatcherDic;
 
 - (void) checkRgsProxyCommandLoad;
 

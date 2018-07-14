@@ -11,7 +11,7 @@
 #import "DataSync.h"
 #import "KVNProgress.h"
 #import "VProjectProxys.h"
-#import "VVideoProcessSetProxy.m"
+#import "VVideoProcessSetProxy.h"
 
 @interface VVideoProcessSet ()
 {
