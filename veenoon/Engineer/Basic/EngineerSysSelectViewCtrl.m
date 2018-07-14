@@ -393,7 +393,7 @@
     {
         IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
         
-        [[RegulusSDK sharedRegulusSDK] NewProject:VEENOON_AREA_NAME
+        [[RegulusSDK sharedRegulusSDK] NewProject:@"Veenoon"
                                        completion:^(BOOL result, NSError *error) {
             
             sender.enabled = YES;
@@ -425,6 +425,9 @@
 
 
 - (void) setNewProject{
+    
+    
+    [[DataSync sharedDataSync] syncCurrentArea];
     
     [[DataBase sharedDatabaseInstance] deleteScenarioByRoom:1];
     [_sceneDrivers removeAllObjects];

@@ -106,12 +106,14 @@
 
 - (void) selected{
     
-    _isSelected = YES;
-    
     NSString *icon = [_data objectForKey:@"icon_sel"];
-    [bigIcon setImage:[UIImage imageNamed:icon]];
+    if(icon)
+    {
+        _isSelected = YES;
+        [bigIcon setImage:[UIImage imageNamed:icon]];
     
-    _textLabel.textColor = YELLOW_COLOR;
+        _textLabel.textColor = YELLOW_COLOR;
+    }
     
 }
 - (void) unselected{
