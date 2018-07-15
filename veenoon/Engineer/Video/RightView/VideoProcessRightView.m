@@ -73,7 +73,7 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
                               ((RgsDriverObj*)(basePlugin._driver)).m_id];
         [dataDic setObject:deviceID forKey:@"type"];
         
-        [dataDic setObject:@"1" forKey:@"input_out"];
+        [dataDic setObject:@"1" forKey:@"input_output"];
         
         if(basePlugin){
             NSString *className  = NSStringFromClass([basePlugin class]);
@@ -120,7 +120,7 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
                               ((RgsDriverObj*)(basePlugin._driver)).m_id];
         [dataDic setObject:deviceID forKey:@"type"];
         
-        [dataDic setObject:@"2" forKey:@"input_out"];
+        [dataDic setObject:@"2" forKey:@"input_output"];
         
         if(basePlugin){
             NSString *className  = NSStringFromClass([basePlugin class]);
