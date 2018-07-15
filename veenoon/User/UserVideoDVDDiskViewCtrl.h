@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "UserBaseViewControllor.h"
+#import "VDVDPlayerSet.h"
+
 @interface UserVideoDVDDiskViewCtrl : UserBaseViewControllor {
     
 }
-
+@property (nonatomic, strong) VDVDPlayerSet *_currentProcessor;
 @end
