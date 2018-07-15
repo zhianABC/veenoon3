@@ -71,7 +71,9 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
         
         NSString *deviceID = [NSString stringWithFormat:@"%d", (int)
                               ((RgsDriverObj*)(basePlugin._driver)).m_id];
-        [dataDic setObject:deviceID forKey:@"driverid"];
+        [dataDic setObject:deviceID forKey:@"type"];
+        
+        [dataDic setObject:@"1" forKey:@"input_out"];
         
         if(basePlugin){
             NSString *className  = NSStringFromClass([basePlugin class]);
@@ -116,7 +118,9 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
         
         NSString *deviceID = [NSString stringWithFormat:@"%d", (int)
                               ((RgsDriverObj*)(basePlugin._driver)).m_id];
-        [dataDic setObject:deviceID forKey:@"driverid"];
+        [dataDic setObject:deviceID forKey:@"type"];
+        
+        [dataDic setObject:@"2" forKey:@"input_out"];
         
         if(basePlugin){
             NSString *className  = NSStringFromClass([basePlugin class]);
