@@ -23,6 +23,7 @@
 @property (nonatomic, strong) NSMutableArray *_cameraPol;
 @property (nonatomic, assign) int _fayanPriority;
 @property (nonatomic, strong) NSString *_workMode;
+@property (nonatomic, strong) NSString *_zhuxiDaibiao;
 @property (nonatomic, strong) NSString *_mixHighFilter;
 @property (nonatomic, strong) NSString *_mixLowFilter;
 @property (nonatomic, strong) NSString *_mixPEQ;
@@ -62,7 +63,7 @@
 
 - (void) controlDeviceVol:(float)db force:(BOOL)force;
 - (void) controlDeviceCameraPol:(NSString*)cameraPol;
-- (void) controlFayanPriority:(int)fayanPriority;
+- (void) controlFayanPriority:(int)fayanPriority withType:(NSString*)type;
 - (void) controlWorkMode:(NSString*)workMode;
 - (void) controlHighFilter:(NSString*)highFilter;
 - (void) controlLowFilter:(NSString*)lowFilter;

@@ -14,6 +14,7 @@
 #import "EngineerMonitorViewCtrl.h"
 #import "DataSync.h"
 #import "RegulusSDK.h"
+#import "UserHuiYinViewController.h"
 
 @interface AppDelegate () <RegulusSDKDelegate>
 {
@@ -34,7 +35,7 @@
 //    
     [RegulusSDK sharedRegulusSDK].delegate = self;
     
-    HomeViewController *wellcome = [[HomeViewController alloc] init];
+    UserHuiYinViewController *wellcome = [[UserHuiYinViewController alloc] init];
     _naviRoot = [[CMNavigationController alloc] initWithRootViewController:wellcome];
     _naviRoot.navigationBarHidden = YES;
     self.window.rootViewController = _naviRoot;

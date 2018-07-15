@@ -31,6 +31,8 @@
     UITableView *_tableView;
     
     UIButton *_selectedBtn;
+    
+    NSString *_zhuxiDaibiao;
 }
 @property (nonatomic, strong) NSMutableArray *_btns;
 @end
@@ -320,6 +322,8 @@
     [_shedingzhuxiBtn setSelected:YES];
     [_fayanrenshuBtn setSelected:NO];
     
+    _zhuxiDaibiao = @"设定主席";
+    
     int colNumber = 4;
     int space = 5;
     int cellWidth = 115/2;
@@ -375,11 +379,13 @@
     _selectedBtn = btn;
     
     int numberInt = [numberStr intValue];
-    [_currentObj._proxyObj controlFayanPriority:numberInt];
+    [_currentObj._proxyObj controlFayanPriority:numberInt withType:_zhuxiDaibiao];
 }
 - (void) fayanrenshuAction:(id)sender{
     [_shedingzhuxiBtn setSelected:NO];
     [_fayanrenshuBtn setSelected:YES];
+    
+    _zhuxiDaibiao = @"设定代表";
     
     int colNumber = 4;
     int space = 5;
