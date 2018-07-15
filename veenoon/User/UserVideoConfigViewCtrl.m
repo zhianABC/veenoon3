@@ -257,6 +257,21 @@
     [_contrlPanl createP2P:_currentProxy._deviceMatcherDic];
 }
 
+- (void) didControlInOutState:(NSDictionary*)inSrc
+                       outSrc:(NSDictionary*)outSrc
+                       linked:(BOOL)linked{
+    
+    if(_currentProxy)
+    {
+        if(linked)
+        {
+        [_currentProxy controlDeviceAdd:inSrc
+                          withOutDevice:outSrc];
+        }
+    }
+    
+}
+
 
 - (void) didPupConfigView:(StickerLayerView*)sticker {
     NSDictionary *dic = sticker._element;

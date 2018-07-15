@@ -13,6 +13,10 @@
 
 @optional
 - (void) didPupConfigView:(StickerLayerView*)sticker;
+- (void) didControlInOutState:(NSDictionary*)inSrc
+                       outSrc:(NSDictionary*)outSrc
+                       linked:(BOOL)linked;
+
 @end
 
 @interface UserVideoConfigView : UIView
