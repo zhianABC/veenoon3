@@ -112,22 +112,22 @@
             
             if(_curSelectInput)
             {
-            //输入源
-            NSDictionary* inputD = _curSelectInput._element;
-            
-            
-            [_result setObject:inputD
-                        forKey:[outData objectForKey:@"code"]];
-            
-            
-            NSString *imageN = [inputD objectForKey:@"image_sel"];
-            [output setTopIconImage:[UIImage imageNamed:imageN]];
+                //输入源
+                NSDictionary* inputD = _curSelectInput._element;
+                
+                
+                [_result setObject:inputD
+                            forKey:[outData objectForKey:@"ctrl_val"]];
+                
+                
+                NSString *imageN = [inputD objectForKey:@"user_show_icon_s"];
+                [output setTopIconImage:[UIImage imageNamed:imageN]];
             }
         }
         else
         {
 
-            [_result removeObjectForKey:[outData objectForKey:@"code"]];
+            [_result removeObjectForKey:[outData objectForKey:@"ctrl_val"]];
             [output setTopIconImage:nil];
             
         }
@@ -149,20 +149,25 @@
         cell.tag = i;
         cell._enableDrag = NO;
         [cell enableLongPressed];
-        cell.delegate_ = self;
-        cell._element = dic;
-        NSString *image = [dic objectForKey:@"image"];
-        [cell setSticker:image];
         
-        NSString *sel = [dic objectForKey:@"image_sel"];
-        cell.selectedImg = [UIImage imageNamed:sel];
-        cell.textLabel.text = [dic objectForKey:@"name"];
-        
+        if([dic objectForKey:@"id"])
+        {
+            cell.delegate_ = self;
+            cell._element = dic;
+            
+            NSString *image = [dic objectForKey:@"user_show_icon"];
+            [cell setSticker:image];
+            
+            NSString *sel = [dic objectForKey:@"user_show_icon_s"];
+            cell.selectedImg = [UIImage imageNamed:sel];
+            cell.textLabel.text = [dic objectForKey:@"name"];
+        }
+        else
+        {
+            [cell setEmptyCell];
+        }
         x+=cellWidth;
-        
-        
         [_inputCells addObject:cell];
-        
     }
     
     
@@ -187,19 +192,27 @@
         [self addSubview:cell];
 
         cell.tag = 100+i;
-        cell._enableDrag = NO;
-        NSString *image = [dic objectForKey:@"image"];
-        [cell setSticker:image];
-
-        NSString *sel = [dic objectForKey:@"image_sel"];
-        cell.selectedImg = [UIImage imageNamed:sel];
-        cell.textLabel.text = [dic objectForKey:@"name"];
         
-        [_outputDmap setObject:cell
-                 forKey:[dic objectForKey:@"code"]];
+        if([dic objectForKey:@"id"])
+        {
+            
+            cell._enableDrag = NO;
+            NSString *image = [dic objectForKey:@"user_show_icon"];
+            [cell setSticker:image];
+            
+            NSString *sel = [dic objectForKey:@"user_show_icon_s"];
+            cell.selectedImg = [UIImage imageNamed:sel];
+            cell.textLabel.text = [dic objectForKey:@"name"];
+            
+            [_outputDmap setObject:cell
+                            forKey:[dic objectForKey:@"ctrl_val"]];
+        }
+        else
+        {
+            [cell setEmptyCell];
+        }
         
         x+=cellWidth;
-        
         [_outputs addObject:cell];
     }
     

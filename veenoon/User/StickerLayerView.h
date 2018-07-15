@@ -65,4 +65,6 @@
 
 - (void) setTopIconImage:(UIImage*)icon;
 
+- (void) setEmptyCell;
+
 @end

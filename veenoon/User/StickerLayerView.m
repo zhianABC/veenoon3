@@ -104,6 +104,15 @@
     return self;
 }
 
+- (void) setEmptyCell{
+    
+    _sticker.layer.borderColor = LINE_COLOR.CGColor;
+    _sticker.layer.borderWidth = 1;
+    _sticker.layer.cornerRadius = 5;
+    _sticker.clipsToBounds = YES;
+}
+
+
 - (void) setTopIconImage:(UIImage*)icon{
     
     _topIcon.image = icon;

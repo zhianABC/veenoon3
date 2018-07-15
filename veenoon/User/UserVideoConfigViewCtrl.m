@@ -27,9 +27,11 @@
     int outputMin;
     
     
+    UserVideoConfigView *_contrlPanl;
+    
 }
-@property (nonatomic, strong) NSArray *_inputDevices;
-@property (nonatomic, strong) NSArray *_outputDevices;
+@property (nonatomic, strong) NSMutableArray *_inputDevices;
+@property (nonatomic, strong) NSMutableArray *_outputDevices;
 @property (nonatomic, strong) VVideoProcessSet *_curProcessor;
 @property (nonatomic, strong) VVideoProcessSetProxy *_currentProxy;
 
@@ -79,6 +81,11 @@
     forControlEvents:UIControlEventTouchUpInside];
     
    
+    _contrlPanl = [[UserVideoConfigView alloc]
+                               initWithFrame:CGRectMake(0, 0,
+                                                        SCREEN_WIDTH,
+                                                        SCREEN_HEIGHT-114)];
+    [self.view addSubview:_contrlPanl];
     
     if([_scenario._videoDevices count])
     {
@@ -92,53 +99,7 @@
     [self getCurrentDeviceDriverProxys];
     
     
-    self._inputDevices = @[@{@"name":@"DVD播放器",@"image":@"user_video_dvd_n.png",
-                             @"image_sel":@"user_video_dvd_s.png"},
-                           @{@"name":@"硬盘播放器",@"image":@"user_video_disk_n.png",
-                             @"image_sel":@"user_video_disk_s.png"},
-                           @{@"name":@"桌面信息盒",@"image":@"user_video_desk_n.png",
-                             @"image_sel":@"user_video_desk_s.png"},
-                           @{@"name":@"桌面信息盒",@"image":@"user_video_desk_n.png",
-                             @"image_sel":@"user_video_desk_s.png"},
-                           @{@"name":@"远程视讯",@"image":@"user_video_remote_n.png",
-                             @"image_sel":@"user_video_remote_s.png"},
-                           @{@"name":@"摄像机1",@"image":@"user_video_camera_n.png",
-                             @"image_sel":@"user_video_camera_s.png"},
-                           @{@"name":@"摄像机2",@"image":@"user_video_camera_n.png",
-                             @"image_sel":@"user_video_camera_s.png"},
-                           @{@"name":@"摄像机3",@"image":@"user_video_camera_n.png",
-                             @"image_sel":@"user_video_camera_s.png"}];
     
-    self._outputDevices = @[@{@"name":@"拼接屏",@"image":@"user_video_pinjieping_n.png",
-                              @"image_sel":@"user_video_pinjieping_s.png",
-                              @"code":@"1000"},
-                            @{@"name":@"投影机",@"image":@"user_video_touying_n.png",
-                              @"image_sel":@"user_video_touying_s.png",
-                              @"code":@"1001"},
-                            @{@"name":@"液晶电视",@"image":@"user_video_yejing_n.png",
-                              @"image_sel":@"user_video_yejing_s.png",
-                              @"code":@"1002"},
-                            @{@"name":@"液晶电视",@"image":@"user_video_yejing_n.png",
-                              @"image_sel":@"user_video_yejing_s.png",
-                              @"code":@"1003"},
-                            @{@"name":@"录播机",@"image":@"user_video_lubo_n.png",
-                              @"image_sel":@"user_video_lubo_s.png",
-                              @"code":@"1004"},
-                            @{@"name":@"远程视讯",@"image":@"user_video_remote_n.png",
-                              @"image_sel":@"user_video_remote_s.png",
-                              @"code":@"1005"}];
-
-   
-    UserVideoConfigView *uv = [[UserVideoConfigView alloc]
-                               initWithFrame:CGRectMake(0, 0,
-                                                        SCREEN_WIDTH,
-                                                        SCREEN_HEIGHT-114)];
-    [self.view addSubview:uv];
-    
-    uv._inputDatas = self._inputDevices;
-    uv._outputDatas = self._outputDevices;
-    uv.delegate_ = self;
-    [uv show];
     
 }
 
@@ -205,7 +166,94 @@
     outputMin = [[outputSettings objectForKey:@"min"] intValue];
     outputMax = [[outputSettings objectForKey:@"max"] intValue];
     
-    //[self updateView];
+    [self updateView];
+}
+
+- (void) updateView{
+    
+    self._inputDevices = [NSMutableArray array];
+    self._outputDevices = [NSMutableArray array];
+    
+    NSDictionary *inputs = _currentProxy._inputDevices;
+    
+    for(int i = inputMin; i <= inputMax; i++)
+    {
+        id key = [NSString stringWithFormat:@"%d", i];
+        
+        if([inputs objectForKey:key])
+        {
+            [self._inputDevices addObject:[inputs objectForKey:key]];
+        }
+        else
+        {
+            [self._inputDevices addObject:@{@"ctrl_val":key}];
+        }
+        
+    }
+    
+    NSDictionary *outputs = _currentProxy._outputDevices;
+    
+    for(int i = outputMin; i <= outputMax; i++)
+    {
+        id key = [NSString stringWithFormat:@"%d", i];
+        
+        if([outputs objectForKey:key])
+        {
+            [self._outputDevices addObject:[outputs objectForKey:key]];
+        }
+        else
+        {
+            [self._outputDevices addObject:@{@"ctrl_val":key}];
+        }
+        
+    }
+   
+    /*
+    self._inputDevices = @[@{@"name":@"DVD播放器",@"image":@"user_video_dvd_n.png",
+                             @"image_sel":@"user_video_dvd_s.png"},
+                           @{@"name":@"硬盘播放器",@"image":@"user_video_disk_n.png",
+                             @"image_sel":@"user_video_disk_s.png"},
+                           @{@"name":@"桌面信息盒",@"image":@"user_video_desk_n.png",
+                             @"image_sel":@"user_video_desk_s.png"},
+                           @{@"name":@"桌面信息盒",@"image":@"user_video_desk_n.png",
+                             @"image_sel":@"user_video_desk_s.png"},
+                           @{@"name":@"远程视讯",@"image":@"user_video_remote_n.png",
+                             @"image_sel":@"user_video_remote_s.png"},
+                           @{@"name":@"摄像机1",@"image":@"user_video_camera_n.png",
+                             @"image_sel":@"user_video_camera_s.png"},
+                           @{@"name":@"摄像机2",@"image":@"user_video_camera_n.png",
+                             @"image_sel":@"user_video_camera_s.png"},
+                           @{@"name":@"摄像机3",@"image":@"user_video_camera_n.png",
+                             @"image_sel":@"user_video_camera_s.png"}];
+    
+    self._outputDevices = @[@{@"name":@"拼接屏",@"image":@"user_video_pinjieping_n.png",
+                              @"image_sel":@"user_video_pinjieping_s.png",
+                              @"code":@"1000"},
+                            @{@"name":@"投影机",@"image":@"user_video_touying_n.png",
+                              @"image_sel":@"user_video_touying_s.png",
+                              @"code":@"1001"},
+                            @{@"name":@"液晶电视",@"image":@"user_video_yejing_n.png",
+                              @"image_sel":@"user_video_yejing_s.png",
+                              @"code":@"1002"},
+                            @{@"name":@"液晶电视",@"image":@"user_video_yejing_n.png",
+                              @"image_sel":@"user_video_yejing_s.png",
+                              @"code":@"1003"},
+                            @{@"name":@"录播机",@"image":@"user_video_lubo_n.png",
+                              @"image_sel":@"user_video_lubo_s.png",
+                              @"code":@"1004"},
+                            @{@"name":@"远程视讯",@"image":@"user_video_remote_n.png",
+                              @"image_sel":@"user_video_remote_s.png",
+                              @"code":@"1005"}];
+     */
+    
+    
+   
+    
+    _contrlPanl._inputDatas = self._inputDevices;
+    _contrlPanl._outputDatas = self._outputDevices;
+    _contrlPanl.delegate_ = self;
+    [_contrlPanl show];
+    
 }
 
 

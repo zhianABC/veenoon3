@@ -185,6 +185,19 @@
     
 }
 
+- (void) saveInputDevice:(NSDictionary*)inputDev{
+    
+    NSString *inName = [inputDev objectForKey:@"ctrl_val"];
+    [self._inputDevices setObject:inputDev forKey:inName];
+
+}
+- (void) saveOutputDevice:(NSDictionary*)outputDev{
+    
+    NSString *outName = [outputDev objectForKey:@"ctrl_val"];
+    [self._outputDevices setObject:outputDev forKey:outName];
+    
+}
+
 - (void) controlDeviceAdd:(NSDictionary*)inputDev
             withOutDevice:(NSDictionary*)outputDev {
     
