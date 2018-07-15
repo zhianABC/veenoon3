@@ -91,18 +91,26 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
         if ([basePlugin isKindOfClass:[VDVDPlayerSet class]]) {
             [dataDic setObject:@"videop_dvd_w.png" forKey:@"icon"];
             [dataDic setObject:@"videop_dvd_y.png" forKey:@"icon_sel"];
+            [dataDic setObject:@"user_video_dvd_n.png" forKey:@"user_show_icon"];
+            [dataDic setObject:@"user_video_dvd_s.png" forKey:@"user_show_icon_s"];
         } else if([basePlugin isKindOfClass:[VCameraSettingSet class]])
         {
             [dataDic setObject:@"videop_camera_w.png" forKey:@"icon"];
             [dataDic setObject:@"videop_camera_y.png" forKey:@"icon_sel"];
+            [dataDic setObject:@"user_video_camera_n.png" forKey:@"user_show_icon"];
+            [dataDic setObject:@"user_video_camera_s.png" forKey:@"user_show_icon_s"];
         } else if([baseName isEqualToString:@"信息盒"])
         {
             [dataDic setObject:@"videop_xinxihe_w.png" forKey:@"icon"];
             [dataDic setObject:@"videop_xinxihe_y.png" forKey:@"icon_sel"];
+            [dataDic setObject:@"user_video_desk_n.png" forKey:@"user_show_icon"];
+            [dataDic setObject:@"user_video_desk_s.png" forKey:@"user_show_icon_s"];
         } else if([basePlugin isKindOfClass:[VRemoteVideoSet class]])
         {
             [dataDic setObject:@"videop_remotevideo_w.png" forKey:@"icon"];
             [dataDic setObject:@"videop_remotevideo_y.png" forKey:@"icon_sel"];
+            [dataDic setObject:@"user_video_remote_n.png" forKey:@"user_show_icon"];
+            [dataDic setObject:@"user_video_remote_s.png" forKey:@"user_show_icon_s"];
         }
         if ([dataDic objectForKey:@"icon"]) {
             [finalItems addObject:dataDic];
@@ -140,22 +148,32 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
         if ([basePlugin isKindOfClass:[VRemoteVideoSet class]]) {
             [dataDic setObject:@"videop_remotevideo_w.png" forKey:@"icon"];
             [dataDic setObject:@"videop_remotevideo_y.png" forKey:@"icon_sel"];
+            [dataDic setObject:@"user_video_remote_n.png" forKey:@"user_show_icon"];
+            [dataDic setObject:@"user_video_remote_s.png" forKey:@"user_show_icon_s"];
         } else if([basePlugin isKindOfClass:[VPinJieSet class]])
         {
             [dataDic setObject:@"videop_screen_w.png" forKey:@"icon"];
             [dataDic setObject:@"videop_screen_y.png" forKey:@"icon_sel"];
+            [dataDic setObject:@"user_video_pinjieping_n.png" forKey:@"user_show_icon"];
+            [dataDic setObject:@"user_video_pinjieping_s.png" forKey:@"user_show_icon_s"];
         } else if([basePlugin isKindOfClass:[VTVSet class]])
         {
             [dataDic setObject:@"videop_tv_w.png" forKey:@"icon"];
             [dataDic setObject:@"videop_tv_y.png" forKey:@"icon_sel"];
+            [dataDic setObject:@"user_video_yejing_n.png" forKey:@"user_show_icon"];
+            [dataDic setObject:@"user_video_yejing_s.png" forKey:@"user_show_icon_s"];
         } else if([basePlugin isKindOfClass:[VLuBoJiSet class]])
         {
             [dataDic setObject:@"videop_player_w.png" forKey:@"icon"];
             [dataDic setObject:@"videop_player_y.png" forKey:@"icon_sel"];
+            [dataDic setObject:@"user_video_lubo_n.png" forKey:@"user_show_icon"];
+            [dataDic setObject:@"user_video_lubo_s.png" forKey:@"user_show_icon_s"];
         } else if([basePlugin isKindOfClass:[VTouyingjiSet class]])
         {
             [dataDic setObject:@"videop_tscreen_w.png" forKey:@"icon"];
             [dataDic setObject:@"videop_tscreen_y.png" forKey:@"icon_sel"];
+            [dataDic setObject:@"user_video_touying_n.png" forKey:@"user_show_icon"];
+            [dataDic setObject:@"user_video_touying_s.png" forKey:@"user_show_icon_s"];
         }
         if ([dataDic objectForKey:@"icon"]) {
             [finalItems addObject:dataDic];
