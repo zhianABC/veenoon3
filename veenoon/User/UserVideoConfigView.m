@@ -105,16 +105,13 @@
         StickerLayerView *output = layer;
         //输出设备
         NSDictionary *outData = output._element;
-        
-        
+    
         if(isSelected)
         {
-            
             if(_curSelectInput)
             {
                 //输入源
                 NSDictionary* inputD = _curSelectInput._element;
-                
                 
                 [_result setObject:inputD
                             forKey:[outData objectForKey:@"ctrl_val"]];
@@ -133,6 +130,51 @@
         }
     }
 
+}
+
+- (void) createP2P:(NSDictionary *)p2p{
+    
+    for(StickerLayerView *cell in _inputCells)
+    {
+        if(cell._element)
+        {
+            NSString *ctrl_val = [cell._element objectForKey:@"ctrl_val"];
+            NSArray *outputs = [p2p objectForKey:ctrl_val];
+            if(outputs && [outputs count])
+            {
+                for(id val in outputs)
+                {
+                    
+                    StickerLayerView *toCell = [_outputDmap objectForKey:val];
+                    if(toCell)
+                    {
+                        [self linkCell:cell outCell:toCell];
+                    }
+                    
+                }
+            }
+        }
+    }
+}
+
+- (void) linkCell:(StickerLayerView *)inCell outCell:(StickerLayerView* )outCell{
+    
+    
+    StickerLayerView *output = outCell;
+    //输出设备
+    NSDictionary *outData = output._element;
+    if(inCell)
+    {
+        //输入源
+        NSDictionary* inputD = inCell._element;
+        
+        [_result setObject:inputD
+                    forKey:[outData objectForKey:@"ctrl_val"]];
+        
+        NSString *imageN = [inputD objectForKey:@"user_show_icon_s"];
+        [output setTopIconImage:[UIImage imageNamed:imageN]];
+    }
+    
 }
 
 - (void) show{

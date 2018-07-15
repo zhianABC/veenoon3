@@ -253,7 +253,8 @@
     _contrlPanl._outputDatas = self._outputDevices;
     _contrlPanl.delegate_ = self;
     [_contrlPanl show];
-    
+ 
+    [_contrlPanl createP2P:_currentProxy._deviceMatcherDic];
 }
 
 
