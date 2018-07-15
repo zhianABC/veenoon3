@@ -25,5 +25,6 @@
 @property (nonatomic, strong) NSMutableDictionary *_result;
 
 - (void) show;
+- (void) createP2P:(NSDictionary *)p2p;
 
 @end
