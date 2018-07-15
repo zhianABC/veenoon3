@@ -229,11 +229,11 @@
 
     if(proxy && [proxy isKindOfClass:[VVideoProcessSetProxy class]])
     {
-        _currentProxy = proxy;
+        self._currentProxy = proxy;
     }
     else
     {
-        _currentProxy = [[VVideoProcessSetProxy alloc] init];
+        self._currentProxy = [[VVideoProcessSetProxy alloc] init];
     }
     _currentProxy.delegate = self;
     
@@ -588,13 +588,18 @@
                 {
                     [ti fillData:data];
                     ti.delegate = self;
+                    
+                    [_currentProxy saveInputDevice:data];
+                    
                     break;
                 }
             }
             
            // [self addInputDevice:data];
             
-        } else {
+        }
+        else
+        {
             
             CGPoint rpt = [self.view convertPoint:viewPoint toView:scroolViewOut];
             for(TwoIconAndTitleView * ti in _outPutBtnArray)
@@ -603,6 +608,9 @@
                 {
                     [ti fillData:data];
                     ti.delegate = self;
+                    
+                    [_currentProxy saveOutputDevice:data];
+                    
                     break;
                 }
             }
