@@ -223,6 +223,10 @@
     }
     if(areaObj)
     {
+        //获取Area添加的插件
+        [DataSync sharedDataSync]._currentArea = areaObj;
+        [[DataSync sharedDataSync] syncAreaHasDrivers];
+        
         [[RegulusSDK sharedRegulusSDK] GetAreaScenes:areaObj.m_id
                                           completion:^(BOOL result, NSArray *scenes, NSError *error) {
                                               if (result) {

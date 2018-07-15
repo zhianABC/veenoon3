@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "UserBaseViewControllor.h"
+
+@class AudioEMix;
+
 @interface UserHuiYinViewController : UserBaseViewControllor {
     
 }
+@property (nonatomic, strong) AudioEMix *_processor;
 
 @end
 

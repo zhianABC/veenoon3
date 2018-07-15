@@ -8,6 +8,8 @@
 #import "UserHuiYinViewController.h"
 #import "CenterCustomerPickerView.h"
 #import "UIButton+Color.h"
+#import "RegulusSDK.h"
+#import "AudioEMix.h"
 
 @interface UserHuiYinViewController () {
     UIButton *_yuyinjiliBtn;
@@ -20,6 +22,8 @@
 @end
 
 @implementation UserHuiYinViewController
+@synthesize _processor;
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];

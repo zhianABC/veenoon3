@@ -270,6 +270,23 @@ static DataSync* dSyncInstance = nil;
     return [_mapDrivers objectForKey:uuid];
 }
 
+- (id) queryCurrentAreaDriverWithMID:(NSInteger)mid{
+    
+    RgsDriverObj *result = nil;
+    
+    NSMutableArray *drivers = self._currentAreaDrivers;
+    for(RgsDriverObj *odr in drivers)
+    {
+        if(odr.m_id == mid)
+        {
+            result = odr;
+            break;
+        }
+    }
+    
+    return result;
+}
+
 - (void) addCurrentSelectDriverToCurrentArea:(NSString*)mapkey{
     
     RgsDriverInfo *info = [_mapDrivers objectForKey:mapkey];

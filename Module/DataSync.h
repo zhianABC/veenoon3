@@ -39,6 +39,8 @@
 - (void) addDriver:(id)driverInfo key:(NSString*)key;
 
 - (void) addCurrentSelectDriverToCurrentArea:(NSString*)mapkey;
+- (id) queryCurrentAreaDriverWithMID:(NSInteger)mid;
+
 - (RgsDriverInfo *) driverInfoByUUID:(NSString*)uuid;
 
 - (void) reloginRegulus;
