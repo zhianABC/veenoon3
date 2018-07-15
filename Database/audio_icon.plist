@@ -94,6 +94,10 @@
 				<string>a_icon_6.png</string>
 				<key>icon_s</key>
 				<string>s3_16.png</string>
+				<key>user_show_icon_s</key>
+				<string>enginner_fankuiyizhi_s.png</string>
+				<key>user_show_icon</key>
+				<string>enginner_fankuiyizhi_n.png</string>
 			</dict>
 		</array>
 	</dict>

@@ -78,7 +78,7 @@ UITableViewDataSource,AudioIconSettingViewDelegate, EPlusLayerViewDelegate> {
             }
             
             //set dic
-            [self setDicIcon:name withDic:dic];
+            [self setDicIcon:basePlugin withDic:dic];
             
             [finalItems addObject:dic];
             
@@ -94,8 +94,9 @@ UITableViewDataSource,AudioIconSettingViewDelegate, EPlusLayerViewDelegate> {
     
 }
 
-- (void) setDicIcon:(NSString*)baseName withDic:(NSMutableDictionary*)dataDic {
-    if ([baseName isEqualToString:audio_mixer_name])
+- (void) setDicIcon:(BasePlugElement*)basePlugin withDic:(NSMutableDictionary*)dataDic {
+    
+    if ([basePlugin isKindOfClass:[AudioEMix class]])
     {
         [dataDic setObject:@"a_yx_3.png" forKey:@"icon"];
         [dataDic setObject:@"a_yx_3.png" forKey:@"icon_sel"];
@@ -103,7 +104,7 @@ UITableViewDataSource,AudioIconSettingViewDelegate, EPlusLayerViewDelegate> {
         [dataDic setObject:@"huiyinhuiyi_player_n.png" forKey:@"user_show_icon"];
         [dataDic setObject:@"huiyinhuiyi_player_s.png" forKey:@"user_show_icon_s"];
         
-    } else if ([baseName isEqualToString:@"无线话筒"])
+    } else if ([basePlugin isKindOfClass:[AudioEHand2Hand class]])
     {
         [dataDic setObject:@"a_wx_2.png" forKey:@"icon"];
         [dataDic setObject:@"a_wx_2.png" forKey:@"icon_sel"];
@@ -111,7 +112,7 @@ UITableViewDataSource,AudioIconSettingViewDelegate, EPlusLayerViewDelegate> {
         [dataDic setObject:@"huatong_player_n.png" forKey:@"user_show_icon"];
         [dataDic setObject:@"huatong_player_s.png" forKey:@"user_show_icon_s"];
         
-    } else if ([baseName isEqualToString:@"手拉手会议"])
+    } else if ([basePlugin isKindOfClass:[AudioEWirlessMike class]])
     {
         [dataDic setObject:@"a_yx_3.png" forKey:@"icon"];
         [dataDic setObject:@"a_yx_3.png" forKey:@"icon_sel"];
@@ -119,7 +120,7 @@ UITableViewDataSource,AudioIconSettingViewDelegate, EPlusLayerViewDelegate> {
         [dataDic setObject:@"huiyinhuiyi_player_n.png" forKey:@"user_show_icon"];
         [dataDic setObject:@"huiyinhuiyi_player_s.png" forKey:@"user_show_icon_s"];
         
-    } else if ([baseName isEqualToString:@"无线会议"])
+    } else if ([basePlugin isKindOfClass:[AudioEWirlessMeetingSys class]])
     {
         [dataDic setObject:@"a_yx_3.png" forKey:@"icon"];
         [dataDic setObject:@"a_yx_3.png" forKey:@"icon_sel"];
