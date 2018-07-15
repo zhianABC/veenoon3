@@ -354,13 +354,10 @@
                         }
                     }
                 }
-                
-                
-        
                 if(target)
                 {
                     UserHuiYinViewController *controller = [[UserHuiYinViewController alloc] init];
-                    controller._processor = target;
+                    controller._processor = (AudioEMix*)target;
                     [self.navigationController pushViewController:controller animated:YES];
                 }
             }
