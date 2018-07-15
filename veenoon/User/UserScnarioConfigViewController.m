@@ -217,6 +217,7 @@
 
 - (void) videoSysAction:(id)sender{
     UserVideoConfigViewCtrl *controller = [[UserVideoConfigViewCtrl alloc] init];
+    controller._scenario = _data;
     [self.navigationController pushViewController:controller animated:YES];
 }
 

@@ -9,8 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "UserVideoConfigView.h"
 #import "UserBaseViewControllor.h"
+
+@class Scenario;
+
 @interface UserVideoConfigViewCtrl : UserBaseViewControllor<UserVideoConfigViewDelegate> {
     
 }
+
+@property (nonatomic, strong) Scenario *_scenario;
 
 @end

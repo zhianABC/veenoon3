@@ -227,10 +227,10 @@
             [allData setObject:proxy._deviceMatcherDic forKey:@"video_process"];
         
         if(proxy._inputDevices)
-            [allData setObject:proxy._deviceMatcherDic forKey:@"input_devices"];
+            [allData setObject:proxy._inputDevices forKey:@"input_devices"];
         
         if(proxy._outputDevices)
-            [allData setObject:proxy._deviceMatcherDic forKey:@"output_devices"];
+            [allData setObject:proxy._outputDevices forKey:@"output_devices"];
     
     }
     
@@ -283,7 +283,6 @@
     proxy._outputDevices = [json objectForKey:@"output_devices"];
     proxy._inputDevices = [json objectForKey:@"input_devices"];
     proxy._deviceMatcherDic = [json objectForKey:@"video_process"];
-
     
     NSDictionary *local = [self._localSavedCommands objectAtIndex:0];
     [proxy recoverWithDictionary:local];
