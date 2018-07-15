@@ -274,7 +274,10 @@
     VVideoProcessSetProxy *proxy = [[VVideoProcessSetProxy alloc] init];
     self._proxyObj = proxy;
     
-    //proxy._deviceMatcherDic = [json objectForKey:@"video_process"];
+    proxy._outputDevices = [json objectForKey:@"output_devices"];
+    proxy._inputDevices = [json objectForKey:@"input_devices"];
+    proxy._deviceMatcherDic = [json objectForKey:@"video_process"];
+
     
     NSDictionary *local = [self._localSavedCommands objectAtIndex:0];
     [proxy recoverWithDictionary:local];

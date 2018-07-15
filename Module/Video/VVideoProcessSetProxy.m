@@ -21,10 +21,6 @@
 @property (nonatomic, strong) NSMutableDictionary *_cmdMap;
 @property (nonatomic, strong) NSMutableDictionary *_RgsSceneDeviceOperationShadow;
 
-@property (nonatomic, strong) NSMutableDictionary *_deviceMatcherDic;
-@property (nonatomic, strong) NSMutableDictionary *_inputDevices;
-@property (nonatomic, strong) NSMutableDictionary *_outputDevices;
-
 
 @end
 
@@ -33,11 +29,11 @@
 @synthesize _rgsProxyObj;
 @synthesize _cmdMap;
 @synthesize delegate;
-//@synthesize _deviceMatcherDic;
+@synthesize _deviceMatcherDic;
 @synthesize _RgsSceneDeviceOperationShadow;
 
-//@synthesize _inputDevices;
-//@synthesize _outputDevices;
+@synthesize _inputDevices;
+@synthesize _outputDevices;
 
 - (id) init
 {
@@ -185,9 +181,7 @@
     if(!_rgsProxyObj || (_rgsProxyObj && (proxy_id == _rgsProxyObj.m_id)))
     {
         
-        self._outputDevices = [data objectForKey:@"output_devices"];
-        self._inputDevices = [data objectForKey:@"input_devices"];
-        self._deviceMatcherDic = [data objectForKey:@"video_process"];
+      
     }
     
 }
