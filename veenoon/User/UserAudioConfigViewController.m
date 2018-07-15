@@ -19,6 +19,8 @@
 #import "KVNProgress.h"
 #import "AudioEProcessor.h"
 #import "VAProcessorProxys.h"
+#import "AudioEMix.h"
+#import "DataSync.h"
 
 @interface UserAudioConfigViewController () <JSlideViewDelegate> {
     
@@ -168,13 +170,15 @@
             vap._rgsProxyObj = proxy;
             [_inputProxys addObject:vap];
             
-            [vap checkRgsProxyCommandLoad];
+           // [vap checkRgsProxyCommandLoad];
             
         }
     }
     
     _curProcessor._inAudioProxys = _inputProxys;
     
+    ///加载输出输出Proxy的Commands数据
+    [_curProcessor prepareAllAudioInCmds];
     
     int sliderHeight = 475-64;
     int sliderLeftRight = 90;
@@ -305,6 +309,8 @@
             IconCenterTextButton *icbtn = (IconCenterTextButton*)btn;
             NSDictionary *data = icbtn.vdata;
             NSString *name = [data objectForKey:@"name"];
+            NSString *class = [data objectForKey:@"class"];
+            
             if([name isEqualToString:@"播放器"]
                || [name isEqualToString:@"硬盘存储器"]
                || [name isEqualToString:@"SD"])
@@ -329,10 +335,34 @@
                 UserYouXianViewController *controller = [[UserYouXianViewController alloc] init];
                 [self.navigationController pushViewController:controller animated:YES];
             }
-            else if([name isEqualToString:@"有线会议室"])
+            else if(class && [class isEqualToString:@"AudioEMix"])
             {
-                UserHuiYinViewController *controller = [[UserHuiYinViewController alloc] init];
-                [self.navigationController pushViewController:controller animated:YES];
+                BasePlugElement * target = nil;
+                NSString *driverid = [data objectForKey:@"driverid"];
+
+                if(driverid)
+                {
+                    for(BasePlugElement *obj in _scenario._audioDevices)
+                    {
+                        if(obj._driver)
+                        {
+                            RgsDriverObj *driver = obj._driver;
+                            if(driver.m_id == [driverid integerValue]){
+                                target = obj;
+                                break;
+                            }
+                        }
+                    }
+                }
+                
+                
+        
+                if(target)
+                {
+                    UserHuiYinViewController *controller = [[UserHuiYinViewController alloc] init];
+                    controller._processor = target;
+                    [self.navigationController pushViewController:controller animated:YES];
+                }
             }
         }
         
