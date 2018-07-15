@@ -35,7 +35,8 @@
 /////场景还原
 - (void) recoverWithDictionary:(NSDictionary*)data;
 
-- (void) controlDeviceAdd:(NSString*)inputName withOutDevice:(NSString*)outputName;
+- (void) controlDeviceAdd:(NSDictionary*)inputName
+            withOutDevice:(NSDictionary*)outputName;
 
 //生成场景片段
 - (NSArray* ) generateEventOperation_p2p;
