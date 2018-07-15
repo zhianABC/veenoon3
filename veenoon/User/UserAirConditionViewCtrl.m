@@ -8,7 +8,9 @@
 #import "UserAirConditionViewCtrl.h"
 #import "UIButton+Color.h"
 #import "MapMarkerLayer.h"
-
+#import "Scenario.h"
+#import "AirConditionPlug.h"
+#import "RegulusSDK.h"
 
 @interface UserAirConditionViewCtrl () {
     NSMutableArray *_conditionRoomList;
@@ -27,39 +29,33 @@
 
 @implementation UserAirConditionViewCtrl
 @synthesize _conditionRoomList;
+@synthesize _scenario;
+
 
 - (void) initData {
-    if (_conditionRoomList) {
-        [_conditionRoomList removeAllObjects];
-    } else {
-        NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"Channel 01", @"name",
-                                     nil];
-        NSMutableDictionary *dic2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"Channel 02", @"name",
-                                     nil];
-        NSMutableDictionary *dic3 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"Channel 03", @"name",
-                                     nil];
-        NSMutableDictionary *dic4 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"Channel 04", @"name",
-                                     nil];
-        NSMutableDictionary *dic5 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"Channel 05", @"name",
-                                     nil];
-        NSMutableDictionary *dic6 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"Channel 06", @"name",
-                                     nil];
-        self._conditionRoomList = [NSMutableArray arrayWithObjects:dic1, dic2, dic3, dic4, dic5, dic6, nil];
+    
+    
+    self._conditionRoomList = [NSMutableArray array];
+    
+    for(BasePlugElement *plug in _scenario._envDevices)
+    {
+        if([plug isKindOfClass:[AirConditionPlug class]])
+        {
+            [self._conditionRoomList addObject:plug];
+        }
     }
+
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self setTitleAndImage:@"env_corner_kongtiao.png" withTitle:@"空调"];
+    
     [self initData];
     
-    if (_conditionBtnList) {
-        [_conditionBtnList removeAllObjects];
-    } else {
-        _conditionBtnList = [[NSMutableArray alloc] init];
-    }
+    _conditionBtnList = [[NSMutableArray alloc] init];
     
-    [super setTitleAndImage:@"env_corner_kongtiao.png" withTitle:@"空调"];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
@@ -104,7 +100,10 @@
     [self.view addSubview:airCondtionView];
     
     int index = 0;
-    for (id dic in _conditionRoomList) {
+    for (AirConditionPlug *plug in _conditionRoomList) {
+        
+        RgsDriverObj *driver = plug._driver;
+        
         int startX = index*cellWidth+index*rowGap+20;
         int startY = 5;
         
@@ -113,7 +112,9 @@
         airConditionBtn.frame = CGRectMake(startX, startY, cellWidth, cellWidth);
         [airConditionBtn setImage:[UIImage imageNamed:@"user_aircondition_n.png"] forState:UIControlStateNormal];
         [airConditionBtn setImage:[UIImage imageNamed:@"user_aircondition_s.png"] forState:UIControlStateHighlighted];
-        [airConditionBtn setTitle:[dic objectForKey:@"name"] forState:UIControlStateNormal];
+        [airConditionBtn setTitle:[NSString stringWithFormat:@"%d",
+                                   (int)driver.m_id] forState:UIControlStateNormal];
+        
         [airConditionBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
         airConditionBtn.titleLabel.font = [UIFont systemFontOfSize:13];
         [airConditionBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];

@@ -9,8 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "MapMarkerLayer.h"
 #import "UserBaseViewControllor.h"
+
+@class Scenario;
+
 @interface UserAirConditionViewCtrl<MapMarkerLayerDelegate> : UserBaseViewControllor {
     
 }
+@property (nonatomic, strong) Scenario *_scenario;
+
 
 @end

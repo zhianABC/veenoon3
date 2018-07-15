@@ -206,6 +206,7 @@
 
 - (void) airConditionSysAction:(id)sender{
     UserAirConditionViewCtrl *ctrl = [[UserAirConditionViewCtrl alloc] init];
+    ctrl._scenario = _data;
     [self.navigationController pushViewController:ctrl animated:YES];
 }
 
