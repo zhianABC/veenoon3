@@ -51,7 +51,7 @@ UITableViewDataSource,AudioIconSettingViewDelegate, EPlusLayerViewDelegate> {
     
     for (BasePlugElement *basePlugin in _currentAudioDevices) {
         NSString *name = basePlugin._name;
-        if ([name isEqualToString:@"会议"] || [name isEqualToString:@"无线话筒"]
+        if ([name isEqualToString:audio_mixer_name] || [name isEqualToString:@"无线话筒"]
             || [name isEqualToString:@"手拉手会议"] || [name isEqualToString:@"无线会议"]) {
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
             
@@ -79,7 +79,7 @@ UITableViewDataSource,AudioIconSettingViewDelegate, EPlusLayerViewDelegate> {
 }
 
 - (void) setDicIcon:(NSString*)baseName withDic:(NSMutableDictionary*)dataDic {
-    if ([baseName isEqualToString:@"会议"])
+    if ([baseName isEqualToString:audio_mixer_name])
     {
         [dataDic setObject:@"a_yx_3.png" forKey:@"icon"];
         [dataDic setObject:@"a_yx_3.png" forKey:@"icon_sel"];

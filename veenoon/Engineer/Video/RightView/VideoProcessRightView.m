@@ -70,7 +70,7 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
         NSString *deviceID = [NSString stringWithFormat:@"%ld", ((RgsDriverObj*)(basePlugin._driver)).m_id];
         [dataDic setObject:deviceID forKey:@"type"];
         
-        if ([baseName isEqualToString:@"DVD-1531578979"]) {
+        if ([baseName hasPrefix:@"DVD-"]) {
             [dataDic setObject:@"videop_dvd_w.png" forKey:@"icon"];
             [dataDic setObject:@"videop_dvd_y.png" forKey:@"icon_sel"];
         } else if([baseName isEqualToString:@"摄像机"])
@@ -115,7 +115,7 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
         {
             [dataDic setObject:@"videop_screen_w.png" forKey:@"icon"];
             [dataDic setObject:@"videop_screen_y.png" forKey:@"icon_sel"];
-        } else if([baseName isEqualToString:@"TV-1531578928"])
+        } else if([baseName hasPrefix:@"TV-"])
         {
             [dataDic setObject:@"videop_tv_w.png" forKey:@"icon"];
             [dataDic setObject:@"videop_tv_y.png" forKey:@"icon_sel"];
