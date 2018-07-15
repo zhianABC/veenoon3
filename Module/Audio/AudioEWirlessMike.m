@@ -208,6 +208,9 @@
     
     NSDictionary *allData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
     
+    if([allData objectForKey:@"name"])
+        self._name = [allData objectForKey:@"name"];
+    
     if([allData objectForKey:@"brand"])
         self._brand = [allData objectForKey:@"brand"];
     if([allData objectForKey:@"type"])

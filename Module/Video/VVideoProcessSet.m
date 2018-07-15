@@ -241,6 +241,9 @@
 - (void) jsonToObject:(NSDictionary*)json{
     
     //基本信息
+    if([json objectForKey:@"name"])
+        self._name = [json objectForKey:@"name"];
+    
     if([json objectForKey:@"brand"])
         self._brand = [json objectForKey:@"brand"];
     
