@@ -119,6 +119,13 @@
                 
                 NSString *imageN = [inputD objectForKey:@"user_show_icon_s"];
                 [output setTopIconImage:[UIImage imageNamed:imageN]];
+                
+                if(delegate_ && [delegate_ respondsToSelector:@selector(didControlInOutState:outSrc:linked:)])
+                {
+                    [delegate_ didControlInOutState:inputD
+                                             outSrc:outData
+                                             linked:YES];
+                }
             }
         }
         else
@@ -126,6 +133,13 @@
 
             [_result removeObjectForKey:[outData objectForKey:@"ctrl_val"]];
             [output setTopIconImage:nil];
+            
+            if(delegate_ && [delegate_ respondsToSelector:@selector(didControlInOutState:outSrc:linked:)])
+            {
+                [delegate_ didControlInOutState:inputD
+                                         outSrc:outData
+                                         linked:NO];
+            }
             
         }
     }
