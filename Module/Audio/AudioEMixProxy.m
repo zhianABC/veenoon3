@@ -39,6 +39,7 @@
 @synthesize _cameraPol;
 @synthesize _fayanPriority;
 @synthesize _workMode;
+@synthesize _zhuxiDaibiao;
 @synthesize _mixPEQ;
 @synthesize _mixPEQRate;
 @synthesize _deviceId;
@@ -433,9 +434,10 @@
 }
 
 
-- (void) controlFayanPriority:(int)fayanPriority {
+- (void) controlFayanPriority:(int)fayanPriority withType:(NSString*)type {
     
     self._fayanPriority = fayanPriority;
+    self._zhuxiDaibiao = type;
     
     RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_PRIORITY"];
     if(cmd)

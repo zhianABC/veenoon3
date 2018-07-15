@@ -13,13 +13,15 @@
 #import "AudioEMixProxy.h"
 #import "KVNProgress.h"
 
-@interface UserHuiYinViewController () {
+@interface UserHuiYinViewController () <CenterCustomerPickerViewDelegate>{
     UIButton *_yuyinjiliBtn;
     UIButton *_shedingzhuxiBtn;
     UIButton *_biaozhunmoshiBtn;
     UIButton *_fayanrenshuBtn;
     
     CenterCustomerPickerView *_peoplePicker;
+    
+    NSString *_zhuxiDaibiao;
 }
 @end
 
@@ -105,7 +107,7 @@
     [self.view addSubview:_fayanrenshuBtn];
     
     _peoplePicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(0, 0, 100, 150)];
-    _peoplePicker._pickerDataArray = @[@{@"values":@[@"12",@"10",@"09"]}];
+    _peoplePicker._pickerDataArray = @[@{@"values":@[@"1",@"2",@"3",@"4",@"5"]}];
     _peoplePicker.hidden = YES;
     [_peoplePicker removeArray];
     [self.view addSubview:_peoplePicker];
@@ -113,10 +115,7 @@
     [_peoplePicker selectRow:0 inComponent:0];
     _peoplePicker._selectColor = RGB(230, 151, 50);
     _peoplePicker._rowNormalColor = SINGAL_COLOR;
-    IMP_BLOCK_SELF(UserHuiYinViewController);
-    _peoplePicker._selectionBlock = ^(NSDictionary *values) {
-        [block_self didPickerValue:values];
-    };
+    _peoplePicker.delegate_ = self;
     
     
     if(_processor._proxyObj)
@@ -178,12 +177,82 @@
 
         
     }
-
+    [self updateViewByProxy];
 }
-- (void) didPickerValue:(NSDictionary *)values{
-    if (_peoplePicker) {
+
+- (void) updateViewByProxy {
+    if (_processor && _processor._proxyObj) {
+        NSString *workMode = _processor._proxyObj._workMode;
+        if ([@"语音激励" isEqualToString:workMode]) {
+            [_yuyinjiliBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
+            [_yuyinjiliBtn setImage:[UIImage imageNamed:@"yuyinjili_s.png"] forState:UIControlStateNormal];
+            [_biaozhunmoshiBtn setImage:[UIImage imageNamed:@"biaozhunmoshi_n.png"] forState:UIControlStateNormal];
+        } else if ([@"标准模式" isEqualToString:workMode])
+        {
+            [_biaozhunmoshiBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
+            [_yuyinjiliBtn setImage:[UIImage imageNamed:@"yuyinjili_n.png"] forState:UIControlStateNormal];
+            [_biaozhunmoshiBtn setImage:[UIImage imageNamed:@"biaozhunmoshi_s.png"] forState:UIControlStateNormal];
+        } else {
+            [_yuyinjiliBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
+            [_biaozhunmoshiBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
+            
+            [_yuyinjiliBtn setImage:[UIImage imageNamed:@"yuyinjili_n.png"] forState:UIControlStateNormal];
+        }
+        
+        NSString *zhuxiDaibiao = _processor._proxyObj._zhuxiDaibiao;
+        if ([@"设定主席" isEqualToString:zhuxiDaibiao]) {
+            [_shedingzhuxiBtn setSelected:YES];
+            _shedingzhuxiBtn.alpha=1;
+            [_fayanrenshuBtn setSelected:NO];
+            _fayanrenshuBtn.alpha=0.4;
+        } else if ([@"设定人数" isEqualToString:zhuxiDaibiao])
+        {
+            [_shedingzhuxiBtn setSelected:NO];
+            _shedingzhuxiBtn.alpha=0.4;
+            [_fayanrenshuBtn setSelected:YES];
+            _fayanrenshuBtn.alpha=1;
+        } else
+        {
+            [_shedingzhuxiBtn setSelected:NO];
+            _shedingzhuxiBtn.alpha=0.4;
+            [_fayanrenshuBtn setSelected:NO];
+            _fayanrenshuBtn.alpha=0.4;
+        }
+            
+        
+        NSMutableDictionary *minMaxDic = [_processor._proxyObj getPriorityMinMax];
+        int min = [[minMaxDic objectForKey:@"min"] intValue];
+        int max = [[minMaxDic objectForKey:@"max"] intValue];
+        
+        int count = (max - min) + 1;
+        NSMutableArray *pickerArray = [NSMutableArray array];
+        for (int index = 0; index < count; index++) {
+            [pickerArray addObject:[NSString stringWithFormat:@"%d", min]];
+            
+            min++;
+        }
+        _peoplePicker._pickerDataArray = @[@{@"values":pickerArray}];
+        
+        _peoplePicker.hidden=NO;
+        
+        int priority = _processor._proxyObj._fayanPriority;
+        
+        NSString *priorityStr = [NSString stringWithFormat:@"%d", priority];
+        
+        int index = (int) [pickerArray indexOfObject:priorityStr];
+        
+        [_peoplePicker selectRow:index inComponent:0];
+    }
+}
+-(void) didScrollPickerValue:(NSString*)brand{
+if (_peoplePicker) {
         [_peoplePicker removeFromSuperview];
     }
+    
+    NSString *priorityValue = brand;
+    int priority = [priorityValue intValue];
+    
+    [_processor._proxyObj controlFayanPriority:priority withType:_zhuxiDaibiao];
 }
 - (void) fayanrenshuAction:(id)sender{
     _peoplePicker.hidden=NO;
@@ -192,6 +261,8 @@
     _shedingzhuxiBtn.alpha=0.4;
     [_fayanrenshuBtn setSelected:YES];
     _fayanrenshuBtn.alpha=1;
+    
+    _zhuxiDaibiao = @"设定代表";
 }
 - (void) shedingzhuxiAction:(id)sender{
     _peoplePicker.hidden=NO;
@@ -200,6 +271,8 @@
     _shedingzhuxiBtn.alpha=1;
     [_fayanrenshuBtn setSelected:NO];
     _fayanrenshuBtn.alpha=0.4;
+    
+    _zhuxiDaibiao = @"设定主席";
 }
 
 - (void) biaozhunmoshiAction:(id)sender{
@@ -211,6 +284,8 @@
     _fayanrenshuBtn.hidden=YES;
     
     _peoplePicker.hidden=YES;
+    
+    [_processor._proxyObj controlWorkMode:@"标准发言"];
 }
 
 - (void) yuyinjiliAction:(id)sender{
@@ -223,6 +298,8 @@
     _fayanrenshuBtn.hidden=NO;
     
     _peoplePicker.hidden=YES;
+    
+    [_processor._proxyObj controlWorkMode:@"语音激励"];
 }
 
 - (void) okAction:(id)sender{

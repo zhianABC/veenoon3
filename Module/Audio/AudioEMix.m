@@ -377,6 +377,10 @@
         //
         if(proxy._workMode)
         [allData setObject:proxy._workMode forKey:@"work_mode"];
+        
+        //
+        if(proxy._zhuxiDaibiao)
+            [allData setObject:proxy._workMode forKey:@"zhuxi_daibiao"];
     }
     
     
@@ -469,6 +473,9 @@
     
     //
     proxy._workMode = [json objectForKey:@"work_mode"];
+    
+    //
+    proxy._zhuxiDaibiao = [json objectForKey:@"zhuxi_daibiao"];
 }
 
 
