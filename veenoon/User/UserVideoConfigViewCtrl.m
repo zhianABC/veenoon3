@@ -262,12 +262,40 @@
     NSDictionary *dic = sticker._element;
     
     NSString *deviceName = [dic objectForKey:@"name"];
-    
-    if ([@"DVD播放器" isEqualToString:deviceName]
-            || [@"硬盘播放器" isEqualToString:deviceName]) {
-        UserVideoDVDDiskViewCtrl *ctrl = [[UserVideoDVDDiskViewCtrl alloc] init];
-        [self.navigationController pushViewController:ctrl animated:YES];
+    NSString *class = [dic objectForKey:@"class"];
+        
+    if(class && [class isEqualToString:@"VDVDPlayerSet"])
+    {
+        BasePlugElement * target = nil;
+        NSString *driverid = [dic objectForKey:@"driverid"];
+        
+        if(driverid)
+        {
+            for(BasePlugElement *obj in _scenario._videoDevices)
+            {
+                if(obj._driver)
+                {
+                    RgsDriverObj *driver = obj._driver;
+                    if(driver.m_id == [driverid integerValue]){
+                        target = obj;
+                        break;
+                    }
+                }
+            }
+        }
+        
+        
+        
+        if(target)
+        {
+            UserVideoDVDDiskViewCtrl *ctrl = [[UserVideoDVDDiskViewCtrl alloc] init];
+            ctrl._currentProcessor = (VDVDPlayerSet*) target;
+            [self.navigationController pushViewController:ctrl animated:YES];
+        }
+        
+        
     }
+        
     if ([@"远程视讯" isEqualToString:deviceName]) {
         UserVideoRemoteShiXunViewCtrl *ctrl = [[UserVideoRemoteShiXunViewCtrl alloc] init];
         [self.navigationController pushViewController:ctrl animated:YES];

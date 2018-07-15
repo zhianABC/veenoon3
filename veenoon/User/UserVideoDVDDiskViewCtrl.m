@@ -8,6 +8,7 @@
 
 #import "UserVideoDVDDiskViewCtrl.h"
 #import "UIButton+Color.h"
+#import "VDVDPlayerSet.h"
 
 @interface UserVideoDVDDiskViewCtrl () {
     
@@ -26,6 +27,8 @@
 @end
 
 @implementation UserVideoDVDDiskViewCtrl
+@synthesize _currentProcessor;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
