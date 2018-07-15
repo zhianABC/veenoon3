@@ -12,18 +12,35 @@
 #import "UserVideoCameraSettingsViewCtrl.h"
 #import "UserVideoRemoteShiXunViewCtrl.h"
 #import "UserVideoLuBoJiViewCtrl.h"
+#import "Scenario.h"
+#import "VVideoProcessSet.h"
+#import "VVideoProcessSetProxy.h"
+#import "RegulusSDK.h"
+#import "KVNProgress.h"
 
-@interface UserVideoConfigViewCtrl () <UserVideoConfigViewDelegate> {
+@interface UserVideoConfigViewCtrl () <UserVideoConfigViewDelegate, VVideoProcessSetProxyDelegate> {
    
+    int inputMin;
+    int inputMax;
+    
+    int outputMax;
+    int outputMin;
+    
+    
 }
 @property (nonatomic, strong) NSArray *_inputDevices;
 @property (nonatomic, strong) NSArray *_outputDevices;
+@property (nonatomic, strong) VVideoProcessSet *_curProcessor;
+@property (nonatomic, strong) VVideoProcessSetProxy *_currentProxy;
 
 @end
 
 @implementation UserVideoConfigViewCtrl
 @synthesize _inputDevices;
 @synthesize _outputDevices;
+@synthesize _scenario;
+@synthesize _curProcessor;
+@synthesize _currentProxy;
 
 
 - (void)viewDidLoad {
@@ -62,6 +79,18 @@
     forControlEvents:UIControlEventTouchUpInside];
     
    
+    
+    if([_scenario._videoDevices count])
+    {
+        for(BasePlugElement *plug in _scenario._videoDevices)
+        {
+            if([plug isKindOfClass:[VVideoProcessSet class]])
+                self._curProcessor = (VVideoProcessSet*)plug;
+        }
+    }
+    
+    [self getCurrentDeviceDriverProxys];
+    
     
     self._inputDevices = @[@{@"name":@"DVD播放器",@"image":@"user_video_dvd_n.png",
                              @"image_sel":@"user_video_dvd_s.png"},
@@ -112,6 +141,73 @@
     [uv show];
     
 }
+
+
+- (void) getCurrentDeviceDriverProxys{
+    
+    if(_curProcessor == nil)
+        return;
+    
+#ifdef OPEN_REG_LIB_DEF
+    
+    IMP_BLOCK_SELF(UserVideoConfigViewCtrl);
+    
+    RgsDriverObj *driver = _curProcessor._driver;
+    if([driver isKindOfClass:[RgsDriverObj class]])
+    {
+        [[RegulusSDK sharedRegulusSDK] GetDriverProxys:driver.m_id completion:^(BOOL result, NSArray *proxys, NSError *error) {
+            if (result) {
+                if ([proxys count]) {
+                    
+                    [block_self loadedVideoProcessorProxy:proxys];
+                    
+                }
+            }
+            else{
+                [KVNProgress showErrorWithStatus:@"中控链接断开！"];
+            }
+        }];
+    }
+#endif
+}
+
+- (void) loadedVideoProcessorProxy:(NSArray*)proxys{
+    
+    id proxy = self._curProcessor._proxyObj;
+    
+    if(proxy && [proxy isKindOfClass:[VVideoProcessSetProxy class]])
+    {
+        self._currentProxy = proxy;
+    }
+    
+    if(_currentProxy)
+    {
+        _currentProxy.delegate = self;
+        _currentProxy._rgsProxyObj = [proxys objectAtIndex:0];
+        [_currentProxy checkRgsProxyCommandLoad];
+        
+        self._curProcessor._proxyObj = _currentProxy;
+    }
+    
+}
+
+- (void) didLoadedProxyCommand {
+    
+    _currentProxy.delegate = nil;
+    
+    NSDictionary *inputSettings = [_currentProxy getVideoProcessInputSettings];
+    
+    inputMin = [[inputSettings objectForKey:@"min"] intValue];
+    inputMax = [[inputSettings objectForKey:@"max"] intValue];
+    
+    NSDictionary *outputSettings = [_currentProxy getVideoProcessOutputSettings];
+    
+    outputMin = [[outputSettings objectForKey:@"min"] intValue];
+    outputMax = [[outputSettings objectForKey:@"max"] intValue];
+    
+    //[self updateView];
+}
+
 
 - (void) didPupConfigView:(StickerLayerView*)sticker {
     NSDictionary *dic = sticker._element;

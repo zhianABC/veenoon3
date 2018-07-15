@@ -180,8 +180,7 @@
     NSInteger proxy_id = [[data objectForKey:@"proxy_id"] intValue];
     if(!_rgsProxyObj || (_rgsProxyObj && (proxy_id == _rgsProxyObj.m_id)))
     {
-        
-      
+        _isSetOK = YES;
     }
     
 }

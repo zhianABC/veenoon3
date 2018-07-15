@@ -38,6 +38,12 @@
 #import "AudioEMix.h"
 #import "AudioEMixProxy.h"
 
+#import "VTVSet.h"
+#import "VTVSetProxy.h"
+
+#import "VDVDPlayerSet.h"
+#import "VDVDPlayerProxy.h"
+
 #import "DataBase.h"
 
 @interface Scenario ()
@@ -688,6 +694,16 @@
                 
             }
             
+            NSDictionary *data = [dev objectToJson];
+            [videos addObject:data];
+        }
+        else if([dev isKindOfClass:[VTVSet class]])
+        {
+            NSDictionary *data = [dev objectToJson];
+            [videos addObject:data];
+        }
+        else if([dev isKindOfClass:[VDVDPlayerSet class]])
+        {
             NSDictionary *data = [dev objectToJson];
             [videos addObject:data];
         }
