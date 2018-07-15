@@ -170,9 +170,9 @@
 - (BOOL) testIsInDevice
 {
     
-    NSNumber *number = [_data objectForKey:@"id"];
+    NSNumber *number = [_data objectForKey:@"input_output"];
     int numberInt = [number intValue];
-    if (301 <= numberInt && numberInt <= 305) {
+    if (numberInt == 1) {
         
         return YES;
     }

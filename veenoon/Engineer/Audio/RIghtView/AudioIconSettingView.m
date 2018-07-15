@@ -11,6 +11,10 @@
 #import "ComSettingView.h"
 #import "RgsDriverObj.h"
 #import "APowerESet.h"
+#import "AudioEMix.h"
+#import "AudioEHand2Hand.h"
+#import "AudioEWirlessMike.h"
+#import "AudioEWirlessMeetingSys.h"
 
 @interface AudioIconSettingView () <UITableViewDelegate,
 UITableViewDataSource,AudioIconSettingViewDelegate, EPlusLayerViewDelegate> {
@@ -50,9 +54,14 @@ UITableViewDataSource,AudioIconSettingViewDelegate, EPlusLayerViewDelegate> {
     int itemID = 304;
     
     for (BasePlugElement *basePlugin in _currentAudioDevices) {
+        
         NSString *name = basePlugin._name;
-        if ([name isEqualToString:audio_mixer_name] || [name isEqualToString:@"无线话筒"]
-            || [name isEqualToString:@"手拉手会议"] || [name isEqualToString:@"无线会议"]) {
+        
+        if([basePlugin isKindOfClass:[AudioEMix class]] ||
+           [basePlugin isKindOfClass:[AudioEHand2Hand class]] ||
+           [basePlugin isKindOfClass:[AudioEWirlessMike class]] ||
+           [basePlugin isKindOfClass:[AudioEWirlessMeetingSys class]])
+        {
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
             
             [dic setObject:[NSString stringWithFormat:@"%d", itemID] forKey:@"id"];

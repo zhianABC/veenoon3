@@ -11,6 +11,13 @@
 #import "UIButton+Color.h"
 #import "VVideoProcessSet.h"
 #import "RgsDriverObj.h"
+#import "VDVDPlayerSet.h"
+#import "VTVSet.h"
+#import "VCameraSettingSet.h"
+#import "VRemoteVideoSet.h"
+#import "VTouyingjiSet.h"
+#import "VLuBoJiSet.h"
+#import "VPinJieSet.h"
 
 @interface VideoProcessRightView () <UITableViewDelegate,
 UITableViewDataSource,
@@ -80,10 +87,10 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
             [dataDic setObject:className forKey:@"class"];
         }
         
-        if ([baseName hasPrefix:@"DVD-"]) {
+        if ([basePlugin isKindOfClass:[VDVDPlayerSet class]]) {
             [dataDic setObject:@"videop_dvd_w.png" forKey:@"icon"];
             [dataDic setObject:@"videop_dvd_y.png" forKey:@"icon_sel"];
-        } else if([baseName isEqualToString:@"摄像机"])
+        } else if([basePlugin isKindOfClass:[VCameraSettingSet class]])
         {
             [dataDic setObject:@"videop_camera_w.png" forKey:@"icon"];
             [dataDic setObject:@"videop_camera_y.png" forKey:@"icon_sel"];
@@ -91,7 +98,7 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
         {
             [dataDic setObject:@"videop_xinxihe_w.png" forKey:@"icon"];
             [dataDic setObject:@"videop_xinxihe_y.png" forKey:@"icon_sel"];
-        } else if([baseName isEqualToString:@"远程视讯"])
+        } else if([basePlugin isKindOfClass:[VRemoteVideoSet class]])
         {
             [dataDic setObject:@"videop_remotevideo_w.png" forKey:@"icon"];
             [dataDic setObject:@"videop_remotevideo_y.png" forKey:@"icon_sel"];
@@ -128,22 +135,22 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
         }
         
         
-        if ([baseName isEqualToString:@"远程视讯"]) {
+        if ([basePlugin isKindOfClass:[VRemoteVideoSet class]]) {
             [dataDic setObject:@"videop_remotevideo_w.png" forKey:@"icon"];
             [dataDic setObject:@"videop_remotevideo_y.png" forKey:@"icon_sel"];
-        } else if([baseName isEqualToString:@"拼接屏"])
+        } else if([basePlugin isKindOfClass:[VPinJieSet class]])
         {
             [dataDic setObject:@"videop_screen_w.png" forKey:@"icon"];
             [dataDic setObject:@"videop_screen_y.png" forKey:@"icon_sel"];
-        } else if([baseName hasPrefix:@"TV-"])
+        } else if([basePlugin isKindOfClass:[VTVSet class]])
         {
             [dataDic setObject:@"videop_tv_w.png" forKey:@"icon"];
             [dataDic setObject:@"videop_tv_y.png" forKey:@"icon_sel"];
-        } else if([baseName isEqualToString:@"录播机"])
+        } else if([basePlugin isKindOfClass:[VLuBoJiSet class]])
         {
             [dataDic setObject:@"videop_player_w.png" forKey:@"icon"];
             [dataDic setObject:@"videop_player_y.png" forKey:@"icon_sel"];
-        } else if([baseName isEqualToString:@"投影机"])
+        } else if([basePlugin isKindOfClass:[VTouyingjiSet class]])
         {
             [dataDic setObject:@"videop_tscreen_w.png" forKey:@"icon"];
             [dataDic setObject:@"videop_tscreen_y.png" forKey:@"icon_sel"];
