@@ -11,8 +11,9 @@
 #import "Scenario.h"
 #import "AirConditionPlug.h"
 #import "RegulusSDK.h"
+#import "AirConditionPlug.h"
 
-@interface UserAirConditionViewCtrl () {
+@interface UserAirConditionViewCtrl () <MapMarkerLayerDelegate>{
     NSMutableArray *_conditionRoomList;
     NSMutableArray *_conditionBtnList;
     MapMarkerLayer *markerLayer;
@@ -23,6 +24,8 @@
     UIButton *aireFireBtn;
     
     UILabel *wenduL;
+    
+    AirConditionPlug *_currentSelected;
 }
 @property (nonatomic, strong) NSMutableArray *_conditionRoomList;
 @end
@@ -34,6 +37,7 @@
 
 - (void) initData {
     
+    _currentSelected = nil;
     
     self._conditionRoomList = [NSMutableArray array];
     
@@ -238,7 +242,7 @@
     [markerLayer addSubview:minusLabel];
     
     [self.view addSubview:markerLayer];
-    markerLayer.delegate_ = self;
+    markerLayer.delegate_=self;
     
     aireWindBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
     aireWindBtn.frame = CGRectMake(btnLeftRight+rowGap2*2 +80*2, SCREEN_HEIGHT-400, 80, 80);
@@ -290,23 +294,28 @@
     markerLayer.isSelected = 0;
     [markerLayer setNeedsDisplay];
 }
+
 - (void) airFireAction:(id)sender{
     [aireFireBtn setSelected:YES];
     [aireWindBtn setSelected:NO];
     [zhireBtn setSelected:NO];
     [zhilengBtn setSelected:NO];
+    
+    
 }
 - (void) airWindAction:(id)sender{
     [aireFireBtn setSelected:NO];
     [aireWindBtn setSelected:YES];
     [zhireBtn setSelected:NO];
     [zhilengBtn setSelected:NO];
+    
 }
 - (void) zhireAction:(id)sender{
     [aireFireBtn setSelected:NO];
     [aireWindBtn setSelected:NO];
     [zhireBtn setSelected:YES];
     [zhilengBtn setSelected:NO];
+    
 }
 - (void) zhilengAction:(id)sender{
     [aireFireBtn setSelected:NO];
@@ -314,9 +323,8 @@
     [zhireBtn setSelected:NO];
     [zhilengBtn setSelected:YES];
 }
-- (void) airConditionAction:(id)sender{
-    UIButton *selectBtn = (UIButton*) sender;
-    int selectTag = selectBtn.tag;
+- (void) airConditionAction:(UIButton*)sender {
+    int selectTag = (int) sender.tag;
     
     for (UIButton *btn in _conditionBtnList) {
         if (btn.tag == selectTag) {
@@ -327,6 +335,8 @@
             [btn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
         }
     }
+    
+    _currentSelected = [self._conditionRoomList objectAtIndex:selectTag];
 }
 
 - (void) okAction:(id)sender{

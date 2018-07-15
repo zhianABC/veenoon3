@@ -7,6 +7,7 @@
 //
 
 #import "BasePlugElement.h"
+#import "AirConditionProxy.h"
 
 @interface AirConditionPlug : BasePlugElement
 {
@@ -16,7 +17,7 @@
 @property (nonatomic, strong) id _IRDriver;
 
 //<VDVDPlayerProxy>
-@property (nonatomic, strong) id _proxyObj;
+@property (nonatomic, strong) AirConditionProxy *_proxyObj;
 
 //<RgsConnectionObj>
 @property (nonatomic, strong) NSArray *_localSavedProxys;
