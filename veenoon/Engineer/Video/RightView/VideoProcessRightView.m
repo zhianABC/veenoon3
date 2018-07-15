@@ -79,6 +79,7 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
         NSString *deviceID = [NSString stringWithFormat:@"%d", (int)
                               ((RgsDriverObj*)(basePlugin._driver)).m_id];
         [dataDic setObject:deviceID forKey:@"type"];
+        [dataDic setObject:deviceID forKey:@"driverid"];
         
         [dataDic setObject:@"1" forKey:@"input_output"];
         
@@ -126,6 +127,7 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
         NSString *deviceID = [NSString stringWithFormat:@"%d", (int)
                               ((RgsDriverObj*)(basePlugin._driver)).m_id];
         [dataDic setObject:deviceID forKey:@"type"];
+        [dataDic setObject:deviceID forKey:@"driverid"];
         
         [dataDic setObject:@"2" forKey:@"input_output"];
         
