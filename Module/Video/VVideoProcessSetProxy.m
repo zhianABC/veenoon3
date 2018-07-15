@@ -32,6 +32,9 @@
 @synthesize _deviceMatcherDic;
 @synthesize _RgsSceneDeviceOperationShadow;
 
+@synthesize _inputDevices;
+@synthesize _outputDevices;
+
 - (id) init
 {
     if(self = [super init])
@@ -39,6 +42,9 @@
         
         self._deviceMatcherDic = [NSMutableDictionary dictionary];
         self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionary];
+        
+        self._outputDevices =  [NSMutableDictionary dictionary];
+        self._inputDevices =  [NSMutableDictionary dictionary];
     }
     
     return self;
@@ -175,28 +181,38 @@
     if(!_rgsProxyObj || (_rgsProxyObj && (proxy_id == _rgsProxyObj.m_id)))
     {
         
+      
     }
     
 }
 
-- (void) controlDeviceAdd:(NSString*)inputName withOutDevice:(NSString*)outputName {
+- (void) controlDeviceAdd:(NSDictionary*)inputDev
+            withOutDevice:(NSDictionary*)outputDev {
     
-    NSMutableArray *outPutArray = [_deviceMatcherDic objectForKey:inputName];
+    
+    NSString *inName = [inputDev objectForKey:@"ctrl_val"];
+    NSString *outName = [outputDev objectForKey:@"ctrl_val"];
+    
+    [self._inputDevices setObject:inputDev forKey:inName];
+    [self._outputDevices setObject:outputDev forKey:outName];
+    
+    NSMutableArray *outPutArray = [self._deviceMatcherDic objectForKey:inName];
     if (outPutArray) {
-        if (![outPutArray containsObject:outputName]) {
-            [outPutArray addObject:outputName];
+        if (![outPutArray containsObject:outName]) {
+            [outPutArray addObject:outName];
         }
     } else {
         outPutArray = [NSMutableArray array];
-        [_deviceMatcherDic setObject:outPutArray forKey:inputName];
+        [self._deviceMatcherDic setObject:outPutArray forKey:inName];
         
-        [outPutArray addObject:outputName];
+        [outPutArray addObject:outName];
     }
     
-    [self sendAddDviceToCenter:inputName withOutDevice:outputName];
+    [self sendAddDviceToCenter:inName withOutDevice:outName];
 }
 
-- (void) sendAddDviceToCenter:(NSString*)inputName withOutDevice:(NSString*)outputName {
+- (void) sendAddDviceToCenter:(NSString*)inputName
+                withOutDevice:(NSString*)outputName {
     
     RgsCommandInfo *cmd = nil;
     cmd = [_cmdMap objectForKey:@"SET_P2P"];
@@ -234,9 +250,9 @@
 - (NSArray* ) generateEventOperation_p2p{
     
     NSMutableArray *results = [NSMutableArray array];
-    for(NSString* inSrc in [_deviceMatcherDic allKeys])
+    for(NSString* inSrc in [self._deviceMatcherDic allKeys])
     {
-        NSArray *outSrcs = [_deviceMatcherDic objectForKey:inSrc];
+        NSArray *outSrcs = [self._deviceMatcherDic objectForKey:inSrc];
         
         for(NSString *outSrc in outSrcs)
         {
@@ -274,7 +290,7 @@
             }
         }
     
-        int proxyid = _rgsProxyObj.m_id;
+        int proxyid = (int)_rgsProxyObj.m_id;
         
         RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc] init];
         scene_opt.dev_id = proxyid;

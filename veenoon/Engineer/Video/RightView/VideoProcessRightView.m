@@ -67,8 +67,16 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
         [dataDic setObject:[NSString stringWithFormat:@"%d", itemID] forKey:@"id"];
         
         [dataDic setObject:baseName forKey:@"name"];
-        NSString *deviceID = [NSString stringWithFormat:@"%ld", ((RgsDriverObj*)(basePlugin._driver)).m_id];
-        [dataDic setObject:deviceID forKey:@"type"];
+        
+        
+        NSString *deviceID = [NSString stringWithFormat:@"%d", (int)
+                              ((RgsDriverObj*)(basePlugin._driver)).m_id];
+        [dataDic setObject:deviceID forKey:@"driverid"];
+        
+        if(basePlugin){
+            NSString *className  = NSStringFromClass([basePlugin class]);
+            [dataDic setObject:className forKey:@"class"];
+        }
         
         if ([baseName hasPrefix:@"DVD-"]) {
             [dataDic setObject:@"videop_dvd_w.png" forKey:@"icon"];
@@ -105,8 +113,16 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
         [dataDic setObject:[NSString stringWithFormat:@"%d", itemID] forKey:@"id"];
         
         [dataDic setObject:baseName forKey:@"name"];
-        NSString *deviceID = [NSString stringWithFormat:@"%ld", ((RgsDriverObj*)(basePlugin._driver)).m_id];
-        [dataDic setObject:deviceID forKey:@"type"];
+        
+        NSString *deviceID = [NSString stringWithFormat:@"%d", (int)
+                              ((RgsDriverObj*)(basePlugin._driver)).m_id];
+        [dataDic setObject:deviceID forKey:@"driverid"];
+        
+        if(basePlugin){
+            NSString *className  = NSStringFromClass([basePlugin class]);
+            [dataDic setObject:className forKey:@"class"];
+        }
+        
         
         if ([baseName isEqualToString:@"远程视讯"]) {
             [dataDic setObject:@"videop_remotevideo_w.png" forKey:@"icon"];

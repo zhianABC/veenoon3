@@ -450,7 +450,17 @@
     NSString *inputDeviceName = _inputSelected._textLabel.text;
     NSString *outputDeviceName = _outPutSelected._textLabel.text;
     
-    [_currentProxy controlDeviceAdd:inputDeviceName withOutDevice:outputDeviceName];
+    //把选择的插件数据传递过去
+    NSDictionary *data = [_inputSelected getMyData];
+    NSMutableDictionary *src = [NSMutableDictionary dictionaryWithDictionary:data];
+    [src setObject:inputDeviceName forKey:@"ctrl_val"];
+    
+    data = [_outPutSelected getMyData];
+    NSMutableDictionary *res = [NSMutableDictionary dictionaryWithDictionary:data];
+    [res setObject:outputDeviceName forKey:@"ctrl_val"];
+    
+    [_currentProxy controlDeviceAdd:src
+                      withOutDevice:res];
 }
 
 - (void) controlRemoveOutDevice {

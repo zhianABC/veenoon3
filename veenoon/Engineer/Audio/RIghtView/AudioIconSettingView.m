@@ -58,8 +58,14 @@ UITableViewDataSource,AudioIconSettingViewDelegate, EPlusLayerViewDelegate> {
             [dic setObject:[NSString stringWithFormat:@"%d", itemID] forKey:@"id"];
             
             [dic setObject:name forKey:@"name"];
-            NSString *deviceID = [NSString stringWithFormat:@"%ld", ((RgsDriverObj*)(basePlugin._driver)).m_id];
-            [dic setObject:deviceID forKey:@"type"];
+            NSString *deviceID = [NSString stringWithFormat:@"%d", (int)
+                                  ((RgsDriverObj*)(basePlugin._driver)).m_id];
+            [dic setObject:deviceID forKey:@"driverid"];
+            
+            if(basePlugin){
+                NSString *className  = NSStringFromClass([basePlugin class]);
+                [dic setObject:className forKey:@"class"];
+            }
             
             //set dic
             [self setDicIcon:name withDic:dic];
