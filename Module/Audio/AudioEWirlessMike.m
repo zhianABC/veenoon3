@@ -140,6 +140,10 @@
     
     NSMutableDictionary *allData = [NSMutableDictionary dictionary];
     
+    if (self._name) {
+        [allData setObject:self._name forKey:@"name"];
+    }
+    
     if(self._brand)
         [allData setObject:self._brand forKey:@"brand"];
     
