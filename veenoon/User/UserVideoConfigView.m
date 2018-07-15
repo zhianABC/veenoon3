@@ -131,14 +131,19 @@
         else
         {
 
+            
             [_result removeObjectForKey:[outData objectForKey:@"ctrl_val"]];
             [output setTopIconImage:nil];
             
-            if(delegate_ && [delegate_ respondsToSelector:@selector(didControlInOutState:outSrc:linked:)])
-            {
-                [delegate_ didControlInOutState:inputD
-                                         outSrc:outData
-                                         linked:NO];
+            if(_curSelectInput){
+                NSDictionary* inputD = _curSelectInput._element;
+                
+                if(delegate_ && [delegate_ respondsToSelector:@selector(didControlInOutState:outSrc:linked:)])
+                {
+                    [delegate_ didControlInOutState:inputD
+                                             outSrc:outData
+                                             linked:NO];
+                }
             }
             
         }
