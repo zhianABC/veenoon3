@@ -178,6 +178,10 @@
     [allData setValue:[NSString stringWithFormat:@"%@", [self class]] forKey:@"class"];
     
     //基本信息
+    if (self._name) {
+        [allData setObject:self._name forKey:@"name"];
+    }
+    
     if(self._brand)
         [allData setObject:self._brand forKey:@"brand"];
     
@@ -249,6 +253,7 @@
 - (void) jsonToObject:(NSDictionary*)json{
     
     //基本信息
+    
     if([json objectForKey:@"brand"])
         self._brand = [json objectForKey:@"brand"];
     
