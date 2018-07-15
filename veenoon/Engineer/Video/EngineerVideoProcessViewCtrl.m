@@ -577,9 +577,9 @@
     
     if(viewPoint.x < CGRectGetMinX(_rightView.frame)  - 20)
     {
-        NSNumber *number = [data objectForKey:@"id"];
+        NSNumber *number = [data objectForKey:@"input_output"];
         int numberInt = [number intValue];
-        if (301 <= numberInt && numberInt <= 305) {
+        if (numberInt == 1) {
             
             CGPoint rpt = [self.view convertPoint:viewPoint toView:scroolViewIn];
             for(TwoIconAndTitleView * ti in _inPutBtnArray)
