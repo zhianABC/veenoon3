@@ -336,17 +336,20 @@
         AudioEMixProxy *proxy = _proxyObj;
         
         //proxy id
-        [allData setObject:[NSString stringWithFormat:@"%d",proxy._deviceId] forKey:@"device_id"];
+        [allData setObject:[NSString stringWithFormat:@"%d",(int)proxy._deviceId]
+                    forKey:@"device_id"];
         
         // volumn
-        [allData setObject:[NSString stringWithFormat:@"%f",proxy._deviceVol] forKey:@"device_vol"];
+        [allData setObject:[NSString stringWithFormat:@"%f",proxy._deviceVol]
+                    forKey:@"device_vol"];
         
         //摄像协议
         if(proxy._currentCameraPol)
         [allData setObject:proxy._currentCameraPol forKey:@"camera_pol"];
         
         //
-        [allData setObject:[NSString stringWithFormat:@"%d",proxy._fayanPriority] forKey:@"fayan_priority"];
+        [allData setObject:[NSString stringWithFormat:@"%d",proxy._fayanPriority]
+                    forKey:@"fayan_priority"];
         //
         if(proxy._mixHighFilter)
         [allData setObject:proxy._mixHighFilter forKey:@"mix_high_filter"];

@@ -10,6 +10,8 @@
 #import "UIButton+Color.h"
 #import "RegulusSDK.h"
 #import "AudioEMix.h"
+#import "AudioEMixProxy.h"
+#import "KVNProgress.h"
 
 @interface UserHuiYinViewController () {
     UIButton *_yuyinjiliBtn;
@@ -115,6 +117,68 @@
     _peoplePicker._selectionBlock = ^(NSDictionary *values) {
         [block_self didPickerValue:values];
     };
+    
+    
+    if(_processor._proxyObj)
+    {
+        [self getCurrentDeviceDriverProxys];
+    }
+    
+    
+}
+
+- (void) getCurrentDeviceDriverProxys{
+    
+    if(_processor == nil)
+        return;
+    
+#ifdef OPEN_REG_LIB_DEF
+    
+    IMP_BLOCK_SELF(UserHuiYinViewController);
+    
+    RgsDriverObj *driver = _processor._driver;
+    if([driver isKindOfClass:[RgsDriverObj class]])
+    {
+        /*混音会议 - 没有Proxy，直接访问Commands*/
+        
+        [[RegulusSDK sharedRegulusSDK] GetDriverCommands:driver.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
+            if (result) {
+                if ([commands count]) {
+                    [block_self loadedHunyinCommands:commands];
+                }
+            }
+            else{
+                [KVNProgress showErrorWithStatus:@"中控链接断开！"];
+            }
+        }];
+    }
+#endif
+}
+
+
+- (void) loadedHunyinCommands:(NSArray*)cmds{
+    
+    RgsDriverObj *driver = _processor._driver;
+    
+    id proxy = self._processor._proxyObj;
+    
+    AudioEMixProxy *vpro = nil;
+    if(proxy && [proxy isKindOfClass:[AudioEMixProxy class]])
+    {
+        vpro = proxy;
+        
+        vpro._deviceId = driver.m_id;
+        [vpro checkRgsProxyCommandLoad:cmds];
+        
+        if([_processor._localSavedCommands count])
+        {
+            NSDictionary *local = [_processor._localSavedCommands objectAtIndex:0];
+            [vpro recoverWithDictionary:local];
+        }
+
+        
+    }
+
 }
 - (void) didPickerValue:(NSDictionary *)values{
     if (_peoplePicker) {
