@@ -141,7 +141,7 @@
     _zengyiSlider.topEdge = 90;
     _zengyiSlider.bottomEdge = 79;
     _zengyiSlider.maxValue = maxAnalogyGain;
-    _zengyiSlider.minValue = -minAnalogyGain;
+    _zengyiSlider.minValue = minAnalogyGain;
     _zengyiSlider.delegate = self;
     [_zengyiSlider resetScale];
     _zengyiSlider.center = CGPointMake(SCREEN_WIDTH - 110, SCREEN_HEIGHT/2+50);
@@ -297,9 +297,13 @@
                 float min = [[dic objectForKey:@"min"] floatValue];
                 if(max - min > 0)
                 {
-                float p = fabs(([proxy getAnalogyGain]+min)/(max-min));
-                [sbtn setCircleValue:p];
+                    float p = fabs(([proxy getAnalogyGain] - min)/(max-min));
+                    [sbtn setCircleValue:p];
                 }
+                
+                BOOL isMute = [proxy isProxyMute];
+                [sbtn muteSlider:isMute];
+                
             }
         }
     }
