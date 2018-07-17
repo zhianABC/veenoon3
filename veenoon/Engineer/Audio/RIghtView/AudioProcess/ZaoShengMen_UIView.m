@@ -49,14 +49,12 @@
 
 - (id)initWithFrameProxys:(CGRect)frame withProxys:(NSArray*) proxys
 {
-    self._proxys = proxys;
-    
     if(self = [super initWithFrame:frame])
     {
-        if (self._curProxy == nil) {
-            if (self._proxys) {
-                self._curProxy = [self._proxys objectAtIndex:0];
-            }
+        self._proxys = proxys;
+        
+        if ([self._proxys count]) {
+            self._curProxy = [self._proxys objectAtIndex:0];
         }
         
         channelBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];

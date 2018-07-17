@@ -51,7 +51,7 @@
 {
     if(self = [super initWithFrame:frame])
     {
-        _currentObj = audioMix;
+        self._currentObj = audioMix;
         
         channelBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
         channelBtn.frame = CGRectMake(0, 50, 70, 36);

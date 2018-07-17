@@ -66,14 +66,12 @@
 
 - (id)initWithFrameProxy:(CGRect)frame withAudio:(AudioEProcessor*) audioProcessor withProxy:(AudioEProcessorSignalProxy*) proxy {
     
-    self._currentAudio = audioProcessor;
-    
-    self._currentSignalProxy = proxy;
-    
-    
     if(self = [super initWithFrame:frame])
     {
-//        contentView.frame  = CGRectMake(0, 90, frame.size.width, 340);
+    
+        self._currentAudio = audioProcessor;
+        self._currentSignalProxy = proxy;
+        
         
         outputChanels = [NSMutableArray array];
         
@@ -342,14 +340,14 @@
     int tag = (int) slbtn.tag;
     if (tag == 2) {
         float k = roundf((value *(maxZengyi-minZengyi)) + minZengyi);
-        NSString *valueStr= [NSString stringWithFormat:@"%.f ms", k];
+        NSString *valueStr= [NSString stringWithFormat:@"%.f dB", k];
         
         zengyiL.text = valueStr;
         
         [_currentSignalProxy controlXinhaofashengZengYi:[NSString stringWithFormat:@"%.f", k]];
     } else {
         float k = roundf((value *(maxRate-minRate)) + minRate);
-        NSString *valueStr= [NSString stringWithFormat:@"%.f ms", k];
+        NSString *valueStr= [NSString stringWithFormat:@"%.f Hz", k];
         
         zhengxuanboL.text = valueStr;
         

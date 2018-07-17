@@ -251,6 +251,8 @@
     yaxianView.hidden = YES;
     lvbojunhengView.hidden = YES;
     dianpingView.hidden = NO;
+    
+    [dianpingView updateProxyCommandValIsLoaded];
 }
 - (void) xinhaofashengqiAction:(id)sender{
     

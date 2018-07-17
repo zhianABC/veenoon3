@@ -40,10 +40,11 @@
 
 - (id)initWithFrameProxy:(CGRect)frame withAudio:(AudioEProcessor*) audioProcessor withProxy:(AudioEProcessorAutoMixProxy*) proxy
 {
-    self._currentProxy = proxy;
-    self._currentAodio = audioProcessor;
-    
     if(self = [super initWithFrame:frame]) {
+        
+        self._currentProxy = proxy;
+        self._currentAodio = audioProcessor;
+        
         inputChanels = [NSMutableArray array];
         outputChanels = [NSMutableArray array];
         

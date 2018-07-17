@@ -378,8 +378,6 @@
             if(arr == nil){
                 
                 arr = [NSMutableArray array];
-                outproxy._setMixSrc = arr;
-                
                 [_outpus setObject:arr forKey:okey];
             }
            

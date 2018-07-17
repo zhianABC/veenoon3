@@ -132,6 +132,8 @@
         
         self._yanshiqiSlide = @"0.00";
         
+        
+        
         _isyaxianStart = YES;
         self._yaxianFazhi = @"0";
         self._yaxianXielv = @"2";
@@ -506,6 +508,28 @@
     }
 }
 
+- (NSDictionary*)getAnalogyGainRange{
+    
+    NSMutableDictionary *result = [NSMutableDictionary dictionary];
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_ANALOGY_GRAIN"];
+    if(cmd)
+    {
+        for( RgsCommandParamInfo * param_info in cmd.params)
+        {
+            if([param_info.name isEqualToString:@"AG"])
+            {
+                if(param_info.max)
+                    [result setObject:param_info.max forKey:@"max"];
+                if(param_info.min)
+                    [result setObject:param_info.min forKey:@"min"];
+            }
+        }
+    }
+    
+    return result;
+}
 
 //SET_ANALOGY_GRAIN
 - (void) controlDeviceDb:(float)db force:(BOOL)force{

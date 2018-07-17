@@ -67,6 +67,8 @@
         self._currentCameraPol = @"VISCA";
         self._workMode = @"Speak";
         
+        self._fayanPriority = 1;
+        
         self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionary];
         _cameraPol = [NSMutableArray array];
     }
