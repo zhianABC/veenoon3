@@ -638,7 +638,7 @@
     } else if (tag == 4) {
         
         float k = (value *(maxGain - minGain)) + minGain;
-        NSString *valueStr= [NSString stringWithFormat:@"%0.1f db", k];
+        NSString *valueStr= [NSString stringWithFormat:@"%0.1f dB", k];
         
         boduanZengyiL.text = valueStr;
         

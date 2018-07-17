@@ -10,6 +10,8 @@
 #import "UserMeetingRoomConfig.h"
 #import "JCActionView.h"
 #import "AppDelegate.h"
+#import "DataBase.h"
+#import "Utilities.h"
 
 @interface UserHomeViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, JCActionViewDelegate>{
     NSMutableArray *lableArray;
@@ -34,6 +36,9 @@
     roomImageArray = [[NSMutableArray alloc] init];
     selectedRoomIndex = -1;
     
+    self.roomList = [[DataBase sharedDatabaseInstance] getMeetingRooms];
+
+    /*
     if (roomList) {
         [roomList removeAllObjects];
     } else {
@@ -63,6 +68,7 @@
                                      nil];
         self.roomList = [NSMutableArray arrayWithObjects:dic1, dic2, dic3, dic4, dic5, dic6, nil];
     }
+    */
     
     UIScrollView *scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     scroolView.backgroundColor = RGB(63, 58, 55);
@@ -86,8 +92,22 @@
         roomeImageBGView.frame = CGRectMake(startX-21, startY-21, 354, 228);
         [scroolView addSubview:roomeImageBGView];
         
-        UIImage *roomImage = [dic objectForKey:@"image"];
-        UIImageView *roomeImageView = [[UIImageView alloc] initWithImage:roomImage];
+        
+        NSString *roomImgName = [dic objectForKey:@"image"];
+        UIImage *img = nil;
+        int roomid = [[dic objectForKey:@"room_id"] intValue];
+        if([roomImgName length] == 0)
+        {
+            int r = roomid%6;
+            NSString *name = [NSString stringWithFormat:@"user_meeting_room_%d.png", r];
+            img = [UIImage imageNamed:name];
+        }
+        else
+        {
+            NSString *path = [Utilities documentsPath:roomImgName];
+            img = [UIImage imageWithContentsOfFile:path];
+        }
+        UIImageView *roomeImageView = [[UIImageView alloc] initWithImage:img];
         roomeImageView.userInteractionEnabled=YES;
         roomeImageView.contentMode = UIViewContentModeScaleAspectFill;
         roomeImageView.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
@@ -127,12 +147,12 @@
         [view addGestureRecognizer:tapGesture];
         
         
-        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(roomeImageView.frame)-30, 200, 30)];
+        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(5, CGRectGetHeight(roomeImageView.frame)-30, 200, 30)];
         titleL.backgroundColor = [UIColor clearColor];
         [roomeImageView addSubview:titleL];
         titleL.font = [UIFont boldSystemFontOfSize:16];
         titleL.textColor  = [UIColor whiteColor];
-        titleL.text = [dic objectForKey:@"roomname"];
+        titleL.text = [dic objectForKey:@"name"];
         
         [lableArray addObject:titleL];
         
@@ -179,6 +199,8 @@
                 
                 [meetingDic setObject:scenarioName forKey:@"roomname"];
                 scenarioLabel.text =scenarioName;
+                
+                [[DataBase sharedDatabaseInstance] saveMeetingRoom:meetingDic];
             }
         }]];
         
@@ -198,7 +220,6 @@
     
     UserMeetingRoomConfig *lctrl = [[UserMeetingRoomConfig alloc] init];
     lctrl.meetingRoomDic = dic;
-    
     [self.navigationController pushViewController:lctrl animated:YES];
 }
 
@@ -276,8 +297,7 @@
 
                 ///////图从这儿穿出去
                 
-                NSMutableDictionary *roomDic = [self.roomList objectAtIndex:selectedRoomIndex];
-                [roomDic setObject:img forKey:@"image"];
+                [self cacheCurrentRoomImage:img];
                 
             });
         });
@@ -285,6 +305,25 @@
     
     
     [_imagePicker dismissViewControllerAnimated:YES completion:NULL];
+}
+
+
+- (void) cacheCurrentRoomImage:(UIImage *)img{
+    
+    NSMutableDictionary *roomDic = [self.roomList objectAtIndex:selectedRoomIndex];
+    
+    int time = [[NSDate date] timeIntervalSince1970];
+    NSString *name = [NSString stringWithFormat:@"%d_%d.jpg", time, rand()%10];
+    
+    NSString *path = [Utilities documentsPath:name];
+    
+    NSData *data = UIImageJPEGRepresentation(img, 1);
+    
+    [data writeToFile:path atomically:YES];
+    
+    [roomDic setObject:name forKey:@"image"];
+    
+    [[DataBase sharedDatabaseInstance] saveMeetingRoom:roomDic];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker

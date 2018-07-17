@@ -116,7 +116,7 @@
     }
     
     if (zengyiDB) {
-        fazhiL.text = [zengyiDB stringByAppendingString:@" db"];
+        fazhiL.text = [zengyiDB stringByAppendingString:@" dB"];
     }
     
     NSString *startTime = [_curProxy getZaoshengStartTime];

@@ -139,8 +139,9 @@
     
     if(_scenario == nil)
     {
+        NSDictionary *room = [DataCenter defaultDataCenter]._roomData;
         self._scenario = [[Scenario alloc] init];
-        self._scenario.room_id = 1;
+        self._scenario.room_id = [[room objectForKey:@"room_id"] intValue];
         
         _isEditingScenario = NO;
         
@@ -655,7 +656,6 @@
         else
         {
             EngineerScenarioSettingsViewCtrl *ctrl = [[EngineerScenarioSettingsViewCtrl alloc] init];
-            ctrl._room_id = 1;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
 

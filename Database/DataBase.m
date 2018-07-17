@@ -72,6 +72,7 @@ static DataBase* sharedInstance = nil;
 	self.databasePath_ = dbPath;
 	if(sqlite3_open([dbPath UTF8String], &database_)== SQLITE_OK)
 	{
+        [self checkMeetingRoomCachedTable];
         [self checkCachedTable];
         
 		return 1;
@@ -106,6 +107,231 @@ static DataBase* sharedInstance = nil;
 }
 
 - (void)dealloc{
+    
+}
+
+
+#pragma mark ----Cached Meeting-------
+- (void) checkMeetingRoomCachedTable{
+    
+    NSString *s = @"SELECT * FROM sqlite_master WHERE type='table' AND name='tblMeetingRoomCachedTable'";
+    
+    const char *sqlStatement = [s UTF8String];
+    sqlite3_stmt *statement;
+    
+    int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
+    if (success != SQLITE_OK) {
+        NSLog(@"Error: failed to tblMeetingRoomCachedTable");
+        return;
+    }
+    
+    BOOL have = NO;
+    while (sqlite3_step(statement) == SQLITE_ROW) {
+        
+        have = YES;
+    }
+    sqlite3_finalize(statement);
+    
+    if(!have)
+    {
+        s = @"CREATE TABLE tblMeetingRoomCachedTable(id INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL  UNIQUE, regulus_id TEXT, password TEXT, name TEXT, image TEXT, user_id TEXT)";
+        
+        const char * sql = [s UTF8String];
+        sqlite3_stmt *delete_statement = nil;
+        
+        if (sqlite3_prepare_v2(database_, sql, -1, &delete_statement, NULL) != SQLITE_OK) {
+            NSLog(@"Not Prepared DataBase! -- tblMeetingRoomCachedTable");
+        }
+        
+        sqlite3_step(delete_statement);
+        sqlite3_finalize(delete_statement);
+    }
+}
+
+- (int) saveMeetingRoom:(NSDictionary*)room{
+    
+    @synchronized (self) {
+        
+        NSString *regulus_id = [room objectForKey:@"regulus_id"];
+        if(regulus_id == nil)
+            return -1;
+        int b = [self isMeetingRoomExist:regulus_id];
+        if(b)
+        {
+            [self updateMeetingRoom:room];
+            return b;
+        }
+        
+        const char *sqlStatement = "insert into tblMeetingRoomCachedTable (regulus_id, password, name, image, user_id) VALUES (?,?,?,?,?)";
+        sqlite3_stmt *statement;
+        
+        int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
+        if (success != SQLITE_OK) {
+            NSLog(@"Error: failed to insert: tblCachedScenario");
+            return -1;
+        }
+        
+        NSString *password = [room objectForKey:@"password"];
+        if(password == nil)
+            password = @"";
+        
+        NSString *name = [room objectForKey:@"name"];
+        if(name == nil)
+            name = @"";
+        NSString *small_icon = [room objectForKey:@"image"];
+        if(small_icon == nil)
+            small_icon = @"";
+        
+        NSString *user_id = [room objectForKey:@"user_id"];
+        if(user_id == nil)
+            user_id = @"";
+    
+        
+        sqlite3_bind_text(statement, 1, [regulus_id UTF8String], -1, SQLITE_TRANSIENT);
+
+        sqlite3_bind_text(statement, 2, [password UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(statement, 3, [name UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(statement, 4, [small_icon UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(statement, 5, [user_id UTF8String], -1, SQLITE_TRANSIENT);
+        
+        success = sqlite3_step(statement);
+        sqlite3_finalize(statement);
+        
+        if (success == SQLITE_ERROR) {
+            NSLog(@"Error: failed to insert into tblCachedScenario with message.");
+            return -1;
+        }
+        
+        // NOTE: return the id which insert a record.
+        // we must refresh the dial.id at once,because when we del curren tial by id
+        int tid = (int)sqlite3_last_insert_rowid(database_);
+        
+        return tid;
+    }
+}
+
+- (int) isMeetingRoomExist:(NSString*)regulus_id{
+    
+    NSString *s = [NSString stringWithFormat:@"select * from tblMeetingRoomCachedTable where regulus_id = ?"];
+    const char *sqlStatement = [s UTF8String];
+    sqlite3_stmt *statement;
+    
+    int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
+    if (success != SQLITE_OK) {
+        NSLog(@"Error: failed to access:tblMeetingRoomCachedTable");
+        return NO;
+    }
+    
+     sqlite3_bind_text(statement, 1, [regulus_id UTF8String], -1, SQLITE_TRANSIENT);
+    
+    int bRes = 0;
+    while (sqlite3_step(statement) == SQLITE_ROW) {
+        
+        int chkin = sqlite3_column_int(statement, 0);
+        bRes = chkin;
+    }
+    sqlite3_finalize(statement);
+    
+    return bRes;
+}
+
+
+- (void) updateMeetingRoom:(NSDictionary*)room{
+    
+    @synchronized (self) {
+        
+        const char *sqlStatement = "update tblMeetingRoomCachedTable set password=?,name=?,image=?,user_id=? where regulus_id=?";
+        sqlite3_stmt *statement;
+        
+        int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
+        if (success != SQLITE_OK) {
+            NSLog(@"Error: failed to insert: tblMeetingRoomCachedTable");
+            return;
+        }
+        
+        NSString *password = [room objectForKey:@"password"];
+        if(password == nil)
+            password = @"";
+        
+        NSString *name = [room objectForKey:@"name"];
+        if(name == nil)
+            name = @"";
+        NSString *small_icon = [room objectForKey:@"image"];
+        if(small_icon == nil)
+            small_icon = @"";
+        
+        
+        NSString *regulus_id = [room objectForKey:@"regulus_id"];
+        if(regulus_id == nil)
+            regulus_id = @"";
+        
+        NSString *user_id = [room objectForKey:@"user_id"];
+        if(user_id == nil)
+            user_id = @"";
+        
+        sqlite3_bind_text(statement, 1, [password UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(statement, 2, [name UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(statement, 3, [small_icon UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(statement, 4, [user_id UTF8String], -1, SQLITE_TRANSIENT);
+        
+        sqlite3_bind_text(statement, 5, [regulus_id UTF8String], -1, SQLITE_TRANSIENT);
+
+        success = sqlite3_step(statement);
+        sqlite3_finalize(statement);
+    }
+}
+
+
+
+- (NSMutableArray*) getMeetingRooms{
+    
+    NSString *s = [NSString stringWithFormat:@"select * from tblMeetingRoomCachedTable order by id DESC"];
+    const char *sqlStatement = [s UTF8String];
+    sqlite3_stmt *statement;
+    
+    int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
+    if (success != SQLITE_OK) {
+        NSLog(@"Error: failed to access:tblMeetingRoomCachedTable");
+        return nil;
+    }
+    
+    NSMutableArray *objs = [[NSMutableArray alloc] init];
+    while (sqlite3_step(statement) == SQLITE_ROW) {
+        
+        int col0   =        sqlite3_column_int(statement, 0);
+        char* col1 = (char*)sqlite3_column_text(statement, 1);
+        char* col2 = (char*)sqlite3_column_text(statement, 2);
+        char* col3 = (char*)sqlite3_column_text(statement, 3);
+        char* col4 = (char*)sqlite3_column_text(statement, 4);
+        char* col5 = (char*)sqlite3_column_text(statement, 5);
+        
+        NSMutableDictionary *p = [NSMutableDictionary dictionary];
+        
+        [p setObject:[NSString stringWithFormat:@"%d", col0]
+              forKey:@"room_id"];
+        
+        if(col1){
+            [p setObject:[NSString stringWithUTF8String:col1] forKey:@"regulus_id"];
+        }
+        if(col2){
+            [p setObject:[NSString stringWithUTF8String:col2] forKey:@"passowrd"];
+        }
+        if(col3){
+            [p setObject:[NSString stringWithUTF8String:col3] forKey:@"name"];
+        }
+        if(col4){
+            [p setObject:[NSString stringWithUTF8String:col4] forKey:@"image"];
+        }
+        if(col5){
+            [p setObject:[NSString stringWithUTF8String:col5] forKey:@"user_id"];
+        }
+        
+        [objs addObject:p];
+    }
+    sqlite3_finalize(statement);
+    
+  
+    return objs;
     
 }
 

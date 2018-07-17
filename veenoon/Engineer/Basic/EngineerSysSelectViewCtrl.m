@@ -448,7 +448,7 @@
     if([_sceneDrivers count])
     {
         EngineerScenarioSettingsViewCtrl *ctrl = [[EngineerScenarioSettingsViewCtrl alloc] init];
-        ctrl._room_id = 1;
+        ctrl._room_id = [[_meetingRoomDic objectForKey:@"room_id"] intValue];
         ctrl._scenarioArray = _sceneDrivers;
         [self.navigationController pushViewController:ctrl animated:YES];
     }
