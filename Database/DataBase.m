@@ -134,7 +134,7 @@ static DataBase* sharedInstance = nil;
     
     if(!have)
     {
-        s = @"CREATE TABLE tblMeetingRoomCachedTable(id INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL  UNIQUE, regulus_id TEXT, password TEXT, name TEXT, image TEXT, user_id TEXT)";
+        s = @"CREATE TABLE tblMeetingRoomCachedTable(id INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL  UNIQUE, regulus_id TEXT, regulus_password TEXT, regulus_user_id TEXT, room_name TEXT, room_image TEXT,  room_id INTEGER, user_id INTEGER)";
         
         const char * sql = [s UTF8String];
         sqlite3_stmt *delete_statement = nil;
@@ -162,7 +162,7 @@ static DataBase* sharedInstance = nil;
             return b;
         }
         
-        const char *sqlStatement = "insert into tblMeetingRoomCachedTable (regulus_id, password, name, image, user_id) VALUES (?,?,?,?,?)";
+        const char *sqlStatement = "insert into tblMeetingRoomCachedTable (regulus_id, regulus_password,regulus_user_id, room_name, room_image, room_id, user_id) VALUES (?,?,?,?,?,?,?)";
         sqlite3_stmt *statement;
         
         int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
@@ -171,28 +171,32 @@ static DataBase* sharedInstance = nil;
             return -1;
         }
         
-        NSString *password = [room objectForKey:@"password"];
+        NSString *password = [room objectForKey:@"regulus_password"];
         if(password == nil)
             password = @"";
         
-        NSString *name = [room objectForKey:@"name"];
+        NSString *regulus_user_id = [room objectForKey:@"regulus_user_id"];
+        if(regulus_user_id == nil)
+            regulus_user_id = @"";
+        
+        NSString *name = [room objectForKey:@"room_name"];
         if(name == nil)
             name = @"";
-        NSString *small_icon = [room objectForKey:@"image"];
+        NSString *small_icon = [room objectForKey:@"room_image"];
         if(small_icon == nil)
             small_icon = @"";
         
-        NSString *user_id = [room objectForKey:@"user_id"];
-        if(user_id == nil)
-            user_id = @"";
-    
+        int room_id = [[room objectForKey:@"room_id"] intValue];
+        int user_id = [[room objectForKey:@"user_id"] intValue];
         
         sqlite3_bind_text(statement, 1, [regulus_id UTF8String], -1, SQLITE_TRANSIENT);
-
         sqlite3_bind_text(statement, 2, [password UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_text(statement, 3, [name UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_text(statement, 4, [small_icon UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_text(statement, 5, [user_id UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(statement, 3, [regulus_user_id UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(statement, 4, [name UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(statement, 5, [small_icon UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_int(statement, 6, room_id);
+        sqlite3_bind_int(statement, 7, user_id);
+        
         
         success = sqlite3_step(statement);
         sqlite3_finalize(statement);
@@ -235,12 +239,11 @@ static DataBase* sharedInstance = nil;
     return bRes;
 }
 
-
-- (void) updateMeetingRoom:(NSDictionary*)room{
+- (void) updateMeetingRoomPic:(NSDictionary*)room{
     
     @synchronized (self) {
         
-        const char *sqlStatement = "update tblMeetingRoomCachedTable set password=?,name=?,image=?,user_id=? where regulus_id=?";
+        const char *sqlStatement = "update tblMeetingRoomCachedTable set room_image=? where regulus_id=?";
         sqlite3_stmt *statement;
         
         int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
@@ -249,14 +252,7 @@ static DataBase* sharedInstance = nil;
             return;
         }
         
-        NSString *password = [room objectForKey:@"password"];
-        if(password == nil)
-            password = @"";
-        
-        NSString *name = [room objectForKey:@"name"];
-        if(name == nil)
-            name = @"";
-        NSString *small_icon = [room objectForKey:@"image"];
+        NSString *small_icon = [room objectForKey:@"room_image"];
         if(small_icon == nil)
             small_icon = @"";
         
@@ -265,16 +261,58 @@ static DataBase* sharedInstance = nil;
         if(regulus_id == nil)
             regulus_id = @"";
         
-        NSString *user_id = [room objectForKey:@"user_id"];
-        if(user_id == nil)
-            user_id = @"";
+        sqlite3_bind_text(statement, 1, [small_icon UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(statement, 2, [regulus_id UTF8String], -1, SQLITE_TRANSIENT);
+        
+        success = sqlite3_step(statement);
+        sqlite3_finalize(statement);
+    }
+}
+
+- (void) updateMeetingRoom:(NSDictionary*)room{
+    
+    @synchronized (self) {
+        
+        const char *sqlStatement = "update tblMeetingRoomCachedTable set regulus_password=?,regulus_user_id=?, room_name=?,room_image=?,room_id = ? where regulus_id=?";
+        sqlite3_stmt *statement;
+        
+        int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
+        if (success != SQLITE_OK) {
+            NSLog(@"Error: failed to insert: tblMeetingRoomCachedTable");
+            return;
+        }
+        
+        NSString *password = [room objectForKey:@"regulus_password"];
+        if(password == nil)
+            password = @"";
+        
+        NSString *name = [room objectForKey:@"room_name"];
+        if(name == nil)
+            name = @"";
+        NSString *small_icon = [room objectForKey:@"room_image"];
+        if(small_icon == nil)
+            small_icon = @"";
+        
+        
+        NSString *regulus_id = [room objectForKey:@"regulus_id"];
+        if(regulus_id == nil)
+            regulus_id = @"";
+        
+        NSString *regulus_user_id = [room objectForKey:@"regulus_user_id"];
+        if(regulus_user_id == nil)
+            regulus_user_id = @"";
+        
+        int room_id = [[room objectForKey:@"room_id"] intValue];
         
         sqlite3_bind_text(statement, 1, [password UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_text(statement, 2, [name UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_text(statement, 3, [small_icon UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_text(statement, 4, [user_id UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(statement, 2, [regulus_user_id UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(statement, 3, [name UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(statement, 4, [small_icon UTF8String], -1, SQLITE_TRANSIENT);
         
-        sqlite3_bind_text(statement, 5, [regulus_id UTF8String], -1, SQLITE_TRANSIENT);
+        
+        sqlite3_bind_int(statement, 5, room_id);
+        
+        sqlite3_bind_text(statement, 6, [regulus_id UTF8String], -1, SQLITE_TRANSIENT);
 
         success = sqlite3_step(statement);
         sqlite3_finalize(statement);
@@ -304,27 +342,36 @@ static DataBase* sharedInstance = nil;
         char* col3 = (char*)sqlite3_column_text(statement, 3);
         char* col4 = (char*)sqlite3_column_text(statement, 4);
         char* col5 = (char*)sqlite3_column_text(statement, 5);
-        
+        int col6   =        sqlite3_column_int(statement, 6);
+        int col7   =        sqlite3_column_int(statement, 7);
         NSMutableDictionary *p = [NSMutableDictionary dictionary];
         
         [p setObject:[NSString stringWithFormat:@"%d", col0]
               forKey:@"room_id"];
         
+        [p setObject:[NSString stringWithFormat:@"%d", col6]
+              forKey:@"room_no"];
+        
+        [p setObject:[NSString stringWithFormat:@"%d", col7]
+              forKey:@"u_id"];
+        
         if(col1){
             [p setObject:[NSString stringWithUTF8String:col1] forKey:@"regulus_id"];
         }
         if(col2){
-            [p setObject:[NSString stringWithUTF8String:col2] forKey:@"passowrd"];
+            [p setObject:[NSString stringWithUTF8String:col2] forKey:@"password"];
         }
         if(col3){
-            [p setObject:[NSString stringWithUTF8String:col3] forKey:@"name"];
+            [p setObject:[NSString stringWithUTF8String:col3] forKey:@"user_id"];
         }
         if(col4){
-            [p setObject:[NSString stringWithUTF8String:col4] forKey:@"image"];
+            [p setObject:[NSString stringWithUTF8String:col4] forKey:@"room_name"];
         }
         if(col5){
-            [p setObject:[NSString stringWithUTF8String:col5] forKey:@"user_id"];
+            [p setObject:[NSString stringWithUTF8String:col5] forKey:@"image"];
         }
+
+        
         
         [objs addObject:p];
     }

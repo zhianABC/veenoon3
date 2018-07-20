@@ -248,7 +248,8 @@
 
 
 - (void) postPhotoWithUrlRequest:(NSString *)url param:(NSDictionary *)param{
-	self.characterBuffer = [NSMutableData data];
+	
+    self.characterBuffer = [NSMutableData data];
 	done = NO;
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
 	

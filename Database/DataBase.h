@@ -25,6 +25,7 @@
 
 
 - (int) saveMeetingRoom:(NSDictionary*)room;
+- (void) updateMeetingRoomPic:(NSDictionary*)room;
 - (NSMutableArray*) getMeetingRooms;
 
 

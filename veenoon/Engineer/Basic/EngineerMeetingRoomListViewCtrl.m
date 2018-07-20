@@ -14,6 +14,7 @@
 #import "DataBase.h"
 #import "ReaderCodeViewController.h"
 #import "Utilities.h"
+#import "SBJson4.h"
 
 #import "KVNProgress.h"
 #import "DataCenter.h"
@@ -35,6 +36,8 @@
     UIImageView *_scanLineImageView;
     BOOL _is_Animation;
     UIImageView* shoot_image;
+    
+    WebClient *_client;
 }
 @property (nonatomic, strong) NSMutableArray *roomList;
 
@@ -469,7 +472,7 @@
             [roomeImageView addSubview:titleL];
             titleL.font = [UIFont boldSystemFontOfSize:16];
             titleL.textColor  = [UIColor whiteColor];
-            titleL.text = [dic objectForKey:@"name"];
+            titleL.text = [dic objectForKey:@"room_name"];
             
             [lableArray addObject:titleL];
         }
@@ -504,10 +507,12 @@
                 
                 NSMutableDictionary *meetingDic = [self.roomList objectAtIndex:index];
                 UILabel *scenarioLabel = [lableArray objectAtIndex:index];
-                [meetingDic setObject:scenarioName forKey:@"name"];
+                [meetingDic setObject:scenarioName forKey:@"room_name"];
                 scenarioLabel.text = scenarioName;
                 
                 [[DataBase sharedDatabaseInstance] saveMeetingRoom:meetingDic];
+                
+                [self saveRoomPic:nil room:meetingDic];
             }
         }]];
         
@@ -736,11 +741,154 @@
     
     [data writeToFile:path atomically:YES];
 
-    [roomDic setObject:name forKey:@"image"];
+    [roomDic setObject:name forKey:@"room_image"];
     
-    [[DataBase sharedDatabaseInstance] saveMeetingRoom:roomDic];
+    [[DataBase sharedDatabaseInstance] updateMeetingRoomPic:roomDic];
+    
+
+    [self saveRoomPic:img room:roomDic];
 }
 
+- (void) saveRoomPic:(UIImage *)image room:(NSDictionary*)roomDic{
+    
+    int room_id = [[roomDic objectForKey:@"room_no"] intValue];
+    int user_id = [[roomDic objectForKey:@"u_id"] intValue];
+    if( room_id && user_id)
+    {
+
+        if(_client == nil)
+        {
+            _client = [[WebClient alloc] initWithDelegate:self];
+        }
+        
+        _client._method = @"/updateroom";
+        _client._httpMethod = @"POST";
+        
+        NSMutableDictionary *param = [NSMutableDictionary dictionary];
+        
+        _client._requestParam = param;
+        
+        
+        [param setObject:[NSString stringWithFormat:@"%d", user_id] forKey:@"userID"];
+        [param setObject:[NSString stringWithFormat:@"%d", room_id] forKey:@"roomID"];
+        [param setObject:[roomDic objectForKey:@"regulus_id"] forKey:@"regulusID"];
+        
+        if([roomDic objectForKey:@"password"])
+            [param setObject:[roomDic objectForKey:@"password"] forKey:@"regulusPassword"];
+        
+        if([roomDic objectForKey:@"room_name"])
+            [param setObject:[roomDic objectForKey:@"room_name"] forKey:@"roomName"];
+        
+        
+        IMP_BLOCK_SELF(EngineerMeetingRoomListViewCtrl);
+        
+        if(image)
+        {
+            [param setObject:@"file" forKey:@"filename"];
+            [param setObject:image forKey:@"image"];
+            
+            [_client requestWithSusessBlockWithImage:^(id lParam, id rParam) {
+                
+                NSString *response = lParam;
+                NSLog(@"%@", response);
+                
+                
+                SBJson4ValueBlock block = ^(id v, BOOL *stop) {
+                    
+                    
+                    if([v isKindOfClass:[NSDictionary class]])
+                    {
+                        int code = [[v objectForKey:@"code"] intValue];
+                        
+                        if(code == 200)
+                        {
+                            if([v objectForKey:@"data"])
+                            {
+                                [block_self updateRoomPic:[v objectForKey:@"data"]];
+                            }
+                        }
+                        return;
+                    }
+                    
+                    
+                };
+                
+                SBJson4ErrorBlock eh = ^(NSError* err) {
+                    
+                    
+                    
+                    NSLog(@"OOPS: %@", err);
+                };
+                
+                id parser = [SBJson4Parser multiRootParserWithBlock:block
+                                                       errorHandler:eh];
+                
+                id data = [response dataUsingEncoding:NSUTF8StringEncoding];
+                [parser parse:data];
+                
+                
+            } FailBlock:^(id lParam, id rParam) {
+                
+                NSString *response = lParam;
+                NSLog(@"%@", response);
+                
+            }];
+        }
+        else
+        {
+            [_client requestWithSusessBlock:^(id lParam, id rParam) {
+                
+                NSString *response = lParam;
+                NSLog(@"%@", response);
+                
+                
+                SBJson4ValueBlock block = ^(id v, BOOL *stop) {
+                    
+                    
+                    if([v isKindOfClass:[NSDictionary class]])
+                    {
+                        int code = [[v objectForKey:@"code"] intValue];
+                        
+                        if(code == 200)
+                        {
+                           
+                        }
+                        return;
+                    }
+                    
+                    
+                };
+                
+                SBJson4ErrorBlock eh = ^(NSError* err) {
+                    
+                    
+                    
+                    NSLog(@"OOPS: %@", err);
+                };
+                
+                id parser = [SBJson4Parser multiRootParserWithBlock:block
+                                                       errorHandler:eh];
+                
+                id data = [response dataUsingEncoding:NSUTF8StringEncoding];
+                [parser parse:data];
+                
+                
+            } FailBlock:^(id lParam, id rParam) {
+                
+                NSString *response = lParam;
+                NSLog(@"%@", response);
+                
+            }];
+        }
+    
+    }
+    
+}
+
+- (void) updateRoomPic:(NSDictionary*)data{
+    
+    [[DataBase sharedDatabaseInstance] updateMeetingRoomPic:data];
+}
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
@@ -932,18 +1080,105 @@
     
     if(userid && regulusid)
     {
-        NSDictionary *room = @{@"name":@"房间",
-                               @"password":@"111111",
+        NSDictionary *room = @{@"room_name":@"房间",
+                               @"regulus_password":@"111111",
                                @"regulus_id":regulusid,
-                               @"user_id":userid
+                               @"regulus_user_id":userid,
+                               @"user_id":@"1"
                                };
         [[DataBase sharedDatabaseInstance] saveMeetingRoom:room];
         
-        self.roomList = [[DataBase sharedDatabaseInstance] getMeetingRooms];
-        [self showRoomList];
+        if(_client == nil)
+        {
+            _client = [[WebClient alloc] initWithDelegate:self];
+        }
         
-        [self cancelZbarController:nil];
+        _client._method = @"/addroom";
+        _client._httpMethod = @"POST";
+        
+        NSMutableDictionary *param = [NSMutableDictionary dictionary];
+        
+        _client._requestParam = param;
+        
+
+        [param setObject:@"1" forKey:@"userID"];
+        [param setObject:userid forKey:@"regulusUserID"];
+        [param setObject:regulusid forKey:@"regulusID"];
+        [param setObject:@"房间" forKey:@"roomName"];
+        [param setObject:@"111111" forKey:@"regulusPassword"];
+        
+        IMP_BLOCK_SELF(EngineerMeetingRoomListViewCtrl);
+
+        
+        [_client requestWithSusessBlock:^(id lParam, id rParam) {
+            
+            NSString *response = lParam;
+             NSLog(@"%@", response);
+            
+            
+            SBJson4ValueBlock block = ^(id v, BOOL *stop) {
+                
+                
+                if([v isKindOfClass:[NSDictionary class]])
+                {
+                    int code = [[v objectForKey:@"code"] intValue];
+                    
+                    if(code == 200)
+                    {
+                        if([v objectForKey:@"data"])
+                        {
+                            [block_self successAddRoom:[v objectForKey:@"data"]];
+                        }
+                    }
+                    return;
+                }
+                
+                
+            };
+            
+            SBJson4ErrorBlock eh = ^(NSError* err) {
+                
+                
+                
+                NSLog(@"OOPS: %@", err);
+            };
+            
+            id parser = [SBJson4Parser multiRootParserWithBlock:block
+                                                   errorHandler:eh];
+            
+            id data = [response dataUsingEncoding:NSUTF8StringEncoding];
+            [parser parse:data];
+            
+            
+        } FailBlock:^(id lParam, id rParam) {
+            
+            NSString *response = lParam;
+            NSLog(@"%@", response);
+            
+        }];
+    
     }
+}
+
+- (void) successAddRoom:(NSDictionary*)room{
+    
+    /*
+     "regulus_id" = "RGS_EOC500_01";
+     "regulus_password" = 111111;
+     "regulus_user_id" = "B3763CEA-D181-4429-A01C-E4DAAA7F4EA6";
+     "room_id" = 1;
+     "room_image" = "";
+     "room_name" = "\U623f\U95f4";
+     "user_id" = 1;
+     */
+    
+    
+    [[DataBase sharedDatabaseInstance] saveMeetingRoom:room];
+    
+    self.roomList = [[DataBase sharedDatabaseInstance] getMeetingRooms];
+    [self showRoomList];
+    
+    [self cancelZbarController:nil];
 }
 
 @end

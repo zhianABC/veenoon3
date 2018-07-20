@@ -152,7 +152,7 @@
         [roomeImageView addSubview:titleL];
         titleL.font = [UIFont boldSystemFontOfSize:16];
         titleL.textColor  = [UIColor whiteColor];
-        titleL.text = [dic objectForKey:@"name"];
+        titleL.text = [dic objectForKey:@"room_name"];
         
         [lableArray addObject:titleL];
         
