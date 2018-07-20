@@ -10,7 +10,6 @@
 #import "CenterCustomerPickerView.h"
 #import "UIButton+Color.h"
 #import "IconCenterTextButton.h"
-#import "AdjustAudioVideoEnvSettingsViewCtrl.h"
 #import "EDimmerLight.h"
 #import "DataSync.h"
 #import "EngineerToUseTeslariViewCtrl.h"
@@ -41,7 +40,6 @@
 @end
 
 @implementation EngineerPortPluginViewCtrl
-@synthesize _meetingRoomDic;
 @synthesize _selectedSysDic;
 
 @synthesize _currentBrands;
@@ -383,7 +381,6 @@
     
     EngineerToUseTeslariViewCtrl *ctrl = [[EngineerToUseTeslariViewCtrl alloc] init];
     ctrl._selectedDevices = self._selectedSysDic;
-    ctrl._meetingRoomDic = _meetingRoomDic;
     [self.navigationController pushViewController:ctrl animated:YES];
     
 }

@@ -42,7 +42,6 @@
 @end
 
 @implementation EngineerAudioDevicePluginViewCtrl
-@synthesize _meetingRoomDic;
 @synthesize _selectedSysDic;
 
 @synthesize _currentBrands;
@@ -548,7 +547,6 @@
 - (void) okAction:(id)sender{
     
     EngineerVideoDevicePluginViewCtrl *ctrl = [[EngineerVideoDevicePluginViewCtrl alloc] init];
-    ctrl._meetingRoomDic = self._meetingRoomDic;
     ctrl._selectedSysDic = self._selectedSysDic;
     
     [self.navigationController pushViewController:ctrl animated:YES];

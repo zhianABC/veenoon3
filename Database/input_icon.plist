@@ -22,6 +22,10 @@
 				<string>videop_usb_w.png</string>
 				<key>icon_sel</key>
 				<string>videop_usb_y.png</string>
+				<key>user_show_icon</key>
+				<string>user_video_disk_n.png</string>
+				<key>user_show_icon_s</key>
+				<string>user_video_disk_s.png</string>
 			</dict>
 		</array>
 	</dict>

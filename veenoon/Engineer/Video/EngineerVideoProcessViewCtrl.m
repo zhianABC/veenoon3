@@ -239,7 +239,8 @@
     
     _currentProxy._rgsProxyObj = [proxys objectAtIndex:0];
     [_currentProxy checkRgsProxyCommandLoad];
-
+    
+    
     self._currentObj._proxyObj = _currentProxy;
     
 }
@@ -276,7 +277,16 @@
         iBtn.tag = i;
         //iBtn.delegate = self;
         iBtn.clipsToBounds = YES;
-        [iBtn fillData:@{@"icon":@"engineer_scenario_add_small.png",@"type":@"0"}];
+        
+        NSString *ctrl_val = [NSString stringWithFormat:@"%d",i];
+        id data = @{@"icon":@"engineer_scenario_add_small.png",@"type":@"0"};
+        if([_currentProxy._inputDevices objectForKey:ctrl_val]){
+            
+            data = [_currentProxy._inputDevices objectForKey:ctrl_val];
+        }
+        [iBtn fillData:data];
+        
+        
         [scroolViewIn addSubview:iBtn];
         
         
@@ -305,7 +315,18 @@
         iBtn.tag = i;
         //iBtn.delegate = self;
         iBtn.clipsToBounds = YES;
-        [iBtn fillData:@{@"icon":@"engineer_scenario_add_small.png",@"type":@"0"}];
+        
+        NSString *ctrl_val = [NSString stringWithFormat:@"%d",i];
+        id data = @{@"icon":@"engineer_scenario_add_small.png",@"type":@"0"};
+        if([_currentProxy._outputDevices objectForKey:ctrl_val]){
+            
+            data = [_currentProxy._outputDevices objectForKey:ctrl_val];
+            
+            [_outDataMap setObject:iBtn
+                            forKey:ctrl_val];
+        }
+        [iBtn fillData:data];
+        
         [scroolViewOut addSubview:iBtn];
         
         
@@ -319,6 +340,53 @@
     
     x+=180;
     scroolViewOut.contentSize = CGSizeMake(x, CGRectGetHeight(scroolViewOut.frame));
+    
+    
+    if([_currentProxy._deviceMatcherDic count])
+    {
+        [self createP2P:_currentProxy._deviceMatcherDic];
+    }
+    
+}
+
+- (void) createP2P:(NSDictionary *)p2p{
+    
+    for(TwoIconAndTitleView *ibtn in _inPutBtnArray)
+    {
+        NSDictionary *data = [ibtn getMyData];
+        if(data)
+        {
+            NSString *ctrl_val = [data objectForKey:@"ctrl_val"];
+            NSArray *outputs = [p2p objectForKey:ctrl_val];
+            if(outputs && [outputs count])
+            {
+                for(id val in outputs)
+                {
+                    TwoIconAndTitleView *toCell = [_outDataMap objectForKey:val];
+                    if(toCell)
+                    {
+                        [self linkCell:ibtn outCell:toCell];
+                    }
+                    
+                }
+            }
+        }
+    }
+}
+
+- (void) linkCell:(TwoIconAndTitleView *)inCell outCell:(TwoIconAndTitleView* )outCell{
+    
+    if(inCell && outCell)
+    {
+        //输入源
+        
+        [inCell selected];
+        [outCell selected];
+        
+        NSDictionary* inputD = [inCell getMyData];
+        [outCell fillRelatedData:inputD];
+        
+    }
     
 }
 
@@ -586,10 +654,14 @@
             {
                 if(CGRectContainsPoint(ti.frame, rpt))
                 {
-                    [ti fillData:data];
+                    NSString *deviceName = [NSString stringWithFormat:@"%d", (int)ti.tag];
+                    NSMutableDictionary *src = [NSMutableDictionary dictionaryWithDictionary:data];
+                    [src setObject:deviceName forKey:@"ctrl_val"];
+                    
+                    [ti fillData:src];
                     ti.delegate = self;
                     
-                    [_currentProxy saveInputDevice:data];
+                    [_currentProxy saveInputDevice:src];
                     
                     break;
                 }
@@ -606,10 +678,17 @@
             {
                 if(CGRectContainsPoint(ti.frame, rpt))
                 {
-                    [ti fillData:data];
+                    NSString *deviceName = [NSString stringWithFormat:@"%d", (int)ti.tag];
+                    NSMutableDictionary *src = [NSMutableDictionary dictionaryWithDictionary:data];
+                    [src setObject:deviceName forKey:@"ctrl_val"];
+                    
+                    [ti fillData:src];
                     ti.delegate = self;
                     
-                    [_currentProxy saveOutputDevice:data];
+                    [_currentProxy saveOutputDevice:src];
+                    
+                    [_outDataMap setObject:ti
+                                    forKey:deviceName];
                     
                     break;
                 }

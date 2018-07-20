@@ -29,6 +29,7 @@
 - (BOOL) testIsInDevice;
 
 - (void) unselected;
+- (void) selected;
 
 - (NSDictionary *)getMyData;
 

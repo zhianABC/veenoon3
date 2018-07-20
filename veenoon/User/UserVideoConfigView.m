@@ -178,10 +178,9 @@
 
 - (void) linkCell:(StickerLayerView *)inCell outCell:(StickerLayerView* )outCell{
     
-    
-    StickerLayerView *output = outCell;
+
     //输出设备
-    NSDictionary *outData = output._element;
+    NSDictionary *outData = outCell._element;
     if(inCell)
     {
         //输入源
@@ -191,7 +190,11 @@
                     forKey:[outData objectForKey:@"ctrl_val"]];
         
         NSString *imageN = [inputD objectForKey:@"user_show_icon_s"];
-        [output setTopIconImage:[UIImage imageNamed:imageN]];
+        [outCell setTopIconImage:[UIImage imageNamed:imageN]];
+        
+        
+        [inCell selected];
+        [outCell selected];
     }
     
 }
@@ -225,7 +228,11 @@
         }
         else
         {
-            [cell setEmptyCell];
+            
+            //NSString *image = [dic objectForKey:@"user_show_icon"];
+            [cell setSticker:@"engineer_scenario_add_small.png"];
+            cell.textLabel.text = @"空位";
+           //[cell setEmptyCell];
         }
         x+=cellWidth;
         [_inputCells addObject:cell];
@@ -270,7 +277,10 @@
         }
         else
         {
-            [cell setEmptyCell];
+            //NSString *image = [dic objectForKey:@"user_show_icon"];
+            [cell setSticker:@"engineer_scenario_add_small.png"];
+            cell.textLabel.text = @"空位";
+            //[cell setEmptyCell];
         }
         
         x+=cellWidth;

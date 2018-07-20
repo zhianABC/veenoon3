@@ -131,7 +131,7 @@
     dbbtn.center = CGPointMake(cx, cy);
     
     UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMinY(dbbtn.frame)-30, 120, 20)];
-    tL.text = @"增益（db）";
+    tL.text = @"增益（dB）";
     tL.textAlignment = NSTextAlignmentCenter;
     [_maskView addSubview:tL];
     tL.font = [UIFont systemFontOfSize:13];
@@ -378,8 +378,6 @@
             if(arr == nil){
                 
                 arr = [NSMutableArray array];
-                outproxy._setMixSrc = arr;
-                
                 [_outpus setObject:arr forKey:okey];
             }
            
@@ -440,7 +438,7 @@
         
         float th = value * (maxDb - minDb) + minDb;
         
-        _dbValue.text = [NSString stringWithFormat:@"%0.1f", th];
+        _dbValue.text = [NSString stringWithFormat:@"%0.0f", th];
         [_selectBtn setTitle:_dbValue.text forState:UIControlStateNormal];
         
         VAProcessorProxys *proxy = [_processor._outAudioProxys objectAtIndex:output_idx];
@@ -454,7 +452,7 @@
                 VAProcessorProxys *inproxy = [mdic objectForKey:@"proxy"];
                 if(inproxy._rgsProxyObj.m_id == inSelrPoxy._rgsProxyObj.m_id)
                 {
-                    [mdic setObject:[NSString stringWithFormat:@"%0.1f",th]
+                    [mdic setObject:[NSString stringWithFormat:@"%0.0f",th]
                              forKey:@"TH"];
                     
                     [proxy controlMatrixSrcValue:inproxy th:th];

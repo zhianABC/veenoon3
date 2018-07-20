@@ -145,6 +145,8 @@ static DataSync* dSyncInstance = nil;
 
 - (void) syncCurrentArea{
     
+    NSLog(@"=========Call: syncCurrentArea");
+    
 #ifdef OPEN_REG_LIB_DEF
     
     IMP_BLOCK_SELF(DataSync);
@@ -166,10 +168,13 @@ static DataSync* dSyncInstance = nil;
 
 - (void) checkNeedCreateArea:(NSArray*)RgsAreaObjs{
     
+    NSLog(@"=========Call: checkNeedCreateArea");
+    
 #ifdef OPEN_REG_LIB_DEF
     
     IMP_BLOCK_SELF(DataSync);
     
+    self._currentArea = nil;
     for(RgsAreaObj *area in RgsAreaObjs)
     {
         if([area.name isEqualToString:VEENOON_AREA_NAME])
@@ -181,6 +186,8 @@ static DataSync* dSyncInstance = nil;
     
     if(_currentArea == nil)
     {
+        NSLog(@"=========Call: CreateArea: VEENOON_AREA_NAME");
+        
         [[RegulusSDK sharedRegulusSDK] CreateArea:VEENOON_AREA_NAME completion:^(BOOL result, RgsAreaObj *area, NSError *error) {
             if (result) {
                 block_self._currentArea = area;
@@ -191,6 +198,8 @@ static DataSync* dSyncInstance = nil;
     }
     else
     {
+        NSLog(@"Result: Area Exist: VEENOON_AREA_NAME");
+        
 //        [[RegulusSDK sharedRegulusSDK] DeleteArea:_currentArea.m_id
 //                                       completion:nil];
     }

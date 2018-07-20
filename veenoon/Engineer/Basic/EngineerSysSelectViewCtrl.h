@@ -7,9 +7,8 @@
 //
 #import <UIKit/UIKit.h>
 @interface EngineerSysSelectViewCtrl : UIViewController {
-    NSMutableDictionary *_meetingRoomDic;
+    
 }
-@property (nonatomic,strong) NSMutableDictionary *_meetingRoomDic;
 
 
 @end

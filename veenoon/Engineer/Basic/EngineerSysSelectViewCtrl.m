@@ -41,7 +41,6 @@
 @end
 
 @implementation EngineerSysSelectViewCtrl
-@synthesize _meetingRoomDic;
 @synthesize _sceneDrivers;
 
 
@@ -212,31 +211,40 @@
 
 - (void) checkSceneDriver:(NSArray*)scenes{
     
-    NSArray* savedScenarios = [[DataBase sharedDatabaseInstance] getSavedScenario:1];
-    
-
-    NSMutableDictionary *map = [NSMutableDictionary dictionary];
-    for(NSMutableDictionary *senario in savedScenarios)
+    NSDictionary *room = [DataCenter defaultDataCenter]._roomData;
+    if(room)
     {
-        int s_driver_id = [[senario objectForKey:@"s_driver_id"] intValue];
-        [map setObject:senario forKey:[NSNumber numberWithInt:s_driver_id]];
-    }
-    
-    for(RgsSceneObj *dr in scenes)
-    {
-        id key = [NSNumber numberWithInt:(int)dr.m_id];
+        int room_id = [[room objectForKey:@"room_id"] intValue];
         
-        if([map objectForKey:key])
+        NSArray* savedScenarios = [[DataBase sharedDatabaseInstance] getSavedScenario:room_id];
+        
+        
+        NSMutableDictionary *map = [NSMutableDictionary dictionary];
+        for(NSMutableDictionary *senario in savedScenarios)
         {
-            Scenario *s = [[Scenario alloc] init];
-            [s fillWithData:[map objectForKey:key]];
-            s._rgsSceneObj = dr;
+            int s_driver_id = [[senario objectForKey:@"s_driver_id"] intValue];
+            [map setObject:senario forKey:[NSNumber numberWithInt:s_driver_id]];
+        }
+        
+        for(RgsSceneObj *dr in scenes)
+        {
+            id key = [NSNumber numberWithInt:(int)dr.m_id];
             
-            
-            [_sceneDrivers addObject:s];
+            if([map objectForKey:key])
+            {
+                Scenario *s = [[Scenario alloc] init];
+                [s fillWithData:[map objectForKey:key]];
+                s._rgsSceneObj = dr;
+                
+                
+                [_sceneDrivers addObject:s];
+            }
         }
     }
-    
+    else
+    {
+        [KVNProgress showErrorWithStatus:@"出错 Error Code: 404!"];
+    }
 
 }
 
@@ -427,13 +435,14 @@
 - (void) setNewProject{
     
     
+    NSLog(@"Call: NewProject");
+    
     [[DataSync sharedDataSync] syncCurrentArea];
     
     [[DataBase sharedDatabaseInstance] deleteScenarioByRoom:1];
     [_sceneDrivers removeAllObjects];
     
     EngineerNewTeslariViewCtrl *ctrl = [[EngineerNewTeslariViewCtrl alloc] init];
-    ctrl._meetingRoomDic = self._meetingRoomDic;
     [self.navigationController pushViewController:ctrl animated:YES];
 
 }
@@ -448,7 +457,6 @@
     if([_sceneDrivers count])
     {
         EngineerScenarioSettingsViewCtrl *ctrl = [[EngineerScenarioSettingsViewCtrl alloc] init];
-        ctrl._room_id = 1;
         ctrl._scenarioArray = _sceneDrivers;
         [self.navigationController pushViewController:ctrl animated:YES];
     }

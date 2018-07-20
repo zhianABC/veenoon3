@@ -32,17 +32,17 @@
 #import "RgsPropertyObj.h"
 #import "RgsProxyStateInfo.h"
 #import "RgsSystemInfo.h"
+#import "RgsUpdatePacketInfo.h"
 
 
 @protocol RegulusSDKDelegate <NSObject>
-@required -(void) onConnectChanged:(BOOL)connect;
-@required -(void) onRecvDeviceNotify:(RgsDeviceNoteObj *) notify;
+@optional -(void) onConnectChanged:(BOOL)connect;
+@optional -(void) onRecvDeviceNotify:(RgsDeviceNoteObj *) notify;
 @optional -(void) onIrcodeRecord:(NSString *)serial key:(NSString *)key status:(RgsIrRecordStatus)status;
 @optional -(void) onExportProject:(RgsNotifyStatus) status;
 @optional -(void) onImportProject:(RgsNotifyStatus) status;
 @optional -(void) onDepressUpdatePacket:(RgsNotifyStatus) status persent:(CGFloat)persent error:(NSError *)error;
-@optional -(void) onDowningTopology:(float) persen;
-@optional -(void) onDownDoneTopology;
+@optional -(void) onDownloadUpdatePacket:(RgsNotifyStatus) status persent:(CGFloat)persent error:(NSError *)error;
 @end
 
 @interface RegulusSDK : NSObject
@@ -603,6 +603,56 @@
  */
 -(void)UpdateFromUdisc:(NSString *)name
                    completion:(void(^)(BOOL result,NSError * error)) completion;
+
+
+/*!
+ @since 3.8.1
+ @brief 获取系统所有配置了操作的事件
+ @param completion 回调block 正常时返回YES events为RgsEventObj对象列表
+ @see RgsEventObj
+ */
+-(void)GetFilledEvents:(void(^)(BOOL result,NSArray * events,NSError * error)) completion;
+
+
+/*!
+ @since 3.8.1
+ @brief 清空该事件的配置内容
+ @param evt_obj 为需要清空的事件对象
+ @param completion 回调block 正常时返回YES
+ @see RgsEventObj
+ */
+-(void)ClearEventOperatons:(RgsEventObj *)evt_obj completion:(void(^)(BOOL result,NSError * error)) completion;
+
+
+/*!
+ @since 3.9.2
+ @brief 查询命令操作的描述
+ @param operation 为待查询的操作，现阶段只支持RgsSceneDeviceOperation的查询。
+ @param completion 回调block 正常时返回YES descripe为该操作的描述
+ @see RgsSceneOperation
+ */
+-(void)QueryRgsSceneOperationDescripe:(RgsSceneOperation *)operation
+                           completion:(void(^)(BOOL result,NSString * descripe,NSError * error)) completion;
+
+
+/*!
+ @since 3.10.1
+ @brief 通过网络检查当前系统版本，并获取更新包信息
+ @param completion 回调block 正常时返回YES info为nil时，则不需要更新。info为非nil，则需要更新。
+ @see RgsUpdatePacketInfo
+ */
+-(void)RequestSystemVersionCheck:(void(^)(BOOL result,RgsUpdatePacketInfo * info,NSError * error)) completion;
+
+/*!
+ @since 3.10.1
+ @brief 下载并安装更新包
+ @param info 更新包信息对象
+ @param completion 回调block 正常时返回YES。下载进度通过onDownloadUpdatePacket返回。
+ @see RgsUpdatePacketInfo
+ */
+-(void)DownloadAndInstallUpdatePacket:(RgsUpdatePacketInfo *)info completion:(void(^)(BOOL result,NSError * error)) completion;
+
+
 @end
 
 

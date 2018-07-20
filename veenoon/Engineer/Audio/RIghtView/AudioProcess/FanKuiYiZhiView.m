@@ -33,15 +33,15 @@
 
 - (id)initWithFrameProxys:(CGRect)frame withProxys:(NSArray*) proxys;
 {
-    self._proxys = proxys;
     
     if(self = [super initWithFrame:frame])
     {
-        if (_curProxy == nil) {
-            if (self._proxys) {
-                _curProxy = [self._proxys objectAtIndex:0];
-            }
+        self._proxys = proxys;
+        
+        if ([self._proxys count]) {
+            _curProxy = [self._proxys objectAtIndex:0];
         }
+        
         channelBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
         channelBtn.frame = CGRectMake(0, 50, 70, 36);
         channelBtn.clipsToBounds = YES;

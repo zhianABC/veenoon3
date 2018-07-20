@@ -32,6 +32,7 @@
 }
 @property (nonatomic, strong) NSMutableArray *_sBtns;
 @property (nonatomic, strong) NSMutableDictionary *_map;
+@property (nonatomic, assign) int _room_id;
 
 @end
 
@@ -52,6 +53,9 @@
 
     self._sBtns = [NSMutableArray array];
     self._map = [NSMutableDictionary dictionary];
+    
+    NSDictionary *room = [DataCenter defaultDataCenter]._roomData;
+    self._room_id = [[room objectForKey:@"room_id"] intValue];
     
     UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
     [self.view addSubview:titleIcon];
@@ -215,7 +219,8 @@
 
 - (void) checkSceneDriver:(NSArray*)scenes{
     
-    NSArray* savedScenarios = [[DataBase sharedDatabaseInstance] getSavedScenario:1];
+    NSArray* savedScenarios = [[DataBase sharedDatabaseInstance]
+                               getSavedScenario:_room_id];
     
     NSMutableDictionary *map = [NSMutableDictionary dictionary];
     for(NSDictionary *senario in savedScenarios)
@@ -223,6 +228,8 @@
         int s_driver_id = [[senario objectForKey:@"s_driver_id"] intValue];
         [map setObject:senario forKey:[NSNumber numberWithInt:s_driver_id]];
     }
+    
+    [_scenarioArray removeAllObjects];
     
     for(RgsSceneObj *dr in scenes)
     {
@@ -240,8 +247,7 @@
     
     [KVNProgress showSuccess];
     
-    if([_scenarioArray count])
-        [self layoutScenarios];
+    [self layoutScenarios];
 }
 
 - (void) layoutScenarios{
@@ -436,19 +442,12 @@
     else
     {
         NSMutableDictionary *devicesSel = [DataCenter defaultDataCenter]._selectedDevice;
-        NSMutableDictionary *roomDic = [DataCenter defaultDataCenter]._roomData;
         if(devicesSel)
         {
             EngineerNewTeslariViewCtrl *ctrl = [[EngineerNewTeslariViewCtrl alloc] init];
-            ctrl._meetingRoomDic = roomDic;
-            //ctrl._selectedDevices = _selectedDevices;
             [self.navigationController pushViewController:ctrl animated:YES];
 
-            
-//            EngineerScenarioListViewCtrl *ctrl = [[EngineerScenarioListViewCtrl alloc] init];
-//            ctrl._selectedDevices = devicesSel;
-//            ctrl._meetingRoomDic = roomDic;
-//            [self.navigationController pushViewController:ctrl animated:YES];
+
         }
         else
         {
@@ -457,7 +456,6 @@
 //            [self.navigationController pushViewController:ctrl animated:YES];
 
             EngineerNewTeslariViewCtrl *ctrl = [[EngineerNewTeslariViewCtrl alloc] init];
-            ctrl._meetingRoomDic = roomDic;
             //ctrl._selectedDevices = _selectedDevices;
             [self.navigationController pushViewController:ctrl animated:YES];
             

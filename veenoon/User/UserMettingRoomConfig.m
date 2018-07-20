@@ -91,8 +91,8 @@
     self._nor_image = [UIImage imageNamed:@"user_training_n.png"];
     self._sel_image = [UIImage imageNamed:@"user_training_s.png"];
     
-    self._regulus_gateway_id = @"RGS_EOC500_01";//[_meetingRoomDic objectForKey:@"regulus_id"];
-    self._regulus_user_id = [[NSUserDefaults standardUserDefaults] objectForKey:@"user_id"];
+    self._regulus_gateway_id = [meetingRoomDic objectForKey:@"regulus_id"];
+    self._regulus_user_id = [meetingRoomDic objectForKey:@"user_id"];
     
     self._sceneDrivers = [NSMutableArray array];
     
@@ -100,13 +100,13 @@
     [KVNProgress show];
     
     
-    if(_regulus_gateway_id && _regulus_user_id)
+    if([_regulus_gateway_id length]
+       && [_regulus_user_id length])
     {
         [self loginCtrlDevice];
     }
     else
     {
-        self._regulus_gateway_id = @"RGS_EOC500_01";
         [self regCtrlDevice];
     }
     
@@ -178,6 +178,10 @@
     [DataCenter defaultDataCenter]._roomData = meetingRoomDic;
     [meetingRoomDic setObject:_regulus_user_id forKey:@"user_id"];
     
+    [[DataBase sharedDatabaseInstance] saveMeetingRoom:meetingRoomDic];
+    
+    
+    
     [DataSync sharedDataSync]._currentReglusLogged = @{@"gw_id":_regulus_gateway_id,
                                                        @"user_id":_regulus_user_id
                                                        };
@@ -246,7 +250,8 @@
 
 - (void) checkSceneDriver:(NSArray*)scenes{
     
-    NSArray* savedScenarios = [[DataBase sharedDatabaseInstance] getSavedScenario:1];
+    int room_id = [[meetingRoomDic objectForKey:@"room_id"] intValue];
+    NSArray* savedScenarios = [[DataBase sharedDatabaseInstance] getSavedScenario:room_id];
     
     NSMutableDictionary *map = [NSMutableDictionary dictionary];
     for(NSMutableDictionary *senario in savedScenarios)

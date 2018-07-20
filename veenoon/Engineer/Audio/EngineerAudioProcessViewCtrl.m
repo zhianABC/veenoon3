@@ -48,6 +48,9 @@
     UIImageView *bottomBar;
     
     UIView *_proxysView;
+    
+    float maxAnalogyGain;
+    float minAnalogyGain;
  
 }
 @property (nonatomic, strong) AudioEProcessor *_curProcessor;
@@ -70,6 +73,13 @@
 @synthesize _currentAudioDevices;
 
 @synthesize _isChoosedCmdToScenario;
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    
+    [self refreshProxyAnalogyGains];
+    
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -119,6 +129,8 @@
               action:@selector(settingAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
+    maxAnalogyGain = 12.0;
+    minAnalogyGain = -70.0;
     
     _zengyiSlider = [[EngineerSliderView alloc]
                      initWithSliderBg:[UIImage imageNamed:@"engineer_zengyi3.png"]
@@ -128,8 +140,8 @@
     [_zengyiSlider setIndicatorImage:[UIImage imageNamed:@"wireless_slide_s.png"]];
     _zengyiSlider.topEdge = 90;
     _zengyiSlider.bottomEdge = 79;
-    _zengyiSlider.maxValue = 12;
-    _zengyiSlider.minValue = -70;
+    _zengyiSlider.maxValue = maxAnalogyGain;
+    _zengyiSlider.minValue = minAnalogyGain;
     _zengyiSlider.delegate = self;
     [_zengyiSlider resetScale];
     _zengyiSlider.center = CGPointMake(SCREEN_WIDTH - 110, SCREEN_HEIGHT/2+50);
@@ -271,6 +283,32 @@
 #endif
 }
 
+- (void) refreshProxyAnalogyGains{
+    
+    if([_buttonArray count])
+    {
+        for(SlideButton *sbtn in _buttonArray)
+        {
+            VAProcessorProxys *proxy = sbtn.data;
+            if(proxy && [proxy isKindOfClass:[VAProcessorProxys class]])
+            {
+                NSDictionary *dic = [proxy getAnalogyGainRange];
+                float max = [[dic objectForKey:@"max"] floatValue];
+                float min = [[dic objectForKey:@"min"] floatValue];
+                if(max - min > 0)
+                {
+                    float p = fabs(([proxy getAnalogyGain] - min)/(max-min));
+                    [sbtn setCircleValue:p];
+                }
+                
+                BOOL isMute = [proxy isProxyMute];
+                [sbtn muteSlider:isMute];
+                
+            }
+        }
+    }
+}
+
 - (void) initChannels{
     
     [[_proxysView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
@@ -353,6 +391,11 @@
         self._inputProxys = _curProcessor._inAudioProxys;
         self._outputProxys = _curProcessor._outAudioProxys;
         
+        ///加载输出输出Proxy的Commands数据
+        [_curProcessor prepareAllAudioInCmds];
+        [_curProcessor prepareAllAudioOutCmds];
+
+        
     }
     for (int i = 0; i < [_inputProxys count]; i++) {
         
@@ -395,7 +438,7 @@
         }
         
         
-        float p = fabs(([vap getAnalogyGain]+70)/82.0);
+        float p = fabs(([vap getAnalogyGain] - minAnalogyGain)/(maxAnalogyGain-minAnalogyGain));
         [btn setCircleValue:p];
         
         index++;
@@ -428,7 +471,7 @@
         
         [_buttonArray addObject:btn];
         
-        float p = fabs(([vap getAnalogyGain]+70)/82.0);
+        float p = fabs(([vap getAnalogyGain] - minAnalogyGain)/(maxAnalogyGain-minAnalogyGain));
         [btn setCircleValue:p];
         
         index++;
@@ -439,13 +482,12 @@
 //value = 0....1
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
-    float circleValue = -70 + (value * 82);
+    float circleValue = minAnalogyGain + (value * (maxAnalogyGain - minAnalogyGain));
     slbtn._valueLabel.text = [NSString stringWithFormat:@"%0.1f db", circleValue];
     
     id data = slbtn.data;
     if([data isKindOfClass:[VAProcessorProxys class]])
     {
-        //float circleValue = -70 + (value * 82);
         [(VAProcessorProxys*)data controlDeviceDb:circleValue force:NO];
         
         [_zengyiSlider setScaleValue:circleValue];
@@ -457,7 +499,7 @@
     id data = slbtn.data;
     if([data isKindOfClass:[VAProcessorProxys class]])
     {
-        float circleValue = -70 + (value * 82);
+        float circleValue = minAnalogyGain + (value * (maxAnalogyGain - minAnalogyGain));
         [(VAProcessorProxys*)data controlDeviceDb:circleValue force:YES];
         
         [_zengyiSlider setScaleValue:circleValue];
@@ -472,7 +514,7 @@
     for (SlideButton *button in _selectedBtnArray) {
         
         button._valueLabel.text = [NSString stringWithFormat:@"%0.1f db", circleValue];
-        [button setCircleValue:fabs((value+70)/82.0)];
+        [button setCircleValue:fabs((value - minAnalogyGain)/(maxAnalogyGain - minAnalogyGain))];
         
         id data = button.data;
         if([data isKindOfClass:[VAProcessorProxys class]])
@@ -488,7 +530,7 @@
     for (SlideButton *button in _selectedBtnArray) {
         
         button._valueLabel.text = [NSString stringWithFormat:@"%0.1f db", circleValue];
-        [button setCircleValue:fabs((value+70)/82.0)];
+        [button setCircleValue:fabs((value - minAnalogyGain)/(maxAnalogyGain - minAnalogyGain))];
         
         id data = button.data;
         if([data isKindOfClass:[VAProcessorProxys class]])

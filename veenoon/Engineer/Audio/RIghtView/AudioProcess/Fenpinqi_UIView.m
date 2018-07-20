@@ -33,7 +33,7 @@
 -(id) initWithFrame:(CGRect)frame withAudiMix:(AudioEMix*) audioMix {
     if(self = [super initWithFrame:frame]) {
         
-        _currentObj = audioMix;
+        self._currentObj = audioMix;
         
         NSDictionary *highFilterDic = [_currentObj._proxyObj getHighFilterMinMax];
         _highFilterMin = [[highFilterDic objectForKey:@"min"] intValue];

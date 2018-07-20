@@ -31,6 +31,11 @@
  操作参数
  */
 @property NSDictionary * param;
+
+/*!
+ 操作描述 3.9.1
+ */
+@property NSString * descripe;
 @end
 
 /*!
@@ -127,6 +132,12 @@ typedef NS_ENUM(NSInteger,RgsCondType)
  @see RgsSceneCondOperation
  */
 -(id)getOperation;
+
+/*!
+ @since 3.9.1
+ @brief 设置描述
+ */
+-(void)set_descripe:(NSString *)descripe;
 @end
 
 

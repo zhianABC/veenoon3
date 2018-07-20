@@ -87,7 +87,7 @@
     
     if(_curSelectBtn)
     {
-        [_curSelectBtn setTitle:[NSString stringWithFormat:@"%0.1f", value]
+        [_curSelectBtn setTitle:[NSString stringWithFormat:@"%0.0f", value]
                        forState:UIControlStateNormal];
         
         if(value > 0)

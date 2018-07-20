@@ -12,18 +12,28 @@
 #import "VAProcessorProxys.h"
 #import "RegulusSDK.h"
 
-@interface DianPing_UIView() <SlideButtonDelegate>{
+@interface DianPing_UIView() <SlideButtonDelegate, VAProcessorProxysDelegate>{
     
     UIButton *channelBtn;
     
     UILabel *labelL1;
     
+    
+    SlideButton *analogyDbSlider;
+    
+    float dbMax;
+    float dbMin;
+    
+    UIButton *muteBtn;
+    UIButton *invertBtn;
 }
 @property (nonatomic, strong) VAProcessorProxys *_curProxy;
 @end
 
 
 @implementation DianPing_UIView
+@synthesize _curProxy;
+
 //@synthesize _channelBtns;
 /*
  // Only override drawRect: if you perform custom drawing.
@@ -35,14 +45,12 @@
 
 - (id)initWithFrameProxys:(CGRect)frame withProxys:(NSArray*) proxys
 {
-    self._proxys = proxys;
-    
     if(self = [super initWithFrame:frame])
     {
-        if (self._curProxy == nil) {
-            if (self._proxys) {
-                self._curProxy = [self._proxys objectAtIndex:0];
-            }
+        self._proxys = proxys;
+        
+        if ([self._proxys count]) {
+            self._curProxy = [self._proxys objectAtIndex:0];
         }
         
         channelBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
@@ -62,6 +70,9 @@
         int y = CGRectGetMaxY(channelBtn.frame)+20;
         contentView.frame = CGRectMake(0, y, frame.size.width, 340);
 //
+        dbMax = 70;
+        dbMin = -70;
+        
         [self contentViewComps];
     }
     
@@ -71,7 +82,8 @@
 
 - (void) channelBtnAction:(UIButton*)sender{
     
-    int tag = (int)sender.tag+1;
+    int idx = (int)sender.tag;
+    int tag = idx+1;
     [channelBtn setTitle:[NSString stringWithFormat:@"Out %d", tag] forState:UIControlStateNormal];
     
     for(UIButton * btn in _channelBtns)
@@ -85,14 +97,69 @@
             [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }
     }
+    
+    
+    if (idx < [self._proxys count]) {
+        self._curProxy = [self._proxys objectAtIndex:idx];
+        
+        [self updateProxyCommandValIsLoaded];
+    }
 }
+
+
+- (void) updateProxyCommandValIsLoaded {
+    
+    self._curProxy.delegate = self;
+    [_curProxy checkRgsProxyCommandLoad];
+}
+
+- (void) didLoadedProxyCommand {
+    
+    _curProxy.delegate = nil;
+    
+    NSDictionary *range = [_curProxy getAnalogyGainRange];
+    dbMax = [[range objectForKey:@"max"] floatValue];
+    dbMin = [[range objectForKey:@"min"] floatValue];
+    
+    if(dbMax - dbMin > 0)
+    {
+        float value = [_curProxy getAnalogyGain];
+        NSString *valueStr= [NSString stringWithFormat:@"%0.1f dB", value];
+        labelL1.text = valueStr;
+        
+        float percent = (value - dbMin)/(dbMax - dbMin);
+        [analogyDbSlider setCircleValue:percent];
+    }
+    
+    BOOL isMute = [_curProxy isProxyMute];
+    if(isMute)
+    {
+        [muteBtn changeNormalColor:THEME_RED_COLOR];
+    }
+    else
+    {
+        [muteBtn changeNormalColor:RGB(75, 163, 202)];
+    }
+    
+    BOOL isInvert = [_curProxy getInverted];
+    if(isInvert)
+    {
+        [invertBtn changeNormalColor:THEME_RED_COLOR];
+    }
+    else
+    {
+        [invertBtn changeNormalColor:RGB(75, 163, 202)];
+    }
+}
+
+
 
 - (void) contentViewComps{
     int btnStartX = 250;
     int btnY = 150;
     
     UILabel *addLabel2 = [[UILabel alloc] init];
-    addLabel2.text = @"频率 (Hz)";
+    addLabel2.text = @"编组";
     addLabel2.font = [UIFont boldSystemFontOfSize: 14];
     addLabel2.textColor = [UIColor whiteColor];
     addLabel2.frame = CGRectMake(btnStartX, btnY -30, 120, 20);
@@ -104,7 +171,7 @@
     lineBtn.layer.borderWidth = 2;
     lineBtn.layer.borderColor = [UIColor clearColor].CGColor;;
     lineBtn.clipsToBounds = YES;
-    [lineBtn setTitle:@"  0db" forState:UIControlStateNormal];
+    [lineBtn setTitle:@"  " forState:UIControlStateNormal];
     lineBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     lineBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     UIImageView *icon = [[UIImageView alloc]
@@ -118,20 +185,22 @@
       forControlEvents:UIControlEventTouchUpInside];
     [contentView addSubview:lineBtn];
     
-    UIButton *zerodbBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
-    zerodbBtn.frame = CGRectMake(CGRectGetMaxX(lineBtn.frame)+20, btnY, 50, 30);
-    zerodbBtn.layer.cornerRadius = 5;
-    zerodbBtn.layer.borderWidth = 2;
-    zerodbBtn.layer.borderColor = [UIColor clearColor].CGColor;;
-    zerodbBtn.clipsToBounds = YES;
-    [zerodbBtn setTitle:@"  反相" forState:UIControlStateNormal];
-    zerodbBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-    zerodbBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    [contentView addSubview:zerodbBtn];
+    invertBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    invertBtn.frame = CGRectMake(CGRectGetMaxX(lineBtn.frame)+20, btnY, 50, 30);
+    invertBtn.layer.cornerRadius = 5;
+    invertBtn.layer.borderWidth = 2;
+    invertBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    invertBtn.clipsToBounds = YES;
+    [invertBtn setTitle:@"  反相" forState:UIControlStateNormal];
+    invertBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+    invertBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [contentView addSubview:invertBtn];
+    [invertBtn addTarget:self
+                action:@selector(invertBtnAction:)
+      forControlEvents:UIControlEventTouchUpInside];
     
-    
-    UIButton *muteBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
-    muteBtn.frame = CGRectMake(CGRectGetMaxX(zerodbBtn.frame)+10, btnY, 50, 30);
+    muteBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    muteBtn.frame = CGRectMake(CGRectGetMaxX(invertBtn.frame)+10, btnY, 50, 30);
     muteBtn.layer.cornerRadius = 5;
     muteBtn.layer.borderWidth = 2;
     muteBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -151,13 +220,13 @@
     addLabel.frame = CGRectMake(630, 120, 120, 20);
     [contentView addSubview:addLabel];
     
-    SlideButton *xielvSlider3 = [[SlideButton alloc] initWithFrame:CGRectMake(600, 135, 120, 120)];
-    xielvSlider3._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
-    xielvSlider3._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
-    [xielvSlider3 enableValueSet:YES];
-    xielvSlider3.delegate = self;
-    xielvSlider3.tag = 3;
-    [contentView addSubview:xielvSlider3];
+    analogyDbSlider = [[SlideButton alloc] initWithFrame:CGRectMake(600, 135, 120, 120)];
+    analogyDbSlider._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
+    analogyDbSlider._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
+    [analogyDbSlider enableValueSet:YES];
+    analogyDbSlider.delegate = self;
+    analogyDbSlider.tag = 3;
+    [contentView addSubview:analogyDbSlider];
     
     labelL1 = [[UILabel alloc] initWithFrame:CGRectMake(600, 135+120, 120, 20)];
     labelL1.text = @"0";
@@ -169,10 +238,19 @@
 
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
-    int k = (value *24)-12;
-    NSString *valueStr= [NSString stringWithFormat:@"%d", k];
+    if(dbMax - dbMin > 0)
+    {
+        float k = (value *(dbMax-dbMin)) + dbMin;
+        NSString *valueStr= [NSString stringWithFormat:@"%0.1f dB", k];
+        labelL1.text = valueStr;
     
-    labelL1.text = valueStr;
+        if(_curProxy)
+        {
+            [_curProxy controlDeviceDb:k force:YES];
+        }
+    }
+    
+    
 }
 
 -(void) bianzuAction:(id) sender {
@@ -182,8 +260,44 @@
     
 }
 
--(void) muteBtnAction:(id) sender {
+
+-(void) invertBtnAction:(UIButton*) sender {
     
+    if(_curProxy)
+    {
+        BOOL isInvert = [_curProxy getInverted];
+        [_curProxy controlInverted:!isInvert];
+        
+        
+        isInvert = [_curProxy getInverted];
+        if(isInvert)
+        {
+            [invertBtn changeNormalColor:THEME_RED_COLOR];
+        }
+        else
+        {
+            [invertBtn changeNormalColor:RGB(75, 163, 202)];
+        }
+    }
+}
+
+-(void) muteBtnAction:(UIButton*) sender {
+    
+    if(_curProxy)
+    {
+        BOOL isMute = [_curProxy isProxyMute];
+        [_curProxy controlDeviceMute:!isMute];
+        
+        isMute = [_curProxy isProxyMute];
+        if(isMute)
+        {
+            [muteBtn changeNormalColor:THEME_RED_COLOR];
+        }
+        else
+        {
+            [muteBtn changeNormalColor:RGB(75, 163, 202)];
+        }
+    }
 }
 
 @end

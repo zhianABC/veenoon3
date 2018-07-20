@@ -33,7 +33,7 @@
 {
     if(self = [super initWithFrame:frame])
     {
-        _currentObj = audioMix;
+       self._currentObj = audioMix;
         
         CGRect rc = CGRectMake(0, 40, frame.size.width, 320);
         UIView *bgv = [[UIView alloc] initWithFrame:rc];

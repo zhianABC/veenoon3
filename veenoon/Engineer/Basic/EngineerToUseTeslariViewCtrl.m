@@ -59,8 +59,6 @@
 @synthesize _portDrivers;
 @synthesize _mapFlash;
 
-@synthesize _meetingRoomDic;
-
 - (void) dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -319,8 +317,6 @@
 - (void) saveAction:(UIButton*)sender{
     
     EngineerPresetScenarioViewCtrl *ctrl = [[EngineerPresetScenarioViewCtrl alloc] init];
-    ctrl._meetingRoomDic = self._meetingRoomDic;
-    
     NSMutableDictionary *selectedSysDic = [[NSMutableDictionary alloc] init];
     
     [selectedSysDic setObject:_audioDrivers forKey:@"audio"];
@@ -808,8 +804,7 @@
 - (void) okAction:(id)sender{
     
     EngineerPresetScenarioViewCtrl *ctrl = [[EngineerPresetScenarioViewCtrl alloc] init];
-    ctrl._meetingRoomDic = self._meetingRoomDic;
-    
+
     NSMutableDictionary *selectedSysDic = [[NSMutableDictionary alloc] init];
     
     [selectedSysDic setObject:_audioDrivers forKey:@"audio"];

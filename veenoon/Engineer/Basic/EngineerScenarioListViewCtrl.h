@@ -10,10 +10,8 @@
 #import "BaseViewController.h"
 
 @interface EngineerScenarioListViewCtrl : UIViewController {
-    NSMutableDictionary *_meetingRoomDic;
+    
 }
-@property (nonatomic,strong) NSMutableDictionary *_meetingRoomDic;
-
 @property (nonatomic,strong) NSMutableDictionary *_selectedDevices;
 
 @end

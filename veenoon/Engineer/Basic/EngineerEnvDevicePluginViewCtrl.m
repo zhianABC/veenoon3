@@ -10,7 +10,6 @@
 #import "CenterCustomerPickerView.h"
 #import "UIButton+Color.h"
 #import "IconCenterTextButton.h"
-#import "AdjustAudioVideoEnvSettingsViewCtrl.h"
 #import "EDimmerLight.h"
 #import "DataSync.h"
 #import "EnginnerChuanGanDevicePluginViewCtrl.h"
@@ -48,7 +47,6 @@
 @end
 
 @implementation EngineerEnvDevicePluginViewCtrl
-@synthesize _meetingRoomDic;
 @synthesize _selectedSysDic;
 
 @synthesize _currentBrands;
@@ -666,7 +664,6 @@
     
     EnginnerChuanGanDevicePluginViewCtrl *ctrl = [[EnginnerChuanGanDevicePluginViewCtrl alloc] init];
     ctrl._selectedSysDic = self._selectedSysDic;
-    ctrl._meetingRoomDic = _meetingRoomDic;
     [self.navigationController pushViewController:ctrl animated:YES];
     
 }

@@ -24,6 +24,10 @@
 - (NSString *)dbPath;
 
 
+- (int) saveMeetingRoom:(NSDictionary*)room;
+- (NSMutableArray*) getMeetingRooms;
+
+
 - (int) saveScenario:(NSDictionary*)scenario;
 - (int) deleteScenario:(NSDictionary*)scenario;
 - (void) deleteScenarioByRoom:(int)room_id;

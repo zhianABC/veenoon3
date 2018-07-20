@@ -130,6 +130,7 @@
 - (NSDictionary*)getNoiseGateOptions;
 - (NSDictionary*)getPressLimitOptions;
 - (NSDictionary*)getSetDelayOptions;
+- (NSDictionary*)getAnalogyGainRange;
 - (NSArray*)getHighFilters;
 - (NSArray*)getHighSL;
 - (NSDictionary*)getHighRateRange;

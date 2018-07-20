@@ -232,16 +232,20 @@
             min++;
         }
         _peoplePicker._pickerDataArray = @[@{@"values":pickerArray}];
-        
-        _peoplePicker.hidden=NO;
+        _peoplePicker.hidden = NO;
         
         int priority = _processor._proxyObj._fayanPriority;
         
         NSString *priorityStr = [NSString stringWithFormat:@"%d", priority];
         
-        int index = (int) [pickerArray indexOfObject:priorityStr];
+        //先判断有没有
+        if([pickerArray containsObject:priorityStr])
+        {
         
-        [_peoplePicker selectRow:index inComponent:0];
+            int index = (int) [pickerArray indexOfObject:priorityStr];
+            if(index >=0 && index < [pickerArray count])
+                [_peoplePicker selectRow:index inComponent:0];
+        }
     }
 }
 -(void) didScrollPickerValue:(NSString*)brand{

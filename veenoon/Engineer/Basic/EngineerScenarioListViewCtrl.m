@@ -27,7 +27,6 @@
 @end
 
 @implementation EngineerScenarioListViewCtrl
-@synthesize _meetingRoomDic;
 @synthesize _sBtns;
 @synthesize _map;
 @synthesize _selectedDevices;
@@ -36,8 +35,6 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = BLACK_COLOR;
-    
-    [self initData];
     
     self._sBtns = [NSMutableArray array];
     self._map = [NSMutableDictionary dictionary];
@@ -171,7 +168,6 @@
 
     
     EngineerPresetScenarioViewCtrl *ctrl = [[EngineerPresetScenarioViewCtrl alloc] init];
-    ctrl._meetingRoomDic = self._meetingRoomDic;
     ctrl._selectedDevices = _selectedDevices;
     [self.navigationController pushViewController:ctrl animated:YES];
 //
@@ -220,39 +216,5 @@
     
 }
 
--(void) initData {
-    if (_meetingRoomDic) {
-        [_meetingRoomDic removeAllObjects];
-    } else {
-        _meetingRoomDic = [[NSMutableDictionary alloc] init];
-    }
-    NSMutableArray *scenarioArray = [_meetingRoomDic objectForKey:@"scenarioArray"];
-    
-    NSMutableDictionary *scenarioDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"离开会议1", @"scenarioName",
-    nil];
-    NSMutableDictionary *scenarioDic2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"离开会议2", @"scenarioName",
-                                         nil];
-    NSMutableDictionary *scenarioDic3 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"离开会议3", @"scenarioName",
-                                         nil];
-    NSMutableDictionary *scenarioDic4 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"离开会议4", @"scenarioName",
-                                         nil];
-    NSMutableDictionary *scenarioDic5 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"离开会议5", @"scenarioName",
-                                         nil];
-    NSMutableDictionary *scenarioDic6 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"离开会议6", @"scenarioName",
-                                         nil];
-    NSMutableDictionary *scenarioDic7 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"离开会议7", @"scenarioName",
-                                         nil];
-    NSMutableDictionary *scenarioDic8 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"离开会议8", @"scenarioName",
-                                         nil];
-    NSMutableDictionary *scenarioDic9 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"离开会议9", @"scenarioName",
-                                         nil];
-    NSMutableDictionary *scenarioDic10 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"离开会议10", @"scenarioName",
-                                         nil];
-    NSMutableDictionary *scenarioDic11 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"离开会议11", @"scenarioName",
-                                         nil];
-    scenarioArray = [NSMutableArray arrayWithObjects:scenarioDic, scenarioDic2, scenarioDic3, scenarioDic4, scenarioDic5, scenarioDic6, scenarioDic7, scenarioDic8, scenarioDic9, scenarioDic10, scenarioDic11, nil];
-    
-    [_meetingRoomDic setObject:scenarioArray forKey:@"scenarioArray"];
-}
 
 @end
