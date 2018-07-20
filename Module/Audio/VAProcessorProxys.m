@@ -504,6 +504,8 @@
             [self._cmdMap setObject:cmd forKey:cmd.name];
         }
     
+        _isSetOK = YES;
+        
         [self initDatasAfterPullData];
     }
 }

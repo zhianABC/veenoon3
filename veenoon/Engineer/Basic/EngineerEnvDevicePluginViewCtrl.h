@@ -10,9 +10,8 @@
 #import "BaseViewController.h"
 
 @interface EngineerEnvDevicePluginViewCtrl : UIViewController {
-    NSMutableDictionary *_meetingRoomDic;
-    NSMutableDictionary *_selectedSysDic;
+    
+    
 }
-@property (nonatomic,strong) NSMutableDictionary *_meetingRoomDic;
 @property (nonatomic,strong) NSMutableDictionary *_selectedSysDic;
 @end

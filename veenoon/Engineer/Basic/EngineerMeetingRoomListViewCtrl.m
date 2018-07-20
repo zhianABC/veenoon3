@@ -614,20 +614,28 @@
 
 - (void) enterRoom{
     
-    [DataCenter defaultDataCenter]._roomData = _meetingRoomDic;
-    [_meetingRoomDic setObject:_regulus_user_id forKey:@"user_id"];
-    [[DataBase sharedDatabaseInstance] saveMeetingRoom:_meetingRoomDic];
     
-    [KVNProgress dismiss];
-    
-    [DataSync sharedDataSync]._currentReglusLogged = @{@"gw_id":_regulus_gateway_id,
-                                                       @"user_id":_regulus_user_id
-                                                       };
-   
-    EngineerSysSelectViewCtrl *lctrl = [[EngineerSysSelectViewCtrl alloc] init];
-    lctrl._meetingRoomDic = _meetingRoomDic;
-    [self.navigationController pushViewController:lctrl animated:YES];
+    if(_meetingRoomDic)
+    {
+        [DataCenter defaultDataCenter]._roomData = [NSMutableDictionary dictionaryWithDictionary:_meetingRoomDic];
+        
+        [_meetingRoomDic setObject:_regulus_user_id forKey:@"user_id"];
+        [[DataBase sharedDatabaseInstance] saveMeetingRoom:_meetingRoomDic];
+        
+        [KVNProgress dismiss];
+        
+        [DataSync sharedDataSync]._currentReglusLogged = @{@"gw_id":_regulus_gateway_id,
+                                                           @"user_id":_regulus_user_id
+                                                           };
+        
+        
+        NSLog(@"Login Room --------- %@", [[DataCenter defaultDataCenter]._roomData description]);
+        
+        EngineerSysSelectViewCtrl *lctrl = [[EngineerSysSelectViewCtrl alloc] init];
+        [self.navigationController pushViewController:lctrl animated:YES];
 
+    }
+    
     
 }
 

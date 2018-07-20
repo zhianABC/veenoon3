@@ -104,7 +104,6 @@
 @end
 
 @implementation EngineerPresetScenarioViewCtrl
-@synthesize _meetingRoomDic;
 @synthesize _scenarioName;
 
 @synthesize _audioCells;
@@ -130,13 +129,6 @@
     self._envCells = [NSMutableArray array];
     self._deleteCells = [NSMutableArray array];
   
-    
-    if (_meetingRoomDic) {
-        [_meetingRoomDic removeAllObjects];
-    } else {
-        _meetingRoomDic = [[NSMutableDictionary alloc] init];
-    }
-    
     if(_scenario == nil)
     {
         NSDictionary *room = [DataCenter defaultDataCenter]._roomData;
@@ -207,7 +199,7 @@
             {
                 if(btn._isEdited)
                 {
-                    haveEdited = NO;
+                    haveEdited = YES;
                     break;
                 }
             }

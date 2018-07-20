@@ -23,7 +23,6 @@
 @end
 
 @implementation EngineerNewTeslariViewCtrl
-@synthesize _meetingRoomDic;
 @synthesize _mapDrivers;
 @synthesize _driver_objs;
 @synthesize _area_objs;
@@ -88,7 +87,7 @@
 #if LOGIN_REGULUS
     
     //创建Area
-    [[DataSync sharedDataSync] syncCurrentArea];
+    //[[DataSync sharedDataSync] syncCurrentArea];
     
     //获取Regulus支持的插件
     [[DataSync sharedDataSync] syncRegulusDrivers];
@@ -102,7 +101,6 @@
 - (void) okAction:(id)sender{
     
     EngineerAudioDevicePluginViewCtrl *ctrl = [[EngineerAudioDevicePluginViewCtrl alloc] init];
-    ctrl._meetingRoomDic = self._meetingRoomDic;
     NSMutableDictionary *selectedSysDic = [[NSMutableDictionary alloc] init];
     ctrl._selectedSysDic = selectedSysDic;
     

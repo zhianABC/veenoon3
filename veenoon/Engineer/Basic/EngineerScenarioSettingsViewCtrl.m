@@ -32,6 +32,7 @@
 }
 @property (nonatomic, strong) NSMutableArray *_sBtns;
 @property (nonatomic, strong) NSMutableDictionary *_map;
+@property (nonatomic, assign) int _room_id;
 
 @end
 
@@ -441,19 +442,12 @@
     else
     {
         NSMutableDictionary *devicesSel = [DataCenter defaultDataCenter]._selectedDevice;
-        NSMutableDictionary *roomDic = [DataCenter defaultDataCenter]._roomData;
         if(devicesSel)
         {
             EngineerNewTeslariViewCtrl *ctrl = [[EngineerNewTeslariViewCtrl alloc] init];
-            ctrl._meetingRoomDic = roomDic;
-            //ctrl._selectedDevices = _selectedDevices;
             [self.navigationController pushViewController:ctrl animated:YES];
 
-            
-//            EngineerScenarioListViewCtrl *ctrl = [[EngineerScenarioListViewCtrl alloc] init];
-//            ctrl._selectedDevices = devicesSel;
-//            ctrl._meetingRoomDic = roomDic;
-//            [self.navigationController pushViewController:ctrl animated:YES];
+
         }
         else
         {
@@ -462,7 +456,6 @@
 //            [self.navigationController pushViewController:ctrl animated:YES];
 
             EngineerNewTeslariViewCtrl *ctrl = [[EngineerNewTeslariViewCtrl alloc] init];
-            ctrl._meetingRoomDic = roomDic;
             //ctrl._selectedDevices = _selectedDevices;
             [self.navigationController pushViewController:ctrl animated:YES];
             

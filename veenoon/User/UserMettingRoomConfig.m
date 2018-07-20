@@ -250,7 +250,8 @@
 
 - (void) checkSceneDriver:(NSArray*)scenes{
     
-    NSArray* savedScenarios = [[DataBase sharedDatabaseInstance] getSavedScenario:1];
+    int room_id = [[meetingRoomDic objectForKey:@"room_id"] intValue];
+    NSArray* savedScenarios = [[DataBase sharedDatabaseInstance] getSavedScenario:room_id];
     
     NSMutableDictionary *map = [NSMutableDictionary dictionary];
     for(NSMutableDictionary *senario in savedScenarios)

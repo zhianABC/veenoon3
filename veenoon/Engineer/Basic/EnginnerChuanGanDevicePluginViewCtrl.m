@@ -34,7 +34,6 @@
 @end
 
 @implementation EnginnerChuanGanDevicePluginViewCtrl
-@synthesize _meetingRoomDic;
 @synthesize _selectedSysDic;
 
 @synthesize _currentBrands;
@@ -331,7 +330,6 @@
     
     EngineerPortPluginViewCtrl *ctrl = [[EngineerPortPluginViewCtrl alloc] init];
     ctrl._selectedSysDic = self._selectedSysDic;
-    ctrl._meetingRoomDic = _meetingRoomDic;
     [self.navigationController pushViewController:ctrl animated:YES];
     
 }
