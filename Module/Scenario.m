@@ -46,9 +46,11 @@
 
 #import "DataBase.h"
 
+#import "WebClient.h"
+
 @interface Scenario ()
 {
-    
+    WebClient *_client;
 }
 @property (nonatomic, strong) RgsDriverObj *_rgsDriver;
 @property (nonatomic, strong) RgsSceneObj *_rgsScene;
@@ -163,6 +165,38 @@
     
     [self recoverDriverEvent];
 
+}
+
+- (void) uploadToServer{
+    
+    if(regulus_id == nil)
+    {
+        return;
+    }
+    
+    if(_client == nil)
+    {
+        _client = [[WebClient alloc] initWithDelegate:self];
+    }
+    
+    _client._method = @"/addroom";
+    _client._httpMethod = @"POST";
+    
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    
+    _client._requestParam = param;
+    
+    [param setObject:@"1" forKey:@"userID"];
+    [param setObject:regulus_id forKey:@"regulusUserID"];
+    [param setObject:regulusid forKey:@"regulusID"];
+    [param setObject:@"房间" forKey:@"roomName"];
+    [param setObject:@"111111" forKey:@"regulusPassword"];
+    
+    [_client requestWithSusessBlock:^(id lParam, id rParam) {
+        
+    } FailBlock:^(id lParam, id rParam) {
+    
+    }];
 }
 
 - (void) recoverDriverEvent{
