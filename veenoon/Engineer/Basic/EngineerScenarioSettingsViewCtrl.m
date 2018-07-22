@@ -419,6 +419,8 @@
                 if([tL isKindOfClass:[UILabel class]])
                     tL.text = scenarioName;
                 
+                [s updateProperty];
+                
                 [[DataBase sharedDatabaseInstance] saveScenario:sdic];
             }
         }
@@ -522,6 +524,8 @@
                     
                     if([tL isKindOfClass:[UILabel class]])
                         tL.text = title;
+                    
+                    [s updateProperty];
                     
                     [[DataBase sharedDatabaseInstance] saveScenario:scenarioDic];
                 }

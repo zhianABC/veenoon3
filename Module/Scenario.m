@@ -45,8 +45,10 @@
 #import "VDVDPlayerProxy.h"
 
 #import "DataBase.h"
+#import "DataCenter.h"
 
 #import "WebClient.h"
+#import "MeetingRoom.h"
 
 @interface Scenario ()
 {
@@ -85,6 +87,13 @@
     {
         
         self.regulus_id = nil;
+        
+        MeetingRoom *room = [DataCenter defaultDataCenter]._currentRoom;
+        if(room)
+        {
+            self.regulus_id = room.regulus_id;
+        }
+        
         [self initData];
        
     }
@@ -129,7 +138,6 @@
     
     self._rgsDriver = [[RgsDriverObj alloc] init];
     _rgsDriver.m_id = [[data objectForKey:@"s_driver_id"] intValue];
-    
     
     NSArray *audios = [data objectForKey:@"audio"];
     for(NSDictionary *a in audios){
@@ -179,7 +187,7 @@
         _client = [[WebClient alloc] initWithDelegate:self];
     }
     
-    _client._method = @"/addroom";
+    _client._method = @"/addscenario";
     _client._httpMethod = @"POST";
     
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -187,15 +195,83 @@
     _client._requestParam = param;
     
     [param setObject:@"1" forKey:@"userID"];
-    [param setObject:regulus_id forKey:@"regulusUserID"];
-    [param setObject:regulusid forKey:@"regulusID"];
-    [param setObject:@"房间" forKey:@"roomName"];
-    [param setObject:@"111111" forKey:@"regulusPassword"];
+    [param setObject:regulus_id
+              forKey:@"regulusID"];
+    [param setObject:[NSString stringWithFormat:@"%d", (int)_rgsDriver.m_id]
+              forKey:@"driverID"];
+    
+    NSString *name = [_scenarioData objectForKey:@"name"];
+    NSString *en_name = [_scenarioData objectForKey:@"en_name"];
+    
+    if(name)
+        [param setObject:name forKey:@"scenarioCName"];
+    if(en_name)
+        [param setObject:en_name forKey:@"scenarioEName"];
+    
+    NSError *error = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_scenarioData
+                                                       options:NSJSONWritingPrettyPrinted
+                                                         error: &error];
+    
+    NSString *jsonresult = [[NSString alloc] initWithData:jsonData
+                                                 encoding:NSUTF8StringEncoding];
+    
+    if(jsonresult == nil)
+        jsonresult  = @"";
+    
+    [param setObject:jsonresult forKey:@"scenarioContent"];
     
     [_client requestWithSusessBlock:^(id lParam, id rParam) {
         
     } FailBlock:^(id lParam, id rParam) {
     
+    }];
+}
+
+- (void) updateProperty{
+    
+    if(regulus_id == nil)
+    {
+        return;
+    }
+    
+    if(_client == nil)
+    {
+        _client = [[WebClient alloc] initWithDelegate:self];
+    }
+    
+    _client._method = @"/updatescenarionameicon";
+    _client._httpMethod = @"POST";
+    
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    
+    _client._requestParam = param;
+    
+    [param setObject:regulus_id
+              forKey:@"regulusID"];
+    [param setObject:[NSString stringWithFormat:@"%d", (int)_rgsDriver.m_id]
+              forKey:@"driverID"];
+    
+    NSString *name = [_scenarioData objectForKey:@"name"];
+    NSString *en_name = [_scenarioData objectForKey:@"en_name"];
+    
+    if(name)
+        [param setObject:name forKey:@"scenarioCName"];
+    if(en_name)
+        [param setObject:en_name forKey:@"scenarioEName"];
+    
+    NSString *smallIcon = [_scenarioData objectForKey:@"small_icon"];
+    NSString *userIcon = [_scenarioData objectForKey:@"icon_user"];
+    
+    if(smallIcon)
+        [param setObject:smallIcon forKey:@"scenarioPic"];
+    if(userIcon)
+        [param setObject:userIcon forKey:@"userPic"];
+    
+    [_client requestWithSusessBlock:^(id lParam, id rParam) {
+        
+    } FailBlock:^(id lParam, id rParam) {
+        
     }];
 }
 
@@ -229,8 +305,12 @@
     
     if(success)
     {
+        [_scenarioData setObject:regulus_id forKey:@"regulus_id"];
+        
         //保存数据库
         [[DataBase sharedDatabaseInstance] saveScenario:_scenarioData];
+        
+        [self uploadToServer];
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"Notify_Scenario_Create_Result"
