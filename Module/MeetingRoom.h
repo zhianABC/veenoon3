@@ -25,6 +25,7 @@
 
 @property (nonatomic, strong) NSArray *_scenarioArray;
 
+- (id) initWithDictionary:(NSDictionary*)info;
 
 - (void) syncAreaToServer;
 

@@ -57,10 +57,8 @@
 		04DE1E921AD6AEE000D49E2F /* UserDefaultsKV.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DE1E1D1AD6AEE000D49E2F /* UserDefaultsKV.m */; };
 		04DE1E931AD6AEE000D49E2F /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DE1E1F1AD6AEE000D49E2F /* Utilities.m */; };
 		04DE1E9D1AD6AEE000D49E2F /* DataCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DE1E391AD6AEE000D49E2F /* DataCenter.m */; };
-		04DE1E9F1AD6AEE000D49E2F /* iHttpAdmin.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DE1E3D1AD6AEE000D49E2F /* iHttpAdmin.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		04DE1E9F1AD6AEE000D49E2F /* iHttpAdmin.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DE1E3D1AD6AEE000D49E2F /* iHttpAdmin.m */; };
 		04DE1EA01AD6AEE000D49E2F /* WebClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DE1E3F1AD6AEE000D49E2F /* WebClient.m */; };
-		04DE1EA11AD6AEE000D49E2F /* NetworkChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DE1E431AD6AEE000D49E2F /* NetworkChecker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		04DE1EA21AD6AEE000D49E2F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DE1E451AD6AEE000D49E2F /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		04DE1EA31AD6AEE000D49E2F /* SBJson4Parser.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DE1E4A1AD6AEE000D49E2F /* SBJson4Parser.m */; };
 		04DE1EA41AD6AEE000D49E2F /* SBJson4StreamParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DE1E4C1AD6AEE000D49E2F /* SBJson4StreamParser.m */; };
 		04DE1EA51AD6AEE000D49E2F /* SBJson4StreamParserState.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DE1E4E1AD6AEE000D49E2F /* SBJson4StreamParserState.m */; };
@@ -161,6 +159,8 @@
 		341CE4A320A4165C009DBC01 /* DriverPropertyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 341CE4A220A4165C009DBC01 /* DriverPropertyView.m */; };
 		341CE4A520A42016009DBC01 /* connect_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 341CE4A420A42015009DBC01 /* connect_icon@2x.png */; };
 		341CE4A820A428D9009DBC01 /* ComDriver.m in Sources */ = {isa = PBXBuildFile; fileRef = 341CE4A720A428D9009DBC01 /* ComDriver.m */; };
+		341E652621045A41007EB685 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 341E652221045A41007EB685 /* Reachability.m */; };
+		341E652721045A42007EB685 /* NetworkChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 341E652321045A41007EB685 /* NetworkChecker.m */; };
 		341E75E4209BF94C00E69DB2 /* VAProcessorProxys.m in Sources */ = {isa = PBXBuildFile; fileRef = 341E75E3209BF94C00E69DB2 /* VAProcessorProxys.m */; };
 		341E7BE5205BFD7400E2DEA0 /* back_white_ico@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 341E7BE4205BFD7300E2DEA0 /* back_white_ico@2x.png */; };
 		341FFA2120F1C8C6008CD558 /* HLFilterGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341FFA2020F1C8C6008CD558 /* HLFilterGraphView.swift */; };
@@ -1017,10 +1017,6 @@
 		04DE1E3D1AD6AEE000D49E2F /* iHttpAdmin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iHttpAdmin.m; sourceTree = "<group>"; };
 		04DE1E3E1AD6AEE000D49E2F /* WebClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebClient.h; sourceTree = "<group>"; };
 		04DE1E3F1AD6AEE000D49E2F /* WebClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebClient.m; sourceTree = "<group>"; };
-		04DE1E421AD6AEE000D49E2F /* NetworkChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkChecker.h; sourceTree = "<group>"; };
-		04DE1E431AD6AEE000D49E2F /* NetworkChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkChecker.m; sourceTree = "<group>"; };
-		04DE1E441AD6AEE000D49E2F /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		04DE1E451AD6AEE000D49E2F /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		04DE1E481AD6AEE000D49E2F /* SBJson4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson4.h; sourceTree = "<group>"; };
 		04DE1E491AD6AEE000D49E2F /* SBJson4Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJson4Parser.h; sourceTree = "<group>"; };
 		04DE1E4A1AD6AEE000D49E2F /* SBJson4Parser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJson4Parser.m; sourceTree = "<group>"; };
@@ -1160,6 +1156,10 @@
 		341CE4A420A42015009DBC01 /* connect_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "connect_icon@2x.png"; sourceTree = "<group>"; };
 		341CE4A620A428D9009DBC01 /* ComDriver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComDriver.h; sourceTree = "<group>"; };
 		341CE4A720A428D9009DBC01 /* ComDriver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComDriver.m; sourceTree = "<group>"; };
+		341E652221045A41007EB685 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		341E652321045A41007EB685 /* NetworkChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkChecker.m; sourceTree = "<group>"; };
+		341E652421045A41007EB685 /* NetworkChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkChecker.h; sourceTree = "<group>"; };
+		341E652521045A41007EB685 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		341E75E2209BF94C00E69DB2 /* VAProcessorProxys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VAProcessorProxys.h; sourceTree = "<group>"; };
 		341E75E3209BF94C00E69DB2 /* VAProcessorProxys.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VAProcessorProxys.m; sourceTree = "<group>"; };
 		341E7BE4205BFD7300E2DEA0 /* back_white_ico@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back_white_ico@2x.png"; sourceTree = "<group>"; };
@@ -2403,6 +2403,7 @@
 		04DE1E201AD6AEE000D49E2F /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				341E652121045A41007EB685 /* NetWork */,
 				04DE1E371AD6AEE000D49E2F /* Configure.h */,
 				04DE1E381AD6AEE000D49E2F /* DataCenter.h */,
 				04DE1E391AD6AEE000D49E2F /* DataCenter.m */,
@@ -2420,23 +2421,11 @@
 				34766EB820CE2237006B9E82 /* Base64 */,
 				049ECA8E1C8D694400A611D8 /* Encoder */,
 				049ECA531C8D4B8A00A611D8 /* ZBarSDK */,
-				04DE1E411AD6AEE000D49E2F /* NetWork */,
 				04DE1E461AD6AEE000D49E2F /* SBJSON4 */,
 				04DE1E571AD6AEE000D49E2F /* SDWebImage */,
 			);
 			path = SupportAddons;
 			sourceTree = SOURCE_ROOT;
-		};
-		04DE1E411AD6AEE000D49E2F /* NetWork */ = {
-			isa = PBXGroup;
-			children = (
-				04DE1E421AD6AEE000D49E2F /* NetworkChecker.h */,
-				04DE1E431AD6AEE000D49E2F /* NetworkChecker.m */,
-				04DE1E441AD6AEE000D49E2F /* Reachability.h */,
-				04DE1E451AD6AEE000D49E2F /* Reachability.m */,
-			);
-			path = NetWork;
-			sourceTree = "<group>";
 		};
 		04DE1E461AD6AEE000D49E2F /* SBJSON4 */ = {
 			isa = PBXGroup;
@@ -3098,6 +3087,17 @@
 				341C60ED1FDD0DBF003A5490 /* a_room_4@2x.png */,
 			);
 			path = audio;
+			sourceTree = "<group>";
+		};
+		341E652121045A41007EB685 /* NetWork */ = {
+			isa = PBXGroup;
+			children = (
+				341E652521045A41007EB685 /* Reachability.h */,
+				341E652221045A41007EB685 /* Reachability.m */,
+				341E652321045A41007EB685 /* NetworkChecker.m */,
+				341E652421045A41007EB685 /* NetworkChecker.h */,
+			);
+			path = NetWork;
 			sourceTree = "<group>";
 		};
 		3448D9432073B9590055D48F /* videoprocess */ = {
@@ -4565,6 +4565,7 @@
 				EB795B652042E8A1005D1F47 /* ZiDongHunYin_UIView.m in Sources */,
 				EB09C4A21FD3A00200776540 /* UserAirConditionViewCtrl.m in Sources */,
 				EB478FFC2061341F00EDCD64 /* UserBaseViewControllor.m in Sources */,
+				341E652721045A42007EB685 /* NetworkChecker.m in Sources */,
 				EB1717931FF5E6B600CBDB81 /* EngineerTouYingJiViewCtrl.m in Sources */,
 				EBDB4547205D56D5000ABAB0 /* LightSliderButton.m in Sources */,
 				04DE1EAD1AD6AEE000D49E2F /* SDWebImageCompat.m in Sources */,
@@ -4619,7 +4620,6 @@
 				341C784D2050185200DD1677 /* IconLayerView.m in Sources */,
 				EB7333FA204108B000AE60B8 /* AddWetRightView.m in Sources */,
 				04DE1DD81AD68C5E00D49E2F /* main.m in Sources */,
-				04DE1EA11AD6AEE000D49E2F /* NetworkChecker.m in Sources */,
 				EB1717901FF5E44B00CBDB81 /* EngineerLuBoJiViewController.m in Sources */,
 				EBECD4542053AF5000F5474D /* CenterCustomerPickerView.m in Sources */,
 				EB5F7F951FD59D6B00351888 /* EngineerPortSettingView.m in Sources */,
@@ -4636,10 +4636,10 @@
 				04DE1EB41AD6AEE000D49E2F /* UIImage+GIF.m in Sources */,
 				EB3B73B51FE6395C001941CF /* EngineerSliderView.m in Sources */,
 				3495268420F0E07600A6BF00 /* VTVSetProxy.m in Sources */,
-				04DE1EA21AD6AEE000D49E2F /* Reachability.m in Sources */,
 				EB1717971FF5F5AB00CBDB81 /* EngineerLightViewController.m in Sources */,
 				3495267E20F091E700A6BF00 /* EngineerDimmerSwitchViewController.m in Sources */,
 				EB17178D1FF5DF6B00CBDB81 /* EngineerTVViewController.m in Sources */,
+				341E652621045A41007EB685 /* Reachability.m in Sources */,
 				04DE1EA91AD6AEE000D49E2F /* SBJson4Writer.m in Sources */,
 				349DADE5206E8D02001593DE /* AudioEWirlessMeetingSys.m in Sources */,
 				EBD79C0F204BBC2400FD534C /* YinPinProcessCodeUIView.m in Sources */,

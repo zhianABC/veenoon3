@@ -82,7 +82,7 @@
 		[dic removeObjectForKey:@"baseUrl"];
 	}
 	
-    [_httpAdmin postUrlRequestWithBody:url body:_body];
+    //[_httpAdmin postUrlRequestWithBody:url body:_body];
     
 }
 

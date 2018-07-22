@@ -38,6 +38,28 @@
     return self;
 }
 
+- (id) initWithDictionary:(NSDictionary *)info
+{
+    
+    if(self = [super init])
+    {
+        
+        self.regulus_id = [info objectForKey:@"regulus_id"];
+        self.regulus_user_id = [info objectForKey:@"regulus_user_id"];
+        self.regulus_password = [info objectForKey:@"regulus_password"];
+        self.room_name = [info objectForKey:@"room_name"];
+        
+        NSString *roomImage = [info objectForKey:@"room_image"];
+        self.room_image = [NSString stringWithFormat:@"%@/%@",WEB_API_URL,roomImage];
+        
+        self.user_id = [[info objectForKey:@"user_id"] intValue];
+        self.area_id = [[info objectForKey:@"area_id"] intValue];
+        self.server_room_id = [[info objectForKey:@"room_id"] intValue];
+    }
+    return self;
+
+}
+
 - (void) syncAreaToServer{
     
     if(_client == nil)

@@ -1,6 +1,6 @@
 //
 //  iHttpAdmin.h
-//
+//  
 //
 //  Created by Jack on 3/12/09.
 //  Copyright 2009 Jack. All rights reserved.
@@ -13,10 +13,9 @@
 
 @interface iHttpAdmin : NSObject {
     
-	id						delegate_;
+	//id						delegate_;
     //data
-    
-	NSURLConnection			*connection;
+
 	NSMutableData			*characterBuffer;
 	//NSAutoreleasePool		*uploadPool;
 	
@@ -25,9 +24,9 @@
 	BOOL					done;
 	
 	NSString				*error_;
-    
+		
 	//ArchiveParser			*archiveParser_;
-    
+		
 	int						curPage;
 	int						curCommentPage_;
 	int						curPublicPage;
@@ -39,24 +38,28 @@
     
 	
 }
-@property (nonatomic, assign) id <iHttpAdminDelegate> delegate_;
-@property (nonatomic, retain) NSURLConnection *connection;
-@property (nonatomic, retain) NSMutableData *characterBuffer;
+@property (nonatomic, weak) id  delegate_;
+@property (nonatomic, strong) NSMutableData *characterBuffer;
+
+@property (nonatomic, strong) NSURLSessionDataTask *_sesstiontask;
+
 //@property (nonatomic, assign) NSAutoreleasePool *uploadPool;
 @property NSInteger errorCode_;
-@property (nonatomic, retain) NSString *error_;
+@property (nonatomic, strong) NSString *error_;
 
 + (NSString*) escapeURIComponent:(NSString*)src;
 
 
 - (void)sendUrlRequest:(NSString*)url param:(NSDictionary*)param;
+- (void)sendUrlRequestWithMethod:(NSString*)url param:(NSDictionary*)param method:(NSString*)method;
 
 - (void)postUrlRequest:(NSString*)url param:(NSDictionary*)param;
-- (void)postUrlRequestWithBody:(NSString*)url body:(NSString*)body;
 
 - (void)postPhotoWithUrlRequest:(NSString *)url param:(NSDictionary *)param;
-- (void) BCR_postPhotoWithUrlRequest:(NSString *)url param:(NSDictionary *)param image:(UIImage*)image;
 
+- (void) postJSONData:(NSString*)url body:(NSData*)body;
+
+- (void) BCR_postPhotoWithUrlRequest:(NSString *)url param:(NSDictionary *)param image:(UIImage*)image;
 @end
 
 

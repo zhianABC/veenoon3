@@ -131,7 +131,7 @@
                                                    
                                                    block_self._regulus_user_id = client_id;
                                                    //NSLog(@"user_id:%@,gw:%@\n",user_id,_gw_id.text);
-                                                   [[NSUserDefaults standardUserDefaults] setObject:@"RGS_EOC500_01" forKey:@"gateway_id"];
+                                                   [[NSUserDefaults standardUserDefaults] setObject:_regulus_gateway_id forKey:@"gateway_id"];
                                                    [[NSUserDefaults standardUserDefaults] setObject:client_id forKey:@"user_id"];
                                                    
                                                    [[NSUserDefaults standardUserDefaults] synchronize];
