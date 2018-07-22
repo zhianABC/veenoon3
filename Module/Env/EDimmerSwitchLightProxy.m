@@ -77,7 +77,8 @@
             self._channelsMap = [NSMutableDictionary dictionaryWithDictionary:ch_level];
         
         if([data objectForKey:@"RgsSceneDeviceOperation"]){
-            self._RgsSceneDeviceOperationShadow = [data objectForKey:@"RgsSceneDeviceOperation"];
+            NSDictionary *dic = [data objectForKey:@"RgsSceneDeviceOperation"];
+            self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionaryWithDictionary:dic];
             _isSetOK = YES;
         }
         
