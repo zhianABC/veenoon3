@@ -430,7 +430,7 @@ static DataBase* sharedInstance = nil;
     
     if(!have)
     {
-        s = @"CREATE TABLE tblCachedScenario(id INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL  UNIQUE, s_driver_id INTEGER, cover TEXT, name TEXT, small_icon TEXT, data BLOB, room_id INTEGER)";
+        s = @"CREATE TABLE tblCachedScenario(id INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL  UNIQUE, s_driver_id INTEGER, cover TEXT, name TEXT, small_icon TEXT, data BLOB, regulus_id TEXT)";
         
         const char * sql = [s UTF8String];
         sqlite3_stmt *delete_statement = nil;
@@ -445,9 +445,9 @@ static DataBase* sharedInstance = nil;
 }
 
 
-- (int) isScenarioExist:(int)s_driver_id room_id:(int)room_id{
+- (int) isScenarioExist:(int)s_driver_id regulus_id:(NSString*)regulus_id{
     
-    NSString *s = [NSString stringWithFormat:@"select * from tblCachedScenario where s_driver_id = ? and room_id = ?"];
+    NSString *s = [NSString stringWithFormat:@"select * from tblCachedScenario where s_driver_id = ? and regulus_id = ?"];
 	const char *sqlStatement = [s UTF8String];
 	sqlite3_stmt *statement;
 	
@@ -458,7 +458,7 @@ static DataBase* sharedInstance = nil;
     }
 	
     sqlite3_bind_int(statement, 1, s_driver_id);
-    sqlite3_bind_int(statement, 2, room_id);
+    sqlite3_bind_text(statement, 2, [regulus_id UTF8String], -1, SQLITE_TRANSIENT);
     
     int bRes = 0;
 	while (sqlite3_step(statement) == SQLITE_ROW) {		
@@ -480,7 +480,7 @@ static DataBase* sharedInstance = nil;
     
     @synchronized (self) {
     
-        const char *sqlStatement = "update tblCachedScenario set cover=?,name=?,small_icon=?,data=? where s_driver_id=? and room_id=?";
+        const char *sqlStatement = "update tblCachedScenario set cover=?,name=?,small_icon=?,data=? where s_driver_id=? and regulus_id=?";
         sqlite3_stmt *statement;
         
         int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
@@ -503,19 +503,21 @@ static DataBase* sharedInstance = nil;
         NSDictionary *data = scenario;
         
         int s_driver_id = [[scenario objectForKey:@"s_driver_id"] intValue];
-        int room_id = [[scenario objectForKey:@"room_id"] intValue];
-        
-        sqlite3_bind_text(statement, 1, [cover UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_text(statement, 2, [name UTF8String], -1, SQLITE_TRANSIENT);
-        sqlite3_bind_text(statement, 3, [small_icon UTF8String], -1, SQLITE_TRANSIENT);
-        
-        NSData *archiveData = [NSKeyedArchiver archivedDataWithRootObject:data];
-        sqlite3_bind_blob(statement, 4, [archiveData bytes], (int)[archiveData length], NULL);
-        
-        sqlite3_bind_int(statement, 5, s_driver_id);
-        sqlite3_bind_int(statement, 6, room_id);
-        
-        success = sqlite3_step(statement);
+        NSString* regulus_id = [scenario objectForKey:@"regulus_id"];
+        if(regulus_id)
+        {
+            sqlite3_bind_text(statement, 1, [cover UTF8String], -1, SQLITE_TRANSIENT);
+            sqlite3_bind_text(statement, 2, [name UTF8String], -1, SQLITE_TRANSIENT);
+            sqlite3_bind_text(statement, 3, [small_icon UTF8String], -1, SQLITE_TRANSIENT);
+            
+            NSData *archiveData = [NSKeyedArchiver archivedDataWithRootObject:data];
+            sqlite3_bind_blob(statement, 4, [archiveData bytes], (int)[archiveData length], NULL);
+            
+            sqlite3_bind_int(statement, 5, s_driver_id);
+            sqlite3_bind_text(statement, 6, [regulus_id UTF8String], -1, SQLITE_TRANSIENT);
+            
+            success = sqlite3_step(statement);
+        }
         sqlite3_finalize(statement);
     }
 }
@@ -525,15 +527,19 @@ static DataBase* sharedInstance = nil;
     @synchronized (self) {
         
         int s_driver_id = [[scenario objectForKey:@"s_driver_id"] intValue];
-        int room_id = [[scenario objectForKey:@"room_id"] intValue];
-        int c = [self isScenarioExist:s_driver_id room_id:room_id];
+        NSString* regulus_id = [scenario objectForKey:@"regulus_id"];
+        
+        if(regulus_id == nil)
+            return -1;
+        
+        int c = [self isScenarioExist:s_driver_id regulus_id:regulus_id];
         if(c)
         {
             [self updateScenario:scenario];
             return 0;
         }
         
-        const char *sqlStatement = "insert into tblCachedScenario (s_driver_id, cover, name, small_icon, data, room_id) VALUES (?,?,?,?,?,?)";
+        const char *sqlStatement = "insert into tblCachedScenario (s_driver_id, cover, name, small_icon, data, regulus_id) VALUES (?,?,?,?,?,?)";
         sqlite3_stmt *statement;
         
         int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
@@ -564,7 +570,7 @@ static DataBase* sharedInstance = nil;
         NSData *archiveData = [NSKeyedArchiver archivedDataWithRootObject:data];
         sqlite3_bind_blob(statement, 5, [archiveData bytes], (int)[archiveData length], NULL);
         
-        sqlite3_bind_int(statement, 6, room_id);
+        sqlite3_bind_text(statement, 6, [regulus_id UTF8String], -1, SQLITE_TRANSIENT);
         
         success = sqlite3_step(statement);
         sqlite3_finalize(statement);
@@ -582,9 +588,9 @@ static DataBase* sharedInstance = nil;
     }
 }
 
-- (NSMutableArray*) getSavedScenario:(int)room_id{
+- (NSMutableArray*) getSavedScenario:(NSString*)regulus_id{
     
-    NSString *s = [NSString stringWithFormat:@"select data from tblCachedScenario where room_id = ?"];
+    NSString *s = [NSString stringWithFormat:@"select data from tblCachedScenario where regulus_id = ?"];
     const char *sqlStatement = [s UTF8String];
     sqlite3_stmt *statement;
 
@@ -594,7 +600,7 @@ static DataBase* sharedInstance = nil;
         return nil;
     }
 
-    sqlite3_bind_int(statement, 1, room_id);
+    sqlite3_bind_text(statement, 1, [regulus_id UTF8String], -1, SQLITE_TRANSIENT);
 
     NSMutableArray *objs = [[NSMutableArray alloc] init];
     while (sqlite3_step(statement) == SQLITE_ROW) {
@@ -627,7 +633,7 @@ static DataBase* sharedInstance = nil;
 
 - (int) deleteScenario:(NSDictionary*)scenario{
     
-    const char *sqlStatement = "delete from tblCachedScenario where s_driver_id = ? and room_id=?";
+    const char *sqlStatement = "delete from tblCachedScenario where s_driver_id = ? and regulus_id=?";
 	sqlite3_stmt *statement;
 	
 	int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
@@ -637,9 +643,9 @@ static DataBase* sharedInstance = nil;
     }
     
     int s_driver_id = [[scenario objectForKey:@"s_driver_id"] intValue];
-    int room_id = [[scenario objectForKey:@"room_id"] intValue];
+    NSString* regulus_id = [scenario objectForKey:@"regulus_id"];
     sqlite3_bind_int(statement, 1, s_driver_id);
-    sqlite3_bind_int(statement, 2, room_id);
+    sqlite3_bind_text(statement, 2, [regulus_id UTF8String], -1, SQLITE_TRANSIENT);
     
     success = sqlite3_step(statement);
     sqlite3_finalize(statement);
@@ -651,9 +657,9 @@ static DataBase* sharedInstance = nil;
     return 0;
 }
 
-- (void) deleteScenarioByRoom:(int)room_id{
+- (void) deleteScenarioByRoom:(NSString*)regulus_id{
  
-    const char *sqlStatement = "delete from tblCachedScenario where room_id=?";
+    const char *sqlStatement = "delete from tblCachedScenario where regulus_id=?";
     sqlite3_stmt *statement;
     
     int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
@@ -662,7 +668,7 @@ static DataBase* sharedInstance = nil;
         return;
     }
 
-    sqlite3_bind_int(statement, 1, room_id);
+    sqlite3_bind_text(statement, 1, [regulus_id UTF8String], -1, SQLITE_TRANSIENT);
     
     success = sqlite3_step(statement);
     sqlite3_finalize(statement);

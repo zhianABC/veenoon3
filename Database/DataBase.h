@@ -33,7 +33,7 @@
 
 - (int) saveScenario:(NSDictionary*)scenario;
 - (int) deleteScenario:(NSDictionary*)scenario;
-- (void) deleteScenarioByRoom:(int)room_id;
-- (NSMutableArray*) getSavedScenario:(int)room_id;
+- (void) deleteScenarioByRoom:(NSString*)regulus_id;
+- (NSMutableArray*) getSavedScenario:(NSString*)regulus_id;
 
 @end

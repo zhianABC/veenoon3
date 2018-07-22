@@ -30,7 +30,6 @@
 
 + (DataSync*)sharedDataSync;
 
-
 - (void) syncCurrentArea;
 
 - (void) loadingLocalDrivers;

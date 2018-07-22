@@ -249,9 +249,9 @@
 
 - (void) checkSceneDriver:(NSArray*)scenes{
     
-    int room_id = _currentRoom.local_room_id;
+    NSString* regulus_id = _currentRoom.regulus_id;
     
-    NSArray* savedScenarios = [[DataBase sharedDatabaseInstance] getSavedScenario:room_id];
+    NSArray* savedScenarios = [[DataBase sharedDatabaseInstance] getSavedScenario:regulus_id];
     
     NSMutableDictionary *map = [NSMutableDictionary dictionary];
     for(NSMutableDictionary *senario in savedScenarios)

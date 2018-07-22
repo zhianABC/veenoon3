@@ -219,9 +219,8 @@
     MeetingRoom *room = [DataCenter defaultDataCenter]._currentRoom;
     if(room)
     {
-        int room_id = room.local_room_id;
-        
-        NSArray* savedScenarios = [[DataBase sharedDatabaseInstance] getSavedScenario:room_id];
+        NSArray* savedScenarios = [[DataBase sharedDatabaseInstance]
+                                   getSavedScenario:room.regulus_id];
         
         
         NSMutableDictionary *map = [NSMutableDictionary dictionary];
@@ -446,7 +445,7 @@
     [[DataSync sharedDataSync] syncCurrentArea];
     
     MeetingRoom *room = [DataCenter defaultDataCenter]._currentRoom;
-    [[DataBase sharedDatabaseInstance] deleteScenarioByRoom:room.local_room_id];
+    [[DataBase sharedDatabaseInstance] deleteScenarioByRoom:room.regulus_id];
     [_sceneDrivers removeAllObjects];
     
     EngineerNewTeslariViewCtrl *ctrl = [[EngineerNewTeslariViewCtrl alloc] init];
