@@ -41,6 +41,9 @@ static DataCenter *_globalDataInstanse;
 
 - (void) syncDriversWithServer{
     
+    if(self._mapDrivers)
+        return;
+    
     if(_client == nil)
     {
         _client = [[WebClient alloc] initWithDelegate:self];
