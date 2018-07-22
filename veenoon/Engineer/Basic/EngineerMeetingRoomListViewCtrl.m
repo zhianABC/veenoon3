@@ -23,6 +23,9 @@
 #import "RegulusSDK.h"
 #endif
 
+#import "UIImageView+WebCache.h"
+
+
 @interface EngineerMeetingRoomListViewCtrl () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, JCActionViewDelegate, ReaderCodeDelegate>{
     NSMutableArray *lableArray;
     NSMutableArray *roomImageArray;
@@ -76,6 +79,7 @@
     scroolView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:scroolView];
     
+    [[DataCenter defaultDataCenter] syncDriversWithServer];
     
     self.roomList = [[DataBase sharedDatabaseInstance] getMeetingRooms];
     
@@ -361,6 +365,7 @@
         {
             NSString *roomImgName = room.room_image;
             UIImage *img = nil;
+            NSString *coverurl = nil;
             int roomid = room.local_room_id;
             if([roomImgName length] == 0)
             {
@@ -370,8 +375,16 @@
             }
             else
             {
-                NSString *path = [Utilities documentsPath:roomImgName];
-                img = [UIImage imageWithContentsOfFile:path];
+                NSRange range = [roomImgName rangeOfString:@"http"];
+                if(range.location != NSNotFound)
+                {
+                    coverurl = roomImgName;
+                }
+                else
+                {
+                    NSString *path = [Utilities documentsPath:roomImgName];
+                    img = [UIImage imageWithContentsOfFile:path];
+                }
             }
             
             UIImageView *roomeImageView = [[UIImageView alloc] initWithImage:img];
@@ -379,6 +392,11 @@
             roomeImageView.contentMode = UIViewContentModeScaleAspectFill;
             roomeImageView.clipsToBounds=YES;
             roomeImageView.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
+            
+            if(coverurl)
+            {
+                [roomeImageView setImageWithURL:[NSURL URLWithString:coverurl]];
+            }
             
             UIView *view = [[UIView alloc] init];
             view.frame = CGRectMake(0, 0, cellWidth, cellHeight);
@@ -610,7 +628,7 @@
     {
         _imagePicker = [[UIImagePickerController alloc] init];
         _imagePicker.delegate = self;
-        _imagePicker.allowsEditing = YES;
+       // _imagePicker.allowsEditing = YES;
         
     }
     
@@ -668,7 +686,7 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             // 耗时的操作
             
-            UIImage *img = [self imageWithImage:image scaledToSize:CGSizeMake(800, 800)];
+            UIImage *img = [self imageWithImage:image scaledToSize:CGSizeMake(600, 600)];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 // 更新界面
@@ -854,7 +872,11 @@
 
 - (void) updateRoomPic:(NSDictionary*)data{
     
-    [[DataBase sharedDatabaseInstance] updateMeetingRoomPic:data];
+    MeetingRoom* room = [self.roomList objectAtIndex:selectedRoomIndex];
+    NSString *roomImage = [data objectForKey:@"room_image"];
+    room.room_image = [NSString stringWithFormat:@"%@/%@",WEB_API_URL,roomImage];
+    
+    [[DataBase sharedDatabaseInstance] updateMeetingRoomPic:room];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker

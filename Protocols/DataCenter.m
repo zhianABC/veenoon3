@@ -10,8 +10,17 @@
 #import "Scenario.h"
 #import "DataBase.h"
 #import "MeetingRoom.h"
+#import "WebClient.h"
+#import "SBJson4.h"
 
 static DataCenter *_globalDataInstanse;
+
+@interface DataCenter ()
+{
+    WebClient *_client;
+}
+
+@end
 
 
 @implementation DataCenter
@@ -30,9 +39,94 @@ static DataCenter *_globalDataInstanse;
 	return _globalDataInstanse;
 }
 
-- (void) prepareDrivers{
+- (void) syncDriversWithServer{
+    
+    if(_client == nil)
+    {
+        _client = [[WebClient alloc] initWithDelegate:self];
+    }
+    
+    _client._method = @"/getdevicelist";
+    _client._httpMethod = @"POST";
+    
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    
+    _client._requestParam = param;
+
+    
+    IMP_BLOCK_SELF(DataCenter);
+    
+    [_client requestWithSusessBlock:^(id lParam, id rParam) {
+        
+        NSString *response = lParam;
+        NSLog(@"%@", response);
+    
+        SBJson4ValueBlock block = ^(id v, BOOL *stop) {
+            
+            
+            if([v isKindOfClass:[NSDictionary class]])
+            {
+                int code = [[v objectForKey:@"code"] intValue];
+                
+                if(code == 200)
+                {
+                    if([v objectForKey:@"data"])
+                    {
+                        [block_self updateDeviceList:[v objectForKey:@"data"]];
+                    }
+                }
+                return;
+            }
+            
+            
+        };
+        
+        SBJson4ErrorBlock eh = ^(NSError* err) {
+            
+            
+            
+            NSLog(@"OOPS: %@", err);
+        };
+        
+        id parser = [SBJson4Parser multiRootParserWithBlock:block
+                                               errorHandler:eh];
+        
+        id data = [response dataUsingEncoding:NSUTF8StringEncoding];
+        [parser parse:data];
+        
+        
+    } FailBlock:^(id lParam, id rParam) {
+        
+        NSString *response = lParam;
+        NSLog(@"%@", response);
+        
+
+    }];
+    
+}
+
+- (void) updateDeviceList:(NSArray*)list{
     
     self._mapDrivers = [NSMutableDictionary dictionary];
+    
+    for(NSDictionary *dic in list)
+    {
+        if([dic objectForKey:@"driver"])
+        [_mapDrivers setObject:dic forKey:[dic objectForKey:@"driver"]];
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setObject:_mapDrivers forKey:@"all_drivers"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    
+}
+
+- (void) prepareDrivers{
+    
+    if(_mapDrivers == nil)
+    {
+        self._mapDrivers = [NSMutableDictionary dictionary];
+    }
     
     NSDictionary *all = [[NSUserDefaults standardUserDefaults] objectForKey:@"all_drivers"];
     if(all)
@@ -41,154 +135,7 @@ static DataCenter *_globalDataInstanse;
     }
     else
     {
-    
-        NSDictionary *audioDic = @{@"type":@"audio",
-                                   @"name":@"音频处理器",
-                                   @"driver":UUID_Audio_Processor,
-                                   @"brand":@"Teslaria",
-                                   @"icon":@"engineer_yinpinchuli_n.png",
-                                   @"icon_s":@"engineer_yinpinchuli_s.png",
-                                   @"driver_class":@"AudioEProcessor",
-                                   @"ptype":@"Audio Processor"
-                                   };
-        
-        [_mapDrivers setObject:audioDic forKey:UUID_Audio_Processor];
-        
-        NSDictionary *camera = @{@"type":@"video",
-                                 @"name":@"摄像机",
-                                 @"driver":UUID_NetCamera,
-                                 @"brand":@"Teslaria",
-                                 @"icon":@"engineer_video_shexiangji_n.png",
-                                 @"icon_s":@"engineer_video_shexiangji_s.png",
-                                 @"driver_class":@"VCameraSettingSet",
-                                 @"ptype":@"Camera"
-                                 };
-        [_mapDrivers setObject:camera forKey:UUID_NetCamera];
-        
-        NSDictionary *pdvd = @{@"type":@"video",
-                               @"name":@"Philips DVD",
-                               @"driver":UUID_Philips_DVD,
-                               @"brand":@"Philips",
-                               @"icon":@"engineer_video_dvd_n.png",
-                               @"icon_s":@"engineer_video_dvd_s.png",
-                               @"driver_class":@"VDVDPlayerSet",
-                               @"ptype":@"DVD"
-                               };
-        [_mapDrivers setObject:pdvd forKey:UUID_Philips_DVD];
-        
-        NSDictionary *ty = @{@"type":@"video",
-                             @"name":@"投影机",
-                             @"driver":UUID_CANON_WUX450,
-                             @"brand":@"Canon",
-                             @"icon":@"engineer_video_touyingji_n.png",
-                             @"icon_s":@"engineer_video_touyingji_s.png",
-                             @"driver_class":@"VTouyingjiSet",
-                             @"ptype":@"WUX450"
-                             };
-        [_mapDrivers setObject:ty forKey:UUID_CANON_WUX450];
-        
-        NSDictionary *light = @{@"type":@"env",
-                                @"name":@"照明",
-                                @"driver":UUID_6CH_Dimmer_Light,
-                                @"brand":@"Teslaria",
-                                @"icon":@"engineer_env_zhaoming_n.png",
-                                @"icon_s":@"engineer_env_zhaoming_s.png",
-                                @"driver_class":@"EDimmerLight",
-                                @"ptype":@"6 CH Dimmer Light"
-                                };
-        
-        [_mapDrivers setObject:light forKey:UUID_6CH_Dimmer_Light];
-        
-        NSDictionary *com = @{@"type":@"other",
-                              @"name":@"串口服务器",
-                              @"driver":UUID_Serial_Com,
-                              @"brand":@"Teslaria",
-                              @"icon":@"engineer_video_xinxihe_n.png",
-                              @"icon_s":@"engineer_video_xinxihe_s.png",
-                              @"driver_class":@"ComDriver",
-                              @"ptype":@"Com"
-                              };
-        
-        [_mapDrivers setObject:com forKey:UUID_Serial_Com];
-        
-        
-        NSDictionary *audiMixer = @{@"type":@"audio",
-                                    @"name":audio_mixer_name,
-                                    @"driver":UUID_Audio_Mixer,
-                                    @"brand":@"Teslaria",
-                                    @"icon":@"engineer_huiyi_n.png",
-                                    @"icon_s":@"engineer_huiyi_s.png",
-                                    @"driver_class":@"AudioEMix",
-                                    @"ptype":@"Audio Mixer"
-                                    };
-        [_mapDrivers setObject:audiMixer forKey:UUID_Audio_Mixer];
-        
-        NSDictionary *ir = @{@"type":@"other",
-                             @"name":@"Regulus IR Sender",
-                             @"driver":UUID_IR_Sender,
-                             @"brand":@"Teslaria",
-                             @"icon":@"hongwaishebei_n.png",
-                             @"icon_s":@"hongwaishebei_s.png",
-                             @"driver_class":@"IRDirver",
-                             @"ptype":@"IR"
-                             };
-        
-        [_mapDrivers setObject:ir forKey:UUID_IR_Sender];
-        
-        NSDictionary *videoSwitch = @{@"type":@"video",
-                                      @"name":@"Teslaria Video Switch",
-                                      @"driver":UUID_Video_Switch,
-                                      @"brand":@"Teslaria",
-                                      @"icon":@"engineer_video_shipinchuli_n.png",
-                                      @"icon_s":@"engineer_video_shipinchuli_s.png",
-                                      @"driver_class":@"VVideoProcessSet",
-                                      @"ptype":@"Video Switch"
-                                      };
-        
-        [_mapDrivers setObject:videoSwitch forKey:UUID_Video_Switch];
-        
-        NSDictionary *greeac = @{@"type":@"env",
-                                 @"name":@"空调",
-                                 @"driver":UUID_Gree_AC,
-                                 @"brand":@"Gree",
-                                 @"icon":@"engineer_env_kongtiao_n.png",
-                                 @"icon_s":@"engineer_env_kongtiao_s.png",
-                                 @"driver_class":@"AirConditionPlug",
-                                 @"ptype":@"Gree AC"
-                                 };
-        
-        [_mapDrivers setObject:greeac forKey:UUID_Gree_AC];
-        
-        
-        NSDictionary *light8sch = @{@"type":@"env",
-                                 @"name":@"开关照明",
-                                 @"driver":UUID_8CH_Dimmer_Light,
-                                 @"brand":@"Teslaria",
-                                 @"icon":@"engineer_env_zhaoming_n.png",
-                                 @"icon_s":@"engineer_env_zhaoming_s.png",
-                                 @"driver_class":@"EDimmerSwitchLight",
-                                 @"ptype":@"Dimmer Switch"
-                                 };
-        
-        [_mapDrivers setObject:light8sch forKey:UUID_8CH_Dimmer_Light];
-        
-        
-        NSDictionary *powerSequencer = @{@"type":@"audio",
-                                    @"name":@"电源管理",
-                                    @"driver":UUID_Power_Sequencer,
-                                    @"brand":@"Teslaria",
-                                    @"icon":@"engineer_dianyuanguanli_n.png",
-                                    @"icon_s":@"engineer_dianyuanguanli_s.png",
-                                    @"driver_class":@"APowerESet",
-                                    @"ptype":@"Power Sequencer"
-                                    };
-        
-        [_mapDrivers setObject:powerSequencer forKey:UUID_Power_Sequencer];
-        
-        [[NSUserDefaults standardUserDefaults] setObject:_mapDrivers forKey:@"all_drivers"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        
-        
+        [self syncDriversWithServer];
     }
 
 }

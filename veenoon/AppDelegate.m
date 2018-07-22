@@ -15,6 +15,7 @@
 #import "DataSync.h"
 #import "RegulusSDK.h"
 
+
 @interface AppDelegate () <RegulusSDKDelegate>
 {
     UIView *_maskView;

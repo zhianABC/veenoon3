@@ -24,6 +24,7 @@
 
 + (DataCenter*)defaultDataCenter;
 
+- (void) syncDriversWithServer;
 - (void) prepareDrivers;
 - (NSArray*) driversWithType:(NSString*)type;
 - (NSDictionary *)driverWithKey:(NSString *)key;

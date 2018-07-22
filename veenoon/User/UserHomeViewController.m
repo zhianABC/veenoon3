@@ -13,6 +13,7 @@
 #import "DataBase.h"
 #import "Utilities.h"
 #import "MeetingRoom.h"
+#import "UIImageView+WebCache.h"
 
 @interface UserHomeViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, JCActionViewDelegate>{
     NSMutableArray *lableArray;
@@ -66,6 +67,7 @@
         
         NSString *roomImgName = room.room_image;
         UIImage *img = nil;
+        NSString *coverurl = nil;
         int roomid = room.local_room_id;
         if([roomImgName length] == 0)
         {
@@ -75,13 +77,25 @@
         }
         else
         {
-            NSString *path = [Utilities documentsPath:roomImgName];
-            img = [UIImage imageWithContentsOfFile:path];
+            NSRange range = [roomImgName rangeOfString:@"http"];
+            if(range.location != NSNotFound)
+            {
+                coverurl = roomImgName;
+            }
+            else
+            {
+                NSString *path = [Utilities documentsPath:roomImgName];
+                img = [UIImage imageWithContentsOfFile:path];
+            }
         }
         UIImageView *roomeImageView = [[UIImageView alloc] initWithImage:img];
         roomeImageView.userInteractionEnabled=YES;
         roomeImageView.contentMode = UIViewContentModeScaleAspectFill;
         roomeImageView.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
+        
+        if(coverurl)
+            [roomeImageView setImageWithURL:[NSURL URLWithString:coverurl]];
+        
         UIView *view = [[UIView alloc] init];
         view.frame = CGRectMake(0, 0, cellWidth, cellHeight);
         view.tag = index;
