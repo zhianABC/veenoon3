@@ -6,7 +6,10 @@
 //  Copyright © 2017年 jack. All rights reserved.
 //
 #import <UIKit/UIKit.h>
+
+@class MeetingRoom;
+
 @interface UserMeetingRoomConfig : UIViewController
 
-@property (nonatomic, strong) NSMutableDictionary *meetingRoomDic;
+@property (nonatomic, strong) MeetingRoom *_currentRoom;
 @end

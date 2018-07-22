@@ -21,6 +21,7 @@
 #import "EngineerToUseTeslariViewCtrl.h"
 #import "HomeViewController.h"
 #import "EngineerNewTeslariViewCtrl.h"
+#import "MeetingRoom.h"
 
 @interface EngineerScenarioSettingsViewCtrl ()<SIconSelectViewDelegate>{
     
@@ -54,8 +55,8 @@
     self._sBtns = [NSMutableArray array];
     self._map = [NSMutableDictionary dictionary];
     
-    NSDictionary *room = [DataCenter defaultDataCenter]._roomData;
-    self._room_id = [[room objectForKey:@"room_id"] intValue];
+    MeetingRoom *room = [DataCenter defaultDataCenter]._currentRoom;
+    self._room_id = room.local_room_id;
     
     UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
     [self.view addSubview:titleIcon];

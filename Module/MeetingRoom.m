@@ -7,14 +7,27 @@
 //
 
 #import "MeetingRoom.h"
+#import "WebClient.h"
+
+@interface MeetingRoom ()
+{
+    WebClient *_client;
+}
+
+@end;
 
 @implementation MeetingRoom
-@synthesize _roomId;
-@synthesize _ip;
-@synthesize _name;
-@synthesize _coverPath;
+@synthesize regulus_id;
+@synthesize regulus_password;
+@synthesize regulus_user_id;
+@synthesize room_name;
+@synthesize room_image;
 
-@synthesize _scenarioArray;
+@synthesize local_room_id;
+@synthesize server_room_id;
+@synthesize user_id;
+@synthesize area_id;
+
 
 - (id) init{
     
@@ -25,30 +38,34 @@
     return self;
 }
 
-- (void) setMeetingData:(NSDictionary*)meetingData{
+- (void) syncAreaToServer{
     
-    self._roomId = [meetingData objectForKey:@"roomId"];
+    if(_client == nil)
+    {
+        _client = [[WebClient alloc] initWithDelegate:self];
+    }
+    
+    _client._method = @"/updateroomarea";
+    _client._httpMethod = @"POST";
+    
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    
+    _client._requestParam = param;
+    
+    [param setObject:regulus_id forKey:@"regulusID"];
+    [param setObject:[NSString stringWithFormat:@"%d", area_id] forKey:@"areaID"];
     
     
-}
-- (NSDictionary *)meetingData{
-    
-    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    
-    if(_roomId)
-        [dic setObject:_roomId forKey:@"roomId"];
-    
-    if(_ip)
-        [dic setObject:_ip forKey:@"roomIP"];
-    if(_name)
-        [dic setObject:_name forKey:@"roomName"];
-    if(_coverPath)
-        [dic setObject:_coverPath forKey:@"coverPath"];
-    
-    if(_scenarioArray)
-        [dic setObject:_scenarioArray forKey:@"scenarioArray"];
-    
-    return dic;
+    [_client requestWithSusessBlock:^(id lParam, id rParam) {
+        
+        NSString *response = lParam;
+        NSLog(@"%@", response);
+       
+        
+    } FailBlock:^(id lParam, id rParam) {
+        
+       
+    }];
 }
 
 @end

@@ -17,6 +17,11 @@
 #import "RegulusSDK.h"
 #import "WaitDialog.h"
 
+#import "DataCenter.h"
+#import "DataBase.h"
+#import "MeetingRoom.h"
+
+
 @interface DataSync ()
 {
     WebClient *_syncClient;
@@ -191,6 +196,8 @@ static DataSync* dSyncInstance = nil;
         [[RegulusSDK sharedRegulusSDK] CreateArea:VEENOON_AREA_NAME completion:^(BOOL result, RgsAreaObj *area, NSError *error) {
             if (result) {
                 block_self._currentArea = area;
+                
+                [block_self updateCurrentRoomData];
             }
             else
                 [KVNProgress showErrorWithStatus:@"创建Area出错!"];
@@ -199,11 +206,23 @@ static DataSync* dSyncInstance = nil;
     else
     {
         NSLog(@"Result: Area Exist: VEENOON_AREA_NAME");
+    
+        [self updateCurrentRoomData];
         
-//        [[RegulusSDK sharedRegulusSDK] DeleteArea:_currentArea.m_id
-//                                       completion:nil];
     }
 #endif
+}
+
+- (void) updateCurrentRoomData{
+    
+    MeetingRoom *mroom = [DataCenter defaultDataCenter]._currentRoom;
+    if(mroom)
+    {
+        mroom.area_id = (int)_currentArea.m_id;
+        [mroom syncAreaToServer];
+        [[DataBase sharedDatabaseInstance] updateMeetingRoomAreaId:mroom.server_room_id
+                                                            areaId:mroom.area_id];
+    }
 }
 
 - (void) syncAreaHasDrivers{

@@ -15,6 +15,7 @@
 #import "ReaderCodeViewController.h"
 #import "Utilities.h"
 #import "SBJson4.h"
+#import "MeetingRoom.h"
 
 #import "KVNProgress.h"
 #import "DataCenter.h"
@@ -38,12 +39,14 @@
     UIImageView* shoot_image;
     
     WebClient *_client;
+    
+    int _curEditIndex;
 }
 @property (nonatomic, strong) NSMutableArray *roomList;
 
 @property (nonatomic, strong) NSString *_regulus_user_id;
 @property (nonatomic, strong) NSString *_regulus_gateway_id;
-@property (nonatomic, strong) NSMutableDictionary *_meetingRoomDic;
+@property (nonatomic, strong) MeetingRoom *_currentRoom;
 
 @property (nonatomic, strong) ReaderCodeViewController *reader_;
 @property (nonatomic, strong) NSString *qrcode;
@@ -51,7 +54,7 @@
 
 @implementation EngineerMeetingRoomListViewCtrl
 @synthesize roomList;
-@synthesize _meetingRoomDic;
+@synthesize _currentRoom;
 
 @synthesize _regulus_user_id;
 @synthesize _regulus_gateway_id;
@@ -82,64 +85,6 @@
     }
     
     [self showRoomList];
-    
-   /*
-    if (roomList) {
-        [roomList removeAllObjects];
-    } else {
-        UIImage *roomImage1 = [UIImage imageNamed:@"user_meeting_room_1.png"];
-        UIImage *roomImage2 = [UIImage imageNamed:@"user_meeting_room_2.png"];
-        UIImage *roomImage3 = [UIImage imageNamed:@"user_meeting_room_3.png"];
-        UIImage *roomImage4 = [UIImage imageNamed:@"user_meeting_room_4.png"];
-        UIImage *roomImage5 = [UIImage imageNamed:@"user_meeting_room_5.png"];
-        UIImage *roomImage6 = [UIImage imageNamed:@"user_meeting_room_6.png"];
-        NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:roomImage1,
-                                     @"image",
-                                     @"meeting_room1",
-                                     @"roomname",
-                                     @"1",@"room_id",
-                                     @"RGS_EOC500_01",@"regulus_id",
-                                     nil];
-        NSMutableDictionary *dic2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:roomImage2,
-                                     @"image",
-                                     @"meeting_room2",
-                                     @"roomname",
-                                     @"2",@"room_id",
-                                     @"RGS_EOC500_01",@"regulus_id",
-                                     nil];
-        NSMutableDictionary *dic3 = [NSMutableDictionary dictionaryWithObjectsAndKeys:roomImage3,
-                                     @"image",
-                                     @"meeting_room3",
-                                     @"roomname",
-                                     @"3",@"room_id",
-                                     @"RGS_EOC500_01",@"regulus_id",
-                                     nil];
-        NSMutableDictionary *dic4 = [NSMutableDictionary dictionaryWithObjectsAndKeys:roomImage4,
-                                     @"image",
-                                     @"meeting_room4",
-                                     @"roomname",
-                                     @"4",@"room_id",
-                                     @"RGS_EOC500_01",@"regulus_id",
-                                     nil];
-        NSMutableDictionary *dic5 = [NSMutableDictionary dictionaryWithObjectsAndKeys:roomImage5,
-                                     @"image",
-                                     @"meeting_room5",
-                                     @"roomname",
-                                     @"5",@"room_id",
-                                     @"RGS_EOC500_01",@"regulus_id",
-                                     nil];
-        NSMutableDictionary *dic6 = [NSMutableDictionary dictionaryWithObjectsAndKeys:roomImage6,
-                                     @"image",
-                                     @"meeting_room6",
-                                     @"roomname",
-                                     @"6",@"room_id",
-                                     @"RGS_EOC500_01",@"regulus_id",
-                                     nil];
-        self.roomList = [NSMutableArray arrayWithObjects:dic1, dic2, dic3, dic4, dic5, dic6, nil];
-    }
-    
-    */
-    
     
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
@@ -375,7 +320,11 @@
     [cellData addObjectsFromArray:roomList];
     [cellData addObject:@{@"p":@"1"}];
     
-    for (id dic in cellData) {
+    
+    [lableArray removeAllObjects];
+    [roomImageArray removeAllObjects];
+    
+    for (MeetingRoom * room in cellData) {
         
         int row = index/3;
         int col = index%3;
@@ -390,7 +339,7 @@
         [scroolView addSubview:roomeImageBGView];
         
         
-        if([dic objectForKey:@"p"])
+        if(![room isKindOfClass:[MeetingRoom class]])
         {
             //plus +1
             UIImage *img = [UIImage imageNamed:@"room_add_pg.png"];
@@ -410,9 +359,9 @@
         }
         else
         {
-            NSString *roomImgName = [dic objectForKey:@"image"];
+            NSString *roomImgName = room.room_image;
             UIImage *img = nil;
-            int roomid = [[dic objectForKey:@"room_id"] intValue];
+            int roomid = room.local_room_id;
             if([roomImgName length] == 0)
             {
                 int r = roomid%6;
@@ -472,7 +421,7 @@
             [roomeImageView addSubview:titleL];
             titleL.font = [UIFont boldSystemFontOfSize:16];
             titleL.textColor  = [UIColor whiteColor];
-            titleL.text = [dic objectForKey:@"room_name"];
+            titleL.text = room.room_name;
             
             [lableArray addObject:titleL];
         }
@@ -492,27 +441,26 @@
         return;
     } else if (press.state == UIGestureRecognizerStateBegan) {
         UILongPressGestureRecognizer *viewRecognizer = (UILongPressGestureRecognizer*) sender;
+       
         int index = (int)viewRecognizer.view.tag;
+        _curEditIndex = index;
+        
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"请输入会议室名称" preferredStyle:UIAlertControllerStyleAlert];
         
         [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
             textField.placeholder = @"会议室名称";
         }];
         
+        IMP_BLOCK_SELF(EngineerMeetingRoomListViewCtrl);
+        
         [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             UITextField *envirnmentNameTextField = alertController.textFields.firstObject;
-            NSString *scenarioName = envirnmentNameTextField.text;
-            if (scenarioName && [scenarioName length] > 0) {
+            NSString *nameTxt = envirnmentNameTextField.text;
+            if (nameTxt && [nameTxt length] > 0) {
                 
                 
-                NSMutableDictionary *meetingDic = [self.roomList objectAtIndex:index];
-                UILabel *scenarioLabel = [lableArray objectAtIndex:index];
-                [meetingDic setObject:scenarioName forKey:@"room_name"];
-                scenarioLabel.text = scenarioName;
+                [block_self updateRoomName:nameTxt];
                 
-                [[DataBase sharedDatabaseInstance] saveMeetingRoom:meetingDic];
-                
-                [self saveRoomPic:nil room:meetingDic];
             }
         }]];
         
@@ -520,6 +468,19 @@
         
         [self presentViewController:alertController animated:true completion:nil];
     }
+}
+
+- (void) updateRoomName:(NSString*)nameTxt{
+    
+    MeetingRoom *room = [self.roomList objectAtIndex:_curEditIndex];
+    UILabel *scenarioLabel = [lableArray objectAtIndex:_curEditIndex];
+    
+    scenarioLabel.text = nameTxt;
+    room.room_name = nameTxt;
+    
+    [[DataBase sharedDatabaseInstance] saveMeetingRoom:room];
+    
+    [self saveRoomPic:nil room:room];
 }
 
 - (void) backAction:(id)sender{
@@ -532,8 +493,8 @@
     
     long index = gestureRecognizer.view.tag;
     
-    NSMutableDictionary *dic = [roomList objectAtIndex:index];
-    self._meetingRoomDic = dic;
+    MeetingRoom *room = [roomList objectAtIndex:index];
+    self._currentRoom = room;
     
     [self tryLoginRegulus];
    
@@ -541,8 +502,8 @@
 
 - (void) tryLoginRegulus{
 
-    self._regulus_gateway_id    = [_meetingRoomDic objectForKey:@"regulus_id"];
-    self._regulus_user_id       = [_meetingRoomDic objectForKey:@"user_id"];
+    self._regulus_gateway_id    = _currentRoom.regulus_id;
+    self._regulus_user_id       = _currentRoom.regulus_user_id;
 
     
 #if LOGIN_REGULUS
@@ -620,12 +581,12 @@
 - (void) enterRoom{
     
     
-    if(_meetingRoomDic)
+    if(_currentRoom)
     {
-        [DataCenter defaultDataCenter]._roomData = [NSMutableDictionary dictionaryWithDictionary:_meetingRoomDic];
+        [DataCenter defaultDataCenter]._currentRoom = _currentRoom;
         
-        [_meetingRoomDic setObject:_regulus_user_id forKey:@"user_id"];
-        [[DataBase sharedDatabaseInstance] saveMeetingRoom:_meetingRoomDic];
+        _currentRoom.regulus_user_id = _regulus_user_id;
+        [[DataBase sharedDatabaseInstance] saveMeetingRoom:_currentRoom];
         
         [KVNProgress dismiss];
         
@@ -633,9 +594,7 @@
                                                            @"user_id":_regulus_user_id
                                                            };
         
-        
-        NSLog(@"Login Room --------- %@", [[DataCenter defaultDataCenter]._roomData description]);
-        
+    
         EngineerSysSelectViewCtrl *lctrl = [[EngineerSysSelectViewCtrl alloc] init];
         [self.navigationController pushViewController:lctrl animated:YES];
 
@@ -730,7 +689,7 @@
 
 - (void) cacheCurrentRoomImage:(UIImage *)img{
     
-    NSMutableDictionary *roomDic = [self.roomList objectAtIndex:selectedRoomIndex];
+    MeetingRoom* room = [self.roomList objectAtIndex:selectedRoomIndex];
     
     int time = [[NSDate date] timeIntervalSince1970];
     NSString *name = [NSString stringWithFormat:@"%d_%d.jpg", time, rand()%10];
@@ -741,18 +700,18 @@
     
     [data writeToFile:path atomically:YES];
 
-    [roomDic setObject:name forKey:@"room_image"];
+    room.room_image = name;
+    [[DataBase sharedDatabaseInstance] updateMeetingRoomPic:room];
     
-    [[DataBase sharedDatabaseInstance] updateMeetingRoomPic:roomDic];
-    
-
-    [self saveRoomPic:img room:roomDic];
+#if 1
+    [self saveRoomPic:img room:room];
+#endif
 }
 
-- (void) saveRoomPic:(UIImage *)image room:(NSDictionary*)roomDic{
+- (void) saveRoomPic:(UIImage *)image room:(MeetingRoom*)room{
     
-    int room_id = [[roomDic objectForKey:@"room_no"] intValue];
-    int user_id = [[roomDic objectForKey:@"u_id"] intValue];
+    int room_id = room.server_room_id;
+    int user_id = room.user_id;
     if( room_id && user_id)
     {
 
@@ -771,13 +730,13 @@
         
         [param setObject:[NSString stringWithFormat:@"%d", user_id] forKey:@"userID"];
         [param setObject:[NSString stringWithFormat:@"%d", room_id] forKey:@"roomID"];
-        [param setObject:[roomDic objectForKey:@"regulus_id"] forKey:@"regulusID"];
+        [param setObject:room.regulus_id forKey:@"regulusID"];
         
-        if([roomDic objectForKey:@"password"])
-            [param setObject:[roomDic objectForKey:@"password"] forKey:@"regulusPassword"];
+        if(room.regulus_password)
+            [param setObject:room.regulus_password forKey:@"regulusPassword"];
         
-        if([roomDic objectForKey:@"room_name"])
-            [param setObject:[roomDic objectForKey:@"room_name"] forKey:@"roomName"];
+        if(room.room_name)
+            [param setObject:room.room_name forKey:@"roomName"];
         
         
         IMP_BLOCK_SELF(EngineerMeetingRoomListViewCtrl);
@@ -785,13 +744,16 @@
         if(image)
         {
             [param setObject:@"file" forKey:@"filename"];
-            [param setObject:image forKey:@"image"];
+            [param setObject:image forKey:@"photo"];
+            
+            [KVNProgress show];
             
             [_client requestWithSusessBlockWithImage:^(id lParam, id rParam) {
                 
                 NSString *response = lParam;
                 NSLog(@"%@", response);
                 
+                [KVNProgress dismiss];
                 
                 SBJson4ValueBlock block = ^(id v, BOOL *stop) {
                     
@@ -832,15 +794,19 @@
                 NSString *response = lParam;
                 NSLog(@"%@", response);
                 
+                [KVNProgress dismiss];
             }];
         }
         else
         {
+            [KVNProgress show];
+            
             [_client requestWithSusessBlock:^(id lParam, id rParam) {
                 
                 NSString *response = lParam;
                 NSLog(@"%@", response);
                 
+                [KVNProgress dismiss];
                 
                 SBJson4ValueBlock block = ^(id v, BOOL *stop) {
                     
@@ -878,6 +844,7 @@
                 NSString *response = lParam;
                 NSLog(@"%@", response);
                 
+                [KVNProgress dismiss];
             }];
         }
     
@@ -1080,14 +1047,18 @@
     
     if(userid && regulusid)
     {
-        NSDictionary *room = @{@"room_name":@"房间",
-                               @"regulus_password":@"111111",
-                               @"regulus_id":regulusid,
-                               @"regulus_user_id":userid,
-                               @"user_id":@"1"
-                               };
+
+        MeetingRoom *room = [[MeetingRoom alloc] init];
+        room.room_name = @"房间";
+        room.regulus_password = @"111111";
+        room.regulus_user_id = userid;
+        room.regulus_id = regulusid;
+        room.user_id = 1;
+        
         [[DataBase sharedDatabaseInstance] saveMeetingRoom:room];
         
+        
+#if 1
         if(_client == nil)
         {
             _client = [[WebClient alloc] initWithDelegate:self];
@@ -1110,11 +1081,14 @@
         IMP_BLOCK_SELF(EngineerMeetingRoomListViewCtrl);
 
         
+        [KVNProgress show];
+        
         [_client requestWithSusessBlock:^(id lParam, id rParam) {
             
             NSString *response = lParam;
              NSLog(@"%@", response);
             
+            [KVNProgress dismiss];
             
             SBJson4ValueBlock block = ^(id v, BOOL *stop) {
                 
@@ -1155,12 +1129,17 @@
             NSString *response = lParam;
             NSLog(@"%@", response);
             
+            [KVNProgress dismiss];
         }];
+        
+#else
+        [self successAddRoom:room];
+#endif
     
     }
 }
 
-- (void) successAddRoom:(NSDictionary*)room{
+- (void) successAddRoom:(NSDictionary*)roomDic{
     
     /*
      "regulus_id" = "RGS_EOC500_01";
@@ -1172,6 +1151,14 @@
      "user_id" = 1;
      */
     
+    MeetingRoom *room = [[MeetingRoom alloc] init];
+    room.room_name = [roomDic objectForKey:@"room_name"];
+    room.regulus_password = [roomDic objectForKey:@"regulus_password"];
+    room.regulus_user_id = [roomDic objectForKey:@"regulus_user_id"];
+    room.regulus_id = [roomDic objectForKey:@"regulus_id"];
+    room.user_id = [[roomDic objectForKey:@"user_id"] intValue];;
+    room.server_room_id = [[roomDic objectForKey:@"room_id"] intValue];
+    room.room_image = [roomDic objectForKey:@"room_image"];
     
     [[DataBase sharedDatabaseInstance] saveMeetingRoom:room];
     

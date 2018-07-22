@@ -19,6 +19,7 @@
 #import "Scenario.h"
 #import "DataCenter.h"
 #import "SBJson4.h"
+#import "MeetingRoom.h"
 
 #ifdef OPEN_REG_LIB_DEF
 #import "RegulusSDK.h"
@@ -26,6 +27,7 @@
 #endif
 
 @interface EngineerSysSelectViewCtrl ()<UIScrollViewDelegate>{
+    
     EngineerDNSSettingView *_dnsView;
     EngineerPortSettingView *_portView;
     
@@ -98,17 +100,7 @@
     [signup addTarget:self
                action:@selector(linktoSysAction:)
      forControlEvents:UIControlEventTouchUpInside];
-    
-    
-//    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT,
-//                                                                SCREEN_HEIGHT - 100,
-//                                                                SCREEN_WIDTH, 20)];
-//    titleL.backgroundColor = [UIColor clearColor];
-//    [self.view addSubview:titleL];
-//    titleL.font = [UIFont systemFontOfSize:16];
-//    titleL.textColor  = [UIColor whiteColor];
-//    titleL.text = @"关于TESLSRIA";
-//
+
   
     UIView *touchView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 500)];
     [self.view addSubview:touchView];
@@ -144,6 +136,7 @@
     
     [self containerView];
     
+    //准备插件
     [[DataCenter defaultDataCenter] prepareDrivers];
     
     self._sceneDrivers = [NSMutableArray array];
@@ -192,6 +185,18 @@
     {
         [DataSync sharedDataSync]._currentArea = areaObj;
         
+        MeetingRoom *room = [DataCenter defaultDataCenter]._currentRoom;
+        if(room)
+        {
+            int room_id = room.server_room_id;
+            room.area_id = (int)areaObj.m_id;
+            
+            [room syncAreaToServer];
+            
+            [[DataBase sharedDatabaseInstance] updateMeetingRoomAreaId:room_id
+                                                                areaId:(int)areaObj.m_id];
+        }
+        
         [[RegulusSDK sharedRegulusSDK] GetAreaScenes:areaObj.m_id
                                           completion:^(BOOL result, NSArray *scenes, NSError *error) {
             if (result) {
@@ -211,10 +216,10 @@
 
 - (void) checkSceneDriver:(NSArray*)scenes{
     
-    NSDictionary *room = [DataCenter defaultDataCenter]._roomData;
+    MeetingRoom *room = [DataCenter defaultDataCenter]._currentRoom;
     if(room)
     {
-        int room_id = [[room objectForKey:@"room_id"] intValue];
+        int room_id = room.local_room_id;
         
         NSArray* savedScenarios = [[DataBase sharedDatabaseInstance] getSavedScenario:room_id];
         
@@ -332,6 +337,7 @@
     [_switchContent setContentOffset:CGPointMake(0, 0) animated:YES];
 }
 - (void) dnsAction:(id)sender{
+    
     [_portSettingsBtn setImage:[UIImage imageNamed:@"engineer_port_n.png"] forState:UIControlStateNormal];
     [_dnsSettingsBtn setImage:[UIImage imageNamed:@"engineer_dns_s.png"] forState:UIControlStateNormal];
 
@@ -439,7 +445,8 @@
     
     [[DataSync sharedDataSync] syncCurrentArea];
     
-    [[DataBase sharedDatabaseInstance] deleteScenarioByRoom:1];
+    MeetingRoom *room = [DataCenter defaultDataCenter]._currentRoom;
+    [[DataBase sharedDatabaseInstance] deleteScenarioByRoom:room.local_room_id];
     [_sceneDrivers removeAllObjects];
     
     EngineerNewTeslariViewCtrl *ctrl = [[EngineerNewTeslariViewCtrl alloc] init];

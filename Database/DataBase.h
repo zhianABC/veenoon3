@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <sqlite3.h>
 
+@class MeetingRoom;
 
 @interface DataBase : NSObject {
 
@@ -24,8 +25,9 @@
 - (NSString *)dbPath;
 
 
-- (int) saveMeetingRoom:(NSDictionary*)room;
-- (void) updateMeetingRoomPic:(NSDictionary*)room;
+- (int) saveMeetingRoom:(MeetingRoom*)room;
+- (void) updateMeetingRoomPic:(MeetingRoom*)room;
+- (void) updateMeetingRoomAreaId:(int)room_id areaId:(int)area_id;
 - (NSMutableArray*) getMeetingRooms;
 
 

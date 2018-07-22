@@ -9,6 +9,7 @@
 #import "DataCenter.h"
 #import "Scenario.h"
 #import "DataBase.h"
+#import "MeetingRoom.h"
 
 static DataCenter *_globalDataInstanse;
 
@@ -16,7 +17,7 @@ static DataCenter *_globalDataInstanse;
 @implementation DataCenter
 
 @synthesize _selectedDevice;
-@synthesize _roomData;
+@synthesize _currentRoom;
 @synthesize _scenario;
 @synthesize _mapDrivers;
 
