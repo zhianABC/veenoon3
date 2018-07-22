@@ -38,13 +38,17 @@
     UIButton *_dnsSettingsBtn;
     
     UIImageView *_aniWaitDialog;
+    
+    WebClient *_client;
 }
 @property (nonatomic, strong) NSMutableArray *_sceneDrivers;
+@property (nonatomic, strong) NSArray *_scenes;
+
 @end
 
 @implementation EngineerSysSelectViewCtrl
 @synthesize _sceneDrivers;
-
+@synthesize _scenes;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -141,10 +145,141 @@
     
     self._sceneDrivers = [NSMutableArray array];
     
+    [self getScenarioList];
+    
     [self checkArea];
     
 }
 
+
+- (void) getScenarioList{
+  
+    MeetingRoom *room = [DataCenter defaultDataCenter]._currentRoom;
+    if(room == nil)
+    {
+        return;
+    }
+    
+    if(_client == nil)
+    {
+        _client = [[WebClient alloc] initWithDelegate:self];
+    }
+    
+    _client._method = @"/getscenariolist";
+    _client._httpMethod = @"GET";
+    
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    
+    _client._requestParam = param;
+    
+    
+    [param setObject:room.regulus_id forKey:@"regulusID"];
+    
+    IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
+    
+    [KVNProgress show];
+    
+    [_client requestWithSusessBlock:^(id lParam, id rParam) {
+        
+        NSString *response = lParam;
+        //NSLog(@"%@", response);
+        
+        [KVNProgress dismiss];
+        
+        SBJson4ValueBlock block = ^(id v, BOOL *stop) {
+            
+            
+            if([v isKindOfClass:[NSDictionary class]])
+            {
+                int code = [[v objectForKey:@"code"] intValue];
+                
+                if(code == 200)
+                {
+                    if([v objectForKey:@"data"])
+                    {
+                        [block_self saveScenarioList:[v objectForKey:@"data"]];
+                    }
+                }
+                return;
+            }
+            
+            
+        };
+        
+        SBJson4ErrorBlock eh = ^(NSError* err) {
+            
+            
+            
+            NSLog(@"OOPS: %@", err);
+        };
+        
+        id parser = [SBJson4Parser multiRootParserWithBlock:block
+                                               errorHandler:eh];
+        
+        id data = [response dataUsingEncoding:NSUTF8StringEncoding];
+        [parser parse:data];
+        
+        
+    } FailBlock:^(id lParam, id rParam) {
+        
+        NSString *response = lParam;
+        NSLog(@"%@", response);
+        
+        [KVNProgress dismiss];
+    }];
+}
+
+- (void) saveScenarioList:(NSArray*)list{
+    
+    for(NSDictionary *rd in list)
+    {
+        NSString *scenario_content = [rd objectForKey:@"scenario_content"];
+        NSData *data = [scenario_content dataUsingEncoding:NSUTF8StringEncoding];
+        
+        NSError *error = nil;
+        NSDictionary *s = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+        
+        NSMutableDictionary *scenario = [NSMutableDictionary dictionaryWithDictionary:s];
+        
+        NSString *regulus_id = [rd objectForKey:@"regulus_id"];
+        if(regulus_id)
+        {
+            [scenario setObject:regulus_id forKey:@"regulus_id"];
+        }
+        
+        NSString *scenario_c_name = [rd objectForKey:@"scenario_c_name"];
+        if(scenario_c_name)
+        {
+            [scenario setObject:scenario_c_name forKey:@"name"];
+        }
+        
+        NSString *scenario_e_name = [rd objectForKey:@"scenario_e_name"];
+        if(scenario_e_name)
+        {
+            [scenario setObject:scenario_e_name forKey:@"en_name"];
+        }
+        
+        NSString *scenario_picture = [rd objectForKey:@"scenario_picture"];
+        if(scenario_picture)
+        {
+            [scenario setObject:scenario_picture forKey:@"small_icon"];
+        }
+        
+        NSString *scenario_user_icon_name = [rd objectForKey:@"scenario_user_icon_name"];
+        if(scenario_user_icon_name)
+        {
+            [scenario setObject:scenario_user_icon_name forKey:@"icon_user"];
+        }
+        
+        [[DataBase sharedDatabaseInstance] saveScenario:scenario];
+    
+    }
+    
+    if([_scenes count])
+    {
+        [self updateScenarioDrivers];
+    }
+}
 
 - (void) checkArea{
     
@@ -216,6 +351,15 @@
 
 - (void) checkSceneDriver:(NSArray*)scenes{
     
+    self._scenes = scenes;
+    [self updateScenarioDrivers];
+
+}
+
+- (void) updateScenarioDrivers{
+    
+    [_sceneDrivers removeAllObjects];
+    
     MeetingRoom *room = [DataCenter defaultDataCenter]._currentRoom;
     if(room)
     {
@@ -230,7 +374,7 @@
             [map setObject:senario forKey:[NSNumber numberWithInt:s_driver_id]];
         }
         
-        for(RgsSceneObj *dr in scenes)
+        for(RgsSceneObj *dr in _scenes)
         {
             id key = [NSNumber numberWithInt:(int)dr.m_id];
             
@@ -249,7 +393,6 @@
     {
         [KVNProgress showErrorWithStatus:@"出错 Error Code: 404!"];
     }
-
 }
 
 

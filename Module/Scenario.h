@@ -34,6 +34,8 @@
 - (void) createEventScenario;
 - (void) saveEventScenario;
 
+- (void) updateProperty;
+
 - (void) fillWithData:(NSDictionary*)data;
 - (NSMutableDictionary *)senarioData;
 

@@ -430,7 +430,7 @@ static DataBase* sharedInstance = nil;
     
     if(!have)
     {
-        s = @"CREATE TABLE tblCachedScenario(id INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL  UNIQUE, s_driver_id INTEGER, cover TEXT, name TEXT, small_icon TEXT, data BLOB, regulus_id TEXT)";
+        s = @"CREATE TABLE tblCachedScenario(id INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL  UNIQUE, s_driver_id INTEGER, en_name TEXT, name TEXT, small_icon TEXT, icon_user TEXT, data BLOB, regulus_id TEXT)";
         
         const char * sql = [s UTF8String];
         sqlite3_stmt *delete_statement = nil;
@@ -480,7 +480,7 @@ static DataBase* sharedInstance = nil;
     
     @synchronized (self) {
     
-        const char *sqlStatement = "update tblCachedScenario set cover=?,name=?,small_icon=?,data=? where s_driver_id=? and regulus_id=?";
+        const char *sqlStatement = "update tblCachedScenario set en_name=?,name=?,small_icon=?,icon_user=?,data=? where s_driver_id=? and regulus_id=?";
         sqlite3_stmt *statement;
         
         int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
@@ -489,7 +489,7 @@ static DataBase* sharedInstance = nil;
             return;
         }
         
-        NSString *cover = [scenario objectForKey:@"cover"];
+        NSString *cover = [scenario objectForKey:@"en_name"];
         if(cover == nil)
             cover = @"";
         
@@ -500,6 +500,10 @@ static DataBase* sharedInstance = nil;
         if(small_icon == nil)
             small_icon = @"";
         
+        NSString *icon_user = [scenario objectForKey:@"icon_user"];
+        if(icon_user == nil)
+            icon_user = @"";
+        
         NSDictionary *data = scenario;
         
         int s_driver_id = [[scenario objectForKey:@"s_driver_id"] intValue];
@@ -509,12 +513,13 @@ static DataBase* sharedInstance = nil;
             sqlite3_bind_text(statement, 1, [cover UTF8String], -1, SQLITE_TRANSIENT);
             sqlite3_bind_text(statement, 2, [name UTF8String], -1, SQLITE_TRANSIENT);
             sqlite3_bind_text(statement, 3, [small_icon UTF8String], -1, SQLITE_TRANSIENT);
+            sqlite3_bind_text(statement, 4, [icon_user UTF8String], -1, SQLITE_TRANSIENT);
             
             NSData *archiveData = [NSKeyedArchiver archivedDataWithRootObject:data];
-            sqlite3_bind_blob(statement, 4, [archiveData bytes], (int)[archiveData length], NULL);
+            sqlite3_bind_blob(statement, 5, [archiveData bytes], (int)[archiveData length], NULL);
             
-            sqlite3_bind_int(statement, 5, s_driver_id);
-            sqlite3_bind_text(statement, 6, [regulus_id UTF8String], -1, SQLITE_TRANSIENT);
+            sqlite3_bind_int(statement, 6, s_driver_id);
+            sqlite3_bind_text(statement, 7, [regulus_id UTF8String], -1, SQLITE_TRANSIENT);
             
             success = sqlite3_step(statement);
         }
@@ -539,7 +544,7 @@ static DataBase* sharedInstance = nil;
             return 0;
         }
         
-        const char *sqlStatement = "insert into tblCachedScenario (s_driver_id, cover, name, small_icon, data, regulus_id) VALUES (?,?,?,?,?,?)";
+        const char *sqlStatement = "insert into tblCachedScenario (s_driver_id, en_name, name, small_icon,icon_user, data, regulus_id) VALUES (?,?,?,?,?,?,?)";
         sqlite3_stmt *statement;
         
         int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
@@ -548,7 +553,7 @@ static DataBase* sharedInstance = nil;
             return -1;
         }
         
-        NSString *cover = [scenario objectForKey:@"cover"];
+        NSString *cover = [scenario objectForKey:@"en_name"];
         if(cover == nil)
             cover = @"";
         
@@ -559,6 +564,10 @@ static DataBase* sharedInstance = nil;
         if(small_icon == nil)
             small_icon = @"";
         
+        NSString *icon_user = [scenario objectForKey:@"icon_user"];
+        if(icon_user == nil)
+            icon_user = @"";
+        
         NSDictionary *data = scenario;
         
         sqlite3_bind_int(statement, 1, s_driver_id);
@@ -566,11 +575,12 @@ static DataBase* sharedInstance = nil;
         sqlite3_bind_text(statement, 2, [cover UTF8String], -1, SQLITE_TRANSIENT);
         sqlite3_bind_text(statement, 3, [name UTF8String], -1, SQLITE_TRANSIENT);
         sqlite3_bind_text(statement, 4, [small_icon UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(statement, 5, [icon_user UTF8String], -1, SQLITE_TRANSIENT);
         
         NSData *archiveData = [NSKeyedArchiver archivedDataWithRootObject:data];
-        sqlite3_bind_blob(statement, 5, [archiveData bytes], (int)[archiveData length], NULL);
+        sqlite3_bind_blob(statement, 6, [archiveData bytes], (int)[archiveData length], NULL);
         
-        sqlite3_bind_text(statement, 6, [regulus_id UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(statement, 7, [regulus_id UTF8String], -1, SQLITE_TRANSIENT);
         
         success = sqlite3_step(statement);
         sqlite3_finalize(statement);
@@ -590,7 +600,7 @@ static DataBase* sharedInstance = nil;
 
 - (NSMutableArray*) getSavedScenario:(NSString*)regulus_id{
     
-    NSString *s = [NSString stringWithFormat:@"select data from tblCachedScenario where regulus_id = ?"];
+    NSString *s = [NSString stringWithFormat:@"select en_name,name,small_icon,icon_user,data from tblCachedScenario where regulus_id = ?"];
     const char *sqlStatement = [s UTF8String];
     sqlite3_stmt *statement;
 
@@ -605,8 +615,13 @@ static DataBase* sharedInstance = nil;
     NSMutableArray *objs = [[NSMutableArray alloc] init];
     while (sqlite3_step(statement) == SQLITE_ROW) {
 
-        const void* achievement_id       = sqlite3_column_blob(statement, 0);
-        int achievement_idSize           = sqlite3_column_bytes(statement, 0);
+        char* enName = (char*)sqlite3_column_text(statement, 0);
+        char* name = (char*)sqlite3_column_text(statement, 1);
+        char* smallIcon = (char*)sqlite3_column_text(statement, 2);
+        char* iconUser = (char*)sqlite3_column_text(statement, 3);
+        
+        const void* achievement_id       = sqlite3_column_blob(statement, 4);
+        int achievement_idSize           = sqlite3_column_bytes(statement, 4);
 
         if(achievement_id)
         {
@@ -614,6 +629,14 @@ static DataBase* sharedInstance = nil;
             NSDictionary * dic = [NSKeyedUnarchiver unarchiveObjectWithData:data];
             NSMutableDictionary *mdic = [NSMutableDictionary dictionaryWithDictionary:dic];
             [objs addObject:mdic];
+            
+            if(enName)
+            {
+                [mdic setObject:[NSString stringWithUTF8String:enName] forKey:@"en_name"];
+                [mdic setObject:[NSString stringWithUTF8String:name] forKey:@"name"];
+                [mdic setObject:[NSString stringWithUTF8String:smallIcon] forKey:@"small_icon"];
+                [mdic setObject:[NSString stringWithUTF8String:iconUser] forKey:@"icon_user"];
+            }
         }
 
     }
