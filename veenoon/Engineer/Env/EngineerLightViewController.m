@@ -176,7 +176,7 @@
         btn.delegate = self;
         [_proxysView addSubview:btn];
         
-        id key = [NSNumber numberWithInt:i+1];
+        id key = [NSString stringWithFormat:@"%d", i+1];
         if([chLevelMap objectForKey:key])
         {
             int level = [[chLevelMap objectForKey:key] intValue];

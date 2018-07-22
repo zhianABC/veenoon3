@@ -68,7 +68,8 @@
         self._save = self._load;
         
         if([data objectForKey:@"RgsSceneDeviceOperation"]){
-            self._RgsSceneDeviceOperationShadow = [data objectForKey:@"RgsSceneDeviceOperation"];
+            NSDictionary *dic = [data objectForKey:@"RgsSceneDeviceOperation"];
+            self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionaryWithDictionary:dic];
             _isSetOK = YES;
         }
     }
