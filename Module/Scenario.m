@@ -59,7 +59,7 @@
 @end
 
 @implementation Scenario
-@synthesize room_id;
+@synthesize regulus_id;
 @synthesize _rgsSceneObj;
 
 @synthesize _rgsSceneEvent;
@@ -82,7 +82,7 @@
     if(self = [super init])
     {
         
-        self.room_id = 1;
+        self.regulus_id = nil;
         [self initData];
        
     }
@@ -110,8 +110,9 @@
     
     [_scenarioData setObject:@"场景" forKey:@"name"];
     
-    [_scenarioData setObject:[NSNumber numberWithInt:room_id]
-                      forKey:@"room_id"];
+    if(regulus_id)
+        [_scenarioData setObject:regulus_id
+                          forKey:@"regulus_id"];
     
 }
 
@@ -332,8 +333,9 @@
         
         [_scenarioData setObject:@"场景" forKey:@"name"];
         
-        [_scenarioData setObject:[NSNumber numberWithInt:room_id]
-                          forKey:@"room_id"];
+        if(regulus_id)
+            [_scenarioData setObject:regulus_id
+                              forKey:@"regulus_id"];
 
     }
     

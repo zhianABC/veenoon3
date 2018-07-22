@@ -12,7 +12,7 @@
 
 #define POSTDataSeparator			@"----------sadkfjaskdjfkjsadfjj3234234"
 
-#define   WEB_API_URL           @"http://39.106.67.198:8080/veenopro/servelet/"
+#define   WEB_API_URL           @"http://39.106.67.198:8080/api"
 #define   NEW_API_U2P           @"/v1/utility/u2p"
 
 #define   NEW_API_LOGIN         @"GetUserLoginInfoServelet"

@@ -9,13 +9,14 @@
 #import <Foundation/Foundation.h>
 
 @class Scenario;
+@class MeetingRoom;
 
 @interface DataCenter : NSObject {
 	   
    
 }
 @property (nonatomic, strong) NSMutableDictionary *_selectedDevice;
-@property (nonatomic, strong) NSMutableDictionary *_roomData;
+@property (nonatomic, strong) MeetingRoom *_currentRoom;
 
 @property (nonatomic, strong) NSMutableDictionary *_mapDrivers;
 
@@ -23,6 +24,7 @@
 
 + (DataCenter*)defaultDataCenter;
 
+- (void) syncDriversWithServer;
 - (void) prepareDrivers;
 - (NSArray*) driversWithType:(NSString*)type;
 - (NSDictionary *)driverWithKey:(NSString *)key;

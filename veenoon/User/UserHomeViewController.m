@@ -12,6 +12,8 @@
 #import "AppDelegate.h"
 #import "DataBase.h"
 #import "Utilities.h"
+#import "MeetingRoom.h"
+#import "UIImageView+WebCache.h"
 
 @interface UserHomeViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, JCActionViewDelegate>{
     NSMutableArray *lableArray;
@@ -38,38 +40,6 @@
     
     self.roomList = [[DataBase sharedDatabaseInstance] getMeetingRooms];
 
-    /*
-    if (roomList) {
-        [roomList removeAllObjects];
-    } else {
-        UIImage *roomImage1 = [UIImage imageNamed:@"user_meeting_room_1.png"];
-        UIImage *roomImage2 = [UIImage imageNamed:@"user_meeting_room_2.png"];
-        UIImage *roomImage3 = [UIImage imageNamed:@"user_meeting_room_3.png"];
-        UIImage *roomImage4 = [UIImage imageNamed:@"user_meeting_room_4.png"];
-        UIImage *roomImage5 = [UIImage imageNamed:@"user_meeting_room_5.png"];
-        UIImage *roomImage6 = [UIImage imageNamed:@"user_meeting_room_6.png"];
-        NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:roomImage1, @"image",
-                                     @"meeting_room1", @"roomname",
-                                    nil];
-        NSMutableDictionary *dic2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:roomImage2, @"image",
-                                     @"meeting_room2", @"roomname",
-                                     nil];
-        NSMutableDictionary *dic3 = [NSMutableDictionary dictionaryWithObjectsAndKeys:roomImage3, @"image",
-                                     @"meeting_room3", @"roomname",
-                                     nil];
-        NSMutableDictionary *dic4 = [NSMutableDictionary dictionaryWithObjectsAndKeys:roomImage4, @"image",
-                                     @"meeting_room4", @"roomname",
-                                     nil];
-        NSMutableDictionary *dic5 = [NSMutableDictionary dictionaryWithObjectsAndKeys:roomImage5, @"image",
-                                     @"meeting_room5", @"roomname",
-                                     nil];
-        NSMutableDictionary *dic6 = [NSMutableDictionary dictionaryWithObjectsAndKeys:roomImage6, @"image",
-                                     @"meeting_room6", @"roomname",
-                                     nil];
-        self.roomList = [NSMutableArray arrayWithObjects:dic1, dic2, dic3, dic4, dic5, dic6, nil];
-    }
-    */
-    
     UIScrollView *scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     scroolView.backgroundColor = RGB(63, 58, 55);
     [self.view addSubview:scroolView];
@@ -81,7 +51,9 @@
     int cellWidth = 312;
     int cellHeight = 186;
     int index = 0;
-    for (id dic in roomList) {
+    for (MeetingRoom *room in roomList) {
+        
+        
         int row = index/3;
         int col = index%3;
         int startX = col*cellWidth+col*space+leftRight;
@@ -93,9 +65,10 @@
         [scroolView addSubview:roomeImageBGView];
         
         
-        NSString *roomImgName = [dic objectForKey:@"image"];
+        NSString *roomImgName = room.room_image;
         UIImage *img = nil;
-        int roomid = [[dic objectForKey:@"room_id"] intValue];
+        NSString *coverurl = nil;
+        int roomid = room.local_room_id;
         if([roomImgName length] == 0)
         {
             int r = roomid%6;
@@ -104,13 +77,25 @@
         }
         else
         {
-            NSString *path = [Utilities documentsPath:roomImgName];
-            img = [UIImage imageWithContentsOfFile:path];
+            NSRange range = [roomImgName rangeOfString:@"http"];
+            if(range.location != NSNotFound)
+            {
+                coverurl = roomImgName;
+            }
+            else
+            {
+                NSString *path = [Utilities documentsPath:roomImgName];
+                img = [UIImage imageWithContentsOfFile:path];
+            }
         }
         UIImageView *roomeImageView = [[UIImageView alloc] initWithImage:img];
         roomeImageView.userInteractionEnabled=YES;
         roomeImageView.contentMode = UIViewContentModeScaleAspectFill;
         roomeImageView.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
+        
+        if(coverurl)
+            [roomeImageView setImageWithURL:[NSURL URLWithString:coverurl]];
+        
         UIView *view = [[UIView alloc] init];
         view.frame = CGRectMake(0, 0, cellWidth, cellHeight);
         view.tag = index;
@@ -152,7 +137,7 @@
         [roomeImageView addSubview:titleL];
         titleL.font = [UIFont boldSystemFontOfSize:16];
         titleL.textColor  = [UIColor whiteColor];
-        titleL.text = [dic objectForKey:@"name"];
+        titleL.text = room.room_name;
         
         [lableArray addObject:titleL];
         
@@ -216,10 +201,11 @@
 
 -(void)handleTapGesture:(UIGestureRecognizer*)gestureRecognizer{
     long index = gestureRecognizer.view.tag;
-    NSMutableDictionary *dic = [roomList objectAtIndex:index];
+    
+    MeetingRoom *dic = [roomList objectAtIndex:index];
     
     UserMeetingRoomConfig *lctrl = [[UserMeetingRoomConfig alloc] init];
-    lctrl.meetingRoomDic = dic;
+    lctrl._currentRoom = dic;
     [self.navigationController pushViewController:lctrl animated:YES];
 }
 

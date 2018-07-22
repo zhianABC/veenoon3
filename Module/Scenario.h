@@ -13,7 +13,7 @@
 
 @interface Scenario : NSObject
 
-@property (nonatomic, assign) int room_id;
+@property (nonatomic, strong) NSString* regulus_id;
 @property (nonatomic, strong) RgsSceneObj *_rgsSceneObj;
 
 @property (nonatomic, strong) NSMutableArray *_areas;

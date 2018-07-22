@@ -21,6 +21,7 @@
 #import "EngineerToUseTeslariViewCtrl.h"
 #import "HomeViewController.h"
 #import "EngineerNewTeslariViewCtrl.h"
+#import "MeetingRoom.h"
 
 @interface EngineerScenarioSettingsViewCtrl ()<SIconSelectViewDelegate>{
     
@@ -32,7 +33,7 @@
 }
 @property (nonatomic, strong) NSMutableArray *_sBtns;
 @property (nonatomic, strong) NSMutableDictionary *_map;
-@property (nonatomic, assign) int _room_id;
+@property (nonatomic, strong) NSString* regulus_id;
 
 @end
 
@@ -40,7 +41,7 @@
 @synthesize _scenarioArray;
 @synthesize _sBtns;
 @synthesize _map;
-@synthesize _room_id;
+@synthesize regulus_id;
 
 - (void) initDat {
 
@@ -54,8 +55,8 @@
     self._sBtns = [NSMutableArray array];
     self._map = [NSMutableDictionary dictionary];
     
-    NSDictionary *room = [DataCenter defaultDataCenter]._roomData;
-    self._room_id = [[room objectForKey:@"room_id"] intValue];
+    MeetingRoom *room = [DataCenter defaultDataCenter]._currentRoom;
+    self.regulus_id = room.regulus_id;
     
     UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
     [self.view addSubview:titleIcon];
@@ -220,7 +221,7 @@
 - (void) checkSceneDriver:(NSArray*)scenes{
     
     NSArray* savedScenarios = [[DataBase sharedDatabaseInstance]
-                               getSavedScenario:_room_id];
+                               getSavedScenario:regulus_id];
     
     NSMutableDictionary *map = [NSMutableDictionary dictionary];
     for(NSDictionary *senario in savedScenarios)

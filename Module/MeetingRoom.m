@@ -7,14 +7,27 @@
 //
 
 #import "MeetingRoom.h"
+#import "WebClient.h"
+
+@interface MeetingRoom ()
+{
+    WebClient *_client;
+}
+
+@end;
 
 @implementation MeetingRoom
-@synthesize _roomId;
-@synthesize _ip;
-@synthesize _name;
-@synthesize _coverPath;
+@synthesize regulus_id;
+@synthesize regulus_password;
+@synthesize regulus_user_id;
+@synthesize room_name;
+@synthesize room_image;
 
-@synthesize _scenarioArray;
+@synthesize local_room_id;
+@synthesize server_room_id;
+@synthesize user_id;
+@synthesize area_id;
+
 
 - (id) init{
     
@@ -25,30 +38,56 @@
     return self;
 }
 
-- (void) setMeetingData:(NSDictionary*)meetingData{
+- (id) initWithDictionary:(NSDictionary *)info
+{
     
-    self._roomId = [meetingData objectForKey:@"roomId"];
-    
-    
+    if(self = [super init])
+    {
+        
+        self.regulus_id = [info objectForKey:@"regulus_id"];
+        self.regulus_user_id = [info objectForKey:@"regulus_user_id"];
+        self.regulus_password = [info objectForKey:@"regulus_password"];
+        self.room_name = [info objectForKey:@"room_name"];
+        
+        NSString *roomImage = [info objectForKey:@"room_image"];
+        self.room_image = [NSString stringWithFormat:@"%@/%@",WEB_API_URL,roomImage];
+        
+        self.user_id = [[info objectForKey:@"user_id"] intValue];
+        self.area_id = [[info objectForKey:@"area_id"] intValue];
+        self.server_room_id = [[info objectForKey:@"room_id"] intValue];
+    }
+    return self;
+
 }
-- (NSDictionary *)meetingData{
+
+- (void) syncAreaToServer{
     
-    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    if(_client == nil)
+    {
+        _client = [[WebClient alloc] initWithDelegate:self];
+    }
     
-    if(_roomId)
-        [dic setObject:_roomId forKey:@"roomId"];
+    _client._method = @"/updateroomarea";
+    _client._httpMethod = @"POST";
     
-    if(_ip)
-        [dic setObject:_ip forKey:@"roomIP"];
-    if(_name)
-        [dic setObject:_name forKey:@"roomName"];
-    if(_coverPath)
-        [dic setObject:_coverPath forKey:@"coverPath"];
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
     
-    if(_scenarioArray)
-        [dic setObject:_scenarioArray forKey:@"scenarioArray"];
+    _client._requestParam = param;
     
-    return dic;
+    [param setObject:regulus_id forKey:@"regulusID"];
+    [param setObject:[NSString stringWithFormat:@"%d", area_id] forKey:@"areaID"];
+    
+    
+    [_client requestWithSusessBlock:^(id lParam, id rParam) {
+        
+        NSString *response = lParam;
+        NSLog(@"%@", response);
+       
+        
+    } FailBlock:^(id lParam, id rParam) {
+        
+       
+    }];
 }
 
 @end

@@ -93,7 +93,7 @@
     }
     else if([network isEqualToString:@"3G"])
     {
-        if(status == ReachableVia3G || status == ReachableViaWiFi || status == ReachableViaWWAN)
+        if(status == ReachableViaWWAN)
             return 1;
     }
     else if([network isEqualToString:@"2G"])

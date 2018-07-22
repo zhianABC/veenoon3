@@ -59,6 +59,7 @@
 #import "WaitDialog.h"
 #import "DevicePlugButton.h"
 #import "DataCenter.h"
+#import "MeetingRoom.h"
 
 #import "CreateScenarioViewController.h"
 #import "UIButton+Color.h"
@@ -131,17 +132,17 @@
   
     if(_scenario == nil)
     {
-        NSDictionary *room = [DataCenter defaultDataCenter]._roomData;
+        MeetingRoom *room = [DataCenter defaultDataCenter]._currentRoom;
         self._scenario = [[Scenario alloc] init];
-        self._scenario.room_id = [[room objectForKey:@"room_id"] intValue];
+        self._scenario.regulus_id = room.regulus_id;
         
         _isEditingScenario = NO;
         
         if(_selectedDevices)
         {
-        _scenario._audioDevices = [_selectedDevices objectForKey:@"audio"];
-        _scenario._videoDevices = [_selectedDevices objectForKey:@"video"];
-        _scenario._envDevices = [_selectedDevices objectForKey:@"env"];
+            _scenario._audioDevices = [_selectedDevices objectForKey:@"audio"];
+            _scenario._videoDevices = [_selectedDevices objectForKey:@"video"];
+            _scenario._envDevices = [_selectedDevices objectForKey:@"env"];
         }
         
         [DataCenter defaultDataCenter]._scenario = nil;

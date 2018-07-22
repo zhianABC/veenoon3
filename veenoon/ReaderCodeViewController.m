@@ -124,13 +124,50 @@
     cameraLayer.frame = CGRectMake(0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
     [self.view.layer insertSublayer:cameraLayer atIndex:0];
     
+    cameraLayer.connection.videoOrientation = [self videoOrientationFromCurrentDeviceOrientation];
     
+    AVCaptureConnection *output2VideoConnection = [_output connectionWithMediaType:AVMediaTypeVideo];
+    output2VideoConnection.videoOrientation = [self videoOrientationFromCurrentDeviceOrientation];
+
+    
+//    AVCaptureConnection *connection = [_output connectionWithMediaType:AVMediaTypeVideo];
+//    connection.videoOrientation = AVCaptureVideoOrientationLandscapeLeft;
+//   
     // Start
     [session startRunning];
     
     //timer = [NSTimer scheduledTimerWithTimeInterval:.02 target:self selector:@selector(animation1) userInfo:nil repeats:YES];
 }
 
+- (AVCaptureVideoOrientation) videoOrientationFromCurrentDeviceOrientation {
+    
+    AVCaptureVideoOrientation res = AVCaptureVideoOrientationLandscapeLeft;
+    
+    switch (self.interfaceOrientation) {
+        case UIInterfaceOrientationPortrait: {
+            res = AVCaptureVideoOrientationPortrait;
+            break;
+        }
+        case UIInterfaceOrientationLandscapeLeft: {
+            res = AVCaptureVideoOrientationLandscapeLeft;
+            break;
+        }
+        case UIInterfaceOrientationLandscapeRight: {
+            res = AVCaptureVideoOrientationLandscapeRight;
+            break;
+        }
+        case UIInterfaceOrientationPortraitUpsideDown: {
+            res = AVCaptureVideoOrientationPortraitUpsideDown;
+            break;
+        }
+    
+        case UIInterfaceOrientationUnknown: {
+            break;
+        }
+    }
+    return res;
+}
+    
 - (void) initCamera{
    
     AVCaptureDevice * device = nil;
@@ -194,6 +231,13 @@
     cameraLayer.videoGravity=AVLayerVideoGravityResizeAspectFill;
     cameraLayer.frame = self.view.layer.bounds;
     [self.view.layer insertSublayer:cameraLayer atIndex:0];
+    
+    
+    cameraLayer.connection.videoOrientation = [self videoOrientationFromCurrentDeviceOrientation];
+    
+    AVCaptureConnection *output2VideoConnection = [_output connectionWithMediaType:AVMediaTypeVideo];
+    output2VideoConnection.videoOrientation = [self videoOrientationFromCurrentDeviceOrientation];
+
 }
 
 - (void) setDevicePosition:(int)pos
@@ -267,6 +311,7 @@
     
      [session startRunning];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

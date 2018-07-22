@@ -14,10 +14,10 @@
 #import "DataSync.h"
 #import "DataBase.h"
 #import "Scenario.h"
+#import "MeetingRoom.h"
 
 @interface UserMeetingRoomConfig () {
-    NSMutableDictionary *meetingRoomDic;
-    
+
     UIButton *_trainingBtn;
     UIButton *_envirementControlBtn;
     UIButton *_guestBtn;
@@ -40,7 +40,7 @@
 @end
 
 @implementation UserMeetingRoomConfig
-@synthesize meetingRoomDic;
+@synthesize _currentRoom;
 @synthesize _mapSelect;
 
 @synthesize _regulus_user_id;
@@ -77,7 +77,7 @@
     [self.view addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:20];
     titleL.textColor  = [UIColor whiteColor];
-    titleL.text = [meetingRoomDic objectForKey:@"roomname"];
+    titleL.text = _currentRoom.room_name;
     
     self._mapSelect = [NSMutableDictionary dictionary];
     
@@ -91,8 +91,8 @@
     self._nor_image = [UIImage imageNamed:@"user_training_n.png"];
     self._sel_image = [UIImage imageNamed:@"user_training_s.png"];
     
-    self._regulus_gateway_id = [meetingRoomDic objectForKey:@"regulus_id"];
-    self._regulus_user_id = [meetingRoomDic objectForKey:@"user_id"];
+    self._regulus_gateway_id = _currentRoom.regulus_id;
+    self._regulus_user_id = _currentRoom.regulus_user_id;
     
     self._sceneDrivers = [NSMutableArray array];
     
@@ -131,7 +131,7 @@
                                                    
                                                    block_self._regulus_user_id = client_id;
                                                    //NSLog(@"user_id:%@,gw:%@\n",user_id,_gw_id.text);
-                                                   [[NSUserDefaults standardUserDefaults] setObject:@"RGS_EOC500_01" forKey:@"gateway_id"];
+                                                   [[NSUserDefaults standardUserDefaults] setObject:_regulus_gateway_id forKey:@"gateway_id"];
                                                    [[NSUserDefaults standardUserDefaults] setObject:client_id forKey:@"user_id"];
                                                    
                                                    [[NSUserDefaults standardUserDefaults] synchronize];
@@ -175,10 +175,9 @@
 
 - (void) update{
     
-    [DataCenter defaultDataCenter]._roomData = meetingRoomDic;
-    [meetingRoomDic setObject:_regulus_user_id forKey:@"user_id"];
-    
-    [[DataBase sharedDatabaseInstance] saveMeetingRoom:meetingRoomDic];
+    [DataCenter defaultDataCenter]._currentRoom = _currentRoom;
+    _currentRoom.regulus_user_id = _regulus_user_id;
+    [[DataBase sharedDatabaseInstance] saveMeetingRoom:_currentRoom];
     
     
     
@@ -250,8 +249,9 @@
 
 - (void) checkSceneDriver:(NSArray*)scenes{
     
-    int room_id = [[meetingRoomDic objectForKey:@"room_id"] intValue];
-    NSArray* savedScenarios = [[DataBase sharedDatabaseInstance] getSavedScenario:room_id];
+    NSString* regulus_id = _currentRoom.regulus_id;
+    
+    NSArray* savedScenarios = [[DataBase sharedDatabaseInstance] getSavedScenario:regulus_id];
     
     NSMutableDictionary *map = [NSMutableDictionary dictionary];
     for(NSMutableDictionary *senario in savedScenarios)
