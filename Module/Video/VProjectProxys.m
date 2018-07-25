@@ -173,14 +173,7 @@
         
         [[RegulusSDK sharedRegulusSDK] ControlDevice:_deviceId
                                                  cmd:cmd.name
-                                               param:param completion:^(BOOL result, NSError *error) {
-                                                   if (result) {
-                                                       
-                                                   }
-                                                   else{
-                                                       
-                                                   }
-                                               }];
+                                               param:param completion:nil];
     }
 }
 
@@ -210,14 +203,7 @@
         
         [[RegulusSDK sharedRegulusSDK] ControlDevice:_deviceId
                                                  cmd:cmd.name
-                                               param:param completion:^(BOOL result, NSError *error) {
-                                                   if (result) {
-                                                       
-                                                   }
-                                                   else{
-                                                       
-                                                   }
-                                               }];
+                                               param:param completion:nil];
     }
 }
 

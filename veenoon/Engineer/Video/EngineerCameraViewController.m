@@ -462,7 +462,7 @@
                 }
             }
             else{
-                [KVNProgress showErrorWithStatus:@"中控链接断开！"];
+                [KVNProgress showErrorWithStatus:[error description]];
             }
         }];
     }

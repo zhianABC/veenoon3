@@ -17,6 +17,8 @@
 #import "TeslariaComboChooser.h"
 #import "RegulusSDK.h"
 #import "DataCenter.h"
+#import "VTVSet.h"
+#import "VDVDPlayerSet.h"
 
 
 @interface EngineerVideoDevicePluginViewCtrl ()<CenterCustomerPickerViewDelegate> {
@@ -390,7 +392,7 @@
     NSDictionary *greeac = @{@"type":@"video",
                              @"name":name,
                              @"driver":driver_info.serial,
-                             @"brand":@"Unknown",
+                             @"brand":@"红外设备",
                              @"icon":icon_name,
                              @"icon_s":icon_name1,
                              @"driver_class":class_name,
@@ -405,17 +407,18 @@
     
 }
 
+
 - (void) initBrandAndTypes{
     
-    self._currentBrands = @[@"品牌1",@"品牌2",@"品牌3"];
-    self._currentTypes = @[@"型号A",@"型号B",@"型号C"];
+    self._currentBrands = @[@"品牌"];
+    self._currentTypes = @[@"型号"];
     self._driverUdids = @[];
     
     _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
     _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
     
     [_brandPicker selectRow:0 inComponent:0];
-    [_productTypePikcer selectRow:0 inComponent:0];
+    [_productCategoryPicker selectRow:0 inComponent:0];
 }
 
 - (void) addDriverToCenter:(NSDictionary*)device{
@@ -518,12 +521,43 @@
     [_lubojiBtn setBtnHighlited:NO];
     [_touyingjiBtn setBtnHighlited:NO];
     
-    
     IconCenterTextButton *btn = (IconCenterTextButton*) sender;
     NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
     
+    
     [self initBrandAndTypes];
+    
+    NSArray *drivers = [[DataCenter defaultDataCenter] driversWithType:@"video"];
+    
+    NSString *toclass = NSStringFromClass([VTVSet class]);
+    
+    NSMutableArray *bands = [NSMutableArray array];
+    NSMutableArray *types = [NSMutableArray array];
+    NSMutableArray *uuids = [NSMutableArray array];
+    for(NSDictionary *device in drivers)
+    {
+        NSString *classname = [device objectForKey:@"driver_class"];
+        if([classname isEqualToString:toclass])
+        {
+            [bands addObject:[device objectForKey:@"brand"]];
+            [types addObject:[device objectForKey:@"ptype"]];
+            [uuids addObject:[device objectForKey:@"driver"]];
+        }
+    }
+    
+    self._currentBrands = bands;
+    self._currentTypes = types;
+    self._driverUdids = uuids;
+    
+    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
+    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
+    
+    [_brandPicker selectRow:0 inComponent:0];
+    [_productCategoryPicker selectRow:0 inComponent:0];
+    
+    
+    
 }
 - (void) pinjiepingAction:(id)sender{
     
@@ -664,16 +698,33 @@
     
     [self initBrandAndTypes];
     
-    self._currentBrands = @[@"Philips"];
-    self._currentTypes = @[@"DVD"];
-    self._driverUdids = @[UUID_Philips_DVD];
+    NSArray *drivers = [[DataCenter defaultDataCenter] driversWithType:@"video"];
+    
+    NSString *toclass = NSStringFromClass([VDVDPlayerSet class]);
+    
+    NSMutableArray *bands = [NSMutableArray array];
+    NSMutableArray *types = [NSMutableArray array];
+    NSMutableArray *uuids = [NSMutableArray array];
+    for(NSDictionary *device in drivers)
+    {
+        NSString *classname = [device objectForKey:@"driver_class"];
+        if([classname isEqualToString:toclass])
+        {
+            [bands addObject:[device objectForKey:@"brand"]];
+            [types addObject:[device objectForKey:@"ptype"]];
+            [uuids addObject:[device objectForKey:@"driver"]];
+        }
+    }
+    
+    self._currentBrands = bands;
+    self._currentTypes = types;
+    self._driverUdids = uuids;
     
     _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
     _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
     
     [_brandPicker selectRow:0 inComponent:0];
     [_productCategoryPicker selectRow:0 inComponent:0];
-
 }
 
 - (void) dianyuanguanliAction:(id)sender{

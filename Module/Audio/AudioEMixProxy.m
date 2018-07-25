@@ -128,14 +128,7 @@
         if(_deviceId)
             [[RegulusSDK sharedRegulusSDK] ControlDevice:_deviceId
                                                      cmd:cmd.name
-                                                   param:param completion:^(BOOL result, NSError *error) {
-                                                       if (result) {
-                                                           
-                                                       }
-                                                       else{
-                                                           
-                                                       }
-                                                   }];
+                                                   param:param completion:nil];
     }
 }
 
@@ -186,14 +179,7 @@
         if(_deviceId)
             [[RegulusSDK sharedRegulusSDK] ControlDevice:_deviceId
                                                      cmd:cmd.name
-                                                   param:param completion:^(BOOL result, NSError *error) {
-                                                       if (result) {
-                                                           
-                                                       }
-                                                       else{
-                                                           
-                                                       }
-                                                   }];
+                                                   param:param completion:nil];
     }
 }
 - (void) controlLowFilter:(NSString*)lowFilter {
@@ -243,14 +229,7 @@
         if(_deviceId)
             [[RegulusSDK sharedRegulusSDK] ControlDevice:_deviceId
                                                      cmd:cmd.name
-                                                   param:param completion:^(BOOL result, NSError *error) {
-                                                       if (result) {
-                                                           
-                                                       }
-                                                       else{
-                                                           
-                                                       }
-                                                   }];
+                                                   param:param completion:nil];
     }
 }
 - (void) controlMixPEQ:(NSString*)mixPEQ withRate:(NSString*)peqRate {
@@ -310,14 +289,7 @@
         if(_deviceId)
             [[RegulusSDK sharedRegulusSDK] ControlDevice:_deviceId
                                                      cmd:cmd.name
-                                                   param:param completion:^(BOOL result, NSError *error) {
-                                                       if (result) {
-                                                           
-                                                       }
-                                                       else{
-                                                           
-                                                       }
-                                                   }];
+                                                   param:param completion:nil];
     }
 }
 - (void) controlMixPress:(NSString*)mixPress {
@@ -367,14 +339,7 @@
         if(_deviceId)
             [[RegulusSDK sharedRegulusSDK] ControlDevice:_deviceId
                                                      cmd:cmd.name
-                                                   param:param completion:^(BOOL result, NSError *error) {
-                                                       if (result) {
-                                                           
-                                                       }
-                                                       else{
-                                                           
-                                                       }
-                                                   }];
+                                                   param:param completion:nil];
     }
 }
 - (void) controlMixNoise:(NSString*)mixNoise {
@@ -424,14 +389,7 @@
         if(_deviceId)
             [[RegulusSDK sharedRegulusSDK] ControlDevice:_deviceId
                                                      cmd:cmd.name
-                                                   param:param completion:^(BOOL result, NSError *error) {
-                                                       if (result) {
-                                                           
-                                                       }
-                                                       else{
-                                                           
-                                                       }
-                                                   }];
+                                                   param:param completion:nil];
     }
 }
 
@@ -474,14 +432,7 @@
         if(_deviceId)
             [[RegulusSDK sharedRegulusSDK] ControlDevice:_deviceId
                                                      cmd:cmd.name
-                                                   param:param completion:^(BOOL result, NSError *error) {
-                                                       if (result) {
-                                                           
-                                                       }
-                                                       else{
-                                                           
-                                                       }
-                                                   }];
+                                                   param:param completion:nil];
     }
 }
 
@@ -773,14 +724,7 @@
         if(_deviceId)
             [[RegulusSDK sharedRegulusSDK] ControlDevice:_deviceId
                                                      cmd:cmd.name
-                                                   param:param completion:^(BOOL result, NSError *error) {
-                                                       if (result) {
-                                                           
-                                                       }
-                                                       else{
-                                                           
-                                                       }
-                                                   }];
+                                                   param:param completion:nil];
     }
 }
 //SET_VOL
@@ -829,14 +773,7 @@
         if(_deviceId)
             [[RegulusSDK sharedRegulusSDK] ControlDevice:_deviceId
                                                      cmd:cmd.name
-                                                   param:param completion:^(BOOL result, NSError *error) {
-                                                       if (result) {
-                                                           
-                                                       }
-                                                       else{
-                                                           
-                                                       }
-                                                   }];
+                                                   param:param completion:nil];
     }
 }
 

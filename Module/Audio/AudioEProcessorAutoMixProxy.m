@@ -200,14 +200,7 @@
         
         [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
                                                  cmd:cmd.name
-                                               param:param completion:^(BOOL result, NSError *error) {
-                                                   if (result) {
-                                                       
-                                                   }
-                                                   else{
-                                                       
-                                                   }
-                                               }];
+                                               param:param completion:nil];
     }
     
 }
@@ -261,14 +254,7 @@
         
         [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
                                                  cmd:cmd.name
-                                               param:param completion:^(BOOL result, NSError *error) {
-                                                   if (result) {
-                                                       
-                                                   }
-                                                   else{
-                                                       
-                                                   }
-                                               }];
+                                               param:param completion:nil];
     }
     
 }
