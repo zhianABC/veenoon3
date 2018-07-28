@@ -33,7 +33,7 @@
         
         //self.backgroundColor = [UIColor redColor];
         
-        _icon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
+        _icon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 40, frame.size.height)];
         [self addSubview:_icon];
         _icon.image = normal;
         _icon.layer.contentsGravity = kCAGravityCenter;

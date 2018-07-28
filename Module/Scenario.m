@@ -228,6 +228,12 @@
     }];
 }
 
+- (NSString *)name{
+    
+    NSString *name = [_scenarioData objectForKey:@"name"];
+    
+    return name;
+}
 - (void) updateProperty{
     
     if(regulus_id == nil)

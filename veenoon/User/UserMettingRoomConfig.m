@@ -15,6 +15,7 @@
 #import "DataBase.h"
 #import "Scenario.h"
 #import "MeetingRoom.h"
+#import "AutoRunViewController.h"
 
 @interface UserMeetingRoomConfig () {
 
@@ -63,7 +64,7 @@
     [self.view addSubview:line];
     
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    backBtn.frame = CGRectMake(60, SCREEN_HEIGHT -45, 60, 40);
+    backBtn.frame = CGRectMake(60, 40, 60, 40);
     [self.view addSubview:backBtn];
     [backBtn setTitle:@"返回" forState:UIControlStateNormal];
     [backBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -72,12 +73,37 @@
     [backBtn addTarget:self action:@selector(backAction:)
       forControlEvents:UIControlEventTouchUpInside];
     
-    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(50, 40, 200, 40)];
+    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(50, 40, SCREEN_WIDTH-100, 40)];
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
-    titleL.font = [UIFont boldSystemFontOfSize:20];
+    titleL.font = [UIFont boldSystemFontOfSize:18];
     titleL.textColor  = [UIColor whiteColor];
-    titleL.text = _currentRoom.room_name;
+    titleL.textAlignment = NSTextAlignmentCenter;
+    titleL.text = [NSString stringWithFormat:@"%@ - 场景应用",_currentRoom.room_name];
+    
+    UIButton *btnState = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnState.frame = CGRectMake(60, SCREEN_HEIGHT - 50, 60, 50);
+    [btnState setImage:[UIImage imageNamed:@"state_summary_white.png"]
+              forState:UIControlStateNormal];
+    [btnState setImage:[UIImage imageNamed:@"state_summary.png"]
+             forState:UIControlStateHighlighted];
+    [self.view addSubview:btnState];
+    btnState.center = CGPointMake(SCREEN_WIDTH/4, btnState.center.y);
+    [btnState addTarget:self
+                 action:@selector(stateAction:)
+       forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *btnAuto = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnAuto.frame = CGRectMake(SCREEN_WIDTH-120, SCREEN_HEIGHT - 50, 60, 50);
+    [btnAuto setImage:[UIImage imageNamed:@"syc_icon_white.png"]
+              forState:UIControlStateNormal];
+    [btnAuto setImage:[UIImage imageNamed:@"sync_icon.png"]
+             forState:UIControlStateHighlighted];
+    [self.view addSubview:btnAuto];
+    btnAuto.center = CGPointMake(SCREEN_WIDTH*3/4.0, btnState.center.y);
+    [btnAuto addTarget:self
+                 action:@selector(autoAyncAction:)
+       forControlEvents:UIControlEventTouchUpInside];
     
     self._mapSelect = [NSMutableDictionary dictionary];
     
@@ -113,6 +139,18 @@
 #endif
     
    
+}
+
+- (void) stateAction:(id)sender{
+    
+}
+
+- (void) autoAyncAction:(id)sender{
+    
+    AutoRunViewController *autoSync = [[AutoRunViewController alloc] init];
+    autoSync._scenarios = _sceneDrivers;
+    [self presentViewController:autoSync animated:YES
+                     completion:nil];
 }
 
 
