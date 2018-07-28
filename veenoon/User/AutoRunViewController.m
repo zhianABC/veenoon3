@@ -11,6 +11,7 @@
 #import "AutoRunSetView.h"
 #import "MeetingRoom.h"
 #import "Scenario.h"
+#import "DataBase.h"
 
 @interface AutoRunViewController ()
 {
@@ -68,11 +69,20 @@
     
     //
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(notifyRefreshItems:)
+                                                 name:@"Notify_Refresh_Items"
+                                               object:nil];
+    
     [self loadAutoItems];
     
 }
 
 - (void) loadAutoItems{
+    
+    NSArray *datas = [[DataBase sharedDatabaseInstance] getScenarioSchedules];
+    
+    [_autoItems addObjectsFromArray:datas];
     
     [_autoItems addObject:@{@"name":@"+", @"type":@"1"}];
     
@@ -82,11 +92,13 @@
     int y = 0;
     for(int i = 0; i < [_autoItems count]; i++)
     {
+        NSDictionary *dic = [_autoItems objectAtIndex:i];
+        
         int row = i/7;
         int col = i%7;
         
-        x = row * (cellWidth+15) + left;
-        y = col * (cellWidth+15) + 15;
+        x = col * (cellWidth+15) + left;
+        y = row * (cellWidth+15) + 15;
         
         UIButton *btn = [UIButton buttonWithColor:RGB(0x52, 0x4e, 0x4b)
                                          selColor:nil];
@@ -96,17 +108,46 @@
         btn.clipsToBounds = YES;
         btn.tag = i;
         
-        [btn addTarget:self
-                action:@selector(buttonAction:)
-      forControlEvents:UIControlEventTouchUpInside];
+        UILabel* titleL = [[UILabel alloc] initWithFrame:btn.bounds];
+        titleL.backgroundColor = [UIColor clearColor];
+        [btn addSubview:titleL];
+        titleL.font = [UIFont systemFontOfSize:16];
+        titleL.textColor  = [UIColor whiteColor];
+        titleL.textAlignment = NSTextAlignmentCenter;
+        titleL.numberOfLines = 2;
+        
+        int type = [[dic objectForKey:@"type"] intValue];
+        if(type == 0)
+        {
+            int tms = [[dic objectForKey:@"date"] intValue];
+            NSDate *date = [NSDate dateWithTimeIntervalSince1970:tms];
+            
+            NSDateFormatter *fm = [[NSDateFormatter alloc] init];
+            [fm setDateFormat:@"HH:mm"];
+            
+            NSString *times = [fm stringFromDate:date];
+            
+            titleL.text = [NSString stringWithFormat:@"%@\n%@",times,[dic objectForKey:@"name"]];
+
+        }
+        else
+        {
+            titleL.text = [dic objectForKey:@"name"];
+            [btn addTarget:self
+                    action:@selector(buttonAction:)
+          forControlEvents:UIControlEventTouchUpInside];
+        }
+        
+        
         
     }
 }
 
-- (void) showItems{
+- (void) notifyRefreshItems:(id)sender{
     
+    [_autoItems removeAllObjects];
     
-    
+    [self loadAutoItems];
 }
 
 - (void) buttonAction:(UIButton*)sender{
@@ -132,6 +173,13 @@
     
     [self dismissViewControllerAnimated:YES
                              completion:nil];
+}
+
+
+- (void) dealloc
+{
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)didReceiveMemoryWarning {

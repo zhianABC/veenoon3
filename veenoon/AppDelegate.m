@@ -35,7 +35,7 @@
 //    
     [RegulusSDK sharedRegulusSDK].delegate = self;
     
-    HomeViewController *wellcome = [[HomeViewController alloc] init];
+    WellcomeViewController *wellcome = [[WellcomeViewController alloc] init];
     _naviRoot = [[CMNavigationController alloc] initWithRootViewController:wellcome];
     _naviRoot.navigationBarHidden = YES;
     self.window.rootViewController = _naviRoot;

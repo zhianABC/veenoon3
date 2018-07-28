@@ -11,6 +11,7 @@
 #import "Scenario.h"
 #import "RegulusSDK.h"
 #import "WebClient.h"
+#import "DataBase.h"
 
 #define SCEN_PICKER_WIDTH  300
 
@@ -214,7 +215,7 @@ UITableViewDataSource>
                   forKey:@"date"];
     }
     
-    [datas setObject:[NSString stringWithFormat:@"%d",m_id]
+    [datas setObject:[NSString stringWithFormat:@"%d", (int)m_id]
               forKey:@"m_id"];
     
     [datas setObject:weeks
@@ -222,6 +223,8 @@ UITableViewDataSource>
     
     if(m_id)
     {
+        [[DataBase sharedDatabaseInstance] saveScenarioSchedule:datas];
+        
         IMP_BLOCK_SELF(AutoRunSetView);
         [[RegulusSDK sharedRegulusSDK] SetScheduler:m_id
                                           exce_time:date
@@ -260,14 +263,27 @@ UITableViewDataSource>
     [param setObject:[datas objectForKey:@"date"] forKey:@"exceTime"];
     [param setObject:[datas objectForKey:@"weeks"] forKey:@"workItems"];
     
+    IMP_BLOCK_SELF(AutoRunSetView);
+    
     [_client requestWithSusessBlock:^(id lParam, id rParam) {
         
+        [block_self done];
         
     } FailBlock:^(id lParam, id rParam) {
         
-        
+        [block_self done];
     }];
     
+    
+    
+}
+
+- (void) done{
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"Notify_Refresh_Items"
+                                                        object:nil];
+    
+    [self hidden];
 }
 
      

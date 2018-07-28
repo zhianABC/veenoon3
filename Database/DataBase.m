@@ -76,6 +76,8 @@ static DataBase* sharedInstance = nil;
         [self checkMeetingRoomCachedTable];
         [self checkCachedTable];
         
+        [self checkScheduleTable];
+        
 		return 1;
 	}
 	else {
@@ -111,6 +113,206 @@ static DataBase* sharedInstance = nil;
     
 }
 
+#pragma mark ----Schedule Table-------
+
+- (void) checkScheduleTable{
+    
+    NSString *s = @"SELECT * FROM sqlite_master WHERE type='table' AND name='tblScheduleCachedTable'";
+    
+    const char *sqlStatement = [s UTF8String];
+    sqlite3_stmt *statement;
+    
+    int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
+    if (success != SQLITE_OK) {
+        NSLog(@"Error: failed to tblScheduleCachedTable");
+        return;
+    }
+    
+    BOOL have = NO;
+    while (sqlite3_step(statement) == SQLITE_ROW) {
+        
+        have = YES;
+    }
+    sqlite3_finalize(statement);
+    
+    if(!have)
+    {
+        s = @"CREATE TABLE tblScheduleCachedTable(scenario_id INTEGER, name TEXT, weeks TEXT, date INTEGER, user_id INTEGER)";
+        
+        const char * sql = [s UTF8String];
+        sqlite3_stmt *delete_statement = nil;
+        
+        if (sqlite3_prepare_v2(database_, sql, -1, &delete_statement, NULL) != SQLITE_OK) {
+            NSLog(@"Not Prepared DataBase! -- tblScheduleCachedTable");
+        }
+        
+        sqlite3_step(delete_statement);
+        sqlite3_finalize(delete_statement);
+    }
+    
+}
+
+- (int) saveScenarioSchedule:(NSDictionary*)schedule{
+    
+    @synchronized (self) {
+        
+        int scenario_id = [[schedule objectForKey:@"m_id"] intValue];
+        if(scenario_id == 0)
+            return -1;
+        int b = [self isScheduleExist:scenario_id];
+        if(b)
+        {
+            [self updateSchedule:schedule];
+            return b;
+        }
+        
+        const char *sqlStatement = "insert into tblScheduleCachedTable (scenario_id, name, weeks, date, user_id) VALUES (?,?,?,?,?)";
+        sqlite3_stmt *statement;
+        
+        int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
+        if (success != SQLITE_OK) {
+            NSLog(@"Error: failed to insert: tblScheduleCachedTable");
+            return -1;
+        }
+        
+        NSString *name = [schedule objectForKey:@"name"];
+        if(name == nil)
+            name = @"";
+        
+        NSString *weeks = [schedule objectForKey:@"weeks"];
+        if(weeks == nil)
+            weeks = @"";
+        
+        int date = [[schedule objectForKey:@"date"] intValue];
+        int user_id = [[schedule objectForKey:@"user_id"] intValue];
+        
+        
+        sqlite3_bind_int(statement, 1, scenario_id);
+        sqlite3_bind_text(statement, 2, [name UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(statement, 3, [weeks UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_int(statement, 4, date);
+        sqlite3_bind_int(statement, 5, user_id);
+        
+        success = sqlite3_step(statement);
+        sqlite3_finalize(statement);
+        
+        if (success == SQLITE_ERROR) {
+            NSLog(@"Error: failed to insert into tblScheduleCachedTable with message.");
+            return -1;
+        }
+        
+        // NOTE: return the id which insert a record.
+        // we must refresh the dial.id at once,because when we del curren tial by id
+        int tid = (int)sqlite3_last_insert_rowid(database_);
+        
+        return tid;
+    }
+}
+
+
+- (int) isScheduleExist:(int)scenario_id{
+    
+    NSString *s = [NSString stringWithFormat:@"select * from tblScheduleCachedTable where scenario_id = ?"];
+    const char *sqlStatement = [s UTF8String];
+    sqlite3_stmt *statement;
+    
+    int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
+    if (success != SQLITE_OK) {
+        NSLog(@"Error: failed to access:tblScheduleCachedTable");
+        return NO;
+    }
+    
+    sqlite3_bind_int(statement, 1, scenario_id);
+    
+    int bRes = 0;
+    while (sqlite3_step(statement) == SQLITE_ROW) {
+        
+        int chkin = sqlite3_column_int(statement, 0);
+        bRes = chkin;
+    }
+    sqlite3_finalize(statement);
+    
+    return bRes;
+}
+
+
+- (void) updateSchedule:(NSDictionary*)schedule{
+    
+    @synchronized (self) {
+        
+        const char *sqlStatement = "update tblScheduleCachedTable set name=?,weeks=?,date=? where scenario_id=?";
+        sqlite3_stmt *statement;
+        
+        int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
+        if (success != SQLITE_OK) {
+            NSLog(@"Error: failed to insert: tblScheduleCachedTable");
+            return;
+        }
+        
+        NSString *name = [schedule objectForKey:@"name"];
+        if(name == nil)
+            name = @"";
+        
+        NSString *weeks = [schedule objectForKey:@"weeks"];
+        if(weeks == nil)
+            weeks = @"";
+        
+        int date = [[schedule objectForKey:@"date"] intValue];
+        int scenario_id = [[schedule objectForKey:@"m_id"] intValue];
+        
+        
+        sqlite3_bind_text(statement, 1, [name UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_text(statement, 2, [weeks UTF8String], -1, SQLITE_TRANSIENT);
+        sqlite3_bind_int(statement, 3, date);
+        sqlite3_bind_int(statement, 4, scenario_id);
+        
+        success = sqlite3_step(statement);
+        sqlite3_finalize(statement);
+    }
+}
+
+- (NSMutableArray*) getScenarioSchedules{
+    
+    NSString *s = [NSString stringWithFormat:@"select * from tblScheduleCachedTable"];
+    const char *sqlStatement = [s UTF8String];
+    sqlite3_stmt *statement;
+    
+    int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
+    if (success != SQLITE_OK) {
+        NSLog(@"Error: failed to access:tblScheduleCachedTable");
+        return nil;
+    }
+    
+    NSMutableArray *objs = [[NSMutableArray alloc] init];
+    while (sqlite3_step(statement) == SQLITE_ROW) {
+        
+        int col0        =   sqlite3_column_int(statement, 0);
+        char* name      = (char*)sqlite3_column_text(statement, 1);
+        char* weeks     = (char*)sqlite3_column_text(statement, 2);
+        int col3        =   sqlite3_column_int(statement, 3);
+        
+        NSMutableDictionary *mdic = [NSMutableDictionary dictionary];
+        [objs addObject:mdic];
+        
+        [mdic setObject:[NSString stringWithFormat:@"%d", col0]
+                 forKey:@"m_id"];
+        [mdic setObject:[NSString stringWithFormat:@"%d", col3]
+                 forKey:@"date"];
+        
+        if(name)
+        {
+            [mdic setObject:[NSString stringWithUTF8String:name] forKey:@"name"];
+        }
+        if(weeks)
+        {
+            [mdic setObject:[NSString stringWithUTF8String:weeks] forKey:@"weeks"];
+        }
+        
+    }
+    sqlite3_finalize(statement);
+
+    return objs;
+}
 
 #pragma mark ----Cached Meeting-------
 - (void) checkMeetingRoomCachedTable{
