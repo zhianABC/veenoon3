@@ -31,8 +31,13 @@
 
 @property (nonatomic, strong) id _ctime;
 
+@property (nonatomic, strong) NSString *active_time;
+@property (nonatomic, strong) NSString *expire_time;
+
 - (id) initWithDicionary:(NSDictionary*)dic;
 
 - (void) updateUserInfo:(NSDictionary*)dic;
+
+- (BOOL) isActive;
 
 @end

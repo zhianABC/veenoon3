@@ -13,7 +13,9 @@
 #import "HomeViewController.h"
 #import "EngineerMonitorViewCtrl.h"
 #import "DataSync.h"
+#import "UserDefaultsKV.h"
 #import "RegulusSDK.h"
+#import "InvitationCodeViewCotroller.h"
 
 
 @interface AppDelegate () <RegulusSDKDelegate>
@@ -35,9 +37,34 @@
 //    
     [RegulusSDK sharedRegulusSDK].delegate = self;
     
-    WellcomeViewController *wellcome = [[WellcomeViewController alloc] init];
-    _naviRoot = [[CMNavigationController alloc] initWithRootViewController:wellcome];
-    _naviRoot.navigationBarHidden = YES;
+    User *u = [UserDefaultsKV getUser];
+    
+    if(u)
+    {
+        if([u isActive])
+        {
+            HomeViewController *wellcome = [[HomeViewController alloc] init];
+            _naviRoot = [[CMNavigationController alloc] initWithRootViewController:wellcome];
+            _naviRoot.navigationBarHidden = YES;
+        }
+        else
+        {
+            InvitationCodeViewCotroller *wellcome = [[InvitationCodeViewCotroller alloc] init];
+            wellcome.showBack = NO;
+            _naviRoot = [[CMNavigationController alloc] initWithRootViewController:wellcome];
+            _naviRoot.navigationBarHidden = YES;
+            
+        }
+    }
+    else
+    {
+        WellcomeViewController *wellcome = [[WellcomeViewController alloc] init];
+        _naviRoot = [[CMNavigationController alloc] initWithRootViewController:wellcome];
+        _naviRoot.navigationBarHidden = YES;
+        
+    }
+        
+    
     self.window.rootViewController = _naviRoot;
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
@@ -58,6 +85,17 @@
     return YES;
 }
 
+- (void) logout{
+    
+    [UserDefaultsKV clearUser];
+    
+    WellcomeViewController *wellcome = [[WellcomeViewController alloc] init];
+    _naviRoot = [[CMNavigationController alloc] initWithRootViewController:wellcome];
+    _naviRoot.navigationBarHidden = YES;
+    
+    self.window.rootViewController = _naviRoot;
+    
+}
 
 //Regulus SDK delegate
 -(void)onConnectChanged:(BOOL)connect

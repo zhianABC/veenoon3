@@ -16,6 +16,8 @@
 #import "AppDelegate.h"
 #import "WaitDialog.h"
 #import "DataSync.h"
+#import "Utilities.h"
+#import "KVNProgress.h"
 
 #define T7DaySecs (7*24*3600)
 
@@ -28,6 +30,7 @@
 @end
 
 @implementation InvitationCodeViewCotroller
+@synthesize showBack;
 
 - (void) viewWillAppear:(BOOL)animated {
     if([[NetworkChecker sharedNetworkChecker] networkStatus] == NotReachable) {
@@ -60,6 +63,8 @@
     bottomBar.userInteractionEnabled = YES;
     bottomBar.image = [UIImage imageNamed:@"botomo_icon_black.png"];
     
+    if(showBack)
+    {
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     cancelBtn.frame = CGRectMake(0, 0,160, 50);
     [bottomBar addSubview:cancelBtn];
@@ -70,6 +75,7 @@
     [cancelBtn addTarget:self
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
+    }
     
     UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
@@ -115,9 +121,6 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void) okAction:(UIButton*) btn {
-    [self didLogin];
-}
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     
@@ -136,10 +139,97 @@
     return YES;
 }
 
-- (void) enterAdminMode{
+- (void) okAction:(UIButton*) btn {
+    
+    NSString *code = _invitationCode.text;
+    
+    if([code length] < 5)
+    {
+        [Utilities showMessage:@"请输入合法的序列号" ctrl:self];
+    }
+    
+    User *u = [UserDefaultsKV getUser];
+
+    if(_autoClient == nil)
+        _autoClient = [[WebClient alloc] initWithDelegate:self];
+    
+    _autoClient._httpMethod = @"GET";
+    _autoClient._method = @"/validinvitationcode";
     
     
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setObject:code forKey:@"invitationCode"];
+    [params setObject:u._userId forKey:@"userID"];
+    
+    _autoClient._requestParam = params;
+    
+    btn.enabled = NO;
+    
+    IMP_BLOCK_SELF(InvitationCodeViewCotroller);
+    
+    [KVNProgress show];
+    
+    [_autoClient requestWithSusessBlock:^(id lParam, id rParam) {
+        
+        NSString *response = lParam;
+        //NSLog(@"%@", response);
+        
+        [KVNProgress dismiss];
+        
+        SBJson4ValueBlock block = ^(id v, BOOL *stop) {
+            
+            if ([v isKindOfClass:[NSDictionary class]]) {
+                int  code = [[v objectForKey:@"code"] intValue];
+                if (code == 200) {
+                    
+                    NSDictionary *data = [v objectForKey:@"data"];
+                    [block_self processLoginData:data];
+                    
+                } else {
+                    btn.enabled = YES;
+                    
+                    NSString *message = [v objectForKey:@"message"];
+                    
+                    [Utilities showMessage:message ctrl:self];
+                    
+                }
+                return;
+            }
+            
+        };
+        
+        SBJson4ErrorBlock eh = ^(NSError* err) {
+            NSLog(@"OOPS: %@", err);
+            
+        };
+        
+        id parser = [SBJson4Parser multiRootParserWithBlock:block
+                                               errorHandler:eh];
+        
+        id data = [response dataUsingEncoding:NSUTF8StringEncoding];
+        [parser parse:data];
+        
+        
+    } FailBlock:^(id lParam, id rParam) {
+        
+        NSString *response = lParam;
+        NSLog(@"%@", response);
+        
+        [KVNProgress dismiss];
+    }];
 }
+
+- (void) processLoginData:(NSDictionary*)data{
+    
+    User *u = [[User alloc] initWithDicionary:data];
+    [UserDefaultsKV saveUser:u];
+    
+    if([u isActive])
+    {
+        [[AppDelegate shareAppDelegate] enterApp];
+    }
+}
+
 
 - (void) didLogin {
     

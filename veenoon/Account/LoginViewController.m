@@ -21,6 +21,7 @@
 #import "wsDB.h"
 #import "SignupViewController.h"
 #import "Utilities.h"
+#import "KVNProgress.h"
 
 #define T7DaySecs (7*24*3600)
 
@@ -280,8 +281,9 @@
         if (u) {
             if([_userName.text isEqualToString:u._cellphone] &&
                [_userPwd.text isEqualToString:[UserDefaultsKV getUserPwd]]) {
-                InvitationCodeViewCotroller *invitation = [[InvitationCodeViewCotroller alloc] init];
-                [self.navigationController pushViewController:invitation animated:YES];
+                
+                [self checkUserActive];
+                
             } else {
                 
                 [Utilities showMessage:@"用户名或密码错误！" ctrl:self];
@@ -320,10 +322,14 @@
     
     IMP_BLOCK_SELF(LoginViewController);
     
+    [KVNProgress show];
+    
     [_autoClient requestWithSusessBlock:^(id lParam, id rParam) {
         
         NSString *response = lParam;
         //NSLog(@"%@", response);
+        
+        [KVNProgress dismiss];
         
         SBJson4ValueBlock block = ^(id v, BOOL *stop) {
             
@@ -364,7 +370,7 @@
         NSString *response = lParam;
         NSLog(@"%@", response);
         
-        
+        [KVNProgress dismiss];
     }];
 }
 
@@ -374,8 +380,24 @@
     [UserDefaultsKV saveUserPwd:_userPwd.text];
     [UserDefaultsKV saveUser:u];
     
-    InvitationCodeViewCotroller *invitation = [[InvitationCodeViewCotroller alloc] init];
-    [self.navigationController pushViewController:invitation animated:YES];
+    
+    [self checkUserActive];
+ }
+
+- (void) checkUserActive{
+    
+    User *u = [UserDefaultsKV getUser];
+    
+    if(![u isActive])
+    {
+        InvitationCodeViewCotroller *invitation = [[InvitationCodeViewCotroller alloc] init];
+        [self.navigationController pushViewController:invitation animated:YES];
+        
+    }
+    else
+    {
+        [[AppDelegate shareAppDelegate] enterApp];
+    }
 }
 
 - (void) notifyNetworkStatusChanged:(NSNotification*)notify{

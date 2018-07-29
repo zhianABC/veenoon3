@@ -7,7 +7,6 @@
 //
 
 #import "HomeViewController.h"
-#import "SettingsViewController.h"
 #import "EnginnerHomeViewController.h"
 #import "UserHomeViewController.h"
 #import "NSDate-Helper.h"
@@ -323,11 +322,6 @@
                                                 userInfo:nil
                                                  repeats:NO];
     }
-}
-
-- (void) settingsAction:(id)sender{
-    SettingsViewController *lctrl = [[SettingsViewController alloc] init];
-    [self.navigationController pushViewController:lctrl animated:YES];
 }
 
 - (void) userLoginAction:(id)sender{

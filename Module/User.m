@@ -7,6 +7,7 @@
 //
 
 #import "User.h"
+#import "NSDate-Helper.h"
 
 @implementation User
 @synthesize _userId;
@@ -29,6 +30,9 @@
 @synthesize address;
 @synthesize license;
 @synthesize is_engineer;
+
+@synthesize expire_time;
+@synthesize active_time;
 
 - (id) initWithDicionary:(NSDictionary*)dic{
     
@@ -95,6 +99,19 @@
     }
     self.is_engineer = [value intValue];
     
+    value = [dic objectForKey:@"expire_time"];
+    if([value isKindOfClass:[NSNull class]])
+    {
+        value = @"";
+    }
+    self.expire_time = value;
+    
+    value = [dic objectForKey:@"active_time"];
+    if([value isKindOfClass:[NSNull class]])
+    {
+        value = @"";
+    }
+    self.active_time = value;
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -121,6 +138,9 @@
         self.address = [aDecoder decodeObjectForKey:@"address"];
         self.is_engineer = [[aDecoder decodeObjectForKey:@"is_engineer"] intValue];
         
+        self.active_time = [aDecoder decodeObjectForKey:@"active_time"];
+        self.expire_time = [aDecoder decodeObjectForKey:@"expire_time"];
+        
     }
     return self;
 }
@@ -146,6 +166,37 @@
     [aCoder encodeObject:self.address forKey:@"address"];
     [aCoder encodeObject:[NSNumber numberWithInt:is_engineer] forKey:@"is_engineer"];
     
+    [aCoder encodeObject:self.active_time forKey:@"active_time"];
+    [aCoder encodeObject:self.expire_time forKey:@"expire_time"];
+}
+
+- (BOOL) isActive{
+    
+    BOOL active = NO;
+    
+    if([active_time length])
+    {
+        if([expire_time length] == 0)
+        {
+            active = YES;
+        }
+        else
+        {
+            NSDate *date = [NSDate dateFromString:expire_time
+                                       withFormat:@"yyyy-MM-dd HH:mm:ss"];
+            
+            NSDate *nowDate = [NSDate date];
+            
+            int tm = [nowDate timeIntervalSinceDate:date];
+            
+            if(tm < 0)
+            {
+                active = YES;
+            }
+        }
+    }
+    
+    return active;
 }
 
 @end

@@ -17,6 +17,7 @@
 #import "DataBase.h"
 #import "MeetingRoom.h"
 #import "UserDefaultsKV.h"
+#import "Utilities.h"
 
 @interface EnginnerHomeViewController () <ReaderCodeDelegate> {
     UITextField *_userNameField;
@@ -197,6 +198,10 @@
                     {
                         [block_self saveRoomList:[v objectForKey:@"data"]];
                     }
+                }
+                else
+                {
+                    [Utilities showMessage:[v objectForKey:@"message"] ctrl:self];
                 }
                 return;
             }

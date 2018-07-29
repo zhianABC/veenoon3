@@ -13,7 +13,7 @@
 		0479345B1DB0A7AA0066BABC /* JCShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0479345A1DB0A7AA0066BABC /* JCShareView.m */; };
 		049BA6091AF76C5E00F17584 /* camera_flip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 049BA6081AF76C5E00F17584 /* camera_flip@2x.png */; };
 		049BA6601AF7B64000F17584 /* DataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 049BA65E1AF7B64000F17584 /* DataBase.m */; };
-		049BA6611AF7B64000F17584 /* zhucebao_db.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 049BA65F1AF7B64000F17584 /* zhucebao_db.sqlite */; };
+		049BA6611AF7B64000F17584 /* veenoon_db.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 049BA65F1AF7B64000F17584 /* veenoon_db.sqlite */; };
 		049BA6661AF7B82700F17584 /* ChooseCountryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 049BA6651AF7B82700F17584 /* ChooseCountryViewController.m */; };
 		049ECA711C8D4B8A00A611D8 /* libzbar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 049ECA6B1C8D4B8A00A611D8 /* libzbar.a */; };
 		049ECA721C8D4B8A00A611D8 /* zbar-back.png in Resources */ = {isa = PBXBuildFile; fileRef = 049ECA6D1C8D4B8A00A611D8 /* zbar-back.png */; };
@@ -348,7 +348,6 @@
 		EB03F5371FBDDAB300865541 /* main_user_log_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB03F5311FBDDAB300865541 /* main_user_log_normal@2x.png */; };
 		EB03F5381FBDDAB300865541 /* main_user_login_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB03F5321FBDDAB300865541 /* main_user_login_selected@2x.png */; };
 		EB03F5391FBDDAB300865541 /* main_engineer_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB03F5331FBDDAB300865541 /* main_engineer_n@2x.png */; };
-		EB03F53F1FBDE8FB00865541 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB03F53E1FBDE8FB00865541 /* SettingsViewController.m */; };
 		EB03F5491FBDEB8900865541 /* EnginnerHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB03F5481FBDEB8900865541 /* EnginnerHomeViewController.m */; };
 		EB03F54D1FBDEC6000865541 /* UserHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB03F54C1FBDEC6000865541 /* UserHomeViewController.m */; };
 		EB042A5B1FC2FFCD00F7F73D /* OutSystemView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB042A5A1FC2FFCD00F7F73D /* OutSystemView.m */; };
@@ -923,7 +922,7 @@
 		049BA6081AF76C5E00F17584 /* camera_flip@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera_flip@2x.png"; sourceTree = "<group>"; };
 		049BA65D1AF7B64000F17584 /* DataBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataBase.h; sourceTree = "<group>"; };
 		049BA65E1AF7B64000F17584 /* DataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataBase.m; sourceTree = "<group>"; };
-		049BA65F1AF7B64000F17584 /* zhucebao_db.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = zhucebao_db.sqlite; sourceTree = "<group>"; };
+		049BA65F1AF7B64000F17584 /* veenoon_db.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = veenoon_db.sqlite; sourceTree = "<group>"; };
 		049BA6641AF7B82700F17584 /* ChooseCountryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseCountryViewController.h; sourceTree = "<group>"; };
 		049BA6651AF7B82700F17584 /* ChooseCountryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseCountryViewController.m; sourceTree = "<group>"; };
 		049ECA571C8D4B8A00A611D8 /* Decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Decoder.h; sourceTree = "<group>"; };
@@ -1439,8 +1438,6 @@
 		EB03F5311FBDDAB300865541 /* main_user_log_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "main_user_log_normal@2x.png"; sourceTree = "<group>"; };
 		EB03F5321FBDDAB300865541 /* main_user_login_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "main_user_login_selected@2x.png"; sourceTree = "<group>"; };
 		EB03F5331FBDDAB300865541 /* main_engineer_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "main_engineer_n@2x.png"; sourceTree = "<group>"; };
-		EB03F53E1FBDE8FB00865541 /* SettingsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
-		EB03F5411FBDE94300865541 /* SettingsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		EB03F5481FBDEB8900865541 /* EnginnerHomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EnginnerHomeViewController.m; sourceTree = "<group>"; };
 		EB03F54A1FBDEB9C00865541 /* EnginnerHomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EnginnerHomeViewController.h; sourceTree = "<group>"; };
 		EB03F54C1FBDEC6000865541 /* UserHomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserHomeViewController.m; sourceTree = "<group>"; };
@@ -2161,7 +2158,7 @@
 				341C60C51FDCF878003A5490 /* ecplus.plist */,
 				049BA65D1AF7B64000F17584 /* DataBase.h */,
 				049BA65E1AF7B64000F17584 /* DataBase.m */,
-				049BA65F1AF7B64000F17584 /* zhucebao_db.sqlite */,
+				049BA65F1AF7B64000F17584 /* veenoon_db.sqlite */,
 			);
 			path = Database;
 			sourceTree = SOURCE_ROOT;
@@ -3288,8 +3285,6 @@
 			children = (
 				3429E2B3205AAAFD00F87AC3 /* VNSettingsView.h */,
 				3429E2B4205AAAFD00F87AC3 /* VNSettingsView.m */,
-				EB03F5411FBDE94300865541 /* SettingsViewController.h */,
-				EB03F53E1FBDE8FB00865541 /* SettingsViewController.m */,
 				EB3685F91FC07A2F009973A3 /* SettingsUserView.h */,
 				EB3685FA1FC07A42009973A3 /* SettingsUserView.m */,
 				EB3685FE1FC07A75009973A3 /* SettingsViewView.h */,
@@ -4426,7 +4421,7 @@
 				34190F21205D538E009A519C /* dy_08_sel@2x.png in Resources */,
 				EB19B67E20581D2C003F1546 /* video_corner_pinjieping@2x.png in Resources */,
 				049BA6091AF76C5E00F17584 /* camera_flip@2x.png in Resources */,
-				049BA6611AF7B64000F17584 /* zhucebao_db.sqlite in Resources */,
+				049BA6611AF7B64000F17584 /* veenoon_db.sqlite in Resources */,
 				EB19B68220581D2C003F1546 /* video_corner_yuancheng@2x.png in Resources */,
 				EB19B67020581D2C003F1546 /* audio_corner_hunyin@2x.png in Resources */,
 				EB23501A204ED441008F6CA2 /* user_meeting_room_3@2x.png in Resources */,
@@ -4711,7 +4706,6 @@
 				EB5A47FA2084D9F300564C06 /* SystemIRSet.m in Sources */,
 				04DE1EB01AD6AEE000D49E2F /* SDWebImageDownloaderOperation.m in Sources */,
 				34217A721FCE9C160006701C /* StickerLayerView.m in Sources */,
-				EB03F53F1FBDE8FB00865541 /* SettingsViewController.m in Sources */,
 				341C784A2050184300DD1677 /* SIconSelectView.m in Sources */,
 				341CE4A320A4165C009DBC01 /* DriverPropertyView.m in Sources */,
 				EB03F54D1FBDEC6000865541 /* UserHomeViewController.m in Sources */,

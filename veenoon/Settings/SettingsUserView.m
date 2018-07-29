@@ -8,7 +8,8 @@
 #import "SettingsUserView.h"
 #import "AreaPickView.h"
 #import "UIButton+Color.h"
-
+#import "UserDefaultsKV.h"
+#import "AppDelegate.h"
 
 @interface SettingsUserView () {
     UIButton *registerBtn;
@@ -361,7 +362,8 @@
 
 - (void) logoutAction:(id)sender{
     
-    
+    AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    [app logout];
 }
 
 - (void) areaPickAction:(UIButton*)sender{
@@ -432,6 +434,26 @@
     [textField resignFirstResponder];
     
     return YES;
+}
+
+- (void) fillCacheData{
+    
+    User *u = [UserDefaultsKV getUser];
+    
+    companyField.text = u.companyname;
+    
+    NSString *baseString = @"所在地区：";
+    NSString *buttonTitle = [NSString stringWithFormat:@"%@ %@ %@ %@",
+                             baseString,
+                             u.province,
+                             u.city,
+                             u.zone];
+    
+    [_regionBtn setTitle: buttonTitle forState:UIControlStateNormal];
+    
+    telphoneField.text = u._cellphone;
+    
+    addressField.text = u.address;
 }
 
 @end

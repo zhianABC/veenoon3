@@ -15,4 +15,6 @@
     
     WebClient *_autoClient;
 }
+@property (nonatomic, assign) BOOL showBack;
+
 @end

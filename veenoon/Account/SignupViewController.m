@@ -509,8 +509,11 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     
     if (alertView.cancelButtonIndex == buttonIndex) {
+        
+        
         InvitationCodeViewCotroller *ctrl = [[InvitationCodeViewCotroller alloc] init];
         [self.navigationController pushViewController:ctrl animated:YES];
+        
     }
 }
 
