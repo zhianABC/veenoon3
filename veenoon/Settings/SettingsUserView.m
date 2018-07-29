@@ -257,7 +257,7 @@
         _timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(line6.frame)+20,
                                                                 sec2Top-10,
                                                                 100, 40)];
-        _timerLabel.text = @"180s 有效";
+        _timerLabel.text = @"180秒 有效";
         _timerLabel.textAlignment = NSTextAlignmentCenter;
         _timerLabel.textColor = RGB(255, 180, 0);
         _timerLabel.font = [UIFont systemFontOfSize:16];

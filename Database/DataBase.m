@@ -9,6 +9,7 @@
 #import "DataBase.h"
 #import "SBJson4.h"
 #import "MeetingRoom.h"
+#import "UserDefaultsKV.h"
 
 @interface DataBase ()
 {
@@ -36,21 +37,32 @@ static DataBase* sharedInstance = nil;
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *path = [documentsDirectory stringByAppendingPathComponent:@"veenoon_db.sqlite"];
-    NSFileManager *fileManager = [NSFileManager defaultManager];
     
-    BOOL find = [fileManager fileExistsAtPath:path];
-    if(find)
+    User *u = [UserDefaultsKV getUser];
+    NSString *folder = @"def";
+    if(u)
     {
-        return;
-        
-        //[fileManager removeItemAtPath:path error:nil];
+        folder = u._cellphone;
     }
     
-    NSError *error;
-    NSString *pathToDefaultPlist = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"veenoon_db.sqlite"];
-    [fileManager copyItemAtPath:pathToDefaultPlist toPath:path error:&error];
+    NSString *dbPath = [documentsDirectory stringByAppendingPathComponent:folder];
     
+    NSFileManager *fm = [NSFileManager defaultManager];
+    if(![fm fileExistsAtPath:dbPath])
+    {
+        [fm createDirectoryAtPath:dbPath
+      withIntermediateDirectories:NO
+                       attributes:nil
+                            error:nil];
+    }
+    
+    dbPath = [dbPath stringByAppendingPathComponent:@"veenoon_db.sqlite"];
+    
+    if(![fm fileExistsAtPath:dbPath])
+    {
+        NSString *sPath = [[NSBundle mainBundle] pathForResource:@"veenoon_db.sqlite" ofType:nil];
+        [fm copyItemAtPath:sPath toPath:dbPath error:nil];
+    }
     
 }
 
@@ -67,7 +79,32 @@ static DataBase* sharedInstance = nil;
 	
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *dbPath = [documentsDirectory stringByAppendingPathComponent:@"veenoon_db.sqlite"];
+    
+    User *u = [UserDefaultsKV getUser];
+    NSString *folder = @"def";
+    if(u)
+    {
+        folder = u._cellphone;
+    }
+    
+    NSString *dbPath = [documentsDirectory stringByAppendingPathComponent:folder];
+    
+    NSFileManager *fm = [NSFileManager defaultManager];
+    if(![fm fileExistsAtPath:dbPath])
+    {
+        [fm createDirectoryAtPath:dbPath
+      withIntermediateDirectories:NO
+                       attributes:nil
+                            error:nil];
+    }
+    
+    dbPath = [dbPath stringByAppendingPathComponent:@"veenoon_db.sqlite"];
+    
+    if(![fm fileExistsAtPath:dbPath])
+    {
+        NSString *sPath = [[NSBundle mainBundle] pathForResource:@"veenoon_db.sqlite" ofType:nil];
+        [fm copyItemAtPath:sPath toPath:dbPath error:nil];
+    }
 
 	
 	self.databasePath_ = dbPath;

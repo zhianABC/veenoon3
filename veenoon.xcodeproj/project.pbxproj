@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		045850181B08CF42002BC23C /* BookCache.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 045850151B08CF42002BC23C /* BookCache.sqlite */; };
-		045850191B08CF42002BC23C /* BookCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 045850171B08CF42002BC23C /* BookCache.m */; };
 		0469CF3C1B033162006B901E /* CustomImagePickerCtrlor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0469CF3B1B033162006B901E /* CustomImagePickerCtrlor.m */; };
 		0477DC531DA9F3CC0077FA52 /* SHA1.m in Sources */ = {isa = PBXBuildFile; fileRef = 0477DC521DA9F3CC0077FA52 /* SHA1.m */; };
 		0477DC5B1DA9F4BA0077FA52 /* WaitDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 0477DC5A1DA9F4BA0077FA52 /* WaitDialog.m */; };
@@ -914,9 +912,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		045850151B08CF42002BC23C /* BookCache.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = BookCache.sqlite; sourceTree = "<group>"; };
-		045850161B08CF42002BC23C /* BookCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookCache.h; sourceTree = "<group>"; };
-		045850171B08CF42002BC23C /* BookCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookCache.m; sourceTree = "<group>"; };
 		0469CF3A1B033162006B901E /* CustomImagePickerCtrlor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomImagePickerCtrlor.h; sourceTree = "<group>"; };
 		0469CF3B1B033162006B901E /* CustomImagePickerCtrlor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomImagePickerCtrlor.m; sourceTree = "<group>"; };
 		0477DC511DA9F3CC0077FA52 /* SHA1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHA1.h; sourceTree = "<group>"; };
@@ -2164,9 +2159,6 @@
 				EB795B6F2042F1DF005D1F47 /* audio_icon.plist */,
 				EBC71B0E203AFF6600DD0A98 /* input_icon.plist */,
 				341C60C51FDCF878003A5490 /* ecplus.plist */,
-				045850151B08CF42002BC23C /* BookCache.sqlite */,
-				045850161B08CF42002BC23C /* BookCache.h */,
-				045850171B08CF42002BC23C /* BookCache.m */,
 				049BA65D1AF7B64000F17584 /* DataBase.h */,
 				049BA65E1AF7B64000F17584 /* DataBase.m */,
 				049BA65F1AF7B64000F17584 /* zhucebao_db.sqlite */,
@@ -4461,7 +4453,6 @@
 				EBEA7C211FBCAF260028F0E8 /* area.plist in Resources */,
 				341C60FA1FDD0DBF003A5490 /* hj_icon_9@2x.png in Resources */,
 				EB23AEB91FD1A98D00D1570F /* remote_video_left@2x.png in Resources */,
-				045850181B08CF42002BC23C /* BookCache.sqlite in Resources */,
 				34615F0B1FC9BD7B002DFCE0 /* jslide_thumb@2x.png in Resources */,
 				345493051FE64B2200793E2E /* ir_icon_sel@2x.png in Resources */,
 				3456C19C20A051AA001FAB61 /* senario_02_18_big@2x.png in Resources */,
@@ -4544,7 +4535,6 @@
 				342A2F4020411B6900BE4071 /* GroupsPickerView.m in Sources */,
 				04DE1E8C1AD6AEE000D49E2F /* RRScrollView.m in Sources */,
 				34686C9F1ED025CB001749A1 /* DesUtil.m in Sources */,
-				045850191B08CF42002BC23C /* BookCache.m in Sources */,
 				EB217FB81FD42188003F5A8F /* UserFloorWarmViewCtrl.m in Sources */,
 				0477DC531DA9F3CC0077FA52 /* SHA1.m in Sources */,
 				EBD009CE2090A9D200920849 /* VTouyingjiSet.m in Sources */,

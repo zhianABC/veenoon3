@@ -20,6 +20,7 @@
 #import "XDPickView.h"
 #import "wsDB.h"
 #import "SignupViewController.h"
+#import "Utilities.h"
 
 #define T7DaySecs (7*24*3600)
 
@@ -194,6 +195,13 @@
                   action:@selector(registerAction:)
         forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:registerBtn];
+    
+     User *u = [UserDefaultsKV getUser];
+    if(u)
+    {
+        _userName.text = u._cellphone;
+        _userPwd.text = [UserDefaultsKV getUserPwd];
+    }
 }
 
 - (void) registerAction:(id)sender {
@@ -247,31 +255,21 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+
 - (void) okAction:(UIButton*)btn {
+    
     NSString *userName = _userName.text;
     NSString *userPwd = _userPwd.text;
-    // temp login
-    if (true) {
-        InvitationCodeViewCotroller *invitation = [[InvitationCodeViewCotroller alloc] init];
-        [self.navigationController pushViewController:invitation animated:YES];
-        return;
-    }
     if ([userName length] < 1) {
-        UIAlertView *alert  = [[UIAlertView alloc] initWithTitle:@""
-                                                         message:@"请输入登录名！"
-                                                        delegate:nil
-                                               cancelButtonTitle:@"确定"
-                                               otherButtonTitles:nil, nil];
-        [alert show];
+        
+        [Utilities showMessage:@"请输入登录名！" ctrl:self];
+        
         return;
     }
     if ([userPwd length] < 1) {
-        UIAlertView *alert  = [[UIAlertView alloc] initWithTitle:@""
-                                                         message:@"请输入密码！"
-                                                        delegate:nil
-                                               cancelButtonTitle:@"确定"
-                                               otherButtonTitles:nil, nil];
-        [alert show];
+        
+        [Utilities showMessage:@"请输入密码！" ctrl:self];
+
         return;
     }
     
@@ -280,25 +278,17 @@
         
         User *u = [UserDefaultsKV getUser];
         if (u) {
-            if([_userName.text isEqualToString:u._userName] &&
+            if([_userName.text isEqualToString:u._cellphone] &&
                [_userPwd.text isEqualToString:[UserDefaultsKV getUserPwd]]) {
                 InvitationCodeViewCotroller *invitation = [[InvitationCodeViewCotroller alloc] init];
                 [self.navigationController pushViewController:invitation animated:YES];
             } else {
-                UIAlertView *alert  = [[UIAlertView alloc] initWithTitle:nil
-                                                                 message:@"用户名或密码错误！"
-                                                                delegate:nil
-                                                       cancelButtonTitle:@"确定"
-                                                       otherButtonTitles:nil, nil];
-                [alert show];
+                
+                [Utilities showMessage:@"用户名或密码错误！" ctrl:self];
             }
         } else {
-            UIAlertView *alert  = [[UIAlertView alloc] initWithTitle:nil
-                                                             message:@"没有离线登录的账号！"
-                                                            delegate:nil
-                                                   cancelButtonTitle:@"确定"
-                                                   otherButtonTitles:nil, nil];
-            [alert show];
+            
+            [Utilities showMessage:@"没有离线登录的账号！" ctrl:self];
         }
         
         //返回
@@ -317,16 +307,18 @@
         _autoClient = [[WebClient alloc] initWithDelegate:self];
     
     _autoClient._httpMethod = @"GET";
-    _autoClient._method = NEW_API_LOGIN;
+    _autoClient._method = @"/userlogin";
     
     
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    [params setObject:_userName.text forKey:@"userName"];
-    [params setObject:_userPwd.text forKey:@"userPassword"];
+    [params setObject:_userName.text forKey:@"telephone"];
+    [params setObject:_userPwd.text forKey:@"password"];
     
     _autoClient._requestParam = params;
     
     btn.enabled = NO;
+    
+    IMP_BLOCK_SELF(LoginViewController);
     
     [_autoClient requestWithSusessBlock:^(id lParam, id rParam) {
         
@@ -336,30 +328,18 @@
         SBJson4ValueBlock block = ^(id v, BOOL *stop) {
             
             if ([v isKindOfClass:[NSDictionary class]]) {
-                NSString *status = [v objectForKey:@"status"];
-                if ([status isEqualToString:@"sucess"]) {
-                    NSString *token = [v objectForKey:@"token"];
+                int  code = [[v objectForKey:@"code"] intValue];
+                if (code == 200) {
                     
-                    User *u = [[User alloc] initWithDicionary:v];
-                    u._userName = _userName.text;
-                    [UserDefaultsKV saveUserPwd:_userPwd.text];
-                    u._authtoken = token;
+                    NSDictionary *data = [v objectForKey:@"data"];
+                    [block_self processLoginData:data];
                     
-                    [UserDefaultsKV saveUser:u];
-                    
-                    InvitationCodeViewCotroller *invitation = [[InvitationCodeViewCotroller alloc] init];
-                    [self.navigationController pushViewController:invitation animated:YES];
                 } else {
                     btn.enabled = YES;
                     
-                    NSString *message = [v objectForKey:@"loginInfor"];
+                    NSString *message = [v objectForKey:@"message"];
                     
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
-                                                                    message:message
-                                                                   delegate:nil
-                                                          cancelButtonTitle:@"OK"
-                                                          otherButtonTitles:nil, nil];
-                    [alert show];
+                    [Utilities showMessage:message ctrl:self];
                     
                 }
                 return;
@@ -386,6 +366,16 @@
         
         
     }];
+}
+
+- (void) processLoginData:(NSDictionary*)data{
+    
+    User *u = [[User alloc] initWithDicionary:data];
+    [UserDefaultsKV saveUserPwd:_userPwd.text];
+    [UserDefaultsKV saveUser:u];
+    
+    InvitationCodeViewCotroller *invitation = [[InvitationCodeViewCotroller alloc] init];
+    [self.navigationController pushViewController:invitation animated:YES];
 }
 
 - (void) notifyNetworkStatusChanged:(NSNotification*)notify{

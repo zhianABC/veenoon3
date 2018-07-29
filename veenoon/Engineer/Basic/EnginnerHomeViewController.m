@@ -16,6 +16,7 @@
 #import "NetworkChecker.h"
 #import "DataBase.h"
 #import "MeetingRoom.h"
+#import "UserDefaultsKV.h"
 
 @interface EnginnerHomeViewController () <ReaderCodeDelegate> {
     UITextField *_userNameField;
@@ -166,9 +167,12 @@
     
     _client._requestParam = param;
     
+    User *u = [UserDefaultsKV getUser];
+    if(u)
+    {
+        [param setObject:u._userId forKey:@"userID"];
+    }
 
-    [param setObject:@"1" forKey:@"userID"];
-    
     IMP_BLOCK_SELF(EnginnerHomeViewController);
     
     [KVNProgress show];

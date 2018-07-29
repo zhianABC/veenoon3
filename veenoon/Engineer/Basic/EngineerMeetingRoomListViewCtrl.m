@@ -24,6 +24,7 @@
 #endif
 
 #import "UIImageView+WebCache.h"
+#import "UserDefaultsKV.h"
 
 
 @interface EngineerMeetingRoomListViewCtrl () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, JCActionViewDelegate, ReaderCodeDelegate>{
@@ -1093,8 +1094,12 @@
         
         _client._requestParam = param;
         
+        User *u = [UserDefaultsKV getUser];
+        if(u)
+        {
+            [param setObject:u._userId forKey:@"userID"];
+        }
 
-        [param setObject:@"1" forKey:@"userID"];
         [param setObject:userid forKey:@"regulusUserID"];
         [param setObject:regulusid forKey:@"regulusID"];
         [param setObject:@"房间" forKey:@"roomName"];

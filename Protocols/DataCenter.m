@@ -12,6 +12,7 @@
 #import "MeetingRoom.h"
 #import "WebClient.h"
 #import "SBJson4.h"
+#import "UserDefaultsKV.h"
 
 static DataCenter *_globalDataInstanse;
 
@@ -179,7 +180,12 @@ static DataCenter *_globalDataInstanse;
     
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     
-    [param setObject:@"1" forKey:@"userID"];
+    User *u = [UserDefaultsKV getUser];
+    if(u)
+    {
+        [param setObject:u._userId forKey:@"userID"];
+    }
+
     [param setObject:[driver objectForKey:@"type"] forKey:@"type"];
     [param setObject:[driver objectForKey:@"name"] forKey:@"name"];
     [param setObject:[driver objectForKey:@"driver"] forKey:@"driver"];

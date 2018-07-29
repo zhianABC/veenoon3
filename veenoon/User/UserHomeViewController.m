@@ -190,13 +190,13 @@
             UITextField *envirnmentNameTextField = alertController.textFields.firstObject;
             NSString *scenarioName = envirnmentNameTextField.text;
             if (scenarioName && [scenarioName length] > 0) {
-                NSMutableDictionary *meetingDic = [self.roomList objectAtIndex:index];
+                MeetingRoom *mroom = [self.roomList objectAtIndex:index];
                 UILabel *scenarioLabel = [lableArray objectAtIndex:index];
                 
-                [meetingDic setObject:scenarioName forKey:@"roomname"];
+                mroom.room_name = scenarioName;
                 scenarioLabel.text =scenarioName;
                 
-                [[DataBase sharedDatabaseInstance] saveMeetingRoom:meetingDic];
+                [[DataBase sharedDatabaseInstance] saveMeetingRoom:mroom];
             }
         }]];
         

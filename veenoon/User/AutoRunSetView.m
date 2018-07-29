@@ -12,6 +12,8 @@
 #import "RegulusSDK.h"
 #import "WebClient.h"
 #import "DataBase.h"
+#import "User.h"
+#import "UserDefaultsKV.h"
 
 #define SCEN_PICKER_WIDTH  300
 
@@ -257,9 +259,14 @@ UITableViewDataSource>
     
     _client._requestParam = param;
     
+    User *u = [UserDefaultsKV getUser];
+    if(u)
+    {
+        [param setObject:u._userId forKey:@"userID"];
+    }
+    
     [param setObject:[datas objectForKey:@"m_id"] forKey:@"scenarioID"];
     [param setObject:[datas objectForKey:@"name"] forKey:@"scenarioName"];
-    [param setObject:@"1" forKey:@"userID"];
     [param setObject:[datas objectForKey:@"date"] forKey:@"exceTime"];
     [param setObject:[datas objectForKey:@"weeks"] forKey:@"workItems"];
     

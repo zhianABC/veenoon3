@@ -50,6 +50,8 @@
 #import "WebClient.h"
 #import "MeetingRoom.h"
 
+#import "UserDefaultsKV.h"
+
 @interface Scenario ()
 {
     WebClient *_client;
@@ -194,7 +196,12 @@
     
     _client._requestParam = param;
     
-    [param setObject:@"1" forKey:@"userID"];
+    User *u = [UserDefaultsKV getUser];
+    if(u)
+    {
+        [param setObject:u._userId forKey:@"userID"];
+    }
+    
     [param setObject:regulus_id
               forKey:@"regulusID"];
     [param setObject:[NSString stringWithFormat:@"%d", (int)_rgsDriver.m_id]
