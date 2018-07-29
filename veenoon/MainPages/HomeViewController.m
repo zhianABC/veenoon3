@@ -16,6 +16,7 @@
 #import "AppDelegate.h"
 #import "DataSync.h"
 #import "EngineerPresetScenarioViewCtrl.h"
+#import "UIButton+Color.h"
 
 @interface HomeViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate, JCActionViewDelegate> {
     
@@ -181,8 +182,39 @@
     titleIcon.frame = CGRectMake(70, 50, 70, 10);
     
     
+    UIButton *btn = [UIButton buttonWithColor:RGB(0, 0, 0) selColor:nil];
+    btn.frame = CGRectMake(SCREEN_WIDTH - 90, 60, 70, 40);
+    [btn setTitle:@"备份" forState:UIControlStateNormal];
+    [_homeView addSubview:btn];
+    btn.layer.cornerRadius = 5;
+    btn.clipsToBounds = YES;
+    [btn addTarget:self
+            action:@selector(backupAction:)
+  forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *btnSync = [UIButton buttonWithColor:RGB(0, 0, 0) selColor:nil];
+    btnSync.frame = CGRectMake(SCREEN_WIDTH - 90 - 90, 60, 70, 40);
+    [btnSync setTitle:@"同步" forState:UIControlStateNormal];
+    [_homeView addSubview:btnSync];
+    btnSync.layer.cornerRadius = 5;
+    btnSync.clipsToBounds = YES;
+    [btnSync addTarget:self
+            action:@selector(dataSyncAction:)
+  forControlEvents:UIControlEventTouchUpInside];
     
 }
+
+- (void) backupAction:(id)sender{
+    
+    [[DataSync sharedDataSync] backupLocalDBToServer];
+}
+
+- (void) dataSyncAction:(id)sender{
+    
+    [[DataSync sharedDataSync] syncDataFromServerToLocalDB];
+}
+
+
 - (void) longPressed0:(id)sender{
     if(_imagePicker == nil)
     {

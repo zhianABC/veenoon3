@@ -134,6 +134,16 @@
     return _scenarioData;
 }
 
+- (void) prepareDataForUploadCloud:(NSDictionary*)data{
+    
+   
+    self._scenarioData = [NSMutableDictionary dictionaryWithDictionary:data];
+    
+    self._rgsDriver = [[RgsDriverObj alloc] init];
+    _rgsDriver.m_id = [[data objectForKey:@"s_driver_id"] intValue];
+
+}
+
 - (void) fillWithData:(NSMutableDictionary*)data{
     
     self._scenarioData = data;
@@ -291,7 +301,8 @@
 - (void) recoverDriverEvent{
     
     IMP_BLOCK_SELF(Scenario);
-    
+    if(_rgsDriver.m_id)
+    {
     [[RegulusSDK sharedRegulusSDK] GetDriverEvents:_rgsDriver.m_id
                                         completion:^(BOOL result, NSArray *events, NSError *error) {
         if (result) {
@@ -305,6 +316,7 @@
             NSLog(@"++++++++++recoverDriverEvent++++++++++Error");
         }
     }];
+    }
 }
 
 - (void) addEventOperation:(RgsSceneOperation*)rgsSceneOp{

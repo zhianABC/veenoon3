@@ -163,6 +163,26 @@ static DataCenter *_globalDataInstanse;
     
 }
 
+- (NSArray *)userDrivers{
+    
+    
+    NSMutableArray *resuls = [NSMutableArray array];
+    
+    NSArray *all = [_mapDrivers allValues];
+    
+    for(NSDictionary *driver in all)
+    {
+        NSString *ptype = [driver objectForKey:@"ptype"];
+        if([ptype isEqualToString:@"Define"])
+        {
+            [resuls addObject:driver];
+        }
+    }
+    
+    return resuls;
+    
+}
+
 - (void) saveDriver:(NSDictionary *)driver{
     
     NSString *key = [driver objectForKey:@"driver"];

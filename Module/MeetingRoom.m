@@ -12,6 +12,7 @@
 @interface MeetingRoom ()
 {
     WebClient *_client;
+    
 }
 
 @end;
@@ -50,7 +51,9 @@
         self.room_name = [info objectForKey:@"room_name"];
         
         NSString *roomImage = [info objectForKey:@"room_image"];
-        self.room_image = [NSString stringWithFormat:@"%@/%@",WEB_API_URL,roomImage];
+        NSRange range = [roomImage rangeOfString:@"/"];
+        if(range.location != NSNotFound)
+            self.room_image = [NSString stringWithFormat:@"%@/%@",WEB_API_URL,roomImage];
         
         self.user_id = [[info objectForKey:@"user_id"] intValue];
         self.area_id = [[info objectForKey:@"area_id"] intValue];
@@ -79,15 +82,13 @@
     
     
     [_client requestWithSusessBlock:^(id lParam, id rParam) {
-        
-        NSString *response = lParam;
-        NSLog(@"%@", response);
-       
+    
         
     } FailBlock:^(id lParam, id rParam) {
         
        
     }];
 }
+
 
 @end

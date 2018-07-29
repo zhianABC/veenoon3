@@ -37,6 +37,9 @@
 - (void) updateProperty;
 
 - (void) fillWithData:(NSDictionary*)data;
+
+- (void) prepareDataForUploadCloud:(NSDictionary*)data;
+
 - (NSMutableDictionary *)senarioData;
 - (NSString *)name;
 

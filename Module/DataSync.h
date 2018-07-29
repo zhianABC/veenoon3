@@ -45,4 +45,7 @@
 - (void) reloginRegulus;
 - (void) logoutCurrentRegulus;
 
+- (void) backupLocalDBToServer;
+- (void) syncDataFromServerToLocalDB;
+
 @end

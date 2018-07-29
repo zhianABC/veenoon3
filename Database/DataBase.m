@@ -633,9 +633,6 @@ static DataBase* sharedInstance = nil;
         if(col5){
             mr.room_image = [NSString stringWithUTF8String:col5];
         }
-
-        
-        
         [objs addObject:mr];
     }
     sqlite3_finalize(statement);
