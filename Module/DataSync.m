@@ -442,6 +442,7 @@ static DataSync* dSyncInstance = nil;
     }
     else
     {
+        [KVNProgress showProgress:1];
         [KVNProgress showSuccess];
     }
 }

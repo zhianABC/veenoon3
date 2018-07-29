@@ -172,6 +172,9 @@
     [param setObject:room.room_name forKey:@"roomName"];
     [param setObject:@"111111" forKey:@"regulusPassword"];
     
+    [param setObject:[NSString stringWithFormat:@"%d", room.area_id]
+              forKey:@"areaID"];
+    
     IMP_BLOCK_SELF(DriverSync);
     
     UIImage *img = nil;

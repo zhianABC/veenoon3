@@ -137,10 +137,10 @@
 - (void) prepareDataForUploadCloud:(NSDictionary*)data{
     
    
-        self._scenarioData = data;
-        
-        self._rgsDriver = [[RgsDriverObj alloc] init];
-        _rgsDriver.m_id = [[data objectForKey:@"s_driver_id"] intValue];
+    self._scenarioData = [NSMutableDictionary dictionaryWithDictionary:data];
+    
+    self._rgsDriver = [[RgsDriverObj alloc] init];
+    _rgsDriver.m_id = [[data objectForKey:@"s_driver_id"] intValue];
 
 }
 
