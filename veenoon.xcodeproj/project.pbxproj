@@ -309,6 +309,7 @@
 		34CC7858209AE0D10057A2C1 /* UIImage+KVNEmpty.m in Sources */ = {isa = PBXBuildFile; fileRef = 34CC7852209AE0D10057A2C1 /* UIImage+KVNEmpty.m */; };
 		34D34F3C20DF510800CC7897 /* IRDirver.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D34F3B20DF510800CC7897 /* IRDirver.m */; };
 		34D34F3F20DF5BA800CC7897 /* VDVDPlayerProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D34F3E20DF5BA800CC7897 /* VDVDPlayerProxy.m */; };
+		34D68BA9210E03D600E90E1F /* DriverSync.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D68BA8210E03D600E90E1F /* DriverSync.m */; };
 		34DC473F1FD6984400ACB589 /* ColumnView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DC473E1FD6984400ACB589 /* ColumnView.m */; };
 		34DC47421FD6DD9300ACB589 /* CircleProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DC47401FD6DD9300ACB589 /* CircleProgressView.m */; };
 		34DE8E9620663E840061B48D /* MeetingRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DE8E9520663E840061B48D /* MeetingRoom.m */; };
@@ -1391,6 +1392,8 @@
 		34D34F3B20DF510800CC7897 /* IRDirver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IRDirver.m; sourceTree = "<group>"; };
 		34D34F3D20DF5BA800CC7897 /* VDVDPlayerProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VDVDPlayerProxy.h; sourceTree = "<group>"; };
 		34D34F3E20DF5BA800CC7897 /* VDVDPlayerProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VDVDPlayerProxy.m; sourceTree = "<group>"; };
+		34D68BA7210E03D600E90E1F /* DriverSync.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DriverSync.h; sourceTree = "<group>"; };
+		34D68BA8210E03D600E90E1F /* DriverSync.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DriverSync.m; sourceTree = "<group>"; };
 		34DC473D1FD6984400ACB589 /* ColumnView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColumnView.h; sourceTree = "<group>"; };
 		34DC473E1FD6984400ACB589 /* ColumnView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ColumnView.m; sourceTree = "<group>"; };
 		34DC47401FD6DD9300ACB589 /* CircleProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleProgressView.m; sourceTree = "<group>"; };
@@ -2510,6 +2513,8 @@
 				EB18B7252067D4A6000BDEAB /* Video */,
 				04D719831DADE2D8002153D7 /* DataSync.h */,
 				04D719841DADE2D8002153D7 /* DataSync.m */,
+				34D68BA7210E03D600E90E1F /* DriverSync.h */,
+				34D68BA8210E03D600E90E1F /* DriverSync.m */,
 				04D719801DADE0A9002153D7 /* WSEvent.h */,
 				04D719811DADE0A9002153D7 /* WSEvent.m */,
 				04D719731DADD3A4002153D7 /* SSUser.h */,
@@ -4504,6 +4509,7 @@
 				EB36AAC41FCD9E71009A0FD8 /* UserVideoConfigViewCtrl.m in Sources */,
 				04DE1E831AD6AEE000D49E2F /* ClassFactory.m in Sources */,
 				EB4EC11F1FE7F94B000B3101 /* EngineerHandtoHandViewCtrl.m in Sources */,
+				34D68BA9210E03D600E90E1F /* DriverSync.m in Sources */,
 				EB1A55BB1FE801CF000B18E6 /* EngineerWIrelessMeetingPlayViewCtrl.m in Sources */,
 				04DE1E921AD6AEE000D49E2F /* UserDefaultsKV.m in Sources */,
 				3456C17B209EEDCC001FAB61 /* DevicePlugButton.m in Sources */,

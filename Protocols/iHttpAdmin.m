@@ -273,12 +273,20 @@
 	
 	NSString *paramData = @"";
 	for(NSString *key in [param allKeys]){
-		if([paramData isEqualToString:@""]){
-			paramData = [NSString stringWithFormat:@"%@=%@",key, [iHttpAdmin escapeURIComponent:[param valueForKey:key]]];
-		}
-		else {
-			paramData = [NSString stringWithFormat:@"%@&%@=%@",paramData, key, [iHttpAdmin escapeURIComponent:[param valueForKey:key]]];
-		}
+        
+        id val = [param valueForKey:key];
+        
+        if([val isKindOfClass:[NSNumber class]])
+        {
+            val = [NSString stringWithFormat:@"%d", [val intValue]];
+        }
+        
+        if([paramData isEqualToString:@""]){
+            paramData = [NSString stringWithFormat:@"%@=%@",key, [iHttpAdmin escapeURIComponent:val]];
+        }
+        else {
+            paramData = [NSString stringWithFormat:@"%@&%@=%@",paramData, key, [iHttpAdmin escapeURIComponent:val]];
+        }
 	}
 //	NSLog(@"request url:%@", url);
 //	NSLog(@"request param:%@", paramData);

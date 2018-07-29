@@ -21,8 +21,11 @@
 #import "DataBase.h"
 #import "MeetingRoom.h"
 
+#import "DriverSync.h"
+#import "Scenario.h"
 
-@interface DataSync ()
+
+@interface DataSync () <DriverSyncDelegate>
 {
     WebClient *_syncClient;
  
@@ -32,9 +35,14 @@
     WebClient *_eventClient;
     
     WebClient *_http;
+    
+    int _nextIdx;
 }
 @property (nonatomic, strong) WSEvent *_event;
 @property (nonatomic, strong) NSMutableArray *_exhibitors;
+
+@property (nonatomic, strong) NSMutableArray *_uploadQueue;
+@property (nonatomic, strong) NSMutableArray *_syncQueue;
 
 @end
 
@@ -53,6 +61,9 @@
 @synthesize _mapDrivers;
 @synthesize _currentArea;
 @synthesize _currentAreaDrivers;
+
+@synthesize _uploadQueue;
+@synthesize _syncQueue;
 
 static DataSync* dSyncInstance = nil;
 
@@ -358,5 +369,134 @@ static DataSync* dSyncInstance = nil;
     
 
 }
+
+- (void) backupLocalDBToServer{
+    
+    NSArray *devices = [[DataCenter defaultDataCenter] userDrivers];
+    
+    self._uploadQueue = [NSMutableArray array];
+    for(NSDictionary *dr in devices)
+    {
+        DriverSync *sync = [[DriverSync alloc] initWithDict:dr];
+        sync.delegate = self;
+        [_uploadQueue addObject:sync];
+    }
+    
+    NSArray *roomList = [[DataBase sharedDatabaseInstance] getMeetingRooms];
+    for(MeetingRoom *room in roomList)
+    {
+        DriverSync *sync = [[DriverSync alloc] initWithDict:room];
+        sync.delegate = self;
+        [_uploadQueue addObject:sync];
+    }
+   
+    for(MeetingRoom *room in roomList)
+    {
+        
+        NSArray *scenarios = [[DataBase sharedDatabaseInstance] getSavedScenario:room.regulus_id];
+        
+        for(NSDictionary *sdic in scenarios)
+        {
+            Scenario *s = [[Scenario alloc] init];
+            [s prepareDataForUploadCloud:sdic];
+            
+            DriverSync *sync = [[DriverSync alloc] initWithDict:s];
+            sync.delegate = self;
+            [_uploadQueue addObject:sync];
+            
+        }
+        
+    }
+    
+    NSArray *datas = [[DataBase sharedDatabaseInstance] getScenarioSchedules];
+    
+    for(NSDictionary *sdic in datas)
+    {
+        DriverSync *sync = [[DriverSync alloc] initWithDict:sdic];
+        sync.delegate = self;
+        [_uploadQueue addObject:sync];
+        
+    }
+    
+    _nextIdx = 0;
+    
+    if([_uploadQueue count])
+    {
+        [KVNProgress show];
+        
+        DriverSync *sync = [_uploadQueue objectAtIndex:_nextIdx];
+        [sync uploadData];
+    }
+}
+
+- (void) uploadDoneAndNext{
+    
+    _nextIdx++;
+    if(_nextIdx < [_uploadQueue count])
+    {
+        float p = (float)_nextIdx/[_uploadQueue count];
+        [KVNProgress showProgress:p];
+        
+        DriverSync *sync = [_uploadQueue objectAtIndex:_nextIdx];
+        [sync uploadData];
+    }
+    else
+    {
+        [KVNProgress showSuccess];
+    }
+}
+
+- (void) syncDataFromServerToLocalDB{
+    
+    [[DataCenter defaultDataCenter] syncDriversWithServer];
+
+    self._syncQueue = [NSMutableArray array];
+    
+    _nextIdx = 0;
+    
+    DriverSync *sync = [[DriverSync alloc] initWithDict:@{@"type":@"1"}];
+    sync.delegate = self;
+    [_syncQueue addObject:sync];
+    
+    
+    [KVNProgress show];
+    
+    [sync syncData];
+}
+
+- (void) syncDoneAndNext{
+    
+    _nextIdx++;
+    
+    if(_nextIdx <= 1)
+    {
+        NSArray *roomList = [[DataBase sharedDatabaseInstance] getMeetingRooms];
+        for(MeetingRoom *room in roomList)
+        {
+            if(room.regulus_id)
+            {
+                DriverSync *sync = [[DriverSync alloc] initWithDict:@{@"type":@"2",
+                                                                      @"regulus_id":room.regulus_id
+                                                                      }];
+                sync.delegate = self;
+                [_syncQueue addObject:sync];
+            }
+        }
+    }
+
+    if(_nextIdx < [_syncQueue count])
+    {
+        DriverSync *sync = [_syncQueue objectAtIndex:_nextIdx];
+        [sync syncData];
+    }
+    else
+    {
+        [KVNProgress dismiss];
+    }
+
+   
+}
+
+
 
 @end

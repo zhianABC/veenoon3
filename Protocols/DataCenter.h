@@ -31,4 +31,6 @@
 - (void) saveDriver:(NSDictionary *)driver;
 - (void) cacheScenarioOnLocalDB;
 
+- (NSArray *)userDrivers;
+
 @end
