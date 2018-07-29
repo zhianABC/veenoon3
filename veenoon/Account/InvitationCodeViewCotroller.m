@@ -18,6 +18,7 @@
 #import "DataSync.h"
 #import "Utilities.h"
 #import "KVNProgress.h"
+#import "DataCenter.h"
 
 #define T7DaySecs (7*24*3600)
 
@@ -226,6 +227,7 @@
     
     if([u isActive])
     {
+        [[DataCenter defaultDataCenter] syncDriversWithServer];
         [[AppDelegate shareAppDelegate] enterApp];
     }
 }

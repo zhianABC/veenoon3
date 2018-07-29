@@ -323,7 +323,9 @@
         //保存数据库
         [[DataBase sharedDatabaseInstance] saveScenario:_scenarioData];
         
+#ifdef REALTIME_NETWORK_MODEL
         [self uploadToServer];
+#endif
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"Notify_Scenario_Create_Result"

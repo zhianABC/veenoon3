@@ -80,7 +80,7 @@
     scroolView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:scroolView];
     
-    [[DataCenter defaultDataCenter] syncDriversWithServer];
+    //[[DataCenter defaultDataCenter] syncDriversWithServer];
     
     self.roomList = [[DataBase sharedDatabaseInstance] getMeetingRooms];
     
@@ -722,7 +722,7 @@
     room.room_image = name;
     [[DataBase sharedDatabaseInstance] updateMeetingRoomPic:room];
     
-#if 1
+#ifdef   REALTIME_NETWORK_MODEL
     [self saveRoomPic:img room:room];
 #endif
 }
@@ -1081,7 +1081,7 @@
         [[DataBase sharedDatabaseInstance] saveMeetingRoom:room];
         
         
-#if 1
+#ifdef REALTIME_NETWORK_MODEL
         if(_client == nil)
         {
             _client = [[WebClient alloc] initWithDelegate:self];
@@ -1166,7 +1166,7 @@
     }
 }
 
-- (void) successAddRoom:(NSDictionary*)roomDic{
+- (void) successAddRoom:(MeetingRoom*)room{
     
     /*
      "regulus_id" = "RGS_EOC500_01";
@@ -1178,16 +1178,7 @@
      "user_id" = 1;
      */
     
-    MeetingRoom *room = [[MeetingRoom alloc] init];
-    room.room_name = [roomDic objectForKey:@"room_name"];
-    room.regulus_password = [roomDic objectForKey:@"regulus_password"];
-    room.regulus_user_id = [roomDic objectForKey:@"regulus_user_id"];
-    room.regulus_id = [roomDic objectForKey:@"regulus_id"];
-    room.user_id = [[roomDic objectForKey:@"user_id"] intValue];;
-    room.server_room_id = [[roomDic objectForKey:@"room_id"] intValue];
-    room.room_image = [roomDic objectForKey:@"room_image"];
-    
-    [[DataBase sharedDatabaseInstance] saveMeetingRoom:room];
+    //[[DataBase sharedDatabaseInstance] saveMeetingRoom:room];
     
     self.roomList = [[DataBase sharedDatabaseInstance] getMeetingRooms];
     [self showRoomList];

@@ -22,6 +22,7 @@
 #import "SignupViewController.h"
 #import "Utilities.h"
 #import "KVNProgress.h"
+#import "DataCenter.h"
 
 #define T7DaySecs (7*24*3600)
 
@@ -396,6 +397,7 @@
     }
     else
     {
+        [[DataCenter defaultDataCenter] syncDriversWithServer];
         [[AppDelegate shareAppDelegate] enterApp];
     }
 }

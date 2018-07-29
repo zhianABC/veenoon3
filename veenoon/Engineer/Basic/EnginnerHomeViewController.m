@@ -143,6 +143,9 @@
 
 -(void) loginAction:(id) sender {
 
+    [self enterRoomListView];
+    
+#ifdef REALTIME_NETWORK_MODEL
     NetworkStatus status = [[NetworkChecker sharedNetworkChecker] networkStatus];
     if(status != NotReachable)
     {
@@ -152,6 +155,8 @@
     {
         [self enterRoomListView];
     }
+#endif
+    
 }
 
 - (void) getRoomList{

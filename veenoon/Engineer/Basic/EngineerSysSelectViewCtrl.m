@@ -145,7 +145,9 @@
     
     self._sceneDrivers = [NSMutableArray array];
     
+#ifdef   REALTIME_NETWORK_MODEL
     [self getScenarioList];
+#endif
     
     [self checkArea];
     
@@ -326,7 +328,9 @@
             int room_id = room.server_room_id;
             room.area_id = (int)areaObj.m_id;
             
+#ifdef   REALTIME_NETWORK_MODEL
             [room syncAreaToServer];
+#endif
             
             [[DataBase sharedDatabaseInstance] updateMeetingRoomAreaId:room_id
                                                                 areaId:(int)areaObj.m_id];

@@ -419,7 +419,9 @@
                 if([tL isKindOfClass:[UILabel class]])
                     tL.text = scenarioName;
                 
+#ifdef REALTIME_NETWORK_MODEL
                 [s updateProperty];
+#endif
                 
                 [[DataBase sharedDatabaseInstance] saveScenario:sdic];
             }
@@ -525,7 +527,9 @@
                     if([tL isKindOfClass:[UILabel class]])
                         tL.text = title;
                     
+#ifdef REALTIME_NETWORK_MODEL
                     [s updateProperty];
+#endif
                     
                     [[DataBase sharedDatabaseInstance] saveScenario:scenarioDic];
                 }

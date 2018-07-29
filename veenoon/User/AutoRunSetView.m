@@ -225,8 +225,7 @@ UITableViewDataSource>
     
     if(m_id)
     {
-        [[DataBase sharedDatabaseInstance] saveScenarioSchedule:datas];
-        
+    
         IMP_BLOCK_SELF(AutoRunSetView);
         [[RegulusSDK sharedRegulusSDK] SetScheduler:m_id
                                           exce_time:date
@@ -247,6 +246,9 @@ UITableViewDataSource>
 
 - (void) saveScheduler:(NSDictionary*)datas{
     
+    [[DataBase sharedDatabaseInstance] saveScenarioSchedule:datas];
+    
+#ifdef   REALTIME_NETWORK_MODEL
     if(_client == nil)
     {
         _client = [[WebClient alloc] initWithDelegate:self];
@@ -281,6 +283,9 @@ UITableViewDataSource>
         [block_self done];
     }];
     
+#else
+    [self done];
+#endif
     
     
 }

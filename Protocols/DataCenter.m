@@ -42,18 +42,18 @@ static DataCenter *_globalDataInstanse;
 
 - (void) syncDriversWithServer{
     
-    if(self._mapDrivers)
-        return;
-    
     if(_client == nil)
     {
         _client = [[WebClient alloc] initWithDelegate:self];
     }
     
     _client._method = @"/getdevicelist";
-    _client._httpMethod = @"POST";
+    _client._httpMethod = @"GET";
     
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    
+    User *u = [UserDefaultsKV getUser];
+    [param setObject:u._userId forKey:@"userID"];
     
     _client._requestParam = param;
 
@@ -139,7 +139,9 @@ static DataCenter *_globalDataInstanse;
     }
     else
     {
+#ifdef   REALTIME_NETWORK_MODEL
         [self syncDriversWithServer];
+#endif
     }
 
 }
@@ -169,7 +171,7 @@ static DataCenter *_globalDataInstanse;
     [[NSUserDefaults standardUserDefaults] setObject:_mapDrivers forKey:@"all_drivers"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    
+#ifdef   REALTIME_NETWORK_MODEL
     if(_client == nil)
     {
         _client = [[WebClient alloc] initWithDelegate:self];
@@ -202,6 +204,7 @@ static DataCenter *_globalDataInstanse;
     } FailBlock:^(id lParam, id rParam) {
         
     }];
+#endif
     
 }
 
