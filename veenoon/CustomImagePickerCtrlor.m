@@ -111,11 +111,11 @@
 	}
 }
 
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	NSLog(@"OK");
-	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
-}
+//
+//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+//    NSLog(@"OK");
+//    return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+//}
 //- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 
 @end

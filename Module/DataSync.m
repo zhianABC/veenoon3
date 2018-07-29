@@ -219,7 +219,10 @@ static DataSync* dSyncInstance = nil;
     if(mroom)
     {
         mroom.area_id = (int)_currentArea.m_id;
+        
+#ifdef REALTIME_NETWORK_MODEL
         [mroom syncAreaToServer];
+#endif
         [[DataBase sharedDatabaseInstance] updateMeetingRoomAreaId:mroom.server_room_id
                                                             areaId:mroom.area_id];
     }

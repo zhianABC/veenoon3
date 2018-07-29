@@ -17,6 +17,7 @@
 #import "DataCenter.h"
 #import "RegulusSDK.h"
 #import "TeslariaComboChooser.h"
+#import "AirConditionPlug.h"
 
 @interface EngineerEnvDevicePluginViewCtrl () <CenterCustomerPickerViewDelegate> {
     IconCenterTextButton *_zhaomingBtn;
@@ -390,8 +391,8 @@
 
 - (void) initBrandAndTypes{
     
-    self._currentBrands = @[@"品牌1",@"品牌2",@"品牌3"];
-    self._currentTypes = @[@"型号A",@"型号B",@"型号C"];
+    self._currentBrands = @[@"品牌"];
+    self._currentTypes = @[@"型号"];
     self._driverUdids = @[];
     
     _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
@@ -399,7 +400,7 @@
     
     [_brandPicker selectRow:0
                 inComponent:0];
-    [_productTypePikcer selectRow:0
+    [_productCategoryPicker selectRow:0
                       inComponent:0];
 }
 
@@ -450,19 +451,35 @@
     NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
     
-    //[self initBrandAndTypes];
+    [self initBrandAndTypes];
     
-    self._currentBrands = @[@"GREE"];
-    self._currentTypes = @[@"空调"];
-    self._driverUdids = @[UUID_Gree_AC];
+    NSArray *drivers = [[DataCenter defaultDataCenter] driversWithType:@"video"];
+    
+    NSString *toclass = NSStringFromClass([AirConditionPlug class]);
+    
+    NSMutableArray *bands = [NSMutableArray array];
+    NSMutableArray *types = [NSMutableArray array];
+    NSMutableArray *uuids = [NSMutableArray array];
+    for(NSDictionary *device in drivers)
+    {
+        NSString *classname = [device objectForKey:@"driver_class"];
+        if([classname isEqualToString:toclass])
+        {
+            [bands addObject:[device objectForKey:@"brand"]];
+            [types addObject:[device objectForKey:@"ptype"]];
+            [uuids addObject:[device objectForKey:@"driver"]];
+        }
+    }
+    
+    self._currentBrands = bands;
+    self._currentTypes = types;
+    self._driverUdids = uuids;
     
     _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
     _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
     
-    [_brandPicker selectRow:0
-                inComponent:0];
-    [_productCategoryPicker selectRow:0
-                          inComponent:0];
+    [_brandPicker selectRow:0 inComponent:0];
+    [_productCategoryPicker selectRow:0 inComponent:0];
 
 }
 - (void) diandongmadaAction:(id)sender{

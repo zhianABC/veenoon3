@@ -554,14 +554,7 @@
         }
         [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
                                                  cmd:cmd.name
-                                               param:param completion:^(BOOL result, NSError *error) {
-            if (result) {
-                
-            }
-            else{
-                
-            }
-        }];
+                                               param:param completion:nil];
     }
 }
 
@@ -589,14 +582,7 @@
         }
         [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
                                                  cmd:cmd.name
-                                               param:param completion:^(BOOL result, NSError *error) {
-                                                   if (result) {
-                                                       
-                                                   }
-                                                   else{
-                                                       
-                                                   }
-                                               }];
+                                               param:param completion:nil];
     }
 }
 - (void) controlDeviceMute:(BOOL)isMute{
@@ -619,14 +605,7 @@
         NSMutableDictionary * param = [NSMutableDictionary dictionary];
         [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
                                                  cmd:cmd.name
-                                               param:param completion:^(BOOL result, NSError *error) {
-                                                   if (result) {
-                                                       
-                                                   }
-                                                   else{
-                                                       
-                                                   }
-                                               }];
+                                               param:param completion:nil];
     }
 }
 
@@ -661,14 +640,7 @@
         }
         [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
                                                  cmd:cmd.name
-                                               param:param completion:^(BOOL result, NSError *error) {
-                                                   if (result) {
-                                                       
-                                                   }
-                                                   else{
-                                                       
-                                                   }
-                                               }];
+                                               param:param completion:nil];
     }
 }
 #pragma mark ---- 延时器 ----
@@ -746,14 +718,7 @@
                 
                 [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
                                                          cmd:cmd.name
-                                                       param:param completion:^(BOOL result, NSError *error) {
-                                                           if (result) {
-                                                               
-                                                           }
-                                                           else{
-                                                               
-                                                           }
-                                                       }];
+                                                       param:param completion:nil];
             }
             
         }
@@ -806,14 +771,7 @@
             {
                 [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
                                                          cmd:cmd.name
-                                                       param:param completion:^(BOOL result, NSError *error) {
-                                                           if (result) {
-                                                               
-                                                           }
-                                                           else{
-                                                               
-                                                           }
-                                                       }];
+                                                       param:param completion:nil];
             }
             
         }
@@ -1089,14 +1047,7 @@
             {
                 [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
                                                          cmd:cmd.name
-                                                       param:param completion:^(BOOL result, NSError *error) {
-                                                           if (result) {
-                                                               
-                                                           }
-                                                           else{
-                                                               
-                                                           }
-                                                       }];
+                                                       param:param completion:nil];
             }
             
         }
@@ -1256,14 +1207,7 @@
             {
                 [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
                                                          cmd:cmd.name
-                                                       param:param completion:^(BOOL result, NSError *error) {
-                                                           if (result) {
-                                                               
-                                                           }
-                                                           else{
-                                                               
-                                                           }
-                                                       }];
+                                                       param:param completion:nil];
             }
             
         }
@@ -1465,14 +1409,7 @@
             {
                 [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
                                                          cmd:cmd.name
-                                                       param:param completion:^(BOOL result, NSError *error) {
-                                                           if (result) {
-                                                               
-                                                           }
-                                                           else{
-                                                               
-                                                           }
-                                                       }];
+                                                       param:param completion:nil];
             }
             
         }
@@ -1673,14 +1610,7 @@
             {
                 [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
                                                          cmd:cmd.name
-                                                       param:param completion:^(BOOL result, NSError *error) {
-                                                           if (result) {
-                                                               
-                                                           }
-                                                           else{
-                                                               
-                                                           }
-                                                       }];
+                                                       param:param completion:nil];
             }
             
         }
@@ -1835,14 +1765,7 @@
                 
                 [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
                                                          cmd:cmd.name
-                                                       param:param completion:^(BOOL result, NSError *error) {
-                                                           if (result) {
-                                                               
-                                                           }
-                                                           else{
-                                                               
-                                                           }
-                                                       }];
+                                                       param:param completion:nil];
             }
             
         }
@@ -1950,14 +1873,7 @@
         }
         [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
                                                  cmd:cmd.name
-                                               param:param completion:^(BOOL result, NSError *error) {
-                                                   if (result) {
-                                                       
-                                                   }
-                                                   else{
-                                                       
-                                                   }
-                                               }];
+                                               param:param completion:nil];
     }
 }
 
@@ -1993,14 +1909,7 @@
         }
         [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
                                                  cmd:cmd.name
-                                               param:param completion:^(BOOL result, NSError *error) {
-                                                   if (result) {
-                                                       
-                                                   }
-                                                   else{
-                                                       
-                                                   }
-                                               }];
+                                               param:param completion:nil];
     }
 }
 
@@ -2026,14 +1935,7 @@
         }
         [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
                                                  cmd:cmd.name
-                                               param:param completion:^(BOOL result, NSError *error) {
-                                                   if (result) {
-                                                       
-                                                   }
-                                                   else{
-                                                       
-                                                   }
-                                               }];
+                                               param:param completion:nil];
     }
 }
 
@@ -2059,14 +1961,7 @@
         }
         [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
                                                  cmd:cmd.name
-                                               param:param completion:^(BOOL result, NSError *error) {
-                                                   if (result) {
-                                                       
-                                                   }
-                                                   else{
-                                                       
-                                                   }
-                                               }];
+                                               param:param completion:nil];
     }
 }
 
@@ -2136,7 +2031,7 @@
                 [val setObject:@"False" forKey:@"ENABLE"];
             }
             
-            NSString *inputProxyId = [NSString stringWithFormat:@"%d", proxy._rgsProxyObj.m_id];
+            NSString *inputProxyId = [NSString stringWithFormat:@"%d", (int)proxy._rgsProxyObj.m_id];
             [val setObject:name
                     forKey:@"name"];
             [val setObject:inputProxyId
@@ -2150,14 +2045,7 @@
         
         [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
                                                  cmd:cmd.name
-                                               param:param completion:^(BOOL result, NSError *error) {
-                                                   if (result) {
-                                                       
-                                                   }
-                                                   else{
-                                                       
-                                                   }
-                                               }];
+                                               param:param completion:nil];
     }
     
 }
@@ -2221,23 +2109,16 @@
             
             /////for Save json
             [val setObject:[NSString stringWithFormat:@"%d",
-                        proxy._rgsProxyObj.m_id] forKey:@"proxy_id"];
+                        (int)proxy._rgsProxyObj.m_id] forKey:@"proxy_id"];
             
             [_setMixValue setObject:val forKey:[NSString stringWithFormat:@"%d",
-                                                proxy._rgsProxyObj.m_id]];
+                                                (int)proxy._rgsProxyObj.m_id]];
            
         }
         
         [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
                                                  cmd:cmd.name
-                                               param:param completion:^(BOOL result, NSError *error) {
-                                                   if (result) {
-                                                       
-                                                   }
-                                                   else{
-                                                       
-                                                   }
-                                               }];
+                                               param:param completion:nil];
     }
 }
 

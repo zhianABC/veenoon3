@@ -24,6 +24,8 @@
 
 - (NSString *)dbPath;
 
+- (int) saveScenarioSchedule:(NSDictionary*)schedule;
+- (NSMutableArray*) getScenarioSchedules;
 
 - (int) saveMeetingRoom:(MeetingRoom*)room;
 - (void) updateMeetingRoomPic:(MeetingRoom*)room;

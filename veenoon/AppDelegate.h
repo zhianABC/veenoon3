@@ -23,5 +23,7 @@
 
 - (void) showWait:(BOOL)show;
 
+- (void) logout;
+
 @end
 

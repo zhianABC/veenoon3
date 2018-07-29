@@ -74,6 +74,8 @@
         settingsUserView.backgroundColor = [UIColor clearColor];
         [_content addSubview:settingsUserView];
         
+        [settingsUserView fillCacheData];
+        
         _imgSetting = [[SettingsViewView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64-50)];
         [_content addSubview:_imgSetting];
         

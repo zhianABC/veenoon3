@@ -9,7 +9,7 @@
 #import "BaseViewController.h"
 #import <UIKit/UIKit.h>
 
-@interface UserHomeViewController : BaseViewController  {
+@interface UserHomeViewController : UIViewController  {
     
 }
 @property (strong, nonatomic) UIActionSheet *actionSheet;

@@ -12,6 +12,7 @@
 #import "MeetingRoom.h"
 #import "WebClient.h"
 #import "SBJson4.h"
+#import "UserDefaultsKV.h"
 
 static DataCenter *_globalDataInstanse;
 
@@ -41,18 +42,18 @@ static DataCenter *_globalDataInstanse;
 
 - (void) syncDriversWithServer{
     
-    if(self._mapDrivers)
-        return;
-    
     if(_client == nil)
     {
         _client = [[WebClient alloc] initWithDelegate:self];
     }
     
     _client._method = @"/getdevicelist";
-    _client._httpMethod = @"POST";
+    _client._httpMethod = @"GET";
     
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    
+    User *u = [UserDefaultsKV getUser];
+    [param setObject:u._userId forKey:@"userID"];
     
     _client._requestParam = param;
 
@@ -138,7 +139,9 @@ static DataCenter *_globalDataInstanse;
     }
     else
     {
+#ifdef   REALTIME_NETWORK_MODEL
         [self syncDriversWithServer];
+#endif
     }
 
 }
@@ -167,6 +170,41 @@ static DataCenter *_globalDataInstanse;
     
     [[NSUserDefaults standardUserDefaults] setObject:_mapDrivers forKey:@"all_drivers"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+#ifdef   REALTIME_NETWORK_MODEL
+    if(_client == nil)
+    {
+        _client = [[WebClient alloc] initWithDelegate:self];
+    }
+    
+    _client._method = @"/adduserdevice";
+    _client._httpMethod = @"POST";
+    
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    
+    User *u = [UserDefaultsKV getUser];
+    if(u)
+    {
+        [param setObject:u._userId forKey:@"userID"];
+    }
+
+    [param setObject:[driver objectForKey:@"type"] forKey:@"type"];
+    [param setObject:[driver objectForKey:@"name"] forKey:@"name"];
+    [param setObject:[driver objectForKey:@"driver"] forKey:@"driver"];
+    [param setObject:[driver objectForKey:@"brand"] forKey:@"brand"];
+    [param setObject:[driver objectForKey:@"icon"] forKey:@"icon"];
+    [param setObject:[driver objectForKey:@"icon_s"] forKey:@"iconS"];
+    [param setObject:[driver objectForKey:@"driver_class"] forKey:@"driverClass"];
+    [param setObject:[driver objectForKey:@"ptype"] forKey:@"pType"];
+    
+    _client._requestParam = param;
+    
+    [_client requestWithSusessBlock:^(id lParam, id rParam) {
+        
+    } FailBlock:^(id lParam, id rParam) {
+        
+    }];
+#endif
     
 }
 

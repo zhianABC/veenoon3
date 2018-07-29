@@ -269,15 +269,15 @@
 
 - (void) initBrandAndTypes{
     
-    self._currentBrands = @[@"品牌1",@"品牌2",@"品牌3"];
-    self._currentTypes = @[@"型号A",@"型号B",@"型号C"];
+    self._currentBrands = @[@"品牌"];
+    self._currentTypes = @[@"型号"];
     self._driverUdids = @[];
     
     _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
     _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
     
     [_brandPicker selectRow:0 inComponent:0];
-    [_productTypePikcer selectRow:0 inComponent:0];
+    [_productCategoryPicker selectRow:0 inComponent:0];
 }
 
 

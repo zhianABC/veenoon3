@@ -9,5 +9,9 @@
 #import "AreaPickView.h"
 
 @interface SettingsUserView : UIView <UITextFieldDelegate, AreaPickViewDelegate>
+{
+    
+}
 
+- (void) fillCacheData;
 @end

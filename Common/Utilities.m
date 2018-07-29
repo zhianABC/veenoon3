@@ -248,4 +248,22 @@
 }
 
 
++ (void) showMessage:(NSString*)message ctrl:(UIViewController*)ctrl{
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil
+                                                                   message:message
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    
+    UIAlertAction *takeAction = [UIAlertAction
+                                 actionWithTitle:@"确定"
+                                 style:UIAlertActionStyleDefault
+                                 handler:nil];
+    [alert addAction:takeAction];
+    
+    [ctrl presentViewController:alert animated:YES
+                     completion:nil];
+}
+
+
 @end

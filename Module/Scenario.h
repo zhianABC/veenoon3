@@ -38,6 +38,7 @@
 
 - (void) fillWithData:(NSDictionary*)data;
 - (NSMutableDictionary *)senarioData;
+- (NSString *)name;
 
 
 @end

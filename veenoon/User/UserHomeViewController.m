@@ -40,11 +40,21 @@
     
     self.roomList = [[DataBase sharedDatabaseInstance] getMeetingRooms];
 
-    UIScrollView *scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-    scroolView.backgroundColor = RGB(63, 58, 55);
+    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(15, 24, SCREEN_WIDTH-30, 40)];
+    titleL.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:titleL];
+    titleL.font = [UIFont boldSystemFontOfSize:18];
+    titleL.textColor  = [UIColor whiteColor];
+    titleL.textAlignment = NSTextAlignmentCenter;
+    titleL.text = @"房间管理";
+    
+    self.view.backgroundColor = RGB(63, 58, 55);
+    
+    UIScrollView *scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-64)];
+    scroolView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:scroolView];
     
-    int top = 80;
+    int top = 30;
     int leftRight = 30;
     int space = 15;
     
@@ -92,6 +102,7 @@
         roomeImageView.userInteractionEnabled=YES;
         roomeImageView.contentMode = UIViewContentModeScaleAspectFill;
         roomeImageView.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
+        roomeImageView.clipsToBounds = YES;
         
         if(coverurl)
             [roomeImageView setImageWithURL:[NSURL URLWithString:coverurl]];
@@ -179,13 +190,13 @@
             UITextField *envirnmentNameTextField = alertController.textFields.firstObject;
             NSString *scenarioName = envirnmentNameTextField.text;
             if (scenarioName && [scenarioName length] > 0) {
-                NSMutableDictionary *meetingDic = [self.roomList objectAtIndex:index];
+                MeetingRoom *mroom = [self.roomList objectAtIndex:index];
                 UILabel *scenarioLabel = [lableArray objectAtIndex:index];
                 
-                [meetingDic setObject:scenarioName forKey:@"roomname"];
+                mroom.room_name = scenarioName;
                 scenarioLabel.text =scenarioName;
                 
-                [[DataBase sharedDatabaseInstance] saveMeetingRoom:meetingDic];
+                [[DataBase sharedDatabaseInstance] saveMeetingRoom:mroom];
             }
         }]];
         

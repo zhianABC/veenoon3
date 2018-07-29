@@ -16,6 +16,8 @@
 #import "NetworkChecker.h"
 #import "DataBase.h"
 #import "MeetingRoom.h"
+#import "UserDefaultsKV.h"
+#import "Utilities.h"
 
 @interface EnginnerHomeViewController () <ReaderCodeDelegate> {
     UITextField *_userNameField;
@@ -141,6 +143,9 @@
 
 -(void) loginAction:(id) sender {
 
+    [self enterRoomListView];
+    
+#ifdef REALTIME_NETWORK_MODEL
     NetworkStatus status = [[NetworkChecker sharedNetworkChecker] networkStatus];
     if(status != NotReachable)
     {
@@ -150,6 +155,8 @@
     {
         [self enterRoomListView];
     }
+#endif
+    
 }
 
 - (void) getRoomList{
@@ -166,9 +173,12 @@
     
     _client._requestParam = param;
     
+    User *u = [UserDefaultsKV getUser];
+    if(u)
+    {
+        [param setObject:u._userId forKey:@"userID"];
+    }
 
-    [param setObject:@"1" forKey:@"userID"];
-    
     IMP_BLOCK_SELF(EnginnerHomeViewController);
     
     [KVNProgress show];
@@ -193,6 +203,10 @@
                     {
                         [block_self saveRoomList:[v objectForKey:@"data"]];
                     }
+                }
+                else
+                {
+                    [Utilities showMessage:[v objectForKey:@"message"] ctrl:self];
                 }
                 return;
             }

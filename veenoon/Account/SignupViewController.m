@@ -11,6 +11,11 @@
 #import "LoginViewController.h"
 #import "InvitationCodeViewCotroller.h"
 #import "UIButton+Color.h"
+#import "Utilities.h"
+#import "SBJson4.h"
+#import "WaitDialog.h"
+#import "User.h"
+#import "UserDefaultsKV.h"
 
 
 @interface SignupViewController () <AreaPickViewDelegate>{
@@ -33,10 +38,22 @@
     AreaPickView *areaPick;
     
     UIButton *loginBtn;
+    
+    WebClient *_httpGetCode;
+    NSTimer *_timer;
+    int secondsCount;
+    
+    WebClient *_http;
 }
+@property (nonatomic, strong) NSString *_province;
+@property (nonatomic, strong) NSString *_city;
+@property (nonatomic, strong) NSString *_area;
 @end
 
 @implementation SignupViewController
+@synthesize _province;
+@synthesize _city;
+@synthesize _area;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -225,7 +242,7 @@
     [_inputPannel addSubview:line7];
 
     _timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(left+285, top+235, 100, 40)];
-    _timerLabel.text = @"180s 有效";
+    _timerLabel.text = @"180秒内有效";
     _timerLabel.textColor = [UIColor whiteColor];
     _timerLabel.font = [UIFont boldSystemFontOfSize:14];
     [_inputPannel addSubview:_timerLabel];
@@ -293,13 +310,26 @@
           forControlEvents:UIControlEventTouchUpInside];
 
 }
-- (void) loginBtnAction:(id) sender {
-    LoginViewController *ctrl = [[LoginViewController alloc] init];
+- (void) loginBtnAction:(UIButton*) btn {
+
+    [self.navigationController popViewControllerAnimated:YES];
     
-    [self.navigationController pushViewController:ctrl animated:YES];
+}
+
+- (void) successRegDone{
+    
+    UIAlertView *alert  = [[UIAlertView alloc] initWithTitle:nil
+                                                     message:@"注册成功，将转入验证注册码界面"
+                                                    delegate:nil
+                                           cancelButtonTitle:@"确定"
+                                           otherButtonTitles:@"取消", nil];
+    [alert show];
+    alert.delegate = self;
+    
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
+    
     if (textField == _jiaoyanmaTextfield) {
         _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 70);
     }
@@ -327,29 +357,330 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void) okAction:(id)sender{
-    NSLog(@"enter the method.");
-    UIAlertView *alert  = [[UIAlertView alloc] initWithTitle:@""
-                                                     message:@"注册成功，将转入验证注册码界面"
-                                                    delegate:nil
-                                           cancelButtonTitle:@"确定"
-                                           otherButtonTitles:@"取消", nil];
-    [alert show];
-    alert.delegate = self;
+- (void) okAction:(UIButton*)btn{
     
+    [self stopTimer];
+    
+    NSString *companyName = _companyName.text;
+    NSString *address = _addressTextfield.text;
+    NSString *pwd = _password.text;
+    NSString *pwd1 = _passwordAgain.text;
+    NSString *identifyCode = _jiaoyanmaTextfield.text;
+    
+    NSString *msg = nil;
+    do{
+        if([companyName length] == 0)
+        {
+            msg = @"请输入企业名称";
+            break;
+        }
+        if([identifyCode length] != 6)
+        {
+            msg = @"请输入正确的验证码";
+            break;
+        }
+        if([_province length] == 0)
+        {
+            msg = @"请选择行政区域";
+            break;
+        }
+        if([address length] == 0)
+        {
+            msg = @"请输入地址";
+            break;
+        }
+        if([pwd length] == 0)
+        {
+            msg = @"请输入密码";
+            break;
+        }
+        if(![pwd isEqualToString:pwd1])
+        {
+            msg = @"两次输入的密码不一致";
+            break;
+        }
+    }while(0);
+    
+    if(msg)
+    {
+        UIAlertView *alert  = [[UIAlertView alloc] initWithTitle:nil
+                                                         message:msg
+                                                        delegate:nil
+                                               cancelButtonTitle:@"确定"
+                                               otherButtonTitles:nil, nil];
+        [alert show];
+        return;
+    }
+    
+    NSString *mobile = _cellphoneTextfield.text;
+    if(![Utilities IsValidMobeilTel:[mobile UTF8String]])
+    {
+        UIAlertView *alert  = [[UIAlertView alloc] initWithTitle:nil
+                                                         message:@"请输入正确的手机号！"
+                                                        delegate:nil
+                                               cancelButtonTitle:@"确定"
+                                               otherButtonTitles:nil, nil];
+        [alert show];
+        return;
+    }
+    
+    if(_http == nil)
+        _http = [[WebClient alloc] initWithDelegate:self];
+    
+    _http._httpMethod = @"POST";
+    _http._method = @"/userregister";
+    
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setObject:mobile forKey:@"telephone"];
+    [params setObject:companyName forKey:@"company"];
+    [params setObject:_province forKey:@"province"];
+    [params setObject:_city forKey:@"city"];
+    [params setObject:_area forKey:@"zone"];
+    [params setObject:address forKey:@"address"];
+    [params setObject:pwd forKey:@"password"];
+    [params setObject:identifyCode forKey:@"identifyCode"];
+    
+    [params setObject:@"CN" forKey:@"countrycode"];
+    _http._requestParam = params;
+    
+    
+    IMP_BLOCK_SELF(SignupViewController);
+    
+    btn.enabled = NO;
+    
+    [_http requestWithSusessBlock:^(id lParam, id rParam) {
+        
+        NSString *response = lParam;
+        //NSLog(@"%@", response);
+        
+        btn.enabled = YES;
+        
+        SBJson4ValueBlock block = ^(id v, BOOL *stop) {
+            
+            if([v isKindOfClass:[NSDictionary class]])
+            {
+                int code = [[v objectForKey:@"code"] intValue];
+                if(code == 200)
+                {
+                    User *u = [[User alloc] initWithDicionary:v];
+                    [UserDefaultsKV saveUser:u];
+                    
+                    [block_self successRegDone];
+                }
+                else
+                {
+                    NSString *message = [v objectForKey:@"msg"];
+                    
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                                    message:message
+                                                                   delegate:nil
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil, nil];
+                    [alert show];
+                }
+                return;
+            }
+            
+        };
+        
+        SBJson4ErrorBlock eh = ^(NSError* err) {
+            NSLog(@"OOPS: %@", err);
+            
+        };
+        
+        id parser = [SBJson4Parser multiRootParserWithBlock:block
+                                               errorHandler:eh];
+        
+        id data = [response dataUsingEncoding:NSUTF8StringEncoding];
+        [parser parse:data];
+        
+        
+    } FailBlock:^(id lParam, id rParam) {
+        
+        NSString *response = lParam;
+        NSLog(@"%@", response);
+        
+        btn.enabled = YES;
+    }];
     
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     
     if (alertView.cancelButtonIndex == buttonIndex) {
+        
+        
         InvitationCodeViewCotroller *ctrl = [[InvitationCodeViewCotroller alloc] init];
         [self.navigationController pushViewController:ctrl animated:YES];
+        
     }
 }
 
-- (void) registerNumberAction:(id)sender{
-    NSLog(@"enter the method.");
+
+- (void) startTimer{
+    
+    _registerNumberBtn.enabled = NO;
+    _registerNumberBtn.alpha = 0.5;
+    _timerLabel.text = @"60秒";
+    secondsCount = 60;
+    _timer = [NSTimer scheduledTimerWithTimeInterval:1
+                                              target:self
+                                            selector:@selector(timeCount)
+                                            userInfo:nil
+                                             repeats:NO];
+}
+
+- (void) timeCount{
+    
+    secondsCount--;
+    
+    [self performSelectorOnMainThread:@selector(showWait) withObject:nil waitUntilDone:NO];
+    
+    
+    
+    if(secondsCount <= 0)
+    {
+        _registerNumberBtn.enabled = YES;
+        _registerNumberBtn.alpha = 1;
+        _timerLabel.text = @"60秒";
+        
+        if([_timer isValid])
+            [_timer invalidate];
+        _timer = nil;
+    }
+    else
+    {
+        _timer = [NSTimer scheduledTimerWithTimeInterval:1
+                                                  target:self
+                                                selector:@selector(timeCount)
+                                                userInfo:nil
+                                                 repeats:NO];
+    }
+}
+
+- (void) showWait{
+    dispatch_async(dispatch_get_main_queue(), ^
+                   {
+                       //NSLog(@"%d", secondsCount);
+                       //[btnVerify setTitle:[NSString stringWithFormat:@"%d秒后重发", secondsCount] forState:UIControlStateNormal];
+                       //[btnVerify setNeedsDisplay];
+                       if(secondsCount == 0)
+                       {
+                           _timerLabel.text = @"60秒";
+                       }
+                       else
+                       {
+                           _timerLabel.text = [NSString stringWithFormat:@"%d秒", secondsCount];
+                       }
+                   });
+    
+    
+}
+
+
+- (void) stopTimer{
+    
+    if(_timer)
+    {
+        if([_timer isValid])
+            [_timer invalidate];
+        _timer = nil;
+    }
+}
+
+
+- (void) registerNumberAction:(UIButton*)btn{
+ 
+    NSString *mobile = _cellphoneTextfield.text;
+    if(![Utilities IsValidMobeilTel:[mobile UTF8String]])
+    {
+        UIAlertView *alert  = [[UIAlertView alloc] initWithTitle:nil
+                                                         message:@"请输入正确的手机号！"
+                                                        delegate:nil
+                                               cancelButtonTitle:@"确定"
+                                               otherButtonTitles:nil, nil];
+        [alert show];
+        return;
+    }
+    
+    if(_httpGetCode == nil)
+        _httpGetCode = [[WebClient alloc] initWithDelegate:self];
+    
+    _httpGetCode._httpMethod = @"GET";
+    _httpGetCode._method = @"/sendidentifycode";
+    
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setObject:mobile forKey:@"telephoneNumber"];
+    [params setObject:@"CN" forKey:@"countrycode"];
+    _httpGetCode._requestParam = params;
+    
+    
+    IMP_BLOCK_SELF(SignupViewController);
+    
+    btn.enabled = NO;
+    
+    [_httpGetCode requestWithSusessBlock:^(id lParam, id rParam) {
+        
+        NSString *response = lParam;
+        //NSLog(@"%@", response);
+        
+        btn.enabled = YES;
+        
+        SBJson4ValueBlock block = ^(id v, BOOL *stop) {
+            
+            if([v isKindOfClass:[NSDictionary class]])
+            {
+                int code = [[v objectForKey:@"code"] intValue];
+                if(code == 200)
+                {
+                    [block_self showSmsMessage];
+                }
+                else
+                {
+                    NSString *message = [v objectForKey:@"msg"];
+                    
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                                    message:message
+                                                                   delegate:nil
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil, nil];
+                    [alert show];
+                }
+                return;
+            }
+            
+        };
+        
+        SBJson4ErrorBlock eh = ^(NSError* err) {
+            NSLog(@"OOPS: %@", err);
+            
+        };
+        
+        id parser = [SBJson4Parser multiRootParserWithBlock:block
+                                               errorHandler:eh];
+        
+        id data = [response dataUsingEncoding:NSUTF8StringEncoding];
+        [parser parse:data];
+        
+        
+    } FailBlock:^(id lParam, id rParam) {
+        
+        NSString *response = lParam;
+        NSLog(@"%@", response);
+        
+        btn.enabled = YES;
+    }];
+}
+
+
+- (void) showSmsMessage{
+    
+    [self startTimer];
+    
+    [[WaitDialog sharedAlertDialog] setTitle:@"验证码已发送"];
+    [[WaitDialog sharedAlertDialog] animateShow];
 }
 
 - (void) countrySelectAction:(id)sender{
@@ -371,6 +702,10 @@
         NSString *province = areaPick.provinceBtn.titleLabel.text;
         NSString *city = areaPick.cityBtn.titleLabel.text;
         NSString *district = areaPick.districtBtn.titleLabel.text;
+        
+        self._province = province;
+        self._city = city;
+        self._area = district;
         
         NSString *baseString = @"所在地区：";
         NSString *buttonTitle = [[[baseString stringByAppendingString:province] stringByAppendingString:city] stringByAppendingString:district];

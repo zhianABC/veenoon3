@@ -176,14 +176,7 @@
             {
                 [[RegulusSDK sharedRegulusSDK] ControlDevice:((RgsDriverObj*) _driver).m_id
                                                          cmd:cmd.name
-                                                       param:param completion:^(BOOL result, NSError *error) {
-                                                           if (result) {
-                                                               
-                                                           }
-                                                           else{
-                                                               
-                                                           }
-                                                       }];
+                                                       param:param completion:nil];
             }
             
         }
