@@ -138,11 +138,114 @@
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    
+    [textField resignFirstResponder];
+    
     return YES;
 }
 
--(void) loginAction:(id) sender {
+-(void) loginAction:(UIButton*) sender {
 
+    NSString *userName = _userNameField.text;
+    NSString *userPwd = _userPwdField.text;
+    if ([userName length] < 1) {
+        
+        [Utilities showMessage:@"请输入登录名！" ctrl:self];
+        
+        return;
+    }
+    if ([userPwd length] < 1) {
+        
+        [Utilities showMessage:@"请输入密码！" ctrl:self];
+        
+        return;
+    }
+    
+    
+    if([_userNameField isFirstResponder])
+        [_userNameField resignFirstResponder];
+    
+    if([_userPwdField isFirstResponder])
+        [_userPwdField resignFirstResponder];
+    
+    
+    if(_client == nil)
+        _client = [[WebClient alloc] initWithDelegate:self];
+    
+    _client._httpMethod = @"GET";
+    _client._method = @"/userlogin";
+    
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setObject:userName forKey:@"telephone"];
+    [params setObject:userPwd forKey:@"password"];
+    
+    _client._requestParam = params;
+    
+
+    IMP_BLOCK_SELF(EnginnerHomeViewController);
+    
+    [KVNProgress show];
+    
+    [_client requestWithSusessBlock:^(id lParam, id rParam) {
+        
+        NSString *response = lParam;
+        //NSLog(@"%@", response);
+        [KVNProgress dismiss];
+        
+        SBJson4ValueBlock block = ^(id v, BOOL *stop) {
+            
+            if ([v isKindOfClass:[NSDictionary class]]) {
+                int  code = [[v objectForKey:@"code"] intValue];
+                if (code == 200) {
+                    
+                    NSDictionary *data = [v objectForKey:@"data"];
+                    [block_self processLoginData:data];
+                    
+                } else {
+                    
+                    NSString *message = [v objectForKey:@"message"];
+                    [Utilities showMessage:message ctrl:self];
+                    
+                }
+                return;
+            }
+            
+        };
+        
+        SBJson4ErrorBlock eh = ^(NSError* err) {
+            NSLog(@"OOPS: %@", err);
+            
+        };
+        
+        id parser = [SBJson4Parser multiRootParserWithBlock:block
+                                               errorHandler:eh];
+        
+        id data = [response dataUsingEncoding:NSUTF8StringEncoding];
+        [parser parse:data];
+        
+        
+    } FailBlock:^(id lParam, id rParam) {
+        
+        NSString *response = lParam;
+        NSLog(@"%@", response);
+        
+        [KVNProgress dismiss];
+    }];
+}
+
+- (void) processLoginData:(NSDictionary*)data{
+    
+    User *u = [[User alloc] initWithDicionary:data];
+    
+    if(u.is_engineer)
+    {
+        [self successLogin];
+    }
+    
+}
+- (void) successLogin{
+    
     [self enterRoomListView];
     
 #ifdef REALTIME_NETWORK_MODEL

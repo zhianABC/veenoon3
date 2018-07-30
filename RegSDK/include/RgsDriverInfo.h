@@ -28,14 +28,7 @@
  */
 @property RgsDriverType type;
 
-/*!
- 品牌
- */
-@property NSString * brand;
-/*!
- 类别
- */
-@property NSString * classify;
+
 /*!
  序列号
  */
@@ -66,4 +59,28 @@
  */
 @property NSDate * modify_date;
 
+/*!
+ 品牌
+ */
+@property NSString * brand;
+
+/*!
+ 所属系统
+ */
+@property NSString * system;
+
+/*!
+ 产品类型
+ */
+@property NSString * main_class;
+
+/*!
+ 子类
+ */
+@property NSString * sub_class;
+
+/*!
+ 适用型号
+ */
+@property NSString * model;
 @end
