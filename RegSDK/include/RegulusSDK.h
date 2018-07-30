@@ -74,15 +74,35 @@
 
 
 /*!
-   @since 1.0.0
+   @since 3.10.3
    @brief 登出网关
    @discussion 登出中控，调用本函数后，SDK销毁会话句柄。
-   @param user_id  网关分配的客户ID
-   @param gw_id    网关ID
    @param completion 回调block，正常时返回登出结果(result)
  */
--(void) Logout:(NSString *)user_id gw_id:(NSString *)gw_id
-    completion:(void(^)(BOOL result,NSError * error)) completion;
+-(void) Logout:(void(^)(BOOL result,NSError * error)) completion;
+
+/*!
+ @since 3.10.3
+ @brief 暂停使用，用于进入后台前调用，释放网络资源
+ @param completion 回调block，正常时返回登出结果(result)
+ */
+-(void) Pause:(void(^)(BOOL result,NSError * error)) completion;
+
+/*!
+ @since 3.10.3
+ @brief 恢复使用，用于进入前台后调用，重新获取网络资源
+ @param completion 回调block，正常时返回登出结果(result)
+ */
+-(void) Resume:(void(^)(BOOL result,NSError * error)) completion;
+
+
+/*!
+ @since 3.10.3
+ @brief 判断登陆状况
+ @return YES已经登陆 NO未登陆
+ */
+-(BOOL) IsLoginBeforce;
+
 
 
 /*!
@@ -121,6 +141,17 @@
                   cmd:(NSString *)cmd
                 param:(NSDictionary *)param
            completion:(void(^)(BOOL result,NSError * error)) completion;
+
+/*!
+ @since 3.10.4
+ @brief 控制设备
+ 
+ @param dev_operations  设备操作列表
+ @param completion 回调block，正常时返回YES
+ @see RgsSceneOperation
+ */
+-(void) ControlDeviceByOperation:(NSArray *)dev_operations
+                      completion:(void(^)(BOOL result,NSError * error)) completion;
 
 
 /*!
