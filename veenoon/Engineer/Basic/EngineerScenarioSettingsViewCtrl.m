@@ -58,16 +58,12 @@
     MeetingRoom *room = [DataCenter defaultDataCenter]._currentRoom;
     self.regulus_id = room.regulus_id;
     
-    UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
-    [self.view addSubview:titleIcon];
-    titleIcon.frame = CGRectMake(60, 40, 70, 10);
-    
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 63, SCREEN_WIDTH, 1)];
     line.backgroundColor = RGB(75, 163, 202);
     [self.view addSubview:line];
     
     UIView *topbar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 64)];
-    topbar.backgroundColor = THEME_COLOR;
+    topbar.backgroundColor = BLACK_COLOR;
     
     UIView *bottom = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     bottom.backgroundColor = THEME_COLOR;

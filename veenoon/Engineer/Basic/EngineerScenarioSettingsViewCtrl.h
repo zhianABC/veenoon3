@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 
-@interface EngineerScenarioSettingsViewCtrl : UIViewController {
+@interface EngineerScenarioSettingsViewCtrl : BaseViewController {
     
 }
 

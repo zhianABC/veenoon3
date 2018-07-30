@@ -142,7 +142,7 @@
 }
 
 -(void) loginAction:(id) sender {
-
+    
     [self enterRoomListView];
     
 #ifdef REALTIME_NETWORK_MODEL
