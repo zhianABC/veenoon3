@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface YinPinProcessCodeUIView : UIView
+#import "WebClient.h"
+@interface YinPinProcessCodeUIView : UIView {
+    WebClient *_autoClient;
+    UILabel *_networkStatus;
+}
 
 @end

@@ -7,6 +7,10 @@
 //
 
 #import "YinPinProcessCodeUIView.h"
+#import "NetworkChecker.h"
+#import "KVNProgress.h"
+#import "SBJson4.h"
+
 
 @interface YinPinProcessCodeUIView()<UITextFieldDelegate> {
     UIView *_inputPannel;
@@ -113,7 +117,80 @@
 }
 
 - (void) okAction:(id)sender {
+    if([[NetworkChecker sharedNetworkChecker] networkStatus] == NotReachable) {
+        _networkStatus.text = @"没有连接网络...";
+        _networkStatus.hidden = NO;
+        return;
+    } else {
+        _networkStatus.hidden = YES;
+    }
+    
+    NSString *code = _invitationCode.text;
+    
+    if(_autoClient == nil)
+        _autoClient = [[WebClient alloc] initWithDelegate:self];
+    
+    _autoClient._httpMethod = @"GET";
+    _autoClient._method = @"/validaeccode";
+    
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    [params setObject:code forKey:@"aecCode"];
+    
+    _autoClient._requestParam = params;
+    
+    IMP_BLOCK_SELF(YinPinProcessCodeUIView);
+    
+    [KVNProgress show];
+    
+    [_autoClient requestWithSusessBlock:^(id lParam, id rParam) {
+        
+        NSString *response = lParam;
+        //NSLog(@"%@", response);
+        
+        [KVNProgress dismiss];
+        
+        SBJson4ValueBlock block = ^(id v, BOOL *stop) {
+            
+            if ([v isKindOfClass:[NSDictionary class]]) {
+                int  code = [[v objectForKey:@"code"] intValue];
+                if (code == 200) {
+                    
+                    NSDictionary *data = [v objectForKey:@"data"];
+                    [block_self processLoginData:data];
+                    
+                }
+                return;
+            }
+            
+        };
+        
+        SBJson4ErrorBlock eh = ^(NSError* err) {
+            NSLog(@"OOPS: %@", err);
+            
+        };
+        
+        id parser = [SBJson4Parser multiRootParserWithBlock:block
+                                               errorHandler:eh];
+        
+        id data = [response dataUsingEncoding:NSUTF8StringEncoding];
+        [parser parse:data];
+        
+        
+    } FailBlock:^(id lParam, id rParam) {
+        
+        NSString *response = lParam;
+        NSLog(@"%@", response);
+        
+        [KVNProgress dismiss];
+    }];
+    
     [self removeFromSuperview];
+}
+
+- (void) processLoginData:(NSDictionary*)data{
+    NSLog(@"ssss");
+    
 }
 
 - (void) cancelAction:(id)sender{
