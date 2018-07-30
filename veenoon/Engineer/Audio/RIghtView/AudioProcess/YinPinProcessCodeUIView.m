@@ -117,13 +117,7 @@
 }
 
 - (void) okAction:(id)sender {
-    if([[NetworkChecker sharedNetworkChecker] networkStatus] == NotReachable) {
-        _networkStatus.text = @"没有连接网络...";
-        _networkStatus.hidden = NO;
-        return;
-    } else {
-        _networkStatus.hidden = YES;
-    }
+
     
     NSString *code = _invitationCode.text;
     
@@ -185,12 +179,13 @@
         [KVNProgress dismiss];
     }];
     
-    [self removeFromSuperview];
+    
 }
 
 - (void) processLoginData:(NSDictionary*)data{
     NSLog(@"ssss");
     
+    [self removeFromSuperview];
 }
 
 - (void) cancelAction:(id)sender{

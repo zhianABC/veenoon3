@@ -147,10 +147,7 @@ static DataSync* dSyncInstance = nil;
         
         if(regulus_user_id && regulus_gateway_id)
         {
-            [[RegulusSDK sharedRegulusSDK] Logout:regulus_user_id
-                                            gw_id:regulus_gateway_id completion:^(BOOL result, NSError *error) {
-                                                
-                                            }];
+            [[RegulusSDK sharedRegulusSDK] Logout:nil];
             
             //[DataSync sharedDataSync]._currentReglusLogged = nil;
         }

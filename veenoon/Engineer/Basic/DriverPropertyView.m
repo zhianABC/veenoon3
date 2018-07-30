@@ -357,7 +357,7 @@
     RgsDriverInfo * info = _plugDriver._driverInfo;
     
     _isIR = NO;
-    if([info.classify isEqualToString:@"IR Controller"])
+    if([info.system isEqualToString:@"IR Controller"])
     {
         _isIR = YES;
     }
@@ -582,7 +582,7 @@
     RgsDriverInfo * info = _plugDriver._driverInfo;
     
     BOOL _isIR = NO;
-    if([info.classify isEqualToString:@"IR Controller"])
+    if([info.system isEqualToString:@"IR Controller"])
     {
         _isIR = YES;
     }
