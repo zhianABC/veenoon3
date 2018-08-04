@@ -10,20 +10,25 @@
 
 #import <Foundation/Foundation.h>
 #include "RgsConstants.h"
+#include "RgsEventObj.h"
 
 /*!
  @class RgsSchedulerObj
- @since 3.4.1
+ @since 3.11.1
  @brief 重复计划对象
  */
 
 @interface RgsSchedulerObj : NSObject
 
 /*!
- 关联情景id
+ 日程id
  */
-@property NSInteger scene_id;
+@property NSInteger m_id;
 
+/*!
+ 名字
+ */
+@property NSString * name;
 
 /*!
  执行时间
@@ -31,18 +36,24 @@
 @property NSDate * exce_time;
 
 /*!
- 重复类型
- */
-@property RgsFrequencyType frequency_type;
-
-/*!
- 重复频率
- */
-@property NSInteger rate;
-
-/*!
  周重复
  */
 @property NSArray * week_items;
+
+/*！
+ 开始日期
+ */
+@property NSDate * start_date;
+
+/*！
+ 失效日期
+ */
+@property NSDate * end_date;
+
+/*！
+ 生效事件
+ */
+@property RgsEventObj * evt_obj;
+
 
 @end

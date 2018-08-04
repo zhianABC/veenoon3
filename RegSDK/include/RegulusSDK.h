@@ -429,39 +429,6 @@
  */
 -(void)GetSystemDrivers:(void(^)(BOOL result,NSArray * drivers,NSError * error)) completion;
 
-/*!
- @since 3.4.1
- @brief 获取情景重复计划对象
- @param scene_id 情景ID
- @param completion 回调block 正常时返回YES schedulers为RgsSchedulerObj对象列表,为nil时则该情景没有重复计划
- @see RgsSchedulerObj
- */
--(void)GetSceneScheduler:(NSInteger)scene_id
-              completion:(void(^)(BOOL result,RgsSchedulerObj * scheduler,NSError * error)) completion;
-
-/*!
- @since 3.4.1
- @brief 删除指定获取情景重复计划
- @param scene_id 情景ID
- @param completion 回调block 正常时返回YES
- @see RgsSchedulerObj
- */
--(void)DelScheduler:(NSInteger)scene_id
-         completion:(void(^)(BOOL result,NSError * error)) completion;
-
-/*!
- @since 3.4.1
- @brief 设置情景重复计划
- @param scene_id 执行的情景ID
- @param exce_time 执行时间
- @param week_items @[@"Sun",@"Mon",@"Tues",@"Wed",@"Thurs",@"Fri",@"Sat"]中的组成。如@[@"Sun",@"Fri",@"Sat"] 表示周日、周五、周六执行
- @param completion 回调block 正常时返回YES schedulers为创建的对象
- @see RgsSchedulerObj
- */
--(void)SetScheduler:(NSInteger)scene_id
-             exce_time:(NSDate *)exce_time
-             week_items:(NSArray *)week_items
-            completion:(void(^)(BOOL result,RgsSchedulerObj * scheduler ,NSError * error)) completion;
 
 /*!
  @since 3.5.1
@@ -684,6 +651,100 @@
 -(void)DownloadAndInstallUpdatePacket:(RgsUpdatePacketInfo *)info completion:(void(^)(BOOL result,NSError * error)) completion;
 
 
+/*!
+ @since 3.11.1
+ @brief 创建日程
+ @param name 名字
+ @param exce_time 执行时间
+ @param start_date 开始日期
+ @param end_date 结束日期 为nil表示不设置结束时间
+ @param week_items 周重复 为nil时表示不设置重复
+ @param completion 成功反回YES 以及 RgsSchedulerObj对象
+ @see RgsSchedulerObj
+ */
+-(void)CreateScheduler:(NSString *)name
+             exce_time:(NSDate *)exce_time
+            start_date:(NSDate *)start_date
+              end_date:(NSDate *)end_date
+            week_items:(NSArray *)week_items
+            completion:(void (^)(BOOL, RgsSchedulerObj *, NSError *))completion;
+
+/*!
+ @since 3.11.1
+ @brief 修改日程
+ @param scheduler_id 修改日程的ID
+ @param name 名字
+ @param exce_time 执行时间
+ @param start_date 开始日期
+ @param end_date 结束日期 为nil表示不设置结束时间
+ @param week_items 周重复 为nil时表示不设置重复
+ @param completion 成功反回YES 以及 RgsSchedulerObj对象
+ @see RgsSchedulerObj
+ */
+-(void)SetScheduler:(NSInteger)scheduler_id
+               name:(NSString *)name
+          exce_time:(NSDate *)exce_time
+         start_date:(NSDate *)start_date
+           end_date:(NSDate *)end_date
+         week_items:(NSArray *)week_items
+         completion:(void (^)(BOOL,RgsSchedulerObj *,NSError *))completion;
+
+/*!
+ @since 3.11.1
+ @brief 删除日程
+ @param scheduler_id 需要删除的日程ID
+ @param completion 成功反回YES
+ */
+-(void)DelSchedulerByID:(NSInteger) scheduler_id
+         completion:(void (^)(BOOL, NSError *))completion;
+
+/*!
+ @since 3.11.1
+ @brief 获取日程
+ @param completion 成功反回RgsSchedulerObj的对象列表
+ */
+-(void)GetSchedulers:(void (^)(BOOL, NSArray *, NSError *))completion;
+
+
+/*!
+ @since 3.11.1
+ @brief 获取区域所有连接
+ @param completion 成功返回RgsConnectionObj的对象列表
+ @see RgsConnectionObj
+ */
+-(void)GetAreaConnections:(NSInteger)area_id completion:(void(^)(BOOL result,NSArray * connt_objs,NSError * error)) completion;
+
+/*!
+ @since 3.11.1
+ @brief 获取区域所有事件
+ @param completion 成功返回RgsEventObj的对象列表
+ @see RgsEventObj
+ */
+-(void)GetAreaEvents:(NSInteger)area_id completion:(void(^)(BOOL result,NSArray * evt_objs,NSError * error)) completion;
+
+/*!
+ @since 3.11.1
+ @brief 根据Proxy类型获取所有的该类型的Proxy
+ @param completion 成功返回RgsEventObj的对象列表
+ @see RgsProxyObj
+ */
+-(void)GetProxysByType:(NSString *)type completion:(void(^)(BOOL result,NSArray * proxys,NSError * error)) completion;
+
+/*!
+ @since 3.11.1
+ @brief 获取设备下的所有Proxy的当前状态
+ @param completion 成功返回state_dict的字典。Key为Proxy的ID，value为该Proxy的state，类型为NSDictionary *
+ */
+-(void)GetDriverProxyCurState:(NSInteger) driver_id completion:(void(^)(BOOL result,NSDictionary * state_dict,NSError * error)) completion;
+
+
+/*!
+ @since 3.11.1
+ @brief 获取指定的Proxy的当前状态
+ @param proxy_ids  为NSNUmber数组。NSNUmber内容为要查询的Proxy id
+ @param completion 成功返回state_list的列表。列表按请求参数proxy_ids的顺序返回每个对应Proxy的state，类型为NSDictionary *
+ */
+-(void)GetProxysCurState:(NSArray *)proxy_ids completion:(void(^)(BOOL result,NSArray * state_list,NSError * error)) completion;
 @end
 
 
