@@ -184,6 +184,7 @@
             [dic setObject:@"43" forKey:@"q"];
             [dic setObject:@"6.00" forKey:@"q_val"];
             [dic setObject:@"True" forKey:@"enable"];
+            [dic setObject:@"0" forKey:@"is_set"];
             
             [dic setObject:[NSString stringWithFormat:@"%d", i+1]
                     forKey:@"band"];
@@ -471,9 +472,6 @@
                     [block_self._cmdMap setObject:cmd forKey:cmd.name];
                 }
                 
-                _isSetOK = YES;
-                
-                
                 [block_self initDatasAfterPullData];
                 [block_self callDelegateDidLoad];
             }
@@ -505,8 +503,6 @@
             [self._cmdMap setObject:cmd forKey:cmd.name];
         }
     
-        _isSetOK = YES;
-        
         [self initDatasAfterPullData];
     }
 }
@@ -537,6 +533,8 @@
 //SET_ANALOGY_GRAIN
 - (void) controlDeviceDb:(float)db force:(BOOL)force{
 
+    _isSetOK = YES;
+    
     _voiceDb = db;
     
     RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_ANALOGY_GRAIN"];
@@ -559,6 +557,8 @@
 }
 
 - (void) controlDeviceDigitalGain:(float)digVal{
+    
+    _isSetOK = YES;
     
     _digitalGain = digVal;
     
@@ -587,6 +587,8 @@
 }
 - (void) controlDeviceMute:(BOOL)isMute{
     
+    _isSetOK = YES;
+    
     RgsCommandInfo *cmd = nil;
     if(isMute)
     {
@@ -610,6 +612,8 @@
 }
 
 - (void) controlInverted:(BOOL)invert{
+    
+    _isSetOK = YES;
     
     RgsCommandInfo *cmd = nil;
     cmd = [_cmdMap objectForKey:@"SET_INVERTED"];
@@ -678,7 +682,6 @@
         self._isDigitalMute = [[cpData objectForKey:@"_isDigitalMute"] boolValue];
         self._digitalGain = [[cpData objectForKey:@"_digitalGain"] floatValue];
         
-        
         //生成操作序列，一次性发给中控
         [self sendZengYiCmdOprationsToRegulus];
     }
@@ -694,11 +697,15 @@
     self._mode = @"LINE";
     
     
+    
+    
     //生成操作序列，一次性发给中控
     [self sendZengYiCmdOprationsToRegulus];
 }
 
 - (void) sendZengYiCmdOprationsToRegulus{
+    
+    _isSetOK = YES;
     
     NSMutableArray *opts = [NSMutableArray array];
     RgsSceneOperation *opt = [self generateEventOperation_Mode];
@@ -762,6 +769,7 @@
         
         
         self._isZaoshengStarted = [[cpData objectForKey:@"_isZaoshengStarted"] boolValue];
+        
         
         [self sendNoiseGate];
         
@@ -862,6 +870,7 @@
         [dic setObject:@"43" forKey:@"q"];
         [dic setObject:@"6.00" forKey:@"q_val"];
         [dic setObject:@"True" forKey:@"enable"];
+        [dic setObject:@"1" forKey:@"is_set"];
         
         [dic setObject:[NSString stringWithFormat:@"%d", i+1]
                 forKey:@"band"];
@@ -875,6 +884,8 @@
 }
 
 - (void) sendPEQCmdsOpts{
+    
+    _isSetOK = YES;
     
     NSMutableArray *opts = [NSMutableArray array];
     RgsSceneOperation *opt = [self generateEventOperation_hp];
@@ -983,7 +994,7 @@
     if(cpData)
     {
         //反馈抑制
-        self._isFanKuiYiZhiStarted = [cpData objectForKey:@"audio_processor_fb_started"];
+        self._isFanKuiYiZhiStarted = [[cpData objectForKey:@"audio_processor_fb_started"] boolValue];
         [self controlFanKuiYiZhi:_isFanKuiYiZhiStarted];
     }
 }
@@ -1033,6 +1044,8 @@
 }
 
 - (void) sendElecLevelOpts{
+    
+    _isSetOK = YES;
     
     NSMutableArray *opts = [NSMutableArray array];
     RgsSceneOperation *opt = [self generateEventOperation_AnalogyGain];
@@ -1089,6 +1102,8 @@
 }
 
 - (void) controlYanshiqiSlide:(NSString*) yanshiqiSlide {
+    
+    _isSetOK = YES;
     
     self._yanshiqiSlide = yanshiqiSlide;
     
@@ -1152,6 +1167,8 @@
 }
 
 -(void) sendFBCallBack {
+    
+    _isSetOK = YES;
     
     RgsCommandInfo *cmd = nil;
     cmd = [_cmdMap objectForKey:@"SET_FB_CTRL"];
@@ -1369,6 +1386,8 @@
 
 - (void) sendPressLimitCmd{
     
+    _isSetOK = YES;
+    
     RgsCommandInfo *cmd = nil;
     cmd = [_cmdMap objectForKey:@"SET_PRESS_LIMIT"];
     if(cmd)
@@ -1543,6 +1562,8 @@
 }
 
 -(void) sendNoiseGate {
+    
+    _isSetOK = YES;
     
     RgsCommandInfo *cmd = nil;
     cmd = [_cmdMap objectForKey:@"SET_NOISE_GATE"];
@@ -1764,6 +1785,8 @@
 
 - (void) sendHighFilterCmd{
     
+    _isSetOK = YES;
+    
     RgsCommandInfo *cmd = nil;
     cmd = [_cmdMap objectForKey:@"SET_HIGH_FILTER"];
     if(cmd)
@@ -1965,6 +1988,8 @@
 
 - (void) sendLowFilterCmd{
     
+    _isSetOK = YES;
+    
     RgsCommandInfo *cmd = nil;
     cmd = [_cmdMap objectForKey:@"SET_LOW_FILTER"];
     if(cmd)
@@ -2039,7 +2064,7 @@
 
 
 - (void) controlBandLineType:(NSString*) lineType band:(int)band {
-
+    
     if(band < [waves16_feq_gain_q count])
     {
         NSMutableDictionary *dic = [waves16_feq_gain_q objectAtIndex:band];
@@ -2052,6 +2077,7 @@
 }
 
 - (void) controlBandEnabled:(BOOL) enable band:(int)band {
+
     
     NSString* tureOrFalse = @"False";
     if(enable)
@@ -2078,6 +2104,7 @@
 }
 
 - (void) controlBrandFreqAndGain:(NSString*) freq gain:(NSString*)gain brand:(int)brand{
+
     
     if(brand < [waves16_feq_gain_q count])
     {
@@ -2096,6 +2123,7 @@
 
 - (void) sendBandControlCmd:(int)band{
     
+    _isSetOK = YES;
     
     NSMutableDictionary *dic = [waves16_feq_gain_q objectAtIndex:band];
     
@@ -2104,6 +2132,8 @@
     id q = [dic objectForKey:@"q"];
     id tureOrFalse = [dic objectForKey:@"enable"];
     id type = [dic objectForKey:@"type"];
+    
+    [dic setObject:@"1" forKey:@"is_set"];
     
     RgsCommandInfo *cmd = nil;
     cmd = [_cmdMap objectForKey:@"SET_PEQ"];
@@ -2270,6 +2300,8 @@
 
 - (void) control48V:(BOOL)is48v{
     
+    _isSetOK = YES;
+    
     RgsCommandInfo *cmd = nil;
     cmd = [_cmdMap objectForKey:@"SET_48V"];
     NSString* tureOrFalse = @"False";
@@ -2306,6 +2338,8 @@
 
 - (void) controlDeviceMode:(NSString*)mode{
     
+    _isSetOK = YES;
+    
     RgsCommandInfo *cmd = nil;
     
     if(_cmdMap)
@@ -2331,6 +2365,8 @@
 }
 
 - (void) controlDeviceMicDb:(NSString*)db{
+    
+    _isSetOK = YES;
     
     RgsCommandInfo *cmd = nil;
     
@@ -2389,6 +2425,7 @@
 
 - (void) controlMatrixSrc:(VAProcessorProxys *)proxy selected:(BOOL)selected{
     
+    _isSetOK = YES;
     
     RgsCommandInfo *cmd = nil;
     
@@ -2442,6 +2479,8 @@
 }
 
 - (void) controlMatrixSrcValue:(VAProcessorProxys *)proxy th:(float)th{
+    
+    _isSetOK = YES;
     
     RgsCommandInfo *cmd = nil;
     
@@ -3185,6 +3224,10 @@
 - (id) generateEventOperation_peqAtBand:(int)band{
     
     NSMutableDictionary *dic = [waves16_feq_gain_q objectAtIndex:band];
+    
+    int is_set = [[dic objectForKey:@"is_set"] intValue];
+    if(is_set == 0)
+        return nil;
     
     id freq = [dic objectForKey:@"freq"];
     id gain = [dic objectForKey:@"gain"];

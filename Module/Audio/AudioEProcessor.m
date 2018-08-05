@@ -857,7 +857,7 @@
             }
         }
         
-        int proxyid = ((RgsDriverObj*) _driver).m_id;
+        int proxyid = (int)((RgsDriverObj*) _driver).m_id;
         
         RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc] init];
         scene_opt.dev_id = proxyid;
