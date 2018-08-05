@@ -129,7 +129,7 @@
         
         _isSetOK = NO;
         
-        _isFanKuiYiZhiStarted = NO;
+        self._isFanKuiYiZhiStarted = NO;
         
         self._yanshiqiSlide = @"0.00";
         
@@ -816,11 +816,241 @@
         self._islvboDitongStart = [[cpData objectForKey:@"low_filter_start"] boolValue];
         //PEQ
         self.waves16_feq_gain_q = [cpData objectForKey:@"peq_band"];
+        
+        [self sendPEQCmdsOpts];
     }
+    
+    
     
 }
 - (void) clearPEQ{
     
+    self._lvbojunhengGaotongType = @"Bessel";
+    self._lvboGaotongArray = [NSArray array];
+    
+    self._lvbojunhengDitongType = @"";
+    self._lvboDitongArray = [NSArray array];
+    
+    self._lvboGaotongXielvArray = [NSArray array];
+    self._lvbojunhengGaotongXielv = @"0";
+    
+    self._lvboDitongXielvArray = [NSArray array];
+    self._lvboDitongSL = @"-6db";
+    
+    self._lvboBoDuanArray = [NSArray array];
+    
+    self._lvboGaotongPinLv = @"20";
+    self._lvboDitongFreq = @"20000";
+    
+    
+    self._lvboBoduanQ = @"4";
+    self._lvboBoduanZengyi = @"5";
+    self._lvboBoduanPinlv = @"6";
+    
+    [self.waves16_feq_gain_q removeAllObjects];
+    
+    //初始化16条线的数据
+    NSArray *def_freq = @[@40,@60,@80,@100,@200,@300,@400,@500,@600,@700,@800,
+                          @900,@1000,@2000,@3000,@4000];
+    for(int i = 0; i < 16; i++)
+    {
+        id freq = [def_freq objectAtIndex:i];
+        
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setObject:freq forKey:@"freq"];
+        [dic setObject:@"0" forKey:@"gain"];
+        [dic setObject:@"43" forKey:@"q"];
+        [dic setObject:@"6.00" forKey:@"q_val"];
+        [dic setObject:@"True" forKey:@"enable"];
+        
+        [dic setObject:[NSString stringWithFormat:@"%d", i+1]
+                forKey:@"band"];
+        
+        [waves16_feq_gain_q addObject:dic];
+        
+    }
+    
+    [self sendPEQCmdsOpts];
+    
+}
+
+- (void) sendPEQCmdsOpts{
+    
+    NSMutableArray *opts = [NSMutableArray array];
+    RgsSceneOperation *opt = [self generateEventOperation_hp];
+    if(opt)
+        [opts addObject:opt];
+    
+    opt = [self generateEventOperation_lp];
+    if(opt)
+        [opts addObject:opt];
+    
+    NSArray *tmp = [self generateEventOperation_peq];
+    if([tmp count])
+        [opts addObjectsFromArray:tmp];
+
+    
+    if([opts count])
+        [[RegulusSDK sharedRegulusSDK] ControlDeviceByOperation:opts
+                                                     completion:nil];
+}
+
+- (void) copyCompressorLimiter{
+    
+    NSMutableDictionary *cpData = [NSMutableDictionary dictionary];
+    
+    //压限器
+    [cpData setObject:self._yaxianFazhi forKey:@"press_limit_th"];
+    [cpData setObject:self._yaxianXielv forKey:@"press_limit_sl"];
+    [cpData setObject:self._yaxianStartTime forKey:@"press_limit_start_time"];
+    [cpData setObject:self._yaxianRecoveryTime forKey:@"press_limit_recover_time"];
+    [cpData setObject:[NSNumber numberWithBool:self._isyaxianStart] forKey:@"press_limit_start"];
+    
+    [DataCenter defaultDataCenter]._cpComLimter = cpData;
+    
+}
+- (void) pasteCompressorLimiter{
+    
+    NSDictionary *cpData = [DataCenter defaultDataCenter]._cpComLimter;
+    if(cpData)
+    {
+        //压限器
+        self._yaxianFazhi           = [cpData objectForKey:@"press_limit_th"];
+        self._yaxianXielv           = [cpData objectForKey:@"press_limit_sl"];
+        self._yaxianStartTime       = [cpData objectForKey:@"press_limit_start_time"];
+        self._yaxianRecoveryTime    = [cpData objectForKey:@"press_limit_recover_time"];
+        self._isyaxianStart         = [[cpData objectForKey:@"press_limit_start"] boolValue];
+    }
+    
+    [self sendPressLimitCmd];
+    
+}
+- (void) clearCompressorLimiter{
+    
+    self._isyaxianStart         = YES;
+    self._yaxianFazhi           = @"0";
+    self._yaxianXielv           = @"2";
+    self._yaxianStartTime       = @"20";
+    self._yaxianRecoveryTime    = @"20";
+    
+    [self sendPressLimitCmd];
+}
+
+
+- (void) copyDelaySet{
+    
+    NSMutableDictionary *cpData = [NSMutableDictionary dictionary];
+    
+    //延时器
+    [cpData setObject:self._yanshiqiSlide forKey:@"delay_time"];
+    
+    [DataCenter defaultDataCenter]._cpDelaySet = cpData;
+
+}
+- (void) pasteDelaySet{
+    
+    NSDictionary *cpData = [DataCenter defaultDataCenter]._cpDelaySet;
+    if(cpData)
+    {
+        //延时器
+        self._yanshiqiSlide = [cpData objectForKey:@"delay_time"];
+        [self controlYanshiqiSlide:_yanshiqiSlide];
+    }
+    
+    
+    
+}
+- (void) clearDelaySet{
+    
+    self._yanshiqiSlide = @"0.00";
+    [self controlYanshiqiSlide:_yanshiqiSlide];
+}
+
+- (void) copyFeedbackSet{
+    
+    NSMutableDictionary *cpData = [NSMutableDictionary dictionary];
+    
+    //反馈抑制
+    [cpData setObject:[NSNumber numberWithBool:self._isFanKuiYiZhiStarted]
+               forKey:@"audio_processor_fb_started"];
+    
+    [DataCenter defaultDataCenter]._cpFeedback = cpData;
+    
+}
+- (void) pasteFeedbackSet{
+    
+    NSDictionary *cpData = [DataCenter defaultDataCenter]._cpDelaySet;
+    if(cpData)
+    {
+        //反馈抑制
+        self._isFanKuiYiZhiStarted = [cpData objectForKey:@"audio_processor_fb_started"];
+        [self controlFanKuiYiZhi:_isFanKuiYiZhiStarted];
+    }
+}
+- (void) clearFeedbackSet{
+    
+    self._isFanKuiYiZhiStarted = NO;
+    [self controlFanKuiYiZhi:_isFanKuiYiZhiStarted];
+}
+
+- (void) copyElecLevelSet{
+    
+    NSMutableDictionary *cpData = [NSMutableDictionary dictionary];
+    
+    //反馈抑制
+    [cpData setObject:[NSString stringWithFormat:@"%0.1f", [self getAnalogyGain]]
+                 forKey:@"analogy_gain"];
+    
+    [cpData setObject:[NSNumber numberWithBool:[self isProxyMute]]
+                 forKey:@"analogy_mute"];
+    
+    [cpData setObject:[NSNumber numberWithBool:[self getInverted]]
+                 forKey:@"inverted"];
+    
+    [DataCenter defaultDataCenter]._cpElecLevel = cpData;
+    
+    
+}
+- (void) pasteElecLevelSet{
+ 
+    NSDictionary *cpData = [DataCenter defaultDataCenter]._cpElecLevel;
+    if(cpData)
+    {
+        self._voiceDb = [[cpData objectForKey:@"analogy_gain"] floatValue];
+        self._isMute = [[cpData objectForKey:@"analogy_mute"] boolValue];
+        self._inverted = [[cpData objectForKey:@"inverted"] boolValue];
+        
+        [self sendElecLevelOpts];
+    }
+}
+- (void) clearElecLevelSet{
+    
+    self._isMute = NO;
+    self._voiceDb = 0;
+    self._inverted = NO;
+    
+    [self sendElecLevelOpts];
+}
+
+- (void) sendElecLevelOpts{
+    
+    NSMutableArray *opts = [NSMutableArray array];
+    RgsSceneOperation *opt = [self generateEventOperation_AnalogyGain];
+    if(opt)
+        [opts addObject:opt];
+    
+    opt = [self generateEventOperation_Mute];
+    if(opt)
+        [opts addObject:opt];
+    
+    NSArray *tmp = [self generateEventOperation_Inverted];
+    if([tmp count])
+        [opts addObjectsFromArray:tmp];
+    
+    
+    if([opts count])
+        [[RegulusSDK sharedRegulusSDK] ControlDeviceByOperation:opts
+                                                     completion:nil];
 }
 
 #pragma mark ---- 延时器 ----
@@ -905,6 +1135,9 @@
     }
     
 }
+
+
+
 #pragma mark ---- 反馈抑制 ----
 
 - (BOOL) isFanKuiYiZhiStarted{
@@ -913,7 +1146,7 @@
 }
 
 - (void) controlFanKuiYiZhi:(BOOL)isFanKuiYiZhiStarted { 
-    _isFanKuiYiZhiStarted = isFanKuiYiZhiStarted;
+    self._isFanKuiYiZhiStarted = isFanKuiYiZhiStarted;
     
     [self sendFBCallBack];
 }
@@ -1996,33 +2229,6 @@
         
         [self sendBandControlCmd:brand];
     }
-}
-
-#pragma mark ---电平---
-
--(NSString*) getDianpingPinlv {
-    return _dianpingPinlv;
-}
--(void) controlDianpingPinlv:(NSString*)dianpingPinlv {
-    self._dianpingPinlv = dianpingPinlv;
-}
--(NSString*) getDianpingfanxiang {
-    return _dianpingfanxiang;
-}
--(void) controlDianpingfanxian:(NSString*)dianpingfanxiang {
-    self._dianpingfanxiang = dianpingfanxiang;
-}
--(BOOL) isDianpingMute {
-    return self._isdianpingMute;
-}
--(void) controlDianpingMute:(BOOL)dianpingMute {
-    self._isdianpingMute = dianpingMute;
-}
--(NSString*) getDianpingZengyi {
-    return self._dianpingZengyi;
-}
--(void) controlDianpingZengyi:(NSString*)dianpingZengyi {
-    self._dianpingZengyi = dianpingZengyi;
 }
 
 #pragma mark --增益---

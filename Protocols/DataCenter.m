@@ -34,6 +34,10 @@ static DataCenter *_globalDataInstanse;
 @synthesize _cpZengYi;
 @synthesize _cpNosieGate;
 @synthesize _cpPEQ;
+@synthesize _cpComLimter;
+@synthesize _cpDelaySet;
+@synthesize _cpFeedback;
+@synthesize _cpElecLevel;
 
 
 + (DataCenter*)defaultDataCenter{

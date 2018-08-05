@@ -211,7 +211,7 @@
         labelL1.text = [zengyiDB stringByAppendingString:@" ms"];
     }
     
-    float mi = value / 1000 * 340;
+    float mi = value / 1000 * 340.0;
     NSString *miString = [NSString stringWithFormat:@"%.3f", mi];
     miField.text = miString;
     
@@ -247,6 +247,7 @@
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
+    
     int index = (int) textField.tag;
     if (index == 1) {
         NSString *haomiaoStr = textField.text;
@@ -255,7 +256,7 @@
         
         float haomiao = roundf([textField.text floatValue]);
         
-        float mi = haomiao/1000*340;
+        float mi = haomiao/1000*340.0;
         NSString *miString = [NSString stringWithFormat:@"%.3f", mi];
         miField.text = miString;
         
@@ -267,7 +268,7 @@
         NSString *miString = textField.text;
         float mi = [miString floatValue];
         
-        float haomiao = roundf(mi/340*1000);
+        float haomiao = roundf(mi/340*1000.0);
         NSString *haomiaoString = [NSString stringWithFormat:@"%.2f", haomiao];
         [_curProxy controlYanshiqiSlide:haomiaoString];
         haomiaoField.text = haomiaoString;
@@ -282,9 +283,8 @@
         NSString *miString = [NSString stringWithFormat:@"%.3f", mi];
         miField.text = miString;
         
-        float haomiao = roundf(mi/340*1000);
+        float haomiao = roundf(mi/340*1000.0);
         NSString *haomiaoString = [NSString stringWithFormat:@"%.2f", haomiao];
-        [_curProxy controlYanshiqiSlide:haomiaoString];
         haomiaoField.text = haomiaoString;
         [_curProxy controlYanshiqiSlide:haomiaoString];
         
@@ -320,6 +320,21 @@
     
     [_curProxy controlYanshiqiSlide:[NSString stringWithFormat:@"%0.2f", k]];
     
+    [self updateYanshiqi];
+}
+
+- (void) onCopyData:(id)sender{
+    
+    [_curProxy copyDelaySet];
+}
+- (void) onPasteData:(id)sender{
+    
+    [_curProxy pasteDelaySet];
+    [self updateYanshiqi];
+}
+- (void) onClearData:(id)sender{
+    
+    [_curProxy clearDelaySet];
     [self updateYanshiqi];
 }
 

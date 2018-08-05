@@ -25,6 +25,10 @@
 @property (nonatomic, strong) NSDictionary *_cpZengYi;
 @property (nonatomic, strong) NSDictionary *_cpNosieGate;
 @property (nonatomic, strong) NSDictionary *_cpPEQ;
+@property (nonatomic, strong) NSDictionary *_cpComLimter;
+@property (nonatomic, strong) NSDictionary *_cpDelaySet;
+@property (nonatomic, strong) NSDictionary *_cpFeedback;
+@property (nonatomic, strong) NSDictionary *_cpElecLevel;
 
 + (DataCenter*)defaultDataCenter;
 
