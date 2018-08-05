@@ -172,6 +172,10 @@
 - (NSString*) getZaoshengRecoveryTime;
 - (void) controlZaoshengRecoveryTime:(NSString*) zaoshengHuifuTime;
 
+- (void) copyNosieGate;
+- (void) pasteNosieGate;
+- (void) clearNosieGate;
+
 //TODO:滤波均衡
 - (NSString*) getGaoTongType;
 - (void) controlGaoTongType:(NSString*) gaotongType;

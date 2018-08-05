@@ -692,6 +692,48 @@
     
 }
 
+- (void) copyNosieGate{
+    
+    NSMutableDictionary *cpData = [NSMutableDictionary dictionary];
+    if(self._zaoshengFazhi)
+        [cpData setObject:_zaoshengFazhi forKey:@"_zaoshengFazhi"];
+    if(self._zaoshengStartTime)
+        [cpData setObject:_zaoshengStartTime forKey:@"_zaoshengStartTime"];
+    if(self._zaoshengHuifuTime)
+        [cpData setObject:_zaoshengHuifuTime forKey:@"_zaoshengHuifuTime"];
+    
+    [cpData setObject:[NSNumber numberWithBool:_isZaoshengStarted] forKey:@"_isZaoshengStarted"];
+    
+    [DataCenter defaultDataCenter]._cpNosieGate = cpData;
+    
+}
+- (void) pasteNosieGate{
+    
+    NSDictionary *cpData = [DataCenter defaultDataCenter]._cpNosieGate;
+    if(cpData)
+    {
+        if([cpData objectForKey:@"_zaoshengFazhi"])
+            self._zaoshengFazhi = [cpData objectForKey:@"_zaoshengFazhi"];
+        
+        if([cpData objectForKey:@"_zaoshengStartTime"])
+            self._zaoshengStartTime = [cpData objectForKey:@"_zaoshengStartTime"];
+        
+        if([cpData objectForKey:@"_zaoshengHuifuTime"])
+            self._zaoshengHuifuTime = [cpData objectForKey:@"_zaoshengHuifuTime"];
+        
+        
+        self._isZaoshengStarted = [[cpData objectForKey:@"_isZaoshengStarted"] boolValue];
+        
+    }
+}
+- (void) clearNosieGate{
+    
+    self._zaoshengFazhi = @"0";
+    self._zaoshengStartTime = @"20";
+    self._zaoshengHuifuTime = @"20";
+    self._isZaoshengStarted = NO;
+}
+
 #pragma mark ---- 延时器 ----
 
 - (NSDictionary*)getSetDelayOptions{
@@ -1165,8 +1207,8 @@
     return self._zaoshengStartTime;
 }
 - (void) controlZaoshengStartTime:(NSString*) zaoshengStartTime {
-    self._zaoshengStartTime = zaoshengStartTime;
     
+    self._zaoshengStartTime = zaoshengStartTime;
     [self sendNoiseGate];
 }
 - (NSString*) getZaoshengRecoveryTime {
