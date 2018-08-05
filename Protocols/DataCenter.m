@@ -31,6 +31,8 @@ static DataCenter *_globalDataInstanse;
 @synthesize _scenario;
 @synthesize _mapDrivers;
 
+@synthesize _cpZengYi;
+
 
 + (DataCenter*)defaultDataCenter{
 	

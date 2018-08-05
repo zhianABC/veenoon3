@@ -22,6 +22,9 @@
 
 @property (nonatomic, strong) Scenario *_scenario;
 
+@property (nonatomic, strong) NSDictionary *_cpZengYi;
+
+
 + (DataCenter*)defaultDataCenter;
 
 - (void) syncDriversWithServer;

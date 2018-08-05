@@ -9,6 +9,7 @@
 #import "VAProcessorProxys.h"
 #import "RegulusSDK.h"
 #import "KVNProgress.h"
+#import "DataCenter.h"
 
 /*
  SET_MUTE
@@ -643,6 +644,54 @@
                                                param:param completion:nil];
     }
 }
+
+#pragma mark ---数据的复制/粘贴/clear----
+- (void) copyZengYi{
+    
+    NSMutableDictionary *cpData = [NSMutableDictionary dictionary];
+    if(self._mode)
+        [cpData setObject:_mode forKey:@"_mode"];
+    if(self._micDb)
+        [cpData setObject:_micDb forKey:@"_micDb"];
+  
+    [cpData setObject:[NSNumber numberWithBool:_is48V] forKey:@"_is48V"];
+    [cpData setObject:[NSNumber numberWithBool:_inverted] forKey:@"_inverted"];
+    
+    [cpData setObject:[NSNumber numberWithBool:_isDigitalMute] forKey:@"_isDigitalMute"];
+    [cpData setObject:[NSNumber numberWithFloat:_digitalGain] forKey:@"_digitalGain"];
+
+    [DataCenter defaultDataCenter]._cpZengYi = cpData;
+}
+- (void) pasteZengYi{
+    
+    NSDictionary *cpData = [DataCenter defaultDataCenter]._cpZengYi;
+    if(cpData)
+    {
+        if([cpData objectForKey:@"_mode"])
+            self._mode = [cpData objectForKey:@"_mode"];
+        
+        if([cpData objectForKey:@"_micDb"])
+            self._micDb = [cpData objectForKey:@"_micDb"];
+        
+        self._is48V = [[cpData objectForKey:@"_is48V"] boolValue];
+        self._inverted = [[cpData objectForKey:@"_inverted"] boolValue];
+        
+        self._isDigitalMute = [[cpData objectForKey:@"_isDigitalMute"] boolValue];
+        self._digitalGain = [[cpData objectForKey:@"_digitalGain"] floatValue];
+    }
+    
+}
+- (void) clearZengYi{
+    
+    self._isDigitalMute = NO;
+    self._digitalGain = 0;
+    self._inverted = NO;
+    self._is48V = NO;
+    self._micDb = @"0db";
+    self._mode = @"LINE";
+    
+}
+
 #pragma mark ---- 延时器 ----
 
 - (NSDictionary*)getSetDelayOptions{

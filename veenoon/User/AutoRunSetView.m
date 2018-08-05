@@ -226,6 +226,7 @@ UITableViewDataSource>
     if(m_id)
     {
     
+        /*
         IMP_BLOCK_SELF(AutoRunSetView);
         [[RegulusSDK sharedRegulusSDK] SetScheduler:m_id
                                           exce_time:date
@@ -239,6 +240,7 @@ UITableViewDataSource>
                                              }
                                              
                                          }];
+         */
     }
     
     

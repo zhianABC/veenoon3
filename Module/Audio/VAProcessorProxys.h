@@ -141,18 +141,16 @@
 - (void) controlDeviceDb:(float)db force:(BOOL)force;
 - (void) controlDeviceMute:(BOOL)isMute;
 
-- (void) controlDeviceDigitalGain:(float)digVal;
-- (void) controlDigtalMute:(BOOL)isMute;
 
-//fankuiyizhi
+//TODO: 反馈抑制
 - (void) controlFanKuiYiZhi:(BOOL)isFanKuiYiZhiStarted;
 - (BOOL) isFanKuiYiZhiStarted;
 
-//yanshiqi
+//TODO: 延时器
 - (NSString*) getYanshiqiSlide;
 - (void) controlYanshiqiSlide:(NSString*) yanshiqiSlide;
 
-//yaxianqi
+//TODO:压限器
 - (NSString*) getYaxianFazhi;
 - (void) controlYaxianFazhi:(NSString*) yaxianFazhi;
 - (NSString*) getYaxianXielv;
@@ -164,7 +162,7 @@
 - (BOOL) isYaXianStarted;
 - (void) controlYaXianStarted:(BOOL)isyaxianstarted;
 
-//zaosheng
+//TODO:噪声门
 - (BOOL) isZaoshengStarted;
 - (void) controlZaoshengStarted:(BOOL)isZaoshengStarted;
 - (NSString*) getZaoshengFazhi;
@@ -174,7 +172,7 @@
 - (NSString*) getZaoshengRecoveryTime;
 - (void) controlZaoshengRecoveryTime:(NSString*) zaoshengHuifuTime;
 
-//lvbojunheng
+//TODO:滤波均衡
 - (NSString*) getGaoTongType;
 - (void) controlGaoTongType:(NSString*) gaotongType;
 - (NSArray*) getLvBoGaoTongArray;
@@ -216,12 +214,12 @@
 
 - (NSDictionary*)getLowRateRange;
 
-//矩阵路由
+//TODO:矩阵路由
 - (NSDictionary*)getMatrixCmdSettings;
 - (void) controlMatrixSrc:(VAProcessorProxys *)proxy selected:(BOOL)selected;
 - (void) controlMatrixSrcValue:(VAProcessorProxys *)proxy th:(float)th;
 
-//信号发生器
+//TODO:信号发生器
 -(NSString*) getXinhaofashengPinlv;
 -(void) controlXinHaofashengPinlv:(NSString*)xinhaofashengPinlv;
 -(NSArray*) getXinhaofashengPinlvArray;
@@ -243,16 +241,21 @@
 -(void) controlDianpingZengyi:(NSString*)dianpingZengyi;
 
 
+//TODO:增益
 - (void) controlDeviceMode:(NSString*)mode;
-
 - (void) controlDeviceMicDb:(NSString*)db;
 - (void) control48V:(BOOL)is48v;
-
 - (void) controlInverted:(BOOL)invert;
+- (void) controlDigtalMute:(BOOL)isMute;
+- (void) controlDeviceDigitalGain:(float)digVal;
+
+- (void) copyZengYi;
+- (void) pasteZengYi;
+- (void) clearZengYi;
 
 
 - (BOOL) isSetChanged;
-////生成场景片段
+//TODO:生成场景片段
 - (id) generateEventOperation_AnalogyGain;
 - (id) generateEventOperation_Mute;
 
@@ -266,31 +269,31 @@
 
 - (id) generateEventOperation_Inverted;
 
-//高通
+//TODO:高通
 - (id) generateEventOperation_hp;
 
-//低通
+//TODO:低通
 - (id) generateEventOperation_lp;
 
-//PEQ 0-15
+//TODO:PEQ 0-15
 - (NSArray*) generateEventOperation_peq;
 
-//压限器
+//TODO:压限器
 - (id) generateEventOperation_limitPress;
 
-//矩阵SRC
+//TODO:矩阵SRC
 - (NSArray* ) generateEventOperation_mixSrc;
 
-//矩阵SRC VALUE
+//TODO:矩阵SRC VALUE
 - (NSArray* ) generateEventOperation_mixValue;
 
-//噪声门
+//TODO:噪声门
 - (id) generateEventOperation_noiseGate;
 
-//反馈抑制
+//TODO:反馈抑制
 - (id) generateEventOperation_fbLimit;
 
-//延时器
+//TODO:延时器
 - (id) generateEventOperation_delay;
 
 

@@ -72,10 +72,18 @@
 
 
 - (void) onCopyData:(id)sender{
+    
+    [_curProxy copyZengYi];
 }
 - (void) onPasteData:(id)sender{
+    
+    [_curProxy pasteZengYi];
+    [self updateCurrentStateData];
 }
 - (void) onClearData:(id)sender{
+    
+    [_curProxy clearZengYi];
+    [self updateCurrentStateData];
 }
 
 - (void) channelBtnAction:(UIButton*)sender{
@@ -101,6 +109,13 @@
     }
     
     
+    [self updateCurrentStateData];
+    
+}
+
+- (void) updateCurrentStateData{
+    
+    
     float kdb = [_curProxy getDigitalGain];
     NSString *valueStr= [NSString stringWithFormat:@"%0.1fdB", kdb];
     zaoshengL.text = valueStr;
@@ -117,8 +132,6 @@
     
     [zerodbBtn setTitle:_curProxy._micDb
                forState:UIControlStateNormal];
-    
-    
 }
 
 - (void) updateMuteButtonState{
