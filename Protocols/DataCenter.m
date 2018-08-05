@@ -33,6 +33,7 @@ static DataCenter *_globalDataInstanse;
 
 @synthesize _cpZengYi;
 @synthesize _cpNosieGate;
+@synthesize _cpPEQ;
 
 
 + (DataCenter*)defaultDataCenter{

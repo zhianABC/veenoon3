@@ -1076,7 +1076,9 @@
         room.regulus_password = @"111111";
         room.regulus_user_id = userid;
         room.regulus_id = regulusid;
-        room.user_id = 1;
+        
+         User *u = [UserDefaultsKV getUser];
+        room.user_id = [u._userId intValue];
         
         [[DataBase sharedDatabaseInstance] saveMeetingRoom:room];
         

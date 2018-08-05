@@ -218,6 +218,11 @@
 
 - (NSDictionary*)getLowRateRange;
 
+- (void) copyPEQ;
+- (void) pastePEQ;
+- (void) clearPEQ;
+
+
 //TODO:矩阵路由
 - (NSDictionary*)getMatrixCmdSettings;
 - (void) controlMatrixSrc:(VAProcessorProxys *)proxy selected:(BOOL)selected;
