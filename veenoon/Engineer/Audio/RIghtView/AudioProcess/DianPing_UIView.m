@@ -117,6 +117,11 @@
     
     _curProxy.delegate = nil;
     
+    [self updateElecLevelUIVals];
+}
+
+- (void) updateElecLevelUIVals{
+    
     NSDictionary *range = [_curProxy getAnalogyGainRange];
     dbMax = [[range objectForKey:@"max"] floatValue];
     dbMin = [[range objectForKey:@"min"] floatValue];
@@ -298,6 +303,22 @@
             [muteBtn changeNormalColor:RGB(75, 163, 202)];
         }
     }
+}
+
+- (void) onCopyData:(id)sender{
+    
+    [_curProxy copyElecLevelSet];
+}
+- (void) onPasteData:(id)sender{
+    
+    [_curProxy pasteElecLevelSet];
+    [self updateElecLevelUIVals];
+    
+}
+- (void) onClearData:(id)sender{
+    
+    [_curProxy clearElecLevelSet];
+    [self updateElecLevelUIVals];
 }
 
 @end

@@ -146,9 +146,17 @@
 - (void) controlFanKuiYiZhi:(BOOL)isFanKuiYiZhiStarted;
 - (BOOL) isFanKuiYiZhiStarted;
 
+- (void) copyFeedbackSet;
+- (void) pasteFeedbackSet;
+- (void) clearFeedbackSet;
+
 //TODO: 延时器
 - (NSString*) getYanshiqiSlide;
 - (void) controlYanshiqiSlide:(NSString*) yanshiqiSlide;
+
+- (void) copyDelaySet;
+- (void) pasteDelaySet;
+- (void) clearDelaySet;
 
 //TODO:压限器
 - (NSString*) getYaxianFazhi;
@@ -161,6 +169,10 @@
 - (void) controlYaxianRecoveryTime:(NSString*) yaxianRecoveryTime;
 - (BOOL) isYaXianStarted;
 - (void) controlYaXianStarted:(BOOL)isyaxianstarted;
+
+- (void) copyCompressorLimiter;
+- (void) pasteCompressorLimiter;
+- (void) clearCompressorLimiter;
 
 //TODO:噪声门
 - (BOOL) isZaoshengStarted;
@@ -240,15 +252,11 @@
 -(NSString*) getXinhaofashengZengyi;
 -(void) controlXinhaofashengZengyi:(NSString*)xinhaofashengZengyi;
 
--(NSString*) getDianpingPinlv;
--(void) controlDianpingPinlv:(NSString*)dianpingPinlv;
--(NSString*) getDianpingfanxiang;
--(void) controlDianpingfanxian:(NSString*)dianpingfanxiang;
--(BOOL) isDianpingMute;
--(void) controlDianpingMute:(BOOL)dianpingMute;
--(NSString*) getDianpingZengyi;
--(void) controlDianpingZengyi:(NSString*)dianpingZengyi;
+//TODO:电平 = 模拟
 
+- (void) copyElecLevelSet;
+- (void) pasteElecLevelSet;
+- (void) clearElecLevelSet;
 
 //TODO:增益
 - (void) controlDeviceMode:(NSString*)mode;

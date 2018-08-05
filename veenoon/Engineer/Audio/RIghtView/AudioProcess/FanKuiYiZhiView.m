@@ -130,4 +130,21 @@
     [self updateFankuiyizhi];
 }
 
+
+- (void) onCopyData:(id)sender{
+    
+    [_curProxy copyFeedbackSet];
+}
+- (void) onPasteData:(id)sender{
+    
+    [_curProxy pasteFeedbackSet];
+    [self updateFankuiyizhi];
+}
+- (void) onClearData:(id)sender{
+    
+    [_curProxy clearFeedbackSet];
+    [self updateFankuiyizhi];
+}
+
+
 @end

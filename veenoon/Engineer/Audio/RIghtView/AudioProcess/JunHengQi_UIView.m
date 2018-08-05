@@ -128,7 +128,7 @@
 
 - (void)filterGraphViewPEQFilterBandChoosedWithBand:(NSInteger)band{
     
-    _curIndex = band;
+    _curIndex = (int)band;
     
     if(_curIndex < [_peqRateArray count])
     {
@@ -150,7 +150,7 @@
 }
 - (void)filterGraphViewPEQFilterChangedWithBand:(NSInteger)band freq:(float)freq gain:(float)gain{
     
-    _curIndex = band;
+    _curIndex = (int)band;
     
     if(_curIndex < [_peqRateArray count])
     {

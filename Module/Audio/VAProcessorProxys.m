@@ -129,7 +129,7 @@
         
         _isSetOK = NO;
         
-        _isFanKuiYiZhiStarted = NO;
+        self._isFanKuiYiZhiStarted = NO;
         
         self._yanshiqiSlide = @"0.00";
         
@@ -184,6 +184,7 @@
             [dic setObject:@"43" forKey:@"q"];
             [dic setObject:@"6.00" forKey:@"q_val"];
             [dic setObject:@"True" forKey:@"enable"];
+            [dic setObject:@"0" forKey:@"is_set"];
             
             [dic setObject:[NSString stringWithFormat:@"%d", i+1]
                     forKey:@"band"];
@@ -471,9 +472,6 @@
                     [block_self._cmdMap setObject:cmd forKey:cmd.name];
                 }
                 
-                _isSetOK = YES;
-                
-                
                 [block_self initDatasAfterPullData];
                 [block_self callDelegateDidLoad];
             }
@@ -505,8 +503,6 @@
             [self._cmdMap setObject:cmd forKey:cmd.name];
         }
     
-        _isSetOK = YES;
-        
         [self initDatasAfterPullData];
     }
 }
@@ -537,6 +533,8 @@
 //SET_ANALOGY_GRAIN
 - (void) controlDeviceDb:(float)db force:(BOOL)force{
 
+    _isSetOK = YES;
+    
     _voiceDb = db;
     
     RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_ANALOGY_GRAIN"];
@@ -559,6 +557,8 @@
 }
 
 - (void) controlDeviceDigitalGain:(float)digVal{
+    
+    _isSetOK = YES;
     
     _digitalGain = digVal;
     
@@ -587,6 +587,8 @@
 }
 - (void) controlDeviceMute:(BOOL)isMute{
     
+    _isSetOK = YES;
+    
     RgsCommandInfo *cmd = nil;
     if(isMute)
     {
@@ -610,6 +612,8 @@
 }
 
 - (void) controlInverted:(BOOL)invert{
+    
+    _isSetOK = YES;
     
     RgsCommandInfo *cmd = nil;
     cmd = [_cmdMap objectForKey:@"SET_INVERTED"];
@@ -678,7 +682,6 @@
         self._isDigitalMute = [[cpData objectForKey:@"_isDigitalMute"] boolValue];
         self._digitalGain = [[cpData objectForKey:@"_digitalGain"] floatValue];
         
-        
         //生成操作序列，一次性发给中控
         [self sendZengYiCmdOprationsToRegulus];
     }
@@ -694,11 +697,15 @@
     self._mode = @"LINE";
     
     
+    
+    
     //生成操作序列，一次性发给中控
     [self sendZengYiCmdOprationsToRegulus];
 }
 
 - (void) sendZengYiCmdOprationsToRegulus{
+    
+    _isSetOK = YES;
     
     NSMutableArray *opts = [NSMutableArray array];
     RgsSceneOperation *opt = [self generateEventOperation_Mode];
@@ -763,6 +770,7 @@
         
         self._isZaoshengStarted = [[cpData objectForKey:@"_isZaoshengStarted"] boolValue];
         
+        
         [self sendNoiseGate];
         
     }
@@ -816,11 +824,246 @@
         self._islvboDitongStart = [[cpData objectForKey:@"low_filter_start"] boolValue];
         //PEQ
         self.waves16_feq_gain_q = [cpData objectForKey:@"peq_band"];
+        
+        [self sendPEQCmdsOpts];
     }
+    
+    
     
 }
 - (void) clearPEQ{
     
+    self._lvbojunhengGaotongType = @"Bessel";
+    self._lvboGaotongArray = [NSArray array];
+    
+    self._lvbojunhengDitongType = @"";
+    self._lvboDitongArray = [NSArray array];
+    
+    self._lvboGaotongXielvArray = [NSArray array];
+    self._lvbojunhengGaotongXielv = @"0";
+    
+    self._lvboDitongXielvArray = [NSArray array];
+    self._lvboDitongSL = @"-6db";
+    
+    self._lvboBoDuanArray = [NSArray array];
+    
+    self._lvboGaotongPinLv = @"20";
+    self._lvboDitongFreq = @"20000";
+    
+    
+    self._lvboBoduanQ = @"4";
+    self._lvboBoduanZengyi = @"5";
+    self._lvboBoduanPinlv = @"6";
+    
+    [self.waves16_feq_gain_q removeAllObjects];
+    
+    //初始化16条线的数据
+    NSArray *def_freq = @[@40,@60,@80,@100,@200,@300,@400,@500,@600,@700,@800,
+                          @900,@1000,@2000,@3000,@4000];
+    for(int i = 0; i < 16; i++)
+    {
+        id freq = [def_freq objectAtIndex:i];
+        
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setObject:freq forKey:@"freq"];
+        [dic setObject:@"0" forKey:@"gain"];
+        [dic setObject:@"43" forKey:@"q"];
+        [dic setObject:@"6.00" forKey:@"q_val"];
+        [dic setObject:@"True" forKey:@"enable"];
+        [dic setObject:@"1" forKey:@"is_set"];
+        
+        [dic setObject:[NSString stringWithFormat:@"%d", i+1]
+                forKey:@"band"];
+        
+        [waves16_feq_gain_q addObject:dic];
+        
+    }
+    
+    [self sendPEQCmdsOpts];
+    
+}
+
+- (void) sendPEQCmdsOpts{
+    
+    _isSetOK = YES;
+    
+    NSMutableArray *opts = [NSMutableArray array];
+    RgsSceneOperation *opt = [self generateEventOperation_hp];
+    if(opt)
+        [opts addObject:opt];
+    
+    opt = [self generateEventOperation_lp];
+    if(opt)
+        [opts addObject:opt];
+    
+    NSArray *tmp = [self generateEventOperation_peq];
+    if([tmp count])
+        [opts addObjectsFromArray:tmp];
+
+    
+    if([opts count])
+        [[RegulusSDK sharedRegulusSDK] ControlDeviceByOperation:opts
+                                                     completion:nil];
+}
+
+- (void) copyCompressorLimiter{
+    
+    NSMutableDictionary *cpData = [NSMutableDictionary dictionary];
+    
+    //压限器
+    [cpData setObject:self._yaxianFazhi forKey:@"press_limit_th"];
+    [cpData setObject:self._yaxianXielv forKey:@"press_limit_sl"];
+    [cpData setObject:self._yaxianStartTime forKey:@"press_limit_start_time"];
+    [cpData setObject:self._yaxianRecoveryTime forKey:@"press_limit_recover_time"];
+    [cpData setObject:[NSNumber numberWithBool:self._isyaxianStart] forKey:@"press_limit_start"];
+    
+    [DataCenter defaultDataCenter]._cpComLimter = cpData;
+    
+}
+- (void) pasteCompressorLimiter{
+    
+    NSDictionary *cpData = [DataCenter defaultDataCenter]._cpComLimter;
+    if(cpData)
+    {
+        //压限器
+        self._yaxianFazhi           = [cpData objectForKey:@"press_limit_th"];
+        self._yaxianXielv           = [cpData objectForKey:@"press_limit_sl"];
+        self._yaxianStartTime       = [cpData objectForKey:@"press_limit_start_time"];
+        self._yaxianRecoveryTime    = [cpData objectForKey:@"press_limit_recover_time"];
+        self._isyaxianStart         = [[cpData objectForKey:@"press_limit_start"] boolValue];
+    }
+    
+    [self sendPressLimitCmd];
+    
+}
+- (void) clearCompressorLimiter{
+    
+    self._isyaxianStart         = YES;
+    self._yaxianFazhi           = @"0";
+    self._yaxianXielv           = @"2";
+    self._yaxianStartTime       = @"20";
+    self._yaxianRecoveryTime    = @"20";
+    
+    [self sendPressLimitCmd];
+}
+
+
+- (void) copyDelaySet{
+    
+    NSMutableDictionary *cpData = [NSMutableDictionary dictionary];
+    
+    //延时器
+    [cpData setObject:self._yanshiqiSlide forKey:@"delay_time"];
+    
+    [DataCenter defaultDataCenter]._cpDelaySet = cpData;
+
+}
+- (void) pasteDelaySet{
+    
+    NSDictionary *cpData = [DataCenter defaultDataCenter]._cpDelaySet;
+    if(cpData)
+    {
+        //延时器
+        self._yanshiqiSlide = [cpData objectForKey:@"delay_time"];
+        [self controlYanshiqiSlide:_yanshiqiSlide];
+    }
+    
+    
+    
+}
+- (void) clearDelaySet{
+    
+    self._yanshiqiSlide = @"0.00";
+    [self controlYanshiqiSlide:_yanshiqiSlide];
+}
+
+- (void) copyFeedbackSet{
+    
+    NSMutableDictionary *cpData = [NSMutableDictionary dictionary];
+    
+    //反馈抑制
+    [cpData setObject:[NSNumber numberWithBool:self._isFanKuiYiZhiStarted]
+               forKey:@"audio_processor_fb_started"];
+    
+    [DataCenter defaultDataCenter]._cpFeedback = cpData;
+    
+}
+- (void) pasteFeedbackSet{
+    
+    NSDictionary *cpData = [DataCenter defaultDataCenter]._cpDelaySet;
+    if(cpData)
+    {
+        //反馈抑制
+        self._isFanKuiYiZhiStarted = [[cpData objectForKey:@"audio_processor_fb_started"] boolValue];
+        [self controlFanKuiYiZhi:_isFanKuiYiZhiStarted];
+    }
+}
+- (void) clearFeedbackSet{
+    
+    self._isFanKuiYiZhiStarted = NO;
+    [self controlFanKuiYiZhi:_isFanKuiYiZhiStarted];
+}
+
+- (void) copyElecLevelSet{
+    
+    NSMutableDictionary *cpData = [NSMutableDictionary dictionary];
+    
+    //反馈抑制
+    [cpData setObject:[NSString stringWithFormat:@"%0.1f", [self getAnalogyGain]]
+                 forKey:@"analogy_gain"];
+    
+    [cpData setObject:[NSNumber numberWithBool:[self isProxyMute]]
+                 forKey:@"analogy_mute"];
+    
+    [cpData setObject:[NSNumber numberWithBool:[self getInverted]]
+                 forKey:@"inverted"];
+    
+    [DataCenter defaultDataCenter]._cpElecLevel = cpData;
+    
+    
+}
+- (void) pasteElecLevelSet{
+ 
+    NSDictionary *cpData = [DataCenter defaultDataCenter]._cpElecLevel;
+    if(cpData)
+    {
+        self._voiceDb = [[cpData objectForKey:@"analogy_gain"] floatValue];
+        self._isMute = [[cpData objectForKey:@"analogy_mute"] boolValue];
+        self._inverted = [[cpData objectForKey:@"inverted"] boolValue];
+        
+        [self sendElecLevelOpts];
+    }
+}
+- (void) clearElecLevelSet{
+    
+    self._isMute = NO;
+    self._voiceDb = 0;
+    self._inverted = NO;
+    
+    [self sendElecLevelOpts];
+}
+
+- (void) sendElecLevelOpts{
+    
+    _isSetOK = YES;
+    
+    NSMutableArray *opts = [NSMutableArray array];
+    RgsSceneOperation *opt = [self generateEventOperation_AnalogyGain];
+    if(opt)
+        [opts addObject:opt];
+    
+    opt = [self generateEventOperation_Mute];
+    if(opt)
+        [opts addObject:opt];
+    
+    NSArray *tmp = [self generateEventOperation_Inverted];
+    if([tmp count])
+        [opts addObjectsFromArray:tmp];
+    
+    
+    if([opts count])
+        [[RegulusSDK sharedRegulusSDK] ControlDeviceByOperation:opts
+                                                     completion:nil];
 }
 
 #pragma mark ---- 延时器 ----
@@ -859,6 +1102,8 @@
 }
 
 - (void) controlYanshiqiSlide:(NSString*) yanshiqiSlide {
+    
+    _isSetOK = YES;
     
     self._yanshiqiSlide = yanshiqiSlide;
     
@@ -905,6 +1150,9 @@
     }
     
 }
+
+
+
 #pragma mark ---- 反馈抑制 ----
 
 - (BOOL) isFanKuiYiZhiStarted{
@@ -913,12 +1161,14 @@
 }
 
 - (void) controlFanKuiYiZhi:(BOOL)isFanKuiYiZhiStarted { 
-    _isFanKuiYiZhiStarted = isFanKuiYiZhiStarted;
+    self._isFanKuiYiZhiStarted = isFanKuiYiZhiStarted;
     
     [self sendFBCallBack];
 }
 
 -(void) sendFBCallBack {
+    
+    _isSetOK = YES;
     
     RgsCommandInfo *cmd = nil;
     cmd = [_cmdMap objectForKey:@"SET_FB_CTRL"];
@@ -1136,6 +1386,8 @@
 
 - (void) sendPressLimitCmd{
     
+    _isSetOK = YES;
+    
     RgsCommandInfo *cmd = nil;
     cmd = [_cmdMap objectForKey:@"SET_PRESS_LIMIT"];
     if(cmd)
@@ -1310,6 +1562,8 @@
 }
 
 -(void) sendNoiseGate {
+    
+    _isSetOK = YES;
     
     RgsCommandInfo *cmd = nil;
     cmd = [_cmdMap objectForKey:@"SET_NOISE_GATE"];
@@ -1531,6 +1785,8 @@
 
 - (void) sendHighFilterCmd{
     
+    _isSetOK = YES;
+    
     RgsCommandInfo *cmd = nil;
     cmd = [_cmdMap objectForKey:@"SET_HIGH_FILTER"];
     if(cmd)
@@ -1732,6 +1988,8 @@
 
 - (void) sendLowFilterCmd{
     
+    _isSetOK = YES;
+    
     RgsCommandInfo *cmd = nil;
     cmd = [_cmdMap objectForKey:@"SET_LOW_FILTER"];
     if(cmd)
@@ -1806,7 +2064,7 @@
 
 
 - (void) controlBandLineType:(NSString*) lineType band:(int)band {
-
+    
     if(band < [waves16_feq_gain_q count])
     {
         NSMutableDictionary *dic = [waves16_feq_gain_q objectAtIndex:band];
@@ -1819,6 +2077,7 @@
 }
 
 - (void) controlBandEnabled:(BOOL) enable band:(int)band {
+
     
     NSString* tureOrFalse = @"False";
     if(enable)
@@ -1845,6 +2104,7 @@
 }
 
 - (void) controlBrandFreqAndGain:(NSString*) freq gain:(NSString*)gain brand:(int)brand{
+
     
     if(brand < [waves16_feq_gain_q count])
     {
@@ -1863,6 +2123,7 @@
 
 - (void) sendBandControlCmd:(int)band{
     
+    _isSetOK = YES;
     
     NSMutableDictionary *dic = [waves16_feq_gain_q objectAtIndex:band];
     
@@ -1871,6 +2132,8 @@
     id q = [dic objectForKey:@"q"];
     id tureOrFalse = [dic objectForKey:@"enable"];
     id type = [dic objectForKey:@"type"];
+    
+    [dic setObject:@"1" forKey:@"is_set"];
     
     RgsCommandInfo *cmd = nil;
     cmd = [_cmdMap objectForKey:@"SET_PEQ"];
@@ -1998,33 +2261,6 @@
     }
 }
 
-#pragma mark ---电平---
-
--(NSString*) getDianpingPinlv {
-    return _dianpingPinlv;
-}
--(void) controlDianpingPinlv:(NSString*)dianpingPinlv {
-    self._dianpingPinlv = dianpingPinlv;
-}
--(NSString*) getDianpingfanxiang {
-    return _dianpingfanxiang;
-}
--(void) controlDianpingfanxian:(NSString*)dianpingfanxiang {
-    self._dianpingfanxiang = dianpingfanxiang;
-}
--(BOOL) isDianpingMute {
-    return self._isdianpingMute;
-}
--(void) controlDianpingMute:(BOOL)dianpingMute {
-    self._isdianpingMute = dianpingMute;
-}
--(NSString*) getDianpingZengyi {
-    return self._dianpingZengyi;
-}
--(void) controlDianpingZengyi:(NSString*)dianpingZengyi {
-    self._dianpingZengyi = dianpingZengyi;
-}
-
 #pragma mark --增益---
 
 - (void) controlDigtalMute:(BOOL)isMute{
@@ -2064,6 +2300,8 @@
 
 - (void) control48V:(BOOL)is48v{
     
+    _isSetOK = YES;
+    
     RgsCommandInfo *cmd = nil;
     cmd = [_cmdMap objectForKey:@"SET_48V"];
     NSString* tureOrFalse = @"False";
@@ -2100,6 +2338,8 @@
 
 - (void) controlDeviceMode:(NSString*)mode{
     
+    _isSetOK = YES;
+    
     RgsCommandInfo *cmd = nil;
     
     if(_cmdMap)
@@ -2125,6 +2365,8 @@
 }
 
 - (void) controlDeviceMicDb:(NSString*)db{
+    
+    _isSetOK = YES;
     
     RgsCommandInfo *cmd = nil;
     
@@ -2183,6 +2425,7 @@
 
 - (void) controlMatrixSrc:(VAProcessorProxys *)proxy selected:(BOOL)selected{
     
+    _isSetOK = YES;
     
     RgsCommandInfo *cmd = nil;
     
@@ -2236,6 +2479,8 @@
 }
 
 - (void) controlMatrixSrcValue:(VAProcessorProxys *)proxy th:(float)th{
+    
+    _isSetOK = YES;
     
     RgsCommandInfo *cmd = nil;
     
@@ -2979,6 +3224,10 @@
 - (id) generateEventOperation_peqAtBand:(int)band{
     
     NSMutableDictionary *dic = [waves16_feq_gain_q objectAtIndex:band];
+    
+    int is_set = [[dic objectForKey:@"is_set"] intValue];
+    if(is_set == 0)
+        return nil;
     
     id freq = [dic objectForKey:@"freq"];
     id gain = [dic objectForKey:@"gain"];

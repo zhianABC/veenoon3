@@ -423,4 +423,20 @@
         [_curProxy controlYaxianRecoveryTime:valueStr];
     }
 }
+
+- (void) onCopyData:(id)sender{
+    
+    [_curProxy copyCompressorLimiter];
+}
+- (void) onPasteData:(id)sender{
+    
+    [_curProxy pasteCompressorLimiter];
+    [self updateYaXianQi];
+}
+- (void) onClearData:(id)sender{
+    
+    [_curProxy clearCompressorLimiter];
+    [self updateYaXianQi];
+}
+
 @end

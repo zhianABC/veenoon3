@@ -1291,4 +1291,21 @@
     }
 }
 
+
+- (void) onCopyData:(id)sender{
+    
+    [_curProxy copyPEQ];
+}
+- (void) onPasteData:(id)sender{
+    
+    [_curProxy pastePEQ];
+    [self updateUICtrlVals];
+}
+- (void) onClearData:(id)sender{
+    
+    [_curProxy clearZengYi];
+    [self updateUICtrlVals];
+}
+
+
 @end
