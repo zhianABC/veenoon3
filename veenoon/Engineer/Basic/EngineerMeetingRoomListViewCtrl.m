@@ -99,16 +99,47 @@
     bottomBar.image = [UIImage imageNamed:@"botomo_icon_black.png"];
     
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    backBtn.frame = CGRectMake(60, SCREEN_HEIGHT -45, 60, 40);
+    backBtn.frame = CGRectMake(25, 25, 60, 35);
     [self.view addSubview:backBtn];
     [backBtn setTitle:@"返回" forState:UIControlStateNormal];
     [backBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [backBtn setTitleColor:RGB(242, 148, 20) forState:UIControlStateHighlighted];
-    backBtn.titleLabel.font = [UIFont boldSystemFontOfSize:20];
+    backBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [backBtn addTarget:self
                 action:@selector(backAction:)
       forControlEvents:UIControlEventTouchUpInside];
     
+    UIButton *btnSync = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnSync.frame = CGRectMake(60, SCREEN_HEIGHT - 48, 42, 42);
+    [btnSync setImage:[UIImage imageNamed:@"sync_data_n.png"] forState:UIControlStateNormal];
+    [btnSync setImage:[UIImage imageNamed:@"sync_data_s.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:btnSync];
+    btnSync.layer.cornerRadius = 5;
+    btnSync.clipsToBounds = YES;
+    [btnSync addTarget:self
+                action:@selector(dataSyncAction:)
+      forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *btnBack = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnBack.frame = CGRectMake(SCREEN_WIDTH - 90, SCREEN_HEIGHT - 48, 42, 42);
+    [btnBack setImage:[UIImage imageNamed:@"backup_data_n.png"] forState:UIControlStateNormal];
+    [btnBack setImage:[UIImage imageNamed:@"backup_data_s.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:btnBack];
+    btnBack.layer.cornerRadius = 5;
+    btnBack.clipsToBounds = YES;
+    [btnBack addTarget:self
+                action:@selector(backupAction:)
+      forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void) backupAction:(id)sender{
+    
+    [[DataSync sharedDataSync] backupLocalDBToServer];
+}
+
+- (void) dataSyncAction:(id)sender{
+    
+    [[DataSync sharedDataSync] syncDataFromServerToLocalDB];
 }
 
 - (void) scanRegulus:(id)sender{

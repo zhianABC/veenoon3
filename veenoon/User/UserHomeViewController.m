@@ -14,6 +14,8 @@
 #import "Utilities.h"
 #import "MeetingRoom.h"
 #import "UIImageView+WebCache.h"
+#import "UIButton+Color.h"
+#import "DataSync.h"
 
 @interface UserHomeViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, JCActionViewDelegate>{
     NSMutableArray *lableArray;
@@ -160,15 +162,31 @@
     [self.view addSubview:line];
     
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    backBtn.frame = CGRectMake(60, SCREEN_HEIGHT -45, 60, 40);
+    backBtn.frame = CGRectMake(25, 25, 60, 35);
     [self.view addSubview:backBtn];
     [backBtn setTitle:@"返回" forState:UIControlStateNormal];
     [backBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [backBtn setTitleColor:RGB(242, 148, 20) forState:UIControlStateHighlighted];
-    backBtn.titleLabel.font = [UIFont boldSystemFontOfSize:20];
+    backBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [backBtn addTarget:self
                   action:@selector(backAction:)
         forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *btnSync = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnSync.frame = CGRectMake(60, SCREEN_HEIGHT - 48, 42, 42);
+    [btnSync setImage:[UIImage imageNamed:@"sync_data_n.png"] forState:UIControlStateNormal];
+    [btnSync setImage:[UIImage imageNamed:@"sync_data_s.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:btnSync];
+    btnSync.layer.cornerRadius = 5;
+    btnSync.clipsToBounds = YES;
+    [btnSync addTarget:self
+                action:@selector(dataSyncAction:)
+      forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void) dataSyncAction:(id)sender{
+    
+    [[DataSync sharedDataSync] syncDataFromServerToLocalDB];
 }
 
 - (void) longPressed0:(id)sender{
