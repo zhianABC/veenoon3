@@ -288,6 +288,11 @@
     Scenario *scen = mdata;
     NSMutableDictionary *sdata = [scen senarioData];
     
+    if (![sdata objectForKey:@"s_driver_id"]) {
+        [self nextDone];
+        return;
+    }
+    
     if(_client == nil)
     {
         _client = [[WebClient alloc] initWithDelegate:self];
