@@ -24,6 +24,7 @@
 
 @property (nonatomic, strong) NSDictionary *_cpZengYi;
 @property (nonatomic, strong) NSDictionary *_cpNosieGate;
+@property (nonatomic, strong) NSDictionary *_cpPEQ;
 
 + (DataCenter*)defaultDataCenter;
 

@@ -242,7 +242,6 @@
 
         }
         
-        
         if([data objectForKey:@"RgsSceneDeviceOperation"]){
             NSDictionary *dic = [data objectForKey:@"RgsSceneDeviceOperation"];
             self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionaryWithDictionary:dic];
@@ -678,6 +677,10 @@
         
         self._isDigitalMute = [[cpData objectForKey:@"_isDigitalMute"] boolValue];
         self._digitalGain = [[cpData objectForKey:@"_digitalGain"] floatValue];
+        
+        
+        //生成操作序列，一次性发给中控
+        [self sendZengYiCmdOprationsToRegulus];
     }
     
 }
@@ -690,6 +693,42 @@
     self._micDb = @"0db";
     self._mode = @"LINE";
     
+    
+    //生成操作序列，一次性发给中控
+    [self sendZengYiCmdOprationsToRegulus];
+}
+
+- (void) sendZengYiCmdOprationsToRegulus{
+    
+    NSMutableArray *opts = [NSMutableArray array];
+    RgsSceneOperation *opt = [self generateEventOperation_Mode];
+    if(opt)
+        [opts addObject:opt];
+    
+    opt = [self generateEventOperation_MicDb];
+    if(opt)
+        [opts addObject:opt];
+    
+    opt = [self generateEventOperation_48v];
+    if(opt)
+        [opts addObject:opt];
+    
+    opt = [self generateEventOperation_Inverted];
+    if(opt)
+        [opts addObject:opt];
+    
+    opt = [self generateEventOperation_DigitalMute];
+    if(opt)
+        [opts addObject:opt];
+    
+    opt = [self generateEventOperation_DigitalGain];
+    if(opt)
+        [opts addObject:opt];
+    
+    
+    if([opts count])
+        [[RegulusSDK sharedRegulusSDK] ControlDeviceByOperation:opts
+                                                     completion:nil];
 }
 
 - (void) copyNosieGate{
@@ -724,6 +763,8 @@
         
         self._isZaoshengStarted = [[cpData objectForKey:@"_isZaoshengStarted"] boolValue];
         
+        [self sendNoiseGate];
+        
     }
 }
 - (void) clearNosieGate{
@@ -732,6 +773,54 @@
     self._zaoshengStartTime = @"20";
     self._zaoshengHuifuTime = @"20";
     self._isZaoshengStarted = NO;
+    
+    [self sendNoiseGate];
+}
+
+- (void) copyPEQ{
+    
+    NSMutableDictionary *cpData = [NSMutableDictionary dictionary];
+    
+    //高通
+    [cpData setObject:self._lvbojunhengGaotongType forKey:@"high_filter_type"];
+    [cpData setObject:self._lvbojunhengGaotongXielv forKey:@"high_filter_sl"];
+    [cpData setObject:self._lvboGaotongPinLv forKey:@"high_filter_rate"];
+    [cpData setObject:[NSNumber numberWithBool:self._islvboGaotongStart] forKey:@"high_filter_start"];
+    //低通
+    [cpData setObject:self._lvbojunhengDitongType forKey:@"low_filter_type"];
+    [cpData setObject:self._lvboDitongSL forKey:@"low_filter_sl"];
+    [cpData setObject:self._lvboDitongFreq forKey:@"low_filter_rate"];
+    [cpData setObject:[NSNumber numberWithBool:self._islvboDitongStart] forKey:@"low_filter_start"];
+    //PEQ
+    [cpData setObject:self.waves16_feq_gain_q forKey:@"peq_band"];
+    
+    [DataCenter defaultDataCenter]._cpPEQ = cpData;
+    
+}
+- (void) pastePEQ{
+    
+    //滤波均衡
+    
+    NSDictionary *cpData = [DataCenter defaultDataCenter]._cpPEQ;
+    if(cpData)
+    {
+        //高通
+        self._lvbojunhengGaotongType = [cpData objectForKey:@"high_filter_type"];
+        self._lvbojunhengGaotongXielv = [cpData objectForKey:@"high_filter_sl"];
+        self._lvboGaotongPinLv = [cpData objectForKey:@"high_filter_rate"];
+        self._islvboGaotongStart = [[cpData objectForKey:@"high_filter_start"] boolValue];
+        //低通
+        self._lvbojunhengDitongType = [cpData objectForKey:@"low_filter_type"];
+        self._lvboDitongSL = [cpData objectForKey:@"low_filter_sl"];
+        self._lvboDitongFreq = [cpData objectForKey:@"low_filter_rate"];
+        self._islvboDitongStart = [[cpData objectForKey:@"low_filter_start"] boolValue];
+        //PEQ
+        self.waves16_feq_gain_q = [cpData objectForKey:@"peq_band"];
+    }
+    
+}
+- (void) clearPEQ{
+    
 }
 
 #pragma mark ---- 延时器 ----
@@ -1305,6 +1394,7 @@
     }
 }
 
+#pragma mark ---滤波均衡---
 
 #pragma mark ----- GaoTong High Filter -----
 
@@ -1908,6 +1998,8 @@
     }
 }
 
+#pragma mark ---电平---
+
 -(NSString*) getDianpingPinlv {
     return _dianpingPinlv;
 }
@@ -1932,6 +2024,8 @@
 -(void) controlDianpingZengyi:(NSString*)dianpingZengyi {
     self._dianpingZengyi = dianpingZengyi;
 }
+
+#pragma mark --增益---
 
 - (void) controlDigtalMute:(BOOL)isMute{
     
