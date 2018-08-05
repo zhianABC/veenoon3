@@ -316,6 +316,24 @@
         [qiyongBtn changeNormalColor:RGB(75, 163, 202)];
     }
 }
+
+- (void) onCopyData:(id)sender{
+    
+    [_curProxy copyNosieGate];
+}
+- (void) onPasteData:(id)sender{
+    
+    [_curProxy pasteNosieGate];
+    
+    [self updateZaoShengMen];
+}
+- (void) onClearData:(id)sender{
+    
+    [_curProxy clearNosieGate];
+    [self updateZaoShengMen];
+}
+
+
 @end
 
 

@@ -53,7 +53,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = RGB(1, 138, 182);
+    self.view.backgroundColor = BLACK_COLOR;
     // Do any additional setup after loading the view.
     UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(80,
                                                                 80,
@@ -106,7 +106,7 @@
     int w = CGRectGetWidth(_inputPannel.frame);
     UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(left, top, w, 50)];
     tL.text = @"国家/地区";
-    tL.textColor = RGB(70, 219, 254);
+    tL.textColor = [UIColor whiteColor];
     tL.font = [UIFont boldSystemFontOfSize:18];
     [_inputPannel addSubview:tL];
     
@@ -132,16 +132,16 @@
     top = CGRectGetMaxY(_country.frame);
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(left, top, w, 1)];
-    line.backgroundColor = RGB(75, 163, 202);
+    line.backgroundColor = [UIColor whiteColor];
     [_inputPannel addSubview:line];
     
     line = [[UILabel alloc] initWithFrame:CGRectMake(left +80, top, 1, 50)];
-    line.backgroundColor = RGB(75, 163, 202);
+    line.backgroundColor = [UIColor whiteColor];
     [_inputPannel addSubview:line];
     
     _countrycode = [[UILabel alloc] initWithFrame:CGRectMake(left, top, w, 50)];
     _countrycode.text = @"+86";
-    _countrycode.textColor = RGB(70, 219, 254);
+    _countrycode.textColor = [UIColor whiteColor];
     _countrycode.font = [UIFont boldSystemFontOfSize:18];
     [_inputPannel addSubview:_countrycode];
     
@@ -160,12 +160,12 @@
     top = CGRectGetMaxY(_countrycode.frame);
     
     line = [[UILabel alloc] initWithFrame:CGRectMake(left, top, w, 1)];
-    line.backgroundColor = RGB(75, 163, 202);
+    line.backgroundColor = [UIColor whiteColor];
     [_inputPannel addSubview:line];
     
     tL = [[UILabel alloc] initWithFrame:CGRectMake(left, top, w, 50)];
     tL.text = @"密码";
-    tL.textColor = RGB(70, 219, 254);
+    tL.textColor = [UIColor whiteColor];
     tL.font = [UIFont boldSystemFontOfSize:18];
     [_inputPannel addSubview:tL];
     
@@ -175,7 +175,7 @@
     _userPwd.returnKeyType = UIReturnKeyDone;
     _userPwd.placeholder = @"6-12位密码";
     _userPwd.backgroundColor = [UIColor clearColor];
-    _userPwd.textColor = RGB(70, 219, 254);
+    _userPwd.textColor = [UIColor whiteColor];
     _userPwd.borderStyle = UITextBorderStyleNone;
     _userPwd.secureTextEntry = YES;
     [_inputPannel addSubview:_userPwd];
@@ -184,7 +184,7 @@
     top = CGRectGetMaxY(tL.frame);
     
     line = [[UILabel alloc] initWithFrame:CGRectMake(left, top, w, 1)];
-    line.backgroundColor = RGB(75, 163, 202);
+    line.backgroundColor = [UIColor whiteColor];
     [_inputPannel addSubview:line];
     
     UIButton *registerBtn = [UIButton buttonWithType:UIButtonTypeCustom];

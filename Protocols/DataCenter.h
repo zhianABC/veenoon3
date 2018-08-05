@@ -23,7 +23,7 @@
 @property (nonatomic, strong) Scenario *_scenario;
 
 @property (nonatomic, strong) NSDictionary *_cpZengYi;
-
+@property (nonatomic, strong) NSDictionary *_cpNosieGate;
 
 + (DataCenter*)defaultDataCenter;
 

@@ -32,6 +32,7 @@ static DataCenter *_globalDataInstanse;
 @synthesize _mapDrivers;
 
 @synthesize _cpZengYi;
+@synthesize _cpNosieGate;
 
 
 + (DataCenter*)defaultDataCenter{
