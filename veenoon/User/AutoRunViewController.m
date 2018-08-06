@@ -15,21 +15,33 @@
 #import "RegulusSDK.h"
 #import "AutoRunCell.h"
 
+
 @interface AutoRunViewController ()
 {
     UIScrollView *_content;
     
     int cellWidth;
     
+    int _auto_mode;
+    
+    UIButton *btnPre;
+    UIButton *btnWeek;
+    
     
 }
 @property (nonatomic, strong) NSMutableArray *_autoItems;
+
+@property (nonatomic, strong) NSMutableArray *_subscribeItems;
+@property (nonatomic, strong) NSMutableArray *_weekItems;
 @end
 
 @implementation AutoRunViewController
 @synthesize _autoItems;
 @synthesize _room;
 @synthesize _scenarios;
+
+@synthesize _subscribeItems;
+@synthesize _weekItems;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -60,6 +72,32 @@
     titleL.textAlignment = NSTextAlignmentCenter;
     titleL.text = @"自动化设置";
     
+    
+    btnPre = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnPre.frame = CGRectMake(60, SCREEN_HEIGHT - 50, 60, 50);
+    [btnPre setImage:[UIImage imageNamed:@"auto_run_pre.png"]
+              forState:UIControlStateNormal];
+    [btnPre setImage:[UIImage imageNamed:@"auto_run_pre.png"]
+              forState:UIControlStateHighlighted];
+    [self.view addSubview:btnPre];
+    btnPre.center = CGPointMake(SCREEN_WIDTH/4, btnPre.center.y);
+    [btnPre addTarget:self
+                 action:@selector(autoPreAction:)
+       forControlEvents:UIControlEventTouchUpInside];
+    
+    btnWeek = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnWeek.frame = CGRectMake(SCREEN_WIDTH-120, SCREEN_HEIGHT - 50, 60, 50);
+    [btnWeek setImage:[UIImage imageNamed:@"auto_run_week_w.png"]
+             forState:UIControlStateNormal];
+    [btnWeek setImage:[UIImage imageNamed:@"auto_run_week.png"]
+             forState:UIControlStateHighlighted];
+    [self.view addSubview:btnWeek];
+    btnWeek.center = CGPointMake(SCREEN_WIDTH*3/4.0, btnWeek.center.y);
+    [btnWeek addTarget:self
+                action:@selector(autoWeekAction:)
+      forControlEvents:UIControlEventTouchUpInside];
+    
+    
     self._autoItems = [NSMutableArray array];
     cellWidth = 110;
     
@@ -71,6 +109,8 @@
     
     //
     
+    _auto_mode = 0;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(notifyRefreshItems:)
                                                  name:@"Notify_Refresh_Items"
@@ -78,6 +118,30 @@
     
     [self getSchedules];
     
+}
+
+- (void) autoPreAction:(id)sender{
+    
+    [btnPre setImage:[UIImage imageNamed:@"auto_run_pre.png"]
+            forState:UIControlStateNormal];
+    [btnWeek setImage:[UIImage imageNamed:@"auto_run_week_w.png"]
+             forState:UIControlStateNormal];
+    
+    _auto_mode = 0;
+    
+    [self layoutAutoCells];
+}
+
+- (void) autoWeekAction:(id)sender{
+    
+    [btnPre setImage:[UIImage imageNamed:@"auto_run_pre_w.png"]
+            forState:UIControlStateNormal];
+    [btnWeek setImage:[UIImage imageNamed:@"auto_run_week.png"]
+             forState:UIControlStateNormal];
+    
+    _auto_mode = 1;
+    
+    [self layoutAutoCells];
 }
 
 - (void) getSchedules{
@@ -92,26 +156,52 @@
 
 - (void) loadAutoItems:(NSArray*)datas{
     
-    //NSArray *datas = [[DataBase sharedDatabaseInstance] getScenarioSchedules];
-    
     [_autoItems addObjectsFromArray:datas];
-    [_autoItems addObject:@{@"name":@"+", @"type":@"1"}];
+    
+    self._subscribeItems = [NSMutableArray array];
+    self._weekItems = [NSMutableArray array];
+    
+    for(RgsSchedulerObj *sch in _autoItems)
+    {
+        if([sch.week_items count])
+        {
+            [_weekItems addObject:sch];
+        }
+        else
+        {
+            [_subscribeItems addObject:sch];
+        }
+    }
+    [_subscribeItems addObject:@{@"name":@"+", @"type":@"1"}];
+    [_weekItems addObject:@{@"name":@"+", @"type":@"1"}];
+    
+    [self layoutAutoCells];
+}
+
+- (void) layoutAutoCells{
+    
+    [[_content subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     int left = (SCREEN_WIDTH - 15*6 - cellWidth*7)/2;
     
     int x = left;
     int y = 0;
-    for(int i = 0; i < [_autoItems count]; i++)
+    
+    NSMutableArray  *items = _subscribeItems;
+    if(_auto_mode == 1)
     {
-        id sche = [_autoItems objectAtIndex:i];
+        items = _weekItems;
+    }
+    
+    for(int i = 0; i < [items count]; i++)
+    {
+        id sche = [items objectAtIndex:i];
         
         int row = i/7;
         int col = i%7;
         
         x = col * (cellWidth+15) + left;
         y = row * (cellWidth+15) + 15;
-        
-        
         
         if([sche isKindOfClass:[RgsSchedulerObj class]])
         {
@@ -123,7 +213,7 @@
             at.button.tag = i;
             
             [at showRgsSchedule:sch];
-
+            
         }
         else
         {
@@ -145,7 +235,7 @@
             
             titleL.text = [sche objectForKey:@"name"];
             [btn addTarget:self
-                    action:@selector(buttonAction:)
+                    action:@selector(buttonAddAction:)
           forControlEvents:UIControlEventTouchUpInside];
             
             titleL.font = [UIFont systemFontOfSize:24];
@@ -161,19 +251,28 @@
     [self getSchedules];
 }
 
-- (void) buttonAction:(UIButton*)sender{
+- (void) buttonAddAction:(UIButton*)sender{
     
-    NSDictionary *item = [_autoItems objectAtIndex:sender.tag];
-    
-    int type = [[item objectForKey:@"type"] intValue];
-    if(type == 1)
+    if(_auto_mode == 0)
     {
-        AutoRunSetView *autoView = [[AutoRunSetView alloc] initWithFrame:CGRectMake(0,
-                                                                                   0,
-                                                                                    SCREEN_WIDTH,
-                                                                                    SCREEN_HEIGHT)];
+        AutoRunSetView *autoView = [[AutoRunSetView alloc] initWithDateAndTime:CGRectMake(0,
+                                                                                          0,
+                                                                                          SCREEN_WIDTH,
+                                                                                          SCREEN_HEIGHT)];
         [self.view addSubview:autoView];
         autoView._scenarios = _scenarios;
+        
+        [autoView show];
+    }
+    else
+    {
+        AutoRunSetView *autoView = [[AutoRunSetView alloc] initWithWeeks:CGRectMake(0,
+                                                                                          0,
+                                                                                          SCREEN_WIDTH,
+                                                                                          SCREEN_HEIGHT)];
+        [self.view addSubview:autoView];
+        autoView._scenarios = _scenarios;
+        autoView.ctrl = self;
         
         [autoView show];
     }

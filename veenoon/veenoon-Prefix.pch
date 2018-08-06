@@ -140,6 +140,8 @@
 #define UUID_8CH_Dimmer_Light   @"c2ce8874-d422-4fb2-90ff-7caf8344bee4"
 #define UUID_Power_Sequencer    @"90ec882b-150f-438e-8e09-921584bc2e9c"
 
+#define UMENG_KEY @"5b685b8ef29d98459e00053e"
+
 #define LOGIN_REGULUS 1
 
 typedef void (^RightSetViewCallbackBlock)(int deviceIndex);

@@ -16,7 +16,7 @@
 #import "UserDefaultsKV.h"
 #import "RegulusSDK.h"
 #import "InvitationCodeViewCotroller.h"
-
+#import <UMCommon/UMCommon.h>
 
 @interface AppDelegate () <RegulusSDKDelegate>
 {
@@ -81,6 +81,8 @@
     _wait.hidesWhenStopped = YES;
     [_maskView addSubview:_wait];
     _wait.center = CGPointMake(768/2, 1024/2);
+    
+    [UMConfigure initWithAppkey:UMENG_KEY channel:@"iPad"];
     
     return YES;
 }

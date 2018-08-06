@@ -13,6 +13,11 @@
     
 }
 @property (nonatomic, strong) NSArray *_scenarios;
+@property (nonatomic, weak) UIViewController *ctrl;
+
+- (id) initWithDateAndTime:(CGRect)frame;
+- (id) initWithWeeks:(CGRect)frame;
+
 - (void) show;
 
 @end

@@ -14,6 +14,7 @@
 #import "DataBase.h"
 #import "User.h"
 #import "UserDefaultsKV.h"
+#import "Utilities.h"
 
 #define SCEN_PICKER_WIDTH  300
 
@@ -47,6 +48,7 @@ UITableViewDataSource>
 @synthesize _weaks;
 @synthesize _scenarios;
 @synthesize _selected;
+@synthesize ctrl;
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -56,10 +58,105 @@ UITableViewDataSource>
 }
 */
 
-- (id) initWithFrame:(CGRect)frame
-{
+- (id) initWithDateAndTime:(CGRect)frame{
+    
     if(self = [super initWithFrame:frame])
     {
+        self.backgroundColor = [UIColor clearColor];
+        
+        maskView = [[UIView alloc] initWithFrame:self.bounds];
+        [self addSubview:maskView];
+        maskView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
+        
+        UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+        tapGesture.cancelsTouchesInView =  NO;
+        tapGesture.numberOfTapsRequired = 1;
+        [maskView addGestureRecognizer:tapGesture];
+        
+        whiteView = [[UIView alloc] initWithFrame:CGRectMake(0, frame.size.height,
+                                                             frame.size.width,
+                                                             390)];
+        [self addSubview:whiteView];
+        whiteView.backgroundColor = [UIColor whiteColor];
+        
+        int x = (frame.size.width - 650)/2.0;
+        
+        UILabel* colL = [[UILabel alloc] initWithFrame:CGRectMake(x,
+                                                                  10,
+                                                                  300, 20)];
+        colL.backgroundColor = [UIColor clearColor];
+        [whiteView addSubview:colL];
+        colL.font = [UIFont systemFontOfSize:15];
+        colL.textColor  = [UIColor blackColor];
+        colL.textAlignment = NSTextAlignmentCenter;
+        colL.text = @"时间";
+        
+        
+        _datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(x,
+                                                                     40,
+                                                                     300,
+                                                                     300)];
+        _datePicker.datePickerMode = UIDatePickerModeDateAndTime;
+        [whiteView addSubview:_datePicker];
+        [_datePicker setLocale:[NSLocale currentLocale]];
+        _datePicker.minimumDate = [NSDate date];
+        
+        x+=300;
+        x+=50;
+        
+        col = 0;
+        
+        colL = [[UILabel alloc] initWithFrame:CGRectMake(x,
+                                                         10,
+                                                         300, 20)];
+        colL.backgroundColor = [UIColor clearColor];
+        [whiteView addSubview:colL];
+        colL.font = [UIFont systemFontOfSize:15];
+        colL.textColor  = [UIColor blackColor];
+        colL.textAlignment = NSTextAlignmentCenter;
+        colL.text = @"执行场景";
+        
+        self._scripts = [NSMutableArray array];
+        self._weaks = [NSMutableArray array];
+        
+        _scriptPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(x, 40,
+                                                                       300,
+                                                                       300)];
+        _scriptPicker.delegate = self;
+        _scriptPicker.dataSource = self;
+        _scriptPicker.showsSelectionIndicator = YES;
+        
+        [whiteView addSubview:_scriptPicker];
+        
+        UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0,
+                                                                  CGRectGetHeight(whiteView.frame)-50,
+                                                                  CGRectGetWidth(whiteView.frame),
+                                                                  1)];
+        [whiteView addSubview:line];
+        line.backgroundColor = LINE_COLOR;
+        
+        UIButton *btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
+        btnSave.frame = CGRectMake(0, CGRectGetMaxY(line.frame), CGRectGetWidth(whiteView.frame), 50);
+        [whiteView addSubview:btnSave];
+        [btnSave setTitle:@"保存" forState:UIControlStateNormal];
+        [btnSave setTitleColor:[UIColor blackColor]
+                      forState:UIControlStateNormal];
+        [btnSave addTarget:self
+                    action:@selector(saveSchedule:)
+          forControlEvents:UIControlEventTouchUpInside];
+        
+        
+        currentRow = 0;
+    }
+    
+    return self;
+}
+- (id) initWithWeeks:(CGRect)frame{
+    
+    if(self = [super initWithFrame:frame])
+    {
+        self.backgroundColor = [UIColor clearColor];
+        
         self.backgroundColor = [UIColor clearColor];
         
         maskView = [[UIView alloc] initWithFrame:self.bounds];
@@ -80,25 +177,25 @@ UITableViewDataSource>
         int x = (frame.size.width - 800)/2.0;
         
         UILabel* colL = [[UILabel alloc] initWithFrame:CGRectMake(x,
-                                                                    10,
-                                                                    300, 20)];
+                                                                  10,
+                                                                  300, 20)];
         colL.backgroundColor = [UIColor clearColor];
         [whiteView addSubview:colL];
         colL.font = [UIFont systemFontOfSize:15];
         colL.textColor  = [UIColor blackColor];
         colL.textAlignment = NSTextAlignmentCenter;
-        colL.text = @"时间";
+        colL.text = @"开始时间";
         
         
         _datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(x,
-                                                                       40,
-                                                                       300,
-                                                                       300)];
+                                                                     40,
+                                                                     300,
+                                                                     300)];
         _datePicker.datePickerMode = UIDatePickerModeDateAndTime;
         [whiteView addSubview:_datePicker];
         [_datePicker setLocale:[NSLocale currentLocale]];
         _datePicker.minimumDate = [NSDate date];
-
+        
         x+=300;
         x+=50;
         
@@ -142,10 +239,10 @@ UITableViewDataSource>
         self._selected = [NSMutableDictionary dictionary];
         
         _weakPicker = [[UITableView alloc] initWithFrame:CGRectMake(x,
-                                                                   40,
-                                                                   200,
-                                                                   300)
-                                                  style:UITableViewStylePlain];
+                                                                    40,
+                                                                    200,
+                                                                    300)
+                                                   style:UITableViewStylePlain];
         _weakPicker.delegate = self;
         _weakPicker.dataSource = self;
         _weakPicker.backgroundColor = [UIColor clearColor];
@@ -170,14 +267,36 @@ UITableViewDataSource>
                     action:@selector(saveSchedule:)
           forControlEvents:UIControlEventTouchUpInside];
         
-
+        
         currentRow = 0;
+        
+    }
+    
+    return self;
+    
+}
+- (id) initWithFrame:(CGRect)frame
+{
+    if(self = [super initWithFrame:frame])
+    {
+        
     }
     
     return self;
 }
 
 - (void) saveSchedule:(id)sender{
+    
+    if(_weakPicker)
+    {
+        if([_selected count] == 0)
+        {
+            [Utilities showMessage:@"请选择周重复"
+                              ctrl:ctrl];
+            
+            return;
+        }
+    }
     
     NSMutableDictionary *datas = [NSMutableDictionary dictionary];
     
@@ -258,11 +377,11 @@ UITableViewDataSource>
         NSUInteger m_id = [[datas objectForKey:@"m_id"] integerValue];
         RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:m_id
                                                                           cmd:@"invoke"
-                                                                        param:nil];//10 指的是你想调用的Scene的id
+                                                                        param:nil];
         [opts addObject:opt];
         
         IMP_BLOCK_SELF(AutoRunSetView);
-        [[RegulusSDK sharedRegulusSDK]SetEventOperatons:scheduler_obj.evt_obj
+        [[RegulusSDK sharedRegulusSDK] SetEventOperatons:scheduler_obj.evt_obj
                                               operation:opts
                                              completion:^(BOOL result, NSError *error) {
                                                  
