@@ -60,20 +60,6 @@
     
     self._sch = sch;
     
-    IMP_BLOCK_SELF(AutoRunCell);
-    
-    [[RegulusSDK sharedRegulusSDK] GetEventOperations:sch.evt_obj
-                                           completion:^(BOOL result, NSArray *operatins, NSError *error) {
-                                               
-                                               [block_self loadData:operatins];
-                                               
-                                           }];
-    
-    
-}
-
-- (void) loadData:(NSArray*)operatins{
-    
     NSDate *date = _sch.exce_time;
     
     NSDateFormatter *fm = [[NSDateFormatter alloc] init];
@@ -81,22 +67,17 @@
     
     NSString *times = [fm stringFromDate:date];
     
-    NSString *scenName = @"";
-    
-    if([operatins count])
-    {
-        RgsSceneOperation *opt = [operatins objectAtIndex:0];
-        RgsSceneDeviceOperation *rgs = [opt getOperation];
-        if(rgs)
-        {
-            scenName = [NSString stringWithFormat:@"%d", (int)rgs.dev_id];
-        }
-    }
-    
     
     titleL.text = [NSString stringWithFormat:@"%@\n%@",
                    times,
-                   scenName];
+                   _sch.name];
+    
+    
+}
+
+- (void) loadData:(NSArray*)operatins{
+    
+    
 }
 
 
