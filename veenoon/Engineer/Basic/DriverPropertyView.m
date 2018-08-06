@@ -69,7 +69,7 @@
         
         
         UILabel* line = [[UILabel alloc] initWithFrame:CGRectMake(0, frame.size.height-1, frame.size.width, 1)];
-        line.backgroundColor =  B_GRAY_COLOR;
+        line.backgroundColor =  USER_GRAY_COLOR;
         [self addSubview:line];
         
     }
@@ -183,7 +183,7 @@
     
         self.layer.cornerRadius = 5;
         self.clipsToBounds = YES;
-        self.layer.borderColor = B_GRAY_COLOR.CGColor;
+        self.layer.borderColor = USER_GRAY_COLOR.CGColor;
         self.layer.borderWidth = 1;
         
         UIImageView *titleBar = [[UIImageView alloc] initWithFrame:CGRectMake(0,
@@ -247,7 +247,7 @@
         top = CGRectGetMaxY(_iptitleL.frame)+15;
         
         UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, top, frame.size.width, 1)];
-        line.backgroundColor =  B_GRAY_COLOR;
+        line.backgroundColor =  USER_GRAY_COLOR;
         [_tabHeader addSubview:line];
         
         top = CGRectGetMaxY(line.frame);
@@ -693,7 +693,7 @@
     }
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 1)];
-    line.backgroundColor =  B_GRAY_COLOR;
+    line.backgroundColor =  USER_GRAY_COLOR;
     [cell.contentView addSubview:line];
     
     return cell;
@@ -725,7 +725,7 @@
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 43,
                                                               self.frame.size.width, 1)];
-    line.backgroundColor =  B_GRAY_COLOR;
+    line.backgroundColor =  USER_GRAY_COLOR;
     [header addSubview:line];
 
     

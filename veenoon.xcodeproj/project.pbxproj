@@ -157,6 +157,7 @@
 		341CE4A320A4165C009DBC01 /* DriverPropertyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 341CE4A220A4165C009DBC01 /* DriverPropertyView.m */; };
 		341CE4A520A42016009DBC01 /* connect_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 341CE4A420A42015009DBC01 /* connect_icon@2x.png */; };
 		341CE4A820A428D9009DBC01 /* ComDriver.m in Sources */ = {isa = PBXBuildFile; fileRef = 341CE4A720A428D9009DBC01 /* ComDriver.m */; };
+		341DD3C421183DF0007CD30F /* AutoRunCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 341DD3C321183DF0007CD30F /* AutoRunCell.m */; };
 		341E652621045A41007EB685 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 341E652221045A41007EB685 /* Reachability.m */; };
 		341E652721045A42007EB685 /* NetworkChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 341E652321045A41007EB685 /* NetworkChecker.m */; };
 		341E75E4209BF94C00E69DB2 /* VAProcessorProxys.m in Sources */ = {isa = PBXBuildFile; fileRef = 341E75E3209BF94C00E69DB2 /* VAProcessorProxys.m */; };
@@ -1163,6 +1164,8 @@
 		341CE4A420A42015009DBC01 /* connect_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "connect_icon@2x.png"; sourceTree = "<group>"; };
 		341CE4A620A428D9009DBC01 /* ComDriver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComDriver.h; sourceTree = "<group>"; };
 		341CE4A720A428D9009DBC01 /* ComDriver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComDriver.m; sourceTree = "<group>"; };
+		341DD3C221183DF0007CD30F /* AutoRunCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AutoRunCell.h; sourceTree = "<group>"; };
+		341DD3C321183DF0007CD30F /* AutoRunCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AutoRunCell.m; sourceTree = "<group>"; };
 		341E652221045A41007EB685 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		341E652321045A41007EB685 /* NetworkChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkChecker.m; sourceTree = "<group>"; };
 		341E652421045A41007EB685 /* NetworkChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkChecker.h; sourceTree = "<group>"; };
@@ -3338,6 +3341,8 @@
 				3421B09A210B00C1001C4B22 /* AutoRunViewController.m */,
 				3421B09C210B00D3001C4B22 /* AutoRunSetView.h */,
 				3421B09D210B00D3001C4B22 /* AutoRunSetView.m */,
+				341DD3C221183DF0007CD30F /* AutoRunCell.h */,
+				341DD3C321183DF0007CD30F /* AutoRunCell.m */,
 				EBDF1C1A1FC5CCEF00A756EA /* UserScnarioConfigViewController.h */,
 				EBDF1C181FC5CCD700A756EA /* UserScnarioConfigViewController.m */,
 				EB1A045E1FC71564007CC1F2 /* UserAudioConfigViewController.h */,
@@ -4615,6 +4620,7 @@
 				EB5F7F871FD593F800351888 /* EngineerSysSelectViewCtrl.m in Sources */,
 				04DE1EAC1AD6AEE000D49E2F /* SDImageCache.m in Sources */,
 				EBDF1BFF1FC5BA0900A756EA /* UserMettingRoomConfig.m in Sources */,
+				341DD3C421183DF0007CD30F /* AutoRunCell.m in Sources */,
 				3495268120F0C5B700A6BF00 /* DSwitchLightRightView.m in Sources */,
 				EB09EF371FD9801400C968CA /* EngineerEnvDevicePluginViewCtrl.m in Sources */,
 				04D27A2A1AF8470100305E39 /* SelDataViewController.m in Sources */,
@@ -4928,7 +4934,7 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sz1.veenoon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "14aab912-70c2-4e34-bd90-7264cd22ac4d";
+				PROVISIONING_PROFILE = "86cd8fd0-e315-4fd2-a661-eaf71e7f10d0";
 				PROVISIONING_PROFILE_SPECIFIER = DevTest;
 				SWIFT_OBJC_BRIDGING_HEADER = "veenoon/Engineer/Audio/RIghtView/AudioProcess/veenoon-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -4960,6 +4966,7 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sz1.veenoon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "86cd8fd0-e315-4fd2-a661-eaf71e7f10d0";
 				PROVISIONING_PROFILE_SPECIFIER = DevTest;
 				SWIFT_OBJC_BRIDGING_HEADER = "veenoon/Engineer/Audio/RIghtView/AudioProcess/veenoon-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;

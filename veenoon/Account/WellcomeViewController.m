@@ -34,7 +34,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.view.backgroundColor = BLACK_COLOR;
+    self.view.backgroundColor = LOGIN_BLACK_COLOR;
     
     UIImageView *icon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"teslaria_title.png"]];
     [self.view addSubview:icon];

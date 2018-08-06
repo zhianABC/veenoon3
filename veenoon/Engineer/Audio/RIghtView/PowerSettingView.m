@@ -48,7 +48,7 @@
     if(self = [super initWithFrame:frame])
     {
         
-        self.backgroundColor = BLACK_COLOR;
+        self.backgroundColor = ADMIN_BLACK_COLOR;
         self.clipsToBounds = YES;
         
         UILabel* valueL = [[UILabel alloc] initWithFrame:CGRectMake(10,
@@ -269,7 +269,7 @@
     }
 }
 
-- (void) show8Labs{
+- (void) showLabs:(int)n{
     
     [[_sliders subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
@@ -290,7 +290,7 @@
         [self checkClicked:0];
     }
     
-    for(int i = 0; i < 8; i++)
+    for(int i = 0; i < n; i++)
     {
         UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(xx, yy, 50, 50)];
         tL.backgroundColor = [UIColor clearColor];

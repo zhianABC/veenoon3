@@ -65,7 +65,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = BLACK_COLOR;
+    self.view.backgroundColor = LOGIN_BLACK_COLOR;
     
     [self prepareDrivers];
     

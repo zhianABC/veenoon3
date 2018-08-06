@@ -54,7 +54,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.view.backgroundColor = BLACK_COLOR;
+    self.view.backgroundColor = LOGIN_BLACK_COLOR;
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
@@ -82,7 +82,7 @@
     [self.view addSubview:login];
     [login setTitle:@"设置新的系统" forState:UIControlStateNormal];
     //[login setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [login setTitleColor:BLACK_COLOR forState:UIControlStateNormal];
+    [login setTitleColor:ADMIN_BLACK_COLOR forState:UIControlStateNormal];
     login.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     
     [login addTarget:self
@@ -98,7 +98,7 @@
     [self.view addSubview:signup];
     [signup setTitle:@"链接已有系统" forState:UIControlStateNormal];
     [signup setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [signup setTitleColor:BLACK_COLOR forState:UIControlStateHighlighted];
+    [signup setTitleColor:ADMIN_BLACK_COLOR forState:UIControlStateHighlighted];
     signup.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     
     [signup addTarget:self

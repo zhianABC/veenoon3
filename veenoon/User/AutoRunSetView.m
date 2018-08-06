@@ -184,12 +184,15 @@ UITableViewDataSource>
     NSDate *date =_datePicker.date;
     
     NSInteger m_id = 0;
+    NSString *atName = @"自动化";
     if(currentRow < [_scenarios count])
     {
         Scenario *s = [_scenarios objectAtIndex:currentRow];
         m_id = s._rgsSceneObj.m_id;
         
         [datas setObject:[s name] forKey:@"name"];
+        
+        atName = [s name];
     }
     
     NSMutableArray *weeksArr = [NSMutableArray array];
@@ -226,25 +229,50 @@ UITableViewDataSource>
     if(m_id)
     {
     
-        /*
         IMP_BLOCK_SELF(AutoRunSetView);
-        [[RegulusSDK sharedRegulusSDK] SetScheduler:m_id
-                                          exce_time:date
-                                         week_items:weeksArr
-                                         completion:^(BOOL result, RgsSchedulerObj *scheduler, NSError *error) {
-                                             
-                                             if(result)
-                                             {
-                                                 //save
-                                                 [block_self saveScheduler:datas];
-                                             }
-                                             
-                                         }];
-         */
+        
+        [[RegulusSDK sharedRegulusSDK] CreateScheduler:atName
+                                             exce_time:date
+                                            start_date:date
+                                              end_date:nil
+                                            week_items:weeksArr
+                                            completion:^(BOOL result, RgsSchedulerObj *scheduler_obj, NSError *error) {
+                                                
+                                                [block_self excAutoRunSet:scheduler_obj datas:datas];
+                                                
+                                            }];
+       
+        
     }
     
     
 }
+
+- (void) excAutoRunSet:(RgsSchedulerObj*)scheduler_obj datas:(NSDictionary*)datas{
+    
+    if(scheduler_obj)
+    {
+    
+        NSMutableArray * opts = [NSMutableArray array];
+        
+        NSUInteger m_id = [[datas objectForKey:@"m_id"] integerValue];
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:m_id
+                                                                          cmd:@"invoke"
+                                                                        param:nil];//10 指的是你想调用的Scene的id
+        [opts addObject:opt];
+        
+        IMP_BLOCK_SELF(AutoRunSetView);
+        [[RegulusSDK sharedRegulusSDK]SetEventOperatons:scheduler_obj.evt_obj
+                                              operation:opts
+                                             completion:^(BOOL result, NSError *error) {
+                                                 
+                                                 [block_self done];
+                                                 
+                                             }];
+    }
+
+}
+
 
 - (void) saveScheduler:(NSDictionary*)datas{
     
@@ -437,7 +465,7 @@ UITableViewDataSource>
     
     
 //    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 49, tableWidth, 1)];
-//    line.backgroundColor =  B_GRAY_COLOR;
+//    line.backgroundColor =  USER_GRAY_COLOR;
 //    [cell.contentView addSubview:line];
 //
     return cell;
@@ -451,7 +479,7 @@ UITableViewDataSource>
 
 - (void) checkClicked:(int)tagIndex btn:(CheckButton *)btn{
     
-    id key = [NSNumber numberWithInt:btn.tag];
+    id key = [NSNumber numberWithInteger:btn.tag];
     if(tagIndex)
     {
         [_selected setObject:@"1" forKey:key];
@@ -470,7 +498,7 @@ UITableViewDataSource>
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    currentRow = row;
+    currentRow = (int)row;
 }
 
 

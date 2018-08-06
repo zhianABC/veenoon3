@@ -46,6 +46,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    self.view.backgroundColor = LOGIN_BLACK_COLOR;
+    
     UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(50,
                                                                 80,
                                                                 SCREEN_WIDTH, 20)];

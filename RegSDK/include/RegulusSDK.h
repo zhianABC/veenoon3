@@ -667,7 +667,7 @@
             start_date:(NSDate *)start_date
               end_date:(NSDate *)end_date
             week_items:(NSArray *)week_items
-            completion:(void (^)(BOOL, RgsSchedulerObj *, NSError *))completion;
+            completion:(void (^)(BOOL result, RgsSchedulerObj * scheduler_obj, NSError * error))completion;
 
 /*!
  @since 3.11.1
@@ -687,7 +687,7 @@
          start_date:(NSDate *)start_date
            end_date:(NSDate *)end_date
          week_items:(NSArray *)week_items
-         completion:(void (^)(BOOL,RgsSchedulerObj *,NSError *))completion;
+         completion:(void (^)(BOOL result,RgsSchedulerObj *scheduler_obj, NSError *error))completion;
 
 /*!
  @since 3.11.1
@@ -696,14 +696,14 @@
  @param completion 成功反回YES
  */
 -(void)DelSchedulerByID:(NSInteger) scheduler_id
-         completion:(void (^)(BOOL, NSError *))completion;
+         completion:(void (^)(BOOL result, NSError *error))completion;
 
 /*!
  @since 3.11.1
  @brief 获取日程
  @param completion 成功反回RgsSchedulerObj的对象列表
  */
--(void)GetSchedulers:(void (^)(BOOL, NSArray *, NSError *))completion;
+-(void)GetSchedulers:(void (^)(BOOL result, NSArray * scheduler_objs, NSError * error))completion;
 
 
 /*!

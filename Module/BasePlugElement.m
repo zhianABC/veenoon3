@@ -38,6 +38,8 @@
 @synthesize _show_icon_name;
 @synthesize _show_icon_sel_name;
 
+@synthesize _isSelected;
+
 - (id) init
 {
     if(self = [super init])
@@ -50,6 +52,7 @@
         self._index = 0;
         self._comIdx = 0;
         self._name = @"";
+        self._isSelected = NO;
     }
     
     return self;

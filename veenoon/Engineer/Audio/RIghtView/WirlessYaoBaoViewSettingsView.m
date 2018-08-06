@@ -43,7 +43,7 @@
     
     if(self = [super initWithFrame:frame])
     {
-        self.backgroundColor = BLACK_COLOR;
+        self.backgroundColor = ADMIN_BLACK_COLOR;
         
         UILabel* line = [[UILabel alloc] initWithFrame:CGRectMake(0, 60, frame.size.width, 1)];
         line.backgroundColor = TITLE_LINE_COLOR;

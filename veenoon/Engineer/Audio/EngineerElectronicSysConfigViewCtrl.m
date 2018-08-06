@@ -218,10 +218,10 @@
     }
     
     int count = (int) [_currentObj._proxys count];
-    if (count == 8) {
-        [_rightView show8Labs];
-    } else if (count == 16) {
-        [_rightView show16Labs];
+    if (count) {
+        [_currentObj initLabs:count];
+        [_rightView showLabs:count];
+        
     }
 }
 

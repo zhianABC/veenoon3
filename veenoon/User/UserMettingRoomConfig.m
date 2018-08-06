@@ -56,7 +56,7 @@
    
     [super viewDidLoad];
     
-    self.view.backgroundColor = RGB(63, 58, 55);
+    self.view.backgroundColor = USER_GRAY_COLOR;
     
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];

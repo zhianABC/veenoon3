@@ -7,12 +7,13 @@
 //
 
 #import "DevicePlugButton.h"
+#import "BasePlugElement.h"
 
 @implementation DevicePlugButton
 
 @synthesize _mydata;
 @synthesize _isEdited;
-
+@synthesize _plug;
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -56,10 +57,12 @@
     }
     
     _isEdited = YES;
+    _plug._isSelected = YES;
 }
 
 - (void) removeMyObserver{
     
+    self._plug = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

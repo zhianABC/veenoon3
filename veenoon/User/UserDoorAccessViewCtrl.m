@@ -46,7 +46,7 @@
         _doorAccessBtnList = [[NSMutableArray alloc] init];
     }
     
-    self.view.backgroundColor = RGB(63, 58, 55);
+    self.view.backgroundColor = USER_GRAY_COLOR;
     
     UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
     [self.view addSubview:titleIcon];

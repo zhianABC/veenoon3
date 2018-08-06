@@ -27,7 +27,7 @@
     
     if(self = [super initWithFrame:frame])
     {
-        self.backgroundColor = BLACK_COLOR;
+        self.backgroundColor = ADMIN_BLACK_COLOR;
         
         _curIndex = -1;
         

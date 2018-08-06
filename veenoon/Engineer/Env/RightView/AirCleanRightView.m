@@ -49,7 +49,7 @@
 - (id)initWithFrame:(CGRect)frame {
     
     if(self = [super initWithFrame:frame]) {
-        self.backgroundColor = BLACK_COLOR;
+        self.backgroundColor = ADMIN_BLACK_COLOR;
         
         _btns = [[NSMutableArray alloc] init];
         

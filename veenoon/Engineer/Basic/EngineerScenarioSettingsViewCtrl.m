@@ -50,7 +50,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = BLACK_COLOR;
+    self.view.backgroundColor = LOGIN_BLACK_COLOR;
 
     self._sBtns = [NSMutableArray array];
     self._map = [NSMutableDictionary dictionary];
@@ -63,7 +63,7 @@
     [self.view addSubview:line];
     
     UIView *topbar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 64)];
-    topbar.backgroundColor = BLACK_COLOR;
+    topbar.backgroundColor = LOGIN_BLACK_COLOR;
     
     UIView *bottom = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     bottom.backgroundColor = THEME_COLOR;

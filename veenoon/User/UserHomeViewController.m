@@ -50,7 +50,7 @@
     titleL.textAlignment = NSTextAlignmentCenter;
     titleL.text = @"房间管理";
     
-    self.view.backgroundColor = RGB(63, 58, 55);
+    self.view.backgroundColor = USER_GRAY_COLOR;
     
     UIScrollView *scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-64)];
     scroolView.backgroundColor = [UIColor clearColor];

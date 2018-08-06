@@ -222,7 +222,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = BLACK_COLOR;
+    self.view.backgroundColor = LOGIN_BLACK_COLOR;
     
     [self initData];
     
@@ -238,7 +238,7 @@
 
     
     UIView *topbar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 64)];
-    topbar.backgroundColor = BLACK_COLOR;
+    topbar.backgroundColor = LOGIN_BLACK_COLOR;
     
     
     UILabel *centerTitleL = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-100, 25, 200, 30)];
@@ -342,7 +342,7 @@
     scenarioButton.layer.cornerRadius = 3;
     scenarioButton.clipsToBounds = YES;
     [scenarioButton setTitle:@"生成场景" forState:UIControlStateNormal];
-    [scenarioButton setTitleColor:B_GRAY_COLOR forState:UIControlStateNormal];
+    [scenarioButton setTitleColor:USER_GRAY_COLOR forState:UIControlStateNormal];
     //[scenarioButton setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
     scenarioButton.titleLabel.font = [UIFont boldSystemFontOfSize:16];
     [scenarioButton addTarget:self
@@ -557,6 +557,7 @@
                                                                                        E_CELL_WIDTH)];
         cellBtn.tag = tagBase+i;
         cellBtn._mydata = dic;
+        cellBtn._plug = plug;
         [cellBtn addMyObserver];
         
         

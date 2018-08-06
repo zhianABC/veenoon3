@@ -12,6 +12,8 @@
 #import "MeetingRoom.h"
 #import "Scenario.h"
 #import "DataBase.h"
+#import "RegulusSDK.h"
+#import "AutoRunCell.h"
 
 @interface AutoRunViewController ()
 {
@@ -33,7 +35,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.view.backgroundColor = RGB(63, 58, 55);
+    self.view.backgroundColor = USER_GRAY_COLOR;
     
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
@@ -74,16 +76,25 @@
                                                  name:@"Notify_Refresh_Items"
                                                object:nil];
     
-    [self loadAutoItems];
+    [self getSchedules];
     
 }
 
-- (void) loadAutoItems{
+- (void) getSchedules{
     
-    NSArray *datas = [[DataBase sharedDatabaseInstance] getScenarioSchedules];
+    IMP_BLOCK_SELF(AutoRunViewController);
+    [[RegulusSDK sharedRegulusSDK] GetSchedulers:^(BOOL result, NSArray * schedulers, NSError * error) {
+ 
+        [block_self loadAutoItems:schedulers];
+        
+    }];
+}
+
+- (void) loadAutoItems:(NSArray*)datas{
+    
+    //NSArray *datas = [[DataBase sharedDatabaseInstance] getScenarioSchedules];
     
     [_autoItems addObjectsFromArray:datas];
-    
     [_autoItems addObject:@{@"name":@"+", @"type":@"1"}];
     
     int left = (SCREEN_WIDTH - 15*6 - cellWidth*7)/2;
@@ -92,7 +103,7 @@
     int y = 0;
     for(int i = 0; i < [_autoItems count]; i++)
     {
-        NSDictionary *dic = [_autoItems objectAtIndex:i];
+        id sche = [_autoItems objectAtIndex:i];
         
         int row = i/7;
         int col = i%7;
@@ -100,45 +111,46 @@
         x = col * (cellWidth+15) + left;
         y = row * (cellWidth+15) + 15;
         
-        UIButton *btn = [UIButton buttonWithColor:RGB(0x52, 0x4e, 0x4b)
-                                         selColor:nil];
-        btn.frame = CGRectMake(x, y, cellWidth, cellWidth);
-        [_content addSubview:btn];
-        btn.layer.cornerRadius = 5;
-        btn.clipsToBounds = YES;
-        btn.tag = i;
         
-        UILabel* titleL = [[UILabel alloc] initWithFrame:btn.bounds];
-        titleL.backgroundColor = [UIColor clearColor];
-        [btn addSubview:titleL];
-        titleL.font = [UIFont systemFontOfSize:16];
-        titleL.textColor  = [UIColor whiteColor];
-        titleL.textAlignment = NSTextAlignmentCenter;
-        titleL.numberOfLines = 2;
         
-        int type = [[dic objectForKey:@"type"] intValue];
-        if(type == 0)
+        if([sche isKindOfClass:[RgsSchedulerObj class]])
         {
-            int tms = [[dic objectForKey:@"date"] intValue];
-            NSDate *date = [NSDate dateWithTimeIntervalSince1970:tms];
+            RgsSchedulerObj *sch = sche;
             
-            NSDateFormatter *fm = [[NSDateFormatter alloc] init];
-            [fm setDateFormat:@"HH:mm"];
+            AutoRunCell *at = [[AutoRunCell alloc]
+                               initWithFrame:CGRectMake(x, y, cellWidth, cellWidth)];
+            [_content addSubview:at];
+            at.button.tag = i;
             
-            NSString *times = [fm stringFromDate:date];
-            
-            titleL.text = [NSString stringWithFormat:@"%@\n%@",times,[dic objectForKey:@"name"]];
+            [at showRgsSchedule:sch];
 
         }
         else
         {
-            titleL.text = [dic objectForKey:@"name"];
+            UIButton *btn = [UIButton buttonWithColor:RGB(0x52, 0x4e, 0x4b)
+                                             selColor:nil];
+            btn.frame = CGRectMake(x, y, cellWidth, cellWidth);
+            [_content addSubview:btn];
+            btn.layer.cornerRadius = 5;
+            btn.clipsToBounds = YES;
+            btn.tag = i;
+            
+            UILabel* titleL = [[UILabel alloc] initWithFrame:btn.bounds];
+            titleL.backgroundColor = [UIColor clearColor];
+            [btn addSubview:titleL];
+            titleL.font = [UIFont systemFontOfSize:16];
+            titleL.textColor  = [UIColor whiteColor];
+            titleL.textAlignment = NSTextAlignmentCenter;
+            titleL.numberOfLines = 2;
+            
+            titleL.text = [sche objectForKey:@"name"];
             [btn addTarget:self
                     action:@selector(buttonAction:)
           forControlEvents:UIControlEventTouchUpInside];
+            
+            titleL.font = [UIFont systemFontOfSize:24];
+            
         }
-        
-        
         
     }
 }
@@ -146,8 +158,7 @@
 - (void) notifyRefreshItems:(id)sender{
     
     [_autoItems removeAllObjects];
-    
-    [self loadAutoItems];
+    [self getSchedules];
 }
 
 - (void) buttonAction:(UIButton*)sender{
