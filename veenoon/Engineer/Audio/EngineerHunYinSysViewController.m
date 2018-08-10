@@ -77,7 +77,7 @@
     
     
     _zengyiSlider = [[EngineerSliderView alloc]
-                     initWithSliderBg:[UIImage imageNamed:@"engineer_zengyi_n.png"]
+                     initWithSliderBg:[UIImage imageNamed:@"engineer_yunyin_n.png"]
                      frame:CGRectZero];
     [self.view addSubview:_zengyiSlider];
     [_zengyiSlider setRoadImage:[UIImage imageNamed:@"e_v_slider_road.png"]];

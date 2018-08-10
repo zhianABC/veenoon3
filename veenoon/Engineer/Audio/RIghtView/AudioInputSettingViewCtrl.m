@@ -217,9 +217,10 @@
     [self.view addSubview:yxq];
     yxq.hidden = YES;
     
-    zengyiView = [[ZengYi_UIView alloc] initWithFrame:vrc];
+    zengyiView = [[ZengYi_UIView alloc] initWithFrame:vrc withProxy:_processor._inAudioProxys];
     [self.view addSubview:zengyiView];
     zengyiView.hidden = NO;
+    [zengyiView updateProxyCommandValIsLoaded];
 
     
     zaoshengView = [[ZaoShengMen_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._inAudioProxys];
