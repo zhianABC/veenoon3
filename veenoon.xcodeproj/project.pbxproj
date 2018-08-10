@@ -157,6 +157,17 @@
 		341CE4A320A4165C009DBC01 /* DriverPropertyView.m in Sources */ = {isa = PBXBuildFile; fileRef = 341CE4A220A4165C009DBC01 /* DriverPropertyView.m */; };
 		341CE4A520A42016009DBC01 /* connect_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 341CE4A420A42015009DBC01 /* connect_icon@2x.png */; };
 		341CE4A820A428D9009DBC01 /* ComDriver.m in Sources */ = {isa = PBXBuildFile; fileRef = 341CE4A720A428D9009DBC01 /* ComDriver.m */; };
+		341DD3C421183DF0007CD30F /* AutoRunCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 341DD3C321183DF0007CD30F /* AutoRunCell.m */; };
+		341DD3C9211891C1007CD30F /* auto_run_week@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 341DD3C5211891BA007CD30F /* auto_run_week@2x.png */; };
+		341DD3CA211891C1007CD30F /* auto_run_week_w@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 341DD3C6211891BC007CD30F /* auto_run_week_w@2x.png */; };
+		341DD3CB211891C1007CD30F /* auto_run_pre@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 341DD3C7211891BF007CD30F /* auto_run_pre@2x.png */; };
+		341DD3CC211891C1007CD30F /* auto_run_pre_w@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 341DD3C8211891C1007CD30F /* auto_run_pre_w@2x.png */; };
+		341DD3DE21189430007CD30F /* UMCommonLog.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 341DD3D121189430007CD30F /* UMCommonLog.framework */; };
+		341DD3DF21189430007CD30F /* UMCommonLog.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 341DD3D221189430007CD30F /* UMCommonLog.bundle */; };
+		341DD3E021189430007CD30F /* UTDID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 341DD3D521189430007CD30F /* UTDID.framework */; };
+		341DD3E121189430007CD30F /* SecurityEnvSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 341DD3D621189430007CD30F /* SecurityEnvSDK.framework */; };
+		341DD3E221189430007CD30F /* UMCommon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 341DD3DA21189430007CD30F /* UMCommon.framework */; };
+		341DD3E321189430007CD30F /* UMAnalytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 341DD3DD21189430007CD30F /* UMAnalytics.framework */; };
 		341E652621045A41007EB685 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 341E652221045A41007EB685 /* Reachability.m */; };
 		341E652721045A42007EB685 /* NetworkChecker.m in Sources */ = {isa = PBXBuildFile; fileRef = 341E652321045A41007EB685 /* NetworkChecker.m */; };
 		341E75E4209BF94C00E69DB2 /* VAProcessorProxys.m in Sources */ = {isa = PBXBuildFile; fileRef = 341E75E3209BF94C00E69DB2 /* VAProcessorProxys.m */; };
@@ -1163,6 +1174,18 @@
 		341CE4A420A42015009DBC01 /* connect_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "connect_icon@2x.png"; sourceTree = "<group>"; };
 		341CE4A620A428D9009DBC01 /* ComDriver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComDriver.h; sourceTree = "<group>"; };
 		341CE4A720A428D9009DBC01 /* ComDriver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComDriver.m; sourceTree = "<group>"; };
+		341DD3C221183DF0007CD30F /* AutoRunCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AutoRunCell.h; sourceTree = "<group>"; };
+		341DD3C321183DF0007CD30F /* AutoRunCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AutoRunCell.m; sourceTree = "<group>"; };
+		341DD3C5211891BA007CD30F /* auto_run_week@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "auto_run_week@2x.png"; sourceTree = "<group>"; };
+		341DD3C6211891BC007CD30F /* auto_run_week_w@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "auto_run_week_w@2x.png"; sourceTree = "<group>"; };
+		341DD3C7211891BF007CD30F /* auto_run_pre@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "auto_run_pre@2x.png"; sourceTree = "<group>"; };
+		341DD3C8211891C1007CD30F /* auto_run_pre_w@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "auto_run_pre_w@2x.png"; sourceTree = "<group>"; };
+		341DD3D121189430007CD30F /* UMCommonLog.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMCommonLog.framework; sourceTree = "<group>"; };
+		341DD3D221189430007CD30F /* UMCommonLog.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = UMCommonLog.bundle; sourceTree = "<group>"; };
+		341DD3D521189430007CD30F /* UTDID.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UTDID.framework; sourceTree = "<group>"; };
+		341DD3D621189430007CD30F /* SecurityEnvSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SecurityEnvSDK.framework; sourceTree = "<group>"; };
+		341DD3DA21189430007CD30F /* UMCommon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMCommon.framework; sourceTree = "<group>"; };
+		341DD3DD21189430007CD30F /* UMAnalytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMAnalytics.framework; sourceTree = "<group>"; };
 		341E652221045A41007EB685 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		341E652321045A41007EB685 /* NetworkChecker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkChecker.m; sourceTree = "<group>"; };
 		341E652421045A41007EB685 /* NetworkChecker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkChecker.h; sourceTree = "<group>"; };
@@ -2136,9 +2159,14 @@
 			files = (
 				34766EB020CE2033006B9E82 /* libstdc++.tbd in Frameworks */,
 				341651E41ED8067100B16E91 /* MessageUI.framework in Frameworks */,
+				341DD3E121189430007CD30F /* SecurityEnvSDK.framework in Frameworks */,
+				341DD3E221189430007CD30F /* UMCommon.framework in Frameworks */,
 				34E105E9209AD73200C7F337 /* libRegulusSDK.a in Frameworks */,
 				049ECA7F1C8D4EA500A611D8 /* libsqlite3.0.tbd in Frameworks */,
 				049ECA7D1C8D4E9C00A611D8 /* libicucore.tbd in Frameworks */,
+				341DD3E021189430007CD30F /* UTDID.framework in Frameworks */,
+				341DD3E321189430007CD30F /* UMAnalytics.framework in Frameworks */,
+				341DD3DE21189430007CD30F /* UMCommonLog.framework in Frameworks */,
 				049ECA7B1C8D4E9100A611D8 /* libz.tbd in Frameworks */,
 				049ECA791C8D4E8C00A611D8 /* libiconv.tbd in Frameworks */,
 				04DE1ECA1AD6B33300D49E2F /* AVFoundation.framework in Frameworks */,
@@ -2297,6 +2325,7 @@
 		04DE1DD41AD68C5E00D49E2F /* veenoon */ = {
 			isa = PBXGroup;
 			children = (
+				341DD3CD21189430007CD30F /* umeng */,
 				34CC784D209AE0D10057A2C1 /* KVNProgress */,
 				34E105D6209AD73100C7F337 /* RegSDK */,
 				342389AF2026D93500885405 /* JCActionView.m */,
@@ -2548,6 +2577,10 @@
 		04DE1ECB1AD6B3BA00D49E2F /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
+				341DD3C8211891C1007CD30F /* auto_run_pre_w@2x.png */,
+				341DD3C7211891BF007CD30F /* auto_run_pre@2x.png */,
+				341DD3C6211891BC007CD30F /* auto_run_week_w@2x.png */,
+				341DD3C5211891BA007CD30F /* auto_run_week@2x.png */,
 				EBC4D29B2116EAA4005CF4ED /* sync_data_n@2x.png */,
 				EBC4D29A2116EAA4005CF4ED /* sync_data_s@2x.png */,
 				EBC4D2972116EA91005CF4ED /* backup_data_n@2x.png */,
@@ -3119,6 +3152,99 @@
 			path = audio;
 			sourceTree = "<group>";
 		};
+		341DD3CD21189430007CD30F /* umeng */ = {
+			isa = PBXGroup;
+			children = (
+				341DD3CE21189430007CD30F /* iOS */,
+			);
+			path = umeng;
+			sourceTree = "<group>";
+		};
+		341DD3CE21189430007CD30F /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				341DD3CF21189430007CD30F /* umcommonlog */,
+				341DD3D321189430007CD30F /* thirdparties */,
+				341DD3D721189430007CD30F /* common */,
+				341DD3DB21189430007CD30F /* analytics */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		341DD3CF21189430007CD30F /* umcommonlog */ = {
+			isa = PBXGroup;
+			children = (
+				341DD3D021189430007CD30F /* umcommonlog_ios_1.0.0 */,
+			);
+			path = umcommonlog;
+			sourceTree = "<group>";
+		};
+		341DD3D021189430007CD30F /* umcommonlog_ios_1.0.0 */ = {
+			isa = PBXGroup;
+			children = (
+				341DD3D121189430007CD30F /* UMCommonLog.framework */,
+				341DD3D221189430007CD30F /* UMCommonLog.bundle */,
+			);
+			path = umcommonlog_ios_1.0.0;
+			sourceTree = "<group>";
+		};
+		341DD3D321189430007CD30F /* thirdparties */ = {
+			isa = PBXGroup;
+			children = (
+				341DD3D421189430007CD30F /* thirdparties_ios_1.0.5 */,
+			);
+			path = thirdparties;
+			sourceTree = "<group>";
+		};
+		341DD3D421189430007CD30F /* thirdparties_ios_1.0.5 */ = {
+			isa = PBXGroup;
+			children = (
+				341DD3D521189430007CD30F /* UTDID.framework */,
+				341DD3D621189430007CD30F /* SecurityEnvSDK.framework */,
+			);
+			path = thirdparties_ios_1.0.5;
+			sourceTree = "<group>";
+		};
+		341DD3D721189430007CD30F /* common */ = {
+			isa = PBXGroup;
+			children = (
+				341DD3D821189430007CD30F /* common_ios_1.5.2 */,
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
+		341DD3D821189430007CD30F /* common_ios_1.5.2 */ = {
+			isa = PBXGroup;
+			children = (
+				341DD3D921189430007CD30F /* normal */,
+			);
+			path = common_ios_1.5.2;
+			sourceTree = "<group>";
+		};
+		341DD3D921189430007CD30F /* normal */ = {
+			isa = PBXGroup;
+			children = (
+				341DD3DA21189430007CD30F /* UMCommon.framework */,
+			);
+			path = normal;
+			sourceTree = "<group>";
+		};
+		341DD3DB21189430007CD30F /* analytics */ = {
+			isa = PBXGroup;
+			children = (
+				341DD3DC21189430007CD30F /* analytics_ios_5.5.0 */,
+			);
+			path = analytics;
+			sourceTree = "<group>";
+		};
+		341DD3DC21189430007CD30F /* analytics_ios_5.5.0 */ = {
+			isa = PBXGroup;
+			children = (
+				341DD3DD21189430007CD30F /* UMAnalytics.framework */,
+			);
+			path = analytics_ios_5.5.0;
+			sourceTree = "<group>";
+		};
 		341E652121045A41007EB685 /* NetWork */ = {
 			isa = PBXGroup;
 			children = (
@@ -3338,6 +3464,8 @@
 				3421B09A210B00C1001C4B22 /* AutoRunViewController.m */,
 				3421B09C210B00D3001C4B22 /* AutoRunSetView.h */,
 				3421B09D210B00D3001C4B22 /* AutoRunSetView.m */,
+				341DD3C221183DF0007CD30F /* AutoRunCell.h */,
+				341DD3C321183DF0007CD30F /* AutoRunCell.m */,
 				EBDF1C1A1FC5CCEF00A756EA /* UserScnarioConfigViewController.h */,
 				EBDF1C181FC5CCD700A756EA /* UserScnarioConfigViewController.m */,
 				EB1A045E1FC71564007CC1F2 /* UserAudioConfigViewController.h */,
@@ -4006,6 +4134,7 @@
 				04DE1DE61AD68C5E00D49E2F /* LaunchScreen.xib in Resources */,
 				3456C18F20A034D9001FAB61 /* senario_02_20@2x.png in Resources */,
 				EB9986E620B6EEC1007E4770 /* kongqichuangan_s@2x.png in Resources */,
+				341DD3CB211891C1007CD30F /* auto_run_pre@2x.png in Resources */,
 				EB36AAE41FCDA432009A0FD8 /* user_video_touying_s@2x.png in Resources */,
 				341C61081FDD0DBF003A5490 /* a_icon_8@2x.png in Resources */,
 				34190EF8205D536C009A519C /* v_icon_3_sel@2x.png in Resources */,
@@ -4114,6 +4243,7 @@
 				EBAE5B7F1FDD07BE00C10C4D /* engineer_video_dvd_s@2x.png in Resources */,
 				3425E9821FE54C62003559F7 /* progress_thumb@2x.png in Resources */,
 				34615F0F1FC9C264002DFCE0 /* v_slider_road@2x.png in Resources */,
+				341DD3DF21189430007CD30F /* UMCommonLog.bundle in Resources */,
 				345493041FE64B2200793E2E /* com_icon_sel@2x.png in Resources */,
 				EB3685F71FC0799A009973A3 /* settings_view_n@2x.png in Resources */,
 				341C60F01FDD0DBF003A5490 /* v_icon_5@2x.png in Resources */,
@@ -4162,6 +4292,7 @@
 				EBAE5B9F1FDD20C400C10C4D /* engineer_env_diandongmada_n@2x.png in Resources */,
 				EB795B702042F1E0005D1F47 /* audio_icon.plist in Resources */,
 				EB3685F51FC0799A009973A3 /* settings_account_n@2x.png in Resources */,
+				341DD3CA211891C1007CD30F /* auto_run_week_w@2x.png in Resources */,
 				3448D9562073B9590055D48F /* videop_tscreen_y@2x.png in Resources */,
 				EB36AADA1FCDA432009A0FD8 /* user_video_dvd_n@2x.png in Resources */,
 				EBDF1C121FC5C6C900A756EA /* envirement_light_s@2x.png in Resources */,
@@ -4286,6 +4417,7 @@
 				EB09EF441FD9A82600C968CA /* engineer_wuxianhuatong_s@2x.png in Resources */,
 				341C60FB1FDD0DBF003A5490 /* hj_icon_5@2x.png in Resources */,
 				EB09C4AC1FD3ABAD00776540 /* user_aircon_wind_n@2x.png in Resources */,
+				341DD3C9211891C1007CD30F /* auto_run_week@2x.png in Resources */,
 				34190F17205D537E009A519C /* a_player_1_sel@2x.png in Resources */,
 				3448D9602073B9590055D48F /* videop_screen_w@2x.png in Resources */,
 				EB733402204112C500AE60B8 /* remote_video_filled_s@2x.png in Resources */,
@@ -4367,6 +4499,7 @@
 				EBF6A73F1FC851E500260FF0 /* audio_player_minus_n@2x.png in Resources */,
 				EB0968C21FE2CCF900CF422F /* dianyuanshishiqi_n@2x.png in Resources */,
 				34190EF2205D536C009A519C /* v_icon_5_sel@2x.png in Resources */,
+				341DD3CC211891C1007CD30F /* auto_run_pre_w@2x.png in Resources */,
 				3456C18A20A034D9001FAB61 /* senario_02_07@2x.png in Resources */,
 				EB19B68020581D2C003F1546 /* video_corner_shipinbofang@2x.png in Resources */,
 				341C60C61FDCF878003A5490 /* ecplus.plist in Resources */,
@@ -4615,6 +4748,7 @@
 				EB5F7F871FD593F800351888 /* EngineerSysSelectViewCtrl.m in Sources */,
 				04DE1EAC1AD6AEE000D49E2F /* SDImageCache.m in Sources */,
 				EBDF1BFF1FC5BA0900A756EA /* UserMettingRoomConfig.m in Sources */,
+				341DD3C421183DF0007CD30F /* AutoRunCell.m in Sources */,
 				3495268120F0C5B700A6BF00 /* DSwitchLightRightView.m in Sources */,
 				EB09EF371FD9801400C968CA /* EngineerEnvDevicePluginViewCtrl.m in Sources */,
 				04D27A2A1AF8470100305E39 /* SelDataViewController.m in Sources */,
@@ -4915,7 +5049,13 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = ES8777A4V4;
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/veenoon/umeng/iOS/umcommonlog/umcommonlog_ios_1.0.0",
+					"$(PROJECT_DIR)/veenoon/umeng/iOS/thirdparties/thirdparties_ios_1.0.5",
+					"$(PROJECT_DIR)/veenoon/umeng/iOS/common/common_ios_1.5.2/normal",
+					"$(PROJECT_DIR)/veenoon/umeng/iOS/analytics/analytics_ios_5.5.0",
+				);
 				GCC_PREFIX_HEADER = "veenoon/veenoon-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/veenoon/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
@@ -4928,7 +5068,7 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sz1.veenoon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "14aab912-70c2-4e34-bd90-7264cd22ac4d";
+				PROVISIONING_PROFILE = "86cd8fd0-e315-4fd2-a661-eaf71e7f10d0";
 				PROVISIONING_PROFILE_SPECIFIER = DevTest;
 				SWIFT_OBJC_BRIDGING_HEADER = "veenoon/Engineer/Audio/RIghtView/AudioProcess/veenoon-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -4947,7 +5087,13 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = ES8777A4V4;
 				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/veenoon/umeng/iOS/umcommonlog/umcommonlog_ios_1.0.0",
+					"$(PROJECT_DIR)/veenoon/umeng/iOS/thirdparties/thirdparties_ios_1.0.5",
+					"$(PROJECT_DIR)/veenoon/umeng/iOS/common/common_ios_1.5.2/normal",
+					"$(PROJECT_DIR)/veenoon/umeng/iOS/analytics/analytics_ios_5.5.0",
+				);
 				GCC_PREFIX_HEADER = "veenoon/veenoon-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/veenoon/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
@@ -4960,6 +5106,7 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sz1.veenoon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "86cd8fd0-e315-4fd2-a661-eaf71e7f10d0";
 				PROVISIONING_PROFILE_SPECIFIER = DevTest;
 				SWIFT_OBJC_BRIDGING_HEADER = "veenoon/Engineer/Audio/RIghtView/AudioProcess/veenoon-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;

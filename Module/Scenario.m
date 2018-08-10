@@ -621,8 +621,10 @@
 
     NSMutableArray *audios = [_scenarioData objectForKey:@"audio"];
     
-    for(id ap in _audioDevices)
+    for(BasePlugElement* ap in _audioDevices)
     {
+        if(!ap._isSelected)
+            continue;
         
         if([ap isKindOfClass:[AudioEProcessor class]])
         {
@@ -639,7 +641,7 @@
                 [self processAudioProcessorProxy:vap];
             }
             
-            id rsp = [ap generateEventOperation_echo];
+            id rsp = [(AudioEProcessor*)ap generateEventOperation_echo];
             if(rsp)
             {
                 [self addEventOperation:rsp];
@@ -709,7 +711,7 @@
             NSArray *proxys = ((APowerESet*)ap)._proxys;
             
             //全开/全关
-            RgsSceneOperation* rsp = [ap generateEventOperation_power];
+            RgsSceneOperation* rsp = [(APowerESet*)ap generateEventOperation_power];
             if(rsp)
             {
                 [self addEventOperation:rsp];
@@ -801,8 +803,11 @@
     
     NSMutableArray *videos = [_scenarioData objectForKey:@"video"];
     
-    for(id dev in self._videoDevices)
+    for(BasePlugElement* dev in self._videoDevices)
     {
+        if(!dev._isSelected)
+            continue;
+        
         if([dev isKindOfClass:[VCameraSettingSet class]])
         {
             VCameraProxys *cam = ((VCameraSettingSet*)dev)._proxyObj;
@@ -872,8 +877,11 @@
     
     NSMutableArray *evns = [_scenarioData objectForKey:@"environment"];
     
-    for(id dev in self._envDevices)
+    for(BasePlugElement* dev in self._envDevices)
     {
+        if(!dev._isSelected)
+            continue;
+        
         if([dev isKindOfClass:[EDimmerLight class]])
         {
             EDimmerLightProxys *proj = ((EDimmerLight*)dev)._proxyObj;

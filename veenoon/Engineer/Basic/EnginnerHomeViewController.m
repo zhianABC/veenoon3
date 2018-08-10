@@ -44,10 +44,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = BLACK_COLOR;
+    self.view.backgroundColor = LOGIN_BLACK_COLOR;
     
     UIView *_topBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 64)];
-    _topBar.backgroundColor = DARK_GRAY_COLOR;
+    _topBar.backgroundColor = LOGIN_BLACK_COLOR;
     [self.view addSubview:_topBar];
     
     UILabel *centerTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-100, 25, 200, 30)];
@@ -76,7 +76,7 @@
     _userNameField.backgroundColor = [UIColor clearColor];
     _userNameField.returnKeyType = UIReturnKeyDone;
     _userNameField.textColor = [UIColor whiteColor];
-    _userNameField.borderStyle = UITextBorderStyleRoundedRect;
+    _userNameField.borderStyle = UITextBorderStyleNone;
     _userNameField.textAlignment = NSTextAlignmentCenter;
     _userNameField.font = [UIFont systemFontOfSize:14];
     _userNameField.placeholder=@"ID";
@@ -90,7 +90,7 @@
     _userPwdField.backgroundColor = [UIColor clearColor];
     _userPwdField.returnKeyType = UIReturnKeyDone;
     _userPwdField.textColor = [UIColor whiteColor];
-    _userPwdField.borderStyle = UITextBorderStyleRoundedRect;
+    _userPwdField.borderStyle = UITextBorderStyleNone;
     _userPwdField.textAlignment = NSTextAlignmentCenter;
     _userPwdField.placeholder=@"Password";
     _userPwdField.font = [UIFont systemFontOfSize:16];
@@ -109,7 +109,7 @@
     [self.view addSubview:signup];
     [signup setTitle:@"登录" forState:UIControlStateNormal];
     [signup setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [signup setTitleColor:BLACK_COLOR forState:UIControlStateHighlighted];
+    [signup setTitleColor:ADMIN_BLACK_COLOR forState:UIControlStateHighlighted];
     signup.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     
     [signup addTarget:self

@@ -251,7 +251,7 @@
     
     UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0,
                                                               _tableView.frame.size.width, 40)];
-    header.backgroundColor = B_GRAY_COLOR;
+    header.backgroundColor = USER_GRAY_COLOR;
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 39,
                                                               _tableView.frame.size.width, 1)];

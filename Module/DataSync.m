@@ -405,6 +405,7 @@ static DataSync* dSyncInstance = nil;
         
     }
     
+    /*
     NSArray *datas = [[DataBase sharedDatabaseInstance] getScenarioSchedules];
     
     for(NSDictionary *sdic in datas)
@@ -414,6 +415,7 @@ static DataSync* dSyncInstance = nil;
         [_uploadQueue addObject:sync];
         
     }
+    */
     
     _nextIdx = 0;
     

@@ -25,8 +25,8 @@
 @property (nonatomic, strong) APowerESet *_objSet;
 @property (nonatomic, weak) id <PowerSettingViewDelegate> _delegate;
 
-- (void) show8Labs;
-- (void) show16Labs;
+- (void) showLabs:(int)n;
+//- (void) show16Labs;
 -(void) refreshView:(APowerESet*) powerSet;
 - (void) saveCurrentSetting;
 

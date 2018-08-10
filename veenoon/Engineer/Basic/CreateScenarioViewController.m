@@ -105,7 +105,7 @@
     scenarioButton.layer.cornerRadius = 3;
     scenarioButton.clipsToBounds = YES;
     [scenarioButton setTitle:@"生成场景" forState:UIControlStateNormal];
-    [scenarioButton setTitleColor:B_GRAY_COLOR forState:UIControlStateNormal];
+    [scenarioButton setTitleColor:USER_GRAY_COLOR forState:UIControlStateNormal];
     //[scenarioButton setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
     scenarioButton.titleLabel.font = [UIFont boldSystemFontOfSize:16];
     [scenarioButton addTarget:self

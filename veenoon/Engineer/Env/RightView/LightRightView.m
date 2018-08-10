@@ -80,7 +80,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
 - (id)initWithFrame:(CGRect)frame {
     
     if(self = [super initWithFrame:frame]) {
-        self.backgroundColor = BLACK_COLOR;
+        self.backgroundColor = ADMIN_BLACK_COLOR;
         
         self._value = [NSMutableDictionary dictionary];
         

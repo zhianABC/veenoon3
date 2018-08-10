@@ -13,10 +13,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = RGB(63, 58, 55);
+    self.view.backgroundColor = USER_GRAY_COLOR;
     
     _topBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 63)];
-    _topBar.backgroundColor = RGB(63, 58, 55);
+    _topBar.backgroundColor = USER_GRAY_COLOR;
     [self.view addSubview:_topBar];
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, 1)];

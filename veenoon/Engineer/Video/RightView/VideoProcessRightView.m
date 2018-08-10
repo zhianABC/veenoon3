@@ -196,7 +196,7 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
         
         [self initData];
         
-        self.backgroundColor = BLACK_COLOR;
+        self.backgroundColor = ADMIN_BLACK_COLOR;
         
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,
                                                                    0,

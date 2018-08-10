@@ -217,6 +217,9 @@
 
 - (void) initLabs:(int)num{
     
+    if([_lines count])
+        return;
+    
     self._lines = [NSMutableArray array];
     
     for(int i = 0; i < num; i++)
@@ -228,7 +231,7 @@
         [_lines addObject:dic];
     }
     
-    self._ipaddress = @"192.168.1.100";
+    //self._ipaddress = @"192.168.1.100";
     
 }
 
@@ -494,6 +497,12 @@
     
     [allData setObject:[NSNumber numberWithBool:_power] forKey:@"power_on_off"];
     
+    if([_lines count])
+    {
+        [allData setObject:_lines forKey:@"_lines"];
+    }
+    
+    
     if(_proxyObj)
     {
         APowerESetProxy *vprj = _proxyObj;
@@ -558,6 +567,12 @@
     self._localSavedCommands = [json objectForKey:@"commands"];
     
     self._power = [[json objectForKey:@"power_on_off"] boolValue];
+    
+    if([json objectForKey:@"_lines"])
+    {
+        NSArray *lines = [json objectForKey:@"_lines"];
+        self._lines = [NSMutableArray arrayWithArray:lines];
+    }
     
     if(json)
     {

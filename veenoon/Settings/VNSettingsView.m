@@ -29,7 +29,7 @@
 {
     if(self = [super initWithFrame:frame])
     {
-        self.backgroundColor = RGB(1, 138, 182);
+        self.backgroundColor = LOGIN_BLACK_COLOR;
         
         
         UIImageView *titleIcon = [[UIImageView alloc]
@@ -37,10 +37,6 @@
         [self addSubview:titleIcon];
         titleIcon.center = CGPointMake(50, 20+22);
         
-        
-        UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 63, SCREEN_WIDTH, 1)];
-        line.backgroundColor = RGB(75, 163, 202);
-        [self addSubview:line];
         
         titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, 44)];
         titleL.backgroundColor = [UIColor clearColor];
@@ -65,10 +61,10 @@
                                                                   SCREEN_WIDTH,
                                                                   SCREEN_HEIGHT-64-50)];
         [self addSubview:_content];
-        _content.contentSize = CGSizeMake(SCREEN_WIDTH*2, CGRectGetHeight(_content.frame));
+        _content.contentSize = CGSizeMake(SCREEN_WIDTH, CGRectGetHeight(_content.frame));
         _content.pagingEnabled = YES;
         _content.showsHorizontalScrollIndicator = NO;
-        _content.delegate = self;
+        //_content.delegate = self;
         
         settingsUserView = [[SettingsUserView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64-50)];
         settingsUserView.backgroundColor = [UIColor clearColor];
@@ -76,18 +72,18 @@
         
         [settingsUserView fillCacheData];
         
-        _imgSetting = [[SettingsViewView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64-50)];
-        [_content addSubview:_imgSetting];
+//        _imgSetting = [[SettingsViewView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64-50)];
+//        [_content addSubview:_imgSetting];
+//
         
-        
-        _pageCtrl1 = [[UIPageControl alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50-30, 120, 20)];
-        [self addSubview:_pageCtrl1];
-        _pageCtrl1.currentPage = 0;
-        _pageCtrl1.userInteractionEnabled = NO;
-        _pageCtrl1.backgroundColor = [UIColor clearColor];
-        _pageCtrl1.numberOfPages = 2;
-        _pageCtrl1.center = CGPointMake(SCREEN_WIDTH/2,
-                                        _pageCtrl1.center.y);
+//        _pageCtrl1 = [[UIPageControl alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50-30, 120, 20)];
+//        [self addSubview:_pageCtrl1];
+//        _pageCtrl1.currentPage = 0;
+//        _pageCtrl1.userInteractionEnabled = NO;
+//        _pageCtrl1.backgroundColor = [UIColor clearColor];
+//        _pageCtrl1.numberOfPages = 2;
+//        _pageCtrl1.center = CGPointMake(SCREEN_WIDTH/2,
+//                                        _pageCtrl1.center.y);
         
         UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         backBtn.frame = CGRectMake(0, 0, 60, 50);

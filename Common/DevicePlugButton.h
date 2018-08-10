@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class BasePlugElement;
+
 @interface DevicePlugButton : UIButton
 
 @property (nonatomic, strong) NSDictionary *_mydata;
 @property (nonatomic, assign) BOOL _isEdited;
+@property (nonatomic, strong) BasePlugElement *_plug;
 
 - (void) addMyObserver;
 - (void) removeMyObserver;

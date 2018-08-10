@@ -59,7 +59,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.view.backgroundColor = RGB(1, 138, 182);
+    self.view.backgroundColor = LOGIN_BLACK_COLOR;
     
     UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(80,
                                                                 80,
@@ -135,7 +135,7 @@
     rightArraw.image = [UIImage imageNamed:@"login_right_arraw.png"];
 
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(left, top +50, w, 1)];
-    line.backgroundColor = RGB(70, 219, 254);
+    line.backgroundColor = WHITE_LINE_COLOR;
     [_inputPannel addSubview:line];
 
     ///手机号输入框 pending....
@@ -149,7 +149,7 @@
     [_inputPannel addSubview:_companyName];
 
     UILabel *line2 = [[UILabel alloc] initWithFrame:CGRectMake(left, top +96, w, 1)];
-    line2.backgroundColor = RGB(70, 219, 254);
+    line2.backgroundColor = WHITE_LINE_COLOR;
     [_inputPannel addSubview:line2];
 
     _regionBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -169,7 +169,7 @@
     rightArraw2.image = [UIImage imageNamed:@"login_right_arraw.png"];
 
     UILabel *line3 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+141, w, 1)];
-    line3.backgroundColor = RGB(70, 219, 254);
+    line3.backgroundColor = WHITE_LINE_COLOR;
     [_inputPannel addSubview:line3];
 
     _addressTextfield = [[UITextField alloc] initWithFrame:CGRectMake(left, top+145, w-85, 40)];
@@ -182,7 +182,7 @@
     [_inputPannel addSubview:_addressTextfield];
 
     UILabel *line4 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+186, w, 1)];
-    line4.backgroundColor = RGB(70, 219, 254);
+    line4.backgroundColor = WHITE_LINE_COLOR;
     [_inputPannel addSubview:line4];
 
     UILabel *tL2 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+190, 80, 40)];
@@ -202,10 +202,10 @@
     [_inputPannel addSubview:_cellphoneTextfield];
 
     UILabel *line5 = [[UILabel alloc] initWithFrame:CGRectMake(left+260, top+190, 1, 40)];
-    line5.backgroundColor = RGB(70, 219, 254);
+    line5.backgroundColor = WHITE_LINE_COLOR;
     [_inputPannel addSubview:line5];
     
-    _registerNumberBtn = [UIButton buttonWithColor:RGB(1, 138, 182) selColor:RGB(1, 138, 182)];
+    _registerNumberBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _registerNumberBtn.frame = CGRectMake(left+285, top+190, 100, 40);
     [_registerNumberBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
     _registerNumberBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -218,7 +218,7 @@
     
     
     UILabel *line6 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+231, w, 1)];
-    line6.backgroundColor = RGB(70, 219, 254);
+    line6.backgroundColor = WHITE_LINE_COLOR;
     [_inputPannel addSubview:line6];
 
     UILabel *tL3 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+235, 80, 40)];
@@ -238,7 +238,7 @@
     [_inputPannel addSubview:_jiaoyanmaTextfield];
 
     UILabel *line7 = [[UILabel alloc] initWithFrame:CGRectMake(left+260, top+235, 1, 40)];
-    line7.backgroundColor = RGB(70, 219, 254);
+    line7.backgroundColor = WHITE_LINE_COLOR;
     [_inputPannel addSubview:line7];
 
     _timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(left+285, top+235, 100, 40)];
@@ -248,11 +248,11 @@
     [_inputPannel addSubview:_timerLabel];
 
     UILabel *line8 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+276, w, 1)];
-    line8.backgroundColor = RGB(70, 219, 254);
+    line8.backgroundColor = WHITE_LINE_COLOR;
     [_inputPannel addSubview:line8];
 
     UILabel *line9 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+316, w, 1)];
-    line9.backgroundColor = RGB(70, 219, 254);
+    line9.backgroundColor = WHITE_LINE_COLOR;
     [_inputPannel addSubview:line9];
 
     UILabel *tL4 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+320, 80, 40)];
@@ -273,7 +273,7 @@
     [_inputPannel addSubview:_password];
 
     UILabel *line10 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+361, w, 1)];
-    line10.backgroundColor = RGB(70, 219, 254);
+    line10.backgroundColor = WHITE_LINE_COLOR;
     [_inputPannel addSubview:line10];
 
     UILabel *tL5 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+365, 80, 40)];
@@ -294,7 +294,7 @@
     [_inputPannel addSubview:_passwordAgain];
 
     UILabel *line11 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+406, w, 1)];
-    line11.backgroundColor = RGB(70, 219, 254);
+    line11.backgroundColor = WHITE_LINE_COLOR;
     [_inputPannel addSubview:line11];
 
 

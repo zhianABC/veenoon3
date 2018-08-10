@@ -67,7 +67,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = BLACK_COLOR;
+    self.view.backgroundColor = LOGIN_BLACK_COLOR;
     
     UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT,
                                                                       ENGINEER_VIEW_TOP+10,
@@ -130,7 +130,7 @@
     [self.view addSubview:fr];
     fr.layer.cornerRadius = 5;
     fr.clipsToBounds = YES;
-    fr.layer.borderColor = B_GRAY_COLOR.CGColor;
+    fr.layer.borderColor = USER_GRAY_COLOR.CGColor;
     fr.layer.borderWidth = 1;
     
     
@@ -611,7 +611,7 @@
                  data._type];
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 59, tableWidth, 1)];
-    line.backgroundColor =  B_GRAY_COLOR;
+    line.backgroundColor =  USER_GRAY_COLOR;
     [cell.contentView addSubview:line];
     
     
@@ -771,7 +771,7 @@
     header.backgroundColor = RGB(0x2b, 0x2b, 0x2c);
 
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 40, tableWidth, 1)];
-    line.backgroundColor =  B_GRAY_COLOR;
+    line.backgroundColor =  USER_GRAY_COLOR;
     [header addSubview:line];
 
     UILabel* rowL = [[UILabel alloc] initWithFrame:CGRectMake(10,

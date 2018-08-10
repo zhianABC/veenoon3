@@ -56,7 +56,7 @@
         
     }
     
-    self.view.backgroundColor = DARK_GRAY_COLOR;
+    self.view.backgroundColor = ADMIN_BLACK_COLOR;
     
     _topBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 64)];
     _topBar.backgroundColor = DARK_GRAY_COLOR;

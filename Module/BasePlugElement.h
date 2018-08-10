@@ -53,6 +53,8 @@
 //@property (nonatomic, strong) RgsConnectionObj *_com;
 @property (nonatomic, strong) ComDriver *_comDriver;
 
+@property (nonatomic, assign) BOOL _isSelected;
+
 
 - (int) getID;
 

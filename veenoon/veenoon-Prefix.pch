@@ -57,6 +57,12 @@
 #define ENGINEER_PORT_VIEW_HEIGHT  100
 #define ENGINEER_VIEW_COMPONENT_TOP  200
 
+
+#define LOGIN_BLACK_COLOR            RGB(18, 18, 18)
+#define ADMIN_BLACK_COLOR            RGB(48, 48, 48)
+#define USER_GRAY_COLOR              RGB(63, 58, 55)
+#define WHITE_LINE_COLOR             RGBA(255, 255, 255, 0.5)
+
 #define YELLOW_COLOR            RGB(255, 180, 0)
 #define DARK_BLUE_COLOR         RGB(0, 89, 118)
 #define M_GREEN_COLOR           RGB(0, 79, 105)
@@ -64,7 +70,6 @@
 #define BLUE_DOWN_COLOR         RGB(0, 47, 62)
 #define DARK_GRAY_COLOR         RGB(31, 31, 31)
 #define BLACK_COLOR             RGB(0x3e, 0x3a, 0x37)
-#define B_GRAY_COLOR            RGB(63, 58, 55)
 #define TITLE_LINE_COLOR        RGB(65, 65, 65)
 #define RIGHT_VIEW_CORNER_COLOR        RGB(71, 71, 71)
 #define RIGHT_VIEW_CORNER_BTN_COLOR        RGB(124, 124, 124)
@@ -134,6 +139,8 @@
 
 #define UUID_8CH_Dimmer_Light   @"c2ce8874-d422-4fb2-90ff-7caf8344bee4"
 #define UUID_Power_Sequencer    @"90ec882b-150f-438e-8e09-921584bc2e9c"
+
+#define UMENG_KEY @"5b685b8ef29d98459e00053e"
 
 #define LOGIN_REGULUS 1
 

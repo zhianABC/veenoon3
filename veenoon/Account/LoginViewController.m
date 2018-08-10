@@ -53,7 +53,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = BLACK_COLOR;
+    self.view.backgroundColor = LOGIN_BLACK_COLOR;
     // Do any additional setup after loading the view.
     UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(80,
                                                                 80,
@@ -132,11 +132,11 @@
     top = CGRectGetMaxY(_country.frame);
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(left, top, w, 1)];
-    line.backgroundColor = [UIColor whiteColor];
+    line.backgroundColor = WHITE_LINE_COLOR;
     [_inputPannel addSubview:line];
     
     line = [[UILabel alloc] initWithFrame:CGRectMake(left +80, top, 1, 50)];
-    line.backgroundColor = [UIColor whiteColor];
+    line.backgroundColor = WHITE_LINE_COLOR;
     [_inputPannel addSubview:line];
     
     _countrycode = [[UILabel alloc] initWithFrame:CGRectMake(left, top, w, 50)];
@@ -160,7 +160,7 @@
     top = CGRectGetMaxY(_countrycode.frame);
     
     line = [[UILabel alloc] initWithFrame:CGRectMake(left, top, w, 1)];
-    line.backgroundColor = [UIColor whiteColor];
+    line.backgroundColor = WHITE_LINE_COLOR;
     [_inputPannel addSubview:line];
     
     tL = [[UILabel alloc] initWithFrame:CGRectMake(left, top, w, 50)];
@@ -184,7 +184,7 @@
     top = CGRectGetMaxY(tL.frame);
     
     line = [[UILabel alloc] initWithFrame:CGRectMake(left, top, w, 1)];
-    line.backgroundColor = [UIColor whiteColor];
+    line.backgroundColor = WHITE_LINE_COLOR;
     [_inputPannel addSubview:line];
     
     UIButton *registerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
