@@ -82,7 +82,7 @@ UITableViewDataSource, UITextFieldDelegate, GroupsPickerViewDelegate> {
 - (id)initWithFrame:(CGRect)frame {
     
     if(self = [super initWithFrame:frame]) {
-        self.backgroundColor = ADMIN_BLACK_COLOR;
+        self.backgroundColor = RIGHT_VIEW_CORNER_SD_COLOR;
         
         _btns4 = [[NSMutableArray alloc] init];
         self._numOfChannel = 8;

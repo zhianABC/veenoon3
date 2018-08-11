@@ -33,7 +33,7 @@
 - (id)initWithFrame:(CGRect)frame {
     
     if(self = [super initWithFrame:frame]) {
-        self.backgroundColor = ADMIN_BLACK_COLOR;
+        self.backgroundColor = RIGHT_VIEW_CORNER_SD_COLOR;
         
         UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 100)];
         [self addSubview:headView];

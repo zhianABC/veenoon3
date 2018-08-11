@@ -29,7 +29,7 @@
         [self addSubview:contentView];
         contentView.layer.cornerRadius = 5;
         contentView.clipsToBounds = YES;
-        contentView.backgroundColor = RGB(0, 89, 118);
+        contentView.backgroundColor = RIGHT_VIEW_CORNER_SD_COLOR;
         
         UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
         tapGesture.cancelsTouchesInView =  NO;

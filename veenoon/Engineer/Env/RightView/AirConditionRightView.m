@@ -49,7 +49,7 @@
 - (id)initWithFrame:(CGRect)frame {
     
     if(self = [super initWithFrame:frame]) {
-        self.backgroundColor = RGB(0, 89, 118);
+        self.backgroundColor = RIGHT_VIEW_CORNER_SD_COLOR;
         
 
         _btns = [[NSMutableArray alloc] init];

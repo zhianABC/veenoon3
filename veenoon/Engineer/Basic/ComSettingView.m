@@ -38,7 +38,7 @@
     if(self = [super initWithFrame:frame])
     {
         
-        self.backgroundColor = RGB(0, 89, 118);
+        self.backgroundColor = RIGHT_VIEW_CORNER_SD_COLOR;
         self.clipsToBounds = YES;
         
         UILabel* line = [[UILabel alloc] initWithFrame:CGRectMake(0, 100, frame.size.width, 1)];
