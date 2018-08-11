@@ -14,6 +14,7 @@
 
 @optional
 - (void) tappedAutoRunCell:(RgsSchedulerObj*)sch;
+- (void) deleteAutoRunCell:(RgsSchedulerObj*)sch;
 
 @end
 
@@ -25,5 +26,7 @@
 @property (nonatomic, weak) id <AutoRunCellDelegate> delegate;
 
 - (void) showRgsSchedule:(RgsSchedulerObj *)sch;
+
+- (void) setEditMode:(BOOL)isEdit;
 
 @end

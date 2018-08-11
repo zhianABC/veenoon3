@@ -16,6 +16,7 @@
 #import "UserDefaultsKV.h"
 #import "Utilities.h"
 #import "NSDate-Helper.h"
+#import "KVNProgress.h"
 
 #define SCEN_PICKER_WIDTH  300
 
@@ -352,6 +353,8 @@ UITableViewDataSource>
     
         IMP_BLOCK_SELF(AutoRunSetView);
         
+        [KVNProgress show];
+        
        if(_schedule)
        {
            //编辑
@@ -388,6 +391,8 @@ UITableViewDataSource>
 }
 
 - (void) excAutoRunSet:(RgsSchedulerObj*)scheduler_obj datas:(NSDictionary*)datas{
+    
+    [KVNProgress dismiss];
     
     if(scheduler_obj)
     {

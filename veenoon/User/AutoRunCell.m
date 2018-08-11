@@ -16,6 +16,8 @@
     UILabel* dateL;
     UILabel* titleL;
     UILabel* weeksL;
+    
+    UIImageView *_iconDelete;
 }
 @property (nonatomic, strong) RgsSchedulerObj *_sch;
 
@@ -79,17 +81,47 @@
                 action:@selector(buttonAction:)
       forControlEvents:UIControlEventTouchUpInside];
         
+        _iconDelete = [[UIImageView alloc]
+                       initWithImage:[UIImage imageNamed:@"red_del_icon.png"]];
+        [self addSubview:_iconDelete];
+        
+        _iconDelete.center = CGPointMake(20, 20);
+        _iconDelete.hidden = YES;
+        
     }
     
     return self;
     
 }
 
+- (void) setEditMode:(BOOL)isEdit{
+
+    if(isEdit)
+    {
+        _iconDelete.hidden = NO;
+    }
+    else
+    {
+        _iconDelete.hidden = YES;
+    }
+    
+}
+
 - (void) buttonAction:(UIButton *)sender{
     
-    if(delegate && [delegate respondsToSelector:@selector(tappedAutoRunCell:)])
+    if(_iconDelete.hidden)
     {
-        [delegate tappedAutoRunCell:_sch];
+        if(delegate && [delegate respondsToSelector:@selector(tappedAutoRunCell:)])
+        {
+            [delegate tappedAutoRunCell:_sch];
+        }
+    }
+    else
+    {
+        if(delegate && [delegate respondsToSelector:@selector(deleteAutoRunCell:)])
+        {
+            [delegate deleteAutoRunCell:_sch];
+        }
     }
 }
 

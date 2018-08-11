@@ -14,6 +14,7 @@
 #import "DataBase.h"
 #import "RegulusSDK.h"
 #import "AutoRunCell.h"
+#import "KVNProgress.h"
 
 
 @interface AutoRunViewController () <AutoRunCellDelegate>
@@ -27,7 +28,7 @@
     UIButton *btnPre;
     UIButton *btnWeek;
     
-    
+    BOOL _isEdit;
 }
 @property (nonatomic, strong) NSMutableArray *_autoItems;
 
@@ -140,6 +141,13 @@
 - (void) editAction:(id)sender{
     
     
+    _isEdit = !_isEdit;
+    
+    for(AutoRunCell *cell in _autoRunCells)
+    {
+        [cell setEditMode:_isEdit];
+    }
+    
 }
 
 - (void) autoPreAction:(id)sender{
@@ -169,6 +177,9 @@
 - (void) getSchedules{
     
     IMP_BLOCK_SELF(AutoRunViewController);
+    
+    [KVNProgress show];
+    
     [[RegulusSDK sharedRegulusSDK] GetSchedulers:^(BOOL result, NSArray * schedulers, NSError * error) {
  
         [block_self loadAutoItems:schedulers];
@@ -178,6 +189,9 @@
 
 - (void) loadAutoItems:(NSArray*)datas{
     
+    [KVNProgress dismiss];
+    
+    [_autoItems removeAllObjects];
     [_autoItems addObjectsFromArray:datas];
     
     self._subscribeItems = [NSMutableArray array];
@@ -239,6 +253,7 @@
             
             [at showRgsSchedule:sch];
             
+            [_autoRunCells addObject:at];
         }
         else
         {
@@ -276,9 +291,21 @@
 
 }
 
-- (void) notifyRefreshItems:(id)sender{
+- (void) deleteAutoRunCell:(RgsSchedulerObj*)sch{
     
-    [_autoItems removeAllObjects];
+    IMP_BLOCK_SELF(AutoRunViewController);
+    if(sch)
+    {
+    [[RegulusSDK sharedRegulusSDK] DelSchedulerByID:sch.m_id
+                                         completion:^(BOOL result, NSError *error) {
+                                            
+                                             [block_self getSchedules];
+                                         }];
+    }
+}
+
+- (void) notifyRefreshItems:(id)sender{
+
     [self getSchedules];
 }
 
