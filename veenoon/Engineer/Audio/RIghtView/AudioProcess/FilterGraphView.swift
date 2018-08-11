@@ -19,6 +19,7 @@ class DataModel: NSObject {
 @objc protocol FilterGraphViewDelegate: NSObjectProtocol {
     func filterGraphViewHPFilterChanged(freq: Float)
     func filterGraphViewLPFilterChanged(freq: Float)
+    func filterGraphViewPEQFilterBandChoosed(band: Int)
     func filterGraphViewPEQFilterChanged(band: Int, freq: Float, gain: Float)
     func filterGraphViewPEQFilterChanged(band: Int, qIndex: Int, qValue: Float)
 }
@@ -176,6 +177,10 @@ class FilterGraphView: UIView {
     private let pinchGestureBeganScale: CGFloat = 1.0
     private var pinchGestureLastScale: CGFloat = 1.0
     
+    ///
+    private var touch_moved_flag = false
+    private var touched_move_point_i: Int = 0
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         additionnalInit()
@@ -203,6 +208,8 @@ class FilterGraphView: UIView {
         var lastX: CGFloat!
         var lastY: CGFloat!
         
+        touch_moved_flag = false
+        
         for touch in touches {
             let touchPoint = touch.location(in: self)
             lastX = touchPoint.x
@@ -212,12 +219,16 @@ class FilterGraphView: UIView {
         for i in 0 ..< (m_peqBand+2) {
             if (lastX>(m_moveRect[i].origin.x-5) && lastX<(m_moveRect[i].origin.x+m_moveRect[i].width+5) && lastY>(m_moveRect[i].origin.y-5) && lastY<(m_moveRect[i].origin.y+m_moveRect[i].height+5)) {
                 bPressed[i] = true
+                touched_move_point_i = i;
+                
                 break
             }
             else {
                 bPressed[i] = false
             }
         }
+        
+        delegate?.filterGraphViewPEQFilterBandChoosed(band : touched_move_point_i);
     }
     
     // 触摸移动处理

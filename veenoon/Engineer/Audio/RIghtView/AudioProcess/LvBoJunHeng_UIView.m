@@ -199,7 +199,7 @@
     
     
     UILabel *addLabel3 = [[UILabel alloc] init];
-    addLabel3.text = @"频率 (HZ)";
+    addLabel3.text = @"频率 (Hz)";
     addLabel3.font = [UIFont systemFontOfSize: 13];
     addLabel3.textColor = [UIColor whiteColor];
     addLabel3.frame = CGRectMake(CGRectGetMaxX(gaotongTypeBtn.frame)-35, btnY+20, 75, 25);
@@ -758,7 +758,7 @@
     
     
     UILabel *addLabel3 = [[UILabel alloc] init];
-    addLabel3.text = @"频率 (HZ)";
+    addLabel3.text = @"频率 (Hz)";
     addLabel3.font = [UIFont systemFontOfSize: 13];
     addLabel3.textColor = [UIColor whiteColor];
     addLabel3.frame = CGRectMake(CGRectGetMaxX(ditongTypeBtn.frame)-35, btnY+20, 75, 25);
@@ -1204,6 +1204,24 @@
             boduanQL.text = [NSString stringWithFormat:@"%0.2f", qval];
         }
     }
+}
+
+- (void)filterGraphViewPEQFilterBandChoosedWithBand:(NSInteger)band{
+    _channelSelIndex = (int) band;
+    
+    for(UIButton * btn in _boduanChannelBtns)
+    {
+        if(btn.tag == band)
+        {
+            [btn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+        }
+        else
+        {
+            [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        }
+    }
+    
+    [self updateCurrentBrand];
 }
 
 - (void)filterGraphViewPEQFilterChangedWithBand:(NSInteger)band freq:(float)freq gain:(float)gain{
