@@ -692,13 +692,13 @@
             
             if (_inconView == nil) {
                 _inconView = [[AudioIconSettingView alloc]
-                              initWithFrame:CGRectMake(SCREEN_WIDTH-300,
-                                                       64, 300, SCREEN_HEIGHT-114) withCurrentAudios:_currentAudioDevices];
+                              initWithFrame:CGRectMake(SCREEN_WIDTH-180,
+                                                       64, 180, SCREEN_HEIGHT-114) withCurrentAudios:_currentAudioDevices];
                 _inconView.delegate = self;
             } else {
                 [UIView beginAnimations:nil context:nil];
-                _inconView.frame  = CGRectMake(SCREEN_WIDTH-300,
-                                               64, 300, SCREEN_HEIGHT-114);
+                _inconView.frame  = CGRectMake(SCREEN_WIDTH-180,
+                                               64, 180, SCREEN_HEIGHT-114);
                 [UIView commitAnimations];
             }
             
