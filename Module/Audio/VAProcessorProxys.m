@@ -535,6 +535,10 @@
 
     _isSetOK = YES;
     
+    ///控制频率
+//    if(fabs(_voiceDb - db) < 1)
+//        return;
+
     _voiceDb = db;
     
     RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_ANALOGY_GRAIN"];
@@ -560,6 +564,10 @@
     
     _isSetOK = YES;
     
+    ///控制频率
+//    if(fabs(_digitalGain - digVal) < 1)
+//        return;
+
     _digitalGain = digVal;
     
     RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_DIGIT_GRAIN"];
@@ -1105,6 +1113,10 @@
     
     _isSetOK = YES;
     
+    ///控制频率
+//    if(fabs([_yanshiqiSlide floatValue] - [yanshiqiSlide floatValue]) < 1)
+//        return;
+    
     self._yanshiqiSlide = yanshiqiSlide;
     
     RgsCommandInfo *cmd = nil;
@@ -1258,36 +1270,36 @@
     return result;
 }
 
--(NSString*) getXinhaofashengPinlv {
-    return _xinhaofashengPinlv;
-}
--(void) controlXinHaofashengPinlv:(NSString*)xinhaofashengPinlv {
-    self._xinhaofashengPinlv = xinhaofashengPinlv;
-}
--(NSArray*) getXinhaofashengPinlvArray {
-    return self._xinhaofashengPinlvArray;
-}
--(NSString*) getXinhaoZhengxuanbo {
-    return self._xinhaozhengxuanbo;
-}
--(void) controlXinhaoZhengxuanbo:(NSString*)zhengxuanbo {
-    self._xinhaozhengxuanbo = zhengxuanbo;
-}
--(NSArray*) getXinhaofashengZhengxuanArray {
-    return self._xinhaozhengxuanArray;
-}
--(BOOL) isXinhaofashengMute {
-    return self._isXinhaofashengMute;
-}
--(void) controlXinhaofashengMute:(BOOL)xinhaofashengMute {
-    self._isXinhaofashengMute = xinhaofashengMute;
-}
--(NSString*) getXinhaofashengZengyi {
-    return _xinhaofashengZengyi;
-}
--(void) controlXinhaofashengZengyi:(NSString*)xinhaofashengZengyi {
-    self._xinhaofashengZengyi = xinhaofashengZengyi;
-}
+//-(NSString*) getXinhaofashengPinlv {
+//    return _xinhaofashengPinlv;
+//}
+//-(void) controlXinHaofashengPinlv:(NSString*)xinhaofashengPinlv {
+//    self._xinhaofashengPinlv = xinhaofashengPinlv;
+//}
+//-(NSArray*) getXinhaofashengPinlvArray {
+//    return self._xinhaofashengPinlvArray;
+//}
+//-(NSString*) getXinhaoZhengxuanbo {
+//    return self._xinhaozhengxuanbo;
+//}
+//-(void) controlXinhaoZhengxuanbo:(NSString*)zhengxuanbo {
+//    self._xinhaozhengxuanbo = zhengxuanbo;
+//}
+//-(NSArray*) getXinhaofashengZhengxuanArray {
+//    return self._xinhaozhengxuanArray;
+//}
+//-(BOOL) isXinhaofashengMute {
+//    return self._isXinhaofashengMute;
+//}
+//-(void) controlXinhaofashengMute:(BOOL)xinhaofashengMute {
+//    self._isXinhaofashengMute = xinhaofashengMute;
+//}
+//-(NSString*) getXinhaofashengZengyi {
+//    return _xinhaofashengZengyi;
+//}
+//-(void) controlXinhaofashengZengyi:(NSString*)xinhaofashengZengyi {
+//    self._xinhaofashengZengyi = xinhaofashengZengyi;
+//}
 
 #pragma mark ---- 压限器 ----
 

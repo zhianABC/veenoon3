@@ -241,16 +241,16 @@
 - (void) controlMatrixSrcValue:(VAProcessorProxys *)proxy th:(float)th;
 
 //TODO:信号发生器
--(NSString*) getXinhaofashengPinlv;
--(void) controlXinHaofashengPinlv:(NSString*)xinhaofashengPinlv;
--(NSArray*) getXinhaofashengPinlvArray;
--(NSString*) getXinhaoZhengxuanbo;
--(void) controlXinhaoZhengxuanbo:(NSString*)zhengxuanbo;
--(NSArray*) getXinhaofashengZhengxuanArray;
--(BOOL) isXinhaofashengMute;
--(void) controlXinhaofashengMute:(BOOL)xinhaofashengMute;
--(NSString*) getXinhaofashengZengyi;
--(void) controlXinhaofashengZengyi:(NSString*)xinhaofashengZengyi;
+//-(NSString*) getXinhaofashengPinlv;
+//-(void) controlXinHaofashengPinlv:(NSString*)xinhaofashengPinlv;
+//-(NSArray*) getXinhaofashengPinlvArray;
+//-(NSString*) getXinhaoZhengxuanbo;
+//-(void) controlXinhaoZhengxuanbo:(NSString*)zhengxuanbo;
+//-(NSArray*) getXinhaofashengZhengxuanArray;
+//-(BOOL) isXinhaofashengMute;
+//-(void) controlXinhaofashengMute:(BOOL)xinhaofashengMute;
+//-(NSString*) getXinhaofashengZengyi;
+//-(void) controlXinhaofashengZengyi:(NSString*)xinhaofashengZengyi;
 
 //TODO:电平 = 模拟
 

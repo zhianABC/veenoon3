@@ -538,7 +538,7 @@
     }
     else
     {
-        [self setNewProject];
+        [self clearAndNewProject:nil];
     }
 
 }
