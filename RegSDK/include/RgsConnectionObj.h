@@ -73,6 +73,11 @@
 @property NSArray * can_connect;
 
 /*!
+ 已绑定的连接信息
+ */
+@property NSArray * bound_connect_str;
+
+/*!
  @brief 建立连接
  @discussion 和对端连接对象建立连接。
  @param peer 对端连接对象 @see RgsConnectionObj

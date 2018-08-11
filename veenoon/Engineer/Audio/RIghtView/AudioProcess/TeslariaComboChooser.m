@@ -26,6 +26,8 @@
 @synthesize _size;
 @synthesize _unit;
 
+@synthesize _titleStr;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -51,22 +53,32 @@
     UILabel *titleL = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, _size.width-20, 20)];
     titleL.font = [UIFont boldSystemFontOfSize:14];
     titleL.textAlignment = NSTextAlignmentCenter;
-    if (_type == 0) {
-        titleL.text = @"选择高通类型";
-    } else if (_type == 1) {
-        titleL.text = @"选择低通类型";
-    } else if (_type == 2) {
-        titleL.text = @"选择高通斜率";
-    } else if (_type == 3) {
-        titleL.text = @"选择频率";
-    } else if (_type == 4) {
-        titleL.text = @"选择波段";
-    } else if (_type == 5) {
-        titleL.text = @"线路";
-    } else if (_type == 6) {
-        titleL.text = @"话筒";
-    }
+    
     titleL.textColor = [UIColor whiteColor];
+    
+    if(_titleStr)
+    {
+        titleL.text = _titleStr;
+    }
+    else
+    {
+        if (_type == 0) {
+            titleL.text = @"选择高通类型";
+        } else if (_type == 1) {
+            titleL.text = @"选择低通类型";
+        } else if (_type == 2) {
+            titleL.text = @"选择高通斜率";
+        } else if (_type == 3) {
+            titleL.text = @"选择频率";
+        } else if (_type == 4) {
+            titleL.text = @"选择波段";
+        } else if (_type == 5) {
+            titleL.text = @"线路";
+        } else if (_type == 6) {
+            titleL.text = @"话筒";
+        }
+    }
+    
     [titleV addSubview:titleL];
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 40,

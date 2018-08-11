@@ -22,7 +22,10 @@
 #import "AudioEMix.h"
 #import "DataSync.h"
 
-@interface UserAudioConfigViewController () <JSlideViewDelegate> {
+#import "PlugsCtrlTitleHeader.h"
+#import "TeslariaComboChooser.h"
+
+@interface UserAudioConfigViewController () <JSlideViewDelegate, UIPopoverPresentationControllerDelegate> {
     
     
     IconCenterTextButton *_cdPlayerBtn;
@@ -44,6 +47,9 @@
     JSlideView *_wuxianSysPlayerSlider;
     
     UIScrollView *_proxysView;
+    
+    PlugsCtrlTitleHeader *_selectSysBtn;
+    TeslariaComboChooser *_chooser;
 }
 
 @property (nonatomic, strong) NSArray *_proxys;
@@ -52,6 +58,8 @@
 @property (nonatomic, strong) AudioEProcessor *_curProcessor;
 
 @property (nonatomic, strong) NSMutableArray *_iconBtns;
+
+@property (nonatomic, strong) NSMutableArray *_audioProcessers;
 
 @end
 
@@ -63,11 +71,13 @@
 @synthesize _scenario;
 
 @synthesize _iconBtns;
+@synthesize _audioProcessers;
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [super setTitleAndImage:@"user_corner_audio.png" withTitle:@"音频系统"];
+    [self setTitleAndImage:@"user_corner_audio.png" withTitle:@"音频系统"];
     
     _proxysView = [[UIScrollView alloc]
                    initWithFrame:CGRectMake(0,
@@ -108,21 +118,149 @@
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
 
-    if([_scenario._audioDevices count])
+    
+    //找出所有的音频处理器
+    self._audioProcessers = [NSMutableArray array];
+    for(BasePlugElement *plug in _scenario._audioDevices)
     {
-        for(BasePlugElement *plug in _scenario._audioDevices)
-        {
-            if([plug isKindOfClass:[AudioEProcessor class]])
-                self._curProcessor = (AudioEProcessor*)plug;
+        if([plug isKindOfClass:[AudioEProcessor class]]){
+            [_audioProcessers addObject:plug];
         }
     }
     
-    self._iconBtns = [NSMutableArray array];
+    if([_audioProcessers count])
+        self._curProcessor = [_audioProcessers objectAtIndex:0];
     
+    
+    _selectSysBtn = [[PlugsCtrlTitleHeader alloc] initWithFrame:CGRectMake(50, 100, 80, 30)];
+    [self.view addSubview:_selectSysBtn];
+    [_selectSysBtn addTarget:self
+                      action:@selector(chooseDevice:)
+            forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    [self refreshCurrentProcessor];
+}
+
+- (void) refreshCurrentProcessor{
+    
+    [self showBasePluginName:self._curProcessor];
+    self._iconBtns = [NSMutableArray array];
     [self getCurrentDeviceDriverProxys];
 }
 
 
+#pragma mark -- UIPopoverPresentationController ---
+
+- (BOOL) popoverPresentationControllerShouldDismissPopover:(UIPopoverPresentationController *)popoverPresentationController{
+    
+    return YES;
+    
+}
+- (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller{
+    
+    return UIModalPresentationNone;
+    
+}
+
+- (void)popoverPresentationControllerDidDismissPopover:(UIPopoverPresentationController *)popoverPresentationController{
+    
+    NSLog(@"dismissed");
+    _chooser = nil;
+}
+
+
+#pragma mark -- 选择设备---
+
+- (void) chooseDevice:(UIButton*)sender{
+    
+    if([_audioProcessers count] > 1)
+    {
+    
+        NSMutableArray *options = [NSMutableArray array];
+        for(int i = 0; i < [_audioProcessers count]; i++)
+        {
+            
+            AudioEProcessor *plug = [_audioProcessers objectAtIndex:i];
+            
+            RgsDriverObj *driver = (RgsDriverObj*)plug._driver;
+            NSString *name = plug._ipaddress;
+            if(driver && driver.name)
+            {
+                name = driver.name;
+            }
+            
+            NSString *s = [NSString stringWithFormat:@"%02d %@", i+1, name];
+            
+            [options addObject:s];
+        }
+        
+        _chooser = [[TeslariaComboChooser alloc] init];
+        _chooser._dataArray = options;
+        _chooser._titleStr = @"选择设备";
+        _chooser._unit = @"";
+        
+        int h = (int)[_chooser._dataArray count]*30 + 50;
+        _chooser._size = CGSizeMake(320, h);
+        
+        _chooser.modalPresentationStyle = UIModalPresentationPopover;
+        _chooser.preferredContentSize =  CGSizeMake(320, h);
+        _chooser.popoverPresentationController.delegate = self;
+        _chooser.popoverPresentationController.sourceView = sender;
+        _chooser.popoverPresentationController.sourceRect = sender.bounds;
+        _chooser.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+        [self presentViewController:_chooser animated:YES completion:nil];
+        
+        IMP_BLOCK_SELF(UserAudioConfigViewController);
+        _chooser._block = ^(id object, int index) {
+            
+            [block_self changeDevice:index];
+        };
+        
+    }
+    
+}
+
+- (void) changeDevice:(int)idx{
+    
+    AudioEProcessor *plug = [_audioProcessers objectAtIndex:idx];
+    
+    self._curProcessor = plug;
+    
+    if(_chooser)
+    {
+        [_chooser dismissViewControllerAnimated:YES
+                                     completion:nil];
+        
+        _chooser = nil;
+    }
+    
+    
+    [self refreshCurrentProcessor];
+}
+
+- (void) showBasePluginName:(BasePlugElement*) basePlugElement {
+    
+    if (basePlugElement) {
+        
+        NSString *ipAddress = @"Unk";
+        NSString *nameStr = basePlugElement._ipaddress;
+        RgsDriverObj *driver = basePlugElement._driver;
+        NSString *idStr = @"Unk";
+        if (driver != nil) {
+            idStr = [NSString stringWithFormat:@"%d", (int) driver.m_id];
+            if(driver.name)
+                nameStr = driver.name;
+        }
+        
+        if (nameStr != nil) {
+            ipAddress = nameStr;
+        }
+        
+        NSString *showText = [[idStr stringByAppendingString:@" - "] stringByAppendingString:ipAddress];
+        [_selectSysBtn setShowText:showText];
+    }
+}
 
 - (void) getCurrentDeviceDriverProxys{
     
@@ -136,7 +274,12 @@
     RgsDriverObj *driver = _curProcessor._driver;
     if([driver isKindOfClass:[RgsDriverObj class]])
     {
+        
+        [KVNProgress show];
         [[RegulusSDK sharedRegulusSDK] GetDriverProxys:driver.m_id completion:^(BOOL result, NSArray *proxys, NSError *error) {
+            
+            [KVNProgress dismiss];
+            
             if (result) {
                 if ([proxys count]) {
                     
@@ -265,7 +408,7 @@
     
     _proxysView.contentSize = CGSizeMake(ww1, _proxysView.frame.size.height);
     _proxysView.pagingEnabled = YES;
-    //[_curProcessor syncDriverIPProperty];
+    
 }
 
 - (void) didSliderValueChanged:(float)value object:(id)object{
