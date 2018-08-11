@@ -59,14 +59,14 @@
 
         _content = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64,
                                                                   SCREEN_WIDTH,
-                                                                  SCREEN_HEIGHT-64-50)];
+                                                                  SCREEN_HEIGHT-64)];
         [self addSubview:_content];
         _content.contentSize = CGSizeMake(SCREEN_WIDTH, CGRectGetHeight(_content.frame));
         _content.pagingEnabled = YES;
         _content.showsHorizontalScrollIndicator = NO;
         //_content.delegate = self;
         
-        settingsUserView = [[SettingsUserView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64-50)];
+        settingsUserView = [[SettingsUserView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64)];
         settingsUserView.backgroundColor = [UIColor clearColor];
         [_content addSubview:settingsUserView];
         

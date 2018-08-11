@@ -347,9 +347,9 @@
         
         UIButton *logout = [UIButton buttonWithColor:USER_GRAY_COLOR
                                             selColor:nil];
-        logout.frame = CGRectMake(0, CGRectGetMaxY(line9.frame)+50,
+        logout.frame = CGRectMake(0, self.frame.size.height - 50,
                                   frame.size.width, 50);
-        [_content addSubview:logout];
+        [self addSubview:logout];
         [logout setTitle:@"退出登录" forState:UIControlStateNormal];
         [logout addTarget:self
                    action:@selector(logoutAction:)
