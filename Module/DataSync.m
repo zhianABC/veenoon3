@@ -137,11 +137,14 @@ static DataSync* dSyncInstance = nil;
     
 }
 
+
+
 - (void) logoutCurrentRegulus{
     
     
     if(_currentReglusLogged)
     {
+        /*
         NSString *regulus_gateway_id = [_currentReglusLogged objectForKey:@"gw_id"];
         NSString *regulus_user_id = [_currentReglusLogged objectForKey:@"user_id"];
         
@@ -151,6 +154,9 @@ static DataSync* dSyncInstance = nil;
             
             //[DataSync sharedDataSync]._currentReglusLogged = nil;
         }
+         */
+        
+        
     }
      
     
@@ -208,7 +214,7 @@ static DataSync* dSyncInstance = nil;
                 [block_self updateCurrentRoomData];
             }
             else
-                [KVNProgress showErrorWithStatus:@"创建Area出错!"];
+                [KVNProgress showErrorWithStatus:[error description]];
         }];
     }
     else
