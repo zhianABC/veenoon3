@@ -24,10 +24,12 @@
 /*! 区域名称 */
 @property NSString * name;
 
-///*! 是否限制访问 */
-//@property BOOL limit;
-//
-///*! 限制访问密码 */
-//@property NSString * limit_pw;
+/*! 区域内Proxy的分类列表 */
+@property NSArray * classifies;
 
+/*! 大图信息 */
+@property NSString * large_img;
+
+/*! 小图信息 */
+@property NSString * small_img;
 @end

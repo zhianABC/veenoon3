@@ -682,7 +682,7 @@
     IMP_BLOCK_SELF(LvBoJunHeng_UIView);
     sel._block = ^(id object, int index)
     {
-        [block_self chooseBandType:object];
+        [block_self chooseBandType:object atIndex:index];
     };
     
     CGRect rect = [self convertRect:sender.frame
@@ -696,7 +696,7 @@
                    permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 }
 
-- (void) chooseBandType:(NSString*)device{
+- (void) chooseBandType:(NSString*)device atIndex:(int)index{
     
     if (device == nil) {
         return;
@@ -706,6 +706,11 @@
     [boduanleixingBtn setTitle:dispaly forState:UIControlStateNormal];
     
     [_curProxy controlBandLineType:device band:_channelSelIndex];
+    
+    float q = [boduanQL.text floatValue];
+    [fglm setPEQWithBand:_channelSelIndex
+                    type:index
+                       Q:q];
     
     if ([_deviceSelector isPopoverVisible]) {
         [_deviceSelector dismissPopoverAnimated:NO];

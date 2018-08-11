@@ -14,9 +14,10 @@
 #import "DataBase.h"
 #import "RegulusSDK.h"
 #import "AutoRunCell.h"
+#import "KVNProgress.h"
 
 
-@interface AutoRunViewController ()
+@interface AutoRunViewController () <AutoRunCellDelegate>
 {
     UIScrollView *_content;
     
@@ -27,12 +28,15 @@
     UIButton *btnPre;
     UIButton *btnWeek;
     
-    
+    BOOL _isEdit;
 }
 @property (nonatomic, strong) NSMutableArray *_autoItems;
 
 @property (nonatomic, strong) NSMutableArray *_subscribeItems;
 @property (nonatomic, strong) NSMutableArray *_weekItems;
+
+@property (nonatomic, strong) NSMutableArray *_autoRunCells;
+
 @end
 
 @implementation AutoRunViewController
@@ -42,6 +46,9 @@
 
 @synthesize _subscribeItems;
 @synthesize _weekItems;
+
+@synthesize _autoRunCells;
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -63,6 +70,17 @@
     backBtn.titleLabel.font = [UIFont boldSystemFontOfSize:20];
     [backBtn addTarget:self action:@selector(backAction:)
       forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    editBtn.frame = CGRectMake(SCREEN_WIDTH-120, 40, 60, 40);
+    [self.view addSubview:editBtn];
+    [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
+    [editBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [editBtn setTitleColor:RGB(242, 148, 20) forState:UIControlStateHighlighted];
+    editBtn.titleLabel.font = [UIFont boldSystemFontOfSize:20];
+    [editBtn addTarget:self action:@selector(editAction:)
+      forControlEvents:UIControlEventTouchUpInside];
+
     
     UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(50, 40, SCREEN_WIDTH-100, 40)];
     titleL.backgroundColor = [UIColor clearColor];
@@ -120,6 +138,18 @@
     
 }
 
+- (void) editAction:(id)sender{
+    
+    
+    _isEdit = !_isEdit;
+    
+    for(AutoRunCell *cell in _autoRunCells)
+    {
+        [cell setEditMode:_isEdit];
+    }
+    
+}
+
 - (void) autoPreAction:(id)sender{
     
     [btnPre setImage:[UIImage imageNamed:@"auto_run_pre.png"]
@@ -147,6 +177,9 @@
 - (void) getSchedules{
     
     IMP_BLOCK_SELF(AutoRunViewController);
+    
+    [KVNProgress show];
+    
     [[RegulusSDK sharedRegulusSDK] GetSchedulers:^(BOOL result, NSArray * schedulers, NSError * error) {
  
         [block_self loadAutoItems:schedulers];
@@ -156,6 +189,9 @@
 
 - (void) loadAutoItems:(NSArray*)datas{
     
+    [KVNProgress dismiss];
+    
+    [_autoItems removeAllObjects];
     [_autoItems addObjectsFromArray:datas];
     
     self._subscribeItems = [NSMutableArray array];
@@ -181,6 +217,8 @@
 - (void) layoutAutoCells{
     
     [[_content subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+    self._autoRunCells = [NSMutableArray array];
     
     int left = (SCREEN_WIDTH - 15*6 - cellWidth*7)/2;
     
@@ -211,9 +249,11 @@
                                initWithFrame:CGRectMake(x, y, cellWidth, cellWidth)];
             [_content addSubview:at];
             at.button.tag = i;
+            at.delegate = self;
             
             [at showRgsSchedule:sch];
             
+            [_autoRunCells addObject:at];
         }
         else
         {
@@ -245,13 +285,37 @@
     }
 }
 
-- (void) notifyRefreshItems:(id)sender{
+- (void) tappedAutoRunCell:(RgsSchedulerObj*)sch{
     
-    [_autoItems removeAllObjects];
+    [self showAutoRunView:sch];
+
+}
+
+- (void) deleteAutoRunCell:(RgsSchedulerObj*)sch{
+    
+    IMP_BLOCK_SELF(AutoRunViewController);
+    if(sch)
+    {
+    [[RegulusSDK sharedRegulusSDK] DelSchedulerByID:sch.m_id
+                                         completion:^(BOOL result, NSError *error) {
+                                            
+                                             [block_self getSchedules];
+                                         }];
+    }
+}
+
+- (void) notifyRefreshItems:(id)sender{
+
     [self getSchedules];
 }
 
 - (void) buttonAddAction:(UIButton*)sender{
+    
+    [self showAutoRunView:nil];
+}
+
+
+- (void) showAutoRunView:(RgsSchedulerObj*)sch{
     
     if(_auto_mode == 0)
     {
@@ -261,18 +325,20 @@
                                                                                           SCREEN_HEIGHT)];
         [self.view addSubview:autoView];
         autoView._scenarios = _scenarios;
+        autoView._schedule = sch;
         
         [autoView show];
     }
     else
     {
         AutoRunSetView *autoView = [[AutoRunSetView alloc] initWithWeeks:CGRectMake(0,
-                                                                                          0,
-                                                                                          SCREEN_WIDTH,
-                                                                                          SCREEN_HEIGHT)];
+                                                                                    0,
+                                                                                    SCREEN_WIDTH,
+                                                                                    SCREEN_HEIGHT)];
         [self.view addSubview:autoView];
         autoView._scenarios = _scenarios;
         autoView.ctrl = self;
+        autoView._schedule = sch;
         
         [autoView show];
     }

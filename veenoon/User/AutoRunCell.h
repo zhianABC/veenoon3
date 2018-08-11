@@ -10,12 +10,23 @@
 
 @class RgsSchedulerObj;
 
+@protocol AutoRunCellDelegate <NSObject>
+
+@optional
+- (void) tappedAutoRunCell:(RgsSchedulerObj*)sch;
+- (void) deleteAutoRunCell:(RgsSchedulerObj*)sch;
+
+@end
+
 @interface AutoRunCell : UIView
 {
     
 }
 @property (nonatomic, readonly) UIButton *button;
+@property (nonatomic, weak) id <AutoRunCellDelegate> delegate;
 
 - (void) showRgsSchedule:(RgsSchedulerObj *)sch;
+
+- (void) setEditMode:(BOOL)isEdit;
 
 @end

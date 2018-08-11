@@ -15,6 +15,8 @@
 #import "User.h"
 #import "UserDefaultsKV.h"
 #import "Utilities.h"
+#import "NSDate-Helper.h"
+#import "KVNProgress.h"
 
 #define SCEN_PICKER_WIDTH  300
 
@@ -49,6 +51,7 @@ UITableViewDataSource>
 @synthesize _scenarios;
 @synthesize _selected;
 @synthesize ctrl;
+@synthesize _schedule;
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -99,7 +102,7 @@ UITableViewDataSource>
         _datePicker.datePickerMode = UIDatePickerModeDateAndTime;
         [whiteView addSubview:_datePicker];
         [_datePicker setLocale:[NSLocale currentLocale]];
-        _datePicker.minimumDate = [NSDate date];
+        
         
         x+=300;
         x+=50;
@@ -350,16 +353,36 @@ UITableViewDataSource>
     
         IMP_BLOCK_SELF(AutoRunSetView);
         
-        [[RegulusSDK sharedRegulusSDK] CreateScheduler:atName
+        [KVNProgress show];
+        
+       if(_schedule)
+       {
+           //编辑
+           [[RegulusSDK sharedRegulusSDK] SetScheduler:_schedule.m_id
+                                                  name:atName
                                              exce_time:date
                                             start_date:date
                                               end_date:nil
                                             week_items:weeksArr
-                                            completion:^(BOOL result, RgsSchedulerObj *scheduler_obj, NSError *error) {
+                                            completion:^(BOOL result, RgsSchedulerObj *scheduler, NSError *error) {
                                                 
-                                                [block_self excAutoRunSet:scheduler_obj datas:datas];
-                                                
+                                                [block_self excAutoRunSet:scheduler datas:datas];
                                             }];
+       }
+        else
+        {
+            //新建
+            [[RegulusSDK sharedRegulusSDK] CreateScheduler:atName
+                                                 exce_time:date
+                                                start_date:date
+                                                  end_date:nil
+                                                week_items:weeksArr
+                                                completion:^(BOOL result, RgsSchedulerObj *scheduler, NSError *error) {
+                                                    
+                                                    [block_self excAutoRunSet:scheduler datas:datas];
+                                                    
+                                                }];
+        }
        
         
     }
@@ -368,6 +391,8 @@ UITableViewDataSource>
 }
 
 - (void) excAutoRunSet:(RgsSchedulerObj*)scheduler_obj datas:(NSDictionary*)datas{
+    
+    [KVNProgress dismiss];
     
     if(scheduler_obj)
     {
@@ -388,6 +413,10 @@ UITableViewDataSource>
                                                  [block_self done];
                                                  
                                              }];
+    }
+    else
+    {
+        [self done];
     }
 
 }
@@ -486,14 +515,81 @@ UITableViewDataSource>
                      }];
 }
 
-- (void) loadData{
+
+- (NSNumber *)weekIdxFromSum:(NSString*)sum{
     
-    for(Scenario *s in _scenarios)
+    
+    if([sum isEqualToString:@"Mon"])
     {
-        [_scripts addObject:[s name]];
+        return @1;
+    }
+    else if([sum isEqualToString:@"Tues"])
+    {
+        return @2;
+    }
+    else if([sum isEqualToString:@"Wed"])
+    {
+        return @3;
+    }
+    else if([sum isEqualToString:@"Thurs"])
+    {
+        return @4;
+    }
+    else if([sum isEqualToString:@"Fri"])
+    {
+        return @5;
+    }
+    else if([sum isEqualToString:@"Sat"])
+    {
+        return @6;
+    }
+    else if([sum isEqualToString:@"Sun"])
+    {
+        return @0;
     }
     
+    return nil;
+}
+
+
+- (void) loadData{
     
+    int defRow = currentRow;
+
+    for(int i = 0; i < [_scenarios count]; i++)
+    {
+        Scenario *s = [_scenarios objectAtIndex:i];
+        NSString *scpName = [s name];
+        [_scripts addObject:scpName];
+        
+        if(_schedule && [_schedule.name isEqualToString:scpName])
+        {
+            defRow = i;
+        }
+    }
+    
+    currentRow = defRow;
+    
+    if(_schedule)
+    {
+        NSDateFormatter *fm = [[NSDateFormatter alloc] init];
+        [fm setDateFormat:@"yyyy-MM-dd"];
+        NSString *ymd = [fm stringFromDate:_schedule.start_date];
+        
+        [fm setDateFormat:@"HH:mm:ss"];
+        NSString *hms = [fm stringFromDate:_schedule.exce_time];
+        
+        NSString *datestr = [NSString stringWithFormat:@"%@ %@", ymd,hms];
+        
+        _datePicker.minimumDate = nil;
+    
+        _datePicker.date = [NSDate dateFromString:datestr
+                                       withFormat:@"yyyy-MM-dd HH:mm:ss"];
+    }
+    else
+    {
+        _datePicker.minimumDate = [NSDate date];
+    }
     [_weaks addObject:@{@"name":@"周日",@"value":@"Sun"}];
     [_weaks addObject:@{@"name":@"周一",@"value":@"Mon"}];
     [_weaks addObject:@{@"name":@"周二",@"value":@"Tues"}];
@@ -506,6 +602,21 @@ UITableViewDataSource>
                  inComponent:0
                     animated:NO];
     [_scriptPicker reloadAllComponents];
+    
+    
+    if([_schedule.week_items count])
+    {
+        for(NSString *wk in _schedule.week_items)
+        {
+            id key = [self weekIdxFromSum:wk];
+            
+            if(key)
+            {
+                [_selected setObject:@"1" forKey:key];
+            }
+        }
+    }
+
     
     [_weakPicker reloadData];
 }
