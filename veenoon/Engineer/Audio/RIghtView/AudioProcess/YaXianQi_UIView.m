@@ -145,9 +145,9 @@
     
     //////
     NSString *xielv = [_curProxy getYaxianXielv];
-    float xielvValue = [xielv floatValue];
+    int xielvValue = [xielv floatValue];
     
-    float maxR = (maxRadio- minRadio);
+    int maxR = (maxRadio- minRadio);
     if(maxR)
     {
         float f = (xielvValue - minRadio)/maxR;
@@ -217,7 +217,7 @@
     x+=10;
     
     UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(x, y, 120, 20)];
-    tL.text = @"阀值（db）";
+    tL.text = @"阀值（dB）";
     tL.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:tL];
     tL.font = [UIFont systemFontOfSize:13];
@@ -397,8 +397,8 @@
         [_curProxy controlYaxianFazhi:[NSString stringWithFormat:@"%0.1f", k]];
 
     } else if (tag == 2) {
-        float k = (value * (maxRadio - minRadio)) + minRadio;
-        NSString *valueStr = [NSString stringWithFormat:@"%0.1f", k];
+        int k = (value * (maxRadio - minRadio)) + minRadio;
+        NSString *valueStr = [NSString stringWithFormat:@"%d", k];
         
         lableL2.text = valueStr;
         
