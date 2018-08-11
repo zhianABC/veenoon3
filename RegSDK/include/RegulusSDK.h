@@ -43,6 +43,8 @@
 @optional -(void) onImportProject:(RgsNotifyStatus) status;
 @optional -(void) onDepressUpdatePacket:(RgsNotifyStatus) status persent:(CGFloat)persent error:(NSError *)error;
 @optional -(void) onDownloadUpdatePacket:(RgsNotifyStatus) status persent:(CGFloat)persent error:(NSError *)error;
+@optional -(void) onDownloadFile:(NSString *)file persent:(float)persent;
+@optional -(void) onSystemWillReboot:(NSString *) reason;
 @end
 
 @interface RegulusSDK : NSObject
@@ -667,7 +669,7 @@
             start_date:(NSDate *)start_date
               end_date:(NSDate *)end_date
             week_items:(NSArray *)week_items
-            completion:(void (^)(BOOL result, RgsSchedulerObj * scheduler_obj, NSError * error))completion;
+            completion:(void (^)(BOOL result, RgsSchedulerObj * scheduler, NSError * error))completion;
 
 /*!
  @since 3.11.1
@@ -687,7 +689,7 @@
          start_date:(NSDate *)start_date
            end_date:(NSDate *)end_date
          week_items:(NSArray *)week_items
-         completion:(void (^)(BOOL result,RgsSchedulerObj *scheduler_obj, NSError *error))completion;
+         completion:(void (^)(BOOL result,RgsSchedulerObj * scheduler,NSError * error))completion;
 
 /*!
  @since 3.11.1
@@ -696,14 +698,14 @@
  @param completion 成功反回YES
  */
 -(void)DelSchedulerByID:(NSInteger) scheduler_id
-         completion:(void (^)(BOOL result, NSError *error))completion;
+         completion:(void (^)(BOOL result, NSError * error))completion;
 
 /*!
  @since 3.11.1
  @brief 获取日程
  @param completion 成功反回RgsSchedulerObj的对象列表
  */
--(void)GetSchedulers:(void (^)(BOOL result, NSArray * scheduler_objs, NSError * error))completion;
+-(void)GetSchedulers:(void (^)(BOOL result, NSArray * schedulers, NSError * error))completion;
 
 
 /*!
@@ -745,6 +747,26 @@
  @param completion 成功返回state_list的列表。列表按请求参数proxy_ids的顺序返回每个对应Proxy的state，类型为NSDictionary *
  */
 -(void)GetProxysCurState:(NSArray *)proxy_ids completion:(void(^)(BOOL result,NSArray * state_list,NSError * error)) completion;
+
+
+/*!
+ @since 3.12.1
+ @brief 获取指定的Proxy的当前状态
+ @param largeOrSmall 设置大图为YES，小图为NO
+ @param area_id 区域ID
+ @param image 图片信息
+ @param completion 成功范围RgsAreaObj对象结构
+ */
+-(void)SetAreaImage:(BOOL)largeOrSmall area_id:(NSInteger)area_id image:(NSString *)image completion:(void(^)(BOOL result,RgsAreaObj * area_obj,NSError * error)) completion;
+
+/*!
+ @since 3.12.2
+ @brief 获取指定的Proxy的当前状态
+ @param save_path 相对用户目录下的保存路径
+ @param completion 成功返回YES 失败返回NO
+ */
+-(void)RequestDownTopology:(NSString *)save_path completion:(void(^)(BOOL result,NSError * error)) completion;
+
 @end
 
 

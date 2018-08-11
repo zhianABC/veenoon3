@@ -35,21 +35,13 @@
 @property NSString * name;
 
 /*!
- 事件列表
- @see RgsEventObj
+ 所属设备驱动ID
  */
-//@property NSArray * events;
+@property NSInteger driver_id;
 
 /*!
- 代理指令
- @see RgsCommandInfo
+所属分类
  */
-//@property NSArray * commands;
-
-/*!
- 代理状态信息描述
- @see RgsProxyStateInfo
- */
-//@property NSArray * states;
+@property NSString * classify;
 
 @end

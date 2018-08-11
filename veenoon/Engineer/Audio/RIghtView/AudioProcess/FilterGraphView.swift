@@ -1028,7 +1028,7 @@ class FilterGraphView: UIView {
         eq_byp[Int(band)] = byp
         updateCurve()
     }
-    func setPEQ(band: UInt8, type: UInt8, Q: Float) {
+    @objc func setPEQ(band: UInt8, type: UInt8, Q: Float) {
         eq_type[Int(band)] = type
         if type == filter_type.type_PEQ.rawValue {
             eq_Q[Int(band)] = Q

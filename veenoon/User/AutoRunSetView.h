@@ -8,12 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class RgsSchedulerObj;
+
 @interface AutoRunSetView : UIView
 {
     
 }
 @property (nonatomic, strong) NSArray *_scenarios;
 @property (nonatomic, weak) UIViewController *ctrl;
+
+@property (nonatomic, strong) RgsSchedulerObj *_schedule;
 
 - (id) initWithDateAndTime:(CGRect)frame;
 - (id) initWithWeeks:(CGRect)frame;

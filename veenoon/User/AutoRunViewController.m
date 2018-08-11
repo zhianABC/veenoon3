@@ -16,7 +16,7 @@
 #import "AutoRunCell.h"
 
 
-@interface AutoRunViewController ()
+@interface AutoRunViewController () <AutoRunCellDelegate>
 {
     UIScrollView *_content;
     
@@ -33,6 +33,9 @@
 
 @property (nonatomic, strong) NSMutableArray *_subscribeItems;
 @property (nonatomic, strong) NSMutableArray *_weekItems;
+
+@property (nonatomic, strong) NSMutableArray *_autoRunCells;
+
 @end
 
 @implementation AutoRunViewController
@@ -42,6 +45,9 @@
 
 @synthesize _subscribeItems;
 @synthesize _weekItems;
+
+@synthesize _autoRunCells;
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -63,6 +69,17 @@
     backBtn.titleLabel.font = [UIFont boldSystemFontOfSize:20];
     [backBtn addTarget:self action:@selector(backAction:)
       forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton *editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    editBtn.frame = CGRectMake(SCREEN_WIDTH-120, 40, 60, 40);
+    [self.view addSubview:editBtn];
+    [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
+    [editBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [editBtn setTitleColor:RGB(242, 148, 20) forState:UIControlStateHighlighted];
+    editBtn.titleLabel.font = [UIFont boldSystemFontOfSize:20];
+    [editBtn addTarget:self action:@selector(editAction:)
+      forControlEvents:UIControlEventTouchUpInside];
+
     
     UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(50, 40, SCREEN_WIDTH-100, 40)];
     titleL.backgroundColor = [UIColor clearColor];
@@ -117,6 +134,11 @@
                                                object:nil];
     
     [self getSchedules];
+    
+}
+
+- (void) editAction:(id)sender{
+    
     
 }
 
@@ -182,6 +204,8 @@
     
     [[_content subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
+    self._autoRunCells = [NSMutableArray array];
+    
     int left = (SCREEN_WIDTH - 15*6 - cellWidth*7)/2;
     
     int x = left;
@@ -211,6 +235,7 @@
                                initWithFrame:CGRectMake(x, y, cellWidth, cellWidth)];
             [_content addSubview:at];
             at.button.tag = i;
+            at.delegate = self;
             
             [at showRgsSchedule:sch];
             
@@ -245,6 +270,12 @@
     }
 }
 
+- (void) tappedAutoRunCell:(RgsSchedulerObj*)sch{
+    
+    [self showAutoRunView:sch];
+
+}
+
 - (void) notifyRefreshItems:(id)sender{
     
     [_autoItems removeAllObjects];
@@ -252,6 +283,12 @@
 }
 
 - (void) buttonAddAction:(UIButton*)sender{
+    
+    [self showAutoRunView:nil];
+}
+
+
+- (void) showAutoRunView:(RgsSchedulerObj*)sch{
     
     if(_auto_mode == 0)
     {
@@ -261,18 +298,20 @@
                                                                                           SCREEN_HEIGHT)];
         [self.view addSubview:autoView];
         autoView._scenarios = _scenarios;
+        autoView._schedule = sch;
         
         [autoView show];
     }
     else
     {
         AutoRunSetView *autoView = [[AutoRunSetView alloc] initWithWeeks:CGRectMake(0,
-                                                                                          0,
-                                                                                          SCREEN_WIDTH,
-                                                                                          SCREEN_HEIGHT)];
+                                                                                    0,
+                                                                                    SCREEN_WIDTH,
+                                                                                    SCREEN_HEIGHT)];
         [self.view addSubview:autoView];
         autoView._scenarios = _scenarios;
         autoView.ctrl = self;
+        autoView._schedule = sch;
         
         [autoView show];
     }
