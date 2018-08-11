@@ -200,18 +200,19 @@
     if(_currentObj == nil)
         return;
     
-#ifdef OPEN_REG_LIB_DEF
+
     
     IMP_BLOCK_SELF(EngineerVideoProcessViewCtrl);
     
     RgsDriverObj *driver = _currentObj._driver;
     if([driver isKindOfClass:[RgsDriverObj class]])
     {
+        /*
         [[RegulusSDK sharedRegulusSDK] GetDriverProxys:driver.m_id completion:^(BOOL result, NSArray *proxys, NSError *error) {
             if (result) {
                 if ([proxys count]) {
                     
-                    [block_self loadedCameraProxy:proxys];
+                    [block_self loadedVideoProxy:proxys];
                     
                 }
             }
@@ -219,11 +220,50 @@
                 [KVNProgress showErrorWithStatus:[error description]];
             }
         }];
+         */
+        
+        [[RegulusSDK sharedRegulusSDK] GetDriverCommands:driver.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
+            if (result) {
+                if ([commands count]) {
+                    [block_self loadedVideoCommands:commands];
+                }
+            }
+            else{
+                [KVNProgress showErrorWithStatus:[error description]];
+            }
+        }];
     }
-#endif
+
 }
 
-- (void) loadedCameraProxy:(NSArray*)proxys{
+
+- (void) loadedVideoCommands:(NSArray*)cmds{
+    
+    RgsDriverObj *driver = _currentObj._driver;
+    
+    id proxy = self._currentObj._proxyObj;
+    
+    VVideoProcessSetProxy *vpro = nil;
+    if(proxy && [proxy isKindOfClass:[VVideoProcessSetProxy class]])
+    {
+        vpro = proxy;
+    }
+    else
+    {
+        vpro = [[VVideoProcessSetProxy alloc] init];
+    }
+    
+    self._currentObj._proxyObj = _currentProxy;
+    
+    _currentProxy.delegate = self;
+    _currentProxy._deviceId = driver.m_id;
+    [_currentProxy checkRgsProxyCommandLoad:cmds];
+    
+    
+    
+}
+
+- (void) loadedVideoProxy:(NSArray*)proxys{
     
     id proxy = self._currentObj._proxyObj;
 
@@ -238,7 +278,7 @@
     _currentProxy.delegate = self;
     
     _currentProxy._rgsProxyObj = [proxys objectAtIndex:0];
-    [_currentProxy checkRgsProxyCommandLoad];
+    [_currentProxy checkRgsProxyCommandLoad:nil];
     
     
     self._currentObj._proxyObj = _currentProxy;

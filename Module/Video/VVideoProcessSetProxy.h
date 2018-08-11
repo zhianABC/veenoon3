@@ -21,13 +21,15 @@
 }
 
 @property (nonatomic, strong) RgsProxyObj *_rgsProxyObj;
+@property (nonatomic, assign) NSUInteger _deviceId;
+
 @property (nonatomic, weak) id <VVideoProcessSetProxyDelegate> delegate;
 @property (nonatomic, strong) NSMutableDictionary *_deviceMatcherDic;
 @property (nonatomic, strong) NSMutableDictionary *_inputDevices;
 @property (nonatomic, strong) NSMutableDictionary *_outputDevices;
 
 
-- (void) checkRgsProxyCommandLoad;
+- (void) checkRgsProxyCommandLoad:(NSArray*)cmds;
 
 - (NSDictionary*)getVideoProcessInputSettings;
 - (NSDictionary*)getVideoProcessOutputSettings;

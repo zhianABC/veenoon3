@@ -254,6 +254,7 @@
     {
         [KVNProgress show];
         
+        /*
         [[RegulusSDK sharedRegulusSDK] GetDriverProxys:driver.m_id completion:^(BOOL result, NSArray *proxys, NSError *error) {
             
             [KVNProgress dismiss];
@@ -269,9 +270,49 @@
                 [KVNProgress showErrorWithStatus:[error description]];
             }
         }];
+         */
+        
+        [[RegulusSDK sharedRegulusSDK] GetDriverCommands:driver.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
+            
+            [KVNProgress dismiss];
+            
+            if (result) {
+                if ([commands count]) {
+                    [block_self loadedVideoCommands:commands];
+                }
+            }
+            else{
+                [KVNProgress showErrorWithStatus:[error description]];
+            }
+        }];
     }
 #endif
 }
+
+
+- (void) loadedVideoCommands:(NSArray*)cmds{
+    
+    RgsDriverObj *driver = _curProcessor._driver;
+    
+    id proxy = self._curProcessor._proxyObj;
+    
+    if(proxy && [proxy isKindOfClass:[VVideoProcessSetProxy class]])
+    {
+        self._currentProxy = proxy;
+    }
+    
+    if(_currentProxy)
+    {
+        self._curProcessor._proxyObj = _currentProxy;
+        
+        _currentProxy.delegate = self;
+        _currentProxy._deviceId = driver.m_id;
+        [_currentProxy checkRgsProxyCommandLoad:cmds];
+        
+    }
+    
+}
+
 
 - (void) loadedVideoProcessorProxy:(NSArray*)proxys{
     
@@ -286,7 +327,7 @@
     {
         _currentProxy.delegate = self;
         _currentProxy._rgsProxyObj = [proxys objectAtIndex:0];
-        [_currentProxy checkRgsProxyCommandLoad];
+        [_currentProxy checkRgsProxyCommandLoad:nil];
         
         self._curProcessor._proxyObj = _currentProxy;
     }
