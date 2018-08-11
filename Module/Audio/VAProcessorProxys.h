@@ -259,6 +259,8 @@
 - (void) clearElecLevelSet;
 
 //TODO:增益
+- (NSDictionary*)getDeviceDigitalGain;
+- (NSString*) getDeviceMode;
 - (void) controlDeviceMode:(NSString*)mode;
 - (void) controlDeviceMicDb:(NSString*)db;
 - (void) control48V:(BOOL)is48v;

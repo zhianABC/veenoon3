@@ -8,7 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "APBaseView.h"
+#import "VAProcessorProxys.h"
 
-@interface ZengYi_UIView : APBaseView
+@interface ZengYi_UIView : APBaseView {
+    
+}
+- (id)initWithFrame:(CGRect)frame withProxy:(NSArray*)proxys;
+- (void) updateProxyCommandValIsLoaded;
 
 @end

@@ -92,9 +92,9 @@
     return self;
 }
 
-- (void) resetScalValue:(float) scalValue {
+- (void) resetScalValue:(int) scalValue {
     
-    valueLabel.text = [NSString stringWithFormat:@"%0.1f", (scalValue)];
+    valueLabel.text = [NSString stringWithFormat:@"%d", (scalValue)];
     curValue = scalValue;
     
     if (scalValue == minValue) {
@@ -114,7 +114,7 @@
     
     CGRect rc = roadSliderHighlight.frame;
     rc.origin.y = CGRectGetMidY(sliderThumb.frame);
-    float offset = CGRectGetMinY(roadSlider.frame);
+    int offset = CGRectGetMinY(roadSlider.frame);
     rc.size.height = CGRectGetHeight(roadSlider.frame) - rc.origin.y + offset;
     roadSliderHighlight.frame = rc;
     
@@ -200,7 +200,7 @@
         
         int h = rc.size.height - topEdge - bottomEdge;
         int subh = (rc.size.height - bottomEdge) - sliderThumb.center.y;
-        float value = (maxValue - minValue)*(float)subh/h + minValue;
+        int value = (maxValue - minValue)*(int)subh/h + minValue;
         
         [self resetScalValue:value];
         
@@ -254,7 +254,7 @@
         int h = rc.size.height - topEdge - bottomEdge;
         int subh = (rc.size.height - bottomEdge) - sliderThumb.center.y;
         
-        float value = (maxValue - minValue)*(float)subh/h + minValue;
+        int value = (maxValue - minValue)*(int)subh/h + minValue;
         
         [self resetScalValue:value];
        
@@ -301,7 +301,7 @@
     int h = rc.size.height - topEdge - bottomEdge;
     int subh = (rc.size.height - bottomEdge) - sliderThumb.center.y;
     
-    int value = (maxValue - minValue)*(float)subh/h + minValue;
+    int value = (maxValue - minValue)*(int)subh/h + minValue;
     
     return value;
 }
@@ -319,11 +319,11 @@
     [self resetScalValue:value];
 }
 
-- (void) setScaleValue:(float)value{
+- (void) setScaleValue:(int)value{
     
     CGRect rc = slider.frame;
     int h = rc.size.height - topEdge - bottomEdge;
-    int subh = ((float)(value - minValue)*h)/(maxValue - minValue);
+    int subh = ((int)(value - minValue)*h)/(maxValue - minValue);
     int cy = (rc.size.height - bottomEdge) - subh;
     
     sliderThumb.center = CGPointMake(slider.frame.origin.x+slider.bounds.size.width/2.0,

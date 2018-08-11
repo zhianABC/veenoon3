@@ -40,7 +40,7 @@
 - (void) setRoadImage:(UIImage *)image;
 - (void) setIndicatorImage:(UIImage *)image;
 - (void) resetScale;
-- (void) setScaleValue:(float)value;
+- (void) setScaleValue:(int)value;
 
 - (int) getScaleValue;
 

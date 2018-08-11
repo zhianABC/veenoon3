@@ -13,7 +13,7 @@
 #import "VAProcessorProxys.h"
 #import "TeslariaComboChooser.h"
 
-@interface ZengYi_UIView() <SlideButtonDelegate>{
+@interface ZengYi_UIView() <SlideButtonDelegate,VAProcessorProxysDelegate>{
     
     UIButton *channelBtn;
     SlideButton *btnJH2;
@@ -29,6 +29,9 @@
     UIButton *zerodbBtn;
     
     int _curSelectorIndex;
+    
+    int maxTh;
+    int minTh;
 }
 @property (nonatomic, strong) VAProcessorProxys *_curProxy;
 
@@ -46,8 +49,14 @@
  }
  */
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithFrame:(CGRect)frame withProxy:(NSArray *)proxys
 {
+    self._proxys = proxys;
+    
+    if ([self._proxys count]) {
+        self._curProxy = [self._proxys objectAtIndex:0];
+    }
+    
     if(self = [super initWithFrame:frame])
     {
         channelBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
@@ -61,6 +70,9 @@
         
         int y = CGRectGetMaxY(channelBtn.frame)+20;
         contentView.frame = CGRectMake(0, y, frame.size.width, 340);
+        
+        maxTh = 12;
+        minTh = -56;
        
         [self contentViewComps];
         
@@ -113,15 +125,35 @@
     
 }
 
-- (void) updateCurrentStateData{
+- (void) updateProxyCommandValIsLoaded {
+    _curProxy.delegate = self;
+    [_curProxy checkRgsProxyCommandLoad];
+}
+
+- (void) didLoadedProxyCommand {
     
+    _curProxy.delegate = nil;
     
+    NSDictionary *result = [_curProxy getDeviceDigitalGain];
+    
+    maxTh = [[result objectForKey:@"max"] intValue];
+    minTh = [[result objectForKey:@"min"] intValue];
+    
+    [self updateCurrentStateData];
+}
+
+- (void) updateCurrentStateData {
     float kdb = [_curProxy getDigitalGain];
+    float max = (maxTh - minTh);
+    if(max)
+    {
+        float f = (kdb - minTh)/max;
+        f = fabsf(f);
+        [btnJH2 setCircleValue:f];
+    }
+    
     NSString *valueStr= [NSString stringWithFormat:@"%0.1fdB", kdb];
     zaoshengL.text = valueStr;
-    
-    float f = (12.0 + kdb)/24.0;
-    [btnJH2 setCircleValue:f];
     
     [lineBtn setTitle:_curProxy._mode
              forState:UIControlStateNormal];
@@ -132,6 +164,23 @@
     
     [zerodbBtn setTitle:_curProxy._micDb
                forState:UIControlStateNormal];
+    NSString *mode = [_curProxy getDeviceMode];
+    if([mode isEqualToString:@"MIC"])
+    {
+        foureivBtn.alpha = 1;
+        foureivBtn.enabled = YES;
+        
+        zerodbBtn.alpha = 1;
+        zerodbBtn.enabled = YES;
+    }
+    else
+    {
+        foureivBtn.alpha = 0.8;
+        foureivBtn.enabled = NO;
+        
+        zerodbBtn.alpha = 0.8;
+        zerodbBtn.enabled = NO;
+    }
 }
 
 - (void) updateMuteButtonState{
@@ -165,7 +214,7 @@
 - (void) contentViewComps{
     
     UILabel *addLabel = [[UILabel alloc] init];
-    addLabel.text = @"增益 (db)";
+    addLabel.text = @"增益 (dB)";
     addLabel.font = [UIFont systemFontOfSize: 13];
     addLabel.textColor = [UIColor whiteColor];
     addLabel.frame = CGRectMake(735, 115, 120, 20);
@@ -191,8 +240,8 @@
 
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
-    float k = (value *24.0)-12.0;
-    NSString *valueStr= [NSString stringWithFormat:@"%0.1fdB", k];
+    float k = (value *(maxTh-minTh)) + minTh;
+    NSString *valueStr= [NSString stringWithFormat:@"%0.1f dB", k];
     
     zaoshengL.text = valueStr;
     
@@ -247,7 +296,7 @@
     zerodbBtn.layer.borderWidth = 2;
     zerodbBtn.layer.borderColor = [UIColor clearColor].CGColor;;
     zerodbBtn.clipsToBounds = YES;
-    [zerodbBtn setTitle:@"0db" forState:UIControlStateNormal];
+    [zerodbBtn setTitle:@"0 dB" forState:UIControlStateNormal];
     [zerodbBtn setTitleEdgeInsets:UIEdgeInsetsMake(0,10,0,0)];
     zerodbBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     zerodbBtn.alpha = 0.8;

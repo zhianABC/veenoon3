@@ -91,9 +91,9 @@
     //roadSlider.image = image;
 }
 
-- (void) resetScalValue:(float) scalValue {
+- (void) resetScalValue:(int) scalValue {
     
-    valueLabel.text = [NSString stringWithFormat:@"%0.1f", (scalValue)];
+    valueLabel.text = [NSString stringWithFormat:@"%d", (scalValue)];
     curValue = scalValue;
     
     if (scalValue == minValue) {
