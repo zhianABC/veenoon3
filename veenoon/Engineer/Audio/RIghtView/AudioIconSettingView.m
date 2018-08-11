@@ -140,7 +140,7 @@ UITableViewDataSource,AudioIconSettingViewDelegate, EPlusLayerViewDelegate> {
         
         [self initData];
         
-        self.backgroundColor = ADMIN_BLACK_COLOR;
+        self.backgroundColor = RIGHT_VIEW_CORNER_SD_COLOR;
         
         _tableView = [[UITableView alloc] initWithFrame:self.bounds];
         _tableView.delegate = self;

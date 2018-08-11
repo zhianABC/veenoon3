@@ -2281,7 +2281,7 @@
     NSMutableDictionary *result = [NSMutableDictionary dictionary];
     
     RgsCommandInfo *cmd = nil;
-    cmd = [_cmdMap objectForKey:@"SET_ANALOGY_GRAIN"];
+    cmd = [_cmdMap objectForKey:@"SET_DIGIT_GRAIN"];
     if(cmd)
     {
         if([cmd.params count])
@@ -2289,7 +2289,7 @@
             
             for( RgsCommandParamInfo * param_info in cmd.params)
             {
-                if([param_info.name isEqualToString:@"AG"])
+                if([param_info.name isEqualToString:@"DG"])
                 {
                     if(param_info.max)
                         [result setObject:param_info.max forKey:@"max"];

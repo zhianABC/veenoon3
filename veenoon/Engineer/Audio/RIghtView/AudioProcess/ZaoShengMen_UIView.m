@@ -120,7 +120,7 @@
     }
     
     NSString *startTime = [_curProxy getZaoshengStartTime];
-    float startTimeV = [startTime floatValue];
+    int startTimeV = [startTime intValue];
     
     float maxS = (maxStartDur- minStartDur);
     if(maxS)
@@ -133,7 +133,7 @@
     qidongshijianL.text = [startTime stringByAppendingString:@" ms"];
     
     NSString *huifuTime = [_curProxy getZaoshengRecoveryTime];
-    float huifuTimeValue = [huifuTime floatValue];
+    int huifuTimeValue = [huifuTime floatValue];
     
     max = (maxRecoveDur - minRecoveDur);
     if(max)
@@ -143,7 +143,7 @@
         [huifushijianSlider setCircleValue:f];
     }
     
-    huifushijianL.text = [NSString stringWithFormat:@"%f ms", huifuTimeValue];
+    huifushijianL.text = [NSString stringWithFormat:@"%d ms", huifuTimeValue];
     
     BOOL isFanKuiYiZhi = [_curProxy isZaoshengStarted];
     

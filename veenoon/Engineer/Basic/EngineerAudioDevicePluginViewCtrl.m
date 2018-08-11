@@ -153,14 +153,14 @@
     _fankuiyizhiBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*6, height,80, 110)];
     [_fankuiyizhiBtn  buttonWithIcon:[UIImage imageNamed:@"enginner_fankuiyizhi_n.png"] selectedIcon:[UIImage imageNamed:@"enginner_fankuiyizhi_s.png"] text:@"反馈抑制" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_fankuiyizhiBtn addTarget:self action:@selector(fankuiyizhiAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_fankuiyizhiBtn];
+//    [self.view addSubview:_fankuiyizhiBtn];
     
-    _yinpinchuliBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left, height + 120,80, 110)];
+    _yinpinchuliBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*6, height,80, 110)];
     [_yinpinchuliBtn  buttonWithIcon:[UIImage imageNamed:@"engineer_yinpinchuli_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_yinpinchuli_s.png"] text:audio_process_name normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_yinpinchuliBtn addTarget:self action:@selector(yinpinchuliAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_yinpinchuliBtn];
     
-    _floorWarmBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap, height+ 120,80, 110)];
+    _floorWarmBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left, height+ 120,80, 110)];
     [_floorWarmBtn  buttonWithIcon:[UIImage imageNamed:@"engineer_gongfang_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_gongfang_s.png"] text:@"功放" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_floorWarmBtn addTarget:self action:@selector(gongfangAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_floorWarmBtn];

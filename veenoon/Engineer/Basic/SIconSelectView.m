@@ -137,7 +137,7 @@ IconLayerViewDelegate, CustomPickerViewDelegate>
         
         _tableView.clipsToBounds = NO;
         
-        self.backgroundColor = RGB(0, 89, 118);
+        self.backgroundColor = RIGHT_VIEW_CORNER_SD_COLOR;
         
         _maskView = [[UIView alloc] initWithFrame:CGRectMake(0, 0,
                                                              frame.size.width,
