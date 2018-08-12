@@ -130,8 +130,8 @@
                                @"name":@"串口服务器",
                                @"driver":UUID_Serial_Com,
                                @"brand":@"Teslaria",
-                             @"icon":@"engineer_video_xinxihe_n.png",
-                             @"icon_s":@"engineer_video_xinxihe_s.png",
+                             @"icon":@"engineer_video_chuankou_n.png",
+                             @"icon_s":@"engineer_video_chuankou_s.png",
                              @"driver_class":@"ComDriver",
                                @"ptype":@"Com"
                                }];
