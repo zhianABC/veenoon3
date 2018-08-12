@@ -102,6 +102,12 @@
     [_curProxy checkRgsProxyCommandLoad];
 }
 
+- (void) didLoadedProxyCommand {
+    _curProxy.delegate = nil;
+    
+    [self updateFankuiyizhi];
+}
+
 - (void) contentViewComps {
     
     fankuiyizhiBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
