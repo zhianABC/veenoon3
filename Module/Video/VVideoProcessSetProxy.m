@@ -27,6 +27,7 @@
 @implementation VVideoProcessSetProxy
 @synthesize _rgsCommands;
 @synthesize _rgsProxyObj;
+@synthesize _deviceId;
 @synthesize _cmdMap;
 @synthesize delegate;
 @synthesize _deviceMatcherDic;
@@ -51,58 +52,79 @@
 }
 
 
-- (void) checkRgsProxyCommandLoad{
+- (void) checkRgsProxyCommandLoad:(NSArray*)cmds{
     
-    if(_rgsProxyObj == nil || _rgsCommands){
+    if(cmds && [cmds count])
+    {
+        self._cmdMap = [NSMutableDictionary dictionary];
+        
+        self._rgsCommands = cmds;
+        for(RgsCommandInfo *cmd in cmds)
+        {
+            [self._cmdMap setObject:cmd forKey:cmd.name];
+        }
+        
+        _isSetOK = YES;
+        
         
         if(delegate && [delegate respondsToSelector:@selector(didLoadedProxyCommand)])
         {
             [delegate didLoadedProxyCommand];
         }
-        
-        return;
     }
-    
-    self._cmdMap = [NSMutableDictionary dictionary];
-    
-    IMP_BLOCK_SELF(VVideoProcessSetProxy);
-    
-    [KVNProgress show];
-    
-    [[RegulusSDK sharedRegulusSDK] GetProxyCommands:_rgsProxyObj.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
-        
-        [KVNProgress dismiss];
-        
-        if (result)
-        {
-            if ([commands count]) {
-                
-                block_self._rgsCommands = commands;
-                for(RgsCommandInfo *cmd in commands)
-                {
-                    [block_self._cmdMap setObject:cmd forKey:cmd.name];
-                }
-                
-                _isSetOK = YES;
-                
-                
-                [block_self initDatasAfterPullData];
-                [block_self callDelegateDidLoad];
+    else
+    {
+        if(_rgsProxyObj == nil || _rgsCommands){
+            
+            if(delegate && [delegate respondsToSelector:@selector(didLoadedProxyCommand)])
+            {
+                [delegate didLoadedProxyCommand];
             }
+            
+            return;
         }
-        else
-        {
-            NSString *errorMsg = [NSString stringWithFormat:@"%@ - proxyid:%d",
-                                  [error description], (int)_rgsProxyObj.m_id];
-            
-            [KVNProgress showErrorWithStatus:errorMsg];
-            
-            [block_self callDelegateDidLoad];
+        
+        self._cmdMap = [NSMutableDictionary dictionary];
+        
+        IMP_BLOCK_SELF(VVideoProcessSetProxy);
+        
+        [KVNProgress show];
+        
+        [[RegulusSDK sharedRegulusSDK] GetProxyCommands:_rgsProxyObj.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
             
             [KVNProgress dismiss];
-        }
-        
-    }];
+            
+            if (result)
+            {
+                if ([commands count]) {
+                    
+                    block_self._rgsCommands = commands;
+                    for(RgsCommandInfo *cmd in commands)
+                    {
+                        [block_self._cmdMap setObject:cmd forKey:cmd.name];
+                    }
+                    
+                    _isSetOK = YES;
+                    
+                    
+                    [block_self initDatasAfterPullData];
+                    [block_self callDelegateDidLoad];
+                }
+            }
+            else
+            {
+                NSString *errorMsg = [NSString stringWithFormat:@"%@ - proxyid:%d",
+                                      [error description], (int)_rgsProxyObj.m_id];
+                
+                [KVNProgress showErrorWithStatus:errorMsg];
+                
+                [block_self callDelegateDidLoad];
+                
+                [KVNProgress dismiss];
+            }
+            
+        }];
+    }
 }
 
 - (void) callDelegateDidLoad{
@@ -245,7 +267,14 @@
                 }
             }
         }
-        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+        
+        NSInteger objid = _deviceId;
+        if(_rgsProxyObj)
+        {
+            objid = _rgsProxyObj.m_id;
+        }
+        
+        [[RegulusSDK sharedRegulusSDK] ControlDevice:objid
                                                  cmd:cmd.name
                                                param:param completion:nil];
     }
@@ -295,7 +324,12 @@
             }
         }
     
-        int proxyid = (int)_rgsProxyObj.m_id;
+
+        NSInteger proxyid = _deviceId;
+        if(_rgsProxyObj)
+        {
+            proxyid = _rgsProxyObj.m_id;
+        }
         
         RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc] init];
         scene_opt.dev_id = proxyid;

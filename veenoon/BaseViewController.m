@@ -99,6 +99,8 @@
         NSString *idStr = @"Unk";
         if (driver != nil) {
             idStr = [NSString stringWithFormat:@"%d", (int) driver.m_id];
+            if(driver.name)
+                nameStr = driver.name;
         }
         
         if (nameStr != nil) {

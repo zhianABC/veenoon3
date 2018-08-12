@@ -324,6 +324,11 @@
     {
         RgsDriverObj *dr = _driver;
         [allData setObject:[NSNumber numberWithInteger:dr.m_id] forKey:@"driver_id"];
+        
+        if(dr.name)
+        {
+            [allData setObject:dr.name forKey:@"driver_name"];
+        }
     }
     if(_comDriverInfo)
     {
@@ -406,6 +411,7 @@
     
     RgsDriverObj *dr = [[RgsDriverObj alloc] init];
     dr.m_id = [[json objectForKey:@"driver_id"] integerValue];
+    dr.name = [json objectForKey:@"driver_name"];
     self._driver = dr;
     
     RgsDriverInfo *comdrinfo = [[RgsDriverInfo alloc] init];

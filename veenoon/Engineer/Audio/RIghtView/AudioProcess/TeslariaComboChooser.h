@@ -19,5 +19,7 @@ typedef void (^TeslariaComboChooserBlock)(id object, int index);
 @property (nonatomic, assign) int _type;
 @property (nonatomic, strong) NSString* _unit;
 
+@property (nonatomic, strong) NSString* _titleStr;
+
 @end
 

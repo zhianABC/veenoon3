@@ -18,7 +18,11 @@
 #import "RegulusSDK.h"
 #import "KVNProgress.h"
 
-@interface UserVideoConfigViewCtrl () <UserVideoConfigViewDelegate, VVideoProcessSetProxyDelegate> {
+#import "PlugsCtrlTitleHeader.h"
+#import "TeslariaComboChooser.h"
+
+
+@interface UserVideoConfigViewCtrl () <UserVideoConfigViewDelegate, VVideoProcessSetProxyDelegate, UIPopoverPresentationControllerDelegate> {
    
     int inputMin;
     int inputMax;
@@ -29,11 +33,16 @@
     
     UserVideoConfigView *_contrlPanl;
     
+    PlugsCtrlTitleHeader *_selectSysBtn;
+    TeslariaComboChooser *_chooser;
 }
 @property (nonatomic, strong) NSMutableArray *_inputDevices;
 @property (nonatomic, strong) NSMutableArray *_outputDevices;
 @property (nonatomic, strong) VVideoProcessSet *_curProcessor;
 @property (nonatomic, strong) VVideoProcessSetProxy *_currentProxy;
+
+@property (nonatomic, strong) NSMutableArray *_videoProcessers;
+
 
 @end
 
@@ -43,6 +52,8 @@
 @synthesize _scenario;
 @synthesize _curProcessor;
 @synthesize _currentProxy;
+
+@synthesize _videoProcessers;
 
 
 - (void)viewDidLoad {
@@ -87,22 +98,147 @@
                                                         SCREEN_HEIGHT-114)];
     [self.view addSubview:_contrlPanl];
     
-    if([_scenario._videoDevices count])
+    //找出所有的视频处理器
+    self._videoProcessers = [NSMutableArray array];
+    for(BasePlugElement *plug in _scenario._videoDevices)
     {
-        for(BasePlugElement *plug in _scenario._videoDevices)
-        {
-            if([plug isKindOfClass:[VVideoProcessSet class]])
-                self._curProcessor = (VVideoProcessSet*)plug;
+        if([plug isKindOfClass:[VVideoProcessSet class]]){
+            [_videoProcessers addObject:plug];
         }
     }
     
+    if([_videoProcessers count])
+        self._curProcessor = [_videoProcessers objectAtIndex:0];
+    
+    
+    _selectSysBtn = [[PlugsCtrlTitleHeader alloc] initWithFrame:CGRectMake(50, 100, 80, 30)];
+    [self.view addSubview:_selectSysBtn];
+    [_selectSysBtn addTarget:self
+                      action:@selector(chooseDevice:)
+            forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    [self refreshCurrentProcessor];
+}
+
+- (void) refreshCurrentProcessor{
+    
+    [self showBasePluginName:self._curProcessor];
     [self getCurrentDeviceDriverProxys];
+}
+
+
+#pragma mark -- UIPopoverPresentationController ---
+
+- (BOOL) popoverPresentationControllerShouldDismissPopover:(UIPopoverPresentationController *)popoverPresentationController{
     
+    return YES;
     
+}
+- (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller{
     
+    return UIModalPresentationNone;
     
 }
 
+- (void)popoverPresentationControllerDidDismissPopover:(UIPopoverPresentationController *)popoverPresentationController{
+    
+    NSLog(@"dismissed");
+    _chooser = nil;
+}
+
+
+#pragma mark -- 选择设备---
+
+- (void) chooseDevice:(UIButton*)sender{
+    
+    if([_videoProcessers count] > 1)
+    {
+        
+        NSMutableArray *options = [NSMutableArray array];
+        for(int i = 0; i < [_videoProcessers count]; i++)
+        {
+            
+            VVideoProcessSet *plug = [_videoProcessers objectAtIndex:i];
+            
+            RgsDriverObj *driver = (RgsDriverObj*)plug._driver;
+            NSString *name = plug._ipaddress;
+            if(driver && driver.name)
+            {
+                name = driver.name;
+            }
+            
+            NSString *s = [NSString stringWithFormat:@"%02d %@", i+1, name];
+            
+            [options addObject:s];
+        }
+        
+        _chooser = [[TeslariaComboChooser alloc] init];
+        _chooser._dataArray = options;
+        _chooser._titleStr = @"选择设备";
+        _chooser._unit = @"";
+        
+        int h = (int)[_chooser._dataArray count]*30 + 50;
+        _chooser._size = CGSizeMake(320, h);
+        
+        _chooser.modalPresentationStyle = UIModalPresentationPopover;
+        _chooser.preferredContentSize =  CGSizeMake(320, h);
+        _chooser.popoverPresentationController.delegate = self;
+        _chooser.popoverPresentationController.sourceView = sender;
+        _chooser.popoverPresentationController.sourceRect = sender.bounds;
+        _chooser.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+        [self presentViewController:_chooser animated:YES completion:nil];
+        
+        IMP_BLOCK_SELF(UserVideoConfigViewCtrl);
+        _chooser._block = ^(id object, int index) {
+            
+            [block_self changeDevice:index];
+        };
+        
+    }
+    
+}
+
+- (void) changeDevice:(int)idx{
+    
+    VVideoProcessSet *plug = [_videoProcessers objectAtIndex:idx];
+    
+    self._curProcessor = plug;
+    
+    if(_chooser)
+    {
+        [_chooser dismissViewControllerAnimated:YES
+                                     completion:nil];
+        
+        _chooser = nil;
+    }
+    
+    
+    [self refreshCurrentProcessor];
+}
+
+- (void) showBasePluginName:(BasePlugElement*) basePlugElement {
+    
+    if (basePlugElement) {
+        
+        NSString *ipAddress = @"Unk";
+        NSString *nameStr = basePlugElement._ipaddress;
+        RgsDriverObj *driver = basePlugElement._driver;
+        NSString *idStr = @"Unk";
+        if (driver != nil) {
+            idStr = [NSString stringWithFormat:@"%d", (int) driver.m_id];
+            if(driver.name)
+                nameStr = driver.name;
+        }
+        
+        if (nameStr != nil) {
+            ipAddress = nameStr;
+        }
+        
+        NSString *showText = [[idStr stringByAppendingString:@" - "] stringByAppendingString:ipAddress];
+        [_selectSysBtn setShowText:showText];
+    }
+}
 
 - (void) getCurrentDeviceDriverProxys{
     
@@ -116,7 +252,13 @@
     RgsDriverObj *driver = _curProcessor._driver;
     if([driver isKindOfClass:[RgsDriverObj class]])
     {
+        [KVNProgress show];
+        
+        /*
         [[RegulusSDK sharedRegulusSDK] GetDriverProxys:driver.m_id completion:^(BOOL result, NSArray *proxys, NSError *error) {
+            
+            [KVNProgress dismiss];
+            
             if (result) {
                 if ([proxys count]) {
                     
@@ -128,9 +270,49 @@
                 [KVNProgress showErrorWithStatus:[error description]];
             }
         }];
+         */
+        
+        [[RegulusSDK sharedRegulusSDK] GetDriverCommands:driver.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
+            
+            [KVNProgress dismiss];
+            
+            if (result) {
+                if ([commands count]) {
+                    [block_self loadedVideoCommands:commands];
+                }
+            }
+            else{
+                [KVNProgress showErrorWithStatus:[error description]];
+            }
+        }];
     }
 #endif
 }
+
+
+- (void) loadedVideoCommands:(NSArray*)cmds{
+    
+    RgsDriverObj *driver = _curProcessor._driver;
+    
+    id proxy = self._curProcessor._proxyObj;
+    
+    if(proxy && [proxy isKindOfClass:[VVideoProcessSetProxy class]])
+    {
+        self._currentProxy = proxy;
+    }
+    
+    if(_currentProxy)
+    {
+        self._curProcessor._proxyObj = _currentProxy;
+        
+        _currentProxy.delegate = self;
+        _currentProxy._deviceId = driver.m_id;
+        [_currentProxy checkRgsProxyCommandLoad:cmds];
+        
+    }
+    
+}
+
 
 - (void) loadedVideoProcessorProxy:(NSArray*)proxys{
     
@@ -145,7 +327,7 @@
     {
         _currentProxy.delegate = self;
         _currentProxy._rgsProxyObj = [proxys objectAtIndex:0];
-        [_currentProxy checkRgsProxyCommandLoad];
+        [_currentProxy checkRgsProxyCommandLoad:nil];
         
         self._curProcessor._proxyObj = _currentProxy;
     }
@@ -208,47 +390,6 @@
         
     }
    
-    /*
-    self._inputDevices = @[@{@"name":@"DVD播放器",@"image":@"user_video_dvd_n.png",
-                             @"image_sel":@"user_video_dvd_s.png"},
-                           @{@"name":@"硬盘播放器",@"image":@"user_video_disk_n.png",
-                             @"image_sel":@"user_video_disk_s.png"},
-                           @{@"name":@"桌面信息盒",@"image":@"user_video_desk_n.png",
-                             @"image_sel":@"user_video_desk_s.png"},
-                           @{@"name":@"桌面信息盒",@"image":@"user_video_desk_n.png",
-                             @"image_sel":@"user_video_desk_s.png"},
-                           @{@"name":@"远程视讯",@"image":@"user_video_remote_n.png",
-                             @"image_sel":@"user_video_remote_s.png"},
-                           @{@"name":@"摄像机1",@"image":@"user_video_camera_n.png",
-                             @"image_sel":@"user_video_camera_s.png"},
-                           @{@"name":@"摄像机2",@"image":@"user_video_camera_n.png",
-                             @"image_sel":@"user_video_camera_s.png"},
-                           @{@"name":@"摄像机3",@"image":@"user_video_camera_n.png",
-                             @"image_sel":@"user_video_camera_s.png"}];
-    
-    self._outputDevices = @[@{@"name":@"拼接屏",@"image":@"user_video_pinjieping_n.png",
-                              @"image_sel":@"user_video_pinjieping_s.png",
-                              @"code":@"1000"},
-                            @{@"name":@"投影机",@"image":@"user_video_touying_n.png",
-                              @"image_sel":@"user_video_touying_s.png",
-                              @"code":@"1001"},
-                            @{@"name":@"液晶电视",@"image":@"user_video_yejing_n.png",
-                              @"image_sel":@"user_video_yejing_s.png",
-                              @"code":@"1002"},
-                            @{@"name":@"液晶电视",@"image":@"user_video_yejing_n.png",
-                              @"image_sel":@"user_video_yejing_s.png",
-                              @"code":@"1003"},
-                            @{@"name":@"录播机",@"image":@"user_video_lubo_n.png",
-                              @"image_sel":@"user_video_lubo_s.png",
-                              @"code":@"1004"},
-                            @{@"name":@"远程视讯",@"image":@"user_video_remote_n.png",
-                              @"image_sel":@"user_video_remote_s.png",
-                              @"code":@"1005"}];
-     */
-    
-    
-   
-    
     _contrlPanl._inputDatas = self._inputDevices;
     _contrlPanl._outputDatas = self._outputDevices;
     _contrlPanl.delegate_ = self;
