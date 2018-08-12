@@ -242,15 +242,14 @@
     RgsDriverObj *driver = _currentObj._driver;
     
     id proxy = self._currentObj._proxyObj;
-    
-    VVideoProcessSetProxy *vpro = nil;
+
     if(proxy && [proxy isKindOfClass:[VVideoProcessSetProxy class]])
     {
-        vpro = proxy;
+        self._currentProxy = proxy;
     }
     else
     {
-        vpro = [[VVideoProcessSetProxy alloc] init];
+        self._currentProxy = [[VVideoProcessSetProxy alloc] init];
     }
     
     self._currentObj._proxyObj = _currentProxy;

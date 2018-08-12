@@ -39,6 +39,8 @@
     UIImagePickerController *_imagePicker;
     
     UIImageView *imageView;
+    
+    JCActionView *jcAction;
 }
 
 @end
@@ -185,6 +187,10 @@
 
 
 - (void) longPressed0:(id)sender{
+    
+    if([jcAction superview])
+        return;
+    
     if(_imagePicker == nil)
     {
         _imagePicker = [[UIImagePickerController alloc] init];
@@ -196,7 +202,7 @@
     
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
     {
-        JCActionView *jcAction = [[JCActionView alloc] initWithTitles:@[@"直接拍照", @"从相册中选取"]
+        jcAction = [[JCActionView alloc] initWithTitles:@[@"直接拍照", @"从相册中选取"]
                                                                 frame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
         jcAction.delegate_ = self;
         jcAction.tag = 2017;

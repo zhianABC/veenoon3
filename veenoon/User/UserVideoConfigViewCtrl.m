@@ -98,9 +98,9 @@
                                                         SCREEN_HEIGHT-114)];
     [self.view addSubview:_contrlPanl];
     
-    //找出所有的音频处理器
+    //找出所有的视频处理器
     self._videoProcessers = [NSMutableArray array];
-    for(BasePlugElement *plug in _scenario._audioDevices)
+    for(BasePlugElement *plug in _scenario._videoDevices)
     {
         if([plug isKindOfClass:[VVideoProcessSet class]]){
             [_videoProcessers addObject:plug];
