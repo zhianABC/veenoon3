@@ -193,9 +193,11 @@
     {
         if([pro.type isEqualToString:@"Audio Mixer"])
         {
-            _currentProxy._rgsProxyObj = [proxys objectAtIndex:0];
+            _currentProxy._rgsProxyObj = pro;
             [_currentProxy checkRgsProxyCommandLoad:nil];
             self._currentObj._proxyObj = _currentProxy;
+            
+            break;
         }
     }
 
