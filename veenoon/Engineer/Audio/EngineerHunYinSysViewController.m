@@ -27,11 +27,15 @@
     BOOL isSettings;
     MixVoiceSettingsView *_rightView;
 }
+@property (nonatomic, strong) AudioEMixProxy *_currentProxy;
+
+
 @end
 
 @implementation EngineerHunYinSysViewController
 @synthesize _hunyinSysArray;
 @synthesize _currentObj;
+@synthesize _currentProxy;
 
 
 - (void)viewDidLoad {
@@ -141,21 +145,21 @@
     RgsDriverObj *driver = _currentObj._driver;
     if([driver isKindOfClass:[RgsDriverObj class]])
     {
-        /*混音会议 - 没有Proxy，直接访问Commands
-         [[RegulusSDK sharedRegulusSDK] GetDriverProxys:driver.m_id completion:^(BOOL result, NSArray *proxys, NSError *error) {
-         if (result) {
-         if ([proxys count]) {
-         
-         [block_self loadedCameraProxy:proxys];
-         
-         }
-         }
-         else{
-         [KVNProgress showErrorWithStatus:[error description]];
-         }
-         }];
-         */
         
+        [[RegulusSDK sharedRegulusSDK] GetDriverProxys:driver.m_id completion:^(BOOL result, NSArray *proxys, NSError *error) {
+            if (result) {
+                if ([proxys count]) {
+                    
+                    [block_self loadedHunyinProxys:proxys];
+                    
+                }
+            }
+            else{
+                [KVNProgress showErrorWithStatus:[error description]];
+            }
+        }];
+        
+        /*
         [[RegulusSDK sharedRegulusSDK] GetDriverCommands:driver.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
             if (result) {
                 if ([commands count]) {
@@ -166,10 +170,36 @@
                 [KVNProgress showErrorWithStatus:[error description]];
             }
         }];
+         */
     }
 #endif
 }
 
+- (void) loadedHunyinProxys:(NSArray*)proxys{
+    
+    id proxy = self._currentObj._proxyObj;
+    
+    if(proxy && [proxy isKindOfClass:[AudioEMixProxy class]])
+    {
+        self._currentProxy = proxy;
+    }
+    else
+    {
+        self._currentProxy = [[AudioEMixProxy alloc] init];
+    }
+    //_currentProxy.delegate = self;
+    
+    for(RgsProxyObj *pro in proxys)
+    {
+        if([pro.type isEqualToString:@"Audio Mixer"])
+        {
+            _currentProxy._rgsProxyObj = [proxys objectAtIndex:0];
+            [_currentProxy checkRgsProxyCommandLoad:nil];
+            self._currentObj._proxyObj = _currentProxy;
+        }
+    }
+
+}
 
 - (void) loadedHunyinCommands:(NSArray*)cmds{
     
@@ -221,6 +251,7 @@
     isSettings = NO;
 }
 - (void) didSliderValueChanged:(float)value object:(id)object {
+   
     float circleValue = value;
     
     [_currentObj._proxyObj controlDeviceVol:circleValue force:YES];
