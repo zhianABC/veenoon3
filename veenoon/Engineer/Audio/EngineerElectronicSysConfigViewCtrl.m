@@ -264,8 +264,13 @@
         [[RegulusSDK sharedRegulusSDK] GetDriverProxys:driver.m_id completion:^(BOOL result, NSArray *proxys, NSError *error) {
             if (result) {
                 if ([proxys count]) {
-                    
-                    block_self._proxys = proxys;
+                    NSMutableArray *proxysArray = [NSMutableArray array];
+                    for (RgsProxyObj *proxyObj in proxys) {
+                        if ([proxyObj.type isEqualToString:@"Relay"]) {
+                            [proxysArray addObject:proxyObj];
+                        }
+                    }
+                    block_self._proxys = proxysArray;
                     [block_self layoutChannels];
                 }
             }
@@ -297,7 +302,9 @@
         
         [slbtn enableValueSet:YES];
         
-        
+        if (YES) {
+            return;
+        }
         
         if(proxyObj && [proxyObj isKindOfClass:[APowerESetProxy class]])
         {
@@ -313,6 +320,10 @@
         numberL.textColor = [UIColor whiteColor];;
         
         [slbtn enableValueSet:NO];
+        
+        if (YES) {
+            return;
+        }
         
         if(proxyObj && [proxyObj isKindOfClass:[APowerESetProxy class]])
         {
@@ -345,9 +356,6 @@
             powerProxy._relayStatus = @"Break";
         }
     }
-    
-    
-    
 }
 - (void) didControlRelayDuration:(int)relayIndex withDuration:(int)duration {
     if (relayIndex == -1) {
