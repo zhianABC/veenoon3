@@ -44,6 +44,9 @@
 #import "VDVDPlayerSet.h"
 #import "VDVDPlayerProxy.h"
 
+#import "AirConditionPlug.h"
+#import "AirConditionProxy.h"
+
 #import "DataBase.h"
 #import "DataCenter.h"
 
@@ -914,6 +917,24 @@
                     }
                 }
             }
+            
+            NSDictionary *data = [dev objectToJson];
+            [evns addObject:data];
+        }
+        else if([dev isKindOfClass:[AirConditionPlug class]])
+        {
+//            AirConditionProxy *proj = ((AirConditionPlug*)dev)._proxyObj;
+//            if([proj isSetChanged])
+//            {
+//                NSArray *rsps = [proj ];
+//                if(rsps && [rsps count])
+//                {
+//                    for(id rsp in rsps)
+//                    {
+//                        [self addEventOperation:rsp];
+//                    }
+//                }
+//            }
             
             NSDictionary *data = [dev objectToJson];
             [evns addObject:data];

@@ -11,7 +11,8 @@
 #import "Scenario.h"
 #import "AirConditionPlug.h"
 #import "RegulusSDK.h"
-#import "AirConditionPlug.h"
+#import "AirConditionProxy.h"
+#import "KVNProgress.h"
 
 @interface UserAirConditionViewCtrl () <MapMarkerLayerDelegate>{
     NSMutableArray *_conditionRoomList;
@@ -26,13 +27,17 @@
     UILabel *wenduL;
     
     AirConditionPlug *_currentSelected;
+    
+    int _windIdx;
 }
 @property (nonatomic, strong) NSMutableArray *_conditionRoomList;
+@property (nonatomic, strong) NSArray *_windModes;
 @end
 
 @implementation UserAirConditionViewCtrl
 @synthesize _conditionRoomList;
 @synthesize _scenario;
+@synthesize _windModes;
 
 
 - (void) initData {
@@ -91,24 +96,30 @@
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
-    int leftGap = 160;
+    
     int scrollHeight = 600;
     int cellWidth = 100;
     int rowGap = 20;
     int number = (int) [self._conditionRoomList count];
-    int contentWidth = number * 100 + (number-1) * rowGap;
-    UIScrollView *airCondtionView = [[UIScrollView alloc] initWithFrame:CGRectMake(leftGap, SCREEN_HEIGHT-scrollHeight, SCREEN_WIDTH - leftGap*2, cellWidth+10)];
+    
+    int leftGap = (SCREEN_WIDTH - number*(cellWidth+20))/2 + 10;
+    if(leftGap < 50)
+        leftGap = 50;
+    
+    int contentWidth = number * cellWidth + (number-1) * rowGap;
+    UIScrollView *airCondtionView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-scrollHeight, SCREEN_WIDTH, cellWidth+10)];
     airCondtionView.contentSize =  CGSizeMake(contentWidth, cellWidth+10);
-    airCondtionView.scrollEnabled=YES;
+    //airCondtionView.scrollEnabled=YES;
     airCondtionView.backgroundColor =[UIColor clearColor];
     [self.view addSubview:airCondtionView];
     
     int index = 0;
+    int startX = leftGap;
     for (AirConditionPlug *plug in _conditionRoomList) {
         
         RgsDriverObj *driver = plug._driver;
         
-        int startX = index*cellWidth+index*rowGap+20;
+        
         int startY = 5;
         
         UIButton *airConditionBtn = [UIButton buttonWithColor:nil selColor:nil];
@@ -131,6 +142,10 @@
         index++;
         
         [_conditionBtnList addObject:airConditionBtn];
+        
+        startX+=cellWidth;
+        startX+=rowGap;
+        
     }
     int rowGap2 = 40;
     int btnLeftRight = SCREEN_WIDTH/2-160-60;
@@ -268,6 +283,14 @@
     [self.view addSubview:aireFireBtn];
     [aireFireBtn addTarget:self action:@selector(airFireAction:)
        forControlEvents:UIControlEventTouchUpInside];
+    
+    if([_conditionBtnList count])
+    {
+        [self airConditionAction:[_conditionBtnList objectAtIndex:0]];
+    }
+    
+    _windIdx = 0;
+    self._windModes = @[@"Weak",@"Middle",@"Strong"];
 }
 
 - (void) didSelectView:(int) path {
@@ -279,15 +302,33 @@
         int value = [wenduStr intValue];
         value++;
         
+        if(value > 32)
+            value = 32;
+        
+        
         NSString *wenduStr2 = [NSString stringWithFormat:@"%d", value];
         wenduL.text = wenduStr2;
+        
+        if(_currentSelected._proxyObj)
+        {
+            [(AirConditionProxy*)_currentSelected._proxyObj controlACTemprature:value];
+        }
+        
     } else if (path == 3) {
         NSString *wenduStr = wenduL.text;
         int value = [wenduStr intValue];
         value--;
         
+        if(value < 16)
+            value = 16;
+        
         NSString *wenduStr2 = [NSString stringWithFormat:@"%d", value];
         wenduL.text = wenduStr2;
+        
+        if(_currentSelected._proxyObj)
+        {
+            [(AirConditionProxy*)_currentSelected._proxyObj controlACTemprature:value];
+        }
     }
 }
 - (void) didUnSelectView:(int) path {
@@ -309,6 +350,20 @@
     [zhireBtn setSelected:NO];
     [zhilengBtn setSelected:NO];
     
+    if(_currentSelected._proxyObj)
+    {
+        if(_windIdx >= 3)
+        {
+            _windIdx = 0;
+        }
+        
+        NSString *cmd = [_windModes objectAtIndex:_windIdx];
+        
+        [(AirConditionProxy*)_currentSelected._proxyObj controlACWindMode:cmd];
+        
+        _windIdx++;
+    }
+    
 }
 - (void) zhireAction:(id)sender{
     [aireFireBtn setSelected:NO];
@@ -316,12 +371,22 @@
     [zhireBtn setSelected:YES];
     [zhilengBtn setSelected:NO];
     
+   
+    if(_currentSelected._proxyObj)
+    {
+        [(AirConditionProxy*)_currentSelected._proxyObj controlACMode:@"Heat"];
+    }
 }
 - (void) zhilengAction:(id)sender{
     [aireFireBtn setSelected:NO];
     [aireWindBtn setSelected:NO];
     [zhireBtn setSelected:NO];
     [zhilengBtn setSelected:YES];
+    
+    if(_currentSelected._proxyObj)
+    {
+        [(AirConditionProxy*)_currentSelected._proxyObj controlACMode:@"Cool"];
+    }
 }
 - (void) airConditionAction:(UIButton*)sender {
     int selectTag = (int) sender.tag;
@@ -337,7 +402,62 @@
     }
     
     _currentSelected = [self._conditionRoomList objectAtIndex:selectTag];
+    
+    if(_currentSelected._proxyObj == nil)
+    {
+        [self getCurrentDeviceDriverProxys];
+    }
 }
+
+- (void) getCurrentDeviceDriverProxys{
+    
+    if(_currentSelected == nil)
+        return;
+    
+#ifdef OPEN_REG_LIB_DEF
+    
+    IMP_BLOCK_SELF(UserAirConditionViewCtrl);
+    
+    RgsDriverObj *driver = _currentSelected._driver;
+    if([driver isKindOfClass:[RgsDriverObj class]])
+    {
+        [[RegulusSDK sharedRegulusSDK] GetDriverProxys:driver.m_id completion:^(BOOL result, NSArray *proxys, NSError *error) {
+            if (result) {
+                if ([proxys count]) {
+                    
+                    [block_self loadedACDriverProxy:proxys];
+                    
+                }
+            }
+            else{
+                [KVNProgress showErrorWithStatus:[error description]];
+            }
+        }];
+    }
+#endif
+}
+
+- (void) loadedACDriverProxy:(NSArray*)proxys{
+    
+    id proxy = _currentSelected._proxyObj;
+    
+    AirConditionProxy *vcam = nil;
+    if(proxy && [proxy isKindOfClass:[AirConditionProxy class]])
+    {
+        vcam = proxy;
+    }
+    else
+    {
+        vcam = [[AirConditionProxy alloc] init];
+    }
+    
+    vcam._rgsProxyObj = [proxys objectAtIndex:0];
+    [vcam checkRgsProxyCommandLoad];
+    _currentSelected._proxyObj = vcam;
+    
+}
+
+
 
 - (void) okAction:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
