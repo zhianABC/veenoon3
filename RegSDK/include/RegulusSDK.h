@@ -45,6 +45,9 @@
 @optional -(void) onDownloadUpdatePacket:(RgsNotifyStatus) status persent:(CGFloat)persent error:(NSError *)error;
 @optional -(void) onDownloadFile:(NSString *)file persent:(float)persent;
 @optional -(void) onSystemWillReboot:(NSString *) reason;
+@optional -(void) onUploadProject:(RgsNotifyStatus) status persent:(CGFloat)persent error:(NSError *)error;
+@optional -(void) onDownloadProject:(RgsNotifyStatus) status persent:(CGFloat)persent error:(NSError *)error;
+@optional -(void) onDownloadPlugin:(RgsNotifyStatus) status name:(NSString *)name persent:(CGFloat)persent error:(NSError *)error;
 @end
 
 @interface RegulusSDK : NSObject
@@ -767,6 +770,67 @@
  */
 -(void)RequestDownTopology:(NSString *)save_path completion:(void(^)(BOOL result,NSError * error)) completion;
 
+/*!
+ @since 3.14.1
+ @brief 获取数据结构ID的客户数据字段
+ @param id 数据结构ID
+ @param completion 成功返回YES 失败返回NO data为获取的客户数据
+ */
+-(void)GetUserData:(NSInteger)id completion:(void(^)(BOOL result,NSDictionary * data,NSError * error)) completion;
+
+/*!
+ @since 3.14.1
+ @brief 添加数据结构ID的客户数据字段。新添加的数据字段和原来数据字段为叠加关系
+ @param id 数据结构ID
+ @param completion 成功返回YES 失败返回NO
+ */
+-(void)SetUserData:(NSInteger)id data:(NSDictionary *)data completion:(void(^)(BOOL result,NSError * error)) completion;
+
+/*!
+ @since 3.14.1
+ @brief 根据ID获取数据结构
+ @param id 数据结构ID
+ @param completion 成功返回YES 失败返回NO RgsObject 为数据结构指针
+ @see RgsAreaObj RgsDriverObj RgsProxyObj
+ */
+-(void)GetRgsObjectByID:(NSInteger) id completion:(void(^)(BOOL result,id RgsObject,NSError * error)) completion;
+
+/*!
+ @since 3.14.1
+ @brief 上传当前工程
+ 使用Put请求，请求参数存放在Header。
+ 上传结果由 onUploadProject返回
+ @param url 上传地址
+ @param param 上传参数
+ @param timeout 超时设置，单位秒
+ @param completion YES：请求成功发送 NO：请求发送失败
+ */
+-(void)ExportProjectToUrl:(NSString *)url param:(NSDictionary *)param timeout:(NSInteger)timeout completion:(void(^)(BOOL result,NSError * error)) completion;
+
+/*!
+ @since 3.14.1
+ @brief 下载并导入工程
+ 使用post请求，请求参数存放在Body。
+ 上传结果由 onDownloadProject返回
+ @param url 下载地址
+ @param param 下载参数
+ @param timeout 超时设置，单位秒
+ @param completion YES：请求成功发送 NO：请求发送失败
+ */
+-(void)ImportProjectFromUrl:(NSString *)url param:(NSDictionary *)param timeout:(NSInteger)timeout completion:(void(^)(BOOL result,NSError * error)) completion;
+
+/*!
+ @since 3.14.1
+ @brief 下载更新插件
+ 使用post请求，请求参数存放在Body。
+ 上传结果由 onDownloadPlugin返回
+ @param url 下载地址
+ @param param 下载参数
+ @param timeout 超时设置，单位秒
+ @param plugin_name 插件保存的名字
+ @param completion YES：请求成功发送 NO：请求发送失败
+ */
+-(void)UpdateRgsDriverFromUrl:(NSString *)url param:(NSDictionary *)param timeout:(NSInteger)timeout plugin_name:(NSString *)plugin_name completion:(void(^)(BOOL result,NSError * error)) completion;
 @end
 
 
