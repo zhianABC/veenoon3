@@ -535,28 +535,27 @@
 
     _isSetOK = YES;
     
-    ///控制频率
-//    if(fabs(_voiceDb - db) < 1)
-//        return;
-
     _voiceDb = db;
     
-    RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_ANALOGY_GRAIN"];
-    if(cmd)
+    if(force)//执行
     {
-        NSMutableDictionary * param = [NSMutableDictionary dictionary];
-        if([cmd.params count])
+        RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_ANALOGY_GRAIN"];
+        if(cmd)
         {
-            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
-            if(param_info.type == RGS_PARAM_TYPE_FLOAT)
+            NSMutableDictionary * param = [NSMutableDictionary dictionary];
+            if([cmd.params count])
             {
-                [param setObject:[NSString stringWithFormat:@"%0.1f",_voiceDb]
-                          forKey:param_info.name];
+                RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
+                if(param_info.type == RGS_PARAM_TYPE_FLOAT)
+                {
+                    [param setObject:[NSString stringWithFormat:@"%0.1f",_voiceDb]
+                              forKey:param_info.name];
+                }
             }
+            [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
+                                                     cmd:cmd.name
+                                                   param:param completion:nil];
         }
-        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
-                                                 cmd:cmd.name
-                                               param:param completion:nil];
     }
 }
 
@@ -593,7 +592,7 @@
                                                param:param completion:nil];
     }
 }
-- (void) controlDeviceMute:(BOOL)isMute{
+- (void) controlDeviceMute:(BOOL)isMute exec:(BOOL)exec{
     
     _isSetOK = YES;
     
@@ -610,13 +609,15 @@
         
         _isMute = NO;
     }
-    if(cmd)
+    
+    if(exec && cmd)
     {
         NSMutableDictionary * param = [NSMutableDictionary dictionary];
         [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
                                                  cmd:cmd.name
                                                param:param completion:nil];
     }
+
 }
 
 - (void) controlInverted:(BOOL)invert{

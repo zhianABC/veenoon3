@@ -422,7 +422,8 @@
         if([data isKindOfClass:[VAProcessorProxys class]])
         {
             //float circleValue = -70 + (value * 82);
-            [(VAProcessorProxys*)data controlDeviceDb:value force:NO];
+            [(VAProcessorProxys*)data controlDeviceDb:value
+                                                force:YES];
             
         }
     }

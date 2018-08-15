@@ -489,7 +489,8 @@
     id data = slbtn.data;
     if([data isKindOfClass:[VAProcessorProxys class]])
     {
-        [(VAProcessorProxys*)data controlDeviceDb:circleValue force:NO];
+        [(VAProcessorProxys*)data controlDeviceDb:circleValue
+                                            force:YES];
         
         [_zengyiSlider setScaleValue:circleValue];
     }
@@ -501,7 +502,8 @@
     if([data isKindOfClass:[VAProcessorProxys class]])
     {
         float circleValue = minAnalogyGain + (value * (maxAnalogyGain - minAnalogyGain));
-        [(VAProcessorProxys*)data controlDeviceDb:circleValue force:YES];
+        [(VAProcessorProxys*)data controlDeviceDb:circleValue
+                                            force:YES];
         
         [_zengyiSlider setScaleValue:circleValue];
     }
@@ -512,6 +514,10 @@
 - (void) didSliderValueChanged:(float)value object:(id)object {
     
     float circleValue = value;
+    
+    //批量执行
+    NSMutableArray *opts = [NSMutableArray array];
+    
     for (SlideButton *button in _selectedBtnArray) {
         
         button._valueLabel.text = [NSString stringWithFormat:@"%0.1f db", circleValue];
@@ -520,14 +526,32 @@
         id data = button.data;
         if([data isKindOfClass:[VAProcessorProxys class]])
         {
-            [(VAProcessorProxys*)data controlDeviceDb:circleValue force:NO];
+            [(VAProcessorProxys*)data controlDeviceDb:circleValue
+                                                force:NO];
+            
+            //控制命令
+            RgsSceneOperation *opt = [(VAProcessorProxys*)data
+                                      generateEventOperation_AnalogyGain];
+            if(opt)
+                [opts addObject:opt];
         }
     }
+
+    
+    if([opts count])
+        [[RegulusSDK sharedRegulusSDK] ControlDeviceByOperation:opts
+                                                     completion:nil];
+    
 }
 
 - (void) didSliderEndChanged:(float)value object:(id)object{
     
     float circleValue = value;
+    
+    //批量执行
+    NSMutableArray *opts = [NSMutableArray array];
+    
+    
     for (SlideButton *button in _selectedBtnArray) {
         
         button._valueLabel.text = [NSString stringWithFormat:@"%0.1f db", circleValue];
@@ -536,12 +560,26 @@
         id data = button.data;
         if([data isKindOfClass:[VAProcessorProxys class]])
         {
-            [(VAProcessorProxys*)data controlDeviceDb:circleValue force:YES];
+            [(VAProcessorProxys*)data controlDeviceDb:circleValue
+                                                force:NO];
+            
+            //控制命令
+            RgsSceneOperation *opt = [(VAProcessorProxys*)data
+                                      generateEventOperation_AnalogyGain];
+            if(opt)
+                [opts addObject:opt];
         }
     }
+    
+    if([opts count])
+        [[RegulusSDK sharedRegulusSDK] ControlDeviceByOperation:opts
+                                                     completion:nil];
 }
 
 - (void) didSliderMuteChanged:(BOOL)mute object:(id)object{
+    
+    //批量执行
+    NSMutableArray *opts = [NSMutableArray array];
     
     for (SlideButton *button in _selectedBtnArray) {
        
@@ -550,9 +588,20 @@
         id data = button.data;
         if([data isKindOfClass:[VAProcessorProxys class]])
         {
-            [(VAProcessorProxys*)data controlDeviceMute:mute];
+            [(VAProcessorProxys*)data controlDeviceMute:mute
+                                                   exec:NO];
+            
+            //控制命令
+            RgsSceneOperation *opt = [(VAProcessorProxys*)data
+                                      generateEventOperation_Mute];
+            if(opt)
+                [opts addObject:opt];
         }
     }
+    
+    if([opts count])
+        [[RegulusSDK sharedRegulusSDK] ControlDeviceByOperation:opts
+                                                     completion:nil];
 }
 
 

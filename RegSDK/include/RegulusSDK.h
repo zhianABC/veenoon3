@@ -811,7 +811,7 @@
  @since 3.14.1
  @brief 下载并导入工程
  使用post请求，请求参数存放在Body。
- 上传结果由 onDownloadProject返回
+ 下载结果由 onDownloadProject返回
  @param url 下载地址
  @param param 下载参数
  @param timeout 超时设置，单位秒
@@ -823,7 +823,7 @@
  @since 3.14.1
  @brief 下载更新插件
  使用post请求，请求参数存放在Body。
- 上传结果由 onDownloadPlugin返回
+ 下载结果由 onDownloadPlugin返回
  @param url 下载地址
  @param param 下载参数
  @param timeout 超时设置，单位秒
@@ -831,6 +831,14 @@
  @param completion YES：请求成功发送 NO：请求发送失败
  */
 -(void)UpdateRgsDriverFromUrl:(NSString *)url param:(NSDictionary *)param timeout:(NSInteger)timeout plugin_name:(NSString *)plugin_name completion:(void(^)(BOOL result,NSError * error)) completion;
+
+/*!
+ @since 3.14.2
+ @brief 请求代理状态参数，结果在onRecvDeviceNotify返回
+ @param proxy_id 代理ID
+ @param completion 成功返回YES 失败返回NO RgsObject 为数据结构指针
+ */
+-(void)QueryProxyStateInCallBack:(NSInteger)proxy_id completion:(void(^)(BOOL result,NSError * error)) completion;
 @end
 
 

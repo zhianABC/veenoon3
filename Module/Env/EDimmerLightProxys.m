@@ -162,7 +162,7 @@
     return max;
 }
 
-- (void) controlDeviceLightLevel:(int)levelValue ch:(int)ch{
+- (void) controlDeviceLightLevel:(int)levelValue ch:(int)ch exec:(BOOL)exec{
     
     RgsCommandInfo *cmd = nil;
     cmd = [_cmdMap objectForKey:@"SET_CH_LEVEL"];
@@ -171,7 +171,7 @@
     [self._channelsMap setObject:[NSNumber numberWithInt:_level]
                           forKey:[NSString stringWithFormat:@"%d", ch]];
     
-    if(cmd)
+    if(cmd && exec)
     {
         NSMutableDictionary * param = [NSMutableDictionary dictionary];
         if([cmd.params count])

@@ -358,7 +358,9 @@
     
     if([vpro isKindOfClass:[EDimmerLightProxys class]])
     {
-        [vpro controlDeviceLightLevel:circleValue ch:ch];
+        [vpro controlDeviceLightLevel:circleValue
+                                   ch:ch
+                                 exec:YES];
     }
     
 }

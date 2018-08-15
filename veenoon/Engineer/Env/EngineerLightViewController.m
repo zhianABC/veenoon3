@@ -274,18 +274,31 @@
 - (void) didSliderValueChanged:(float)value object:(id)object {
     
     float circleValue = (value + 0.0f)/100.0f;
+    
+     EDimmerLightProxys *vpro = self._curProcessor._proxyObj;
+    
     for (LightSliderButton *button in _selectedBtnArray) {
         
         [button setCircleValue:circleValue];
         
-        EDimmerLightProxys *vpro = self._curProcessor._proxyObj;
         int ch = (int)button.tag + 1;
         if([vpro isKindOfClass:[EDimmerLightProxys class]])
         {
-            [vpro controlDeviceLightLevel:(int)value ch:ch];
-            
-            
+            [vpro controlDeviceLightLevel:(int)value
+                                       ch:ch
+                                     exec:NO];
+
         }
+    }
+    
+    if(vpro)
+    {
+        //控制命令
+        NSArray *opts = [vpro generateEventOperation_ChLevel];
+        
+        if([opts count])
+            [[RegulusSDK sharedRegulusSDK] ControlDeviceByOperation:opts
+                                                         completion:nil];
     }
 }
 
@@ -297,7 +310,9 @@
     int ch = (int)slbtn.tag + 1;
     if([vpro isKindOfClass:[EDimmerLightProxys class]])
     {
-        [vpro controlDeviceLightLevel:circleValue ch:ch];
+        [vpro controlDeviceLightLevel:circleValue
+                                   ch:ch
+                                 exec:YES];
     }
     
     [_zengyiSlider setScaleValue:circleValue];

@@ -139,7 +139,7 @@
 - (NSDictionary*)getWaveOptions;
 
 - (void) controlDeviceDb:(float)db force:(BOOL)force;
-- (void) controlDeviceMute:(BOOL)isMute;
+- (void) controlDeviceMute:(BOOL)isMute exec:(BOOL)exec;
 
 
 //TODO: 反馈抑制

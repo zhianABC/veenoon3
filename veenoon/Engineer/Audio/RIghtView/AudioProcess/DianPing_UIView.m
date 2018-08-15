@@ -251,7 +251,8 @@
     
         if(_curProxy)
         {
-            [_curProxy controlDeviceDb:k force:YES];
+            [_curProxy controlDeviceDb:k
+                                 force:YES];
         }
     }
     
@@ -291,7 +292,7 @@
     if(_curProxy)
     {
         BOOL isMute = [_curProxy isProxyMute];
-        [_curProxy controlDeviceMute:!isMute];
+        [_curProxy controlDeviceMute:!isMute exec:YES];
         
         isMute = [_curProxy isProxyMute];
         if(isMute)

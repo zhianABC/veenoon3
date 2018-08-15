@@ -27,7 +27,7 @@
 
 - (int)getNumberOfLights;
 
-- (void) controlDeviceLightLevel:(int)levelValue ch:(int)ch;
+- (void) controlDeviceLightLevel:(int)levelValue ch:(int)ch exec:(BOOL)exec;
 
 - (BOOL) isSetChanged;
 
