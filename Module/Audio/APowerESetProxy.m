@@ -77,11 +77,13 @@
     }
 }
 
-- (void) controlRelayDuration:(BOOL)isBreak withDuration:(int)duration {
-    if (isBreak) {
+- (void) controlRelayDuration:(BOOL)isBreak withDuration:(int)duration exec:(BOOL)exec{
+   
+    if (isBreak)
+    {
         _breakDuration = duration;
         RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_BREAK_DUR"];
-        if(cmd)
+        if(cmd && exec)
         {
             NSMutableDictionary * param = [NSMutableDictionary dictionary];
             if([cmd.params count])
@@ -105,10 +107,12 @@
                                                      cmd:cmd.name
                                                    param:param completion:nil];
         }
-    } else {
+    }
+    else
+    {
         _linkDuration = duration;
         RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_LINK_DUR"];
-        if(cmd)
+        if(cmd && exec)
         {
             NSMutableDictionary * param = [NSMutableDictionary dictionary];
             if([cmd.params count])
@@ -253,7 +257,7 @@
                 [param setObject:_relayStatus forKey:param_info.name];
             }
         }
-        int proxyid = _rgsProxyObj.m_id;
+        int proxyid = (int)_rgsProxyObj.m_id;
         
         RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc] init];
         scene_opt.dev_id = proxyid;
@@ -313,7 +317,7 @@
                 }
             }
         }
-        int proxyid = _rgsProxyObj.m_id;
+        int proxyid = (int)_rgsProxyObj.m_id;
         
         RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc] init];
         scene_opt.dev_id = proxyid;
@@ -372,7 +376,7 @@
                 }
             }
         }
-        int proxyid = _rgsProxyObj.m_id;
+        int proxyid = (int)_rgsProxyObj.m_id;
         
         RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc] init];
         scene_opt.dev_id = proxyid;

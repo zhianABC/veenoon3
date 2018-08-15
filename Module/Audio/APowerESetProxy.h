@@ -24,7 +24,7 @@
 @property (nonatomic, assign) int _level;
 
 - (void) controlRelayStatus:(NSString*)relayStatus;
-- (void) controlRelayDuration:(BOOL)isBreak withDuration:(int)duration;
+- (void) controlRelayDuration:(BOOL)isBreak withDuration:(int)duration exec:(BOOL)exec;
 
 - (BOOL) haveProxyCommandLoaded;
 

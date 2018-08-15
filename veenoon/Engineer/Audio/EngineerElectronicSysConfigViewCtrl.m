@@ -302,6 +302,7 @@
         
         [slbtn enableValueSet:YES];
         
+        /*
         if (YES) {
             return;
         }
@@ -311,6 +312,7 @@
             //控制 开
             [proxyObj controlRelayStatus:@"Link"];
         }
+         */
         
     } else {
         // remove it
@@ -321,6 +323,7 @@
         
         [slbtn enableValueSet:NO];
         
+        /*
         if (YES) {
             return;
         }
@@ -330,6 +333,7 @@
             //控制 关
             [proxyObj controlRelayStatus:@"Break"];
         }
+         */
     }
 }
 
@@ -358,27 +362,65 @@
     }
 }
 - (void) didControlRelayDuration:(int)relayIndex withDuration:(int)duration {
+    
     if (relayIndex == -1) {
+        
+        //批量执行
+        NSMutableArray *opts = [NSMutableArray array];
+        
+        
         for (LightSliderButton *slider in _buttonArray) {
+            
             BOOL isEnabel = !slider._isEnabel;
             int index = (int) slider.tag;
             APowerESetProxy *powerProxy = [_powerProxys objectAtIndex:index];
-            if (isEnabel) {
-                [powerProxy controlRelayDuration:YES withDuration:duration];
-            } else {
-                [powerProxy controlRelayDuration:NO withDuration:duration];
+            if (isEnabel)
+            {
+                [powerProxy controlRelayDuration:YES
+                                    withDuration:duration
+                                            exec:NO];
+                
+                //控制命令
+                RgsSceneOperation *opt = [powerProxy generateEventOperation_breakDur];
+                if(opt)
+                    [opts addObject:opt];
+                
             }
+            else
+            {
+                [powerProxy controlRelayDuration:NO
+                                    withDuration:duration
+                                            exec:NO];
+                
+                //控制命令
+                RgsSceneOperation *opt = [powerProxy generateEventOperation_linkDur];
+                if(opt)
+                    [opts addObject:opt];
+            }
+            
         }
-    } else {
+        
+        //批量执行
+        if([opts count])
+            [[RegulusSDK sharedRegulusSDK] ControlDeviceByOperation:opts
+                                                         completion:nil];
+        
+    }
+    else
+    {
         LightSliderButton *slider = [_buttonArray objectAtIndex:relayIndex];
         
         BOOL isEnabel = !slider._isEnabel;
         int index = (int) slider.tag;
         APowerESetProxy *powerProxy = [_powerProxys objectAtIndex:index];
         if (isEnabel) {
-            [powerProxy controlRelayDuration:YES withDuration:duration];
+            [powerProxy controlRelayDuration:YES
+                                withDuration:duration
+                                        exec:YES];
         } else {
-            [powerProxy controlRelayDuration:NO withDuration:duration];
+            [powerProxy controlRelayDuration:NO
+                                withDuration:duration
+                                        exec:YES];
         }
     }
 }
