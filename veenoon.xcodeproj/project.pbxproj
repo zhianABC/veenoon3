@@ -704,6 +704,8 @@
 		EB795B702042F1E0005D1F47 /* audio_icon.plist in Resources */ = {isa = PBXBuildFile; fileRef = EB795B6F2042F1DF005D1F47 /* audio_icon.plist */; };
 		EB795B722042F574005D1F47 /* a_usb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB795B712042F574005D1F47 /* a_usb@2x.png */; };
 		EB795B742042F5E4005D1F47 /* a_sd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB795B732042F5E4005D1F47 /* a_sd@2x.png */; };
+		EB7BBC5121311AA30038750B /* BlindPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7BBC5021311AA30038750B /* BlindPlugin.m */; };
+		EB7BBC5421311AB90038750B /* BlindPluginProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7BBC5321311AB90038750B /* BlindPluginProxy.m */; };
 		EB7E81581FF8C4C90053E5A7 /* info_day_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB7E81521FF8C4C80053E5A7 /* info_day_n@2x.png */; };
 		EB7E81591FF8C4C90053E5A7 /* info_month_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB7E81531FF8C4C80053E5A7 /* info_month_n@2x.png */; };
 		EB7E815A1FF8C4C90053E5A7 /* info_day_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB7E81541FF8C4C90053E5A7 /* info_day_s@2x.png */; };
@@ -1901,6 +1903,10 @@
 		EB795B6F2042F1DF005D1F47 /* audio_icon.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = audio_icon.plist; sourceTree = "<group>"; };
 		EB795B712042F574005D1F47 /* a_usb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "a_usb@2x.png"; sourceTree = "<group>"; };
 		EB795B732042F5E4005D1F47 /* a_sd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "a_sd@2x.png"; sourceTree = "<group>"; };
+		EB7BBC4F21311AA30038750B /* BlindPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlindPlugin.h; sourceTree = "<group>"; };
+		EB7BBC5021311AA30038750B /* BlindPlugin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlindPlugin.m; sourceTree = "<group>"; };
+		EB7BBC5221311AB90038750B /* BlindPluginProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlindPluginProxy.h; sourceTree = "<group>"; };
+		EB7BBC5321311AB90038750B /* BlindPluginProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlindPluginProxy.m; sourceTree = "<group>"; };
 		EB7E81521FF8C4C80053E5A7 /* info_day_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info_day_n@2x.png"; sourceTree = "<group>"; };
 		EB7E81531FF8C4C80053E5A7 /* info_month_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info_month_n@2x.png"; sourceTree = "<group>"; };
 		EB7E81541FF8C4C90053E5A7 /* info_day_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info_day_s@2x.png"; sourceTree = "<group>"; };
@@ -3060,6 +3066,10 @@
 				34890CA420E4AC0C00C8505D /* AirConditionPlug.m */,
 				34890CA620E4AC2A00C8505D /* AirConditionProxy.h */,
 				34890CA720E4AC2A00C8505D /* AirConditionProxy.m */,
+				EB7BBC4F21311AA30038750B /* BlindPlugin.h */,
+				EB7BBC5021311AA30038750B /* BlindPlugin.m */,
+				EB7BBC5221311AB90038750B /* BlindPluginProxy.h */,
+				EB7BBC5321311AB90038750B /* BlindPluginProxy.m */,
 			);
 			path = Env;
 			sourceTree = "<group>";
@@ -4724,6 +4734,7 @@
 				EB795B4E2042DEDE005D1F47 /* AudioMatrixSettingViewCtrl.m in Sources */,
 				EB09C4851FD2A64A00776540 /* UserElectronicAutoViewCtrl.m in Sources */,
 				EB1717A61FF6143600CBDB81 /* EngineerAirCleanViewCtrl.m in Sources */,
+				EB7BBC5121311AA30038750B /* BlindPlugin.m in Sources */,
 				EB1717AC1FF6147200CBDB81 /* EngineerAddWetViewCtrl.m in Sources */,
 				EBDF1C191FC5CCD700A756EA /* UserScnarioConfigViewController.m in Sources */,
 				3421B09E210B00D3001C4B22 /* AutoRunSetView.m in Sources */,
@@ -4885,6 +4896,7 @@
 				348FC8D0208B203E00F7DB3D /* PlugsCtrlTitleHeader.m in Sources */,
 				04DE1EB51AD6AEE000D49E2F /* UIImageView+WebCache.m in Sources */,
 				34DC47421FD6DD9300ACB589 /* CircleProgressView.m in Sources */,
+				EB7BBC5421311AB90038750B /* BlindPluginProxy.m in Sources */,
 				348FC8D3208B748B00F7DB3D /* DActionView.m in Sources */,
 				EB9986DF20B6EA30007E4770 /* EngineerPortPluginViewCtrl.m in Sources */,
 				345B3E3820A55A5900BFF0F0 /* DriverConnectionsView.m in Sources */,

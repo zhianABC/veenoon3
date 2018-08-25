@@ -8,14 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
-
+#import "BlindPlugin.h"
 
 @interface EngineerElectronicAutoViewCtrl : BaseViewController {
-    NSMutableArray *_electronicSysArray;
-    
     int _number;
+    
+    BlindPlugin *_currentObj;
 }
-@property (nonatomic,strong) NSMutableArray *_electronicSysArray;
+@property (nonatomic,strong) NSArray *_electronicSysArray;
 @property (nonatomic,assign) int _number;
+@property (nonatomic,strong) BlindPlugin *_currentObj;
 @end
 
