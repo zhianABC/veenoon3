@@ -14,7 +14,7 @@
 #import "KVNProgress.h"
 #import "BlindPluginProxy.h"
 
-@interface EngineerElectronicAutoViewCtrl () <CustomPickerViewDelegate>{
+@interface EngineerElectronicAutoViewCtrl () <CustomPickerViewDelegate, BlindPluginProxyDelegate>{
     
     NSMutableArray *_nameLabelArray;
     
@@ -26,6 +26,9 @@
     NSMutableArray *selectedBtnArray;
     
     UIView *_proxysView;
+    
+    int minCh;
+    int maxCh;
 }
 @end
 
@@ -40,16 +43,18 @@
     
     isSettings=NO;
     
-    if (_electronicSysArray == nil) {
-        _electronicSysArray = [[NSMutableArray alloc] init];
+    if ([_electronicSysArray count]) {
+        self._currentObj = [_electronicSysArray objectAtIndex:0];
     }
+    
+    if (_currentObj == nil) {
+        self._currentObj = [[BlindPlugin alloc] init];
+    }
+    
     _nameLabelArray = [[NSMutableArray alloc] init];
     buttonArray = [[NSMutableArray alloc] init];
     selectedBtnArray = [[NSMutableArray alloc] init];
-    for (int i = 0; i < self._number; i++) {
-        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-        [_electronicSysArray arrayByAddingObject:dic];
-    }
+    
     [super setTitleAndImage:@"env_corner_diandongmada.png" withTitle:@"电动马达"];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
@@ -82,46 +87,6 @@
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
-    int index = 0;
-    int top = ENGINEER_VIEW_COMPONENT_TOP;
-    
-    int leftRight = ENGINEER_VIEW_LEFT;
-    
-    int cellWidth = 92;
-    int cellHeight = 92;
-    int colNumber = ENGINEER_VIEW_COLUMN_N;
-    int space = ENGINEER_VIEW_COLUMN_GAP;
-    
-    for (int i = 0; i < self._number; i++) {
-        
-        int row = index/colNumber;
-        int col = index%colNumber;
-        int startX = col*cellWidth+col*space+leftRight;
-        int startY = row*cellHeight+space*row+top;
-        
-        UIButton *scenarioBtn = [UIButton buttonWithColor:nil selColor:RGB(0, 89, 118)];
-        scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
-        scenarioBtn.clipsToBounds = YES;
-        scenarioBtn.layer.cornerRadius = 5;
-        scenarioBtn.layer.borderWidth = 2;
-        scenarioBtn.layer.borderColor = [UIColor clearColor].CGColor;
-        
-        [scenarioBtn setImage:[UIImage imageNamed:@"dianyuanshishiqi_n.png"] forState:UIControlStateNormal];
-        [scenarioBtn setImage:[UIImage imageNamed:@"dianyuanshishiqi_s.png"] forState:UIControlStateHighlighted];
-        
-        scenarioBtn.tag = index;
-        [self.view addSubview:scenarioBtn];
-        [buttonArray addObject:scenarioBtn];
-        
-        NSMutableDictionary *dataDic = [[NSMutableDictionary alloc] init];
-        [dataDic setObject:[NSString stringWithFormat:@"%d", index+1] forKey:@"name"];
-        
-        [scenarioBtn addTarget:self
-                        action:@selector(scenarioAction:)
-              forControlEvents:UIControlEventTouchUpInside];
-        [self createBtnLabel:scenarioBtn dataDic:dataDic];
-        index++;
-    }
     int height = 150;
     
     _proxysView = [[UIView alloc] initWithFrame:CGRectMake(0,
@@ -176,9 +141,6 @@
                 [KVNProgress showErrorWithStatus:[error description]];
             }
         }];
-        
-        
-        
     }
 #endif
 }
@@ -199,7 +161,12 @@
         vpro = [[BlindPluginProxy alloc] init];
     }
     
+    self._currentObj._proxyObj = vpro;
+    self._currentObj._proxyObj.delegate = self;
+    
     vpro._deviceId = driver.m_id;
+    
+    
     [vpro checkRgsProxyCommandLoad:cmds];
     
     if([_currentObj._localSavedCommands count])
@@ -208,7 +175,66 @@
         [vpro recoverWithDictionary:local];
     }
     
-    self._currentObj._proxyObj = vpro;
+    
+}
+
+- (void) createChannels {
+    
+    self._number = maxCh - minCh + 1;
+    
+    int index = 0;
+    int top = ENGINEER_VIEW_COMPONENT_TOP;
+    
+    int leftRight = ENGINEER_VIEW_LEFT;
+    
+    int cellWidth = 92;
+    int cellHeight = 92;
+    int colNumber = ENGINEER_VIEW_COLUMN_N;
+    int space = ENGINEER_VIEW_COLUMN_GAP;
+    
+    for (int i = 0; i < self._number; i++) {
+        
+        int row = index/colNumber;
+        int col = index%colNumber;
+        int startX = col*cellWidth+col*space+leftRight;
+        int startY = row*cellHeight+space*row+top;
+        
+        UIButton *scenarioBtn = [UIButton buttonWithColor:nil selColor:RGB(0, 89, 118)];
+        scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
+        scenarioBtn.clipsToBounds = YES;
+        scenarioBtn.layer.cornerRadius = 5;
+        scenarioBtn.layer.borderWidth = 2;
+        scenarioBtn.layer.borderColor = [UIColor clearColor].CGColor;
+        
+        [scenarioBtn setImage:[UIImage imageNamed:@"dianyuanshishiqi_n.png"] forState:UIControlStateNormal];
+        [scenarioBtn setImage:[UIImage imageNamed:@"dianyuanshishiqi_s.png"] forState:UIControlStateHighlighted];
+        
+        scenarioBtn.tag = index;
+        [self.view addSubview:scenarioBtn];
+        [buttonArray addObject:scenarioBtn];
+        
+        NSMutableDictionary *dataDic = [[NSMutableDictionary alloc] init];
+        [dataDic setObject:[NSString stringWithFormat:@"%d", index+1] forKey:@"name"];
+        
+        [scenarioBtn addTarget:self
+                        action:@selector(scenarioAction:)
+              forControlEvents:UIControlEventTouchUpInside];
+        [self createBtnLabel:scenarioBtn dataDic:dataDic];
+        index++;
+    }
+}
+
+- (void) didLoadedProxyCommand {
+    
+    self._currentObj._proxyObj.delegate = nil;
+    
+    NSDictionary *inputSettings = [self._currentObj._proxyObj getChRecords];
+    
+    minCh = [[inputSettings objectForKey:@"min"] intValue];
+    maxCh = [[inputSettings objectForKey:@"max"] intValue];
+    
+    
+    [self createChannels];
 }
 
 - (void) handleTapGesture:(id)sender{
