@@ -31,6 +31,7 @@ static NSString * video_touying_name = @"投影机";
 static NSString * video_camera_name = @"摄像机";
 static NSString * env_dimmer_light  = @"照明";
 static NSString * video_process_name  = @"视频处理";
+static NSString * env_blind_name = @"电动马达";
 
 #define   HOME_LIST_CELL_COLOR   [UIColor colorWithRed:0xe1/255.0 green:0xe1/255.0 blue:0xe1/255.0 alpha:1.0]
 #define   ASK_ANSWER_CELL_COLOR  [UIColor colorWithRed:0xee/255.0 green:0xf3/255.0 blue:0xf6/255.0 alpha:1.0]

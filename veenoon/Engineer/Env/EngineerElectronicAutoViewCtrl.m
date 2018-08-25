@@ -10,6 +10,9 @@
 #import "UIButton+Color.h"
 #import "CustomPickerView.h"
 #import "ElectronicAutoRightView.h"
+#import "RegulusSDK.h"
+#import "KVNProgress.h"
+#import "BlindPluginProxy.h"
 
 @interface EngineerElectronicAutoViewCtrl () <CustomPickerViewDelegate>{
     
@@ -29,6 +32,8 @@
 @implementation EngineerElectronicAutoViewCtrl
 @synthesize _electronicSysArray;
 @synthesize _number;
+@synthesize _currentObj;
+
 - (void)viewDidLoad {
     
     [super viewDidLoad];
@@ -43,7 +48,7 @@
     selectedBtnArray = [[NSMutableArray alloc] init];
     for (int i = 0; i < self._number; i++) {
         NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-        [_electronicSysArray addObject:dic];
+        [_electronicSysArray arrayByAddingObject:dic];
     }
     [super setTitleAndImage:@"env_corner_diandongmada.png" withTitle:@"电动马达"];
     
@@ -129,6 +134,79 @@
     tapGesture.cancelsTouchesInView =  NO;
     tapGesture.numberOfTapsRequired = 1;
     [_proxysView addGestureRecognizer:tapGesture];
+    
+    [self getCurrentDeviceDriverProxys];
+}
+
+- (void) getCurrentDeviceDriverProxys{
+    
+    if(_currentObj == nil)
+        return;
+    
+#ifdef OPEN_REG_LIB_DEF
+    
+    IMP_BLOCK_SELF(EngineerElectronicAutoViewCtrl);
+    
+    RgsDriverObj *driver = _currentObj._driver;
+    if([driver isKindOfClass:[RgsDriverObj class]])
+    {
+        
+//        [[RegulusSDK sharedRegulusSDK] GetDriverProxys:driver.m_id completion:^(BOOL result, NSArray *proxys, NSError *error) {
+//            if (result) {
+//                if ([proxys count]) {
+//
+//                    [block_self loadedHunyinProxys:proxys];
+//
+//                }
+//            }
+//            else{
+//                [KVNProgress showErrorWithStatus:[error description]];
+//            }
+//        }];
+        
+        [[RegulusSDK sharedRegulusSDK] GetDriverCommands:driver.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
+            if (result) {
+                if ([commands count]) {
+                    [block_self loadedBlindCommands:commands];
+                }
+            }
+            else{
+                [KVNProgress showErrorWithStatus:[error description]];
+            }
+        }];
+        
+        
+        
+    }
+#endif
+}
+
+- (void) loadedBlindCommands:(NSArray*)cmds{
+    
+    RgsDriverObj *driver = _currentObj._driver;
+    
+    id proxy = self._currentObj._proxyObj;
+    
+    BlindPluginProxy *vpro = nil;
+    if(proxy && [proxy isKindOfClass:[BlindPluginProxy class]])
+    {
+        vpro = proxy;
+    }
+    else
+    {
+        vpro = [[BlindPluginProxy alloc] init];
+    }
+    
+    vpro._deviceId = driver.m_id;
+    [vpro checkRgsProxyCommandLoad:cmds];
+    
+    if([_currentObj._localSavedCommands count])
+    {
+        NSDictionary *local = [_currentObj._localSavedCommands objectAtIndex:0];
+        [vpro recoverWithDictionary:local];
+    }
+    
+    self._currentObj._proxyObj = vpro;
 }
 
 - (void) handleTapGesture:(id)sender{

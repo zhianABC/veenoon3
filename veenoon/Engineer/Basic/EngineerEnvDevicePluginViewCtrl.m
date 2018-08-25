@@ -18,6 +18,7 @@
 #import "RegulusSDK.h"
 #import "TeslariaComboChooser.h"
 #import "AirConditionPlug.h"
+#import "BlindPlugin.h"
 
 @interface EngineerEnvDevicePluginViewCtrl () <CenterCustomerPickerViewDelegate> {
     IconCenterTextButton *_zhaomingBtn;
@@ -499,6 +500,34 @@
     [self setBrandValue:btnText];
     
     [self initBrandAndTypes];
+    
+    NSArray *drivers = [[DataCenter defaultDataCenter] driversWithType:@"env"];
+    
+    NSString *toclass = NSStringFromClass([BlindPlugin class]);
+    
+    NSMutableArray *bands = [NSMutableArray array];
+    NSMutableArray *types = [NSMutableArray array];
+    NSMutableArray *uuids = [NSMutableArray array];
+    for(NSDictionary *device in drivers)
+    {
+        NSString *classname = [device objectForKey:@"driver_class"];
+        if([classname isEqualToString:toclass])
+        {
+            [bands addObject:[device objectForKey:@"brand"]];
+            [types addObject:[device objectForKey:@"ptype"]];
+            [uuids addObject:[device objectForKey:@"driver"]];
+        }
+    }
+    
+    self._currentBrands = bands;
+    self._currentTypes = types;
+    self._driverUdids = uuids;
+    
+    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
+    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
+    
+    [_brandPicker selectRow:0 inComponent:0];
+    [_productCategoryPicker selectRow:0 inComponent:0];
 }
 - (void) xinfengAction:(id)sender{
     [_zhaomingBtn setBtnHighlited:NO];

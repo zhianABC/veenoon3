@@ -879,9 +879,9 @@
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
-        if ([name isEqualToString:@"电动马达"]) {
+        if ([name isEqualToString:env_blind_name]) {
             EngineerElectronicAutoViewCtrl *ctrl = [[EngineerElectronicAutoViewCtrl alloc] init];
-            ctrl._electronicSysArray= nil;// [NSMutableArray arrayWithObject:data];
+            ctrl._electronicSysArray = @[plug];
             ctrl._number=8;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
