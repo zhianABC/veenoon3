@@ -106,6 +106,40 @@
     
 }
 
+
+- (void) syncDriverComs{
+    
+    if(_driver
+       && [_driver isKindOfClass:[RgsDriverObj class]]
+       && ![_connections count])
+    {
+        IMP_BLOCK_SELF(BlindPlugin);
+        
+        RgsDriverObj *comd = _driver;
+        [[RegulusSDK sharedRegulusSDK] GetDriverConnects:comd.m_id
+                                              completion:^(BOOL result, NSArray *connects, NSError *error) {
+                                                  if (result) {
+                                                      if ([connects count]) {
+                                                          
+                                                          block_self._connections = connects;
+                                                      }
+                                                  }
+                                                  else
+                                                  {
+                                                      NSLog(@"+++++++++++++");
+                                                      NSLog(@"+++++++++++++");
+                                                      NSLog(@"sync Driver Connection Error");
+                                                      NSLog(@"+++++++++++++");
+                                                      NSLog(@"+++++++++++++");
+                                                      
+                                                      //[KVNProgress showErrorWithStatus:[error description]];
+                                                  }
+                                              }];
+        
+    }
+}
+
+
 - (void) createConnection:(RgsConnectionObj*)source withConnect:(RgsConnectionObj*)target{
     
     if(target && source)

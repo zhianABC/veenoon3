@@ -18,4 +18,6 @@
 @property (nonatomic, strong) BlindPluginProxy *_proxyObj;
 @property (nonatomic, strong) NSArray *_localSavedCommands;
 
+- (void) syncDriverComs;
+
 @end
