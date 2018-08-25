@@ -191,6 +191,8 @@
             }
         }
         
+        //NSLog(@"=====%@", [NSString stringWithFormat:@"%d", _level]);
+        
         if(_rgsProxyObj)
         {
             _deviceId = _rgsProxyObj.m_id;
@@ -236,7 +238,7 @@
                     }
                 }
             }
-            
+            //NSLog(@"=====%@", [NSString stringWithFormat:@"%d", iLevel]);
             if(_rgsProxyObj)
             {
                 _deviceId = _rgsProxyObj.m_id;
