@@ -302,6 +302,45 @@
     }
 }
 
+- (void) didSliderEndChanged:(id)object {
+    
+    EngineerSliderView *sliderCtrl = object;
+    float value = [sliderCtrl getScaleValue];
+    
+    float circleValue = (value)/100.0f;
+    
+    EDimmerLightProxys *vpro = self._curProcessor._proxyObj;
+    
+    for (LightSliderButton *button in _selectedBtnArray) {
+        
+        [button setCircleValue:circleValue];
+        
+        int ch = (int)button.tag + 1;
+        if([vpro isKindOfClass:[EDimmerLightProxys class]])
+        {
+            [vpro controlDeviceLightLevel:(int)value
+                                       ch:ch
+                                     exec:NO];
+            
+        }
+    }
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(200.0 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
+        
+        if(vpro)
+        {
+            //控制命令
+            NSArray *opts = [vpro generateEventOperation_ChLevel];
+            
+            if([opts count])
+                [[RegulusSDK sharedRegulusSDK] ControlDeviceByOperation:opts
+                                                             completion:nil];
+        }
+    });
+    
+}
+
+
+
 - (void) didSlideButtonValueChanged:(float)value slbtn:(LightSliderButton*)slbtn{
     
     int circleValue = value*100.0f;
@@ -318,7 +357,23 @@
     [_zengyiSlider setScaleValue:circleValue];
 }
 
-- (void) didSliderEndChanged:(id)object {
+- (void) didSlideButtonValueEndChanged:(float)value slbtn:(LightSliderButton*)slbtn{
+    
+    int circleValue = value*100.0f;
+    [_zengyiSlider setScaleValue:circleValue];
+    
+    EDimmerLightProxys *vpro = self._curProcessor._proxyObj;
+    int ch = (int)slbtn.tag + 1;
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(200.0 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
+        
+        if([vpro isKindOfClass:[EDimmerLightProxys class]])
+        {
+            [vpro controlDeviceLightLevel:circleValue
+                                       ch:ch
+                                     exec:YES];
+        }
+    });
     
 }
 

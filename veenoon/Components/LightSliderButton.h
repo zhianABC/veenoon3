@@ -14,6 +14,8 @@
 
 @optional
 - (void) didSlideButtonValueChanged:(float)value slbtn:(LightSliderButton*)slbtn;
+- (void) didSlideButtonValueEndChanged:(float)value slbtn:(LightSliderButton*)slbtn;
+
 - (void) didTappedMSelf:(LightSliderButton*)slbtn;
 
 @end

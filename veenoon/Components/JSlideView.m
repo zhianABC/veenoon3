@@ -313,6 +313,7 @@
     
     float value = (maxValue - minValue)*(float)subh/h + minValue;
     
+    
     return value;
 }
 
