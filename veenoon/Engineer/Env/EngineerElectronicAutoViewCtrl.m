@@ -142,8 +142,10 @@
     
     if(_currentObj == nil)
         return;
-    
+
 #ifdef OPEN_REG_LIB_DEF
+    
+    [_currentObj syncDriverComs];
     
     IMP_BLOCK_SELF(EngineerElectronicAutoViewCtrl);
     
