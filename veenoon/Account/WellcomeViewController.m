@@ -40,7 +40,7 @@
     [self.view addSubview:icon];
     icon.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.5-80);
     
-    UIButton *login = [UIButton buttonWithColor:[UIColor whiteColor] selColor:ADMIN_BLACK_COLOR];
+    UIButton *login = [UIButton buttonWithColor:[UIColor whiteColor] selColor:LOGIN_BLACK_COLOR];
         login.frame = CGRectMake(0, 0,220, 50);
     login.layer.cornerRadius = 10;
     login.layer.borderWidth = 1;
@@ -66,7 +66,7 @@
     [self.view addSubview:signup];
     [signup setTitle:@"注册" forState:UIControlStateNormal];
     [signup setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [signup setTitleColor:RGB(1, 138, 182) forState:UIControlStateHighlighted];
+    [signup setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
     signup.titleLabel.font = [UIFont systemFontOfSize:18];
     signup.center = CGPointMake(SCREEN_WIDTH/2+120, CGRectGetMaxY(icon.frame)+160);
 
@@ -74,14 +74,19 @@
               action:@selector(signupAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
-    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(40,
-                                                                SCREEN_HEIGHT - 60,
-                                                                SCREEN_WIDTH, 20)];
+    UIButton *titleL = [UIButton buttonWithType:UIButtonTypeCustom];
+    titleL.frame = CGRectMake(60,
+                              SCREEN_HEIGHT - 60,
+                              100, 20);
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
-    titleL.font = [UIFont systemFontOfSize:16];
-    titleL.textColor  = [UIColor whiteColor];
-    titleL.text = @"关于TESLSRIA";
+    titleL.titleLabel.font = [UIFont systemFontOfSize:13];
+    [titleL setTitle:@"关于 TESLSRIA" forState:UIControlStateNormal];
+    [titleL setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    [titleL addTarget:self
+               action:@selector(webAction:)
+     forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:titleL];
     
@@ -183,6 +188,10 @@
     
     
     
+}
+
+- (void) webAction:(id)sender{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.teslaria.com"]];
 }
 
 - (void) loginAction:(id)sender{

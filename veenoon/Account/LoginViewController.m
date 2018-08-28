@@ -104,16 +104,16 @@
     int top = 10;
     int left = 10;
     int w = CGRectGetWidth(_inputPannel.frame);
-    UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(left, top, w, 50)];
+    UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(left, top, w, 40)];
     tL.text = @"国家/地区";
     tL.textColor = [UIColor whiteColor];
-    tL.font = [UIFont boldSystemFontOfSize:18];
+    tL.font = [UIFont boldSystemFontOfSize:14];
     [_inputPannel addSubview:tL];
     
-    _country = [[UILabel alloc] initWithFrame:CGRectMake(left+120, top, w, 50)];
+    _country = [[UILabel alloc] initWithFrame:CGRectMake(left+120, top, w, 40)];
     _country.text = @"中国";
     _country.textColor = YELLOW_COLOR;
-    _country.font = [UIFont boldSystemFontOfSize:18];
+    _country.font = [UIFont boldSystemFontOfSize:14];
     [_inputPannel addSubview:_country];
     
     //选择箭头 pending....
@@ -131,25 +131,26 @@
     
     top = CGRectGetMaxY(_country.frame);
     
-    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(left, top, w, 1)];
+    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(left, top-2, w, 1)];
     line.backgroundColor = WHITE_LINE_COLOR;
     [_inputPannel addSubview:line];
     
-    line = [[UILabel alloc] initWithFrame:CGRectMake(left +80, top, 1, 50)];
+    line = [[UILabel alloc] initWithFrame:CGRectMake(left +80, top+4, 1, 32)];
     line.backgroundColor = WHITE_LINE_COLOR;
     [_inputPannel addSubview:line];
     
-    _countrycode = [[UILabel alloc] initWithFrame:CGRectMake(left, top, w, 50)];
+    _countrycode = [[UILabel alloc] initWithFrame:CGRectMake(left, top, w, 40)];
     _countrycode.text = @"+86";
     _countrycode.textColor = [UIColor whiteColor];
-    _countrycode.font = [UIFont boldSystemFontOfSize:18];
+    _countrycode.font = [UIFont boldSystemFontOfSize:14];
     [_inputPannel addSubview:_countrycode];
     
     ///手机号输入框 pending....
-    _userName = [[UITextField alloc] initWithFrame:CGRectMake(left + 95, top+10, w-95, 30)];
+    _userName = [[UITextField alloc] initWithFrame:CGRectMake(left + 95, top, w-95, 40)];
     _userName.delegate = self;
     _userName.returnKeyType = UIReturnKeyDone;
     _userName.placeholder = @"输入手机号码";
+    [_userName setValue:[UIColor grayColor] forKeyPath:@"_placeholderLabel.textColor"];
     _userName.keyboardType = UIKeyboardTypePhonePad;
     _userName.backgroundColor = [UIColor clearColor];
     _userName.textColor = [UIColor whiteColor];
@@ -159,21 +160,22 @@
     
     top = CGRectGetMaxY(_countrycode.frame);
     
-    line = [[UILabel alloc] initWithFrame:CGRectMake(left, top, w, 1)];
+    line = [[UILabel alloc] initWithFrame:CGRectMake(left, top-2, w, 1)];
     line.backgroundColor = WHITE_LINE_COLOR;
     [_inputPannel addSubview:line];
     
-    tL = [[UILabel alloc] initWithFrame:CGRectMake(left, top, w, 50)];
+    tL = [[UILabel alloc] initWithFrame:CGRectMake(left, top, w, 40)];
     tL.text = @"密码";
     tL.textColor = [UIColor whiteColor];
-    tL.font = [UIFont boldSystemFontOfSize:18];
+    tL.font = [UIFont boldSystemFontOfSize:14];
     [_inputPannel addSubview:tL];
     
     //密码输入框 pending....
-    _userPwd = [[UITextField alloc] initWithFrame:CGRectMake(left + 95, top+10, w-95, 30)];
+    _userPwd = [[UITextField alloc] initWithFrame:CGRectMake(left + 95, top, w-95, 40)];
     _userPwd.delegate = self;
     _userPwd.returnKeyType = UIReturnKeyDone;
     _userPwd.placeholder = @"6-12位密码";
+    [_userPwd setValue:[UIColor grayColor] forKeyPath:@"_placeholderLabel.textColor"];
     _userPwd.backgroundColor = [UIColor clearColor];
     _userPwd.textColor = [UIColor whiteColor];
     _userPwd.borderStyle = UITextBorderStyleNone;
@@ -183,16 +185,16 @@
     
     top = CGRectGetMaxY(tL.frame);
     
-    line = [[UILabel alloc] initWithFrame:CGRectMake(left, top, w, 1)];
+    line = [[UILabel alloc] initWithFrame:CGRectMake(left, top-2, w, 1)];
     line.backgroundColor = WHITE_LINE_COLOR;
     [_inputPannel addSubview:line];
     
     UIButton *registerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    registerBtn.frame = CGRectMake(SCREEN_WIDTH/2 - w/2, CGRectGetMaxY(_inputPannel.frame)+60, w, 50);
-    [registerBtn setTitle:@"创建您的TESLARIA账户！" forState:UIControlStateNormal];
+    registerBtn.frame = CGRectMake(SCREEN_WIDTH/2 - w/2 +10, CGRectGetMaxY(_inputPannel.frame)+120, w, 50);
+    [registerBtn setTitle:@"创建您的TESLARIA账户" forState:UIControlStateNormal];
     [registerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [registerBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
-    registerBtn.titleLabel.font = [UIFont boldSystemFontOfSize:16];
+    registerBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     [registerBtn addTarget:self
                   action:@selector(registerAction:)
         forControlEvents:UIControlEventTouchUpInside];
