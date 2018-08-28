@@ -16,8 +16,7 @@
 {
     id _driverInfo;
     id _driver;
-    
-    RgsPropertyObj *_driver_ip_property;
+
     NSArray *_connections;
 }
 
@@ -28,6 +27,7 @@
 @property (nonatomic, strong) NSString *_deviceno;
 @property (nonatomic, strong) NSString *_deviceid;
 @property (nonatomic, strong) NSString *_ipaddress;
+@property (nonatomic, strong) NSString *_port;
 
 @property (nonatomic, strong) NSString *_plugicon;
 @property (nonatomic, strong) NSString *_plugicon_s;
@@ -46,6 +46,7 @@
 @property (nonatomic, strong) id _driverInfo;
 @property (nonatomic, strong) id _driver;
 @property (nonatomic, strong) RgsPropertyObj *_driver_ip_property;
+@property (nonatomic, strong) RgsPropertyObj *_driver_port_property;
 @property (nonatomic, strong) NSArray *_properties;
 
 @property (nonatomic, strong) NSArray *_connections;

@@ -594,23 +594,27 @@
 - (void) setNewProject{
     
     
+    [self actionNewArea];
+    
+    /*
     [KVNProgress show];
     [NSTimer scheduledTimerWithTimeInterval:0.1
                                      target:self
                                    selector:@selector(actionNewArea)
                                    userInfo:nil
                                     repeats:NO];
+     */
 }
 
 - (void) actionNewArea{
     
-    [KVNProgress dismiss];
+   //[KVNProgress dismiss];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         
         NSLog(@"Call: NewProject");
         
-        [[DataSync sharedDataSync] syncCurrentArea];
+        [[DataSync sharedDataSync] newVeenoonArea];
         
         MeetingRoom *room = [DataCenter defaultDataCenter]._currentRoom;
         [[DataBase sharedDatabaseInstance] deleteScenarioByRoom:room.regulus_id];

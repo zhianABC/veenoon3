@@ -207,15 +207,7 @@ static DataSync* dSyncInstance = nil;
     {
         NSLog(@"=========Call: CreateArea: VEENOON_AREA_NAME");
         
-        [[RegulusSDK sharedRegulusSDK] CreateArea:VEENOON_AREA_NAME completion:^(BOOL result, RgsAreaObj *area, NSError *error) {
-            if (result) {
-                block_self._currentArea = area;
-                
-                [block_self updateCurrentRoomData];
-            }
-            else
-                [KVNProgress showErrorWithStatus:[error description]];
-        }];
+        [self newVeenoonArea];
     }
     else
     {
@@ -225,6 +217,21 @@ static DataSync* dSyncInstance = nil;
         
     }
 #endif
+}
+
+- (void) newVeenoonArea{
+    
+    IMP_BLOCK_SELF(DataSync);
+    
+    [[RegulusSDK sharedRegulusSDK] CreateArea:VEENOON_AREA_NAME completion:^(BOOL result, RgsAreaObj *area, NSError *error) {
+        if (result) {
+            block_self._currentArea = area;
+            
+            [block_self updateCurrentRoomData];
+        }
+        else
+            [KVNProgress showErrorWithStatus:[error description]];
+    }];
 }
 
 - (void) updateCurrentRoomData{

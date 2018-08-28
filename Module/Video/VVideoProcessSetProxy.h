@@ -40,6 +40,9 @@
 - (void) controlDeviceAdd:(NSDictionary*)inputDev
             withOutDevice:(NSDictionary*)outputDev;
 
+- (void) controlDeviceRemove:(NSDictionary*)inputDev
+            withOutDevice:(NSDictionary*)outputDev;
+
 - (void) saveInputDevice:(NSDictionary*)inputDev;
 - (void) saveOutputDevice:(NSDictionary*)outputDev;
 

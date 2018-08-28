@@ -409,6 +409,11 @@
         [_currentProxy controlDeviceAdd:inSrc
                           withOutDevice:outSrc];
         }
+        else
+        {
+            [_currentProxy controlDeviceRemove:inSrc
+                              withOutDevice:outSrc];
+        }
     }
     
 }

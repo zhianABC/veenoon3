@@ -242,14 +242,35 @@
         [outPutArray addObject:outName];
     }
     
-    [self sendAddDviceToCenter:inName withOutDevice:outName];
+    [self sendAddDviceToCenter:inName
+                 withOutDevice:outName
+                        method:@"SET_P2P"];
+}
+
+- (void) controlDeviceRemove:(NSDictionary*)inputDev
+               withOutDevice:(NSDictionary*)outputDev{
+    
+    NSString *inName = [inputDev objectForKey:@"ctrl_val"];
+    NSString *outName = [outputDev objectForKey:@"ctrl_val"];
+    
+    [self._outputDevices removeObjectForKey:outName];
+    
+    NSMutableArray *outPutArray = [self._deviceMatcherDic objectForKey:inName];
+    if (outPutArray) {
+        [outPutArray removeObject:outName];
+    }
+    
+    [self sendAddDviceToCenter:inName
+                 withOutDevice:outName
+                        method:@"SET_INVERT"];
 }
 
 - (void) sendAddDviceToCenter:(NSString*)inputName
-                withOutDevice:(NSString*)outputName {
+                withOutDevice:(NSString*)outputName
+                       method:(NSString*)method{
     
     RgsCommandInfo *cmd = nil;
-    cmd = [_cmdMap objectForKey:@"SET_P2P"];
+    cmd = [_cmdMap objectForKey:method];
     
     if(cmd)
     {

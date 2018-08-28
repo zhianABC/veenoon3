@@ -141,10 +141,12 @@
 @interface DriverPropertyView () <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource>
 {
     UITextField *ipTextField;
+    UITextField *portTextField;
     
     int leftx;
     
     UILabel* _iptitleL;
+    UILabel* _porttitleL;
     UIButton *btnSave;
     
     DriverConnectionsView   *_connectionView;
@@ -252,6 +254,37 @@
         
         top = CGRectGetMaxY(line.frame);
         
+        _porttitleL = [[UILabel alloc] initWithFrame:CGRectMake(leftx, top+15, 200, 30)];
+        _porttitleL.textColor = [UIColor whiteColor];
+        _porttitleL.backgroundColor = [UIColor clearColor];
+        [_tabHeader addSubview:_porttitleL];
+        _porttitleL.font = [UIFont systemFontOfSize:15];
+        _porttitleL.text = @"端口号: ";
+        
+        
+        portTextField = [[UITextField alloc] initWithFrame:CGRectMake(leftx+80,
+                                                                    top+15,
+                                                                    200, 30)];
+        portTextField.delegate = self;
+        portTextField.backgroundColor = [UIColor clearColor];
+        portTextField.returnKeyType = UIReturnKeyDone;
+        portTextField.text = @"2000";
+        portTextField.textColor = [UIColor whiteColor];
+        portTextField.borderStyle = UITextBorderStyleNone;
+        portTextField.textAlignment = NSTextAlignmentLeft;
+        portTextField.font = [UIFont systemFontOfSize:15];
+        portTextField.keyboardType = UIKeyboardTypeNumberPad;
+        portTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        [_tabHeader addSubview:portTextField];
+        
+        top = CGRectGetMaxY(_porttitleL.frame)+15;
+        
+        line = [[UILabel alloc] initWithFrame:CGRectMake(0, top, frame.size.width, 1)];
+        line.backgroundColor =  USER_GRAY_COLOR;
+        [_tabHeader addSubview:line];
+        
+        top = CGRectGetMaxY(line.frame);
+        
         _connectionTableView = [[UIView alloc] initWithFrame:CGRectMake(0, top,
                                                                    frame.size.width,
                                                                    60)];
@@ -333,6 +366,7 @@
 - (void) saveCurrentSetting{
     
     _plugDriver._ipaddress = ipTextField.text;
+    _plugDriver._port = portTextField.text;
     [_plugDriver uploadDriverIPProperty];
 
 }
@@ -423,32 +457,14 @@
         [_tableView reloadData];
         
     }
-    
-    
-//    if(_plugDriver._ipaddress == nil)
-//    {
-////        _iptitleL.alpha = 0.5;
-////        ipTextField.alpha = 0.5;
-////        ipTextField.text = @"";
-////        ipTextField.userInteractionEnabled = NO;
-//
-//
-//
-//        return;
-//    }
-//    else
-//    {
-//        _iptitleL.alpha = 1;
-//        ipTextField.alpha = 1;
-//        ipTextField.text = @"";
-//        ipTextField.userInteractionEnabled = YES;
-//
-//        _connectionTableView.hidden = YES;
-//    }
+
     
     if(_plugDriver._driver_ip_property)
     {
         ipTextField.text = _plugDriver._ipaddress;
+        if(_plugDriver._driver_port_property)
+            portTextField.text = _plugDriver._port;
+        
         return;
     }
     
@@ -484,10 +500,16 @@
                 _plugDriver._driver_ip_property = pro;
                 _plugDriver._ipaddress = pro.value;
             }
+            else if([pro.name isEqualToString:@"Port"])
+            {
+                _plugDriver._driver_port_property = pro;
+                _plugDriver._port = pro.value;
+            }
         }
         
         _plugDriver._properties = properties;
         ipTextField.text = _plugDriver._ipaddress;
+        portTextField.text = _plugDriver._port;
     }
     
     [KVNProgress dismiss];

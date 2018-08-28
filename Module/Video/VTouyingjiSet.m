@@ -49,42 +49,6 @@
 }
 
 
-- (void) syncDriverIPProperty{
-    
-    /*
-    if(_driver_ip_property)
-    {
-        self._ipaddress = _driver_ip_property.value;
-        return;
-    }
-    
-    if(_comDriver && [_comDriver isKindOfClass:[RgsDriverObj class]])
-    {
-        IMP_BLOCK_SELF(VTouyingjiSet);
-        
-        RgsDriverObj *rd = (RgsDriverObj*)_comDriver;
-        [[RegulusSDK sharedRegulusSDK] GetDriverProperties:rd.m_id completion:^(BOOL result, NSArray *properties, NSError *error) {
-            if (result) {
-                if ([properties count]) {
-                    
-                    for(RgsPropertyObj *pro in properties)
-                    {
-                        if([pro.name isEqualToString:@"IP"])
-                        {
-                            block_self._driver_ip_property = pro;
-                            block_self._ipaddress = pro.value;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                
-            }
-        }];
-    }
-     */
-}
 
 - (void) syncDriverComs{
     /*
@@ -151,36 +115,6 @@
                                                   }
                                               }];
         
-    }
-}
-
-- (void) uploadDriverIPProperty
-{
-    if(_driver
-       && [_driver isKindOfClass:[RgsDriverObj class]]
-       && _driver_ip_property)
-    {
-        IMP_BLOCK_SELF(VTouyingjiSet);
-        
-        RgsDriverObj *rd = (RgsDriverObj*)_driver;
-        
-        //保存到内存
-        _driver_ip_property.value = self._ipaddress;
-        
-        [KVNProgress show];
-        
-        [[RegulusSDK sharedRegulusSDK] SetDriverProperty:rd.m_id
-                                           property_name:_driver_ip_property.name
-                                          property_value:self._ipaddress
-                                              completion:^(BOOL result, NSError *error) {
-                                                  if (result) {
-                                                      
-                                                      [block_self saveProject];
-                                                  }
-                                                  else{
-                                                      [KVNProgress dismiss];
-                                                  }
-                                              }];
     }
 }
 
