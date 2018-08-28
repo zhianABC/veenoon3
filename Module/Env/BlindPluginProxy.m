@@ -30,11 +30,47 @@
 @synthesize _rgsCommands;
 @synthesize _rgsProxyObj;
 @synthesize _cmdMap;
-
+@synthesize delegate;
 @synthesize _deviceId;
+
+- (NSDictionary*)getChRecords{
+    
+    NSMutableDictionary *result = [NSMutableDictionary dictionary];
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_CH"];
+    if(cmd)
+    {
+        if([cmd.params count])
+        {
+            
+            for( RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"CH"])
+                {
+                    if(param_info.max)
+                        [result setObject:param_info.max forKey:@"max"];
+                    if(param_info.min)
+                        [result setObject:param_info.min forKey:@"min"];
+                }
+            }
+        }
+    }
+    
+    return result;
+}
 
 - (void) checkRgsProxyCommandLoad:(NSArray*)cmds{
     
+    if(_rgsProxyObj != nil || _rgsCommands){
+        
+        if(delegate && [delegate respondsToSelector:@selector(didLoadedProxyCommand)])
+        {
+            [delegate didLoadedProxyCommand];
+        }
+        
+        return;
+    }
     
     if(cmds && [cmds count])
     {
