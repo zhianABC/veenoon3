@@ -8,6 +8,7 @@
 
 #import "BasePlugElement.h"
 #import "RegulusSDK.h"
+#import "KVNProgress.h"
 
 @implementation BasePlugElement
 @synthesize _name;
@@ -15,6 +16,7 @@
 @synthesize _type;
 @synthesize _deviceno;
 @synthesize _ipaddress;
+@synthesize _port;
 @synthesize _deviceid;
 @synthesize _index;
 @synthesize _comIdx;
@@ -29,6 +31,7 @@
 @synthesize _driverInfo;
 
 @synthesize _driver_ip_property;
+@synthesize _driver_port_property;
 @synthesize _properties;
 @synthesize _connections;
 @synthesize _irCodeKeys;
@@ -53,6 +56,8 @@
         self._comIdx = 0;
         self._name = @"";
         self._isSelected = NO;
+        
+        self._port = @"";
     }
     
     return self;
@@ -73,7 +78,7 @@
     int myid = 0;
     if(_driver)
     {
-        myid = ((RgsDriverObj*)_driver).m_id;
+        myid = (int)((RgsDriverObj*)_driver).m_id;
     }
     return myid;
 }
@@ -102,9 +107,98 @@
 
 - (void) syncDriverIPProperty{
     
+    if(self._driver_ip_property)
+    {
+        self._ipaddress = self._driver_ip_property.value;
+        self._port = self._driver_port_property.value;
+        
+        return;
+    }
+    
+    if(_driver && [_driver isKindOfClass:[RgsDriverObj class]])
+    {
+        IMP_BLOCK_SELF(BasePlugElement);
+        
+        RgsDriverObj *rd = (RgsDriverObj*)_driver;
+        [[RegulusSDK sharedRegulusSDK] GetDriverProperties:rd.m_id completion:^(BOOL result, NSArray *properties, NSError *error) {
+            if (result) {
+                if ([properties count]) {
+                    
+                    for(RgsPropertyObj *pro in properties)
+                    {
+                        if([pro.name isEqualToString:@"IP"])
+                        {
+                            block_self._driver_ip_property = pro;
+                            block_self._ipaddress = pro.value;
+                        }
+                        else if([pro.name isEqualToString:@"Port"])
+                        {
+                            block_self._driver_port_property = pro;
+                            block_self._port = pro.value;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                
+            }
+        }];
+    }
+    
 }
 - (void) uploadDriverIPProperty{
     
+    if(_driver
+       && [_driver isKindOfClass:[RgsDriverObj class]])
+    {
+        IMP_BLOCK_SELF(BasePlugElement);
+        
+        RgsDriverObj *rd = (RgsDriverObj*)_driver;
+        
+        
+        
+        //保存到内存
+        
+        if(self._driver_port_property)
+        {
+            
+            self._driver_port_property.value = self._port;
+            [[RegulusSDK sharedRegulusSDK] SetDriverProperty:rd.m_id
+                                               property_name:self._driver_port_property.name
+                                              property_value:self._port
+                                                  completion:nil];
+        }
+        
+        if(self._driver_ip_property)
+        {
+            [KVNProgress show];
+            
+            self._driver_ip_property.value = self._ipaddress;
+            [[RegulusSDK sharedRegulusSDK] SetDriverProperty:rd.m_id
+                                               property_name:self._driver_ip_property.name
+                                              property_value:self._ipaddress
+                                                  completion:^(BOOL result, NSError *error) {
+                                                      if (result) {
+                                                          
+                                                          [block_self showSuccess];
+                                                      }
+                                                      else{
+                                                          
+                                                          [KVNProgress dismiss];
+                                                      }
+                                                  }];
+        }
+        
+        
+        
+        
+    }
+}
+
+- (void) showSuccess{
+    
+    [KVNProgress showSuccess];
 }
 
 - (void) syncDriverComs{

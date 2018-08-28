@@ -329,6 +329,85 @@
     
 }
 
+- (void) uploadToRegulusCenter{
+    
+    return;
+    
+    if(regulus_id == nil || _rgsDriver == nil)
+    {
+        return;
+    }
+    
+  
+    [KVNProgress show];
+    
+    NSMutableDictionary *udata = [NSMutableDictionary dictionary];
+    NSError *error = nil;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_scenarioData
+                                                       options:NSJSONWritingPrettyPrinted
+                                                         error: &error];
+    
+    NSString *jsonresult = [[NSString alloc] initWithData:jsonData
+                                                 encoding:NSUTF8StringEncoding];
+    
+    if(jsonresult == nil)
+        jsonresult  = @"";
+    
+    [udata setObject:jsonresult forKey:@"content"];
+    
+    [[RegulusSDK sharedRegulusSDK] SetUserData:_rgsDriver.m_id
+                                          data:udata
+                                    completion:^(BOOL result, NSError *error) {
+                                        
+                                        if (result) {
+                                            
+                                            [KVNProgress showSuccess];
+                                        }
+                                        else
+                                        {
+                                            [KVNProgress showErrorWithStatus:[error description]];
+                                            
+                                        }
+                                        
+                                    }];
+    
+    
+  
+}
+
+- (void) syncDataFromRegulus{
+    
+    if(_rgsDriver == nil)
+    {
+        return;
+    }
+    
+    IMP_BLOCK_SELF(Scenario);
+    
+    [[RegulusSDK sharedRegulusSDK] GetUserData:_rgsDriver.m_id
+                                    completion:^(BOOL result, NSDictionary *data, NSError *error) {
+                                        
+                                        if(result)
+                                        {
+                                            [block_self recoverFromUserData:data];
+                                        }
+                                        
+                                    }];
+}
+
+- (void) recoverFromUserData:(NSDictionary*)data{
+    
+    NSString *scenario_content = [data objectForKey:@"content"];
+    NSData *bdata = [scenario_content dataUsingEncoding:NSUTF8StringEncoding];
+    
+    NSError *error = nil;
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:bdata
+                                                      options:NSJSONReadingAllowFragments
+                                                        error:&error];
+    if([dic isKindOfClass:[NSDictionary class]])
+        [self fillWithData:dic];
+}
+
 - (void) postCreateScenarioNotifyResult:(BOOL)success{
     
     if(success)
@@ -337,6 +416,7 @@
         
         //保存数据库
         [[DataBase sharedDatabaseInstance] saveScenario:_scenarioData];
+        //[self uploadToRegulusCenter];
         
 #ifdef REALTIME_NETWORK_MODEL
         [self uploadToServer];

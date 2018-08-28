@@ -31,6 +31,7 @@
 + (DataSync*)sharedDataSync;
 
 - (void) syncCurrentArea;
+- (void) newVeenoonArea;
 
 - (void) loadingLocalDrivers;
 - (void) syncAreaHasDrivers;

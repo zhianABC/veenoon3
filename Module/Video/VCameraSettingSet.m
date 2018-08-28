@@ -49,11 +49,6 @@
 }
 
 
-- (void) syncDriverIPProperty{
-    
-    
-}
-
 - (void) syncDriverComs{
     
     
@@ -81,35 +76,7 @@
     }
 }
 
-- (void) uploadDriverIPProperty
-{
-    if(_driver
-       && [_driver isKindOfClass:[RgsDriverObj class]]
-       && _driver_ip_property)
-    {
-        IMP_BLOCK_SELF(VCameraSettingSet);
-        
-        RgsDriverObj *rd = (RgsDriverObj*)_driver;
-        
-        //保存到内存
-        _driver_ip_property.value = self._ipaddress;
-        
-        [KVNProgress show];
-        
-        [[RegulusSDK sharedRegulusSDK] SetDriverProperty:rd.m_id
-                                           property_name:_driver_ip_property.name
-                                          property_value:self._ipaddress
-                                              completion:^(BOOL result, NSError *error) {
-                                                  if (result) {
-                                                      
-                                                      [block_self saveProject];
-                                                  }
-                                                  else{
-                                                      [KVNProgress dismiss];
-                                                  }
-                                              }];
-    }
-}
+
 
 - (void) saveProject{
     
