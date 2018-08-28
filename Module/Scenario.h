@@ -43,5 +43,8 @@
 - (NSMutableDictionary *)senarioData;
 - (NSString *)name;
 
+- (void) syncDataFromRegulus;
+- (void) uploadToRegulusCenter;
+
 
 @end

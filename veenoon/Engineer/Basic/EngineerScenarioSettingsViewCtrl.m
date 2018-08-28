@@ -528,6 +528,8 @@
 #endif
                     
                     [[DataBase sharedDatabaseInstance] saveScenario:scenarioDic];
+                    
+                    [s uploadToRegulusCenter];
                 }
                 
                 break;

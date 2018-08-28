@@ -391,6 +391,13 @@
                 
                 [_sceneDrivers addObject:s];
             }
+//            else
+//            {
+//                Scenario *s = [[Scenario alloc] init];
+//                s._rgsSceneObj = dr;
+//                [s syncDataFromRegulus];
+//                [_sceneDrivers addObject:s];
+//            }
         }
     }
     else
@@ -587,18 +594,36 @@
 - (void) setNewProject{
     
     
-    NSLog(@"Call: NewProject");
+    [KVNProgress show];
+    [NSTimer scheduledTimerWithTimeInterval:0.1
+                                     target:self
+                                   selector:@selector(actionNewArea)
+                                   userInfo:nil
+                                    repeats:NO];
+}
+
+- (void) actionNewArea{
     
-    [[DataSync sharedDataSync] syncCurrentArea];
+    [KVNProgress dismiss];
     
-    MeetingRoom *room = [DataCenter defaultDataCenter]._currentRoom;
-    [[DataBase sharedDatabaseInstance] deleteScenarioByRoom:room.regulus_id];
-    [_sceneDrivers removeAllObjects];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        NSLog(@"Call: NewProject");
+        
+        [[DataSync sharedDataSync] syncCurrentArea];
+        
+        MeetingRoom *room = [DataCenter defaultDataCenter]._currentRoom;
+        [[DataBase sharedDatabaseInstance] deleteScenarioByRoom:room.regulus_id];
+        [_sceneDrivers removeAllObjects];
+        
+        EngineerNewTeslariViewCtrl *ctrl = [[EngineerNewTeslariViewCtrl alloc] init];
+        [self.navigationController pushViewController:ctrl animated:YES];
+        
+    });
     
-    EngineerNewTeslariViewCtrl *ctrl = [[EngineerNewTeslariViewCtrl alloc] init];
-    [self.navigationController pushViewController:ctrl animated:YES];
 
 }
+
 
 - (void) cancelAction:(id)sender{
     
