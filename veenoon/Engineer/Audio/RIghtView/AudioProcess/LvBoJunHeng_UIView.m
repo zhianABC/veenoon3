@@ -598,10 +598,10 @@
         }
     }
 }
-- (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
+
+- (void) processSlideValue:(int)tag value:(float)value{
     
-    int tag = (int) slbtn.tag;
-    if (slbtn == gaotongFeqSlider) {
+    if (tag == 1) {
         
         NSDictionary *range = [_curProxy getHighRateRange];
         int max = [[range objectForKey:@"RATE_max"] intValue];
@@ -609,7 +609,7 @@
         
         int feq = value * (max - min) + min;
         gaotongFeqL.text = [NSString stringWithFormat:@"%d Hz", feq];
-
+        
         [_curProxy controlHighFilterFreq:[NSString stringWithFormat:@"%d", feq]];
         
         [fglm setHPFilterWithFreq:feq];
@@ -622,7 +622,7 @@
         
         int feq = value * (max - min) + min;
         ditongFreqL.text = [NSString stringWithFormat:@"%d Hz", feq];
-
+        
         [fglm setLPFilterWithFreq:feq];
         
         [_curProxy controlLowFilterFreq:[NSString stringWithFormat:@"%d", feq]];
@@ -638,7 +638,7 @@
         boduanPinlvL.text = valueStr;
         
         [_curProxy controlBrandFreq:[NSString stringWithFormat:@"%d", k]
-                                    brand:_channelSelIndex];
+                              brand:_channelSelIndex];
         
     } else if (tag == 4) {
         
@@ -649,7 +649,7 @@
         
         [fglm setPEQWithBand:_channelSelIndex gain:k];
         [_curProxy controlBrandGain:[NSString stringWithFormat:@"%0.1f", k]
-                                     brand:_channelSelIndex];
+                              brand:_channelSelIndex];
         
     } else {
         
@@ -668,6 +668,27 @@
                                brand:_channelSelIndex];
         }
     }
+}
+
+- (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
+    
+    int tag = (int) slbtn.tag;
+    
+    [self processSlideValue:tag value:value];
+}
+
+- (void) didEndSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
+    
+    IMP_BLOCK_SELF(LvBoJunHeng_UIView);
+    
+    int tag = (int) slbtn.tag;
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+                                 (int64_t)(200.0 * NSEC_PER_MSEC)),
+                   dispatch_get_main_queue(), ^{
+        
+        [block_self processSlideValue:tag value:value];
+    });
 }
 
 - (void) boduantypeAction:(UIButton*)sender {

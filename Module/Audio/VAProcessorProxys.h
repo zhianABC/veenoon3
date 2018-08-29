@@ -28,6 +28,7 @@
 
 
 @property (nonatomic, strong) RgsProxyObj *_rgsProxyObj;
+@property (nonatomic, strong) NSString *_valName;
 
 //Property
 @property (nonatomic, strong) NSString *_mode;

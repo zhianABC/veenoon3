@@ -135,13 +135,15 @@
         spx = 10;
     for(int i = 0; i < num; i++)
     {
-        VAProcessorProxys *vProxy = [self._currentAodio._inAudioProxys objectAtIndex:i];
+        //VAProcessorProxys *vProxy = [self._currentAodio._inAudioProxys objectAtIndex:i];
         UIButton *btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
         btn.frame = CGRectMake(x, y, 50, 50);
         btn.clipsToBounds = YES;
         btn.layer.cornerRadius = 5;
         btn.titleLabel.font = [UIFont systemFontOfSize:15];
-        [btn setTitle:vProxy._rgsProxyObj.name forState:UIControlStateNormal];
+        //[btn setTitle:vProxy._rgsProxyObj.name forState:UIControlStateNormal];
+        [btn setTitle:[NSString stringWithFormat:@"In %d", i+1]
+             forState:UIControlStateNormal];
         btn.tag = i;
         [self addSubview:btn];
         
@@ -253,14 +255,18 @@
         spx = 10;
     for(int i = 0; i < num; i++)
     {
-        VAProcessorProxys *vProxy = [self._currentAodio._outAudioProxys objectAtIndex:i];
+        //VAProcessorProxys *vProxy = [self._currentAodio._outAudioProxys objectAtIndex:i];
         
         UIButton *btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
         btn.frame = CGRectMake(x, y, 50, 50);
         btn.clipsToBounds = YES;
         btn.layer.cornerRadius = 5;
         btn.titleLabel.font = [UIFont systemFontOfSize:15];
-        [btn setTitle:vProxy._rgsProxyObj.name forState:UIControlStateNormal];
+        //[btn setTitle:vProxy._rgsProxyObj.name forState:UIControlStateNormal];
+        
+        [btn setTitle:[NSString stringWithFormat:@"Out %d", i+1]
+             forState:UIControlStateNormal];
+        
         btn.tag = i;
         [self addSubview:btn];
         

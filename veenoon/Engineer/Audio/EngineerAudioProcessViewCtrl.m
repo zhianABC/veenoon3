@@ -643,7 +643,8 @@
 }
 
 - (void) didEndDragingElecCell:(NSDictionary *)data pt:(CGPoint)pt {
-    CGPoint viewPoint = [self.view convertPoint:pt fromView:_rightView];
+    
+    CGPoint viewPoint = [self.view convertPoint:pt fromView:_inconView];
     
     //NSLog(@"%f - %f", viewPoint.x, viewPoint.y);
     
