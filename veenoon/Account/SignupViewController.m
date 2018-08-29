@@ -107,18 +107,18 @@
     [self.view addSubview:_inputPannel];
     _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2+50);
     
-    int top = 10;
+    int top = 80;
     int left = 10;
     int w = CGRectGetWidth(_inputPannel.frame);
     
-    UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(left, top, 80, 50)];
+    UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(left, top, 80, 40)];
     tL.text = @"国家/地区";
     tL.textColor = [UIColor whiteColor];
     tL.font = [UIFont boldSystemFontOfSize:14];
     [_inputPannel addSubview:tL];
 
     _countryBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _countryBtn.frame = CGRectMake(left+120, top, w-80, 50);
+    _countryBtn.frame = CGRectMake(left+120, top, w-80, 40);
     [_countryBtn setTitle:@"中国" forState:UIControlStateNormal];
     _countryBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     _countryBtn.titleLabel.textColor = [UIColor redColor];
@@ -134,26 +134,27 @@
     rightArraw.userInteractionEnabled = YES;
     rightArraw.image = [UIImage imageNamed:@"login_right_arraw.png"];
 
-    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(left, top +50, w, 1)];
+    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(left, top +38, w, 1)];
     line.backgroundColor = WHITE_LINE_COLOR;
     [_inputPannel addSubview:line];
 
     ///手机号输入框 pending....
-    _companyName = [[UITextField alloc] initWithFrame:CGRectMake(left, top+55, w-85, 40)];
+    _companyName = [[UITextField alloc] initWithFrame:CGRectMake(left, top+40, w-85, 40)];
     _companyName.delegate = self;
     _companyName.returnKeyType = UIReturnKeyDone;
     _companyName.placeholder = @"请输入企业名称";
+    [_companyName setValue:[UIColor grayColor] forKeyPath:@"_placeholderLabel.textColor"];
     _companyName.backgroundColor = [UIColor clearColor];
     _companyName.textColor = [UIColor whiteColor];
     _companyName.borderStyle = UITextBorderStyleNone;
     [_inputPannel addSubview:_companyName];
 
-    UILabel *line2 = [[UILabel alloc] initWithFrame:CGRectMake(left, top +96, w, 1)];
+    UILabel *line2 = [[UILabel alloc] initWithFrame:CGRectMake(left, top +78, w, 1)];
     line2.backgroundColor = WHITE_LINE_COLOR;
     [_inputPannel addSubview:line2];
 
     _regionBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _regionBtn.frame = CGRectMake(left, top+100, w-80, 40);
+    _regionBtn.frame = CGRectMake(left, top+80, w-80, 40);
     [_regionBtn setTitle:@"所在地区：" forState:UIControlStateNormal];
     _regionBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [_regionBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -168,45 +169,47 @@
     rightArraw2.userInteractionEnabled = YES;
     rightArraw2.image = [UIImage imageNamed:@"login_right_arraw.png"];
 
-    UILabel *line3 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+141, w, 1)];
+    UILabel *line3 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+118, w, 1)];
     line3.backgroundColor = WHITE_LINE_COLOR;
     [_inputPannel addSubview:line3];
 
-    _addressTextfield = [[UITextField alloc] initWithFrame:CGRectMake(left, top+145, w-85, 40)];
+    _addressTextfield = [[UITextField alloc] initWithFrame:CGRectMake(left, top+120, w-85, 40)];
     _addressTextfield.delegate = self;
     _addressTextfield.returnKeyType = UIReturnKeyDone;
     _addressTextfield.placeholder = @"请输入街道／楼宇／单位";
+    [_addressTextfield setValue:[UIColor grayColor] forKeyPath:@"_placeholderLabel.textColor"];
     _addressTextfield.backgroundColor = [UIColor clearColor];
     _addressTextfield.textColor = [UIColor whiteColor];
     _addressTextfield.borderStyle = UITextBorderStyleNone;
     [_inputPannel addSubview:_addressTextfield];
 
-    UILabel *line4 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+186, w, 1)];
+    UILabel *line4 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+158, w, 1)];
     line4.backgroundColor = WHITE_LINE_COLOR;
     [_inputPannel addSubview:line4];
 
-    UILabel *tL2 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+190, 80, 40)];
+    UILabel *tL2 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+160, 80, 40)];
     tL2.text = @"+86";
     tL2.textColor = [UIColor whiteColor];
     tL2.font = [UIFont boldSystemFontOfSize:14];
     [_inputPannel addSubview:tL2];
 
-    _cellphoneTextfield = [[UITextField alloc] initWithFrame:CGRectMake(left+80, top+190, 180, 40)];
+    _cellphoneTextfield = [[UITextField alloc] initWithFrame:CGRectMake(left+80, top+160, 180, 40)];
     _cellphoneTextfield.delegate = self;
     _cellphoneTextfield.textAlignment = NSTextAlignmentLeft;
     _cellphoneTextfield.returnKeyType = UIReturnKeyDone;
-    _cellphoneTextfield.placeholder = @"";
+    _cellphoneTextfield.placeholder = @"请输入手机号码";
+    [_cellphoneTextfield setValue:[UIColor grayColor] forKeyPath:@"_placeholderLabel.textColor"];
     _cellphoneTextfield.textColor = [UIColor whiteColor];
     _cellphoneTextfield.backgroundColor = [UIColor clearColor];
     _cellphoneTextfield.borderStyle = UITextBorderStyleNone;
     [_inputPannel addSubview:_cellphoneTextfield];
 
-    UILabel *line5 = [[UILabel alloc] initWithFrame:CGRectMake(left+260, top+190, 1, 40)];
+    UILabel *line5 = [[UILabel alloc] initWithFrame:CGRectMake(left+260, top+160, 1, 40)];
     line5.backgroundColor = WHITE_LINE_COLOR;
     [_inputPannel addSubview:line5];
     
     _registerNumberBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _registerNumberBtn.frame = CGRectMake(left+285, top+190, 100, 40);
+    _registerNumberBtn.frame = CGRectMake(left+285, top+160, 100, 40);
     [_registerNumberBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
     _registerNumberBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [_registerNumberBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -217,93 +220,96 @@
           forControlEvents:UIControlEventTouchUpInside];
     
     
-    UILabel *line6 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+231, w, 1)];
+    UILabel *line6 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+198, w, 1)];
     line6.backgroundColor = WHITE_LINE_COLOR;
     [_inputPannel addSubview:line6];
 
-    UILabel *tL3 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+235, 80, 40)];
+    UILabel *tL3 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+200, 80, 40)];
     tL3.text = @"校验码";
     tL3.textColor = [UIColor whiteColor];
     tL3.font = [UIFont boldSystemFontOfSize:14];
     [_inputPannel addSubview:tL3];
 
-    _jiaoyanmaTextfield = [[UITextField alloc] initWithFrame:CGRectMake(left+80, top+235, 240, 40)];
+    _jiaoyanmaTextfield = [[UITextField alloc] initWithFrame:CGRectMake(left+80, top+200, 240, 40)];
     _jiaoyanmaTextfield.delegate = self;
     _jiaoyanmaTextfield.textAlignment = NSTextAlignmentLeft;
     _jiaoyanmaTextfield.returnKeyType = UIReturnKeyDone;
-    _jiaoyanmaTextfield.placeholder = @"";
+    _jiaoyanmaTextfield.placeholder = @"请输入短信校验码";
+    [_jiaoyanmaTextfield setValue:[UIColor grayColor] forKeyPath:@"_placeholderLabel.textColor"];
     _jiaoyanmaTextfield.backgroundColor = [UIColor clearColor];
     _jiaoyanmaTextfield.textColor = [UIColor whiteColor];
     _jiaoyanmaTextfield.borderStyle = UITextBorderStyleNone;
     [_inputPannel addSubview:_jiaoyanmaTextfield];
 
-    UILabel *line7 = [[UILabel alloc] initWithFrame:CGRectMake(left+260, top+235, 1, 40)];
+    UILabel *line7 = [[UILabel alloc] initWithFrame:CGRectMake(left+260, top+200, 1, 40)];
     line7.backgroundColor = WHITE_LINE_COLOR;
     [_inputPannel addSubview:line7];
 
-    _timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(left+285, top+235, 100, 40)];
+    _timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(left+285, top+200, 100, 40)];
     _timerLabel.text = @"180秒内有效";
     _timerLabel.textColor = [UIColor whiteColor];
     _timerLabel.font = [UIFont boldSystemFontOfSize:14];
     [_inputPannel addSubview:_timerLabel];
 
-    UILabel *line8 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+276, w, 1)];
+    UILabel *line8 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+238, w, 1)];
     line8.backgroundColor = WHITE_LINE_COLOR;
     [_inputPannel addSubview:line8];
 
-    UILabel *line9 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+316, w, 1)];
+    UILabel *line9 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+278, w, 1)];
     line9.backgroundColor = WHITE_LINE_COLOR;
     [_inputPannel addSubview:line9];
 
-    UILabel *tL4 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+320, 80, 40)];
+    UILabel *tL4 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+280, 80, 40)];
     tL4.text = @"设置密码";
     tL4.textColor = [UIColor whiteColor];
     tL4.font = [UIFont boldSystemFontOfSize:14];
     [_inputPannel addSubview:tL4];
 
-    _password = [[UITextField alloc] initWithFrame:CGRectMake(left+80, top+320, 240, 40)];
+    _password = [[UITextField alloc] initWithFrame:CGRectMake(left+80, top+280, 240, 40)];
     _password.delegate = self;
     _password.textAlignment = NSTextAlignmentLeft;
     _password.returnKeyType = UIReturnKeyDone;
     _password.placeholder = @"请输入6-16位密码";
+    [_password setValue:[UIColor grayColor] forKeyPath:@"_placeholderLabel.textColor"];
     _password.backgroundColor = [UIColor clearColor];
     _password.textColor = [UIColor whiteColor];
     _password.borderStyle = UITextBorderStyleNone;
     _password.secureTextEntry = YES;
     [_inputPannel addSubview:_password];
 
-    UILabel *line10 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+361, w, 1)];
+    UILabel *line10 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+318, w, 1)];
     line10.backgroundColor = WHITE_LINE_COLOR;
     [_inputPannel addSubview:line10];
 
-    UILabel *tL5 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+365, 80, 40)];
+    UILabel *tL5 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+320, 80, 40)];
     tL5.text = @"确认密码";
     tL5.textColor = [UIColor whiteColor];
     tL5.font = [UIFont boldSystemFontOfSize:14];
     [_inputPannel addSubview:tL5];
 
-    _passwordAgain = [[UITextField alloc] initWithFrame:CGRectMake(left+80, top+365, 240, 40)];
+    _passwordAgain = [[UITextField alloc] initWithFrame:CGRectMake(left+80, top+320, 240, 40)];
     _passwordAgain.delegate = self;
     _passwordAgain.textAlignment = NSTextAlignmentLeft;
     _passwordAgain.returnKeyType = UIReturnKeyDone;
     _passwordAgain.placeholder = @"请输入6-16位密码";
+    [_passwordAgain setValue:[UIColor grayColor] forKeyPath:@"_placeholderLabel.textColor"];
     _passwordAgain.backgroundColor = [UIColor clearColor];
     _passwordAgain.textColor = [UIColor whiteColor];
     _passwordAgain.borderStyle = UITextBorderStyleNone;
     _passwordAgain.secureTextEntry = YES;
     [_inputPannel addSubview:_passwordAgain];
 
-    UILabel *line11 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+406, w, 1)];
+    UILabel *line11 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+358, w, 1)];
     line11.backgroundColor = WHITE_LINE_COLOR;
     [_inputPannel addSubview:line11];
 
 
     loginBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    loginBtn.frame = CGRectMake(left-20, top+480, w+60, 40);
-    [loginBtn setTitle:@"* 如果您已经使用过了TESLARIA服务，则应返回以使用该账号登录。*" forState:UIControlStateNormal];
+    loginBtn.frame = CGRectMake(left, top+400, w+60, 40);
+    [loginBtn setTitle:@"* 如果您已经使用过了TESLARIA服务，则应返回以使用该账号登录 *" forState:UIControlStateNormal];
     [loginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     loginBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    loginBtn.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+    loginBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     [_inputPannel addSubview:loginBtn];
     [loginBtn addTarget:self
                     action:@selector(loginBtnAction:)

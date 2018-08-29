@@ -40,17 +40,17 @@
     [self.view addSubview:icon];
     icon.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.5-80);
     
-    UIButton *login = [UIButton buttonWithColor:[UIColor whiteColor] selColor:RGB(1, 138, 182)];
-    login.frame = CGRectMake(0, 0,220, 50);
+    UIButton *login = [UIButton buttonWithColor:[UIColor whiteColor] selColor:LOGIN_BLACK_COLOR];
+        login.frame = CGRectMake(0, 0,220, 50);
     login.layer.cornerRadius = 10;
-    login.layer.borderWidth = 2;
+    login.layer.borderWidth = 1;
     login.layer.borderColor = [UIColor whiteColor].CGColor;
     login.clipsToBounds = YES;
     [self.view addSubview:login];
     [login setTitle:@"登录" forState:UIControlStateNormal];
-    [login setTitleColor:RGB(1, 138, 182) forState:UIControlStateNormal];
+    [login setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [login setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
-    login.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    login.titleLabel.font = [UIFont systemFontOfSize:18];
     login.center = CGPointMake(SCREEN_WIDTH/2-120, CGRectGetMaxY(icon.frame)+160);
 
     [login addTarget:self
@@ -60,28 +60,33 @@
     UIButton *signup = [UIButton buttonWithColor:nil selColor:[UIColor whiteColor]];
     signup.frame = CGRectMake(0, 0,220, 50);
     signup.layer.cornerRadius = 10;
-    signup.layer.borderWidth = 2;
+    signup.layer.borderWidth = 1;
     signup.layer.borderColor = [UIColor whiteColor].CGColor;
     signup.clipsToBounds = YES;
     [self.view addSubview:signup];
     [signup setTitle:@"注册" forState:UIControlStateNormal];
     [signup setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [signup setTitleColor:RGB(1, 138, 182) forState:UIControlStateHighlighted];
-    signup.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [signup setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
+    signup.titleLabel.font = [UIFont systemFontOfSize:18];
     signup.center = CGPointMake(SCREEN_WIDTH/2+120, CGRectGetMaxY(icon.frame)+160);
 
     [signup addTarget:self
               action:@selector(signupAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
-    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(40,
-                                                                SCREEN_HEIGHT - 60,
-                                                                SCREEN_WIDTH, 20)];
+    UIButton *titleL = [UIButton buttonWithType:UIButtonTypeCustom];
+    titleL.frame = CGRectMake(60,
+                              SCREEN_HEIGHT - 60,
+                              100, 20);
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
-    titleL.font = [UIFont systemFontOfSize:16];
-    titleL.textColor  = [UIColor whiteColor];
-    titleL.text = @"关于TESLSRIA";
+    titleL.titleLabel.font = [UIFont systemFontOfSize:13];
+    [titleL setTitle:@"关于 TESLSRIA" forState:UIControlStateNormal];
+    [titleL setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    [titleL addTarget:self
+               action:@selector(webAction:)
+     forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:titleL];
     
@@ -183,6 +188,10 @@
     
     
     
+}
+
+- (void) webAction:(id)sender{
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.teslaria.com"]];
 }
 
 - (void) loginAction:(id)sender{
