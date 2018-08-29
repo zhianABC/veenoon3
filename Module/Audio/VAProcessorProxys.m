@@ -189,6 +189,8 @@
             [dic setObject:[NSString stringWithFormat:@"%d", i+1]
                     forKey:@"band"];
             
+            [dic setObject:@"Midshelf" forKey:@"type"];
+            
             [waves16_feq_gain_q addObject:dic];
    
         }
@@ -883,6 +885,8 @@
         
         [dic setObject:[NSString stringWithFormat:@"%d", i+1]
                 forKey:@"band"];
+        
+        [dic setObject:@"Midshelf" forKey:@"type"];
         
         [waves16_feq_gain_q addObject:dic];
         

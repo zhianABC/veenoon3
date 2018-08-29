@@ -273,6 +273,8 @@
     isEnable = !isEnable;
     
     [_curProxy controlLVboGaotongStart:isEnable];
+    
+    [fglm setHPFilterWithByp:!isEnable];
 
     if(isEnable)
     {
@@ -583,6 +585,9 @@
         [_curProxy controlBandEnabled:isEnabled
                                  band:_channelSelIndex];
         
+        [fglm setPEQWithBand:_channelSelIndex
+                         byp:!isEnabled];
+        
         if(isEnabled)
         {
             [buduanStartBtn changeNormalColor:THEME_RED_COLOR];
@@ -838,6 +843,8 @@
     
     [_curProxy controllvboDitongStart:isEnabled];
 
+    [fglm setLPFilterWithByp:!isEnabled];
+    
     if(isEnabled)
     {
         [ditongStartBtn changeNormalColor:THEME_RED_COLOR];
@@ -1326,7 +1333,7 @@
 }
 - (void) onClearData:(id)sender{
     
-    [_curProxy clearZengYi];
+    [_curProxy clearPEQ];
     [self updateUICtrlVals];
 }
 

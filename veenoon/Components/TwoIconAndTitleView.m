@@ -104,6 +104,11 @@
     return _data;
 }
 
+- (NSDictionary *)getInputData{
+    
+    return _inputdata;
+}
+
 - (void) selected{
     
     NSString *icon = [_data objectForKey:@"icon_sel"];
@@ -139,11 +144,12 @@
     
     if(_isSelected)
     {
+        [self unselected];
+        
         if([delegate respondsToSelector:@selector(didCancelTouchedTIA:)]){
             [delegate didCancelTouchedTIA:self];
         }
-        
-        [self unselected];
+
     }
     else{
         
