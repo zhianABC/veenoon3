@@ -29,8 +29,7 @@
 @property NSString * name;
 
 /*!
- 情景执行后使用标记
+ 图片名称
  */
-@property BOOL enable;
-
+@property NSString * image;
 @end

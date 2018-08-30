@@ -42,4 +42,9 @@
  */
 @property NSString * min;
 
+/*!
+ 依赖命令
+ */
+@property NSString * depend_cmd;
+
 @end
