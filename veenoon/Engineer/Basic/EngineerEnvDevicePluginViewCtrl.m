@@ -454,7 +454,7 @@
     
     [self initBrandAndTypes];
     
-    NSArray *drivers = [[DataCenter defaultDataCenter] driversWithType:@"video"];
+    NSArray *drivers = [[DataCenter defaultDataCenter] driversWithType:@"env"];
     
     NSString *toclass = NSStringFromClass([AirConditionPlug class]);
     

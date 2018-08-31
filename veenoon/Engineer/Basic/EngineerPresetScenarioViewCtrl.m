@@ -68,14 +68,12 @@
 #import "RegulusSDK.h"
 #endif
 
-#define E_CELL_WIDTH   60
+#define E_CELL_WIDTH   44
 
 
 @interface EngineerPresetScenarioViewCtrl()  <ECPlusSelectViewDelegate>{
     
-    UIScrollView *_audioScroll;
-    UIScrollView *_videoScroll;
-    UIScrollView *_envScroll;
+    UIScrollView *_content;
     
     int audioStartX;
     int space;
@@ -90,13 +88,11 @@
     UIButton *scenarioButton;
     
     BOOL _isEditingScenario;
+    
+    float _yVal;
 }
-@property (nonatomic, strong) NSMutableArray *_audioCells;
-@property (nonatomic, strong) NSMutableArray *_videoCells;
-@property (nonatomic, strong) NSMutableArray *_envCells;
-
+@property (nonatomic, strong) NSMutableArray *_drCells;
 @property (nonatomic, strong) NSMutableArray *_deleteCells;
-//@property (nonatomic, strong) NSMutableDictionary *_buttonTagWithDataMap;
 
 @property (nonatomic, strong) NSMutableDictionary *_aDataCheckTestMap;
 @property (nonatomic, strong) NSMutableDictionary *_vDataCheckTestMap;
@@ -107,12 +103,8 @@
 @implementation EngineerPresetScenarioViewCtrl
 @synthesize _scenarioName;
 
-@synthesize _audioCells;
-@synthesize _videoCells;
-@synthesize _envCells;
-
+@synthesize _drCells;
 @synthesize _deleteCells;
-//@synthesize _buttonTagWithDataMap;
 
 @synthesize _scenario;
 @synthesize _aDataCheckTestMap;
@@ -125,9 +117,8 @@
 
 -(void) initData {
     
-    self._audioCells = [NSMutableArray array];
-    self._videoCells = [NSMutableArray array];
-    self._envCells = [NSMutableArray array];
+    self._drCells = [NSMutableArray array];
+   
     self._deleteCells = [NSMutableArray array];
   
     if(_scenario == nil)
@@ -167,7 +158,7 @@
 {
     
     BOOL haveEdited = NO;
-    for(DevicePlugButton *btn in _audioCells)
+    for(DevicePlugButton *btn in _drCells)
     {
         if([btn isKindOfClass:[DevicePlugButton class]])
         {
@@ -178,34 +169,7 @@
             }
         }
     }
-    if(!haveEdited)
-    {
-        for(DevicePlugButton *btn in _videoCells)
-        {
-            if([btn isKindOfClass:[DevicePlugButton class]])
-            {
-                if(btn._isEdited)
-                {
-                    haveEdited = YES;
-                    break;
-                }
-            }
-        }
-    }
-    if(!haveEdited)
-    {
-        for(DevicePlugButton *btn in _envCells)
-        {
-            if([btn isKindOfClass:[DevicePlugButton class]])
-            {
-                if(btn._isEdited)
-                {
-                    haveEdited = YES;
-                    break;
-                }
-            }
-        }
-    }
+    
     
     if(haveEdited)
     {
@@ -226,89 +190,52 @@
     
     [self initData];
     
-    audioStartX = 0;
-    space = 20;
+    audioStartX = 30;
+    space = 36;
     audioStartY = 50;
+    _yVal = 15;
     
     _isEditMode = NO;
     
-    
     [[DataSync sharedDataSync] loadingLocalDrivers];
-    
 
     
-    UIView *topbar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 64)];
+    UIView *topbar = [[UIView alloc] initWithFrame:CGRectMake(0, 0,
+                                                              SCREEN_WIDTH,
+                                                              64)];
     topbar.backgroundColor = LOGIN_BLACK_COLOR;
     
     
-    UILabel *centerTitleL = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-100, 25, 200, 30)];
+    UILabel *centerTitleL = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-100,
+                                                                      25,
+                                                                      200,
+                                                                      30)];
     centerTitleL.textColor = [UIColor whiteColor];
     centerTitleL.backgroundColor = [UIColor clearColor];
     centerTitleL.textAlignment = NSTextAlignmentCenter;
     [topbar addSubview:centerTitleL];
     centerTitleL.text = @"设备调试";
     
-    UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT+50, ENGINEER_VIEW_TOP+70, SCREEN_WIDTH-80, 30)];
-    portDNSLabel.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont boldSystemFontOfSize:16];
-    portDNSLabel.textColor  = [UIColor whiteColor];
-    portDNSLabel.text = @"音频管理";
+//    UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT+50, ENGINEER_VIEW_TOP+70, SCREEN_WIDTH-80, 30)];
+//    portDNSLabel.backgroundColor = [UIColor clearColor];
+//    [self.view addSubview:portDNSLabel];
+//    portDNSLabel.font = [UIFont boldSystemFontOfSize:16];
+//    portDNSLabel.textColor  = [UIColor whiteColor];
+//    portDNSLabel.text = @"音频管理";
+//
+
+    _content = [[UIScrollView alloc] init];
+    [self.view addSubview:_content];
+    _content.backgroundColor = [UIColor clearColor];
+    int top = 64;
+    _content.frame = CGRectMake(ENGINEER_VIEW_LEFT+30,
+                                    top,
+                                    SCREEN_WIDTH-(ENGINEER_VIEW_LEFT+30)*2,
+                                SCREEN_HEIGHT - top - 50);
+    
+    _content.userInteractionEnabled = YES;
     
     
-    
-    _audioScroll = [[UIScrollView alloc] init];
-    [self.view addSubview:_audioScroll];
-    _audioScroll.backgroundColor = [UIColor clearColor];
-    _audioScroll.frame = CGRectMake(ENGINEER_VIEW_LEFT+50,
-                                    ENGINEER_VIEW_TOP+85,
-                                    SCREEN_WIDTH-(ENGINEER_VIEW_LEFT+50)*2, 150);
-    int audioCount = (int) [[_curScenario objectForKey:@"audioArray"] count] + 1;
-    _audioScroll.contentSize = CGSizeMake(audioStartX + audioCount*(E_CELL_WIDTH+space),
-                                          150);
-    _audioScroll.userInteractionEnabled=YES;
-    
-    
-    portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT+50,
-                                                             ENGINEER_VIEW_TOP+255,
-                                                             SCREEN_WIDTH-80, 30)];
-    portDNSLabel.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont boldSystemFontOfSize:16];
-    portDNSLabel.textColor  = [UIColor whiteColor];
-    portDNSLabel.text = @"视频管理";
-    
-    _videoScroll = [[UIScrollView alloc] init];
-    [self.view addSubview:_videoScroll];
-    _videoScroll.backgroundColor = [UIColor clearColor];
-    _videoScroll.frame = CGRectMake(ENGINEER_VIEW_LEFT+50,
-                                    ENGINEER_VIEW_TOP+270,
-                                    SCREEN_WIDTH-(ENGINEER_VIEW_LEFT+50)*2,
-                                    150);
-    _videoScroll.userInteractionEnabled=YES;
-    int videoCount = (int)[[_curScenario objectForKey:@"videoArray"] count] + 1;
-    _videoScroll.contentSize = CGSizeMake(audioStartX + videoCount*(E_CELL_WIDTH+space), 150);
-  
-    
-    portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT+50,
-                                                             ENGINEER_VIEW_TOP+440,
-                                                             SCREEN_WIDTH-80, 30)];
-    portDNSLabel.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont boldSystemFontOfSize:16];
-    portDNSLabel.textColor  = [UIColor whiteColor];
-    portDNSLabel.text = @"环境管理";
-    
-    _envScroll = [[UIScrollView alloc] init];
-    [self.view addSubview:_envScroll];
-    _envScroll.backgroundColor = [UIColor clearColor];
-    _envScroll.frame = CGRectMake(ENGINEER_VIEW_LEFT+50,
-                                  ENGINEER_VIEW_TOP+455,
-                                  SCREEN_WIDTH-(ENGINEER_VIEW_LEFT+50)*2, 150);
-    _envScroll.userInteractionEnabled=YES;
-    int envCount = (int)[[_curScenario objectForKey:@"envArray"] count] + 1;
-    _envScroll.contentSize = CGSizeMake(audioStartX + envCount*(E_CELL_WIDTH+space), 150);
-  
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0,
                                                                            SCREEN_HEIGHT-50,
@@ -337,8 +264,8 @@
     [self.view addSubview:bottomBar];
 
     scenarioButton = [UIButton buttonWithColor:YELLOW_COLOR selColor:nil];
-    scenarioButton.frame = CGRectMake(SCREEN_WIDTH-120, 84, 100, 40);
-    [self.view addSubview:scenarioButton];
+    scenarioButton.frame = CGRectMake(SCREEN_WIDTH-120, 5, 100, 40);
+    [bottomBar addSubview:scenarioButton];
     scenarioButton.layer.cornerRadius = 3;
     scenarioButton.clipsToBounds = YES;
     [scenarioButton setTitle:@"生成场景" forState:UIControlStateNormal];
@@ -353,9 +280,21 @@
     scenarioButton.alpha = 0.5;
 
     
+    _setBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _setBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 20, 160, 44);
+    [self.view addSubview:_setBtn];
+    [_setBtn setTitle:@"编辑" forState:UIControlStateNormal];
+    [_setBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_setBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    _setBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [_setBtn addTarget:self
+                 action:@selector(editAction:)
+       forControlEvents:UIControlEventTouchUpInside];
+    //_setBtn.hidden = YES;
+    
     _doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _doneBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
-    [bottomBar addSubview:_doneBtn];
+    _doneBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 20, 160, 44);
+    [self.view addSubview:_doneBtn];
     [_doneBtn setTitle:@"完成" forState:UIControlStateNormal];
     [_doneBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_doneBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
@@ -413,6 +352,12 @@
         
         NSArray *envs = [_selectedDevices objectForKey:@"env"];
         [self showCells:3000 datas:envs];
+        
+        NSArray *chuangan = [_selectedDevices objectForKey:@"chuangan"];
+        [self showCells:4000 datas:chuangan];
+        
+        NSArray *port = [_selectedDevices objectForKey:@"port"];
+        [self showCells:5000 datas:port];
     }
    
 }
@@ -518,22 +463,55 @@
 
 - (void) showCells:(int)tagBase datas:(NSArray*)datas{
     
-    UIScrollView * scroll = nil;
-    NSMutableArray *btncells = nil;
-    if(tagBase == 1000){
-        scroll = _audioScroll;
-        btncells = _audioCells;
-    }
-    if(tagBase == 2000){
-        scroll = _videoScroll;
-        btncells = _videoCells;
-    }
-    if(tagBase == 3000){
-        scroll = _envScroll;
-        btncells = _envCells;
-    }
+    NSMutableArray *btncells = _drCells;
+    
     
     int x = audioStartX;
+    
+    UIImageView *smicon = [[UIImageView alloc] initWithFrame:CGRectMake(30,
+                                                                        _yVal,
+                                                                        30,
+                                                                        30)];
+    smicon.layer.contentsGravity = kCAGravityCenter;
+    [_content addSubview:smicon];
+    
+    UILabel *sectionL = [[UILabel alloc] initWithFrame:CGRectMake(60,
+                                                                      _yVal,
+                                                                      200,
+                                                                      30)];
+    sectionL.textColor = [UIColor whiteColor];
+    sectionL.backgroundColor = [UIColor clearColor];
+    sectionL.textAlignment = NSTextAlignmentLeft;
+    [_content addSubview:sectionL];
+    sectionL.font = [UIFont systemFontOfSize:14];
+    sectionL.textColor = YELLOW_COLOR;
+    
+    if(tagBase == 1000)
+    {
+        sectionL.text  = @"音频设备";
+        smicon.image = [UIImage imageNamed:@"sm_row_audio.png"];
+    }
+    else if(tagBase == 2000)
+    {
+        sectionL.text  = @"视频设备";
+        smicon.image = [UIImage imageNamed:@"sm_row_video.png"];
+    }
+    else if(tagBase == 3000)
+    {
+        sectionL.text  = @"环境设备";
+        smicon.image = [UIImage imageNamed:@"sm_row_env.png"];
+    }
+    else if(tagBase == 4000)
+    {
+        sectionL.text  = @"传感设备";
+        smicon.image = [UIImage imageNamed:@"sm_sensor.png"];
+    }
+    else if(tagBase == 5000)
+    {
+        sectionL.text  = @"辅助设备";
+        smicon.image = [UIImage imageNamed:@"sm_others.png"];
+    }
+    _yVal+=40;
     
     for(int i = 0; i < [datas count]; i++)
     {
@@ -552,7 +530,7 @@
         UIImage *eImg = [UIImage imageNamed:imageStr];
         
         DevicePlugButton *cellBtn = [[DevicePlugButton alloc] initWithFrame:CGRectMake(x,
-                                                                                       audioStartY,
+                                                                                       _yVal,
                                                                                        E_CELL_WIDTH,
                                                                                        E_CELL_WIDTH)];
         cellBtn.tag = tagBase+i;
@@ -561,9 +539,22 @@
         [cellBtn addMyObserver];
         
         
+        UILabel *btnL = [[UILabel alloc] initWithFrame:CGRectMake(x-15,
+                                                                      _yVal+E_CELL_WIDTH+5,
+                                                                      E_CELL_WIDTH+30,
+                                                                      20)];
+        btnL.textColor = [UIColor whiteColor];
+        btnL.backgroundColor = [UIColor clearColor];
+        btnL.textAlignment = NSTextAlignmentCenter;
+        [_content addSubview:btnL];
+        btnL.font = [UIFont systemFontOfSize:12];
+        btnL.textColor = DARK_BLUE_COLOR;
+        btnL.text = [dic objectForKey:@"name"];
+        
+        
         [cellBtn setBackgroundImage:eImg forState:UIControlStateNormal];
         
-        [scroll addSubview:cellBtn];
+        [_content addSubview:cellBtn];
         [cellBtn addTarget:self
                     action:@selector(buttonAction:)
           forControlEvents:UIControlEventTouchUpInside];
@@ -582,8 +573,25 @@
         x+=E_CELL_WIDTH;
         x+=space;
         
+        
+        if(x >= (CGRectGetWidth(_content.frame) - E_CELL_WIDTH))
+        {
+            if(i < [datas count] - 1)
+            {
+                _yVal += E_CELL_WIDTH;
+                _yVal += 30;
+                
+                x = audioStartX;
+            }
+        }
+        
     }
-    scroll.contentSize = CGSizeMake(x+E_CELL_WIDTH, 150);
+    
+    _yVal += E_CELL_WIDTH;
+    _yVal += 40;
+    
+    _content.contentSize = CGSizeMake(_content.frame.size.width,
+                                      _yVal);
     
 }
 
@@ -602,15 +610,6 @@
     {
         [_scenario createEventScenario];
     }
-    
-//    CreateScenarioViewController *cr = [[CreateScenarioViewController alloc] init];
-//    cr._selectedDevices = _selectedDevices;
-//    UINavigationController *navi = [[UINavigationController alloc] initWithRootViewController:cr];
-//    navi.navigationBarHidden = YES;
-//
-//    [self presentViewController:navi
-//                       animated:YES
-//                     completion:nil];
     
 }
 
@@ -929,12 +928,47 @@
     
 }
 
+- (void) editAction:(id)sender{
+    
+    if(_isEditMode)
+        return;
+    _isEditMode = YES;
+    
+    _doneBtn.hidden = NO;
+    _setBtn.hidden = YES;
+    
+    [_deleteCells removeAllObjects];
+    
+    for(UIButton *btn in _drCells)
+    {
+        if(btn.tag > 100)
+        {
+            UIButton *btnDel = [UIButton buttonWithType:UIButtonTypeCustom];
+            btnDel.frame = btn.bounds;
+            btnDel.tag = btn.tag;
+            
+            [btn addSubview:btnDel];
+            
+            [btnDel setImage:[UIImage imageNamed:@"red_del_icon.png"]
+                    forState:UIControlStateNormal];
+            
+            btnDel.imageEdgeInsets = UIEdgeInsetsMake(-30, -30, 0, 0);
+            
+            [btnDel addTarget:self
+                       action:@selector(delButton:)
+             forControlEvents:UIControlEventTouchUpInside];
+            
+            [_deleteCells addObject:btnDel];
+        }
+    }
+}
 
 - (void) doneAction:(id)sender{
     
     _isEditMode = NO;
     
     _doneBtn.hidden = YES;
+    _setBtn.hidden = NO;
     
     for(UIButton *btn in _deleteCells)
     {
@@ -947,82 +981,7 @@
 
 - (void) btnlongPressed:(id)sender{
     
-    if(_isEditMode)
-        return;
-    _isEditMode = YES;
     
-    _doneBtn.hidden = NO;
-    
-    [_deleteCells removeAllObjects];
-    
-    for(UIButton *btn in _audioCells)
-    {
-        if(btn.tag > 100)
-        {
-        UIButton *btnDel = [UIButton buttonWithType:UIButtonTypeCustom];
-        btnDel.frame = btn.bounds;
-        btnDel.tag = btn.tag;
-        
-        [btn addSubview:btnDel];
-        
-        [btnDel setImage:[UIImage imageNamed:@"red_del_icon.png"]
-                forState:UIControlStateNormal];
-        
-        btnDel.imageEdgeInsets = UIEdgeInsetsMake(-30, -30, 0, 0);
-        
-        [btnDel addTarget:self
-                   action:@selector(delButton:)
-         forControlEvents:UIControlEventTouchUpInside];
-        
-        [_deleteCells addObject:btnDel];
-        }
-    }
-    
-    for(UIButton *btn in _videoCells)
-    {
-        if(btn.tag > 100)
-        {
-        UIButton *btnDel = [UIButton buttonWithType:UIButtonTypeCustom];
-        btnDel.frame = btn.bounds;
-        btnDel.tag = btn.tag;
-        
-        [btn addSubview:btnDel];
-        
-        [btnDel setImage:[UIImage imageNamed:@"red_del_icon.png"]
-                forState:UIControlStateNormal];
-        
-        btnDel.imageEdgeInsets = UIEdgeInsetsMake(-30, -30, 0, 0);
-        
-        [btnDel addTarget:self
-                   action:@selector(delButton:)
-         forControlEvents:UIControlEventTouchUpInside];
-        
-        [_deleteCells addObject:btnDel];
-        }
-    }
-    
-    for(UIButton *btn in _envCells)
-    {
-        if(btn.tag > 100)
-        {
-        UIButton *btnDel = [UIButton buttonWithType:UIButtonTypeCustom];
-        btnDel.frame = btn.bounds;
-        btnDel.tag = btn.tag;
-        
-        [btn addSubview:btnDel];
-        
-        [btnDel setImage:[UIImage imageNamed:@"red_del_icon.png"]
-                forState:UIControlStateNormal];
-        
-        btnDel.imageEdgeInsets = UIEdgeInsetsMake(-30, -30, 0, 0);
-        
-        [btnDel addTarget:self
-                   action:@selector(delButton:)
-         forControlEvents:UIControlEventTouchUpInside];
-        
-        [_deleteCells addObject:btnDel];
-        }
-    }
     
    
 }
@@ -1036,21 +995,18 @@
     int idx = tag%1000;
     
     NSMutableArray *dataArray = nil;
-    NSMutableArray *btnCells = nil;
+    NSMutableArray *btnCells = _drCells;
     if(baseTag == 1)//音频
     {
         dataArray = [_selectedDevices objectForKey:@"audio"];
-        btnCells = _audioCells;
     }
     else if(baseTag == 2)//视频
     {
         dataArray = [_selectedDevices objectForKey:@"video"];
-        btnCells = _videoCells;
     }
     else//环境
     {
         dataArray = [_selectedDevices objectForKey:@"env"];
-        btnCells = _envCells;
     }
 
     [dataArray removeObjectAtIndex:idx];
@@ -1075,7 +1031,7 @@
     
     [btnCells removeObject:supBtn];
     
-    for(int i = 0; i < [btnCells count]; i++)
+    for(int i = 0; i < [_drCells count]; i++)
     {
         [UIView beginAnimations:nil context:nil];
         

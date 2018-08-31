@@ -27,6 +27,18 @@
 
 //@synthesize _localSavedProxys;
 
+- (id) init
+{
+    if(self = [super init])
+    {
+        
+        self._show_icon_name = @"com_driver_icon.png";
+        self._show_icon_sel_name = @"com_driver_icon_sel.png";
+        
+    }
+    
+    return self;
+}
 
 - (void) createDriver{
     
