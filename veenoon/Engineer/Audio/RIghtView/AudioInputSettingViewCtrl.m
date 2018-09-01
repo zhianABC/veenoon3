@@ -51,7 +51,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [super setCenterTitle:@"输入设置"];
+    [self setTitleAndImage:@"audio_corner_yinpinchuli.png" withTitle:@"音频处理器"];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
@@ -213,33 +213,43 @@
     
     
     CGRect vrc = CGRectMake(60, 140, SCREEN_WIDTH-120, SCREEN_HEIGHT-140-60);
-    
-    yxq = [[YaXianQi_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._inAudioProxys];
-    [self.view addSubview:yxq];
-    yxq.hidden = YES;
+    int numProxys = (int)[_processor._inAudioProxys count];
     
     zengyiView = [[ZengYi_UIView alloc] initWithFrame:vrc withProxy:_processor._inAudioProxys];
     [self.view addSubview:zengyiView];
     zengyiView.hidden = NO;
     [zengyiView updateProxyCommandValIsLoaded];
+    zengyiView._proxys = _processor._inAudioProxys;
+    [zengyiView layoutChannelBtns:numProxys];
 
-    
     zaoshengView = [[ZaoShengMen_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._inAudioProxys];
     [self.view addSubview:zaoshengView];
     zaoshengView.hidden = YES;
+    zaoshengView._proxys = _processor._inAudioProxys;
+    [zaoshengView layoutChannelBtns:numProxys];
     
     yanshiView = [[YanShiQi_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._inAudioProxys];
     [self.view addSubview:yanshiView];
     yanshiView.hidden = YES;
+    yanshiView._proxys = _processor._inAudioProxys;
+    [yanshiView layoutChannelBtns:numProxys];
     
     lvbo = [[LvBoJunHeng_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._inAudioProxys];
     [self.view addSubview:lvbo];
     lvbo.hidden = YES;
+    lvbo._proxys = _processor._inAudioProxys;
+    [lvbo layoutChannelBtns:numProxys];
     
     huishengView = [[HuiShengXiaoChu_UIView alloc] initWithFrameProxys:vrc withProxys:_processor];
     huishengView.delegate_ = self;
     [self.view addSubview:huishengView];
     huishengView.hidden = YES;
+    
+    yxq = [[YaXianQi_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._inAudioProxys];
+    [self.view addSubview:yxq];
+    yxq.hidden = YES;
+    yxq._proxys = _processor._inAudioProxys;
+    [yxq layoutChannelBtns:numProxys];
     
     zidonghunyinView = [[ZiDongHunYin_UIView alloc] initWithFrameProxy:vrc withAudio:_processor withProxy:_processor._autoMixProxy];
     [self.view addSubview:zidonghunyinView];
@@ -249,27 +259,10 @@
     [self.view addSubview:fankuiyizhiView];
     fankuiyizhiView.hidden = YES;
     
-    self._curSelectBtn = zengyiBtn;
-    [zengyiBtn changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
-    
-    int numProxys = (int)[_processor._inAudioProxys count];
-    zengyiView._proxys = _processor._inAudioProxys;
-    [zengyiView layoutChannelBtns:numProxys];
-    
-    zaoshengView._proxys = _processor._inAudioProxys;
-    [zaoshengView layoutChannelBtns:numProxys];
-    
-    yanshiView._proxys = _processor._inAudioProxys;
-    [yanshiView layoutChannelBtns:numProxys];
-    
-    lvbo._proxys = _processor._inAudioProxys;
-    [lvbo layoutChannelBtns:numProxys];
-    
-    yxq._proxys = _processor._inAudioProxys;
-    [yxq layoutChannelBtns:numProxys];
-    
     [fankuiyizhiView layoutChannelBtns:numProxys];
     
+    self._curSelectBtn = zengyiBtn;
+    [zengyiBtn changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
 }
 - (void) zidonghunyinAction:(UIButton*)sender{
    

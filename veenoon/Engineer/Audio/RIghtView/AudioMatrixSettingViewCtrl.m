@@ -53,23 +53,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = DARK_GRAY_COLOR;
+    [super setTitleAndImage:@"audio_corner_yinpinchuli.png" withTitle:@"音频处理器"];
     
-    UIView* _topBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 64)];
-    _topBar.backgroundColor = DARK_GRAY_COLOR;
-    [self.view addSubview:_topBar];
-    
-    UILabel* centerTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-100, 25, 200, 30)];
-    centerTitleLabel.textColor = [UIColor whiteColor];
-    centerTitleLabel.backgroundColor = [UIColor clearColor];
-    centerTitleLabel.textAlignment = NSTextAlignmentCenter;
-    [_topBar addSubview:centerTitleLabel];
-    
-    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 63, SCREEN_WIDTH, 1)];
-    line.backgroundColor = TITLE_LINE_COLOR;
-    [_topBar addSubview:line];
-    
-    centerTitleLabel.text = @"矩阵路由";
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
@@ -207,7 +192,7 @@
     
     
     int left = (SCREEN_WIDTH - (maxIn * w))/2;
-    int top = 40;
+    int top = 50;
     
     int x = 0;
     int y = 0;
@@ -218,7 +203,12 @@
     {
          y = top + i*h;
         VAProcessorProxys *vap = [audio_outs objectAtIndex:i];
-        vap._valName = [NSString stringWithFormat:@"Out %d", i+1];
+        
+        if (i==maxOut-1) {
+            vap._valName = @"Output";
+        } else {
+            vap._valName = [NSString stringWithFormat:@"%02d", i+1];
+        }
         
         UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(left-w, y, w, h)];
         //tL.text = vap._rgsProxyObj.name;
@@ -235,8 +225,12 @@
             if(i == 0)
             {
                 VAProcessorProxys *vap = [audio_ins objectAtIndex:j];
-                vap._valName = [NSString stringWithFormat:@"In %d", j+1];
-                
+                if (j==0) {
+                    vap._valName = @"Input";
+                } else {
+                     vap._valName = [NSString stringWithFormat:@"%02d", j+1];
+                }
+               
                 UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(x, y-20, w, 20)];
                 //tL.text = vap._rgsProxyObj.name;
                 tL.text = vap._valName;
@@ -246,8 +240,8 @@
                 tL.textColor = [UIColor whiteColor];
             }
             
-            UIButton *btn = [UIButton buttonWithColor:RGB(75, 163, 202)
-                                             selColor:nil];
+            UIButton *btn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR
+                                             selColor:NEW_ER_BUTTON_BL_COLOR];
             btn.frame = CGRectMake(x-2, y+2, w-4, h-4);
             [_matrix addSubview:btn];
             btn.layer.cornerRadius = 5;
@@ -369,7 +363,7 @@
     {
         [_map setObject:@"1" forKey:key];
         
-        [sender changeNormalColor:RGB(0x10, 0x2f, 0x3d)];
+        [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
         
         [sender setTitle:@"0.0" forState:UIControlStateNormal];
         
@@ -400,7 +394,7 @@
     {
         [_map removeObjectForKey:key];
         
-        [sender changeNormalColor:RGB(75, 163, 202)];
+        [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
         
         [sender setTitle:@"" forState:UIControlStateNormal];
         

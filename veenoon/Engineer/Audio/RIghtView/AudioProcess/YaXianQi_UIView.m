@@ -104,7 +104,7 @@
     int idx = (int)sender.tag;
     int tag = idx + 1;
     
-    [channelBtn setTitle:[NSString stringWithFormat:@"In %d", tag] forState:UIControlStateNormal];
+    [channelBtn setTitle:[NSString stringWithFormat:@"Out %d", tag] forState:UIControlStateNormal];
     
     for(UIButton * btn in _channelBtns)
     {
@@ -116,7 +116,7 @@
         else
         {
             [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            [btn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
+            [btn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
         }
     }
     

@@ -10,7 +10,7 @@
 #import "BaseViewController.h"
 @class AudioEProcessor;
 
-@interface AudioMatrixSettingViewCtrl : UIViewController
+@interface AudioMatrixSettingViewCtrl : BaseViewController
 @property (nonatomic, strong) AudioEProcessor *_processor;
 
 @end

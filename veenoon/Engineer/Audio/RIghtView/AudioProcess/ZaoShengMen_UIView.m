@@ -176,7 +176,7 @@
         else
         {
             [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            [btn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
+            [btn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
         }
     }
     
