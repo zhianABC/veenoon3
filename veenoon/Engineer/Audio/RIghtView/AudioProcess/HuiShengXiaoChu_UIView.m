@@ -43,8 +43,8 @@
     {
         self._curProxy = proxy;
         
-        channelBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
-        channelBtn.frame = CGRectMake(0, 50, 70, 36);
+        channelBtn = [UIButton buttonWithColor:nil selColor:nil];
+        channelBtn.frame = CGRectMake(0, 50, 300, 36);
 //        channelBtn.clipsToBounds = YES;
 //        channelBtn.layer.cornerRadius = 5;
 //        channelBtn.titleLabel.font = [UIFont systemFontOfSize:15];
@@ -52,7 +52,7 @@
 //        [channelBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
 //        [self addSubview:channelBtn];
         
-        int y = CGRectGetMaxY(channelBtn.frame)+20;
+        int y = CGRectGetMaxY(channelBtn.frame)+10;
         contentView.frame  = CGRectMake(0, y, frame.size.width, 340);
         
         [self createContentViewBtns];
@@ -85,7 +85,7 @@
     
     [contentView addSubview:roomeImageView];
     
-    qidongBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    qidongBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_SD_COLOR];
     qidongBtn.frame = CGRectMake(contentView.frame.size.width/2 - 25, contentView.frame.size.height - 40, 50, 30);
     qidongBtn.layer.cornerRadius = 5;
     qidongBtn.layer.borderWidth = 2;
@@ -143,7 +143,7 @@
     }
     else
     {
-        [qidongBtn changeNormalColor:RGB(75, 163, 202)];
+        [qidongBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
     }
 }
 

@@ -89,23 +89,24 @@
     int bw = 80;
     int bh = 30;
     
-    zengyiBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+    zengyiBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
     zengyiBtn.frame = CGRectMake(startX, startY, bw, bh);
     zengyiBtn.clipsToBounds = YES;
     zengyiBtn.layer.cornerRadius = 5;
+    self._curSelectBtn = zengyiBtn;
     zengyiBtn.layer.borderWidth = 2;
     zengyiBtn.layer.borderColor = [UIColor clearColor].CGColor;
     zengyiBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [zengyiBtn setTitle:@"增益" forState:UIControlStateNormal];
-    [zengyiBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-    [zengyiBtn setTitleColor:YELLOW_COLOR forState:UIControlStateHighlighted];
+    [zengyiBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+    [zengyiBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     [self.view addSubview:zengyiBtn];
     [zengyiBtn addTarget:self
                     action:@selector(zengyiAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
     
-    zaoshengmenBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+    zaoshengmenBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
     zaoshengmenBtn.frame = CGRectMake(CGRectGetMaxX(zengyiBtn.frame) + gap, startY, bw, bh);
     zaoshengmenBtn.clipsToBounds = YES;
     zaoshengmenBtn.layer.cornerRadius = 5;
@@ -120,7 +121,7 @@
                   action:@selector(zaoshengmenAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    lvbojunhengBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+    lvbojunhengBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
     lvbojunhengBtn.frame = CGRectMake(CGRectGetMaxX(zaoshengmenBtn.frame) + gap, startY, bw, bh);
     lvbojunhengBtn.clipsToBounds = YES;
     lvbojunhengBtn.layer.cornerRadius = 5;
@@ -135,7 +136,7 @@
                        action:@selector(lvbojunhengAction:)
              forControlEvents:UIControlEventTouchUpInside];
     
-    yaxianBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+    yaxianBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
     yaxianBtn.frame = CGRectMake(CGRectGetMaxX(lvbojunhengBtn.frame) + gap, startY, bw, bh);
     yaxianBtn.clipsToBounds = YES;
     yaxianBtn.layer.cornerRadius = 5;
@@ -150,7 +151,7 @@
                        action:@selector(yaxianqiAction:)
              forControlEvents:UIControlEventTouchUpInside];
     
-    yanshiqiBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+    yanshiqiBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
     yanshiqiBtn.frame = CGRectMake(CGRectGetMaxX(yaxianBtn.frame) + gap, startY, bw, bh);
     yanshiqiBtn.clipsToBounds = YES;
     yanshiqiBtn.layer.cornerRadius = 5;
@@ -165,7 +166,7 @@
                        action:@selector(yanshiqiAction:)
              forControlEvents:UIControlEventTouchUpInside];
     
-    huishengxiaochuBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+    huishengxiaochuBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
     huishengxiaochuBtn.frame = CGRectMake(CGRectGetMaxX(yanshiqiBtn.frame) + gap, startY, bw, bh);
     huishengxiaochuBtn.clipsToBounds = YES;
     huishengxiaochuBtn.layer.cornerRadius = 5;
@@ -180,7 +181,7 @@
                        action:@selector(huishengxiaochuAction:)
              forControlEvents:UIControlEventTouchUpInside];
     
-    zidonghunyinBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+    zidonghunyinBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
     zidonghunyinBtn.frame = CGRectMake(CGRectGetMaxX(huishengxiaochuBtn.frame) + gap, startY, bw, bh);
     zidonghunyinBtn.clipsToBounds = YES;
     zidonghunyinBtn.layer.cornerRadius = 5;
@@ -195,7 +196,7 @@
                        action:@selector(zidonghunyinAction:)
              forControlEvents:UIControlEventTouchUpInside];
     
-    fankuiyizhiBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+    fankuiyizhiBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
     fankuiyizhiBtn.frame = CGRectMake(CGRectGetMaxX(zidonghunyinBtn.frame) + gap, startY, bw, bh);
     fankuiyizhiBtn.clipsToBounds = YES;
     fankuiyizhiBtn.layer.cornerRadius = 5;
@@ -249,8 +250,7 @@
     fankuiyizhiView.hidden = YES;
     
     self._curSelectBtn = zengyiBtn;
-    [zengyiBtn changeNormalColor:BLUE_DOWN_COLOR];
-    
+    [zengyiBtn changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
     
     int numProxys = (int)[_processor._inAudioProxys count];
     zengyiView._proxys = _processor._inAudioProxys;
@@ -278,11 +278,11 @@
         return;
     }
 
-    [_curSelectBtn changeNormalColor:RGB(0, 89, 118)];
+    [_curSelectBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
     [_curSelectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
-    [sender setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-    [sender changeNormalColor:BLUE_DOWN_COLOR];
+    [sender setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+    [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
     
     self._curSelectBtn = sender;
     
@@ -305,11 +305,11 @@
         return;
     }
     
-    [_curSelectBtn changeNormalColor:RGB(0, 89, 118)];
+    [_curSelectBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
     [_curSelectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
-    [sender setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-    [sender changeNormalColor:BLUE_DOWN_COLOR];
+    [sender setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+    [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
     
     self._curSelectBtn = sender;
     
@@ -332,11 +332,11 @@
         return;
     }
     
-    [_curSelectBtn changeNormalColor:RGB(0, 89, 118)];
+    [_curSelectBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
     [_curSelectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
-    [sender setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-    [sender changeNormalColor:BLUE_DOWN_COLOR];
+    [sender setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+    [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
     
     self._curSelectBtn = sender;
     
@@ -349,6 +349,7 @@
     zidonghunyinView.hidden=YES;
     fankuiyizhiView.hidden=YES;
     
+    
     [huishengView updateProxyCommandValIsLoaded];
 }
 - (void) yanshiqiAction:(UIButton*)sender{
@@ -358,11 +359,11 @@
         return;
     }
     
-    [_curSelectBtn changeNormalColor:RGB(0, 89, 118)];
+    [_curSelectBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
     [_curSelectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
-    [sender setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-    [sender changeNormalColor:BLUE_DOWN_COLOR];
+    [sender setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+    [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
     
     self._curSelectBtn = sender;
     
@@ -384,11 +385,11 @@
         return;
     }
     
-    [_curSelectBtn changeNormalColor:RGB(0, 89, 118)];
+    [_curSelectBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
     [_curSelectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
-    [sender setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-    [sender changeNormalColor:BLUE_DOWN_COLOR];
+    [sender setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+    [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
     
     self._curSelectBtn = sender;
     
@@ -412,11 +413,11 @@
         return;
     }
     
-    [_curSelectBtn changeNormalColor:RGB(0, 89, 118)];
+    [_curSelectBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
     [_curSelectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
-    [sender setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-    [sender changeNormalColor:BLUE_DOWN_COLOR];
+    [sender setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+    [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
     
     self._curSelectBtn = sender;
     
@@ -429,6 +430,7 @@
     zidonghunyinView.hidden=YES;
     fankuiyizhiView.hidden=YES;
     
+    
     [lvbo updateProxyCommandValIsLoaded];
 }
 - (void) zaoshengmenAction:(UIButton*)sender{
@@ -438,11 +440,11 @@
         return;
     }
     
-    [_curSelectBtn changeNormalColor:RGB(0, 89, 118)];
+    [_curSelectBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
     [_curSelectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
-    [sender setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-    [sender changeNormalColor:BLUE_DOWN_COLOR];
+    [sender setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+    [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
     
     self._curSelectBtn = sender;
     
@@ -464,11 +466,11 @@
         return;
     }
     
-    [_curSelectBtn changeNormalColor:RGB(0, 89, 118)];
+    [_curSelectBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
     [_curSelectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
-    [sender setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-    [sender changeNormalColor:BLUE_DOWN_COLOR];
+    [sender setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+    [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
     
     self._curSelectBtn = sender;
     
@@ -480,6 +482,7 @@
     lvbo.hidden=YES;
     zidonghunyinView.hidden=YES;
     fankuiyizhiView.hidden=YES;
+    
 }
 - (void) didAecButtonAction {
     YinPinProcessCodeUIView *uiView = [[YinPinProcessCodeUIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];

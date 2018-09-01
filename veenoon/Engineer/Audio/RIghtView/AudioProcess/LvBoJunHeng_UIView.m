@@ -102,14 +102,14 @@
         [self addSubview:bgv];
         bgv.layer.cornerRadius = 5;
         bgv.clipsToBounds = YES;
-        bgv.backgroundColor = RGB(0, 89, 118);
+        bgv.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR;
         
         rc = CGRectMake(0, 300, frame.size.width/4 -10, 200);
         bgv = [[UIView alloc] initWithFrame:rc];
         [self addSubview:bgv];
         bgv.layer.cornerRadius = 5;
         bgv.clipsToBounds = YES;
-        bgv.backgroundColor = RGB(0, 89, 118);
+        bgv.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR;
         
         [self createGaoTong:bgv];
         
@@ -118,7 +118,7 @@
         [self addSubview:bgv];
         bgv.layer.cornerRadius = 5;
         bgv.clipsToBounds = YES;
-        bgv.backgroundColor = RGB(0, 89, 118);
+        bgv.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR;
         
         [self createBoDuan:bgv];
         
@@ -127,7 +127,7 @@
         [self addSubview:bgv];
         bgv.layer.cornerRadius = 5;
         bgv.clipsToBounds = YES;
-        bgv.backgroundColor = RGB(0, 89, 118);
+        bgv.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR;
         
         [self createDiTong:bgv];
         
@@ -178,7 +178,7 @@
     
     int btnStartX = 10;
     int btnY = 50;
-    gaotongTypeBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    gaotongTypeBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     gaotongTypeBtn.frame = CGRectMake(btnStartX+60, btnY-20, 120, 30);
     gaotongTypeBtn.layer.cornerRadius = 5;
     gaotongTypeBtn.layer.borderWidth = 2;
@@ -215,7 +215,7 @@
     [view addSubview:addLabel22];
     
     btnY+=30;
-    gaotongXielvBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    gaotongXielvBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     gaotongXielvBtn.frame = CGRectMake(btnStartX, btnY, 100, 30);
     gaotongXielvBtn.layer.cornerRadius = 5;
     gaotongXielvBtn.layer.borderWidth = 2;
@@ -242,14 +242,17 @@
     gaotongFeqSlider.tag = 1;
     [view addSubview:gaotongFeqSlider];
 
-    gaotongFeqL = [[UILabel alloc] initWithFrame:CGRectMake(100, 180, 120, 20)];
+    gaotongFeqL = [[UILabel alloc] initWithFrame:CGRectMake(100+25, 175, 70, 20)];
     gaotongFeqL.textAlignment = NSTextAlignmentCenter;
     [view addSubview:gaotongFeqL];
     gaotongFeqL.font = [UIFont systemFontOfSize:13];
-    gaotongFeqL.textColor = YELLOW_COLOR;
+    gaotongFeqL.textColor = NEW_ER_BUTTON_SD_COLOR;
+    gaotongFeqL.backgroundColor=NEW_ER_BUTTON_GRAY_COLOR2;
+    gaotongFeqL.layer.cornerRadius=5;
+    gaotongFeqL.clipsToBounds=YES;
     
     
-    gaotongStartBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    gaotongStartBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     gaotongStartBtn.frame = CGRectMake(10, view.frame.size.height - 30, 50, 25);
     gaotongStartBtn.layer.cornerRadius = 5;
     gaotongStartBtn.layer.borderWidth = 2;
@@ -282,7 +285,7 @@
     }
     else
     {
-        [gaotongStartBtn changeNormalColor:RGB(75, 163, 202)];
+        [gaotongStartBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
     }
 }
 - (void) gaotongxielvAction:(UIButton*) sender {
@@ -406,7 +409,7 @@
         spx = 10;
     
     for(int i = 0; i < num; i++) {
-        UIButton *btn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+        UIButton *btn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
         btn.frame = CGRectMake(x+15, y, bw, bh);
         btn.clipsToBounds = YES;
         btn.layer.cornerRadius = 5;
@@ -417,13 +420,13 @@
         
         if(i == 0)
         {
-            [btn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-            [btn setTitleColor:YELLOW_COLOR forState:UIControlStateHighlighted];
+            [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+            [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
         }
         else
         {
             [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            [btn setTitleColor:YELLOW_COLOR forState:UIControlStateHighlighted];
+            [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
         }
         
         [btn addTarget:self
@@ -450,7 +453,7 @@
     
     int btnStartX = 10;
     int btnY = 125;
-    boduanleixingBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    boduanleixingBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     boduanleixingBtn.frame = CGRectMake(btnStartX, btnY, 100, 30);
     boduanleixingBtn.layer.cornerRadius = 5;
     boduanleixingBtn.layer.borderWidth = 2;
@@ -493,13 +496,16 @@
     [view addSubview:bandFreqSlider];
     
     
-    boduanPinlvL = [[UILabel alloc] initWithFrame:CGRectMake(startX, labelY+labelBtnGap+95, 120, 20)];
+    boduanPinlvL = [[UILabel alloc] initWithFrame:CGRectMake(startX+30, labelY+labelBtnGap+95, 60, 20)];
     
     
     boduanPinlvL.textAlignment = NSTextAlignmentCenter;
     [view addSubview:boduanPinlvL];
     boduanPinlvL.font = [UIFont systemFontOfSize:13];
-    boduanPinlvL.textColor = YELLOW_COLOR;
+    boduanPinlvL.backgroundColor=NEW_ER_BUTTON_GRAY_COLOR2;
+    boduanPinlvL.textColor = NEW_ER_BUTTON_SD_COLOR;
+    boduanPinlvL.layer.cornerRadius=5;
+    boduanPinlvL.clipsToBounds=YES;
     
     UILabel *addLabel23 = [[UILabel alloc] init];
     addLabel23.text = @"增益 (dB)";
@@ -517,13 +523,16 @@
     [view addSubview:bandGainSlider];
     
     
-    boduanZengyiL = [[UILabel alloc] initWithFrame:CGRectMake(startX+gap, labelY+labelBtnGap+95, 120, 20)];
+    boduanZengyiL = [[UILabel alloc] initWithFrame:CGRectMake(startX+gap+30, labelY+labelBtnGap+95, 60, 20)];
     
  
     boduanZengyiL.textAlignment = NSTextAlignmentCenter;
     [view addSubview:boduanZengyiL];
     boduanZengyiL.font = [UIFont systemFontOfSize:13];
-    boduanZengyiL.textColor = YELLOW_COLOR;
+    boduanZengyiL.textColor = NEW_ER_BUTTON_SD_COLOR;
+    boduanZengyiL.backgroundColor=NEW_ER_BUTTON_GRAY_COLOR2;
+    boduanZengyiL.layer.cornerRadius=5;
+    boduanZengyiL.clipsToBounds=YES;
     
     UILabel *addLabel224= [[UILabel alloc] init];
     addLabel224.text = @"Q";
@@ -540,13 +549,16 @@
     boduanQSlider.tag = 5;
     [view addSubview:boduanQSlider];
     
-    boduanQL = [[UILabel alloc] initWithFrame:CGRectMake(startX+gap*2, labelY+labelBtnGap+95, 120, 20)];
+    boduanQL = [[UILabel alloc] initWithFrame:CGRectMake(startX+gap*2+30, labelY+labelBtnGap+95, 60, 20)];
     boduanQL.textAlignment = NSTextAlignmentCenter;
     [view addSubview:boduanQL];
     boduanQL.font = [UIFont systemFontOfSize:13];
-    boduanQL.textColor = YELLOW_COLOR;
+    boduanQL.backgroundColor=NEW_ER_BUTTON_GRAY_COLOR2;
+    boduanQL.textColor = NEW_ER_BUTTON_SD_COLOR;
+    boduanQL.layer.cornerRadius=5;
+    boduanQL.clipsToBounds=YES;
     
-    buduanStartBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    buduanStartBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     buduanStartBtn.frame = CGRectMake(10, view.frame.size.height - 30, 50, 25);
     buduanStartBtn.layer.cornerRadius = 5;
     buduanStartBtn.layer.borderWidth = 2;
@@ -591,10 +603,11 @@
         if(isEnabled)
         {
             [buduanStartBtn changeNormalColor:THEME_RED_COLOR];
+        
         }
         else
         {
-            [buduanStartBtn changeNormalColor:RGB(75, 163, 202)];
+            [buduanStartBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
         }
     }
 }
@@ -767,7 +780,7 @@
     
     int btnStartX = 10;
     int btnY = 50;
-    ditongTypeBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    ditongTypeBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     ditongTypeBtn.frame = CGRectMake(btnStartX+60, btnY-20, 120, 30);
     ditongTypeBtn.layer.cornerRadius = 5;
     ditongTypeBtn.layer.borderWidth = 2;
@@ -805,7 +818,7 @@
     [view addSubview:addLabel22];
     
     btnY+=30;
-    ditongxielvBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    ditongxielvBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     ditongxielvBtn.frame = CGRectMake(btnStartX, btnY, 100, 30);
     ditongxielvBtn.layer.cornerRadius = 5;
     ditongxielvBtn.layer.borderWidth = 2;
@@ -832,13 +845,16 @@
     ditongFreqSlider.tag = 2;
     [view addSubview:ditongFreqSlider];
     
-    ditongFreqL = [[UILabel alloc] initWithFrame:CGRectMake(100, 180, 120, 20)];
+    ditongFreqL = [[UILabel alloc] initWithFrame:CGRectMake(125, 175, 70, 20)];
     ditongFreqL.textAlignment = NSTextAlignmentCenter;
     [view addSubview:ditongFreqL];
     ditongFreqL.font = [UIFont systemFontOfSize:13];
-    ditongFreqL.textColor = YELLOW_COLOR;
+    ditongFreqL.backgroundColor=NEW_ER_BUTTON_GRAY_COLOR2;
+    ditongFreqL.textColor = NEW_ER_BUTTON_SD_COLOR;
+    ditongFreqL.layer.cornerRadius=5;
+    ditongFreqL.clipsToBounds=YES;
     
-    ditongStartBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    ditongStartBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     ditongStartBtn.frame = CGRectMake(10, view.frame.size.height - 30, 50, 25);
     ditongStartBtn.layer.cornerRadius = 5;
     ditongStartBtn.layer.borderWidth = 2;
@@ -872,7 +888,7 @@
     }
     else
     {
-        [ditongStartBtn changeNormalColor:RGB(75, 163, 202)];
+        [ditongStartBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
     }
     
 }
@@ -990,10 +1006,12 @@
         if(btn == sender)
         {
             [btn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+            [btn changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
         }
         else
         {
             [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [btn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
         }
     }
     
@@ -1007,10 +1025,12 @@
         if(btn == sender)
         {
             [btn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+            [btn changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
         }
         else
         {
             [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [btn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
         }
     }
     
@@ -1074,7 +1094,7 @@
     }
     else
     {
-        [gaotongStartBtn changeNormalColor:RGB(75, 163, 202)];
+        [gaotongStartBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
     }
     
     ////
@@ -1112,7 +1132,7 @@
     }
     else
     {
-        [ditongStartBtn changeNormalColor:RGB(75, 163, 202)];
+        [ditongStartBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
     }
     ///
     
@@ -1201,7 +1221,7 @@
         }
         else
         {
-            [buduanStartBtn changeNormalColor:RGB(75, 163, 202)];
+            [buduanStartBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
         }
         
         NSString *boduanType= @"";
@@ -1246,11 +1266,13 @@
     {
         if(btn.tag == band)
         {
-            [btn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+            [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+            [btn changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
         }
         else
         {
             [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [btn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
         }
     }
     

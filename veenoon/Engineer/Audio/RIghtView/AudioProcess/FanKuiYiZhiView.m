@@ -42,17 +42,18 @@
             _curProxy = [self._proxys objectAtIndex:0];
         }
         
-        channelBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
-        channelBtn.frame = CGRectMake(0, 50, 70, 36);
+        channelBtn = [UIButton buttonWithColor:nil selColor:nil];
+        channelBtn.frame = CGRectMake(0, 50, 300, 36);
         channelBtn.clipsToBounds = YES;
         channelBtn.layer.cornerRadius = 5;
         channelBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+        channelBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         NSString *currentName = _curProxy._rgsProxyObj.name;
         [channelBtn setTitle:currentName forState:UIControlStateNormal];
-        [channelBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+        [channelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self addSubview:channelBtn];
         
-        int y = CGRectGetMaxY(channelBtn.frame)+20;
+        int y = CGRectGetMaxY(channelBtn.frame)+10;
         contentView.frame  = CGRectMake(0, y, frame.size.width, 340);
         
         [self contentViewComps];
@@ -70,7 +71,7 @@
     }
     else
     {
-        [fankuiyizhiBtn changeNormalColor:RGB(75, 163, 202)];
+        [fankuiyizhiBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
     }
 }
 
@@ -80,11 +81,13 @@
     {
         if(btn == sender)
         {
-            [btn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+            [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+            [btn changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
         }
         else
         {
             [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [btn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
         }
     }
     
@@ -110,7 +113,7 @@
 
 - (void) contentViewComps {
     
-    fankuiyizhiBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    fankuiyizhiBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:THEME_RED_COLOR];
     fankuiyizhiBtn.frame = CGRectMake(contentView.frame.size.width/2 - 25, contentView.frame.size.height/2 - 15, 50, 30);
     fankuiyizhiBtn.layer.cornerRadius = 5;
     fankuiyizhiBtn.layer.borderWidth = 2;

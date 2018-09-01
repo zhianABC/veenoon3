@@ -45,7 +45,7 @@
         _progress = 0;
         self.currentProgress = 0;
          
-        self.backColor = [UIColor colorWithWhite:1.0 alpha:0.7];  //RGB(46, 105, 106);
+        self.backColor = RGB(48, 48, 48);  //RGB(46, 105, 106);
         self.progressColor = RGB(242, 148, 20);
         self.lineWidth = 10;
         

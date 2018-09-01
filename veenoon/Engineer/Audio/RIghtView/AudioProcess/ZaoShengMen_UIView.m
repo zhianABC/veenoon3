@@ -57,16 +57,17 @@
             self._curProxy = [self._proxys objectAtIndex:0];
         }
         
-        channelBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
-        channelBtn.frame = CGRectMake(0, 50, 70, 36);
+        channelBtn = [UIButton buttonWithColor:nil selColor:nil];
+        channelBtn.frame = CGRectMake(0, 50, 300, 36);
         channelBtn.clipsToBounds = YES;
         channelBtn.layer.cornerRadius = 5;
         channelBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+        channelBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         [channelBtn setTitle:_curProxy._rgsProxyObj.name forState:UIControlStateNormal];
-        [channelBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+        [channelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self addSubview:channelBtn];
         
-        int y = CGRectGetMaxY(channelBtn.frame)+20;
+        int y = CGRectGetMaxY(channelBtn.frame)+10;
         contentView.frame = CGRectMake(0, y, frame.size.width, 340);
         
         maxTh = 0;
@@ -153,7 +154,7 @@
     }
     else
     {
-        [qiyongBtn changeNormalColor:RGB(75, 163, 202)];
+        [qiyongBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
     }
 }
 
@@ -170,10 +171,12 @@
         if(btn == sender)
         {
             [btn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+            [btn changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
         }
         else
         {
             [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [btn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
         }
     }
     
@@ -208,11 +211,14 @@
     fazhiSlider.tag = 1;
     [contentView addSubview:fazhiSlider];
     
-    fazhiL = [[UILabel alloc] initWithFrame:CGRectMake(startX, labelY+labelBtnGap+120, 120, 20)];
+    fazhiL = [[UILabel alloc] initWithFrame:CGRectMake(startX+30, labelY+labelBtnGap+120, 60, 20)];
     fazhiL.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:fazhiL];
     fazhiL.font = [UIFont systemFontOfSize:13];
-    fazhiL.textColor = YELLOW_COLOR;
+    fazhiL.textColor = NEW_ER_BUTTON_SD_COLOR;
+    fazhiL.backgroundColor=NEW_ER_BUTTON_GRAY_COLOR2;
+    fazhiL.layer.cornerRadius=5;
+    fazhiL.clipsToBounds=YES;
     
     UILabel *addLabel2 = [[UILabel alloc] init];
     addLabel2.text = @"启动时间 (ms)";
@@ -229,11 +235,14 @@
     qidongshijianSlider.tag = 2;
     [contentView addSubview:qidongshijianSlider];
     
-    qidongshijianL = [[UILabel alloc] initWithFrame:CGRectMake(startX+gap, labelY+labelBtnGap+120, 120, 20)];
+    qidongshijianL = [[UILabel alloc] initWithFrame:CGRectMake(startX+gap+30, labelY+labelBtnGap+120, 60, 20)];
     qidongshijianL.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:qidongshijianL];
     qidongshijianL.font = [UIFont systemFontOfSize:13];
-    qidongshijianL.textColor = YELLOW_COLOR;
+    qidongshijianL.textColor = NEW_ER_BUTTON_SD_COLOR;
+    qidongshijianL.layer.cornerRadius=5;
+    qidongshijianL.clipsToBounds=YES;
+    qidongshijianL.backgroundColor=NEW_ER_BUTTON_GRAY_COLOR2;
     
     UILabel *addLabel22 = [[UILabel alloc] init];
     addLabel22.text = @"恢复时间 (ms)";
@@ -250,14 +259,16 @@
     huifushijianSlider.tag = 3;
     [contentView addSubview:huifushijianSlider];
     
-    huifushijianL = [[UILabel alloc] initWithFrame:CGRectMake(startX+gap*2, labelY+labelBtnGap+120, 120, 20)];
+    huifushijianL = [[UILabel alloc] initWithFrame:CGRectMake(startX+gap*2+30, labelY+labelBtnGap+120, 60, 20)];
     huifushijianL.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:huifushijianL];
     huifushijianL.font = [UIFont systemFontOfSize:13];
-    huifushijianL.textColor = YELLOW_COLOR;
+    huifushijianL.textColor = NEW_ER_BUTTON_SD_COLOR;
+    huifushijianL.layer.cornerRadius=5;
+    huifushijianL.clipsToBounds=YES;
+    huifushijianL.backgroundColor=NEW_ER_BUTTON_GRAY_COLOR2;
     
-    
-    qiyongBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    qiyongBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:THEME_RED_COLOR];
     qiyongBtn.frame = CGRectMake(contentView.frame.size.width/2 - 25, contentView.frame.size.height - 40, 50, 30);
     qiyongBtn.layer.cornerRadius = 5;
     qiyongBtn.layer.borderWidth = 2;
@@ -313,7 +324,7 @@
     }
     else
     {
-        [qiyongBtn changeNormalColor:RGB(75, 163, 202)];
+        [qiyongBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
     }
 }
 

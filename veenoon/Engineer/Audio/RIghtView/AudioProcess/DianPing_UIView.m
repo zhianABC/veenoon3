@@ -53,7 +53,7 @@
             self._curProxy = [self._proxys objectAtIndex:0];
         }
         
-        channelBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+        channelBtn = [UIButton buttonWithColor:nil selColor:nil];
         channelBtn.frame = CGRectMake(0, 50, 70, 36);
         channelBtn.clipsToBounds = YES;
         channelBtn.layer.cornerRadius = 5;
@@ -64,7 +64,7 @@
             [channelBtn setTitle:@"Out 1" forState:UIControlStateNormal];
         }
         
-        [channelBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+        [channelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self addSubview:channelBtn];
         
         int y = CGRectGetMaxY(channelBtn.frame)+20;

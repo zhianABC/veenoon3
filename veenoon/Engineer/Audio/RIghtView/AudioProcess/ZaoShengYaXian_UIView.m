@@ -53,13 +53,13 @@
     {
         self._currentObj = audioMix;
         
-        channelBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+        channelBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:nil];
         channelBtn.frame = CGRectMake(0, 50, 70, 36);
         channelBtn.clipsToBounds = YES;
         channelBtn.layer.cornerRadius = 5;
         channelBtn.titleLabel.font = [UIFont systemFontOfSize:15];
         [channelBtn setTitle:@"In 1" forState:UIControlStateNormal];
-        [channelBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+        [channelBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
 //        [self addSubview:channelBtn];
         
         

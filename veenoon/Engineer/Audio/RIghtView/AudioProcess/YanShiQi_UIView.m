@@ -55,16 +55,17 @@
             self._curProxy = [self._proxys objectAtIndex:0];
         }
         
-        channelBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
-        channelBtn.frame = CGRectMake(0, 50, 70, 36);
+        channelBtn = [UIButton buttonWithColor:nil selColor:nil];
+        channelBtn.frame = CGRectMake(0, 50, 300, 36);
         channelBtn.clipsToBounds = YES;
         channelBtn.layer.cornerRadius = 5;
         channelBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+        channelBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         [channelBtn setTitle:_curProxy._rgsProxyObj.name forState:UIControlStateNormal];
-        [channelBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+        [channelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self addSubview:channelBtn];
         
-        int y = CGRectGetMaxY(channelBtn.frame)+20;
+        int y = CGRectGetMaxY(channelBtn.frame)+10;
         contentView.frame = CGRectMake(0, y, frame.size.width, 340);
         
         minDuration = 0;
@@ -89,10 +90,12 @@
         if(btn == sender)
         {
             [btn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+            [btn changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
         }
         else
         {
             [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [btn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
         }
     }
     
@@ -122,11 +125,14 @@
     xielvSlider3.tag = 3;
     [contentView addSubview:xielvSlider3];
     
-    labelL1 = [[UILabel alloc] initWithFrame:CGRectMake(670, 105+120, 120, 20)];
+    labelL1 = [[UILabel alloc] initWithFrame:CGRectMake(700, 105+120, 60, 20)];
     labelL1.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:labelL1];
     labelL1.font = [UIFont systemFontOfSize:13];
-    labelL1.textColor = YELLOW_COLOR;
+    labelL1.textColor = NEW_ER_BUTTON_SD_COLOR;
+    labelL1.backgroundColor=NEW_ER_BUTTON_GRAY_COLOR2;
+    labelL1.layer.cornerRadius=5;
+    labelL1.clipsToBounds=YES;
 }
 
 - (void) createContentViewBtns {
@@ -139,7 +145,7 @@
                                                                    30)];
     haomiaoField.delegate = self;
     haomiaoField.returnKeyType = UIReturnKeyDone;
-    haomiaoField.backgroundColor = RGB(75, 163, 202);
+    haomiaoField.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR2;
     haomiaoField.textColor = [UIColor whiteColor];
     haomiaoField.borderStyle = UITextBorderStyleRoundedRect;
     haomiaoField.textAlignment = NSTextAlignmentLeft;
@@ -159,7 +165,7 @@
     miField = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(addLabel.frame)+10, btnY, 100, 30)];
     miField.delegate = self;
     miField.returnKeyType = UIReturnKeyDone;
-    miField.backgroundColor = RGB(75, 163, 202);
+    miField.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR2;
     miField.textColor = [UIColor whiteColor];
     miField.borderStyle = UITextBorderStyleRoundedRect;
     miField.textAlignment = NSTextAlignmentLeft;
@@ -179,7 +185,7 @@
     yingchiFiedld = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(addLabel2.frame)+10, btnY, 100, 30)];
     yingchiFiedld.delegate = self;
     yingchiFiedld.returnKeyType = UIReturnKeyDone;
-    yingchiFiedld.backgroundColor = RGB(75, 163, 202);
+    yingchiFiedld.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR2;
     yingchiFiedld.textColor = [UIColor whiteColor];
     yingchiFiedld.borderStyle = UITextBorderStyleRoundedRect;
     yingchiFiedld.textAlignment = NSTextAlignmentLeft;

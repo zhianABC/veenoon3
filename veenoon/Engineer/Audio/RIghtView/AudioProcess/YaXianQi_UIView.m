@@ -77,16 +77,17 @@
             self._curProxy = [self._proxys objectAtIndex:0];
         }
         
-        channelBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
-        channelBtn.frame = CGRectMake(0, 50, 70, 36);
+        channelBtn = [UIButton buttonWithColor:nil selColor:nil];
+        channelBtn.frame = CGRectMake(0, 50, 300, 36);
         channelBtn.clipsToBounds = YES;
         channelBtn.layer.cornerRadius = 5;
         channelBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+        channelBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         [channelBtn setTitle:_curProxy._rgsProxyObj.name forState:UIControlStateNormal];
-        [channelBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+        [channelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self addSubview:channelBtn];
     
-        int y = CGRectGetMaxY(channelBtn.frame)+20;
+        int y = CGRectGetMaxY(channelBtn.frame)+10;
         contentView.frame = CGRectMake(0, y, frame.size.width, 340);
         
         maxTh = 0;
@@ -110,10 +111,12 @@
         if(btn == sender)
         {
             [btn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+            [btn changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
         }
         else
         {
             [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [btn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
         }
     }
     
@@ -195,7 +198,7 @@
     }
     else
     {
-        [_enableStartBtn changeNormalColor:RGB(75, 163, 202)];
+        [_enableStartBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
     }
 }
 
@@ -232,11 +235,14 @@
     [contentView addSubview:fazhiSlider];
     
 
-    lableL1 = [[UILabel alloc] initWithFrame:CGRectMake(x, y+20+120, 120, 20)];
+    lableL1 = [[UILabel alloc] initWithFrame:CGRectMake(x+30, y+20+120, 60, 20)];
     lableL1.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:lableL1];
     lableL1.font = [UIFont systemFontOfSize:13];
-    lableL1.textColor = YELLOW_COLOR;
+    lableL1.textColor = NEW_ER_BUTTON_SD_COLOR;
+    lableL1.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR2;
+    lableL1.layer.cornerRadius = 5;
+    lableL1.clipsToBounds=YES;
     
     x+=120;
     x+=10;
@@ -256,11 +262,14 @@
     xielvSlide.tag = 2;
     [contentView addSubview:xielvSlide];
 
-    lableL2 = [[UILabel alloc] initWithFrame:CGRectMake(x, y+20+120, 120, 20)];
+    lableL2 = [[UILabel alloc] initWithFrame:CGRectMake(x+30, y+20+120, 60, 20)];
     lableL2.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:lableL2];
     lableL2.font = [UIFont systemFontOfSize:13];
-    lableL2.textColor = YELLOW_COLOR;
+    lableL2.textColor = NEW_ER_BUTTON_SD_COLOR;
+    lableL2.backgroundColor=NEW_ER_BUTTON_GRAY_COLOR2;
+    lableL2.layer.cornerRadius = 5;
+    lableL2.clipsToBounds=YES;
     
     x+=120;
     x+=10;
@@ -280,12 +289,14 @@
     qidongshijianSlide.tag = 3;
     [contentView addSubview:qidongshijianSlide];
     
-    lableL3 = [[UILabel alloc] initWithFrame:CGRectMake(x, y+20+120, 120, 20)];
+    lableL3 = [[UILabel alloc] initWithFrame:CGRectMake(x+30, y+20+120, 60, 20)];
     lableL3.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:lableL3];
     lableL3.font = [UIFont systemFontOfSize:13];
     lableL3.textColor = YELLOW_COLOR;
-    
+    lableL3.layer.cornerRadius=5;
+    lableL3.clipsToBounds=YES;
+    lableL3.backgroundColor=NEW_ER_BUTTON_GRAY_COLOR2;
     x+=120;
     x+=10;
     
@@ -304,14 +315,17 @@
     huifushijianSlide.tag = 4;
     [contentView addSubview:huifushijianSlide];
     
-    lableL4 = [[UILabel alloc] initWithFrame:CGRectMake(x, y+20+120, 120, 20)];
+    lableL4 = [[UILabel alloc] initWithFrame:CGRectMake(x+30, y+20+120, 60, 20)];
     lableL4.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:lableL4];
     lableL4.font = [UIFont systemFontOfSize:13];
     lableL4.textColor = YELLOW_COLOR;
+    lableL4.layer.cornerRadius=5;
+    lableL4.clipsToBounds=YES;
+    lableL4.backgroundColor=NEW_ER_BUTTON_GRAY_COLOR2;
     
-    _enableStartBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
-    _enableStartBtn.frame = CGRectMake(contentView.frame.size.width/2 - 25, contentView.frame.size.height - 40, 50, 30);
+    _enableStartBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:THEME_RED_COLOR];
+    _enableStartBtn.frame = CGRectMake(contentView.frame.size.width/2 + 110, contentView.frame.size.height - 40, 50, 30);
     _enableStartBtn.layer.cornerRadius = 5;
     _enableStartBtn.layer.borderWidth = 2;
     _enableStartBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -335,7 +349,7 @@
     }
     else
     {
-        [_enableStartBtn changeNormalColor:RGB(75, 163, 202)];
+        [_enableStartBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
     }
     
     [_curProxy controlYaXianStarted:isYaXianStarted];

@@ -282,7 +282,7 @@
     {
         //VAProcessorProxys *vProxy = [self._currentAudio._outAudioProxys objectAtIndex:i];
         
-        UIButton *btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+        UIButton *btn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:nil];
         btn.frame = CGRectMake(x, y, 50, 50);
         btn.clipsToBounds = YES;
         btn.layer.cornerRadius = 5;
@@ -294,7 +294,7 @@
         [self addSubview:btn];
         
         [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [btn setTitleColor:YELLOW_COLOR forState:UIControlStateHighlighted];
+        [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
         
         [btn addTarget:self
                 action:@selector(outputChanelBtnAction:) forControlEvents:UIControlEventTouchUpInside];
