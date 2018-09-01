@@ -55,7 +55,7 @@
     centerTitleLabel.backgroundColor = [UIColor clearColor];
     centerTitleLabel.textAlignment = NSTextAlignmentCenter;
     centerTitleLabel.text = @"工程师登录";
-    centerTitleLabel.font = [UIFont boldSystemFontOfSize:15];
+    centerTitleLabel.font = [UIFont boldSystemFontOfSize:18];
     [_topBar addSubview:centerTitleLabel];
     
     
@@ -102,9 +102,9 @@
     
     
     UIButton *signup = [UIButton buttonWithColor:nil selColor:[UIColor whiteColor]];
-    signup.frame = CGRectMake(SCREEN_WIDTH/2 - 125, inputHeight+128+120, 250, 44);
+    signup.frame = CGRectMake(SCREEN_WIDTH/2 - 125, inputHeight+128+150, 250, 36);
     signup.layer.cornerRadius = 8;
-    signup.layer.borderWidth = 1;
+    signup.layer.borderWidth = 0.5;
     signup.layer.borderColor = [UIColor whiteColor].CGColor;
     signup.clipsToBounds = YES;
     [self.view addSubview:signup];
