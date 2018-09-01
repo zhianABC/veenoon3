@@ -62,6 +62,10 @@
 #define ADMIN_BLACK_COLOR            RGB(48, 48, 48)
 #define USER_GRAY_COLOR              RGB(63, 58, 55)
 #define WHITE_LINE_COLOR             RGBA(255, 255, 255, 0.5)
+#define NEW_ER_BUTTON_GRAY_COLOR     RGB(73, 73, 73)
+#define NEW_ER_BUTTON_GRAY_COLOR2     RGB(92, 92, 92)
+#define NEW_ER_BUTTON_SD_COLOR       RGB(242, 148, 20)
+#define NEW_ER_BUTTON_BL_COLOR       RGB(11,102,135)
 
 #define YELLOW_COLOR            RGB(255, 180, 0)
 #define DARK_BLUE_COLOR         RGB(0, 89, 118)

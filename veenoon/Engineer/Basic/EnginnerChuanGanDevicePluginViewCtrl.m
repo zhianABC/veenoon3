@@ -118,7 +118,7 @@
     int height = 200;
     
     _rentichuanganBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left, height, 140, 110)];
-    [_rentichuanganBtn buttonWithIcon:[UIImage imageNamed:@"rentichuangan_n.png"] selectedIcon:[UIImage imageNamed:@"rentichuangan_s.png"] text:@"人体感应传感器" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
+    [_rentichuanganBtn buttonWithIcon:[UIImage imageNamed:@"rentichuangan_n.png"] selectedIcon:[UIImage imageNamed:@"rentichuangan_s.png"] text:@"人体感应" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_rentichuanganBtn addTarget:self action:@selector(rentichuangangAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_rentichuanganBtn];
     
@@ -126,12 +126,12 @@
     _wenshiduBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap, height, 140, 110)];
     [_wenshiduBtn buttonWithIcon:[UIImage imageNamed:@"wenshiduchuangan_n.png"] selectedIcon:[UIImage imageNamed:@"wenshiduchuangan_s.png"] text:@"温湿度传感器" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_wenshiduBtn addTarget:self action:@selector(wenshiduchuanganAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_wenshiduBtn];
+//    [self.view addSubview:_wenshiduBtn];
     
     
     
-    _kongqizhiliangBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*2, height, 140, 110)];
-    [_kongqizhiliangBtn buttonWithIcon:[UIImage imageNamed:@"kongqichuangan_n.png"] selectedIcon:[UIImage imageNamed:@"kongqichuangan_s.png"] text:@"空气质量传感器" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
+    _kongqizhiliangBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap, height, 140, 110)];
+    [_kongqizhiliangBtn buttonWithIcon:[UIImage imageNamed:@"kongqichuangan_n.png"] selectedIcon:[UIImage imageNamed:@"kongqichuangan_s.png"] text:@"空气质量" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_kongqizhiliangBtn addTarget:self action:@selector(kongqizhiliangchuanganAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_kongqizhiliangBtn];
     
@@ -155,7 +155,7 @@
     [_productTypePikcer removeArray];
     _productTypePikcer.delegate_=self;
     _productTypePikcer.fontSize=14;
-    _productTypePikcer._pickerDataArray = @[@{@"values":@[@"人体感应传感器",@"温湿度传感器",@"空气质量传感器"]}];
+    _productTypePikcer._pickerDataArray = @[@{@"values":@[@"人体感应",@"空气质量"]}];
     [_productTypePikcer selectRow:0 inComponent:0];
     _productTypePikcer._selectColor = RGB(253, 180, 0);
     _productTypePikcer._rowNormalColor = [UIColor whiteColor];

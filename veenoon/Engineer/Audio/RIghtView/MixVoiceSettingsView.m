@@ -27,6 +27,7 @@
     UIButton *_fayanrenshuBtn;
     UIButton *_shexiangxieyiBtn;
     CustomPickerView *_picker;
+    UIButton *biaozhunfayanBtn;
     
     UITableView *_tableView;
     
@@ -191,6 +192,11 @@
     
     // control biaozhunfayan
     [_currentObj._proxyObj controlWorkMode:@"标准发言"];
+    
+    NSString *isBiaoZhunFaYan = _currentObj._proxyObj._workMode;
+    if ([@"标准发言" isEqualToString:isBiaoZhunFaYan]) {
+        biaozhunfayanBtn.selected = YES;
+    }
 }
 - (void) yinpinchuliAction:(id)sender{
     
@@ -209,7 +215,7 @@
     
     [self addSubview:_shexiangzhuizongView];
     
-    UILabel *titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, 90, _shexiangzhuizongView.frame.size.width, 20)];
+    UILabel *titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, 110, _shexiangzhuizongView.frame.size.width, 20)];
     titleL.font = [UIFont systemFontOfSize:13];
     titleL.textAlignment = NSTextAlignmentCenter;
     titleL.text = @"摄像机协议";
@@ -218,7 +224,7 @@
     
     int x = 70;
     _shexiangxieyiBtn = [UIButton buttonWithColor:RGB(0, 146, 174) selColor:nil];
-    _shexiangxieyiBtn.frame = CGRectMake(x, CGRectGetMaxY(titleL.frame) + 10, self.frame.size.width-2*x, 25);
+    _shexiangxieyiBtn.frame = CGRectMake(x, CGRectGetMaxY(titleL.frame) + 30, self.frame.size.width-2*x, 25);
     _shexiangxieyiBtn.clipsToBounds = YES;
     _shexiangxieyiBtn.layer.cornerRadius = 5;
     [_shexiangzhuizongView addSubview:_shexiangxieyiBtn];
@@ -227,7 +233,7 @@
     
     
     _picker = [[CustomPickerView alloc]
-               initWithFrame:CGRectMake(_shexiangzhuizongView.frame.size.width/2-100, 130, 200, 120) withGrayOrLight:@"picker_player.png"];
+               initWithFrame:CGRectMake(_shexiangzhuizongView.frame.size.width/2-100, 170, 200, 120) withGrayOrLight:@"picker_player.png"];
     
     NSMutableArray *dataArray = [_currentObj._proxyObj getCameraPol];
     if (dataArray) {
@@ -283,7 +289,7 @@
     int top = 40;
     int gap = 5;
     int x = self.frame.size.width/2 - gap/2 - bw;
-    _shedingzhuxiBtn = [UIButton buttonWithColor:RGB(0, 146, 174) selColor:YELLOW_COLOR];
+    _shedingzhuxiBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
     _shedingzhuxiBtn.frame = CGRectMake(x, top, bw, 25);
     _shedingzhuxiBtn.clipsToBounds = YES;
     _shedingzhuxiBtn.layer.cornerRadius = 5;
@@ -293,7 +299,7 @@
     _shedingzhuxiBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     
     x = self.frame.size.width/2 + gap/2;
-    _fayanrenshuBtn = [UIButton buttonWithColor:RGB(0, 146, 174) selColor:YELLOW_COLOR];
+    _fayanrenshuBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
     _fayanrenshuBtn.frame = CGRectMake(x, top, bw, 25);
     _fayanrenshuBtn.clipsToBounds = YES;
     _fayanrenshuBtn.layer.cornerRadius = 5;
@@ -309,12 +315,15 @@
     
     [self addSubview:_biaozhunfayanView];
     
-    UILabel *titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, _biaozhunfayanView.frame.size.height/2 -10, _biaozhunfayanView.frame.size.width, 20)];
-    titleL.font = [UIFont systemFontOfSize:13];
-    titleL.textAlignment = NSTextAlignmentCenter;
-    titleL.text = @"所有话筒均可打开或关闭";
-    titleL.textColor = [UIColor whiteColor];
-    [_biaozhunfayanView addSubview:titleL];
+    biaozhunfayanBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
+    biaozhunfayanBtn.frame = CGRectMake(_biaozhunfayanView.frame.size.width/2-35, _biaozhunfayanView.frame.size.height/2 -10, 70, 30);
+    biaozhunfayanBtn.clipsToBounds = YES;
+    biaozhunfayanBtn.layer.cornerRadius = 5;
+    [_biaozhunfayanView addSubview:biaozhunfayanBtn];
+    [biaozhunfayanBtn setTitle:@"启用" forState:UIControlStateNormal];
+    [biaozhunfayanBtn addTarget:self action:@selector(biaozhunfayanAction:) forControlEvents:UIControlEventTouchUpInside];
+    biaozhunfayanBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    
     _biaozhunfayanView.hidden=YES;
 }
 
@@ -342,7 +351,7 @@
         int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+top;
         
-        UIButton *scenarioBtn = [UIButton buttonWithColor:RGB(0, 146, 174) selColor:nil];
+        UIButton *scenarioBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:nil];
         scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
         scenarioBtn.clipsToBounds = YES;
         scenarioBtn.layer.cornerRadius = 5;
@@ -363,7 +372,7 @@
     NSString *numberStr = btn.titleLabel.text;
     if (_selectedBtn == nil) {
         
-        [btn setTitleColor:YELLOW_COLOR
+        [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR
                   forState:UIControlStateNormal];
     } else {
         if (_selectedBtn.tag == btn.tag) {
@@ -371,7 +380,7 @@
         } else {
             [_selectedBtn setTitleColor:[UIColor whiteColor]
                       forState:UIControlStateNormal];
-            [btn setTitleColor:YELLOW_COLOR
+            [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR
                       forState:UIControlStateNormal];
         }
     }
@@ -406,7 +415,7 @@
         int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+top;
         
-        UIButton *scenarioBtn = [UIButton buttonWithColor:RGB(0, 146, 174) selColor:nil];
+        UIButton *scenarioBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:nil];
         scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
         scenarioBtn.clipsToBounds = YES;
         scenarioBtn.layer.cornerRadius = 5;

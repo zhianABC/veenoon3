@@ -30,9 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
-    [self.view addSubview:titleIcon];
-    titleIcon.frame = CGRectMake(60, 40, 70, 10);
+    [super setTitleAndImage:@"audio_corner_hunyin.png" withTitle:@"混音会议"];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
@@ -55,7 +53,7 @@
     
     UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
-    [bottomBar addSubview:okBtn];
+//    [bottomBar addSubview:okBtn];
     [okBtn setTitle:@"保存" forState:UIControlStateNormal];
     [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
@@ -70,7 +68,7 @@
     int bw = 100;
     int bh = 30;
     
-    fenpingBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+    fenpingBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
     fenpingBtn.frame = CGRectMake(startX, startY, bw, bh);
     fenpingBtn.clipsToBounds = YES;
     fenpingBtn.layer.cornerRadius = 5;
@@ -78,30 +76,32 @@
     fenpingBtn.layer.borderColor = [UIColor clearColor].CGColor;
     fenpingBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [fenpingBtn setTitle:@"分频器" forState:UIControlStateNormal];
-    [fenpingBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-    [fenpingBtn setTitleColor:YELLOW_COLOR forState:UIControlStateHighlighted];
+    [fenpingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [fenpingBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
+    fenpingBtn.selected = YES;
     [self.view addSubview:fenpingBtn];
     [fenpingBtn addTarget:self
                   action:@selector(fenpinAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
     
-    junhengqiBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+    junhengqiBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
     junhengqiBtn.frame = CGRectMake(CGRectGetMaxX(fenpingBtn.frame) + gap, startY, bw, bh);
     junhengqiBtn.clipsToBounds = YES;
     junhengqiBtn.layer.cornerRadius = 5;
     junhengqiBtn.layer.borderWidth = 2;
+    
     junhengqiBtn.layer.borderColor = [UIColor clearColor].CGColor;
     junhengqiBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [junhengqiBtn setTitle:@"均衡器" forState:UIControlStateNormal];
     [junhengqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [junhengqiBtn setTitleColor:YELLOW_COLOR forState:UIControlStateHighlighted];
+    [junhengqiBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     [self.view addSubview:junhengqiBtn];
     [junhengqiBtn addTarget:self
                        action:@selector(junhengAction:)
              forControlEvents:UIControlEventTouchUpInside];
     
-    zaoshengmenBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+    zaoshengmenBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
     zaoshengmenBtn.frame = CGRectMake(CGRectGetMaxX(junhengqiBtn.frame) + gap, startY, bw, bh);
     zaoshengmenBtn.clipsToBounds = YES;
     zaoshengmenBtn.layer.cornerRadius = 5;
@@ -110,7 +110,7 @@
     zaoshengmenBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [zaoshengmenBtn setTitle:@"噪声／压限" forState:UIControlStateNormal];
     [zaoshengmenBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [zaoshengmenBtn setTitleColor:YELLOW_COLOR forState:UIControlStateHighlighted];
+    [zaoshengmenBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     [self.view addSubview:zaoshengmenBtn];
     [zaoshengmenBtn addTarget:self
                   action:@selector(zaoshengyaxianAction:)
@@ -135,7 +135,11 @@
 - (void) junhengAction:(id)sender{
     [fenpingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [zaoshengmenBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [junhengqiBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+    [junhengqiBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+    
+    junhengqiBtn.selected=YES;
+    zaoshengmenBtn.selected=NO;
+    fenpingBtn.selected=NO;
     
     fenpinqi.hidden = YES;
     junhengqi.hidden = NO;
@@ -143,18 +147,26 @@
     
 }
 - (void) zaoshengyaxianAction:(id)sender{
-    [zaoshengmenBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+    [zaoshengmenBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
     [junhengqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [fenpingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    junhengqiBtn.selected=NO;
+    zaoshengmenBtn.selected=YES;
+    fenpingBtn.selected=NO;
     
     junhengqi.hidden = YES;
     fenpinqi.hidden = YES;
     zaoshengView.hidden = NO;
 }
 - (void) fenpinAction:(id)sender{
-    [fenpingBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+    [fenpingBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
     [junhengqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [zaoshengmenBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    junhengqiBtn.selected=NO;
+    zaoshengmenBtn.selected=NO;
+    fenpingBtn.selected=YES;
     
     junhengqi.hidden = YES;
     fenpinqi.hidden = NO;

@@ -146,17 +146,17 @@
     _wangkoufuwuqiBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap, height, 120, 110)];
     [_wangkoufuwuqiBtn buttonWithIcon:[UIImage imageNamed:@"wangkoushebei_n.png"] selectedIcon:[UIImage imageNamed:@"wangkoushebei_s.png"] text:@"网口服务器" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_wangkoufuwuqiBtn addTarget:self action:@selector(wangkouAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_wangkoufuwuqiBtn];
+//    [self.view addSubview:_wangkoufuwuqiBtn];
     
     
     
-    _hongwaizhuanhuanqiBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*2, height, 120, 110)];
-    [_hongwaizhuanhuanqiBtn buttonWithIcon:[UIImage imageNamed:@"hongwaishebei_n.png"] selectedIcon:[UIImage imageNamed:@"hongwaishebei_s.png"] text:@"红外转换器" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
+    _hongwaizhuanhuanqiBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap, height, 120, 110)];
+    [_hongwaizhuanhuanqiBtn buttonWithIcon:[UIImage imageNamed:@"hongwaishebei_n.png"] selectedIcon:[UIImage imageNamed:@"hongwaishebei_s.png"] text:@"红外转发器" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_hongwaizhuanhuanqiBtn addTarget:self action:@selector(hongwaiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_hongwaizhuanhuanqiBtn];
     
     
-    _chumopingBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*3, height, 120, 110)];
+    _chumopingBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*2, height, 120, 110)];
     [_chumopingBtn buttonWithIcon:[UIImage imageNamed:@"chumoping_n.png"] selectedIcon:[UIImage imageNamed:@"chumoping_s.png"] text:@"触摸屏" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_chumopingBtn addTarget:self action:@selector(chumopingAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_chumopingBtn];
@@ -179,7 +179,7 @@
     [_productTypePikcer removeArray];
     _productTypePikcer.delegate_=self;
     _productTypePikcer.fontSize=14;
-    _productTypePikcer._pickerDataArray = @[@{@"values":@[@"串口服务器",@"网口服务器",@"红外转换器",@"触摸屏"]}];
+    _productTypePikcer._pickerDataArray = @[@{@"values":@[@"串口服务器",@"红外转发器",@"触摸屏"]}];
     [_productTypePikcer selectRow:0 inComponent:0];
     _productTypePikcer._selectColor = RGB(253, 180, 0);
     _productTypePikcer._rowNormalColor = [UIColor whiteColor];

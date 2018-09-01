@@ -62,80 +62,21 @@
         [channelBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
 //        [self addSubview:channelBtn];
         
-        int y = CGRectGetMaxY(channelBtn.frame)+20;
-        contentView = [[UIView alloc] initWithFrame:CGRectMake(0, y, frame.size.width, 340)];
+        
+        CGRect rc = CGRectMake(0, 40, frame.size.width, 320);
+        
+//        int y = CGRectGetMaxY(channelBtn.frame)+20;
+        contentView = [[UIView alloc] initWithFrame:rc];
         [self addSubview:contentView];
         contentView.layer.cornerRadius = 5;
         contentView.clipsToBounds = YES;
-        contentView.backgroundColor = RGB(0, 89, 118);
+        contentView.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR;
         
 //        [self layoutChannelBtns:16];
         [self contentViewComps];
     }
     
     return self;
-}
-
-- (void) layoutChannelBtns:(int)num{
-    
-    self._channelBtns = [NSMutableArray array];
-    
-    float x = 0;
-    int y = CGRectGetHeight(self.frame)-60;
-    
-    float spx = (CGRectGetWidth(self.frame) - num*50.0)/(num-1);
-    if(spx > 10)
-        spx = 10;
-    for(int i = 0; i < num; i++)
-    {
-        UIButton *btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
-        btn.frame = CGRectMake(x, y, 50, 50);
-        btn.clipsToBounds = YES;
-        btn.layer.cornerRadius = 5;
-        btn.titleLabel.font = [UIFont systemFontOfSize:15];
-        [btn setTitle:[NSString stringWithFormat:@"%d", i+1] forState:UIControlStateNormal];
-        btn.tag = i;
-        [self addSubview:btn];
-        
-        if(i == 0)
-        {
-            [btn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-            [btn setTitleColor:YELLOW_COLOR forState:UIControlStateHighlighted];
-        }
-        else
-        {
-            [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            [btn setTitleColor:YELLOW_COLOR forState:UIControlStateHighlighted];
-        }
-        
-        [btn addTarget:self
-                action:@selector(channelBtnAction:)
-      forControlEvents:UIControlEventTouchUpInside];
-        
-        x+=50;
-        x+=spx;
-        
-        [_channelBtns addObject:btn];
-    }
-    
-}
-
-- (void) channelBtnAction:(UIButton*)sender{
-    
-    int tag = (int)sender.tag+1;
-    [channelBtn setTitle:[NSString stringWithFormat:@"In %d", tag] forState:UIControlStateNormal];
-    
-    for(UIButton * btn in _channelBtns)
-    {
-        if(btn == sender)
-        {
-            [btn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-        }
-        else
-        {
-            [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        }
-    }
 }
 
 - (void) contentViewComps{
@@ -163,7 +104,7 @@
     tL.font = [UIFont boldSystemFontOfSize:16];
     tL.textColor = [UIColor whiteColor];
     
-    btnJH1 = [[SlideButton alloc] initWithFrame:CGRectMake(x, y+125, 120, 120)];
+    btnJH1 = [[SlideButton alloc] initWithFrame:CGRectMake(x, y+75, 120, 120)];
     btnJH1._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
     btnJH1._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
     [btnJH1 enableValueSet:YES];
@@ -191,12 +132,15 @@
         [_limiter setThresHoldWithR:pressValue];
     }
     
-    yaxianL = [[UILabel alloc] initWithFrame:CGRectMake(x, y+100, 120, 120)];
+    yaxianL = [[UILabel alloc] initWithFrame:CGRectMake(x+35, y+155, 50, 20)];
     yaxianL.text = [pressStr stringByAppendingString:@" dB"];
     yaxianL.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:yaxianL];
     yaxianL.font = [UIFont systemFontOfSize:13];
     yaxianL.textColor = YELLOW_COLOR;
+    yaxianL.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR2;
+    yaxianL.layer.cornerRadius = 5;
+    yaxianL.clipsToBounds = YES;
     
     x+=200;
     x+=10;
@@ -208,7 +152,7 @@
     tL.font = [UIFont boldSystemFontOfSize:16];
     tL.textColor = [UIColor whiteColor];
     
-    btnJH2 = [[SlideButton alloc] initWithFrame:CGRectMake(x, y+125, 120, 120)];
+    btnJH2 = [[SlideButton alloc] initWithFrame:CGRectMake(x, y+75, 120, 120)];
     btnJH2._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
     btnJH2._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
     [btnJH2 enableValueSet:YES];
@@ -231,13 +175,16 @@
         [btnJH2 setCircleValue:f];
     }
     
-    zaoshengL = [[UILabel alloc] initWithFrame:CGRectMake(x, y+100, 120, 120)];
+    zaoshengL = [[UILabel alloc] initWithFrame:CGRectMake(x+35, y+155, 50, 20)];
     zaoshengL.text = [noiseStr stringByAppendingString:@" dB"];
     zaoshengL.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:zaoshengL];
     zaoshengL.font = [UIFont systemFontOfSize:13];
+    zaoshengL.backgroundColor=[UIColor redColor];
     zaoshengL.textColor = YELLOW_COLOR;
-    
+    zaoshengL.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR2;
+    zaoshengL.layer.cornerRadius = 5;
+    zaoshengL.clipsToBounds = YES;
 }
 
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{

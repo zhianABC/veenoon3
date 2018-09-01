@@ -50,7 +50,7 @@
         [self addSubview:bgv];
         bgv.layer.cornerRadius = 5;
         bgv.clipsToBounds = YES;
-        bgv.backgroundColor = RGB(0, 89, 118);
+        bgv.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR;
         
         
         rc = CGRectMake(10, 50, frame.size.width-20, 300);
@@ -105,7 +105,7 @@
         [self addSubview:_highFilterL];
         _highFilterL.textAlignment = NSTextAlignmentCenter;
         _highFilterL.layer.cornerRadius = 5;
-        _highFilterL.backgroundColor = RGB(0, 89, 118);
+        _highFilterL.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR;
         _highFilterL.center = CGPointMake(_highFilterSlider.center.x, _highFilterL.center.y);
         _highFilterL.clipsToBounds = YES;
         
@@ -152,7 +152,7 @@
         [self addSubview:_lowFilgerL];
         _lowFilgerL.textAlignment = NSTextAlignmentCenter;
         _lowFilgerL.layer.cornerRadius = 5;
-        _lowFilgerL.backgroundColor = RGB(0, 89, 118);
+        _lowFilgerL.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR;
         _lowFilgerL.center = CGPointMake(_lowFilterSlider.center.x, _lowFilgerL.center.y);
         _lowFilgerL.clipsToBounds = YES;
         
