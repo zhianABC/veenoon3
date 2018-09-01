@@ -536,6 +536,8 @@
         cellBtn.tag = tagBase+i;
         cellBtn._mydata = dic;
         cellBtn._plug = plug;
+        cellBtn._deviceType = tagBase;
+        cellBtn._deviceTypeName = sectionL.text;
         [cellBtn addMyObserver];
         
         
@@ -550,6 +552,8 @@
         btnL.font = [UIFont systemFontOfSize:12];
         btnL.textColor = DARK_BLUE_COLOR;
         btnL.text = [dic objectForKey:@"name"];
+        
+        cellBtn._drNameLabel = btnL;
         
         
         [cellBtn setBackgroundImage:eImg forState:UIControlStateNormal];
@@ -977,6 +981,9 @@
     
     [_deleteCells removeAllObjects];
     
+    
+    [self reroderCells];
+    
 }
 
 - (void) btnlongPressed:(id)sender{
@@ -1022,15 +1029,19 @@
                      }];
     
     
-    int x = audioStartX;
+    //int x = audioStartX;
     
     if([supBtn isKindOfClass:[DevicePlugButton class]])
     {
         [(DevicePlugButton*)supBtn removeMyObserver];
+        [((DevicePlugButton*)supBtn)._drNameLabel removeFromSuperview];
     }
     
     [btnCells removeObject:supBtn];
     
+    
+    /*
+    //重新排序
     for(int i = 0; i < [_drCells count]; i++)
     {
         [UIView beginAnimations:nil context:nil];
@@ -1048,7 +1059,131 @@
         x+=E_CELL_WIDTH;
         x+=space;
     }
+     */
     
+}
+
+- (void) reroderCells{
+    
+    int x = audioStartX;
+    _yVal = 15;
+    
+    [[_content subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+    int lastType = 0;
+    
+    for(int i = 0; i < [_drCells count]; i++)
+    {
+        DevicePlugButton *btn = [_drCells objectAtIndex:i];
+        [_content addSubview:btn];
+        
+        
+        int curType = btn._deviceType;
+        
+        if(lastType != curType)
+        {
+            if(lastType != 0)
+            {
+                _yVal += E_CELL_WIDTH;
+                _yVal += 40;
+                x = audioStartX;
+            }
+            
+            lastType = curType;
+            
+            UIImageView *smicon = [[UIImageView alloc] initWithFrame:CGRectMake(30,
+                                                                                _yVal,
+                                                                                30,
+                                                                                30)];
+            smicon.layer.contentsGravity = kCAGravityCenter;
+            [_content addSubview:smicon];
+            
+            UILabel *sectionL = [[UILabel alloc] initWithFrame:CGRectMake(60,
+                                                                          _yVal,
+                                                                          200,
+                                                                          30)];
+            sectionL.textColor = [UIColor whiteColor];
+            sectionL.backgroundColor = [UIColor clearColor];
+            sectionL.textAlignment = NSTextAlignmentLeft;
+            [_content addSubview:sectionL];
+            sectionL.font = [UIFont systemFontOfSize:14];
+            sectionL.textColor = YELLOW_COLOR;
+            
+            
+            
+            if(lastType == 1000)
+            {
+                sectionL.text  = @"音频设备";
+                smicon.image = [UIImage imageNamed:@"sm_row_audio.png"];
+            }
+            else if(lastType == 2000)
+            {
+                sectionL.text  = @"视频设备";
+                smicon.image = [UIImage imageNamed:@"sm_row_video.png"];
+            }
+            else if(lastType == 3000)
+            {
+                sectionL.text  = @"环境设备";
+                smicon.image = [UIImage imageNamed:@"sm_row_env.png"];
+            }
+            else if(lastType == 4000)
+            {
+                sectionL.text  = @"传感设备";
+                smicon.image = [UIImage imageNamed:@"sm_sensor.png"];
+            }
+            else if(lastType == 5000)
+            {
+                sectionL.text  = @"辅助设备";
+                smicon.image = [UIImage imageNamed:@"sm_others.png"];
+            }
+            
+            _yVal+=40;
+            
+        }
+        
+        [UIView beginAnimations:nil context:nil];
+        btn.frame = CGRectMake(x,
+                               _yVal,
+                               E_CELL_WIDTH,
+                               E_CELL_WIDTH);
+        [UIView commitAnimations];
+        
+        UILabel *btnL = [[UILabel alloc] initWithFrame:CGRectMake(x-15,
+                                                                  _yVal+E_CELL_WIDTH+5,
+                                                                  E_CELL_WIDTH+30,
+                                                                  20)];
+        btnL.textColor = [UIColor whiteColor];
+        btnL.backgroundColor = [UIColor clearColor];
+        btnL.textAlignment = NSTextAlignmentCenter;
+        [_content addSubview:btnL];
+        btnL.font = [UIFont systemFontOfSize:12];
+        btnL.textColor = DARK_BLUE_COLOR;
+        btnL.text = [btn._plug deviceName];
+        
+        btn._drNameLabel = btnL;
+        
+        x+=E_CELL_WIDTH;
+        x+=space;
+        
+        
+        if(x >= (CGRectGetWidth(_content.frame) - E_CELL_WIDTH))
+        {
+            if(i < [_drCells count] - 1)
+            {
+                _yVal += E_CELL_WIDTH;
+                _yVal += 30;
+                
+                x = audioStartX;
+            }
+        }
+        
+    }
+    
+    _yVal += E_CELL_WIDTH;
+    _yVal += 40;
+    
+    _content.contentSize = CGSizeMake(_content.frame.size.width,
+                                      _yVal);
 }
 
 

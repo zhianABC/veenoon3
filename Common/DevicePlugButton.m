@@ -14,6 +14,9 @@
 @synthesize _mydata;
 @synthesize _isEdited;
 @synthesize _plug;
+@synthesize _deviceType;
+@synthesize _deviceTypeName;
+@synthesize _drNameLabel;
 
 /*
 // Only override drawRect: if you perform custom drawing.

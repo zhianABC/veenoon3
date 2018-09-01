@@ -15,6 +15,10 @@
 @property (nonatomic, strong) NSDictionary *_mydata;
 @property (nonatomic, assign) BOOL _isEdited;
 @property (nonatomic, strong) BasePlugElement *_plug;
+@property (nonatomic, assign) int _deviceType;
+@property (nonatomic, strong) NSString* _deviceTypeName;
+
+@property (nonatomic, strong) UILabel* _drNameLabel;
 
 - (void) addMyObserver;
 - (void) removeMyObserver;
