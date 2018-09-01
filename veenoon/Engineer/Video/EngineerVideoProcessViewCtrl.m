@@ -513,7 +513,7 @@
     
     TwoIconAndTitleView *t = tia;
  
-    if([t testIsInDevice])
+    if([t testIsInDevice])//输入
     {
         self._current = t;
         
@@ -532,18 +532,11 @@
     }
     else//输出
     {
-        if(_current)
+        if(_current)//如果有输入
         {
             [t fillRelatedData:[_current getMyData]];
             _outPutSelected = t;
             [self controlAddOutDevice];
-        }
-        else
-        {
-            [t unselected];
-            _outPutSelected = t;
-            
-            [self controlRemoveOutDevice];
         }
     }
 }
@@ -599,14 +592,40 @@
     
     if([t testIsInDevice])
     {
+        //取消输入
         self._current = nil;
     }
-    else//输出
+    else//取消输出
     {
-        [t unselected];
-        _outPutSelected = t;
-        
-        [self controlRemoveOutDevice];
+        if(self._current)
+        {
+            //如果有输入，顶替新的输入
+            
+            id cur = [_current getMyData];
+            id inp = [t getInputData];
+            if(cur != inp)//替换
+            {
+                [t selected];
+                [t fillRelatedData:cur];
+                _outPutSelected = t;
+                 [self controlAddOutDevice];
+            }
+            else//取消
+            {
+                [t unselected];
+                _outPutSelected = t;
+                [self controlRemoveOutDevice];
+            }
+           
+        }
+        else
+        {
+            //如果没选择输入，直接取消输出
+            [t unselected];
+            _outPutSelected = t;
+            
+            [self controlRemoveOutDevice];
+        }
     }
 }
 

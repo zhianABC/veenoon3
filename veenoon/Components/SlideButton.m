@@ -231,10 +231,10 @@
     
     [progress syncCurrentStepedValue];
     
-    if(delegate && [delegate respondsToSelector:@selector(didSlideButtonValueChanged:slbtn:)])
-    {
-        [delegate didSlideButtonValueChanged:[progress pgvalue] slbtn:self];
-    }
+//    if(delegate && [delegate respondsToSelector:@selector(didSlideButtonValueChanged:slbtn:)])
+//    {
+//        [delegate didSlideButtonValueChanged:[progress pgvalue] slbtn:self];
+//    }
     
     if(delegate && [delegate respondsToSelector:@selector(didEndSlideButtonValueChanged:slbtn:)])
     {

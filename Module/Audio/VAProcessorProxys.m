@@ -52,6 +52,7 @@
 
 @synthesize _rgsCommands;
 @synthesize _rgsProxyObj;
+@synthesize _valName;
 @synthesize _cmdMap;
 
 @synthesize _mode;
@@ -188,6 +189,8 @@
             
             [dic setObject:[NSString stringWithFormat:@"%d", i+1]
                     forKey:@"band"];
+            
+            [dic setObject:@"Midshelf" forKey:@"type"];
             
             [waves16_feq_gain_q addObject:dic];
    
@@ -884,6 +887,8 @@
         [dic setObject:[NSString stringWithFormat:@"%d", i+1]
                 forKey:@"band"];
         
+        [dic setObject:@"Midshelf" forKey:@"type"];
+        
         [waves16_feq_gain_q addObject:dic];
         
     }
@@ -1065,9 +1070,9 @@
     if(opt)
         [opts addObject:opt];
     
-    NSArray *tmp = [self generateEventOperation_Inverted];
-    if([tmp count])
-        [opts addObjectsFromArray:tmp];
+    opt = [self generateEventOperation_Inverted];
+    if(opt)
+        [opts addObject:opt];
     
     
     if([opts count])
@@ -2490,7 +2495,7 @@
             
             RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
             
-            NSString *name = proxy._rgsProxyObj.name;
+            NSString *name = proxy._valName;
             name = [name stringByReplacingOccurrencesOfString:@" " withString:@""];
             
             [param setObject:name forKey:param_info.name];
@@ -2548,7 +2553,7 @@
             
                 if([param_info.name isEqualToString:@"SRC"])
                 {
-                    NSString *name = proxy._rgsProxyObj.name;
+                    NSString *name = proxy._valName;
                     name = [name stringByReplacingOccurrencesOfString:@" " withString:@""];
                     [param setObject:name forKey:param_info.name];
                     

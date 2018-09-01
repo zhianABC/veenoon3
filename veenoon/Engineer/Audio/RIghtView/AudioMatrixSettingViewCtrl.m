@@ -218,16 +218,16 @@
     {
          y = top + i*h;
         VAProcessorProxys *vap = [audio_outs objectAtIndex:i];
+        vap._valName = [NSString stringWithFormat:@"Out %d", i+1];
+        
         UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(left-w, y, w, h)];
-        tL.text = vap._rgsProxyObj.name;
+        //tL.text = vap._rgsProxyObj.name;
+        tL.text = vap._valName;
         tL.textAlignment = NSTextAlignmentCenter;
         [_matrix addSubview:tL];
         tL.font = [UIFont systemFontOfSize:13];
         tL.textColor = [UIColor whiteColor];
-        
-        //[vap checkRgsProxyCommandLoad];
-        
-        
+
         for(int j = 0; j < maxIn; j++)
         {
             x = left + j*w;
@@ -235,8 +235,11 @@
             if(i == 0)
             {
                 VAProcessorProxys *vap = [audio_ins objectAtIndex:j];
+                vap._valName = [NSString stringWithFormat:@"In %d", j+1];
+                
                 UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(x, y-20, w, 20)];
-                tL.text = vap._rgsProxyObj.name;
+                //tL.text = vap._rgsProxyObj.name;
+                tL.text = vap._valName;
                 tL.textAlignment = NSTextAlignmentCenter;
                 [_matrix addSubview:tL];
                 tL.font = [UIFont systemFontOfSize:13];
@@ -267,7 +270,7 @@
     {
         //只读取一个，因为所有的out的commands相同
         VAProcessorProxys *vap = [audio_outs objectAtIndex:0];
-        [proxyids addObject:[NSNumber numberWithInt:vap._rgsProxyObj.m_id]];
+        [proxyids addObject:[NSNumber numberWithInteger:vap._rgsProxyObj.m_id]];
         
         if(![vap haveProxyCommandLoaded])
         {
@@ -427,9 +430,8 @@
 }
 
 
-
-- (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
-   
+- (void) processSlideButtonValue:(float)value{
+    
     if(_selectBtn)
     {
         int index = (int)_selectBtn.tag;
@@ -461,6 +463,23 @@
             }
         }
     }
+}
+
+- (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
+   
+    [self processSlideButtonValue:value];
+}
+
+- (void) didEndSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
+    
+    IMP_BLOCK_SELF(AudioMatrixSettingViewCtrl);
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+                                 (int64_t)(200.0 * NSEC_PER_MSEC)),
+                   dispatch_get_main_queue(), ^{
+                       
+                       [block_self processSlideButtonValue:value];
+                   });
 }
 
 - (void) okAction:(id)sender{

@@ -980,7 +980,7 @@ class FilterGraphView: UIView {
         hpf_freq = freq
         updateCurve()
     }
-    func setHPFilter(byp: Bool) {
+   @objc func setHPFilter(byp: Bool) {
         hpf_byp = byp
         updateCurve()
     }
@@ -1005,7 +1005,7 @@ class FilterGraphView: UIView {
         lpf_freq = freq
         updateCurve()
     }
-    func setLPFilter(byp: Bool) {
+   @objc func setLPFilter(byp: Bool) {
         lpf_byp = byp
         updateCurve()
     }
@@ -1035,7 +1035,7 @@ class FilterGraphView: UIView {
         }
         updateCurve()
     }
-    func setPEQ(band: UInt8, byp: Bool) {
+    @objc func setPEQ(band: UInt8, byp: Bool) {
         eq_byp[Int(band)] = byp
         updateCurve()
     }

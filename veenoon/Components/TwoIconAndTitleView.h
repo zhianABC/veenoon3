@@ -32,5 +32,6 @@
 - (void) selected;
 
 - (NSDictionary *)getMyData;
+- (NSDictionary *)getInputData;
 
 @end

@@ -48,6 +48,8 @@
 @optional -(void) onUploadProject:(RgsNotifyStatus) status persent:(CGFloat)persent error:(NSError *)error;
 @optional -(void) onDownloadProject:(RgsNotifyStatus) status persent:(CGFloat)persent error:(NSError *)error;
 @optional -(void) onDownloadPlugin:(RgsNotifyStatus) status name:(NSString *)name persent:(CGFloat)persent error:(NSError *)error;
+@optional -(void) onRecvDeviceCapbility:(NSInteger)proxy_id cap:(NSDictionary *)cap;
+@optional -(void) onRecvCommandInfo:(NSInteger)dev_id commds:(NSArray *)commds;
 @end
 
 @interface RegulusSDK : NSObject
@@ -833,12 +835,37 @@
 -(void)UpdateRgsDriverFromUrl:(NSString *)url param:(NSDictionary *)param timeout:(NSInteger)timeout plugin_name:(NSString *)plugin_name completion:(void(^)(BOOL result,NSError * error)) completion;
 
 /*!
- @since 3.14.2
+ @since 3.14.3
  @brief 请求代理状态参数，结果在onRecvDeviceNotify返回
  @param proxy_id 代理ID
  @param completion 成功返回YES 失败返回NO RgsObject 为数据结构指针
  */
 -(void)QueryProxyStateInCallBack:(NSInteger)proxy_id completion:(void(^)(BOOL result,NSError * error)) completion;
+
+/*!
+ @since 3.14.3
+ @brief 请求命令参数，结果在onRecvCommandInfo返回
+ @param id 代理ID
+ @param completion 成功返回YES 失败返回NO RgsObject 为数据结构指针
+ */
+-(void)QueryCommandInfoByIDInCallBack:(NSInteger)id completion:(void(^)(BOOL result,NSError * error)) completion;
+
+/*!
+ @since 3.14.3
+ @brief 请求代理性能参数，结果在onRecvDeviceCapbility返回
+ @param proxy_id 代理ID
+ @param completion 成功返回YES 失败返回NO RgsObject 为数据结构指针
+ */
+-(void)QueryProxyCapbilityInCallBack:(NSInteger)proxy_id completion:(void(^)(BOOL result,NSError * error)) completion;
+
+/*!
+ @since 3.14.4
+ @brief 请求代理关联代理
+ @param proxy_id 代理ID
+ @param completion 成功返回YES 失败返回NO RgsProxyObj 为数据结构指针
+ @see RgsProxyObj
+ */
+-(void)GetProxyRelevanceProxyObj:(NSInteger)proxy_id completion:(void(^)(BOOL result,NSArray<RgsProxyObj *>* proxies,NSError * error)) completion;
 @end
 
 

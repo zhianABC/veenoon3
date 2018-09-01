@@ -251,7 +251,7 @@
     labelL.font = [UIFont systemFontOfSize:13];
     labelL.textColor = YELLOW_COLOR;
     
-    labelL.text = @"输出";
+    labelL.text = @"输出通道";
     
     int num = (int) [self._currentAudio._outAudioProxys count];
     if (num <= 0) {
@@ -280,14 +280,16 @@
         spx = 10;
     for(int i = 0; i < num; i++)
     {
-        VAProcessorProxys *vProxy = [self._currentAudio._outAudioProxys objectAtIndex:i];
+        //VAProcessorProxys *vProxy = [self._currentAudio._outAudioProxys objectAtIndex:i];
         
         UIButton *btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
         btn.frame = CGRectMake(x, y, 50, 50);
         btn.clipsToBounds = YES;
         btn.layer.cornerRadius = 5;
         btn.titleLabel.font = [UIFont systemFontOfSize:15];
-        [btn setTitle:vProxy._rgsProxyObj.name forState:UIControlStateNormal];
+        //[btn setTitle:vProxy._rgsProxyObj.name forState:UIControlStateNormal];
+        [btn setTitle:[NSString stringWithFormat:@"Out %d", i+1]
+             forState:UIControlStateNormal];
         btn.tag = i;
         [self addSubview:btn];
         
