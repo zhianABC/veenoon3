@@ -81,14 +81,14 @@
     UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, ENGINEER_VIEW_TOP+10, SCREEN_WIDTH-80, 30)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont boldSystemFontOfSize:20];
+    portDNSLabel.font = [UIFont boldSystemFontOfSize:18];
     portDNSLabel.textColor  = [UIColor whiteColor];
     portDNSLabel.text = @"请配置您的环境管理系统";
     
     portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, CGRectGetMaxY(portDNSLabel.frame)+20, SCREEN_WIDTH-80, 20)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont systemFontOfSize:18];
+    portDNSLabel.font = [UIFont systemFontOfSize:16];
     portDNSLabel.textColor  = [UIColor colorWithWhite:1.0 alpha:0.9];
     portDNSLabel.text = @"选择您所需要设置的设备类型> 品牌 > 型号";
     
@@ -210,7 +210,7 @@
     titleL.font = [UIFont boldSystemFontOfSize:16];
     titleL.textAlignment = NSTextAlignmentCenter;
     titleL.textColor  = [UIColor whiteColor];
-    titleL.text = @"产品类型";
+    titleL.text = @"类型";
     
     _productTypePikcer = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(labelStartX, labelStartY+20, maxWidth, 160)];
     [_productTypePikcer removeArray];
@@ -260,16 +260,13 @@
     [self.view addSubview:_productCategoryPicker];
     
  
-    UIButton *addBtn = [UIButton buttonWithColor:YELLOW_COLOR selColor:nil];
+    UIButton *addBtn = [UIButton buttonWithColor:[UIColor clearColor] selColor:RGB(242, 148, 20)];
     addBtn.frame = CGRectMake(SCREEN_WIDTH/2-50, labelStartY+120+55, 100, 40);
-    addBtn.layer.cornerRadius = 5;
-    addBtn.layer.borderWidth = 2;
-    addBtn.layer.borderColor = [UIColor clearColor].CGColor;
+    
     addBtn.clipsToBounds = YES;
     [self.view addSubview:addBtn];
     [addBtn setTitle:@"添加" forState:UIControlStateNormal];
     [addBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [addBtn setTitleColor:RGB(1, 138, 182) forState:UIControlStateHighlighted];
     addBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [addBtn addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
     
