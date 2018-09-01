@@ -55,6 +55,7 @@
     centerTitleLabel.backgroundColor = [UIColor clearColor];
     centerTitleLabel.textAlignment = NSTextAlignmentCenter;
     centerTitleLabel.text = @"工程师登录";
+    centerTitleLabel.font = [UIFont boldSystemFontOfSize:15];
     [_topBar addSubview:centerTitleLabel];
     
     
@@ -117,7 +118,7 @@
      forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    backBtn.frame = CGRectMake(30, 22, 40, 20);
+    backBtn.frame = CGRectMake(30, 32, 40, 20);
     [backBtn setImage:[UIImage imageNamed:@"left_back_bg.png"] forState:UIControlStateNormal];
     [backBtn setImage:[UIImage imageNamed:@"left_back_bg.png"] forState:UIControlStateHighlighted];
     [backBtn addTarget:self action:@selector(cancelAction:) forControlEvents:UIControlEventTouchUpInside];

@@ -9,7 +9,7 @@
 #import "BaseViewController.h"
 
 
-@interface InvitationCodeViewCotroller : BaseViewController <UITextFieldDelegate> {
+@interface InvitationCodeViewCotroller : UIViewController <UITextFieldDelegate> {
     
     UILabel *_networkStatus;
     

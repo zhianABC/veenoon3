@@ -53,7 +53,7 @@
                                                                 SCREEN_WIDTH, 20)];
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
-    titleL.font = [UIFont boldSystemFontOfSize:20];
+    titleL.font = [UIFont boldSystemFontOfSize:16];
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"请输入官方授权的序列号";
    
@@ -114,7 +114,7 @@
     _invitationCode.returnKeyType = UIReturnKeyDone;
     _invitationCode.placeholder = @"";
     _invitationCode.backgroundColor = [UIColor whiteColor];
-    _invitationCode.textColor = RGB(1, 138, 182);
+    _invitationCode.textColor = RGB(70, 219, 254);
     _invitationCode.borderStyle = UITextBorderStyleNone;
     [_inputPannel addSubview:_invitationCode];
 }
