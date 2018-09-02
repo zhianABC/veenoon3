@@ -84,28 +84,34 @@
     
     for(NSDictionary *dr in drivers)
     {
+        if([dr objectForKey:@"driver"] == nil)
+            continue;
+        
         [self._mapDrivers setObject:dr forKey:[dr objectForKey:@"driver"]];
         
         id key = [dr objectForKey:@"subtype"];
-        NSMutableArray* arr = [typeAndSubTypeMap objectForKey:key];
-        if(arr == nil)
+        if(key)
         {
-            arr = [NSMutableArray array];
-            [typeAndSubTypeMap setObject:arr forKey:key];
+            NSMutableArray* arr = [typeAndSubTypeMap objectForKey:key];
+            if(arr == nil)
+            {
+                arr = [NSMutableArray array];
+                [typeAndSubTypeMap setObject:arr forKey:key];
+            }
+            
+            [arr addObject:dr];
+            
+            //
+            key = [dr objectForKey:@"name"];
+            arr = [nameDriverMap objectForKey:key];
+            if(arr == nil)
+            {
+                arr = [NSMutableArray array];
+                [nameDriverMap setObject:arr forKey:key];
+            }
+            
+            [arr addObject:dr];
         }
-        
-        [arr addObject:dr];
-        
-        //
-        key = [dr objectForKey:@"name"];
-        arr = [nameDriverMap objectForKey:key];
-        if(arr == nil)
-        {
-            arr = [NSMutableArray array];
-            [nameDriverMap setObject:arr forKey:key];
-        }
-        
-        [arr addObject:dr];
     }
 }
 
