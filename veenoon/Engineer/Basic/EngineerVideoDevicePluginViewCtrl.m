@@ -216,7 +216,7 @@
     [_touyingjiBtn addTarget:self action:@selector(touyingjiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_touyingjiBtn];
     
-    
+    /*
     UIButton *btnAdd = [UIButton buttonWithType:UIButtonTypeCustom];
     btnAdd.frame = CGRectMake(left+rowGap*3, height+120, 80, 80);
     [btnAdd setImage:[UIImage imageNamed:@"engineer_scenario_add_small.png"]
@@ -234,7 +234,7 @@
     addTitle.textAlignment = NSTextAlignmentCenter;
     addTitle.textColor  = [UIColor whiteColor];
     addTitle.text = @"添加红外设备";
-
+     */
     
     int maxWidth = 120;
     float labelStartX = (SCREEN_WIDTH - maxWidth*2 - 60 - 15)/2.0;

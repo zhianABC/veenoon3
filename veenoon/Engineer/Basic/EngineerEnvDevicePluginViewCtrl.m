@@ -221,7 +221,7 @@
     [_nenghaotongjiBtn addTarget:self action:@selector(nenghaotongjiAction:) forControlEvents:UIControlEventTouchUpInside];
 //    [self.view addSubview:_nenghaotongjiBtn];
     
-    
+    /*
     UIButton *btnAdd = [UIButton buttonWithType:UIButtonTypeCustom];
     btnAdd.frame = CGRectMake(left, height+120, 80, 80);
     [btnAdd setImage:[UIImage imageNamed:@"engineer_scenario_add_small.png"]
@@ -239,7 +239,7 @@
     addTitle.textAlignment = NSTextAlignmentCenter;
     addTitle.textColor  = [UIColor whiteColor];
     addTitle.text = @"添加红外设备";
-    
+    */
 
     
     int maxWidth = 120;
