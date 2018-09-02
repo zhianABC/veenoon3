@@ -115,6 +115,19 @@
     
     int index = 0;
     int startX = leftGap;
+    
+    AirConditionPlug *ss = [[AirConditionPlug alloc] init];
+    RgsDriverObj *driver = [[RgsDriverObj alloc] init];
+    ss._driver = driver;
+    
+    [_conditionRoomList addObject:ss];
+    
+    AirConditionPlug *ss1 = [[AirConditionPlug alloc] init];
+    RgsDriverObj *driver1 = [[RgsDriverObj alloc] init];
+    ss1._driver = driver1;
+    
+    [_conditionRoomList addObject:ss1];
+    
     for (AirConditionPlug *plug in _conditionRoomList) {
         
         RgsDriverObj *driver = plug._driver;
@@ -130,9 +143,9 @@
         [airConditionBtn setTitle:[NSString stringWithFormat:@"%d",
                                    (int)driver.m_id] forState:UIControlStateNormal];
         
-        [airConditionBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
+        [airConditionBtn setTitleColor:ADMIN_BLACK_COLOR forState:UIControlStateNormal];
         airConditionBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-        [airConditionBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
+        [airConditionBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
         airConditionBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
         [airConditionBtn setTitleEdgeInsets:UIEdgeInsetsMake(airConditionBtn.imageView.frame.size.height+10,-105,-20,20)];
         [airConditionBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,-15,airConditionBtn.titleLabel.bounds.size.height, 0)];
@@ -394,10 +407,10 @@
     for (UIButton *btn in _conditionBtnList) {
         if (btn.tag == selectTag) {
             [btn setImage:[UIImage imageNamed:@"user_aircondition_s.png"] forState:UIControlStateNormal];
-            [btn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
+            [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
         } else {
             [btn setImage:[UIImage imageNamed:@"user_aircondition_n.png"] forState:UIControlStateNormal];
-            [btn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
+            [btn setTitleColor:ADMIN_BLACK_COLOR forState:UIControlStateNormal];
         }
     }
     

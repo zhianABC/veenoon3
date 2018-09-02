@@ -56,12 +56,12 @@
     scroolView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:scroolView];
     
-    int top = 30;
-    int leftRight = 30;
+    int top = 50;
+    int leftRight = 75;
     int space = 15;
     
-    int cellWidth = 312;
-    int cellHeight = 186;
+    int cellWidth = 278;
+    int cellHeight = 156;
     int index = 0;
     for (MeetingRoom *room in roomList) {
         
@@ -73,8 +73,8 @@
         
         UIImage *roomImageBG = [UIImage imageNamed:@"image_backgroud.png"];
         UIImageView *roomeImageBGView = [[UIImageView alloc] initWithImage:roomImageBG];
-        roomeImageBGView.frame = CGRectMake(startX-21, startY-21, 354, 228);
-        [scroolView addSubview:roomeImageBGView];
+        roomeImageBGView.frame = CGRectMake(startX-21, startY-21, 278, 156);
+//        [scroolView addSubview:roomeImageBGView];
         
         
         NSString *roomImgName = room.room_image;
@@ -162,7 +162,7 @@
     [self.view addSubview:line];
     
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    backBtn.frame = CGRectMake(25, 25, 60, 35);
+    backBtn.frame = CGRectMake(60, SCREEN_HEIGHT - 48, 42, 42);
     [self.view addSubview:backBtn];
     [backBtn setTitle:@"返回" forState:UIControlStateNormal];
     [backBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -176,7 +176,7 @@
     btnSync.frame = CGRectMake(60, SCREEN_HEIGHT - 48, 42, 42);
     [btnSync setImage:[UIImage imageNamed:@"sync_data_n.png"] forState:UIControlStateNormal];
     [btnSync setImage:[UIImage imageNamed:@"sync_data_s.png"] forState:UIControlStateHighlighted];
-    [self.view addSubview:btnSync];
+//    [self.view addSubview:btnSync];
     btnSync.layer.cornerRadius = 5;
     btnSync.clipsToBounds = YES;
     [btnSync addTarget:self

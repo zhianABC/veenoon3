@@ -140,7 +140,21 @@
     
 #endif
     
-   
+    UIButton *btnSync = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnSync.frame = CGRectMake(SCREEN_WIDTH - 90, 42, 42, 42);
+    [btnSync setImage:[UIImage imageNamed:@"sync_data_n.png"] forState:UIControlStateNormal];
+    [btnSync setImage:[UIImage imageNamed:@"sync_data_s.png"] forState:UIControlStateHighlighted];
+        [self.view addSubview:btnSync];
+    btnSync.layer.cornerRadius = 5;
+    btnSync.clipsToBounds = YES;
+    [btnSync addTarget:self
+                action:@selector(dataSyncAction:)
+      forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void) dataSyncAction:(id)sender{
+    
+    [[DataSync sharedDataSync] syncDataFromServerToLocalDB];
 }
 
 - (void) stateAction:(id)sender{
@@ -323,21 +337,21 @@
 
 - (void) layoutScenarios{
 
-    
-    int ox = (SCREEN_WIDTH - 420*2 - 20)/2 - 20;
-    int y = 0;
+    int w = 325;
+    int ox = (SCREEN_WIDTH - w*3)/2+30;
+    int y = 10;
     int x = ox;
     for(int i = 0; i < [_sceneDrivers count]; i++)
     {
         
-        if(i%2==0 && i > 0){
+        if(i%3==0 && i > 0){
             y+=200;
-            y+=5;
+            y-=10;
             x = ox;
         }
-        if(i%2 != 0 ){
-            x = ox+420;
-            x+=10;
+        if(i%3 != 0 ){
+            x += w;
+            x-=20;
         }
         
         Scenario *scen = [_sceneDrivers objectAtIndex:i];
@@ -345,7 +359,7 @@
         NSDictionary *sDic = [scen senarioData];
         
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        btn.frame = CGRectMake(x, y, 481, 250);
+        btn.frame = CGRectMake(x, y, w, 210);
         [btn setImage:_nor_image
              forState:UIControlStateNormal];
         [btn setImage:_sel_image
@@ -362,20 +376,20 @@
             [btn addSubview:iconView];
             iconView.contentMode = UIViewContentModeCenter;
             
-            iconView.center = CGPointMake(120, 125);
+            iconView.center = CGPointMake(100, 105);
         }
         
         NSString *name = [sDic objectForKey:@"name"];
         
-        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(180, 0, 200, 40)];
+        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(150, 0, 200, 40)];
         titleL.backgroundColor = [UIColor clearColor];
         [btn addSubview:titleL];
-        titleL.font = [UIFont boldSystemFontOfSize:22];
+        titleL.font = [UIFont boldSystemFontOfSize:20];
         titleL.textColor  = [UIColor whiteColor];
         titleL.text = name;
         titleL.tag = 102;
         titleL.textAlignment = NSTextAlignmentLeft;
-        titleL.center = CGPointMake(titleL.center.x, 110);
+        titleL.center = CGPointMake(titleL.center.x, 90);
         
         NSString *en_name = [sDic objectForKey:@"en_name"];
         if(en_name == nil)
@@ -383,15 +397,15 @@
             en_name = @"";
         }
         
-        UILabel* titleEnL = [[UILabel alloc] initWithFrame:CGRectMake(180, 0, 300, 40)];
+        UILabel* titleEnL = [[UILabel alloc] initWithFrame:CGRectMake(150, 0, 300, 40)];
         titleEnL.backgroundColor = [UIColor clearColor];
         [btn addSubview:titleEnL];
-        titleEnL.font = [UIFont systemFontOfSize:22];
+        titleEnL.font = [UIFont systemFontOfSize:20];
         titleEnL.textColor  = [UIColor whiteColor];
         titleEnL.text = en_name;
         titleEnL.tag = 103;
         titleEnL.textAlignment = NSTextAlignmentLeft;
-        titleEnL.center = CGPointMake(titleEnL.center.x, 140);
+        titleEnL.center = CGPointMake(titleEnL.center.x, 120);
         
         
         UILongPressGestureRecognizer *longPress0 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed0:)];

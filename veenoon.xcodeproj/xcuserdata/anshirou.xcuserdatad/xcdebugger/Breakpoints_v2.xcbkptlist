@@ -26,13 +26,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "veenoon/Engineer/Basic/EngineerAudioDevicePluginViewCtrl.m"
-            timestampString = "557574770.935606"
+            timestampString = "557579748.0731159"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "475"
             endingLineNumber = "475"
-            landmarkName = "-electronicSysAction:"
-            landmarkType = "7">
+            landmarkName = "EngineerAudioDevicePluginViewCtrl"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
