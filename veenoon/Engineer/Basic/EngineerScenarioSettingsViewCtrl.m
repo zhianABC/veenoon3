@@ -23,7 +23,7 @@
 #import "EngineerNewTeslariViewCtrl.h"
 #import "MeetingRoom.h"
 
-@interface EngineerScenarioSettingsViewCtrl ()<SIconSelectViewDelegate>{
+@interface EngineerScenarioSettingsViewCtrl ()<SIconSelectViewDelegate, ScenarioDelegate>{
     
     UIButton *_selectSysBtn;
     SIconSelectView *_settingview;
@@ -34,6 +34,8 @@
 @property (nonatomic, strong) NSMutableArray *_sBtns;
 @property (nonatomic, strong) NSMutableDictionary *_map;
 @property (nonatomic, strong) NSString* regulus_id;
+@property (nonatomic, strong) Scenario *_curSecenario;
+
 
 @end
 
@@ -42,6 +44,8 @@
 @synthesize _sBtns;
 @synthesize _map;
 @synthesize regulus_id;
+@synthesize _curSecenario;
+
 
 - (void) initDat {
 
@@ -429,15 +433,23 @@
     [self presentViewController:alertController animated:true completion:nil];
 }
 
+- (void) didEndLoadingDiverValues{
+    
+    EngineerPresetScenarioViewCtrl *ctrl = [[EngineerPresetScenarioViewCtrl alloc] init];
+    ctrl._scenario = _curSecenario;
+    [self.navigationController pushViewController:ctrl animated:YES];
+    
+}
+
 -(void)handleTapGesture:(UIButton*)sender{
     
     if(sender.tag < [_scenarioArray count])
     {
         Scenario *s = [self._scenarioArray objectAtIndex:sender.tag];
-        
-        EngineerPresetScenarioViewCtrl *ctrl = [[EngineerPresetScenarioViewCtrl alloc] init];
-        ctrl._scenario = s;
-        [self.navigationController pushViewController:ctrl animated:YES];
+
+        self._curSecenario = s;
+        _curSecenario.delegate = self;
+        [_curSecenario loadDriverValues];
         
     }
     else
@@ -447,24 +459,11 @@
         {
             EngineerNewTeslariViewCtrl *ctrl = [[EngineerNewTeslariViewCtrl alloc] init];
             [self.navigationController pushViewController:ctrl animated:YES];
-
-
         }
         else
         {
-//            EngineerToUseTeslariViewCtrl *ctrl = [[EngineerToUseTeslariViewCtrl alloc] init];
-//            ctrl._meetingRoomDic = roomDic;
-//            [self.navigationController pushViewController:ctrl animated:YES];
-
             EngineerNewTeslariViewCtrl *ctrl = [[EngineerNewTeslariViewCtrl alloc] init];
-            //ctrl._selectedDevices = _selectedDevices;
             [self.navigationController pushViewController:ctrl animated:YES];
-            
-            
-            
-//            EngineerPresetScenarioViewCtrl *ctrl = [[EngineerPresetScenarioViewCtrl alloc] init];
-//            ctrl._meetingRoomDic =roomDic;
-//            [self.navigationController pushViewController:ctrl animated:YES];
 
             
         }

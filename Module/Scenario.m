@@ -86,6 +86,8 @@
 
 @synthesize _scenarioData;
 
+@synthesize delegate;
+
 - (id)init
 {
     if(self = [super init])
@@ -160,6 +162,7 @@
     _rgsSceneEvent.m_id = s_event_id;
     _rgsSceneEvent.parent_id = _rgsDriver.m_id;
     
+    
     IMP_BLOCK_SELF(Scenario);
     
     [KVNProgress show];
@@ -169,8 +172,10 @@
                                                 if ([events count]) {
                                                     
                                                     block_self._rgsSceneEvent = [events objectAtIndex:0];
-                                                    [block_self getScenceEventOperations];
+                                                    
                                                 }
+                                                
+                                                [KVNProgress dismiss];
                                             }
                                             else
                                             {
@@ -178,13 +183,22 @@
                                                 [block_self postCreateScenarioNotifyResult:NO];
                                             }
                                         }];
-    
 
+}
+
+- (void) loadDriverValues{
+    
+    
+    [self getScenceEventOperations];
 }
 
 - (void) getScenceEventOperations{
     
+    if(_rgsSceneEvent == nil)
+        return;
+    
     IMP_BLOCK_SELF(Scenario);
+    [KVNProgress show];
     [[RegulusSDK sharedRegulusSDK] GetEventOperations:_rgsSceneEvent
                                            completion:^(BOOL result, NSArray *operatins, NSError *error) {
                                                
@@ -199,7 +213,6 @@
     
     if([operatins count])
     {
-    
         NSMutableDictionary *map = [NSMutableDictionary dictionary];
         for(RgsSceneOperation *opt in operatins)
         {
@@ -220,6 +233,7 @@
         }
         
         NSArray *audios = [_scenarioData objectForKey:@"audio"];
+        [_audioDevices removeAllObjects];
         for(NSDictionary *a in audios){
             
             NSString *classname = [a objectForKey:@"class"];
@@ -230,6 +244,7 @@
             [_audioDevices addObject:obj];
         }
         NSArray *videos = [_scenarioData objectForKey:@"video"];
+        [_videoDevices removeAllObjects];
         for(NSDictionary *v in videos){
             
             NSString *classname = [v objectForKey:@"class"];
@@ -240,6 +255,7 @@
             [_videoDevices addObject:obj];
         }
         NSArray *envs = [_scenarioData objectForKey:@"environment"];
+        [_envDevices removeAllObjects];
         for(NSDictionary *env in envs){
             
             NSString *classname = [env objectForKey:@"class"];
@@ -251,7 +267,12 @@
         }
         
         
-        [self recoverDriverEvent];
+        //[self recoverDriverEvent];
+    }
+    
+    if(delegate && [delegate respondsToSelector:@selector(didEndLoadingDiverValues)])
+    {
+        [delegate didEndLoadingDiverValues];
     }
 }
 
@@ -447,9 +468,7 @@
 }
 
 - (void) syncDataFromRegulus{
-    
-    
-    
+
     if(_rgsDriver == nil)
     {
         self._rgsDriver = [[RgsDriverObj alloc] init];
@@ -466,14 +485,17 @@
     
     IMP_BLOCK_SELF(Scenario);
     
+    [KVNProgress show];
+    
     [[RegulusSDK sharedRegulusSDK] GetUserData:_rgsDriver.m_id
                                     completion:^(BOOL result, NSDictionary *data, NSError *error) {
+                                        
+                                        [KVNProgress dismiss];
                                         
                                         if(result)
                                         {
                                             [block_self recoverFromUserData:data];
                                         }
-                                        
                                     }];
 }
 

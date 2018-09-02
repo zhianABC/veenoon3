@@ -42,4 +42,7 @@
 - (NSArray*) generateEventOperation_outpus;
 - (id) generateEventOperation_gain;
 
+/////场景还原
+- (void) recoverWithDictionary:(NSArray*)datas;
+
 @end

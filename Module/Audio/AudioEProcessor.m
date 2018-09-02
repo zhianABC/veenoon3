@@ -962,12 +962,18 @@
             AudioEProcessorSignalProxy *vap = [[AudioEProcessorSignalProxy alloc] init];
             vap._rgsProxyObj = proxy;
             
+            NSArray *vals = [map objectForKey:key];
+            [vap recoverWithDictionary:vals];
+
             self._singalProxy = vap;
         }
         else if ([proxy.type isEqualToString:@"Audio AutoMix"]) {
             
             AudioEProcessorAutoMixProxy *vap = [[AudioEProcessorAutoMixProxy alloc] init];
             vap._rgsProxyObj = proxy;
+            
+            NSArray *vals = [map objectForKey:key];
+            [vap recoverWithDictionary:vals];
             
             self._autoMixProxy = vap;
         }

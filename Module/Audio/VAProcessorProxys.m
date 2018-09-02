@@ -212,7 +212,6 @@
 
 - (void) recoverWithDictionary:(NSArray*)datas
 {
-    
     for(RgsSceneDeviceOperation *dopt in datas)
     {
          _isSetOK = YES;
@@ -373,6 +372,8 @@
             {
                 NSMutableDictionary* freq = [waves16_feq_gain_q objectAtIndex:SEG];
                 
+                [freq setObject:@"1" forKey:@"is_set"];
+                
                 if([param objectForKey:@"ENABLE"])
                     [freq setObject:[param objectForKey:@"ENABLE"] forKey:@"enable"];
                 
@@ -390,10 +391,52 @@
             }
   
         }
-        
+        else if([cmd isEqualToString:@"SET_MIX_SOURCE"]){
+            
+            //缓存自定义数据
+            NSMutableDictionary *val = [NSMutableDictionary dictionary];
+            
+            NSString *src = [param objectForKey:@"SRC"];
+            
+            if([param objectForKey:@"ENABLE"])
+                [val setObject:[param objectForKey:@"ENABLE"] forKey:@"ENABLE"];
+            
+            if(src){
+                
+                [val setObject:src forKey:@"SRC"];
+                
+                [val setObject:src
+                        forKey:@"name"];
+                
+                //保存成词典
+                [_setMixSrc setObject:val forKey:src];
+            }
+ 
+        }
+        else if([cmd isEqualToString:@"SET_MIX_VALUE"])
+        {
+            //缓存自定义数据
+            NSMutableDictionary *val = [NSMutableDictionary dictionary];
+            
+            NSString *src = [param objectForKey:@"SRC"];
+            
+            if(src){
+                [val setObject:src forKey:@"SRC"];
+                
+                [val setObject:src
+                        forKey:@"name"];
+                
+                //保存成词典
+                [_setMixValue setObject:val forKey:src];
+            }
+            
+            if([param objectForKey:@"VALUE"])
+                [val setObject:[param objectForKey:@"VALUE"] forKey:@"value"];
+            
+        }
     }
-
-
+    
+    //NSLog(@"===");
 }
 
 - (NSArray*)getModeOptions{
@@ -2652,15 +2695,12 @@
                 [val setObject:@"False" forKey:@"ENABLE"];
             }
             
-            NSString *inputProxyId = [NSString stringWithFormat:@"%d", (int)proxy._rgsProxyObj.m_id];
             [val setObject:name
                     forKey:@"name"];
-            [val setObject:inputProxyId
-                    forKey:@"proxy_id"];
             
             
             //保存成词典
-            [_setMixSrc setObject:val forKey:inputProxyId];
+            [_setMixSrc setObject:val forKey:proxy._valName];
             
         }
         
@@ -2730,12 +2770,8 @@
                 
             }
             
-            /////for Save json
-            [val setObject:[NSString stringWithFormat:@"%d",
-                        (int)proxy._rgsProxyObj.m_id] forKey:@"proxy_id"];
-            
-            [_setMixValue setObject:val forKey:[NSString stringWithFormat:@"%d",
-                                                (int)proxy._rgsProxyObj.m_id]];
+
+            [_setMixValue setObject:val forKey:proxy._valName];
            
         }
         
@@ -3718,15 +3754,15 @@
         [slice setObject:cmd.name forKey:@"cmd"];
         [slice setObject:param forKey:@"param"];
         
-        NSMutableDictionary *src_map = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_MIX_SOURCE"];
-        if(src_map == nil)
-        {
-            src_map = [NSMutableDictionary dictionary];
-            [_RgsSceneDeviceOperationShadow setObject:src_map forKey:@"SET_MIX_SOURCE"];
-        }
-        
-        [src_map setObject:slice forKey:[src objectForKey:@"proxy_id"]];
-        
+//        NSMutableDictionary *src_map = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_MIX_SOURCE"];
+//        if(src_map == nil)
+//        {
+//            src_map = [NSMutableDictionary dictionary];
+//            [_RgsSceneDeviceOperationShadow setObject:src_map forKey:@"SET_MIX_SOURCE"];
+//        }
+//
+//        [src_map setObject:slice forKey:[src objectForKey:@"proxy_id"]];
+//
     
         RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
                                                                           cmd:scene_opt.cmd
@@ -3736,20 +3772,20 @@
     }
     else
     {
-        NSMutableDictionary *src_map = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_MIX_SOURCE"];
-        if(src_map)
-        {
-            NSDictionary *cmdsRev = [src_map objectForKey:[src objectForKey:@"proxy_id"]];
-            if(cmdsRev)
-            {
-                RgsSceneOperation * opt = [[RgsSceneOperation alloc]
-                                           initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
-                                           cmd:[cmdsRev objectForKey:@"cmd"]
-                                           param:[cmdsRev objectForKey:@"param"]];
-                
-                return opt;
-            }
-        }
+//        NSMutableDictionary *src_map = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_MIX_SOURCE"];
+//        if(src_map)
+//        {
+//            NSDictionary *cmdsRev = [src_map objectForKey:[src objectForKey:@"proxy_id"]];
+//            if(cmdsRev)
+//            {
+//                RgsSceneOperation * opt = [[RgsSceneOperation alloc]
+//                                           initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
+//                                           cmd:[cmdsRev objectForKey:@"cmd"]
+//                                           param:[cmdsRev objectForKey:@"param"]];
+//
+//                return opt;
+//            }
+//        }
     }
     
     return nil;
@@ -3811,15 +3847,15 @@
         [slice setObject:cmd.name forKey:@"cmd"];
         [slice setObject:param forKey:@"param"];
         
-        NSMutableDictionary *srcval_map = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_MIX_VALUE"];
-        if(srcval_map == nil)
-        {
-            srcval_map = [NSMutableDictionary dictionary];
-            [_RgsSceneDeviceOperationShadow setObject:srcval_map forKey:@"SET_MIX_VALUE"];
-        }
-        
-        [srcval_map setObject:slice forKey:[src objectForKey:@"proxy_id"]];
-        
+//        NSMutableDictionary *srcval_map = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_MIX_VALUE"];
+//        if(srcval_map == nil)
+//        {
+//            srcval_map = [NSMutableDictionary dictionary];
+//            [_RgsSceneDeviceOperationShadow setObject:srcval_map forKey:@"SET_MIX_VALUE"];
+//        }
+//
+//        [srcval_map setObject:slice forKey:[src objectForKey:@"proxy_id"]];
+//
         
         RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
                                                                           cmd:scene_opt.cmd
@@ -3829,20 +3865,20 @@
     }
     else
     {
-        NSMutableDictionary *srcval_map = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_MIX_VALUE"];
-        if(srcval_map)
-        {
-            NSDictionary *cmdsRev = [srcval_map objectForKey:[src objectForKey:@"proxy_id"]];
-            if(cmdsRev)
-            {
-                RgsSceneOperation * opt = [[RgsSceneOperation alloc]
-                                           initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
-                                           cmd:[cmdsRev objectForKey:@"cmd"]
-                                           param:[cmdsRev objectForKey:@"param"]];
-                
-                return opt;
-            }
-        }
+//        NSMutableDictionary *srcval_map = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_MIX_VALUE"];
+//        if(srcval_map)
+//        {
+//            NSDictionary *cmdsRev = [srcval_map objectForKey:[src objectForKey:@"proxy_id"]];
+//            if(cmdsRev)
+//            {
+//                RgsSceneOperation * opt = [[RgsSceneOperation alloc]
+//                                           initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
+//                                           cmd:[cmdsRev objectForKey:@"cmd"]
+//                                           param:[cmdsRev objectForKey:@"param"]];
+//
+//                return opt;
+//            }
+//        }
     }
     
     return nil;

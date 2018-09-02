@@ -8,6 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol ScenarioDelegate <NSObject>
+
+@optional
+- (void) didEndLoadingDiverValues;
+
+@end
+
 @class RgsSceneOperation;
 @class RgsSceneObj;
 
@@ -27,6 +34,8 @@
 //<RgsSceneOperation> -- 参见Regulus SDK里的对象说明
 @property (nonatomic, strong) NSMutableArray *_eventOperations;
 
+@property (nonatomic, weak) id <ScenarioDelegate> delegate;
+
 
 - (void) addEventOperation:(RgsSceneOperation*)rgsSceneOp;
 
@@ -44,6 +53,8 @@
 - (NSString *)name;
 
 - (void) syncDataFromRegulus;
+- (void) loadDriverValues;
+
 - (void) uploadToRegulusCenter;
 
 

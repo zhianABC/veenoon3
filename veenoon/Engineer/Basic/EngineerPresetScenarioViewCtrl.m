@@ -312,7 +312,6 @@
     if(_isEditingScenario)
     {
         [scenarioButton setTitle:@"保存场景" forState:UIControlStateNormal];
-        
         [self recoverScrollThumbCells];
     }
     else
@@ -467,7 +466,7 @@
     
     int x = audioStartX;
     
-    UIImageView *smicon = [[UIImageView alloc] initWithFrame:CGRectMake(30,
+    UIImageView *smicon = [[UIImageView alloc] initWithFrame:CGRectMake(25,
                                                                         _yVal,
                                                                         30,
                                                                         30)];

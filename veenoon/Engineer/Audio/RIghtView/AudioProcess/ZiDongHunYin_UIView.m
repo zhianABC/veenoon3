@@ -90,7 +90,6 @@
     labelL1.clipsToBounds=YES;
     
     [self createInPutComps];
-    
     [self createOutPutComps];
 }
 
@@ -145,7 +144,11 @@
         btn.layer.cornerRadius = 5;
         btn.titleLabel.font = [UIFont systemFontOfSize:15];
         //[btn setTitle:vProxy._rgsProxyObj.name forState:UIControlStateNormal];
-        [btn setTitle:[NSString stringWithFormat:@"In %d", i+1]
+        
+        NSString *name = [NSString stringWithFormat:@"In %d", i+1];
+        NSString *valName = [NSString stringWithFormat:@"In%d", i+1];
+        
+        [btn setTitle:name
              forState:UIControlStateNormal];
         btn.tag = i;
         [self addSubview:btn];
@@ -159,6 +162,11 @@
         x+=spx;
         
         [inputChanels addObject:btn];
+        
+        if([_currentProxy._inputMap objectForKey:valName])
+        {
+            [self changeInputButtonState:btn];
+        }
     }
     
 }
@@ -192,8 +200,10 @@
     
 }
 
-- (void) inputChanelBtnAction:(UIButton*) sender {
+- (BOOL) changeInputButtonState:(UIButton*)sender{
+    
     int btnIndex = (int) sender.tag;
+    BOOL isEnable = NO;
     
     UIButton *selectedBtn = nil;
     for (UIButton *btn in inputSelectedBtns) {
@@ -202,7 +212,6 @@
             break;
         }
     }
-    BOOL isEnable;
     if (selectedBtn) {
         [selectedBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [selectedBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
@@ -216,9 +225,18 @@
         isEnable = YES;
     }
     
+    return isEnable;
+}
+
+- (void) inputChanelBtnAction:(UIButton*) sender {
+    
+    BOOL isEnable = [self changeInputButtonState:sender];
+    
     NSString *proxyName = sender.titleLabel.text;
     
-    [_currentProxy controlZidongHunyinBtn:proxyName withType:0 withState:isEnable];
+    [_currentProxy controlZidongHunyinBtn:proxyName
+                                 withType:0
+                                withState:isEnable];
 }
 
 - (void) createOutPutComps {
@@ -258,7 +276,8 @@
         spx = 10;
     for(int i = 0; i < num; i++)
     {
-        //VAProcessorProxys *vProxy = [self._currentAodio._outAudioProxys objectAtIndex:i];
+        NSString *name = [NSString stringWithFormat:@"Out %d", i+1];
+        NSString *valName = [NSString stringWithFormat:@"Out%d", i+1];
         
         UIButton *btn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:nil];
         btn.frame = CGRectMake(x, y, 50, 50);
@@ -267,7 +286,7 @@
         btn.titleLabel.font = [UIFont systemFontOfSize:15];
         //[btn setTitle:vProxy._rgsProxyObj.name forState:UIControlStateNormal];
         
-        [btn setTitle:[NSString stringWithFormat:@"Out %d", i+1]
+        [btn setTitle:name
              forState:UIControlStateNormal];
         
         btn.tag = i;
@@ -283,10 +302,16 @@
         x+=spx;
         
         [outputChanels addObject:btn];
+        
+        if([_currentProxy._outputMap objectForKey:valName])
+        {
+            [self changeOutputButtonState:btn];
+        }
     }
 }
 
-- (void) outputChanelBtnAction:(UIButton*) sender {
+- (BOOL) changeOutputButtonState:(UIButton*)sender{
+
     int btnIndex = (int) sender.tag;
     
     UIButton *selectedBtn = nil;
@@ -296,7 +321,7 @@
             break;
         }
     }
-    BOOL isEnable;
+    BOOL isEnable = NO;
     if (selectedBtn) {
         [selectedBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [selectedBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
@@ -311,17 +336,25 @@
         isEnable = YES;
     }
     
+    return isEnable;
+}
+
+- (void) outputChanelBtnAction:(UIButton*) sender {
+    
+    BOOL isEnable = [self changeOutputButtonState:sender];
+    
     NSString *proxyName = sender.titleLabel.text;
     
-    [_currentProxy controlZidongHunyinBtn:proxyName withType:1 withState:isEnable];
+    [_currentProxy controlZidongHunyinBtn:proxyName
+                                 withType:1
+                                withState:isEnable];
 }
 
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn {
+    
     float k = roundf((value *(valueMax-valueMin)) + valueMin);
     NSString *valueStr= [NSString stringWithFormat:@"%.f dB", k];
-    
     labelL1.text = valueStr;
-    
     [_currentProxy controlZiDongHunYinZengYi:[NSString stringWithFormat:@"%f", k]];
 }
 

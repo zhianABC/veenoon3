@@ -17,7 +17,7 @@
 #import "MeetingRoom.h"
 #import "AutoRunViewController.h"
 
-@interface UserMeetingRoomConfig () {
+@interface UserMeetingRoomConfig () <ScenarioDelegate>{
 
     UIButton *_trainingBtn;
     UIButton *_envirementControlBtn;
@@ -36,6 +36,7 @@
 
 @property (nonatomic, strong) UIImage *_nor_image;
 @property (nonatomic, strong) UIImage *_sel_image;
+@property (nonatomic, strong) Scenario *_curSecenario;
 
 
 @end
@@ -50,6 +51,7 @@
 
 @synthesize _nor_image;
 @synthesize _sel_image;
+@synthesize _curSecenario;
 
 
 - (void)viewDidLoad {
@@ -286,35 +288,32 @@
 }
 
 - (void) checkSceneDriver:(NSArray*)scenes{
-    
-    NSString* regulus_id = _currentRoom.regulus_id;
-    
-    NSArray* savedScenarios = [[DataBase sharedDatabaseInstance] getSavedScenario:regulus_id];
+
+    NSArray* savedScenarios = [[DataBase sharedDatabaseInstance]
+                               getSavedScenario:_regulus_gateway_id];
     
     NSMutableDictionary *map = [NSMutableDictionary dictionary];
-    for(NSMutableDictionary *senario in savedScenarios)
+    for(NSDictionary *senario in savedScenarios)
     {
         int s_driver_id = [[senario objectForKey:@"s_driver_id"] intValue];
         [map setObject:senario forKey:[NSNumber numberWithInt:s_driver_id]];
     }
     
-    
-    
+  
     for(RgsSceneObj *dr in scenes)
     {
         id key = [NSNumber numberWithInt:(int)dr.m_id];
         
+        Scenario *s = [[Scenario alloc] init];
         if([map objectForKey:key])
         {
-            Scenario *s = [[Scenario alloc] init];
-            [s fillWithData:[map objectForKey:key]];
-            s._rgsSceneObj = dr;
-            
-            
-            [_sceneDrivers addObject:s];
+            [s prepareDataForUploadCloud:[map objectForKey:key]];
         }
+        
+        s._rgsSceneObj = dr;
+        [s syncDataFromRegulus];
+        [_sceneDrivers addObject:s];
     }
-    
     
     [KVNProgress dismiss];
     
@@ -323,21 +322,7 @@
 
 
 - (void) layoutScenarios{
-    
-//    self.scens = @[@{@"icon_nor":@"user_training_n.png",@"icon_sel":@"user_training_s.png",
-//                     @"title":@"专业培训",@"title_en":@"Training"},
-//                   @{@"icon_nor":@"envirement_control_n.png",@"icon_sel":@"envirement_control_s.png",
-//                     @"title":@"环境控制",@"title_en":@"Environmental control"},
-//                   @{@"icon_nor":@"guest_reception_n.png",@"icon_sel":@"guest_reception_s.png",
-//                     @"title":@"宾客接待",@"title_en":@"Guests reception"},
-//                   @{@"icon_nor":@"envirement_light_n.png",@"icon_sel":@"envirement_light_s.png",
-//                     @"title":@"环境照明",@"title_en":@"Ambient lighting"},
-//                   @{@"icon_nor":@"meeting_discuss_n.png",@"icon_sel":@"meeting_discuss_s.png",
-//                     @"title":@"讨论会议",@"title_en":@"Meeting"},
-//                   @{@"icon_nor":@"close_system_n.png",@"icon_sel":@"close_system_s.png",
-//                     @"title":@"离开会场",@"title_en":@"Close system"}];
-//
-    
+
     
     int ox = (SCREEN_WIDTH - 420*2 - 20)/2 - 20;
     int y = 0;
@@ -428,12 +413,20 @@
         UILongPressGestureRecognizer *viewRecognizer = (UILongPressGestureRecognizer*) sender;
         int index = (int)viewRecognizer.view.tag;
         
-        Scenario *scen = [_sceneDrivers objectAtIndex:index];
+        self._curSecenario = [_sceneDrivers objectAtIndex:index];
+        _curSecenario.delegate = self;
+        [_curSecenario loadDriverValues];
         
-        UserScnarioConfigViewController *invitation = [[UserScnarioConfigViewController alloc] init];
-        invitation._data = scen;
-        [self.navigationController pushViewController:invitation animated:YES];
+        
     }
+}
+
+- (void) didEndLoadingDiverValues{
+    
+    UserScnarioConfigViewController *invitation = [[UserScnarioConfigViewController alloc] init];
+    invitation._data = _curSecenario;
+    [self.navigationController pushViewController:invitation animated:YES];
+    
 }
 
 - (void) userTrainingAction:(UIButton*)sender{

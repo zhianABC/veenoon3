@@ -43,7 +43,7 @@
     return self;
 }
 
-- (void) layoutChannelBtns:(int)num{
+- (void) layoutChannelBtns:(int)num selectedIndex:(int)selectedIndex{
     
     if(_channelBtns && [_channelBtns count])
     {
@@ -69,16 +69,9 @@
         btn.tag = i;
         [self addSubview:btn];
         
-        if(i == 0)
-        {
-            [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
-            [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
-        }
-        else
-        {
-            [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
-        }
+        [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
+
         
         [btn addTarget:self
                 action:@selector(channelBtnAction:)
@@ -95,8 +88,8 @@
         
     }
     
-    if([_channelBtns count])
-        [self channelBtnAction:[_channelBtns objectAtIndex:0]];
+    if(selectedIndex >= 0 && selectedIndex < [_channelBtns count])
+        [self channelBtnAction:[_channelBtns objectAtIndex:selectedIndex]];
     
 }
 

@@ -143,7 +143,7 @@
     }
     
     NSString *pinlvDB = [_currentSignalProxy getXinhaofashengPinlv];
-    float value2 = [pinlvDB floatValue];
+    int value2 = [pinlvDB intValue];
     float max2 = (maxRate - minRate);
     if(max2)
     {
@@ -153,7 +153,7 @@
     }
     
     if (pinlvDB) {
-        zhengxuanboL.text = [pinlvDB stringByAppendingString:@" Hz"];
+        zhengxuanboL.text = [NSString stringWithFormat:@"%d Hz", value2];
     }
     
     NSString *zhengxuan = [_currentSignalProxy getXinhaofashengZhengXuan];
@@ -168,6 +168,36 @@
     else
     {
         [xinhaoMuteBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
+    }
+    
+    if([_currentSignalProxy._xinhaofashengOutputChanels count])
+    {
+        for(int idx = 0; idx < [_channelBtns count]; idx++)
+        {
+            int tag = idx+1;
+            
+            UIButton *btn = [_channelBtns objectAtIndex:idx];
+            
+            NSString *valName = [NSString stringWithFormat:@"Out%d", tag];
+            
+            BOOL isEnable = NO;
+            
+            id state = [_currentSignalProxy._xinhaofashengOutputChanels objectForKey:valName];
+            if(state){
+                isEnable = [state boolValue];
+            }
+            
+            if(isEnable)
+            {
+                [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+                [btn changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
+            }
+            else
+            {
+                [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                [btn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
+            }
+        }
     }
 }
 - (void) contentViewComps{
@@ -192,7 +222,7 @@
     xinhaoPinlvSlider.tag = 3;
     [self addSubview:xinhaoPinlvSlider];
     
-    zhengxuanboL = [[UILabel alloc] initWithFrame:CGRectMake(btnX+30, 135+110+topY, 60, 20)];
+    zhengxuanboL = [[UILabel alloc] initWithFrame:CGRectMake(btnX+30-10, 135+110+topY, 80, 20)];
     zhengxuanboL.text = @"0";
     zhengxuanboL.textAlignment = NSTextAlignmentCenter;
     [self addSubview:zhengxuanboL];
@@ -271,90 +301,36 @@
     
     int idx = (int)sender.tag;
     int tag = idx+1;
-    [channelBtn setTitle:[NSString stringWithFormat:@"Out %d", tag] forState:UIControlStateNormal];
     
-    for(UIButton * btn in _channelBtns)
-    {
-        if(btn == sender)
-        {
-            [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
-            [btn changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
-        }
-        else
-        {
-            [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            [btn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
-        }
+    NSString *show = [NSString stringWithFormat:@"Out %d", tag];
+    NSString *valName = [NSString stringWithFormat:@"Out%d", tag];
+    
+    [channelBtn setTitle:show forState:UIControlStateNormal];
+    
+    BOOL isEnable = NO;
+    
+    id state = [_currentSignalProxy._xinhaofashengOutputChanels objectForKey:valName];
+    if(state){
+       isEnable = [state boolValue];
     }
     
+    isEnable = !isEnable;
     
-    [self updateProxyCommandValIsLoaded];
+    [_currentSignalProxy controlSignalWithOutState:valName
+                                         withState:isEnable];
+    
+    if(isEnable)
+    {
+        [sender setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+        [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
+    }
+    else
+    {
+        [sender setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [sender changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
+    }
+
 }
-
-
-- (void) createOutPutComps {
-    
-    UILabel *labelL = [[UILabel alloc] initWithFrame:CGRectMake(0, 320, 220, 120)];
-    labelL.textAlignment = NSTextAlignmentLeft;
-//    [self addSubview:labelL];
-    labelL.font = [UIFont systemFontOfSize:13];
-    labelL.textColor = NEW_ER_BUTTON_SD_COLOR;
-    
-    labelL.text = @"输出通道";
-    
-    int num = (int) [self._currentAudio._outAudioProxys count];
-    if (num <= 0) {
-        return;
-    }
-    
-    if(outputChanels && [outputChanels count])
-    {
-        [outputChanels makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    }
-    
-    outputChanels = [NSMutableArray array];
-    
-    if(outputSelectedBtns && [outputSelectedBtns count])
-    {
-        [outputSelectedBtns makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    }
-    
-    outputSelectedBtns = [NSMutableArray array];
-    
-    float x = 0;
-    int y = CGRectGetHeight(self.frame)-80;
-    
-    float spx = (CGRectGetWidth(self.frame) - num*50.0)/(num-1);
-    if(spx > 10)
-        spx = 10;
-    for(int i = 0; i < num; i++)
-    {
-        //VAProcessorProxys *vProxy = [self._currentAudio._outAudioProxys objectAtIndex:i];
-        
-        UIButton *btn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
-        btn.frame = CGRectMake(x, y, 50, 50);
-        btn.clipsToBounds = YES;
-        btn.layer.cornerRadius = 5;
-        btn.titleLabel.font = [UIFont systemFontOfSize:15];
-        //[btn setTitle:vProxy._rgsProxyObj.name forState:UIControlStateNormal];
-        [btn setTitle:[NSString stringWithFormat:@"Out %d", i+1]
-             forState:UIControlStateNormal];
-        btn.tag = i;
-        [self addSubview:btn];
-        
-        [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
-        
-        [btn addTarget:self
-                action:@selector(outputChanelBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-        
-        x+=50;
-        x+=spx;
-        
-        [outputChanels addObject:btn];
-    }
-}
-
 
 - (void) outputChanelBtnAction:(UIButton*) sender {
     int btnIndex = (int) sender.tag;
@@ -366,7 +342,7 @@
             break;
         }
     }
-    BOOL isEnable;
+    BOOL isEnable = NO;
     if (selectedBtn) {
         [selectedBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [selectedBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
@@ -383,7 +359,8 @@
     
     NSString *proxyName = sender.titleLabel.text;
     
-    [_currentSignalProxy controlSignalWithOutState:proxyName withState:isEnable];
+    [_currentSignalProxy controlSignalWithOutState:proxyName
+                                         withState:isEnable];
 }
 
 

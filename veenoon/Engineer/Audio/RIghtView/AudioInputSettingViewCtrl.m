@@ -220,25 +220,25 @@
     zengyiView.hidden = NO;
     [zengyiView updateProxyCommandValIsLoaded];
     zengyiView._proxys = _processor._inAudioProxys;
-    [zengyiView layoutChannelBtns:numProxys];
+    [zengyiView layoutChannelBtns:numProxys selectedIndex:0];
 
     zaoshengView = [[ZaoShengMen_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._inAudioProxys];
     [self.view addSubview:zaoshengView];
     zaoshengView.hidden = YES;
     zaoshengView._proxys = _processor._inAudioProxys;
-    [zaoshengView layoutChannelBtns:numProxys];
+    [zaoshengView layoutChannelBtns:numProxys selectedIndex:0];
     
     yanshiView = [[YanShiQi_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._inAudioProxys];
     [self.view addSubview:yanshiView];
     yanshiView.hidden = YES;
     yanshiView._proxys = _processor._inAudioProxys;
-    [yanshiView layoutChannelBtns:numProxys];
+    [yanshiView layoutChannelBtns:numProxys selectedIndex:0];
     
     lvbo = [[LvBoJunHeng_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._inAudioProxys];
     [self.view addSubview:lvbo];
     lvbo.hidden = YES;
     lvbo._proxys = _processor._inAudioProxys;
-    [lvbo layoutChannelBtns:numProxys];
+    [lvbo layoutChannelBtns:numProxys selectedIndex:0];
     
     huishengView = [[HuiShengXiaoChu_UIView alloc] initWithFrameProxys:vrc withProxys:_processor];
     huishengView.delegate_ = self;
@@ -249,7 +249,7 @@
     [self.view addSubview:yxq];
     yxq.hidden = YES;
     yxq._proxys = _processor._inAudioProxys;
-    [yxq layoutChannelBtns:numProxys];
+    [yxq layoutChannelBtns:numProxys selectedIndex:0];
     
     zidonghunyinView = [[ZiDongHunYin_UIView alloc] initWithFrameProxy:vrc withAudio:_processor withProxy:_processor._autoMixProxy];
     [self.view addSubview:zidonghunyinView];
@@ -259,7 +259,7 @@
     [self.view addSubview:fankuiyizhiView];
     fankuiyizhiView.hidden = YES;
     
-    [fankuiyizhiView layoutChannelBtns:numProxys];
+    [fankuiyizhiView layoutChannelBtns:numProxys selectedIndex:0];
     
     self._curSelectBtn = zengyiBtn;
     [zengyiBtn changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
