@@ -426,10 +426,13 @@
     _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
     _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
     
-    [_brandPicker selectRow:0
-                inComponent:0];
-    [_productCategoryPicker selectRow:0
-                          inComponent:0];
+    if([_currentBrands count])
+        [_brandPicker selectRow:0 inComponent:0];
+    
+    
+    if([_currentTypes count])
+        [_productCategoryPicker selectRow:0 inComponent:0];
+
 
     
 }
@@ -476,8 +479,13 @@
     _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
     _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
     
-    [_brandPicker selectRow:0 inComponent:0];
-    [_productCategoryPicker selectRow:0 inComponent:0];
+    
+    if([_currentBrands count])
+        [_brandPicker selectRow:0 inComponent:0];
+    
+    
+    if([_currentTypes count])
+        [_productCategoryPicker selectRow:0 inComponent:0];
 
 }
 - (void) diandongmadaAction:(id)sender{
@@ -523,8 +531,13 @@
     _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
     _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
     
-    [_brandPicker selectRow:0 inComponent:0];
-    [_productCategoryPicker selectRow:0 inComponent:0];
+    if([_currentBrands count])
+        [_brandPicker selectRow:0 inComponent:0];
+    
+    
+    if([_currentTypes count])
+        [_productCategoryPicker selectRow:0 inComponent:0];
+
 }
 - (void) xinfengAction:(id)sender{
     [_zhaomingBtn setBtnHighlited:NO];

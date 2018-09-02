@@ -1023,7 +1023,7 @@ class FilterGraphView: UIView {
     }
     
     // 外部接口函数：设置PEQ
-    func setPEQ(band: UInt8, byp: Bool, type: UInt8, freq: Float, gain: Float, Q: Float) {
+    @objc func setPEQ(band: UInt8, byp: Bool, type: UInt8, freq: Float, gain: Float, Q: Float, show: Bool) {
         eq_byp[Int(band)] = byp
         eq_type[Int(band)] = type
         eq_freq[Int(band)] = freq
@@ -1033,8 +1033,17 @@ class FilterGraphView: UIView {
         } else {
             eq_Q[Int(band)] = 0.71
         }
+        
+        if show {
+            updateCurve()
+        }
+    }
+    
+    @objc func refreshUI ()
+    {
         updateCurve()
     }
+    
     @objc func setPEQ(band: UInt8, byp: Bool) {
         eq_byp[Int(band)] = byp
         updateCurve()

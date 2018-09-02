@@ -38,6 +38,7 @@
 //<VAProcessorProxys>
 @property (nonatomic, strong) NSMutableArray *_outAudioProxys;
 
+
 - (void) checkRgsProxyCommandLoad;
 
 - (NSMutableDictionary *)inputChannelAtIndex:(int)index;

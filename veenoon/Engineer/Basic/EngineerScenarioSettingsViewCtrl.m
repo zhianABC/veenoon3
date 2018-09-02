@@ -235,9 +235,9 @@
         if([map objectForKey:key])
         {
             Scenario *s = [[Scenario alloc] init];
-            [s fillWithData:[map objectForKey:key]];
+            [s prepareDataForUploadCloud:[map objectForKey:key]];
             s._rgsSceneObj = dr;
-            
+            [s syncDataFromRegulus];
             [_scenarioArray addObject:s];
         }
     }

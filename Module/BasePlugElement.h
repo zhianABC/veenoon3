@@ -74,4 +74,7 @@
 - (NSDictionary *)objectToJson;
 - (void) jsonToObject:(NSDictionary*)json;
 
+- (NSDictionary *)userData;
+- (void) createByUserData:(NSDictionary*)userdata withMap:(NSDictionary*)valMap;
+
 @end

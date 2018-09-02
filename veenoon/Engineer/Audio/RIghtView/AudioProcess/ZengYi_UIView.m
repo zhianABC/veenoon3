@@ -51,17 +51,18 @@
 
 - (id)initWithFrame:(CGRect)frame withProxy:(NSArray *)proxys
 {
-    self._proxys = proxys;
-    
-    if ([self._proxys count]) {
-        self._curProxy = [self._proxys objectAtIndex:0];
-    }
-    
     if(self = [super initWithFrame:frame])
     {
+        self._proxys = proxys;
+        
+        if ([self._proxys count]) {
+            self._curProxy = [self._proxys objectAtIndex:0];
+        }
+        
         channelBtn = [UIButton buttonWithColor:nil selColor:nil];
         channelBtn.frame = CGRectMake(0, 50, 300, 36);
         channelBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+
         channelBtn.clipsToBounds = YES;
         channelBtn.layer.cornerRadius = 5;
         channelBtn.titleLabel.font = [UIFont systemFontOfSize:15];

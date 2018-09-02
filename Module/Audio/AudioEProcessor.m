@@ -25,6 +25,7 @@
 
 @property (nonatomic, strong) NSMutableDictionary *_RgsSceneDeviceOperationShadow;
 
+@property (nonatomic, strong) NSMutableDictionary *config;
 
 @end
 
@@ -45,6 +46,8 @@
 @synthesize _outchannels;
 
 @synthesize _RgsSceneDeviceOperationShadow;
+
+@synthesize config;
 
 - (id) init
 {
@@ -278,6 +281,148 @@
     }
 }
 
+- (void) prepareAllAudioInCmds
+{
+    
+    if([_inAudioProxys count])
+    {
+        NSMutableArray *proxyids = [NSMutableArray array];
+        //只读取一个，因为所有的Channel的commands相同
+        VAProcessorProxys *vap = [_inAudioProxys objectAtIndex:0];
+        [proxyids addObject:[NSNumber numberWithInt:(int)vap._rgsProxyObj.m_id]];
+    
+        IMP_BLOCK_SELF(AudioEProcessor);
+        
+        [[RegulusSDK sharedRegulusSDK] GetProxyCommandDict:proxyids
+                                                completion:^(BOOL result, NSDictionary *commd_dict, NSError *error) {
+                                                    
+                                                    [block_self loadAudioInCommands:commd_dict];
+                                                    
+                                                }];
+    }
+    
+}
+
+- (void) loadAudioInCommands:(NSDictionary*)commd_dict{
+    
+    NSMutableArray *audio_channels = _inAudioProxys;
+    
+    if([[commd_dict allValues] count])
+    {
+        NSArray *cmds = [[commd_dict allValues] objectAtIndex:0];
+        
+        for(VAProcessorProxys *vap in audio_channels)
+        {
+            [vap prepareLoadCommand:cmds];
+        }
+    }
+
+}
+
+- (void) prepareAllAudioOutCmds{
+    
+    if([_outAudioProxys count])
+    {
+        NSMutableArray *proxyids = [NSMutableArray array];
+        //只读取一个，因为所有的Channel的commands相同
+        VAProcessorProxys *vap = [_outAudioProxys objectAtIndex:0];
+        [proxyids addObject:[NSNumber numberWithInt:vap._rgsProxyObj.m_id]];
+        
+        IMP_BLOCK_SELF(AudioEProcessor);
+        
+        [[RegulusSDK sharedRegulusSDK] GetProxyCommandDict:proxyids
+                                                completion:^(BOOL result, NSDictionary *commd_dict, NSError *error) {
+                                                    
+                                                    [block_self loadAudioOutCommands:commd_dict];
+                                                    
+                                                }];
+    }
+}
+
+- (void) loadAudioOutCommands:(NSDictionary*)commd_dict{
+    
+    NSMutableArray *audio_channels = _outAudioProxys;
+    
+    if([[commd_dict allValues] count])
+    {
+        NSArray *cmds = [[commd_dict allValues] objectAtIndex:0];
+        
+        for(VAProcessorProxys *vap in audio_channels)
+        {
+            [vap prepareLoadCommand:cmds];
+        }
+    }
+    
+}
+
+//回声消除
+- (id) generateEventOperation_echo{
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"ECHO_CANCLE"];
+    if(cmd)
+    {
+        NSString* tureOrFalse = @"False";
+        if(_isHuiShengXiaoChu)
+        {
+            tureOrFalse = @"True";
+        }
+        else
+        {
+            tureOrFalse = @"False";
+        }
+        
+        
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        
+        for( RgsCommandParamInfo * param_info in cmd.params)
+        {
+            if([param_info.name isEqualToString:@"ENABLE"])
+            {
+                [param setObject:tureOrFalse
+                          forKey:param_info.name];
+            }
+        }
+        
+        int proxyid = (int)((RgsDriverObj*) _driver).m_id;
+        
+        RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc] init];
+        scene_opt.dev_id = proxyid;
+        scene_opt.cmd = cmd.name;
+        scene_opt.param = param;
+        
+        //用于保存还原
+        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
+        [slice setObject:[NSNumber numberWithInteger:proxyid] forKey:@"dev_id"];
+        [slice setObject:cmd.name forKey:@"cmd"];
+        [slice setObject:param forKey:@"param"];
+        [_RgsSceneDeviceOperationShadow setObject:slice forKey:@"ECHO_CANCLE"];
+        
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
+                                                                          cmd:scene_opt.cmd
+                                                                        param:scene_opt.param];
+        
+        return opt;
+    }
+    else
+    {
+        NSDictionary *cmdsRev = [_RgsSceneDeviceOperationShadow objectForKey:@"ECHO_CANCLE"];
+        if(cmdsRev)
+        {
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc]
+                                       initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
+                                       cmd:[cmdsRev objectForKey:@"cmd"]
+                                       param:[cmdsRev objectForKey:@"param"]];
+            
+            return opt;
+        }
+    }
+    
+    return nil;
+}
+
+
+
 - (NSDictionary *)objectToJson{
     
     NSMutableDictionary *allData = [NSMutableDictionary dictionary];
@@ -328,7 +473,7 @@
             [allData setObject:dr.name forKey:@"driver_name"];
         }
     }
-
+    
     if(_inAudioProxys)
     {
         NSMutableArray *proxys = [NSMutableArray array];
@@ -426,7 +571,7 @@
         }
         
         [allData setObject:proxys forKey:@"in_audio_proxys"];
-       
+        
     }
     
     if(_outAudioProxys)
@@ -546,7 +691,7 @@
         self._comIdx = [[json objectForKey:@"com"] intValue];
     
     self._index = [[json objectForKey:@"index"] intValue];
-  
+    
     RgsDriverInfo *drinfo = [[RgsDriverInfo alloc] init];
     drinfo.serial = [json objectForKey:@"driver_info_uuid"];
     self._driverInfo = drinfo;
@@ -689,150 +834,146 @@
         [vap recoverWithDictionary:dic];
         [_outAudioProxys addObject:vap];
     }
-
+    
     //Echo
     //反馈抑制
     
 }
 
-- (void) prepareAllAudioInCmds
-{
+- (NSDictionary *)userData{
     
-    if([_inAudioProxys count])
+    self.config = [NSMutableDictionary dictionary];
+    [config setValue:[NSString stringWithFormat:@"%@", [self class]] forKey:@"class"];
+    if(_driver)
     {
-        NSMutableArray *proxyids = [NSMutableArray array];
-        //只读取一个，因为所有的Channel的commands相同
-        VAProcessorProxys *vap = [_inAudioProxys objectAtIndex:0];
-        [proxyids addObject:[NSNumber numberWithInt:(int)vap._rgsProxyObj.m_id]];
-    
-        IMP_BLOCK_SELF(AudioEProcessor);
-        
-        [[RegulusSDK sharedRegulusSDK] GetProxyCommandDict:proxyids
-                                                completion:^(BOOL result, NSDictionary *commd_dict, NSError *error) {
-                                                    
-                                                    [block_self loadAudioInCommands:commd_dict];
-                                                    
-                                                }];
+        RgsDriverObj *dr = _driver;
+        [config setObject:[NSNumber numberWithInteger:dr.m_id] forKey:@"driver_id"];
     }
     
-}
-
-- (void) loadAudioInCommands:(NSDictionary*)commd_dict{
-    
-    NSMutableArray *audio_channels = _inAudioProxys;
-    
-    if([[commd_dict allValues] count])
+    if(_inAudioProxys)
     {
-        NSArray *cmds = [[commd_dict allValues] objectAtIndex:0];
+        NSMutableDictionary *proxysMapRef = [NSMutableDictionary dictionary];
         
-        for(VAProcessorProxys *vap in audio_channels)
+        for(VAProcessorProxys *vap in _inAudioProxys)
         {
-            [vap prepareLoadCommand:cmds];
-        }
-    }
-
-}
-
-- (void) prepareAllAudioOutCmds{
-    
-    if([_outAudioProxys count])
-    {
-        NSMutableArray *proxyids = [NSMutableArray array];
-        //只读取一个，因为所有的Channel的commands相同
-        VAProcessorProxys *vap = [_outAudioProxys objectAtIndex:0];
-        [proxyids addObject:[NSNumber numberWithInt:vap._rgsProxyObj.m_id]];
-        
-        IMP_BLOCK_SELF(AudioEProcessor);
-        
-        [[RegulusSDK sharedRegulusSDK] GetProxyCommandDict:proxyids
-                                                completion:^(BOOL result, NSDictionary *commd_dict, NSError *error) {
-                                                    
-                                                    [block_self loadAudioOutCommands:commd_dict];
-                                                    
-                                                }];
-    }
-}
-
-- (void) loadAudioOutCommands:(NSDictionary*)commd_dict{
-    
-    NSMutableArray *audio_channels = _outAudioProxys;
-    
-    if([[commd_dict allValues] count])
-    {
-        NSArray *cmds = [[commd_dict allValues] objectAtIndex:0];
-        
-        for(VAProcessorProxys *vap in audio_channels)
-        {
-            [vap prepareLoadCommand:cmds];
-        }
-    }
-    
-}
-
-//回声消除
-- (id) generateEventOperation_echo{
-    
-    RgsCommandInfo *cmd = nil;
-    cmd = [_cmdMap objectForKey:@"ECHO_CANCLE"];
-    if(cmd)
-    {
-        NSString* tureOrFalse = @"False";
-        if(_isHuiShengXiaoChu)
-        {
-            tureOrFalse = @"True";
-        }
-        else
-        {
-            tureOrFalse = @"False";
-        }
-        
-        
-        NSMutableDictionary * param = [NSMutableDictionary dictionary];
-        
-        for( RgsCommandParamInfo * param_info in cmd.params)
-        {
-            if([param_info.name isEqualToString:@"ENABLE"])
+            RgsProxyObj *proxy = vap._rgsProxyObj;
+            if(vap._icon_name && vap._voiceInDevice)
             {
-                [param setObject:tureOrFalse
-                          forKey:param_info.name];
+                NSMutableDictionary *proxyDic = [NSMutableDictionary dictionary];
+                [proxyDic setObject:vap._icon_name
+                             forKey:@"icon_name"];
+                
+                [proxyDic setObject:vap._voiceInDevice
+                             forKey:@"voiceInDevice"];
+                //增益
+                [proxysMapRef setObject:proxyDic
+                             forKey:[NSString stringWithFormat:@"%d",proxy.m_id]];
             }
         }
         
-        int proxyid = (int)((RgsDriverObj*) _driver).m_id;
-        
-        RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc] init];
-        scene_opt.dev_id = proxyid;
-        scene_opt.cmd = cmd.name;
-        scene_opt.param = param;
-        
-        //用于保存还原
-        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
-        [slice setObject:[NSNumber numberWithInteger:proxyid] forKey:@"dev_id"];
-        [slice setObject:cmd.name forKey:@"cmd"];
-        [slice setObject:param forKey:@"param"];
-        [_RgsSceneDeviceOperationShadow setObject:slice forKey:@"ECHO_CANCLE"];
-        
-        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
-                                                                          cmd:scene_opt.cmd
-                                                                        param:scene_opt.param];
-        
-        return opt;
+        if([proxysMapRef count])
+            [config setObject:proxysMapRef forKey:@"in_audio_proxys"];
     }
-    else
+    
+    return config;
+}
+
+
+
+- (void) createByUserData:(NSDictionary*)userdata withMap:(NSDictionary*)valMap{
+    
+    self.config = [NSMutableDictionary dictionaryWithDictionary:userdata];
+    [config setObject:valMap forKey:@"opt_value_map"];
+    
+    int driver_id = [[config objectForKey:@"driver_id"] intValue];
+    
+    IMP_BLOCK_SELF(AudioEProcessor);
+    [[RegulusSDK sharedRegulusSDK] GetRgsObjectByID:driver_id
+                                         completion:^(BOOL result, id RgsObject, NSError *error) {
+                                             
+                                             if(result)
+                                             {
+                                                 [block_self successGotDriver:RgsObject];
+                                             }
+                                         }];
+}
+
+- (void) successGotDriver:(RgsDriverObj*)rgsd{
+    
+    self._driver = rgsd;
+    self._driverInfo = rgsd.info;
+ 
+    IMP_BLOCK_SELF(AudioEProcessor);
+    [[RegulusSDK sharedRegulusSDK] GetDriverProxys:rgsd.m_id
+                                        completion:^(BOOL result, NSArray *proxys, NSError *error) {
+        if (result) {
+            if ([proxys count]) {
+                [block_self prepareInOutChannels:proxys];
+            }
+        }
+        
+    }];
+}
+
+- (void) prepareInOutChannels:(NSArray*)proxys{
+    
+    self._inAudioProxys = [NSMutableArray array];
+    self._outAudioProxys = [NSMutableArray array];
+    
+    NSDictionary *mapRef = [config objectForKey:@"in_audio_proxys"];
+    
+    NSDictionary *map = [config objectForKey:@"opt_value_map"];
+
+    for(RgsProxyObj *proxy in proxys)
     {
-        NSDictionary *cmdsRev = [_RgsSceneDeviceOperationShadow objectForKey:@"ECHO_CANCLE"];
-        if(cmdsRev)
+        
+        id key = [NSString stringWithFormat:@"%d", (int)proxy.m_id];
+        
+        if([proxy.type isEqualToString:@"Audio In"])
         {
-            RgsSceneOperation * opt = [[RgsSceneOperation alloc]
-                                       initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
-                                       cmd:[cmdsRev objectForKey:@"cmd"]
-                                       param:[cmdsRev objectForKey:@"param"]];
+            VAProcessorProxys *vap = [[VAProcessorProxys alloc] init];
+            vap._rgsProxyObj = proxy;
             
-            return opt;
+            NSDictionary *ref = [mapRef objectForKey:key];
+            if(ref)
+            {
+                vap._icon_name = [ref objectForKey:@"icon_name"];
+                vap._voiceInDevice = [ref objectForKey:@"voiceInDevice"];
+            }
+            
+            NSArray *vals = [map objectForKey:key];
+            [vap recoverWithDictionary:vals];
+            
+            [_inAudioProxys addObject:vap];
+    
+        }
+        else if([proxy.type isEqualToString:@"Audio Out"])
+        {
+            VAProcessorProxys *vap = [[VAProcessorProxys alloc] init];
+            vap._rgsProxyObj = proxy;
+            
+            NSArray *vals = [map objectForKey:key];
+            [vap recoverWithDictionary:vals];
+            
+            [_outAudioProxys addObject:vap];
+        }
+        else if ([proxy.type isEqualToString:@"Audio Signal"])
+        {
+            AudioEProcessorSignalProxy *vap = [[AudioEProcessorSignalProxy alloc] init];
+            vap._rgsProxyObj = proxy;
+            
+            self._singalProxy = vap;
+        }
+        else if ([proxy.type isEqualToString:@"Audio AutoMix"]) {
+            
+            AudioEProcessorAutoMixProxy *vap = [[AudioEProcessorAutoMixProxy alloc] init];
+            vap._rgsProxyObj = proxy;
+            
+            self._autoMixProxy = vap;
         }
     }
     
-    return nil;
+    _isSetOK = YES;
 }
 
 @end
