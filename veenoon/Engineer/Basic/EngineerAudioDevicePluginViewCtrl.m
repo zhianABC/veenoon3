@@ -41,7 +41,7 @@
 @property (nonatomic, strong) NSMutableArray *_audioDrivers;
 
 @property (nonatomic, strong) NSMutableDictionary *typeAndSubTypeMap;
-
+@property (nonatomic, strong) NSMutableDictionary *nameDriverMap;
 @end
 
 @implementation EngineerAudioDevicePluginViewCtrl
@@ -54,6 +54,7 @@
 @synthesize _audioDrivers;
 
 @synthesize typeAndSubTypeMap;
+@synthesize nameDriverMap;
 
 
 
@@ -61,11 +62,36 @@
     
     self._mapDrivers = [NSMutableDictionary dictionary];
     
+    //根据Subtype分类
+    self.typeAndSubTypeMap = [NSMutableDictionary dictionary];
+    self.nameDriverMap = [NSMutableDictionary dictionary];
+    
     NSArray *drivers = [[DataCenter defaultDataCenter] driversWithType:@"audio"];
     
     for(NSDictionary *dr in drivers)
     {
         [self._mapDrivers setObject:dr forKey:[dr objectForKey:@"driver"]];
+        
+        id key = [dr objectForKey:@"subtype"];
+        NSMutableArray* arr = [typeAndSubTypeMap objectForKey:key];
+        if(arr == nil)
+        {
+            arr = [NSMutableArray array];
+            [typeAndSubTypeMap setObject:arr forKey:key];
+        }
+        
+        [arr addObject:dr];
+        
+        //
+        key = [dr objectForKey:@"name"];
+        arr = [nameDriverMap objectForKey:key];
+        if(arr == nil)
+        {
+            arr = [NSMutableArray array];
+            [nameDriverMap setObject:arr forKey:key];
+        }
+        
+        [arr addObject:dr];
     }
 
 }
@@ -187,15 +213,13 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"类型";
     
-    [self initBrandAndTypes];
+    
     
     _productTypePikcer = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(labelStartX, labelStartY+20, maxWidth, 160)];
     [_productTypePikcer removeArray];
     _productTypePikcer.delegate_=self;
     _productTypePikcer.tag = 101;
-    _productTypePikcer.fontSize=14;
-    _productTypePikcer._pickerDataArray = @[@{@"values":_currentCategorys}];
-    [_productTypePikcer selectRow:0 inComponent:0];
+    _productTypePikcer.fontSize = 14;
     _productTypePikcer._selectColor = RGB(253, 180, 0);
     _productTypePikcer._rowNormalColor = [UIColor whiteColor];
     [self.view addSubview:_productTypePikcer];
@@ -218,8 +242,6 @@
                                                                               maxWidth, 160)];
     _brandPicker.tag=102;
     [_brandPicker  removeArray];
-    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
-    [_brandPicker selectRow:0 inComponent:0];
     _brandPicker._selectColor = RGB(253, 180, 0);
     _brandPicker._rowNormalColor = [UIColor whiteColor];
     [self.view addSubview:_brandPicker];
@@ -238,8 +260,6 @@
     _productCategoryPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(x1, labelStartY+20, maxWidth, 160)];
     _productCategoryPicker.tag=103;
     [_productCategoryPicker removeArray];
-    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
-    [_productCategoryPicker selectRow:0 inComponent:0];
     _productCategoryPicker._selectColor = RGB(253, 180, 0);
     _productCategoryPicker._rowNormalColor = [UIColor whiteColor];
     [self.view addSubview:_productCategoryPicker];
@@ -253,6 +273,8 @@
     [addBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     addBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [addBtn addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self initBrandAndTypes];
     
     //[[DataSync sharedDataSync] syncAreaHasDrivers];
     
@@ -305,6 +327,9 @@
     self._currentBrands = @[@"品牌"];
     self._currentTypes = @[@"型号"];
     self._driverUdids = @[];
+    
+    _productTypePikcer._pickerDataArray = @[@{@"values":_currentCategorys}];
+    [_productTypePikcer selectRow:0 inComponent:0];
     
     _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
     _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
@@ -372,26 +397,80 @@
     [_electronicSysBtn setBtnHighlited:NO];
     [_musicPlayBtn setBtnHighlited:NO];
     [_wuxianhuatongBtn setBtnHighlited:NO];
-    [_huiyiBtn setBtnHighlited:NO];
-    [_fankuiyizhiBtn setBtnHighlited:NO];
+    //[_huiyiBtn setBtnHighlited:NO];
+    //[_fankuiyizhiBtn setBtnHighlited:NO];
     [_yinpinchuliBtn setBtnHighlited:YES];
     [_floorWarmBtn setBtnHighlited:NO];
-    [_handToHandhuiyiBtn setBtnHighlited:NO];
+    //[_handToHandhuiyiBtn setBtnHighlited:NO];
     [_wirelessHuiyiBtn setBtnHighlited:NO];
+
     
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
+    NSArray *types = [typeAndSubTypeMap objectForKey:@"音频处理器"];
     
-    self._currentBrands = @[@"Teslaria"];
-    self._currentTypes = @[@"Audio Processor"];
-    self._driverUdids = @[UUID_Audio_Processor];
+    NSMutableArray *cate = [NSMutableArray array];
+    for(NSDictionary *dr in types)
+    {
+        NSString *name = [dr objectForKey:@"name"];
+        [cate addObject:name];
+    }
+    self._currentCategorys = cate;
+    if([cate count])
+    {
+        _productTypePikcer._pickerDataArray = @[@{@"values":cate}];
+        [_productTypePikcer selectRow:0 inComponent:0];
+        
+        NSString *name = [cate objectAtIndex:0];
+        NSArray *arr = [nameDriverMap objectForKey:name];
+        
+        NSMutableArray *brands = [NSMutableArray array];
+        
+        NSMutableDictionary *map = [NSMutableDictionary dictionary];
+        for(NSDictionary *dr in arr)
+        {
+            NSString *brand = [dr objectForKey:@"brand"];
+            
+            NSMutableArray *xhs = [map objectForKey:brand];
+            if(xhs == nil)
+            {
+                xhs = [NSMutableArray array];
+                [map setObject:xhs forKey:brand];
+            }
+            [xhs addObject:dr];
+            
+            if(![brands containsObject:brand])
+                [brands addObject:brand];
+        }
+        
+        self._currentBrands = brands;
+        _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
+        
+        if([brands count])
+        {
+            [_brandPicker selectRow:0 inComponent:0];
+            
+            NSString *b = [brands objectAtIndex:0];
+            NSArray *xhs = [map objectForKey:b];
+            
+            NSMutableArray *ts = [NSMutableArray array];
+            NSMutableArray *ids = [NSMutableArray array];
+            for(NSDictionary *d in xhs)
+            {
+                [ts addObject:[d objectForKey:@"ptype"]];
+                [ids addObject:[d objectForKey:@"driver"]];
+            }
+            
+            self._currentTypes = ts;
+            self._driverUdids = ids;
+            
+            _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
+            
+            if([ts count])
+            {
+                [_productCategoryPicker selectRow:0 inComponent:0];
+            }
+        }
+    }
     
-    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
-    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
-    
-    [_brandPicker selectRow:0 inComponent:0];
-    [_productCategoryPicker selectRow:0 inComponent:0];
 }
 
 - (void) fankuiyizhiAction:(id)sender{
