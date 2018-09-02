@@ -39,6 +39,8 @@
 @property (nonatomic, strong) NSMutableDictionary *_mapDrivers;
 @property (nonatomic, strong) NSMutableArray *_audioDrivers;
 
+@property (nonatomic, strong) NSMutableDictionary *typeAndSubTypeMap;
+
 @end
 
 @implementation EngineerAudioDevicePluginViewCtrl
@@ -49,6 +51,9 @@
 @synthesize _driverUdids;
 @synthesize _mapDrivers;
 @synthesize _audioDrivers;
+
+@synthesize typeAndSubTypeMap;
+
 
 
 - (void) prepareDrivers{
