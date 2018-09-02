@@ -40,6 +40,7 @@
     
     UIPopoverController *_dataSelector;
 }
+@property (nonatomic, strong) NSArray *_currentCategorys;
 @property (nonatomic, strong) NSArray *_currentBrands;
 @property (nonatomic, strong) NSArray *_currentTypes;
 @property (nonatomic, strong) NSArray *_driverUdids;
@@ -47,11 +48,17 @@
 @property (nonatomic, strong) NSMutableDictionary *_mapDrivers;
 @property (nonatomic, strong) NSMutableArray *_videoDrivers;
 
+@property (nonatomic, strong) NSMutableDictionary *typeAndSubTypeMap;
+@property (nonatomic, strong) NSMutableDictionary *nameDriverMap;
+@property (nonatomic, strong) NSMutableDictionary *_tmpMap;
+@property (nonatomic, strong) NSString *_typeName;
+
 @end
 
 @implementation EngineerVideoDevicePluginViewCtrl
 @synthesize _selectedSysDic;
 
+@synthesize _currentCategorys;
 @synthesize _currentBrands;
 @synthesize _currentTypes;
 @synthesize _driverUdids;
@@ -59,15 +66,46 @@
 @synthesize _mapDrivers;
 @synthesize _videoDrivers;
 
+@synthesize typeAndSubTypeMap;
+@synthesize nameDriverMap;
+@synthesize _tmpMap;
+@synthesize _typeName;
+
 - (void) prepareDrivers{
     
     self._mapDrivers = [NSMutableDictionary dictionary];
+    
+    //根据Subtype分类
+    self.typeAndSubTypeMap = [NSMutableDictionary dictionary];
+    self.nameDriverMap = [NSMutableDictionary dictionary];
+    
     
     NSArray *drivers = [[DataCenter defaultDataCenter] driversWithType:@"video"];
     
     for(NSDictionary *dr in drivers)
     {
         [self._mapDrivers setObject:dr forKey:[dr objectForKey:@"driver"]];
+        
+        id key = [dr objectForKey:@"subtype"];
+        NSMutableArray* arr = [typeAndSubTypeMap objectForKey:key];
+        if(arr == nil)
+        {
+            arr = [NSMutableArray array];
+            [typeAndSubTypeMap setObject:arr forKey:key];
+        }
+        
+        [arr addObject:dr];
+        
+        //
+        key = [dr objectForKey:@"name"];
+        arr = [nameDriverMap objectForKey:key];
+        if(arr == nil)
+        {
+            arr = [NSMutableArray array];
+            [nameDriverMap setObject:arr forKey:key];
+        }
+        
+        [arr addObject:dr];
     }
     
 }
@@ -178,7 +216,7 @@
     [_touyingjiBtn addTarget:self action:@selector(touyingjiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_touyingjiBtn];
     
-    
+    /*
     UIButton *btnAdd = [UIButton buttonWithType:UIButtonTypeCustom];
     btnAdd.frame = CGRectMake(left+rowGap*3, height+120, 80, 80);
     [btnAdd setImage:[UIImage imageNamed:@"engineer_scenario_add_small.png"]
@@ -196,7 +234,7 @@
     addTitle.textAlignment = NSTextAlignmentCenter;
     addTitle.textColor  = [UIColor whiteColor];
     addTitle.text = @"添加红外设备";
-
+     */
     
     int maxWidth = 120;
     float labelStartX = (SCREEN_WIDTH - maxWidth*2 - 60 - 15)/2.0;
@@ -220,14 +258,11 @@
     [_productTypePikcer removeArray];
     _productTypePikcer.delegate_=self;
     _productTypePikcer.fontSize = 14;
-    _productTypePikcer._pickerDataArray = @[@{@"values":@[audio_power_sequencer,@"视频播放",video_camera_name,@"信息盒",@"远程视讯",@"视频处理",@"拼接屏",@"液晶电视",@"录播机",@"投影机"]}];
-    [_productTypePikcer selectRow:0 inComponent:0];
     _productTypePikcer._selectColor = RGB(253, 180, 0);
     _productTypePikcer._rowNormalColor = [UIColor whiteColor];
     [self.view addSubview:_productTypePikcer];
     
-    [self initBrandAndTypes];
-    
+  
     int x1 = CGRectGetMaxX(titleL.frame)+5;
     
     titleL = [[UILabel alloc] initWithFrame:CGRectMake(x1, labelStartY, maxWidth, 20)];
@@ -241,8 +276,6 @@
     
     _brandPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(x1, labelStartY+20, maxWidth, 160)];
     [_brandPicker removeArray];
-    _brandPicker._pickerDataArray = @[@{@"values":@[@"F",@"E",@"A"]}];
-    [_brandPicker selectRow:0 inComponent:0];
     _brandPicker._selectColor = RGB(253, 180, 0);
     _brandPicker._rowNormalColor = [UIColor whiteColor];
     [self.view addSubview:_brandPicker];
@@ -259,8 +292,6 @@
     
     _productCategoryPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(x1, labelStartY+20, maxWidth, 160)];
     [_productCategoryPicker removeArray];
-    _productCategoryPicker._pickerDataArray = @[@{@"values":@[@"C",@"V",@"B"]}];
-    [_productCategoryPicker selectRow:0 inComponent:0];
     _productCategoryPicker._selectColor = RGB(253, 180, 0);
     _productCategoryPicker._rowNormalColor = [UIColor whiteColor];
     [self.view addSubview:_productCategoryPicker];
@@ -277,6 +308,8 @@
     
     self._videoDrivers = [NSMutableArray array];
     [self._selectedSysDic setObject:_videoDrivers forKey:@"video"];
+    
+    [self emptyBrandAndTypes];
 }
 
 
@@ -405,11 +438,15 @@
 }
 
 
-- (void) initBrandAndTypes{
+- (void) emptyBrandAndTypes{
     
+    self._currentCategorys = @[@"类型"];
     self._currentBrands = @[@"品牌"];
     self._currentTypes = @[@"型号"];
     self._driverUdids = @[];
+    
+    _productTypePikcer._pickerDataArray = @[@{@"values":_currentCategorys}];
+    [_productTypePikcer selectRow:0 inComponent:0];
     
     _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
     _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
@@ -417,6 +454,94 @@
     [_brandPicker selectRow:0 inComponent:0];
     [_productCategoryPicker selectRow:0 inComponent:0];
 }
+
+
+- (void) choosedDevice:(NSString*)category{
+    
+    self._typeName = category;
+    
+    NSArray *types = [typeAndSubTypeMap objectForKey:category];
+    
+    NSMutableArray *cate = [NSMutableArray array];
+    for(NSDictionary *dr in types)
+    {
+        NSString *name = [dr objectForKey:@"name"];
+        [cate addObject:name];
+    }
+    self._currentCategorys = cate;
+    if([cate count])
+    {
+        _productTypePikcer._pickerDataArray = @[@{@"values":cate}];
+        [_productTypePikcer selectRow:0 inComponent:0];
+        
+        NSString *typename = [cate objectAtIndex:0];
+        [self choosedDeviceType:typename];
+    }
+    else
+    {
+        [self emptyBrandAndTypes];
+    }
+}
+
+- (void) choosedDeviceType:(NSString*)type{
+    
+    NSArray *arr = [nameDriverMap objectForKey:type];
+    
+    NSMutableArray *brands = [NSMutableArray array];
+    
+    self._tmpMap = [NSMutableDictionary dictionary];
+    for(NSDictionary *dr in arr)
+    {
+        NSString *brand = [dr objectForKey:@"brand"];
+        
+        NSMutableArray *xhs = [_tmpMap objectForKey:brand];
+        if(xhs == nil)
+        {
+            xhs = [NSMutableArray array];
+            [_tmpMap setObject:xhs forKey:brand];
+        }
+        [xhs addObject:dr];
+        
+        if(![brands containsObject:brand])
+            [brands addObject:brand];
+    }
+    
+    self._currentBrands = brands;
+    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
+    
+    if([brands count])
+    {
+        [_brandPicker selectRow:0 inComponent:0];
+        NSString *b = [brands objectAtIndex:0];
+        
+        [self choosedCurrentBand:b];
+    }
+}
+
+- (void) choosedCurrentBand:(NSString*)band{
+    
+    NSArray *xhs = [_tmpMap objectForKey:band];
+    
+    NSMutableArray *ts = [NSMutableArray array];
+    NSMutableArray *ids = [NSMutableArray array];
+    for(NSDictionary *d in xhs)
+    {
+        [ts addObject:[d objectForKey:@"ptype"]];
+        [ids addObject:[d objectForKey:@"driver"]];
+    }
+    
+    self._currentTypes = ts;
+    self._driverUdids = ids;
+    
+    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
+    
+    if([ts count])
+    {
+        [_productCategoryPicker selectRow:0 inComponent:0];
+    }
+}
+
+
 
 - (void) addDriverToCenter:(NSDictionary*)device{
     
@@ -458,6 +583,7 @@
     }
 }
 - (void) touyingjiAction:(id)sender{
+   
     [_dianyuanguanliBtn setBtnHighlited:NO];
     [_shipinbofangBtn setBtnHighlited:NO];
     [_shexiangjiBtn setBtnHighlited:NO];
@@ -470,19 +596,7 @@
     [_touyingjiBtn setBtnHighlited:YES];
     
     
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
-    
-    self._currentBrands = @[@"Canon"];
-    self._currentTypes = @[@"WUX450"];
-    self._driverUdids = @[UUID_CANON_WUX450];
-    
-    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
-    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
-    
-    [_brandPicker selectRow:0 inComponent:0];
-    [_productCategoryPicker selectRow:0 inComponent:0];
+    [self choosedDevice:@"投影机"];
 
 }
 - (void) lubojiAction:(id)sender{
@@ -499,11 +613,7 @@
     [_touyingjiBtn setBtnHighlited:NO];
     
     
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
-    
-    [self initBrandAndTypes];
+    [self choosedDevice:@"录播机"];
 }
 - (void) yejingdianshiAction:(id)sender{
     
@@ -518,40 +628,7 @@
     [_lubojiBtn setBtnHighlited:NO];
     [_touyingjiBtn setBtnHighlited:NO];
     
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
-    
-    
-    [self initBrandAndTypes];
-    
-    NSArray *drivers = [[DataCenter defaultDataCenter] driversWithType:@"video"];
-    
-    NSString *toclass = NSStringFromClass([VTVSet class]);
-    
-    NSMutableArray *bands = [NSMutableArray array];
-    NSMutableArray *types = [NSMutableArray array];
-    NSMutableArray *uuids = [NSMutableArray array];
-    for(NSDictionary *device in drivers)
-    {
-        NSString *classname = [device objectForKey:@"driver_class"];
-        if([classname isEqualToString:toclass])
-        {
-            [bands addObject:[device objectForKey:@"brand"]];
-            [types addObject:[device objectForKey:@"ptype"]];
-            [uuids addObject:[device objectForKey:@"driver"]];
-        }
-    }
-    
-    self._currentBrands = bands;
-    self._currentTypes = types;
-    self._driverUdids = uuids;
-    
-    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
-    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
-    
-    [_brandPicker selectRow:0 inComponent:0];
-    [_productCategoryPicker selectRow:0 inComponent:0];
+    [self choosedDevice:@"液晶电视"];
     
     
     
@@ -570,11 +647,7 @@
     [_touyingjiBtn setBtnHighlited:NO];
     
     
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
-    
-    [self initBrandAndTypes];
+    [self choosedDevice:@"拼接屏"];
 }
 
 - (void) shipinchuliAction:(id)sender{
@@ -590,19 +663,7 @@
     [_touyingjiBtn setBtnHighlited:NO];
     
     
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
-    
-    self._currentBrands = @[@"Teslaria"];
-    self._currentTypes = @[@"Video Switch"];
-    self._driverUdids = @[UUID_Video_Switch];
-    
-    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
-    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
-    
-    [_brandPicker selectRow:0 inComponent:0];
-    [_productCategoryPicker selectRow:0 inComponent:0];
+    [self choosedDevice:@"视频处理"];
 }
 
 - (void) yuanchengshixunAction:(id)sender{
@@ -618,11 +679,7 @@
     [_touyingjiBtn setBtnHighlited:NO];
     
     
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
-    
-    [self initBrandAndTypes];
+    [self choosedDevice:@"远程视讯"];
 }
 
 - (void) xinxiheAction:(id)sender{
@@ -638,11 +695,7 @@
     [_touyingjiBtn setBtnHighlited:NO];
     
     
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
-    
-    [self initBrandAndTypes];
+    [self choosedDevice:@"信息盒"];
 }
 
 - (void) shexiangjiAction:(id)sender{
@@ -658,20 +711,7 @@
     [_touyingjiBtn setBtnHighlited:NO];
     
     
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
-    
-    
-    self._currentBrands = @[@"Teslaria"];
-    self._currentTypes = @[@"摄像机"];
-    self._driverUdids = @[UUID_NetCamera];
-    
-    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
-    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
-    
-    [_brandPicker selectRow:0 inComponent:0];
-    [_productCategoryPicker selectRow:0 inComponent:0];
+    [self choosedDevice:@"摄像机"];
 
 }
 
@@ -689,39 +729,7 @@
     [_touyingjiBtn setBtnHighlited:NO];
     
     
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
-    
-    [self initBrandAndTypes];
-    
-    NSArray *drivers = [[DataCenter defaultDataCenter] driversWithType:@"video"];
-    
-    NSString *toclass = NSStringFromClass([VDVDPlayerSet class]);
-    
-    NSMutableArray *bands = [NSMutableArray array];
-    NSMutableArray *types = [NSMutableArray array];
-    NSMutableArray *uuids = [NSMutableArray array];
-    for(NSDictionary *device in drivers)
-    {
-        NSString *classname = [device objectForKey:@"driver_class"];
-        if([classname isEqualToString:toclass])
-        {
-            [bands addObject:[device objectForKey:@"brand"]];
-            [types addObject:[device objectForKey:@"ptype"]];
-            [uuids addObject:[device objectForKey:@"driver"]];
-        }
-    }
-    
-    self._currentBrands = bands;
-    self._currentTypes = types;
-    self._driverUdids = uuids;
-    
-    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
-    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
-    
-    [_brandPicker selectRow:0 inComponent:0];
-    [_productCategoryPicker selectRow:0 inComponent:0];
+   [self choosedDevice:@"视频播放"];
 }
 
 - (void) dianyuanguanliAction:(id)sender{
@@ -737,64 +745,26 @@
     [_touyingjiBtn setBtnHighlited:NO];
     
     
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
-    
-    [self initBrandAndTypes];
+    [self choosedDevice:@"电源管理"];
 }
 
-- (void) didChangedPickerValue:(NSDictionary*)value {
+
+-(void) didScrollPickerValue:(NSString*)value  obj:(id)obj{
     
-    NSDictionary *val = [value objectForKey:@0];
-    if(val)
+    //类型
+    if(obj == _productTypePikcer)
     {
-        
-    NSString *brand = [val objectForKey:@"value"];
-            
-            
-    if ([audio_power_sequencer isEqualToString:brand]) {
-        [self dianyuanguanliAction:_dianyuanguanliBtn];
-    } else if ([@"视频播放" isEqualToString:brand]) {
-        [self shipinbofangAction:_shipinbofangBtn];
-    } else if ([video_camera_name isEqualToString:brand]) {
-        [self shexiangjiAction:_shexiangjiBtn];
-    } else if ([@"信息盒" isEqualToString:brand]) {
-        [self xinxiheAction:_xinxiheBtn];
-    } else if ([@"远程视讯" isEqualToString:brand]) {
-        [self yuanchengshixunAction:_yuanchengshixunBtn];
-    } else if ([video_process_name isEqualToString:brand]) {
-        [self shipinchuliAction:_shipinchuliBtn];
-    } else if ([@"拼接屏" isEqualToString:brand]) {
-        [self pinjiepingAction:_pinjiepingBtn];
-    } else if ([@"液晶电视" isEqualToString:brand]) {
-        [self yejingdianshiAction:_yejingdianshiBtn];
-    }  else if ([@"录播机" isEqualToString:brand]) {
-        [self lubojiAction:_lubojiBtn];
-    } else {
-        [self touyingjiAction:_touyingjiBtn];
-    }
-    }
+        [self choosedDeviceType:value];
+    }//品牌
+    else if(obj == _brandPicker)
+    {
+        [self choosedCurrentBand:value];
+    }//型号
+    
 }
 
--(void) setBrandValue:(NSString*)brand {
-    if (brand == nil) {
-        return;
-    }
-    NSArray *array = _productTypePikcer._pickerDataArray;
-    int index = 0;
-    for (NSDictionary *dic in array) {
-        NSArray *valueArray = [dic objectForKey:@"values"];
-        for (NSString * str in valueArray) {
-            if ([str isEqualToString:brand]) {
-                break;
-            }
-            index++;
-        }
-    }
-    [_productTypePikcer selectRow:index inComponent:0];
-}
 - (void) okAction:(id)sender{
+    
     EngineerEnvDevicePluginViewCtrl *ctrl = [[EngineerEnvDevicePluginViewCtrl alloc] init];
     ctrl._selectedSysDic = self._selectedSysDic;
     

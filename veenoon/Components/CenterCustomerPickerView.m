@@ -149,8 +149,8 @@
     }
     
     
-    if ([self.delegate_ respondsToSelector:@selector(didScrollPickerValue:)]) {
-        [self.delegate_ didScrollPickerValue:value];
+    if ([self.delegate_ respondsToSelector:@selector(didScrollPickerValue:obj:)]) {
+        [self.delegate_ didScrollPickerValue:value obj:self];
     }
 }
 

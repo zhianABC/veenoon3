@@ -39,6 +39,7 @@
     
     UIPopoverController *_dataSelector;
 }
+@property (nonatomic, strong) NSArray *_currentCategorys;
 @property (nonatomic, strong) NSArray *_currentBrands;
 @property (nonatomic, strong) NSArray *_currentTypes;
 @property (nonatomic, strong) NSArray *_driverUdids;
@@ -46,11 +47,18 @@
 @property (nonatomic, strong) NSMutableDictionary *_mapDrivers;
 @property (nonatomic, strong) NSMutableArray *_envDrivers;
 
+@property (nonatomic, strong) NSMutableDictionary *typeAndSubTypeMap;
+@property (nonatomic, strong) NSMutableDictionary *nameDriverMap;
+@property (nonatomic, strong) NSMutableDictionary *_tmpMap;
+@property (nonatomic, strong) NSString *_typeName;
+
+
 @end
 
 @implementation EngineerEnvDevicePluginViewCtrl
 @synthesize _selectedSysDic;
 
+@synthesize _currentCategorys;
 @synthesize _currentBrands;
 @synthesize _currentTypes;
 @synthesize _driverUdids;
@@ -58,16 +66,52 @@
 @synthesize _mapDrivers;
 @synthesize _envDrivers;
 
+@synthesize typeAndSubTypeMap;
+@synthesize nameDriverMap;
+@synthesize _tmpMap;
+@synthesize _typeName;
 
 - (void) prepareDrivers{
     
     self._mapDrivers = [NSMutableDictionary dictionary];
     
+    //根据Subtype分类
+    self.typeAndSubTypeMap = [NSMutableDictionary dictionary];
+    self.nameDriverMap = [NSMutableDictionary dictionary];
+    
+    
     NSArray *drivers = [[DataCenter defaultDataCenter] driversWithType:@"env"];
     
     for(NSDictionary *dr in drivers)
     {
+        if([dr objectForKey:@"driver"] == nil)
+            continue;
+        
         [self._mapDrivers setObject:dr forKey:[dr objectForKey:@"driver"]];
+        
+        id key = [dr objectForKey:@"subtype"];
+        if(key)
+        {
+            NSMutableArray* arr = [typeAndSubTypeMap objectForKey:key];
+            if(arr == nil)
+            {
+                arr = [NSMutableArray array];
+                [typeAndSubTypeMap setObject:arr forKey:key];
+            }
+            
+            [arr addObject:dr];
+            
+            //
+            key = [dr objectForKey:@"name"];
+            arr = [nameDriverMap objectForKey:key];
+            if(arr == nil)
+            {
+                arr = [NSMutableArray array];
+                [nameDriverMap setObject:arr forKey:key];
+            }
+            
+            [arr addObject:dr];
+        }
     }
 }
 
@@ -177,7 +221,7 @@
     [_nenghaotongjiBtn addTarget:self action:@selector(nenghaotongjiAction:) forControlEvents:UIControlEventTouchUpInside];
 //    [self.view addSubview:_nenghaotongjiBtn];
     
-    
+    /*
     UIButton *btnAdd = [UIButton buttonWithType:UIButtonTypeCustom];
     btnAdd.frame = CGRectMake(left, height+120, 80, 80);
     [btnAdd setImage:[UIImage imageNamed:@"engineer_scenario_add_small.png"]
@@ -195,7 +239,7 @@
     addTitle.textAlignment = NSTextAlignmentCenter;
     addTitle.textColor  = [UIColor whiteColor];
     addTitle.text = @"添加红外设备";
-    
+    */
 
     
     int maxWidth = 120;
@@ -216,8 +260,6 @@
     [_productTypePikcer removeArray];
     _productTypePikcer.delegate_=self;
     _productTypePikcer.fontSize=14;
-    _productTypePikcer._pickerDataArray = @[@{@"values":@[@"照明",@"空调",@"电动马达",@"新风",@"空气净化",@"净水",@"加湿器",@"门禁",@"监控"]}];
-    [_productTypePikcer selectRow:0 inComponent:0];
     _productTypePikcer._selectColor = RGB(253, 180, 0);
     _productTypePikcer._rowNormalColor = [UIColor whiteColor];
     [self.view addSubview:_productTypePikcer];
@@ -234,8 +276,6 @@
     
     _brandPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(x1, labelStartY+20, maxWidth, 160)];
     [_brandPicker removeArray];
-    _brandPicker._pickerDataArray = @[@{@"values":@[@"F",@"E",@"A"]}];
-    [_brandPicker selectRow:0 inComponent:0];
     _brandPicker._selectColor = RGB(253, 180, 0);
     _brandPicker._rowNormalColor = [UIColor whiteColor];
     [self.view addSubview:_brandPicker];
@@ -253,8 +293,6 @@
     
     _productCategoryPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(x1, labelStartY+20, maxWidth, 160)];
     [_productCategoryPicker removeArray];
-    _productCategoryPicker._pickerDataArray = @[@{@"values":@[@"C",@"V",@"B"]}];
-    [_productCategoryPicker selectRow:0 inComponent:0];
     _productCategoryPicker._selectColor = RGB(253, 180, 0);
     _productCategoryPicker._rowNormalColor = [UIColor whiteColor];
     [self.view addSubview:_productCategoryPicker];
@@ -272,6 +310,8 @@
     
     self._envDrivers = [NSMutableArray array];
     [self._selectedSysDic setObject:_envDrivers forKey:@"env"];
+    
+    [self emptyBrandAndTypes];
 }
 
 
@@ -361,6 +401,108 @@
     
 }
 
+- (void) emptyBrandAndTypes{
+    
+    self._currentCategorys = @[@"类型"];
+    self._currentBrands = @[@"品牌"];
+    self._currentTypes = @[@"型号"];
+    self._driverUdids = @[];
+    
+    _productTypePikcer._pickerDataArray = @[@{@"values":_currentCategorys}];
+    [_productTypePikcer selectRow:0 inComponent:0];
+    
+    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
+    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
+    
+    [_brandPicker selectRow:0 inComponent:0];
+    [_productCategoryPicker selectRow:0 inComponent:0];
+}
+
+
+- (void) choosedDevice:(NSString*)category{
+    
+    self._typeName = category;
+    
+    NSArray *types = [typeAndSubTypeMap objectForKey:category];
+    
+    NSMutableArray *cate = [NSMutableArray array];
+    for(NSDictionary *dr in types)
+    {
+        NSString *name = [dr objectForKey:@"name"];
+        [cate addObject:name];
+    }
+    self._currentCategorys = cate;
+    if([cate count])
+    {
+        _productTypePikcer._pickerDataArray = @[@{@"values":cate}];
+        [_productTypePikcer selectRow:0 inComponent:0];
+        
+        NSString *typename = [cate objectAtIndex:0];
+        [self choosedDeviceType:typename];
+    }
+    else
+    {
+        [self emptyBrandAndTypes];
+    }
+}
+
+- (void) choosedDeviceType:(NSString*)type{
+    
+    NSArray *arr = [nameDriverMap objectForKey:type];
+    
+    NSMutableArray *brands = [NSMutableArray array];
+    
+    self._tmpMap = [NSMutableDictionary dictionary];
+    for(NSDictionary *dr in arr)
+    {
+        NSString *brand = [dr objectForKey:@"brand"];
+        
+        NSMutableArray *xhs = [_tmpMap objectForKey:brand];
+        if(xhs == nil)
+        {
+            xhs = [NSMutableArray array];
+            [_tmpMap setObject:xhs forKey:brand];
+        }
+        [xhs addObject:dr];
+        
+        if(![brands containsObject:brand])
+            [brands addObject:brand];
+    }
+    
+    self._currentBrands = brands;
+    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
+    
+    if([brands count])
+    {
+        [_brandPicker selectRow:0 inComponent:0];
+        NSString *b = [brands objectAtIndex:0];
+        
+        [self choosedCurrentBand:b];
+    }
+}
+
+- (void) choosedCurrentBand:(NSString*)band{
+    
+    NSArray *xhs = [_tmpMap objectForKey:band];
+    
+    NSMutableArray *ts = [NSMutableArray array];
+    NSMutableArray *ids = [NSMutableArray array];
+    for(NSDictionary *d in xhs)
+    {
+        [ts addObject:[d objectForKey:@"ptype"]];
+        [ids addObject:[d objectForKey:@"driver"]];
+    }
+    
+    self._currentTypes = ts;
+    self._driverUdids = ids;
+    
+    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
+    
+    if([ts count])
+    {
+        [_productCategoryPicker selectRow:0 inComponent:0];
+    }
+}
 - (void) addDriverToCenter:(NSDictionary*)device{
     
     NSString *classname = [device objectForKey:@"driver_class"];
@@ -387,51 +529,17 @@
     }
 }
 
-- (void) initBrandAndTypes{
-    
-    self._currentBrands = @[@"品牌"];
-    self._currentTypes = @[@"型号"];
-    self._driverUdids = @[];
-    
-    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
-    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
-    
-    [_brandPicker selectRow:0
-                inComponent:0];
-    [_productCategoryPicker selectRow:0
-                      inComponent:0];
-}
-
-
 - (void) zhaomingAction:(id)sender{
     
     [_zhaomingBtn setBtnHighlited:YES];
     [_kongtiaoBtn setBtnHighlited:NO];
     [_diandongmadaBtn setBtnHighlited:NO];
     [_xinfengBtn setBtnHighlited:NO];
-    [_dinuanBtn setBtnHighlited:NO];
     [_kongqijinghuaBtn setBtnHighlited:NO];
     [_jiashiqiBtn setBtnHighlited:NO];
     [_jiankongBtn setBtnHighlited:NO];
-    [_nenghaotongjiBtn setBtnHighlited:NO];
     
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
-    
-    self._currentBrands = @[@"TESLARIA"];
-    self._currentTypes = @[@"Dimmer-6", @"Dimmer Switch"];
-    self._driverUdids = @[UUID_6CH_Dimmer_Light, UUID_8CH_Dimmer_Light];
-    
-    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
-    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
-    
-    if([_currentBrands count])
-        [_brandPicker selectRow:0 inComponent:0];
-    
-    
-    if([_currentTypes count])
-        [_productCategoryPicker selectRow:0 inComponent:0];
+    [self choosedDevice:@"照明"];
 
 
     
@@ -442,50 +550,11 @@
     [_kongtiaoBtn setBtnHighlited:YES];
     [_diandongmadaBtn setBtnHighlited:NO];
     [_xinfengBtn setBtnHighlited:NO];
-    [_dinuanBtn setBtnHighlited:NO];
     [_kongqijinghuaBtn setBtnHighlited:NO];
     [_jiashiqiBtn setBtnHighlited:NO];
     [_jiankongBtn setBtnHighlited:NO];
-    [_nenghaotongjiBtn setBtnHighlited:NO];
     
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
-    
-    [self initBrandAndTypes];
-    
-    NSArray *drivers = [[DataCenter defaultDataCenter] driversWithType:@"env"];
-    
-    NSString *toclass = NSStringFromClass([AirConditionPlug class]);
-    
-    NSMutableArray *bands = [NSMutableArray array];
-    NSMutableArray *types = [NSMutableArray array];
-    NSMutableArray *uuids = [NSMutableArray array];
-    for(NSDictionary *device in drivers)
-    {
-        NSString *classname = [device objectForKey:@"driver_class"];
-        if([classname isEqualToString:toclass])
-        {
-            [bands addObject:[device objectForKey:@"brand"]];
-            [types addObject:[device objectForKey:@"ptype"]];
-            [uuids addObject:[device objectForKey:@"driver"]];
-        }
-    }
-    
-    self._currentBrands = bands;
-    self._currentTypes = types;
-    self._driverUdids = uuids;
-    
-    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
-    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
-    
-    
-    if([_currentBrands count])
-        [_brandPicker selectRow:0 inComponent:0];
-    
-    
-    if([_currentTypes count])
-        [_productCategoryPicker selectRow:0 inComponent:0];
+    [self choosedDevice:@"空调"];
 
 }
 - (void) diandongmadaAction:(id)sender{
@@ -494,49 +563,11 @@
     [_kongtiaoBtn setBtnHighlited:NO];
     [_diandongmadaBtn setBtnHighlited:YES];
     [_xinfengBtn setBtnHighlited:NO];
-    [_dinuanBtn setBtnHighlited:NO];
     [_kongqijinghuaBtn setBtnHighlited:NO];
     [_jiashiqiBtn setBtnHighlited:NO];
     [_jiankongBtn setBtnHighlited:NO];
-    [_nenghaotongjiBtn setBtnHighlited:NO];
     
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
-    
-    [self initBrandAndTypes];
-    
-    NSArray *drivers = [[DataCenter defaultDataCenter] driversWithType:@"env"];
-    
-    NSString *toclass = NSStringFromClass([BlindPlugin class]);
-    
-    NSMutableArray *bands = [NSMutableArray array];
-    NSMutableArray *types = [NSMutableArray array];
-    NSMutableArray *uuids = [NSMutableArray array];
-    for(NSDictionary *device in drivers)
-    {
-        NSString *classname = [device objectForKey:@"driver_class"];
-        if([classname isEqualToString:toclass])
-        {
-            [bands addObject:[device objectForKey:@"brand"]];
-            [types addObject:[device objectForKey:@"ptype"]];
-            [uuids addObject:[device objectForKey:@"driver"]];
-        }
-    }
-    
-    self._currentBrands = bands;
-    self._currentTypes = types;
-    self._driverUdids = uuids;
-    
-    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
-    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
-    
-    if([_currentBrands count])
-        [_brandPicker selectRow:0 inComponent:0];
-    
-    
-    if([_currentTypes count])
-        [_productCategoryPicker selectRow:0 inComponent:0];
+    [self choosedDevice:@"电动马达"];
 
 }
 - (void) xinfengAction:(id)sender{
@@ -544,178 +575,65 @@
     [_kongtiaoBtn setBtnHighlited:NO];
     [_diandongmadaBtn setBtnHighlited:NO];
     [_xinfengBtn setBtnHighlited:YES];
-    [_dinuanBtn setBtnHighlited:NO];
     [_kongqijinghuaBtn setBtnHighlited:NO];
     [_jiashiqiBtn setBtnHighlited:NO];
     [_jiankongBtn setBtnHighlited:NO];
-    [_nenghaotongjiBtn setBtnHighlited:NO];
     
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
-    
-    [self initBrandAndTypes];
+    [self choosedDevice:@"新风"];
 }
-- (void) dinuanAction:(id)sender{
-    [_zhaomingBtn setBtnHighlited:NO];
-    [_kongtiaoBtn setBtnHighlited:NO];
-    [_diandongmadaBtn setBtnHighlited:NO];
-    [_xinfengBtn setBtnHighlited:NO];
-    [_dinuanBtn setBtnHighlited:YES];
-    [_kongqijinghuaBtn setBtnHighlited:NO];
-    [_jiashiqiBtn setBtnHighlited:NO];
-    [_jiankongBtn setBtnHighlited:NO];
-    [_nenghaotongjiBtn setBtnHighlited:NO];
-    
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
-    
-    [self initBrandAndTypes];
-}
+
 - (void) kongqijinghuaAction:(id)sender{
     [_zhaomingBtn setBtnHighlited:NO];
     [_kongtiaoBtn setBtnHighlited:NO];
     [_diandongmadaBtn setBtnHighlited:NO];
     [_xinfengBtn setBtnHighlited:NO];
-    [_dinuanBtn setBtnHighlited:NO];
     [_kongqijinghuaBtn setBtnHighlited:YES];
     [_jiashiqiBtn setBtnHighlited:NO];
     [_jiankongBtn setBtnHighlited:NO];
-    [_nenghaotongjiBtn setBtnHighlited:NO];
     
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
-    
-    [self initBrandAndTypes];
+    [self choosedDevice:@"空气净化"];
 }
-- (void) jingshuiAction:(id)sender{
-    [_zhaomingBtn setBtnHighlited:NO];
-    [_kongtiaoBtn setBtnHighlited:NO];
-    [_diandongmadaBtn setBtnHighlited:NO];
-    [_xinfengBtn setBtnHighlited:NO];
-    [_dinuanBtn setBtnHighlited:NO];
-    [_kongqijinghuaBtn setBtnHighlited:NO];
-    [_jiashiqiBtn setBtnHighlited:NO];
-    [_jiankongBtn setBtnHighlited:NO];
-    [_nenghaotongjiBtn setBtnHighlited:NO];
-    
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
-    
-    [self initBrandAndTypes];
-}
+
 - (void) jiashiAction:(id)sender{
     [_zhaomingBtn setBtnHighlited:NO];
     [_kongtiaoBtn setBtnHighlited:NO];
     [_diandongmadaBtn setBtnHighlited:NO];
     [_xinfengBtn setBtnHighlited:NO];
-    [_dinuanBtn setBtnHighlited:NO];
     [_kongqijinghuaBtn setBtnHighlited:NO];
     [_jiashiqiBtn setBtnHighlited:YES];
     [_jiankongBtn setBtnHighlited:NO];
-    [_nenghaotongjiBtn setBtnHighlited:NO];
     
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
-    
-    [self initBrandAndTypes];
+    [self choosedDevice:@"加湿"];
 }
-- (void) menjinAction:(id)sender{
-    [_zhaomingBtn setBtnHighlited:NO];
-    [_kongtiaoBtn setBtnHighlited:YES];
-    [_diandongmadaBtn setBtnHighlited:NO];
-    [_xinfengBtn setBtnHighlited:NO];
-    [_dinuanBtn setBtnHighlited:NO];
-    [_kongqijinghuaBtn setBtnHighlited:NO];
-    [_jiashiqiBtn setBtnHighlited:NO];
-    [_jiankongBtn setBtnHighlited:NO];
-    [_nenghaotongjiBtn setBtnHighlited:NO];
-    
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
-    
-    [self initBrandAndTypes];
-}
+
 - (void) jiankongAction:(id)sender{
     [_zhaomingBtn setBtnHighlited:NO];
     [_kongtiaoBtn setBtnHighlited:NO];
     [_diandongmadaBtn setBtnHighlited:NO];
     [_xinfengBtn setBtnHighlited:NO];
-    [_dinuanBtn setBtnHighlited:NO];
     [_kongqijinghuaBtn setBtnHighlited:NO];
     [_jiashiqiBtn setBtnHighlited:NO];
     [_jiankongBtn setBtnHighlited:YES];
-    [_nenghaotongjiBtn setBtnHighlited:NO];
     
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
-    
-    [self initBrandAndTypes];
-}
-- (void) nenghaotongjiAction:(id)sender{
-    [_zhaomingBtn setBtnHighlited:NO];
-    [_kongtiaoBtn setBtnHighlited:NO];
-    [_diandongmadaBtn setBtnHighlited:NO];
-    [_xinfengBtn setBtnHighlited:NO];
-    [_dinuanBtn setBtnHighlited:NO];
-    [_kongqijinghuaBtn setBtnHighlited:NO];
-    [_jiashiqiBtn setBtnHighlited:NO];
-    [_jiankongBtn setBtnHighlited:NO];
-    [_nenghaotongjiBtn setBtnHighlited:YES];
-    
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
-    
-    [self initBrandAndTypes];
-}
--(void) didScrollPickerValue:(NSString*)brand {
-    
-    if ([@"照明" isEqualToString:brand]) {
-        [self zhaomingAction:_zhaomingBtn];
-    } else if ([@"空调" isEqualToString:brand]) {
-        [self kongtiaoAction:_kongtiaoBtn];
-    } else if ([@"电动马达" isEqualToString:brand]) {
-        [self diandongmadaAction:_diandongmadaBtn];
-    } else if ([@"新风" isEqualToString:brand]) {
-        [self xinfengAction:_xinfengBtn];
-    } else if ([@"地暖" isEqualToString:brand]) {
-        [self dinuanAction:_dinuanBtn];
-    } else if ([@"空气净化" isEqualToString:brand]) {
-        [self kongqijinghuaAction:_kongqijinghuaBtn];
-    } else if ([@"加湿器" isEqualToString:brand]) {
-        [self jiashiAction:_jiashiqiBtn];
-    }else if ([@"监控" isEqualToString:brand]) {
-        [self jiankongAction:_jiankongBtn];
-    } else {
-        [self nenghaotongjiAction:_nenghaotongjiBtn];
-    }
+    [self choosedDevice:@"监控"];
 }
 
--(void) setBrandValue:(NSString*)brand {
+
+
+-(void) didScrollPickerValue:(NSString*)value  obj:(id)obj{
     
-    if (brand == nil) {
-        return;
-    }
-    NSArray *array = _productTypePikcer._pickerDataArray;
-    int index = 0;
-    for (NSDictionary *dic in array) {
-        NSArray *valueArray = [dic objectForKey:@"values"];
-        for (NSString * str in valueArray) {
-            if ([str isEqualToString:brand]) {
-                break;
-            }
-            index++;
-        }
-    }
-    [_productTypePikcer selectRow:index inComponent:0];
+    //类型
+    if(obj == _productTypePikcer)
+    {
+        [self choosedDeviceType:value];
+    }//品牌
+    else if(obj == _brandPicker)
+    {
+        [self choosedCurrentBand:value];
+    }//型号
+    
 }
+
 - (void) okAction:(id)sender{
     
     EnginnerChuanGanDevicePluginViewCtrl *ctrl = [[EnginnerChuanGanDevicePluginViewCtrl alloc] init];

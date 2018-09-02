@@ -345,7 +345,7 @@
     [self setBrandValue:btnText];
     
 }
--(void) didScrollPickerValue:(NSString*)brand {
+-(void) didScrollPickerValue:(NSString*)brand obj:(id)obj{
     if ([@"串口服务器" isEqualToString:brand]) {
         [self chuankouAction:_chuankoufuwuqiBtn];
     } else if ([@"网口服务器" isEqualToString:brand]) {
