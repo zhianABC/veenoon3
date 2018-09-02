@@ -77,16 +77,16 @@
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-//    okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
-//    [bottomBar addSubview:okBtn];
-//    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
-//    [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
-//    okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-//    [okBtn addTarget:self
-//              action:@selector(settingAction:)
-//    forControlEvents:UIControlEventTouchUpInside];
+    okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
+    [bottomBar addSubview:okBtn];
+    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+    [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [okBtn addTarget:self
+              action:@selector(settingAction:)
+    forControlEvents:UIControlEventTouchUpInside];
     
     int index = 0;
     int top = ENGINEER_VIEW_COMPONENT_TOP;
@@ -105,7 +105,7 @@
         int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+top;
         
-        UIButton *scenarioBtn = [UIButton buttonWithColor:nil selColor:RGB(0, 89, 118)];
+        UIButton *scenarioBtn = [UIButton buttonWithColor:nil selColor:nil];
         scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
         scenarioBtn.clipsToBounds = YES;
         scenarioBtn.layer.cornerRadius = 5;
@@ -128,16 +128,6 @@
         [self createBtnLabel:scenarioBtn dataDic:dataDic];
         index++;
     }
-    
-    if(_settingView == nil)
-    {
-        _settingView = [[AirConditionRightView alloc]
-                        initWithFrame:CGRectMake(SCREEN_WIDTH-300,
-                                                 64, 300, SCREEN_HEIGHT-114)];
-    }
-    
-    [self.view addSubview:_settingView];
-    //[okBtn setTitle:@"保存" forState:UIControlStateNormal];
     
     [self getCurrentDeviceDriverProxys];
 }

@@ -131,21 +131,6 @@
     [_tableView reloadData];
 }
 
-- (void) buttonAction:(id)sender{
-    for (UIButton *button in _selectedBtns) {
-        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [button setSelected:NO];
-    }
-    if ([_selectedBtns containsObject:sender]) {
-        [sender setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [sender setSelected:NO];
-        [_selectedBtns removeObject:sender];
-    } else {
-        [sender setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-        [sender setSelected:YES];
-        [_selectedBtns addObject:sender];
-    }
-}
 - (void) switchComSetting{
     
   
@@ -261,20 +246,22 @@
         imageView.frame = CGRectMake(160, 16, 12, 8);
         [cell addSubview:imageView];
         
-        
-        UIColor *rectColor = RGB(0, 146, 174);
-        
-        UIButton *addBtn = [UIButton buttonWithColor:rectColor selColor:BLUE_DOWN_COLOR];
+        UIButton *addBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
         addBtn.frame = CGRectMake(10, 7, 60, 30);
         addBtn.clipsToBounds = YES;
         addBtn.layer.cornerRadius = 5;
         [cell addSubview:addBtn];
         
         [addBtn setTitle:@"+" forState:UIControlStateNormal];
+        [addBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [addBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
         [addBtn addTarget:self action:@selector(addAction:) forControlEvents:UIControlEventTouchUpInside];
         addBtn.titleLabel.font = [UIFont systemFontOfSize:15];
         
-        UIButton *minusBtn = [UIButton buttonWithColor:rectColor selColor:BLUE_DOWN_COLOR];
+        UIButton *minusBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
+        [minusBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [minusBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
+        
         minusBtn.frame = CGRectMake(CGRectGetWidth(self.frame)-70, 7, 60, 30);
         minusBtn.clipsToBounds = YES;
         minusBtn.layer.cornerRadius = 5;
@@ -293,7 +280,7 @@
     }
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 43, self.frame.size.width, 1)];
-    line.backgroundColor =  M_GREEN_LINE;
+    line.backgroundColor =  NEW_ER_BUTTON_GRAY_COLOR2;
     [cell.contentView addSubview:line];
     
     if(_curIndex == indexPath.row && _curIndex != 1) {
