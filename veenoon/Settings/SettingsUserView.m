@@ -38,34 +38,31 @@
         self.userInteractionEnabled = YES;
         self.backgroundColor = [UIColor clearColor];
         
-        int left = 150;
-        int top = 50;
+        int left = 165;
+        int top = 140;
         int sec2Top = top+250;
+        
+        float righSpace = 180;
         
         _content = [[UIScrollView alloc] initWithFrame:self.bounds];
         [self addSubview:_content];
         _content.contentSize = CGSizeMake(frame.size.width, frame.size.height+10);
         
-        UILabel* titleL2 = [[UILabel alloc] initWithFrame:CGRectMake(left, top, 100, 20)];
+        UILabel* titleL2 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+5, 100, 30)];
         titleL2.backgroundColor = [UIColor clearColor];
         [_content addSubview:titleL2];
         titleL2.font = [UIFont systemFontOfSize:16];
         titleL2.textColor  = [UIColor whiteColor];
         titleL2.text = @"账户信息";
         
-        UILabel* titleL3 = [[UILabel alloc] initWithFrame:CGRectMake(left, sec2Top, 100, 20)];
-        titleL3.backgroundColor = [UIColor clearColor];
-        [_content addSubview:titleL3];
-        titleL3.font = [UIFont systemFontOfSize:16];
-        titleL3.textColor  = [UIColor whiteColor];
-        titleL3.text = @"安全设置";
+        
         
         int blockLx = left+160;
         int fieldLx = blockLx + 100;
         
         UILabel* titleL4 = [[UILabel alloc] initWithFrame:CGRectMake(blockLx,
-                                                                     top,
-                                                                     80, 20)];
+                                                                     top+5,
+                                                                     80, 30)];
         titleL4.backgroundColor = [UIColor clearColor];
         [_content addSubview:titleL4];
         titleL4.font = [UIFont boldSystemFontOfSize:16];
@@ -73,29 +70,32 @@
         titleL4.text = @"企业";
         
         companyField = [[UITextField alloc] initWithFrame:CGRectMake(fieldLx,
-                                                                     top-10,
-                                                                     SCREEN_WIDTH-fieldLx-150, 40)];
+                                                                     top,
+                                                                     SCREEN_WIDTH-fieldLx-righSpace, 30)];
         companyField.delegate = self;
         companyField.textAlignment = NSTextAlignmentLeft;
         companyField.returnKeyType = UIReturnKeyDone;
-        companyField.placeholder = @"";
+        companyField.placeholder = @"请输入企业名称";
+        [companyField setValue:[UIColor grayColor] forKeyPath:@"_placeholderLabel.textColor"];
         companyField.backgroundColor = [UIColor clearColor];
+        companyField.font = [UIFont systemFontOfSize:16];
         companyField.textColor = RGB(70, 219, 254);
         companyField.borderStyle = UITextBorderStyleNone;
         [_content addSubview:companyField];
         
+        top = CGRectGetMaxY(companyField.frame);
         
-        UILabel *line1 = [[UILabel alloc] initWithFrame:CGRectMake(fieldLx, top+26,
-                                                                   SCREEN_WIDTH-fieldLx-150, 1)];
+        UILabel *line1 = [[UILabel alloc] initWithFrame:CGRectMake(fieldLx, top,
+                                                                   SCREEN_WIDTH-fieldLx-righSpace, 1)];
         line1.backgroundColor = WHITE_LINE_COLOR;
         [_content addSubview:line1];
         
-        top+=40;
+        top = CGRectGetMaxY(line1.frame);
         top+=10;
         
         UILabel* titleL5 = [[UILabel alloc] initWithFrame:CGRectMake(blockLx,
-                                                                     top,
-                                                                     80, 20)];
+                                                                     top+5,
+                                                                     80, 30)];
         titleL5.backgroundColor = [UIColor clearColor];
         [_content addSubview:titleL5];
         titleL5.font = [UIFont boldSystemFontOfSize:16];
@@ -103,52 +103,57 @@
         titleL5.text = @"地址";
         
         _regionBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _regionBtn.frame = CGRectMake(fieldLx, top-10, SCREEN_WIDTH-fieldLx-150, 40);
+        _regionBtn.frame = CGRectMake(fieldLx, top, SCREEN_WIDTH-fieldLx-righSpace, 30);
         _regionBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         [_regionBtn setTitleColor:RGB(109, 210, 244) forState:UIControlStateNormal];
-        _regionBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+        _regionBtn.titleLabel.font = [UIFont systemFontOfSize:16];
         [_content addSubview:_regionBtn];
         [_regionBtn addTarget:self
                        action:@selector(areaPickAction:)
              forControlEvents:UIControlEventTouchUpInside];
         
+        top = CGRectGetMaxY(_regionBtn.frame);
+        
         UILabel *line2 = [[UILabel alloc] initWithFrame:CGRectMake(fieldLx,
-                                                                   top+26,
-                                                                   SCREEN_WIDTH-fieldLx-150,
+                                                                   top,
+                                                                   SCREEN_WIDTH-fieldLx-righSpace,
                                                                    1)];
         line2.backgroundColor = WHITE_LINE_COLOR;
         [_content addSubview:line2];
         
-        top+=40;
+        top = CGRectGetMaxY(line2.frame);
         top+=10;
         
         addressField = [[UITextField alloc] initWithFrame:CGRectMake(fieldLx,
-                                                                     top-10,
-                                                                     SCREEN_WIDTH-fieldLx-150,
-                                                                     40)];
+                                                                     top,
+                                                                     SCREEN_WIDTH-fieldLx-righSpace,
+                                                                     30)];
         addressField.delegate = self;
         addressField.textAlignment = NSTextAlignmentLeft;
         addressField.returnKeyType = UIReturnKeyDone;
-        addressField.placeholder = @"";
+        addressField.placeholder = @"请输入地址";
+        [addressField setValue:[UIColor grayColor] forKeyPath:@"_placeholderLabel.textColor"];
         addressField.backgroundColor = [UIColor clearColor];
         addressField.textColor = RGB(70, 219, 254);
         addressField.borderStyle = UITextBorderStyleNone;
+        addressField.font = [UIFont systemFontOfSize:16];
         [_content addSubview:addressField];
         
+         top = CGRectGetMaxY(addressField.frame);
+        
         UILabel *line3 = [[UILabel alloc] initWithFrame:CGRectMake(fieldLx,
-                                                                   top+26,
-                                                                   SCREEN_WIDTH-fieldLx-150,
+                                                                   top,
+                                                                   SCREEN_WIDTH-fieldLx-righSpace,
                                                                    1)];
         line3.backgroundColor = WHITE_LINE_COLOR;
         [_content addSubview:line3];
 
-
-        top+=40;
-        top+=10;
+        top = CGRectGetMaxY(line3.frame);
+        top+=15;
         
         UILabel* titleL6 = [[UILabel alloc] initWithFrame:CGRectMake(blockLx,
-                                                                     top,
-                                                                     80, 20)];
+                                                                     top+5,
+                                                                     80, 30)];
         titleL6.backgroundColor = [UIColor clearColor];
         [_content addSubview:titleL6];
         titleL6.font = [UIFont boldSystemFontOfSize:16];
@@ -157,63 +162,82 @@
         
         
         telphoneField = [[UITextField alloc] initWithFrame:CGRectMake(fieldLx,
-                                                                      top-10,
-                                                                      SCREEN_WIDTH-fieldLx-150,
-                                                                      40)];
+                                                                      top,
+                                                                      SCREEN_WIDTH-fieldLx-righSpace,
+                                                                      30)];
         telphoneField.delegate = self;
         telphoneField.textAlignment = NSTextAlignmentLeft;
         telphoneField.returnKeyType = UIReturnKeyDone;
-        telphoneField.placeholder = @"";
+        telphoneField.placeholder = @"输入手机号码";
+        [telphoneField setValue:[UIColor grayColor] forKeyPath:@"_placeholderLabel.textColor"];
         telphoneField.backgroundColor = [UIColor clearColor];
         telphoneField.textColor = RGB(70, 219, 254);
         telphoneField.borderStyle = UITextBorderStyleNone;
         telphoneField.keyboardType = UIKeyboardTypePhonePad;
+        telphoneField.font = [UIFont systemFontOfSize:16];
         [_content addSubview:telphoneField];
         
+        top = CGRectGetMaxY(telphoneField.frame);
+        
         UILabel *line4 = [[UILabel alloc] initWithFrame:CGRectMake(fieldLx,
-                                                                   top+26,
-                                                                   SCREEN_WIDTH-fieldLx-150, 1)];
+                                                                   top,
+                                                                   SCREEN_WIDTH-fieldLx-righSpace, 1)];
         line4.backgroundColor = WHITE_LINE_COLOR;
         [_content addSubview:line4];
         
+        top = CGRectGetMaxY(line4.frame);
+        top+=10;
 
+        
+        sec2Top = top + 50;
+        
+        UILabel* titleL3 = [[UILabel alloc] initWithFrame:CGRectMake(left, sec2Top+5, 100, 30)];
+        titleL3.backgroundColor = [UIColor clearColor];
+        [_content addSubview:titleL3];
+        titleL3.font = [UIFont systemFontOfSize:16];
+        titleL3.textColor  = [UIColor whiteColor];
+        titleL3.text = @"安全设置";
+        
  //////////////////////////////////
         
         UILabel* titleL7 = [[UILabel alloc] initWithFrame:CGRectMake(blockLx,
-                                                                     sec2Top,
-                                                                     80, 20)];
+                                                                     sec2Top+5,
+                                                                     80, 30)];
         titleL7.backgroundColor = [UIColor clearColor];
         [_content addSubview:titleL7];
         titleL7.font = [UIFont boldSystemFontOfSize:16];
         titleL7.textColor  = [UIColor whiteColor];
         titleL7.text = @"更换手机";
         
+        
         againTelphone = [[UITextField alloc] initWithFrame:CGRectMake(fieldLx,
-                                                                      sec2Top-10,
-                                                                      SCREEN_WIDTH-fieldLx-150-120,
-                                                                      40)];
+                                                                      sec2Top,
+                                                                      SCREEN_WIDTH-fieldLx-righSpace-120,
+                                                                      30)];
         againTelphone.delegate = self;
         againTelphone.textAlignment = NSTextAlignmentLeft;
         againTelphone.returnKeyType = UIReturnKeyDone;
-        againTelphone.placeholder = @"";
+        againTelphone.placeholder=@"输入手机号码";
+        [againTelphone setValue:[UIColor grayColor] forKeyPath:@"_placeholderLabel.textColor"];
         againTelphone.backgroundColor = [UIColor clearColor];
         againTelphone.textColor = RGB(70, 219, 254);
         againTelphone.borderStyle = UITextBorderStyleNone;
         againTelphone.keyboardType = UIKeyboardTypePhonePad;
+        againTelphone.font = [UIFont systemFontOfSize:16];
         [_content addSubview:againTelphone];
         
         UILabel *line5 = [[UILabel alloc] initWithFrame:CGRectMake(fieldLx,
-                                                                   sec2Top+26,
-                                                                   SCREEN_WIDTH-fieldLx-150-120,
+                                                                   sec2Top,
+                                                                   SCREEN_WIDTH-fieldLx-righSpace-120,
                                                                    1)];
         line5.backgroundColor = WHITE_LINE_COLOR;
         [_content addSubview:line5];
         
         registerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         registerBtn.frame = CGRectMake(CGRectGetMaxX(line5.frame)+20,
-                                       sec2Top-10,
+                                       sec2Top,
                                        100,
-                                       40);
+                                       30);
         [_content addSubview:registerBtn];
         [registerBtn setTitle:@"发送验证码" forState:UIControlStateNormal];
         [registerBtn setTitleColor:RGB(70, 219, 254) forState:UIControlStateNormal];
@@ -223,61 +247,73 @@
                         action:@selector(registerAction:)
               forControlEvents:UIControlEventTouchUpInside];
         
+        sec2Top = CGRectGetMaxY(registerBtn.frame);
+        
+        line5.frame = CGRectMake(fieldLx,sec2Top,SCREEN_WIDTH-fieldLx-righSpace-120,
+                                 1);
+      
         UILabel *line7 = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(line5.frame)+20,
-                                                                   sec2Top+26,
+                                                                   sec2Top,
                                                                    100, 1)];
         line7.backgroundColor = WHITE_LINE_COLOR;
         [_content addSubview:line7];
-
         
-        sec2Top+=40;
+        sec2Top = CGRectGetMaxY(line7.frame);
         sec2Top+=10;
         
         messageCodeField = [[UITextField alloc] initWithFrame:CGRectMake(fieldLx,
-                                                                         sec2Top-10,
-                                                                         SCREEN_WIDTH-fieldLx-150-120,
-                                                                         40)];
+                                                                         sec2Top,
+                                                                         SCREEN_WIDTH-fieldLx-righSpace-120,
+                                                                         30)];
         messageCodeField.delegate = self;
         messageCodeField.textAlignment = NSTextAlignmentLeft;
         messageCodeField.returnKeyType = UIReturnKeyDone;
-        messageCodeField.placeholder = @"";
+        messageCodeField.placeholder=@"短信验证码";
+        messageCodeField.attributedPlaceholder = [[NSAttributedString alloc]
+                                               initWithString:@"验证码"
+                                               attributes:@{NSForegroundColorAttributeName:RGB(70, 219, 254)}];
+        [messageCodeField setValue:[UIColor grayColor] forKeyPath:@"_placeholderLabel.textColor"];
         messageCodeField.backgroundColor = [UIColor clearColor];
         messageCodeField.textColor = [UIColor whiteColor];
         messageCodeField.borderStyle = UITextBorderStyleNone;
         messageCodeField.keyboardType = UIKeyboardTypeNumberPad;
+        messageCodeField.font = [UIFont systemFontOfSize:16];
         [_content addSubview:messageCodeField];
         
         
+        
         UILabel *line6 = [[UILabel alloc] initWithFrame:CGRectMake(fieldLx,
-                                                                   sec2Top+26,
-                                                                   SCREEN_WIDTH-fieldLx-150-120,
+                                                                   CGRectGetMaxY(messageCodeField.frame),
+                                                                   SCREEN_WIDTH-fieldLx-righSpace-120,
                                                                    1)];
         line6.backgroundColor = WHITE_LINE_COLOR;
         [_content addSubview:line6];
+
         
         _timerLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(line6.frame)+20,
-                                                                sec2Top-10,
-                                                                100, 40)];
+                                                                sec2Top,
+                                                                100, 30)];
         _timerLabel.text = @"180秒 有效";
         _timerLabel.textAlignment = NSTextAlignmentCenter;
         _timerLabel.textColor = RGB(70, 219, 254);
         _timerLabel.font = [UIFont systemFontOfSize:16];
         [_content addSubview:_timerLabel];
 
+        sec2Top = CGRectGetMaxY(_timerLabel.frame);
         
         UILabel *line10 = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(line6.frame)+20,
-                                                                    sec2Top+26,
+                                                                    sec2Top,
                                                                     100, 1)];
         line10.backgroundColor = WHITE_LINE_COLOR;
         [_content addSubview:line10];
         
         
-        sec2Top+=40;
+        sec2Top = CGRectGetMaxY(line10.frame);
         sec2Top+=10;
         
         UILabel* titleL8 = [[UILabel alloc] initWithFrame:CGRectMake(blockLx,
-                                                                     sec2Top,
-                                                                     80, 20)];
+                                                                     sec2Top+5,
+                                                                     80, 30)];
         titleL8.backgroundColor = [UIColor clearColor];
         [_content addSubview:titleL8];
         titleL8.font = [UIFont boldSystemFontOfSize:16];
@@ -286,34 +322,36 @@
         
         passwordField = [[UITextField alloc] initWithFrame:CGRectMake(fieldLx,
                                                                       sec2Top-10,
-                                                                      SCREEN_WIDTH-fieldLx-150,
+                                                                      SCREEN_WIDTH-fieldLx-righSpace,
                                                                       40)];
         passwordField.delegate = self;
         passwordField.textAlignment = NSTextAlignmentLeft;
         passwordField.returnKeyType = UIReturnKeyDone;
-        passwordField.placeholder = @"";
+        passwordField.placeholder = @"请输入6-18位密码";
+        [passwordField setValue:[UIColor grayColor] forKeyPath:@"_placeholderLabel.textColor"];
         passwordField.backgroundColor = [UIColor clearColor];
         passwordField.secureTextEntry = YES;
         passwordField.textColor = RGB(70, 219, 254);
         passwordField.borderStyle = UITextBorderStyleNone;
+        passwordField.font = [UIFont systemFontOfSize:16];
         [_content addSubview:passwordField];
 
+        sec2Top = CGRectGetMaxY(passwordField.frame);
         
         UILabel *line8 = [[UILabel alloc] initWithFrame:CGRectMake(fieldLx,
-                                                                   sec2Top+26,
-                                                                   SCREEN_WIDTH-fieldLx-150,
+                                                                   sec2Top,
+                                                                   SCREEN_WIDTH-fieldLx-righSpace,
                                                                    1)];
         line8.backgroundColor = WHITE_LINE_COLOR;
         [_content addSubview:line8];
         
 
-        
-        sec2Top+=40;
+        sec2Top = CGRectGetMaxY(line8.frame);
         sec2Top+=10;
         
         UILabel* titleL9 = [[UILabel alloc] initWithFrame:CGRectMake(blockLx,
-                                                                     sec2Top,
-                                                                     80, 20)];
+                                                                     sec2Top+5,
+                                                                     80, 30)];
         titleL9.backgroundColor = [UIColor clearColor];
         [_content addSubview:titleL9];
         titleL9.font = [UIFont boldSystemFontOfSize:16];
@@ -321,29 +359,33 @@
         titleL9.text = @"确认密码";
         
         againPassword = [[UITextField alloc] initWithFrame:CGRectMake(fieldLx,
-                                                                      sec2Top-10,
-                                                                      SCREEN_WIDTH-fieldLx-150,
-                                                                      40)];
+                                                                      sec2Top,
+                                                                      SCREEN_WIDTH-fieldLx-righSpace,
+                                                                      30)];
         againPassword.delegate = self;
         againPassword.textAlignment = NSTextAlignmentLeft;
         againPassword.returnKeyType = UIReturnKeyDone;
-        againPassword.placeholder = @"";
+        againPassword.placeholder = @"请输入6-18位密码";
+        [againPassword setValue:[UIColor grayColor] forKeyPath:@"_placeholderLabel.textColor"];
         againPassword.backgroundColor = [UIColor clearColor];
         againPassword.textColor = RGB(70, 219, 254);
         againPassword.secureTextEntry = YES;
         againPassword.borderStyle = UITextBorderStyleNone;
+        againPassword.font = [UIFont systemFontOfSize:16];
         [_content addSubview:againPassword];
 
         
-        
+        sec2Top = CGRectGetMaxY(againPassword.frame);
 
         UILabel *line9 = [[UILabel alloc] initWithFrame:CGRectMake(fieldLx,
-                                                                   sec2Top+26,
-                                                                   SCREEN_WIDTH-fieldLx-150,
+                                                                   sec2Top,
+                                                                   SCREEN_WIDTH-fieldLx-righSpace,
                                                                    1)];
         line9.backgroundColor = WHITE_LINE_COLOR;
         [_content addSubview:line9];
         
+        sec2Top = CGRectGetMaxY(line9.frame);
+        sec2Top+=10;
         
         UIButton *logout = [UIButton buttonWithColor:USER_GRAY_COLOR
                                             selColor:nil];

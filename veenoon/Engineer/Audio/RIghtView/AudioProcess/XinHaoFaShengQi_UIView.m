@@ -68,7 +68,21 @@
     
     if(self = [super initWithFrame:frame])
     {
-    
+        channelBtn = [UIButton buttonWithColor:nil selColor:nil];
+        channelBtn.frame = CGRectMake(0, 50, 70, 36);
+        channelBtn.clipsToBounds = YES;
+        channelBtn.layer.cornerRadius = 5;
+        channelBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+        if (self._currentSignalProxy && self._currentSignalProxy._rgsProxyObj) {
+            [channelBtn setTitle:self._currentSignalProxy._rgsProxyObj.name forState:UIControlStateNormal];
+        } else {
+            [channelBtn setTitle:@"Out 1" forState:UIControlStateNormal];
+        }
+        
+        [channelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [self addSubview:channelBtn];
+        
+        
         self._currentAudio = audioProcessor;
         self._currentSignalProxy = proxy;
         
@@ -76,6 +90,9 @@
         outputChanels = [NSMutableArray array];
         
         outputSelectedBtns = [NSMutableArray array];
+        
+        int y = CGRectGetMaxY(channelBtn.frame)+10;
+        contentView.frame = CGRectMake(0, y, frame.size.width, 340);
         
         [self contentViewComps];
     }
@@ -150,7 +167,7 @@
     }
     else
     {
-        [xinhaoMuteBtn changeNormalColor:RGB(75, 163, 202)];
+        [xinhaoMuteBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
     }
 }
 - (void) contentViewComps{
@@ -158,14 +175,16 @@
     int btnY = 150;
     int btnX = 200;
     
+    int topY = 100;
+    
     UILabel *addLabel2 = [[UILabel alloc] init];
     addLabel2.text = @"频率 (Hz)";
     addLabel2.font = [UIFont boldSystemFontOfSize: 13];
     addLabel2.textColor = [UIColor whiteColor];
-    addLabel2.frame = CGRectMake(btnX+30, 120, 120, 20);
+    addLabel2.frame = CGRectMake(btnX+30, 120+topY, 120, 20);
     [self addSubview:addLabel2];
     
-    xinhaoPinlvSlider = [[SlideButton alloc] initWithFrame:CGRectMake(btnX, 135, 120, 120)];
+    xinhaoPinlvSlider = [[SlideButton alloc] initWithFrame:CGRectMake(btnX, 135+topY, 120, 120)];
     xinhaoPinlvSlider._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
     xinhaoPinlvSlider._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
     [xinhaoPinlvSlider enableValueSet:YES];
@@ -173,16 +192,19 @@
     xinhaoPinlvSlider.tag = 3;
     [self addSubview:xinhaoPinlvSlider];
     
-    zhengxuanboL = [[UILabel alloc] initWithFrame:CGRectMake(btnX, 135+100, 120, 20)];
+    zhengxuanboL = [[UILabel alloc] initWithFrame:CGRectMake(btnX+30, 135+110+topY, 60, 20)];
     zhengxuanboL.text = @"0";
     zhengxuanboL.textAlignment = NSTextAlignmentCenter;
     [self addSubview:zhengxuanboL];
     zhengxuanboL.font = [UIFont systemFontOfSize:13];
-    zhengxuanboL.textColor = YELLOW_COLOR;
+    zhengxuanboL.textColor = NEW_ER_BUTTON_SD_COLOR;
+    zhengxuanboL.layer.cornerRadius=5;
+    zhengxuanboL.clipsToBounds=YES;
+    zhengxuanboL.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR2;
     
     
-    zerodbBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
-    zerodbBtn.frame = CGRectMake(CGRectGetMaxX(zhengxuanboL.frame)+40, btnY+30, 120, 30);
+    zerodbBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
+    zerodbBtn.frame = CGRectMake(CGRectGetMaxX(zhengxuanboL.frame)+90, btnY+30+topY, 120, 30);
     zerodbBtn.layer.cornerRadius = 5;
     zerodbBtn.layer.borderWidth = 2;
     zerodbBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -203,8 +225,8 @@
     [self addSubview:zerodbBtn];
     
     
-    xinhaoMuteBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
-    xinhaoMuteBtn.frame = CGRectMake(CGRectGetMaxX(zerodbBtn.frame)+10, btnY+30, 50, 30);
+    xinhaoMuteBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
+    xinhaoMuteBtn.frame = CGRectMake(CGRectGetMaxX(zerodbBtn.frame)+10, btnY+30+topY, 50, 30);
     xinhaoMuteBtn.layer.cornerRadius = 5;
     xinhaoMuteBtn.layer.borderWidth = 2;
     xinhaoMuteBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -221,10 +243,10 @@
     addLabel.text = @"增益 (dB)";
     addLabel.font = [UIFont boldSystemFontOfSize: 13];
     addLabel.textColor = [UIColor whiteColor];
-    addLabel.frame = CGRectMake(660, 120, 120, 20);
+    addLabel.frame = CGRectMake(660, 120+topY, 120, 20);
     [self addSubview:addLabel];
     
-    xinhaoZengyiSlider = [[SlideButton alloc] initWithFrame:CGRectMake(630, 135, 120, 120)];
+    xinhaoZengyiSlider = [[SlideButton alloc] initWithFrame:CGRectMake(630, 135+topY, 120, 120)];
     xinhaoZengyiSlider._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
     xinhaoZengyiSlider._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
     [xinhaoZengyiSlider enableValueSet:YES];
@@ -232,24 +254,51 @@
     xinhaoZengyiSlider.tag = 2;
     [self addSubview:xinhaoZengyiSlider];
     
-    zengyiL = [[UILabel alloc] initWithFrame:CGRectMake(630, 135+100, 120, 20)];
+    zengyiL = [[UILabel alloc] initWithFrame:CGRectMake(660, 135+110+topY, 60, 20)];
     zengyiL.text = @"1";
     zengyiL.textAlignment = NSTextAlignmentCenter;
     [self addSubview:zengyiL];
     zengyiL.font = [UIFont systemFontOfSize:13];
-    zengyiL.textColor = YELLOW_COLOR;
+    zengyiL.textColor = NEW_ER_BUTTON_SD_COLOR;
+    zengyiL.layer.cornerRadius=5;
+    zengyiL.clipsToBounds=YES;
+    zengyiL.backgroundColor=NEW_ER_BUTTON_GRAY_COLOR2;
     
-    [self createOutPutComps];
+//    [self createOutPutComps];
+}
+
+- (void) channelBtnAction:(UIButton*)sender{
+    
+    int idx = (int)sender.tag;
+    int tag = idx+1;
+    [channelBtn setTitle:[NSString stringWithFormat:@"Out %d", tag] forState:UIControlStateNormal];
+    
+    for(UIButton * btn in _channelBtns)
+    {
+        if(btn == sender)
+        {
+            [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+            [btn changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
+        }
+        else
+        {
+            [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [btn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
+        }
+    }
+    
+    
+    [self updateProxyCommandValIsLoaded];
 }
 
 
 - (void) createOutPutComps {
     
-    UILabel *labelL = [[UILabel alloc] initWithFrame:CGRectMake(0, 320, 120, 120)];
+    UILabel *labelL = [[UILabel alloc] initWithFrame:CGRectMake(0, 320, 220, 120)];
     labelL.textAlignment = NSTextAlignmentLeft;
-    [self addSubview:labelL];
+//    [self addSubview:labelL];
     labelL.font = [UIFont systemFontOfSize:13];
-    labelL.textColor = YELLOW_COLOR;
+    labelL.textColor = NEW_ER_BUTTON_SD_COLOR;
     
     labelL.text = @"输出通道";
     
@@ -273,7 +322,7 @@
     outputSelectedBtns = [NSMutableArray array];
     
     float x = 0;
-    int y = CGRectGetHeight(self.frame)-150;
+    int y = CGRectGetHeight(self.frame)-80;
     
     float spx = (CGRectGetWidth(self.frame) - num*50.0)/(num-1);
     if(spx > 10)
@@ -282,7 +331,7 @@
     {
         //VAProcessorProxys *vProxy = [self._currentAudio._outAudioProxys objectAtIndex:i];
         
-        UIButton *btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+        UIButton *btn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
         btn.frame = CGRectMake(x, y, 50, 50);
         btn.clipsToBounds = YES;
         btn.layer.cornerRadius = 5;
@@ -294,7 +343,7 @@
         [self addSubview:btn];
         
         [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [btn setTitleColor:YELLOW_COLOR forState:UIControlStateHighlighted];
+        [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
         
         [btn addTarget:self
                 action:@selector(outputChanelBtnAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -320,13 +369,13 @@
     BOOL isEnable;
     if (selectedBtn) {
         [selectedBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        
+        [selectedBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
         [outputSelectedBtns removeObject:selectedBtn];
         
         isEnable = NO;
     } else {
         [sender setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-        
+        [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
         [outputSelectedBtns addObject:sender];
         
         isEnable = YES;
@@ -426,7 +475,7 @@
     }
     else
     {
-        [xinhaoMuteBtn changeNormalColor:RGB(75, 163, 202)];
+        [xinhaoMuteBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
     }
 }
 

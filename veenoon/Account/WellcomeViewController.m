@@ -29,6 +29,7 @@
 @end
 
 @implementation WellcomeViewController
+@synthesize _isActiving;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -187,6 +188,7 @@
      */
     
     
+   
     
 }
 

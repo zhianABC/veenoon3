@@ -31,6 +31,8 @@
     
     YanShiQi_UIView *yanshiView;
     UIButton *yanshiqiBtn;
+    
+    UIButton *_curSelectBtn;
 }
 
 @end
@@ -41,7 +43,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [super setCenterTitle:@"输出设置"];
+    [self setTitleAndImage:@"audio_corner_yinpinchuli.png" withTitle:@"音频处理器"];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
@@ -79,7 +81,10 @@
     int bw = 80;
     int bh = 30;
     
-    xinhaofashengqiBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+    xinhaofashengqiBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
+    _curSelectBtn = xinhaofashengqiBtn;
+    [_curSelectBtn changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
+    
     xinhaofashengqiBtn.frame = CGRectMake(startX, startY, bw, bh);
     xinhaofashengqiBtn.clipsToBounds = YES;
     xinhaofashengqiBtn.layer.cornerRadius = 5;
@@ -87,15 +92,15 @@
     xinhaofashengqiBtn.layer.borderColor = [UIColor clearColor].CGColor;
     xinhaofashengqiBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [xinhaofashengqiBtn setTitle:@"信号发生器" forState:UIControlStateNormal];
-    [xinhaofashengqiBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-    [xinhaofashengqiBtn setTitleColor:YELLOW_COLOR forState:UIControlStateHighlighted];
+    [xinhaofashengqiBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+    [xinhaofashengqiBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     [self.view addSubview:xinhaofashengqiBtn];
     [xinhaofashengqiBtn addTarget:self
                   action:@selector(xinhaofashengqiAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
     
-    dianpingBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+    dianpingBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
     dianpingBtn.frame = CGRectMake(CGRectGetMaxX(xinhaofashengqiBtn.frame) + gap, startY, bw, bh);
     dianpingBtn.clipsToBounds = YES;
     dianpingBtn.layer.cornerRadius = 5;
@@ -104,14 +109,14 @@
     dianpingBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [dianpingBtn setTitle:@"电平" forState:UIControlStateNormal];
     [dianpingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [dianpingBtn setTitleColor:YELLOW_COLOR forState:UIControlStateHighlighted];
+    [dianpingBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     [self.view addSubview:dianpingBtn];
     [dianpingBtn addTarget:self
                        action:@selector(dianpingAction:)
              forControlEvents:UIControlEventTouchUpInside];
     
     
-    lvbojunhengBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+    lvbojunhengBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
     lvbojunhengBtn.frame = CGRectMake(CGRectGetMaxX(dianpingBtn.frame) + gap, startY, bw, bh);
     lvbojunhengBtn.clipsToBounds = YES;
     lvbojunhengBtn.layer.cornerRadius = 5;
@@ -120,13 +125,13 @@
     lvbojunhengBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [lvbojunhengBtn setTitle:@"滤波/均衡" forState:UIControlStateNormal];
     [lvbojunhengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [lvbojunhengBtn setTitleColor:YELLOW_COLOR forState:UIControlStateHighlighted];
+    [lvbojunhengBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     [self.view addSubview:lvbojunhengBtn];
     [lvbojunhengBtn addTarget:self
                        action:@selector(lvbojunhengAction:)
              forControlEvents:UIControlEventTouchUpInside];
     
-    yaxianBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+    yaxianBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
     yaxianBtn.frame = CGRectMake(CGRectGetMaxX(lvbojunhengBtn.frame) + gap, startY, bw, bh);
     yaxianBtn.clipsToBounds = YES;
     yaxianBtn.layer.cornerRadius = 5;
@@ -135,13 +140,13 @@
     yaxianBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [yaxianBtn setTitle:@"压限器" forState:UIControlStateNormal];
     [yaxianBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [yaxianBtn setTitleColor:YELLOW_COLOR forState:UIControlStateHighlighted];
+    [yaxianBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     [self.view addSubview:yaxianBtn];
     [yaxianBtn addTarget:self
                   action:@selector(yaxianqiAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    yanshiqiBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+    yanshiqiBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
     yanshiqiBtn.frame = CGRectMake(CGRectGetMaxX(yaxianBtn.frame) + gap, startY, bw, bh);
     yanshiqiBtn.clipsToBounds = YES;
     yanshiqiBtn.layer.cornerRadius = 5;
@@ -150,7 +155,7 @@
     yanshiqiBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [yanshiqiBtn setTitle:@"延时器" forState:UIControlStateNormal];
     [yanshiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [yanshiqiBtn setTitleColor:YELLOW_COLOR forState:UIControlStateHighlighted];
+    [yanshiqiBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     [self.view addSubview:yanshiqiBtn];
     [yanshiqiBtn addTarget:self
                     action:@selector(yanshiqiAction:)
@@ -164,6 +169,8 @@
     xinhaoView.hidden = NO;
     
     [xinhaoView updateProxyCommandValIsLoaded];
+    xinhaoView._proxys = _processor._outAudioProxys;
+    [xinhaoView layoutChannelBtns:numProxys];
     
     dianpingView = [[DianPing_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._outAudioProxys];
     [self.view addSubview:dianpingView];
@@ -193,12 +200,20 @@
     yanshiView._proxys = _processor._outAudioProxys;
     [yanshiView layoutChannelBtns:numProxys];
 }
-- (void) yanshiqiAction:(id)sender{
+- (void) yanshiqiAction:(UIButton*)sender{
     [xinhaofashengqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [yanshiqiBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+    [yanshiqiBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
     [yaxianBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [lvbojunhengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [dianpingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    [_curSelectBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
+    [_curSelectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    [sender setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+    [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
+    
+    _curSelectBtn = sender;
     
     xinhaoView.hidden=YES;
     yanshiView.hidden = NO;
@@ -208,12 +223,20 @@
     
     [yanshiView updateProxyCommandValIsLoaded];
 }
-- (void) yaxianqiAction:(id)sender{
+- (void) yaxianqiAction:(UIButton*)sender{
     [xinhaofashengqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [yanshiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [yaxianBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+    [yaxianBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
     [lvbojunhengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [dianpingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    [_curSelectBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
+    [_curSelectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    [sender setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+    [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
+    
+    _curSelectBtn = sender;
     
     xinhaoView.hidden=YES;
     yanshiView.hidden = YES;
@@ -223,12 +246,20 @@
     
     [yaxianView updateProxyCommandValIsLoaded];
 }
-- (void) lvbojunhengAction:(id)sender{
+- (void) lvbojunhengAction:(UIButton*)sender{
     [xinhaofashengqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [yanshiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [yaxianBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [lvbojunhengBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+    [lvbojunhengBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
     [dianpingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    [_curSelectBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
+    [_curSelectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    [sender setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+    [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
+    
+    _curSelectBtn = sender;
     
     xinhaoView.hidden=YES;
     yanshiView.hidden = YES;
@@ -238,13 +269,21 @@
     
     [lvbojunhengView updateProxyCommandValIsLoaded];
 }
-- (void) dianpingAction:(id)sender{
+- (void) dianpingAction:(UIButton*)sender{
     
     [xinhaofashengqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [yanshiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [yaxianBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [lvbojunhengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [dianpingBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+    [dianpingBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+    
+    [_curSelectBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
+    [_curSelectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    [sender setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+    [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
+    
+    _curSelectBtn = sender;
     
     xinhaoView.hidden=YES;
     yanshiView.hidden = YES;
@@ -254,13 +293,21 @@
     
     [dianpingView updateProxyCommandValIsLoaded];
 }
-- (void) xinhaofashengqiAction:(id)sender{
+- (void) xinhaofashengqiAction:(UIButton*)sender{
     
-    [xinhaofashengqiBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+    [xinhaofashengqiBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
     [yanshiqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [yaxianBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [lvbojunhengBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [dianpingBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    [_curSelectBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
+    [_curSelectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    [sender setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+    [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
+    
+    _curSelectBtn = sender;
     
     xinhaoView.hidden=NO;
     yanshiView.hidden = YES;

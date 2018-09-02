@@ -50,16 +50,22 @@
         }
         else
         {
-            InvitationCodeViewCotroller *wellcome = [[InvitationCodeViewCotroller alloc] init];
-            wellcome.showBack = NO;
+            WellcomeViewController *wellcome = [[WellcomeViewController alloc] init];
+            wellcome._isActiving = YES;
             _naviRoot = [[CMNavigationController alloc] initWithRootViewController:wellcome];
             _naviRoot.navigationBarHidden = YES;
+            
+//            InvitationCodeViewCotroller *wellcome = [[InvitationCodeViewCotroller alloc] init];
+//            wellcome.showBack = NO;
+//            _naviRoot = [[CMNavigationController alloc] initWithRootViewController:wellcome];
+//            _naviRoot.navigationBarHidden = YES;
             
         }
     }
     else
     {
         WellcomeViewController *wellcome = [[WellcomeViewController alloc] init];
+        wellcome._isActiving = NO;
         _naviRoot = [[CMNavigationController alloc] initWithRootViewController:wellcome];
         _naviRoot.navigationBarHidden = YES;
         

@@ -53,23 +53,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = DARK_GRAY_COLOR;
+    [super setTitleAndImage:@"audio_corner_yinpinchuli.png" withTitle:@"音频处理器"];
     
-    UIView* _topBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 64)];
-    _topBar.backgroundColor = DARK_GRAY_COLOR;
-    [self.view addSubview:_topBar];
-    
-    UILabel* centerTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2-100, 25, 200, 30)];
-    centerTitleLabel.textColor = [UIColor whiteColor];
-    centerTitleLabel.backgroundColor = [UIColor clearColor];
-    centerTitleLabel.textAlignment = NSTextAlignmentCenter;
-    [_topBar addSubview:centerTitleLabel];
-    
-    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 63, SCREEN_WIDTH, 1)];
-    line.backgroundColor = TITLE_LINE_COLOR;
-    [_topBar addSubview:line];
-    
-    centerTitleLabel.text = @"矩阵路由";
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
@@ -119,7 +104,7 @@
     
     
     _maskView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-    _maskView.backgroundColor = RGBA(0, 89, 118, 0.6);
+    _maskView.backgroundColor = RGBA(48, 48, 48, 0.8);
     
     int cx = SCREEN_WIDTH/2;
     int cy = SCREEN_HEIGHT/2;
@@ -150,7 +135,7 @@
     
     
 
-    _dbValue = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(dbbtn.frame)+10, 120, 24)];
+    _dbValue = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(dbbtn.frame)+10, 60, 24)];
     _dbValue.text = @"0.0";
     _dbValue.textAlignment = NSTextAlignmentCenter;
     [_maskView addSubview:_dbValue];
@@ -158,15 +143,17 @@
     _dbValue.textColor = [UIColor whiteColor];
     _dbValue.layer.cornerRadius = 5;
     _dbValue.clipsToBounds = YES;
-    _dbValue.backgroundColor = RGB(0x10, 0x2f, 0x3d);
+    _dbValue.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR2;
     
     _dbValue.center = CGPointMake(cx, _dbValue.center.y);
     
-    _muteBtn = [UIButton buttonWithColor:RGB(0, 146, 174) selColor:nil];
+    _muteBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     _muteBtn.frame = CGRectMake(50, CGRectGetMaxY(_dbValue.frame)+10, 70, 30);
     _muteBtn.clipsToBounds = YES;
     _muteBtn.layer.cornerRadius = 3;
     _muteBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    [_muteBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_muteBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     [_muteBtn setTitle:@"复位" forState:UIControlStateNormal];
     [_maskView addSubview:_muteBtn];
     [_muteBtn addTarget:self
@@ -175,12 +162,14 @@
     
     _muteBtn.center = CGPointMake(cx-40, _muteBtn.center.y);
     
-    UIButton *doneBtn = [UIButton buttonWithColor:RGB(0, 146, 174) selColor:nil];
+    UIButton *doneBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     doneBtn.frame = CGRectMake(50, CGRectGetMaxY(_dbValue.frame)+10, 70, 30);
     doneBtn.clipsToBounds = YES;
     doneBtn.layer.cornerRadius = 3;
     doneBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [doneBtn setTitle:@"确认" forState:UIControlStateNormal];
+    [doneBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [doneBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     [_maskView addSubview:doneBtn];
     [doneBtn addTarget:self
                  action:@selector(doneAction:)
@@ -207,7 +196,7 @@
     
     
     int left = (SCREEN_WIDTH - (maxIn * w))/2;
-    int top = 40;
+    int top = 50;
     
     int x = 0;
     int y = 0;
@@ -218,7 +207,12 @@
     {
          y = top + i*h;
         VAProcessorProxys *vap = [audio_outs objectAtIndex:i];
-        vap._valName = [NSString stringWithFormat:@"Out %d", i+1];
+        
+        if (i==maxOut-1) {
+            vap._valName = @"Output";
+        } else {
+            vap._valName = [NSString stringWithFormat:@"%02d", i+1];
+        }
         
         UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(left-w, y, w, h)];
         //tL.text = vap._rgsProxyObj.name;
@@ -235,8 +229,12 @@
             if(i == 0)
             {
                 VAProcessorProxys *vap = [audio_ins objectAtIndex:j];
-                vap._valName = [NSString stringWithFormat:@"In %d", j+1];
-                
+                if (j==0) {
+                    vap._valName = @"Input";
+                } else {
+                     vap._valName = [NSString stringWithFormat:@"%02d", j+1];
+                }
+               
                 UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(x, y-20, w, 20)];
                 //tL.text = vap._rgsProxyObj.name;
                 tL.text = vap._valName;
@@ -246,8 +244,8 @@
                 tL.textColor = [UIColor whiteColor];
             }
             
-            UIButton *btn = [UIButton buttonWithColor:RGB(75, 163, 202)
-                                             selColor:nil];
+            UIButton *btn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR
+                                             selColor:NEW_ER_BUTTON_BL_COLOR];
             btn.frame = CGRectMake(x-2, y+2, w-4, h-4);
             [_matrix addSubview:btn];
             btn.layer.cornerRadius = 5;
@@ -307,14 +305,12 @@
 
 
 - (void) doneAction:(id)sender{
-    
     self._selectBtn = nil;
     [_maskView removeFromSuperview];
     
 }
 
-- (void) clearAction:(id)sender{
-    
+- (void) clearAction:(UIButton*)sender{
     
 }
 
@@ -369,7 +365,7 @@
     {
         [_map setObject:@"1" forKey:key];
         
-        [sender changeNormalColor:RGB(0x10, 0x2f, 0x3d)];
+        [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
         
         [sender setTitle:@"0.0" forState:UIControlStateNormal];
         
@@ -400,7 +396,7 @@
     {
         [_map removeObjectForKey:key];
         
-        [sender changeNormalColor:RGB(75, 163, 202)];
+        [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
         
         [sender setTitle:@"" forState:UIControlStateNormal];
         

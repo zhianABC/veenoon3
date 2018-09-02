@@ -48,12 +48,12 @@
     
     self.view.backgroundColor = LOGIN_BLACK_COLOR;
     
-    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(50,
-                                                                80,
+    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(60,
+                                                                105,
                                                                 SCREEN_WIDTH, 20)];
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
-    titleL.font = [UIFont boldSystemFontOfSize:20];
+    titleL.font = [UIFont boldSystemFontOfSize:18];
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"请输入官方授权的序列号";
    
@@ -66,8 +66,7 @@
     bottomBar.userInteractionEnabled = YES;
     bottomBar.image = [UIImage imageNamed:@"botomo_icon_black.png"];
     
-    if(showBack)
-    {
+    
     UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     cancelBtn.frame = CGRectMake(0, 0,160, 50);
     [bottomBar addSubview:cancelBtn];
@@ -75,10 +74,11 @@
     [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [cancelBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
     cancelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    
     [cancelBtn addTarget:self
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
-    }
+    
     
     UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
@@ -91,7 +91,7 @@
                   action:@selector(okAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    _inputPannel = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 400, 180)];
+    _inputPannel = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 400, 50)];
     [self.view addSubview:_inputPannel];
     _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
     
@@ -108,15 +108,20 @@
     ///手机号输入框 pending....
     _invitationCode = [[UITextField alloc] initWithFrame:CGRectMake(left + 80, top+10, w-50, 30)];
     _invitationCode.delegate = self;
-    _invitationCode.layer.cornerRadius = 5;
+    _invitationCode.layer.cornerRadius = 10;
     _invitationCode.layer.masksToBounds = YES;
     _invitationCode.textAlignment = NSTextAlignmentCenter;
     _invitationCode.returnKeyType = UIReturnKeyDone;
     _invitationCode.placeholder = @"";
     _invitationCode.backgroundColor = [UIColor whiteColor];
-    _invitationCode.textColor = RGB(1, 138, 182);
+    _invitationCode.textColor = RGB(70, 219, 254);
     _invitationCode.borderStyle = UITextBorderStyleNone;
     [_inputPannel addSubview:_invitationCode];
+}
+
+- (void) goHome:(id)sender{
+    
+    
 }
 
 - (void) cancelAction:(id)sender {
@@ -127,12 +132,12 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     
-    
+    _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 90);
 }
 
 - (void)  textFieldDidEndEditing:(UITextField *)textField{
     
-    
+    _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{

@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface WellcomeViewController : UIViewController
-
+{
+    
+}
+@property (nonatomic, assign) BOOL _isActiving;
 @end

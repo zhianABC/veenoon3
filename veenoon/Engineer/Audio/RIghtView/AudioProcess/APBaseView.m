@@ -29,7 +29,7 @@
         [self addSubview:contentView];
         contentView.layer.cornerRadius = 5;
         contentView.clipsToBounds = YES;
-        contentView.backgroundColor = RIGHT_VIEW_CORNER_SD_COLOR;
+        contentView.backgroundColor =NEW_ER_BUTTON_GRAY_COLOR;
         
         UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
         tapGesture.cancelsTouchesInView =  NO;
@@ -60,7 +60,7 @@
         spx = 10;
     for(int i = 0; i < num; i++)
     {
-        UIButton *btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+        UIButton *btn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
         btn.frame = CGRectMake(x, y, 50, 50);
         btn.clipsToBounds = YES;
         btn.layer.cornerRadius = 5;
@@ -71,13 +71,13 @@
         
         if(i == 0)
         {
-            [btn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-            [btn setTitleColor:YELLOW_COLOR forState:UIControlStateHighlighted];
+            [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+            [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
         }
         else
         {
             [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            [btn setTitleColor:YELLOW_COLOR forState:UIControlStateHighlighted];
+            [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
         }
         
         [btn addTarget:self

@@ -144,7 +144,7 @@
     _zengyiSlider.minValue = minAnalogyGain;
     _zengyiSlider.delegate = self;
     [_zengyiSlider resetScale];
-    _zengyiSlider.center = CGPointMake(SCREEN_WIDTH - 110, SCREEN_HEIGHT/2+50);
+    _zengyiSlider.center = CGPointMake(TESLARIA_SLIDER_X, TESLARIA_SLIDER_Y);
     
     int height = 150;
     
@@ -317,7 +317,7 @@
     [_inputBtnArray removeAllObjects];
     
     int height = 5;
-    int inputOutGap = 282;
+    int inputOutGap = 255;
     
     
     UILabel* subTL = [[UILabel alloc] initWithFrame:CGRectMake(50, height-5, 100, 20)];
@@ -406,6 +406,9 @@
         int col = index%colNumber;
         int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+height+20;
+        if (row>=1) {
+            startY-=20;
+        }
         
         SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(startX, startY, cellWidth, cellHeight)];
         btn.delegate = self;
@@ -446,7 +449,11 @@
         int row = i/colNumber;
         int col = i%colNumber;
         int startX = col*cellWidth+col*space+leftRight;
-        int startY = row*cellHeight+space*row+height+20+inputOutGap;
+        int startY = row*cellHeight+space*row+height+inputOutGap+20;
+        
+        if (row>=1) {
+            startY-=20;
+        }
         
         SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(startX, startY, cellWidth, cellHeight)];
         btn.tag = index;

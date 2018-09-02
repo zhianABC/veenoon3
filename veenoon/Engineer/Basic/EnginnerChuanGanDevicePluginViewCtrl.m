@@ -72,14 +72,14 @@
     UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, ENGINEER_VIEW_TOP+10, SCREEN_WIDTH-80, 30)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont boldSystemFontOfSize:20];
+    portDNSLabel.font = [UIFont boldSystemFontOfSize:18];
     portDNSLabel.textColor  = [UIColor whiteColor];
     portDNSLabel.text = @"请配置您的传感器管理系统";
     
     portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, CGRectGetMaxY(portDNSLabel.frame)+20, SCREEN_WIDTH-80, 20)];
     portDNSLabel.backgroundColor = [UIColor clearColor];
     [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont systemFontOfSize:18];
+    portDNSLabel.font = [UIFont systemFontOfSize:16];
     portDNSLabel.textColor  = [UIColor colorWithWhite:1.0 alpha:0.9];
     portDNSLabel.text = @"选择您所需要设置的设备类型> 品牌 > 型号";
     
@@ -113,12 +113,12 @@
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
-    int left = 100;
+    int left = 110;
     int rowGap = (SCREEN_WIDTH - left * 2)/6 -10;
     int height = 200;
     
     _rentichuanganBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left, height, 140, 110)];
-    [_rentichuanganBtn buttonWithIcon:[UIImage imageNamed:@"rentichuangan_n.png"] selectedIcon:[UIImage imageNamed:@"rentichuangan_s.png"] text:@"人体感应传感器" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
+    [_rentichuanganBtn buttonWithIcon:[UIImage imageNamed:@"rentichuangan_n.png"] selectedIcon:[UIImage imageNamed:@"rentichuangan_s.png"] text:@"人体感应" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_rentichuanganBtn addTarget:self action:@selector(rentichuangangAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_rentichuanganBtn];
     
@@ -126,12 +126,12 @@
     _wenshiduBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap, height, 140, 110)];
     [_wenshiduBtn buttonWithIcon:[UIImage imageNamed:@"wenshiduchuangan_n.png"] selectedIcon:[UIImage imageNamed:@"wenshiduchuangan_s.png"] text:@"温湿度传感器" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_wenshiduBtn addTarget:self action:@selector(wenshiduchuanganAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_wenshiduBtn];
+//    [self.view addSubview:_wenshiduBtn];
     
     
     
-    _kongqizhiliangBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*2, height, 140, 110)];
-    [_kongqizhiliangBtn buttonWithIcon:[UIImage imageNamed:@"kongqichuangan_n.png"] selectedIcon:[UIImage imageNamed:@"kongqichuangan_s.png"] text:@"空气质量传感器" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
+    _kongqizhiliangBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap, height, 140, 110)];
+    [_kongqizhiliangBtn buttonWithIcon:[UIImage imageNamed:@"kongqichuangan_n.png"] selectedIcon:[UIImage imageNamed:@"kongqichuangan_s.png"] text:@"空气质量" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_kongqizhiliangBtn addTarget:self action:@selector(kongqizhiliangchuanganAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_kongqizhiliangBtn];
     
@@ -149,13 +149,13 @@
     titleL.font = [UIFont boldSystemFontOfSize:16];
     titleL.textAlignment = NSTextAlignmentCenter;
     titleL.textColor  = [UIColor whiteColor];
-    titleL.text = @"产品类型";
+    titleL.text = @"类型";
     
     _productTypePikcer = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(labelStartX, labelStartY+20, maxWidth, 160)];
     [_productTypePikcer removeArray];
     _productTypePikcer.delegate_=self;
     _productTypePikcer.fontSize=14;
-    _productTypePikcer._pickerDataArray = @[@{@"values":@[@"人体感应传感器",@"温湿度传感器",@"空气质量传感器"]}];
+    _productTypePikcer._pickerDataArray = @[@{@"values":@[@"人体感应",@"空气质量"]}];
     [_productTypePikcer selectRow:0 inComponent:0];
     _productTypePikcer._selectColor = RGB(253, 180, 0);
     _productTypePikcer._rowNormalColor = [UIColor whiteColor];
@@ -199,16 +199,13 @@
     [self.view addSubview:_productCategoryPicker];
     
     
-    UIButton *addBtn = [UIButton buttonWithColor:YELLOW_COLOR selColor:nil];
+    UIButton *addBtn = [UIButton buttonWithColor:[UIColor clearColor] selColor:RGB(242, 148, 20)];
     addBtn.frame = CGRectMake(SCREEN_WIDTH/2-50, labelStartY+120+55, 100, 40);
-    addBtn.layer.cornerRadius = 5;
-    addBtn.layer.borderWidth = 2;
-    addBtn.layer.borderColor = [UIColor clearColor].CGColor;
+    
     addBtn.clipsToBounds = YES;
     [self.view addSubview:addBtn];
     [addBtn setTitle:@"添加" forState:UIControlStateNormal];
     [addBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [addBtn setTitleColor:RGB(1, 138, 182) forState:UIControlStateHighlighted];
     addBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [addBtn addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
     

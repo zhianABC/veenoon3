@@ -263,13 +263,13 @@
     [self.view addSubview:topbar];
     [self.view addSubview:bottomBar];
 
-    scenarioButton = [UIButton buttonWithColor:YELLOW_COLOR selColor:nil];
+    scenarioButton = [UIButton buttonWithColor:[UIColor clearColor] selColor:YELLOW_COLOR];
     scenarioButton.frame = CGRectMake(SCREEN_WIDTH-120, 5, 100, 40);
     [bottomBar addSubview:scenarioButton];
     scenarioButton.layer.cornerRadius = 3;
     scenarioButton.clipsToBounds = YES;
     [scenarioButton setTitle:@"生成场景" forState:UIControlStateNormal];
-    [scenarioButton setTitleColor:USER_GRAY_COLOR forState:UIControlStateNormal];
+    [scenarioButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     //[scenarioButton setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
     scenarioButton.titleLabel.font = [UIFont boldSystemFontOfSize:16];
     [scenarioButton addTarget:self
@@ -277,7 +277,6 @@
              forControlEvents:UIControlEventTouchUpInside];
     
     scenarioButton.enabled = NO;
-    scenarioButton.alpha = 0.5;
 
     
     _setBtn = [UIButton buttonWithType:UIButtonTypeCustom];

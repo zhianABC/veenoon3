@@ -40,7 +40,7 @@
         [self addSubview:bgv];
         bgv.layer.cornerRadius = 5;
         bgv.clipsToBounds = YES;
-        bgv.backgroundColor = RGB(0, 89, 118);
+        bgv.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR;
         
         
         rc = CGRectMake(10, 50, frame.size.width-20, 300);
@@ -101,7 +101,7 @@
         [self addSubview:gaotongL];
         gaotongL.textAlignment = NSTextAlignmentCenter;
         gaotongL.layer.cornerRadius = 5;
-        gaotongL.backgroundColor = RGB(0, 89, 118);
+        gaotongL.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR;
         gaotongL.center = CGPointMake(btnJH.center.x, gaotongL.center.y);
         gaotongL.clipsToBounds = YES;
         

@@ -59,16 +59,18 @@
             self._curProxy = [self._proxys objectAtIndex:0];
         }
         
-        channelBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
-        channelBtn.frame = CGRectMake(0, 50, 70, 36);
+        channelBtn = [UIButton buttonWithColor:nil selColor:nil];
+        channelBtn.frame = CGRectMake(0, 50, 300, 36);
+        channelBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+
         channelBtn.clipsToBounds = YES;
         channelBtn.layer.cornerRadius = 5;
         channelBtn.titleLabel.font = [UIFont systemFontOfSize:15];
         [channelBtn setTitle:@"In 1" forState:UIControlStateNormal];
-        [channelBtn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+        [channelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self addSubview:channelBtn];
         
-        int y = CGRectGetMaxY(channelBtn.frame)+20;
+        int y = CGRectGetMaxY(channelBtn.frame)+10;
         contentView.frame = CGRectMake(0, y, frame.size.width, 340);
         
         maxTh = 12;
@@ -112,11 +114,13 @@
     {
         if(btn == sender)
         {
-            [btn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+            [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+            [btn changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
         }
         else
         {
             [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [btn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
         }
     }
     
@@ -193,7 +197,7 @@
     }
     else
     {
-        [muteBtn changeNormalColor:RGB(75, 163, 202)];
+        [muteBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
     }
 }
 
@@ -207,7 +211,7 @@
     }
     else
     {
-        [fanxiangBtn changeNormalColor:RGB(75, 163, 202)];
+        [fanxiangBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
     }
 }
 
@@ -217,11 +221,11 @@
     addLabel.text = @"增益 (dB)";
     addLabel.font = [UIFont systemFontOfSize: 13];
     addLabel.textColor = [UIColor whiteColor];
-    addLabel.frame = CGRectMake(735, 115, 120, 20);
+    addLabel.frame = CGRectMake(735, 80, 120, 20);
     [contentView addSubview:addLabel];
     
     
-    btnJH2 = [[SlideButton alloc] initWithFrame:CGRectMake(700, 235, 120, 120)];
+    btnJH2 = [[SlideButton alloc] initWithFrame:CGRectMake(700, 205, 120, 120)];
     btnJH2._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray_nokd.png"];
     btnJH2._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light_nokd.png"];
     [btnJH2 enableValueSet:YES];
@@ -229,13 +233,15 @@
     btnJH2.tag = 2;
     [self addSubview:btnJH2];
     
-    zaoshengL = [[UILabel alloc] initWithFrame:CGRectMake(700, 135+100, 120, 20)];
+    zaoshengL = [[UILabel alloc] initWithFrame:CGRectMake(730, 135+100, 60, 20)];
     zaoshengL.text = @"-12dB";
     zaoshengL.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:zaoshengL];
     zaoshengL.font = [UIFont systemFontOfSize:13];
-    zaoshengL.textColor = YELLOW_COLOR;
-    
+    zaoshengL.textColor = NEW_ER_BUTTON_SD_COLOR;
+    zaoshengL.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR2;
+    zaoshengL.layer.cornerRadius = 5;
+    zaoshengL.clipsToBounds=YES;
 }
 
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
@@ -253,7 +259,7 @@
     int btnStartX = 100;
     int btnY = 150;
     
-    lineBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    lineBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     lineBtn.frame = CGRectMake(btnStartX, btnY, 120, 30);
     lineBtn.layer.cornerRadius = 5;
     lineBtn.layer.borderWidth = 2;
@@ -276,7 +282,7 @@
     [contentView addSubview:lineBtn];
     
     
-    muteBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    muteBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     muteBtn.frame = CGRectMake(CGRectGetMaxX(lineBtn.frame)+10, btnY, 50, 30);
     muteBtn.layer.cornerRadius = 5;
     muteBtn.layer.borderWidth = 2;
@@ -290,7 +296,7 @@
     [contentView addSubview:muteBtn];
     
     
-    zerodbBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    zerodbBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_GRAY_COLOR3];
     zerodbBtn.frame = CGRectMake(CGRectGetMaxX(muteBtn.frame)+20, btnY, 120, 30);
     zerodbBtn.layer.cornerRadius = 5;
     zerodbBtn.layer.borderWidth = 2;
@@ -313,7 +319,7 @@
                 action:@selector(micDbBtnAction:)
       forControlEvents:UIControlEventTouchUpInside];
     
-    foureivBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    foureivBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_GRAY_COLOR3];
     foureivBtn.frame = CGRectMake(CGRectGetMaxX(zerodbBtn.frame)+10, btnY, 50, 30);
     foureivBtn.layer.cornerRadius = 5;
     foureivBtn.layer.borderWidth = 2;
@@ -331,7 +337,7 @@
       forControlEvents:UIControlEventTouchUpInside];
     
     
-    bianzuBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    bianzuBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     bianzuBtn.frame = CGRectMake(CGRectGetMaxX(foureivBtn.frame)+20, btnY, 120, 30);
     bianzuBtn.layer.cornerRadius = 5;
     bianzuBtn.layer.borderWidth = 2;
@@ -351,7 +357,7 @@
     [contentView addSubview:bianzuBtn];
     
     
-    fanxiangBtn = [UIButton buttonWithColor:RGB(75, 163, 202) selColor:nil];
+    fanxiangBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     fanxiangBtn.frame = CGRectMake(CGRectGetMaxX(bianzuBtn.frame)+10, btnY, 50, 30);
     fanxiangBtn.layer.cornerRadius = 5;
     fanxiangBtn.layer.borderWidth = 2;
@@ -375,7 +381,7 @@
     }
     else
     {
-        [foureivBtn changeNormalColor:RGB(75, 163, 202)];
+        [foureivBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
     }
 }
 

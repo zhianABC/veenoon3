@@ -55,6 +55,7 @@
     centerTitleLabel.backgroundColor = [UIColor clearColor];
     centerTitleLabel.textAlignment = NSTextAlignmentCenter;
     centerTitleLabel.text = @"工程师登录";
+    centerTitleLabel.font = [UIFont boldSystemFontOfSize:18];
     [_topBar addSubview:centerTitleLabel];
     
     
@@ -101,9 +102,9 @@
     
     
     UIButton *signup = [UIButton buttonWithColor:nil selColor:[UIColor whiteColor]];
-    signup.frame = CGRectMake(SCREEN_WIDTH/2 - 125, inputHeight+128+120, 250, 44);
+    signup.frame = CGRectMake(SCREEN_WIDTH/2 - 125, inputHeight+128+150, 250, 36);
     signup.layer.cornerRadius = 8;
-    signup.layer.borderWidth = 1;
+    signup.layer.borderWidth = 0.5;
     signup.layer.borderColor = [UIColor whiteColor].CGColor;
     signup.clipsToBounds = YES;
     [self.view addSubview:signup];
@@ -117,7 +118,7 @@
      forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    backBtn.frame = CGRectMake(30, 22, 40, 20);
+    backBtn.frame = CGRectMake(30, 32, 40, 20);
     [backBtn setImage:[UIImage imageNamed:@"left_back_bg.png"] forState:UIControlStateNormal];
     [backBtn setImage:[UIImage imageNamed:@"left_back_bg.png"] forState:UIControlStateHighlighted];
     [backBtn addTarget:self action:@selector(cancelAction:) forControlEvents:UIControlEventTouchUpInside];

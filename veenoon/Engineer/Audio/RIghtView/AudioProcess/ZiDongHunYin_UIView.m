@@ -80,11 +80,14 @@
     [self addSubview:zengyi];
     
     
-    labelL1 = [[UILabel alloc] initWithFrame:CGRectMake(startX+gap, labelY+labelBtnGap+50, 120, 120)];
+    labelL1 = [[UILabel alloc] initWithFrame:CGRectMake(startX+gap+30, labelY+labelBtnGap+100, 60, 20)];
     labelL1.textAlignment = NSTextAlignmentCenter;
     [self addSubview:labelL1];
     labelL1.font = [UIFont systemFontOfSize:13];
-    labelL1.textColor = YELLOW_COLOR;
+    labelL1.textColor = NEW_ER_BUTTON_SD_COLOR;
+    labelL1.backgroundColor=NEW_ER_BUTTON_GRAY_COLOR2;
+    labelL1.layer.cornerRadius=5;
+    labelL1.clipsToBounds=YES;
     
     [self createInPutComps];
     
@@ -136,7 +139,7 @@
     for(int i = 0; i < num; i++)
     {
         //VAProcessorProxys *vProxy = [self._currentAodio._inAudioProxys objectAtIndex:i];
-        UIButton *btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+        UIButton *btn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:nil];
         btn.frame = CGRectMake(x, y, 50, 50);
         btn.clipsToBounds = YES;
         btn.layer.cornerRadius = 5;
@@ -202,13 +205,13 @@
     BOOL isEnable;
     if (selectedBtn) {
         [selectedBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        
+        [selectedBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
         [inputSelectedBtns removeObject:selectedBtn];
         
         isEnable = NO;
     } else {
-        [sender setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-        
+        [sender setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+        [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
         [inputSelectedBtns addObject:sender];
         isEnable = YES;
     }
@@ -257,7 +260,7 @@
     {
         //VAProcessorProxys *vProxy = [self._currentAodio._outAudioProxys objectAtIndex:i];
         
-        UIButton *btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:nil];
+        UIButton *btn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:nil];
         btn.frame = CGRectMake(x, y, 50, 50);
         btn.clipsToBounds = YES;
         btn.layer.cornerRadius = 5;
@@ -271,7 +274,7 @@
         [self addSubview:btn];
         
         [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [btn setTitleColor:YELLOW_COLOR forState:UIControlStateHighlighted];
+        [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
         
         [btn addTarget:self
                 action:@selector(outputChanelBtnAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -296,13 +299,13 @@
     BOOL isEnable;
     if (selectedBtn) {
         [selectedBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        
+        [selectedBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
         [outputSelectedBtns removeObject:selectedBtn];
         
         isEnable = NO;
     } else {
-        [sender setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-        
+        [sender setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+        [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
         [outputSelectedBtns addObject:sender];
         
         isEnable = YES;

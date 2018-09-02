@@ -332,6 +332,8 @@
         NSString *response = lParam;
         //NSLog(@"%@", response);
         
+        btn.enabled = YES;
+        
         [KVNProgress dismiss];
         
         SBJson4ValueBlock block = ^(id v, BOOL *stop) {
@@ -344,7 +346,6 @@
                     [block_self processLoginData:data];
                     
                 } else {
-                    btn.enabled = YES;
                     
                     NSString *message = [v objectForKey:@"message"];
                     
@@ -373,6 +374,7 @@
         NSString *response = lParam;
         NSLog(@"%@", response);
         
+        btn.enabled = YES;
         [KVNProgress dismiss];
     }];
 }

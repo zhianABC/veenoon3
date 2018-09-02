@@ -34,17 +34,17 @@
         
         UIImageView *titleIcon = [[UIImageView alloc]
                                   initWithImage:[UIImage imageNamed:@"back_white_ico.png"]];
-        [self addSubview:titleIcon];
+//        [self addSubview:titleIcon];
         titleIcon.center = CGPointMake(50, 20+22);
         
         
-        titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, 44)];
+        titleL = [[UILabel alloc] initWithFrame:CGRectMake(60, 105, SCREEN_WIDTH-60, 44)];
         titleL.backgroundColor = [UIColor clearColor];
         [self addSubview:titleL];
         titleL.font = [UIFont boldSystemFontOfSize:16];
         titleL.textColor  = [UIColor whiteColor];
         titleL.text = @"账户与安全";
-        titleL.textAlignment = NSTextAlignmentCenter;
+        titleL.textAlignment = NSTextAlignmentLeft;
         
         
         ///
