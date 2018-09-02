@@ -170,35 +170,35 @@
     
     [xinhaoView updateProxyCommandValIsLoaded];
     xinhaoView._proxys = _processor._outAudioProxys;
-    [xinhaoView layoutChannelBtns:numProxys];
+    [xinhaoView layoutChannelBtns:numProxys selectedIndex:-1];
     
     dianpingView = [[DianPing_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._outAudioProxys];
     [self.view addSubview:dianpingView];
     dianpingView.hidden = YES;
     
     dianpingView._proxys = _processor._outAudioProxys;
-    [dianpingView layoutChannelBtns:numProxys];
+    [dianpingView layoutChannelBtns:numProxys selectedIndex:0];
     
     lvbojunhengView = [[LvBoJunHeng_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._outAudioProxys];
     [self.view addSubview:lvbojunhengView];
     lvbojunhengView.hidden = YES;
     
     lvbojunhengView._proxys = _processor._outAudioProxys;
-    [lvbojunhengView layoutChannelBtns:numProxys];
+    [lvbojunhengView layoutChannelBtns:numProxys selectedIndex:0];
     
     yaxianView = [[YaXianQi_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._outAudioProxys];
     [self.view addSubview:yaxianView];
     yaxianView.hidden = YES;
     
     yaxianView._proxys = _processor._outAudioProxys;
-    [yaxianView layoutChannelBtns:numProxys];
+    [yaxianView layoutChannelBtns:numProxys selectedIndex:0];
     
     yanshiView = [[YanShiQi_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._outAudioProxys];
     [self.view addSubview:yanshiView];
     yanshiView.hidden = YES;
     
     yanshiView._proxys = _processor._outAudioProxys;
-    [yanshiView layoutChannelBtns:numProxys];
+    [yanshiView layoutChannelBtns:numProxys selectedIndex:0];
 }
 - (void) yanshiqiAction:(UIButton*)sender{
     [xinhaofashengqiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

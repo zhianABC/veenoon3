@@ -206,17 +206,19 @@
     for(int i = 0; i < maxOut; i++)
     {
          y = top + i*h;
-        VAProcessorProxys *vap = [audio_outs objectAtIndex:i];
+        VAProcessorProxys *output = [audio_outs objectAtIndex:i];
         
+        NSString *showName = nil;
         if (i==maxOut-1) {
-            vap._valName = @"Output";
+            showName = @"Output";
         } else {
-            vap._valName = [NSString stringWithFormat:@"%02d", i+1];
+            showName = [NSString stringWithFormat:@"%02d", i+1];
         }
         
+        output._valName = [NSString stringWithFormat:@"Out%d", i+1];
+        
         UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(left-w, y, w, h)];
-        //tL.text = vap._rgsProxyObj.name;
-        tL.text = vap._valName;
+        tL.text = showName;
         tL.textAlignment = NSTextAlignmentCenter;
         [_matrix addSubview:tL];
         tL.font = [UIFont systemFontOfSize:13];
@@ -226,18 +228,20 @@
         {
             x = left + j*w;
             
+            VAProcessorProxys *vap = [audio_ins objectAtIndex:j];
+            vap._valName = [NSString stringWithFormat:@"In%d", j+1];
+            
             if(i == 0)
             {
-                VAProcessorProxys *vap = [audio_ins objectAtIndex:j];
+                showName = nil;
                 if (j==0) {
-                    vap._valName = @"Input";
+                    showName = @"Input";
                 } else {
-                     vap._valName = [NSString stringWithFormat:@"%02d", j+1];
+                     showName = [NSString stringWithFormat:@"%02d", j+1];
                 }
                
                 UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(x, y-20, w, 20)];
-                //tL.text = vap._rgsProxyObj.name;
-                tL.text = vap._valName;
+                tL.text = showName;
                 tL.textAlignment = NSTextAlignmentCenter;
                 [_matrix addSubview:tL];
                 tL.font = [UIFont systemFontOfSize:13];
@@ -255,6 +259,14 @@
                     action:@selector(buttonAction:)
           forControlEvents:UIControlEventTouchUpInside];
             btn.titleLabel.font = [UIFont systemFontOfSize:13];
+            
+            
+            NSString *key = vap._valName;
+            NSDictionary* val =  [output._setMixSrc objectForKey:key];
+            if([[val objectForKey:@"ENABLE"] isEqualToString:@"True"])
+            {
+                [self changeButtonState:btn ctrl:NO];
+            }
             
             UILongPressGestureRecognizer *longPressBtn = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressedAction:)];
             [btn addGestureRecognizer:longPressBtn];
@@ -355,6 +367,11 @@
 
 - (void) buttonAction:(UIButton*)sender{
     
+    [self changeButtonState:sender ctrl:YES];
+}
+
+- (void) changeButtonState:(UIButton*)sender ctrl:(BOOL)ctrl{
+    
     id key = [NSNumber numberWithInteger:sender.tag];
     
     int index = (int)sender.tag;
@@ -366,7 +383,6 @@
         [_map setObject:@"1" forKey:key];
         
         [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
-        
         [sender setTitle:@"0.0" forState:UIControlStateNormal];
         
         if(output_idx < [_processor._outAudioProxys count])
@@ -379,16 +395,29 @@
                 arr = [NSMutableArray array];
                 [_outpus setObject:arr forKey:okey];
             }
-           
+            
             NSMutableDictionary *mdic = [NSMutableDictionary dictionary];
             VAProcessorProxys *inproxy = [_processor._inAudioProxys objectAtIndex:input_idx];
             [mdic setObject:inproxy forKey:@"proxy"];
-            [mdic setObject:@"0.0" forKey:@"TH"];
-            [arr addObject:mdic];
-        
-            [outproxy checkRgsProxyCommandLoad];
             
+            [arr addObject:mdic];
+            
+            NSString *key = inproxy._valName;
+            NSDictionary* val =  [outproxy._setMixValue objectForKey:key];
+            
+            if([val objectForKey:@"value"]){
+                [mdic setObject:[val objectForKey:@"value"] forKey:@"TH"];
+                [sender setTitle:[val objectForKey:@"value"]
+                        forState:UIControlStateNormal];
+            }
+            else
+                [mdic setObject:@"0.0" forKey:@"TH"];
+            
+            if(ctrl)
+            {
+            [outproxy checkRgsProxyCommandLoad];
             [outproxy controlMatrixSrc:inproxy selected:YES];
+            }
         }
         
     }
@@ -396,7 +425,7 @@
     {
         [_map removeObjectForKey:key];
         
-        [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
+        [sender changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
         
         [sender setTitle:@"" forState:UIControlStateNormal];
         
@@ -415,7 +444,12 @@
                     if(inproxy._rgsProxyObj.m_id == inSelrPoxy._rgsProxyObj.m_id)
                     {
                         [arr removeObject:dic];
-                        [outproxy controlMatrixSrc:inproxy selected:NO];
+                        
+                        if(ctrl)
+                        {
+                            [outproxy controlMatrixSrc:inproxy selected:NO];
+                        }
+                        
                         break;
                     }
                 }

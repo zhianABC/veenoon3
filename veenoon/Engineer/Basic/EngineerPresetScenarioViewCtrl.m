@@ -467,7 +467,7 @@
     
     int x = audioStartX;
     
-    UIImageView *smicon = [[UIImageView alloc] initWithFrame:CGRectMake(30,
+    UIImageView *smicon = [[UIImageView alloc] initWithFrame:CGRectMake(25,
                                                                         _yVal,
                                                                         30,
                                                                         30)];

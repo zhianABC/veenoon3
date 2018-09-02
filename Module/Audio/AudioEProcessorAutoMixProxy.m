@@ -360,9 +360,9 @@
 - (NSArray*) generateEventOperation_outpus{
     
     NSMutableArray *results = [NSMutableArray array];
-    for(NSString* proxyName in [_inputMap allKeys])
+    for(NSString* proxyName in [_outputMap allKeys])
     {
-        int state = [[_inputMap objectForKey:proxyName] intValue];
+        int state = [[_outputMap objectForKey:proxyName] intValue];
         
         id opt = [self generateEventOperation_inOuts:proxyName
                                                state:state
@@ -443,5 +443,53 @@
     
     return nil;
 }
+
+- (void) recoverWithDictionary:(NSArray*)datas
+{
+    
+    
+    for(RgsSceneDeviceOperation *dopt in datas)
+    {
+        _isSetOK = YES;
+        
+        NSString *cmd = dopt.cmd;
+        NSDictionary *param = dopt.param;
+        
+         if([cmd isEqualToString:@"SET_INPUT"]){
+            
+    
+            NSString *src = [param objectForKey:@"INPUT"];
+            NSString *enable = [param objectForKey:@"ENABLE"];
+
+             if ([enable isEqualToString:@"True"]) {
+                 [_inputMap setObject:@1 forKey:src];
+             } else {
+                 [_inputMap setObject:@0 forKey:src];
+             }
+            
+        }
+        else if([cmd isEqualToString:@"SET_OUTPUT"])
+        {
+            NSString *src = [param objectForKey:@"OUTPUT"];
+            NSString *enable = [param objectForKey:@"ENABLE"];
+            
+            if ([enable isEqualToString:@"True"]) {
+                [_outputMap setObject:@1 forKey:src];
+            } else {
+                [_outputMap setObject:@0 forKey:src];
+            }
+            
+        }
+        else if([cmd isEqualToString:@"SET_A_VALUE"])
+        {
+            NSString *src = [param objectForKey:@"VALUE"];
+            self._zidonghunyinZengYi = src;
+            
+        }
+    }
+    
+    //NSLog(@"===");
+}
+
 
 @end

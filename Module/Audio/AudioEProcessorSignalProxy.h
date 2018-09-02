@@ -55,5 +55,9 @@
 - (id) generateEventOperation_sigSineRate;
 - (id) generateEventOperation_sigGain;
 
+/////场景还原
+- (void) recoverWithDictionary:(NSArray*)datas;
+
+
 @end
 

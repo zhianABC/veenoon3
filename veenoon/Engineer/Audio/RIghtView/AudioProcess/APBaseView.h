@@ -16,6 +16,6 @@
 @property (nonatomic, strong) NSMutableArray *_channelBtns;
 @property (nonatomic, strong) NSArray *_proxys;
 
-- (void) layoutChannelBtns:(int)num;
+- (void) layoutChannelBtns:(int)num selectedIndex:(int)selectedIndex;
 
 @end

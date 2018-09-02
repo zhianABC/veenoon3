@@ -790,5 +790,60 @@
     return nil;
 }
 
+/////场景还原
+- (void) recoverWithDictionary:(NSArray*)datas{
+    
+    for(RgsSceneDeviceOperation *dopt in datas)
+    {
+        _isSetOK = YES;
+        
+        NSString *cmd = dopt.cmd;
+        NSDictionary *param = dopt.param;
+        
+        if([cmd isEqualToString:@"SET_SIG_OUT"]){
+            
+            
+            NSString *src = [param objectForKey:@"OUT"];
+            NSString *enable = [param objectForKey:@"ENABLE"];
+            
+            if ([enable isEqualToString:@"True"]) {
+                [_xinhaofashengOutputChanels setObject:@1 forKey:src];
+            } else {
+                [_xinhaofashengOutputChanels setObject:@0 forKey:src];
+            }
+            
+        }
+        else if([cmd isEqualToString:@"SET_SIG_MUTE"])
+        {
+            NSString *enable = [param objectForKey:@"MUTE"];
+            
+            if ([enable isEqualToString:@"True"]) {
+                _isXinhaofashengMute = YES;
+            } else {
+                _isXinhaofashengMute = NO;
+            }
+            
+        }
+        else if([cmd isEqualToString:@"SET_SIG_TYPE"])
+        {
+            NSString *src = [param objectForKey:@"TYPE"];
+            self._xinhaofashengZhengxuan = src;
+            
+        }
+        else if([cmd isEqualToString:@"SET_SIG_SINE_RATE"])
+        {
+            NSString *src = [param objectForKey:@"RATE"];
+            self._xinhaofashengPinlv = src;
+            
+        }
+        else if([cmd isEqualToString:@"SET_SIG_GAIN"])
+        {
+            NSString *src = [param objectForKey:@"GAIN"];
+            self._xinhaofashengZengYi = src;
+            
+        }
+    }
+}
+
 @end
 
