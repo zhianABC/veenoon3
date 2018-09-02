@@ -33,6 +33,7 @@
     CenterCustomerPickerView *_brandPicker;
     CenterCustomerPickerView *_productCategoryPicker;
 }
+@property (nonatomic, strong) NSArray *_currentCategorys;
 @property (nonatomic, strong) NSArray *_currentBrands;
 @property (nonatomic, strong) NSArray *_currentTypes;
 @property (nonatomic, strong) NSArray *_driverUdids;
@@ -45,7 +46,7 @@
 
 @implementation EngineerAudioDevicePluginViewCtrl
 @synthesize _selectedSysDic;
-
+@synthesize _currentCategorys;
 @synthesize _currentBrands;
 @synthesize _currentTypes;
 @synthesize _driverUdids;
@@ -140,32 +141,32 @@
     [_wuxianhuatongBtn addTarget:self action:@selector(wuxianhuatongAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_wuxianhuatongBtn];
     
-    _huiyiBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*3, height,80, 110)];
-    [_huiyiBtn  buttonWithIcon:[UIImage imageNamed:@"engineer_huiyi_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_huiyi_s.png"] text:audio_mixer_name normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
-    [_huiyiBtn addTarget:self action:@selector(huiyiAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_huiyiBtn];
+//    _huiyiBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*3, height,80, 110)];
+//    [_huiyiBtn  buttonWithIcon:[UIImage imageNamed:@"engineer_huiyi_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_huiyi_s.png"] text:audio_mixer_name normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
+//    [_huiyiBtn addTarget:self action:@selector(huiyiAction:) forControlEvents:UIControlEventTouchUpInside];
+////    [self.view addSubview:_huiyiBtn];
     
-    _handToHandhuiyiBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*4, height,80, 110)];
-    [_handToHandhuiyiBtn  buttonWithIcon:[UIImage imageNamed:@"engineer_huiyi_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_huiyi_s.png"] text:@"手拉手会议" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
-    [_handToHandhuiyiBtn addTarget:self action:@selector(handToHandAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_handToHandhuiyiBtn];
+//    _handToHandhuiyiBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*4, height,80, 110)];
+//    [_handToHandhuiyiBtn  buttonWithIcon:[UIImage imageNamed:@"engineer_huiyi_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_huiyi_s.png"] text:@"手拉手会议" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
+//    [_handToHandhuiyiBtn addTarget:self action:@selector(handToHandAction:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:_handToHandhuiyiBtn];
     
-    _wirelessHuiyiBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*5, height,80, 110)];
-    [_wirelessHuiyiBtn  buttonWithIcon:[UIImage imageNamed:@"engineer_huiyi_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_huiyi_s.png"] text:@"无线会议" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
+    _wirelessHuiyiBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*3, height,80, 110)];
+    [_wirelessHuiyiBtn  buttonWithIcon:[UIImage imageNamed:@"engineer_huiyi_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_huiyi_s.png"] text:@"会议" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_wirelessHuiyiBtn addTarget:self action:@selector(wirelessHuiyiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_wirelessHuiyiBtn];
-    
-    _fankuiyizhiBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*6, height,80, 110)];
-    [_fankuiyizhiBtn  buttonWithIcon:[UIImage imageNamed:@"enginner_fankuiyizhi_n.png"] selectedIcon:[UIImage imageNamed:@"enginner_fankuiyizhi_s.png"] text:@"反馈抑制" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
-    [_fankuiyizhiBtn addTarget:self action:@selector(fankuiyizhiAction:) forControlEvents:UIControlEventTouchUpInside];
+//
+//    _fankuiyizhiBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*6, height,80, 110)];
+//    [_fankuiyizhiBtn  buttonWithIcon:[UIImage imageNamed:@"enginner_fankuiyizhi_n.png"] selectedIcon:[UIImage imageNamed:@"enginner_fankuiyizhi_s.png"] text:@"反馈抑制" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
+//    [_fankuiyizhiBtn addTarget:self action:@selector(fankuiyizhiAction:) forControlEvents:UIControlEventTouchUpInside];
 //    [self.view addSubview:_fankuiyizhiBtn];
     
-    _yinpinchuliBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*6, height,80, 110)];
+    _yinpinchuliBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*4, height,80, 110)];
     [_yinpinchuliBtn  buttonWithIcon:[UIImage imageNamed:@"engineer_yinpinchuli_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_yinpinchuli_s.png"] text:audio_process_name normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_yinpinchuliBtn addTarget:self action:@selector(yinpinchuliAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_yinpinchuliBtn];
     
-    _floorWarmBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left, height+ 120,80, 110)];
+    _floorWarmBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*5, height,80, 110)];
     [_floorWarmBtn  buttonWithIcon:[UIImage imageNamed:@"engineer_gongfang_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_gongfang_s.png"] text:@"功放" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_floorWarmBtn addTarget:self action:@selector(gongfangAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_floorWarmBtn];
@@ -186,20 +187,14 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"类型";
     
+    [self initBrandAndTypes];
+    
     _productTypePikcer = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(labelStartX, labelStartY+20, maxWidth, 160)];
     [_productTypePikcer removeArray];
     _productTypePikcer.delegate_=self;
     _productTypePikcer.tag = 101;
     _productTypePikcer.fontSize=14;
-    _productTypePikcer._pickerDataArray = @[@{@"values":@[audio_power_sequencer,
-                                                          @"音乐播放",
-                                                          @"无线话筒",
-                                                          audio_mixer_name,
-                                                          @"手拉手会议",
-                                                          @"无线会议",
-                                                          @"反馈抑制",
-                                                          audio_process_name,
-                                                          @"功放"]}];
+    _productTypePikcer._pickerDataArray = @[@{@"values":_currentCategorys}];
     [_productTypePikcer selectRow:0 inComponent:0];
     _productTypePikcer._selectColor = RGB(253, 180, 0);
     _productTypePikcer._rowNormalColor = [UIColor whiteColor];
@@ -216,7 +211,7 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"品牌";
     
-    [self initBrandAndTypes];
+    
     
     _brandPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(x1,
                                                                               labelStartY+20,
@@ -306,7 +301,7 @@
 }
 
 - (void) initBrandAndTypes{
-    
+    self._currentCategorys = @[@"类型"];
     self._currentBrands = @[@"品牌"];
     self._currentTypes = @[@"型号"];
     self._driverUdids = @[];
@@ -496,6 +491,9 @@
     NSString *btnText = btn._titleL.text;
     [self setBrandValue:btnText];
     
+    self._currentCategorys = @[];
+    _productTypePikcer._pickerDataArray = @[@{@"values":_currentCategorys}];
+    
     self._currentBrands = @[@"Teslaria"];
     self._currentTypes = @[@"Power Sequencer"];
     self._driverUdids = @[UUID_Power_Sequencer];
@@ -508,25 +506,6 @@
 }
 -(void) didScrollPickerValue:(NSString*)brand {
     
-    if ([@"电源管理" isEqualToString:brand]) {
-        [self electronicSysAction:_electronicSysBtn];
-    } else if ([@"音乐播放" isEqualToString:brand]) {
-        [self musicPlayAction:_musicPlayBtn];
-    } else if ([@"无线话筒" isEqualToString:brand]) {
-        [self wuxianhuatongAction:_wuxianhuatongBtn];
-    } else if ([audio_mixer_name isEqualToString:brand]) {
-        [self huiyiAction:_huiyiBtn];
-    } else if ([@"手拉手会议" isEqualToString:brand]) {
-        [self yinpinchuliAction:_handToHandhuiyiBtn];
-    } else if ([@"无线会议" isEqualToString:brand]) {
-        [self yinpinchuliAction:_wirelessHuiyiBtn];
-    } else if ([@"反馈抑制" isEqualToString:brand]) {
-        [self fankuiyizhiAction:_fankuiyizhiBtn];
-    } else if ([audio_process_name isEqualToString:brand]) {
-        [self yinpinchuliAction:_yinpinchuliBtn];
-    } else {
-        [self gongfangAction:_floorWarmBtn];
-    }
 }
 -(void) setBrandValue:(NSString*)brand {
     if (brand == nil) {
