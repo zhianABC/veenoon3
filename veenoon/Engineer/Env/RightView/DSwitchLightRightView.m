@@ -15,7 +15,7 @@
 #import "EDimmerSwitchLight.h"
 #import "IPValidate.h"
 
-#define LIGHT_MAX_NUM   6
+#define LIGHT_MAX_NUM   8
 
 @interface DSwitchLightRightView () <UITableViewDelegate,
 UITableViewDataSource, UITextFieldDelegate,
@@ -156,9 +156,9 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
 - (void)createFooter{
     
     _footerView = [[UIView alloc] initWithFrame:CGRectMake(0,
-                                                           CGRectGetMaxY(_tableView.frame),
+                                                           CGRectGetMaxY(_tableView.frame)-100,
                                                            self.frame.size.width,
-                                                           180)];
+                                                           280)];
     [self addSubview:_footerView];
     _footerView.backgroundColor = RIGHT_VIEW_CORNER_COLOR;
     
@@ -176,7 +176,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
         int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+20*row+top;
         
-        UIButton *scenarioBtn = [UIButton buttonWithColor:RIGHT_VIEW_CORNER_BTN_COLOR selColor:RIGHT_VIEW_CORNER_SD_COLOR];
+        UIButton *scenarioBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
         scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
         scenarioBtn.clipsToBounds = YES;
         scenarioBtn.layer.cornerRadius = 5;
@@ -505,16 +505,16 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
     
     for (UIButton *button in _selectedBtnArray) {
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [button setSelected:NO];
+        [button changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
     }
     
     if ([_selectedBtnArray containsObject:sender]) {
         [sender setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [sender setSelected:NO];
+        [sender changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
         [_selectedBtnArray removeObject:sender];
     } else {
-        [sender setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-        [sender setSelected:YES];
+        [sender setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+        [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
         [_selectedBtnArray addObject:sender];
     }
 }

@@ -80,16 +80,16 @@
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-//    okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
-//    [bottomBar addSubview:okBtn];
-//    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
-//    [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
-//    okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-//    [okBtn addTarget:self
-//              action:@selector(okAction:)
-//    forControlEvents:UIControlEventTouchUpInside];
+    okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
+    [bottomBar addSubview:okBtn];
+    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+    [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [okBtn addTarget:self
+              action:@selector(okAction:)
+    forControlEvents:UIControlEventTouchUpInside];
 //
     
     
@@ -100,30 +100,7 @@
                                                            SCREEN_HEIGHT-64-50)];
     [self.view addSubview:_proxysView];
     
-
-    [self showRightView];
-    
     [self getCurrentDeviceDriverProxys];
-    
-}
-
-- (void) showRightView{
-    
-    if(_rightView == nil)
-    {
-        _rightView = [[DSwitchLightRightView alloc]
-                      initWithFrame:CGRectMake(SCREEN_WIDTH-300,
-                                               64, 300, SCREEN_HEIGHT-114)];
-    } else {
-        [UIView beginAnimations:nil context:nil];
-        _rightView.frame  = CGRectMake(SCREEN_WIDTH-300,
-                                       64, 300, SCREEN_HEIGHT-114);
-        [UIView commitAnimations];
-    }
-    [self.view addSubview:_rightView];
-    
-    _rightView._currentObj = _curProcessor;
-    [_rightView refreshView:_curProcessor];
     
 }
 
@@ -161,7 +138,7 @@
     
     int cellWidth = 92;
     int cellHeight = 92;
-    int colNumber = 6;
+    int colNumber = 8;
     int space = ENGINEER_VIEW_COLUMN_GAP;
     
     
@@ -320,6 +297,7 @@
                                      64, 300, SCREEN_HEIGHT-114);
             [UIView commitAnimations];
         }
+        
         [self.view addSubview:_rightView];
         
         _rightView._currentObj = _curProcessor;

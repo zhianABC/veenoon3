@@ -38,11 +38,16 @@ CustomPickerViewDelegate> {
     UITextField *ipTextField;
     
     NSMutableArray *_selectedBtns;
+    
+    int _number;
+    
+    UIButton *_previousBtn;
 }
+
 @property (nonatomic, strong) NSMutableArray *_studyItems;
 @property (nonatomic, strong) NSMutableArray *_bianzuArrays;
 @property (nonatomic, strong) NSMutableDictionary *_value;
-
+@property (nonatomic, assign) int _number;
 @property (nonatomic, strong) NSMutableArray *_coms;
 @property (nonatomic, strong) NSMutableArray *_brands;
 @property (nonatomic, strong) NSMutableArray *_ips;
@@ -61,6 +66,7 @@ CustomPickerViewDelegate> {
 @synthesize _ips;
 @synthesize _map;
 @synthesize _coms;
+@synthesize _number;
 
 @synthesize _selectedSecs;
 @synthesize _selectedType;
@@ -145,7 +151,7 @@ CustomPickerViewDelegate> {
     int space = 5;
     int cellWidth = 115/2;
     int cellHeight = 115/2;
-    int leftRight = (self.frame.size.width - 4*cellWidth - 3*5)/2;
+    int leftRight = (self.frame.size.width - 4*cellWidth - 3*space)/2;
     
     int top = 40;
     
@@ -155,7 +161,7 @@ CustomPickerViewDelegate> {
         int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+top;
         
-        UIButton *scenarioBtn = [UIButton buttonWithColor:RIGHT_VIEW_CORNER_BTN_COLOR selColor:RIGHT_VIEW_CORNER_SD_COLOR];
+        UIButton *scenarioBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
         scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
         scenarioBtn.clipsToBounds = YES;
         scenarioBtn.layer.cornerRadius = 5;
@@ -293,7 +299,7 @@ CustomPickerViewDelegate> {
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    return 3;
+    return 2;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
@@ -309,7 +315,7 @@ CustomPickerViewDelegate> {
     
     
     
-    return 44;
+    return 54;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -381,7 +387,7 @@ CustomPickerViewDelegate> {
     {
         return 164;
     }
-    return 44;
+    return 54;
 }
 
 
@@ -390,7 +396,7 @@ CustomPickerViewDelegate> {
     if(section == 0)
         return nil;
     
-    int height = 44;
+    int height = 54;
     
     UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, height)];
     header.backgroundColor = [UIColor clearColor];
@@ -414,65 +420,39 @@ CustomPickerViewDelegate> {
     valueL.textColor  = [UIColor whiteColor];
     valueL.textAlignment = NSTextAlignmentRight;
     
-    UIColor *rectColor = RGB(0, 146, 174);
-    
     if(section == 1)  {
-        UIButton *openBtn = [UIButton buttonWithColor:rectColor selColor:BLUE_DOWN_COLOR];
-        openBtn.frame = CGRectMake(10, 4, 70, 36);
+        UIButton *openBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
+        openBtn.frame = CGRectMake(10, 9, 70, 36);
         openBtn.clipsToBounds = YES;
         openBtn.layer.cornerRadius = 5;
         [header addSubview:openBtn];
         [openBtn setTitle:@"开" forState:UIControlStateNormal];
+        [openBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [openBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
         [openBtn addTarget:self action:@selector(openBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         openBtn.titleLabel.font = [UIFont systemFontOfSize:15];
         
-        UIButton *stopBtn = [UIButton buttonWithColor:rectColor selColor:BLUE_DOWN_COLOR];
-        stopBtn.frame = CGRectMake(115, 4, 70, 36);
+        UIButton *stopBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
+        stopBtn.frame = CGRectMake(115, 9, 70, 36);
         stopBtn.clipsToBounds = YES;
         stopBtn.layer.cornerRadius = 5;
         [header addSubview:stopBtn];
         [stopBtn setTitle:@"停" forState:UIControlStateNormal];
+        [stopBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [stopBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
         [stopBtn addTarget:self action:@selector(stopBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         stopBtn.titleLabel.font = [UIFont systemFontOfSize:15];
         
-        UIButton *closeBtn = [UIButton buttonWithColor:rectColor selColor:BLUE_DOWN_COLOR];
-        closeBtn.frame = CGRectMake(220, 4, 70, 36);
+        UIButton *closeBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
+        closeBtn.frame = CGRectMake(220, 9, 70, 36);
         closeBtn.clipsToBounds = YES;
         closeBtn.layer.cornerRadius = 5;
         [header addSubview:closeBtn];
         [closeBtn setTitle:@"关" forState:UIControlStateNormal];
-        [closeBtn addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
+        [closeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [closeBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
+        [closeBtn addTarget:self action:@selector(closeBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         closeBtn.titleLabel.font = [UIFont systemFontOfSize:15];
-        
-    } else if(section == 2) {
-        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        btn.frame = header.bounds;
-        [header addSubview:btn];
-        btn.tag = section;
-        [btn addTarget:self
-                action:@selector(clickHeader:)
-      forControlEvents:UIControlEventTouchUpInside];
-        
-        rowLT.text = @"传感器";
-        valueL.text = [_ips objectAtIndex:_selRowIp];
-        
-        UIImageView *icon = [[UIImageView alloc]
-                             initWithFrame:CGRectMake(CGRectGetMaxX(valueL.frame)+5, 16, 10, 10)];
-        icon.image = [UIImage imageNamed:@"remote_video_down.png"];
-        [header addSubview:icon];
-        icon.alpha = 0.8;
-        icon.layer.contentsGravity = kCAGravityResizeAspect;
-        
-        if(_curSectionIndex == section)
-        {
-            _picker.tag = 1;
-            _picker._pickerDataArray = @[@{@"values":_ips}];
-            [_picker selectRow:_selRowIp inComponent:0];
-            
-            [header addSubview:_picker];
-            
-            height = 164;
-        }
     }
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, height-1, self.frame.size.width, 1)];
@@ -482,16 +462,42 @@ CustomPickerViewDelegate> {
     return header;
 }
 
-- (void) openBtnAction:(id) sender {
+- (void) openBtnAction:(UIButton*) sender {
+    [sender setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+    [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
     
+    if (_previousBtn) {
+        [_previousBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_previousBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
+    }
+    
+    _previousBtn = sender;
 }
 
-- (void) stopBtnAction:(id) sender {
+- (void) stopBtnAction:(UIButton*) sender {
     
+    [sender setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+    [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
+    
+    if (_previousBtn) {
+        [_previousBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_previousBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
+    }
+    
+    _previousBtn = sender;
 }
 
-- (void) closeBtnAction:(id) sender {
+- (void) closeBtnAction:(UIButton*) sender {
     
+    [sender setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+    [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
+    
+    if (_previousBtn) {
+        [_previousBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_previousBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
+    }
+    
+    _previousBtn = sender;
 }
 
 - (void) clickHeader:(UIButton*)sender{
@@ -525,15 +531,15 @@ CustomPickerViewDelegate> {
 - (void) buttonAction:(UIButton*)sender{
     for (UIButton *button in _selectedBtns) {
         [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [button setSelected:NO];
+        [button changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
     }
     if ([_selectedBtns containsObject:sender]) {
         [sender setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [sender setSelected:NO];
+        [sender changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
         [_selectedBtns removeObject:sender];
     } else {
-        [sender setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
-        [sender setSelected:YES];
+        [sender setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+        [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
         [_selectedBtns addObject:sender];
     }
 }
@@ -544,8 +550,6 @@ CustomPickerViewDelegate> {
     {
         NSMutableDictionary *mdic = [_bianzuArrays objectAtIndex:_curIndex];
         
-        UIImage *imgNor = [UIImage imageWithColor:RGB(0, 146, 174) andSize:CGSizeMake(1, 1)];
-        UIImage *imgSel = [UIImage imageWithColor:RGB(0, 113, 140) andSize:CGSizeMake(1, 1)];
         NSMutableArray *values = [mdic objectForKey:@"values"];
         for(UIButton *btn in _btns)
         {
@@ -554,12 +558,12 @@ CustomPickerViewDelegate> {
             
             if([values containsObject:obj])
             {
-                [btn setBackgroundImage:imgSel forState:UIControlStateNormal];
-                [btn setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+                [btn changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
+                [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
             }
             else
             {
-                [btn setBackgroundImage:imgNor forState:UIControlStateNormal];
+                [btn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
                 [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             }
         }

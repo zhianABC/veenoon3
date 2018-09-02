@@ -22,6 +22,8 @@
     
     BOOL isSettings;
     UIButton *okBtn;
+    
+    UIButton *_previousBtn;
 }
 @end
 
@@ -61,7 +63,7 @@
     okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
     [bottomBar addSubview:okBtn];
-    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+    [okBtn setTitle:@"保存" forState:UIControlStateNormal];
     [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
     okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
@@ -69,8 +71,8 @@
               action:@selector(settingsAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
-    _powerOnBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
-    _powerOnBtn.frame = CGRectMake(70, SCREEN_HEIGHT-140, 60, 60);
+    _powerOnBtn = [UIButton buttonWithColor:nil selColor:nil];
+    _powerOnBtn.frame = CGRectMake(SCREEN_WIDTH-112, 70, 60, 60);
     _powerOnBtn.layer.cornerRadius = 5;
     _powerOnBtn.layer.borderWidth = 2;
     _powerOnBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -83,36 +85,18 @@
                  action:@selector(powerOnAction:)
        forControlEvents:UIControlEventTouchUpInside];
     
-    _powerOffBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
-    _powerOffBtn.frame = _powerOnBtn.frame;
-    _powerOffBtn.layer.cornerRadius = 5;
-    _powerOffBtn.layer.borderWidth = 2;
-    _powerOffBtn.layer.borderColor = [UIColor clearColor].CGColor;;
-    _powerOffBtn.clipsToBounds = YES;
-    [_powerOffBtn setImage:[UIImage imageNamed:@"engineer_lubo_s.png"] forState:UIControlStateNormal];
-    [_powerOffBtn setImage:[UIImage imageNamed:@"engineer_lubo_n.png"] forState:UIControlStateHighlighted];
-    [self.view addSubview:_powerOffBtn];
-    
-    [_powerOffBtn addTarget:self
-                    action:@selector(powerOffAction:)
-          forControlEvents:UIControlEventTouchUpInside];
-    
-    _powerOffBtn.hidden = YES;
-    
-    
-    
-    int playerLeft = 215;
-    int playerHeight = 60;
+    int playerLeft = 265;
+    int playerHeight = 100;
     
     UILabel *titleL = [[UILabel alloc] initWithFrame:CGRectMake(280+playerLeft, SCREEN_HEIGHT-625+playerHeight, 80, 40)];
     titleL.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:titleL];
+//    [self.view addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:14];
     titleL.textColor  = [UIColor whiteColor];
     titleL.textAlignment=NSTextAlignmentCenter;
     titleL.text = @"投影幕";
     
-    UIButton *yingmuUpBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    UIButton *yingmuUpBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     yingmuUpBtn.frame = CGRectMake(280+playerLeft, SCREEN_HEIGHT-585+playerHeight, 80, 80);
     yingmuUpBtn.layer.cornerRadius = 5;
     yingmuUpBtn.layer.borderWidth = 2;
@@ -120,13 +104,13 @@
     yingmuUpBtn.clipsToBounds = YES;
     [yingmuUpBtn setImage:[UIImage imageNamed:@"engineer_up_n.png"] forState:UIControlStateNormal];
     [yingmuUpBtn setImage:[UIImage imageNamed:@"engineer_up_s.png"] forState:UIControlStateHighlighted];
-    [self.view addSubview:yingmuUpBtn];
+//    [self.view addSubview:yingmuUpBtn];
     
     [yingmuUpBtn addTarget:self
                     action:@selector(yingmuUpAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *yingmuStopBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    UIButton *yingmuStopBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     yingmuStopBtn.frame = CGRectMake(280+playerLeft, SCREEN_HEIGHT-485+playerHeight, 80, 80);
     yingmuStopBtn.layer.cornerRadius = 5;
     yingmuStopBtn.layer.borderWidth = 2;
@@ -135,14 +119,14 @@
     [yingmuStopBtn setTitle:@"停" forState:UIControlStateNormal];
     [yingmuStopBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [yingmuStopBtn setTitleColor:RGB(242, 148, 20) forState:UIControlStateHighlighted];
-    [self.view addSubview:yingmuStopBtn];
+//    [self.view addSubview:yingmuStopBtn];
     
     [yingmuStopBtn addTarget:self
                       action:@selector(yingmuStopAction:)
             forControlEvents:UIControlEventTouchUpInside];
     
     
-    UIButton *yingmuDownBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    UIButton *yingmuDownBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     yingmuDownBtn.frame = CGRectMake(280+playerLeft, SCREEN_HEIGHT-385+playerHeight, 80, 80);
     yingmuDownBtn.layer.cornerRadius = 5;
     yingmuDownBtn.layer.borderWidth = 2;
@@ -150,7 +134,7 @@
     yingmuDownBtn.clipsToBounds = YES;
     [yingmuDownBtn setImage:[UIImage imageNamed:@"engineer_down_n.png"] forState:UIControlStateNormal];
     [yingmuDownBtn setImage:[UIImage imageNamed:@"engineer_down_s.png"] forState:UIControlStateHighlighted];
-    [self.view addSubview:yingmuDownBtn];
+//    [self.view addSubview:yingmuDownBtn];
     
     [yingmuDownBtn addTarget:self
                     action:@selector(yingmuDownAction:)
@@ -159,13 +143,13 @@
     
     titleL = [[UILabel alloc] initWithFrame:CGRectMake(455+playerLeft, SCREEN_HEIGHT-625+playerHeight, 80, 40)];
     titleL.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:titleL];
+//    [self.view addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:14];
     titleL.textColor  = [UIColor whiteColor];
     titleL.textAlignment=NSTextAlignmentCenter;
     titleL.text = @"投影机";
     
-    UIButton *yingjiUpBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    UIButton *yingjiUpBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     yingjiUpBtn.frame = CGRectMake(455+playerLeft, SCREEN_HEIGHT-585+playerHeight, 80, 80);
     yingjiUpBtn.layer.cornerRadius = 5;
     yingjiUpBtn.layer.borderWidth = 2;
@@ -173,13 +157,13 @@
     yingjiUpBtn.clipsToBounds = YES;
     [yingjiUpBtn setImage:[UIImage imageNamed:@"engineer_up_n.png"] forState:UIControlStateNormal];
     [yingjiUpBtn setImage:[UIImage imageNamed:@"engineer_up_s.png"] forState:UIControlStateHighlighted];
-    [self.view addSubview:yingjiUpBtn];
+//    [self.view addSubview:yingjiUpBtn];
     
     [yingjiUpBtn addTarget:self
                     action:@selector(yingjiUpAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *yingjiStopBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    UIButton *yingjiStopBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     yingjiStopBtn.frame = CGRectMake(455+playerLeft, SCREEN_HEIGHT-485+playerHeight, 80, 80);
     yingjiStopBtn.layer.cornerRadius = 5;
     yingjiStopBtn.layer.borderWidth = 2;
@@ -188,13 +172,13 @@
     [yingjiStopBtn setTitle:@"停" forState:UIControlStateNormal];
     [yingjiStopBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [yingjiStopBtn setTitleColor:RGB(242, 148, 20) forState:UIControlStateHighlighted];
-    [self.view addSubview:yingjiStopBtn];
+//    [self.view addSubview:yingjiStopBtn];
     
     [yingjiStopBtn addTarget:self
                       action:@selector(yingjiStopAction:)
             forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *yingjiDownBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    UIButton *yingjiDownBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     yingjiDownBtn.frame = CGRectMake(455+playerLeft, SCREEN_HEIGHT-385+playerHeight, 80, 80);
     yingjiDownBtn.layer.cornerRadius = 5;
     yingjiDownBtn.layer.borderWidth = 2;
@@ -202,39 +186,36 @@
     yingjiDownBtn.clipsToBounds = YES;
     [yingjiDownBtn setImage:[UIImage imageNamed:@"engineer_down_n.png"] forState:UIControlStateNormal];
     [yingjiDownBtn setImage:[UIImage imageNamed:@"engineer_down_s.png"] forState:UIControlStateHighlighted];
-    [self.view addSubview:yingjiDownBtn];
+//    [self.view addSubview:yingjiDownBtn];
     
     [yingjiDownBtn addTarget:self
                       action:@selector(yingjiDownAction:)
             forControlEvents:UIControlEventTouchUpInside];
     
-    playerLeft = 15;
-    playerHeight=-40;
-    
-    UIButton *hmi1Btn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
-    hmi1Btn.frame = CGRectMake(155+playerLeft, SCREEN_HEIGHT-435+playerHeight, 80, 80);
+    UIButton *hmi1Btn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
+    hmi1Btn.frame = CGRectMake(0,0, 80, 80);
     hmi1Btn.layer.cornerRadius = 5;
     hmi1Btn.layer.borderWidth = 2;
     hmi1Btn.layer.borderColor = [UIColor clearColor].CGColor;;
     hmi1Btn.clipsToBounds = YES;
     [hmi1Btn setTitle:@"HDMI" forState:UIControlStateNormal];
     [hmi1Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [hmi1Btn setTitleColor:RGB(242, 148, 20) forState:UIControlStateHighlighted];
+    [hmi1Btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     [self.view addSubview:hmi1Btn];
     
     [hmi1Btn addTarget:self
                       action:@selector(hdmiAction:)
             forControlEvents:UIControlEventTouchDown];
     
-    UIButton *vgaBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
-    vgaBtn.frame = CGRectMake(255+playerLeft, SCREEN_HEIGHT-435+playerHeight, 80, 80);
+    UIButton *vgaBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
+    vgaBtn.frame = CGRectMake(0,0, 80, 80);
     vgaBtn.layer.cornerRadius = 5;
     vgaBtn.layer.borderWidth = 2;
     vgaBtn.layer.borderColor = [UIColor clearColor].CGColor;;
     vgaBtn.clipsToBounds = YES;
     [vgaBtn setTitle:@"VGA" forState:UIControlStateNormal];
     [vgaBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [vgaBtn setTitleColor:RGB(242, 148, 20) forState:UIControlStateHighlighted];
+    [vgaBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     [self.view addSubview:vgaBtn];
     
     [vgaBtn addTarget:self
@@ -242,35 +223,40 @@
             forControlEvents:UIControlEventTouchUpInside];
     
     
-    UIButton *usbBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
-    usbBtn.frame = CGRectMake(155+playerLeft, SCREEN_HEIGHT-335+playerHeight, 80, 80);
+    UIButton *usbBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
+    usbBtn.frame = CGRectMake(0,0, 80, 80);
     usbBtn.layer.cornerRadius = 5;
     usbBtn.layer.borderWidth = 2;
     usbBtn.layer.borderColor = [UIColor clearColor].CGColor;;
     usbBtn.clipsToBounds = YES;
     [usbBtn setTitle:@"USB" forState:UIControlStateNormal];
     [usbBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [usbBtn setTitleColor:RGB(242, 148, 20) forState:UIControlStateHighlighted];
+    [usbBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     [self.view addSubview:usbBtn];
     
     [usbBtn addTarget:self
                       action:@selector(usbAction:)
             forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *netBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
-    netBtn.frame = CGRectMake(255+playerLeft, SCREEN_HEIGHT-335+playerHeight, 80, 80);
+    UIButton *netBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
+    netBtn.frame = CGRectMake(0,0, 80, 80);
     netBtn.layer.cornerRadius = 5;
     netBtn.layer.borderWidth = 2;
     netBtn.layer.borderColor = [UIColor clearColor].CGColor;;
     netBtn.clipsToBounds = YES;
     [netBtn setTitle:@"网络" forState:UIControlStateNormal];
     [netBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [netBtn setTitleColor:RGB(242, 148, 20) forState:UIControlStateHighlighted];
+    [netBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     [self.view addSubview:netBtn];
     
     [netBtn addTarget:self
                       action:@selector(lanAction:)
             forControlEvents:UIControlEventTouchUpInside];
+    
+    hmi1Btn.center = CGPointMake(SCREEN_WIDTH/2 - 10-40, SCREEN_HEIGHT/2-10-40);
+    vgaBtn.center = CGPointMake(SCREEN_WIDTH/2 + 10+40, SCREEN_HEIGHT/2-10-40);
+    usbBtn.center = CGPointMake(SCREEN_WIDTH/2 - 10-40, SCREEN_HEIGHT/2+10+40);
+    netBtn.center = CGPointMake(SCREEN_WIDTH/2 + 10+40, SCREEN_HEIGHT/2+10+40);
     
     [self getCurrentDeviceDriverProxys];
 }
@@ -347,29 +333,69 @@
 }
 
 
-- (void) hdmiAction:(id)sender{
+- (void) hdmiAction:(UIButton*)sender{
     
     VProjectProxys *vcam = _currentObj._proxyObj;
     if(vcam)
         [vcam controlDeviceInput:@"HDMI"];
+    
+    [sender setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+    [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
+    
+    if (_previousBtn) {
+        [_previousBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_previousBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
+    }
+    
+    _previousBtn = sender;
 }
-- (void) vgaAction:(id)sender{
+- (void) vgaAction:(UIButton*)sender{
     
     VProjectProxys *vcam = _currentObj._proxyObj;
     if(vcam)
         [vcam controlDeviceInput:@"COMP"];
+    
+    [sender setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+    [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
+    
+    if (_previousBtn) {
+        [_previousBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_previousBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
+    }
+    
+    _previousBtn = sender;
 }
-- (void) usbAction:(id)sender{
+- (void) usbAction:(UIButton*)sender{
     
     VProjectProxys *vcam = _currentObj._proxyObj;
     if(vcam)
         [vcam controlDeviceInput:@"USB"];
+    
+    [sender setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+    [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
+    
+    if (_previousBtn) {
+        [_previousBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_previousBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
+    }
+    
+    _previousBtn = sender;
 }
-- (void) lanAction:(id)sender{
+- (void) lanAction:(UIButton*)sender{
     
     VProjectProxys *vcam = _currentObj._proxyObj;
     if(vcam)
         [vcam controlDeviceInput:@"LAN"];
+    
+    [sender setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+    [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
+    
+    if (_previousBtn) {
+        [_previousBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_previousBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
+    }
+    
+    _previousBtn = sender;
 }
 
 - (void) powerOnAction:(id)sender{
