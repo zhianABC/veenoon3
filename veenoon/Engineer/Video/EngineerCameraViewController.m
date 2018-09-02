@@ -72,7 +72,7 @@
     okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
     [bottomBar addSubview:okBtn];
-    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+    [okBtn setTitle:@"保存" forState:UIControlStateNormal];
     [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
     okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
@@ -81,9 +81,9 @@
     forControlEvents:UIControlEventTouchUpInside];
     
     int playerLeft = -60;
-    int playerHeight = 50;
+    int playerHeight = 85;
     
-    UIButton *minusBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    UIButton *minusBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     minusBtn.frame = CGRectMake(230+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
     minusBtn.layer.cornerRadius = 5;
     minusBtn.layer.borderWidth = 2;
@@ -91,26 +91,26 @@
     minusBtn.clipsToBounds = YES;
     [minusBtn setTitle:@"-" forState:UIControlStateNormal];
     [minusBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [minusBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [minusBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     [self.view addSubview:minusBtn];
     
     [minusBtn addTarget:self
                        action:@selector(minusAction:)
              forControlEvents:UIControlEventTouchUpInside];
     
-    _numberBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:RGB(0, 89, 118)];
+    _numberBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     _numberBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
     _numberBtn.layer.cornerRadius = 5;
     _numberBtn.layer.borderWidth = 2;
     _numberBtn.layer.borderColor = [UIColor clearColor].CGColor;;
     _numberBtn.clipsToBounds = YES;
     [_numberBtn setTitle:@"1" forState:UIControlStateNormal];
-    [_numberBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateNormal];
-    [_numberBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [_numberBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+    [_numberBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     _numberBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [self.view addSubview:_numberBtn];
     
-    UIButton *invokeBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    UIButton *invokeBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     invokeBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-585+playerHeight, 80, 80);
     invokeBtn.layer.cornerRadius = 5;
     invokeBtn.layer.borderWidth = 2;
@@ -118,14 +118,14 @@
     invokeBtn.clipsToBounds = YES;
     [invokeBtn setTitle:@"调用" forState:UIControlStateNormal];
     [invokeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [invokeBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [invokeBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     [self.view addSubview:invokeBtn];
     
     [invokeBtn addTarget:self
                     action:@selector(invokeAction:)
           forControlEvents:UIControlEventTouchDown];
     
-    UIButton *addBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    UIButton *addBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     addBtn.frame = CGRectMake(400+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
     addBtn.layer.cornerRadius = 5;
     addBtn.layer.borderWidth = 2;
@@ -133,14 +133,14 @@
     addBtn.clipsToBounds = YES;
     [addBtn setTitle:@"+" forState:UIControlStateNormal];
     [addBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [addBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [addBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     [self.view addSubview:addBtn];
     
     [addBtn addTarget:self
                     action:@selector(addAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *storeBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    UIButton *storeBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     storeBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-415+playerHeight, 80, 80);
     storeBtn.layer.cornerRadius = 5;
     storeBtn.layer.borderWidth = 2;
@@ -148,7 +148,7 @@
     storeBtn.clipsToBounds = YES;
     [storeBtn setTitle:@"存储" forState:UIControlStateNormal];
     [storeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [storeBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [storeBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     [self.view addSubview:storeBtn];
     
     [storeBtn addTarget:self
@@ -157,7 +157,7 @@
     
     playerLeft = 320;
     
-    UIButton *tBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    UIButton *tBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     tBtn.frame = CGRectMake(230+playerLeft, SCREEN_HEIGHT-500+playerHeight-85, 80, 80);
     tBtn.layer.cornerRadius = 5;
     tBtn.layer.borderWidth = 2;
@@ -165,14 +165,14 @@
     tBtn.clipsToBounds = YES;
     [tBtn setTitle:@"T" forState:UIControlStateNormal];
     [tBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [tBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [tBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     [self.view addSubview:tBtn];
     
     [tBtn addTarget:self
                        action:@selector(tAction:)
              forControlEvents:UIControlEventTouchDown];
     
-    UIButton *directLeftBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    UIButton *directLeftBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     directLeftBtn.frame = CGRectMake(230+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
     directLeftBtn.layer.cornerRadius = 5;
     directLeftBtn.layer.borderWidth = 2;
@@ -196,7 +196,7 @@
                     action:@selector(camerDirectStopAction:)
           forControlEvents:UIControlEventTouchUpInside];
 
-    UIButton *okPlayerBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    UIButton *okPlayerBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     okPlayerBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
     okPlayerBtn.layer.cornerRadius = 5;
     okPlayerBtn.layer.borderWidth = 2;
@@ -204,14 +204,14 @@
     okPlayerBtn.clipsToBounds = YES;
     [okPlayerBtn setTitle:@"ok" forState:UIControlStateNormal];
     [okPlayerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [okPlayerBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [okPlayerBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     okPlayerBtn.titleLabel.font = [UIFont boldSystemFontOfSize:24];
     [self.view addSubview:okPlayerBtn];
     
     [okPlayerBtn addTarget:self action:@selector(audioPlayHoldAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *wBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    UIButton *wBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     wBtn.frame = CGRectMake(315+playerLeft+85, SCREEN_HEIGHT-585+playerHeight, 80, 80);
     wBtn.layer.cornerRadius = 5;
     wBtn.layer.borderWidth = 2;
@@ -219,14 +219,14 @@
     wBtn.clipsToBounds = YES;
     [wBtn setTitle:@"W" forState:UIControlStateNormal];
     [wBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [wBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [wBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     [self.view addSubview:wBtn];
     
     [wBtn addTarget:self
              action:@selector(wAction:)
    forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *directUpBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    UIButton *directUpBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     directUpBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-585+playerHeight, 80, 80);
     directUpBtn.layer.cornerRadius = 5;
     directUpBtn.layer.borderWidth = 2;
@@ -251,7 +251,7 @@
             forControlEvents:UIControlEventTouchUpInside];
     
     
-    UIButton *zoomOutBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    UIButton *zoomOutBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     zoomOutBtn.frame = CGRectMake(315+playerLeft+85, SCREEN_HEIGHT-415+playerHeight, 80, 80);
     zoomOutBtn.layer.cornerRadius = 5;
     zoomOutBtn.layer.borderWidth = 2;
@@ -291,7 +291,7 @@
            forControlEvents:UIControlEventTouchUpInside];
 
     
-    UIButton *directRightBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    UIButton *directRightBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     directRightBtn.frame = CGRectMake(400+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
     directRightBtn.layer.cornerRadius = 5;
     directRightBtn.layer.borderWidth = 2;
@@ -317,7 +317,7 @@
 
     
     
-    UIButton *zoomInBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    UIButton *zoomInBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     zoomInBtn.frame = CGRectMake(315+playerLeft-85, SCREEN_HEIGHT-415+playerHeight, 80, 80);
     zoomInBtn.layer.cornerRadius = 5;
     zoomInBtn.layer.borderWidth = 2;
@@ -356,7 +356,7 @@
          forControlEvents:UIControlEventTouchUpInside];
 
     
-    UIButton *volumnDownBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    UIButton *volumnDownBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     volumnDownBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-415+playerHeight, 80, 80);
     volumnDownBtn.layer.cornerRadius = 5;
     volumnDownBtn.layer.borderWidth = 2;
