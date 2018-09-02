@@ -115,7 +115,7 @@
     okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
     [bottomBar addSubview:okBtn];
-    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+    [okBtn setTitle:@"保存" forState:UIControlStateNormal];
     [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
     okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
@@ -137,38 +137,38 @@
     
     int labelHeight = 180;
     
-    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, labelHeight, SCREEN_WIDTH-125*2, 20)];
+    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(90, labelHeight, SCREEN_WIDTH-90, 20)];
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
-    titleL.font = [UIFont boldSystemFontOfSize:20];
+    titleL.font = [UIFont systemFontOfSize:18];
     titleL.textColor  = [UIColor whiteColor];
-    titleL.textAlignment=NSTextAlignmentCenter;
-    titleL.text = @"输入";
+    titleL.textAlignment=NSTextAlignmentLeft;
+    titleL.text = @"Inputs";
     
 
 //    int cellHeight = 80;
 //    int cellWidth = 80;
     
-    scroolViewIn = [[UIScrollView alloc] initWithFrame:CGRectMake(100,
+    scroolViewIn = [[UIScrollView alloc] initWithFrame:CGRectMake(75,
                                                                   labelHeight+60,
-                                                                  SCREEN_WIDTH - 175*2,
+                                                                  SCREEN_WIDTH,
                                                                   110)];
     [self.view addSubview:scroolViewIn];
     scroolViewIn.showsHorizontalScrollIndicator = NO;
     
     
-    scroolViewOut = [[UIScrollView alloc] initWithFrame:CGRectMake(100, labelHeight+260, SCREEN_WIDTH - 175*2, 120)];
+    scroolViewOut = [[UIScrollView alloc] initWithFrame:CGRectMake(75, labelHeight+260, SCREEN_WIDTH, 120)];
     
     [self.view addSubview:scroolViewOut];
 
     
-    titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, labelHeight+210, SCREEN_WIDTH-125*2, 40)];
+    titleL = [[UILabel alloc] initWithFrame:CGRectMake(90, labelHeight+210, SCREEN_WIDTH-90, 40)];
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
-    titleL.font = [UIFont boldSystemFontOfSize:20];
+    titleL.font = [UIFont systemFontOfSize:18];
     titleL.textColor  = [UIColor whiteColor];
-    titleL.textAlignment=NSTextAlignmentCenter;
-    titleL.text = @"输出";
+    titleL.textAlignment=NSTextAlignmentLeft;
+    titleL.text = @"Outputs";
     
     
     [self.view addSubview:bottomBar];
@@ -332,7 +332,7 @@
         NSString *titleStr = [NSString stringWithFormat:@"%d", i];
         [iBtn setTitle:titleStr];
         
-        x = CGRectGetMaxX(rc)+20;
+        x = CGRectGetMaxX(rc)+15;
         
         [_inPutBtnArray addObject:iBtn];
     }
@@ -372,7 +372,7 @@
         NSString *titleStr = [NSString stringWithFormat:@"%d", i];
         [iBtn setTitle:titleStr];
         
-        x = CGRectGetMaxX(rc)+20;
+        x = CGRectGetMaxX(rc)+15;
         
         [_outPutBtnArray addObject:iBtn];
     }

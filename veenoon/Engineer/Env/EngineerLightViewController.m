@@ -114,7 +114,7 @@
     _zengyiSlider.minValue = 0;
     _zengyiSlider.delegate = self;
     [_zengyiSlider resetScale];
-    _zengyiSlider.center = CGPointMake(SCREEN_WIDTH - 150, SCREEN_HEIGHT/2);
+    _zengyiSlider.center = CGPointMake(TESLARIA_SLIDER_X, TESLARIA_SLIDER_Y);
     
     [self getCurrentDeviceDriverProxys];
     

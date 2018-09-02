@@ -107,6 +107,8 @@
     if([view isKindOfClass:[UIButton class]])
     {
         [self becomeFirstResponder];
+        UIButton *btn = (UIButton*) view;
+        [self channelBtnAction:btn];
         CGRect rect = [self convertRect:view.frame fromView:view.superview];
         
         UIMenuController *menu = [UIMenuController sharedMenuController];
