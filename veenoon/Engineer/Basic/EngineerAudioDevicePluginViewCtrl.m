@@ -42,6 +42,7 @@
 
 @property (nonatomic, strong) NSMutableDictionary *typeAndSubTypeMap;
 @property (nonatomic, strong) NSMutableDictionary *nameDriverMap;
+@property (nonatomic, strong) NSMutableDictionary *_tmpMap;
 @end
 
 @implementation EngineerAudioDevicePluginViewCtrl
@@ -55,6 +56,7 @@
 
 @synthesize typeAndSubTypeMap;
 @synthesize nameDriverMap;
+@synthesize _tmpMap;
 
 
 
@@ -65,6 +67,7 @@
     //根据Subtype分类
     self.typeAndSubTypeMap = [NSMutableDictionary dictionary];
     self.nameDriverMap = [NSMutableDictionary dictionary];
+    
     
     NSArray *drivers = [[DataCenter defaultDataCenter] driversWithType:@"audio"];
     
@@ -166,26 +169,11 @@
     [_wuxianhuatongBtn  buttonWithIcon:[UIImage imageNamed:@"engineer_wuxianhuatong_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_wuxianhuatong_s.png"] text:@"无线话筒" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_wuxianhuatongBtn addTarget:self action:@selector(wuxianhuatongAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_wuxianhuatongBtn];
-    
-//    _huiyiBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*3, height,80, 110)];
-//    [_huiyiBtn  buttonWithIcon:[UIImage imageNamed:@"engineer_huiyi_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_huiyi_s.png"] text:audio_mixer_name normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
-//    [_huiyiBtn addTarget:self action:@selector(huiyiAction:) forControlEvents:UIControlEventTouchUpInside];
-////    [self.view addSubview:_huiyiBtn];
-    
-//    _handToHandhuiyiBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*4, height,80, 110)];
-//    [_handToHandhuiyiBtn  buttonWithIcon:[UIImage imageNamed:@"engineer_huiyi_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_huiyi_s.png"] text:@"手拉手会议" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
-//    [_handToHandhuiyiBtn addTarget:self action:@selector(handToHandAction:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:_handToHandhuiyiBtn];
-    
+
     _wirelessHuiyiBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*3, height,80, 110)];
     [_wirelessHuiyiBtn  buttonWithIcon:[UIImage imageNamed:@"engineer_huiyi_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_huiyi_s.png"] text:@"会议" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_wirelessHuiyiBtn addTarget:self action:@selector(wirelessHuiyiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_wirelessHuiyiBtn];
-//
-//    _fankuiyizhiBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*6, height,80, 110)];
-//    [_fankuiyizhiBtn  buttonWithIcon:[UIImage imageNamed:@"enginner_fankuiyizhi_n.png"] selectedIcon:[UIImage imageNamed:@"enginner_fankuiyizhi_s.png"] text:@"反馈抑制" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
-//    [_fankuiyizhiBtn addTarget:self action:@selector(fankuiyizhiAction:) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:_fankuiyizhiBtn];
     
     _yinpinchuliBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*4, height,80, 110)];
     [_yinpinchuliBtn  buttonWithIcon:[UIImage imageNamed:@"engineer_yinpinchuli_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_yinpinchuli_s.png"] text:audio_process_name normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
@@ -213,8 +201,6 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"类型";
     
-    
-    
     _productTypePikcer = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(labelStartX, labelStartY+20, maxWidth, 160)];
     [_productTypePikcer removeArray];
     _productTypePikcer.delegate_=self;
@@ -235,8 +221,7 @@
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = @"品牌";
     
-    
-    
+
     _brandPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(x1,
                                                                               labelStartY+20,
                                                                               maxWidth, 160)];
@@ -274,7 +259,7 @@
     addBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [addBtn addTarget:self action:@selector(confirmAction:) forControlEvents:UIControlEventTouchUpInside];
     
-    [self initBrandAndTypes];
+    [self emptyBrandAndTypes];
     
     //[[DataSync sharedDataSync] syncAreaHasDrivers];
     
@@ -322,7 +307,7 @@
     
 }
 
-- (void) initBrandAndTypes{
+- (void) emptyBrandAndTypes{
     self._currentCategorys = @[@"类型"];
     self._currentBrands = @[@"品牌"];
     self._currentTypes = @[@"型号"];
@@ -337,75 +322,12 @@
     [_brandPicker selectRow:0 inComponent:0];
     [_productCategoryPicker selectRow:0 inComponent:0];
 }
-- (void) wirelessHuiyiAction:(id)sender {
-    [_electronicSysBtn setBtnHighlited:NO];
-    [_musicPlayBtn setBtnHighlited:NO];
-    [_wuxianhuatongBtn setBtnHighlited:NO];
-    [_huiyiBtn setBtnHighlited:NO];
-    [_fankuiyizhiBtn setBtnHighlited:NO];
-    [_yinpinchuliBtn setBtnHighlited:NO];
-    [_handToHandhuiyiBtn setBtnHighlited:NO];
-    [_wirelessHuiyiBtn setBtnHighlited:YES];
-    [_floorWarmBtn setBtnHighlited:NO];
-    
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
-    
-    [self initBrandAndTypes];
-}
-- (void) handToHandAction:(id)sender {
-    [_electronicSysBtn setBtnHighlited:NO];
-    [_musicPlayBtn setBtnHighlited:NO];
-    [_wuxianhuatongBtn setBtnHighlited:NO];
-    [_huiyiBtn setBtnHighlited:NO];
-    [_fankuiyizhiBtn setBtnHighlited:NO];
-    [_yinpinchuliBtn setBtnHighlited:NO];
-    [_handToHandhuiyiBtn setBtnHighlited:YES];
-    [_wirelessHuiyiBtn setBtnHighlited:NO];
-    [_floorWarmBtn setBtnHighlited:NO];
-    
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
-    
-    [self initBrandAndTypes];
-}
-- (void) gongfangAction:(id)sender{
-    
-    [_electronicSysBtn setBtnHighlited:NO];
-    [_musicPlayBtn setBtnHighlited:NO];
-    [_wuxianhuatongBtn setBtnHighlited:NO];
-    [_huiyiBtn setBtnHighlited:NO];
-    [_fankuiyizhiBtn setBtnHighlited:NO];
-    [_yinpinchuliBtn setBtnHighlited:NO];
-    [_handToHandhuiyiBtn setBtnHighlited:NO];
-    [_wirelessHuiyiBtn setBtnHighlited:NO];
-    [_floorWarmBtn setBtnHighlited:YES];
-    [_handToHandhuiyiBtn setBtnHighlited:NO];
-    [_wirelessHuiyiBtn setBtnHighlited:NO];
-    
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
-    
-    [self initBrandAndTypes];
-}
 
-- (void) yinpinchuliAction:(id)sender{
-    
-    [_electronicSysBtn setBtnHighlited:NO];
-    [_musicPlayBtn setBtnHighlited:NO];
-    [_wuxianhuatongBtn setBtnHighlited:NO];
-    //[_huiyiBtn setBtnHighlited:NO];
-    //[_fankuiyizhiBtn setBtnHighlited:NO];
-    [_yinpinchuliBtn setBtnHighlited:YES];
-    [_floorWarmBtn setBtnHighlited:NO];
-    //[_handToHandhuiyiBtn setBtnHighlited:NO];
-    [_wirelessHuiyiBtn setBtnHighlited:NO];
+
+- (void) choosedDevice:(NSString*)category{
 
     
-    NSArray *types = [typeAndSubTypeMap objectForKey:@"音频处理器"];
+    NSArray *types = [typeAndSubTypeMap objectForKey:category];
     
     NSMutableArray *cate = [NSMutableArray array];
     for(NSDictionary *dr in types)
@@ -419,104 +341,111 @@
         _productTypePikcer._pickerDataArray = @[@{@"values":cate}];
         [_productTypePikcer selectRow:0 inComponent:0];
         
-        NSString *name = [cate objectAtIndex:0];
-        NSArray *arr = [nameDriverMap objectForKey:name];
+        NSString *typename = [cate objectAtIndex:0];
+        [self choosedDeviceType:typename];
+    }
+    else
+    {
+        [self emptyBrandAndTypes];
+    }
+}
+
+- (void) choosedDeviceType:(NSString*)type{
+    
+    NSArray *arr = [nameDriverMap objectForKey:type];
+    
+    NSMutableArray *brands = [NSMutableArray array];
+    
+    self._tmpMap = [NSMutableDictionary dictionary];
+    for(NSDictionary *dr in arr)
+    {
+        NSString *brand = [dr objectForKey:@"brand"];
         
-        NSMutableArray *brands = [NSMutableArray array];
-        
-        NSMutableDictionary *map = [NSMutableDictionary dictionary];
-        for(NSDictionary *dr in arr)
+        NSMutableArray *xhs = [_tmpMap objectForKey:brand];
+        if(xhs == nil)
         {
-            NSString *brand = [dr objectForKey:@"brand"];
-            
-            NSMutableArray *xhs = [map objectForKey:brand];
-            if(xhs == nil)
-            {
-                xhs = [NSMutableArray array];
-                [map setObject:xhs forKey:brand];
-            }
-            [xhs addObject:dr];
-            
-            if(![brands containsObject:brand])
-                [brands addObject:brand];
+            xhs = [NSMutableArray array];
+            [_tmpMap setObject:xhs forKey:brand];
         }
+        [xhs addObject:dr];
         
-        self._currentBrands = brands;
-        _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
-        
-        if([brands count])
-        {
-            [_brandPicker selectRow:0 inComponent:0];
-            
-            NSString *b = [brands objectAtIndex:0];
-            NSArray *xhs = [map objectForKey:b];
-            
-            NSMutableArray *ts = [NSMutableArray array];
-            NSMutableArray *ids = [NSMutableArray array];
-            for(NSDictionary *d in xhs)
-            {
-                [ts addObject:[d objectForKey:@"ptype"]];
-                [ids addObject:[d objectForKey:@"driver"]];
-            }
-            
-            self._currentTypes = ts;
-            self._driverUdids = ids;
-            
-            _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
-            
-            if([ts count])
-            {
-                [_productCategoryPicker selectRow:0 inComponent:0];
-            }
-        }
+        if(![brands containsObject:brand])
+            [brands addObject:brand];
     }
     
-}
-
-- (void) fankuiyizhiAction:(id)sender{
-    
-    [_electronicSysBtn setBtnHighlited:NO];
-    [_musicPlayBtn setBtnHighlited:NO];
-    [_wuxianhuatongBtn setBtnHighlited:NO];
-    [_huiyiBtn setBtnHighlited:NO];
-    [_fankuiyizhiBtn setBtnHighlited:YES];
-    [_yinpinchuliBtn setBtnHighlited:NO];
-    [_floorWarmBtn setBtnHighlited:NO];
-    [_handToHandhuiyiBtn setBtnHighlited:NO];
-    [_wirelessHuiyiBtn setBtnHighlited:NO];
-    
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
-    
-    [self initBrandAndTypes];
-}
-
-- (void) huiyiAction:(id)sender{
-    
-    [_electronicSysBtn setBtnHighlited:NO];
-    [_musicPlayBtn setBtnHighlited:NO];
-    [_wuxianhuatongBtn setBtnHighlited:NO];
-    [_huiyiBtn setBtnHighlited:YES];
-    [_fankuiyizhiBtn setBtnHighlited:NO];
-    [_yinpinchuliBtn setBtnHighlited:NO];
-    [_floorWarmBtn setBtnHighlited:NO];
-    [_handToHandhuiyiBtn setBtnHighlited:NO];
-    [_wirelessHuiyiBtn setBtnHighlited:NO];
-    
-    self._currentBrands = @[@"Teslaria"];
-    self._currentTypes = @[@"Audio Mixer"];
-    self._driverUdids = @[UUID_Audio_Mixer];
-    
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
-    
+    self._currentBrands = brands;
     _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
+    
+    if([brands count])
+    {
+        [_brandPicker selectRow:0 inComponent:0];
+        NSString *b = [brands objectAtIndex:0];
+        
+        [self choosedCurrentBand:b];
+    }
+}
+
+- (void) choosedCurrentBand:(NSString*)band{
+    
+    NSArray *xhs = [_tmpMap objectForKey:band];
+    
+    NSMutableArray *ts = [NSMutableArray array];
+    NSMutableArray *ids = [NSMutableArray array];
+    for(NSDictionary *d in xhs)
+    {
+        [ts addObject:[d objectForKey:@"ptype"]];
+        [ids addObject:[d objectForKey:@"driver"]];
+    }
+    
+    self._currentTypes = ts;
+    self._driverUdids = ids;
+    
     _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
     
-    [_brandPicker selectRow:0 inComponent:0];
-    [_productCategoryPicker selectRow:0 inComponent:0];
+    if([ts count])
+    {
+        [_productCategoryPicker selectRow:0 inComponent:0];
+    }
+}
+
+
+- (void) wirelessHuiyiAction:(id)sender {
+   
+    [_electronicSysBtn setBtnHighlited:NO];
+    [_musicPlayBtn setBtnHighlited:NO];
+    [_wuxianhuatongBtn setBtnHighlited:NO];
+    [_yinpinchuliBtn setBtnHighlited:NO];
+    [_wirelessHuiyiBtn setBtnHighlited:YES];
+    [_floorWarmBtn setBtnHighlited:NO];
+    
+    [self choosedDevice:@"会议"];
+    
+}
+
+- (void) gongfangAction:(id)sender{
+    
+    [_electronicSysBtn setBtnHighlited:NO];
+    [_musicPlayBtn setBtnHighlited:NO];
+    [_wuxianhuatongBtn setBtnHighlited:NO];
+    [_yinpinchuliBtn setBtnHighlited:NO];
+    [_handToHandhuiyiBtn setBtnHighlited:NO];
+    [_wirelessHuiyiBtn setBtnHighlited:NO];
+    [_floorWarmBtn setBtnHighlited:YES];
+    [_wirelessHuiyiBtn setBtnHighlited:NO];
+    
+    [self choosedDevice:@"功放"];
+}
+
+- (void) yinpinchuliAction:(id)sender{
+    
+    [_electronicSysBtn setBtnHighlited:NO];
+    [_musicPlayBtn setBtnHighlited:NO];
+    [_wuxianhuatongBtn setBtnHighlited:NO];
+    [_yinpinchuliBtn setBtnHighlited:YES];
+    [_floorWarmBtn setBtnHighlited:NO];
+    [_wirelessHuiyiBtn setBtnHighlited:NO];
+
+    [self choosedDevice:@"音频处理器"];
 }
 
 - (void) wuxianhuatongAction:(id)sender{
@@ -530,78 +459,51 @@
     [_handToHandhuiyiBtn setBtnHighlited:NO];
     [_wirelessHuiyiBtn setBtnHighlited:NO];
     
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
-    
-    [self initBrandAndTypes];
+    [self choosedDevice:@"无线话筒"];
 }
 
 - (void) musicPlayAction:(id)sender{
+    
     [_electronicSysBtn setBtnHighlited:NO];
     [_musicPlayBtn setBtnHighlited:YES];
     [_wuxianhuatongBtn setBtnHighlited:NO];
-    [_huiyiBtn setBtnHighlited:NO];
-    [_fankuiyizhiBtn setBtnHighlited:NO];
     [_yinpinchuliBtn setBtnHighlited:NO];
     [_floorWarmBtn setBtnHighlited:NO];
-    [_handToHandhuiyiBtn setBtnHighlited:NO];
     [_wirelessHuiyiBtn setBtnHighlited:NO];
     
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
+    [self choosedDevice:@"音乐播放"];
     
-    [self initBrandAndTypes];
 }
 
 - (void) electronicSysAction:(id)sender{
     [_electronicSysBtn setBtnHighlited:YES];
     [_musicPlayBtn setBtnHighlited:NO];
     [_wuxianhuatongBtn setBtnHighlited:NO];
-    [_huiyiBtn setBtnHighlited:NO];
-    [_fankuiyizhiBtn setBtnHighlited:NO];
     [_yinpinchuliBtn setBtnHighlited:NO];
     [_floorWarmBtn setBtnHighlited:NO];
-    [_handToHandhuiyiBtn setBtnHighlited:NO];
     [_wirelessHuiyiBtn setBtnHighlited:NO];
     
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
-    
-    self._currentCategorys = @[];
-    _productTypePikcer._pickerDataArray = @[@{@"values":_currentCategorys}];
-    
-    self._currentBrands = @[@"Teslaria"];
-    self._currentTypes = @[@"Power Sequencer"];
-    self._driverUdids = @[UUID_Power_Sequencer];
-    
-    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
-    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
-    
-    [_brandPicker selectRow:0 inComponent:0];
-    [_productCategoryPicker selectRow:0 inComponent:0];
-}
--(void) didScrollPickerValue:(NSString*)brand {
+    [self choosedDevice:@"电源管理"];
     
 }
--(void) setBrandValue:(NSString*)brand {
-    if (brand == nil) {
-        return;
-    }
-    NSArray *array = _productTypePikcer._pickerDataArray;
-    int index = 0;
-    for (NSDictionary *dic in array) {
-        NSArray *valueArray = [dic objectForKey:@"values"];
-        for (NSString * str in valueArray) {
-            if ([str isEqualToString:brand]) {
-                break;
-            }
-            index++;
-        }
-    }
-    [_productTypePikcer selectRow:index inComponent:0];
+
+-(void) didScrollPickerValue:(NSString*)value  obj:(id)obj{
+    
+    //类型
+    if(obj == _productTypePikcer)
+    {
+        [self choosedDeviceType:value];
+    }//品牌
+    else if(obj == _brandPicker)
+    {
+        [self choosedCurrentBand:value];
+    }//型号
+    
+}
+
+- (void) setBrandValue:(NSString*)brand {
+   
+    
 }
 
 - (void) okAction:(id)sender{

@@ -11,7 +11,7 @@
 @optional
 - (void) didChangedPickerValue:(NSDictionary*)value;
 - (void) didConfirmPickerValue:(NSString*) pickerValue;
-- (void) didScrollPickerValue:(NSString*) pickerValue;
+- (void) didScrollPickerValue:(NSString*) pickerValue obj:(id)obj;
 @end
 
 typedef void(^CustomPickerSelectionBlock)(NSDictionary* values);

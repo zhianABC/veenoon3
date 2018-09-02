@@ -296,7 +296,7 @@
     
 }
 
--(void) didScrollPickerValue:(NSString*)brand {
+-(void) didScrollPickerValue:(NSString*)brand obj:(id)obj{
     if ([@"人体感应传感器" isEqualToString:brand]) {
         [self rentichuangangAction:_rentichuanganBtn];
     } else if ([@"温湿度传感器" isEqualToString:brand]) {

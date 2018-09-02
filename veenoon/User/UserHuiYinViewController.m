@@ -248,7 +248,7 @@
         }
     }
 }
--(void) didScrollPickerValue:(NSString*)brand{
+-(void) didScrollPickerValue:(NSString*)brand obj:(id)obj{
 if (_peoplePicker) {
         [_peoplePicker removeFromSuperview];
     }
