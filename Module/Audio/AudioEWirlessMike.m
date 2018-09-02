@@ -7,6 +7,7 @@
 //
 
 #import "AudioEWirlessMike.h"
+#import "RegulusSDK.h"
 
 @interface AudioEWirlessMike ()
 {
@@ -260,6 +261,20 @@
     
 }
 
+- (NSDictionary *)userData{
+    
+    NSMutableDictionary *config = [NSMutableDictionary dictionary];
+    [config setValue:[NSString stringWithFormat:@"%@", [self class]] forKey:@"class"];
+    if(_driver)
+    {
+        RgsDriverObj *dr = _driver;
+        [config setObject:[NSNumber numberWithInteger:dr.m_id] forKey:@"driver_id"];
+    }
+    return config;
+}
 
+- (void) createByUserData:(NSDictionary*)userdata withMap:(NSDictionary*)valMap{
+    
+}
 
 @end

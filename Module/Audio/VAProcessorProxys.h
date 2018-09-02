@@ -318,7 +318,7 @@
 
 
 /////场景还原
-- (void) recoverWithDictionary:(NSDictionary*)data;
+- (void) recoverWithDictionary:(NSArray*)datas;
 - (NSDictionary *)getScenarioSliceLocatedShadow;
 
 @end

@@ -402,12 +402,6 @@
         
         VAProcessorProxys *vap = [_inputProxys objectAtIndex:i];
         
-        NSDictionary *dic = [_curProcessor inputChannelAtIndex:i];
-        if(dic)
-        {
-            [vap recoverWithDictionary:dic];
-        }
-        
         int row = index/colNumber;
         int col = index%colNumber;
         int startX = col*cellWidth+col*space+leftRight;
@@ -448,12 +442,6 @@
     for (int i = 0; i < [_outputProxys count]; i++) {
         
         VAProcessorProxys *vap = [_outputProxys objectAtIndex:i];
-        
-        NSDictionary *dic = [_curProcessor outChannelAtIndex:i];
-        if(dic)
-        {
-            [vap recoverWithDictionary:dic];
-        }
         
         int row = i/colNumber;
         int col = i%colNumber;

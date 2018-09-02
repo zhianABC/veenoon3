@@ -343,13 +343,6 @@
         
         VAProcessorProxys *vap = [_inputProxys objectAtIndex:i];
         
-        NSDictionary *dic = [_curProcessor inputChannelAtIndex:i];
-        if(dic)
-        {
-            [vap recoverWithDictionary:dic];
-        }
-        
-        
         
         JSlideView *sliderCtrl = [[JSlideView alloc]
                            initWithSliderBg:[UIImage imageNamed:@"v_slider_bg_light.png"]

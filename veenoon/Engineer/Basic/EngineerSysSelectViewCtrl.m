@@ -336,11 +336,15 @@
                                                                 areaId:(int)areaObj.m_id];
         }
         
+        [KVNProgress show];
         [[RegulusSDK sharedRegulusSDK] GetAreaScenes:areaObj.m_id
                                           completion:^(BOOL result, NSArray *scenes, NSError *error) {
             if (result) {
                 
                 [block_self checkSceneDriver:scenes];
+            }else
+            {
+                [KVNProgress dismiss];
             }
         }];
     }
@@ -362,11 +366,22 @@
 
 - (void) updateScenarioDrivers{
     
+    [KVNProgress dismiss];
+    
     [_sceneDrivers removeAllObjects];
     
     MeetingRoom *room = [DataCenter defaultDataCenter]._currentRoom;
     if(room)
     {
+        for(RgsSceneObj *dr in _scenes)
+        {
+            Scenario *s = [[Scenario alloc] init];
+            s._rgsSceneObj = dr;
+            [s syncDataFromRegulus];
+            [_sceneDrivers addObject:s];
+        }
+        
+        /*
         NSArray* savedScenarios = [[DataBase sharedDatabaseInstance]
                                    getSavedScenario:room.regulus_id];
         
@@ -385,20 +400,19 @@
             if([map objectForKey:key])
             {
                 Scenario *s = [[Scenario alloc] init];
-                [s fillWithData:[map objectForKey:key]];
                 s._rgsSceneObj = dr;
-                
-                
+                [s syncDataFromRegulus];
                 [_sceneDrivers addObject:s];
             }
-//            else
-//            {
-//                Scenario *s = [[Scenario alloc] init];
-//                s._rgsSceneObj = dr;
-//                [s syncDataFromRegulus];
-//                [_sceneDrivers addObject:s];
-//            }
+            else
+            {
+                Scenario *s = [[Scenario alloc] init];
+                s._rgsSceneObj = dr;
+                [s syncDataFromRegulus];
+                [_sceneDrivers addObject:s];
+            }
         }
+         */
     }
     else
     {

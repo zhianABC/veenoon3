@@ -207,4 +207,12 @@
 - (void) createConnection:(RgsConnectionObj*)source withConnect:(RgsConnectionObj*)target{
     
 }
+
+- (NSDictionary *)userData{
+    
+    return nil;
+}
+- (void) createByUserData:(NSDictionary*)userdata withMap:(NSDictionary*)valMap{
+    
+}
 @end

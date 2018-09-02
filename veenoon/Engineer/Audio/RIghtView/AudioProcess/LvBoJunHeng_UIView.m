@@ -1138,6 +1138,8 @@
     
     NSMutableArray *waves16_feq_gain_q = _curProxy.waves16_feq_gain_q;
     
+    NSArray *typearrs = [_curProxy getLvBoBoDuanArray];
+    
     for(NSDictionary *data in waves16_feq_gain_q)
     {
         int freq = [[data objectForKey:@"freq"] intValue];
@@ -1145,10 +1147,33 @@
         float qval = [[data objectForKey:@"q_val"] floatValue];
         int q = [[data objectForKey:@"q"] intValue];
         int band = [[data objectForKey:@"band"] intValue];
+        NSString *enable = [data objectForKey:@"enable"];
+        NSString *type = [data objectForKey:@"type"];
         
-        [fglm setPEQWithBand:band-1 gain:gain];
-        [fglm setPEQWithBand:band-1 Q:qval];
-        [fglm setPEQWithBand:band-1 freq:freq];
+        BOOL isEnabled = YES;
+        if([enable isEqualToString:@"False"])
+        {
+            isEnabled = NO;
+        }
+        
+        int typeIdx = 0;
+        if(typearrs && [typearrs count])
+        {
+            typeIdx = [typearrs indexOfObject:type];
+        }
+        
+//        [fglm setPEQWithBand:band-1 gain:gain];
+//        [fglm setPEQWithBand:band-1 Q:qval];
+//        [fglm setPEQWithBand:band-1 freq:freq];
+//
+        [fglm setPEQWithBand:band-1
+                         byp:!isEnabled
+                        type:typeIdx
+                        freq:freq
+                        gain:gain
+                           Q:qval
+                        show:false];
+        
         
         if(maxRate - minRate)
         {
@@ -1172,6 +1197,8 @@
             boduanQL.text = [NSString stringWithFormat:@"%0.2f", qval];
         }
     }
+    
+    [fglm refreshUI];
 }
 
 - (void) updateCurrentBrand{
@@ -1211,9 +1238,20 @@
         [boduanleixingBtn setTitle:boduanType forState:UIControlStateNormal];
         
         
-        [fglm setPEQWithBand:_channelSelIndex gain:gain];
-        [fglm setPEQWithBand:_channelSelIndex Q:qval];
-        [fglm setPEQWithBand:_channelSelIndex freq:freq];
+        NSArray *typearrs = [_curProxy getLvBoBoDuanArray];
+        int typeIdx = 0;
+        if(typearrs && [typearrs count])
+        {
+            typeIdx = [typearrs indexOfObject:type];
+        }
+        
+        [fglm setPEQWithBand:_channelSelIndex
+                         byp:!isEnabled
+                        type:typeIdx
+                        freq:freq
+                        gain:gain
+                           Q:qval
+                        show:true];
         
         if(maxRate - minRate)
         {

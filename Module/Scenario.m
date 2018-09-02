@@ -149,45 +149,110 @@
 
 - (void) fillWithData:(NSMutableDictionary*)data{
     
-    self._scenarioData = data;
+    self._scenarioData = [NSMutableDictionary dictionaryWithDictionary:data];
     
     self._rgsDriver = [[RgsDriverObj alloc] init];
     _rgsDriver.m_id = [[data objectForKey:@"s_driver_id"] intValue];
     
-    NSArray *audios = [data objectForKey:@"audio"];
-    for(NSDictionary *a in audios){
-        
-        NSString *classname = [a objectForKey:@"class"];
-        Class someClass = NSClassFromString(classname);
-        BasePlugElement * obj = [[someClass alloc] init];
-        [obj jsonToObject:a];
-        
-        [_audioDevices addObject:obj];
-    }
-    NSArray *videos = [data objectForKey:@"video"];
-    for(NSDictionary *v in videos){
-        
-        NSString *classname = [v objectForKey:@"class"];
-        Class someClass = NSClassFromString(classname);
-        BasePlugElement * obj = [[someClass alloc] init];
-        [obj jsonToObject:v];
-        
-        [_videoDevices addObject:obj];
-    }
-    NSArray *envs = [data objectForKey:@"environment"];
-    for(NSDictionary *env in envs){
-        
-        NSString *classname = [env objectForKey:@"class"];
-        Class someClass = NSClassFromString(classname);
-        BasePlugElement * obj = [[someClass alloc] init];
-        [obj jsonToObject:env];
-        
-        [_envDevices addObject:obj];
-    }
+    int s_event_id = [[data objectForKey:@"s_event_id"] intValue];
     
+    self._rgsSceneEvent = [[RgsEventObj alloc] init];
+    _rgsSceneEvent.m_id = s_event_id;
+    _rgsSceneEvent.parent_id = _rgsDriver.m_id;
     
-    [self recoverDriverEvent];
+    IMP_BLOCK_SELF(Scenario);
+    
+    [KVNProgress show];
+    [[RegulusSDK sharedRegulusSDK] GetDriverEvents:_rgsDriver.m_id
+                                        completion:^(BOOL result, NSArray *events, NSError *error) {
+                                            if (result) {
+                                                if ([events count]) {
+                                                    
+                                                    block_self._rgsSceneEvent = [events objectAtIndex:0];
+                                                    [block_self getScenceEventOperations];
+                                                }
+                                            }
+                                            else
+                                            {
+                                                [KVNProgress showErrorWithStatus:[error description]];
+                                                [block_self postCreateScenarioNotifyResult:NO];
+                                            }
+                                        }];
+    
 
+}
+
+- (void) getScenceEventOperations{
+    
+    IMP_BLOCK_SELF(Scenario);
+    [[RegulusSDK sharedRegulusSDK] GetEventOperations:_rgsSceneEvent
+                                           completion:^(BOOL result, NSArray *operatins, NSError *error) {
+                                               
+                                               [block_self initDrivers:operatins];
+                                               
+                                           }];
+}
+
+- (void) initDrivers:(NSArray*)operatins{
+    
+    [KVNProgress dismiss];
+    
+    if([operatins count])
+    {
+    
+        NSMutableDictionary *map = [NSMutableDictionary dictionary];
+        for(RgsSceneOperation *opt in operatins)
+        {
+            RgsSceneDeviceOperation *dopt = [opt getOperation];
+            if([dopt isKindOfClass:[RgsSceneDeviceOperation class]])
+            {
+                id key = [NSString stringWithFormat:@"%d", (int)dopt.dev_id];
+                NSMutableArray *arr = [map objectForKey:key];
+                if(arr == nil)
+                {
+                    arr = [NSMutableArray array];
+                    [map setObject:arr forKey:key];
+                }
+                
+                [arr addObject:dopt];
+                
+            }
+        }
+        
+        NSArray *audios = [_scenarioData objectForKey:@"audio"];
+        for(NSDictionary *a in audios){
+            
+            NSString *classname = [a objectForKey:@"class"];
+            Class someClass = NSClassFromString(classname);
+            BasePlugElement * obj = [[someClass alloc] init];
+            [obj createByUserData:a withMap:map];
+            
+            [_audioDevices addObject:obj];
+        }
+        NSArray *videos = [_scenarioData objectForKey:@"video"];
+        for(NSDictionary *v in videos){
+            
+            NSString *classname = [v objectForKey:@"class"];
+            Class someClass = NSClassFromString(classname);
+            BasePlugElement * obj = [[someClass alloc] init];
+            [obj jsonToObject:v];
+            
+            [_videoDevices addObject:obj];
+        }
+        NSArray *envs = [_scenarioData objectForKey:@"environment"];
+        for(NSDictionary *env in envs){
+            
+            NSString *classname = [env objectForKey:@"class"];
+            Class someClass = NSClassFromString(classname);
+            BasePlugElement * obj = [[someClass alloc] init];
+            [obj jsonToObject:env];
+            
+            [_envDevices addObject:obj];
+        }
+        
+        
+        [self recoverDriverEvent];
+    }
 }
 
 - (void) uploadToServer{
@@ -331,8 +396,6 @@
 
 - (void) uploadToRegulusCenter{
     
-    return;
-    
     if(regulus_id == nil || _rgsDriver == nil)
     {
         return;
@@ -349,6 +412,14 @@
     
     NSString *jsonresult = [[NSString alloc] initWithData:jsonData
                                                  encoding:NSUTF8StringEncoding];
+    
+    if(jsonresult)
+    {
+        jsonresult = [jsonresult stringByReplacingOccurrencesOfString:@" "
+                                                           withString:@""];
+        jsonresult = [jsonresult stringByReplacingOccurrencesOfString:@"\n"
+                                                           withString:@""];
+    }
     
     if(jsonresult == nil)
         jsonresult  = @"";
@@ -377,10 +448,21 @@
 
 - (void) syncDataFromRegulus{
     
+    
+    
     if(_rgsDriver == nil)
     {
-        return;
+        self._rgsDriver = [[RgsDriverObj alloc] init];
+        
+        if(_rgsSceneObj)
+        {
+            _rgsDriver.m_id = _rgsSceneObj.m_id;
+        }
+
     }
+    
+    if(_rgsDriver == nil)
+        return;
     
     IMP_BLOCK_SELF(Scenario);
     
@@ -416,7 +498,9 @@
         
         //保存数据库
         [[DataBase sharedDatabaseInstance] saveScenario:_scenarioData];
-        //[self uploadToRegulusCenter];
+        [self performSelectorOnMainThread:@selector(uploadToRegulusCenter)
+                               withObject:nil
+                            waitUntilDone:NO];
         
 #ifdef REALTIME_NETWORK_MODEL
         [self uploadToServer];
@@ -446,7 +530,6 @@
                                                  if (result) {
                                                      
                                                      block_self._rgsDriver = driver;
-                                                     
                                                      [block_self getDriverEvent];
                                                  }
                                                  else
@@ -786,7 +869,7 @@
                 }
             }
             
-            NSDictionary *data = [ap objectToJson];
+            NSDictionary *data = [ap userData];
             [audios addObject:data];
         }
         else if ([ap isKindOfClass:[APowerESet class]])
@@ -821,7 +904,7 @@
                 }
             }
             
-            NSDictionary *data = [ap objectToJson];
+            NSDictionary *data = [ap userData];
             [audios addObject:data];
         }
         else if ([ap isKindOfClass:[AudioEMix class]])
@@ -874,11 +957,14 @@
                 [self addEventOperation:rsp];
             }
             
-            NSDictionary *data = [ap objectToJson];
+            NSDictionary *data = [ap userData];
             [audios addObject:data];
         }
     }
     
+    
+    if([audios count] == 0)
+        [_scenarioData removeObjectForKey:@"audio"];
 }
 
 - (void) createVideoScenario{
@@ -903,7 +989,7 @@
                 }
             }
             
-            NSDictionary *data = [dev objectToJson];
+            NSDictionary *data = [dev userData];
             [videos addObject:data];
         }
         else if([dev isKindOfClass:[VTouyingjiSet class]])
@@ -925,17 +1011,17 @@
                 
             }
             
-            NSDictionary *data = [dev objectToJson];
+            NSDictionary *data = [dev userData];
             [videos addObject:data];
         }
         else if([dev isKindOfClass:[VTVSet class]])
         {
-            NSDictionary *data = [dev objectToJson];
+            NSDictionary *data = [dev userData];
             [videos addObject:data];
         }
         else if([dev isKindOfClass:[VDVDPlayerSet class]])
         {
-            NSDictionary *data = [dev objectToJson];
+            NSDictionary *data = [dev userData];
             [videos addObject:data];
         }
         else if([dev isKindOfClass:[VVideoProcessSet class]])
@@ -948,11 +1034,14 @@
                 [self addEventOperation:rsp];
             }
             
-            NSDictionary *data = [dev objectToJson];
+            NSDictionary *data = [dev userData];
             [videos addObject:data];
         }
     }
     
+    
+    if([videos count] == 0)
+        [_scenarioData removeObjectForKey:@"video"];
 }
 
 - (void) createEvnScenario{
@@ -980,7 +1069,7 @@
                 }
             }
             
-            NSDictionary *data = [dev objectToJson];
+            NSDictionary *data = [dev userData];
             [evns addObject:data];
         }
         else if([dev isKindOfClass:[EDimmerSwitchLight class]])
@@ -998,7 +1087,7 @@
                 }
             }
             
-            NSDictionary *data = [dev objectToJson];
+            NSDictionary *data = [dev userData];
             [evns addObject:data];
         }
         else if([dev isKindOfClass:[AirConditionPlug class]])
@@ -1016,11 +1105,13 @@
 //                }
 //            }
             
-            NSDictionary *data = [dev objectToJson];
+            NSDictionary *data = [dev userData];
             [evns addObject:data];
         }
     }
     
+    if([evns count] == 0)
+        [_scenarioData removeObjectForKey:@"environment"];
 }
 
 

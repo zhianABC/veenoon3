@@ -210,49 +210,190 @@
     return _RgsSceneDeviceOperationShadow;
 }
 
-- (void) recoverWithDictionary:(NSDictionary *)data
+- (void) recoverWithDictionary:(NSArray*)datas
 {
-    NSInteger proxy_id = [[data objectForKey:@"proxy_id"] integerValue];
     
-    if(!_rgsProxyObj || (_rgsProxyObj && (proxy_id == _rgsProxyObj.m_id)))
+    for(RgsSceneDeviceOperation *dopt in datas)
     {
-        self._icon_name = [data objectForKey:@"icon_name"];
+         _isSetOK = YES;
         
-        self._voiceInDevice = [data objectForKey:@"voiceInDevice"];
+        NSString *cmd = dopt.cmd;
+        NSDictionary *param = dopt.param;
         
-        _voiceDb = [[data objectForKey:@"analogy_gain"] floatValue];
-        _isMute = [[data objectForKey:@"analogy_mute"] boolValue];
-        
-        _digitalGain = [[data objectForKey:@"digital_gain"] floatValue];
-        _isDigitalMute = [[data objectForKey:@"digital_mute"] boolValue];
-        
-        self._mode = [data objectForKey:@"mode"];
-        self._micDb = [data objectForKey:@"mic_db"];
-        
-        _is48V = [[data objectForKey:@"48v"] boolValue];
-        
-        _inverted = [[data objectForKey:@"inverted"] boolValue];
-        
-        
-        if(!_rgsProxyObj)
+        if([cmd isEqualToString:@"SET_ANALOGY_GRAIN"])
         {
-            NSString *name = [data objectForKey:@"proxy_name"];
-            if(name == nil)
-                name = @"";
+            _voiceDb = [[param objectForKey:@"AG"] floatValue];
+        }
+        else if([cmd isEqualToString:@"SET_MUTE"])
+        {
+            _isMute = YES;
+        }
+        else if([cmd isEqualToString:@"SET_UNMUTE"])
+        {
+            _isMute = NO;
+        }
+        else if([cmd isEqualToString:@"SET_DIGIT_MUTE"])
+        {
+            NSString *enable = [[param objectForKey:@"ENABLE"] lowercaseString];
+            if([enable isEqualToString:@"false"])
+            {
+                _isDigitalMute = NO;
+            }
+            else
+            {
+                _isDigitalMute = YES;
+            }
+        }
+        else if([cmd isEqualToString:@"SET_DIGIT_GRAIN"])
+        {
+            _digitalGain = [[param objectForKey:@"DG"] floatValue];
+        }
+        else if([cmd isEqualToString:@"SET_INVERTED"])
+        {
+            NSString *enable = [[param objectForKey:@"ENABLE"] lowercaseString];
+            if([enable isEqualToString:@"false"])
+            {
+                _inverted = NO;
+            }
+            else
+            {
+                _inverted = YES;
+            }
+        }
+        else if([cmd isEqualToString:@"SET_MODE"]){
             
-            self._rgsProxyObj = [[RgsProxyObj alloc] init];
-            self._rgsProxyObj.m_id = proxy_id;
-            self._rgsProxyObj.name = name;
+            self._mode = [param objectForKey:@"MODE"];
+        }
+        else if([cmd isEqualToString:@"SET_MIC_DB"]){
+            
+            _micDb = [param objectForKey:@"DB"];
+        }
+        else if([cmd isEqualToString:@"SET_48V"]){
+            
+            NSString *enable = [[param objectForKey:@"ENABLE"] lowercaseString];
+            if([enable isEqualToString:@"false"])
+            {
+                _is48V = NO;
+            }
+            else
+            {
+                _is48V = YES;
+            }
+        }
+        else if([cmd isEqualToString:@"SET_NOISE_GATE"]){
+            
+            NSString *enable = [[param objectForKey:@"ENABLE"] lowercaseString];
+            if([enable isEqualToString:@"false"])
+            {
+                _isZaoshengStarted = NO;
+            }
+            else
+            {
+                _isZaoshengStarted = YES;
+            }
+            
+            self._zaoshengFazhi = [param objectForKey:@"TH"];
+            self._zaoshengStartTime = [param objectForKey:@"START_DUR"];
+            self._zaoshengHuifuTime = [param objectForKey:@"RECOVER_DUR"];
+            
+        }
+        else if([cmd isEqualToString:@"SET_FB_CTRL"]){
+            
+            NSString *enable = [[param objectForKey:@"ENABLE"] lowercaseString];
+            if([enable isEqualToString:@"false"])
+            {
+                _isFanKuiYiZhiStarted = NO;
+            }
+            else
+            {
+                _isFanKuiYiZhiStarted = YES;
+            }
+        }
+        else if([cmd isEqualToString:@"SET_PRESS_LIMIT"]){
+            
+            NSString *enable = [[param objectForKey:@"ENABLE"] lowercaseString];
+            if([enable isEqualToString:@"false"])
+            {
+                _isyaxianStart = NO;
+            }
+            else
+            {
+                _isyaxianStart = YES;
+            }
+            
+            self._yaxianFazhi = [param objectForKey:@"TH"];
+            self._yaxianXielv = [param objectForKey:@"SL"];
+            self._yaxianStartTime = [param objectForKey:@"START_DUR"];
+            self._yaxianRecoveryTime = [param objectForKey:@"RECOVER_DUR"];
+            
+        }
+        else if([cmd isEqualToString:@"SET_DELAY"]){
 
+            self._yanshiqiSlide = [param objectForKey:@"SET_DELAY"];
+        }
+        else if([cmd isEqualToString:@"SET_HIGH_FILTER"]){
+            
+            NSString *enable = [[param objectForKey:@"ENABLE"] lowercaseString];
+            if([enable isEqualToString:@"false"])
+            {
+                _islvboGaotongStart = NO;
+            }
+            else
+            {
+                _islvboGaotongStart = YES;
+            }
+            
+            self._lvbojunhengGaotongType = [param objectForKey:@"TYPE"];
+            self._lvbojunhengGaotongXielv = [param objectForKey:@"SL"];
+            self._lvboGaotongPinLv = [param objectForKey:@"RATE"];
+        
+        }
+        else if([cmd isEqualToString:@"SET_LOW_FILTER"]){
+            
+            NSString *enable = [[param objectForKey:@"ENABLE"] lowercaseString];
+            if([enable isEqualToString:@"false"])
+            {
+                _islvboDitongStart = NO;
+            }
+            else
+            {
+                _islvboDitongStart = YES;
+            }
+            
+            self._lvbojunhengDitongType = [param objectForKey:@"TYPE"];
+            self._lvboDitongSL = [param objectForKey:@"SL"];
+            self._lvboDitongFreq = [param objectForKey:@"RATE"];
+            
+        }
+        else if([cmd isEqualToString:@"SET_PEQ"]){
+            
+            
+            int SEG = [[param objectForKey:@"SEG"] intValue];
+            if(SEG < [waves16_feq_gain_q count])
+            {
+                NSMutableDictionary* freq = [waves16_feq_gain_q objectAtIndex:SEG];
+                
+                if([param objectForKey:@"ENABLE"])
+                    [freq setObject:[param objectForKey:@"ENABLE"] forKey:@"enable"];
+                
+                if([param objectForKey:@"RATE"])
+                    [freq setObject:[param objectForKey:@"RATE"] forKey:@"freq"];
+                
+                if([param objectForKey:@"TYPE"])
+                    [freq setObject:[param objectForKey:@"TYPE"] forKey:@"type"];
+                
+                if([param objectForKey:@"Q"])
+                    [freq setObject:[param objectForKey:@"Q"] forKey:@"q"];
+                
+                if([param objectForKey:@"GAIN"])
+                    [freq setObject:[param objectForKey:@"GAIN"] forKey:@"gain"];
+            }
+  
         }
         
-        if([data objectForKey:@"RgsSceneDeviceOperation"]){
-            NSDictionary *dic = [data objectForKey:@"RgsSceneDeviceOperation"];
-            self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionaryWithDictionary:dic];
-            _isSetOK = YES;
-        }
-
     }
+
+
 }
 
 - (NSArray*)getModeOptions{
