@@ -77,7 +77,7 @@
     [_yuyinjiliBtn addTarget:self action:@selector(yuyinjiliAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_yuyinjiliBtn];
     
-    _shedingzhuxiBtn = [UIButton buttonWithColor:SINGAL_COLOR selColor:RGB(230, 151, 50)];
+    _shedingzhuxiBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
     _shedingzhuxiBtn.frame = CGRectMake(440, 450, 80, 30);
     [_shedingzhuxiBtn setTitle:@"设定主席" forState:UIControlStateNormal];
     [_shedingzhuxiBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -98,7 +98,7 @@
     [_biaozhunmoshiBtn addTarget:self action:@selector(biaozhunmoshiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_biaozhunmoshiBtn];
     
-    _fayanrenshuBtn = [UIButton buttonWithColor:SINGAL_COLOR selColor:RGB(230, 151, 50)];
+    _fayanrenshuBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
     _fayanrenshuBtn.frame = CGRectMake(590, 450, 80, 30);
     [_fayanrenshuBtn setTitle:@"设定代表" forState:UIControlStateNormal];
     [_fayanrenshuBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];

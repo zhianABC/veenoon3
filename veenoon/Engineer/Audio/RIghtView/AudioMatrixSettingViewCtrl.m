@@ -104,7 +104,7 @@
     
     
     _maskView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-    _maskView.backgroundColor = RGBA(0, 89, 118, 0.6);
+    _maskView.backgroundColor = RGBA(48, 48, 48, 0.8);
     
     int cx = SCREEN_WIDTH/2;
     int cy = SCREEN_HEIGHT/2;
@@ -135,7 +135,7 @@
     
     
 
-    _dbValue = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(dbbtn.frame)+10, 120, 24)];
+    _dbValue = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(dbbtn.frame)+10, 60, 24)];
     _dbValue.text = @"0.0";
     _dbValue.textAlignment = NSTextAlignmentCenter;
     [_maskView addSubview:_dbValue];
@@ -143,15 +143,17 @@
     _dbValue.textColor = [UIColor whiteColor];
     _dbValue.layer.cornerRadius = 5;
     _dbValue.clipsToBounds = YES;
-    _dbValue.backgroundColor = RGB(0x10, 0x2f, 0x3d);
+    _dbValue.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR2;
     
     _dbValue.center = CGPointMake(cx, _dbValue.center.y);
     
-    _muteBtn = [UIButton buttonWithColor:RGB(0, 146, 174) selColor:nil];
+    _muteBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     _muteBtn.frame = CGRectMake(50, CGRectGetMaxY(_dbValue.frame)+10, 70, 30);
     _muteBtn.clipsToBounds = YES;
     _muteBtn.layer.cornerRadius = 3;
     _muteBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    [_muteBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_muteBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     [_muteBtn setTitle:@"复位" forState:UIControlStateNormal];
     [_maskView addSubview:_muteBtn];
     [_muteBtn addTarget:self
@@ -160,12 +162,14 @@
     
     _muteBtn.center = CGPointMake(cx-40, _muteBtn.center.y);
     
-    UIButton *doneBtn = [UIButton buttonWithColor:RGB(0, 146, 174) selColor:nil];
+    UIButton *doneBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     doneBtn.frame = CGRectMake(50, CGRectGetMaxY(_dbValue.frame)+10, 70, 30);
     doneBtn.clipsToBounds = YES;
     doneBtn.layer.cornerRadius = 3;
     doneBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [doneBtn setTitle:@"确认" forState:UIControlStateNormal];
+    [doneBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [doneBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     [_maskView addSubview:doneBtn];
     [doneBtn addTarget:self
                  action:@selector(doneAction:)
@@ -301,14 +305,12 @@
 
 
 - (void) doneAction:(id)sender{
-    
     self._selectBtn = nil;
     [_maskView removeFromSuperview];
     
 }
 
-- (void) clearAction:(id)sender{
-    
+- (void) clearAction:(UIButton*)sender{
     
 }
 

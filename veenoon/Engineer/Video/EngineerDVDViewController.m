@@ -82,7 +82,7 @@
     okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
     [bottomBar addSubview:okBtn];
-    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+    [okBtn setTitle:@"保存" forState:UIControlStateNormal];
     [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
     okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
@@ -90,12 +90,13 @@
               action:@selector(settingsAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
-    int height = SCREEN_HEIGHT - 200;
+    int height = SCREEN_HEIGHT - 150;
     int width = 80;
+    
     
     _volumnMinus = [UIButton buttonWithType:UIButtonTypeCustom];
     _volumnMinus.frame = CGRectMake(0, 0, width, width);
-    _volumnMinus.center = CGPointMake(SCREEN_WIDTH/2 - 200, height);
+    _volumnMinus.center = CGPointMake(SCREEN_WIDTH/2 - 120, height);
     [_volumnMinus setImage:[UIImage imageNamed:@"audio_player_r_minus_n.png"] forState:UIControlStateNormal];
     [_volumnMinus setImage:[UIImage imageNamed:@"audio_player_minus_s.png"] forState:UIControlStateHighlighted];
     [_volumnMinus addTarget:self action:@selector(menuVoiceSub:) forControlEvents:UIControlEventTouchUpInside];
@@ -103,7 +104,7 @@
     
     _lastSing = [UIButton buttonWithType:UIButtonTypeCustom];
     _lastSing.frame = CGRectMake(0, 0, width, width);
-    _lastSing.center = CGPointMake(SCREEN_WIDTH/2 - 100, height);
+    _lastSing.center = CGPointMake(SCREEN_WIDTH/2 - 60, height);
     [_lastSing setImage:[UIImage imageNamed:@"audio_player_r_last_n.png"] forState:UIControlStateNormal];
     [_lastSing setImage:[UIImage imageNamed:@"audio_player_last_s.png"] forState:UIControlStateHighlighted];
     [_lastSing addTarget:self action:@selector(menuPrevAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -120,7 +121,7 @@
     
     _nextSing = [UIButton buttonWithType:UIButtonTypeCustom];
     _nextSing.frame = CGRectMake(0, 0, width, width);
-    _nextSing.center = CGPointMake(SCREEN_WIDTH/2 + 100, height);
+    _nextSing.center = CGPointMake(SCREEN_WIDTH/2 + 60, height);
     [_nextSing setImage:[UIImage imageNamed:@"audio_player_r_next_n.png"] forState:UIControlStateNormal];
     [_nextSing setImage:[UIImage imageNamed:@"audio_player_next_s.png"] forState:UIControlStateHighlighted];
     [_nextSing addTarget:self action:@selector(menuNextAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -128,15 +129,15 @@
     
     _volumnAdd = [UIButton buttonWithType:UIButtonTypeCustom];
     _volumnAdd.frame = CGRectMake(0, 0, width, width);
-    _volumnAdd.center = CGPointMake(SCREEN_WIDTH/2 + 200, height);
+    _volumnAdd.center = CGPointMake(SCREEN_WIDTH/2 + 120, height);
     [_volumnAdd setImage:[UIImage imageNamed:@"audio_layer_r_next_n.png"] forState:UIControlStateNormal];
     [_volumnAdd setImage:[UIImage imageNamed:@"audio_layer_next_s.png"] forState:UIControlStateHighlighted];
     [_volumnAdd addTarget:self action:@selector(menuVoiceAdd:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_volumnAdd];
     
     
-    _luboBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
-    _luboBtn.frame = CGRectMake(70, SCREEN_HEIGHT-140, 60, 60);
+    _luboBtn = [UIButton buttonWithColor:nil selColor:nil];
+    _luboBtn.frame = CGRectMake(SCREEN_WIDTH-112, 70, 60, 60);
     _luboBtn.layer.cornerRadius = 5;
     _luboBtn.layer.borderWidth = 2;
     _luboBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -150,8 +151,8 @@
        forControlEvents:UIControlEventTouchUpInside];
     
     
-    _tanchuBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
-    _tanchuBtn.frame = CGRectMake(150, SCREEN_HEIGHT-140, 60, 60);
+    _tanchuBtn = [UIButton buttonWithColor:nil selColor:nil];
+    _tanchuBtn.frame = CGRectMake(SCREEN_WIDTH - 182, 70, 60, 60);
     _tanchuBtn.layer.cornerRadius = 5;
     _tanchuBtn.layer.borderWidth = 2;
     _tanchuBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -164,8 +165,8 @@
                    action:@selector(tanchuAction:)
          forControlEvents:UIControlEventTouchUpInside];
     
-    _addressBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
-    _addressBtn.frame = CGRectMake(230, SCREEN_HEIGHT-140, 60, 60);
+    _addressBtn = [UIButton buttonWithColor:nil selColor:nil];
+    _addressBtn.frame = CGRectMake(SCREEN_WIDTH - 252, 70, 60, 60);
     _addressBtn.layer.cornerRadius = 5;
     _addressBtn.layer.borderWidth = 2;
     _addressBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -178,11 +179,8 @@
                    action:@selector(detailAction:)
          forControlEvents:UIControlEventTouchUpInside];
     
-    int playerLeft = 155;
-    int playerHeight = 10;
-    
-    UIButton *lastVideoUpBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
-    lastVideoUpBtn.frame = CGRectMake(230+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
+    UIButton *lastVideoUpBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
+    lastVideoUpBtn.frame = CGRectMake(0, 0, 80, 80);
     lastVideoUpBtn.layer.cornerRadius = 5;
     lastVideoUpBtn.layer.borderWidth = 2;
     lastVideoUpBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -195,23 +193,23 @@
                        action:@selector(menuLeftAction:)
              forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *okPlayerBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
-    okPlayerBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
+    UIButton *okPlayerBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
+    okPlayerBtn.frame = CGRectMake(0, 0, 80, 80);
     okPlayerBtn.layer.cornerRadius = 5;
     okPlayerBtn.layer.borderWidth = 2;
     okPlayerBtn.layer.borderColor = [UIColor clearColor].CGColor;;
     okPlayerBtn.clipsToBounds = YES;
     [okPlayerBtn setTitle:@"OK" forState:UIControlStateNormal];
     [okPlayerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [okPlayerBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
-    okPlayerBtn.titleLabel.font = [UIFont boldSystemFontOfSize:24];
+    [okPlayerBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
+    okPlayerBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     [self.view addSubview:okPlayerBtn];
     
     [okPlayerBtn addTarget:self action:@selector(okPlayAction:)
              forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *volumnUpBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
-    volumnUpBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-585+playerHeight, 80, 80);
+    UIButton *volumnUpBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
+    volumnUpBtn.frame = CGRectMake(0, 0, 80, 80);
     volumnUpBtn.layer.cornerRadius = 5;
     volumnUpBtn.layer.borderWidth = 2;
     volumnUpBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -224,8 +222,8 @@
                     action:@selector(menuUpAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *nextPlayBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
-    nextPlayBtn.frame = CGRectMake(400+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
+    UIButton *nextPlayBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
+    nextPlayBtn.frame = CGRectMake(0, 0, 80, 80);
     nextPlayBtn.layer.cornerRadius = 5;
     nextPlayBtn.layer.borderWidth = 2;
     nextPlayBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -238,8 +236,8 @@
                     action:@selector(menuRightAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *volumnDownBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
-    volumnDownBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-415+playerHeight, 80, 80);
+    UIButton *volumnDownBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
+    volumnDownBtn.frame = CGRectMake(0, 0, 80, 80);
     volumnDownBtn.layer.cornerRadius = 5;
     volumnDownBtn.layer.borderWidth = 2;
     volumnDownBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -252,6 +250,12 @@
                       action:@selector(menuDownAction:)
             forControlEvents:UIControlEventTouchUpInside];
     
+    
+    okPlayerBtn.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+    lastVideoUpBtn.center = CGPointMake(SCREEN_WIDTH/2-85, SCREEN_HEIGHT/2);
+    volumnUpBtn.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2-85);
+    volumnDownBtn.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2+85);
+    nextPlayBtn.center = CGPointMake(SCREEN_WIDTH/2+85, SCREEN_HEIGHT/2);
     
     [self getCurrentDeviceDriverProxys];
 

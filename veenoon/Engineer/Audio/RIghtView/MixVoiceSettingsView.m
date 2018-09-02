@@ -196,6 +196,12 @@
     NSString *isBiaoZhunFaYan = _currentObj._proxyObj._workMode;
     if ([@"标准发言" isEqualToString:isBiaoZhunFaYan]) {
         biaozhunfayanBtn.selected = YES;
+        [biaozhunfayanBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+        [biaozhunfayanBtn changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
+    } else {
+        biaozhunfayanBtn.selected = NO;
+        [biaozhunfayanBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [biaozhunfayanBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
     }
 }
 - (void) yinpinchuliAction:(id)sender{
@@ -289,7 +295,7 @@
     int top = 40;
     int gap = 5;
     int x = self.frame.size.width/2 - gap/2 - bw;
-    _shedingzhuxiBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
+    _shedingzhuxiBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
     _shedingzhuxiBtn.frame = CGRectMake(x, top, bw, 25);
     _shedingzhuxiBtn.clipsToBounds = YES;
     _shedingzhuxiBtn.layer.cornerRadius = 5;
@@ -299,7 +305,7 @@
     _shedingzhuxiBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     
     x = self.frame.size.width/2 + gap/2;
-    _fayanrenshuBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
+    _fayanrenshuBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
     _fayanrenshuBtn.frame = CGRectMake(x, top, bw, 25);
     _fayanrenshuBtn.clipsToBounds = YES;
     _fayanrenshuBtn.layer.cornerRadius = 5;
@@ -315,7 +321,7 @@
     
     [self addSubview:_biaozhunfayanView];
     
-    biaozhunfayanBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
+    biaozhunfayanBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
     biaozhunfayanBtn.frame = CGRectMake(_biaozhunfayanView.frame.size.width/2-35, _biaozhunfayanView.frame.size.height/2 -10, 70, 30);
     biaozhunfayanBtn.clipsToBounds = YES;
     biaozhunfayanBtn.layer.cornerRadius = 5;
@@ -330,6 +336,9 @@
 - (void) shedingzhuxiAction:(id)sender {
     [_shedingzhuxiBtn setSelected:YES];
     [_fayanrenshuBtn setSelected:NO];
+    
+    [_shedingzhuxiBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+    [_fayanrenshuBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     _zhuxiDaibiao = @"设定主席";
     
@@ -351,7 +360,7 @@
         int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+top;
         
-        UIButton *scenarioBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:nil];
+        UIButton *scenarioBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
         scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
         scenarioBtn.clipsToBounds = YES;
         scenarioBtn.layer.cornerRadius = 5;
@@ -374,14 +383,17 @@
         
         [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR
                   forState:UIControlStateNormal];
+        [btn changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
     } else {
         if (_selectedBtn.tag == btn.tag) {
             
         } else {
             [_selectedBtn setTitleColor:[UIColor whiteColor]
                       forState:UIControlStateNormal];
+            [_selectedBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
             [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR
                       forState:UIControlStateNormal];
+            [btn changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
         }
     }
     
@@ -393,6 +405,8 @@
 - (void) fayanrenshuAction:(id)sender{
     [_shedingzhuxiBtn setSelected:NO];
     [_fayanrenshuBtn setSelected:YES];
+    [_fayanrenshuBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+    [_shedingzhuxiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
     _zhuxiDaibiao = @"设定代表";
     
@@ -415,7 +429,7 @@
         int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+top;
         
-        UIButton *scenarioBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:nil];
+        UIButton *scenarioBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
         scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
         scenarioBtn.clipsToBounds = YES;
         scenarioBtn.layer.cornerRadius = 5;
