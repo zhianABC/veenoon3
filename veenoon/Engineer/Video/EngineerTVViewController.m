@@ -56,7 +56,7 @@
     [bottomBar addSubview:cancelBtn];
     [cancelBtn setTitle:@"返回" forState:UIControlStateNormal];
     [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [cancelBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [cancelBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     cancelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [cancelBtn addTarget:self
                   action:@selector(cancelAction:)
@@ -65,16 +65,16 @@
     okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
     [bottomBar addSubview:okBtn];
-    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+    [okBtn setTitle:@"保存" forState:UIControlStateNormal];
     [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [okBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [okBtn addTarget:self
               action:@selector(settingsAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
-    _tanchuBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
-    _tanchuBtn.frame = CGRectMake(70, SCREEN_HEIGHT-140, 60, 60);
+    _tanchuBtn = [UIButton buttonWithColor:nil selColor:nil];
+    _tanchuBtn.frame = CGRectMake(SCREEN_WIDTH-112, 70, 60, 60);
     _tanchuBtn.layer.cornerRadius = 5;
     _tanchuBtn.layer.borderWidth = 2;
     _tanchuBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -88,9 +88,9 @@
          forControlEvents:UIControlEventTouchUpInside];
 
     int playerLeft = 165;
-    int playerHeight = 60;
+    int playerHeight = 85;
     
-    UIButton *lastVideoUpBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    UIButton *lastVideoUpBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     lastVideoUpBtn.frame = CGRectMake(230+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
     lastVideoUpBtn.layer.cornerRadius = 5;
     lastVideoUpBtn.layer.borderWidth = 2;
@@ -104,7 +104,7 @@
                        action:@selector(leftAction:)
              forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *okPlayerBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    UIButton *okPlayerBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     okPlayerBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
     okPlayerBtn.layer.cornerRadius = 5;
     okPlayerBtn.layer.borderWidth = 2;
@@ -119,7 +119,7 @@
     [okPlayerBtn addTarget:self action:@selector(okAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *volumnUpBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    UIButton *volumnUpBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     volumnUpBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-585+playerHeight, 80, 80);
     volumnUpBtn.layer.cornerRadius = 5;
     volumnUpBtn.layer.borderWidth = 2;
@@ -133,7 +133,7 @@
                     action:@selector(upAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *nextPlayBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    UIButton *nextPlayBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     nextPlayBtn.frame = CGRectMake(400+playerLeft, SCREEN_HEIGHT-500+playerHeight, 80, 80);
     nextPlayBtn.layer.cornerRadius = 5;
     nextPlayBtn.layer.borderWidth = 2;
@@ -147,7 +147,7 @@
                     action:@selector(rightAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *volumnDownBtn = [UIButton buttonWithColor:RGB(0, 89, 118) selColor:BLUE_DOWN_COLOR];
+    UIButton *volumnDownBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     volumnDownBtn.frame = CGRectMake(315+playerLeft, SCREEN_HEIGHT-415+playerHeight, 80, 80);
     volumnDownBtn.layer.cornerRadius = 5;
     volumnDownBtn.layer.borderWidth = 2;
@@ -223,7 +223,9 @@
     self._currentObj._proxyObj = vcam;
     
 }
-
+-(void) settingsAction:(id)sender {
+    
+}
 
 - (void) menuAction:(id)sender{
     
