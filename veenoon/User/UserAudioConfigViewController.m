@@ -267,6 +267,13 @@
     if(_curProcessor == nil)
         return;
     
+    //如果有，就不需要重新请求了
+    if([_curProcessor._inAudioProxys count] && [_curProcessor._outAudioProxys count])
+    {
+        [self initChannels];
+        return;
+    }
+    
 #ifdef OPEN_REG_LIB_DEF
     
     IMP_BLOCK_SELF(UserAudioConfigViewController);
@@ -302,23 +309,28 @@
     self._inputProxys = [NSMutableArray array];
     self._inputBtnArray = [NSMutableArray array];
     
-    [[_proxysView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-   
-
-    for(RgsProxyObj *proxy in _proxys)
+    //如果有，就不需要重新请求了
+    if([_curProcessor._inAudioProxys count] )
     {
-        if([proxy.type isEqualToString:@"Audio In"])
+        self._inputProxys = _curProcessor._inAudioProxys;
+    }
+    else
+    {
+        for(RgsProxyObj *proxy in _proxys)
         {
-            VAProcessorProxys *vap = [[VAProcessorProxys alloc] init];
-            vap._rgsProxyObj = proxy;
-            [_inputProxys addObject:vap];
-            
-           // [vap checkRgsProxyCommandLoad];
-            
+            if([proxy.type isEqualToString:@"Audio In"])
+            {
+                VAProcessorProxys *vap = [[VAProcessorProxys alloc] init];
+                vap._rgsProxyObj = proxy;
+                [_inputProxys addObject:vap];
+            }
         }
+        _curProcessor._inAudioProxys = _inputProxys;
+        
     }
     
-    _curProcessor._inAudioProxys = _inputProxys;
+    [[_proxysView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+
     
     ///加载输出输出Proxy的Commands数据
     [_curProcessor prepareAllAudioInCmds];
