@@ -258,11 +258,7 @@
     
     vpro._deviceId = driver.m_id;
     [vpro checkRgsProxyCommandLoad:cmds];
-    if([_curProcessor._localSavedCommands count])
-    {
-        NSDictionary *local = [_curProcessor._localSavedCommands objectAtIndex:0];
-        [vpro recoverWithDictionary:local];
-    }
+    
     
     self._curProcessor._proxyObj = vpro;
     [_curProcessor syncDriverIPProperty];

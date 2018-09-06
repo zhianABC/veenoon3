@@ -271,11 +271,7 @@
     
     vpro._deviceId = driver.m_id;
     [vpro checkRgsProxyCommandLoad:cmds];
-    if([_curProcessor._localSavedCommands count])
-    {
-        NSDictionary *local = [_curProcessor._localSavedCommands objectAtIndex:0];
-        [vpro recoverWithDictionary:local];
-    }
+    
     
     self._curProcessor._proxyObj = vpro;
     
@@ -331,6 +327,7 @@
         [lightSlider resetScale];
         lightSlider.center = CGPointMake(lightBtn.center.x, sliderHeight);
         lightSlider.tag = i;
+        lightSlider.delegate = self;
         
         //lightSlider
         id key = [NSString stringWithFormat:@"%d", i+1];
@@ -362,6 +359,32 @@
                                    ch:ch
                                  exec:YES];
     }
+    
+}
+
+- (void) didSliderEndChanged:(id)object{
+    
+    JLightSliderView *sliderCtrl = object;
+    int value = [sliderCtrl getScaleValue];
+    EDimmerLightProxys *vpro = self._curProcessor._proxyObj;
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(200.0 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
+        
+        if(vpro)
+        {
+            int ch = 1;
+            
+            if([object isKindOfClass:[JLightSliderView class]])
+                ch = (int)((JLightSliderView*)object).tag + 1;
+            
+            if([vpro isKindOfClass:[EDimmerLightProxys class]])
+            {
+                [vpro controlDeviceLightLevel:value
+                                           ch:ch
+                                         exec:YES];
+            }
+        }
+    });
     
 }
 

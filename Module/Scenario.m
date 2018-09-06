@@ -261,7 +261,7 @@
             NSString *classname = [env objectForKey:@"class"];
             Class someClass = NSClassFromString(classname);
             BasePlugElement * obj = [[someClass alloc] init];
-            [obj jsonToObject:env];
+            [obj createByUserData:env withMap:map];
             
             [_envDevices addObject:obj];
         }

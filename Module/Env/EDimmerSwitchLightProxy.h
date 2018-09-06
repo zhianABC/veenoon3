@@ -22,7 +22,6 @@
 
 - (NSDictionary *)getChLevelRecords;
 
-- (NSDictionary *)getScenarioSliceLocatedShadow;
 - (void) checkRgsProxyCommandLoad:(NSArray*)cmds;
 
 - (int)getNumberOfLights;
@@ -35,7 +34,7 @@
 - (NSArray*) generateEventOperation_ChPower;
 
 /////场景还原
-- (void) recoverWithDictionary:(NSDictionary*)data;
+- (void) recoverWithDictionary:(NSArray*)datas;
 
 
 @end
