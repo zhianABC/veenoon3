@@ -53,22 +53,6 @@
 - (void) saveProject{
     
     [KVNProgress showSuccess];
-    
-//    [KVNProgress show];
-//    
-//    [[RegulusSDK sharedRegulusSDK] ReloadProject:^(BOOL result, NSError *error) {
-//        if(result)
-//        {
-//            NSLog(@"reload project.");
-//            
-//            [KVNProgress showSuccess];
-//        }
-//        else{
-//            NSLog(@"%@",[error description]);
-//            
-//            [KVNProgress showSuccess];
-//        }
-//    }];
 }
 
 - (void) createDriver{

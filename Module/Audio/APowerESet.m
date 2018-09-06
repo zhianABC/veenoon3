@@ -17,8 +17,10 @@
     
 }
 @property (nonatomic, strong) NSMutableDictionary *_driverCmdsMap;
-@property (nonatomic, assign) BOOL _power;
+
 @property (nonatomic, strong) NSMutableDictionary *_RgsSceneDeviceOperationShadow;
+@property (nonatomic, strong) NSMutableDictionary *config;
+
 
 @end
 
@@ -30,10 +32,11 @@
 
 @synthesize _driverCmdsMap;
 
-@synthesize _power;
+@synthesize _isSetAllOnOff;
 
 @synthesize _RgsSceneDeviceOperationShadow;
-
+@synthesize config;
+@synthesize _linkVal;
 
 - (id) init
 {
@@ -45,7 +48,9 @@
         self._show_icon_name = @"dy_08.png";
         self._show_icon_sel_name = @"dy_08_sel.png";
         
-        self._power = NO;
+        self._isSetAllOnOff = NO;
+        
+        self._linkVal = nil;
         
         self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionary];
         
@@ -60,43 +65,7 @@
 }
 
 - (void) syncDriverComs{
-    /*
-     if(_comDriver
-     && [_comDriver isKindOfClass:[RgsDriverObj class]]
-     && ![_comConnections count])
-     {
-     IMP_BLOCK_SELF(VTouyingjiSet);
-     
-     RgsDriverObj *comd = _comDriver;
-     [[RegulusSDK sharedRegulusSDK] GetDriverConnects:comd.m_id
-     completion:^(BOOL result, NSArray *connects, NSError *error) {
-     if (result) {
-     if ([connects count]) {
-     
-     block_self._comConnections = connects;
-     NSMutableArray *coms = [NSMutableArray array];
-     for(int i = 0; i < [connects count]; i++)
-     {
-     RgsConnectionObj *obj = [connects objectAtIndex:i];
-     [coms addObject:obj.name];
-     }
-     
-     block_self._comArray = coms;
-     }
-     }
-     else
-     {
-     NSLog(@"+++++++++++++");
-     NSLog(@"+++++++++++++");
-     NSLog(@"sync com Driver Connection Error");
-     NSLog(@"+++++++++++++");
-     NSLog(@"+++++++++++++");
-     //[KVNProgress showErrorWithStatus:[error description]];
-     }
-     }];
-     
-     }
-     */
+    
     if(_driver
        && [_driver isKindOfClass:[RgsDriverObj class]]
        && ![_connections count])
@@ -132,21 +101,6 @@
     
     [KVNProgress showSuccess];
     
-    //    [KVNProgress show];
-    //
-    //    [[RegulusSDK sharedRegulusSDK] ReloadProject:^(BOOL result, NSError *error) {
-    //        if(result)
-    //        {
-    //            NSLog(@"reload project.");
-    //
-    //            [KVNProgress showSuccess];
-    //        }
-    //        else{
-    //            NSLog(@"%@",[error description]);
-    //
-    //            [KVNProgress showSuccess];
-    //        }
-    //    }];
 }
 
 - (void) createDriver{
@@ -187,11 +141,14 @@
 
 - (void) initLabs:(int)num{
     
+    if(_lines == nil)
+    {
+        self._lines = [NSMutableArray array];
+    }
+    
     if([_lines count])
         return;
-    
-    self._lines = [NSMutableArray array];
-    
+
     for(int i = 0; i < num; i++)
     {
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
@@ -228,7 +185,10 @@
 
 - (NSDictionary *)getLabValueWithIndex:(int)index{
     
-    return [_lines objectAtIndex:index];
+    if(index < [_lines count])
+        return [_lines objectAtIndex:index];
+    
+    return nil;
 }
 
 - (int) checkIsSameSeconds{
@@ -269,7 +229,7 @@
         NSMutableArray *proxyids = [NSMutableArray array];
         //只读取一个，因为所有的Channel的commands相同
         APowerESetProxy *vap = [_proxys objectAtIndex:0];
-        [proxyids addObject:[NSNumber numberWithInt:vap._rgsProxyObj.m_id]];
+        [proxyids addObject:[NSNumber numberWithInt:(int)vap._rgsProxyObj.m_id]];
         
         IMP_BLOCK_SELF(APowerESet);
         
@@ -348,15 +308,18 @@
 
 - (void) controlPower:(BOOL)isPowerOn{
     
-     RgsCommandInfo *cmd = [_driverCmdsMap objectForKey:@"ORDER_LINK"];
+    self._linkVal = @"ORDER_LINK";
     if (!isPowerOn) {
-        cmd = [_driverCmdsMap objectForKey:@"INVERSE_BREAK"];
+        self._linkVal = @"INVERSE_BREAK";
     }
     
-    self._power = isPowerOn;
+    RgsCommandInfo *cmd = [_driverCmdsMap objectForKey:self._linkVal];
+    self._isSetAllOnOff = YES;
     
     if(cmd)
     {
+        
+        
         NSMutableDictionary * param = [NSMutableDictionary dictionary];
         RgsDriverObj *obj = _driver;
         
@@ -368,51 +331,56 @@
 
 - (id) generateEventOperation_power{
     
-    NSString *cmdName = @"ORDER_LINK";
-    if (!_power)
+    //判断是否相同状态
+    NSString *val = nil;
+    for(int i = 0; i < [_lines count]; i++)
     {
-        cmdName = @"INVERSE_BREAK";
-    }
-    
-    RgsCommandInfo *cmd = nil;
-    cmd = [_driverCmdsMap objectForKey:cmdName];
-    
-    if(cmd)
-    {
-        NSMutableDictionary * param = [NSMutableDictionary dictionary];
-        RgsDriverObj *obj = _driver;
+        NSDictionary *dic = [_lines objectAtIndex:i];
+        NSString *status = [dic objectForKey:@"status"];
+        if(val == nil)
+            val = status;
         
-        int proxyid = obj.m_id;
-        
-        RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc] init];
-        scene_opt.dev_id = proxyid;
-        scene_opt.cmd = cmd.name;
-        scene_opt.param = param;
-        
-        //用于保存还原
-        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
-        [slice setObject:[NSNumber numberWithInteger:proxyid] forKey:@"dev_id"];
-        [slice setObject:cmd.name forKey:@"cmd"];
-        [slice setObject:param forKey:@"param"];
-        [_RgsSceneDeviceOperationShadow setObject:slice forKey:cmdName];
-        
-        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
-                                                                          cmd:scene_opt.cmd
-                                                                        param:scene_opt.param];
-        
-        return opt;
-    }
-    else
-    {
-        NSDictionary *cmdsRev = [_RgsSceneDeviceOperationShadow objectForKey:cmdName];
-        if(cmdsRev)
+        if(![val isEqualToString:status])
         {
-            RgsSceneOperation * opt = [[RgsSceneOperation alloc]
-                                       initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
-                                       cmd:[cmdsRev objectForKey:@"cmd"]
-                                       param:[cmdsRev objectForKey:@"param"]];
+            val = nil;
+            break;
+        }
+    }
+    
+    if(val)
+    {
+        NSString *cmdName = @"ORDER_LINK";
+        if ([val isEqualToString:@"OFF"])
+        {
+            cmdName = @"INVERSE_BREAK";
+        }
+        
+        RgsCommandInfo *cmd = nil;
+        cmd = [_driverCmdsMap objectForKey:cmdName];
+        
+        if(cmd)
+        {
+            NSMutableDictionary * param = [NSMutableDictionary dictionary];
+            RgsDriverObj *obj = _driver;
+            
+            int proxyid = (int)obj.m_id;
+            
+            RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc] init];
+            scene_opt.dev_id = proxyid;
+            scene_opt.cmd = cmd.name;
+            scene_opt.param = param;
+            
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
+                                                                              cmd:scene_opt.cmd
+                                                                            param:scene_opt.param];
+            
+            [_RgsSceneDeviceOperationShadow setObject:opt forKey:cmdName];
             
             return opt;
+        }
+        else
+        {
+            return [_RgsSceneDeviceOperationShadow objectForKey:cmdName];
         }
     }
     
@@ -423,157 +391,21 @@
 - (NSDictionary *)objectToJson{
     
     NSMutableDictionary *allData = [NSMutableDictionary dictionary];
-    
     [allData setValue:[NSString stringWithFormat:@"%@", [self class]] forKey:@"class"];
-    
-    //基本信息
-    if (self._name) {
-        [allData setObject:self._name forKey:@"name"];
-    }
-    if(self._brand)
-        [allData setObject:self._brand forKey:@"brand"];
-    
-    if(self._type)
-        [allData setObject:self._type forKey:@"type"];
-    
-    if(self._deviceno)
-        [allData setObject:self._deviceno forKey:@"deviceno"];
-    
-    if(self._ipaddress)
-        [allData setObject:self._ipaddress forKey:@"ipaddress"];
-    
-    if(self._deviceid)
-        [allData setObject:self._deviceid forKey:@"deviceid"];
-    
-    if(self._driverUUID)
-        [allData setObject:self._driverUUID forKey:@"driverUUID"];
-    
-    if(self._comIdx)
-        [allData setObject:[NSString stringWithFormat:@"%d",self._comIdx] forKey:@"com"];
-    
-    [allData setObject:[NSString stringWithFormat:@"%d",self._index] forKey:@"index"];
-    
-    
-    if(_driverInfo)
-    {
-        RgsDriverInfo *info = _driverInfo;
-        [allData setObject:info.serial forKey:@"driver_info_uuid"];
-    }
-    if(_driver)
-    {
-        RgsDriverObj *dr = _driver;
-        [allData setObject:[NSNumber numberWithInteger:dr.m_id] forKey:@"driver_id"];
-        
-        if(dr.name)
-        {
-            [allData setObject:dr.name forKey:@"driver_name"];
-        }
-    }
-    
-    [allData setObject:[NSNumber numberWithBool:_power] forKey:@"power_on_off"];
-    
-    if([_lines count])
-    {
-        [allData setObject:_lines forKey:@"_lines"];
-    }
-    
-    
-    if(_proxyObj)
-    {
-        APowerESetProxy *vprj = _proxyObj;
-        
-        if(vprj._deviceId)
-        {
-            NSMutableDictionary *proxyDic = [NSMutableDictionary dictionary];
-            [allData setObject:proxyDic forKey:@"proxy"];
-            
-            [proxyDic setObject:[NSString stringWithFormat:@"%d", vprj._deviceId] forKey:@"proxy_id"];
-            [proxyDic setObject:[NSString stringWithFormat:@"%d", vprj._breakDuration] forKey:@"break_duration"];
-            
-            if(vprj._relayStatus)
-                [proxyDic setObject:vprj._relayStatus forKey:@"relay_status"];
-            
-            [proxyDic setObject:[NSString stringWithFormat:@"%d", vprj._linkDuration] forKey:@"link_duration"];
-            [proxyDic setObject:[NSString stringWithFormat:@"%d", vprj._level] forKey:@"level"];
-        }
-    }
-    
+
     return allData;
 }
 
 
 - (void) jsonToObject:(NSDictionary*)json{
     
-    //基本信息
-    if([json objectForKey:@"name"])
-        self._name = [json objectForKey:@"name"];
-    
-    if([json objectForKey:@"brand"])
-        self._brand = [json objectForKey:@"brand"];
-    
-    if([json objectForKey:@"type"])
-        self._type = [json objectForKey:@"type"];
-    
-    if([json objectForKey:@"deviceno"])
-        self._deviceno = [json objectForKey:@"deviceno"];
-    
-    if([json objectForKey:@"ipaddress"])
-        self._ipaddress = [json objectForKey:@"ipaddress"];
-    
-    if([json objectForKey:@"deviceid"])
-        self._deviceid = [json objectForKey:@"deviceid"];
-    
-    if([json objectForKey:@"driverUUID"])
-        self._driverUUID = [json objectForKey:@"driverUUID"];
-    
-    if([json objectForKey:@"com"])
-        self._comIdx = [[json objectForKey:@"com"] intValue];
-    
-    self._index = [[json objectForKey:@"index"] intValue];
-    
-    RgsDriverInfo *drinfo = [[RgsDriverInfo alloc] init];
-    drinfo.serial = [json objectForKey:@"driver_info_uuid"];
-    self._driverInfo = drinfo;
-    
-    RgsDriverObj *dr = [[RgsDriverObj alloc] init];
-    dr.m_id = [[json objectForKey:@"driver_id"] integerValue];
-    dr.name = [json objectForKey:@"driver_name"];
-    self._driver = dr;
-    
-    self._localSavedCommands = [json objectForKey:@"commands"];
-    
-    self._power = [[json objectForKey:@"power_on_off"] boolValue];
-    
-    if([json objectForKey:@"_lines"])
-    {
-        NSArray *lines = [json objectForKey:@"_lines"];
-        self._lines = [NSMutableArray arrayWithArray:lines];
-    }
-    
-    if(json)
-    {
-        APowerESetProxy *vprj = [[APowerESetProxy alloc] init];
-        self._proxyObj = vprj;
-        
-        NSMutableDictionary *proxyDic = [json objectForKey:@"proxy"];
-        if(proxyDic)
-        {
-            vprj._deviceId = [[proxyDic objectForKey:@"proxy_id"] longValue];
-            vprj._breakDuration = [[proxyDic objectForKey:@"break_duration"] intValue];
-            vprj._relayStatus = [proxyDic objectForKey:@"relay_status"];
-            vprj._linkDuration = [[proxyDic objectForKey:@"link_duration"] intValue];
-            vprj._level = [[proxyDic objectForKey:@"level"] intValue];
-        }
-        
-        [vprj recoverWithDictionary:proxyDic];
-    }
-    
     
 }
 
+
 - (NSDictionary *)userData{
     
-    NSMutableDictionary *config = [NSMutableDictionary dictionary];
+    self.config = [NSMutableDictionary dictionary];
     [config setValue:[NSString stringWithFormat:@"%@", [self class]] forKey:@"class"];
     if(_driver)
     {
@@ -585,6 +417,149 @@
 
 - (void) createByUserData:(NSDictionary*)userdata withMap:(NSDictionary*)valMap{
     
+    self.config = [NSMutableDictionary dictionaryWithDictionary:userdata];
+    [config setObject:valMap forKey:@"opt_value_map"];
+    
+    int driver_id = [[config objectForKey:@"driver_id"] intValue];
+    
+    IMP_BLOCK_SELF(APowerESet);
+    [[RegulusSDK sharedRegulusSDK] GetRgsObjectByID:driver_id
+                                         completion:^(BOOL result, id RgsObject, NSError *error) {
+                                             
+                                             if(result)
+                                             {
+                                                 [block_self successGotDriver:RgsObject];
+                                             }
+                                         }];
 }
+
+
+- (void) successGotDriver:(RgsDriverObj*)rgsd{
+    
+    self._driver = rgsd;
+    self._driverInfo = rgsd.info;
+    
+    IMP_BLOCK_SELF(APowerESet);
+    
+    [[RegulusSDK sharedRegulusSDK] GetDriverProxys:rgsd.m_id
+                                        completion:^(BOOL result, NSArray *proxys, NSError *error) {
+        if (result) {
+            if ([proxys count]) {
+                
+                NSMutableArray *proxysArray = [NSMutableArray array];
+                for (RgsProxyObj *proxyObj in proxys) {
+                    if ([proxyObj.type isEqualToString:@"Relay"]) {
+                        [proxysArray addObject:proxyObj];
+                    }
+                }
+                [block_self prepareChannels:proxysArray];
+            }
+        }
+    }];
+}
+
+
+- (void) prepareChannels:(NSArray*)proxys{
+    
+    self._proxys = [NSMutableArray array];
+
+    NSDictionary *map = [config objectForKey:@"opt_value_map"];
+
+    int count = (int) [proxys count];
+    if (count) {
+        [self initLabs:count];
+    }
+    
+    int br = 0;
+    id key = [NSString stringWithFormat:@"%d", (int)((RgsDriverObj*)_driver).m_id];
+    NSArray *datas = [map objectForKey:key];
+    for(RgsSceneDeviceOperation *dopt in datas)
+    {
+        NSString *cmd = dopt.cmd;
+
+        if([cmd isEqualToString:@"ORDER_LINK"])
+        {
+            br = 1;
+            
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:dopt.dev_id
+                                                                              cmd:dopt.cmd
+                                                                            param:dopt.param];
+            [_RgsSceneDeviceOperationShadow setObject:opt forKey:cmd];
+        }
+        else if([cmd isEqualToString:@"INVERSE_BREAK"])
+        {
+            br = 2;
+            
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:dopt.dev_id
+                                                                              cmd:dopt.cmd
+                                                                            param:dopt.param];
+            [_RgsSceneDeviceOperationShadow setObject:opt forKey:cmd];
+        }
+    }
+    
+    if(br)//如果全开/全关
+    {
+        _isSetAllOnOff = YES;
+        
+        self._linkVal = @"ORDER_LINK";
+        if (br == 2) {
+            self._linkVal = @"INVERSE_BREAK";
+        }
+        
+        for(int i = 0; i < [_lines count]; i++)
+        {
+            NSMutableDictionary *value = [_lines objectAtIndex:i];
+            
+            if(br == 1)
+            {
+                [value setObject:@"ON" forKey:@"status"];
+            }
+            else if(br == 2)
+            {
+                [value setObject:@"OFF" forKey:@"status"];
+            }
+        }
+    }
+    else//部分开关
+    {
+        self._linkVal = nil;
+        
+        _isSetAllOnOff = NO;
+        
+        for(int i = 0; i < [_lines count]; i++)
+        {
+            RgsProxyObj *proxy = [proxys objectAtIndex:i];
+            
+            id key = [NSString stringWithFormat:@"%d", (int)proxy.m_id];
+            
+            APowerESetProxy *apxy = [[APowerESetProxy alloc] init];
+            apxy._rgsProxyObj = proxy;
+            
+            NSArray *vals = [map objectForKey:key];
+            [apxy recoverWithDictionary:vals];
+            
+            [_proxys addObject:apxy];
+            
+            NSMutableDictionary *value = [_lines objectAtIndex:i];
+            
+            
+            
+            if([apxy._relayStatus isEqualToString:@"Link"])
+            {
+                [value setObject:@"ON" forKey:@"status"];
+                [value setObject:[NSString stringWithFormat:@"%d", apxy._linkDuration]
+                          forKey:@"seconds"];
+            }
+            else if([apxy._relayStatus isEqualToString:@"Break"])
+            {
+                [value setObject:@"OFF" forKey:@"status"];
+                [value setObject:[NSString stringWithFormat:@"%d", apxy._breakDuration]
+                          forKey:@"seconds"];
+            }
+        }
+    }
+    
+}
+
 
 @end
