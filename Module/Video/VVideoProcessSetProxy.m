@@ -197,12 +197,35 @@
     return result;
 }
 
-- (void) recoverWithDictionary:(NSDictionary*)data{
+- (void) recoverWithDictionary:(NSArray*)datas{
     
-    NSInteger proxy_id = [[data objectForKey:@"proxy_id"] intValue];
-    if(!_rgsProxyObj || (_rgsProxyObj && (proxy_id == _rgsProxyObj.m_id)))
+    self._deviceMatcherDic = [NSMutableDictionary dictionary];
+    
+    for(RgsSceneDeviceOperation *dopt in datas)
     {
         _isSetOK = YES;
+        
+        NSString *cmd = dopt.cmd;
+        NSDictionary *param = dopt.param;
+        
+        if([cmd isEqualToString:@"SET_P2P"])
+        {
+            NSString *inName = [param objectForKey:@"INPUT"];
+            NSString *outName = [param objectForKey:@"OUTPUT"];
+            
+            NSMutableArray *outPutArray = [self._deviceMatcherDic objectForKey:inName];
+            if (outPutArray) {
+                if (![outPutArray containsObject:outName]) {
+                    [outPutArray addObject:outName];
+                }
+            } else {
+                outPutArray = [NSMutableArray array];
+                [self._deviceMatcherDic setObject:outPutArray forKey:inName];
+                
+                [outPutArray addObject:outName];
+            }
+           
+        }
     }
     
 }
@@ -344,8 +367,7 @@
                 }
             }
         }
-    
-
+        
         NSInteger proxyid = _deviceId;
         if(_rgsProxyObj)
         {

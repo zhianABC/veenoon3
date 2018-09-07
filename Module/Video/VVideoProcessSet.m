@@ -17,6 +17,7 @@
 {
     
 }
+@property (nonatomic, strong) NSMutableDictionary *config;
 
 @end
 
@@ -30,6 +31,7 @@
 @synthesize _localSavedCommands;
 
 @synthesize _localSavedProxys;
+@synthesize config;
 
 - (id) init
 {
@@ -113,67 +115,6 @@
     
     [allData setValue:[NSString stringWithFormat:@"%@", [self class]] forKey:@"class"];
     
-    //基本信息
-    if (self._name) {
-        [allData setObject:self._name forKey:@"name"];
-    }
-    if(self._brand)
-        [allData setObject:self._brand forKey:@"brand"];
-    
-    if(self._type)
-        [allData setObject:self._type forKey:@"type"];
-    
-    if(self._deviceno)
-        [allData setObject:self._deviceno forKey:@"deviceno"];
-    
-    if(self._ipaddress)
-        [allData setObject:self._ipaddress forKey:@"ipaddress"];
-    
-    if(self._deviceid)
-        [allData setObject:self._deviceid forKey:@"deviceid"];
-    
-    if(self._driverUUID)
-        [allData setObject:self._driverUUID forKey:@"driverUUID"];
-    
-    if(self._comIdx)
-        [allData setObject:[NSString stringWithFormat:@"%d",self._comIdx] forKey:@"com"];
-    
-    [allData setObject:[NSString stringWithFormat:@"%d",self._index] forKey:@"index"];
-    
-    
-    if(_driverInfo)
-    {
-        RgsDriverInfo *info = _driverInfo;
-        [allData setObject:info.serial forKey:@"driver_info_uuid"];
-    }
-    if(_driver)
-    {
-        RgsDriverObj *dr = _driver;
-        [allData setObject:[NSNumber numberWithInteger:dr.m_id] forKey:@"driver_id"];
-        
-        if(dr.name)
-        {
-            [allData setObject:dr.name forKey:@"driver_name"];
-        }
-    }
-    
-    if (_localSavedCommands) {
-        [allData setObject:_localSavedCommands forKey:@"commands"];
-    }
-    
-    if (_proxyObj) {
-        VVideoProcessSetProxy *proxy = (VVideoProcessSetProxy*) _proxyObj;
-        
-        if(proxy._deviceMatcherDic)
-            [allData setObject:proxy._deviceMatcherDic forKey:@"video_process"];
-        
-        if(proxy._inputDevices)
-            [allData setObject:proxy._inputDevices forKey:@"input_devices"];
-        
-        if(proxy._outputDevices)
-            [allData setObject:proxy._outputDevices forKey:@"output_devices"];
-    
-    }
     
     return allData;
 }
@@ -181,69 +122,114 @@
 
 - (void) jsonToObject:(NSDictionary*)json{
     
-    //基本信息
-    if([json objectForKey:@"name"])
-        self._name = [json objectForKey:@"name"];
     
-    if([json objectForKey:@"brand"])
-        self._brand = [json objectForKey:@"brand"];
-    
-    if([json objectForKey:@"type"])
-        self._type = [json objectForKey:@"type"];
-    
-    if([json objectForKey:@"deviceno"])
-        self._deviceno = [json objectForKey:@"deviceno"];
-    
-    if([json objectForKey:@"ipaddress"])
-        self._ipaddress = [json objectForKey:@"ipaddress"];
-    
-    if([json objectForKey:@"deviceid"])
-        self._deviceid = [json objectForKey:@"deviceid"];
-    
-    if([json objectForKey:@"driverUUID"])
-        self._driverUUID = [json objectForKey:@"driverUUID"];
-    
-    if([json objectForKey:@"com"])
-        self._comIdx = [[json objectForKey:@"com"] intValue];
-    
-    self._index = [[json objectForKey:@"index"] intValue];
-    
-    RgsDriverInfo *drinfo = [[RgsDriverInfo alloc] init];
-    drinfo.serial = [json objectForKey:@"driver_info_uuid"];
-    self._driverInfo = drinfo;
-    
-    RgsDriverObj *dr = [[RgsDriverObj alloc] init];
-    dr.m_id = [[json objectForKey:@"driver_id"] integerValue];
-    dr.name = [json objectForKey:@"driver_name"];
-    self._driver = dr;
-    
-    self._localSavedCommands = [json objectForKey:@"commands"];
-
-    VVideoProcessSetProxy *proxy = [[VVideoProcessSetProxy alloc] init];
-    self._proxyObj = proxy;
-    
-    proxy._outputDevices = [json objectForKey:@"output_devices"];
-    proxy._inputDevices = [json objectForKey:@"input_devices"];
-    proxy._deviceMatcherDic = [json objectForKey:@"video_process"];
-    
-    NSDictionary *local = [self._localSavedCommands objectAtIndex:0];
-    [proxy recoverWithDictionary:local];
 }
 
 - (NSDictionary *)userData{
     
-    NSMutableDictionary *config = [NSMutableDictionary dictionary];
+    self.config = [NSMutableDictionary dictionary];
     [config setValue:[NSString stringWithFormat:@"%@", [self class]] forKey:@"class"];
     if(_driver)
     {
         RgsDriverObj *dr = _driver;
         [config setObject:[NSNumber numberWithInteger:dr.m_id] forKey:@"driver_id"];
     }
+    
+    if (_proxyObj) {
+        VVideoProcessSetProxy *proxy = (VVideoProcessSetProxy*) _proxyObj;
+        
+        if(proxy._inputDevices)
+            [config setObject:proxy._inputDevices forKey:@"input_devices"];
+        
+        if(proxy._outputDevices)
+            [config setObject:proxy._outputDevices forKey:@"output_devices"];
+        
+    }
     return config;
 }
 
 - (void) createByUserData:(NSDictionary*)userdata withMap:(NSDictionary*)valMap{
     
+    self.config = [NSMutableDictionary dictionaryWithDictionary:userdata];
+    [config setObject:valMap forKey:@"opt_value_map"];
+    
+    int driver_id = [[config objectForKey:@"driver_id"] intValue];
+    
+    IMP_BLOCK_SELF(VVideoProcessSet);
+    [[RegulusSDK sharedRegulusSDK] GetRgsObjectByID:driver_id
+                                         completion:^(BOOL result, id RgsObject, NSError *error) {
+                                             
+                                             if(result)
+                                             {
+                                                 [block_self successGotDriver:RgsObject];
+                                             }
+                                         }];
 }
+
+
+- (void) successGotDriver:(RgsDriverObj*)rgsd{
+    
+    self._driver = rgsd;
+    self._driverInfo = rgsd.info;
+    
+    IMP_BLOCK_SELF(VVideoProcessSet);
+    [[RegulusSDK sharedRegulusSDK] GetDriverCommands:rgsd.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
+        if (result) {
+            if ([commands count]) {
+                [block_self loadedVideoCommands:commands];
+            }
+        }
+        
+    }];
+}
+
+
+- (void) loadedVideoCommands:(NSArray*)cmds{
+    
+    RgsDriverObj *driver = self._driver;
+    
+    id proxy = self._proxyObj;
+    
+    VVideoProcessSetProxy *vpro = nil;
+    if(proxy && [proxy isKindOfClass:[VVideoProcessSetProxy class]])
+    {
+        vpro = proxy;
+    }
+    else
+    {
+        vpro = [[VVideoProcessSetProxy alloc] init];
+    }
+    
+    id key = [NSString stringWithFormat:@"%d", (int)driver.m_id];
+    
+    NSDictionary *inp = [config objectForKey:@"input_devices"];
+    NSDictionary *oup = [config objectForKey:@"output_devices"];
+    
+    if([inp count])
+    {
+        for(id d in [inp allValues])
+        {
+            [vpro saveInputDevice:d];
+        }
+    }
+    if([oup count])
+    {
+        for(id d in [oup allValues])
+        {
+            [vpro saveOutputDevice:d];
+        }
+    }
+    
+    vpro._deviceId = driver.m_id;
+    [vpro checkRgsProxyCommandLoad:cmds];
+    
+    NSDictionary *map = [config objectForKey:@"opt_value_map"];
+    [vpro recoverWithDictionary:[map objectForKey:key]];
+    
+    self._proxyObj = vpro;
+ 
+}
+
+
 
 @end

@@ -200,8 +200,6 @@
     if(_currentObj == nil)
         return;
     
-
-    
     IMP_BLOCK_SELF(EngineerVideoProcessViewCtrl);
     
     RgsDriverObj *driver = _currentObj._driver;
@@ -257,8 +255,6 @@
     _currentProxy.delegate = self;
     _currentProxy._deviceId = driver.m_id;
     [_currentProxy checkRgsProxyCommandLoad:cmds];
-    
-    
     
 }
 
@@ -322,6 +318,7 @@
         if([_currentProxy._inputDevices objectForKey:ctrl_val]){
             
             data = [_currentProxy._inputDevices objectForKey:ctrl_val];
+            iBtn.delegate = self;
         }
         [iBtn fillData:data];
         
@@ -363,7 +360,10 @@
             
             [_outDataMap setObject:iBtn
                             forKey:ctrl_val];
+            
+            iBtn.delegate = self;
         }
+    
         [iBtn fillData:data];
         
         [scroolViewOut addSubview:iBtn];
@@ -418,10 +418,7 @@
     if(inCell && outCell)
     {
         //输入源
-        inCell.delegate = self;
-        outCell.delegate = self;
-        
-        [inCell selected];
+        //[inCell selected];
         [outCell selected];
         
         NSDictionary* inputD = [inCell getMyData];
