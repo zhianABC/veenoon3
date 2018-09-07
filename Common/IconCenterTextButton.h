@@ -19,5 +19,6 @@
 - (void) buttonWithIcon:(UIImage*)normalIcon selectedIcon:(UIImage*)sIcon text:(NSString*)text normalColor:(UIColor*) normalColor
                selColor:(UIColor*)selColor;
 - (void) setBtnHighlited:(BOOL)isSel;
+- (void) setBtnAlpha:(float)alpha;
 @end
 

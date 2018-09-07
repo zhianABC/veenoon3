@@ -88,9 +88,15 @@
         self._grayBackgroundImage = [UIImage imageNamed:@"light_slide_btn_gray.png"];
         self._lightBackgroundImage = [UIImage imageNamed:@"light_slide_btn_light.png"];
         
+        
     }
     
     return self;
+}
+
+- (void) setImageStype:(UIViewContentMode)mode{
+    
+    _radioImgV.contentMode = mode;
 }
 -(void) setTitle:(NSString*)title {
     _titleLabel.text = title;
