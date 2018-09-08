@@ -212,6 +212,7 @@
 
 - (void) recoverWithDictionary:(NSArray*)datas
 {
+    
     for(RgsSceneDeviceOperation *dopt in datas)
     {
          _isSetOK = YES;

@@ -258,11 +258,7 @@
     
     vpro._deviceId = driver.m_id;
     [vpro checkRgsProxyCommandLoad:cmds];
-    if([_curProcessor._localSavedCommands count])
-    {
-        NSDictionary *local = [_curProcessor._localSavedCommands objectAtIndex:0];
-        [vpro recoverWithDictionary:local];
-    }
+    
     
     self._curProcessor._proxyObj = vpro;
     [_curProcessor syncDriverIPProperty];
@@ -302,11 +298,11 @@
     }
 }
 
-- (void) didSliderEndChanged:(id)object {
+- (void) didSliderEndChanged:(float)value object:(id)object {
     
-    EngineerSliderView *sliderCtrl = object;
-    float value = [sliderCtrl getScaleValue];
-    
+//    EngineerSliderView *sliderCtrl = object;
+//    float value = [sliderCtrl getScaleValue];
+//
     float circleValue = (value)/100.0f;
     
     EDimmerLightProxys *vpro = self._curProcessor._proxyObj;
@@ -388,7 +384,10 @@
         numberL.textColor = YELLOW_COLOR;
 
         [slbtn enableValueSet:YES];
-    } else {
+        
+    }
+    else
+    {
         // remove it
         [_selectedBtnArray removeObject:slbtn];
 
@@ -400,6 +399,7 @@
 }
 
 -(void)handleTapGesture:(UIGestureRecognizer*)gestureRecognizer {
+    
     int tag = (int) gestureRecognizer.view.tag;
     
     LightSliderButton *btn;
@@ -430,6 +430,7 @@
 }
 
 - (void) okAction:(id)sender{
+    
     if (!isSettings) {
         
         if(_rightView == nil)

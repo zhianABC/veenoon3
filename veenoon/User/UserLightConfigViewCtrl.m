@@ -18,19 +18,24 @@
 #import "KVNProgress.h"
 #import "PlugsCtrlTitleHeader.h"
 #import "TeslariaComboChooser.h"
+#import "EDimmerSwitchLight.h"
+#import "DimmerLightSwitchView.h"
 
 
 @interface UserLightConfigViewCtrl () <JLightSliderViewDelegate, UIPopoverPresentationControllerDelegate>{
     
     UIScrollView *_proxysView;
-    
-    NSMutableArray *_buttonArray;
-    
+
     PlugsCtrlTitleHeader *_selectSysBtn;
     TeslariaComboChooser *_chooser;
+    
+    DimmerLightSwitchView *_ligtSwitchView;
 }
 @property (nonatomic, strong) EDimmerLight *_curProcessor;
 @property (nonatomic, strong) NSMutableArray *_devices;
+
+//<IconCenterTextButton,IconCenterTextButton...>
+@property (nonatomic, strong) NSMutableArray *_channelBtns;
 
 @end
 
@@ -38,12 +43,13 @@
 @synthesize _scenario;
 @synthesize _curProcessor;
 @synthesize _devices;
+@synthesize _channelBtns;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _buttonArray = [[NSMutableArray alloc] init];
-
+    self._channelBtns = [[NSMutableArray alloc] init];
+    
     
     [self setTitleAndImage:@"env_corner_light.png" withTitle:@"照明"];
     
@@ -91,10 +97,14 @@
         if([plug isKindOfClass:[EDimmerLight class]]){
             [_devices addObject:plug];
         }
+        else if([plug isKindOfClass:[EDimmerSwitchLight class]]){
+            [_devices addObject:plug];
+        }
     }
     
-    if([_devices count])
+    if([_devices count]){
         self._curProcessor = [_devices objectAtIndex:0];
+    }
     
     
     _selectSysBtn = [[PlugsCtrlTitleHeader alloc] initWithFrame:CGRectMake(50, 100, 80, 30)];
@@ -103,14 +113,39 @@
                       action:@selector(chooseDevice:)
             forControlEvents:UIControlEventTouchUpInside];
     
+    _ligtSwitchView = [[DimmerLightSwitchView alloc] initWithFrame:_proxysView.frame];
+    _ligtSwitchView.backgroundColor = self.view.backgroundColor;
     
-    [self refreshCurrentProcessor];
+    if(_curProcessor)
+    {
+        [self refreshCurrentProcessor];
+    }
 }
 
 - (void) refreshCurrentProcessor{
     
     [self showBasePluginName:self._curProcessor];
-    [self getCurrentDeviceDriverProxys];
+    
+    
+    if([_curProcessor isKindOfClass:[EDimmerLight class]])
+    {
+        //灯光调光
+        if([_ligtSwitchView superview])
+        [_ligtSwitchView removeFromSuperview];
+        
+        [self getCurrentDeviceDriverProxys];
+    }
+    else
+    {
+        //灯光开关模块
+        
+        _ligtSwitchView._curProcessor = (id)_curProcessor;
+        [_ligtSwitchView load];
+        
+        [self.view insertSubview:_ligtSwitchView
+                    aboveSubview:_proxysView];
+        
+    }
 }
 
 
@@ -255,6 +290,10 @@
 
 - (void) loadedLightCommands:(NSArray*)cmds{
     
+    [[_proxysView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [_channelBtns removeAllObjects];
+    
+    
     RgsDriverObj *driver = _curProcessor._driver;
     
     id proxy = _curProcessor._proxyObj;
@@ -271,11 +310,7 @@
     
     vpro._deviceId = driver.m_id;
     [vpro checkRgsProxyCommandLoad:cmds];
-    if([_curProcessor._localSavedCommands count])
-    {
-        NSDictionary *local = [_curProcessor._localSavedCommands objectAtIndex:0];
-        [vpro recoverWithDictionary:local];
-    }
+    
     
     self._curProcessor._proxyObj = vpro;
     
@@ -314,8 +349,8 @@
         [lightBtn buttonWithIcon:[UIImage imageNamed:@"user_light_bg_n.png"]
                     selectedIcon:[UIImage imageNamed:@"user_light_bg_s.png"]
                             text:txt
-                     normalColor:SINGAL_COLOR
-                        selColor:RGB(230, 151, 50)];
+                     normalColor:RGB(121, 117, 115)
+                        selColor:YELLOW_COLOR];
         [_proxysView addSubview:lightBtn];
         lightBtn.tag = i;
         
@@ -331,6 +366,7 @@
         [lightSlider resetScale];
         lightSlider.center = CGPointMake(lightBtn.center.x, sliderHeight);
         lightSlider.tag = i;
+        lightSlider.delegate = self;
         
         //lightSlider
         id key = [NSString stringWithFormat:@"%d", i+1];
@@ -338,17 +374,27 @@
         {
             int level = [[chLevelMap objectForKey:key] intValue];
             [lightSlider setScaleValue:level];
+            
+            if(level > 0)
+            {
+                [lightBtn setBtnHighlited:YES];
+                
+                float alpha = level/100.0;
+                if(alpha < 0.2)
+                    alpha = 0.2;
+                [lightBtn setBtnAlpha:alpha];
+            }
         }
         
         x+=120;
         
-        [_buttonArray addObject:lightBtn];
+        [_channelBtns addObject:lightBtn];
     }
 }
 
 - (void) didSliderValueChanged:(float)value object:(id)object{
     
-    int circleValue = value*100.0f;
+    int circleValue = value;
     
     EDimmerLightProxys *vpro = self._curProcessor._proxyObj;
     int ch = 1;
@@ -362,6 +408,69 @@
                                    ch:ch
                                  exec:YES];
     }
+    
+    if(ch - 1 < [_channelBtns count])
+    {
+        IconCenterTextButton *lightBtn =  [_channelBtns objectAtIndex:ch-1];
+        if(circleValue > 0)
+        {
+            [lightBtn setBtnHighlited:YES];
+            
+            float alpha = value/100.0;
+            if(alpha < 0.2)
+                alpha = 0.2;
+            [lightBtn setBtnAlpha:alpha];
+        }
+        else
+        {
+            [lightBtn setBtnHighlited:NO];
+        }
+    }
+    
+}
+
+- (void) didSliderEndChanged:(id)object{
+    
+    JLightSliderView *sliderCtrl = object;
+    int value = [sliderCtrl getScaleValue];
+    EDimmerLightProxys *vpro = self._curProcessor._proxyObj;
+    
+    int ch = 1;
+    
+    if([object isKindOfClass:[JLightSliderView class]])
+        ch = (int)((JLightSliderView*)object).tag + 1;
+    
+    if(ch - 1 < [_channelBtns count])
+    {
+        IconCenterTextButton *lightBtn =  [_channelBtns objectAtIndex:ch-1];
+        if(value > 0)
+        {
+            
+            [lightBtn setBtnHighlited:YES];
+            
+            float alpha = value/100.0;
+            if(alpha < 0.2)
+                alpha = 0.2;
+            [lightBtn setBtnAlpha:alpha];
+        }
+        else
+        {
+            [lightBtn setBtnHighlited:NO];
+        }
+    }
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(200.0 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
+        
+        if(vpro)
+        {
+            if([vpro isKindOfClass:[EDimmerLightProxys class]])
+            {
+                [vpro controlDeviceLightLevel:value
+                                           ch:ch
+                                         exec:YES];
+            }
+        }
+    });
     
 }
 

@@ -120,6 +120,7 @@
     
     _rightView._delegate = self;
 }
+
 - (void) layoutChannels {
     
     int index = 0;
@@ -155,15 +156,6 @@
     
     for (int i = 0; i < [_powerProxys count]; i++) {
         
-        /*如果是从场景还原来的，需要recovery data
-        APowerESetProxy *vap = [_powerProxys objectAtIndex:i];
-        NSDictionary *dic = [_curProcessor inputChannelAtIndex:i];
-        if(dic)
-        {
-            [vap recoverWithDictionary:dic];
-        }
-        */
-        
         int row = index/colNumber;
         int col = index%colNumber;
         int startX = col*cellWidth+col*space+leftRight;
@@ -182,6 +174,8 @@
         
         [btn turnOnOff:NO];
         
+        
+        
         UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2-40, 0, 80, 20)];
         titleL.backgroundColor = [UIColor clearColor];
         titleL.textAlignment = NSTextAlignmentCenter;
@@ -193,6 +187,15 @@
         
         [_buttonArray addObject:btn];
         
+        NSDictionary *dic = [_currentObj getLabValueWithIndex:i];
+        if(dic && [[dic objectForKey:@"status"] isEqualToString:@"ON"]){
+            [btn turnOnOff:YES];
+            
+            titleL.textColor = YELLOW_COLOR;
+            
+            [_selectedBtnArray addObject:btn];
+        }
+        
         index++;
     }
     
@@ -201,7 +204,7 @@
         //只读取一个，因为所有的out的commands相同
         NSMutableArray *proxyids = [NSMutableArray array];
         APowerESetProxy *ape = [_powerProxys objectAtIndex:0];
-        [proxyids addObject:[NSNumber numberWithInt:ape._rgsProxyObj.m_id]];
+        [proxyids addObject:[NSNumber numberWithInteger:ape._rgsProxyObj.m_id]];
         
         IMP_BLOCK_SELF(EngineerElectronicSysConfigViewCtrl);
         
@@ -302,17 +305,14 @@
         
         [slbtn enableValueSet:YES];
         
-        /*
-        if (YES) {
-            return;
-        }
-        
         if(proxyObj && [proxyObj isKindOfClass:[APowerESetProxy class]])
         {
+            [_currentObj setLabValue:YES
+                           withIndex:idx];
+            
             //控制 开
             [proxyObj controlRelayStatus:@"Link"];
         }
-         */
         
     } else {
         // remove it
@@ -323,17 +323,14 @@
         
         [slbtn enableValueSet:NO];
         
-        /*
-        if (YES) {
-            return;
-        }
-        
         if(proxyObj && [proxyObj isKindOfClass:[APowerESetProxy class]])
         {
+            [_currentObj setLabValue:NO
+                           withIndex:idx];
+            
             //控制 关
             [proxyObj controlRelayStatus:@"Break"];
         }
-         */
     }
 }
 
@@ -346,6 +343,9 @@
     {
         UILabel *numberL = [_buttonNumberArray objectAtIndex:btn.tag];
         APowerESetProxy *powerProxy = [_powerProxys objectAtIndex:btn.tag];
+        
+        [_currentObj setLabValue:isPowerOn
+                       withIndex:(int)btn.tag];
         
         if(isPowerOn)
         {

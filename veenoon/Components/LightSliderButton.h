@@ -37,6 +37,8 @@
 
 - (void) changToIcon:(UIImage*)iconImg;
 
+- (void) setImageStype:(UIViewContentMode)mode;
+
 - (void) enableValueSet:(BOOL)enabled;
 
 -(void) setTitle:(NSString*)title;

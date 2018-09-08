@@ -17,7 +17,7 @@
 }
 @property (nonatomic, strong) NSArray *_rgsCommands;
 @property (nonatomic, strong) NSMutableDictionary *_cmdMap;
-@property (nonatomic, strong) NSMutableDictionary *_RgsSceneDeviceOperationShadow;
+@property (nonatomic, strong) NSMutableArray *_rgsOpts;
 @property (nonatomic, strong) NSMutableDictionary* _channelsMap;
 
 @end
@@ -29,7 +29,7 @@
 @synthesize _cmdMap;
 
 @synthesize _deviceId;
-@synthesize _RgsSceneDeviceOperationShadow;
+@synthesize _rgsOpts;
 
 @synthesize _channelsMap;
 
@@ -43,7 +43,7 @@
         
         self._channelsMap = [NSMutableDictionary dictionary];
         
-        self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionary];
+        self._rgsOpts = [NSMutableArray array];
         
        
     }
@@ -61,29 +61,39 @@
     return _channelsMap;
 }
 
-- (NSDictionary *)getScenarioSliceLocatedShadow{
-    
-    return _RgsSceneDeviceOperationShadow;
-}
 
-
-- (void) recoverWithDictionary:(NSDictionary*)data{
+- (void) recoverWithDictionary:(NSArray*)datas{
     
-    NSInteger proxy_id = [[data objectForKey:@"proxy_id"] intValue];
-    if(proxy_id == _deviceId)
+    self._rgsOpts = [NSMutableArray array];
+    
+    for(RgsSceneDeviceOperation *dopt in datas)
     {
-        NSDictionary *ch_level = [data objectForKey:@"ch_level"];
-        if(ch_level)
-            self._channelsMap = [NSMutableDictionary dictionaryWithDictionary:ch_level];
+        _isSetOK = YES;
         
-        if([data objectForKey:@"RgsSceneDeviceOperation"]){
-            NSDictionary *dic = [data objectForKey:@"RgsSceneDeviceOperation"];
-            self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionaryWithDictionary:dic];
-            _isSetOK = YES;
+        NSString *cmd = dopt.cmd;
+        NSDictionary *param = dopt.param;
+        
+        if([cmd isEqualToString:@"SET_CH"])
+        {
+            NSString *onoff = [param objectForKey:@"POWER"];
+            int ch = [[param objectForKey:@"CH"] intValue];
+            
+            BOOL lv = YES;
+            if([onoff isEqualToString:@"OFF"])
+                lv = NO;
+            
+            [self._channelsMap setObject:[NSNumber numberWithInt:lv]
+                                  forKey:[NSString stringWithFormat:@"%d", ch]];
+            
+            
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:dopt.dev_id
+                                                                              cmd:dopt.cmd
+                                                                            param:dopt.param];
+            [_rgsOpts addObject:opt];
         }
         
-        
     }
+    
 }
 
 
@@ -217,7 +227,6 @@
     if(cmd)
     {
         NSMutableArray *event_opts = [NSMutableArray array];
-        NSMutableArray *event_opts_slice = [NSMutableArray array];
         for(id chkey in [_channelsMap allKeys])
         {
             
@@ -257,46 +266,21 @@
             scene_opt.cmd = cmd.name;
             scene_opt.param = param;
             
-            //用于保存还原
-            NSMutableDictionary *slice = [NSMutableDictionary dictionary];
-            [slice setObject:[NSNumber numberWithInteger:_deviceId] forKey:@"dev_id"];
-            [slice setObject:cmd.name forKey:@"cmd"];
-            [slice setObject:param forKey:@"param"];
-            [event_opts_slice addObject:slice];
-            
+
             RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
                                                                               cmd:scene_opt.cmd
                                                                             param:scene_opt.param];
             
             [event_opts addObject:opt];
+            
+            [_rgsOpts addObject:opt];
         }
-        
-          [_RgsSceneDeviceOperationShadow setObject:event_opts_slice
-                                             forKey:@"SET_CH"];
-        
         
         return event_opts;
     }
     else
     {
-        NSArray *cmdsRevs = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_CH"];
-        if(cmdsRevs && [cmdsRevs count])
-        {
-            NSMutableArray *event_opts = [NSMutableArray array];
-            
-            for(NSDictionary *cmdsRev in cmdsRevs)
-            {
-                RgsSceneOperation * opt = [[RgsSceneOperation alloc]
-                                           initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
-                                           cmd:[cmdsRev objectForKey:@"cmd"]
-                                           param:[cmdsRev objectForKey:@"param"]];
-                
-                [event_opts addObject:opt];
-            }
-           
-            
-            return event_opts;
-        }
+        return _rgsOpts;
     }
     
     return nil;

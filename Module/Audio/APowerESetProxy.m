@@ -43,6 +43,8 @@
         self._linkDuration = 0;
         self._breakDuration = 0;
         
+        self._relayStatus = @"Break";
+        
         self._channelsMap = [NSMutableDictionary dictionary];
         
         self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionary];
@@ -52,6 +54,39 @@
     
     return self;
 }
+
+- (void) recoverWithDictionary:(NSArray*)datas
+{
+    for(RgsSceneDeviceOperation *dopt in datas)
+    {
+        _isSetOK = YES;
+        
+        NSString *cmd = dopt.cmd;
+        NSDictionary *param = dopt.param;
+        
+        if([cmd isEqualToString:@"SET_RELAY"])
+        {
+            self._relayStatus = [param objectForKey:@"STATUS"];
+
+        }
+        else if([cmd isEqualToString:@"SET_BREAK_DUR"])
+        {
+            _breakDuration = [[param objectForKey:@"DUR"] intValue];
+        
+        }
+        else if([cmd isEqualToString:@"SET_LINK_DUR"])
+        {
+            _linkDuration = [[param objectForKey:@"DUR"] intValue];
+            
+        }
+        
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:dopt.dev_id
+                                                                          cmd:dopt.cmd
+                                                                        param:dopt.param];
+        [_RgsSceneDeviceOperationShadow setObject:opt forKey:cmd];
+    }
+}
+
 - (void) controlRelayStatus:(NSString*)relayStatus {
     
     self._relayStatus = relayStatus;
@@ -138,11 +173,7 @@
         }
     }
 }
-- (void) recoverWithDictionary:(NSDictionary *)data
-{
-    
-    
-}
+
 
 - (BOOL) haveProxyCommandLoaded{
     

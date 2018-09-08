@@ -300,6 +300,7 @@
 		34766EB020CE2033006B9E82 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 34766EAF20CE2033006B9E82 /* libstdc++.tbd */; };
 		34766EB220CE203D006B9E82 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 34766EB120CE203D006B9E82 /* libstdc++.tbd */; };
 		34766EBC20CE2237006B9E82 /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 34766EBA20CE2237006B9E82 /* Base64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		347D4EB2214229370088F989 /* DimmerLightSwitchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 347D4EB1214229370088F989 /* DimmerLightSwitchView.m */; };
 		34890CA520E4AC0C00C8505D /* AirConditionPlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 34890CA420E4AC0C00C8505D /* AirConditionPlug.m */; };
 		34890CA820E4AC2A00C8505D /* AirConditionProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 34890CA720E4AC2A00C8505D /* AirConditionProxy.m */; };
 		348FC8CD208AF80600F7DB3D /* BasePlugElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 348FC8CB208AF80100F7DB3D /* BasePlugElement.m */; };
@@ -1393,6 +1394,8 @@
 		34766EB920CE2237006B9E82 /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
 		34766EBA20CE2237006B9E82 /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
 		34766EBB20CE2237006B9E82 /* Base64Defines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64Defines.h; sourceTree = "<group>"; };
+		347D4EB0214229370088F989 /* DimmerLightSwitchView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DimmerLightSwitchView.h; sourceTree = "<group>"; };
+		347D4EB1214229370088F989 /* DimmerLightSwitchView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DimmerLightSwitchView.m; sourceTree = "<group>"; };
 		34890CA320E4AC0C00C8505D /* AirConditionPlug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirConditionPlug.h; sourceTree = "<group>"; };
 		34890CA420E4AC0C00C8505D /* AirConditionPlug.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AirConditionPlug.m; sourceTree = "<group>"; };
 		34890CA620E4AC2A00C8505D /* AirConditionProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirConditionProxy.h; sourceTree = "<group>"; };
@@ -3563,6 +3566,8 @@
 				EBF831EC1FD03EFA0096E6EC /* UserVideoLuBoJiViewCtrl.m */,
 				EB09C47D1FD25B4E00776540 /* UserLightConfigViewCtrl.h */,
 				EB09C47B1FD25B4300776540 /* UserLightConfigViewCtrl.m */,
+				347D4EB0214229370088F989 /* DimmerLightSwitchView.h */,
+				347D4EB1214229370088F989 /* DimmerLightSwitchView.m */,
 				EB09C4831FD2A63E00776540 /* UserElectronicAutoViewCtrl.h */,
 				EB09C4841FD2A64A00776540 /* UserElectronicAutoViewCtrl.m */,
 				EB09C4A01FD39FF400776540 /* UserAirConditionViewCtrl.h */,
@@ -4865,6 +4870,7 @@
 				EB795B532042E81F005D1F47 /* ZengYi_UIView.m in Sources */,
 				049BA6661AF7B82700F17584 /* ChooseCountryViewController.m in Sources */,
 				04DE1E9D1AD6AEE000D49E2F /* DataCenter.m in Sources */,
+				347D4EB2214229370088F989 /* DimmerLightSwitchView.m in Sources */,
 				04DE1EA51AD6AEE000D49E2F /* SBJson4StreamParserState.m in Sources */,
 				341C60C41FDCF1EA003A5490 /* ECPlusSelectView.m in Sources */,
 				34890CA820E4AC2A00C8505D /* AirConditionProxy.m in Sources */,

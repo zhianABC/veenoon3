@@ -418,6 +418,8 @@
     if(inCell && outCell)
     {
         //输入源
+        inCell.delegate = self;
+        outCell.delegate = self;
         
         [inCell selected];
         [outCell selected];

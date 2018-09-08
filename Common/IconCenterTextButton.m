@@ -83,9 +83,17 @@
         _icon.image = _selImg;
         _titleL.textColor = _selColor;
     } else {
+        _icon.alpha = 1;
+        _titleL.alpha = 1;
         _icon.image = _normalImg;
         _titleL.textColor = _normalColor;
     }
+}
+
+- (void) setBtnAlpha:(float)alpha{
+    
+    _icon.alpha = alpha;
+    _titleL.alpha = alpha;
 }
 
 @end

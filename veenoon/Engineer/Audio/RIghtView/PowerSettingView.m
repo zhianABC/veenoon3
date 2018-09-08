@@ -26,6 +26,8 @@
     CenterCustomerPickerView *levelSetting;
     
     BOOL _isPower;
+    
+    UISwitch* powerOffOn;
 }
 
 
@@ -62,7 +64,7 @@
         
         valueL.text = @"开关";
         
-        UISwitch* powerOffOn = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+        powerOffOn = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
         powerOffOn.center = CGPointMake(CGRectGetWidth(self.frame) - 35, 30);
         [powerOffOn addTarget:self
                        action:@selector(changePowerSwitch:)
@@ -185,6 +187,22 @@
     
     self._objSet = powerSet;
     
+    if(powerSet._isSetAllOnOff)
+    {
+        if([powerSet._linkVal isEqualToString:@"ORDER_LINK"]){
+            [powerOffOn setOn:YES];
+        }
+        else
+        {
+            [powerOffOn setOn:NO];
+        }
+    }
+    else
+    {
+        [powerOffOn setOn:YES];
+    }
+    
+    [self showLabs:(int)[powerSet._proxys count]];
 }
 
 - (void) saveCurrentSetting{

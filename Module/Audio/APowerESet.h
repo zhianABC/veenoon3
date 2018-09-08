@@ -19,6 +19,8 @@
 @property (nonatomic, strong) NSArray *_localSavedCommands;
 //<APowerSetProxy>
 @property (nonatomic, strong) NSMutableArray *_proxys;
+@property (nonatomic, assign) BOOL _isSetAllOnOff;
+@property (nonatomic, strong) NSString* _linkVal;
 
 - (NSString*) deviceName;
 

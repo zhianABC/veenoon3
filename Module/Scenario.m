@@ -250,7 +250,7 @@
             NSString *classname = [v objectForKey:@"class"];
             Class someClass = NSClassFromString(classname);
             BasePlugElement * obj = [[someClass alloc] init];
-            [obj jsonToObject:v];
+            [obj createByUserData:v withMap:map];
             
             [_videoDevices addObject:obj];
         }
@@ -261,7 +261,7 @@
             NSString *classname = [env objectForKey:@"class"];
             Class someClass = NSClassFromString(classname);
             BasePlugElement * obj = [[someClass alloc] init];
-            [obj jsonToObject:env];
+            [obj createByUserData:env withMap:map];
             
             [_envDevices addObject:obj];
         }
@@ -904,28 +904,29 @@
             {
                 [self addEventOperation:rsp];
             }
-        
-            for(APowerESetProxy *proxy in proxys)
+            else
             {
-                RgsSceneOperation* rsp = [proxy generateEventOperation_status];
-                if(rsp)
+                for(APowerESetProxy *proxy in proxys)
                 {
-                    [self addEventOperation:rsp];
-                }
-                
-                rsp = [proxy generateEventOperation_breakDur];
-                if(rsp)
-                {
-                    [self addEventOperation:rsp];
-                }
-                
-                rsp = [proxy generateEventOperation_linkDur];
-                if(rsp)
-                {
-                    [self addEventOperation:rsp];
+                    RgsSceneOperation* rsp = [proxy generateEventOperation_status];
+                    if(rsp)
+                    {
+                        [self addEventOperation:rsp];
+                    }
+                    
+                    rsp = [proxy generateEventOperation_breakDur];
+                    if(rsp)
+                    {
+                        [self addEventOperation:rsp];
+                    }
+                    
+                    rsp = [proxy generateEventOperation_linkDur];
+                    if(rsp)
+                    {
+                        [self addEventOperation:rsp];
+                    }
                 }
             }
-            
             NSDictionary *data = [ap userData];
             [audios addObject:data];
         }
