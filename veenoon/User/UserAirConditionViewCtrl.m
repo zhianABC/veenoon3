@@ -135,7 +135,7 @@
         
         int startY = 5;
         
-        UIButton *airConditionBtn = [UIButton buttonWithColor:nil selColor:nil];
+        UIButton *airConditionBtn = [UIButton buttonWithColor:NEW_UR_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
         airConditionBtn.tag = index;
         airConditionBtn.frame = CGRectMake(startX, startY, cellWidth, cellWidth);
         [airConditionBtn setImage:[UIImage imageNamed:@"user_aircondition_n.png"] forState:UIControlStateNormal];
@@ -143,7 +143,7 @@
         [airConditionBtn setTitle:[NSString stringWithFormat:@"%d",
                                    (int)driver.m_id] forState:UIControlStateNormal];
         
-        [airConditionBtn setTitleColor:ADMIN_BLACK_COLOR forState:UIControlStateNormal];
+        [airConditionBtn setTitleColor:NEW_UR_BUTTON_GRAY_COLOR forState:UIControlStateNormal];
         airConditionBtn.titleLabel.font = [UIFont systemFontOfSize:13];
         [airConditionBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
         airConditionBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
@@ -161,10 +161,9 @@
         
     }
     int rowGap2 = 40;
-    int btnLeftRight = SCREEN_WIDTH/2-160-60;
     
-    zhilengBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
-    zhilengBtn.frame = CGRectMake(btnLeftRight, SCREEN_HEIGHT-400, 80, 80);
+    zhilengBtn = [UIButton buttonWithColor:NEW_UR_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
+    zhilengBtn.frame = CGRectMake(SCREEN_WIDTH/2 - 40-rowGap2*2-80*2, SCREEN_HEIGHT-320, 80, 80);
     zhilengBtn.layer.cornerRadius = 5;
     zhilengBtn.layer.borderWidth = 2;
     zhilengBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -175,8 +174,8 @@
     [zhilengBtn addTarget:self action:@selector(zhilengAction:)
        forControlEvents:UIControlEventTouchUpInside];
     
-    zhireBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
-    zhireBtn.frame = CGRectMake(btnLeftRight+rowGap2 +80, SCREEN_HEIGHT-400, 80, 80);
+    zhireBtn = [UIButton buttonWithColor:NEW_UR_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
+    zhireBtn.frame = CGRectMake(SCREEN_WIDTH/2 - 40-rowGap2-80, SCREEN_HEIGHT-320, 80, 80);
     zhireBtn.layer.cornerRadius = 5;
     zhireBtn.layer.borderWidth = 2;
     zhireBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -188,7 +187,7 @@
          forControlEvents:UIControlEventTouchUpInside];
     
     
-    markerLayer = [[MapMarkerLayer alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2 - 40, SCREEN_HEIGHT-230, 80, 80)];
+    markerLayer = [[MapMarkerLayer alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2 - 40, SCREEN_HEIGHT-320, 80, 80)];
     markerLayer.isFill = YES;
     
     NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"LX",
@@ -272,8 +271,8 @@
     [self.view addSubview:markerLayer];
     markerLayer.delegate_=self;
     
-    aireWindBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
-    aireWindBtn.frame = CGRectMake(btnLeftRight+rowGap2*2 +80*2, SCREEN_HEIGHT-400, 80, 80);
+    aireWindBtn = [UIButton buttonWithColor:NEW_UR_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
+    aireWindBtn.frame = CGRectMake(SCREEN_WIDTH/2-40+rowGap2 +80, SCREEN_HEIGHT-320, 80, 80);
     aireWindBtn.layer.cornerRadius = 5;
     aireWindBtn.layer.borderWidth = 2;
     aireWindBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -285,8 +284,8 @@
        forControlEvents:UIControlEventTouchUpInside];
     
     
-    aireFireBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
-    aireFireBtn.frame = CGRectMake(btnLeftRight+rowGap2*3 +80*3, SCREEN_HEIGHT-400, 80, 80);
+    aireFireBtn = [UIButton buttonWithColor:NEW_UR_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
+    aireFireBtn.frame = CGRectMake(SCREEN_WIDTH/2-40+rowGap2*2 +80*2, SCREEN_HEIGHT-320, 80, 80);
     aireFireBtn.layer.cornerRadius = 5;
     aireFireBtn.layer.borderWidth = 2;
     aireFireBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -307,6 +306,9 @@
 }
 
 - (void) didSelectView:(int) path {
+    if (path == 1) {
+        return;
+    }
     markerLayer.isSelected = path;
     [markerLayer setNeedsDisplay];
     
