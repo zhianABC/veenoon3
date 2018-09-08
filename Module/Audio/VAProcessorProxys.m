@@ -377,7 +377,6 @@
             if(SEG < [waves16_feq_gain_q count])
             {
                 NSMutableDictionary* freq = [waves16_feq_gain_q objectAtIndex:SEG];
-            
                 
                 [freq setObject:@"1" forKey:@"is_set"];
                 
@@ -397,17 +396,17 @@
                 [freq setObject:[param objectForKey:@"GAIN"] forKey:@"gain"];
             }
             
-            NSMutableDictionary *peq_map = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_PEQ"];
-            if(peq_map == nil)
+            NSMutableArray *peqs = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_PEQ"];
+            if(peqs == nil)
             {
-                peq_map = [NSMutableDictionary dictionary];
-                [_RgsSceneDeviceOperationShadow setObject:peq_map forKey:@"SET_PEQ"];
+                peqs = [NSMutableArray array];
+                [_RgsSceneDeviceOperationShadow setObject:peqs forKey:@"SET_PEQ"];
             }
             
             RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:dopt.dev_id
                                                                               cmd:dopt.cmd
                                                                             param:dopt.param];
-            [peq_map setObject:opt forKey:key];
+            [peqs addObject:opt];
             
         }
         else if([cmd isEqualToString:@"SET_MIX_SOURCE"]){
@@ -433,6 +432,18 @@
                 [_setMixSrc setObject:val forKey:src];
             }
             
+            
+            NSMutableArray *mixs = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_MIX_SOURCE"];
+            if(mixs == nil)
+            {
+                mixs = [NSMutableArray array];
+                [_RgsSceneDeviceOperationShadow setObject:mixs forKey:@"SET_MIX_SOURCE"];
+            }
+            
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:dopt.dev_id
+                                                                              cmd:dopt.cmd
+                                                                            param:dopt.param];
+            [mixs addObject:opt];
         }
         else if([cmd isEqualToString:@"SET_MIX_VALUE"])
         {
@@ -454,7 +465,19 @@
             }
             
             if([param objectForKey:@"VALUE"])
-            [val setObject:[param objectForKey:@"VALUE"] forKey:@"value"];
+                [val setObject:[param objectForKey:@"VALUE"] forKey:@"value"];
+            
+            NSMutableArray *mixVals = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_MIX_VALUE"];
+            if(mixVals == nil)
+            {
+                mixVals = [NSMutableArray array];
+                [_RgsSceneDeviceOperationShadow setObject:mixVals forKey:@"SET_MIX_VALUE"];
+            }
+            
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:dopt.dev_id
+                                                                              cmd:dopt.cmd
+                                                                            param:dopt.param];
+            [mixVals addObject:opt];
             
         }
         
@@ -3307,16 +3330,29 @@
 - (NSArray *) generateEventOperation_peq{
     
     NSMutableArray *results = [NSMutableArray array];
-    for(int band = 0; band < [waves16_feq_gain_q count]; band++)
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_PEQ"];
+    if(cmd)
     {
-        id opt = [self generateEventOperation_peqAtBand:band];
         
-        if(opt)
+        for(int band = 0; band < [waves16_feq_gain_q count]; band++)
         {
-            [results addObject:opt];
+            id opt = [self generateEventOperation_peqAtBand:band];
+            
+            if(opt)
+            {
+                [results addObject:opt];
+            }
         }
     }
-    
+    else
+    {
+        NSArray *arrs = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_PEQ"];
+        if(arrs)
+        [results addObjectsFromArray:arrs];
+    }
+
     return results;
 }
 
@@ -3539,14 +3575,27 @@
 - (NSArray *) generateEventOperation_mixSrc{
     
     NSMutableArray *results = [NSMutableArray array];
-    for(NSDictionary *src in [_setMixSrc allValues])
+    
+    RgsCommandInfo *cmd = nil;
+    if(_cmdMap)
+        cmd = [_cmdMap objectForKey:@"SET_MIX_SOURCE"];
+    if(cmd)
     {
-        id opt = [self generateEventOperation_matrixSrc:src];
-        
-        if(opt)
+        for(NSDictionary *src in [_setMixSrc allValues])
         {
-            [results addObject:opt];
+            id opt = [self generateEventOperation_matrixSrc:src];
+            
+            if(opt)
+            {
+                [results addObject:opt];
+            }
         }
+    }
+    else
+    {
+        NSArray *arrs = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_MIX_SOURCE"];
+        if(arrs)
+        [results addObjectsFromArray:arrs];
     }
     
     return results;
@@ -3576,45 +3625,13 @@
         scene_opt.dev_id = _rgsProxyObj.m_id;
         scene_opt.cmd = cmd.name;
         scene_opt.param = param;
-        
-        //用于保存还原
-        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
-        [slice setObject:[NSNumber numberWithInteger:_rgsProxyObj.m_id] forKey:@"dev_id"];
-        [slice setObject:cmd.name forKey:@"cmd"];
-        [slice setObject:param forKey:@"param"];
-        
-//        NSMutableDictionary *src_map = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_MIX_SOURCE"];
-//        if(src_map == nil)
-//        {
-//            src_map = [NSMutableDictionary dictionary];
-//            [_RgsSceneDeviceOperationShadow setObject:src_map forKey:@"SET_MIX_SOURCE"];
-//        }
-//
-//        [src_map setObject:slice forKey:[src objectForKey:@"proxy_id"]];
-//
+    
     
         RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
                                                                           cmd:scene_opt.cmd
                                                                         param:scene_opt.param];
         
         return opt;
-    }
-    else
-    {
-//        NSMutableDictionary *src_map = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_MIX_SOURCE"];
-//        if(src_map)
-//        {
-//            NSDictionary *cmdsRev = [src_map objectForKey:[src objectForKey:@"proxy_id"]];
-//            if(cmdsRev)
-//            {
-//                RgsSceneOperation * opt = [[RgsSceneOperation alloc]
-//                                           initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
-//                                           cmd:[cmdsRev objectForKey:@"cmd"]
-//                                           param:[cmdsRev objectForKey:@"param"]];
-//
-//                return opt;
-//            }
-//        }
     }
     
     return nil;
@@ -3624,16 +3641,30 @@
 - (NSArray* ) generateEventOperation_mixValue{
     
     NSMutableArray *results = [NSMutableArray array];
-    for(NSDictionary *src in [_setMixValue allValues])
+    
+    RgsCommandInfo *cmd = nil;
+    
+    if(_cmdMap)
+        cmd = [_cmdMap objectForKey:@"SET_MIX_VALUE"];
+    
+    if(cmd)
     {
-        id opt = [self generateEventOperation_matrixSrcValue:src];
-        
-        if(opt)
+        for(NSDictionary *src in [_setMixValue allValues])
         {
-            [results addObject:opt];
+            id opt = [self generateEventOperation_matrixSrcValue:src];
+            
+            if(opt)
+            {
+                [results addObject:opt];
+            }
         }
     }
-    
+    else
+    {
+        NSArray *arrs = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_MIX_VALUE"];
+        if(arrs)
+            [results addObjectsFromArray:arrs];
+    }
     return results;
 }
 
@@ -3669,45 +3700,13 @@
         scene_opt.dev_id = _rgsProxyObj.m_id;
         scene_opt.cmd = cmd.name;
         scene_opt.param = param;
-        
-        //用于保存还原
-        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
-        [slice setObject:[NSNumber numberWithInteger:_rgsProxyObj.m_id] forKey:@"dev_id"];
-        [slice setObject:cmd.name forKey:@"cmd"];
-        [slice setObject:param forKey:@"param"];
-        
-//        NSMutableDictionary *srcval_map = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_MIX_VALUE"];
-//        if(srcval_map == nil)
-//        {
-//            srcval_map = [NSMutableDictionary dictionary];
-//            [_RgsSceneDeviceOperationShadow setObject:srcval_map forKey:@"SET_MIX_VALUE"];
-//        }
-//
-//        [srcval_map setObject:slice forKey:[src objectForKey:@"proxy_id"]];
-//
+    
         
         RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
                                                                           cmd:scene_opt.cmd
                                                                         param:scene_opt.param];
         
         return opt;
-    }
-    else
-    {
-//        NSMutableDictionary *srcval_map = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_MIX_VALUE"];
-//        if(srcval_map)
-//        {
-//            NSDictionary *cmdsRev = [srcval_map objectForKey:[src objectForKey:@"proxy_id"]];
-//            if(cmdsRev)
-//            {
-//                RgsSceneOperation * opt = [[RgsSceneOperation alloc]
-//                                           initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
-//                                           cmd:[cmdsRev objectForKey:@"cmd"]
-//                                           param:[cmdsRev objectForKey:@"param"]];
-//
-//                return opt;
-//            }
-//        }
     }
     
     return nil;

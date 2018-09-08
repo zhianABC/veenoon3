@@ -294,20 +294,7 @@
         scene_opt.dev_id = _rgsProxyObj.m_id;
         scene_opt.cmd = cmd.name;
         scene_opt.param = param;
-        
-        //用于保存还原
-        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
-        [slice setObject:[NSNumber numberWithInteger:_rgsProxyObj.m_id] forKey:@"dev_id"];
-        [slice setObject:cmd.name forKey:@"cmd"];
-        [slice setObject:param forKey:@"param"];
-        
-        NSMutableDictionary *src_map = [_RgsSceneDeviceOperationShadow objectForKey:cmdName];
-        if(src_map == nil)
-        {
-            src_map = [NSMutableDictionary dictionary];
-            [_RgsSceneDeviceOperationShadow setObject:src_map forKey:cmdName];
-        }
-        [src_map setObject:slice forKey:proxyName];
+    
         
         RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
                                                                           cmd:scene_opt.cmd
@@ -315,24 +302,6 @@
         
         return opt;
     }
-    else
-    {
-        NSMutableDictionary *src_map = [_RgsSceneDeviceOperationShadow objectForKey:cmdName];
-        if(src_map )
-        {
-            NSDictionary *cmdsRev = [src_map objectForKey:proxyName];
-            if(cmdsRev)
-            {
-                RgsSceneOperation * opt = [[RgsSceneOperation alloc]
-                                           initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
-                                           cmd:[cmdsRev objectForKey:@"cmd"]
-                                           param:[cmdsRev objectForKey:@"param"]];
-                
-                return opt;
-            }
-        }
-    }
-    
     return nil;
     
 }
@@ -340,38 +309,66 @@
 - (NSArray*) generateEventOperation_inputs{
     
     NSMutableArray *results = [NSMutableArray array];
-    for(NSString* proxyName in [_inputMap allKeys])
+    
+    NSString *cmdName = @"SET_INPUT";
+    RgsCommandInfo *cmd = nil;
+    if(_cmdMap)
+        cmd = [_cmdMap objectForKey:cmdName];
+    if(cmd)
     {
-        int state = [[_inputMap objectForKey:proxyName] intValue];
-        
-        id opt = [self generateEventOperation_inOuts:proxyName
-                                               state:state
-                                             andType:0];
-        
-        if(opt)
+        for(NSString* proxyName in [_inputMap allKeys])
         {
-            [results addObject:opt];
+            int state = [[_inputMap objectForKey:proxyName] intValue];
+            
+            id opt = [self generateEventOperation_inOuts:proxyName
+                                                   state:state
+                                                 andType:0];
+            
+            if(opt)
+            {
+                [results addObject:opt];
+            }
         }
     }
-    
+    else
+    {
+        NSArray *arrs = [_RgsSceneDeviceOperationShadow objectForKey:cmdName];
+        if(arrs)
+            [results addObjectsFromArray:arrs];
+    }
     return results;
     
 }
 - (NSArray*) generateEventOperation_outpus{
     
     NSMutableArray *results = [NSMutableArray array];
-    for(NSString* proxyName in [_outputMap allKeys])
+    
+    NSString *cmdName = @"SET_OUTPUT";
+    RgsCommandInfo *cmd = nil;
+    if(_cmdMap)
+    cmd = [_cmdMap objectForKey:cmdName];
+    if(cmd)
     {
-        int state = [[_outputMap objectForKey:proxyName] intValue];
-        
-        id opt = [self generateEventOperation_inOuts:proxyName
-                                               state:state
-                                             andType:1];
-        
-        if(opt)
+        for(NSString* proxyName in [_outputMap allKeys])
         {
-            [results addObject:opt];
+            int state = [[_outputMap objectForKey:proxyName] intValue];
+            
+            id opt = [self generateEventOperation_inOuts:proxyName
+                                                   state:state
+                                                 andType:1];
+            
+            if(opt)
+            {
+                [results addObject:opt];
+            }
         }
+    
+    }
+    else
+    {
+        NSArray *arrs = [_RgsSceneDeviceOperationShadow objectForKey:cmdName];
+        if(arrs)
+        [results addObjectsFromArray:arrs];
     }
     
     return results;
@@ -414,13 +411,7 @@
         scene_opt.cmd = cmd.name;
         scene_opt.param = param;
         
-        //用于保存还原
-        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
-        [slice setObject:[NSNumber numberWithInteger:_rgsProxyObj.m_id] forKey:@"dev_id"];
-        [slice setObject:cmd.name forKey:@"cmd"];
-        [slice setObject:param forKey:@"param"];
-        [_RgsSceneDeviceOperationShadow setObject:slice forKey:@"SET_A_VALUE"];
-        
+
         RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
                                                                           cmd:scene_opt.cmd
                                                                         param:scene_opt.param];
@@ -429,16 +420,8 @@
     }
     else
     {
-        NSDictionary *cmdsRev = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_A_VALUE"];
-        if(cmdsRev)
-        {
-            RgsSceneOperation * opt = [[RgsSceneOperation alloc]
-                                       initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
-                                       cmd:[cmdsRev objectForKey:@"cmd"]
-                                       param:[cmdsRev objectForKey:@"param"]];
-            
-            return opt;
-        }
+        return [_RgsSceneDeviceOperationShadow objectForKey:@"SET_A_VALUE"];
+
     }
     
     return nil;
@@ -466,6 +449,18 @@
              } else {
                  [_inputMap setObject:@0 forKey:src];
              }
+             
+             NSMutableArray *arrs = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_INPUT"];
+             if(arrs == nil)
+             {
+                 arrs = [NSMutableArray array];
+                 [_RgsSceneDeviceOperationShadow setObject:arrs forKey:@"SET_INPUT"];
+             }
+             
+             RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:dopt.dev_id
+                                                                               cmd:dopt.cmd
+                                                                             param:dopt.param];
+             [arrs addObject:opt];
             
         }
         else if([cmd isEqualToString:@"SET_OUTPUT"])
@@ -479,13 +474,31 @@
                 [_outputMap setObject:@0 forKey:src];
             }
             
+            
+            NSMutableArray *arrs = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_OUTPUT"];
+            if(arrs == nil)
+            {
+                arrs = [NSMutableArray array];
+                [_RgsSceneDeviceOperationShadow setObject:arrs forKey:@"SET_OUTPUT"];
+            }
+            
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:dopt.dev_id
+                                                                              cmd:dopt.cmd
+                                                                            param:dopt.param];
+            [arrs addObject:opt];
+            
         }
         else if([cmd isEqualToString:@"SET_A_VALUE"])
         {
             NSString *src = [param objectForKey:@"VALUE"];
             self._zidonghunyinZengYi = src;
             
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:dopt.dev_id
+                                                                              cmd:dopt.cmd
+                                                                            param:dopt.param];
+            [_RgsSceneDeviceOperationShadow setObject:opt forKey:cmd];
         }
+        
     }
     
     //NSLog(@"===");

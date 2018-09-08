@@ -700,17 +700,17 @@
             [self._pointsData setObject:gain forKey:rate];
             
             
-            NSMutableDictionary *peq_map = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_PEQ"];
-            if(peq_map == nil)
+            NSMutableArray *peqs = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_PEQ"];
+            if(peqs == nil)
             {
-                peq_map = [NSMutableDictionary dictionary];
-                [_RgsSceneDeviceOperationShadow setObject:peq_map forKey:@"SET_PEQ"];
+                peqs = [NSMutableArray array];
+                [_RgsSceneDeviceOperationShadow setObject:peqs forKey:@"SET_PEQ"];
             }
             
             RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:dopt.dev_id
                                                                               cmd:dopt.cmd
                                                                             param:dopt.param];
-            [peq_map setObject:opt forKey:rate];
+            [peqs addObject:opt];
             
         }
         else if([cmd isEqualToString:@"SET_PRESS"]){
@@ -1167,17 +1167,10 @@
     else
     {
         NSMutableArray *results = [NSMutableArray array];
-        
-        NSMutableDictionary *peq_map = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_PEQ"];
-        if(peq_map)
+        NSArray *peqs = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_PEQ"];
+        if(peqs)
         {
-            NSArray *bandKeys = [peq_map allKeys];
-            
-            for(NSString *bandKey in bandKeys)
-            {
-                RgsSceneOperation * opt = [peq_map objectForKey:bandKey];
-                [results addObject:opt];
-            }
+            [results addObjectsFromArray:peqs];
         }
         
         return results;
