@@ -16,7 +16,7 @@
 {
     
 }
-
+@property (nonatomic, strong) NSMutableDictionary *config;
 @end
 
 
@@ -28,7 +28,7 @@
 @synthesize _proxyObj;
 
 @synthesize _localSavedProxys;
-
+@synthesize config;
 - (id) init
 {
     if(self = [super init])
@@ -306,7 +306,7 @@
 
 - (NSDictionary *)userData{
     
-    NSMutableDictionary *config = [NSMutableDictionary dictionary];
+    self.config = [NSMutableDictionary dictionary];
     [config setValue:[NSString stringWithFormat:@"%@", [self class]] forKey:@"class"];
     if(_driver)
     {
@@ -318,6 +318,38 @@
 
 - (void) createByUserData:(NSDictionary*)userdata withMap:(NSDictionary*)valMap{
     
+    self.config = [NSMutableDictionary dictionaryWithDictionary:userdata];
+    [config setObject:valMap forKey:@"opt_value_map"];
+    
+    int driver_id = [[config objectForKey:@"driver_id"] intValue];
+    
+    IMP_BLOCK_SELF(VCameraSettingSet);
+    [[RegulusSDK sharedRegulusSDK] GetRgsObjectByID:driver_id
+                                         completion:^(BOOL result, id RgsObject, NSError *error) {
+                                             
+                                             if(result)
+                                             {
+                                                 [block_self successGotDriver:RgsObject];
+                                             }
+                                         }];
 }
+
+
+- (void) successGotDriver:(RgsDriverObj*)rgsd{
+    
+    self._driver = rgsd;
+    self._driverInfo = rgsd.info;
+    
+//    IMP_BLOCK_SELF(VVideoProcessSet);
+//    [[RegulusSDK sharedRegulusSDK] GetDriverCommands:rgsd.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
+//        if (result) {
+//            if ([commands count]) {
+//                [block_self loadedVideoCommands:commands];
+//            }
+//        }
+//
+//    }];
+}
+
 
 @end

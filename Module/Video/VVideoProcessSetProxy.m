@@ -224,10 +224,8 @@
                 
                 [outPutArray addObject:outName];
             }
-           
         }
     }
-    
 }
 
 - (void) saveInputDevice:(NSDictionary*)inputDev{
