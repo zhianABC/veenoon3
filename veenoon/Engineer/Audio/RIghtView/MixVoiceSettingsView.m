@@ -107,7 +107,7 @@
     AudioEMixProxy *proxy = _currentObj._proxyObj;
     if(proxy && proxy._workMode)
     {
-        if([proxy._workMode isEqualToString:@"Speaker"])
+        if([proxy._workMode isEqualToString:@"Speak"])
         {
             _shexiangzhuizongView.hidden=YES;
             _biaozhunfayanView.hidden=YES;

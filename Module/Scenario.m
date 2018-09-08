@@ -56,6 +56,8 @@
 #import "UserDefaultsKV.h"
 
 #import "BlindPlugin.h"
+#import "AirQualityPlug.h"
+
 
 @interface Scenario ()
 {
@@ -81,6 +83,7 @@
 @synthesize _videoDevices;
 @synthesize _envDevices;
 @synthesize _comDevices;
+@synthesize _otherDevices;
 
 @synthesize _areas;
 
@@ -118,6 +121,8 @@
     self._audioDevices = [NSMutableArray array];
     self._videoDevices = [NSMutableArray array];
     self._envDevices = [NSMutableArray array];
+    self._otherDevices = [NSMutableArray array];
+    self._comDevices = [NSMutableArray array];
     
     NSMutableArray *audio = [NSMutableArray array];
     [_scenarioData setObject:audio forKey:@"audio"];
@@ -127,6 +132,13 @@
     
     NSMutableArray *env = [NSMutableArray array];
     [_scenarioData setObject:env forKey:@"environment"];
+    
+    NSMutableArray *coms = [NSMutableArray array];
+    [_scenarioData setObject:coms forKey:@"coms"];
+    
+    NSMutableArray *others = [NSMutableArray array];
+    [_scenarioData setObject:others forKey:@"others"];
+    
     
     [_scenarioData setObject:@"场景" forKey:@"name"];
     
@@ -267,9 +279,29 @@
             
             [_envDevices addObject:obj];
         }
+        NSArray *coms = [_scenarioData objectForKey:@"coms"];
+        [_comDevices removeAllObjects];
+        for(NSDictionary *com in coms){
+            
+            NSString *classname = [com objectForKey:@"class"];
+            Class someClass = NSClassFromString(classname);
+            BasePlugElement * obj = [[someClass alloc] init];
+            [obj createByUserData:com withMap:map];
+            
+            [_comDevices addObject:obj];
+        }
         
-        
-        //[self recoverDriverEvent];
+        NSArray *others = [_scenarioData objectForKey:@"others"];
+        [_otherDevices removeAllObjects];
+        for(NSDictionary *oth in others){
+            
+            NSString *classname = [oth objectForKey:@"class"];
+            Class someClass = NSClassFromString(classname);
+            BasePlugElement * obj = [[someClass alloc] init];
+            [obj createByUserData:oth withMap:map];
+            
+            [_otherDevices addObject:obj];
+        }
     }
     
     if(delegate && [delegate respondsToSelector:@selector(didEndLoadingDiverValues)])
@@ -679,6 +711,12 @@
     NSMutableArray *env = [NSMutableArray array];
     [_scenarioData setObject:env forKey:@"environment"];
     
+    NSMutableArray *coms = [NSMutableArray array];
+    [_scenarioData setObject:coms forKey:@"coms"];
+    
+    NSMutableArray *others = [NSMutableArray array];
+    [_scenarioData setObject:others forKey:@"others"];
+    
     
     //音频处理
     if([self._audioDevices count])
@@ -694,6 +732,16 @@
     if([self._envDevices count])
     {
         [self createEvnScenario];
+    }
+    //Coms
+    if([self._comDevices count])
+    {
+        [self creatComsScenario];
+    }
+    //环境
+    if([self._otherDevices count])
+    {
+        [self createOthersScenario];
     }
     
 }
@@ -1146,5 +1194,42 @@
         [_scenarioData removeObjectForKey:@"environment"];
 }
 
+- (void) creatComsScenario{
+    
+    NSMutableArray *coms = [_scenarioData objectForKey:@"coms"];
+    
+    for(BasePlugElement* dev in self._comDevices)
+    {
+        NSDictionary *data = [dev userData];
+        if(data)
+        [coms addObject:data];
+    }
+    
+    
+    if([coms count] == 0)
+    [_scenarioData removeObjectForKey:@"coms"];
+    
+    
+}
+- (void) createOthersScenario{
+    
+    NSMutableArray *others = [_scenarioData objectForKey:@"others"];
+    
+    for(BasePlugElement* dev in self._otherDevices)
+    {
+        if([dev isKindOfClass:[AirQualityPlug class]])
+        {
+            //AirQualityPlugProxy *proj = ((AirQualityPlug*)dev)._proxyObj;
+        
+            NSDictionary *data = [dev userData];
+            [others addObject:data];
+        }
+    
+    }
+    
+    
+    if([others count] == 0)
+        [_scenarioData removeObjectForKey:@"others"];
+}
 
 @end

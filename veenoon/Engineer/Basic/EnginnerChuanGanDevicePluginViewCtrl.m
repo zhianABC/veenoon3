@@ -13,7 +13,7 @@
 #import "EDimmerLight.h"
 #import "DataSync.h"
 #import "EngineerPortPluginViewCtrl.h"
-
+#import "DataCenter.h"
 
 @interface EnginnerChuanGanDevicePluginViewCtrl () <CenterCustomerPickerViewDelegate> {
     IconCenterTextButton *_rentichuanganBtn;
@@ -24,6 +24,7 @@
     CenterCustomerPickerView *_brandPicker;
     CenterCustomerPickerView *_productCategoryPicker;
 }
+@property (nonatomic, strong) NSArray *_currentCategorys;
 @property (nonatomic, strong) NSArray *_currentBrands;
 @property (nonatomic, strong) NSArray *_currentTypes;
 @property (nonatomic, strong) NSArray *_driverUdids;
@@ -31,11 +32,17 @@
 @property (nonatomic, strong) NSMutableDictionary *_mapDrivers;
 @property (nonatomic, strong) NSMutableArray *_chuanganDrivers;
 
+@property (nonatomic, strong) NSMutableDictionary *typeAndSubTypeMap;
+@property (nonatomic, strong) NSMutableDictionary *nameDriverMap;
+@property (nonatomic, strong) NSMutableDictionary *_tmpMap;
+@property (nonatomic, strong) NSString *_typeName;
+
 @end
 
 @implementation EnginnerChuanGanDevicePluginViewCtrl
 @synthesize _selectedSysDic;
 
+@synthesize _currentCategorys;
 @synthesize _currentBrands;
 @synthesize _currentTypes;
 @synthesize _driverUdids;
@@ -43,23 +50,47 @@
 @synthesize _mapDrivers;
 @synthesize _chuanganDrivers;
 
+@synthesize typeAndSubTypeMap;
+@synthesize nameDriverMap;
+@synthesize _tmpMap;
+@synthesize _typeName;
 
 - (void) prepareDrivers{
     
     self._mapDrivers = [NSMutableDictionary dictionary];
     
-    NSDictionary *light = @{@"type":@"env",
-                            @"name":@"照明",
-                            @"driver":UUID_6CH_Dimmer_Light,
-                            @"brand":@"Teslaria",
-                            @"icon":@"engineer_env_zhaoming_n.png",
-                            @"icon_s":@"engineer_env_zhaoming_s.png",
-                            @"driver_class":@"EDimmerLight",
-                            @"ptype":@"6 CH Dimmer Light"
-                            };
+    //根据Subtype分类
+    self.typeAndSubTypeMap = [NSMutableDictionary dictionary];
+    self.nameDriverMap = [NSMutableDictionary dictionary];
     
-    [_mapDrivers setObject:light forKey:UUID_6CH_Dimmer_Light];
     
+    NSArray *drivers = [[DataCenter defaultDataCenter] driversWithType:@"other"];
+    
+    for(NSDictionary *dr in drivers)
+    {
+        [self._mapDrivers setObject:dr forKey:[dr objectForKey:@"driver"]];
+        
+        id key = [dr objectForKey:@"subtype"];
+        NSMutableArray* arr = [typeAndSubTypeMap objectForKey:key];
+        if(arr == nil)
+        {
+            arr = [NSMutableArray array];
+            [typeAndSubTypeMap setObject:arr forKey:key];
+        }
+        
+        [arr addObject:dr];
+        
+        //
+        key = [dr objectForKey:@"name"];
+        arr = [nameDriverMap objectForKey:key];
+        if(arr == nil)
+        {
+            arr = [NSMutableArray array];
+            [nameDriverMap setObject:arr forKey:key];
+        }
+        
+        [arr addObject:dr];
+    }
 }
 
 - (void)viewDidLoad {
@@ -155,9 +186,7 @@
     [_productTypePikcer removeArray];
     _productTypePikcer.delegate_=self;
     _productTypePikcer.fontSize=14;
-    _productTypePikcer._pickerDataArray = @[@{@"values":@[@"人体感应",@"空气质量"]}];
-    [_productTypePikcer selectRow:0 inComponent:0];
-    _productTypePikcer._selectColor = RGB(253, 180, 0);
+     _productTypePikcer._selectColor = RGB(253, 180, 0);
     _productTypePikcer._rowNormalColor = [UIColor whiteColor];
     [self.view addSubview:_productTypePikcer];
     
@@ -173,8 +202,6 @@
     
     _brandPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(x1, labelStartY+20, maxWidth, 160)];
     [_brandPicker removeArray];
-    _brandPicker._pickerDataArray = @[@{@"values":@[@"F",@"E",@"A"]}];
-    [_brandPicker selectRow:0 inComponent:0];
     _brandPicker._selectColor = RGB(253, 180, 0);
     _brandPicker._rowNormalColor = [UIColor whiteColor];
     [self.view addSubview:_brandPicker];
@@ -192,8 +219,6 @@
     
     _productCategoryPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(x1, labelStartY+20, maxWidth, 160)];
     [_productCategoryPicker removeArray];
-    _productCategoryPicker._pickerDataArray = @[@{@"values":@[@"C",@"V",@"B"]}];
-    [_productCategoryPicker selectRow:0 inComponent:0];
     _productCategoryPicker._selectColor = RGB(253, 180, 0);
     _productCategoryPicker._rowNormalColor = [UIColor whiteColor];
     [self.view addSubview:_productCategoryPicker];
@@ -211,8 +236,112 @@
     
     self._chuanganDrivers = [NSMutableArray array];
     [self._selectedSysDic setObject:_chuanganDrivers forKey:@"chuangan"];
+    
+    [self emptyBrandAndTypes];
 }
 
+- (void) emptyBrandAndTypes{
+    
+    self._currentCategorys = @[@"类型"];
+    self._currentBrands = @[@"品牌"];
+    self._currentTypes = @[@"型号"];
+    self._driverUdids = @[];
+    
+    _productTypePikcer._pickerDataArray = @[@{@"values":_currentCategorys}];
+    [_productTypePikcer selectRow:0 inComponent:0];
+    
+    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
+    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
+    
+    [_brandPicker selectRow:0 inComponent:0];
+    [_productCategoryPicker selectRow:0 inComponent:0];
+}
+
+
+- (void) choosedDevice:(NSString*)category{
+    
+    self._typeName = category;
+    
+    NSArray *types = [typeAndSubTypeMap objectForKey:category];
+    
+    NSMutableArray *cate = [NSMutableArray array];
+    for(NSDictionary *dr in types)
+    {
+        NSString *name = [dr objectForKey:@"name"];
+        [cate addObject:name];
+    }
+    self._currentCategorys = cate;
+    if([cate count])
+    {
+        _productTypePikcer._pickerDataArray = @[@{@"values":cate}];
+        [_productTypePikcer selectRow:0 inComponent:0];
+        
+        NSString *typename = [cate objectAtIndex:0];
+        [self choosedDeviceType:typename];
+    }
+    else
+    {
+        [self emptyBrandAndTypes];
+    }
+}
+
+- (void) choosedDeviceType:(NSString*)type{
+    
+    NSArray *arr = [nameDriverMap objectForKey:type];
+    
+    NSMutableArray *brands = [NSMutableArray array];
+    
+    self._tmpMap = [NSMutableDictionary dictionary];
+    for(NSDictionary *dr in arr)
+    {
+        NSString *brand = [dr objectForKey:@"brand"];
+        
+        NSMutableArray *xhs = [_tmpMap objectForKey:brand];
+        if(xhs == nil)
+        {
+            xhs = [NSMutableArray array];
+            [_tmpMap setObject:xhs forKey:brand];
+        }
+        [xhs addObject:dr];
+        
+        if(![brands containsObject:brand])
+        [brands addObject:brand];
+    }
+    
+    self._currentBrands = brands;
+    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
+    
+    if([brands count])
+    {
+        [_brandPicker selectRow:0 inComponent:0];
+        NSString *b = [brands objectAtIndex:0];
+        
+        [self choosedCurrentBand:b];
+    }
+}
+
+- (void) choosedCurrentBand:(NSString*)band{
+    
+    NSArray *xhs = [_tmpMap objectForKey:band];
+    
+    NSMutableArray *ts = [NSMutableArray array];
+    NSMutableArray *ids = [NSMutableArray array];
+    for(NSDictionary *d in xhs)
+    {
+        [ts addObject:[d objectForKey:@"ptype"]];
+        [ids addObject:[d objectForKey:@"driver"]];
+    }
+    
+    self._currentTypes = ts;
+    self._driverUdids = ids;
+    
+    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
+    
+    if([ts count])
+    {
+        [_productCategoryPicker selectRow:0 inComponent:0];
+    }
+}
 - (void) addDriverToCenter:(NSDictionary*)device{
     
     NSString *classname = [device objectForKey:@"driver_class"];
@@ -239,19 +368,6 @@
     }
 }
 
-- (void) initBrandAndTypes{
-    
-    self._currentBrands = @[@"品牌"];
-    self._currentTypes = @[@"型号"];
-    self._driverUdids = @[];
-    
-    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
-    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
-    
-    [_brandPicker selectRow:0 inComponent:0];
-    [_productCategoryPicker selectRow:0 inComponent:0];
-}
-
 
 - (void) rentichuangangAction:(id)sender{
     
@@ -259,70 +375,20 @@
     [_wenshiduBtn setBtnHighlited:NO];
     [_kongqizhiliangBtn setBtnHighlited:NO];
     
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
-    
-    self._currentBrands = @[@"TESLARIA"];
-    self._currentTypes = @[@"Dimmer-6"];
-    self._driverUdids = @[UUID_6CH_Dimmer_Light];
-    
-    _brandPicker._pickerDataArray = @[@{@"values":_currentBrands}];
-    _productCategoryPicker._pickerDataArray = @[@{@"values":_currentTypes}];
-    
-    [_brandPicker selectRow:0 inComponent:0];
-    [_productCategoryPicker selectRow:0 inComponent:0];
-    
+
+    [self choosedDevice:@"人体感应"];
+
 }
-- (void) wenshiduchuanganAction:(id)sender{
-    
-    [_rentichuanganBtn setBtnHighlited:NO];
-    [_wenshiduBtn setBtnHighlited:YES];
-    [_kongqizhiliangBtn setBtnHighlited:NO];
-    
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
-    
-}
+
 - (void) kongqizhiliangchuanganAction:(id)sender{
     [_rentichuanganBtn setBtnHighlited:NO];
     [_wenshiduBtn setBtnHighlited:NO];
     [_kongqizhiliangBtn setBtnHighlited:YES];
     
-    IconCenterTextButton *btn = (IconCenterTextButton*) sender;
-    NSString *btnText = btn._titleL.text;
-    [self setBrandValue:btnText];
+    [self choosedDevice:@"空气质量"];
     
 }
 
--(void) didScrollPickerValue:(NSString*)brand obj:(id)obj{
-    if ([@"人体感应传感器" isEqualToString:brand]) {
-        [self rentichuangangAction:_rentichuanganBtn];
-    } else if ([@"温湿度传感器" isEqualToString:brand]) {
-        [self wenshiduchuanganAction:_wenshiduBtn];
-    } else if ([@"空气质量传感器" isEqualToString:brand]) {
-        [self kongqizhiliangchuanganAction:_kongqizhiliangBtn];
-    }
-}
-
--(void) setBrandValue:(NSString*)brand {
-    if (brand == nil) {
-        return;
-    }
-    NSArray *array = _productTypePikcer._pickerDataArray;
-    int index = 0;
-    for (NSDictionary *dic in array) {
-        NSArray *valueArray = [dic objectForKey:@"values"];
-        for (NSString * str in valueArray) {
-            if ([str isEqualToString:brand]) {
-                break;
-            }
-            index++;
-        }
-    }
-    [_productTypePikcer selectRow:index inComponent:0];
-}
 - (void) okAction:(id)sender{
     
     EngineerPortPluginViewCtrl *ctrl = [[EngineerPortPluginViewCtrl alloc] init];
