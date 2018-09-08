@@ -25,7 +25,7 @@
 @property (nonatomic, strong) NSMutableDictionary *_cmdMap;
 @property (nonatomic, strong) NSMutableDictionary *_RgsSceneDeviceOperationShadow;
 
-@property (nonatomic, strong) NSMutableDictionary *_pointsData;
+
 
 @end
 
@@ -59,8 +59,8 @@
     if(self = [super init])
     {
         _deviceVol = 20.0f;
-        self._mixLowFilter = @"14";
-        self._mixHighFilter = @"60";
+        self._mixLowFilter = @"0";
+        self._mixHighFilter = @"10";
         self._mixPEQ = @"4";
         self._mixNoise = @"7";
         self._mixPress = @"5";
@@ -135,7 +135,7 @@
     
     float highFilterFloat = [highFilter floatValue];
     
-    RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_HIGHT_FILTER"];
+    RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_HIGH_FILTER"];
     if(cmd)
     {
         NSMutableDictionary * param = [NSMutableDictionary dictionary];
@@ -722,13 +722,13 @@
         {
             self._mixNoise = [param objectForKey:@"LEVEL"];
         }
-        else if([cmd isEqualToString:@"SET_HIGHT_FILTER"])
+        else if([cmd isEqualToString:@"SET_HIGH_FILTER"])
         {
             self._mixHighFilter = [param objectForKey:@"RATE"];
         }
         else if([cmd isEqualToString:@"SET_LOW_FILTER"])
         {
-            self._mixHighFilter = [param objectForKey:@"RATE"];
+            self._mixLowFilter = [param objectForKey:@"RATE"];
         }
         
         
@@ -1300,7 +1300,7 @@
     
     float highFilterFloat = [_mixHighFilter floatValue];
     
-    RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_HIGHT_FILTER"];
+    RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_HIGH_FILTER"];
     if(cmd)
     {
         NSMutableDictionary * param = [NSMutableDictionary dictionary];
@@ -1348,7 +1348,7 @@
     }
     else
     {
-        RgsSceneOperation * opt = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_HIGHT_FILTER"];
+        RgsSceneOperation * opt = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_HIGH_FILTER"];
         return opt;
     }
     return nil;

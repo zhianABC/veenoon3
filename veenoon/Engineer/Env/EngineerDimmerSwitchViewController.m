@@ -164,7 +164,7 @@
         
         [btn turnOnOff:NO];
         
-        id key = [NSNumber numberWithInt:i+1];
+        id key = [NSString stringWithFormat:@"%d", i+1];
         if([chLevelMap objectForKey:key])
         {
             BOOL power = [[chLevelMap objectForKey:key] boolValue];

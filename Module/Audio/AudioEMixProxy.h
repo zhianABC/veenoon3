@@ -31,7 +31,7 @@
 @property (nonatomic, strong) NSString *_mixPEQRate;
 @property (nonatomic, strong) NSString *_mixPress;
 @property (nonatomic, strong) NSString *_mixNoise;
-
+@property (nonatomic, strong) NSMutableDictionary *_pointsData;
 /*
  //set_mode 语音激励，或者是标准发言
  //set_priority 设置主席/代表

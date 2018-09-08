@@ -104,10 +104,48 @@
         gaotongL.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR;
         gaotongL.center = CGPointMake(btnJH.center.x, gaotongL.center.y);
         gaotongL.clipsToBounds = YES;
+     
         
+        [self drawGraphic];
     }
     
     return self;
+}
+
+/*
+ 
+ _peqRateArray = {"70":0x0b,
+ "180":0x0c,
+ "320":0x0d,
+ "600":0x0e,
+ "1K":0x0f,
+ "3K":0x10,
+ "6K":0x11,
+ '12K':0x12,
+ '14K':0x13,
+ '16K':0x14,}
+ 
+
+
+ */
+
+- (void) drawGraphic{
+    
+    NSDictionary *waves16_feq_gain_q = _currentObj._proxyObj._pointsData;
+    for(id band in [waves16_feq_gain_q allKeys])
+    {
+        int gain = [[waves16_feq_gain_q objectForKey:band] intValue];
+       
+        int idx =  (int)[_peqRateArray indexOfObject:band];
+       
+        if(idx < [_peqRateArray count] && idx >= 0)
+        {
+            [fglm setPEQWithBand:idx
+                            gain:gain];
+        }
+    }
+    
+   // [fglm refreshUI];
 }
 
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
