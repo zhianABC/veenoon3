@@ -201,6 +201,7 @@
 
 - (void) electricSysAction:(id)sender{
     UserElectronicAutoViewCtrl *ctrl = [[UserElectronicAutoViewCtrl alloc] init];
+    ctrl._scenario = _data;
     [self.navigationController pushViewController:ctrl animated:YES];
 }
 

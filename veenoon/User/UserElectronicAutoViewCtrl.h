@@ -9,9 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "UserBaseViewControllor.h"
 #import "BlindPlugin.h"
+
+@class Scenario;
+
 @interface UserElectronicAutoViewCtrl : UserBaseViewControllor {
     
 }
 @property (nonatomic, strong) BlindPlugin *_currentBlind;
 @property (nonatomic, strong) NSMutableArray *_blindArray;
+@property (nonatomic, strong) Scenario *_scenario;
+
 @end

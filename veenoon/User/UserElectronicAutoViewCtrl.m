@@ -10,6 +10,9 @@
 #import "IconCenterTextButton.h"
 #import "BlindPluginProxy.h"
 #import "UIButton+Color.h"
+#import "BasePlugElement.h"
+#import "BlindPlugin.h"
+#import "Scenario.h"
 
 @interface UserElectronicAutoViewCtrl () {
 
@@ -24,9 +27,21 @@
 @implementation UserElectronicAutoViewCtrl
 @synthesize _currentBlind;
 @synthesize _blindArray;
+@synthesize _scenario;
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    _blindArray = [NSMutableArray array];
+    
+    for(BasePlugElement *plug in _scenario._envDevices)
+    {
+        if([plug isKindOfClass:[BlindPlugin class]]){
+            [_blindArray addObject:plug];
+        }
+    }
+    
 
     if (_blindArray) {
         _currentBlind = [_blindArray objectAtIndex:0];
@@ -146,9 +161,9 @@
     int statue = 1;
     int tag = (int)sender.tag;
     
-    upBtn.selected=YES;
-    playBtn.selected=NO;
-    downBtn.selected=NO;
+    [upBtn setHighlighted:YES];
+    [playBtn setHighlighted:NO];
+    [downBtn setHighlighted:NO];
     
     [_currentBlind._proxyObj controlStatue:statue withCh:tag];
 }
@@ -156,9 +171,9 @@
     int statue = 2;
     int tag = (int)sender.tag;
     
-    upBtn.selected=NO;
-    playBtn.selected=YES;
-    downBtn.selected=NO;
+    [upBtn setHighlighted:NO];
+    [playBtn setHighlighted:YES];
+    [downBtn setHighlighted:NO];
     
     [_currentBlind._proxyObj controlStatue:statue withCh:tag];
 }
@@ -166,9 +181,9 @@
     int statue = 3;
     int tag = (int)sender.tag;
     
-    upBtn.selected=NO;
-    playBtn.selected=NO;
-    downBtn.selected=YES;
+    [upBtn setHighlighted:NO];
+    [playBtn setHighlighted:NO];
+    [downBtn setHighlighted:YES];
     
     [_currentBlind._proxyObj controlStatue:statue withCh:tag];
 }
