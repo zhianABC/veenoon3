@@ -110,7 +110,7 @@
     
     [_conditionRoomList addObject:ss1];
     
-    int scrollHeight = 550;
+    int scrollHeight = 508;
     int cellWidth = 100;
     int rowGap = 20;
     int number = (int) [self._conditionRoomList count];
@@ -155,7 +155,7 @@
     int rowGap2 = 40;
     
     zhilengBtn = [UIButton buttonWithColor:NEW_UR_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
-    zhilengBtn.frame = CGRectMake(SCREEN_WIDTH/2 - 40-rowGap2*2-80*2, SCREEN_HEIGHT-290, 80, 80);
+    zhilengBtn.frame = CGRectMake(SCREEN_WIDTH/2 - 40-rowGap2*2-80*2, SCREEN_HEIGHT-270, 80, 80);
     zhilengBtn.layer.cornerRadius = 5;
     zhilengBtn.layer.borderWidth = 2;
     zhilengBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -167,7 +167,7 @@
        forControlEvents:UIControlEventTouchUpInside];
     
     zhireBtn = [UIButton buttonWithColor:NEW_UR_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
-    zhireBtn.frame = CGRectMake(SCREEN_WIDTH/2 - 40-rowGap2-80, SCREEN_HEIGHT-290, 80, 80);
+    zhireBtn.frame = CGRectMake(SCREEN_WIDTH/2 - 40-rowGap2-80, SCREEN_HEIGHT-270, 80, 80);
     zhireBtn.layer.cornerRadius = 5;
     zhireBtn.layer.borderWidth = 2;
     zhireBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -179,7 +179,7 @@
          forControlEvents:UIControlEventTouchUpInside];
     
     
-    markerLayer = [[MapMarkerLayer alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2 - 40, SCREEN_HEIGHT-290, 80, 80)];
+    markerLayer = [[MapMarkerLayer alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2 - 40, SCREEN_HEIGHT-270, 80, 80)];
     markerLayer.isFill = YES;
     
     NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"LX",
@@ -264,7 +264,7 @@
     markerLayer.delegate_=self;
     
     aireWindBtn = [UIButton buttonWithColor:NEW_UR_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
-    aireWindBtn.frame = CGRectMake(SCREEN_WIDTH/2-40+rowGap2 +80, SCREEN_HEIGHT-290, 80, 80);
+    aireWindBtn.frame = CGRectMake(SCREEN_WIDTH/2-40+rowGap2 +80, SCREEN_HEIGHT-270, 80, 80);
     aireWindBtn.layer.cornerRadius = 5;
     aireWindBtn.layer.borderWidth = 2;
     aireWindBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -277,7 +277,7 @@
     
     
     aireFireBtn = [UIButton buttonWithColor:NEW_UR_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
-    aireFireBtn.frame = CGRectMake(SCREEN_WIDTH/2-40+rowGap2*2 +80*2, SCREEN_HEIGHT-290, 80, 80);
+    aireFireBtn.frame = CGRectMake(SCREEN_WIDTH/2-40+rowGap2*2 +80*2, SCREEN_HEIGHT-270, 80, 80);
     aireFireBtn.layer.cornerRadius = 5;
     aireFireBtn.layer.borderWidth = 2;
     aireFireBtn.layer.borderColor = [UIColor clearColor].CGColor;;

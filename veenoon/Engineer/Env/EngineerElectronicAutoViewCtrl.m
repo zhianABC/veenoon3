@@ -49,6 +49,10 @@
     
     if (_currentObj == nil) {
         self._currentObj = [[BlindPlugin alloc] init];
+        
+        BlindPluginProxy *proxy = [[BlindPluginProxy alloc] init];
+        proxy._channelNumber = 4;
+        self._currentObj._proxyObj = proxy;
     }
     
     _nameLabelArray = [[NSMutableArray alloc] init];
@@ -175,7 +179,9 @@
         [vpro recoverWithDictionary:local];
     }
     
+    [self createChannels];
     
+    vpro._channelNumber = self._number;
 }
 
 - (void) createChannels {
@@ -232,9 +238,6 @@
     
     minCh = [[inputSettings objectForKey:@"min"] intValue];
     maxCh = [[inputSettings objectForKey:@"max"] intValue];
-    
-    
-    [self createChannels];
 }
 
 - (void) handleTapGesture:(id)sender{

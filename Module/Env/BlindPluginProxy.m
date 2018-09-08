@@ -32,6 +32,7 @@
 @synthesize _cmdMap;
 @synthesize delegate;
 @synthesize _deviceId;
+@synthesize _channelNumber;
 
 - (NSDictionary*)getChRecords{
     

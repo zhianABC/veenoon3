@@ -23,7 +23,7 @@
 @property (nonatomic, weak) id <BlindPluginProxyDelegate> delegate;
 @property (nonatomic, strong) RgsProxyObj *_rgsProxyObj;
 @property (nonatomic, assign) NSUInteger _deviceId;
-
+@property (nonatomic, assign) int _channelNumber;
 
 - (void) checkRgsProxyCommandLoad:(NSArray*)cmds;
 /////场景还原

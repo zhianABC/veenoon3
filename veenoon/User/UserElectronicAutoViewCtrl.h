@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "UserBaseViewControllor.h"
+#import "BlindPlugin.h"
 @interface UserElectronicAutoViewCtrl : UserBaseViewControllor {
     
 }
-
+@property (nonatomic, strong) BlindPlugin *_currentBlind;
+@property (nonatomic, strong) NSMutableArray *_blindArray;
 @end
