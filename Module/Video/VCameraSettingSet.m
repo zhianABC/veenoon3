@@ -340,16 +340,47 @@
     self._driver = rgsd;
     self._driverInfo = rgsd.info;
     
-//    IMP_BLOCK_SELF(VVideoProcessSet);
-//    [[RegulusSDK sharedRegulusSDK] GetDriverCommands:rgsd.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
-//        if (result) {
-//            if ([commands count]) {
-//                [block_self loadedVideoCommands:commands];
-//            }
-//        }
-//
-//    }];
+    IMP_BLOCK_SELF(VCameraSettingSet);
+    
+    RgsDriverObj *driver = rgsd;
+    if([driver isKindOfClass:[RgsDriverObj class]])
+    {
+        [[RegulusSDK sharedRegulusSDK] GetDriverProxys:driver.m_id
+                                            completion:^(BOOL result, NSArray *proxys, NSError *error) {
+            if (result) {
+                if ([proxys count]) {
+                    
+                    [block_self loadedCameraProxy:proxys];
+                    
+                }
+            }
+        }];
+    }
 }
 
+- (void) loadedCameraProxy:(NSArray*)proxys{
+    
+    id proxy = self._proxyObj;
+    
+    VCameraProxys *vcam = nil;
+    if(proxy && [proxy isKindOfClass:[VCameraProxys class]])
+    {
+        vcam = proxy;
+    }
+    else
+    {
+        vcam = [[VCameraProxys alloc] init];
+        self._proxyObj = vcam;
+    }
+    
+    vcam._rgsProxyObj = [proxys objectAtIndex:0];
+   
+    id key = [NSString stringWithFormat:@"%d", (int)vcam._rgsProxyObj.m_id];
+    
+    NSDictionary *map = [config objectForKey:@"opt_value_map"];
+    [vcam recoverWithDictionary:[map objectForKey:key]];
+    
+
+}
 
 @end

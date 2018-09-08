@@ -328,15 +328,7 @@
     self._driver = rgsd;
     self._driverInfo = rgsd.info;
     
-    //    IMP_BLOCK_SELF(VVideoProcessSet);
-    //    [[RegulusSDK sharedRegulusSDK] GetDriverCommands:rgsd.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
-    //        if (result) {
-    //            if ([commands count]) {
-    //                [block_self loadedVideoCommands:commands];
-    //            }
-    //        }
-    //
-    //    }];
+    //红外
 }
 
 @end

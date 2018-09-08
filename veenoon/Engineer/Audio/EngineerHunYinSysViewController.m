@@ -158,19 +158,7 @@
                 [KVNProgress showErrorWithStatus:[error description]];
             }
         }];
-        
-        /*
-        [[RegulusSDK sharedRegulusSDK] GetDriverCommands:driver.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
-            if (result) {
-                if ([commands count]) {
-                    [block_self loadedHunyinCommands:commands];
-                }
-            }
-            else{
-                [KVNProgress showErrorWithStatus:[error description]];
-            }
-        }];
-         */
+
     }
 #endif
 }
@@ -202,37 +190,6 @@
     }
 
 }
-
-- (void) loadedHunyinCommands:(NSArray*)cmds{
-    
-    RgsDriverObj *driver = _currentObj._driver;
-    
-    id proxy = self._currentObj._proxyObj;
-    
-    AudioEMixProxy *vpro = nil;
-    if(proxy && [proxy isKindOfClass:[AudioEMixProxy class]])
-    {
-        vpro = proxy;
-    }
-    else
-    {
-        vpro = [[AudioEMixProxy alloc] init];
-    }
-    
-    vpro._deviceId = driver.m_id;
-    [vpro checkRgsProxyCommandLoad:cmds];
-    
-    if([_currentObj._localSavedCommands count])
-    {
-        NSDictionary *local = [_currentObj._localSavedCommands objectAtIndex:0];
-        [vpro recoverWithDictionary:local];
-    }
-    
-    self._currentObj._proxyObj = vpro;
-    
-    
-}
-
 
 - (void) handleTapGesture:(id)sender{
     

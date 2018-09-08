@@ -169,14 +169,8 @@
         vpro._deviceId = driver.m_id;
         [vpro checkRgsProxyCommandLoad:cmds];
         
-        if([_processor._localSavedCommands count])
-        {
-            NSDictionary *local = [_processor._localSavedCommands objectAtIndex:0];
-            [vpro recoverWithDictionary:local];
-        }
-
-        
     }
+    
     [self updateViewByProxy];
 }
 
@@ -259,6 +253,7 @@ if (_peoplePicker) {
     [_processor._proxyObj controlFayanPriority:priority withType:_zhuxiDaibiao];
 }
 - (void) fayanrenshuAction:(id)sender{
+   
     _peoplePicker.hidden=NO;
     
     [_shedingzhuxiBtn setSelected:NO];
@@ -269,6 +264,7 @@ if (_peoplePicker) {
     _zhuxiDaibiao = @"设定代表";
 }
 - (void) shedingzhuxiAction:(id)sender{
+    
     _peoplePicker.hidden=NO;
     
     [_shedingzhuxiBtn setSelected:YES];

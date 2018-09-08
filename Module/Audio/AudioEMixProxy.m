@@ -38,6 +38,7 @@
 @synthesize _currentCameraPol;
 @synthesize _cameraPol;
 @synthesize _fayanPriority;
+@synthesize _numberOfDaiBiao;
 @synthesize _workMode;
 @synthesize _zhuxiDaibiao;
 @synthesize _mixPEQ;
@@ -68,6 +69,9 @@
         self._workMode = @"Speak";
         
         self._fayanPriority = 1;
+        self._numberOfDaiBiao = 1;
+        
+        self._pointsData = [NSMutableDictionary dictionary];
         
         self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionary];
         _cameraPol = [NSMutableArray array];
@@ -234,10 +238,7 @@
 }
 - (void) controlMixPEQ:(NSString*)mixPEQ withRate:(NSString*)peqRate {
    
-    
-    self._mixPEQ = mixPEQ;
-    self._mixPEQRate = peqRate;
-    
+
     //存储
     [self._pointsData setObject:mixPEQ forKey:peqRate];
     
@@ -396,44 +397,39 @@
 
 - (void) controlFayanPriority:(int)fayanPriority withType:(NSString*)type {
     
-    self._fayanPriority = fayanPriority;
+    
     self._zhuxiDaibiao = type;
     
-    RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_PRIORITY"];
-    if(cmd)
+    NSMutableArray *opts = [NSMutableArray array];
+    
+    if([type isEqualToString:@"设定主席"])
     {
-        NSMutableDictionary * param = [NSMutableDictionary dictionary];
-        if([cmd.params count])
-        {
-            
-            for( RgsCommandParamInfo * param_info in cmd.params)
-            {
-                if([param_info.name isEqualToString:@"COUNT"])
-                {
-                    if(param_info.type == RGS_PARAM_TYPE_INT)
-                    {
-                        [param setObject:[NSString stringWithFormat:@"%d", _fayanPriority]
-                                  forKey:param_info.name];
-                    }
-                }
-                else if([param_info.name isEqualToString:@"TARGET"])
-                {
-                    [param setObject:@"Local"
-                              forKey:param_info.name];
-                }
-                
-            }
-            
-        }
-        if(_rgsProxyObj)
-        {
-            _deviceId = _rgsProxyObj.m_id;
-        }
-        if(_deviceId)
-            [[RegulusSDK sharedRegulusSDK] ControlDevice:_deviceId
-                                                     cmd:cmd.name
-                                                   param:param completion:nil];
+        self._fayanPriority = fayanPriority;
+        
+        RgsSceneOperation *opt = [self generateEventOperation_priority];
+        if(opt)
+            [opts addObject:opt];
     }
+    else
+    {
+        self._fayanPriority = 0;
+        self._numberOfDaiBiao = fayanPriority;
+       
+        RgsSceneOperation *opt = [self generateEventOperation_priority];
+        if(opt)
+            [opts addObject:opt];
+        
+        
+        opt = [self generateEventOperation_daibiao];
+        if(opt)
+            [opts addObject:opt];
+        
+    }
+    
+    if([opts count])
+    [[RegulusSDK sharedRegulusSDK] ControlDeviceByOperation:opts
+                                                 completion:nil];
+    
 }
 
 - (NSMutableDictionary*)getPressMinMax {
@@ -524,8 +520,9 @@
 
 - (void) initPEQDatas{
     
-    self._pointsData = [NSMutableDictionary dictionary];
-    
+    if([_pointsData count])
+        return;
+
     NSDictionary *dic = [self getPEQMinMax];
     
     NSArray *peqRateArray = [dic objectForKey:@"RATE"];
@@ -671,19 +668,59 @@
     return gain;
 }
 
-- (void) recoverWithDictionary:(NSDictionary*)data{
+- (void) recoverWithDictionary:(NSArray*)datas{
     
-    NSInteger proxy_id = [[data objectForKey:@"proxy_id"] intValue];
-    if(proxy_id == _deviceId)
+    for(RgsSceneDeviceOperation *dopt in datas)
     {
+        _isSetOK = YES;
         
-        if([data objectForKey:@"RgsSceneDeviceOperation"]){
-            NSDictionary *dic = [data objectForKey:@"RgsSceneDeviceOperation"];
-            self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionaryWithDictionary:dic];
-            _isSetOK = YES;
+        NSString *cmd = dopt.cmd;
+        NSDictionary *param = dopt.param;
+        
+        if([cmd isEqualToString:@"SET_MODE"])
+        {
+            self._workMode = [param objectForKey:@"MODE"];
         }
-        
-        
+        else if([cmd isEqualToString:@"SET_PRIORITY"])
+        {
+            self._fayanPriority = [[param objectForKey:@"COUNT"] intValue];
+        }
+        else if([cmd isEqualToString:@"SET_MIC_OPEN_MAX"])
+        {
+            self._numberOfDaiBiao = [[param objectForKey:@"COUNT"] intValue];
+        }
+        else if([cmd isEqualToString:@"SET_VOL"])
+        {
+            self._deviceVol = [[param objectForKey:@"VOL"] floatValue];
+        }
+        else if([cmd isEqualToString:@"SET_CAM_POL"])
+        {
+            self._currentCameraPol = [param objectForKey:@"POL"];
+        }
+        else if([cmd isEqualToString:@"SET_PEQ"]){
+            
+            NSString *rate = [param objectForKey:@"RATE"];
+            NSString *gain = [param objectForKey:@"GAIN"];
+            
+            [self._pointsData setObject:gain forKey:rate];
+        }
+        else if([cmd isEqualToString:@"SET_PRESS"]){
+            
+            self._mixPress = [param objectForKey:@"LEVEL"];
+            
+        }
+        else if([cmd isEqualToString:@"SET_NOISE_GATE"])
+        {
+            self._mixNoise = [param objectForKey:@"LEVEL"];
+        }
+        else if([cmd isEqualToString:@"SET_HIGHT_FILTER"])
+        {
+            self._mixHighFilter = [param objectForKey:@"RATE"];
+        }
+        else if([cmd isEqualToString:@"SET_LOW_FILTER"])
+        {
+            self._mixHighFilter = [param objectForKey:@"RATE"];
+        }
     }
     
 }
@@ -707,11 +744,6 @@
                         [param setObject:_currentCameraPol
                                   forKey:param_info.name];
                     }
-                }
-                else if([param_info.name isEqualToString:@"TARGET"])
-                {
-                    [param setObject:@"Local"
-                              forKey:param_info.name];
                 }
                 
             }
@@ -757,12 +789,6 @@
                         
                     }
                 }
-                else if([param_info.name isEqualToString:@"TARGET"])
-                {
-                    [param setObject:@"Local"
-                              forKey:param_info.name];
-                }
-                
             }
             
         }
@@ -924,12 +950,6 @@
                 [param setObject:[NSString stringWithFormat:@"%d", _fayanPriority]
                           forKey:param_info.name];
             }
-            else if([param_info.name isEqualToString:@"TARGET"])
-            {
-                [param setObject:@"Local"
-                          forKey:param_info.name];
-            }
-            
         }
         
         if(_rgsProxyObj)
@@ -941,14 +961,7 @@
         scene_opt.dev_id = _deviceId;
         scene_opt.cmd = cmd.name;
         scene_opt.param = param;
-        
-        //用于保存还原
-        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
-        [slice setObject:[NSNumber numberWithInteger:_deviceId] forKey:@"dev_id"];
-        [slice setObject:cmd.name forKey:@"cmd"];
-        [slice setObject:param forKey:@"param"];
-        [_RgsSceneDeviceOperationShadow setObject:slice forKey:@"SET_PRIORITY"];
-        
+
         
         RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
                                                                           cmd:scene_opt.cmd
@@ -971,6 +984,47 @@
     }
     return nil;
 }
+
+- (id) generateEventOperation_daibiao{
+    
+    RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_MIC_OPEN_MAX"];
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        for( RgsCommandParamInfo * param_info in cmd.params)
+        {
+            if([param_info.name isEqualToString:@"COUNT"])
+            {
+                [param setObject:[NSString stringWithFormat:@"%d", _numberOfDaiBiao]
+                          forKey:param_info.name];
+            }
+        }
+        
+        if(_rgsProxyObj)
+        {
+            _deviceId = _rgsProxyObj.m_id;
+        }
+        
+        RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc]init];
+        scene_opt.dev_id = _deviceId;
+        scene_opt.cmd = cmd.name;
+        scene_opt.param = param;
+        
+        
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
+                                                                          cmd:scene_opt.cmd
+                                                                        param:scene_opt.param];
+        
+        return opt;
+    }
+    else
+    {
+        RgsSceneOperation * opt = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_PRIORITY"];
+        return opt;
+    }
+    return nil;
+}
+
 - (id) generateEventOperation_vol{
     
     RgsCommandInfo *cmd = [_cmdMap objectForKey:@"SET_VOL"];
@@ -1128,11 +1182,6 @@
                     [param setObject:gain
                               forKey:param_info.name];
                 }
-                else if([param_info.name isEqualToString:@"TARGET"])
-                {
-                    [param setObject:@"Local"
-                              forKey:param_info.name];
-                }
             }
             
             if(_rgsProxyObj)
@@ -1231,11 +1280,6 @@
                               forKey:param_info.name];
                     
                 }
-            }
-            else if([param_info.name isEqualToString:@"TARGET"])
-            {
-                [param setObject:@"Local"
-                          forKey:param_info.name];
             }
             
         }

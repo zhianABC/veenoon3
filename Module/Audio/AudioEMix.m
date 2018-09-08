@@ -457,17 +457,53 @@
     self._driver = rgsd;
     self._driverInfo = rgsd.info;
     
-    //    IMP_BLOCK_SELF(VVideoProcessSet);
-    //    [[RegulusSDK sharedRegulusSDK] GetDriverCommands:rgsd.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
-    //        if (result) {
-    //            if ([commands count]) {
-    //                [block_self loadedVideoCommands:commands];
-    //            }
-    //        }
-    //
-    //    }];
+    IMP_BLOCK_SELF(AudioEMix);
+    
+    RgsDriverObj *driver = rgsd;
+    if([driver isKindOfClass:[RgsDriverObj class]])
+    {
+        
+        [[RegulusSDK sharedRegulusSDK] GetDriverProxys:driver.m_id
+                                            completion:^(BOOL result, NSArray *proxys, NSError *error) {
+            if (result) {
+                if ([proxys count]) {
+                    
+                    [block_self loadedHunyinProxys:proxys];
+                    
+                }
+            }
+        }];
+    }
 }
 
+- (void) loadedHunyinProxys:(NSArray*)proxys{
+    
+    AudioEMixProxy* proxy = self._proxyObj;
+    
+    if(proxy && [proxy isKindOfClass:[AudioEMixProxy class]])
+    {
+        self._proxyObj = proxy;
+    }
+    else
+    {
+        proxy = [[AudioEMixProxy alloc] init];
+        self._proxyObj = proxy;
+    }
+    
+    for(RgsProxyObj *pro in proxys)
+    {
+        if([pro.type isEqualToString:@"Audio Mixer"])
+        {
+            proxy._rgsProxyObj = pro;
+            [proxy checkRgsProxyCommandLoad:nil];
+            break;
+        }
+    }
+    
+    id key = [NSString stringWithFormat:@"%d", (int)proxy._rgsProxyObj.m_id];
+    NSDictionary *map = [config objectForKey:@"opt_value_map"];
+    [proxy recoverWithDictionary:[map objectForKey:key]];
+}
 
 
 @end

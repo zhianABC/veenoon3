@@ -22,6 +22,7 @@
 @property (nonatomic, strong) NSString *_currentCameraPol;
 @property (nonatomic, strong) NSMutableArray *_cameraPol;
 @property (nonatomic, assign) int _fayanPriority;
+@property (nonatomic, assign) int _numberOfDaiBiao;
 @property (nonatomic, strong) NSString *_workMode;
 @property (nonatomic, strong) NSString *_zhuxiDaibiao;
 @property (nonatomic, strong) NSString *_mixHighFilter;
@@ -86,7 +87,7 @@
 
 
 /////场景还原
-- (void) recoverWithDictionary:(NSDictionary*)data;
+- (void) recoverWithDictionary:(NSArray*)datas;
 
 
 @end
