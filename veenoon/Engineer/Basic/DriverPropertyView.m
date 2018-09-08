@@ -370,9 +370,7 @@
 
 - (void) saveCurrentSetting{
     if (_isAirQuality) {
-        _plugDriver._ssid = ipTextField.text;
-        _plugDriver._ssidPass = portTextField.text;
-        [_plugDriver uploadDriverSSIDProperty];
+        //[_plugDriver uploadDriverSSIDProperty];
         
     } else {
         _plugDriver._ipaddress = ipTextField.text;
@@ -398,13 +396,14 @@
     if (_isAirQuality) {
         _iptitleL.text = @"SSID: ";
         _porttitleL.text = @"密码: ";
-        NSString *ssid = [RegulusSDK GetWifiSSID];
-        ipTextField.text = ssid;
+        
+        ipTextField.userInteractionEnabled = NO;
+        ipTextField.text = [RegulusSDK GetWifiSSID];
+        
     } else {
         _iptitleL.text = @"IP地址: ";
         _porttitleL.text = @"端口号: ";
-        
-        ipTextField.text = @"192.168.1.100";
+        ipTextField.userInteractionEnabled = YES;
     }
 }
 
@@ -484,21 +483,18 @@
         
     }
 
+    if(_isAirQuality)
+    {
+        return;
+    }
     
     if(_plugDriver._driver_ip_property)
     {
-        if (_isAirQuality) {
-            ipTextField.text = [RegulusSDK GetWifiSSID];
-            if(_plugDriver._driver_port_property)
-                portTextField.text = @"";
-        } else {
-            ipTextField.text = _plugDriver._ipaddress;
-            if(_plugDriver._driver_port_property)
-                portTextField.text = _plugDriver._port;
-        }
+        ipTextField.text = _plugDriver._ipaddress;
         
-        
-        
+        if(_plugDriver._driver_port_property)
+        portTextField.text = _plugDriver._port;
+
         return;
     }
     
@@ -540,15 +536,10 @@
                 _plugDriver._port = pro.value;
             }
         }
-        
+    
         _plugDriver._properties = properties;
-        if (_isAirQuality) {
-            ipTextField.text = [RegulusSDK GetWifiSSID];
-            portTextField.text = @"";
-        } else {
-            ipTextField.text = _plugDriver._ipaddress;
-            portTextField.text = _plugDriver._port;
-        }
+        ipTextField.text = _plugDriver._ipaddress;
+        portTextField.text = _plugDriver._port;
     }
     
     [KVNProgress dismiss];

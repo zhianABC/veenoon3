@@ -23,8 +23,6 @@
 @synthesize _comArray;
 @synthesize _driverUUID;
 @synthesize _isViewed;
-@synthesize _ssid;
-@synthesize _ssidPass;
 @synthesize _plugicon;
 @synthesize _plugicon_s;
 
@@ -33,7 +31,6 @@
 
 @synthesize _driver_ip_property;
 @synthesize _driver_port_property;
-@synthesize _driver_ssid_property;
 @synthesize _properties;
 @synthesize _connections;
 @synthesize _irCodeKeys;
@@ -113,7 +110,6 @@
     {
         self._ipaddress = self._driver_ip_property.value;
         self._port = self._driver_port_property.value;
-        self._ssid = self._driver_ssid_property.value;
         return;
     }
     
