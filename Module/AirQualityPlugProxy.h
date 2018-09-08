@@ -9,18 +9,18 @@
 #import <Foundation/Foundation.h>
 @class RgsProxyObj;
 
-@protocol BlindPluginProxyDelegate <NSObject>
+@protocol AirQualityPlugProxyDelegate <NSObject>
 
 @optional
 - (void) didLoadedProxyCommand;
 
 @end
 
-@interface BlindPluginProxy : NSObject {
+@interface AirQualityPlugProxy : NSObject {
     
 }
 
-@property (nonatomic, weak) id <BlindPluginProxyDelegate> delegate;
+@property (nonatomic, weak) id <AirQualityPlugProxyDelegate> delegate;
 @property (nonatomic, strong) RgsProxyObj *_rgsProxyObj;
 @property (nonatomic, assign) NSUInteger _deviceId;
 @property (nonatomic, assign) int _channelNumber;
@@ -31,7 +31,8 @@
 
 - (NSDictionary *)getChRecords;
 
-- (void) controlStatue:(int)state withCh:(int)ch; 
+- (void) controlStatue:(int)state withCh:(int)ch;
 
 - (int) getChannelNumber;
 @end
+

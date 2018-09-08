@@ -21,6 +21,10 @@
     UIButton *upBtn;
     UIButton *playBtn;
     UIButton *downBtn;
+    
+    int currentSelected;
+    
+    UIButton *_previvousBtn;
 }
 @end
 
@@ -86,11 +90,11 @@
     int width = 100;
     int rowGap = 70;
     
-    int number = self._currentBlind._proxyObj._channelNumber;
+    int number = [self._currentBlind._proxyObj getChannelNumber];
     
     int startX = SCREEN_WIDTH/2 - number*width/2-(number-1)*rowGap/2+10;
     
-    for (int i = 0; i < self._currentBlind._proxyObj._channelNumber; i++) {
+    for (int i = 0; i < number; i++) {
         IconCenterTextButton *diandongchuanglianBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(startX+(rowGap+width)*i, height, width, width)];
         
         NSString *name = [@"Channel " stringByAppendingString:[NSString stringWithFormat:@"%d", i+1]];
@@ -134,7 +138,7 @@
     playBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [self.view addSubview:playBtn];
 
-    [upBtn addTarget:self action:@selector(playAction:)
+    [playBtn addTarget:self action:@selector(playAction:)
              forControlEvents:UIControlEventTouchUpInside];
 
     downBtn = [UIButton buttonWithColor:NEW_UR_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
@@ -152,37 +156,55 @@
           forControlEvents:UIControlEventTouchUpInside];
 }
 - (void) upAction:(UIButton*)sender{
+    
     int statue = 1;
-    int tag = (int)sender.tag;
+    [upBtn changeNormalColor:NEW_ER_BUTTON_SD_COLOR];
+    [playBtn changeNormalColor:NEW_UR_BUTTON_GRAY_COLOR];
+    [downBtn changeNormalColor:NEW_UR_BUTTON_GRAY_COLOR];
     
-    [upBtn setHighlighted:YES];
-    [playBtn setHighlighted:NO];
-    [downBtn setHighlighted:NO];
+    if (currentSelected <= 0) {
+        return;
+    }
     
-    [_currentBlind._proxyObj controlStatue:statue withCh:tag];
+    [_currentBlind._proxyObj controlStatue:statue withCh:currentSelected];
+    
+    _previvousBtn = sender;
 }
 - (void) playAction:(UIButton*)sender{
     int statue = 2;
-    int tag = (int)sender.tag;
     
-    [upBtn setHighlighted:NO];
-    [playBtn setHighlighted:YES];
-    [downBtn setHighlighted:NO];
+    [upBtn changeNormalColor:NEW_UR_BUTTON_GRAY_COLOR];
+    [playBtn changeNormalColor:NEW_ER_BUTTON_SD_COLOR];
+    [downBtn changeNormalColor:NEW_UR_BUTTON_GRAY_COLOR];
     
-    [_currentBlind._proxyObj controlStatue:statue withCh:tag];
+    if (currentSelected <= 0) {
+        return;
+    }
+    
+    [_currentBlind._proxyObj controlStatue:statue withCh:currentSelected];
+    
+    _previvousBtn = sender;
 }
 - (void) downAction:(UIButton*)sender{
     int statue = 3;
-    int tag = (int)sender.tag;
     
-    [upBtn setHighlighted:NO];
-    [playBtn setHighlighted:NO];
-    [downBtn setHighlighted:YES];
+    [upBtn changeNormalColor:NEW_UR_BUTTON_GRAY_COLOR];
+    [playBtn changeNormalColor:NEW_UR_BUTTON_GRAY_COLOR];
+    [downBtn changeNormalColor:NEW_ER_BUTTON_SD_COLOR];
     
-    [_currentBlind._proxyObj controlStatue:statue withCh:tag];
+    if (currentSelected <= 0) {
+        return;
+    }
+    
+    [_currentBlind._proxyObj controlStatue:statue withCh:currentSelected];
+    _previvousBtn = sender;
 }
 - (void) dianchuanBtnAction:(IconCenterTextButton*)sender{
     int selectTag = (int) sender.tag;
+    
+    if (currentSelected == selectTag) {
+        return;
+    }
     
     for (IconCenterTextButton *btn in btnArray_) {
         if (btn.tag == selectTag) {
@@ -191,6 +213,12 @@
             [btn setBtnHighlited:NO];
         }
     }
+    
+    currentSelected = selectTag;
+    
+    [upBtn changeNormalColor:NEW_UR_BUTTON_GRAY_COLOR];
+    [playBtn changeNormalColor:NEW_UR_BUTTON_GRAY_COLOR];
+    [downBtn changeNormalColor:NEW_UR_BUTTON_GRAY_COLOR];
 }
 
 - (void) okAction:(id)sender{

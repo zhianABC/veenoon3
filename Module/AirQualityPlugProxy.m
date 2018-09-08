@@ -6,11 +6,11 @@
 //  Copyright © 2018年 jack. All rights reserved.
 //
 
-#import "BlindPluginProxy.h"
+#import "AirQualityPlugProxy.h"
 #import "RegulusSDK.h"
 #import "KVNProgress.h"
 
-@interface BlindPluginProxy ()
+@interface AirQualityPlugProxy ()
 {
     
     BOOL _isSetOK;
@@ -24,7 +24,7 @@
 
 @end
 
-@implementation BlindPluginProxy {
+@implementation AirQualityPlugProxy {
     
 }
 @synthesize _rgsCommands;
@@ -166,3 +166,4 @@
 }
 
 @end
+
