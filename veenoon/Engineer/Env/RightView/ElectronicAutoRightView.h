@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BlindPlugin.h"
 
-@interface ElectronicAutoRightView : UIView
+@interface ElectronicAutoRightView : UIView {
+    
+}
+@property (nonatomic, strong) BlindPlugin *_currentBlind;
 
+- (id)initWithFrame:(CGRect)frame withPlugin:(BlindPlugin*) blindPlugin;
 @end
