@@ -370,8 +370,14 @@
 
 - (void) saveCurrentSetting{
     if (_isAirQuality) {
-        //[_plugDriver uploadDriverSSIDProperty];
-        
+        [RegulusSDK RgsWifiConfWithPassword:portTextField.text taskCount:3 timeIntevel:10 callback:^(NSError *error) {
+            if (error) {
+                [KVNProgress showErrorWithStatus:[error localizedDescription]];
+            }
+            else{
+                [KVNProgress dismiss];
+            }
+        }];
     } else {
         _plugDriver._ipaddress = ipTextField.text;
         _plugDriver._port = portTextField.text;
