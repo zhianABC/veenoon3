@@ -345,95 +345,53 @@
     
 }
 
-- (void) chooseIRType:(NSString*)device idx:(int)index {
+- (void) chooseIRType:(NSMutableDictionary*)device idx:(int)index {
     
     RgsIrModel rgs = RGS_IR_M_TV;
     NSString *unit = @"";
     if(index == 0)
     {
         rgs = RGS_IR_M_TV;
-        
         unit = @"TV";
     }
     else if(index == 1)
     {
         rgs = RGS_IR_M_DVD;
-        
         unit = @"DVD";
     }
-//    else if(index == 2)
-//    {
-//        rgs = RGS_IR_M_VIDEOBOX;
-//
-//        unit = @"VIDEOBOX";
-//    }
     
-    int dd = [[NSDate date] timeIntervalSince1970];
-    NSString *name = [NSString stringWithFormat:@"%@-%d",unit, dd];
+    NSString *brand = [device objectForKey:@"brand"];
     
     IMP_BLOCK_SELF(EngineerVideoDevicePluginViewCtrl);
     
     [[RegulusSDK sharedRegulusSDK] MakeIrDriverWithIrModel:rgs
-                                                      name:name
+                                                      name:brand
                                                 completion:^(BOOL result, RgsDriverInfo *driver_info, NSError *error) {
                                                     
                                                     if(result)
                                                     {
                                                         [block_self saveNewIRDriver:driver_info
-                                                                               name:name
+                                                                               device:device
                                                                          deviceType:unit];
                                                     }
                                                     
                                                 }];
-    
-    
-    
-    if ([_dataSelector isPopoverVisible]) {
-        [_dataSelector dismissPopoverAnimated:NO];
-    }
+
 }
 
 - (void) saveNewIRDriver:(RgsDriverInfo*)driver_info
-                    name:(NSString*)name
+                    device:(NSMutableDictionary*)device
                     deviceType:(NSString*)deviceType{
     
+
     
-    NSString *class_name = @"";
-    NSString *icon_name = @"";
-    NSString *icon_name1 = @"";
-    if([deviceType isEqualToString:@"TV"])
-    {
-        class_name = @"VTVSet";
-        icon_name   = @"engineer_video_yejingdianshi_n.png";
-        icon_name1  = @"engineer_video_yejingdianshi_s.png";
-    }
-    else if([deviceType isEqualToString:@"DVD"])
-    {
-        class_name = @"VDVDPlayerSet";
-        
-        icon_name   = @"engineer_video_dvd_n.png";
-        icon_name1  = @"engineer_video_dvd_s.png";
-    }
-//    else if([deviceType isEqualToString:@"VIDEOBOX"])
-//    {
-//        class_name = @"VDVDPlayerSet";
-//    }
+    [device setObject:driver_info.serial forKey:@"driver"];
     
-    NSDictionary *greeac = @{@"type":@"video",
-                             @"name":name,
-                             @"driver":driver_info.serial,
-                             @"brand":@"红外设备",
-                             @"icon":icon_name,
-                             @"icon_s":icon_name1,
-                             @"driver_class":class_name,
-                             @"ptype":@"Define"
-                             };
-    
-    [[DataCenter defaultDataCenter] saveDriver:greeac];
+    [[DataCenter defaultDataCenter] saveDriver:device];
     [[DataSync sharedDataSync] addDriver:driver_info
                                      key:driver_info.serial];
     
-    [self addDriverToCenter:greeac];
+    [self addDriverToCenter:device];
     
 }
 
@@ -578,6 +536,22 @@
     if(idx < [_driverUdids count])
     {
         id key = [_driverUdids objectAtIndex:idx];
+        
+        id info = [[DataSync sharedDataSync] driverInfoByUUID:key];
+        if(info == nil)
+        {
+            NSDictionary *device =  [_mapDrivers objectForKey:key];
+            NSMutableDictionary *mdic = [NSMutableDictionary dictionaryWithDictionary:device];
+            
+            NSString *name = [device objectForKey:@"name"];
+            if([name isEqualToString:@"DVD"])
+                [self chooseIRType:mdic idx:1];
+            else if([name isEqualToString:@"TV"])
+                [self chooseIRType:mdic idx:0];
+            
+            return;
+        }
+        
         NSDictionary *device =  [_mapDrivers objectForKey:key];
         [self addDriverToCenter:device];
     }

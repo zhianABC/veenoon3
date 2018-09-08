@@ -347,7 +347,7 @@
     
 }
 
-- (void) chooseIRType:(NSString*)device idx:(int)index {
+- (void) chooseIRType:(NSMutableDictionary*)device idx:(int)index {
     
     RgsIrModel rgs = RGS_IR_M_TV;
     NSString *unit = @"";
@@ -358,18 +358,19 @@
         unit = @"AC";
     }
     
-    int dd = [[NSDate date] timeIntervalSince1970];
-    NSString *name = [NSString stringWithFormat:@"%@-%d",unit, dd];
+    NSString *brand = [device objectForKey:@"brand"];
     
     IMP_BLOCK_SELF(EngineerEnvDevicePluginViewCtrl);
     
     [[RegulusSDK sharedRegulusSDK] MakeIrDriverWithIrModel:rgs
-                                                      name:name
+                                                      name:brand
                                                 completion:^(BOOL result, RgsDriverInfo *driver_info, NSError *error) {
                                                     
                                                     if(result)
                                                     {
-                                                        [block_self saveNewIRDriver:driver_info name:name];
+                                                        [block_self saveNewIRDriver:driver_info
+                                                                               device:device
+                                                                         deviceType:@"AC"];
                                                     }
                                                     
                                                 }];
@@ -381,24 +382,19 @@
     }
 }
 
-- (void) saveNewIRDriver:(RgsDriverInfo*)driver_info name:(NSString*)name{
+- (void) saveNewIRDriver:(RgsDriverInfo*)driver_info
+                  device:(NSMutableDictionary*)device
+              deviceType:(NSString*)deviceType{
+
     
-    NSDictionary *greeac = @{@"type":@"env",
-                             @"name":@"空调",
-                             @"driver":driver_info.serial,
-                             @"brand":@"Unknown",
-                             @"icon":@"engineer_env_kongtiao_n.png",
-                             @"icon_s":@"engineer_env_kongtiao_s.png",
-                             @"driver_class":@"AirConditionPlug",
-                             @"ptype":@"Define"
-                             };
+    [device setObject:driver_info.serial forKey:@"driver"];
     
-    [[DataCenter defaultDataCenter] saveDriver:greeac];
+    [[DataCenter defaultDataCenter] saveDriver:device];
     [[DataSync sharedDataSync] addDriver:driver_info
                                      key:driver_info.serial];
     
-    [self addDriverToCenter:greeac];
-    
+    [self addDriverToCenter:device];
+
 }
 
 - (void) emptyBrandAndTypes{
@@ -649,6 +645,20 @@
     if(idx < [_driverUdids count])
     {
         id key = [_driverUdids objectAtIndex:idx];
+        
+        id info = [[DataSync sharedDataSync] driverInfoByUUID:key];
+        if(info == nil)
+        {
+            NSDictionary *device =  [_mapDrivers objectForKey:key];
+            NSMutableDictionary *mdic = [NSMutableDictionary dictionaryWithDictionary:device];
+            
+            NSString *name = [device objectForKey:@"name"];
+            if([name isEqualToString:@"空调"])
+            [self chooseIRType:mdic idx:0];
+            
+            return;
+        }
+        
         NSDictionary *device =  [_mapDrivers objectForKey:key];
         [self addDriverToCenter:device];
     }
