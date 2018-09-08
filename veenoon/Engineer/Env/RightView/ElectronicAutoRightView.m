@@ -68,7 +68,7 @@ CustomPickerViewDelegate> {
 @synthesize _coms;
 @synthesize _number;
 @synthesize _currentBlind;
-
+@synthesize _delegate;
 @synthesize _selectedSecs;
 @synthesize _selectedType;
 
@@ -466,6 +466,10 @@ CustomPickerViewDelegate> {
 }
 
 - (void) openBtnAction:(UIButton*) sender {
+    
+    if (sender == _previousBtn) {
+        return;
+    }
     [sender setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
     [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
     
@@ -475,9 +479,16 @@ CustomPickerViewDelegate> {
     }
     
     _previousBtn = sender;
+    
+    if(_delegate && [_delegate respondsToSelector:@selector(didButtonAction:)]) {
+        [_delegate didButtonAction:1];
+    }
 }
 
 - (void) stopBtnAction:(UIButton*) sender {
+    if (sender == _previousBtn) {
+        return;
+    }
     
     [sender setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
     [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
@@ -488,10 +499,18 @@ CustomPickerViewDelegate> {
     }
     
     _previousBtn = sender;
+    
+    if(_delegate && [_delegate respondsToSelector:@selector(didButtonAction:)]) {
+        [_delegate didButtonAction:2];
+    }
 }
 
 - (void) closeBtnAction:(UIButton*) sender {
     
+    if (sender == _previousBtn) {
+        return;
+    }
+    
     [sender setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
     [sender changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
     
@@ -501,6 +520,10 @@ CustomPickerViewDelegate> {
     }
     
     _previousBtn = sender;
+    
+    if(_delegate && [_delegate respondsToSelector:@selector(didButtonAction:)]) {
+        [_delegate didButtonAction:3];
+    }
 }
 
 - (void) clickHeader:(UIButton*)sender{
