@@ -14,7 +14,7 @@
 #import "KVNProgress.h"
 #import "BlindPluginProxy.h"
 
-@interface EngineerElectronicAutoViewCtrl () <CustomPickerViewDelegate, BlindPluginProxyDelegate>{
+@interface EngineerElectronicAutoViewCtrl () <CustomPickerViewDelegate, BlindPluginProxyDelegate, ElectronicAutoRightViewDelegate>{
     
     NSMutableArray *_nameLabelArray;
     
@@ -29,6 +29,8 @@
     
     int minCh;
     int maxCh;
+    
+    int currentSelected;
 }
 @end
 
@@ -263,7 +265,7 @@
     UIButton *btn = (UIButton*) sender;
     int tag = (int) btn.tag;
     
-    for (UIButton *button in selectedBtnArray) {
+    for (UIButton *button in buttonArray) {
         if (button.tag == tag) {
             [button setImage:[UIImage imageNamed:@"dianyuanshishiqi_s.png"] forState:UIControlStateNormal];
         } else {
@@ -279,7 +281,8 @@
         }
     }
     
-    self._currentObj = [self._electronicSysArray objectAtIndex:tag];
+    self._currentObj = [self._electronicSysArray objectAtIndex:0];
+    currentSelected = tag+1;
 }
 - (void) createBtnLabel:(UIButton*)sender dataDic:(NSMutableDictionary*) dataDic withTag:(int) tag {
     UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(sender.frame.size.width/2 - 40, 0, 80, 20)];
@@ -311,10 +314,22 @@
         [okBtn setTitle:@"设置" forState:UIControlStateNormal];
         isSettings = NO;
     }
+    
+    _rightView._delegate = self;
 }
 
 - (void) cancelAction:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void) didButtonAction:(int) commond {
+    
+    if (currentSelected <= 0) {
+        return;
+    }
+    
+    [self._currentObj._proxyObj controlStatue:commond withCh:currentSelected];
+    
 }
 @end
 

@@ -60,10 +60,49 @@
     
     return result;
 }
-
+- (void) controlStatue:(int)state withCh:(int)ch {
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_CH"];
+    
+    NSString *status = @"";
+    if (state == 1) {
+        status = @"FWD";
+    } else if (state == 2) {
+        status = @"STOP";
+    } else if (state == 3) {
+        status = @"REV";
+    }
+    
+    if(cmd)
+    {
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
+        {
+            for(RgsCommandParamInfo *param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"CH"])
+                {
+                    [param setObject:[NSString stringWithFormat:@"%d", ch]
+                              forKey:param_info.name];
+                }
+                
+                if([param_info.name isEqualToString:@"STATUS"])
+                {
+                    [param setObject:status
+                              forKey:param_info.name];
+                }
+            }
+        }
+        
+        [[RegulusSDK sharedRegulusSDK] ControlDevice:_deviceId
+                                                 cmd:cmd.name
+                                               param:param completion:nil];
+    }
+}
 - (void) checkRgsProxyCommandLoad:(NSArray*)cmds{
     
-    if( _rgsCommands){
+    if(_rgsCommands){
         
         if(delegate && [delegate respondsToSelector:@selector(didLoadedProxyCommand)])
         {
@@ -85,41 +124,12 @@
         
         _isSetOK = YES;
         
+        if(delegate && [delegate respondsToSelector:@selector(didLoadedProxyCommand)])
+        {
+            [delegate didLoadedProxyCommand];
+        }
         
     }
-    else
-    {
-        if( _rgsCommands)
-            return;
-        
-        self._cmdMap = [NSMutableDictionary dictionary];
-        
-        IMP_BLOCK_SELF(BlindPluginProxy);
-        
-        [[RegulusSDK sharedRegulusSDK] GetProxyCommands:_rgsProxyObj.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
-            if (result)
-            {
-                if ([commands count]) {
-                    block_self._rgsCommands = commands;
-                    for(RgsCommandInfo *cmd in commands)
-                    {
-                        [block_self._cmdMap setObject:cmd forKey:cmd.name];
-                    }
-                    
-                    _isSetOK = YES;
-                }
-            }
-            else
-            {
-                NSString *errorMsg = [NSString stringWithFormat:@"%@ - proxyid:%d",
-                                      [error description], (int)_rgsProxyObj.m_id];
-                
-                [KVNProgress showErrorWithStatus:errorMsg];
-            }
-            
-        }];
-    }
-    
 }
 
 - (void) recoverWithDictionary:(NSDictionary*)data{

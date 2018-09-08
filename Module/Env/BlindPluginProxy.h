@@ -31,4 +31,6 @@
 
 - (NSDictionary *)getChRecords;
 
+- (void) controlStatue:(int)state withCh:(int)ch; 
+
 @end

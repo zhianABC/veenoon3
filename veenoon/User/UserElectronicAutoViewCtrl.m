@@ -14,6 +14,10 @@
 @interface UserElectronicAutoViewCtrl () {
 
     NSMutableArray *btnArray_;
+    
+    UIButton *upBtn;
+    UIButton *playBtn;
+    UIButton *downBtn;
 }
 @end
 
@@ -83,7 +87,7 @@
         NSString *name = [@"Channel " stringByAppendingString:[NSString stringWithFormat:@"%d", i+1]];
         [diandongchuanglianBtn  buttonWithIcon:[UIImage imageNamed:@"user_diandongchuanglian_n.png"] selectedIcon:[UIImage imageNamed:@"user_diandongchuanglian_s.png"] text:name normalColor:NEW_UR_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
         
-        diandongchuanglianBtn.tag = i;
+        diandongchuanglianBtn.tag = i+1;
         
         [diandongchuanglianBtn addTarget:self action:@selector(dianchuanBtnAction:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:diandongchuanglianBtn];
@@ -96,7 +100,7 @@
     int btnGap = 80;
     int buttonSX = SCREEN_WIDTH/2 - btnGap - 120;
 
-    UIButton *upBtn = [UIButton buttonWithColor:NEW_UR_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
+    upBtn = [UIButton buttonWithColor:NEW_UR_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
     upBtn.frame = CGRectMake(buttonSX, SCREEN_HEIGHT-playerHeight, 80, 80);
     upBtn.layer.cornerRadius = 5;
     upBtn.layer.borderWidth = 2;
@@ -110,7 +114,7 @@
                        action:@selector(upAction:)
              forControlEvents:UIControlEventTouchUpInside];
 
-    UIButton *playBtn = [UIButton buttonWithColor:NEW_UR_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
+    playBtn = [UIButton buttonWithColor:NEW_UR_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
     playBtn.frame = CGRectMake(buttonSX + btnGap + 80, SCREEN_HEIGHT-playerHeight, 80, 80);
     playBtn.layer.cornerRadius = 5;
     playBtn.layer.borderWidth = 2;
@@ -124,7 +128,7 @@
     [upBtn addTarget:self action:@selector(playAction:)
              forControlEvents:UIControlEventTouchUpInside];
 
-    UIButton *downBtn = [UIButton buttonWithColor:NEW_UR_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
+    downBtn = [UIButton buttonWithColor:NEW_UR_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
     downBtn.frame = CGRectMake(buttonSX + btnGap*2 + 80*2, SCREEN_HEIGHT-playerHeight, 80, 80);
     downBtn.layer.cornerRadius = 5;
     downBtn.layer.borderWidth = 2;
@@ -138,11 +142,35 @@
                     action:@selector(downAction:)
           forControlEvents:UIControlEventTouchUpInside];
 }
-- (void) upAction:(id)sender{
+- (void) upAction:(UIButton*)sender{
+    int statue = 1;
+    int tag = (int)sender.tag;
+    
+    upBtn.selected=YES;
+    playBtn.selected=NO;
+    downBtn.selected=NO;
+    
+    [_currentBlind._proxyObj controlStatue:statue withCh:tag];
 }
-- (void) playAction:(id)sender{
+- (void) playAction:(UIButton*)sender{
+    int statue = 2;
+    int tag = (int)sender.tag;
+    
+    upBtn.selected=NO;
+    playBtn.selected=YES;
+    downBtn.selected=NO;
+    
+    [_currentBlind._proxyObj controlStatue:statue withCh:tag];
 }
-- (void) downAction:(id)sender{
+- (void) downAction:(UIButton*)sender{
+    int statue = 3;
+    int tag = (int)sender.tag;
+    
+    upBtn.selected=NO;
+    playBtn.selected=NO;
+    downBtn.selected=YES;
+    
+    [_currentBlind._proxyObj controlStatue:statue withCh:tag];
 }
 - (void) dianchuanBtnAction:(IconCenterTextButton*)sender{
     int selectTag = (int) sender.tag;

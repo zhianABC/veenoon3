@@ -9,10 +9,17 @@
 #import <UIKit/UIKit.h>
 #import "BlindPlugin.h"
 
+@protocol ElectronicAutoRightViewDelegate <NSObject>
+
+@optional
+- (void) didButtonAction:(int) commond;
+@end
+
 @interface ElectronicAutoRightView : UIView {
     
 }
 @property (nonatomic, strong) BlindPlugin *_currentBlind;
+@property (nonatomic, weak) id <ElectronicAutoRightViewDelegate> _delegate;
 
 - (id)initWithFrame:(CGRect)frame withPlugin:(BlindPlugin*) blindPlugin;
 @end
