@@ -29,6 +29,7 @@
 @property (nonatomic, strong) NSMutableArray *_videoDevices;
 @property (nonatomic, strong) NSMutableArray *_envDevices;
 @property (nonatomic, strong) NSMutableArray *_comDevices;
+@property (nonatomic, strong) NSMutableArray *_otherDevices;
 
 //场景的Event下的Operations，对应中控上的操作序列，最后生成场景的时候，提交到中控。
 //<RgsSceneOperation> -- 参见Regulus SDK里的对象说明

@@ -57,6 +57,8 @@
 
 #import "BlindPlugin.h"
 
+
+
 @interface Scenario ()
 {
     WebClient *_client;
@@ -81,6 +83,7 @@
 @synthesize _videoDevices;
 @synthesize _envDevices;
 @synthesize _comDevices;
+@synthesize _otherDevices;
 
 @synthesize _areas;
 
@@ -118,6 +121,8 @@
     self._audioDevices = [NSMutableArray array];
     self._videoDevices = [NSMutableArray array];
     self._envDevices = [NSMutableArray array];
+    self._otherDevices = [NSMutableArray array];
+    self._comDevices = [NSMutableArray array];
     
     NSMutableArray *audio = [NSMutableArray array];
     [_scenarioData setObject:audio forKey:@"audio"];
@@ -127,6 +132,13 @@
     
     NSMutableArray *env = [NSMutableArray array];
     [_scenarioData setObject:env forKey:@"environment"];
+    
+    NSMutableArray *coms = [NSMutableArray array];
+    [_scenarioData setObject:coms forKey:@"coms"];
+    
+    NSMutableArray *others = [NSMutableArray array];
+    [_scenarioData setObject:others forKey:@"others"];
+    
     
     [_scenarioData setObject:@"场景" forKey:@"name"];
     
@@ -679,6 +691,12 @@
     NSMutableArray *env = [NSMutableArray array];
     [_scenarioData setObject:env forKey:@"environment"];
     
+    NSMutableArray *coms = [NSMutableArray array];
+    [_scenarioData setObject:coms forKey:@"coms"];
+    
+    NSMutableArray *others = [NSMutableArray array];
+    [_scenarioData setObject:others forKey:@"others"];
+    
     
     //音频处理
     if([self._audioDevices count])
@@ -694,6 +712,16 @@
     if([self._envDevices count])
     {
         [self createEvnScenario];
+    }
+    //Coms
+    if([self._comDevices count])
+    {
+        [self creatComsScenario];
+    }
+    //环境
+    if([self._otherDevices count])
+    {
+        [self createOthersScenario];
     }
     
 }
@@ -1146,5 +1174,37 @@
         [_scenarioData removeObjectForKey:@"environment"];
 }
 
+- (void) creatComsScenario{
+    
+    NSMutableArray *coms = [_scenarioData objectForKey:@"coms"];
+    
+    for(BasePlugElement* dev in self._comDevices)
+    {
+        NSDictionary *data = [dev userData];
+        if(data)
+        [coms addObject:data];
+    }
+    
+    
+    if([coms count] == 0)
+    [_scenarioData removeObjectForKey:@"coms"];
+    
+    
+}
+- (void) createOthersScenario{
+    
+    NSMutableArray *others = [_scenarioData objectForKey:@"others"];
+    
+    for(BasePlugElement* dev in self._otherDevices)
+    {
+        NSDictionary *data = [dev userData];
+        if(data)
+            [others addObject:data];
+    }
+    
+    
+    if([others count] == 0)
+        [_scenarioData removeObjectForKey:@"others"];
+}
 
 @end
