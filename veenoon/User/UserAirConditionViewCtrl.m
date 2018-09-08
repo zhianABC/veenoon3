@@ -13,6 +13,7 @@
 #import "RegulusSDK.h"
 #import "AirConditionProxy.h"
 #import "KVNProgress.h"
+#import "IconCenterTextButton.h"
 
 @interface UserAirConditionViewCtrl () <MapMarkerLayerDelegate>{
     NSMutableArray *_conditionRoomList;
@@ -63,7 +64,7 @@
     
     [self initData];
     
-    _conditionBtnList = [[NSMutableArray alloc] init];
+    _conditionBtnList = [NSMutableArray array];
     
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
@@ -97,25 +98,6 @@
     forControlEvents:UIControlEventTouchUpInside];
     
     
-    int scrollHeight = 600;
-    int cellWidth = 100;
-    int rowGap = 20;
-    int number = (int) [self._conditionRoomList count];
-    
-    int leftGap = (SCREEN_WIDTH - number*(cellWidth+20))/2 + 10;
-    if(leftGap < 50)
-        leftGap = 50;
-    
-    int contentWidth = number * cellWidth + (number-1) * rowGap;
-    UIScrollView *airCondtionView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-scrollHeight, SCREEN_WIDTH, cellWidth+10)];
-    airCondtionView.contentSize =  CGSizeMake(contentWidth, cellWidth+10);
-    //airCondtionView.scrollEnabled=YES;
-    airCondtionView.backgroundColor =[UIColor clearColor];
-    [self.view addSubview:airCondtionView];
-    
-    int index = 0;
-    int startX = leftGap;
-    
     AirConditionPlug *ss = [[AirConditionPlug alloc] init];
     RgsDriverObj *driver = [[RgsDriverObj alloc] init];
     ss._driver = driver;
@@ -128,6 +110,23 @@
     
     [_conditionRoomList addObject:ss1];
     
+    int scrollHeight = 550;
+    int cellWidth = 100;
+    int rowGap = 20;
+    int number = (int) [self._conditionRoomList count];
+    
+    int leftGap = SCREEN_WIDTH/2 - number*cellWidth/2-(number-1)*rowGap/2+10;
+    
+    int contentWidth = number * cellWidth + (number-1) * rowGap;
+    UIScrollView *airCondtionView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-scrollHeight, SCREEN_WIDTH, cellWidth+10)];
+    airCondtionView.contentSize =  CGSizeMake(contentWidth, cellWidth+10);
+    //airCondtionView.scrollEnabled=YES;
+    airCondtionView.backgroundColor =[UIColor clearColor];
+    [self.view addSubview:airCondtionView];
+    
+    int index = 0;
+    int startX = leftGap;
+    
     for (AirConditionPlug *plug in _conditionRoomList) {
         
         RgsDriverObj *driver = plug._driver;
@@ -135,35 +134,28 @@
         
         int startY = 5;
         
-        UIButton *airConditionBtn = [UIButton buttonWithColor:NEW_UR_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
+        IconCenterTextButton *airConditionBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(startX, startY, cellWidth, cellWidth)];
         airConditionBtn.tag = index;
-        airConditionBtn.frame = CGRectMake(startX, startY, cellWidth, cellWidth);
-        [airConditionBtn setImage:[UIImage imageNamed:@"user_aircondition_n.png"] forState:UIControlStateNormal];
-        [airConditionBtn setImage:[UIImage imageNamed:@"user_aircondition_s.png"] forState:UIControlStateHighlighted];
-        [airConditionBtn setTitle:[NSString stringWithFormat:@"%d",
-                                   (int)driver.m_id] forState:UIControlStateNormal];
         
-        [airConditionBtn setTitleColor:NEW_UR_BUTTON_GRAY_COLOR forState:UIControlStateNormal];
-        airConditionBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-        [airConditionBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
-        airConditionBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-        [airConditionBtn setTitleEdgeInsets:UIEdgeInsetsMake(airConditionBtn.imageView.frame.size.height+10,-105,-20,20)];
-        [airConditionBtn setImageEdgeInsets:UIEdgeInsetsMake(-10.0,-15,airConditionBtn.titleLabel.bounds.size.height, 0)];
+        [airConditionBtn  buttonWithIcon:[UIImage imageNamed:@"user_aircondition_n.png"] selectedIcon:[UIImage imageNamed:@"user_aircondition_s.png"] text:[NSString stringWithFormat:@"%d", (int)driver.m_id] normalColor:NEW_UR_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
+        
         [airConditionBtn addTarget:self action:@selector(airConditionAction:) forControlEvents:UIControlEventTouchUpInside];
+        
         [airCondtionView addSubview:airConditionBtn];
         
-        index++;
         
         [_conditionBtnList addObject:airConditionBtn];
         
         startX+=cellWidth;
         startX+=rowGap;
         
+        index++;
+        
     }
     int rowGap2 = 40;
     
     zhilengBtn = [UIButton buttonWithColor:NEW_UR_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
-    zhilengBtn.frame = CGRectMake(SCREEN_WIDTH/2 - 40-rowGap2*2-80*2, SCREEN_HEIGHT-320, 80, 80);
+    zhilengBtn.frame = CGRectMake(SCREEN_WIDTH/2 - 40-rowGap2*2-80*2, SCREEN_HEIGHT-290, 80, 80);
     zhilengBtn.layer.cornerRadius = 5;
     zhilengBtn.layer.borderWidth = 2;
     zhilengBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -175,7 +167,7 @@
        forControlEvents:UIControlEventTouchUpInside];
     
     zhireBtn = [UIButton buttonWithColor:NEW_UR_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
-    zhireBtn.frame = CGRectMake(SCREEN_WIDTH/2 - 40-rowGap2-80, SCREEN_HEIGHT-320, 80, 80);
+    zhireBtn.frame = CGRectMake(SCREEN_WIDTH/2 - 40-rowGap2-80, SCREEN_HEIGHT-290, 80, 80);
     zhireBtn.layer.cornerRadius = 5;
     zhireBtn.layer.borderWidth = 2;
     zhireBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -187,7 +179,7 @@
          forControlEvents:UIControlEventTouchUpInside];
     
     
-    markerLayer = [[MapMarkerLayer alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2 - 40, SCREEN_HEIGHT-320, 80, 80)];
+    markerLayer = [[MapMarkerLayer alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2 - 40, SCREEN_HEIGHT-290, 80, 80)];
     markerLayer.isFill = YES;
     
     NSMutableDictionary *dic1 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"0", @"LX",
@@ -243,7 +235,7 @@
     markerLayer.points2 = array2;
     markerLayer.points3 = array3;
     
-    markerLayer.selectedColor = [UIColor blackColor];
+    markerLayer.selectedColor = USER_GRAY_COLOR;
     
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"user_airecon_wendu_n.png"] ];
     imageView.frame = CGRectMake(48, 9, 9, 6);
@@ -272,7 +264,7 @@
     markerLayer.delegate_=self;
     
     aireWindBtn = [UIButton buttonWithColor:NEW_UR_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
-    aireWindBtn.frame = CGRectMake(SCREEN_WIDTH/2-40+rowGap2 +80, SCREEN_HEIGHT-320, 80, 80);
+    aireWindBtn.frame = CGRectMake(SCREEN_WIDTH/2-40+rowGap2 +80, SCREEN_HEIGHT-290, 80, 80);
     aireWindBtn.layer.cornerRadius = 5;
     aireWindBtn.layer.borderWidth = 2;
     aireWindBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -285,7 +277,7 @@
     
     
     aireFireBtn = [UIButton buttonWithColor:NEW_UR_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
-    aireFireBtn.frame = CGRectMake(SCREEN_WIDTH/2-40+rowGap2*2 +80*2, SCREEN_HEIGHT-320, 80, 80);
+    aireFireBtn.frame = CGRectMake(SCREEN_WIDTH/2-40+rowGap2*2 +80*2, SCREEN_HEIGHT-290, 80, 80);
     aireFireBtn.layer.cornerRadius = 5;
     aireFireBtn.layer.borderWidth = 2;
     aireFireBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -406,13 +398,11 @@
 - (void) airConditionAction:(UIButton*)sender {
     int selectTag = (int) sender.tag;
     
-    for (UIButton *btn in _conditionBtnList) {
+    for (IconCenterTextButton *btn in _conditionBtnList) {
         if (btn.tag == selectTag) {
-            [btn setImage:[UIImage imageNamed:@"user_aircondition_s.png"] forState:UIControlStateNormal];
-            [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+            [btn setBtnHighlited:YES];
         } else {
-            [btn setImage:[UIImage imageNamed:@"user_aircondition_n.png"] forState:UIControlStateNormal];
-            [btn setTitleColor:ADMIN_BLACK_COLOR forState:UIControlStateNormal];
+            [btn setBtnHighlited:NO];
         }
     }
     
@@ -420,7 +410,7 @@
     
     if(_currentSelected._proxyObj == nil)
     {
-        [self getCurrentDeviceDriverProxys];
+//        [self getCurrentDeviceDriverProxys];
     }
 }
 
