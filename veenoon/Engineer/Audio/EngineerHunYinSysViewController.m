@@ -165,7 +165,7 @@
 
 - (void) loadedHunyinProxys:(NSArray*)proxys{
     
-    id proxy = self._currentObj._proxyObj;
+    AudioEMixProxy* proxy = self._currentObj._proxyObj;
     
     if(proxy && [proxy isKindOfClass:[AudioEMixProxy class]])
     {
@@ -188,6 +188,8 @@
             break;
         }
     }
+    
+    [_zengyiSlider setScaleValue:proxy._deviceVol];
 
 }
 

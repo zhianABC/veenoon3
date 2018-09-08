@@ -57,6 +57,8 @@
 
 - (void) recoverWithDictionary:(NSArray*)datas
 {
+    [_RgsSceneDeviceOperationShadow removeAllObjects];
+    
     for(RgsSceneDeviceOperation *dopt in datas)
     {
         _isSetOK = YES;
@@ -310,16 +312,7 @@
     }
     else
     {
-        NSDictionary *cmdsRev = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_RELAY"];
-        if(cmdsRev)
-        {
-            RgsSceneOperation * opt = [[RgsSceneOperation alloc]
-                                       initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
-                                       cmd:[cmdsRev objectForKey:@"cmd"]
-                                       param:[cmdsRev objectForKey:@"param"]];
-            
-            return opt;
-        }
+        return [_RgsSceneDeviceOperationShadow objectForKey:@"SET_RELAY"];
     }
     
     return nil;
@@ -370,16 +363,7 @@
     }
     else
     {
-        NSDictionary *cmdsRev = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_BREAK_DUR"];
-        if(cmdsRev)
-        {
-            RgsSceneOperation * opt = [[RgsSceneOperation alloc]
-                                       initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
-                                       cmd:[cmdsRev objectForKey:@"cmd"]
-                                       param:[cmdsRev objectForKey:@"param"]];
-            
-            return opt;
-        }
+        return [_RgsSceneDeviceOperationShadow objectForKey:@"SET_BREAK_DUR"];
     }
     
     return nil;
@@ -414,13 +398,7 @@
         scene_opt.cmd = cmd.name;
         scene_opt.param = param;
         
-        //用于保存还原
-        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
-        [slice setObject:[NSNumber numberWithInteger:proxyid] forKey:@"dev_id"];
-        [slice setObject:cmd.name forKey:@"cmd"];
-        [slice setObject:param forKey:@"param"];
-        [_RgsSceneDeviceOperationShadow setObject:slice forKey:@"SET_LINK_DUR"];
-        
+    
         RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
                                                                           cmd:scene_opt.cmd
                                                                         param:scene_opt.param];
@@ -429,16 +407,7 @@
     }
     else
     {
-        NSDictionary *cmdsRev = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_LINK_DUR"];
-        if(cmdsRev)
-        {
-            RgsSceneOperation * opt = [[RgsSceneOperation alloc]
-                                       initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
-                                       cmd:[cmdsRev objectForKey:@"cmd"]
-                                       param:[cmdsRev objectForKey:@"param"]];
-            
-            return opt;
-        }
+        return [_RgsSceneDeviceOperationShadow objectForKey:@"SET_LINK_DUR"];
     }
     
     return nil;

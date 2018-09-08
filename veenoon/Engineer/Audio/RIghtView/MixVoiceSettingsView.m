@@ -77,6 +77,8 @@
         [self createYuYinJiLiView];
         [self createBiaoZhunFaYanView];
         [self createShexiangzhuizongView];
+        
+        [self checkStates];
     }
     
     return self;
@@ -98,6 +100,46 @@
     [textField resignFirstResponder];
     
     return YES;
+}
+
+- (void) checkStates{
+    
+    AudioEMixProxy *proxy = _currentObj._proxyObj;
+    if(proxy && proxy._workMode)
+    {
+        if([proxy._workMode isEqualToString:@"Speaker"])
+        {
+            _shexiangzhuizongView.hidden=YES;
+            _biaozhunfayanView.hidden=YES;
+            _yuyinjiliView.hidden=NO;
+            
+            if(proxy._fayanPriority)
+            {
+                [self shedingzhuxiAction:_shedingzhuxiBtn];
+            }
+            else
+            {
+                [self fayanrenshuAction:_fayanrenshuBtn];
+            }
+        }
+        else
+        {
+            _shexiangzhuizongView.hidden=YES;
+            _yuyinjiliView.hidden=YES;
+            _biaozhunfayanView.hidden=NO;
+            
+            NSString *isBiaoZhunFaYan = proxy._workMode;
+            if ([@"Work" isEqualToString:isBiaoZhunFaYan]) {
+                biaozhunfayanBtn.selected = YES;
+                [biaozhunfayanBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+                [biaozhunfayanBtn changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
+            } else {
+                biaozhunfayanBtn.selected = NO;
+                [biaozhunfayanBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                [biaozhunfayanBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
+            }
+        }
+    }
 }
 
 #pragma mark -
@@ -179,23 +221,25 @@
 
 
 - (void) yuyinjiliAction:(id)sender{
+    
     _shexiangzhuizongView.hidden=YES;
     _biaozhunfayanView.hidden=YES;
     _yuyinjiliView.hidden=NO;
     
     // control yuyinjili
-    [_currentObj._proxyObj controlWorkMode:@"语音激励"];
+    [_currentObj._proxyObj controlWorkMode:@"Speak"];
 }
 - (void) biaozhunfayanAction:(id)sender{
+    
     _shexiangzhuizongView.hidden=YES;
     _yuyinjiliView.hidden=YES;
     _biaozhunfayanView.hidden=NO;
     
     // control biaozhunfayan
-    [_currentObj._proxyObj controlWorkMode:@"标准发言"];
+    [_currentObj._proxyObj controlWorkMode:@"Work"];
     
     NSString *isBiaoZhunFaYan = _currentObj._proxyObj._workMode;
-    if ([@"标准发言" isEqualToString:isBiaoZhunFaYan]) {
+    if ([@"Work" isEqualToString:isBiaoZhunFaYan]) {
         biaozhunfayanBtn.selected = YES;
         [biaozhunfayanBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
         [biaozhunfayanBtn changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
@@ -322,6 +366,7 @@
 }
 
 - (void) createBiaoZhunFaYanView {
+    
     _biaozhunfayanView = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height/2-100, self.frame.size.width, self.frame.size.height/2-1)];
     
     [self addSubview:_biaozhunfayanView];
@@ -341,6 +386,9 @@
 - (void) shedingzhuxiAction:(id)sender {
     
     [[_yuyinjiliView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+    [_yuyinjiliView addSubview:_shedingzhuxiBtn];
+    [_yuyinjiliView addSubview:_fayanrenshuBtn];
     
     [_shedingzhuxiBtn setSelected:YES];
     [_fayanrenshuBtn setSelected:NO];
@@ -429,6 +477,9 @@
 - (void) fayanrenshuAction:(id)sender{
     
     [[_yuyinjiliView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+    [_yuyinjiliView addSubview:_shedingzhuxiBtn];
+    [_yuyinjiliView addSubview:_fayanrenshuBtn];
     
     [_shedingzhuxiBtn setSelected:NO];
     [_fayanrenshuBtn setSelected:YES];

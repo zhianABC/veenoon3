@@ -21,4 +21,5 @@
 
 
 - (id)initWithFrame:(CGRect)frame withAudioMixSet:(AudioEMix*) audioEMix;
+
 @end
