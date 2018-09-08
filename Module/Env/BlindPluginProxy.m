@@ -132,21 +132,9 @@
     }
 }
 
-- (void) recoverWithDictionary:(NSDictionary*)data{
+- (void) recoverWithDictionary:(NSArray*)datas{
     
-    NSInteger proxy_id = [[data objectForKey:@"proxy_id"] intValue];
-    if(proxy_id == _deviceId)
-    {
-        
-        if([data objectForKey:@"RgsSceneDeviceOperation"]){
-            NSDictionary *dic = [data objectForKey:@"RgsSceneDeviceOperation"];
-            self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionaryWithDictionary:dic];
-            _isSetOK = YES;
-        }
-        
-        
-    }
-    
+    _isSetOK = YES;
 }
 
 @end

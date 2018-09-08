@@ -45,12 +45,6 @@
 
     if (_blindArray) {
         _currentBlind = [_blindArray objectAtIndex:0];
-    } else {
-        _currentBlind = [[BlindPlugin alloc] init];
-        BlindPluginProxy *proxy = [[BlindPluginProxy alloc] init];
-        
-        proxy._channelNumber = 4;
-        _currentBlind._proxyObj = proxy;
     }
 
     btnArray_ = [NSMutableArray array];
