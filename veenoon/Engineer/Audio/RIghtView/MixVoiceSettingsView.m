@@ -309,6 +309,12 @@
     _picker.hidden = YES;
     
     _shexiangzhuizongView.hidden=YES;
+    
+    if(_currentObj._proxyObj._cameraPol)
+    {
+        [_shexiangxieyiBtn setTitle:_currentObj._proxyObj._currentCameraPol
+                           forState:UIControlStateNormal];
+    }
 }
 -(void) shexiangxieyiAction:(id)sender {
     if (_picker.hidden) {

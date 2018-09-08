@@ -83,7 +83,13 @@
         
         NSString *hightFilter = _currentObj._proxyObj._mixHighFilter;
         float highValue = [hightFilter floatValue];
+        if(highValue < _highFilterMin)
+            highValue = _highFilterMin;
+        
+        
         float highMax = (_highFilterMax - _highFilterMin);
+        
+        
         if(highMax)
         {
             float f = (highValue - _highFilterMin)/highMax;
@@ -93,12 +99,12 @@
             [fglm setHPMaxMinFreqWithMaxfreq:_highFilterMax
                                      minfreq:_highFilterMin];
             
-            [fglm setHPFilterWithFreq:_highFilterMin];
+            [fglm setHPFilterWithFreq:highValue];
         }
         
         
         _highFilterL = [[UILabel alloc] init];
-        _highFilterL.text = [hightFilter stringByAppendingString:@" Hz"];
+        //_highFilterL.text = [hightFilter stringByAppendingString:@" Hz"];
         _highFilterL.font = [UIFont systemFontOfSize: 13];
         _highFilterL.textColor = [UIColor whiteColor];
         _highFilterL.frame = CGRectMake(0, CGRectGetMaxY(_highFilterSlider.frame), 60, 20);
@@ -130,7 +136,9 @@
         _lowFilterSlider.delegate = self;
         
         NSString *lowFilter = _currentObj._proxyObj._mixLowFilter;
-        float lowWalue = [lowFilter floatValue];
+        int lowWalue = [lowFilter intValue]*1000;
+        if(lowWalue < _lowFilterMin)
+            lowWalue = _lowFilterMin;
         float lowMax = (_lowFilterMax - _lowFilterMin);
         if(lowMax)
         {
@@ -141,11 +149,11 @@
             [fglm setLPMaxMinFreqWithMaxfreq:_lowFilterMax
                                      minfreq:_lowFilterMin];
             
-            [fglm setLPFilterWithFreq:_lowFilterMax];
+            [fglm setLPFilterWithFreq:lowWalue];
         }
         
         _lowFilgerL = [[UILabel alloc] init];
-        _lowFilgerL.text = [lowFilter stringByAppendingString:@" KHz"];
+        _lowFilgerL.text = [NSString stringWithFormat:@"%@ KHz",lowFilter];
         _lowFilgerL.font = [UIFont systemFontOfSize: 13];
         _lowFilgerL.textColor = [UIColor whiteColor];
         _lowFilgerL.frame = CGRectMake(0, CGRectGetMaxY(_lowFilterSlider.frame), 60, 20);
@@ -155,6 +163,21 @@
         _lowFilgerL.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR;
         _lowFilgerL.center = CGPointMake(_lowFilterSlider.center.x, _lowFilgerL.center.y);
         _lowFilgerL.clipsToBounds = YES;
+        
+        
+        
+        NSString *hz = @"Hz";
+        int freq  = highValue;
+        int showValue = freq;
+        if(freq > 1000)
+        {
+            hz = @"KHz";
+            showValue = freq/1000;
+        }
+        
+        _highFilterL.text = [NSString stringWithFormat:@"%d %@",
+                             showValue,
+                             hz];
         
         
     }
@@ -201,7 +224,9 @@
             _lowFilgerL.text = [NSString stringWithFormat:@"%0.0f %@",
                                 showValue, hz];
             
-            [_currentObj._proxyObj controlLowFilter:[NSString stringWithFormat:@"%0.0f", freq]];
+            NSString *ctrlVal = [NSString stringWithFormat:@"%0.0f", freq/1000.0];
+            //单位是KHz
+            [_currentObj._proxyObj controlLowFilter:ctrlVal];
             
             [fglm setLPFilterWithFreq:freq];
         }
@@ -250,7 +275,7 @@
                         hz];
     
     
-    [_currentObj._proxyObj controlLowFilter:[NSString stringWithFormat:@"%0.0f", freq]];
+    [_currentObj._proxyObj controlLowFilter:[NSString stringWithFormat:@"%0.0f", showValue]];
     
     float lowWalue = freq;
     float lowMax = (_lowFilterMax - _lowFilterMin);
