@@ -17,6 +17,7 @@
 #import "DataSync.h"
 #import "EngineerPresetScenarioViewCtrl.h"
 #import "UIButton+Color.h"
+#import "DataCenter.h"
 
 @interface HomeViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate, JCActionViewDelegate> {
     
@@ -83,6 +84,8 @@
 //    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
 //        self.edgesForExtendedLayout = UIRectEdgeNone;
 //    }
+    
+    //[[DataCenter defaultDataCenter] syncDriversWithServer];
     
     _homeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     [self createHomeView];
