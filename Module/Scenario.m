@@ -811,8 +811,13 @@
     
     for(BasePlugElement* ap in _audioDevices)
     {
-        if(!ap._isSelected)
+        if(!ap._isSelected){
+            
+            NSDictionary *data = [ap userData];
+            [audios addObject:data];
+            
             continue;
+        }
         
         if([ap isKindOfClass:[AudioEProcessor class]])
         {
@@ -997,8 +1002,13 @@
     
     for(BasePlugElement* dev in self._videoDevices)
     {
-        if(!dev._isSelected)
+        if(!dev._isSelected){
+            
+            NSDictionary *data = [dev userData];
+            [videos addObject:data];
+            
             continue;
+        }
         
         if([dev isKindOfClass:[VCameraSettingSet class]])
         {
@@ -1074,8 +1084,13 @@
     
     for(BasePlugElement* dev in self._envDevices)
     {
-        if(!dev._isSelected)
+        if(!dev._isSelected){
+            
+            NSDictionary *data = [dev userData];
+            [evns addObject:data];
+            
             continue;
+        }
         
         if([dev isKindOfClass:[EDimmerLight class]])
         {

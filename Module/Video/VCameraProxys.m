@@ -59,18 +59,23 @@
     
     return _RgsSceneDeviceOperationShadow;
 }
-- (void) recoverWithDictionary:(NSDictionary*)data{
+- (void) recoverWithDictionary:(NSArray*)datas{
     
-    NSInteger proxy_id = [[data objectForKey:@"proxy_id"] intValue];
-    if(!_rgsProxyObj || (_rgsProxyObj && (proxy_id == _rgsProxyObj.m_id)))
+    for(RgsSceneDeviceOperation *dopt in datas)
     {
-        self._load = [[data objectForKey:@"load"] intValue];
-        self._save = self._load;
+        _isSetOK = YES;
         
-        if([data objectForKey:@"RgsSceneDeviceOperation"]){
-            NSDictionary *dic = [data objectForKey:@"RgsSceneDeviceOperation"];
-            self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionaryWithDictionary:dic];
-            _isSetOK = YES;
+        NSString *cmd = dopt.cmd;
+        NSDictionary *param = dopt.param;
+        
+        if([cmd isEqualToString:@"LOAD"])
+        {
+            self._load = [[param objectForKey:@"Index"] intValue];
+            
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:dopt.dev_id
+                                                                              cmd:dopt.cmd
+                                                                            param:dopt.param];
+            [_RgsSceneDeviceOperationShadow setObject:opt forKey:@"LOAD"];
         }
     }
     
@@ -268,15 +273,7 @@
         scene_opt.dev_id = _rgsProxyObj.m_id;
         scene_opt.cmd = cmd.name;
         scene_opt.param = param;
-        
-        //用于保存还原
-        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
-        [slice setObject:[NSNumber numberWithInteger:_rgsProxyObj.m_id] forKey:@"dev_id"];
-        [slice setObject:cmd.name forKey:@"cmd"];
-        [slice setObject:param forKey:@"param"];
-        [_RgsSceneDeviceOperationShadow setObject:slice forKey:@"LOAD"];
 
-        
         RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
                                                                           cmd:scene_opt.cmd
                                                                         param:scene_opt.param];
@@ -285,17 +282,10 @@
     }
     else
     {
-        NSDictionary *cmdsRev = [_RgsSceneDeviceOperationShadow objectForKey:@"LOAD"];
-        if(cmdsRev)
-        {
-            RgsSceneOperation * opt = [[RgsSceneOperation alloc]
-                                       initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
-                                       cmd:[cmdsRev objectForKey:@"cmd"]
-                                       param:[cmdsRev objectForKey:@"param"]];
-            
-            return opt;
-        }
+        RgsSceneOperation * opt = [_RgsSceneDeviceOperationShadow objectForKey:@"LOAD"];
+        return opt;
     }
+    
     return nil;
 }
 

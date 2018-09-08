@@ -12,6 +12,14 @@
 #import "KVNProgress.h"
 #import "AirConditionProxy.h"
 
+@interface AirConditionPlug ()
+{
+    
+}
+
+@property (nonatomic, strong) NSMutableDictionary *config;
+
+@end
 
 @implementation AirConditionPlug
 
@@ -21,6 +29,7 @@
 @synthesize _proxyObj;
 
 @synthesize _localSavedProxys;
+@synthesize config;
 
 - (id) init
 {
@@ -144,151 +153,19 @@
     NSMutableDictionary *allData = [NSMutableDictionary dictionary];
     
     [allData setValue:[NSString stringWithFormat:@"%@", [self class]] forKey:@"class"];
-    
-    //基本信息
-    if (self._name) {
-        [allData setObject:self._name forKey:@"name"];
-    }
-    if(self._brand)
-        [allData setObject:self._brand forKey:@"brand"];
-    
-    if(self._type)
-        [allData setObject:self._type forKey:@"type"];
-    
-    if(self._deviceno)
-        [allData setObject:self._deviceno forKey:@"deviceno"];
-    
-    if(self._ipaddress)
-        [allData setObject:self._ipaddress forKey:@"ipaddress"];
-    
-    if(self._deviceid)
-        [allData setObject:self._deviceid forKey:@"deviceid"];
-    
-    if(self._driverUUID)
-        [allData setObject:self._driverUUID forKey:@"driverUUID"];
-    
-    if(self._comIdx)
-        [allData setObject:[NSString stringWithFormat:@"%d",self._comIdx] forKey:@"com"];
-    
-    [allData setObject:[NSString stringWithFormat:@"%d",self._index] forKey:@"index"];
-    
-    
-    if(_driverInfo)
-    {
-        RgsDriverInfo *info = _driverInfo;
-        
-        if(info.serial)
-            [allData setObject:info.serial forKey:@"driver_info_uuid"];
-    }
-    if(_driver)
-    {
-        RgsDriverObj *dr = _driver;
-        [allData setObject:[NSNumber numberWithInteger:dr.m_id] forKey:@"driver_id"];
-        
-        if(dr.name)
-        {
-            [allData setObject:dr.name forKey:@"driver_name"];
-        }
-    }
-    
-    if(_IRDriverInfo)
-    {
-        RgsDriverInfo *info = _IRDriverInfo;
-        
-        if(info.serial)
-            [allData setObject:info.serial forKey:@"com_driver_info_uuid"];
-    }
-    if(_IRDriver)
-    {
-        RgsDriverObj *dr = _IRDriver;
-        [allData setObject:[NSNumber numberWithInteger:dr.m_id] forKey:@"com_driver_id"];
-    }
-    
-    if(_proxyObj)
-    {
-        AirConditionProxy *vcam = _proxyObj;
-        
-        RgsProxyObj *proxy = vcam._rgsProxyObj;
-        
-        NSMutableArray *proxys = [NSMutableArray array];
-        NSMutableDictionary *proxyDic = [NSMutableDictionary dictionary];
-        [proxys addObject:proxyDic];
-        
-        [proxyDic setObject:[NSNumber numberWithInteger:proxy.m_id] forKey:@"proxy_id"];
-        //[proxyDic setObject:[NSNumber numberWithInteger:vcam._save] forKey:@"load"];
-        
-        [proxyDic setObject:[vcam getScenarioSliceLocatedShadow]
-                     forKey:@"RgsSceneDeviceOperation"];
-        
-        [allData setObject:proxys forKey:@"proxys"];
-    }
-    
+
     
     return allData;
 }
 
 - (void) jsonToObject:(NSDictionary*)json{
     
-    //基本信息
-    if([json objectForKey:@"name"])
-        self._name = [json objectForKey:@"name"];
-    
-    if([json objectForKey:@"brand"])
-        self._brand = [json objectForKey:@"brand"];
-    
-    if([json objectForKey:@"type"])
-        self._type = [json objectForKey:@"type"];
-    
-    if([json objectForKey:@"deviceno"])
-        self._deviceno = [json objectForKey:@"deviceno"];
-    
-    if([json objectForKey:@"ipaddress"])
-        self._ipaddress = [json objectForKey:@"ipaddress"];
-    
-    if([json objectForKey:@"deviceid"])
-        self._deviceid = [json objectForKey:@"deviceid"];
-    
-    if([json objectForKey:@"driverUUID"])
-        self._driverUUID = [json objectForKey:@"driverUUID"];
-    
-    if([json objectForKey:@"com"])
-        self._comIdx = [[json objectForKey:@"com"] intValue];
-    
-    self._index = [[json objectForKey:@"index"] intValue];
-    
-    RgsDriverInfo *drinfo = [[RgsDriverInfo alloc] init];
-    drinfo.serial = [json objectForKey:@"driver_info_uuid"];
-    self._driverInfo = drinfo;
-    
-    RgsDriverObj *dr = [[RgsDriverObj alloc] init];
-    dr.m_id = [[json objectForKey:@"driver_id"] integerValue];
-    dr.name = [json objectForKey:@"driver_name"];
-    self._driver = dr;
-    
-    RgsDriverInfo *comdrinfo = [[RgsDriverInfo alloc] init];
-    comdrinfo.serial = [json objectForKey:@"com_driver_info_uuid"];
-    self._IRDriverInfo = comdrinfo;
-    
-    RgsDriverObj *comdr = [[RgsDriverObj alloc] init];
-    comdr.m_id = [[json objectForKey:@"com_driver_id"] integerValue];
-    self._IRDriver = comdr;
-    
-    
-    self._localSavedProxys = [json objectForKey:@"proxys"];
-    
-    if([_localSavedProxys count])
-    {
-        AirConditionProxy *vcam = [[AirConditionProxy alloc] init];
-        NSDictionary *local = [self._localSavedProxys objectAtIndex:0];
-        [vcam recoverWithDictionary:local];
-        self._proxyObj = vcam;
-        
-    }
+   
 }
 
 - (NSDictionary *)userData{
     
-    NSMutableDictionary *config = [NSMutableDictionary dictionary];
+    self.config = [NSMutableDictionary dictionary];
     [config setValue:[NSString stringWithFormat:@"%@", [self class]] forKey:@"class"];
     if(_driver)
     {
@@ -300,6 +177,30 @@
 
 - (void) createByUserData:(NSDictionary*)userdata withMap:(NSDictionary*)valMap{
     
+    self.config = [NSMutableDictionary dictionaryWithDictionary:userdata];
+    [config setObject:valMap forKey:@"opt_value_map"];
+    
+    int driver_id = [[config objectForKey:@"driver_id"] intValue];
+    
+    IMP_BLOCK_SELF(AirConditionPlug);
+    [[RegulusSDK sharedRegulusSDK] GetRgsObjectByID:driver_id
+                                         completion:^(BOOL result, id RgsObject, NSError *error) {
+                                             
+                                             if(result)
+                                             {
+                                                 [block_self successGotDriver:RgsObject];
+                                             }
+                                         }];
 }
+
+
+- (void) successGotDriver:(RgsDriverObj*)rgsd{
+    
+    self._driver = rgsd;
+    self._driverInfo = rgsd.info;
+    
+    //红外
+}
+
 
 @end

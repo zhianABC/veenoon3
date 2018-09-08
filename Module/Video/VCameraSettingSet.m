@@ -16,7 +16,7 @@
 {
     
 }
-
+@property (nonatomic, strong) NSMutableDictionary *config;
 @end
 
 
@@ -28,7 +28,7 @@
 @synthesize _proxyObj;
 
 @synthesize _localSavedProxys;
-
+@synthesize config;
 - (id) init
 {
     if(self = [super init])
@@ -306,7 +306,7 @@
 
 - (NSDictionary *)userData{
     
-    NSMutableDictionary *config = [NSMutableDictionary dictionary];
+    self.config = [NSMutableDictionary dictionary];
     [config setValue:[NSString stringWithFormat:@"%@", [self class]] forKey:@"class"];
     if(_driver)
     {
@@ -318,6 +318,69 @@
 
 - (void) createByUserData:(NSDictionary*)userdata withMap:(NSDictionary*)valMap{
     
+    self.config = [NSMutableDictionary dictionaryWithDictionary:userdata];
+    [config setObject:valMap forKey:@"opt_value_map"];
+    
+    int driver_id = [[config objectForKey:@"driver_id"] intValue];
+    
+    IMP_BLOCK_SELF(VCameraSettingSet);
+    [[RegulusSDK sharedRegulusSDK] GetRgsObjectByID:driver_id
+                                         completion:^(BOOL result, id RgsObject, NSError *error) {
+                                             
+                                             if(result)
+                                             {
+                                                 [block_self successGotDriver:RgsObject];
+                                             }
+                                         }];
+}
+
+
+- (void) successGotDriver:(RgsDriverObj*)rgsd{
+    
+    self._driver = rgsd;
+    self._driverInfo = rgsd.info;
+    
+    IMP_BLOCK_SELF(VCameraSettingSet);
+    
+    RgsDriverObj *driver = rgsd;
+    if([driver isKindOfClass:[RgsDriverObj class]])
+    {
+        [[RegulusSDK sharedRegulusSDK] GetDriverProxys:driver.m_id
+                                            completion:^(BOOL result, NSArray *proxys, NSError *error) {
+            if (result) {
+                if ([proxys count]) {
+                    
+                    [block_self loadedCameraProxy:proxys];
+                    
+                }
+            }
+        }];
+    }
+}
+
+- (void) loadedCameraProxy:(NSArray*)proxys{
+    
+    id proxy = self._proxyObj;
+    
+    VCameraProxys *vcam = nil;
+    if(proxy && [proxy isKindOfClass:[VCameraProxys class]])
+    {
+        vcam = proxy;
+    }
+    else
+    {
+        vcam = [[VCameraProxys alloc] init];
+        self._proxyObj = vcam;
+    }
+    
+    vcam._rgsProxyObj = [proxys objectAtIndex:0];
+   
+    id key = [NSString stringWithFormat:@"%d", (int)vcam._rgsProxyObj.m_id];
+    
+    NSDictionary *map = [config objectForKey:@"opt_value_map"];
+    [vcam recoverWithDictionary:[map objectForKey:key]];
+    
+
 }
 
 @end

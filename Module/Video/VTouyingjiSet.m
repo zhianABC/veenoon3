@@ -16,7 +16,7 @@
 {
     
 }
-
+@property (nonatomic, strong) NSMutableDictionary *config;
 @end
 
 @implementation VTouyingjiSet
@@ -27,6 +27,7 @@
 @synthesize _proxyObj;
 
 @synthesize _localSavedCommands;
+@synthesize config;
 
 - (id) init
 {
@@ -373,7 +374,7 @@
 
 - (NSDictionary *)userData{
     
-    NSMutableDictionary *config = [NSMutableDictionary dictionary];
+    self.config = [NSMutableDictionary dictionary];
     [config setValue:[NSString stringWithFormat:@"%@", [self class]] forKey:@"class"];
     if(_driver)
     {
@@ -385,6 +386,72 @@
 
 - (void) createByUserData:(NSDictionary*)userdata withMap:(NSDictionary*)valMap{
     
+    self.config = [NSMutableDictionary dictionaryWithDictionary:userdata];
+    [config setObject:valMap forKey:@"opt_value_map"];
+    
+    int driver_id = [[config objectForKey:@"driver_id"] intValue];
+    
+    IMP_BLOCK_SELF(VTouyingjiSet);
+    [[RegulusSDK sharedRegulusSDK] GetRgsObjectByID:driver_id
+                                         completion:^(BOOL result, id RgsObject, NSError *error) {
+                                             
+                                             if(result)
+                                             {
+                                                 [block_self successGotDriver:RgsObject];
+                                             }
+                                         }];
 }
+
+
+- (void) successGotDriver:(RgsDriverObj*)rgsd{
+    
+    self._driver = rgsd;
+    self._driverInfo = rgsd.info;
+    
+    IMP_BLOCK_SELF(VTouyingjiSet);
+    
+    RgsDriverObj *driver = rgsd;
+    if([driver isKindOfClass:[RgsDriverObj class]])
+    {
+        
+        [[RegulusSDK sharedRegulusSDK] GetDriverCommands:driver.m_id
+                                              completion:^(BOOL result, NSArray *commands, NSError *error) {
+            if (result) {
+                if ([commands count]) {
+                    [block_self loadedProjectCommands:commands];
+                }
+            }
+        }];
+    }
+
+}
+
+- (void) loadedProjectCommands:(NSArray*)cmds{
+    
+    RgsDriverObj *driver = self._driver;
+    
+    id proxy = self._proxyObj;
+    
+    VProjectProxys *vpro = nil;
+    if(proxy && [proxy isKindOfClass:[VProjectProxys class]])
+    {
+        vpro = proxy;
+    }
+    else
+    {
+        vpro = [[VProjectProxys alloc] init];
+        self._proxyObj = vpro;
+    }
+    
+    vpro._deviceId = driver.m_id;
+    [vpro checkRgsProxyCommandLoad:cmds];
+    
+    id key = [NSString stringWithFormat:@"%d", (int)driver.m_id];
+    
+    NSDictionary *map = [config objectForKey:@"opt_value_map"];
+    [vpro recoverWithDictionary:[map objectForKey:key]];
+
+}
+
 
 @end

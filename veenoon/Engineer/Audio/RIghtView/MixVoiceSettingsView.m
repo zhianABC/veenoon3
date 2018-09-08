@@ -30,18 +30,19 @@
     UIButton *biaozhunfayanBtn;
     
     UITableView *_tableView;
-    
-    UIButton *_selectedBtn;
+
     
     NSString *_zhuxiDaibiao;
 }
 @property (nonatomic, strong) NSMutableArray *_btns;
+@property (nonatomic, strong) UIButton *_selectedBtn;
 @end
 
 @implementation MixVoiceSettingsView
 @synthesize delegate_;
 @synthesize _btns;
 @synthesize _currentObj;
+@synthesize _selectedBtn;
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -61,7 +62,7 @@
         
         _btns = [[NSMutableArray alloc] init];
         
-        _selectedBtn = nil;
+        self._selectedBtn = nil;
         
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,
                                                                    60,
@@ -287,7 +288,11 @@
 }
 
 - (void) createYuYinJiLiView {
-    _yuyinjiliView = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height/2-100, self.frame.size.width, self.frame.size.height/2-1)];
+    
+    _yuyinjiliView = [[UIView alloc] initWithFrame:CGRectMake(0,
+                                                              self.frame.size.height/2-100,
+                                                              self.frame.size.width,
+                                                              self.frame.size.height/2-1)];
     
     [self addSubview:_yuyinjiliView];
     
@@ -334,6 +339,9 @@
 }
 
 - (void) shedingzhuxiAction:(id)sender {
+    
+    [[_yuyinjiliView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
     [_shedingzhuxiBtn setSelected:YES];
     [_fayanrenshuBtn setSelected:NO];
     
@@ -354,29 +362,40 @@
     int max = [[minMaxDic objectForKey:@"max"] intValue];
     
     int count = (max - min) + 1;
+    
     for (int index = 0; index < count; index++) {
+        
         int row = index/colNumber;
         int col = index%colNumber;
         int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+top;
         
-        UIButton *scenarioBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
-        scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
-        scenarioBtn.clipsToBounds = YES;
-        scenarioBtn.layer.cornerRadius = 5;
-        [_yuyinjiliView addSubview:scenarioBtn];
+        UIButton *btn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
+        btn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
+        btn.clipsToBounds = YES;
+        btn.layer.cornerRadius = 5;
+        [_yuyinjiliView addSubview:btn];
         
         NSString *string = [NSString stringWithFormat:@"%d",min];
-        [scenarioBtn setTitle:string forState:UIControlStateNormal];
-        [scenarioBtn addTarget:self action:@selector(setPriorityAction:) forControlEvents:UIControlEventTouchUpInside];
-        scenarioBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+        [btn setTitle:string forState:UIControlStateNormal];
+        [btn addTarget:self action:@selector(setPriorityAction:) forControlEvents:UIControlEventTouchUpInside];
+        btn.titleLabel.font = [UIFont systemFontOfSize:15];
+        
+        if(_currentObj._proxyObj._fayanPriority == min)
+        {
+            self._selectedBtn = btn;
+            [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR
+                      forState:UIControlStateNormal];
+            [btn changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
+        }
         
         min++;
         
-        scenarioBtn.tag = min + 100;
+        btn.tag = min;
     }
 }
 - (void) setPriorityAction:(id)sender {
+    
     UIButton *btn = (UIButton*) sender;
     NSString *numberStr = btn.titleLabel.text;
     if (_selectedBtn == nil) {
@@ -384,10 +403,14 @@
         [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR
                   forState:UIControlStateNormal];
         [btn changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
-    } else {
+    }
+    else
+    {
         if (_selectedBtn.tag == btn.tag) {
             
-        } else {
+        }
+        else
+        {
             [_selectedBtn setTitleColor:[UIColor whiteColor]
                       forState:UIControlStateNormal];
             [_selectedBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
@@ -397,12 +420,16 @@
         }
     }
     
-    _selectedBtn = btn;
+    self._selectedBtn = btn;
     
     int numberInt = [numberStr intValue];
-    [_currentObj._proxyObj controlFayanPriority:numberInt withType:_zhuxiDaibiao];
+    [_currentObj._proxyObj controlFayanPriority:numberInt
+                                       withType:_zhuxiDaibiao];
 }
 - (void) fayanrenshuAction:(id)sender{
+    
+    [[_yuyinjiliView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
     [_shedingzhuxiBtn setSelected:NO];
     [_fayanrenshuBtn setSelected:YES];
     [_fayanrenshuBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
@@ -424,25 +451,71 @@
     int count = (max - min) + 1;
     
     for (int index = 0; index < count; index++) {
+        
         int row = index/colNumber;
         int col = index%colNumber;
         int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+top;
         
-        UIButton *scenarioBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
-        scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
-        scenarioBtn.clipsToBounds = YES;
-        scenarioBtn.layer.cornerRadius = 5;
-        [_yuyinjiliView addSubview:scenarioBtn];
+        UIButton *btn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR
+                                         selColor:NEW_ER_BUTTON_BL_COLOR];
+        btn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
+        btn.clipsToBounds = YES;
+        btn.layer.cornerRadius = 5;
+        [_yuyinjiliView addSubview:btn];
         
         NSString *string = [NSString stringWithFormat:@"%d", min];
-        [scenarioBtn setTitle:string forState:UIControlStateNormal];
-        [scenarioBtn addTarget:self action:@selector(setPriorityAction:) forControlEvents:UIControlEventTouchUpInside];
-        scenarioBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+        [btn setTitle:string forState:UIControlStateNormal];
+        [btn addTarget:self
+                        action:@selector(setDaiBiaoAction:)
+              forControlEvents:UIControlEventTouchUpInside];
+        btn.titleLabel.font = [UIFont systemFontOfSize:15];
         
         min++;
         
-        scenarioBtn.tag = min;
+        if(_currentObj._proxyObj._numberOfDaiBiao == min)
+        {
+            self._selectedBtn = btn;
+            [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR
+                      forState:UIControlStateNormal];
+            [btn changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
+        }
+        
+        btn.tag = min;
     }
 }
+
+- (void) setDaiBiaoAction:(id)sender {
+    
+    UIButton *btn = (UIButton*) sender;
+    NSString *numberStr = btn.titleLabel.text;
+    if (_selectedBtn == nil) {
+        
+        [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR
+                  forState:UIControlStateNormal];
+        [btn changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
+    }
+    else
+    {
+        if (_selectedBtn.tag == btn.tag) {
+            
+        }
+        else
+        {
+            [_selectedBtn setTitleColor:[UIColor whiteColor]
+                               forState:UIControlStateNormal];
+            [_selectedBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
+            [btn setTitleColor:NEW_ER_BUTTON_SD_COLOR
+                      forState:UIControlStateNormal];
+            [btn changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
+        }
+    }
+    
+    self._selectedBtn = btn;
+    
+    int numberInt = [numberStr intValue];
+    [_currentObj._proxyObj controlFayanPriority:numberInt
+                                       withType:_zhuxiDaibiao];
+}
+
 @end

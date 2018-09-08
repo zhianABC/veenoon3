@@ -46,7 +46,7 @@
 - (id) generateEventOperation_Postion;
 
 /////场景还原
-- (void) recoverWithDictionary:(NSDictionary*)data;
+- (void) recoverWithDictionary:(NSArray*)datas;
 
 
 @end

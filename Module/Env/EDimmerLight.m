@@ -145,7 +145,8 @@
     self._driverInfo = rgsd.info;
     
     IMP_BLOCK_SELF(EDimmerLight);
-    [[RegulusSDK sharedRegulusSDK] GetDriverCommands:rgsd.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
+    [[RegulusSDK sharedRegulusSDK] GetDriverCommands:rgsd.m_id
+                                          completion:^(BOOL result, NSArray *commands, NSError *error) {
         if (result) {
             if ([commands count]) {
                 [block_self loadedLightCommands:commands];

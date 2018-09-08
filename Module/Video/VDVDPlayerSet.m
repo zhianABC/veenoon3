@@ -12,11 +12,18 @@
 #import "KVNProgress.h"
 #import "VDVDPlayerProxy.h"
 
+@interface VDVDPlayerSet ()
+{
+    
+}
+@property (nonatomic, strong) NSMutableDictionary *config;
+@end
+
 
 @implementation VDVDPlayerSet
 @synthesize _IRDriver;
 @synthesize _IRDriverInfo;
-
+@synthesize config;
 @synthesize _proxyObj;
 
 @synthesize _localSavedProxys;
@@ -287,7 +294,7 @@
 
 - (NSDictionary *)userData{
     
-    NSMutableDictionary *config = [NSMutableDictionary dictionary];
+    self.config = [NSMutableDictionary dictionary];
     [config setValue:[NSString stringWithFormat:@"%@", [self class]] forKey:@"class"];
     if(_driver)
     {
@@ -299,6 +306,29 @@
 
 - (void) createByUserData:(NSDictionary*)userdata withMap:(NSDictionary*)valMap{
     
+    self.config = [NSMutableDictionary dictionaryWithDictionary:userdata];
+    [config setObject:valMap forKey:@"opt_value_map"];
+    
+    int driver_id = [[config objectForKey:@"driver_id"] intValue];
+    
+    IMP_BLOCK_SELF(VDVDPlayerSet);
+    [[RegulusSDK sharedRegulusSDK] GetRgsObjectByID:driver_id
+                                         completion:^(BOOL result, id RgsObject, NSError *error) {
+                                             
+                                             if(result)
+                                             {
+                                                 [block_self successGotDriver:RgsObject];
+                                             }
+                                         }];
+}
+
+
+- (void) successGotDriver:(RgsDriverObj*)rgsd{
+    
+    self._driver = rgsd;
+    self._driverInfo = rgsd.info;
+    
+    //红外
 }
 
 @end

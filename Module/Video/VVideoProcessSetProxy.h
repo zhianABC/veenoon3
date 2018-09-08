@@ -35,7 +35,7 @@
 - (NSDictionary*)getVideoProcessOutputSettings;
 
 /////场景还原
-- (void) recoverWithDictionary:(NSDictionary*)data;
+- (void) recoverWithDictionary:(NSArray*)datas;
 
 - (void) controlDeviceAdd:(NSDictionary*)inputDev
             withOutDevice:(NSDictionary*)outputDev;

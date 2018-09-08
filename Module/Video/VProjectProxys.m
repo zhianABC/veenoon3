@@ -58,21 +58,24 @@
     return _RgsSceneDeviceOperationShadow;
 }
 
-- (void) recoverWithDictionary:(NSDictionary*)data{
+- (void) recoverWithDictionary:(NSArray*)datas{
     
-    NSInteger proxy_id = [[data objectForKey:@"proxy_id"] intValue];
-    if(proxy_id == _deviceId)
+    for(RgsSceneDeviceOperation *dopt in datas)
     {
-        self._input = [data objectForKey:@"input"];
-        self._power = [data objectForKey:@"power"];
+        _isSetOK = YES;
         
-        if([data objectForKey:@"RgsSceneDeviceOperation"]){
-            NSDictionary *dic = [data objectForKey:@"RgsSceneDeviceOperation"];
-            self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionaryWithDictionary:dic];
-            _isSetOK = YES;
+        NSString *cmd = dopt.cmd;
+        NSDictionary *param = dopt.param;
+        
+        if([cmd isEqualToString:@"SET_INPUT"])
+        {
+            self._input = [param objectForKey:@"INPUT"];
+            
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:dopt.dev_id
+                                                                              cmd:dopt.cmd
+                                                                            param:dopt.param];
+            [_RgsSceneDeviceOperationShadow setObject:opt forKey:@"SET_INPUT"];
         }
-        
-        
     }
     
 }
