@@ -55,6 +55,8 @@
 
 #import "UserDefaultsKV.h"
 
+#import "BlindPlugin.h"
+
 @interface Scenario ()
 {
     WebClient *_client;
@@ -1130,19 +1132,11 @@
         }
         else if([dev isKindOfClass:[AirConditionPlug class]])
         {
-//            AirConditionProxy *proj = ((AirConditionPlug*)dev)._proxyObj;
-//            if([proj isSetChanged])
-//            {
-//                NSArray *rsps = [proj ];
-//                if(rsps && [rsps count])
-//                {
-//                    for(id rsp in rsps)
-//                    {
-//                        [self addEventOperation:rsp];
-//                    }
-//                }
-//            }
-            
+            NSDictionary *data = [dev userData];
+            [evns addObject:data];
+        }
+        else if([dev isKindOfClass:[BlindPlugin class]])
+        {
             NSDictionary *data = [dev userData];
             [evns addObject:data];
         }
