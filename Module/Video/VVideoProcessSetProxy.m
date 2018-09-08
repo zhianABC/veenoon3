@@ -201,6 +201,10 @@
     
     self._deviceMatcherDic = [NSMutableDictionary dictionary];
     
+    [_RgsSceneDeviceOperationShadow removeAllObjects];
+    NSMutableArray *opts = [NSMutableArray array];
+    [_RgsSceneDeviceOperationShadow setObject:opts forKey:@"SET_P2P"];
+    
     for(RgsSceneDeviceOperation *dopt in datas)
     {
         _isSetOK = YES;
@@ -224,6 +228,12 @@
                 
                 [outPutArray addObject:outName];
             }
+            
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:dopt.dev_id
+                                                                              cmd:dopt.cmd
+                                                                            param:dopt.param];
+            
+            [opts addObject:opt];
         }
     }
 }
@@ -341,6 +351,11 @@
         }
     }
     
+    if([results count] == 0)
+    {
+       results = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_P2P"];
+    }
+    
     return results;
 }
 
@@ -377,31 +392,11 @@
         scene_opt.cmd = cmd.name;
         scene_opt.param = param;
         
-        //用于保存还原
-        NSMutableDictionary *slice = [NSMutableDictionary dictionary];
-        [slice setObject:[NSNumber numberWithInteger:proxyid] forKey:@"dev_id"];
-        [slice setObject:cmd.name forKey:@"cmd"];
-        [slice setObject:param forKey:@"param"];
-        [_RgsSceneDeviceOperationShadow setObject:slice forKey:@"SET_P2P"];
-        
         RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
                                                                           cmd:scene_opt.cmd
                                                                         param:scene_opt.param];
         
         return opt;
-    }
-    else
-    {
-        NSDictionary *cmdsRev = [_RgsSceneDeviceOperationShadow objectForKey:@"SET_P2P"];
-        if(cmdsRev)
-        {
-            RgsSceneOperation * opt = [[RgsSceneOperation alloc]
-                                       initCmdWithParam:[[cmdsRev objectForKey:@"dev_id"] integerValue]
-                                       cmd:[cmdsRev objectForKey:@"cmd"]
-                                       param:[cmdsRev objectForKey:@"param"]];
-            
-            return opt;
-        }
     }
     
     return nil;
