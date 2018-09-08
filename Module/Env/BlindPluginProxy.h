@@ -27,7 +27,7 @@
 
 - (void) checkRgsProxyCommandLoad:(NSArray*)cmds;
 /////场景还原
-- (void) recoverWithDictionary:(NSDictionary*)data;
+- (void) recoverWithDictionary:(NSArray*)datas;
 
 - (NSDictionary *)getChRecords;
 

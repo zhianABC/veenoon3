@@ -43,18 +43,10 @@
     
     [super viewDidLoad];
     
-    isSettings=NO;
+    isSettings = NO;
     
     if ([_electronicSysArray count]) {
         self._currentObj = [_electronicSysArray objectAtIndex:0];
-    }
-    
-    if (_currentObj == nil) {
-        self._currentObj = [[BlindPlugin alloc] init];
-        
-        BlindPluginProxy *proxy = [[BlindPluginProxy alloc] init];
-        proxy._channelNumber = 4;
-        self._currentObj._proxyObj = proxy;
     }
     
     _nameLabelArray = [[NSMutableArray alloc] init];
@@ -123,20 +115,7 @@
     RgsDriverObj *driver = _currentObj._driver;
     if([driver isKindOfClass:[RgsDriverObj class]])
     {
-        
-//        [[RegulusSDK sharedRegulusSDK] GetDriverProxys:driver.m_id completion:^(BOOL result, NSArray *proxys, NSError *error) {
-//            if (result) {
-//                if ([proxys count]) {
-//
-//                    [block_self loadedHunyinProxys:proxys];
-//
-//                }
-//            }
-//            else{
-//                [KVNProgress showErrorWithStatus:[error description]];
-//            }
-//        }];
-        
+
         [[RegulusSDK sharedRegulusSDK] GetDriverCommands:driver.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
             if (result) {
                 if ([commands count]) {
@@ -172,14 +151,9 @@
     
     vpro._deviceId = driver.m_id;
     
-    
+    vpro.delegate = self;
     [vpro checkRgsProxyCommandLoad:cmds];
-    
-    if([_currentObj._localSavedCommands count])
-    {
-        NSDictionary *local = [_currentObj._localSavedCommands objectAtIndex:0];
-        [vpro recoverWithDictionary:local];
-    }
+
 }
 
 - (void) createChannels {

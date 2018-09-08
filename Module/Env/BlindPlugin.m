@@ -204,15 +204,47 @@
     self._driver = rgsd;
     self._driverInfo = rgsd.info;
     
-    //    IMP_BLOCK_SELF(VVideoProcessSet);
-    //    [[RegulusSDK sharedRegulusSDK] GetDriverCommands:rgsd.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
-    //        if (result) {
-    //            if ([commands count]) {
-    //                [block_self loadedVideoCommands:commands];
-    //            }
-    //        }
-    //
-    //    }];
+    IMP_BLOCK_SELF(BlindPlugin);
+    
+    RgsDriverObj *driver = rgsd;
+    if([driver isKindOfClass:[RgsDriverObj class]])
+    {
+        [[RegulusSDK sharedRegulusSDK] GetDriverCommands:driver.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
+            if (result) {
+                if ([commands count]) {
+                    [block_self loadedBlindCommands:commands];
+                }
+            }
+        }];
+    }
 }
+
+- (void) loadedBlindCommands:(NSArray*)cmds{
+    
+    RgsDriverObj *driver = self._driver;
+    
+    id proxy = self._proxyObj;
+    
+    BlindPluginProxy *vpro = nil;
+    if(proxy && [proxy isKindOfClass:[BlindPluginProxy class]])
+    {
+        vpro = proxy;
+    }
+    else
+    {
+        vpro = [[BlindPluginProxy alloc] init];
+        self._proxyObj = vpro;
+    }
+    [vpro checkRgsProxyCommandLoad:cmds];
+    vpro._deviceId = driver.m_id;
+    
+    id key = [NSString stringWithFormat:@"%d", (int)driver.m_id];
+    
+    NSDictionary *map = [config objectForKey:@"opt_value_map"];
+    [vpro recoverWithDictionary:[map objectForKey:key]];
+
+
+}
+
 
 @end
