@@ -56,7 +56,7 @@
 #import "UserDefaultsKV.h"
 
 #import "BlindPlugin.h"
-
+#import "AirQualityPlug.h"
 
 
 @interface Scenario ()
@@ -279,9 +279,29 @@
             
             [_envDevices addObject:obj];
         }
+        NSArray *coms = [_scenarioData objectForKey:@"coms"];
+        [_comDevices removeAllObjects];
+        for(NSDictionary *com in coms){
+            
+            NSString *classname = [com objectForKey:@"class"];
+            Class someClass = NSClassFromString(classname);
+            BasePlugElement * obj = [[someClass alloc] init];
+            [obj createByUserData:com withMap:map];
+            
+            [_comDevices addObject:obj];
+        }
         
-        
-        //[self recoverDriverEvent];
+        NSArray *others = [_scenarioData objectForKey:@"others"];
+        [_otherDevices removeAllObjects];
+        for(NSDictionary *oth in others){
+            
+            NSString *classname = [oth objectForKey:@"class"];
+            Class someClass = NSClassFromString(classname);
+            BasePlugElement * obj = [[someClass alloc] init];
+            [obj createByUserData:oth withMap:map];
+            
+            [_otherDevices addObject:obj];
+        }
     }
     
     if(delegate && [delegate respondsToSelector:@selector(didEndLoadingDiverValues)])
@@ -1197,9 +1217,14 @@
     
     for(BasePlugElement* dev in self._otherDevices)
     {
-        NSDictionary *data = [dev userData];
-        if(data)
+        if([dev isKindOfClass:[AirQualityPlug class]])
+        {
+            //AirQualityPlugProxy *proj = ((AirQualityPlug*)dev)._proxyObj;
+        
+            NSDictionary *data = [dev userData];
             [others addObject:data];
+        }
+    
     }
     
     

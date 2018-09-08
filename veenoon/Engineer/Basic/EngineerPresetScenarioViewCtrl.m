@@ -331,6 +331,14 @@
     NSArray *envs = _scenario._envDevices;
     [self showCells:3000 datas:envs];
     
+    NSArray *oths = _scenario._otherDevices;
+    [self showCells:4000 datas:oths];
+    
+    NSArray *coms = _scenario._comDevices;
+    [self showCells:5000 datas:coms];
+    
+    
+    
 }
 
 - (void) layoutChoosedDevices{
