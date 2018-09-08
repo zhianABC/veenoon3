@@ -359,6 +359,9 @@
     }
     
     NSString *brand = [device objectForKey:@"brand"];
+    int time = [[NSDate date] timeIntervalSince1970];
+    
+    brand = [NSString stringWithFormat:@"%@ - %d", brand, time];
     
     IMP_BLOCK_SELF(EngineerEnvDevicePluginViewCtrl);
     
