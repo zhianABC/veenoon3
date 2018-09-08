@@ -67,6 +67,7 @@ CustomPickerViewDelegate> {
 @synthesize _map;
 @synthesize _coms;
 @synthesize _number;
+@synthesize _currentBlind;
 
 @synthesize _selectedSecs;
 @synthesize _selectedType;
@@ -79,7 +80,9 @@ CustomPickerViewDelegate> {
  }
  */
 
-- (id)initWithFrame:(CGRect)frame {
+- (id)initWithFrame:(CGRect)frame withPlugin:(BlindPlugin*) blindPlugin {
+    
+    _currentBlind = blindPlugin;
     
     if(self = [super initWithFrame:frame]) {
         self.backgroundColor = RIGHT_VIEW_CORNER_SD_COLOR;

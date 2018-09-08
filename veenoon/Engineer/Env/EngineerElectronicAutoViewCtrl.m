@@ -178,10 +178,6 @@
         NSDictionary *local = [_currentObj._localSavedCommands objectAtIndex:0];
         [vpro recoverWithDictionary:local];
     }
-    
-    [self createChannels];
-    
-    vpro._channelNumber = self._number;
 }
 
 - (void) createChannels {
@@ -225,7 +221,8 @@
         [scenarioBtn addTarget:self
                         action:@selector(scenarioAction:)
               forControlEvents:UIControlEventTouchUpInside];
-        [self createBtnLabel:scenarioBtn dataDic:dataDic];
+        [self createBtnLabel:scenarioBtn dataDic:dataDic withTag:index];
+        
         index++;
     }
 }
@@ -238,6 +235,10 @@
     
     minCh = [[inputSettings objectForKey:@"min"] intValue];
     maxCh = [[inputSettings objectForKey:@"max"] intValue];
+    
+    [self createChannels];
+    
+    self._currentObj._proxyObj._channelNumber = self._number;
 }
 
 - (void) handleTapGesture:(id)sender{
@@ -262,28 +263,25 @@
     UIButton *btn = (UIButton*) sender;
     int tag = (int) btn.tag;
     
-    UILabel *nameLabel = [_nameLabelArray objectAtIndex:tag];
-    
-    UIButton *btnn;
     for (UIButton *button in selectedBtnArray) {
         if (button.tag == tag) {
-            btnn = button;
-            break;
+            [button setImage:[UIImage imageNamed:@"dianyuanshishiqi_s.png"] forState:UIControlStateNormal];
+        } else {
+            [button setImage:[UIImage imageNamed:@"dianyuanshishiqi_n.png"] forState:UIControlStateNormal];
         }
     }
-    // want to choose it
-    if (btnn) {
-        [btnn setImage:[UIImage imageNamed:@"dianyuanshishiqi_n.png"] forState:UIControlStateNormal];
-        nameLabel.textColor  = [UIColor whiteColor];
-        
-        [selectedBtnArray removeObject:btnn];
-    } else {
-        [btn setImage:[UIImage imageNamed:@"dianyuanshishiqi_s.png"] forState:UIControlStateNormal];
-        nameLabel.textColor  = RGB(230, 151, 50);
-        [selectedBtnArray addObject:btn];
+    
+    for (UILabel *label in _nameLabelArray) {
+        if (label.tag == tag) {
+            label.textColor  = NEW_ER_BUTTON_SD_COLOR;
+        } else {
+            label.textColor  = [UIColor whiteColor];
+        }
     }
+    
+    self._currentObj = [self._electronicSysArray objectAtIndex:tag];
 }
-- (void) createBtnLabel:(UIButton*)sender dataDic:(NSMutableDictionary*) dataDic{
+- (void) createBtnLabel:(UIButton*)sender dataDic:(NSMutableDictionary*) dataDic withTag:(int) tag {
     UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(sender.frame.size.width/2 - 40, 0, 80, 20)];
     titleL.textAlignment = NSTextAlignmentCenter;
     titleL.backgroundColor = [UIColor clearColor];
@@ -291,6 +289,8 @@
     titleL.font = [UIFont boldSystemFontOfSize:11];
     titleL.textColor  = [UIColor whiteColor];
     titleL.text = [@"Channel " stringByAppendingString:[dataDic objectForKey:@"name"]];
+    titleL.tag = tag;
+    
     [_nameLabelArray addObject:titleL];
 }
 
@@ -298,7 +298,7 @@
     if (!isSettings) {
         _rightView = [[ElectronicAutoRightView alloc]
                       initWithFrame:CGRectMake(SCREEN_WIDTH-300,
-                                               64, 300, SCREEN_HEIGHT-114)];
+                                               64, 300, SCREEN_HEIGHT-114) withPlugin:_currentObj];
         [self.view addSubview:_rightView];
         
         [okBtn setTitle:@"保存" forState:UIControlStateNormal];
