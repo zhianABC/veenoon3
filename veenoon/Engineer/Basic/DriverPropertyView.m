@@ -22,9 +22,11 @@
     UILabel *_connectionL;
     UITextField *_conField;
     UIButton *btnConnect;
+    
 }
 @property (nonatomic, readonly) UIButton *btnConnect;
 @property (nonatomic, strong) RgsConnectionObj *_connectObj;
+
 @end
 
 @implementation ConnectionRowCell
@@ -160,6 +162,8 @@
     BOOL        _studying;
     
     BOOL        _isIR;
+    
+    
 }
 @property (nonatomic, strong) NSMutableArray *_connection_cells;
 @property (nonatomic, strong) NSArray *_studyItems;
@@ -170,6 +174,7 @@
 @synthesize _plugDriver;
 @synthesize _connection_cells;
 @synthesize _studyItems;
+@synthesize _isAirQuality;
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -364,10 +369,17 @@
 }
 
 - (void) saveCurrentSetting{
+    if (_isAirQuality) {
+        _plugDriver._ssid = ipTextField.text;
+        _plugDriver._ssidPass = portTextField.text;
+        [_plugDriver uploadDriverSSIDProperty];
+        
+    } else {
+        _plugDriver._ipaddress = ipTextField.text;
+        _plugDriver._port = portTextField.text;
+        [_plugDriver uploadDriverIPProperty];
+    }
     
-    _plugDriver._ipaddress = ipTextField.text;
-    _plugDriver._port = portTextField.text;
-    [_plugDriver uploadDriverIPProperty];
 
 }
 
@@ -382,7 +394,21 @@
     }
 }
 
-- (void) recoverSetting{
+- (void) refreshLabelToAirQuality {
+    if (_isAirQuality) {
+        _iptitleL.text = @"SSID: ";
+        _porttitleL.text = @"密码: ";
+        NSString *ssid = [RegulusSDK GetWifiSSID];
+        ipTextField.text = ssid;
+    } else {
+        _iptitleL.text = @"IP地址: ";
+        _porttitleL.text = @"端口号: ";
+        
+        ipTextField.text = @"192.168.1.100";
+    }
+}
+
+- (void) recoverSetting {
     
     [_connectionView removeFromSuperview];
     
@@ -461,9 +487,17 @@
     
     if(_plugDriver._driver_ip_property)
     {
-        ipTextField.text = _plugDriver._ipaddress;
-        if(_plugDriver._driver_port_property)
-            portTextField.text = _plugDriver._port;
+        if (_isAirQuality) {
+            ipTextField.text = [RegulusSDK GetWifiSSID];
+            if(_plugDriver._driver_port_property)
+                portTextField.text = @"";
+        } else {
+            ipTextField.text = _plugDriver._ipaddress;
+            if(_plugDriver._driver_port_property)
+                portTextField.text = _plugDriver._port;
+        }
+        
+        
         
         return;
     }
@@ -508,8 +542,13 @@
         }
         
         _plugDriver._properties = properties;
-        ipTextField.text = _plugDriver._ipaddress;
-        portTextField.text = _plugDriver._port;
+        if (_isAirQuality) {
+            ipTextField.text = [RegulusSDK GetWifiSSID];
+            portTextField.text = @"";
+        } else {
+            ipTextField.text = _plugDriver._ipaddress;
+            portTextField.text = _plugDriver._port;
+        }
     }
     
     [KVNProgress dismiss];

@@ -23,7 +23,8 @@
 @synthesize _comArray;
 @synthesize _driverUUID;
 @synthesize _isViewed;
-
+@synthesize _ssid;
+@synthesize _ssidPass;
 @synthesize _plugicon;
 @synthesize _plugicon_s;
 
@@ -32,6 +33,7 @@
 
 @synthesize _driver_ip_property;
 @synthesize _driver_port_property;
+@synthesize _driver_ssid_property;
 @synthesize _properties;
 @synthesize _connections;
 @synthesize _irCodeKeys;
@@ -111,7 +113,7 @@
     {
         self._ipaddress = self._driver_ip_property.value;
         self._port = self._driver_port_property.value;
-        
+        self._ssid = self._driver_ssid_property.value;
         return;
     }
     
@@ -147,6 +149,44 @@
     }
     
 }
+
+- (void) uploadDriverSSIDProperty{
+    
+    if(_driver
+       && [_driver isKindOfClass:[RgsDriverObj class]])
+    {
+        IMP_BLOCK_SELF(BasePlugElement);
+        
+        RgsDriverObj *rd = (RgsDriverObj*)_driver;
+        
+        //保存到内存
+        
+        if(self._driver_ip_property)
+        {
+            [KVNProgress show];
+            
+            self._driver_ip_property.value = self._ipaddress;
+            [[RegulusSDK sharedRegulusSDK] SetDriverProperty:rd.m_id
+                                               property_name:self._driver_ip_property.name
+                                              property_value:self._ipaddress
+                                                  completion:^(BOOL result, NSError *error) {
+                                                      if (result) {
+                                                          
+                                                          [block_self showSuccess];
+                                                      }
+                                                      else{
+                                                          
+                                                          [KVNProgress dismiss];
+                                                      }
+                                                  }];
+        }
+        
+        
+        
+        
+    }
+}
+
 - (void) uploadDriverIPProperty{
     
     if(_driver

@@ -12,13 +12,15 @@
 
 @interface DriverPropertyView : UIView
 {
-    
+    BOOL _isAirQuality;
 }
 @property (nonatomic, strong) BasePlugElement *_plugDriver;
+@property (nonatomic, assign) BOOL _isAirQuality;
+
 
 - (void) saveCurrentSetting;
 - (void) recoverSetting;
 
 - (void) updateConnectionSet;
-
+- (void) refreshLabelToAirQuality;
 @end

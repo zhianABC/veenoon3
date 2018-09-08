@@ -687,6 +687,15 @@
     
     _propertyView._plugDriver = data;
     
+    // if 空气质量,refresh label
+    if ([other_air_quality isEqualToString:[data deviceName]]) {
+        _propertyView._isAirQuality = YES;
+        [_propertyView refreshLabelToAirQuality];
+    } else {
+        _propertyView._isAirQuality = NO;
+        [_propertyView refreshLabelToAirQuality];
+    }
+    
     //检查，如果插件的Driver没添加上，再补一下
     if(data._driver == nil)
     {
