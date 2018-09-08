@@ -60,6 +60,34 @@
     
     return result;
 }
+
+- (int) getChannelNumber {
+    int result = 0;
+    int max=0;
+    int min=0;
+    
+    RgsCommandInfo *cmd = nil;
+    cmd = [_cmdMap objectForKey:@"SET_CH"];
+    if(cmd)
+    {
+        if([cmd.params count])
+        {
+            
+            for( RgsCommandParamInfo * param_info in cmd.params)
+            {
+                if([param_info.name isEqualToString:@"CH"])
+                {
+                    if(param_info.max)
+                        max = [param_info.max intValue];
+                    if(param_info.min)
+                        min = [param_info.min intValue];
+                }
+            }
+        }
+    }
+    result = max - min +1;
+    return result;
+}
 - (void) controlStatue:(int)state withCh:(int)ch {
     
     RgsCommandInfo *cmd = nil;

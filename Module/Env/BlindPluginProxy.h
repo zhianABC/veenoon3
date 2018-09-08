@@ -33,4 +33,5 @@
 
 - (void) controlStatue:(int)state withCh:(int)ch; 
 
+- (int) getChannelNumber;
 @end
