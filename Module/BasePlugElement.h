@@ -28,7 +28,8 @@
 @property (nonatomic, strong) NSString *_deviceid;
 @property (nonatomic, strong) NSString *_ipaddress;
 @property (nonatomic, strong) NSString *_port;
-
+@property (nonatomic, strong) NSString *_ssid;
+@property (nonatomic, strong) NSString *_ssidPass;
 @property (nonatomic, strong) NSString *_plugicon;
 @property (nonatomic, strong) NSString *_plugicon_s;
 
@@ -46,6 +47,7 @@
 @property (nonatomic, strong) id _driverInfo;
 @property (nonatomic, strong) id _driver;
 @property (nonatomic, strong) RgsPropertyObj *_driver_ip_property;
+@property (nonatomic, strong) RgsPropertyObj *_driver_ssid_property;
 @property (nonatomic, strong) RgsPropertyObj *_driver_port_property;
 @property (nonatomic, strong) NSArray *_properties;
 
@@ -64,6 +66,7 @@
 
 - (void) syncDriverIPProperty;
 - (void) uploadDriverIPProperty;
+- (void) uploadDriverSSIDProperty;
 
 - (void) syncDriverComs;
 - (void) createConnection:(RgsConnectionObj*)source withConnect:(RgsConnectionObj*)target;

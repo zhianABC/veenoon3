@@ -42,7 +42,7 @@
 
 - (NSString*) deviceName{
     
-    return env_blind_name;
+    return other_air_quality;
 }
 
 - (void) createDriver{
