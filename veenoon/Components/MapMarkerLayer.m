@@ -47,12 +47,12 @@
 }
 
 - (void) selected {
-    
+    self.backgroundColor = [UIColor clearColor];
     isSelected = YES;
     [self setNeedsDisplay];
 }
 - (void) unSelected{
-    
+    self.backgroundColor = [UIColor clearColor];
     isSelected = NO;
     [self setNeedsDisplay];
 }
@@ -104,7 +104,7 @@
         CGContextAddPath(currentContext, path);
         [selectedColor setStroke];
         
-        CGContextSetAlpha(currentContext, 0.7);
+//        CGContextSetAlpha(currentContext, 0.7);
         CGContextSetFillColorWithColor(currentContext, NEW_UR_BUTTON_GRAY_COLOR.CGColor);
         CGContextDrawPath(currentContext, kCGPathFillStroke);
     } else {
@@ -112,47 +112,47 @@
         CGContextSetLineWidth(currentContext, DRAW_LINE_WIDTH);
         if (isSelected == 1) {
             CGContextAddPath(currentContext, path1);
-            CGContextSetAlpha(currentContext, 0.7);
+//            CGContextSetAlpha(currentContext, 0.7);
             CGContextSetFillColorWithColor(currentContext, NEW_ER_BUTTON_SD_COLOR.CGColor);
             CGContextDrawPath(currentContext, kCGPathFillStroke);
             
             CGContextAddPath(currentContext, path2);
-            CGContextSetAlpha(currentContext, 0.7);
+//            CGContextSetAlpha(currentContext, 0.7);
             CGContextSetFillColorWithColor(currentContext, NEW_UR_BUTTON_GRAY_COLOR.CGColor);
             CGContextDrawPath(currentContext, kCGPathFillStroke);
             
             CGContextAddPath(currentContext, path3);
-            CGContextSetAlpha(currentContext, 0.7);
+//            CGContextSetAlpha(currentContext, 0.7);
             CGContextSetFillColorWithColor(currentContext, NEW_UR_BUTTON_GRAY_COLOR.CGColor);
             CGContextDrawPath(currentContext, kCGPathFillStroke);
         } else if (isSelected == 2) {
             CGContextAddPath(currentContext, path1);
-            CGContextSetAlpha(currentContext, 0.7);
+//            CGContextSetAlpha(currentContext, 0.7);
             CGContextSetFillColorWithColor(currentContext, NEW_UR_BUTTON_GRAY_COLOR.CGColor);
             CGContextDrawPath(currentContext, kCGPathFillStroke);
             
             CGContextAddPath(currentContext, path2);
-            CGContextSetAlpha(currentContext, 0.7);
+//            CGContextSetAlpha(currentContext, 0.7);
             CGContextSetFillColorWithColor(currentContext, NEW_ER_BUTTON_SD_COLOR.CGColor);
             CGContextDrawPath(currentContext, kCGPathFillStroke);
             
             CGContextAddPath(currentContext, path3);
-            CGContextSetAlpha(currentContext, 0.7);
+//            CGContextSetAlpha(currentContext, 0.7);
             CGContextSetFillColorWithColor(currentContext, NEW_UR_BUTTON_GRAY_COLOR.CGColor);
             CGContextDrawPath(currentContext, kCGPathFillStroke);
         } else {
             CGContextAddPath(currentContext, path1);
-            CGContextSetAlpha(currentContext, 0.7);
+//            CGContextSetAlpha(currentContext, 0.7);
             CGContextSetFillColorWithColor(currentContext, NEW_UR_BUTTON_GRAY_COLOR.CGColor);
             CGContextDrawPath(currentContext, kCGPathFillStroke);
             
             CGContextAddPath(currentContext, path2);
-            CGContextSetAlpha(currentContext, 0.7);
+//            CGContextSetAlpha(currentContext, 0.7);
             CGContextSetFillColorWithColor(currentContext, NEW_UR_BUTTON_GRAY_COLOR.CGColor);
             CGContextDrawPath(currentContext, kCGPathFillStroke);
             
             CGContextAddPath(currentContext, path3);
-            CGContextSetAlpha(currentContext, 0.7);
+//            CGContextSetAlpha(currentContext, 0.7);
             CGContextSetFillColorWithColor(currentContext, NEW_ER_BUTTON_SD_COLOR.CGColor);
             CGContextDrawPath(currentContext, kCGPathFillStroke);
         }
