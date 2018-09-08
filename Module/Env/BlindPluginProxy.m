@@ -63,7 +63,7 @@
 
 - (void) checkRgsProxyCommandLoad:(NSArray*)cmds{
     
-    if(_rgsProxyObj != nil || _rgsCommands){
+    if( _rgsCommands){
         
         if(delegate && [delegate respondsToSelector:@selector(didLoadedProxyCommand)])
         {
@@ -89,7 +89,7 @@
     }
     else
     {
-        if(_rgsProxyObj == nil || _rgsCommands)
+        if( _rgsCommands)
             return;
         
         self._cmdMap = [NSMutableDictionary dictionary];
