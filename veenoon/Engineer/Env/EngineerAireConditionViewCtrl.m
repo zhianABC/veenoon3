@@ -247,7 +247,7 @@
     else
     {
        [self.view addSubview:_settingView];
-        [okBtn setTitle:@"保存" forState:UIControlStateNormal];
+        [okBtn setTitle:@"关闭" forState:UIControlStateNormal];
     }
 
 }

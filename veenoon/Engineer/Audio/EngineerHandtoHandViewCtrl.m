@@ -284,7 +284,7 @@
         }
         
         [self.view addSubview:_rightSetView];
-        [okBtn setTitle:@"保存" forState:UIControlStateNormal];
+        [okBtn setTitle:@"关闭" forState:UIControlStateNormal];
         
         isSettings = YES;
     } else {

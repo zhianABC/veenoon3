@@ -193,7 +193,7 @@
                                                64, 300, SCREEN_HEIGHT-114)];
         [self.view addSubview:_rightView];
         
-        [okBtn setTitle:@"保存" forState:UIControlStateNormal];
+        [okBtn setTitle:@"关闭" forState:UIControlStateNormal];
         
         isSettings = YES;
     } else {

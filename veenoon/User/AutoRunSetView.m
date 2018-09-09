@@ -141,7 +141,7 @@ UITableViewDataSource>
         UIButton *btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
         btnSave.frame = CGRectMake(0, CGRectGetMaxY(line.frame), CGRectGetWidth(whiteView.frame), 50);
         [whiteView addSubview:btnSave];
-        [btnSave setTitle:@"保存" forState:UIControlStateNormal];
+        [btnSave setTitle:@"关闭" forState:UIControlStateNormal];
         [btnSave setTitleColor:[UIColor blackColor]
                       forState:UIControlStateNormal];
         [btnSave addTarget:self
@@ -263,7 +263,7 @@ UITableViewDataSource>
         UIButton *btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
         btnSave.frame = CGRectMake(0, CGRectGetMaxY(line.frame), CGRectGetWidth(whiteView.frame), 50);
         [whiteView addSubview:btnSave];
-        [btnSave setTitle:@"保存" forState:UIControlStateNormal];
+        [btnSave setTitle:@"关闭" forState:UIControlStateNormal];
         [btnSave setTitleColor:[UIColor blackColor]
                       forState:UIControlStateNormal];
         [btnSave addTarget:self
