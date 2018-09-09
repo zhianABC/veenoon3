@@ -406,7 +406,7 @@
 - (void) didPupConfigView:(StickerLayerView*)sticker {
     NSDictionary *dic = sticker._element;
     
-    NSString *deviceName = [dic objectForKey:@"name"];
+    //NSString *deviceName = [dic objectForKey:@"name"];
     NSString *class = [dic objectForKey:@"class"];
         
     if(class)
