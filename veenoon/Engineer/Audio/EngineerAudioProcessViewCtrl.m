@@ -361,7 +361,7 @@
     int cellHeight = 120;
     int leftRight = ENGINEER_VIEW_LEFT;
     int space = 8;
-    
+    int ySpace = 15;
     if(_curProcessor._inAudioProxys == nil ||
        _curProcessor._outAudioProxys == nil)
     {
@@ -426,7 +426,7 @@
         int row = index/colNumber;
         int col = index%colNumber;
         int startX = col*cellWidth+col*space+leftRight;
-        int startY = row*cellHeight+space*row+height+20;
+        int startY = row*cellHeight+ySpace*row+height+20;
         if (row>=1) {
             startY-=20;
         }
@@ -470,7 +470,7 @@
         int row = i/colNumber;
         int col = i%colNumber;
         int startX = col*cellWidth+col*space+leftRight;
-        int startY = row*cellHeight+space*row+height+inputOutGap+20;
+        int startY = row*cellHeight+ySpace*row+height+inputOutGap+20;
         
         if (row>=1) {
             startY-=20;
@@ -536,7 +536,7 @@
     
     for (SlideButton *button in _selectedBtnArray) {
         
-        button._valueLabel.text = [NSString stringWithFormat:@"%0.1f db", circleValue];
+        button._valueLabel.text = [NSString stringWithFormat:@"%0.1f dB", circleValue];
         [button setCircleValue:fabs((value - minAnalogyGain)/(maxAnalogyGain - minAnalogyGain))];
         
         id data = button.data;
@@ -570,7 +570,7 @@
     
     for (SlideButton *button in _selectedBtnArray) {
         
-        button._valueLabel.text = [NSString stringWithFormat:@"%0.1f db", circleValue];
+        button._valueLabel.text = [NSString stringWithFormat:@"%0.1f dB", circleValue];
         [button setCircleValue:fabs((value - minAnalogyGain)/(maxAnalogyGain - minAnalogyGain))];
         
         id data = button.data;

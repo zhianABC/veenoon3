@@ -77,8 +77,8 @@
         _titleLabel.textAlignment = NSTextAlignmentCenter;
         
         _valueLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth(frame)/2-30,
-                                                                CGRectGetHeight(frame)-20,
-                                                                60, 20)];
+                                                                CGRectGetHeight(frame)-25,
+                                                                60, 25)];
         _valueLabel.backgroundColor = [UIColor clearColor];
         [self addSubview:_valueLabel];
         _valueLabel.font = [UIFont boldSystemFontOfSize:11];
