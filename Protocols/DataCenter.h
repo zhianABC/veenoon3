@@ -41,4 +41,6 @@
 
 - (NSArray *)userDrivers;
 
+- (NSMutableDictionary*) getAllDrivers;
+
 @end

@@ -47,6 +47,14 @@ static DataCenter *_globalDataInstanse;
 	}
 	return _globalDataInstanse;
 }
+- (NSMutableDictionary*) getAllDrivers {
+    if (_mapDrivers) {
+        return _mapDrivers;
+    } else {
+        [self syncDriversWithServer];
+    }
+    return _mapDrivers;
+}
 
 - (void) syncDriversWithServer{
     

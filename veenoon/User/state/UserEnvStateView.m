@@ -15,6 +15,8 @@
     if(self = [super initWithFrame:frame])
     {
         self._dataArray = dataArray;
+        
+        self.backgroundColor = [UIColor clearColor];
     }
     return self;
 }
