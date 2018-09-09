@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "UserBaseViewControllor.h"
 
-@interface UserDeviceStateViewController : UIViewController
+@interface UserDeviceStateViewController : UIViewController {
+    UIView *_topBar;
+    UILabel *titleLabel;
+}
 
 @end

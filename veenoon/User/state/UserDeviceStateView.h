@@ -10,6 +10,8 @@
 
 @interface UserDeviceStateView : UIView {
     NSMutableArray *_dataArray;
+    
+    
 }
 @property (nonatomic, strong) NSMutableArray *_dataArray;
 

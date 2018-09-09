@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "veenoon/User/state/UserDeviceStateViewController.m"
-            timestampString = "558178697.0177751"
+            timestampString = "558184360.269803"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "109"
-            endingLineNumber = "109"
+            startingLineNumber = "196"
+            endingLineNumber = "196"
             landmarkName = "-getDeviceDataArray"
             landmarkType = "7">
          </BreakpointContent>
