@@ -28,7 +28,6 @@
 
 @synthesize _proxyObj;
 
-@synthesize _localSavedProxys;
 @synthesize config;
 
 - (id) init

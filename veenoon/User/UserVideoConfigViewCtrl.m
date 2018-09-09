@@ -21,6 +21,8 @@
 #import "PlugsCtrlTitleHeader.h"
 #import "TeslariaComboChooser.h"
 
+#import "VCameraSettingSet.h"
+
 
 @interface UserVideoConfigViewCtrl () <UserVideoConfigViewDelegate, VVideoProcessSetProxyDelegate, UIPopoverPresentationControllerDelegate> {
    
@@ -254,24 +256,6 @@
     {
         [KVNProgress show];
         
-        /*
-        [[RegulusSDK sharedRegulusSDK] GetDriverProxys:driver.m_id completion:^(BOOL result, NSArray *proxys, NSError *error) {
-            
-            [KVNProgress dismiss];
-            
-            if (result) {
-                if ([proxys count]) {
-                    
-                    [block_self loadedVideoProcessorProxy:proxys];
-                    
-                }
-            }
-            else{
-                [KVNProgress showErrorWithStatus:[error description]];
-            }
-        }];
-         */
-        
         [[RegulusSDK sharedRegulusSDK] GetDriverCommands:driver.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
             
             [KVNProgress dismiss];
@@ -425,7 +409,7 @@
     NSString *deviceName = [dic objectForKey:@"name"];
     NSString *class = [dic objectForKey:@"class"];
         
-    if(class && [class isEqualToString:@"VDVDPlayerSet"])
+    if(class)
     {
         BasePlugElement * target = nil;
         NSString *driverid = [dic objectForKey:@"driverid"];
@@ -445,30 +429,36 @@
             }
         }
         
-        
-        
         if(target)
         {
-            UserVideoDVDDiskViewCtrl *ctrl = [[UserVideoDVDDiskViewCtrl alloc] init];
-            ctrl._currentProcessor = (VDVDPlayerSet*) target;
-            [self.navigationController pushViewController:ctrl animated:YES];
+            if([target isKindOfClass:[VDVDPlayerSet class]])
+            {
+                UserVideoDVDDiskViewCtrl *ctrl = [[UserVideoDVDDiskViewCtrl alloc] init];
+                ctrl._currentProcessor = (VDVDPlayerSet*) target;
+                [self.navigationController pushViewController:ctrl animated:YES];
+            }
+            else if([target isKindOfClass:[VCameraSettingSet class]])
+            {
+                UserVideoCameraSettingsViewCtrl *ctrl = [[UserVideoCameraSettingsViewCtrl alloc] init];
+                ctrl._currentProcessor = (VCameraSettingSet*) target;
+                [self.navigationController pushViewController:ctrl animated:YES];
+            }
         }
         
-        
     }
         
-    if ([@"远程视讯" isEqualToString:deviceName]) {
-        UserVideoRemoteShiXunViewCtrl *ctrl = [[UserVideoRemoteShiXunViewCtrl alloc] init];
-        [self.navigationController pushViewController:ctrl animated:YES];
-    }
-    if ([deviceName containsString:video_camera_name]) {
-        UserVideoCameraSettingsViewCtrl *ctrl = [[UserVideoCameraSettingsViewCtrl alloc] init];
-        [self.navigationController pushViewController:ctrl animated:YES];
-    }
-    if ([@"录播机" isEqualToString:deviceName]) {
-        UserVideoLuBoJiViewCtrl *ctrl = [[UserVideoLuBoJiViewCtrl alloc] init];
-        [self.navigationController pushViewController:ctrl animated:YES];
-    }
+//    if ([@"远程视讯" isEqualToString:deviceName]) {
+//        UserVideoRemoteShiXunViewCtrl *ctrl = [[UserVideoRemoteShiXunViewCtrl alloc] init];
+//        [self.navigationController pushViewController:ctrl animated:YES];
+//    }
+//    if ([deviceName containsString:video_camera_name]) {
+//        UserVideoCameraSettingsViewCtrl *ctrl = [[UserVideoCameraSettingsViewCtrl alloc] init];
+//        [self.navigationController pushViewController:ctrl animated:YES];
+//    }
+//    if ([@"录播机" isEqualToString:deviceName]) {
+//        UserVideoLuBoJiViewCtrl *ctrl = [[UserVideoLuBoJiViewCtrl alloc] init];
+//        [self.navigationController pushViewController:ctrl animated:YES];
+//    }
 }
 
 - (void) okAction:(id)sender{

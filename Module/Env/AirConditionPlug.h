@@ -19,9 +19,6 @@
 //<VDVDPlayerProxy>
 @property (nonatomic, strong) AirConditionProxy *_proxyObj;
 
-//<RgsConnectionObj>
-@property (nonatomic, strong) NSArray *_localSavedProxys;
-
 
 
 - (NSString*) deviceName;

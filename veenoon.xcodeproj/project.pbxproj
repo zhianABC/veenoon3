@@ -184,6 +184,8 @@
 		3421561920597293005205D6 /* slide_btn_gray_nokd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3421561720597292005205D6 /* slide_btn_gray_nokd@2x.png */; };
 		34217A6F1FCE98200006701C /* UserVideoConfigView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34217A6E1FCE98200006701C /* UserVideoConfigView.m */; };
 		34217A721FCE9C160006701C /* StickerLayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34217A711FCE9C150006701C /* StickerLayerView.m */; };
+		342188122144F4FF00DBAA4D /* CameraView.m in Sources */ = {isa = PBXBuildFile; fileRef = 342188112144F4FF00DBAA4D /* CameraView.m */; };
+		342188152144F95A00DBAA4D /* DVDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 342188142144F95A00DBAA4D /* DVDView.m */; };
 		3421B09B210B00C1001C4B22 /* AutoRunViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3421B09A210B00C1001C4B22 /* AutoRunViewController.m */; };
 		3421B09E210B00D3001C4B22 /* AutoRunSetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3421B09D210B00D3001C4B22 /* AutoRunSetView.m */; };
 		3421EA2D1FC4136600DC5378 /* CustomPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3421EA2B1FC4136600DC5378 /* CustomPickerView.m */; };
@@ -1236,6 +1238,10 @@
 		34217A6E1FCE98200006701C /* UserVideoConfigView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserVideoConfigView.m; sourceTree = "<group>"; };
 		34217A701FCE9C150006701C /* StickerLayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StickerLayerView.h; sourceTree = "<group>"; };
 		34217A711FCE9C150006701C /* StickerLayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StickerLayerView.m; sourceTree = "<group>"; };
+		342188102144F4FF00DBAA4D /* CameraView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraView.h; sourceTree = "<group>"; };
+		342188112144F4FF00DBAA4D /* CameraView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraView.m; sourceTree = "<group>"; };
+		342188132144F95A00DBAA4D /* DVDView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVDView.h; sourceTree = "<group>"; };
+		342188142144F95A00DBAA4D /* DVDView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DVDView.m; sourceTree = "<group>"; };
 		3421B099210B00C1001C4B22 /* AutoRunViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AutoRunViewController.h; sourceTree = "<group>"; };
 		3421B09A210B00C1001C4B22 /* AutoRunViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AutoRunViewController.m; sourceTree = "<group>"; };
 		3421B09C210B00D3001C4B22 /* AutoRunSetView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AutoRunSetView.h; sourceTree = "<group>"; };
@@ -3585,8 +3591,8 @@
 				EBF831E21FD03A110096E6EC /* UserVideoDVDDiskViewCtrl.m */,
 				EBF831E51FD03E3B0096E6EC /* UserVideoRemoteShiXunViewCtrl.h */,
 				EBF831E61FD03E4B0096E6EC /* UserVideoRemoteShiXunViewCtrl.m */,
-				EBF831E81FD03EC90096E6EC /* UserVideoCameraSettingsViewCtrl.m */,
 				EBF831EA1FD03ED30096E6EC /* UserVideoCameraSettingsViewCtrl.h */,
+				EBF831E81FD03EC90096E6EC /* UserVideoCameraSettingsViewCtrl.m */,
 				EBF831EB1FD03EEF0096E6EC /* UserVideoLuBoJiViewCtrl.h */,
 				EBF831EC1FD03EFA0096E6EC /* UserVideoLuBoJiViewCtrl.m */,
 				EB09C47D1FD25B4E00776540 /* UserLightConfigViewCtrl.h */,
@@ -3803,8 +3809,12 @@
 				EB4E39DF20273C9D00533575 /* RightView */,
 				EB1A55D01FEAA10E000B18E6 /* EngineerDVDViewController.h */,
 				EB1A55D11FEAA10E000B18E6 /* EngineerDVDViewController.m */,
+				342188132144F95A00DBAA4D /* DVDView.h */,
+				342188142144F95A00DBAA4D /* DVDView.m */,
 				EB1A55D71FEF4E0D000B18E6 /* EngineerCameraViewController.h */,
 				EB1A55D81FEF4E0D000B18E6 /* EngineerCameraViewController.m */,
+				342188102144F4FF00DBAA4D /* CameraView.h */,
+				342188112144F4FF00DBAA4D /* CameraView.m */,
 				EB1A55F21FEF80D7000B18E6 /* EngineerRemoteVideoViewCtrl.h */,
 				EB1A55F31FEF80D7000B18E6 /* EngineerRemoteVideoViewCtrl.m */,
 				EB1A56131FEF8F29000B18E6 /* EngineerVideoProcessViewCtrl.h */,
@@ -4864,6 +4874,7 @@
 				EB5F7F871FD593F800351888 /* EngineerSysSelectViewCtrl.m in Sources */,
 				04DE1EAC1AD6AEE000D49E2F /* SDImageCache.m in Sources */,
 				EBDF1BFF1FC5BA0900A756EA /* UserMettingRoomConfig.m in Sources */,
+				342188122144F4FF00DBAA4D /* CameraView.m in Sources */,
 				341DD3C421183DF0007CD30F /* AutoRunCell.m in Sources */,
 				3495268120F0C5B700A6BF00 /* DSwitchLightRightView.m in Sources */,
 				EB09EF371FD9801400C968CA /* EngineerEnvDevicePluginViewCtrl.m in Sources */,
@@ -4921,6 +4932,7 @@
 				EB3685FD1FC07A5A009973A3 /* SettingsViewView.m in Sources */,
 				3456C1A820A0A32A001FAB61 /* EDimmerLight.m in Sources */,
 				34766EBC20CE2237006B9E82 /* Base64.m in Sources */,
+				342188152144F95A00DBAA4D /* DVDView.m in Sources */,
 				EB1717B81FF6150400CBDB81 /* EngineerScenarioSettingsViewCtrl.m in Sources */,
 				349DADDF206E8D02001593DE /* AudioEHand2Hand.m in Sources */,
 				3421EA2D1FC4136600DC5378 /* CustomPickerView.m in Sources */,

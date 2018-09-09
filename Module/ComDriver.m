@@ -21,11 +21,8 @@
 
 @implementation ComDriver
 
-//@synthesize _proxyObj;
-//@synthesize _comConnections;
 @synthesize _comConnections;
 @synthesize config;
-//@synthesize _localSavedProxys;
 
 - (id) init
 {

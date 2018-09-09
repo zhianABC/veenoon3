@@ -178,13 +178,7 @@
     vcam.delegate = self;
     
     [vcam checkRgsProxyCommandLoad];
-    
-    if([_currentObj._localSavedProxys count])
-    {
-        NSDictionary *local = [_currentObj._localSavedProxys objectAtIndex:0];
-        [vcam recoverWithDictionary:local];
-        
-    }
+
     
     self._currentObj._proxyObj = vcam;
     

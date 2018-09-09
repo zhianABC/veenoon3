@@ -8,13 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "UserBaseViewControllor.h"
+
+@class VCameraSettingSet;
+
 @interface UserVideoCameraSettingsViewCtrl : UserBaseViewControllor {
-    NSMutableArray *_cameraSysArray;
+   
     
-    int _number;
 }
-@property(nonatomic, strong) NSMutableArray *_cameraSysArray;
-@property(nonatomic, assign) int _number;
+@property(nonatomic, strong) VCameraSettingSet *_currentProcessor;
+
 @end
 
 
