@@ -385,8 +385,8 @@
                 [inDevice buttonWithIcon:[UIImage imageNamed:icon]
                             selectedIcon:[UIImage imageNamed:icon_s]
                                     text:name
-                             normalColor:[UIColor whiteColor]
-                                selColor:RGB(230, 151, 50)];
+                             normalColor:NEW_UR_BUTTON_GRAY_COLOR
+                                selColor:NEW_ER_BUTTON_SD_COLOR];
                 
                 inDevice.vdata = vap._voiceInDevice;
                 
@@ -399,7 +399,6 @@
                 [_proxysView addSubview:inDevice];
                 [_iconBtns addObject:inDevice];
             }
-            
 
         }
         
