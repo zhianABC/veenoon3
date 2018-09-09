@@ -628,90 +628,6 @@
     }
 }
 
-
-/*
-- (void) addInputDevice:(NSDictionary*)data{
-    
-    
-    UIButton *lastAddBtn = [_inPutBtnArray lastObject];
-    
-    int idx = (int)[_inPutBtnArray count] - 1;
-    
-    CGRect rc = lastAddBtn.frame;
-    rc.origin.y = 0;
-    rc.size.height = 110;
-    
-    TwoIconAndTitleView *iBtn = [[TwoIconAndTitleView alloc] initWithFrame:rc];
-    iBtn.tag = idx;
-    iBtn.delegate = self;
-    iBtn.clipsToBounds = YES;
-    [iBtn fillData:data];
-    [scroolViewIn addSubview:iBtn];
-    
-    
-    NSString *titleStr = [NSString stringWithFormat:@"%d", idx+1];
-    [iBtn setTitle:titleStr];
-   
-
-    CGRect newRC = rc;
-    newRC.origin.x = CGRectGetMaxX(rc) + 20;
-    newRC.origin.y = 10;
-    newRC.size.height = 80;
-    
-    [UIView beginAnimations:nil context:nil];
-    lastAddBtn.frame = newRC;
-    [UIView commitAnimations];
-    
-    [_inPutBtnArray insertObject:iBtn atIndex:idx];
-    
-    [_selectedDataMap setObject:data
-                         forKey:[NSNumber numberWithInt:idx]];
-    
-}
-
-
-- (void) addOutputDevice:(NSDictionary*)data{
-    
-    UIButton *lastAddBtn = [_outPutBtnArray lastObject];
-    
-    int idx = (int)[_outPutBtnArray count] - 1;
-    
-    CGRect rc = lastAddBtn.frame;
-    rc.origin.y = 0;
-    rc.size.height = 110;
-    
-    TwoIconAndTitleView *iBtn = [[TwoIconAndTitleView alloc] initWithFrame:rc];
-    iBtn.tag = idx;
-    iBtn.clipsToBounds = YES;
-    [iBtn fillData:data];
-    [scroolViewOut addSubview:iBtn];
-    
-    iBtn.delegate = self;
-    
-    NSString *titleStr = [NSString stringWithFormat:@"%d", idx+1];
-    [iBtn setTitle:titleStr];
-    
-    //    [iBtn addTarget:self
-    //                  action:@selector(inputBtnAction:)
-    //        forControlEvents:UIControlEventTouchUpInside];
-    //
-    CGRect newRC = rc;
-    newRC.origin.x = CGRectGetMaxX(rc) + 20;
-    newRC.origin.y = 10;
-    newRC.size.height = 80;
-    
-    [UIView beginAnimations:nil context:nil];
-    lastAddBtn.frame = newRC;
-    [UIView commitAnimations];
-    
-    [_outPutBtnArray insertObject:iBtn atIndex:idx];
-    
-    [_outDataMap setObject:data
-                         forKey:[NSNumber numberWithInt:idx]];
-    
-}
-*/
-
 - (void) didEndDragingElecCell:(NSDictionary *)data pt:(CGPoint)pt {
     
     CGPoint viewPoint = [self.view convertPoint:pt fromView:_rightView];
@@ -739,8 +655,6 @@
                     break;
                 }
             }
-            
-           // [self addInputDevice:data];
             
         }
         else
