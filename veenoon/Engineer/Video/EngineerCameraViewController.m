@@ -55,7 +55,8 @@
     CameraView *camView = [[CameraView alloc] initWithFrame:CGRectMake(0,
                                                                        0,
                                                                        SCREEN_WIDTH,
-                                                                       SCREEN_HEIGHT)];
+                                                                       SCREEN_HEIGHT)
+                           withButtonColor:NEW_ER_BUTTON_GRAY_COLOR2 withButtonSelColor:NEW_ER_BUTTON_BL_COLOR];
     camView._vCamera = _currentObj;
     [self.view addSubview:camView];
     

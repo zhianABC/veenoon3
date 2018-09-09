@@ -18,4 +18,6 @@
 
 - (void) loadCurrentDeviceDriver;
 
+- (id)initWithFrame:(CGRect)frame withButtonColor:(UIColor*) color withButtonSelColor:(UIColor*) selColor;
+
 @end
