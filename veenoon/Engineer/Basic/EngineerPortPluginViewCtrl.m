@@ -112,7 +112,7 @@
     [self.view addSubview:portDNSLabel];
     portDNSLabel.font = [UIFont boldSystemFontOfSize:18];
     portDNSLabel.textColor  = [UIColor whiteColor];
-    portDNSLabel.text = @"请配置您的串口管理系统";
+    portDNSLabel.text = @"请配置您的辅助管理系统";
     
     portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, CGRectGetMaxY(portDNSLabel.frame)+20, SCREEN_WIDTH-80, 20)];
     portDNSLabel.backgroundColor = [UIColor clearColor];

@@ -801,7 +801,7 @@
     else if(section == 3)
         rowL.text = @"传感器设备";
     else
-        rowL.text = @"串口设备";
+        rowL.text = @"辅助设备";
     
     [header addSubview:rowL];
     
