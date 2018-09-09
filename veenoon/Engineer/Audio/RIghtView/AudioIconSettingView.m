@@ -168,7 +168,7 @@
     float xx = 15;
     float i = (self.frame.size.width - 30 - ([_data count] * 80 ))/2.0;
     if(xx < i )
-        xx = i;
+        xx = i+15;
     
     
     for(int idx = 0; idx < [_data count]; idx++)
@@ -179,6 +179,7 @@
                                    initWithFrame:CGRectMake(xx, 10,
                                                             80, 80)];
         [_content addSubview:rowCell];
+        [rowCell setIconContentsGravity:kCAGravityCenter];
         rowCell.tag = idx;
         rowCell._enableDrag = YES;
         rowCell.delegate_ = self;
@@ -186,14 +187,14 @@
         NSString *image = [dic objectForKey:@"icon"];
         [rowCell setSticker:image];
         
-        NSString *sel = [dic objectForKey:@"icon_sel"];
+        NSString *sel = [dic objectForKey:@"icon"];
         rowCell.selectedImg = [UIImage imageNamed:sel];
         
         xx+=80;
     }
 
-    _content.contentSize  = CGSizeMake(xx, 100);
-    
+    if(xx > _content.frame.size.width)
+        _content.contentSize  = CGSizeMake(xx, 100);
 }
 
 

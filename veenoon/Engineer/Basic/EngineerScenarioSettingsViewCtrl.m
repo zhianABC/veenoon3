@@ -29,6 +29,8 @@
     SIconSelectView *_settingview;
     UIScrollView *scroolView;
     
+    UIButton *iBtn;
+    
     int topy;
 }
 @property (nonatomic, strong) NSMutableArray *_sBtns;
@@ -111,7 +113,7 @@
     topy = CGRectGetMaxY(portDNSLabel.frame)+20;
 
     UIButton *goHomeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    goHomeBtn.frame = CGRectMake(SCREEN_WIDTH/2-25, 0, 50, 50);
+    goHomeBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0, 160, 50);
     [bottomBar addSubview:goHomeBtn];
     [goHomeBtn setImage:[UIImage imageNamed:@"gohome_icon.png"]
                forState:UIControlStateNormal];
@@ -120,10 +122,23 @@
     [goHomeBtn addTarget:self
               action:@selector(gohomeAction:)
     forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    iBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    iBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
+    [bottomBar addSubview:iBtn];
+    [iBtn setImage:[UIImage imageNamed:@"i_btn_white.png"]
+          forState:UIControlStateNormal];
+    [iBtn addTarget:self
+             action:@selector(iconAction:)
+   forControlEvents:UIControlEventTouchUpInside];
+    iBtn.center = CGPointMake(SCREEN_WIDTH/2, iBtn.center.y);
 
     _settingview = [[SIconSelectView alloc]
-                    initWithFrame:CGRectMake(SCREEN_WIDTH-310,
-                                             64, 310, SCREEN_HEIGHT-114)];
+                    initWithFrame:CGRectMake(0,
+                                             SCREEN_HEIGHT,
+                                             SCREEN_WIDTH,
+                                             100)];
     _settingview.delegate = self;
     
     [self.view addSubview:_settingview];
@@ -150,6 +165,42 @@
                                              selector:@selector(notifyReloadScenario:)
                                                  name:@"Notify_Reload_Senario"
                                                object:nil];
+}
+
+
+- (void) iconAction:(id)sender{
+    
+    //如果在显示，消失
+    if(CGRectGetMinY(_settingview.frame) < SCREEN_HEIGHT)
+    {
+        [iBtn setImage:[UIImage imageNamed:@"i_btn_white.png"]
+              forState:UIControlStateNormal];
+        
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             
+                             _settingview.frame  = CGRectMake(0,
+                                                            SCREEN_HEIGHT,
+                                                            SCREEN_WIDTH,
+                                                            100);
+                         } completion:^(BOOL finished) {
+                             
+                         }];
+    }
+    else//如果没显示，显示
+    {
+        
+        [iBtn setImage:[UIImage imageNamed:@"i_btn_yellow.png"]
+              forState:UIControlStateNormal];
+        
+        
+        [UIView beginAnimations:nil context:nil];
+        _settingview.frame  = CGRectMake(0,
+                                       SCREEN_HEIGHT-150,
+                                       SCREEN_WIDTH,
+                                       100);
+        [UIView commitAnimations];
+    }
 }
 
 - (void) gohomeAction:(id)sender{
@@ -269,7 +320,7 @@
     {
     scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(leftRightSpace,
                                                                 topy,
-                                                                SCREEN_WIDTH-leftRightSpace*2-300,
+                                                                SCREEN_WIDTH-leftRightSpace*2,
                                                                 SCREEN_HEIGHT-240)];
         
     }
@@ -281,7 +332,7 @@
     
     int scrollHeight = rowNumber*cellHeight + (rowNumber-1)*colGap+10;
     
-    scroolView.contentSize = CGSizeMake(SCREEN_WIDTH-leftRightSpace*2-300, scrollHeight);
+    scroolView.contentSize = CGSizeMake(SCREEN_WIDTH-leftRightSpace*2, scrollHeight);
     
     [_sBtns removeAllObjects];
     
@@ -481,9 +532,6 @@
     
     CGPoint viewPoint = [self.view convertPoint:pt fromView:_settingview];
     
-    //    viewPoint.x -= CGRectGetMinX(scroolView.frame);
-    //    viewPoint.y -= CGRectGetMinY(scroolView.frame);
-    //
     NSString *imageName = [data objectForKey:@"iconbig"];
     NSString *icon_user = [data objectForKey:@"icon_user"];
     NSString *title = [data objectForKey:@"title"];

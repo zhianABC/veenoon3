@@ -725,7 +725,7 @@
     //如果在显示，消失
     if(CGRectGetMinY(_inconView.frame) < SCREEN_HEIGHT)
     {
-        [okBtn setImage:[UIImage imageNamed:@"i_btn_white.png"]
+        [iBtn setImage:[UIImage imageNamed:@"i_btn_white.png"]
                forState:UIControlStateNormal];
         
         [UIView animateWithDuration:0.25
@@ -742,7 +742,7 @@
     else//如果没显示，显示
     {
         
-        [okBtn setImage:[UIImage imageNamed:@"i_btn_yellow.png"]
+        [iBtn setImage:[UIImage imageNamed:@"i_btn_yellow.png"]
                forState:UIControlStateNormal];
         
         

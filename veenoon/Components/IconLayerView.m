@@ -60,16 +60,21 @@
         
         _sticker = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
         [self addSubview:_sticker];
-        _sticker.layer.contentsGravity = kCAGravityResizeAspect;
-        
+        _sticker.layer.contentsGravity = kCAGravityCenter;
+        _sticker.center  = CGPointMake(frame.size.width/2.0,
+                                       frame.size.height/2.0);
         
         _stickerCopy = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0,
                                                                      50,
                                                                      50)];
         
         [self addSubview:_stickerCopy];
-        _stickerCopy.layer.contentsGravity = kCAGravityResizeAspect;
+        _stickerCopy.layer.contentsGravity = kCAGravityCenter;
         _stickerCopy.alpha = 0;
+        
+        _stickerCopy.center  = CGPointMake(frame.size.width/2.0,
+                                           frame.size.height/2.0);
+        
         
     }
     return self;
