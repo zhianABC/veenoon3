@@ -137,8 +137,10 @@
         
         NSString *lowFilter = _currentObj._proxyObj._mixLowFilter;
         int lowWalue = [lowFilter intValue]*1000;
-        if(lowWalue < _lowFilterMin)
+        if(lowWalue < _lowFilterMin){
             lowWalue = _lowFilterMin;
+            lowFilter = [NSString stringWithFormat:@"%d", _lowFilterMin];
+        }
         float lowMax = (_lowFilterMax - _lowFilterMin);
         if(lowMax)
         {

@@ -638,6 +638,9 @@
         _currentRoom.regulus_user_id = _regulus_user_id;
         [[DataBase sharedDatabaseInstance] saveMeetingRoom:_currentRoom];
         
+        [[RegulusSDK sharedRegulusSDK] SetDate:[NSDate date]
+                                    completion:nil];
+        
         [KVNProgress dismiss];
         
         [DataSync sharedDataSync]._currentReglusLogged = @{@"gw_id":_regulus_gateway_id,
