@@ -249,7 +249,7 @@
             {
                 if([param_info.name isEqualToString:@"RATE"])
                 {
-                    [param setObject:_mixPEQRate forKey:param_info.name];
+                    [param setObject:peqRate forKey:param_info.name];
                 }
                 else if ([param_info.name isEqualToString:@"GAIN"])
                 {

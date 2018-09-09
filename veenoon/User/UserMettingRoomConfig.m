@@ -237,6 +237,9 @@
     [[DataBase sharedDatabaseInstance] saveMeetingRoom:_currentRoom];
     
     
+    [[RegulusSDK sharedRegulusSDK] SetDate:[NSDate date]
+                                completion:nil];
+    
     
     [DataSync sharedDataSync]._currentReglusLogged = @{@"gw_id":_regulus_gateway_id,
                                                        @"user_id":_regulus_user_id
