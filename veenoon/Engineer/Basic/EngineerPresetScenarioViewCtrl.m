@@ -397,72 +397,72 @@
 
 - (void) prepareCurrentAreaDrivers:(NSArray*)drivers{
     
-    NSMutableArray *audios = [NSMutableArray array];
-    NSMutableArray *videos = [NSMutableArray array];
-    NSMutableArray *envs = [NSMutableArray array];
-    
-    NSMutableDictionary *result = [NSMutableDictionary dictionary];
-    [result setObject:audios forKey:@"audio"];
-    [result setObject:videos forKey:@"video"];
-    [result setObject:envs forKey:@"env"];
-    
-    self._selectedDevices = result;
-    
-    for(RgsDriverObj *driver in drivers)
-    {
-        RgsDriverInfo *info = driver.info;
-        
-        NSDictionary *device = [[DataCenter defaultDataCenter] driverWithKey:info.serial];
-        
-        if(device)
-        {
-            NSString *classname = [device objectForKey:@"driver_class"];
-            Class someClass = NSClassFromString(classname);
-            BasePlugElement * obj = [[someClass alloc] init];
-            
-            if(obj)
-            {
-                obj._name = [device objectForKey:@"name"];
-                obj._brand = [device objectForKey:@"brand"];
-                obj._type = [device objectForKey:@"ptype"];
-                obj._driverUUID = [device objectForKey:@"driver"];
-                
-                obj._driverInfo = info;
-                
-                obj._plugicon = [device objectForKey:@"icon"];
-                obj._plugicon_s = [device objectForKey:@"icon_s"];
-                
-                obj._driver = driver;
-                
-                
-                
-                NSString *type = [device objectForKey:@"type"];
-                if([type isEqualToString:@"audio"])
-                {
-                    [audios addObject:obj];
-                }
-                else if([type isEqualToString:@"video"])
-                {
-                    [videos addObject:obj];
-                }
-                else if([type isEqualToString:@"env"])
-                {
-                    [envs addObject:obj];
-                }
-            }
-
-        }
-        
-    }
-
-    [self showCells:1000 datas:audios];
-    [self showCells:2000 datas:videos];
-    [self showCells:3000 datas:envs];
-    
-    
-    _scenario._audioDevices = audios;
-    _scenario._videoDevices = videos;
-    _scenario._envDevices = envs;
+//    NSMutableArray *audios = [NSMutableArray array];
+//    NSMutableArray *videos = [NSMutableArray array];
+//    NSMutableArray *envs = [NSMutableArray array];
+//
+//    NSMutableDictionary *result = [NSMutableDictionary dictionary];
+//    [result setObject:audios forKey:@"audio"];
+//    [result setObject:videos forKey:@"video"];
+//    [result setObject:envs forKey:@"env"];
+//
+//    self._selectedDevices = result;
+//
+//    for(RgsDriverObj *driver in drivers)
+//    {
+//        RgsDriverInfo *info = driver.info;
+//
+//        NSDictionary *device = [[DataCenter defaultDataCenter] driverWithKey:info.serial];
+//
+//        if(device)
+//        {
+//            NSString *classname = [device objectForKey:@"driver_class"];
+//            Class someClass = NSClassFromString(classname);
+//            BasePlugElement * obj = [[someClass alloc] init];
+//
+//            if(obj)
+//            {
+//                obj._name = [device objectForKey:@"name"];
+//                obj._brand = [device objectForKey:@"brand"];
+//                obj._type = [device objectForKey:@"ptype"];
+//                obj._driverUUID = [device objectForKey:@"driver"];
+//
+//                obj._driverInfo = info;
+//
+//                obj._plugicon = [device objectForKey:@"icon"];
+//                obj._plugicon_s = [device objectForKey:@"icon_s"];
+//
+//                obj._driver = driver;
+//
+//
+//
+//                NSString *type = [device objectForKey:@"type"];
+//                if([type isEqualToString:@"audio"])
+//                {
+//                    [audios addObject:obj];
+//                }
+//                else if([type isEqualToString:@"video"])
+//                {
+//                    [videos addObject:obj];
+//                }
+//                else if([type isEqualToString:@"env"])
+//                {
+//                    [envs addObject:obj];
+//                }
+//            }
+//
+//        }
+//
+//    }
+//
+//    [self showCells:1000 datas:audios];
+//    [self showCells:2000 datas:videos];
+//    [self showCells:3000 datas:envs];
+//
+//
+//    _scenario._audioDevices = audios;
+//    _scenario._videoDevices = videos;
+//    _scenario._envDevices = envs;
     
 }
 

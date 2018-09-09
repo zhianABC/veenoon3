@@ -233,12 +233,14 @@
     NSMutableArray *audios = [NSMutableArray array];
     NSMutableArray *videos = [NSMutableArray array];
     NSMutableArray *envs = [NSMutableArray array];
+    NSMutableArray *others = [NSMutableArray array];
     NSMutableArray *ports = [NSMutableArray array];
     
     NSMutableDictionary *result = [NSMutableDictionary dictionary];
     [result setObject:audios forKey:@"audio"];
     [result setObject:videos forKey:@"video"];
     [result setObject:envs forKey:@"env"];
+    [result setObject:others forKey:@"chuangan"];
     [result setObject:ports forKey:@"port"];
     
     self._selectedDevices = result;
@@ -287,6 +289,10 @@
                 }
                 else if([type isEqualToString:@"other"])
                 {
+                    [others addObject:obj];
+                }
+                else if([type isEqualToString:@"com"])
+                {
                     [ports addObject:obj];
                 }
             }
@@ -299,6 +305,7 @@
     self._audioDrivers = audios;
     self._videoDrivers = videos;
     self._envDrivers = envs;
+    self._chuanganDrivers = others;
     self._portDrivers = ports;
     
     [_tableView reloadData];
