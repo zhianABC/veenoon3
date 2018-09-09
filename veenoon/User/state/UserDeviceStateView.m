@@ -55,20 +55,20 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    return 44;
+    return 54;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 30;
+    return 64;
 }
 
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
     UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0,
-                                                              self.frame.size.width, 30)];
+                                                              self.frame.size.width, 64)];
     header.backgroundColor = [UIColor clearColor];
     
-    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(30, 29,
+    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(30, 63,
                                                               self.frame.size.width-60, 1)];
     line.backgroundColor =  NEW_ER_BUTTON_GRAY_COLOR2;
     [header addSubview:line];
@@ -76,7 +76,7 @@
     
     UILabel *rowL = [[UILabel alloc] initWithFrame:CGRectMake(30,
                                                               12,
-                                                              CGRectGetWidth(self.frame)-20, 20)];
+                                                              CGRectGetWidth(self.frame)-20, 40)];
     rowL.backgroundColor = [UIColor clearColor];
     [header addSubview:rowL];
     rowL.font = [UIFont systemFontOfSize:13];
@@ -129,12 +129,12 @@
     UIImageView *titleIcon = [[UIImageView alloc] init];
     titleIcon.image = [UIImage imageNamed:[dataDic objectForKey:@"icon"]];
     [cell addSubview:titleIcon];
-    titleIcon.frame = CGRectMake(30, 7, 30, 30);
+    titleIcon.frame = CGRectMake(30, 17, 20, 20);
     
     
     UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(60,
                                                                 12,
-                                                                CGRectGetWidth(self.frame)/2-70, 20)];
+                                                                CGRectGetWidth(self.frame)/2-70, 40)];
     titleL.backgroundColor = [UIColor clearColor];
     [cell.contentView addSubview:titleL];
     titleL.font = [UIFont systemFontOfSize:13];
@@ -144,7 +144,7 @@
     
     
     UILabel* valueL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame)-140,
-                                                                12,
+                                                                17,
                                                                 80, 20)];
     valueL.backgroundColor = [UIColor clearColor];
     [cell.contentView addSubview:valueL];
@@ -154,7 +154,7 @@
     
     titleIcon = [[UIImageView alloc] init];
     [cell addSubview:titleIcon];
-    titleIcon.frame = CGRectMake(CGRectGetWidth(self.frame)-60, 7, 30, 30);
+    titleIcon.frame = CGRectMake(CGRectGetWidth(self.frame)-60, 17, 20, 20);
     
     NSString *state = [dataDic objectForKey:@"state"];
     if ([state isEqualToString:@"True"]) {
@@ -170,7 +170,7 @@
     
     
     
-    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(30, 29,
+    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(30, 53,
                                                               self.frame.size.width-60, 1)];
     line.backgroundColor =  NEW_ER_BUTTON_GRAY_COLOR2;
     [cell addSubview:line];
