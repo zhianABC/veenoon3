@@ -54,5 +54,5 @@
 
 - (RgsDriverInfo *) testIrDriverInfoByName:(NSString*)name;
 - (void) saveIrDriverToCache:(RgsDriverInfo*)dInfo;
-
+- (NSMutableArray*) getCurrentDrivers;
 @end

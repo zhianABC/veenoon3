@@ -252,6 +252,10 @@ static DataSync* dSyncInstance = nil;
     }
 }
 
+- (NSDictionary*) getCurrentDrivers {
+    return self._currentAreaDrivers;
+}
+
 - (void) syncAreaHasDrivers{
     
     self._currentAreaDrivers = [NSMutableArray array];
