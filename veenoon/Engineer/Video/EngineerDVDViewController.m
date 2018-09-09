@@ -47,7 +47,7 @@
     DVDView *dvd = [[DVDView alloc] initWithFrame:CGRectMake(0,
                                                              0,
                                                              SCREEN_WIDTH,
-                                                             SCREEN_HEIGHT)];
+                                                             SCREEN_HEIGHT) withColor:NEW_ER_BUTTON_GRAY_COLOR2 withSelColor:NEW_ER_BUTTON_BL_COLOR];
     
     [self.view addSubview:dvd];
     

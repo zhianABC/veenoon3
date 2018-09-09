@@ -45,7 +45,7 @@
 }
 */
 
-- (id) initWithFrame:(CGRect)frame
+- (id) initWithFrame:(CGRect)frame withColor:(UIColor*) color withSelColor:(UIColor*) selColor
 {
     if(self = [super initWithFrame:frame])
     {
@@ -139,7 +139,7 @@
                         action:@selector(detailAction:)
               forControlEvents:UIControlEventTouchUpInside];
         
-        UIButton *lastVideoUpBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
+        UIButton *lastVideoUpBtn = [UIButton buttonWithColor:color selColor:selColor];
         lastVideoUpBtn.frame = CGRectMake(0, 0, 80, 80);
         lastVideoUpBtn.layer.cornerRadius = 5;
         lastVideoUpBtn.layer.borderWidth = 2;
@@ -153,7 +153,7 @@
                            action:@selector(menuLeftAction:)
                  forControlEvents:UIControlEventTouchUpInside];
         
-        UIButton *okPlayerBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
+        UIButton *okPlayerBtn = [UIButton buttonWithColor:color selColor:selColor];
         okPlayerBtn.frame = CGRectMake(0, 0, 80, 80);
         okPlayerBtn.layer.cornerRadius = 5;
         okPlayerBtn.layer.borderWidth = 2;
@@ -168,7 +168,7 @@
         [okPlayerBtn addTarget:self action:@selector(okPlayAction:)
               forControlEvents:UIControlEventTouchUpInside];
         
-        UIButton *volumnUpBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
+        UIButton *volumnUpBtn = [UIButton buttonWithColor:color selColor:selColor];
         volumnUpBtn.frame = CGRectMake(0, 0, 80, 80);
         volumnUpBtn.layer.cornerRadius = 5;
         volumnUpBtn.layer.borderWidth = 2;
@@ -182,7 +182,7 @@
                         action:@selector(menuUpAction:)
               forControlEvents:UIControlEventTouchUpInside];
         
-        UIButton *nextPlayBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
+        UIButton *nextPlayBtn = [UIButton buttonWithColor:color selColor:selColor];
         nextPlayBtn.frame = CGRectMake(0, 0, 80, 80);
         nextPlayBtn.layer.cornerRadius = 5;
         nextPlayBtn.layer.borderWidth = 2;
@@ -196,7 +196,7 @@
                         action:@selector(menuRightAction:)
               forControlEvents:UIControlEventTouchUpInside];
         
-        UIButton *volumnDownBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
+        UIButton *volumnDownBtn = [UIButton buttonWithColor:color selColor:selColor];
         volumnDownBtn.frame = CGRectMake(0, 0, 80, 80);
         volumnDownBtn.layer.cornerRadius = 5;
         volumnDownBtn.layer.borderWidth = 2;

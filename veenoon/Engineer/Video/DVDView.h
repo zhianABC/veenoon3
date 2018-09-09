@@ -17,5 +17,5 @@
 @property (nonatomic, strong) VDVDPlayerSet *_currentObj;
 
 - (void) loadCurrentDeviceDriverProxys;
-
+- (id) initWithFrame:(CGRect)frame withColor:(UIColor*) color withSelColor:(UIColor*) selColor;
 @end
