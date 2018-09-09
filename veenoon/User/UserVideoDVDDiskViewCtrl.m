@@ -79,10 +79,7 @@
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
-    
-    VDVDPlayerProxy *vcam = _currentObj._proxyObj;
-    if(vcam)
-        [vcam controlDeviceMenu:@"UP"];
+
 }
 
 - (void) okAction:(id)sender{
