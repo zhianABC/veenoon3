@@ -115,10 +115,8 @@
     okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
     [bottomBar addSubview:okBtn];
-    [okBtn setTitle:@"保存" forState:UIControlStateNormal];
-    [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
-    okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [okBtn setImage:[UIImage imageNamed:@"i_btn_white.png"]
+           forState:UIControlStateNormal];
     [okBtn addTarget:self
               action:@selector(settingsAction:)
     forControlEvents:UIControlEventTouchUpInside];
@@ -179,18 +177,25 @@
     [self.view addSubview:_topView];
     
     _rightView = [[VideoProcessRightView alloc]
-                  initWithFrame:CGRectMake(SCREEN_WIDTH-300,
-                                           64, 300, SCREEN_HEIGHT-114) withVideoDevices:self._currentVideoDevices];
+                  initWithFrame:CGRectMake(0,
+                                           SCREEN_HEIGHT,
+                                           SCREEN_WIDTH,
+                                           100)
+                  withVideoDevices:self._currentVideoDevices];
+    
     _rightView.delegate = self;
     _rightView._numOfDevice = (int) [_videoProcessArray count];
     
-    [self.view insertSubview:_rightView belowSubview:_topView];
+    [self.view insertSubview:_rightView
+                belowSubview:_topView];
     
     
-    UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
-    tapGesture.cancelsTouchesInView =  NO;
-    tapGesture.numberOfTapsRequired = 1;
-    [mask addGestureRecognizer:tapGesture];
+    [self.view bringSubviewToFront:bottomBar];
+    
+//    UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+//    tapGesture.cancelsTouchesInView =  NO;
+//    tapGesture.numberOfTapsRequired = 1;
+//    [mask addGestureRecognizer:tapGesture];
 
     [self getCurrentDeviceDriverProxys];
 }
@@ -428,67 +433,29 @@
     
 }
 
-
-- (void) handleTapGesture:(UIGestureRecognizer*)sender{
-    
-    CGPoint pt = [sender locationInView:self.view];
-    
-    if(pt.x < SCREEN_WIDTH-300)
-    {
-        
-        CGRect rc = _rightView.frame;
-        rc.origin.x = SCREEN_WIDTH;
-        
-        [UIView animateWithDuration:0.25
-                         animations:^{
-                             
-                             _rightView.frame = rc;
-                             
-                         } completion:^(BOOL finished) {
-                             
-                         }];
-        
-        
-        okBtn.hidden = NO;
-        saveBtn.hidden = YES;
-        isSettings = NO;
-    }
-}
-
 - (void) saveAction:(id)sender{
     
-    [self handleTapGesture:nil];
+    [self settingsAction:nil];
     
     
 }
 - (void) settingsAction:(id)sender{
-    //检查是否需要创建
-    if (_rightView == nil) {
-        _rightView = [[VideoProcessRightView alloc]
-                      initWithFrame:CGRectMake(SCREEN_WIDTH-300,
-                                               64, 300, SCREEN_HEIGHT-114) withVideoDevices:self._currentVideoDevices];
-        
-        //创建底部设备切换按钮
-        _rightView._numOfDevice = (int)[_videoProcessArray count];
-        _rightView._currentVideoDevices = self._currentVideoDevices;
-    }
     
     //如果在显示，消失
-    if([_rightView superview])
+    if(CGRectGetMinY(_rightView.frame) < SCREEN_HEIGHT)
     {
-        
-        //写入中控
-        //......
-        
-        [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+        [okBtn setImage:[UIImage imageNamed:@"i_btn_white.png"]
+               forState:UIControlStateNormal];
         
         [UIView animateWithDuration:0.25
                          animations:^{
                              
-                             _rightView.frame  = CGRectMake(SCREEN_WIDTH,
-                                                            64, 300, SCREEN_HEIGHT-114);
+                             _rightView.frame  = CGRectMake(0,
+                                                            SCREEN_HEIGHT,
+                                                            SCREEN_WIDTH,
+                                                            100);
                          } completion:^(BOOL finished) {
-                             [_rightView removeFromSuperview];
+                             
                          }];
     }
     else//如果没显示，显示
@@ -497,13 +464,15 @@
         [_rightView refreshView:_currentObj];
         
         
-        [self.view addSubview:_rightView];
-        [okBtn setTitle:@"保存" forState:UIControlStateNormal];
+        [okBtn setImage:[UIImage imageNamed:@"i_btn_yellow.png"]
+               forState:UIControlStateNormal];
         
         
         [UIView beginAnimations:nil context:nil];
-        _rightView.frame  = CGRectMake(SCREEN_WIDTH-300,
-                                       64, 300, SCREEN_HEIGHT-114);
+        _rightView.frame  = CGRectMake(0,
+                                       SCREEN_HEIGHT-150,
+                                       SCREEN_WIDTH,
+                                       100);
         [UIView commitAnimations];
     }
 }
@@ -632,7 +601,7 @@
     
     CGPoint viewPoint = [self.view convertPoint:pt fromView:_rightView];
     
-    if(viewPoint.x < CGRectGetMinX(_rightView.frame)  - 20)
+    if(viewPoint.y < CGRectGetMinY(_rightView.frame))
     {
         NSNumber *number = [data objectForKey:@"input_output"];
         int numberInt = [number intValue];

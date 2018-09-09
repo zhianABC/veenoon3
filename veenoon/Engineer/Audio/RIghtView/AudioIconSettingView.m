@@ -16,9 +16,9 @@
 #import "AudioEWirlessMike.h"
 #import "AudioEWirlessMeetingSys.h"
 
-@interface AudioIconSettingView () <UITableViewDelegate,
-UITableViewDataSource,AudioIconSettingViewDelegate, EPlusLayerViewDelegate> {
-    UITableView *_tableView;
+@interface AudioIconSettingView () < EPlusLayerViewDelegate> {
+   
+    UIScrollView *_content;
     UIView     *_maskView;
     
     int _curIndex;
@@ -94,12 +94,8 @@ UITableViewDataSource,AudioIconSettingViewDelegate, EPlusLayerViewDelegate> {
             itemID++;
         }
     }
-    
-    NSMutableDictionary *dataDic = [NSMutableDictionary dictionary];
-    [dataDic setObject:finalItems forKey:@"items"];
-    [dataDic setObject:@"图标" forKey:@"title"];
-    
-    self._data = [[NSMutableArray array] arrayByAddingObject:dataDic];
+
+    self._data = finalItems;
     
 }
 
@@ -142,77 +138,48 @@ UITableViewDataSource,AudioIconSettingViewDelegate, EPlusLayerViewDelegate> {
 }
 
 - (id) initWithFrame:(CGRect)frame withCurrentAudios:(NSArray*) currentAudioArrays {
-    self._currentAudioDevices = currentAudioArrays;
+    
     
     if(self = [super initWithFrame:frame]) {
-        _curIndex = -1;
+        
+        self._currentAudioDevices = currentAudioArrays;
         
         [self initData];
         
-        self.backgroundColor = RIGHT_VIEW_CORNER_SD_COLOR;
+        self.backgroundColor = [UIColor clearColor];
         
-        _tableView = [[UITableView alloc] initWithFrame:self.bounds];
-        _tableView.delegate = self;
-        _tableView.dataSource = self;
-        _tableView.backgroundColor = [UIColor clearColor];
-        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        [self addSubview:_tableView];
-        _tableView.clipsToBounds = NO;
+        _content = [[UIScrollView alloc] initWithFrame:CGRectMake(0,
+                                                                  0,
+                                                                  frame.size.width,
+                                                                  frame.size.height)];
+        [self addSubview:_content];
+        _content.clipsToBounds = NO;
+        
+        
+        [self layoutCells];
         
     }
     return self;
 }
 
-#pragma mark -
-#pragma mark Table View DataSource
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (void) layoutCells{
     
-    return [_data count];
-}
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    float xx = 15;
+    float i = (self.frame.size.width - 30 - ([_data count] * 80 ))/2.0;
+    if(xx < i )
+        xx = i;
     
-    if(_curIndex == section)
+    
+    for(int idx = 0; idx < [_data count]; idx++)
     {
-        NSDictionary *row = [_data objectAtIndex:section];
-        NSArray *items = [row objectForKey:@"items"];
-        
-        return [items count];
-    }
-    
-    return 0;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    return 80;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    static NSString *kCellID = @"listCell";
-    
-    UITableViewCell *cell = (UITableViewCell*)[tableView dequeueReusableCellWithIdentifier:kCellID];
-    if(cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kCellID];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        //cell.editing = NO;
-    }
-    [[cell.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    cell.backgroundColor = [UIColor clearColor];
-    
-    NSDictionary *sec = [_data objectAtIndex:indexPath.section];
-    NSArray *items = [sec objectForKey:@"items"];
-    
-    if(indexPath.row < [items count]) {
-        NSDictionary *dic = [items objectAtIndex:indexPath.row];
+        NSDictionary *dic = [_data objectAtIndex:idx];
         
         EPlusLayerView *rowCell = [[EPlusLayerView alloc]
-                                   initWithFrame:CGRectMake(0, 0,
+                                   initWithFrame:CGRectMake(xx, 10,
                                                             80, 80)];
-        [cell.contentView addSubview:rowCell];
-        rowCell.tag = indexPath.section * 100 + indexPath.row;
+        [_content addSubview:rowCell];
+        rowCell.tag = idx;
         rowCell._enableDrag = YES;
         rowCell.delegate_ = self;
         rowCell._element = dic;
@@ -222,141 +189,35 @@ UITableViewDataSource,AudioIconSettingViewDelegate, EPlusLayerViewDelegate> {
         NSString *sel = [dic objectForKey:@"icon_sel"];
         rowCell.selectedImg = [UIImage imageNamed:sel];
         
-        int xx = 90;
-        
-        UILabel* textLabel = [[UILabel alloc]
-                              initWithFrame:CGRectMake(xx,
-                                                       20,
-                                                       tableView.frame.size.width-xx-10, 20)];
-        [cell.contentView addSubview:textLabel];
-        textLabel.textAlignment = NSTextAlignmentLeft;
-        textLabel.font = [UIFont systemFontOfSize:15];
-        textLabel.textColor = [UIColor whiteColor];
-        
-        UILabel *detailLabel = [[UILabel alloc]
-                                initWithFrame:CGRectMake(xx,
-                                                         40,
-                                                         tableView.frame.size.width-xx-10, 20)];
-        [cell.contentView addSubview:detailLabel];
-        detailLabel.textAlignment = NSTextAlignmentLeft;
-        detailLabel.font = [UIFont systemFontOfSize:15];
-        detailLabel.textColor = [UIColor whiteColor];
-        
-        
-        textLabel.text = [dic objectForKey:@"name"];
-        detailLabel.text = [dic objectForKey:@"type"];
+        xx+=80;
     }
-    
-    
-    return cell;
-}
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    _content.contentSize  = CGSizeMake(xx, 100);
     
 }
 
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    
-    return 44;
-}
-
-
-- (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    
-    UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
-    
-    UIImageView *bg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tb_header_bg.png"]];
-    [header addSubview:bg];
-    bg.frame = header.bounds;
-    
-    NSDictionary *sec = [_data objectAtIndex:section];
-    
-    UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(40, 10, SCREEN_WIDTH, 20)];
-    tL.textColor = [UIColor whiteColor];
-    tL.font = [UIFont systemFontOfSize:14];
-    [header addSubview:tL];
-    
-    tL.text = [sec objectForKey:@"title"];
-    
-    UIImageView *iconAdd = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"down_arraw.png"]];
-    [header addSubview:iconAdd];
-    iconAdd.center = CGPointMake(20, 20);
-    
-    if(_curIndex == section)
-    {
-        iconAdd.transform = CGAffineTransformMakeRotation(M_PI_2);
-    }
-    
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = CGRectMake(0, 0, SCREEN_WIDTH, 40);
-    [btn addTarget:self action:@selector(extendAction:) forControlEvents:UIControlEventTouchUpInside];
-    [header addSubview:btn];
-    btn.tag = section;
-    
-    return header;
-}
-
-- (void) extendAction:(UIButton*)sender{
-    
-    int nextIndex = (int)sender.tag;
-    
-    if(_curIndex == nextIndex)
-    {
-        _curIndex = -1;
-    }
-    else
-    {
-        _curIndex = nextIndex;
-    }
-    
-    [_tableView reloadData];
-}
 
 - (void) didBeginTouchedStickerLayer:(id)layer sticker:(id)sticker{
     
-    _tableView.scrollEnabled = NO;
-    
-    //NSLog(@"1");
-    
-    
-    //    EPlusLayerView *st = layer;
-    //    UIImageView *icon = sticker;
-    //
-    //    CGPoint pt = [_tableView convertPoint:icon.center
-    //                           fromView:st];
-    //
-    //    NSLog(@"%f - %f", pt.x, pt.y);
+    _content.scrollEnabled = NO;
     
 }
-- (void) didMovedStickerLayer:(id)layer sticker:(id)sticker{
-    
-    //
-    //    EPlusLayerView *st = layer;
-    //    UIImageView *icon = sticker;
-    //
-    //    CGPoint pt = [_tableView convertPoint:icon.center
-    //                                 fromView:st];
-    //
-    //    NSLog(@"%f - %f", pt.x, pt.y);
-    
-}
+
+
 - (void) didEndTouchedStickerLayer:(id)layer sticker:(id)sticker{
     
-    _tableView.scrollEnabled = YES;
+    _content.scrollEnabled = YES;
     
     //NSLog(@"-1");
     
     EPlusLayerView *st = layer;
     UIImageView *icon = sticker;
     
-    CGPoint pt = [_tableView convertPoint:icon.center
+    CGPoint pt = [_content convertPoint:icon.center
                                  fromView:st];
     
     CGPoint ptNew = pt;
-    ptNew.y = pt.y - _tableView.contentOffset.y;
+    ptNew.x = pt.x - _content.contentOffset.x;
     
     NSLog(@"%f - %f", ptNew.x, ptNew.y);
     
