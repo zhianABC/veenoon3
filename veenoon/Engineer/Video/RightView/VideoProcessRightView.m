@@ -229,8 +229,9 @@
 
     float xx = 15;
     float i = (self.frame.size.width - 30 - ([_inDevs count] * 80 + [_outDevs count] * 80 + 20))/2.0;
-    if(xx < i )
-        xx = i;
+    if(xx < i ){
+        xx = i+15;
+    }
     
     
     for(int idx = 0; idx < [_inDevs count]; idx++)
@@ -291,8 +292,8 @@
         xx+=80;
     }
     
-    _content.contentSize  = CGSizeMake(xx, 100);
-    
+    if(xx > _content.frame.size.width)
+        _content.contentSize  = CGSizeMake(xx, 100);
 }
 
 
