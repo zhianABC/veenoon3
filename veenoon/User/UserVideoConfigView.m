@@ -108,35 +108,43 @@
     
         if(isSelected)
         {
+            //如果是选中输出设备，意味着执行Link
             if(_curSelectInput)
             {
-                //输入源
-                NSDictionary* inputD = _curSelectInput._element;
-                
-                [_result setObject:inputD
-                            forKey:[outData objectForKey:@"ctrl_val"]];
-                
-                
-                NSString *imageN = [inputD objectForKey:@"user_show_icon_s"];
-                [output setTopIconImage:[UIImage imageNamed:imageN]];
-                
-                if(delegate_ && [delegate_ respondsToSelector:@selector(didControlInOutState:outSrc:linked:)])
-                {
-                    [delegate_ didControlInOutState:inputD
-                                             outSrc:outData
-                                             linked:YES];
-                }
+                [self linkCell:_curSelectInput
+                       outCell:output
+                    actCtrlCmd:YES];
             }
         }
         else
         {
 
+            //点击输出，并且输出已经处于选中状态，要么移除原来的链接/要么就是链接新的输入
+            id oValKey = [outData objectForKey:@"ctrl_val"];
+            id iValKey = [output._linkedElement objectForKey:@"ctrl_val"];
             
-            [_result removeObjectForKey:[outData objectForKey:@"ctrl_val"]];
-            [output setTopIconImage:nil];
-            
+            NSDictionary* newInputD = nil;
+            id iNewValKey = nil;
             if(_curSelectInput){
-                NSDictionary* inputD = _curSelectInput._element;
+                
+                newInputD = _curSelectInput._element;
+                iNewValKey = [newInputD objectForKey:@"ctrl_val"];
+            }
+            
+            if(iNewValKey && [iNewValKey intValue] != [iValKey intValue])
+            {
+                [self linkCell:_curSelectInput
+                       outCell:output
+                    actCtrlCmd:YES];
+            }
+            else
+            {
+                //移除原来的link
+                
+                [_result removeObjectForKey:oValKey];
+                [output setTopIconImage:nil];
+                
+                NSDictionary* inputD = output._linkedElement;
                 
                 if(delegate_ && [delegate_ respondsToSelector:@selector(didControlInOutState:outSrc:linked:)])
                 {
@@ -144,6 +152,7 @@
                                              outSrc:outData
                                              linked:NO];
                 }
+                
             }
             
         }
@@ -167,7 +176,8 @@
                     StickerLayerView *toCell = [_outputDmap objectForKey:val];
                     if(toCell)
                     {
-                        [self linkCell:cell outCell:toCell];
+                        [self linkCell:cell outCell:toCell actCtrlCmd:NO];
+                        
                     }
                     
                 }
@@ -176,7 +186,9 @@
     }
 }
 
-- (void) linkCell:(StickerLayerView *)inCell outCell:(StickerLayerView* )outCell{
+- (void) linkCell:(StickerLayerView *)inCell
+          outCell:(StickerLayerView* )outCell
+       actCtrlCmd:(BOOL)actCtrlCmd{
     
 
     //输出设备
@@ -192,9 +204,20 @@
         NSString *imageN = [inputD objectForKey:@"user_show_icon_s"];
         [outCell setTopIconImage:[UIImage imageNamed:imageN]];
         
+        outCell._linkedElement = inputD;
         
-        [inCell selected];
         [outCell selected];
+        
+        if(actCtrlCmd)
+        {
+            //链接输入和输出
+            if(delegate_ && [delegate_ respondsToSelector:@selector(didControlInOutState:outSrc:linked:)])
+            {
+                [delegate_ didControlInOutState:inputD
+                                         outSrc:outData
+                                         linked:YES];
+            }
+        }
     }
     
 }
@@ -228,11 +251,8 @@
         }
         else
         {
-            
-            //NSString *image = [dic objectForKey:@"user_show_icon"];
             [cell setSticker:@"engineer_scenario_add_small.png"];
             cell.textLabel.text = @"空位";
-           //[cell setEmptyCell];
         }
         x+=cellWidth;
         [_inputCells addObject:cell];
@@ -277,10 +297,8 @@
         }
         else
         {
-            //NSString *image = [dic objectForKey:@"user_show_icon"];
             [cell setSticker:@"engineer_scenario_add_small.png"];
             cell.textLabel.text = @"空位";
-            //[cell setEmptyCell];
         }
         
         x+=cellWidth;
@@ -295,79 +313,6 @@
         [delegate_ didPupConfigView:sticker];
     }
     
-}
-
-- (void) didMovedStickerLayer:(StickerLayerView*)layer sticker:(UIImageView*)sticker{
-
-    /*
-    CGPoint pt = [self convertPoint:sticker.center
-                           fromView:layer];
-    
-    
-    if(CGRectContainsPoint(_outputFrame, pt))
-    {
-       // [UIView beginAnimations:nil context:nil];
-        outputArea.alpha = 1.0;
-        //[UIView commitAnimations];
-        
-        layer._resetWhenEndDrag = NO;
-    }
-    else
-    {
-        outputArea.alpha = 0.0;
-        layer._resetWhenEndDrag = YES;
-    }
-     */
-}
-
-- (void) didEndTouchedStickerLayer:(StickerLayerView*)layer sticker:(UIImageView*)sticker{
-    
-    /*
-    CGPoint pt = [self convertPoint:sticker.center
-                           fromView:layer];
-    
-    outputArea.alpha = 0.0;
-    
-    if(CGRectContainsPoint(_outputFrame, pt))
-    {
-        layer._resetWhenEndDrag = NO;
-        
-        //输入源index
-        int index = (int)layer.tag;
-        id inputD = [_inputDatas objectAtIndex:index];
-        
-        //找输出设备
-        for(StickerLayerView *st in _outputs)
-        {
-            if([st getIsSelected])
-            {
-                //保存结果
-                NSDictionary *outData = [_outputDatas objectAtIndex:st.tag];
-                [_result setObject:inputD
-                            forKey:[outData objectForKey:@"code"]];
-            }
-        }
-        
-        
-        for(id key in [_result allKeys])
-        {
-            StickerLayerView *outD = [_outputDmap objectForKey:key];
-            NSDictionary *inD = [_result objectForKey:key];
-            
-            NSString *imageN = [inD objectForKey:@"image_sel"];
-            [outD setTopIconImage:[UIImage imageNamed:imageN]];
-        }
-        
-        
-    }
-    else
-    {
-       layer._resetWhenEndDrag = YES;
-    }
-    
-    
-    NSLog(@"%f - %f", pt.x, pt.y);
-    */
 }
 
 @end
