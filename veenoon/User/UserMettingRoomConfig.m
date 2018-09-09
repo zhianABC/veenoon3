@@ -16,6 +16,7 @@
 #import "Scenario.h"
 #import "MeetingRoom.h"
 #import "AutoRunViewController.h"
+#import "UserDeviceStateViewController.h"
 
 @interface UserMeetingRoomConfig () <ScenarioDelegate>{
 
@@ -158,7 +159,9 @@
 }
 
 - (void) stateAction:(id)sender{
+    UserDeviceStateViewController *ctrl = [[UserDeviceStateViewController alloc] init];
     
+    [self.navigationController pushViewController:ctrl animated:YES];
 }
 
 - (void) autoAyncAction:(id)sender{

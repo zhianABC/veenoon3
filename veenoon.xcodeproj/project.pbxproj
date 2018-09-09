@@ -530,6 +530,10 @@
 		EB1E64B42144E19700A44EAE /* engineer_lubo_n1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1E64B12144E19600A44EAE /* engineer_lubo_n1@2x.png */; };
 		EB1E64B52144E19700A44EAE /* engineer_tanchu_n1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1E64B22144E19700A44EAE /* engineer_tanchu_n1@2x.png */; };
 		EB1E64B62144E19700A44EAE /* engineer_address_n1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1E64B32144E19700A44EAE /* engineer_address_n1@2x.png */; };
+		EB1E64B921450C7000A44EAE /* UserDeviceStateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1E64B821450C7000A44EAE /* UserDeviceStateViewController.m */; };
+		EB1E64BD21450F7500A44EAE /* UserDeviceStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1E64BC21450F7500A44EAE /* UserDeviceStateView.m */; };
+		EB1E64C021450F8800A44EAE /* UserEnvStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1E64BF21450F8800A44EAE /* UserEnvStateView.m */; };
+		EB1E64C321450FA200A44EAE /* UserMonitorStateView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB1E64C221450FA200A44EAE /* UserMonitorStateView.m */; };
 		EB1F9F101FD818E9007132A1 /* user_info_collect_d@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1F9F0D1FD818E8007132A1 /* user_info_collect_d@2x.png */; };
 		EB1F9F111FD818E9007132A1 /* user_info_collect_y@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1F9F0E1FD818E9007132A1 /* user_info_collect_y@2x.png */; };
 		EB1F9F121FD818E9007132A1 /* user_info_collect_m@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB1F9F0F1FD818E9007132A1 /* user_info_collect_m@2x.png */; };
@@ -1704,6 +1708,14 @@
 		EB1E64B12144E19600A44EAE /* engineer_lubo_n1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_lubo_n1@2x.png"; sourceTree = "<group>"; };
 		EB1E64B22144E19700A44EAE /* engineer_tanchu_n1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_tanchu_n1@2x.png"; sourceTree = "<group>"; };
 		EB1E64B32144E19700A44EAE /* engineer_address_n1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_address_n1@2x.png"; sourceTree = "<group>"; };
+		EB1E64B721450C7000A44EAE /* UserDeviceStateViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserDeviceStateViewController.h; sourceTree = "<group>"; };
+		EB1E64B821450C7000A44EAE /* UserDeviceStateViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserDeviceStateViewController.m; sourceTree = "<group>"; };
+		EB1E64BB21450F7500A44EAE /* UserDeviceStateView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserDeviceStateView.h; sourceTree = "<group>"; };
+		EB1E64BC21450F7500A44EAE /* UserDeviceStateView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserDeviceStateView.m; sourceTree = "<group>"; };
+		EB1E64BE21450F8800A44EAE /* UserEnvStateView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserEnvStateView.h; sourceTree = "<group>"; };
+		EB1E64BF21450F8800A44EAE /* UserEnvStateView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserEnvStateView.m; sourceTree = "<group>"; };
+		EB1E64C121450FA200A44EAE /* UserMonitorStateView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserMonitorStateView.h; sourceTree = "<group>"; };
+		EB1E64C221450FA200A44EAE /* UserMonitorStateView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserMonitorStateView.m; sourceTree = "<group>"; };
 		EB1F9F0D1FD818E8007132A1 /* user_info_collect_d@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_info_collect_d@2x.png"; sourceTree = "<group>"; };
 		EB1F9F0E1FD818E9007132A1 /* user_info_collect_y@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_info_collect_y@2x.png"; sourceTree = "<group>"; };
 		EB1F9F0F1FD818E9007132A1 /* user_info_collect_m@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_info_collect_m@2x.png"; sourceTree = "<group>"; };
@@ -3539,6 +3551,7 @@
 		EB03F54B1FBDEC3E00865541 /* User */ = {
 			isa = PBXGroup;
 			children = (
+				EB1E64BA21450E2200A44EAE /* state */,
 				EB478FFA2061341F00EDCD64 /* UserBaseViewControllor.h */,
 				EB478FFB2061341F00EDCD64 /* UserBaseViewControllor.m */,
 				EB03F54E1FBDEC7400865541 /* UserHomeViewController.h */,
@@ -3817,6 +3830,21 @@
 				EB1717921FF5E6B600CBDB81 /* EngineerTouYingJiViewCtrl.m */,
 			);
 			path = Video;
+			sourceTree = "<group>";
+		};
+		EB1E64BA21450E2200A44EAE /* state */ = {
+			isa = PBXGroup;
+			children = (
+				EB1E64B721450C7000A44EAE /* UserDeviceStateViewController.h */,
+				EB1E64B821450C7000A44EAE /* UserDeviceStateViewController.m */,
+				EB1E64BB21450F7500A44EAE /* UserDeviceStateView.h */,
+				EB1E64BC21450F7500A44EAE /* UserDeviceStateView.m */,
+				EB1E64BE21450F8800A44EAE /* UserEnvStateView.h */,
+				EB1E64BF21450F8800A44EAE /* UserEnvStateView.m */,
+				EB1E64C121450FA200A44EAE /* UserMonitorStateView.h */,
+				EB1E64C221450FA200A44EAE /* UserMonitorStateView.m */,
+			);
+			path = state;
 			sourceTree = "<group>";
 		};
 		EB4E39DE20273B9000533575 /* RIghtView */ = {
@@ -4881,6 +4909,7 @@
 				04D7197F1DADE098002153D7 /* NSDate-Helper.m in Sources */,
 				EB09EF2F1FD978C700C968CA /* EngineerToUseTeslariViewCtrl.m in Sources */,
 				34686C9E1ED025CB001749A1 /* ConverUtil.m in Sources */,
+				EB1E64C021450F8800A44EAE /* UserEnvStateView.m in Sources */,
 				EBD009BF2090613C00920849 /* VVideoProcessSet.m in Sources */,
 				EBD009B6208CB88300920849 /* VRemoteSettingsSet.m in Sources */,
 				EB235011204D9648008F6CA2 /* XDPickView.m in Sources */,
@@ -4890,6 +4919,7 @@
 				3425E98C1FE571CE003559F7 /* ComSettingView.m in Sources */,
 				3421002020A80AE2008497FF /* DeviceCmdSlice.m in Sources */,
 				EB3B739A1FE61B18001941CF /* EngineerPlayerSettingsViewCtrl.m in Sources */,
+				EB1E64C321450FA200A44EAE /* UserMonitorStateView.m in Sources */,
 				3456C178209ED2F1001FAB61 /* VProjectProxys.m in Sources */,
 				049BA6601AF7B64000F17584 /* DataBase.m in Sources */,
 				EB795B532042E81F005D1F47 /* ZengYi_UIView.m in Sources */,
@@ -4922,6 +4952,7 @@
 				3421EA2D1FC4136600DC5378 /* CustomPickerView.m in Sources */,
 				04DE1E8B1AD6AEE000D49E2F /* Progress7View.m in Sources */,
 				EB09EF311FD97CB500C968CA /* EngineerAudioDevicePluginViewCtrl.m in Sources */,
+				EB1E64B921450C7000A44EAE /* UserDeviceStateViewController.m in Sources */,
 				04DE1EB41AD6AEE000D49E2F /* UIImage+GIF.m in Sources */,
 				EB3B73B51FE6395C001941CF /* EngineerSliderView.m in Sources */,
 				3495268420F0E07600A6BF00 /* VTVSetProxy.m in Sources */,
@@ -4973,6 +5004,7 @@
 				049ECAC21C8D694400A611D8 /* DataMatrix.mm in Sources */,
 				EB4EC11C1FE7F164000B3101 /* EngineerHunYinSysViewController.m in Sources */,
 				EB5A47FA2084D9F300564C06 /* SystemIRSet.m in Sources */,
+				EB1E64BD21450F7500A44EAE /* UserDeviceStateView.m in Sources */,
 				04DE1EB01AD6AEE000D49E2F /* SDWebImageDownloaderOperation.m in Sources */,
 				34217A721FCE9C160006701C /* StickerLayerView.m in Sources */,
 				341C784A2050184300DD1677 /* SIconSelectView.m in Sources */,
