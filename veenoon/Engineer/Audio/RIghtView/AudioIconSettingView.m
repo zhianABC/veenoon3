@@ -55,7 +55,16 @@ UITableViewDataSource,AudioIconSettingViewDelegate, EPlusLayerViewDelegate> {
     
     for (BasePlugElement *basePlugin in _currentAudioDevices) {
         
-        NSString *name = basePlugin._name;
+        NSString *name = @"";
+        if ([basePlugin isKindOfClass:[AudioEMix class]]) {
+            name = audio_mixer_name;
+        } else if ([basePlugin isKindOfClass:[AudioEHand2Hand class]]) {
+            name = audio_handtohand_name;
+        } else if ([basePlugin isKindOfClass:[AudioEWirlessMike class]]) {
+            name = audio_wireless_name;
+        } else if ([basePlugin isKindOfClass:[AudioEWirlessMeetingSys class]]) {
+            name = audio_wireless_name;
+        }
         
         if([basePlugin isKindOfClass:[AudioEMix class]] ||
            [basePlugin isKindOfClass:[AudioEHand2Hand class]] ||

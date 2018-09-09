@@ -24,11 +24,14 @@
     UIButton *_luboBtn;
     UIButton *_tanchuBtn;
     UIButton *_addressBtn;
+    VDVDPlayerSet *_currentObj;
 }
+@property (nonatomic, strong) VDVDPlayerSet *_currentObj;
 @end
 
 @implementation UserVideoDVDDiskViewCtrl
 @synthesize _currentProcessor;
+@synthesize _currentObj;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -77,6 +80,9 @@
     forControlEvents:UIControlEventTouchUpInside];
     
     
+    VDVDPlayerProxy *vcam = _currentObj._proxyObj;
+    if(vcam)
+        [vcam controlDeviceMenu:@"UP"];
 }
 
 - (void) okAction:(id)sender{

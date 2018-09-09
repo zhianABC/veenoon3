@@ -64,57 +64,78 @@
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
+    int rowGap = 240;
+    int gap = 15;
+    int buttonWidth = 60;
+    int buttonHeight = 100;
+    int startX = SCREEN_WIDTH/2 - rowGap/2 - buttonWidth+gap;
+    int startyY = 280;
+    
     _yuyinjiliBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _yuyinjiliBtn.frame = CGRectMake(390, 250, 50, 100);
+    _yuyinjiliBtn.frame = CGRectMake(startX, startyY, buttonWidth, buttonHeight);
     [_yuyinjiliBtn setImage:[UIImage imageNamed:@"yuyinjili_n.png"] forState:UIControlStateNormal];
     [_yuyinjiliBtn setImage:[UIImage imageNamed:@"yuyinjili_s.png"] forState:UIControlStateHighlighted];
     [_yuyinjiliBtn setTitle:@"语音激励" forState:UIControlStateNormal];
-    [_yuyinjiliBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
-    [_yuyinjiliBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
+    _yuyinjiliBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+    [_yuyinjiliBtn setTitleColor:NEW_UR_BUTTON_GRAY_COLOR forState:UIControlStateNormal];
+    [_yuyinjiliBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     _yuyinjiliBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     [_yuyinjiliBtn setTitleEdgeInsets:UIEdgeInsetsMake(_yuyinjiliBtn.imageView.frame.size.height+10,-90,-20,-20)];
     [_yuyinjiliBtn setImageEdgeInsets:UIEdgeInsetsMake(-50.0,-10,_yuyinjiliBtn.titleLabel.bounds.size.height, 0)];
     [_yuyinjiliBtn addTarget:self action:@selector(yuyinjiliAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_yuyinjiliBtn];
     
-    _shedingzhuxiBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
-    _shedingzhuxiBtn.frame = CGRectMake(440, 450, 80, 30);
+    int rowGap2 = 40;
+    int buttonWidth2 = 80;
+    int buttonHeight2 = 30;
+    int startX2 = SCREEN_WIDTH/2 - rowGap2/2 - buttonWidth2;
+    int startyY2 = 480;
+    
+    _shedingzhuxiBtn = [UIButton buttonWithColor:NEW_UR_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
+    _shedingzhuxiBtn.frame = CGRectMake(startX2, startyY2, buttonWidth2, buttonHeight2);
+    _shedingzhuxiBtn.layer.cornerRadius = 5;
+    _shedingzhuxiBtn.clipsToBounds = YES;
     [_shedingzhuxiBtn setTitle:@"设定主席" forState:UIControlStateNormal];
-    [_shedingzhuxiBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_shedingzhuxiBtn setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
+    _shedingzhuxiBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+    [_shedingzhuxiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_shedingzhuxiBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     [_shedingzhuxiBtn addTarget:self action:@selector(shedingzhuxiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_shedingzhuxiBtn];
     
     _biaozhunmoshiBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _biaozhunmoshiBtn.frame = CGRectMake(690, 250, 50, 100);
+    _biaozhunmoshiBtn.frame = CGRectMake(startX+rowGap+buttonWidth, startyY, buttonWidth, buttonHeight);
     [_biaozhunmoshiBtn setImage:[UIImage imageNamed:@"biaozhunmoshi_n.png"] forState:UIControlStateNormal];
     [_biaozhunmoshiBtn setImage:[UIImage imageNamed:@"biaozhunmoshi_s.png"] forState:UIControlStateHighlighted];
     [_biaozhunmoshiBtn setTitle:@"标准模式" forState:UIControlStateNormal];
-    [_biaozhunmoshiBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
-    [_biaozhunmoshiBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateHighlighted];
+    _biaozhunmoshiBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+    [_biaozhunmoshiBtn setTitleColor:NEW_UR_BUTTON_GRAY_COLOR forState:UIControlStateNormal];
+    [_biaozhunmoshiBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     _biaozhunmoshiBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_biaozhunmoshiBtn setTitleEdgeInsets:UIEdgeInsetsMake(_biaozhunmoshiBtn.imageView.frame.size.height+10,-90,-20,-20)];
+    [_biaozhunmoshiBtn setTitleEdgeInsets:UIEdgeInsetsMake(_biaozhunmoshiBtn.imageView.frame.size.height+15,-85,-20,-20)];
     [_biaozhunmoshiBtn setImageEdgeInsets:UIEdgeInsetsMake(-50.0,-10.0,_biaozhunmoshiBtn.titleLabel.bounds.size.height, 0)];
     [_biaozhunmoshiBtn addTarget:self action:@selector(biaozhunmoshiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_biaozhunmoshiBtn];
     
-    _fayanrenshuBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
-    _fayanrenshuBtn.frame = CGRectMake(590, 450, 80, 30);
+    _fayanrenshuBtn = [UIButton buttonWithColor:NEW_UR_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
+    _fayanrenshuBtn.frame = CGRectMake(startX2+rowGap2+buttonWidth2, startyY2, buttonWidth2, buttonHeight2);
+    _fayanrenshuBtn.layer.cornerRadius = 5;
+    _fayanrenshuBtn.clipsToBounds = YES;
     [_fayanrenshuBtn setTitle:@"设定代表" forState:UIControlStateNormal];
-    [_fayanrenshuBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [_fayanrenshuBtn setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
+    _fayanrenshuBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+    [_fayanrenshuBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_fayanrenshuBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     [_fayanrenshuBtn addTarget:self action:@selector(fayanrenshuAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_fayanrenshuBtn];
     
     _peoplePicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(0, 0, 100, 150)];
-    _peoplePicker._pickerDataArray = @[@{@"values":@[@"1",@"2",@"3",@"4",@"5"]}];
+    _peoplePicker._pickerDataArray = @[@{@"values":@[@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10",@"11",@"12"]}];
     _peoplePicker.hidden = YES;
     [_peoplePicker removeArray];
     [self.view addSubview:_peoplePicker];
-    _peoplePicker.center = CGPointMake(SCREEN_WIDTH/2+50, SCREEN_HEIGHT - 200);
+    _peoplePicker.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT - 160);
     [_peoplePicker selectRow:0 inComponent:0];
-    _peoplePicker._selectColor = RGB(230, 151, 50);
-    _peoplePicker._rowNormalColor = SINGAL_COLOR;
+    _peoplePicker._selectColor = NEW_ER_BUTTON_SD_COLOR;
+    _peoplePicker._rowNormalColor = NEW_UR_BUTTON_GRAY_COLOR;
     _peoplePicker.delegate_ = self;
     
     
@@ -178,17 +199,17 @@
     if (_processor && _processor._proxyObj) {
         NSString *workMode = _processor._proxyObj._workMode;
         if ([@"语音激励" isEqualToString:workMode]) {
-            [_yuyinjiliBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
+            [_yuyinjiliBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
             [_yuyinjiliBtn setImage:[UIImage imageNamed:@"yuyinjili_s.png"] forState:UIControlStateNormal];
             [_biaozhunmoshiBtn setImage:[UIImage imageNamed:@"biaozhunmoshi_n.png"] forState:UIControlStateNormal];
         } else if ([@"标准模式" isEqualToString:workMode])
         {
-            [_biaozhunmoshiBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
+            [_biaozhunmoshiBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
             [_yuyinjiliBtn setImage:[UIImage imageNamed:@"yuyinjili_n.png"] forState:UIControlStateNormal];
             [_biaozhunmoshiBtn setImage:[UIImage imageNamed:@"biaozhunmoshi_s.png"] forState:UIControlStateNormal];
         } else {
-            [_yuyinjiliBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
-            [_biaozhunmoshiBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
+            [_yuyinjiliBtn setTitleColor:NEW_UR_BUTTON_GRAY_COLOR forState:UIControlStateNormal];
+            [_biaozhunmoshiBtn setTitleColor:NEW_UR_BUTTON_GRAY_COLOR forState:UIControlStateNormal];
             
             [_yuyinjiliBtn setImage:[UIImage imageNamed:@"yuyinjili_n.png"] forState:UIControlStateNormal];
         }
@@ -243,8 +264,8 @@
     }
 }
 -(void) didScrollPickerValue:(NSString*)brand obj:(id)obj{
-if (_peoplePicker) {
-        [_peoplePicker removeFromSuperview];
+    if (_peoplePicker) {
+        _peoplePicker.hidden = YES;
     }
     
     NSString *priorityValue = brand;
@@ -277,9 +298,10 @@ if (_peoplePicker) {
 
 - (void) biaozhunmoshiAction:(id)sender{
     [_yuyinjiliBtn setImage:[UIImage imageNamed:@"yuyinjili_n.png"] forState:UIControlStateNormal];
-    [_yuyinjiliBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
+    [_yuyinjiliBtn setTitleColor:NEW_UR_BUTTON_GRAY_COLOR forState:UIControlStateNormal];
     [_biaozhunmoshiBtn setImage:[UIImage imageNamed:@"biaozhunmoshi_s.png"] forState:UIControlStateNormal];
-    [_biaozhunmoshiBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
+    [_biaozhunmoshiBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+    
     _shedingzhuxiBtn.hidden=YES;
     _fayanrenshuBtn.hidden=YES;
     
@@ -290,10 +312,10 @@ if (_peoplePicker) {
 
 - (void) yuyinjiliAction:(id)sender{
     [_yuyinjiliBtn setImage:[UIImage imageNamed:@"yuyinjili_s.png"] forState:UIControlStateNormal];
-    [_yuyinjiliBtn setTitleColor:RGB(230, 151, 50) forState:UIControlStateNormal];
+    [_yuyinjiliBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
     
     [_biaozhunmoshiBtn setImage:[UIImage imageNamed:@"biaozhunmoshi_n.png"] forState:UIControlStateNormal];
-    [_biaozhunmoshiBtn setTitleColor:SINGAL_COLOR forState:UIControlStateNormal];
+    [_biaozhunmoshiBtn setTitleColor:NEW_UR_BUTTON_GRAY_COLOR forState:UIControlStateNormal];
     _shedingzhuxiBtn.hidden=NO;
     _fayanrenshuBtn.hidden=NO;
     

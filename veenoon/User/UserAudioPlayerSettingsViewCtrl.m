@@ -20,6 +20,7 @@
     BOOL isplay;
     
     UIButton *_tanchuBtn;
+    UIButton *_luboBtn;
 }
 
 @end
@@ -67,12 +68,12 @@
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
-    int height = SCREEN_HEIGHT - 200;
+    int height = SCREEN_HEIGHT - 150;
     int width = 80;
     
     _volumnMinus = [UIButton buttonWithType:UIButtonTypeCustom];
     _volumnMinus.frame = CGRectMake(0, 0, width, width);
-    _volumnMinus.center = CGPointMake(SCREEN_WIDTH/2 - 200, height);
+    _volumnMinus.center = CGPointMake(SCREEN_WIDTH/2 - 120, height);
     [_volumnMinus setImage:[UIImage imageNamed:@"audio_player_minus_n.png"] forState:UIControlStateNormal];
     [_volumnMinus setImage:[UIImage imageNamed:@"audio_player_minus_s.png"] forState:UIControlStateHighlighted];
     [_volumnMinus addTarget:self action:@selector(volumnMinusAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -80,7 +81,7 @@
     
     _lastSing = [UIButton buttonWithType:UIButtonTypeCustom];
     _lastSing.frame = CGRectMake(0, 0, width, width);
-    _lastSing.center = CGPointMake(SCREEN_WIDTH/2 - 100, height);
+    _lastSing.center = CGPointMake(SCREEN_WIDTH/2 - 60, height);
     [_lastSing setImage:[UIImage imageNamed:@"audio_player_last_n.png"] forState:UIControlStateNormal];
     [_lastSing setImage:[UIImage imageNamed:@"audio_player_last_s.png"] forState:UIControlStateHighlighted];
     [_lastSing addTarget:self action:@selector(lastSingAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -97,7 +98,7 @@
     
     _nextSing = [UIButton buttonWithType:UIButtonTypeCustom];
     _nextSing.frame = CGRectMake(0, 0, width, width);
-    _nextSing.center = CGPointMake(SCREEN_WIDTH/2 + 100, height);
+    _nextSing.center = CGPointMake(SCREEN_WIDTH/2 + 60, height);
     [_nextSing setImage:[UIImage imageNamed:@"audio_player_next_n.png"] forState:UIControlStateNormal];
     [_nextSing setImage:[UIImage imageNamed:@"audio_player_next_s.png"] forState:UIControlStateHighlighted];
     [_nextSing addTarget:self action:@selector(nextSingAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -105,30 +106,48 @@
     
     _volumnAdd = [UIButton buttonWithType:UIButtonTypeCustom];
     _volumnAdd.frame = CGRectMake(0, 0, width, width);
-    _volumnAdd.center = CGPointMake(SCREEN_WIDTH/2 + 200, height);
+    _volumnAdd.center = CGPointMake(SCREEN_WIDTH/2 + 120, height);
     [_volumnAdd setImage:[UIImage imageNamed:@"audio_layer_next_n.png"] forState:UIControlStateNormal];
     [_volumnAdd setImage:[UIImage imageNamed:@"audio_layer_next_s.png"] forState:UIControlStateHighlighted];
     [_volumnAdd addTarget:self action:@selector(volumnAddAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_volumnAdd];
     
-    playerIndicator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"audio_player_title_n.png"]];
+    playerIndicator = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"audio_player_title_s.png"]];
     [self.view addSubview:playerIndicator];
     playerIndicator.frame = CGRectMake(0, 0, 322, 322);
-    playerIndicator.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT - 450);
+    playerIndicator.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT - 400);
     
-    _tanchuBtn = [UIButton buttonWithColor:RGB(46, 105, 106) selColor:RGB(242, 148, 20)];
-    _tanchuBtn.frame = CGRectMake(70, SCREEN_HEIGHT-140, 60, 60);
+    _luboBtn = [UIButton buttonWithColor:nil selColor:nil];
+    _luboBtn.frame = CGRectMake(SCREEN_WIDTH-112, 70, 60, 60);
+    _luboBtn.layer.cornerRadius = 5;
+    _luboBtn.layer.borderWidth = 2;
+    _luboBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+    _luboBtn.clipsToBounds = YES;
+    [_luboBtn setImage:[UIImage imageNamed:@"engineer_lubo_n1.png"] forState:UIControlStateNormal];
+    [_luboBtn setImage:[UIImage imageNamed:@"engineer_lubo_s.png"] forState:UIControlStateHighlighted];
+    [self.view addSubview:_luboBtn];
+    
+    [_luboBtn addTarget:self
+                 action:@selector(powerAction:)
+       forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    _tanchuBtn = [UIButton buttonWithColor:nil selColor:nil];
+    _tanchuBtn.frame = CGRectMake(SCREEN_WIDTH - 182, 70, 60, 60);
     _tanchuBtn.layer.cornerRadius = 5;
     _tanchuBtn.layer.borderWidth = 2;
     _tanchuBtn.layer.borderColor = [UIColor clearColor].CGColor;;
     _tanchuBtn.clipsToBounds = YES;
-    [_tanchuBtn setImage:[UIImage imageNamed:@"engineer_tanchu_n.png"] forState:UIControlStateNormal];
+    [_tanchuBtn setImage:[UIImage imageNamed:@"engineer_tanchu_n1.png"] forState:UIControlStateNormal];
     [_tanchuBtn setImage:[UIImage imageNamed:@"engineer_tanchu_s.png"] forState:UIControlStateHighlighted];
     [self.view addSubview:_tanchuBtn];
     
     [_tanchuBtn addTarget:self
                    action:@selector(tanchuAction:)
          forControlEvents:UIControlEventTouchUpInside];
+    
+}
+- (void) powerAction:(id)sender{
     
 }
 - (void) tanchuAction:(id)sender{
@@ -140,7 +159,7 @@
 
 - (void) audioPlayHoldAction:(id)sender{
     if (isplay) {
-        [playerIndicator setImage:[UIImage imageNamed: @"audio_player_title_n.png"]];
+        [playerIndicator setImage:[UIImage imageNamed: @"audio_player_title_s.png"]];
         [_playOrHold setImage:[UIImage imageNamed:@"audio_player_hold.png"] forState:UIControlStateNormal];
         isplay = NO;
     } else {
