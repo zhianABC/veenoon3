@@ -85,7 +85,8 @@
 //        self.edgesForExtendedLayout = UIRectEdgeNone;
 //    }
     
-    //[[DataCenter defaultDataCenter] syncDriversWithServer];
+    //准备插件
+    [[DataCenter defaultDataCenter] prepareDrivers];
     
     _homeView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     [self createHomeView];

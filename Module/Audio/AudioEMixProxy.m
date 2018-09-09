@@ -981,7 +981,7 @@
         NSMutableDictionary * param = [NSMutableDictionary dictionary];
         for( RgsCommandParamInfo * param_info in cmd.params)
         {
-            if([param_info.name isEqualToString:@"COUNT"])
+            if([param_info.name isEqualToString:@"MAX"])
             {
                 [param setObject:[NSString stringWithFormat:@"%d", _numberOfDaiBiao]
                           forKey:param_info.name];
