@@ -65,6 +65,8 @@
 @synthesize _uploadQueue;
 @synthesize _syncQueue;
 
+@synthesize _sysIRDriversMap;
+
 static DataSync* dSyncInstance = nil;
 
 + (DataSync*)sharedDataSync{
@@ -89,6 +91,7 @@ static DataSync* dSyncInstance = nil;
             self._event = [[WSEvent alloc] initWithDictionary:eventJson];
         }
         
+        self._sysIRDriversMap = [NSMutableDictionary dictionary];
         
     }
     
@@ -510,6 +513,36 @@ static DataSync* dSyncInstance = nil;
    
 }
 
+- (void) syncRegulusIRDrivers
+{
+    
+    [[RegulusSDK sharedRegulusSDK] RequestProxyDriverInfos:^(BOOL result, NSArray *driver_infos, NSError *error)
+     {
+         if (result)
+         {
+             for (RgsDriverInfo * info in driver_infos) {
+                 
+                 if ([info.system isEqualToString:@"IR Controller"])
+                 {
+                     [_sysIRDriversMap setObject:info forKey:info.name];
+                 }
+             }
+             
+         }
+         
+     }];
+    
+}
 
+- (void) saveIrDriverToCache:(RgsDriverInfo*)dInfo{
+    
+    [_sysIRDriversMap setObject:dInfo
+                         forKey:dInfo.name];
+}
+
+- (RgsDriverInfo *) testIrDriverInfoByName:(NSString*)name{
+    
+    return [_sysIRDriversMap objectForKey:name];
+}
 
 @end

@@ -17,7 +17,5 @@
 
 @property (nonatomic, strong) NSArray *_comConnections;
 
-//@property (nonatomic, strong) NSArray *_localSavedProxys;
-
 
 @end

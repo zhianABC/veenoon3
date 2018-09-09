@@ -361,14 +361,14 @@
     }
     
     NSString *brand = [device objectForKey:@"brand"];
-    int time = [[NSDate date] timeIntervalSince1970];
-    
-    brand = [NSString stringWithFormat:@"%@ - %d", brand, time];
+    NSString *name = [device objectForKey:@"name"];
+    NSString *ptype = [device objectForKey:@"ptype"];
+    NSString* irname = [NSString stringWithFormat:@"%@-%@-%@", brand, name, ptype];
     
     IMP_BLOCK_SELF(EngineerVideoDevicePluginViewCtrl);
     
     [[RegulusSDK sharedRegulusSDK] MakeIrDriverWithIrModel:rgs
-                                                      name:brand
+                                                      name:irname
                                                 completion:^(BOOL result, RgsDriverInfo *driver_info, NSError *error) {
                                                     
                                                     if(result)
@@ -390,9 +390,15 @@
     
     [device setObject:driver_info.serial forKey:@"driver"];
     
+    //Veenoon 插件Info库
     [[DataCenter defaultDataCenter] saveDriver:device];
+    
+    //中控插件Info库
     [[DataSync sharedDataSync] addDriver:driver_info
                                      key:driver_info.serial];
+    
+    //红外Info库
+    [[DataSync sharedDataSync] saveIrDriverToCache:driver_info];
     
     [self addDriverToCenter:device];
     
@@ -547,11 +553,33 @@
             NSMutableDictionary *mdic = [NSMutableDictionary dictionaryWithDictionary:device];
             
             NSString *name = [device objectForKey:@"name"];
-            if([name isEqualToString:@"DVD"])
-                [self chooseIRType:mdic idx:1];
-            else if([name isEqualToString:@"TV"])
-                [self chooseIRType:mdic idx:0];
             
+            NSString *brand = [device objectForKey:@"brand"];
+            NSString *ptype = [device objectForKey:@"ptype"];
+            NSString* irname = [NSString stringWithFormat:@"%@-%@-%@", brand, name, ptype];
+            
+            RgsDriverInfo *irInfo = [[DataSync sharedDataSync] testIrDriverInfoByName:irname];
+            if(irInfo == nil)
+            {
+                if([name isEqualToString:@"DVD"])
+                    [self chooseIRType:mdic idx:1];
+                else if([name isEqualToString:@"TV"])
+                    [self chooseIRType:mdic idx:0];
+            }
+            else
+            {
+                [mdic setObject:irInfo.serial forKey:@"driver"];
+                
+                //Veenoon插件Info库
+                [[DataCenter defaultDataCenter] saveDriver:mdic];
+                
+                //中控插件Info库
+                [[DataSync sharedDataSync] addDriver:irInfo
+                                                 key:irInfo.serial];
+                
+                
+                [self addDriverToCenter:device];
+            }
             return;
         }
         
