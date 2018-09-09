@@ -54,6 +54,8 @@
 
 @property (nonatomic, assign) BOOL _resetWhenEndDrag;
 
+@property (nonatomic, strong) NSDictionary * _linkedElement;
+
 - (void) selected;
 - (void) unselected;
 

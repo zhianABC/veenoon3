@@ -71,7 +71,7 @@
     self.nameDriverMap = [NSMutableDictionary dictionary];
     
     
-    NSArray *drivers = [[DataCenter defaultDataCenter] driversWithType:@"other"];
+    NSArray *drivers = [[DataCenter defaultDataCenter] driversWithType:@"com"];
     
     for(NSDictionary *dr in drivers)
     {

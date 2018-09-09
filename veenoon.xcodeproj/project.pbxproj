@@ -186,6 +186,8 @@
 		34217A721FCE9C160006701C /* StickerLayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34217A711FCE9C150006701C /* StickerLayerView.m */; };
 		342188122144F4FF00DBAA4D /* CameraView.m in Sources */ = {isa = PBXBuildFile; fileRef = 342188112144F4FF00DBAA4D /* CameraView.m */; };
 		342188152144F95A00DBAA4D /* DVDView.m in Sources */ = {isa = PBXBuildFile; fileRef = 342188142144F95A00DBAA4D /* DVDView.m */; };
+		342188182145228700DBAA4D /* i_btn_yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 342188162145228100DBAA4D /* i_btn_yellow@2x.png */; };
+		342188192145228700DBAA4D /* i_btn_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 342188172145228600DBAA4D /* i_btn_white@2x.png */; };
 		3421B09B210B00C1001C4B22 /* AutoRunViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3421B09A210B00C1001C4B22 /* AutoRunViewController.m */; };
 		3421B09E210B00D3001C4B22 /* AutoRunSetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3421B09D210B00D3001C4B22 /* AutoRunSetView.m */; };
 		3421EA2D1FC4136600DC5378 /* CustomPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3421EA2B1FC4136600DC5378 /* CustomPickerView.m */; };
@@ -1242,6 +1244,8 @@
 		342188112144F4FF00DBAA4D /* CameraView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraView.m; sourceTree = "<group>"; };
 		342188132144F95A00DBAA4D /* DVDView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DVDView.h; sourceTree = "<group>"; };
 		342188142144F95A00DBAA4D /* DVDView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DVDView.m; sourceTree = "<group>"; };
+		342188162145228100DBAA4D /* i_btn_yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "i_btn_yellow@2x.png"; sourceTree = "<group>"; };
+		342188172145228600DBAA4D /* i_btn_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "i_btn_white@2x.png"; sourceTree = "<group>"; };
 		3421B099210B00C1001C4B22 /* AutoRunViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AutoRunViewController.h; sourceTree = "<group>"; };
 		3421B09A210B00C1001C4B22 /* AutoRunViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AutoRunViewController.m; sourceTree = "<group>"; };
 		3421B09C210B00D3001C4B22 /* AutoRunSetView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AutoRunSetView.h; sourceTree = "<group>"; };
@@ -2650,6 +2654,8 @@
 		04DE1ECB1AD6B3BA00D49E2F /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
+				342188172145228600DBAA4D /* i_btn_white@2x.png */,
+				342188162145228100DBAA4D /* i_btn_yellow@2x.png */,
 				EB1E64B32144E19700A44EAE /* engineer_address_n1@2x.png */,
 				EB1E64B12144E19600A44EAE /* engineer_lubo_n1@2x.png */,
 				EB1E64B22144E19700A44EAE /* engineer_tanchu_n1@2x.png */,
@@ -4133,6 +4139,7 @@
 				34F27A5A205121EF0045D765 /* ce_l_08@2x.png in Resources */,
 				EB3B73981FE6119F001941CF /* engineer_sys_select_down_n@2x.png in Resources */,
 				EBDF1BF51FC5A9A200A756EA /* user_meeting_room_4@2x.png in Resources */,
+				342188182145228700DBAA4D /* i_btn_yellow@2x.png in Resources */,
 				34190F02205D5375009A519C /* hj_icon_1_sel@2x.png in Resources */,
 				EB479005206146D500EDCD64 /* user_corner_sd@2x.png in Resources */,
 				342BA47F2137E7B600DA138D /* com_driver_icon@2x.png in Resources */,
@@ -4278,6 +4285,7 @@
 				EBF831F31FD04C2B0096E6EC /* user_video_play_next@2x.png in Resources */,
 				EBDF1C111FC5C6C900A756EA /* meeting_discuss_s@2x.png in Resources */,
 				EB23AE9C1FD18AD600D1570F /* remote_video_dialphone@2x.png in Resources */,
+				342188192145228700DBAA4D /* i_btn_white@2x.png in Resources */,
 				34190F16205D537E009A519C /* a_icon_8_sel@2x.png in Resources */,
 				EB3B73AA1FE621B7001941CF /* engineer_lubo_s@2x.png in Resources */,
 				EBDF1C371FC5D5CF00A756EA /* energy_collect_n@2x.png in Resources */,

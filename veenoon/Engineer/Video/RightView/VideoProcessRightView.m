@@ -19,16 +19,19 @@
 #import "VLuBoJiSet.h"
 #import "VPinJieSet.h"
 
-@interface VideoProcessRightView () <UITableViewDelegate,
-UITableViewDataSource,
-VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
+@interface VideoProcessRightView () <EPlusLayerViewDelegate>
 {
-    UITableView *_tableView;
-    UIView     *_maskView;
+    UIScrollView *_content;
     
-    int _curIndex;
+    UIView       *_maskView;
+    
+    int          _curIndex;
 }
 @property (nonatomic, strong) NSMutableArray *_btns;
+
+@property (nonatomic, strong) NSArray *_inDevs;
+@property (nonatomic, strong) NSArray *_outDevs;
+
 @end
 
 @implementation VideoProcessRightView
@@ -40,6 +43,10 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
 @synthesize _callback;
 @synthesize _curentDeviceIndex;
 @synthesize _currentVideoDevices;
+
+@synthesize _inDevs;
+@synthesize _outDevs;
+
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.
@@ -58,15 +65,13 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
     NSDictionary *sec = [bundelArray objectAtIndex:0];
     NSMutableArray *items = [sec objectForKey:@"items"];
     
-    NSMutableDictionary *inputDic = [NSMutableDictionary dictionary];
-    [inputDic setObject:@"输入设备" forKey:@"name"];
-    NSMutableArray *finalItems = [NSMutableArray array];
-    [finalItems addObject:inputDic];
-    
-    [finalItems addObjectsFromArray:items];
+    NSMutableArray *inDevices = [NSMutableArray array];
+    [inDevices addObjectsFromArray:items];
     
     int itemID = 302;
+    
     for (BasePlugElement *basePlugin in self._currentVideoDevices) {
+        
         NSString *baseName = basePlugin._name;
         
         NSMutableDictionary *dataDic = [NSMutableDictionary dictionary];
@@ -113,15 +118,13 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
             [dataDic setObject:@"user_video_remote_s.png" forKey:@"user_show_icon_s"];
         }
         if ([dataDic objectForKey:@"icon"]) {
-            [finalItems addObject:dataDic];
+            [inDevices addObject:dataDic];
         }
         itemID++;
     }
     
     
-    NSMutableDictionary *outputDic = [NSMutableDictionary dictionary];
-    [outputDic setObject:@"输出设备" forKey:@"name"];
-    [finalItems addObject:outputDic];
+    NSMutableArray *outDevices = [NSMutableArray array];
     
     for (BasePlugElement *basePlugin in self._currentVideoDevices) {
         NSString *baseName = basePlugin._name;
@@ -176,38 +179,38 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
             [dataDic setObject:@"user_video_touying_s.png" forKey:@"user_show_icon_s"];
         }
         if ([dataDic objectForKey:@"icon"]) {
-            [finalItems addObject:dataDic];
+            [outDevices addObject:dataDic];
         }
     }
-    NSMutableDictionary *dataDic = [NSMutableDictionary dictionary];
-    [dataDic setObject:finalItems forKey:@"items"];
     
-    [dataDic setObject:@"图标" forKey:@"title"];
     
-    NSMutableArray *dataArray = [NSMutableArray array];
-    [dataArray addObject:dataDic];
-    self._data = dataArray;
+    self._inDevs = inDevices;
+    self._outDevs = outDevices;
+    
+    
 }
 
 - (id) initWithFrame:(CGRect)frame withVideoDevices:(NSMutableArray*) videoDevices {
-    self._currentVideoDevices = videoDevices;
+
     if(self = [super initWithFrame:frame]) {
+        
         _curIndex = 0;
+        
+        self._currentVideoDevices = videoDevices;
         
         [self initData];
         
-        self.backgroundColor = RIGHT_VIEW_CORNER_SD_COLOR;
+        self.backgroundColor = [UIColor clearColor];
         
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,
+        _content = [[UIScrollView alloc] initWithFrame:CGRectMake(0,
                                                                    0,
                                                                    frame.size.width,
                                                                    frame.size.height)];
-        _tableView.delegate = self;
-        _tableView.dataSource = self;
-        _tableView.backgroundColor = [UIColor clearColor];
-        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        [self addSubview:_tableView];
-        _tableView.clipsToBounds = NO;
+        [self addSubview:_content];
+        _content.clipsToBounds = NO;
+        
+        
+        [self layoutCells];
         
     }
     return self;
@@ -215,111 +218,33 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
 
 
 
--(void) refreshView:(VVideoProcessSet*) vVideoProcessSet {
-    self._currentObj = vVideoProcessSet;
+- (void) refreshView:(VVideoProcessSet*) vVideoProcessSet {
     
+    self._currentObj = vVideoProcessSet;
     self._curentDeviceIndex = _currentObj._index;
 }
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField{
-    
-    //_curIndex = (int)textField.tag;
-    
-}
 
-- (void)textFieldDidEndEditing:(UITextField *)textField{
-    
-}
+- (void) layoutCells{
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    float xx = 15;
+    float i = (self.frame.size.width - 30 - ([_inDevs count] * 80 + [_outDevs count] * 80 + 20))/2.0;
+    if(xx < i )
+        xx = i;
     
-    [textField resignFirstResponder];
     
-    return YES;
-}
-
-- (void) scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    float fy = scrollView.contentOffset.y;
-    
-    if(fy < -40)
+    for(int idx = 0; idx < [_inDevs count]; idx++)
     {
-    }
-    
-}
-
-#pragma mark -
-#pragma mark Table View DataSource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    
-    return [_data count];
-}
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
-    if(_curIndex == section)
-    {
-        NSDictionary *row = [_data objectAtIndex:section];
-        NSArray *items = [row objectForKey:@"items"];
-        
-        return [items count];
-    }
-    
-    return 0;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    NSDictionary *sec = [_data objectAtIndex:indexPath.section];
-    NSArray *items = [sec objectForKey:@"items"];
-    if(indexPath.row < [items count]) {
-        NSDictionary *dic = [items objectAtIndex:indexPath.row];
-        
-        int idx = [[dic objectForKey:@"id"] intValue];
-        
-        if(idx)
-        {
-            
-            return 80;
-        }
-    }
-    
-    return 50;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    static NSString *kCellID = @"listCell";
-    
-    UITableViewCell *cell = (UITableViewCell*)[tableView dequeueReusableCellWithIdentifier:kCellID];
-    if(cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kCellID];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        //cell.editing = NO;
-    }
-    [[cell.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    cell.backgroundColor = [UIColor clearColor];
-    
-    NSDictionary *sec = [_data objectAtIndex:indexPath.section];
-    NSArray *items = [sec objectForKey:@"items"];
-    
-    if(indexPath.row < [items count]) {
-        NSDictionary *dic = [items objectAtIndex:indexPath.row];
-        
-        int idx = [[dic objectForKey:@"id"] intValue];
-        
-        if(idx)
-        {
+        NSDictionary *dic = [_inDevs objectAtIndex:idx];
         
         EPlusLayerView *rowCell = [[EPlusLayerView alloc]
-                                   initWithFrame:CGRectMake(0, 0,
+                                   initWithFrame:CGRectMake(xx, 10,
                                                             80, 80)];
         
         [rowCell setIconContentsGravity:kCAGravityCenter];
         
-        [cell.contentView addSubview:rowCell];
-        rowCell.tag = indexPath.section * 100 + indexPath.row;
+        [_content addSubview:rowCell];
+        rowCell.tag = idx;
         rowCell._enableDrag = YES;
         rowCell.delegate_ = self;
         rowCell._element = dic;
@@ -329,145 +254,68 @@ VideoProcessRightViewDelegate, EPlusLayerViewDelegate, UITextFieldDelegate>
         NSString *sel = [dic objectForKey:@"icon_sel"];
         rowCell.selectedImg = [UIImage imageNamed:sel];
         
-        }
-        int xx = 90;
-        
-        UILabel* textLabel = [[UILabel alloc]
-                              initWithFrame:CGRectMake(xx,
-                                                       20,
-                                                       tableView.frame.size.width-xx-10, 20)];
-        [cell.contentView addSubview:textLabel];
-        textLabel.textAlignment = NSTextAlignmentLeft;
-        textLabel.font = [UIFont systemFontOfSize:15];
-        textLabel.textColor = [UIColor whiteColor];
-        
-        UILabel *detailLabel = [[UILabel alloc]
-                                initWithFrame:CGRectMake(xx,
-                                                         40,
-                                                         tableView.frame.size.width-xx-10, 20)];
-        [cell.contentView addSubview:detailLabel];
-        detailLabel.textAlignment = NSTextAlignmentLeft;
-        detailLabel.font = [UIFont systemFontOfSize:15];
-        detailLabel.textColor = [UIColor whiteColor];
-        
-        
-        textLabel.text = [dic objectForKey:@"name"];
-        detailLabel.text = [dic objectForKey:@"type"];
-    
+        xx+=80;
     }
     
+    if([_inDevs count]){
+        xx+=10;
+        
+        UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(xx, 40, 1, 20)];
+        line.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.4];
+        [_content addSubview:line];
+        
+        xx+=10;
+    }
     
-    return cell;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    
-}
-
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    
-    return 44;
-}
-
-
-- (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    
-    UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
-    
-    UIImageView *bg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tb_header_bg.png"]];
-    [header addSubview:bg];
-    bg.frame = header.bounds;
-    
-    NSDictionary *sec = [_data objectAtIndex:section];
-    
-    UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(40, 10, SCREEN_WIDTH, 20)];
-    tL.textColor = [UIColor whiteColor];
-    tL.font = [UIFont systemFontOfSize:14];
-    [header addSubview:tL];
-    
-    tL.text = [sec objectForKey:@"title"];
-    
-    UIImageView *iconAdd = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"down_arraw.png"]];
-    [header addSubview:iconAdd];
-    iconAdd.center = CGPointMake(20, 20);
-    
-    if(_curIndex == section)
+    for(int idx = 0; idx < [_outDevs count]; idx++)
     {
-        iconAdd.transform = CGAffineTransformMakeRotation(M_PI_2);
+        NSDictionary *dic = [_outDevs objectAtIndex:idx];
+        
+        EPlusLayerView *rowCell = [[EPlusLayerView alloc]
+                                   initWithFrame:CGRectMake(xx, 10,
+                                                            80, 80)];
+        
+        [rowCell setIconContentsGravity:kCAGravityCenter];
+        
+        [_content addSubview:rowCell];
+        rowCell.tag = 100+idx;
+        rowCell._enableDrag = YES;
+        rowCell.delegate_ = self;
+        rowCell._element = dic;
+        NSString *image = [dic objectForKey:@"icon"];
+        [rowCell setSticker:image];
+        
+        NSString *sel = [dic objectForKey:@"icon_sel"];
+        rowCell.selectedImg = [UIImage imageNamed:sel];
+        
+        xx+=80;
     }
     
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = CGRectMake(0, 0, SCREEN_WIDTH, 40);
-    [btn addTarget:self action:@selector(extendAction:) forControlEvents:UIControlEventTouchUpInside];
-    [header addSubview:btn];
-    btn.tag = section;
+    _content.contentSize  = CGSizeMake(xx, 100);
     
-    return header;
 }
 
-- (void) extendAction:(UIButton*)sender{
-    
-    int nextIndex = (int)sender.tag;
-    
-    if(_curIndex == nextIndex)
-    {
-        _curIndex = -1;
-    }
-    else
-    {
-        _curIndex = nextIndex;
-    }
-    
-    [_tableView reloadData];
-}
 
 - (void) didBeginTouchedStickerLayer:(id)layer sticker:(id)sticker{
     
-    _tableView.scrollEnabled = NO;
-    
-    //NSLog(@"1");
-    
-    
-    //    EPlusLayerView *st = layer;
-    //    UIImageView *icon = sticker;
-    //
-    //    CGPoint pt = [_tableView convertPoint:icon.center
-    //                           fromView:st];
-    //
-    //    NSLog(@"%f - %f", pt.x, pt.y);
-    
-}
-- (void) didMovedStickerLayer:(id)layer sticker:(id)sticker{
-    
-    //
-    //    EPlusLayerView *st = layer;
-    //    UIImageView *icon = sticker;
-    //
-    //    CGPoint pt = [_tableView convertPoint:icon.center
-    //                                 fromView:st];
-    //
-    //    NSLog(@"%f - %f", pt.x, pt.y);
-    
+    _content.scrollEnabled = NO;
+
 }
 - (void) didEndTouchedStickerLayer:(id)layer sticker:(id)sticker{
     
-    _tableView.scrollEnabled = YES;
+    _content.scrollEnabled = YES;
     
-    //NSLog(@"-1");
-    
+  
     EPlusLayerView *st = layer;
     UIImageView *icon = sticker;
     
-    CGPoint pt = [_tableView convertPoint:icon.center
+    CGPoint pt = [_content convertPoint:icon.center
                                  fromView:st];
     
     CGPoint ptNew = pt;
-    ptNew.y = pt.y - _tableView.contentOffset.y;
+    ptNew.x = pt.x - _content.contentOffset.x;
     
-    NSLog(@"%f - %f", ptNew.x, ptNew.y);
+    //NSLog(@"%f - %f", ptNew.x, ptNew.y);
     
     if(delegate && [delegate respondsToSelector:@selector(didEndDragingElecCell:pt:)])
     {

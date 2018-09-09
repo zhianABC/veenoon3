@@ -19,6 +19,8 @@
 @synthesize textLabel;
 @synthesize _enableDrag;
 @synthesize _resetWhenEndDrag;
+@synthesize _linkedElement;
+
 
 - (void)dealloc
 {
@@ -37,10 +39,10 @@
     _isSelected = YES;
     
     
-    if(delegate_ && [delegate_ respondsToSelector:@selector(updateSelectedStatus:layer:)])
-    {
-        [delegate_ updateSelectedStatus:_isSelected layer:self];
-    }
+//    if(delegate_ && [delegate_ respondsToSelector:@selector(updateSelectedStatus:layer:)])
+//    {
+//        [delegate_ updateSelectedStatus:_isSelected layer:self];
+//    }
 
 }
 - (void) unselected{
@@ -52,10 +54,10 @@
     
     textLabel.textColor = NEW_UR_BUTTON_GRAY_COLOR;
     
-    if(delegate_ && [delegate_ respondsToSelector:@selector(updateSelectedStatus:layer:)])
-    {
-        [delegate_ updateSelectedStatus:_isSelected layer:self];
-    }
+//    if(delegate_ && [delegate_ respondsToSelector:@selector(updateSelectedStatus:layer:)])
+//    {
+//        [delegate_ updateSelectedStatus:_isSelected layer:self];
+//    }
     
 }
 - (BOOL) getIsSelected{
@@ -218,12 +220,31 @@
     if(!_enableDrag)
     {
         if(_isSelected)
+        {
             [self unselected];
+        }
         else
+        {
             [self selected];
+        }
+        
+        if(delegate_ && [delegate_ respondsToSelector:@selector(updateSelectedStatus:layer:)])
+        {
+            [delegate_ updateSelectedStatus:_isSelected layer:self];
+        }
+
     }
     else
+    {
+        
         [self selected];
+        
+        if(delegate_ && [delegate_ respondsToSelector:@selector(updateSelectedStatus:layer:)])
+        {
+            [delegate_ updateSelectedStatus:_isSelected layer:self];
+        }
+
+    }
     
 }
 

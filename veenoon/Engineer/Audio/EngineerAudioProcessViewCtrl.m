@@ -41,6 +41,7 @@
     AudioProcessRightView *_rightView;
     BOOL isSettings;
     UIButton *okBtn;
+    UIButton *iBtn;
     
     AudioIconSettingView *_inconView;
     BOOL isIcon;
@@ -129,6 +130,17 @@
               action:@selector(settingAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
+    
+    iBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    iBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
+    [bottomBar addSubview:iBtn];
+    [iBtn setImage:[UIImage imageNamed:@"i_btn_white.png"]
+           forState:UIControlStateNormal];
+    [iBtn addTarget:self
+              action:@selector(iconAction:)
+    forControlEvents:UIControlEventTouchUpInside];
+    iBtn.center = CGPointMake(SCREEN_WIDTH/2, iBtn.center.y);
+    
     maxAnalogyGain = 12.0;
     minAnalogyGain = -70.0;
     
@@ -180,6 +192,17 @@
                  forControlEvents:UIControlEventTouchUpInside];
         
     }
+    
+    
+    _inconView = [[AudioIconSettingView alloc]
+                  initWithFrame:CGRectMake(0,
+                                           SCREEN_HEIGHT,
+                                           SCREEN_WIDTH, 100)
+                  withCurrentAudios:_currentAudioDevices];
+    _inconView.delegate = self;
+    [self.view addSubview:_inconView];
+    
+    [self.view bringSubviewToFront:bottomBar];
     
     
     [self getCurrentDeviceDriverProxys];
@@ -239,9 +262,7 @@
                              [_rightView removeFromSuperview];
                          }];
     }
-    if ([_inconView superview]) {
-        [_inconView removeFromSuperview];
-    }
+    
     [okBtn setTitle:@"设置" forState:UIControlStateNormal];
     isSettings = NO;
 }
@@ -670,9 +691,6 @@
 
 - (void) settingAction:(id)sender{
     
-    if ([_inconView superview]) {
-        [_inconView removeFromSuperview];
-    }
     if (!isSettings) {
         if (_rightView == nil) {
             _rightView = [[AudioProcessRightView alloc]
@@ -702,6 +720,40 @@
     }
 }
 
+- (void) iconAction:(id)sender{
+    
+    //如果在显示，消失
+    if(CGRectGetMinY(_inconView.frame) < SCREEN_HEIGHT)
+    {
+        [okBtn setImage:[UIImage imageNamed:@"i_btn_white.png"]
+               forState:UIControlStateNormal];
+        
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             
+                             _inconView.frame  = CGRectMake(0,
+                                                            SCREEN_HEIGHT,
+                                                            SCREEN_WIDTH,
+                                                            100);
+                         } completion:^(BOOL finished) {
+                             
+                         }];
+    }
+    else//如果没显示，显示
+    {
+        
+        [okBtn setImage:[UIImage imageNamed:@"i_btn_yellow.png"]
+               forState:UIControlStateNormal];
+        
+        
+        [UIView beginAnimations:nil context:nil];
+        _inconView.frame  = CGRectMake(0,
+                                       SCREEN_HEIGHT-150,
+                                       SCREEN_WIDTH,
+                                       100);
+        [UIView commitAnimations];
+    }
+}
 
 #pragma mark -- Right View Delegate ---
 - (void) dissmissSettingView{
@@ -730,28 +782,7 @@
         
         [self.navigationController pushViewController:ctrl animated:YES];
     }
-    else
-    {
-        
-        if (_rightView) {
-            [_rightView removeFromSuperview];
-            
-            if (_inconView == nil) {
-                _inconView = [[AudioIconSettingView alloc]
-                              initWithFrame:CGRectMake(SCREEN_WIDTH-180,
-                                                       64, 180, SCREEN_HEIGHT-114) withCurrentAudios:_currentAudioDevices];
-                _inconView.delegate = self;
-            } else {
-                [UIView beginAnimations:nil context:nil];
-                _inconView.frame  = CGRectMake(SCREEN_WIDTH-180,
-                                               64, 180, SCREEN_HEIGHT-114);
-                [UIView commitAnimations];
-            }
-            
-            [self.view insertSubview:_inconView belowSubview:bottomBar];
-            [okBtn setTitle:@"保存" forState:UIControlStateNormal];
-        }
-    }
+    
 }
 
 - (void) cancelAction:(id)sender{

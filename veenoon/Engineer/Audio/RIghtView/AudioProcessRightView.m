@@ -90,19 +90,7 @@
         [btn3 addTarget:self action:@selector(yinpinchuliAction:) forControlEvents:UIControlEventTouchUpInside];
         btn3.titleLabel.font = [UIFont systemFontOfSize:15];
         
-        top+=40;
-        top+=5;
-        
-        btn4 = [UIButton buttonWithColor:RGB(0, 146, 174) selColor:nil];
-        btn4.frame = CGRectMake(x, top, bw, 40);
-        btn4.clipsToBounds = YES;
-        btn4.layer.cornerRadius = 5;
-//        [self addSubview:btn4];
-        
-        [btn4 setTitle:@"标识图标" forState:UIControlStateNormal];
-        [btn4 addTarget:self action:@selector(shexiangzhuizongAction:) forControlEvents:UIControlEventTouchUpInside];
-        btn4.titleLabel.font = [UIFont systemFontOfSize:15];
-        
+
     }
     
     return self;
@@ -136,7 +124,7 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return 4;
+    return 3;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -171,8 +159,6 @@
         titleL.text = @"输出设置";
     } else if (indexPath.row == 2) {
         titleL.text = @"矩阵路由";
-    } else {
-        titleL.text = @"标识图标";
     }
     
     UIImageView *icon = [[UIImageView alloc]
@@ -199,8 +185,6 @@
         [self biaozhunfayanAction:nil];
     } else if (targetIndx == 2) {
         [self yinpinchuliAction:nil];
-    } else {
-        [self shexiangzhuizongAction:nil];
     }
 }
 
@@ -215,10 +199,6 @@
 - (void) yinpinchuliAction:(id)sender{
     
     [self selectBtnAction:btn3.titleLabel.text];
-}
-- (void) shexiangzhuizongAction:(id)sender{
-    
-    [self selectBtnAction:btn4.titleLabel.text];
 }
 
 - (void) selectBtnAction:(NSString*)btnTitle {
