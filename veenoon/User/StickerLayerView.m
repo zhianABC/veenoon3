@@ -50,7 +50,7 @@
     _sticker.image = normalImg;
     _stickerCopy.image = normalImg;
     
-    textLabel.textColor = SINGAL_COLOR;
+    textLabel.textColor = NEW_UR_BUTTON_GRAY_COLOR;
     
     if(delegate_ && [delegate_ respondsToSelector:@selector(updateSelectedStatus:layer:)])
     {
@@ -98,7 +98,7 @@
         [self addSubview:textLabel];
         textLabel.textAlignment = NSTextAlignmentCenter;
         textLabel.font = [UIFont systemFontOfSize:15];
-        textLabel.textColor = SINGAL_COLOR;
+        textLabel.textColor = NEW_UR_BUTTON_GRAY_COLOR;
         
     }
     return self;
