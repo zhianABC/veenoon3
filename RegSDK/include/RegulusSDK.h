@@ -44,12 +44,14 @@
 @optional -(void) onDepressUpdatePacket:(RgsNotifyStatus) status persent:(CGFloat)persent error:(NSError *)error;
 @optional -(void) onDownloadUpdatePacket:(RgsNotifyStatus) status persent:(CGFloat)persent error:(NSError *)error;
 @optional -(void) onDownloadFile:(NSString *)file persent:(float)persent;
+@optional -(void) onUploadFile:(NSString *)file persent:(float)persent;
 @optional -(void) onSystemWillReboot:(NSString *) reason;
 @optional -(void) onUploadProject:(RgsNotifyStatus) status persent:(CGFloat)persent error:(NSError *)error;
 @optional -(void) onDownloadProject:(RgsNotifyStatus) status persent:(CGFloat)persent error:(NSError *)error;
 @optional -(void) onDownloadPlugin:(RgsNotifyStatus) status name:(NSString *)name persent:(CGFloat)persent error:(NSError *)error;
 @optional -(void) onRecvDeviceCapbility:(NSInteger)proxy_id cap:(NSDictionary *)cap;
 @optional -(void) onRecvCommandInfo:(NSInteger)dev_id commds:(NSArray *)commds;
+@optional -(void) onLocalModelDownloadFiles:(NSString *)decription persent:(CGFloat)persent;
 @end
 
 @interface RegulusSDK : NSObject
@@ -866,6 +868,106 @@
  @see RgsProxyObj
  */
 -(void)GetProxyRelevanceProxyObj:(NSInteger)proxy_id completion:(void(^)(BOOL result,NSArray<RgsProxyObj *>* proxies,NSError * error)) completion;
+
+/*!
+ @since 3.15.1
+ @brief 使用本地离线模式
+ @param completion 成功返回YES 失败返回NO
+ */
+-(void)UseLocalModel:(void(^)(BOOL result,NSError * error)) completion;
+
+/*！
+ @since 3.15.1
+ @brief 请求下载本地离线模式需要的资源文件
+ @param completion 成功返回YES 失败返回NO
+ */
+-(void)RequestDownLocalResourceFiles:(void(^)(BOOL result,NSError * error)) completion;
+
+/*!
+ @since 3.15.1
+ @brief 请求代理关联代理
+ @param author 工程创建者
+ @param hardware 设备类型，由GetLocalProjectHardware获取
+ @param completion 成功返回YES 失败返回NO
+ */
+-(void)NewLocalProject:(NSString *)author hardware:(NSString *)hardware completion:(void(^)(BOOL result,NSError * error)) completion;
+
+/*!
+ @since 3.15.1
+ @brief 保存本地工程
+ @param name 工程名字
+ @param completion 成功返回YES 失败返回NO
+ */
+-(void)SaveLocalProject:(NSString *)name completion:(void(^)(BOOL result,NSError * error)) completion;
+
+/*!
+ @since 3.15.1
+ @brief 加载本地工程
+ @param name 工程名字
+ @param completion 成功返回YES 失败返回NO
+ */
+-(void)LoadLocalProject:(NSString *)name completion:(void(^)(BOOL result,NSError * error)) completion;
+
+/*!
+ @since 3.15.1
+ @brief 删除本地工程
+ @param name 工程名字
+ @param completion 成功返回YES 失败返回NO
+ */
+-(void)DelLocalProject:(NSString *)name completion:(void(^)(BOOL result,NSError * error)) completion;
+
+/*!
+ @since 3.15.1
+ @brief 获取当前工程名字
+ @param completion 成功返回YES 失败返回NO name 工程名字
+ */
+-(void)GetLocalProjectName:(void(^)(BOOL result,NSString * name,NSError * error)) completion;
+
+/*!
+ @since 3.15.1
+ @brief 获取本地工程列表
+ @param completion 成功返回YES 失败返回NO names工程列表
+ */
+-(void)GetProjectsFromLocal:(void (^)(BOOL result, NSArray * names, NSError * error))completion;
+
+/*!
+ @since 3.15.1
+ @brief 导入本地工程到中控系统
+ @param name 工程名字
+ @param completion 成功返回YES 失败返回NO
+ */
+-(void)ImportProjectFromLocal:(NSString *)name completion:(void (^)(BOOL, NSError *))completion;
+
+/*!
+ @since 3.15.1
+ @brief 导出中控系统工程到本地
+ @param name 保存的工程名字
+ @param completion 成功返回YES 失败返回NO
+ */
+-(void)ExportProjectToLocal:(NSString *)name completion:(void (^)(BOOL, NSError *))completion;
+
+/*!
+ @since 3.15.1
+ @brief 获取支持的本地工程的中控系统类型
+ @param completion 成功返回YES 失败返回NO hardware中控类型
+ */
+-(void)GetLocalProjectHardware:(void(^)(BOOL result,NSArray <NSString *>* hardware,NSError * error)) completion;
+
+
+/*!
+ @since 3.15.1
+ @brief 更新本地工程资源到当前工程
+ @param completion 成功返回YES 失败返回NO
+ */
+-(void)UpdateResourceToCurProject:(void(^)(BOOL result,NSError * error)) completion;
+
+
+/*!
+ @since 3.15.1
+ @brief 获取当前登录的模式
+ */
+-(RgsLoginStatus) GetLoginModel;
+
 @end
 
 

@@ -14,6 +14,16 @@
 #define RegulusErrorDomain @"com.regulus.sdk"
 
 
+/*!
+ 当前登录状态
+ */
+ typedef NS_ENUM(NSInteger,RgsLoginStatus)
+{
+    RGS_LOGIN_NONE,
+    RGS_LOGIN_ONLINE,
+    RGS_LOGIN_OFFLINE,
+};
+
 
 /*!
  指令参数类型枚举

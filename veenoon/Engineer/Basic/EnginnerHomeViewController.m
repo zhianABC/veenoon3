@@ -75,7 +75,7 @@
     _userNameField = [[UITextField alloc] initWithFrame:CGRectMake(0, inputHeight + 10, SCREEN_WIDTH, 44)];
     _userNameField.delegate = self;
     _userNameField.backgroundColor = [UIColor clearColor];
-    _userNameField.returnKeyType = UIReturnKeyDone;
+    _userNameField.returnKeyType = UIReturnKeyNext;
     _userNameField.textColor = [UIColor whiteColor];
     _userNameField.borderStyle = UITextBorderStyleNone;
     _userNameField.textAlignment = NSTextAlignmentCenter;
@@ -140,7 +140,19 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     
-    [textField resignFirstResponder];
+    if(_userNameField == textField)
+    {
+        [_userPwdField becomeFirstResponder];
+    }
+    else
+    {
+        [textField resignFirstResponder];
+    }
+    
+    if(_userPwdField == textField)
+    {
+        [self loginAction:nil];
+    }
     
     return YES;
 }

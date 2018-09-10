@@ -734,51 +734,122 @@
     
 }
 
+
+
+- (nullable NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    IMP_BLOCK_SELF(EngineerToUseTeslariViewCtrl);
+    
+    UITableViewRowAction *down = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal
+                                                                    title:@"重命名"
+                                                                  handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+                                                                      
+                                                                      [block_self renameDriverAtIndex:(int)indexPath.row andCol:(int)indexPath.section];
+                                                                  }];
+    down.backgroundColor = [UIColor orangeColor];
+    
+    
+    UITableViewRowAction *del = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault
+                                                                   title:@"删除"
+                                                                 handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+                                                                     
+                                                                     [block_self removeDriverAtIndex:(int)indexPath.row andCol:(int)indexPath.section];
+                                                                 }];
+    
+    return @[down, del];
+}
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if(editingStyle == UITableViewCellEditingStyleDelete)
     {
         
-        BasePlugElement *data = nil;
-        NSMutableArray *ma = nil;
-        if(indexPath.section == 0)
-        {
-            data = [_audioDrivers objectAtIndex:indexPath.row];
-            ma = _audioDrivers;
-        }
-        else if(indexPath.section == 1)
-        {
-            data = [_videoDrivers objectAtIndex:indexPath.row];
-            ma = _videoDrivers;
-        }
-        else if(indexPath.section == 2)
-        {
-            data = [_envDrivers objectAtIndex:indexPath.row];
-            ma = _envDrivers;
-        }
-        else if(indexPath.section == 3)
-        {
-            data = [_chuanganDrivers objectAtIndex:indexPath.row];
-            ma = _chuanganDrivers;
-        }
-        else if(indexPath.section == 4)
-        {
-            data = [_portDrivers objectAtIndex:indexPath.row];
-            ma = _portDrivers;
-        }
         
-        if(data._driver)
-        {
-            [data removeDriver];
-        }
-        
-        [ma removeObject:data];
-        
-        [_tableView reloadData];
  
     }
 }
 
+
+- (void) renameDriverAtIndex:(int)row andCol:(int)col{
+    
+    BasePlugElement *data = nil;
+    NSMutableArray *ma = nil;
+    if(col == 0)
+    {
+        data = [_audioDrivers objectAtIndex:row];
+        ma = _audioDrivers;
+    }
+    else if(col == 1)
+    {
+        data = [_videoDrivers objectAtIndex:row];
+        ma = _videoDrivers;
+    }
+    else if(col == 2)
+    {
+        data = [_envDrivers objectAtIndex:row];
+        ma = _envDrivers;
+    }
+    else if(col == 3)
+    {
+        data = [_chuanganDrivers objectAtIndex:row];
+        ma = _chuanganDrivers;
+    }
+    else if(col == 4)
+    {
+        data = [_portDrivers objectAtIndex:row];
+        ma = _portDrivers;
+    }
+    
+//    if(data._driver)
+//    {
+//        [data removeDriver];
+//    }
+//
+//    [ma removeObject:data];
+//
+    [_tableView reloadData];
+}
+
+
+- (void) removeDriverAtIndex:(int)row andCol:(int)col{
+    
+    BasePlugElement *data = nil;
+    NSMutableArray *ma = nil;
+    if(col == 0)
+    {
+        data = [_audioDrivers objectAtIndex:row];
+        ma = _audioDrivers;
+    }
+    else if(col == 1)
+    {
+        data = [_videoDrivers objectAtIndex:row];
+        ma = _videoDrivers;
+    }
+    else if(col == 2)
+    {
+        data = [_envDrivers objectAtIndex:row];
+        ma = _envDrivers;
+    }
+    else if(col == 3)
+    {
+        data = [_chuanganDrivers objectAtIndex:row];
+        ma = _chuanganDrivers;
+    }
+    else if(col == 4)
+    {
+        data = [_portDrivers objectAtIndex:row];
+        ma = _portDrivers;
+    }
+    
+    if(data._driver)
+    {
+        [data removeDriver];
+    }
+    
+    [ma removeObject:data];
+    
+    [_tableView reloadData];
+}
 
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     

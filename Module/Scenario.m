@@ -535,6 +535,8 @@
 
 - (void) recoverFromUserData:(NSDictionary*)data{
     
+    if(data && [data objectForKey:@"content"])
+    {
     NSString *scenario_content = [data objectForKey:@"content"];
     NSData *bdata = [scenario_content dataUsingEncoding:NSUTF8StringEncoding];
     
@@ -544,6 +546,7 @@
                                                         error:&error];
     if([dic isKindOfClass:[NSDictionary class]])
         [self fillWithData:dic];
+    }
 }
 
 - (void) postCreateScenarioNotifyResult:(BOOL)success{

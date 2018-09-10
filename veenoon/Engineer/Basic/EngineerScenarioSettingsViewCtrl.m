@@ -306,9 +306,9 @@
     
     int scenarioSize = (int)[_scenarioArray count] + 1;
     
-    int col = 5;
+    int col = 8;
     int leftRightSpace = ENGINEER_VIEW_LEFT;
-    int colGap = 10;
+    
     
     int rowNumber = scenarioSize/col + 1;
     
@@ -329,6 +329,8 @@
         [[scroolView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     }
     [self.view insertSubview:scroolView belowSubview:_settingview];
+    
+    float colGap = (CGRectGetWidth(scroolView.frame) - 8*cellWidth)/7.0;
     
     int scrollHeight = rowNumber*cellHeight + (rowNumber-1)*colGap+10;
     

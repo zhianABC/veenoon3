@@ -1126,6 +1126,7 @@
 		04DE1FE61AD6B52400D49E2F /* CMNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMNavigationController.m; sourceTree = "<group>"; };
 		34141697204BC3D5002E0B00 /* AudioMatrixView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioMatrixView.h; sourceTree = "<group>"; };
 		34141698204BC3D5002E0B00 /* AudioMatrixView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioMatrixView.m; sourceTree = "<group>"; };
+		3415322C214663C800F378FF /* RgsUpdatePacketInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RgsUpdatePacketInfo.h; sourceTree = "<group>"; };
 		341651E31ED8067100B16E91 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		3416717F1FBA974C001D33D0 /* WellcomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WellcomeViewController.h; sourceTree = "<group>"; };
 		341671801FBA974C001D33D0 /* WellcomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WellcomeViewController.m; sourceTree = "<group>"; };
@@ -3436,6 +3437,7 @@
 		34766E9920CE1E77006B9E82 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				3415322C214663C800F378FF /* RgsUpdatePacketInfo.h */,
 				EB62DFC120DE400500144EE0 /* RgsSystemInfo.h */,
 				34766E9A20CE1E77006B9E82 /* RgsCommandParamInfo.h */,
 				34766E9B20CE1E77006B9E82 /* RgsDriverObj.h */,
