@@ -177,6 +177,11 @@
     _rgsSceneEvent.parent_id = _rgsDriver.m_id;
     
     
+    if(delegate && [delegate respondsToSelector:@selector(didEndLoadingUserData)])
+    {
+        [delegate didEndLoadingUserData];
+    }
+    
     IMP_BLOCK_SELF(Scenario);
     
     [KVNProgress show];
@@ -537,15 +542,15 @@
     
     if(data && [data objectForKey:@"content"])
     {
-    NSString *scenario_content = [data objectForKey:@"content"];
-    NSData *bdata = [scenario_content dataUsingEncoding:NSUTF8StringEncoding];
-    
-    NSError *error = nil;
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:bdata
-                                                      options:NSJSONReadingAllowFragments
-                                                        error:&error];
-    if([dic isKindOfClass:[NSDictionary class]])
-        [self fillWithData:dic];
+        NSString *scenario_content = [data objectForKey:@"content"];
+        NSData *bdata = [scenario_content dataUsingEncoding:NSUTF8StringEncoding];
+        
+        NSError *error = nil;
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:bdata
+                                                            options:NSJSONReadingAllowFragments
+                                                              error:&error];
+        if([dic isKindOfClass:[NSDictionary class]])
+            [self fillWithData:dic];
     }
 }
 

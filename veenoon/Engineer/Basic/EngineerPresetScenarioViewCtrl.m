@@ -570,9 +570,10 @@
                     action:@selector(buttonAction:)
           forControlEvents:UIControlEventTouchUpInside];
         
-        UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(btnlongPressed:)];
+        UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]
+                                                   initWithTarget:self
+                                                   action:@selector(btnlongPressed:)];
         [cellBtn addGestureRecognizer:longPress];
-        
         [btncells addObject:cellBtn];
         
         
@@ -667,46 +668,7 @@
 }
 
 -(void)buttonAction:(DevicePlugButton*)cellBtn{
-    
-    int tag = (int)cellBtn.tag;
-    int baseTag = tag/1000;
-    
-    int index = tag%1000;
-    
-    NSArray *devices = nil;
-    if(baseTag == 1)//音频
-    {
-        if(_isEditingScenario)
-        {
-            devices = _scenario._audioDevices;
-        }
-        else
-        {
-            devices = [_selectedDevices objectForKey:@"audio"];
-        }
-    }
-    else if(baseTag == 2)//视频
-    {
-        if(_isEditingScenario)
-        {
-            devices = _scenario._videoDevices;
-        }
-        else
-        {
-        devices = [_selectedDevices objectForKey:@"video"];
-        }
-    }
-    else
-    {
-        if(_isEditingScenario)
-        {
-            devices = _scenario._envDevices;
-        }
-        else
-        {
-        devices = [_selectedDevices objectForKey:@"env"];
-        }
-    }
+
     
     if(_isEditMode)//删除模式
     {
@@ -727,16 +689,15 @@
                                                         object:nil];
     /////////
     
-    BasePlugElement *plug = [devices objectAtIndex:index];
+    BasePlugElement *plug = cellBtn._plug;
+    
+    int baseTag = cellBtn.tag/1000;
 
     if ([class isEqualToString:@"APowerESet"]) {
         
         EngineerElectronicSysConfigViewCtrl *ctrl = [[EngineerElectronicSysConfigViewCtrl alloc] init];
         ctrl._number = 8;
-        if(baseTag == 1)//Audio
-        {
-            ctrl._electronicSysArray = @[plug];
-        }
+        ctrl._electronicSysArray = @[plug];
         [self.navigationController pushViewController:ctrl animated:YES];
         
     }
@@ -983,10 +944,45 @@
     
 }
 
-- (void) btnlongPressed:(id)sender{
+- (void) btnlongPressed:(UIGestureRecognizer*)sender{
     
+    DevicePlugButton *cellBtn = sender.view;
+    if(![cellBtn isKindOfClass:[DevicePlugButton class]])
+        return;
     
+    BasePlugElement *plug = cellBtn._plug;
     
+    RgsDriverObj *dr = (RgsDriverObj*)plug._driver;
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                             message:@"重命名" preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"设备名";
+        textField.text = dr.name;
+    }];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        UITextField *drNameTxt = alertController.textFields.firstObject;
+        NSString *drName = drNameTxt.text;
+        if (drName && [drName length] > 0) {
+            
+            
+            [[RegulusSDK sharedRegulusSDK] RenameDriver:dr.m_id
+                                                   name:drName
+                                             completion:^(BOOL result, NSError *error) {
+                                                 
+                                                 dr.name = drName;
+                                                 plug._name = drName;
+                                                 cellBtn._drNameLabel.text = drName;
+                                             }];
+            
+        }
+    }]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
+    [self presentViewController:alertController animated:true completion:nil];
    
 }
 

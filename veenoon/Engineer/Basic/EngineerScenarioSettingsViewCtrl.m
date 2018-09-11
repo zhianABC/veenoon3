@@ -22,8 +22,10 @@
 #import "HomeViewController.h"
 #import "EngineerNewTeslariViewCtrl.h"
 #import "MeetingRoom.h"
+#import "ScenarioCellView.h"
 
-@interface EngineerScenarioSettingsViewCtrl ()<SIconSelectViewDelegate, ScenarioDelegate>{
+
+@interface EngineerScenarioSettingsViewCtrl ()<SIconSelectViewDelegate, ScenarioDelegate, ScenarioCellViewDelegate>{
     
     UIButton *_selectSysBtn;
     SIconSelectView *_settingview;
@@ -263,7 +265,7 @@
     }
     else
     {
-        [KVNProgress showSuccess];
+        [KVNProgress dismiss];
     }
     
     
@@ -293,9 +295,7 @@
         {
             [s prepareDataForUploadCloud:[map objectForKey:key]];
         }
-        
         s._rgsSceneObj = dr;
-        [s syncDataFromRegulus];
         [_scenarioArray addObject:s];
     }
     
@@ -320,10 +320,10 @@
     
     if(scroolView == nil)
     {
-    scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(leftRightSpace,
-                                                                topy,
-                                                                SCREEN_WIDTH-leftRightSpace*2,
-                                                                SCREEN_HEIGHT-240)];
+        scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(leftRightSpace,
+                                                                    topy,
+                                                                    SCREEN_WIDTH-leftRightSpace*2,
+                                                                    SCREEN_HEIGHT-240)];
         
     }
     else
@@ -348,141 +348,25 @@
         int startX = colN*cellWidth+colN*colGap;
         int startY = rowN*cellHeight+colGap*rowN+top;
         
-        UIButton *scenarioCellBtn = [UIButton buttonWithColor:DARK_BLUE_COLOR
-                                                     selColor:nil];
-        [scroolView addSubview:scenarioCellBtn];
+        CGRect rc = CGRectMake(startX, startY, cellWidth, cellHeight);
+        ScenarioCellView *cell = [[ScenarioCellView alloc] initWithFrame:rc];
+        [scroolView addSubview:cell];
+        [_sBtns addObject:cell];
+        cell.ctrl = self;
+        cell.delegate = self;
         
-        [_sBtns addObject:scenarioCellBtn];
-        
-        scenarioCellBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
-        scenarioCellBtn.layer.cornerRadius = 5;
-        scenarioCellBtn.clipsToBounds = YES;
-        
-        
-        [scenarioCellBtn addTarget:self
-                         action:@selector(handleTapGesture:)
-               forControlEvents:UIControlEventTouchUpInside];
-        
-        scenarioCellBtn.titleLabel.font = [UIFont boldSystemFontOfSize:16];
-        
-        if ([_scenarioArray count] == index) {
-            
-            [scenarioCellBtn setTitle:@"+" forState:UIControlStateNormal];
-            [scenarioCellBtn setTitleColor:DARK_BLUE_COLOR
-                               forState:UIControlStateNormal];
-            
-            [scenarioCellBtn changeNormalColor:[UIColor clearColor]];
-            scenarioCellBtn.layer.borderColor = DARK_BLUE_COLOR.CGColor;;
-            scenarioCellBtn.clipsToBounds = YES;
-            scenarioCellBtn.layer.borderWidth = 2;
-            
-        } else {
-            
-            UILongPressGestureRecognizer *longPress0 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed0:)];
-            longPress0.view.tag = index;
-            [scenarioCellBtn addGestureRecognizer:longPress0];
-        
-            
-            Scenario *s = [self._scenarioArray objectAtIndex:index];
-            NSString *name  = [[s senarioData] objectForKey:@"name"];
-            
-            
-            UIImageView *iconView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cellWidth, 70)];
-            [scenarioCellBtn addSubview:iconView];
-            iconView.tag = 101;
-            iconView.contentMode = UIViewContentModeCenter;
-            
-            UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(2, 70, cellWidth-4, 1)];
-            line.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.5];
-            [scenarioCellBtn addSubview:line];
-            
-            
-            UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, 70, cellWidth, 30)];
-            titleL.backgroundColor = [UIColor clearColor];
-            [scenarioCellBtn addSubview:titleL];
-            titleL.font = [UIFont boldSystemFontOfSize:14];
-            titleL.textColor  = [UIColor whiteColor];
-            titleL.text = name;
-            titleL.tag = 102;
-            titleL.textAlignment = NSTextAlignmentCenter;
-        
-            NSString *small = [[s senarioData] objectForKey:@"small_icon"];
-            if(small)
-            {
-                UIImage * img = [UIImage imageNamed:small];
-                
-                if(img){
-                    iconView.image = img;
-                }
-            }
-            
+        if(i < [_scenarioArray count])
+        {
+            Scenario *s = [_scenarioArray objectAtIndex:i];
+            [cell fillData:s];
         }
-        
-        scenarioCellBtn.tag = index;
+        else
+        {
+            [cell fillData:nil];
+        }
         
         index++;
     }
-}
-
-- (void) longPressed0:(id)sender {
-    
-    UILongPressGestureRecognizer *viewRecognizer = (UILongPressGestureRecognizer*) sender;
-    int index = (int)viewRecognizer.view.tag;
-    if (index == [self._scenarioArray count]) {
-        return;
-    }
-    UIAlertController *alertController = [UIAlertController
-                                          alertControllerWithTitle:@"提示"
-                                          message:@"请输入场景名称"
-                                          preferredStyle:UIAlertControllerStyleAlert];
-    
-    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.placeholder = @"场景名称";
-    }];
-    
-    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.placeholder = @"英文名称";
-    }];
-    
-    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-        if([alertController.textFields count] == 2)
-        {
-            UITextField *envirnmentNameTextField = alertController.textFields.firstObject;
-            NSString *scenarioName = envirnmentNameTextField.text;
-            
-            UITextField *enNameTextField = [alertController.textFields objectAtIndex:1];
-            NSString *enName = enNameTextField.text;
-            
-            if (scenarioName && [scenarioName length] > 0 && [enName length])
-            {
-                Scenario *s = [self._scenarioArray objectAtIndex:index];
-                UIButton *scenarioCellBtn = [_sBtns objectAtIndex:index];
-                
-                NSMutableDictionary *sdic = [s senarioData];
-                [sdic setObject:scenarioName
-                         forKey:@"name"];
-                
-                [sdic setObject:enName
-                         forKey:@"en_name"];
-                
-                UILabel *tL = [scenarioCellBtn viewWithTag:102];
-                
-                if([tL isKindOfClass:[UILabel class]])
-                    tL.text = scenarioName;
-                
-#ifdef REALTIME_NETWORK_MODEL
-                [s updateProperty];
-#endif
-                
-                [[DataBase sharedDatabaseInstance] saveScenario:sdic];
-            }
-        }
-    }]];
-    
-    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
-    
-    [self presentViewController:alertController animated:true completion:nil];
 }
 
 - (void) didEndLoadingDiverValues{
@@ -493,16 +377,13 @@
     
 }
 
--(void)handleTapGesture:(UIButton*)sender{
+- (void) didButtonCellTapped:(Scenario*)s{
     
-    if(sender.tag < [_scenarioArray count])
+    if(s)
     {
-        Scenario *s = [self._scenarioArray objectAtIndex:sender.tag];
-
         self._curSecenario = s;
         _curSecenario.delegate = self;
         [_curSecenario loadDriverValues];
-        
     }
     else
     {
@@ -516,13 +397,12 @@
         {
             EngineerNewTeslariViewCtrl *ctrl = [[EngineerNewTeslariViewCtrl alloc] init];
             [self.navigationController pushViewController:ctrl animated:YES];
-
+            
             
         }
-        
     }
-
 }
+
 - (void) okAction:(id)sender{
     
     
@@ -534,51 +414,15 @@
     CGPoint viewPoint = [self.view convertPoint:pt fromView:_settingview];
     
     NSString *imageName = [data objectForKey:@"iconbig"];
-    NSString *icon_user = [data objectForKey:@"icon_user"];
-    NSString *title = [data objectForKey:@"title"];
-    NSString *en_name = [data objectForKey:@"en_name"];
     UIImage *img = [UIImage imageNamed:imageName];
-    if(img) {
-        for (UIButton *button in _sBtns) {
-            
-            CGRect rect = [self.view convertRect:button.frame fromView:scroolView];
+    if(img)
+    {
+        for (ScenarioCellView *cell in _sBtns)
+        {
+            CGRect rect = [self.view convertRect:cell.frame fromView:scroolView];
             if (CGRectContainsPoint(rect, viewPoint)) {
-                
-                [_map setObject:data forKey:[NSNumber numberWithInteger:button.tag]];
-                
-    
-                UIImageView *icon = [button viewWithTag:101];
-                if([icon isKindOfClass:[UIImageView class]])
-                    icon.image = img;
-                
-                
-                int index = (int)button.tag;
-                if(index < [_scenarioArray count])
-                {
-                    Scenario *s = [self._scenarioArray objectAtIndex:index];
-                    
-                    NSMutableDictionary *scenarioDic = [s senarioData];
-                    [scenarioDic setObject:imageName forKey:@"small_icon"];
-                    [scenarioDic setObject:icon_user forKey:@"icon_user"];
-                    [scenarioDic setObject:title forKey:@"name"];
-                    
-                    if(en_name)
-                    [scenarioDic setObject:en_name
-                             forKey:@"en_name"];
-                    
-                    UILabel *tL = [button viewWithTag:102];
-                    
-                    if([tL isKindOfClass:[UILabel class]])
-                        tL.text = title;
-                    
-#ifdef REALTIME_NETWORK_MODEL
-                    [s updateProperty];
-#endif
-                    
-                    [[DataBase sharedDatabaseInstance] saveScenario:scenarioDic];
-                    
-                    [s uploadToRegulusCenter];
-                }
+
+                [cell refreshDraggedData:data];
                 
                 break;
                 

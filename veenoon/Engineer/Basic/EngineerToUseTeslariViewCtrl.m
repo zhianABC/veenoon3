@@ -64,6 +64,11 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    [_tableView reloadData];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -612,8 +617,8 @@
     subL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
     
     
-    titleL.text = data._typeName;
-    subL.text = [data deviceName];
+    titleL.text = [data deviceName];
+    subL.text = [NSString stringWithFormat:@"%@ %@", data._brand, data._type];
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 59, tableWidth, 1)];
     line.backgroundColor =  USER_GRAY_COLOR;
@@ -738,13 +743,13 @@
     
     IMP_BLOCK_SELF(EngineerToUseTeslariViewCtrl);
     
-    UITableViewRowAction *down = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal
-                                                                    title:@"重命名"
-                                                                  handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-                                                                      
-                                                                      [block_self renameDriverAtIndex:(int)indexPath.row andCol:(int)indexPath.section];
-                                                                  }];
-    down.backgroundColor = [UIColor orangeColor];
+//    UITableViewRowAction *down = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal
+//                                                                    title:@"重命名"
+//                                                                  handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+//
+//                                                                      [block_self renameDriverAtIndex:(int)indexPath.row andCol:(int)indexPath.section];
+//                                                                  }];
+//    down.backgroundColor = [UIColor orangeColor];
     
     
     UITableViewRowAction *del = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault
@@ -754,7 +759,7 @@
                                                                      [block_self removeDriverAtIndex:(int)indexPath.row andCol:(int)indexPath.section];
                                                                  }];
     
-    return @[del,down];
+    return @[del];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
