@@ -260,7 +260,7 @@
             
             if(obj)
             {
-                obj._name = [device objectForKey:@"name"];
+                obj._name = driver.name;
                 obj._brand = [device objectForKey:@"brand"];
                 obj._type = [device objectForKey:@"ptype"];
                 obj._driverUUID = [device objectForKey:@"driver"];
@@ -612,10 +612,8 @@
     subL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
     
     
-    titleL.text = data._name;
-    subL.text = [NSString stringWithFormat:@"%@ %@",
-                 data._brand,
-                 data._type];
+    titleL.text = data._typeName;
+    subL.text = [data deviceName];
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 59, tableWidth, 1)];
     line.backgroundColor =  USER_GRAY_COLOR;
@@ -756,7 +754,7 @@
                                                                      [block_self removeDriverAtIndex:(int)indexPath.row andCol:(int)indexPath.section];
                                                                  }];
     
-    return @[down, del];
+    return @[del,down];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -800,14 +798,41 @@
         ma = _portDrivers;
     }
     
-//    if(data._driver)
-//    {
-//        [data removeDriver];
-//    }
-//
-//    [ma removeObject:data];
-//
-    [_tableView reloadData];
+    if(data._driver)
+    {
+        RgsDriverObj *dr = (RgsDriverObj*)data._driver;
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                                 message:@"重命名" preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.placeholder = @"设备名";
+            textField.text = dr.name;
+        }];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            UITextField *drNameTxt = alertController.textFields.firstObject;
+            NSString *drName = drNameTxt.text;
+            if (drName && [drName length] > 0) {
+                
+                
+                [[RegulusSDK sharedRegulusSDK] RenameDriver:dr.m_id
+                                                       name:drName
+                                                 completion:^(BOOL result, NSError *error) {
+                                                     
+                                                     dr.name = drName;
+                                                     data._name = drName;
+                                                     [_tableView reloadData];
+                                                     
+                                                 }];
+                
+            }
+        }]];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+        
+        [self presentViewController:alertController animated:true completion:nil];
+    }
 }
 
 

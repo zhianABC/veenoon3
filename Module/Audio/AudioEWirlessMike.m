@@ -269,6 +269,7 @@
     {
         RgsDriverObj *dr = _driver;
         [config setObject:[NSNumber numberWithInteger:dr.m_id] forKey:@"driver_id"];
+        [config setObject:[NSNumber numberWithBool:self._isSelected] forKey:@"s"];
     }
     return config;
 }

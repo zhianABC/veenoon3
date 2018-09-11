@@ -147,6 +147,7 @@
     [self.view addSubview:bottom];
     [self.view addSubview:bottomBar];
 
+    
     if([_scenarioArray count])
     {
         [self layoutScenarios];
@@ -287,14 +288,15 @@
     {
         id key = [NSNumber numberWithInt:(int)dr.m_id];
         
+        Scenario *s = [[Scenario alloc] init];
         if([map objectForKey:key])
         {
-            Scenario *s = [[Scenario alloc] init];
             [s prepareDataForUploadCloud:[map objectForKey:key]];
-            s._rgsSceneObj = dr;
-            [s syncDataFromRegulus];
-            [_scenarioArray addObject:s];
         }
+        
+        s._rgsSceneObj = dr;
+        [s syncDataFromRegulus];
+        [_scenarioArray addObject:s];
     }
     
     [KVNProgress showSuccess];
@@ -379,10 +381,7 @@
             UILongPressGestureRecognizer *longPress0 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed0:)];
             longPress0.view.tag = index;
             [scenarioCellBtn addGestureRecognizer:longPress0];
-            
-//            [scenarioCellBtn setTitleEdgeInsets:UIEdgeInsetsMake(70.0, 0, 0, 0)];
-//            [scenarioCellBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 20, 0)];
-//
+        
             
             Scenario *s = [self._scenarioArray objectAtIndex:index];
             NSString *name  = [[s senarioData] objectForKey:@"name"];

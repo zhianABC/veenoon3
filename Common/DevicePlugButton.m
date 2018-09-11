@@ -8,6 +8,7 @@
 
 #import "DevicePlugButton.h"
 #import "BasePlugElement.h"
+#import "RegulusSDK.h"
 
 @implementation DevicePlugButton
 
@@ -28,22 +29,31 @@
 
 - (void) addMyObserver{
     
-    if(_mydata && [_mydata objectForKey:@"name"])
+    if(_mydata && [_mydata objectForKey:@"class"])
     {
         id key = [NSString stringWithFormat:@"%d-%@",
                   [[_mydata objectForKey:@"id"] intValue],
-                  [_mydata objectForKey:@"name"]];
+                  [_mydata objectForKey:@"class"]];
         
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(revNotifyChangedMyBg:)
                                                  name:key
                                                object:nil];
+        
     }
 }
 
-- (void) revNotifyChangedMyBg:(id)sender{
+- (void) revNotifyChangedMyBg:(NSNotification*)sender{
     
-    [self setEditChanged];
+    NSDictionary *obj = sender.object;
+    if(obj)
+    {
+        self._drNameLabel.text = [obj objectForKey:@"name"];
+    }
+    else
+    {
+        [self setEditChanged];
+    }
 }
 
 - (void) setEditChanged{

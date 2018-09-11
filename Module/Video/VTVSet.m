@@ -36,12 +36,17 @@
         self._show_icon_name = @"v_icon_7.png";
         self._show_icon_sel_name = @"v_icon_7_sel.png";
         
+        self._typeName = @"液晶电视";
     }
     
     return self;
 }
 
 - (NSString*) deviceName{
+    
+    
+    if(self._name)
+        return self._name;
     
     return @"液晶电视";
 }
@@ -97,6 +102,7 @@
                                              if (result) {
                                                  
                                                  block_self._driver = driver;
+                                                 block_self._name = driver.name;
                                                  
                                                  [[NSNotificationCenter defaultCenter] postNotificationName:@"NotifyRefreshTableWithCom" object:nil];
                                              }
@@ -169,6 +175,7 @@
     {
         RgsDriverObj *dr = _driver;
         [config setObject:[NSNumber numberWithInteger:dr.m_id] forKey:@"driver_id"];
+        [config setObject:[NSNumber numberWithBool:self._isSelected] forKey:@"s"];
     }
     return config;
 }
@@ -179,6 +186,7 @@
     [config setObject:valMap forKey:@"opt_value_map"];
     
     int driver_id = [[config objectForKey:@"driver_id"] intValue];
+    self._isSelected = [[config objectForKey:@"s"] boolValue];
     
     IMP_BLOCK_SELF(VTVSet);
     [[RegulusSDK sharedRegulusSDK] GetRgsObjectByID:driver_id
@@ -196,6 +204,8 @@
     
     self._driver = rgsd;
     self._driverInfo = rgsd.info;
+    
+    self._name = rgsd.name;
     
     //红外
 }

@@ -43,12 +43,16 @@
         self._show_icon_name = @"v_icon_5.png";
         self._show_icon_sel_name = @"v_icon_5_sel.png";
         
+        self._typeName = video_process_name;
     }
     
     return self;
 }
 
 - (NSString*) deviceName{
+    
+    if(self._name)
+        return self._name;
     
     return video_process_name;
 }
@@ -89,6 +93,7 @@
                                              if (result) {
                                                  
                                                  block_self._driver = driver;
+                                                 block_self._name = driver.name;
                                                  
                                                  [[NSNotificationCenter defaultCenter] postNotificationName:@"NotifyRefreshTableWithCom" object:nil];
                                              }
@@ -133,6 +138,7 @@
     {
         RgsDriverObj *dr = _driver;
         [config setObject:[NSNumber numberWithInteger:dr.m_id] forKey:@"driver_id"];
+        [config setObject:[NSNumber numberWithBool:self._isSelected] forKey:@"s"];
     }
     
     if (_proxyObj) {
@@ -154,6 +160,7 @@
     [config setObject:valMap forKey:@"opt_value_map"];
     
     int driver_id = [[config objectForKey:@"driver_id"] intValue];
+    self._isSelected = [[config objectForKey:@"s"] boolValue];
     
     IMP_BLOCK_SELF(VVideoProcessSet);
     [[RegulusSDK sharedRegulusSDK] GetRgsObjectByID:driver_id
@@ -171,6 +178,8 @@
     
     self._driver = rgsd;
     self._driverInfo = rgsd.info;
+    
+    self._name = rgsd.name;
     
     IMP_BLOCK_SELF(VVideoProcessSet);
     [[RegulusSDK sharedRegulusSDK] GetDriverCommands:rgsd.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {

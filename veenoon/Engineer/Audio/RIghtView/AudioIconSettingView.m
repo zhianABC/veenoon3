@@ -106,6 +106,7 @@
         [dataDic setObject:@"a_yx_3.png" forKey:@"icon"];
         [dataDic setObject:@"a_yx_3.png" forKey:@"icon_sel"];
         [dataDic setObject:@"s3_05.png" forKey:@"icon_s"];
+        [dataDic setObject:@"a_processor_ico_mix.png" forKey:@"icon_drag"];
         [dataDic setObject:@"huiyinhuiyi_player_n.png" forKey:@"user_show_icon"];
         [dataDic setObject:@"huiyinhuiyi_player_s.png" forKey:@"user_show_icon_s"];
         
@@ -114,6 +115,7 @@
         [dataDic setObject:@"a_wx_2.png" forKey:@"icon"];
         [dataDic setObject:@"a_wx_2.png" forKey:@"icon_sel"];
         [dataDic setObject:@"s3_03.png" forKey:@"icon_s"];
+        [dataDic setObject:@"a_processor_ico_lan.png" forKey:@"icon_drag"];
         [dataDic setObject:@"huatong_player_n.png" forKey:@"user_show_icon"];
         [dataDic setObject:@"huatong_player_s.png" forKey:@"user_show_icon_s"];
         
@@ -122,6 +124,7 @@
         [dataDic setObject:@"a_yx_3.png" forKey:@"icon"];
         [dataDic setObject:@"a_yx_3.png" forKey:@"icon_sel"];
         [dataDic setObject:@"s3_05.png" forKey:@"icon_s"];
+        [dataDic setObject:@"a_processor_ico_mic.png" forKey:@"icon_drag"];
         [dataDic setObject:@"huiyinhuiyi_player_n.png" forKey:@"user_show_icon"];
         [dataDic setObject:@"huiyinhuiyi_player_s.png" forKey:@"user_show_icon_s"];
         
@@ -130,6 +133,7 @@
         [dataDic setObject:@"a_yx_3.png" forKey:@"icon"];
         [dataDic setObject:@"a_yx_3.png" forKey:@"icon_sel"];
         [dataDic setObject:@"s3_05.png" forKey:@"icon_s"];
+        [dataDic setObject:@"a_processor_ico_wir.png" forKey:@"icon_drag"];
         [dataDic setObject:@"huiyinhuiyi_player_n.png" forKey:@"user_show_icon"];
         [dataDic setObject:@"huiyinhuiyi_player_s.png" forKey:@"user_show_icon_s"];
         
@@ -184,10 +188,10 @@
         rowCell._enableDrag = YES;
         rowCell.delegate_ = self;
         rowCell._element = dic;
-        NSString *image = [dic objectForKey:@"icon"];
+        NSString *image = [dic objectForKey:@"icon_drag"];
         [rowCell setSticker:image];
         
-        NSString *sel = [dic objectForKey:@"icon"];
+        NSString *sel = [dic objectForKey:@"icon_drag"];
         rowCell.selectedImg = [UIImage imageNamed:sel];
         
         xx+=80;

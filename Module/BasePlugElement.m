@@ -42,6 +42,8 @@
 
 @synthesize _isSelected;
 
+@synthesize _typeName;
+
 - (id) init
 {
     if(self = [super init])
@@ -53,7 +55,7 @@
         self._deviceid = @"";
         self._index = 0;
         self._comIdx = 0;
-        self._name = @"";
+        self._name = nil;
         self._isSelected = NO;
         
         self._port = @"";

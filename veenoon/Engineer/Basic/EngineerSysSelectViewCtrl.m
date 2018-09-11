@@ -380,39 +380,6 @@
             [s syncDataFromRegulus];
             [_sceneDrivers addObject:s];
         }
-        
-        /*
-        NSArray* savedScenarios = [[DataBase sharedDatabaseInstance]
-                                   getSavedScenario:room.regulus_id];
-        
-        
-        NSMutableDictionary *map = [NSMutableDictionary dictionary];
-        for(NSMutableDictionary *senario in savedScenarios)
-        {
-            int s_driver_id = [[senario objectForKey:@"s_driver_id"] intValue];
-            [map setObject:senario forKey:[NSNumber numberWithInt:s_driver_id]];
-        }
-        
-        for(RgsSceneObj *dr in _scenes)
-        {
-            id key = [NSNumber numberWithInt:(int)dr.m_id];
-            
-            if([map objectForKey:key])
-            {
-                Scenario *s = [[Scenario alloc] init];
-                s._rgsSceneObj = dr;
-                [s syncDataFromRegulus];
-                [_sceneDrivers addObject:s];
-            }
-            else
-            {
-                Scenario *s = [[Scenario alloc] init];
-                s._rgsSceneObj = dr;
-                [s syncDataFromRegulus];
-                [_sceneDrivers addObject:s];
-            }
-        }
-         */
     }
     else
     {

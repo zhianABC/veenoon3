@@ -20,6 +20,7 @@
     NSArray *_connections;
 }
 
+@property (nonatomic, strong) NSString *_typeName;
 @property (nonatomic, strong) NSString *_name;
 @property (nonatomic, strong) NSString *_brand;
 @property (nonatomic, strong) NSString *_type;
