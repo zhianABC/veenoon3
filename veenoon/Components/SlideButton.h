@@ -32,6 +32,8 @@
 
 @property (nonatomic, strong) id data;
 
+@property (nonatomic, assign) BOOL longPressEnabled;
+
 - (id) initWithOffsetFrame:(CGRect)frame offset:(float)offset;
 
 - (void) setCircleValue:(float) value;

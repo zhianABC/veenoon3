@@ -41,6 +41,9 @@
 @synthesize _lightBackgroundImage;
 
 @synthesize data;
+
+@synthesize longPressEnabled;
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -267,7 +270,10 @@
     
     _isMoved = NO;
     
-    [self startTimer];
+    //长按
+    if(self.longPressEnabled){
+        [self startTimer];
+    }
     
     if(progress.hidden)
         return;
@@ -283,8 +289,11 @@
 
 -(void) touchesMoved:(NSSet*)touches withEvent:(UIEvent*)event {
     
-    if(_beginPoint.y < CGRectGetMaxY(_titleLabel.frame))
-        return;
+    if(self.longPressEnabled)
+    {
+        if(_beginPoint.y < CGRectGetMaxY(_titleLabel.frame))
+            return;
+    }
     
     float step = 0;
     float pan = 0;
@@ -310,7 +319,10 @@
     
     _isMoved = YES;
     
-    [self stopTimer];
+    if(self.longPressEnabled)
+    {
+        [self stopTimer];
+    }
     
     if(progress.hidden)
         return;
@@ -348,10 +360,13 @@
 
 -(void) touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event {
     
-    [self stopTimer];
-    
-    if(_isLongPressed)
-        return;
+    if(self.longPressEnabled)
+    {
+        [self stopTimer];
+        
+        if(_isLongPressed)
+            return;
+    }
     
     if(!_isMoved)
     {

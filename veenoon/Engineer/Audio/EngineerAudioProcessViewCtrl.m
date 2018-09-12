@@ -433,6 +433,7 @@
         CGRect rc = CGRectMake(startX, startY, cellWidth, cellHeight);
         SlideButton *btn = [[SlideButton alloc] initWithOffsetFrame:rc offset:10];
         btn.delegate = self;
+        btn.longPressEnabled = YES;
         btn.tag = index;
         btn.data = vap;
         [_proxysView addSubview:btn];
@@ -480,6 +481,7 @@
         SlideButton *btn = [[SlideButton alloc] initWithOffsetFrame:rc offset:10];
         btn.tag = index;
         btn.delegate = self;
+        btn.longPressEnabled = YES;
         btn.data = vap;
         [_proxysView addSubview:btn];
         
