@@ -218,6 +218,7 @@
     zengyiView = [[ZengYi_UIView alloc] initWithFrame:vrc withProxy:_processor._inAudioProxys];
     [self.view addSubview:zengyiView];
     zengyiView.hidden = NO;
+    zengyiView.ctrl = self;
     [zengyiView updateProxyCommandValIsLoaded];
     zengyiView._proxys = _processor._inAudioProxys;
     [zengyiView layoutChannelBtns:numProxys selectedIndex:0];

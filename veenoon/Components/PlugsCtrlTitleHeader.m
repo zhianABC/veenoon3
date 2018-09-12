@@ -47,6 +47,8 @@
         _nameL.center = CGPointMake(_nameL.center.x, _nameL.center.y);
         _icon.center = CGPointMake(CGRectGetMaxX(_nameL.frame), _nameL.center.y);
         
+        _icon.hidden = YES;
+        
         self.clipsToBounds = YES;
     }
     
@@ -96,6 +98,11 @@
     }
 
     _icon.center = CGPointMake(CGRectGetMaxX(_nameL.frame)+10, _nameL.center.y);
+    
+    if([text length] > 0)
+        _icon.hidden = NO;
+    else
+        _icon.hidden = YES;
     
     CGRect rc = self.frame;
     rc.size.width = CGRectGetMaxX(_icon.frame)+10;

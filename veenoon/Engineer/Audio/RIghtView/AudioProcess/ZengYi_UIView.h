@@ -13,6 +13,8 @@
 @interface ZengYi_UIView : APBaseView {
     
 }
+@property (nonatomic, weak) UIViewController *ctrl;
+
 - (id)initWithFrame:(CGRect)frame withProxy:(NSArray*)proxys;
 - (void) updateProxyCommandValIsLoaded;
 

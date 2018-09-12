@@ -554,7 +554,7 @@
 //        return 120;
 //    }
     
-    return 60;
+    return 40;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -595,51 +595,53 @@
     
     UIImage *img = [UIImage imageNamed:data._plugicon];
     UIImageView *iconImage = [[UIImageView alloc] initWithImage:img];
-    iconImage.frame = CGRectMake(tableWidth-30, 12, 16, 16);
+    iconImage.frame = CGRectMake(10, 12, 16, 16);
     [cell.contentView addSubview:iconImage];
     iconImage.contentMode = UIViewContentModeScaleAspectFit;
     
     
-    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(10,
+    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(40,
                                                                 10,
-                                                                tableWidth-20, 20)];
+                                                                100, 20)];
     titleL.backgroundColor = [UIColor clearColor];
     [cell.contentView addSubview:titleL];
-    titleL.font = [UIFont systemFontOfSize:15];
+    titleL.font = [UIFont systemFontOfSize:13];
     titleL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
     
-    UILabel* subL = [[UILabel alloc] initWithFrame:CGRectMake(10,
-                                                              30,
-                                                              tableWidth-35, 20)];
+    UILabel* subL = [[UILabel alloc] initWithFrame:CGRectMake(150,
+                                                              10,
+                                                              200, 20)];
     subL.backgroundColor = [UIColor clearColor];
     [cell.contentView addSubview:subL];
-    subL.font = [UIFont systemFontOfSize:14];
+    subL.font = [UIFont systemFontOfSize:13];
     subL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+    subL.textAlignment = NSTextAlignmentRight;
     
     
     titleL.text = [data deviceName];
     subL.text = [NSString stringWithFormat:@"%@ %@", data._brand, data._type];
     
-    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 59, tableWidth, 1)];
+    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 39, tableWidth, 1)];
     line.backgroundColor =  USER_GRAY_COLOR;
     [cell.contentView addSubview:line];
     
     
+    UILabel* driverIDL = nil;
     if(data._driver)
     {
-        UILabel* driverIDL = [[UILabel alloc] initWithFrame:CGRectMake(10,
-                                                                  30,
-                                                                  tableWidth-20, 20)];
+        driverIDL = [[UILabel alloc] initWithFrame:CGRectMake(tableWidth - 90,
+                                                                  10,
+                                                                  80, 20)];
         driverIDL.backgroundColor = [UIColor clearColor];
         [cell.contentView addSubview:driverIDL];
-        driverIDL.font = [UIFont systemFontOfSize:12];
+        driverIDL.font = [UIFont systemFontOfSize:13];
         driverIDL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
         driverIDL.textAlignment = NSTextAlignmentRight;
         driverIDL.text = [NSString stringWithFormat:@"ID: %d",
                           (int)((RgsDriverObj*)data._driver).m_id];
         
     }
-    int lh = 60;
+    int lh = 40;
     
     id key = [NSString stringWithFormat:@"%d-%d",
               (int)indexPath.section,
@@ -660,6 +662,23 @@
         UILabel *lineSel = [[UILabel alloc] initWithFrame:CGRectMake(tableWidth-3, 0, 3, lh)];
         lineSel.backgroundColor =  YELLOW_COLOR;
         [cell.contentView addSubview:lineSel];
+        
+        titleL.textColor  = YELLOW_COLOR;
+        subL.textColor  = YELLOW_COLOR;
+        
+        if(driverIDL)
+            driverIDL.textColor  = YELLOW_COLOR;
+        
+        UIImage *img = [UIImage imageNamed:data._plugicon_s];
+        iconImage.image = img;
+    }
+    else
+    {
+        titleL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+        subL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+        
+        if(driverIDL)
+            driverIDL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
     }
     
 
