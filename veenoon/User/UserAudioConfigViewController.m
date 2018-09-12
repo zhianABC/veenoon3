@@ -417,7 +417,21 @@
 
 - (void) didSliderValueChanged:(float)value object:(id)object{
     
-    //float circleValue = -70 + (value * 82);
+    JSlideView *jsl = object;
+    if(jsl && [jsl isKindOfClass:[JSlideView class]])
+    {
+        id data = jsl.data;
+        if([data isKindOfClass:[VAProcessorProxys class]])
+        {
+            [(VAProcessorProxys*)data controlDeviceDb:value
+                                                force:YES];
+            
+        }
+    }
+    
+    _proxysView.scrollEnabled = NO;
+}
+- (void) didSliderEndChanged:(id)object{
     
     JSlideView *jsl = object;
     if(jsl && [jsl isKindOfClass:[JSlideView class]])
@@ -425,12 +439,17 @@
         id data = jsl.data;
         if([data isKindOfClass:[VAProcessorProxys class]])
         {
-            //float circleValue = -70 + (value * 82);
-            [(VAProcessorProxys*)data controlDeviceDb:value
-                                                force:YES];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(200.0 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
+                
+                float value = [jsl getScaleValue];
+                [(VAProcessorProxys*)data controlDeviceDb:value
+                                                    force:YES];
+            });
             
         }
     }
+    
+    _proxysView.scrollEnabled = YES;
 }
 
 

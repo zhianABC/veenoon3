@@ -248,33 +248,29 @@
     CGRect rc = slider.frame;
     rc = CGRectMake(rc.origin.x, rc.origin.y, rc.size.width, rc.size.height);
     
-	if (1) {
-		
-        CGPoint colorPoint = p;
-        colorPoint.x = slider.center.x;
-        if(colorPoint.y < topEdge)
-            colorPoint.y = topEdge;
-        if(colorPoint.y > rc.size.height - bottomEdge)
-            colorPoint.y = rc.size.height - bottomEdge;
-        sliderThumb.center = colorPoint;
+    CGPoint colorPoint = p;
+    colorPoint.x = slider.center.x;
+    if(colorPoint.y < topEdge)
+        colorPoint.y = topEdge;
+    if(colorPoint.y > rc.size.height - bottomEdge)
+        colorPoint.y = rc.size.height - bottomEdge;
+    sliderThumb.center = colorPoint;
+    
+    
+    float h = rc.size.height - topEdge - bottomEdge;
+    float subh = (rc.size.height - bottomEdge) - sliderThumb.center.y;
+    
+    float value = (maxValue - minValue)*(float)subh/h + minValue;
+    
+    //        valueLabel.text = [NSString stringWithFormat:@"%d", (value)];
+    [self resetScalValue:value];
+    //NSLog(@"value = %d", value);
+    
+    if(delegate && [delegate respondsToSelector:@selector(didSliderValueChanged:object:)])
+    {
         
-        
-        float h = rc.size.height - topEdge - bottomEdge;
-        float subh = (rc.size.height - bottomEdge) - sliderThumb.center.y;
-
-        float value = (maxValue - minValue)*(float)subh/h + minValue;
-        
-//        valueLabel.text = [NSString stringWithFormat:@"%d", (value)];
-        [self resetScalValue:value];
-        //NSLog(@"value = %d", value);
-        
-        if(delegate && [delegate respondsToSelector:@selector(didSliderValueChanged:object:)])
-        {
-            
-            [delegate didSliderValueChanged:value object:self];
-        }
-        
-	}
+        [delegate didSliderValueChanged:value object:self];
+    }
 
 }
 
