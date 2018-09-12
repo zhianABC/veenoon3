@@ -26,6 +26,9 @@
     
     UILabel *_titleLabel;
     UILabel *_valueLabel;
+    
+    NSTimer *_testTimer;
+    BOOL _isLongPressed;
 }
 @end
 
@@ -51,6 +54,8 @@
     
     if(self = [super initWithFrame:frame])
     {
+        self.backgroundColor = [UIColor clearColor];
+        
         _radioImgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"slide_btn_gray.png"]];
         [self addSubview:_radioImgV];
         _radioImgV.center = CGPointMake(CGRectGetWidth(frame)/2, CGRectGetHeight(frame)/2);
@@ -93,6 +98,59 @@
     
     return self;
 }
+
+- (id) initWithOffsetFrame:(CGRect)frame offset:(float)offset
+{
+    
+    if(self = [super initWithFrame:frame])
+    {
+        self.backgroundColor = [UIColor clearColor];
+        
+        int height = CGRectGetHeight(frame) - offset;
+        
+        _radioImgV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"slide_btn_gray.png"]];
+        [self addSubview:_radioImgV];
+        _radioImgV.center = CGPointMake(CGRectGetWidth(frame)/2, height/2+offset);
+        
+        
+        progress = [[CircleProgressView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
+        [self addSubview:progress];
+        [progress setProgressBolder:4];
+        
+        progress._isShowingPoint = YES;
+        [progress setProgress:0];
+        progress.center = CGPointMake(CGRectGetWidth(frame)/2, height/2+offset);
+        
+        _vheight = frame.size.height;
+        
+        _enabledTouchMove = NO;
+        
+        
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(frame), 20+offset)];
+        _titleLabel.backgroundColor = [UIColor clearColor];
+        [self addSubview:_titleLabel];
+        _titleLabel.font = [UIFont boldSystemFontOfSize:11];
+        _titleLabel.textColor  = [UIColor whiteColor];
+        _titleLabel.textAlignment = NSTextAlignmentCenter;
+        
+        _valueLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth(frame)/2-30,
+                                                                CGRectGetHeight(frame)-25,
+                                                                60, 25)];
+        _valueLabel.backgroundColor = [UIColor clearColor];
+        [self addSubview:_valueLabel];
+        _valueLabel.font = [UIFont boldSystemFontOfSize:11];
+        _valueLabel.textColor  = [UIColor whiteColor];
+        _valueLabel.textAlignment = NSTextAlignmentCenter;
+        
+        
+        self._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray.png"];
+        self._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light.png"];
+        
+    }
+    
+    return self;
+}
+
 -(void) setTitle:(NSString*)title {
     _titleLabel.text = title;
 }
@@ -165,9 +223,51 @@
     }
 }
 
+- (void) stopTimer{
+    
+    if(_testTimer && [_testTimer isValid])
+    {
+        [_testTimer invalidate];
+        _testTimer = nil;
+    }
+    
+}
+
+- (void) startTimer{
+    
+    _isLongPressed = NO;
+    
+    [self stopTimer];
+    
+    _testTimer = [NSTimer scheduledTimerWithTimeInterval:0.5
+                                                  target:self
+                                                selector:@selector(longPress:)
+                                                userInfo:nil
+                                                 repeats:NO];
+}
+
+- (void)longPress:(id)sender{
+    
+    [self stopTimer];
+    
+    _isLongPressed = YES;
+    
+    NSLog(@"------Long Press");
+    
+    if(delegate && [delegate respondsToSelector:@selector(didLongPressSlideButton:)])
+    {
+        [delegate didLongPressSlideButton:self];
+    }
+}
+
+
 -(void) touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event {
     
+    NSLog(@"------began");
+    
     _isMoved = NO;
+    
+    [self startTimer];
     
     if(progress.hidden)
         return;
@@ -183,14 +283,11 @@
 
 -(void) touchesMoved:(NSSet*)touches withEvent:(UIEvent*)event {
     
-    _isMoved = YES;
-    
-    if(progress.hidden)
+    if(_beginPoint.y < CGRectGetMaxY(_titleLabel.frame))
         return;
     
-    if(!_enabledTouchMove)
-        return;
-    
+    float step = 0;
+    float pan = 0;
     NSSet *allTouches = [event allTouches];
     switch ([allTouches count])
     {
@@ -199,13 +296,49 @@
             UITouch* touch = [touches anyObject];
             CGPoint previous = _beginPoint;
             CGPoint current = [touch locationInView:self];
-            float pan = previous.y - current.y;
-            float step = pan/_vheight;
+            pan = previous.y - current.y;
+            step = pan/_vheight;
             
-            [progress stepProgress:step];
+            
         }
             break;
     }
+    if(fabsf(pan) <= 1)
+    {
+        return;
+    }
+    
+    _isMoved = YES;
+    
+    [self stopTimer];
+    
+    if(progress.hidden)
+        return;
+    
+    if(!_enabledTouchMove)
+        return;
+    
+    
+    if(fabsf(pan) > 1)
+    {
+        [progress stepProgress:step];
+    }
+    
+//    NSSet *allTouches = [event allTouches];
+//    switch ([allTouches count])
+//    {
+//        case 1:
+//        {
+//            UITouch* touch = [touches anyObject];
+//            CGPoint previous = _beginPoint;
+//            CGPoint current = [touch locationInView:self];
+//            float pan = previous.y - current.y;
+//            float step = pan/_vheight;
+//
+//            [progress stepProgress:step];
+//        }
+//            break;
+//    }
     
     if(delegate && [delegate respondsToSelector:@selector(didSlideButtonValueChanged:slbtn:)])
     {
@@ -214,6 +347,11 @@
 }
 
 -(void) touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event {
+    
+    [self stopTimer];
+    
+    if(_isLongPressed)
+        return;
     
     if(!_isMoved)
     {
@@ -230,11 +368,7 @@
         return;
     
     [progress syncCurrentStepedValue];
-    
-//    if(delegate && [delegate respondsToSelector:@selector(didSlideButtonValueChanged:slbtn:)])
-//    {
-//        [delegate didSlideButtonValueChanged:[progress pgvalue] slbtn:self];
-//    }
+
     
     if(delegate && [delegate respondsToSelector:@selector(didEndSlideButtonValueChanged:slbtn:)])
     {
@@ -242,5 +376,10 @@
     }
 }
 
+- (void)dealloc
+{
+    [self stopTimer];
+    
+}
 
 @end

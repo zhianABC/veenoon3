@@ -158,7 +158,7 @@
     [_zengyiSlider resetScale];
     _zengyiSlider.center = CGPointMake(TESLARIA_SLIDER_X, TESLARIA_SLIDER_Y);
     
-    int height = 150;
+    int height = 130;
     
     _proxysView = [[UIView alloc] initWithFrame:CGRectMake(0,
                                                            height-5,
@@ -338,7 +338,7 @@
     [_inputBtnArray removeAllObjects];
     
     int height = 5;
-    int inputOutGap = 255;
+    int inputOutGap = 275;
     
     
     UILabel* subTL = [[UILabel alloc] initWithFrame:CGRectMake(50, height-5, 100, 20)];
@@ -358,7 +358,7 @@
     int colNumber = ENGINEER_VIEW_COLUMN_N;
     int index = 0;
     int cellWidth = 92;
-    int cellHeight = 120;
+    int cellHeight = 130;
     int leftRight = ENGINEER_VIEW_LEFT;
     int space = 8;
     int ySpace = 15;
@@ -430,8 +430,8 @@
         if (row>=1) {
             startY-=20;
         }
-        
-        SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(startX, startY, cellWidth, cellHeight)];
+        CGRect rc = CGRectMake(startX, startY, cellWidth, cellHeight);
+        SlideButton *btn = [[SlideButton alloc] initWithOffsetFrame:rc offset:10];
         btn.delegate = self;
         btn.tag = index;
         btn.data = vap;
@@ -476,7 +476,8 @@
             startY-=20;
         }
         
-        SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(startX, startY, cellWidth, cellHeight)];
+        CGRect rc = CGRectMake(startX, startY, cellWidth, cellHeight);
+        SlideButton *btn = [[SlideButton alloc] initWithOffsetFrame:rc offset:10];
         btn.tag = index;
         btn.delegate = self;
         btn.data = vap;
@@ -656,6 +657,53 @@
         [btn enableValueSet:NO];
 
     }
+}
+
+- (void) didLongPressSlideButton:(SlideButton*)slbtn{
+    
+    VAProcessorProxys* proxy = slbtn.data;
+    if([proxy isKindOfClass:[VAProcessorProxys class]])
+    {
+        NSString *alert = @"修改通道名称";
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                                 message:alert preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.placeholder = @"通道名称";
+            textField.text = proxy._rgsProxyObj.name;
+            textField.keyboardType = UIKeyboardTypeDecimalPad;
+        }];
+        
+        
+        IMP_BLOCK_SELF(EngineerAudioProcessViewCtrl);
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            UITextField *alValTxt = alertController.textFields.firstObject;
+            NSString *val = alValTxt.text;
+            if (val && [val length] > 0) {
+                
+                [block_self resetProxyName:val
+                                     proxy:proxy
+                                  slideBtn:slbtn];
+            }
+        }]];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+        
+        [self presentViewController:alertController animated:true completion:nil];
+    }
+}
+
+- (void) resetProxyName:(NSString*)name proxy:(VAProcessorProxys*)proxy slideBtn:(SlideButton*)btn{
+    
+    btn._titleLabel.text = name;
+    proxy._rgsProxyObj.name = name;
+    
+    [[RegulusSDK sharedRegulusSDK] RenameProxy:proxy._rgsProxyObj.m_id
+                                          name:name
+                                    completion:nil];
+    
 }
 
 - (void) didEndDragingElecCell:(NSDictionary *)data pt:(CGPoint)pt {

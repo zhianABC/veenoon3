@@ -86,7 +86,7 @@
     _http = [[WebClient alloc] initWithDelegate:self];
     _http._httpMethod = @"GET";
     
-    _selectSysBtn = [[PlugsCtrlTitleHeader alloc] initWithFrame:CGRectMake(50, 100, 80, 30)];
+    _selectSysBtn = [[PlugsCtrlTitleHeader alloc] initWithFrame:CGRectMake(50, 84, 80, 30)];
     _selectSysBtn.userInteractionEnabled=NO;
     [self.view addSubview:_selectSysBtn];
 }
