@@ -673,7 +673,7 @@
         [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
             textField.placeholder = @"通道名称";
             textField.text = proxy._rgsProxyObj.name;
-            textField.keyboardType = UIKeyboardTypeDecimalPad;
+            //textField.keyboardType = UIKeyboardTypeDecimalPad;
         }];
         
         

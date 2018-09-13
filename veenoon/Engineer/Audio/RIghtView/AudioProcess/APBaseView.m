@@ -20,6 +20,7 @@
 @implementation APBaseView
 @synthesize _channelBtns;
 @synthesize _proxys;
+@synthesize ctrl;
 
 - (id)initWithFrame:(CGRect)frame
 {

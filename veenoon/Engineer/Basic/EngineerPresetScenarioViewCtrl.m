@@ -691,7 +691,7 @@
     
     BasePlugElement *plug = cellBtn._plug;
     
-    int baseTag = cellBtn.tag/1000;
+    int baseTag = (int)cellBtn.tag/1000;
 
     if ([class isEqualToString:@"APowerESet"]) {
         
@@ -988,71 +988,56 @@
 
 - (void) delButton:(UIButton*)cellBtn{
     
-    UIView *supBtn = cellBtn.superview;
-    
-    int tag = (int)supBtn.tag;
-    int baseTag = tag/1000;
-    int idx = tag%1000;
-    
-    NSMutableArray *dataArray = nil;
-    NSMutableArray *btnCells = _drCells;
-    if(baseTag == 1)//音频
-    {
-        dataArray = [_selectedDevices objectForKey:@"audio"];
-    }
-    else if(baseTag == 2)//视频
-    {
-        dataArray = [_selectedDevices objectForKey:@"video"];
-    }
-    else//环境
-    {
-        dataArray = [_selectedDevices objectForKey:@"env"];
-    }
-
-    [dataArray removeObjectAtIndex:idx];
-
-    [UIView animateWithDuration:0.25
-                     animations:^{
-                         
-                         supBtn.transform = CGAffineTransformMakeScale(0, 0);
-                         
-                     } completion:^(BOOL finished) {
-                         
-                         [supBtn removeFromSuperview];
-                     }];
-    
-    
-    //int x = audioStartX;
-    
+    DevicePlugButton *supBtn = (DevicePlugButton*)cellBtn.superview;
     if([supBtn isKindOfClass:[DevicePlugButton class]])
     {
-        [(DevicePlugButton*)supBtn removeMyObserver];
-        [((DevicePlugButton*)supBtn)._drNameLabel removeFromSuperview];
+        NSMutableArray *dataArray = nil;
+        NSMutableArray *btnCells = _drCells;
+        BasePlugElement *plug = supBtn._plug;
+        int baseTag = supBtn._deviceType;
+        if(baseTag == 1000)//音频
+        {
+            dataArray = [_selectedDevices objectForKey:@"audio"];
+        }
+        else if(baseTag == 2000)//视频
+        {
+            dataArray = [_selectedDevices objectForKey:@"video"];
+        }
+        else if(baseTag == 3000)
+        {
+            dataArray = [_selectedDevices objectForKey:@"env"];
+        }
+        else if(baseTag == 4000)
+        {
+            dataArray = [_selectedDevices objectForKey:@"chuangan"];
+        }
+        else if(baseTag == 5000)
+        {
+            dataArray = [_selectedDevices objectForKey:@"port"];
+        }
+        [dataArray removeObject:plug];
+        
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             
+                             supBtn.transform = CGAffineTransformMakeScale(0, 0);
+                             
+                         } completion:^(BOOL finished) {
+                             
+                             [supBtn removeFromSuperview];
+                         }];
+        
+        
+        //int x = audioStartX;
+        
+        if([supBtn isKindOfClass:[DevicePlugButton class]])
+        {
+            [(DevicePlugButton*)supBtn removeMyObserver];
+            [((DevicePlugButton*)supBtn)._drNameLabel removeFromSuperview];
+        }
+        
+        [btnCells removeObject:supBtn];
     }
-    
-    [btnCells removeObject:supBtn];
-    
-    
-    /*
-    //重新排序
-    for(int i = 0; i < [_drCells count]; i++)
-    {
-        [UIView beginAnimations:nil context:nil];
-        
-        UIButton *b = [btnCells objectAtIndex:i];
-        b.frame = CGRectMake(x,
-                             audioStartY,
-                             E_CELL_WIDTH,
-                             E_CELL_WIDTH);
-        
-        [UIView commitAnimations];
-        
-        b.tag = baseTag*1000+i;
-        
-        x+=E_CELL_WIDTH;
-        x+=space;
-    }
-     */
     
 }
 
@@ -1064,7 +1049,7 @@
     [[_content subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     int lastType = 0;
-    
+    BOOL nextLine = NO;
     for(int i = 0; i < [_drCells count]; i++)
     {
         DevicePlugButton *btn = [_drCells objectAtIndex:i];
@@ -1077,8 +1062,15 @@
         {
             if(lastType != 0)
             {
-                _yVal += E_CELL_WIDTH;
-                _yVal += 40;
+                if(nextLine)
+                {
+                    _yVal+=10;
+                }
+                else
+                {
+                    _yVal += 40;
+                    _yVal += E_CELL_WIDTH;
+                }
                 x = audioStartX;
             }
             
@@ -1158,6 +1150,7 @@
         x+=E_CELL_WIDTH;
         x+=space;
         
+        nextLine = NO;
         
         if(x >= (CGRectGetWidth(_content.frame) - E_CELL_WIDTH))
         {
@@ -1167,6 +1160,8 @@
                 _yVal += 30;
                 
                 x = audioStartX;
+                
+                nextLine = YES;
             }
         }
         

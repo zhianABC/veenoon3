@@ -226,6 +226,7 @@
     zaoshengView = [[ZaoShengMen_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._inAudioProxys];
     [self.view addSubview:zaoshengView];
     zaoshengView.hidden = YES;
+    zaoshengView.ctrl = self;
     zaoshengView._proxys = _processor._inAudioProxys;
     [zaoshengView layoutChannelBtns:numProxys selectedIndex:0];
     

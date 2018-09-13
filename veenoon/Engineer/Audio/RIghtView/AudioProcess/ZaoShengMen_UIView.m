@@ -117,7 +117,7 @@
     }
     
     if (zengyiDB) {
-        fazhiL.text = [zengyiDB stringByAppendingString:@" dB"];
+        fazhiL.text = zengyiDB;
     }
     
     NSString *startTime = [_curProxy getZaoshengStartTime];
@@ -126,12 +126,12 @@
     float maxS = (maxStartDur- minStartDur);
     if(maxS)
     {
-        float f = (startTimeV - minStartDur)/maxStartDur;
+        float f = (startTimeV - minStartDur)/maxS;
         f = fabsf(f);
         [qidongshijianSlider setCircleValue:f];
     }
     
-    qidongshijianL.text = [startTime stringByAppendingString:@" ms"];
+    qidongshijianL.text = startTime;
     
     NSString *huifuTime = [_curProxy getZaoshengRecoveryTime];
     int huifuTimeValue = [huifuTime floatValue];
@@ -144,7 +144,7 @@
         [huifushijianSlider setCircleValue:f];
     }
     
-    huifushijianL.text = [NSString stringWithFormat:@"%d ms", huifuTimeValue];
+    huifushijianL.text = [NSString stringWithFormat:@"%d", huifuTimeValue];
     
     BOOL isFanKuiYiZhi = [_curProxy isZaoshengStarted];
     
@@ -190,6 +190,7 @@
 }
 
 - (void) contentViewComps{
+    
     int startX = 140;
     int gap = 250;
     int labelY = 100;
@@ -211,14 +212,27 @@
     fazhiSlider.tag = 1;
     [contentView addSubview:fazhiSlider];
     
+    
     fazhiL = [[UILabel alloc] initWithFrame:CGRectMake(startX+30, labelY+labelBtnGap+120, 60, 20)];
     fazhiL.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:fazhiL];
     fazhiL.font = [UIFont systemFontOfSize:13];
     fazhiL.textColor = NEW_ER_BUTTON_SD_COLOR;
-    fazhiL.backgroundColor=NEW_ER_BUTTON_GRAY_COLOR2;
-    fazhiL.layer.cornerRadius=5;
+    fazhiL.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR2;
+    fazhiL.layer.cornerRadius = 5;
     fazhiL.clipsToBounds=YES;
+    
+    UIButton *btnEdit = [UIButton buttonWithType:UIButtonTypeCustom];
+    [contentView addSubview:btnEdit];
+    btnEdit.frame = CGRectMake(CGRectGetMinX(fazhiL.frame),
+                               CGRectGetMinY(fazhiL.frame)-15,
+                               60,
+                               50);
+    [btnEdit addTarget:self
+                action:@selector(editGainAction:)
+      forControlEvents:UIControlEventTouchUpInside];
+
+    
     
     UILabel *addLabel2 = [[UILabel alloc] init];
     addLabel2.text = @"启动时间 (ms)";
@@ -244,6 +258,16 @@
     qidongshijianL.clipsToBounds=YES;
     qidongshijianL.backgroundColor=NEW_ER_BUTTON_GRAY_COLOR2;
     
+    btnEdit = [UIButton buttonWithType:UIButtonTypeCustom];
+    [contentView addSubview:btnEdit];
+    btnEdit.frame = CGRectMake(CGRectGetMinX(qidongshijianL.frame),
+                               CGRectGetMinY(qidongshijianL.frame)-15,
+                               60,
+                               50);
+    [btnEdit addTarget:self
+                action:@selector(editSTAction:)
+      forControlEvents:UIControlEventTouchUpInside];
+    
     UILabel *addLabel22 = [[UILabel alloc] init];
     addLabel22.text = @"恢复时间 (ms)";
     addLabel22.font = [UIFont systemFontOfSize: 13];
@@ -268,6 +292,16 @@
     huifushijianL.clipsToBounds=YES;
     huifushijianL.backgroundColor=NEW_ER_BUTTON_GRAY_COLOR2;
     
+    btnEdit = [UIButton buttonWithType:UIButtonTypeCustom];
+    [contentView addSubview:btnEdit];
+    btnEdit.frame = CGRectMake(CGRectGetMinX(huifushijianL.frame),
+                               CGRectGetMinY(huifushijianL.frame)-15,
+                               60,
+                               50);
+    [btnEdit addTarget:self
+                action:@selector(editRTAction:)
+      forControlEvents:UIControlEventTouchUpInside];
+    
     qiyongBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:THEME_RED_COLOR];
     qiyongBtn.frame = CGRectMake(contentView.frame.size.width/2 - 25, contentView.frame.size.height - 40, 50, 30);
     qiyongBtn.layer.cornerRadius = 5;
@@ -282,28 +316,189 @@
     [contentView addSubview:qiyongBtn];
 }
 
+
+- (void) editGainAction:(id)sender{
+    
+    NSString *alert = [NSString stringWithFormat:@"设置增益，范围[%d ~ %d(dB)]", minTh, maxTh];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                             message:alert preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"增益";
+        textField.text = fazhiL.text;
+        textField.keyboardType = UIKeyboardTypeDecimalPad;
+    }];
+    
+    
+    IMP_BLOCK_SELF(ZaoShengMen_UIView);
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        UITextField *alValTxt = alertController.textFields.firstObject;
+        NSString *val = alValTxt.text;
+        if (val && [val length] > 0) {
+            
+            [block_self doSetGainValue:[val floatValue]];
+        }
+    }]];
+    
+    [self.ctrl presentViewController:alertController animated:true completion:nil];
+}
+
+- (void) editSTAction:(id)sender{
+    
+    NSString *alert = [NSString stringWithFormat:@"启动时间，范围[%d ~ %d(ms)]", minStartDur, maxStartDur];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                             message:alert preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"启动时间";
+        textField.text = qidongshijianL.text;
+        textField.keyboardType = UIKeyboardTypeDecimalPad;
+    }];
+    
+    
+    IMP_BLOCK_SELF(ZaoShengMen_UIView);
+    
+    
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        UITextField *alValTxt = alertController.textFields.firstObject;
+        NSString *val = alValTxt.text;
+        if (val && [val length] > 0) {
+            
+            [block_self doSetSTValue:[val floatValue]];
+        }
+    }]];
+    
+    [self.ctrl presentViewController:alertController animated:true completion:nil];
+}
+
+- (void) editRTAction:(id)sender{
+    
+    NSString *alert = [NSString stringWithFormat:@"设置回复时间，范围[%d ~ %d(dB)]", minRecoveDur, maxRecoveDur];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                             message:alert preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"恢复时间";
+        textField.text = huifushijianL.text;
+        textField.keyboardType = UIKeyboardTypeDecimalPad;
+    }];
+    
+    
+    IMP_BLOCK_SELF(ZaoShengMen_UIView);
+    
+    
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        UITextField *alValTxt = alertController.textFields.firstObject;
+        NSString *val = alValTxt.text;
+        if (val && [val length] > 0) {
+            
+            [block_self doSetRTValue:[val floatValue]];
+        }
+    }]];
+    
+    [self.ctrl presentViewController:alertController
+                            animated:YES
+                          completion:nil];
+}
+
+- (void) doSetGainValue:(float)val{
+    
+    int fv = val;
+    if(fv < minTh)
+        fv = minTh;
+    else if(fv > maxTh)
+        fv = maxTh;
+    
+    float max = (maxTh - minTh);
+    if(max)
+    {
+        float f = (fv - minTh)/max;
+        f = fabsf(f);
+        [fazhiSlider setCircleValue:f];
+    }
+    
+    NSString *valueStr= [NSString stringWithFormat:@"%d", fv];
+    fazhiL.text = valueStr;
+    [_curProxy controlZaoshengFazhi:[NSString stringWithFormat:@"%d", fv]];
+}
+
+- (void) doSetSTValue:(float)val{
+    
+    int fv = val;
+    if(fv < minStartDur)
+        fv = minStartDur;
+    else if(fv > maxStartDur)
+        fv = maxStartDur;
+    
+    float max = (maxStartDur - minStartDur);
+    if(max)
+    {
+        float f = (fv - minStartDur)/max;
+        f = fabsf(f);
+        [qidongshijianSlider setCircleValue:f];
+    }
+    
+    NSString *valueStr = [NSString stringWithFormat:@"%d", fv];
+    qidongshijianL.text = [NSString stringWithFormat:@"%@",valueStr];;
+    [_curProxy controlZaoshengStartTime:valueStr];
+}
+
+- (void) doSetRTValue:(float)val{
+    
+    int fv = val;
+    if(fv < minRecoveDur)
+        fv = minRecoveDur;
+    else if(fv > maxRecoveDur)
+        fv = maxRecoveDur;
+    
+    float max = (maxRecoveDur - minRecoveDur);
+    if(max)
+    {
+        float f = (fv - minRecoveDur)/max;
+        f = fabsf(f);
+        [huifushijianSlider setCircleValue:f];
+    }
+    
+    NSString *valueStr = [NSString stringWithFormat:@"%d", fv];
+    huifushijianL.text = [NSString stringWithFormat:@"%@",valueStr];;
+    [_curProxy controlZaoshengRecoveryTime:valueStr];
+}
+
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
     int tag = (int) slbtn.tag;
     if (tag == 1) {
+        
         int k = (value *(maxTh-minTh)) + minTh;
-        NSString *valueStr= [NSString stringWithFormat:@"%d dB", k];
-        
+        NSString *valueStr = [NSString stringWithFormat:@"%d", k];
         fazhiL.text = valueStr;
-        
         [_curProxy controlZaoshengFazhi:[NSString stringWithFormat:@"%d", k]];
+        
     } else if (tag == 2) {
+        
         int k = (value *(maxStartDur-minStartDur)) + minStartDur;
         NSString *valueStr= [NSString stringWithFormat:@"%d", k];
         
-        qidongshijianL.text = [NSString stringWithFormat:@"%@ ms",valueStr];;
+        qidongshijianL.text = [NSString stringWithFormat:@"%@",valueStr];;
         
         [_curProxy controlZaoshengStartTime:valueStr];
     } else {
         int k = (value *(maxRecoveDur-minRecoveDur)) + minRecoveDur;
         NSString *valueStr= [NSString stringWithFormat:@"%d", k];
         
-        huifushijianL.text = [NSString stringWithFormat:@"%@ ms",valueStr];;
+        huifushijianL.text = [NSString stringWithFormat:@"%@",valueStr];;
         
         [_curProxy controlZaoshengRecoveryTime:valueStr];
     }

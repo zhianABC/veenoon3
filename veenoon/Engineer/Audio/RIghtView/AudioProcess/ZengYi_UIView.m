@@ -40,7 +40,6 @@
 
 @implementation ZengYi_UIView
 @synthesize _curProxy;
-@synthesize ctrl;
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.
@@ -254,20 +253,32 @@
 
 - (void) editValAction:(id)sender{
     
-    NSString *alert = [NSString stringWithFormat:@"设置增益，范围%d - %d dB", minTh, maxTh];
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+    
+    NSString *defl = zaoshengL.text;
+    
+    IMP_BLOCK_SELF(ZengYi_UIView);
+
+    NSString *alert = [NSString stringWithFormat:@"设置增益，范围[%d ~ %d(dB)]", minTh, maxTh];
+    alertController = [UIAlertController alertControllerWithTitle:nil
                                                                              message:alert preferredStyle:UIAlertControllerStyleAlert];
     
     [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        
         textField.placeholder = @"增益";
-        textField.text = zaoshengL.text;
+        textField.text = defl;
         textField.keyboardType = UIKeyboardTypeDecimalPad;
+        
+        // 监听文字改变的方法，也可以通过通知
+        [textField addTarget:block_self
+                      action:@selector(textFieldDidReturn:)
+            forControlEvents:UIControlEventEditingDidEndOnExit];
     }];
     
     
-    IMP_BLOCK_SELF(ZengYi_UIView);
+   
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
     
-    [alertController addAction:[UIAlertAction actionWithTitle:@"设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         UITextField *alValTxt = alertController.textFields.firstObject;
         NSString *val = alValTxt.text;
@@ -277,9 +288,21 @@
         }
     }]];
     
-    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    [self.ctrl presentViewController:alertController
+                            animated:YES
+                          completion:nil];
+}
+
+- (void) textFieldDidReturn:(UITextField*)alValTxt{
     
-    [self.ctrl presentViewController:alertController animated:true completion:nil];
+    [alertController dismissViewControllerAnimated:YES
+                                        completion:nil];
+    
+    NSString *val = alValTxt.text;
+    if (val && [val length] > 0) {
+        
+        [self doSetGainValue:[val floatValue]];
+    }
 }
 
 - (void) doSetGainValue:(float)val{
@@ -313,7 +336,7 @@
 
 - (void) setGainShowTextValue:(float)gain{
     
-    NSString *valueStr= [NSString stringWithFormat:@"%0.1f", gain];
+    NSString *valueStr = [NSString stringWithFormat:@"%0.1f", gain];
     zaoshengL.text = valueStr;
 }
 
