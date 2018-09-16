@@ -329,7 +329,7 @@
     [vpro checkRgsProxyCommandLoad:cmds];
     
     self._currentObj._proxyObj = vpro;
-    [_currentObj syncDriverIPProperty];
+    //[_currentObj syncDriverIPProperty];
     [_currentObj syncDriverComs];
 }
 

@@ -235,6 +235,7 @@
 
 - (void) prepareCurrentAreaDrivers:(NSArray*)drivers{
     
+    
     NSMutableArray *audios = [NSMutableArray array];
     NSMutableArray *videos = [NSMutableArray array];
     NSMutableArray *envs = [NSMutableArray array];

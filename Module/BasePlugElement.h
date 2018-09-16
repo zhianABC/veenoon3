@@ -46,8 +46,10 @@
 
 @property (nonatomic, strong) id _driverInfo;
 @property (nonatomic, strong) id _driver;
-@property (nonatomic, strong) RgsPropertyObj *_driver_ip_property;
-@property (nonatomic, strong) RgsPropertyObj *_driver_port_property;
+
+//@property (nonatomic, strong) NSArray *_driverProperties;
+//@property (nonatomic, strong) RgsPropertyObj *_driver_ip_property;
+//@property (nonatomic, strong) RgsPropertyObj *_driver_port_property;
 @property (nonatomic, strong) NSArray *_properties;
 
 @property (nonatomic, strong) NSArray *_connections;
@@ -63,9 +65,8 @@
 - (void) createDriver;
 - (void) removeDriver;
 
-- (void) syncDriverIPProperty;
-- (void) uploadDriverIPProperty;
-- (void) uploadDriverSSIDProperty;
+- (void) syncDriverProperty;
+- (void) uploadDriverProperty;
 
 - (void) syncDriverComs;
 - (void) createConnection:(RgsConnectionObj*)source withConnect:(RgsConnectionObj*)target;

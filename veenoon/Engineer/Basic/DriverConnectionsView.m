@@ -9,7 +9,8 @@
 #import "DriverConnectionsView.h"
 #import "RegulusSDK.h"
 #import "BasePlugElement.h"
-
+#import "AirQualityPlug.h"
+#import "DataSync.h"
 
 @interface DriverConnectionsView () <UITableViewDataSource, UITableViewDelegate>
 {
@@ -46,7 +47,7 @@
     {
        // self.backgroundColor = RGBA(0, 0, 0, 0.3);
         
-        tableWidth = 300;
+        tableWidth = 400;
         _connectIdx = 0;
         
         UIView *mask = [[UIView alloc] initWithFrame:self.bounds];
@@ -93,26 +94,30 @@
     cy = pt.y;
     cx = pt.x;
     
-   if(_connectIdx < [_plug._connections count])//如果插件有connection
-   {
-       //获取可以链接的connection
-       
-       IMP_BLOCK_SELF(DriverConnectionsView);
-       RgsConnectionObj *connect = [_plug._connections objectAtIndex:_connectIdx];
-       
-       [connect GetCanConnect:^(BOOL result, NSArray *connections, NSError *error) {
-           
-           if (result) {
-               
-               block_self._canconnects = connections;
-               
-               [block_self layoutDatas];
-           }
-       }];
-       
-       
-       
-   }
+   
+    [self requestCanConnects];
+}
+
+- (void) requestCanConnects{
+    
+    if(_connectIdx < [_plug._connections count])//如果插件有connection
+    {
+        //获取可以链接的connection
+        
+        IMP_BLOCK_SELF(DriverConnectionsView);
+        RgsConnectionObj *connect = [_plug._connections objectAtIndex:_connectIdx];
+        
+        [connect GetCanConnect:^(BOOL result, NSArray *connections, NSError *error) {
+            
+            if (result) {
+                
+                block_self._canconnects = connections;
+                
+                [block_self layoutDatas];
+            }
+        }];
+        
+    }
 }
 
 - (void) layoutDatas{
@@ -121,7 +126,7 @@
     
     if(h > 420)
         h = 420;
-    
+
     _secView.frame = CGRectMake(_secView.frame.origin.x, 0, tableWidth, h);
     _secView.center = CGPointMake(cx, cy);
     
@@ -141,6 +146,16 @@
     return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    if([_plug isKindOfClass:[AirQualityPlug class]])
+    {
+        if([_canconnects count] == 0)
+        {
+            return 1;
+        }
+        
+        return [_canconnects count]+1;
+    }
     
     return [_canconnects count];
 }
@@ -166,37 +181,45 @@
     
     RgsConnectionObj *data = nil;
     
-    data = [self._canconnects objectAtIndex:indexPath.row];
-    
-//    UIImage *img = [UIImage imageNamed:data._plugicon];
-//    UIImageView *iconImage = [[UIImageView alloc] initWithImage:img];
-//    iconImage.frame = CGRectMake(tableWidth-30, 12, 16, 16);
-//    [cell.contentView addSubview:iconImage];
-//    iconImage.contentMode = UIViewContentModeScaleAspectFit;
-//
-  
-    
-    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(10,
-                                                                10,
-                                                                tableWidth-20, 20)];
-    titleL.backgroundColor = [UIColor clearColor];
-    [cell.contentView addSubview:titleL];
-    titleL.font = [UIFont boldSystemFontOfSize:16];
-    titleL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
-    
-    UILabel* subL = [[UILabel alloc] initWithFrame:CGRectMake(10,
-                                                              30,
-                                                              tableWidth-35, 20)];
-    subL.backgroundColor = [UIColor clearColor];
-    [cell.contentView addSubview:subL];
-    subL.font = [UIFont systemFontOfSize:14];
-    subL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
-    
-    
-    titleL.text = [NSString stringWithFormat:@"%d: %@",
-                   data.driver_id,
-                   data.driver_name];
-    subL.text = data.name;
+    if(indexPath.row < [self._canconnects count])
+    {
+        data = [self._canconnects objectAtIndex:indexPath.row];
+        
+        
+        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(10,
+                                                                    10,
+                                                                    tableWidth-20, 20)];
+        titleL.backgroundColor = [UIColor clearColor];
+        [cell.contentView addSubview:titleL];
+        titleL.font = [UIFont boldSystemFontOfSize:16];
+        titleL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+        
+        UILabel* subL = [[UILabel alloc] initWithFrame:CGRectMake(10,
+                                                                  30,
+                                                                  tableWidth-35, 20)];
+        subL.backgroundColor = [UIColor clearColor];
+        [cell.contentView addSubview:subL];
+        subL.font = [UIFont systemFontOfSize:14];
+        subL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+        
+        
+        titleL.text = [NSString stringWithFormat:@"%d: %@",
+                       (int)data.driver_id,
+                       data.driver_name];
+        subL.text = data.name;
+    }
+    else
+    {
+        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(10,
+                                                                    20,
+                                                                    tableWidth-20, 20)];
+        titleL.backgroundColor = [UIColor clearColor];
+        [cell.contentView addSubview:titleL];
+        titleL.font = [UIFont boldSystemFontOfSize:16];
+        titleL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+        titleL.textAlignment = NSTextAlignmentCenter;
+        titleL.text = @"添加Sensor";
+    }
 
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 59, tableWidth, 1)];
     line.backgroundColor =  [UIColor colorWithWhite:1.0 alpha:0.2];
@@ -210,12 +233,65 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
-    RgsConnectionObj *data = nil;
-    data = [self._canconnects objectAtIndex:indexPath.row];
-    RgsConnectionObj *connect = [_plug._connections objectAtIndex:_connectIdx];
+    if([_plug isKindOfClass:[AirQualityPlug class]])
+    {
+        if([_canconnects count] == indexPath.row)
+        {
+            [self addSensorToCenter];
+        }
+    }
     
-    [_plug createConnection:connect withConnect:data];
+    if(indexPath.row < [self._canconnects count])
+    {
+        RgsConnectionObj *data = nil;
+        data = [self._canconnects objectAtIndex:indexPath.row];
+        RgsConnectionObj *connect = [_plug._connections objectAtIndex:_connectIdx];
+        
+        [_plug createConnection:connect withConnect:data];
+        
+        
+        [self removeFromSuperview];
+    }
     
+}
+
+- (void) addSensorToCenter{
+    
+    IMP_BLOCK_SELF(DriverConnectionsView);
+    [[RegulusSDK sharedRegulusSDK] RequestDriverInfos:^(BOOL result, NSArray *driver_infos, NSError *error) {
+        
+        for(RgsDriverInfo *info in driver_infos)
+        {
+            if([[info.name lowercaseString] isEqualToString:@"sensor"])
+            {
+                [block_self addSensorInfoToCenter:info];
+                break;
+            }
+        }
+    
+    }];
+}
+
+- (void) addSensorInfoToCenter:(RgsDriverInfo*)info{
+    
+    
+    RgsAreaObj *area = [DataSync sharedDataSync]._currentArea;
+    if(area && info)
+    {
+        IMP_BLOCK_SELF(DriverConnectionsView);
+
+        [[RegulusSDK sharedRegulusSDK] CreateDriver:area.m_id
+                                             serial:info.serial
+                                         completion:^(BOOL result, RgsDriverObj *driver, NSError *error) {
+                                             if (result) {
+                                                
+                                                 [block_self requestCanConnects];
+                                                
+                                             }
+                                         }];
+    }
+    
+
 }
 
 

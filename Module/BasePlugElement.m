@@ -29,8 +29,9 @@
 @synthesize _driver;
 @synthesize _driverInfo;
 
-@synthesize _driver_ip_property;
-@synthesize _driver_port_property;
+//@synthesize _driverProperties;
+//@synthesize _driver_ip_property;
+//@synthesize _driver_port_property;
 @synthesize _properties;
 @synthesize _connections;
 @synthesize _irCodeKeys;
@@ -106,12 +107,21 @@
     
 }
 
-- (void) syncDriverIPProperty{
+- (void) syncDriverProperty{
     
-    if(self._driver_ip_property)
+    if(self._properties)
     {
-        self._ipaddress = self._driver_ip_property.value;
-        self._port = self._driver_port_property.value;
+        for(RgsPropertyObj *pro in _properties)
+        {
+            if([pro.name isEqualToString:@"IP"])
+            {
+                self._ipaddress = pro.value;
+            }
+            else if([pro.name isEqualToString:@"Port"])
+            {
+                self._port = pro.value;
+            }
+        }
         return;
     }
     
@@ -124,16 +134,16 @@
             if (result) {
                 if ([properties count]) {
                     
+                    block_self._properties = properties;
+                    
                     for(RgsPropertyObj *pro in properties)
                     {
                         if([pro.name isEqualToString:@"IP"])
                         {
-                            block_self._driver_ip_property = pro;
                             block_self._ipaddress = pro.value;
                         }
                         else if([pro.name isEqualToString:@"Port"])
                         {
-                            block_self._driver_port_property = pro;
                             block_self._port = pro.value;
                         }
                     }
@@ -148,90 +158,24 @@
     
 }
 
-- (void) uploadDriverSSIDProperty{
+- (void) uploadDriverProperty{
     
     if(_driver
        && [_driver isKindOfClass:[RgsDriverObj class]])
     {
-        IMP_BLOCK_SELF(BasePlugElement);
-        
         RgsDriverObj *rd = (RgsDriverObj*)_driver;
         
-        //保存到内存
-        
-        if(self._driver_ip_property)
+        for(RgsPropertyObj *pro in _properties)
         {
-            [KVNProgress show];
-            
-            self._driver_ip_property.value = self._ipaddress;
             [[RegulusSDK sharedRegulusSDK] SetDriverProperty:rd.m_id
-                                               property_name:self._driver_ip_property.name
-                                              property_value:self._ipaddress
-                                                  completion:^(BOOL result, NSError *error) {
-                                                      if (result) {
-                                                          
-                                                          [block_self showSuccess];
-                                                      }
-                                                      else{
-                                                          
-                                                          [KVNProgress dismiss];
-                                                      }
-                                                  }];
-        }
-        
-        
-        
-        
-    }
-}
-
-- (void) uploadDriverIPProperty{
-    
-    if(_driver
-       && [_driver isKindOfClass:[RgsDriverObj class]])
-    {
-        IMP_BLOCK_SELF(BasePlugElement);
-        
-        RgsDriverObj *rd = (RgsDriverObj*)_driver;
-        
-        
-        
-        //保存到内存
-        
-        if(self._driver_port_property)
-        {
-            
-            self._driver_port_property.value = self._port;
-            [[RegulusSDK sharedRegulusSDK] SetDriverProperty:rd.m_id
-                                               property_name:self._driver_port_property.name
-                                              property_value:self._port
+                                               property_name:pro.name
+                                              property_value:pro.value
                                                   completion:nil];
         }
         
-        if(self._driver_ip_property)
-        {
-            [KVNProgress show];
-            
-            self._driver_ip_property.value = self._ipaddress;
-            [[RegulusSDK sharedRegulusSDK] SetDriverProperty:rd.m_id
-                                               property_name:self._driver_ip_property.name
-                                              property_value:self._ipaddress
-                                                  completion:^(BOOL result, NSError *error) {
-                                                      if (result) {
-                                                          
-                                                          [block_self showSuccess];
-                                                      }
-                                                      else{
-                                                          
-                                                          [KVNProgress dismiss];
-                                                      }
-                                                  }];
-        }
-        
-        
-        
-        
     }
+    
+    [KVNProgress showSuccess];
 }
 
 - (void) showSuccess{

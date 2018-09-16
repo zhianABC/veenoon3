@@ -456,7 +456,7 @@
     }
     
     self._vCamera._proxyObj = vcam;
-    [_vCamera syncDriverIPProperty];
+    //[_vCamera syncDriverIPProperty];
     [_vCamera syncDriverComs];
 }
 
