@@ -252,7 +252,7 @@
     [bottomBar addSubview:cancelBtn];
     [cancelBtn setTitle:@"返回" forState:UIControlStateNormal];
     [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [cancelBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [cancelBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     cancelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [cancelBtn addTarget:self
                   action:@selector(cancelAction:)
@@ -263,15 +263,15 @@
     [self.view addSubview:topbar];
     [self.view addSubview:bottomBar];
 
-    scenarioButton = [UIButton buttonWithColor:[UIColor clearColor] selColor:YELLOW_COLOR];
-    scenarioButton.frame = CGRectMake(SCREEN_WIDTH-120, 5, 100, 40);
+    scenarioButton = [UIButton buttonWithColor:[UIColor clearColor] selColor:nil];
+    scenarioButton.frame = CGRectMake(SCREEN_WIDTH-20-160, 0,160, 50);
     [bottomBar addSubview:scenarioButton];
     scenarioButton.layer.cornerRadius = 3;
     scenarioButton.clipsToBounds = YES;
     [scenarioButton setTitle:@"生成场景" forState:UIControlStateNormal];
     [scenarioButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    //[scenarioButton setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
-    scenarioButton.titleLabel.font = [UIFont boldSystemFontOfSize:16];
+    [scenarioButton setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
+    scenarioButton.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [scenarioButton addTarget:self
                        action:@selector(createScenarioAction:)
              forControlEvents:UIControlEventTouchUpInside];
@@ -280,11 +280,11 @@
 
     
     _setBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _setBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 20, 160, 44);
+    _setBtn.frame = CGRectMake(SCREEN_WIDTH-2-160, 20, 160, 44);
     [self.view addSubview:_setBtn];
     [_setBtn setTitle:@"编辑" forState:UIControlStateNormal];
     [_setBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_setBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [_setBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     _setBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [_setBtn addTarget:self
                  action:@selector(editAction:)
@@ -292,11 +292,11 @@
     //_setBtn.hidden = YES;
     
     _doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _doneBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 20, 160, 44);
+    _doneBtn.frame = CGRectMake(SCREEN_WIDTH-2-160, 20, 160, 44);
     [self.view addSubview:_doneBtn];
     [_doneBtn setTitle:@"完成" forState:UIControlStateNormal];
     [_doneBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_doneBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [_doneBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     _doneBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [_doneBtn addTarget:self
                  action:@selector(doneAction:)
@@ -557,7 +557,7 @@
         btnL.textAlignment = NSTextAlignmentCenter;
         [_content addSubview:btnL];
         btnL.font = [UIFont systemFontOfSize:12];
-        btnL.textColor = DARK_BLUE_COLOR;
+        btnL.textColor = DARK_BLUE_COLOR2;
         btnL.text = [dic objectForKey:@"name"];
         
         cellBtn._drNameLabel = btnL;
@@ -611,7 +611,7 @@
 - (void) createScenarioAction:(UIButton*) sender{
     
     sender.enabled = NO;
-
+    
     [_scenario prepareSenarioSlice];
 
     if(_isEditingScenario)

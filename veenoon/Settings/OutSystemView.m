@@ -48,7 +48,7 @@
         [self addSubview:outSystemBtn];
         [outSystemBtn setTitle:@"退出登录" forState:UIControlStateNormal];
         [outSystemBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [outSystemBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+        [outSystemBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
         outSystemBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
         [outSystemBtn addTarget:self
                   action:@selector(outSystemAction:)
@@ -59,7 +59,7 @@
         [self addSubview:cancleBtn];
         [cancleBtn setTitle:@"取消" forState:UIControlStateNormal];
         [cancleBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [cancleBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+        [cancleBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
         cancleBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
         [cancleBtn addTarget:self
                      action:@selector(cancelAction:)

@@ -70,7 +70,7 @@
     [self.view addSubview:cancelBtn];
     [cancelBtn setTitle:@"返回" forState:UIControlStateNormal];
     [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [cancelBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [cancelBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     cancelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [cancelBtn addTarget:self
                   action:@selector(cancelAction:)
@@ -106,7 +106,7 @@
     scenarioButton.clipsToBounds = YES;
     [scenarioButton setTitle:@"生成场景" forState:UIControlStateNormal];
     [scenarioButton setTitleColor:USER_GRAY_COLOR forState:UIControlStateNormal];
-    //[scenarioButton setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+//    [scenarioButton setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     scenarioButton.titleLabel.font = [UIFont boldSystemFontOfSize:16];
     [scenarioButton addTarget:self
                        action:@selector(createScenarioAction:)

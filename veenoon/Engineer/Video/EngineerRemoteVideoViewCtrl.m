@@ -61,7 +61,7 @@
     [bottomBar addSubview:cancelBtn];
     [cancelBtn setTitle:@"返回" forState:UIControlStateNormal];
     [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [cancelBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [cancelBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     cancelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [cancelBtn addTarget:self
                   action:@selector(cancelAction:)
@@ -72,7 +72,7 @@
     [bottomBar addSubview:okBtn];
     [okBtn setTitle:@"设置" forState:UIControlStateNormal];
     [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [okBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [okBtn addTarget:self
               action:@selector(settingsAction:)
@@ -218,7 +218,7 @@
     phone1Btn.clipsToBounds = YES;
     [phone1Btn setTitle:@"1" forState:UIControlStateNormal];
     [phone1Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [phone1Btn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [phone1Btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     phone1Btn.titleLabel.font = [UIFont boldSystemFontOfSize:20];
     [self.view addSubview:phone1Btn];
     [phone1Btn addTarget:self
@@ -233,7 +233,7 @@
     phone2Btn.clipsToBounds = YES;
     [phone2Btn setTitle:@"2" forState:UIControlStateNormal];
     [phone2Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [phone2Btn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [phone2Btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     phone2Btn.titleLabel.font = [UIFont boldSystemFontOfSize:20];
     [self.view addSubview:phone2Btn];
     [phone2Btn addTarget:self
@@ -248,7 +248,7 @@
     phone3Btn.clipsToBounds = YES;
     [phone3Btn setTitle:@"3" forState:UIControlStateNormal];
     [phone3Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [phone3Btn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [phone3Btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     phone3Btn.titleLabel.font = [UIFont boldSystemFontOfSize:20];
     [self.view addSubview:phone3Btn];
     [phone3Btn addTarget:self
@@ -263,7 +263,7 @@
     phone4Btn.clipsToBounds = YES;
     [phone4Btn setTitle:@"4" forState:UIControlStateNormal];
     [phone4Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [phone4Btn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [phone4Btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     phone4Btn.titleLabel.font = [UIFont boldSystemFontOfSize:20];
     [self.view addSubview:phone4Btn];
     [phone4Btn addTarget:self
@@ -278,7 +278,7 @@
     phone5Btn.clipsToBounds = YES;
     [phone5Btn setTitle:@"5" forState:UIControlStateNormal];
     [phone5Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [phone5Btn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [phone5Btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     phone5Btn.titleLabel.font = [UIFont boldSystemFontOfSize:20];
     [self.view addSubview:phone5Btn];
     [phone5Btn addTarget:self
@@ -293,7 +293,7 @@
     phone6Btn.clipsToBounds = YES;
     [phone6Btn setTitle:@"6" forState:UIControlStateNormal];
     [phone6Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [phone6Btn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [phone6Btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     phone6Btn.titleLabel.font = [UIFont boldSystemFontOfSize:20];
     [self.view addSubview:phone6Btn];
     [phone6Btn addTarget:self
@@ -308,7 +308,7 @@
     phone7Btn.clipsToBounds = YES;
     [phone7Btn setTitle:@"7" forState:UIControlStateNormal];
     [phone7Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [phone7Btn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [phone7Btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     phone7Btn.titleLabel.font = [UIFont boldSystemFontOfSize:20];
     [self.view addSubview:phone7Btn];
     [phone7Btn addTarget:self
@@ -323,7 +323,7 @@
     phone8Btn.clipsToBounds = YES;
     [phone8Btn setTitle:@"8" forState:UIControlStateNormal];
     [phone8Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [phone8Btn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [phone8Btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     phone8Btn.titleLabel.font = [UIFont boldSystemFontOfSize:20];
     [self.view addSubview:phone8Btn];
     [phone8Btn addTarget:self
@@ -338,7 +338,7 @@
     phone9Btn.clipsToBounds = YES;
     [phone9Btn setTitle:@"9" forState:UIControlStateNormal];
     [phone9Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [phone9Btn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [phone9Btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     phone9Btn.titleLabel.font = [UIFont boldSystemFontOfSize:20];
     [self.view addSubview:phone9Btn];
     [phone9Btn addTarget:self
@@ -353,7 +353,7 @@
     phonedotBtn.clipsToBounds = YES;
     [phonedotBtn setTitle:@"." forState:UIControlStateNormal];
     [phonedotBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [phonedotBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [phonedotBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     phonedotBtn.titleLabel.font = [UIFont boldSystemFontOfSize:20];
     [self.view addSubview:phonedotBtn];
     [phonedotBtn addTarget:self
@@ -368,7 +368,7 @@
     phone0Btn.clipsToBounds = YES;
     [phone0Btn setTitle:@"0" forState:UIControlStateNormal];
     [phone0Btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [phone0Btn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [phone0Btn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     phone0Btn.titleLabel.font = [UIFont boldSystemFontOfSize:20];
     [self.view addSubview:phone0Btn];
     [phone0Btn addTarget:self
@@ -383,7 +383,7 @@
     phoneStarBtn.clipsToBounds = YES;
     [phoneStarBtn setTitle:@"#" forState:UIControlStateNormal];
     [phoneStarBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [phoneStarBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [phoneStarBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     phoneStarBtn.titleLabel.font = [UIFont boldSystemFontOfSize:20];
     [self.view addSubview:phoneStarBtn];
     [phoneStarBtn addTarget:self
@@ -424,7 +424,7 @@
         cameraBtn.clipsToBounds = YES;
         [cameraBtn setTitle:vSet._name forState:UIControlStateNormal];
         [cameraBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [cameraBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+        [cameraBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
         cameraBtn.titleLabel.font = [UIFont boldSystemFontOfSize:20];
         [scroolView addSubview:cameraBtn];
         [cameraBtn addTarget:self
@@ -460,7 +460,7 @@
     okPlayerBtn.clipsToBounds = YES;
     [okPlayerBtn setTitle:@"ok" forState:UIControlStateNormal];
     [okPlayerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [okPlayerBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [okPlayerBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     okPlayerBtn.titleLabel.font = [UIFont boldSystemFontOfSize:24];
     [self.view addSubview:okPlayerBtn];
     
@@ -534,7 +534,7 @@
     int tag = (int) btn.tag;
     for (UIButton *button in _cameraBtnArray) {
         if (button.tag == tag) {
-            [button setTitleColor:RGB(255, 180, 0) forState:UIControlStateNormal];
+            [button setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
         } else {
             [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }

@@ -32,8 +32,8 @@
         
         //不需要ip
         self._ipaddress = @"192.168.1.1";
-        self._show_icon_name = @"hj_icon_3.png";
-        self._show_icon_sel_name = @"hj_icon_3_sel.png";
+        self._show_icon_name = @"pm25.png";
+        self._show_icon_sel_name = @"pm25_sel.png";
         
         self._typeName = @"PM2.5";
     }

@@ -375,7 +375,7 @@ CustomPickerViewDelegate, GroupsPickerViewDelegate> {
         
         if(_curIndex == indexPath.row)
         {
-            cell.backgroundColor = RGBA(255, 180, 0, 0.5);
+            cell.backgroundColor = RGBA(242, 148, 20, 0.5);
         }
         
     }
