@@ -10,7 +10,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "veenoon/Engineer/Audio/RIghtView/AudioProcess/YinPinProcessCodeUIView.m"
-            timestampString = "555145035.190105"
+            timestampString = "558762087.944365"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "192"
@@ -32,6 +32,22 @@
             startingLineNumber = "112"
             endingLineNumber = "112"
             landmarkName = "-syncDriverIPProperty"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "veenoon/Components/SlideButton.m"
+            timestampString = "558762128.665912"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
+            landmarkName = "-enableValueSet:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -134,6 +134,7 @@
         [self addSubview:_titleLabel];
         _titleLabel.font = [UIFont boldSystemFontOfSize:11];
         _titleLabel.textColor  = [UIColor whiteColor];
+        _titleLabel.alpha = 0.5;
         _titleLabel.textAlignment = NSTextAlignmentCenter;
         
         _valueLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth(frame)/2-30,
@@ -143,6 +144,7 @@
         [self addSubview:_valueLabel];
         _valueLabel.font = [UIFont boldSystemFontOfSize:11];
         _valueLabel.textColor  = [UIColor whiteColor];
+        _valueLabel.alpha = 0.5;
         _valueLabel.textAlignment = NSTextAlignmentCenter;
         
         
@@ -166,14 +168,22 @@
     if(enabled)
     {
         _enabledTouchMove = YES;
-        _titleLabel.textColor = YELLOW_COLOR;
+        _titleLabel.textColor = NEW_ER_BUTTON_SD_COLOR;
+        _valueLabel.textColor = NEW_ER_BUTTON_SD_COLOR;
         _radioImgV.image = _lightBackgroundImage;
+        
+        _titleLabel.alpha = 1.0;
+        _valueLabel.alpha = 1.0;
     }
     else
     {
         _enabledTouchMove = NO;
         _titleLabel.textColor = [UIColor whiteColor];
+        _valueLabel.textColor = [UIColor whiteColor];
         _radioImgV.image = _grayBackgroundImage;
+        
+        _titleLabel.alpha = 0.5;
+        _valueLabel.alpha = 0.5;
     }
 }
 

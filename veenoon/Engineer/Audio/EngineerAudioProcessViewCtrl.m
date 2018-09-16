@@ -503,7 +503,7 @@
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
     float circleValue = minAnalogyGain + (value * (maxAnalogyGain - minAnalogyGain));
-    slbtn._valueLabel.text = [NSString stringWithFormat:@"%0.1f db", circleValue];
+    slbtn._valueLabel.text = [NSString stringWithFormat:@"%0.1f dB", circleValue];
     
     id data = slbtn.data;
     if([data isKindOfClass:[VAProcessorProxys class]])
