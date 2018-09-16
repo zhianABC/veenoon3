@@ -246,9 +246,9 @@
         NSString *ipAddress = @"Unk";
         NSString *nameStr = basePlugElement._ipaddress;
         RgsDriverObj *driver = basePlugElement._driver;
-        NSString *idStr = @"Unk";
+        //NSString *idStr = @"Unk";
         if (driver != nil) {
-            idStr = [NSString stringWithFormat:@"%d", (int) driver.m_id];
+            //idStr = [NSString stringWithFormat:@"%d", (int) driver.m_id];
             if(driver.name)
                 nameStr = driver.name;
         }
@@ -257,8 +257,8 @@
             ipAddress = nameStr;
         }
         
-        NSString *showText = [[idStr stringByAppendingString:@" - "] stringByAppendingString:ipAddress];
-        [_selectSysBtn setShowText:showText];
+        NSString *showText = ipAddress;
+        [_selectSysBtn setShowText:showText chooseEnabled:YES];
     }
 }
 

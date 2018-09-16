@@ -13,6 +13,6 @@
     
 }
 
-- (void) setShowText:(NSString*)text;
+- (void) setShowText:(NSString*)text chooseEnabled:(BOOL)enabled;
 
 @end

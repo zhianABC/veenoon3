@@ -539,7 +539,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
--(void)handleTapGesture:(UIGestureRecognizer*)gestureRecognizer{
+- (void) handleTapGesture:(UIGestureRecognizer*)gestureRecognizer{
     
     long index = gestureRecognizer.view.tag;
     

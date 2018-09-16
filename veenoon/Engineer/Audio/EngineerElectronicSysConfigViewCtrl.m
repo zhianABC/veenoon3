@@ -63,7 +63,7 @@
     if([_electronicSysArray count])
         self._currentObj = [_electronicSysArray objectAtIndex:0];
     
-    [self showBasePluginName:_currentObj];
+    [self showBasePluginName:_currentObj chooseEnabled:NO];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];

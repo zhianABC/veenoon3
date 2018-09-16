@@ -55,7 +55,7 @@
     return self;
 }
 
-- (void) setShowText:(NSString*)text{
+- (void) setShowText:(NSString*)text chooseEnabled:(BOOL)enabled{
     
     
     if([_nameL.text length] && ![_nameL.text isEqualToString:text])
@@ -99,11 +99,17 @@
 
     _icon.center = CGPointMake(CGRectGetMaxX(_nameL.frame)+10, _nameL.center.y);
     
-    if([text length] > 0)
-        _icon.hidden = NO;
+    if(enabled)
+    {
+        if([text length] > 0)
+            _icon.hidden = NO;
+        else
+            _icon.hidden = YES;
+    }
     else
+    {
         _icon.hidden = YES;
-    
+    }
     CGRect rc = self.frame;
     rc.size.width = CGRectGetMaxX(_icon.frame)+10;
     self.frame = rc;

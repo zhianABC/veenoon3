@@ -346,22 +346,6 @@
         [progress stepProgress:step];
     }
     
-//    NSSet *allTouches = [event allTouches];
-//    switch ([allTouches count])
-//    {
-//        case 1:
-//        {
-//            UITouch* touch = [touches anyObject];
-//            CGPoint previous = _beginPoint;
-//            CGPoint current = [touch locationInView:self];
-//            float pan = previous.y - current.y;
-//            float step = pan/_vheight;
-//
-//            [progress stepProgress:step];
-//        }
-//            break;
-//    }
-    
     if(delegate && [delegate respondsToSelector:@selector(didSlideButtonValueChanged:slbtn:)])
     {
         [delegate didSlideButtonValueChanged:[progress pgvalue] slbtn:self];

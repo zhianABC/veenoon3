@@ -179,7 +179,6 @@
 		3420A43B2139154D00CBEDA0 /* sm_sensor@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3420A4362139154700CBEDA0 /* sm_sensor@2x.png */; };
 		3420A43C2139154D00CBEDA0 /* sm_row_video@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3420A4372139154A00CBEDA0 /* sm_row_video@2x.png */; };
 		3420A43D2139154D00CBEDA0 /* sm_row_env@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3420A4382139154C00CBEDA0 /* sm_row_env@2x.png */; };
-		3421001D20A807DD008497FF /* CreateScenarioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3421001C20A807DD008497FF /* CreateScenarioViewController.m */; };
 		3421002020A80AE2008497FF /* DeviceCmdSlice.m in Sources */ = {isa = PBXBuildFile; fileRef = 3421001F20A80AE2008497FF /* DeviceCmdSlice.m */; };
 		3421561820597293005205D6 /* slide_btn_light_nokd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3421561620597292005205D6 /* slide_btn_light_nokd@2x.png */; };
 		3421561920597293005205D6 /* slide_btn_gray_nokd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3421561720597292005205D6 /* slide_btn_gray_nokd@2x.png */; };
@@ -1252,8 +1251,6 @@
 		3420A4362139154700CBEDA0 /* sm_sensor@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sm_sensor@2x.png"; sourceTree = "<group>"; };
 		3420A4372139154A00CBEDA0 /* sm_row_video@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sm_row_video@2x.png"; sourceTree = "<group>"; };
 		3420A4382139154C00CBEDA0 /* sm_row_env@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sm_row_env@2x.png"; sourceTree = "<group>"; };
-		3421001B20A807DD008497FF /* CreateScenarioViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CreateScenarioViewController.h; sourceTree = "<group>"; };
-		3421001C20A807DD008497FF /* CreateScenarioViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CreateScenarioViewController.m; sourceTree = "<group>"; };
 		3421001E20A80AE2008497FF /* DeviceCmdSlice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeviceCmdSlice.h; sourceTree = "<group>"; };
 		3421001F20A80AE2008497FF /* DeviceCmdSlice.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeviceCmdSlice.m; sourceTree = "<group>"; };
 		3421561620597292005205D6 /* slide_btn_light_nokd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slide_btn_light_nokd@2x.png"; sourceTree = "<group>"; };
@@ -3842,8 +3839,6 @@
 				3448C2092147AF4D00194569 /* ScenarioCellView.m */,
 				EBAE5BBC1FE0071C00C10C4D /* EngineerPresetScenarioViewCtrl.h */,
 				EBAE5BBA1FE0070600C10C4D /* EngineerPresetScenarioViewCtrl.m */,
-				3421001B20A807DD008497FF /* CreateScenarioViewController.h */,
-				3421001C20A807DD008497FF /* CreateScenarioViewController.m */,
 			);
 			path = Basic;
 			sourceTree = "<group>";
@@ -5115,7 +5110,6 @@
 				3421EA301FC4161300DC5378 /* ColumnsView.m in Sources */,
 				04DE1EA31AD6AEE000D49E2F /* SBJson4Parser.m in Sources */,
 				3425E9921FE5763B003559F7 /* WirlessYaoBaoViewSettingsView.m in Sources */,
-				3421001D20A807DD008497FF /* CreateScenarioViewController.m in Sources */,
 				EBA16C622046EA6700FC6E1F /* JunHengQi_UIView.m in Sources */,
 				EB1A55C71FEA919C000B18E6 /* EngineerPVExpendViewCtrl.m in Sources */,
 				EBCA834B1FD434C6007DEB8E /* UserMonitorSettingsViewCtrl.m in Sources */,
