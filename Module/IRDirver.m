@@ -30,6 +30,14 @@
     return self;
 }
 
+- (NSString*) deviceName{
+    
+    if(self._name)
+        return self._name;
+    
+    return self._typeName;
+}
+
 
 - (void) createDriver{
     

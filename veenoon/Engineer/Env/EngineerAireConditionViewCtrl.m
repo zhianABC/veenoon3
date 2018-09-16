@@ -55,7 +55,7 @@
     selectedBtnArray = [[NSMutableArray alloc] init];
     
     
-   [self showBasePluginName:self._currentObj];
+   [self showBasePluginName:self._currentObj chooseEnabled:NO];
     [self setTitleAndImage:@"env_corner_kongtiao.png" withTitle:@"空调"];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];

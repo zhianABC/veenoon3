@@ -134,6 +134,8 @@
             _scenario._audioDevices = [_selectedDevices objectForKey:@"audio"];
             _scenario._videoDevices = [_selectedDevices objectForKey:@"video"];
             _scenario._envDevices = [_selectedDevices objectForKey:@"env"];
+            _scenario._comDevices = [_selectedDevices objectForKey:@"port"];
+            _scenario._otherDevices = [_selectedDevices objectForKey:@"chuangan"];
         }
         
         [DataCenter defaultDataCenter]._scenario = nil;
@@ -215,14 +217,7 @@
     centerTitleL.textAlignment = NSTextAlignmentCenter;
     [topbar addSubview:centerTitleL];
     centerTitleL.text = @"设备调试";
-    
-//    UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT+50, ENGINEER_VIEW_TOP+70, SCREEN_WIDTH-80, 30)];
-//    portDNSLabel.backgroundColor = [UIColor clearColor];
-//    [self.view addSubview:portDNSLabel];
-//    portDNSLabel.font = [UIFont boldSystemFontOfSize:16];
-//    portDNSLabel.textColor  = [UIColor whiteColor];
-//    portDNSLabel.text = @"音频管理";
-//
+
 
     _content = [[UIScrollView alloc] init];
     [self.view addSubview:_content];
@@ -336,8 +331,6 @@
     
     NSArray *coms = _scenario._comDevices;
     [self showCells:5000 datas:coms];
-    
-    
     
 }
 

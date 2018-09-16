@@ -47,7 +47,7 @@
     if ([_cameraSysArray count]) {
         self._currentObj = [_cameraSysArray objectAtIndex:0];
     }
-    [super showBasePluginName:self._currentObj];
+    [super showBasePluginName:self._currentObj chooseEnabled:NO];
     
     [super setTitleAndImage:@"video_corner_shexiangji.png" withTitle:video_camera_name];
     

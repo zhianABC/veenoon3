@@ -157,12 +157,12 @@
         [btnJH setCircleValue:gtVal];
     }
     
-    jhGainLabel.text = [NSString stringWithFormat:@"%0.1f dB", val];
+    jhGainLabel.text = [NSString stringWithFormat:@"%0.0f dB", val];
     
     if(_curIndex < [_peqRateArray count])
     {
         id rateKey = [_peqRateArray objectAtIndex:_curIndex];
-        [_currentObj._proxyObj controlMixPEQ:[NSString stringWithFormat:@"%0.1f", val]
+        [_currentObj._proxyObj controlMixPEQ:[NSString stringWithFormat:@"%0.0f", val]
                                     withRate:rateKey];
     }
     
@@ -197,12 +197,12 @@
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
     float k = (value *(_peqMax-_peqMin)) + _peqMin;
-    jhGainLabel.text = [NSString stringWithFormat:@"%0.1f dB", k];
+    jhGainLabel.text = [NSString stringWithFormat:@"%0.0f dB", k];
     
     if(_curIndex < [_peqRateArray count])
     {
         id rateKey = [_peqRateArray objectAtIndex:_curIndex];
-        [_currentObj._proxyObj controlMixPEQ:[NSString stringWithFormat:@"%0.1f", k]
+        [_currentObj._proxyObj controlMixPEQ:[NSString stringWithFormat:@"%0.0f", k]
                                     withRate:rateKey];
     }
     
@@ -240,7 +240,7 @@
             f = fabsf(f);
             [btnJH setCircleValue:f];
             
-            jhGainLabel.text = [NSString stringWithFormat:@"%0.1f dB", gain];
+            jhGainLabel.text = [NSString stringWithFormat:@"%0.0f dB", gain];
         }
     }
     
@@ -254,7 +254,7 @@
     {
         id rateKey = [_peqRateArray objectAtIndex:_curIndex];
 
-        [_currentObj._proxyObj controlMixPEQ:[NSString stringWithFormat:@"%0.1f", gain]
+        [_currentObj._proxyObj controlMixPEQ:[NSString stringWithFormat:@"%0.0f", gain]
                                     withRate:rateKey];
         
         float highMax = (_peqMax - _peqMin);
@@ -264,7 +264,7 @@
             f = fabsf(f);
             [btnJH setCircleValue:f];
             
-            jhGainLabel.text = [NSString stringWithFormat:@"%0.1f dB", gain];
+            jhGainLabel.text = [NSString stringWithFormat:@"%0.0f dB", gain];
         }
     }
 }

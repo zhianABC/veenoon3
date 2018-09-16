@@ -240,7 +240,8 @@
     CGRect rc = slider.frame;
     rc = CGRectMake(rc.origin.x, rc.origin.y, rc.size.width, rc.size.height);
     
-    if (p.y > CGRectGetMinY(roadSlider.frame) && p.y < CGRectGetMaxY(roadSlider.frame)) {
+    if (p.y > (CGRectGetMinY(roadSlider.frame)-50)
+        && p.y < (CGRectGetMaxY(roadSlider.frame)+50)) {
         
         CGPoint colorPoint = p;
         colorPoint.x = slider.center.x;

@@ -39,5 +39,5 @@
 - (void) setTitleAndImage:(NSString*)imageName withTitle:(NSString*)title;
 - (void) setCenterTitle:(NSString*)centerTitle;
 
-- (void) showBasePluginName:(BasePlugElement*) basePlugElement;
+- (void) showBasePluginName:(BasePlugElement*) basePlugElement chooseEnabled:(BOOL)enabled;
 @end

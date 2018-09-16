@@ -44,7 +44,7 @@
     if ([_hunyinSysArray count]) {
         self._currentObj = [_hunyinSysArray objectAtIndex:0];
     }
-    [super showBasePluginName:self._currentObj];
+    [super showBasePluginName:self._currentObj chooseEnabled:NO];
     
     
     [super setTitleAndImage:@"eng_small_mix_icon.png" withTitle:@"混音会议"];

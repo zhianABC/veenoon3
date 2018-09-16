@@ -96,7 +96,7 @@
     _selectedBtnArray = [[NSMutableArray alloc] init];
     _inputBtnArray = [[NSMutableArray alloc] init];
     
-    [self showBasePluginName:_curProcessor];
+    [self showBasePluginName:_curProcessor chooseEnabled:NO];
 
     [self setTitleAndImage:@"audio_corner_yinpinchuli.png" withTitle:@"音频处理器"];
 
@@ -645,9 +645,14 @@
         id data = button.data;
         if([data isKindOfClass:[VAProcessorProxys class]])
         {
-            [(VAProcessorProxys*)data checkRgsProxyCommandLoad];
+            VAProcessorProxys *proxy = data;
+            [proxy checkRgsProxyCommandLoad];
             
-            [_zengyiSlider setScaleValue:[(VAProcessorProxys*)data getAnalogyGain]];
+            [_zengyiSlider setScaleValue:[proxy getAnalogyGain]];
+            
+            
+            BOOL isMute = [proxy isProxyMute];
+            [_zengyiSlider setMuteVal:isMute];
         }
         
         

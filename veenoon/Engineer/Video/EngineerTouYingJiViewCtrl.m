@@ -37,7 +37,7 @@
     if ([_touyingjiArray count]) {
         self._currentObj = [_touyingjiArray objectAtIndex:0];
     }
-    [super showBasePluginName:self._currentObj];
+    [super showBasePluginName:self._currentObj chooseEnabled:NO];
     
     [super setTitleAndImage:@"video_corner_shipinbofang.png" withTitle:@"投影机"];
     
