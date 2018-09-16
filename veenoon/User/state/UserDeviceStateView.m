@@ -28,7 +28,7 @@
         
         int top = 20;
         
-        CGRect rc = CGRectMake(0, top, frame.size.width, frame.size.height - 44);
+        CGRect rc = CGRectMake(40, top, frame.size.width-80, frame.size.height - 44);
         
         _tableView = [[UITableView alloc] initWithFrame:rc];
         _tableView.delegate = self;
@@ -69,7 +69,7 @@
     header.backgroundColor = [UIColor clearColor];
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(30, 63,
-                                                              self.frame.size.width-60, 1)];
+                                                              self.frame.size.width-140, 1)];
     line.backgroundColor =  NEW_ER_BUTTON_GRAY_COLOR2;
     [header addSubview:line];
     
@@ -100,10 +100,10 @@
     }
     else if (section == 4)
     {
-        rowL.text = @"微气候";
+        rowL.text = @"辅助设备";
     }
     
-    rowL.textColor  = [UIColor whiteColor];
+    rowL.textColor  = NEW_ER_BUTTON_SD_COLOR;
     
     
     return header;
@@ -134,7 +134,7 @@
     
     UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(60,
                                                                 12,
-                                                                CGRectGetWidth(self.frame)/2-70, 40)];
+                                                                CGRectGetWidth(self.frame)/2-110, 40)];
     titleL.backgroundColor = [UIColor clearColor];
     [cell.contentView addSubview:titleL];
     titleL.font = [UIFont systemFontOfSize:13];
@@ -143,7 +143,7 @@
     titleL.text = driverInfo.name;
     
     
-    UILabel* valueL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame)-140,
+    UILabel* valueL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame)-215,
                                                                 17,
                                                                 80, 20)];
     valueL.backgroundColor = [UIColor clearColor];
@@ -154,7 +154,7 @@
     
     titleIcon = [[UIImageView alloc] init];
     [cell addSubview:titleIcon];
-    titleIcon.frame = CGRectMake(CGRectGetWidth(self.frame)-60, 17, 20, 20);
+    titleIcon.frame = CGRectMake(CGRectGetWidth(self.frame)-135, 17, 20, 20);
     
     NSString *state = [dataDic objectForKey:@"state"];
     if ([state isEqualToString:@"True"]) {
@@ -171,7 +171,7 @@
     
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(30, 53,
-                                                              self.frame.size.width-60, 1)];
+                                                              self.frame.size.width-140, 1)];
     line.backgroundColor =  NEW_ER_BUTTON_GRAY_COLOR2;
     [cell addSubview:line];
     

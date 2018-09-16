@@ -29,6 +29,8 @@
     UIButton *btnPre;
     UIButton *btnWeek;
     
+    UILabel* titleL;
+    
     BOOL _isEdit;
 }
 @property (nonatomic, strong) NSMutableArray *_autoItems;
@@ -83,23 +85,23 @@
       forControlEvents:UIControlEventTouchUpInside];
 
     
-    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(50, 40, SCREEN_WIDTH-100, 40)];
+    titleL = [[UILabel alloc] initWithFrame:CGRectMake(50, 40, SCREEN_WIDTH-100, 40)];
     titleL.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleL];
     titleL.font = [UIFont boldSystemFontOfSize:18];
     titleL.textColor  = [UIColor whiteColor];
     titleL.textAlignment = NSTextAlignmentCenter;
-    titleL.text = @"自动化设置";
+    titleL.text = @"传感器设置";
     
     
     btnChuangan = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnChuangan.frame = CGRectMake(60, SCREEN_HEIGHT - 50, 60, 50);
+    btnChuangan.frame = CGRectMake(80, SCREEN_HEIGHT - 50, 60, 50);
     [btnChuangan setImage:[UIImage imageNamed:@"auto_chuangan_s.png"]
             forState:UIControlStateNormal];
     [btnChuangan setImage:[UIImage imageNamed:@"auto_chuangan_s.png"]
             forState:UIControlStateHighlighted];
     [self.view addSubview:btnChuangan];
-    btnChuangan.center = CGPointMake(150, btnChuangan.center.y);
+    btnChuangan.center = CGPointMake(80, btnChuangan.center.y);
     [btnChuangan addTarget:self
                action:@selector(chuanganAction:)
      forControlEvents:UIControlEventTouchUpInside];
@@ -117,13 +119,13 @@
        forControlEvents:UIControlEventTouchUpInside];
     
     btnWeek = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnWeek.frame = CGRectMake(SCREEN_WIDTH-150, SCREEN_HEIGHT - 50, 60, 50);
+    btnWeek.frame = CGRectMake(SCREEN_WIDTH-80, SCREEN_HEIGHT - 50, 60, 50);
     [btnWeek setImage:[UIImage imageNamed:@"auto_run_week_w.png"]
              forState:UIControlStateNormal];
     [btnWeek setImage:[UIImage imageNamed:@"auto_run_week.png"]
              forState:UIControlStateHighlighted];
     [self.view addSubview:btnWeek];
-    btnWeek.center = CGPointMake(SCREEN_WIDTH-150, btnWeek.center.y);
+    btnWeek.center = CGPointMake(SCREEN_WIDTH-80, btnWeek.center.y);
     [btnWeek addTarget:self
                 action:@selector(autoWeekAction:)
       forControlEvents:UIControlEventTouchUpInside];
@@ -162,6 +164,8 @@
     _auto_mode = 0;
     
     [self layoutAutoCells];
+    
+    titleL.text = @"预约设置";
 }
 
 - (void) editAction:(id)sender{
@@ -187,6 +191,8 @@
     _auto_mode = 0;
     
 //    [self layoutAutoCells];
+    
+    titleL.text = @"传感器设置";
 }
 
 - (void) autoWeekAction:(id)sender{
@@ -200,6 +206,8 @@
     _auto_mode = 1;
     
     [self layoutAutoCells];
+    
+    titleL.text = @"日程设置";
 }
 
 - (void) getSchedules{

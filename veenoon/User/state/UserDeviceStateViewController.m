@@ -72,20 +72,20 @@
       forControlEvents:UIControlEventTouchUpInside];
     
     btnDevice = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnDevice.frame = CGRectMake(60, SCREEN_HEIGHT - 50, 60, 50);
+    btnDevice.frame = CGRectMake(80, SCREEN_HEIGHT - 50, 60, 50);
     [btnDevice setImage:[UIImage imageNamed:@"user_state_device_s.png"]
                  forState:UIControlStateNormal];
     [btnDevice setImage:[UIImage imageNamed:@"user_state_device_s.png"]
                  forState:UIControlStateHighlighted];
     [self.view addSubview:btnDevice];
     
-    btnDevice.center = CGPointMake(150, btnDevice.center.y);
+    btnDevice.center = CGPointMake(80, btnDevice.center.y);
     [btnDevice addTarget:self
                     action:@selector(btnDeviceAction:)
           forControlEvents:UIControlEventTouchUpInside];
     
     btnEnv = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnEnv.frame = CGRectMake(60, SCREEN_HEIGHT - 50, 60, 50);
+    btnEnv.frame = CGRectMake(80, SCREEN_HEIGHT - 50, 60, 50);
     [btnEnv setImage:[UIImage imageNamed:@"user_state_env_n.png"]
             forState:UIControlStateNormal];
     [btnEnv setImage:[UIImage imageNamed:@"user_state_env_s.png"]
@@ -97,13 +97,13 @@
      forControlEvents:UIControlEventTouchUpInside];
     
     btnMonitor = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnMonitor.frame = CGRectMake(SCREEN_WIDTH-150, SCREEN_HEIGHT - 50, 60, 50);
+    btnMonitor.frame = CGRectMake(SCREEN_WIDTH-80, SCREEN_HEIGHT - 50, 60, 50);
     [btnMonitor setImage:[UIImage imageNamed:@"user_state_monitor_n.png"]
              forState:UIControlStateNormal];
     [btnMonitor setImage:[UIImage imageNamed:@"user_state_monitor_s.png"]
              forState:UIControlStateHighlighted];
     [self.view addSubview:btnMonitor];
-    btnMonitor.center = CGPointMake(SCREEN_WIDTH-150, btnMonitor.center.y);
+    btnMonitor.center = CGPointMake(SCREEN_WIDTH-80, btnMonitor.center.y);
     [btnMonitor addTarget:self
                 action:@selector(btnMonitorAction:)
       forControlEvents:UIControlEventTouchUpInside];
