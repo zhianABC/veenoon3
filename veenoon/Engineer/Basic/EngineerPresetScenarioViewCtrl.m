@@ -332,8 +332,6 @@
     NSArray *coms = _scenario._comDevices;
     [self showCells:5000 datas:coms];
     
-    
-    
 }
 
 - (void) layoutChoosedDevices{
