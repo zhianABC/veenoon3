@@ -183,7 +183,7 @@
     
     
     self._curProcessor._proxyObj = vpro;
-    [_curProcessor syncDriverIPProperty];
+    //[_curProcessor syncDriverIPProperty];
     
     _number = [vpro getNumberOfLights];
     [self layoutChannels];

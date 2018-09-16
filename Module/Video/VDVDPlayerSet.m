@@ -52,11 +52,6 @@
 }
 
 
-- (void) syncDriverIPProperty{
-    
-    
-}
-
 - (void) syncDriverComs{
     
     

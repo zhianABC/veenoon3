@@ -237,7 +237,7 @@
     
     
     self._curProcessor._proxyObj = vpro;
-    [_curProcessor syncDriverIPProperty];
+    //[_curProcessor syncDriverIPProperty];
     
     self._number = [vpro getNumberOfLights];
     [self layoutChannels];
@@ -312,7 +312,7 @@
         }
         
         [_rightView saveCurrentSetting];
-        [_curProcessor uploadDriverIPProperty];
+        //[_curProcessor uploadDriverIPProperty];
 
         
         [okBtn setTitle:@"设置" forState:UIControlStateNormal];

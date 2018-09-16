@@ -74,14 +74,6 @@
     
 }
 
-
-
-- (void) syncDriverIPProperty{
-    
-    
-    
-}
-
 - (void) syncDriverComs{
     
     if(_driver
