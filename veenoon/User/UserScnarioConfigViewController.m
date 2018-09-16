@@ -62,7 +62,7 @@
     [self.view addSubview:line2];
     
     _botomView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-132, SCREEN_WIDTH, 134)];
-    _botomView.contentSize =  CGSizeMake(SCREEN_WIDTH*2 + 300, 132);
+    _botomView.contentSize =  CGSizeMake(SCREEN_WIDTH+560, 132);
     _botomView.scrollEnabled=YES;
     _botomView.backgroundColor = USER_GRAY_COLOR;
     [self.view addSubview:_botomView];
