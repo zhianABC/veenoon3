@@ -105,7 +105,7 @@
     {
         [dataDic setObject:@"a_yx_3.png" forKey:@"icon"];
         [dataDic setObject:@"a_yx_3.png" forKey:@"icon_sel"];
-        [dataDic setObject:@"s3_05.png" forKey:@"icon_s"];
+        [dataDic setObject:@"a_processor_ico_mix_small.png" forKey:@"icon_s"];
         [dataDic setObject:@"a_processor_ico_mix.png" forKey:@"icon_drag"];
         [dataDic setObject:@"huiyinhuiyi_player_n.png" forKey:@"user_show_icon"];
         [dataDic setObject:@"huiyinhuiyi_player_s.png" forKey:@"user_show_icon_s"];

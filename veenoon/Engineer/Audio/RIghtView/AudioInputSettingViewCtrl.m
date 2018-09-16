@@ -233,12 +233,14 @@
     yanshiView = [[YanShiQi_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._inAudioProxys];
     [self.view addSubview:yanshiView];
     yanshiView.hidden = YES;
+    yanshiView.ctrl = self;
     yanshiView._proxys = _processor._inAudioProxys;
     [yanshiView layoutChannelBtns:numProxys selectedIndex:0];
     
     lvbo = [[LvBoJunHeng_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._inAudioProxys];
     [self.view addSubview:lvbo];
     lvbo.hidden = YES;
+    lvbo.ctrl = self;
     lvbo._proxys = _processor._inAudioProxys;
     [lvbo layoutChannelBtns:numProxys selectedIndex:0];
     
@@ -250,6 +252,7 @@
     yxq = [[YaXianQi_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._inAudioProxys];
     [self.view addSubview:yxq];
     yxq.hidden = YES;
+    yxq.ctrl = self;
     yxq._proxys = _processor._inAudioProxys;
     [yxq layoutChannelBtns:numProxys selectedIndex:0];
     

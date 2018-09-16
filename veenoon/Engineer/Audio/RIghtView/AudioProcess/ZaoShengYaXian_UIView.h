@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "AudioEMix.h"
+
+
 @interface ZaoShengYaXian_UIView : UIView {
     AudioEMix *_currentObj;
 }
 @property (nonatomic, strong) AudioEMix *_currentObj;
+@property (nonatomic, weak) UIViewController *ctrl;
 
 -(id) initWithFrame:(CGRect)frame withAudiMix:(AudioEMix*) audioMix;
 

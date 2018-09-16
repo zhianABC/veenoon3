@@ -159,6 +159,8 @@
     return self;
 }
 
+#pragma mark --- 高通 ----
+
 - (void) createGaoTong:(UIView*)view {
     
     UILabel *addLabel = [[UILabel alloc] init];
@@ -178,7 +180,8 @@
     
     int btnStartX = 10;
     int btnY = 50;
-    gaotongTypeBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
+    gaotongTypeBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2
+                                      selColor:NEW_ER_BUTTON_BL_COLOR];
     gaotongTypeBtn.frame = CGRectMake(btnStartX+60, btnY-20, 120, 30);
     gaotongTypeBtn.layer.cornerRadius = 5;
     gaotongTypeBtn.layer.borderWidth = 2;
@@ -202,8 +205,9 @@
     addLabel3.text = @"频率 (Hz)";
     addLabel3.font = [UIFont systemFontOfSize: 13];
     addLabel3.textColor = [UIColor whiteColor];
-    addLabel3.frame = CGRectMake(CGRectGetMaxX(gaotongTypeBtn.frame)-35, btnY+20, 75, 25);
+    addLabel3.frame = CGRectMake(100, btnY+20, 120, 25);
     [view addSubview:addLabel3];
+    addLabel3.textAlignment = NSTextAlignmentCenter;
     
     btnY+=35;
     
@@ -215,7 +219,8 @@
     [view addSubview:addLabel22];
     
     btnY+=30;
-    gaotongXielvBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
+    gaotongXielvBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2
+                                       selColor:NEW_ER_BUTTON_BL_COLOR];
     gaotongXielvBtn.frame = CGRectMake(btnStartX, btnY, 100, 30);
     gaotongXielvBtn.layer.cornerRadius = 5;
     gaotongXielvBtn.layer.borderWidth = 2;
@@ -247,12 +252,22 @@
     [view addSubview:gaotongFeqL];
     gaotongFeqL.font = [UIFont systemFontOfSize:13];
     gaotongFeqL.textColor = NEW_ER_BUTTON_SD_COLOR;
-    gaotongFeqL.backgroundColor=NEW_ER_BUTTON_GRAY_COLOR2;
-    gaotongFeqL.layer.cornerRadius=5;
-    gaotongFeqL.clipsToBounds=YES;
+    gaotongFeqL.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR2;
+    gaotongFeqL.layer.cornerRadius = 5;
+    gaotongFeqL.clipsToBounds = YES;
     
+    UIButton* btnEdit = [UIButton buttonWithType:UIButtonTypeCustom];
+    [view addSubview:btnEdit];
+    btnEdit.frame = CGRectMake(CGRectGetMinX(gaotongFeqL.frame),
+                               CGRectGetMinY(gaotongFeqL.frame)-15,
+                               70,
+                               50);
+    [btnEdit addTarget:self
+                action:@selector(editHighFilterFreqAction:)
+      forControlEvents:UIControlEventTouchUpInside];
     
-    gaotongStartBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
+    gaotongStartBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2
+                                       selColor:NEW_ER_BUTTON_BL_COLOR];
     gaotongStartBtn.frame = CGRectMake(10, view.frame.size.height - 30, 50, 25);
     gaotongStartBtn.layer.cornerRadius = 5;
     gaotongStartBtn.layer.borderWidth = 2;
@@ -267,6 +282,56 @@
     
    
 }
+
+- (void) editHighFilterFreqAction:(id)sender{
+    
+    NSString *alert = @"高通频率，范围[10Hz ~ 10KHz]";
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                             message:alert preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"高通频率";
+        textField.text = gaotongFeqL.text;
+        textField.keyboardType = UIKeyboardTypeDecimalPad;
+    }];
+    
+    IMP_BLOCK_SELF(LvBoJunHeng_UIView);
+    
+
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        UITextField *alValTxt = alertController.textFields.firstObject;
+        NSString *val = alValTxt.text;
+        if (val && [val length] > 0) {
+            
+            [block_self doSetHFilterValue:[val intValue]];
+        }
+    }]];
+    
+    [self.ctrl presentViewController:alertController animated:true completion:nil];
+}
+
+- (void) doSetHFilterValue:(int)val{
+    
+    int freq = val;
+    
+    NSDictionary *range = [_curProxy getHighRateRange];
+    int max = [[range objectForKey:@"RATE_max"] intValue];
+    int min = [[range objectForKey:@"RATE_min"] intValue];
+    if(max - min)
+    {
+        float gtVal = (float)(freq - min)/(max - min);
+        [gaotongFeqSlider setCircleValue:gtVal];
+    }
+    
+    gaotongFeqL.text = [NSString stringWithFormat:@"%d", freq];
+    [_curProxy controlHighFilterFreq:[NSString stringWithFormat:@"%d", freq]];
+    [fglm setHPFilterWithFreq:freq];
+}
+
+
 - (void) gaotongStartBtnAction:(id) sender {
     if(_curProxy == nil)
         return;
@@ -391,6 +456,9 @@
     
 }
 
+
+#pragma mark --- 点击弹出编辑 -----
+
 - (void) createBoDuan:(UIView*)view {
     
     int num = 16;
@@ -502,10 +570,20 @@
     boduanPinlvL.textAlignment = NSTextAlignmentCenter;
     [view addSubview:boduanPinlvL];
     boduanPinlvL.font = [UIFont systemFontOfSize:13];
-    boduanPinlvL.backgroundColor=NEW_ER_BUTTON_GRAY_COLOR2;
+    boduanPinlvL.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR2;
     boduanPinlvL.textColor = NEW_ER_BUTTON_SD_COLOR;
-    boduanPinlvL.layer.cornerRadius=5;
-    boduanPinlvL.clipsToBounds=YES;
+    boduanPinlvL.layer.cornerRadius = 5;
+    boduanPinlvL.clipsToBounds = YES;
+    
+    UIButton* btnEdit = [UIButton buttonWithType:UIButtonTypeCustom];
+    [view addSubview:btnEdit];
+    btnEdit.frame = CGRectMake(CGRectGetMinX(boduanPinlvL.frame),
+                               CGRectGetMinY(boduanPinlvL.frame)-15,
+                               60,
+                               50);
+    [btnEdit addTarget:self
+                action:@selector(editBandFreqAction:)
+      forControlEvents:UIControlEventTouchUpInside];
     
     UILabel *addLabel23 = [[UILabel alloc] init];
     addLabel23.text = @"增益 (dB)";
@@ -534,6 +612,16 @@
     boduanZengyiL.layer.cornerRadius=5;
     boduanZengyiL.clipsToBounds=YES;
     
+    btnEdit = [UIButton buttonWithType:UIButtonTypeCustom];
+    [view addSubview:btnEdit];
+    btnEdit.frame = CGRectMake(CGRectGetMinX(boduanZengyiL.frame),
+                               CGRectGetMinY(boduanZengyiL.frame)-15,
+                               60,
+                               50);
+    [btnEdit addTarget:self
+                action:@selector(editBandGainAction:)
+      forControlEvents:UIControlEventTouchUpInside];
+    
     UILabel *addLabel224= [[UILabel alloc] init];
     addLabel224.text = @"Q";
     addLabel224.font = [UIFont systemFontOfSize: 13];
@@ -557,6 +645,7 @@
     boduanQL.textColor = NEW_ER_BUTTON_SD_COLOR;
     boduanQL.layer.cornerRadius=5;
     boduanQL.clipsToBounds=YES;
+
     
     buduanStartBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     buduanStartBtn.frame = CGRectMake(10, view.frame.size.height - 30, 50, 25);
@@ -573,6 +662,124 @@
     
 
 }
+
+
+- (void) editBandFreqAction:(UIButton*)sender{
+    
+    NSString *alert = @"波段频率";
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                             message:alert preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"频率";
+        textField.text = boduanPinlvL.text;
+        textField.keyboardType = UIKeyboardTypeDecimalPad;
+    }];
+    
+    IMP_BLOCK_SELF(LvBoJunHeng_UIView);
+    
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        UITextField *alValTxt = alertController.textFields.firstObject;
+        NSString *val = alValTxt.text;
+        if (val && [val length] > 0) {
+            
+            [block_self doSetBrandFreqValue:[val intValue]];
+        }
+    }]];
+    
+    [self.ctrl presentViewController:alertController
+                            animated:YES
+                          completion:nil];
+}
+
+- (void) doSetBrandFreqValue:(int)val{
+    
+    int feq = val;
+    
+    if(feq < minRate)
+        feq = minRate;
+    if(feq > maxRate)
+        feq = maxRate;
+    
+    if(maxRate - minRate)
+    {
+        float boduanPinlvvaluef = (float)(feq - minRate)/(maxRate - minRate);
+        [bandFreqSlider setCircleValue:boduanPinlvvaluef];
+    }
+    
+    [fglm setPEQWithBand:_channelSelIndex
+                    freq:feq];
+    
+    boduanPinlvL.text = [NSString stringWithFormat:@"%d", feq];
+    
+    [_curProxy controlBrandFreq:[NSString stringWithFormat:@"%d", feq]
+                          brand:_channelSelIndex];
+    
+}
+
+- (void) editBandGainAction:(UIButton*)sender{
+    
+    NSString *alert = [NSString stringWithFormat:@"设置增益, 范围%d ~ %d(dB)",
+                       minGain,
+                       maxGain];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                             message:alert preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"增益";
+        textField.text = boduanZengyiL.text;
+        textField.keyboardType = UIKeyboardTypeDecimalPad;
+    }];
+    
+    IMP_BLOCK_SELF(LvBoJunHeng_UIView);
+    
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        UITextField *alValTxt = alertController.textFields.firstObject;
+        NSString *val = alValTxt.text;
+        if (val && [val length] > 0) {
+            
+            [block_self doSetBrandGainValue:[val intValue]];
+        }
+    }]];
+    
+    [self.ctrl presentViewController:alertController
+                            animated:YES
+                          completion:nil];
+}
+
+- (void) doSetBrandGainValue:(float)val{
+    
+    float gain = val;
+    if(gain < minGain)
+        gain = minGain;
+    if(gain > maxGain)
+        gain = maxGain;
+    
+    NSString *valueStr = [NSString stringWithFormat:@"%0.1f", gain];
+    
+    boduanZengyiL.text = valueStr;
+    
+    if(maxGain - minGain)
+    {
+        float boduanZengYivaluef = (gain - minGain)/(maxGain - minGain);
+        [bandGainSlider setCircleValue:boduanZengYivaluef];
+    }
+    
+    [fglm setPEQWithBand:_channelSelIndex gain:val];
+    [_curProxy controlBrandGain:[NSString stringWithFormat:@"%0.1f", gain]
+                          brand:_channelSelIndex];
+}
+
+
+#pragma mark --- 波段设置 -----
 - (void) boduanStartBtnAction:(id)sender {
     
     if(_curProxy == nil)
@@ -621,7 +828,8 @@
         int min = [[range objectForKey:@"RATE_min"] intValue];
         
         int feq = value * (max - min) + min;
-        gaotongFeqL.text = [NSString stringWithFormat:@"%d Hz", feq];
+        
+        gaotongFeqL.text = [NSString stringWithFormat:@"%d", feq];
         
         [_curProxy controlHighFilterFreq:[NSString stringWithFormat:@"%d", feq]];
         
@@ -634,7 +842,7 @@
         int min = [[range objectForKey:@"RATE_min"] intValue];
         
         int feq = value * (max - min) + min;
-        ditongFreqL.text = [NSString stringWithFormat:@"%d Hz", feq];
+        ditongFreqL.text = [NSString stringWithFormat:@"%d", feq];
         
         [fglm setLPFilterWithFreq:feq];
         
@@ -644,7 +852,7 @@
         
         int k = (value * (maxRate - minRate)) + minRate;
         
-        NSString *valueStr = [NSString stringWithFormat:@"%d Hz", k];
+        NSString *valueStr = [NSString stringWithFormat:@"%d", k];
         
         [fglm setPEQWithBand:_channelSelIndex freq:k];
         
@@ -656,7 +864,7 @@
     } else if (tag == 4) {
         
         float k = (value *(maxGain - minGain)) + minGain;
-        NSString *valueStr= [NSString stringWithFormat:@"%0.1f dB", k];
+        NSString *valueStr= [NSString stringWithFormat:@"%0.1f", k];
         
         boduanZengyiL.text = valueStr;
         
@@ -757,9 +965,7 @@
     
 }
 
-- (void) zhitongBtn2Action:(id)sender {
-    
-}
+#pragma mark --- 低通 -----
 
 - (void) createDiTong:(UIView*)view {
     
@@ -805,8 +1011,9 @@
     addLabel3.text = @"频率 (Hz)";
     addLabel3.font = [UIFont systemFontOfSize: 13];
     addLabel3.textColor = [UIColor whiteColor];
-    addLabel3.frame = CGRectMake(CGRectGetMaxX(ditongTypeBtn.frame)-35, btnY+20, 75, 25);
+    addLabel3.frame = CGRectMake(100, btnY+20, 75, 25);
     [view addSubview:addLabel3];
+    addLabel3.textAlignment = NSTextAlignmentCenter;
     
     btnY+=35;
     
@@ -854,6 +1061,16 @@
     ditongFreqL.layer.cornerRadius=5;
     ditongFreqL.clipsToBounds=YES;
     
+    UIButton* btnEdit = [UIButton buttonWithType:UIButtonTypeCustom];
+    [view addSubview:btnEdit];
+    btnEdit.frame = CGRectMake(CGRectGetMinX(ditongFreqL.frame),
+                               CGRectGetMinY(ditongFreqL.frame)-15,
+                               70,
+                               50);
+    [btnEdit addTarget:self
+                action:@selector(editLowFilterAction:)
+      forControlEvents:UIControlEventTouchUpInside];
+    
     ditongStartBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     ditongStartBtn.frame = CGRectMake(10, view.frame.size.height - 30, 50, 25);
     ditongStartBtn.layer.cornerRadius = 5;
@@ -869,6 +1086,66 @@
     
     
 }
+
+- (void) editLowFilterAction:(id)sender{
+    
+    NSString *alert = @"设置低通频率, 范围10Hz ~ 10KHz";
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                             message:alert preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"低通频率";
+        textField.text = ditongFreqL.text;
+        textField.keyboardType = UIKeyboardTypeDecimalPad;
+    }];
+    
+    IMP_BLOCK_SELF(LvBoJunHeng_UIView);
+    
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        UITextField *alValTxt = alertController.textFields.firstObject;
+        NSString *val = alValTxt.text;
+        if (val && [val length] > 0) {
+            
+            [block_self doSetLowFreqValue:[val intValue]];
+        }
+    }]];
+    
+    [self.ctrl presentViewController:alertController
+                            animated:YES
+                          completion:nil];
+}
+
+- (void) doSetLowFreqValue:(int) val{
+    
+    int freq = val;
+    
+    NSDictionary *range = [_curProxy getLowRateRange];
+    int max = [[range objectForKey:@"RATE_max"] intValue];
+    int min = [[range objectForKey:@"RATE_min"] intValue];
+  
+    if(freq < min)
+        freq = min;
+    if(freq > max)
+        freq = max;
+    
+    if(max-min)
+    {
+        float gtVal = (float)(freq - min)/(max - min);
+        [ditongFreqSlider setCircleValue:gtVal];
+    }
+    
+    ditongFreqL.text = [NSString stringWithFormat:@"%d", freq];
+    
+    [fglm setLPFilterWithFreq:freq];
+    
+    [_curProxy controlLowFilterFreq:[NSString stringWithFormat:@"%d", freq]];
+
+}
+
 - (void) ditongStartBtnAction:(id) sender {
     
     if(_curProxy == nil)
@@ -993,9 +1270,8 @@
     
 }
 
-- (void) zhitongBtn3Action:(id) sender {
-    
-}
+
+#pragma mark --- others ---
 
 - (void) boduanChannelBtnAction:(UIButton*)sender{
     
@@ -1084,7 +1360,7 @@
     }
     
     if (gaotongPinLv) {
-        gaotongFeqL.text = [NSString stringWithFormat:@"%@ Hz", gaotongPinLv];
+        gaotongFeqL.text = [NSString stringWithFormat:@"%@", gaotongPinLv];
     }
     
     BOOL isGaoTongStarted = [_curProxy isLvboGaotongStart];
@@ -1118,10 +1394,10 @@
     min = [[range objectForKey:@"RATE_min"] intValue];
     if(max)
     {
-        float gtVal = (value - min)/(max - min);
+        float gtVal = (low_value - min)/(max - min);
         [ditongFreqSlider setCircleValue:gtVal];
     }
-    ditongFreqL.text = [NSString stringWithFormat:@"%0.0f Hz", low_value];
+    ditongFreqL.text = [NSString stringWithFormat:@"%0.0f", low_value];
     ////
     
     
@@ -1179,7 +1455,7 @@
         int typeIdx = 0;
         if(typearrs && [typearrs count])
         {
-            typeIdx = [typearrs indexOfObject:type];
+            typeIdx = (int)[typearrs indexOfObject:type];
         }
         
 //        [fglm setPEQWithBand:band-1 gain:gain];
@@ -1199,7 +1475,7 @@
         {
             float boduanPinlvvaluef = (freq - minRate)/(maxRate - minRate);
             [bandFreqSlider setCircleValue:boduanPinlvvaluef];
-            boduanPinlvL.text = [NSString stringWithFormat:@"%d Hz", freq];
+            boduanPinlvL.text = [NSString stringWithFormat:@"%d", freq];
             
         }
         
@@ -1207,7 +1483,7 @@
         {
             float boduanZengYivaluef = (gain - minGain)/(maxGain - minGain);
             [bandGainSlider setCircleValue:boduanZengYivaluef];
-            boduanZengyiL.text = [NSString stringWithFormat:@"%0.1f dB", gain];
+            boduanZengyiL.text = [NSString stringWithFormat:@"%0.1f", gain];
         }
         
         if(maxQ - minQ)
@@ -1262,7 +1538,7 @@
         int typeIdx = 0;
         if(typearrs && [typearrs count])
         {
-            typeIdx = [typearrs indexOfObject:type];
+            typeIdx = (int)[typearrs indexOfObject:type];
         }
         
         [fglm setPEQWithBand:_channelSelIndex
@@ -1275,9 +1551,9 @@
         
         if(maxRate - minRate)
         {
-            float boduanPinlvvaluef = (freq - minRate)/(maxRate - minRate);
+            float boduanPinlvvaluef = (float)(freq - minRate)/(maxRate - minRate);
             [bandFreqSlider setCircleValue:boduanPinlvvaluef];
-            boduanPinlvL.text = [NSString stringWithFormat:@"%d Hz", freq];
+            boduanPinlvL.text = [NSString stringWithFormat:@"%d", freq];
             
         }
         
@@ -1285,7 +1561,7 @@
         {
             float boduanZengYivaluef = (gain - minGain)/(maxGain - minGain);
             [bandGainSlider setCircleValue:boduanZengYivaluef];
-            boduanZengyiL.text = [NSString stringWithFormat:@"%0.1f dB", gain];
+            boduanZengyiL.text = [NSString stringWithFormat:@"%0.1f", gain];
         }
         
         if(maxQ - minQ)
@@ -1336,7 +1612,7 @@
             {
                 float boduanPinlvvaluef = (freq - minRate)/(maxRate - minRate);
                 [bandFreqSlider setCircleValue:boduanPinlvvaluef];
-                boduanPinlvL.text = [NSString stringWithFormat:@"%0.0f Hz", freq];
+                boduanPinlvL.text = [NSString stringWithFormat:@"%0.0f", freq];
                 
             }
             
@@ -1344,7 +1620,7 @@
             {
                 float boduanZengYivaluef = (gain - minGain)/(maxGain - minGain);
                 [bandGainSlider setCircleValue:boduanZengYivaluef];
-                boduanZengyiL.text = [NSString stringWithFormat:@"%0.1f dB", gain];
+                boduanZengyiL.text = [NSString stringWithFormat:@"%0.1f", gain];
             }
         }
     }
@@ -1375,7 +1651,7 @@
 
 - (void)filterGraphViewHPFilterChangedWithFreq:(float)freq{
     
-    gaotongFeqL.text = [NSString stringWithFormat:@"%0.0f Hz", freq];
+    gaotongFeqL.text = [NSString stringWithFormat:@"%0.0f", freq];
     [_curProxy controlHighFilterFreq:[NSString stringWithFormat:@"%0.0f", freq]];
     
     NSDictionary *range = [_curProxy getHighRateRange];
@@ -1389,7 +1665,7 @@
 }
 - (void)filterGraphViewLPFilterChangedWithFreq:(float)freq{
     
-    ditongFreqL.text = [NSString stringWithFormat:@"%0.0f Hz", freq];
+    ditongFreqL.text = [NSString stringWithFormat:@"%0.0f", freq];
     [_curProxy controlLowFilterFreq:[NSString stringWithFormat:@"%0.0f", freq]];
     
     NSDictionary *range = [_curProxy getLowRateRange];

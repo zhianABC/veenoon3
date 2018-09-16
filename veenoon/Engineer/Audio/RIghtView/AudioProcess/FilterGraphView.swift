@@ -132,8 +132,8 @@ class FilterGraphView: UIView {
     private let movePointHighlightedStrokeColor = UIColor(red: 43.0/255.0, green: 225.0/255.0, blue: 249.0/255.0, alpha: 1.0)
     
     // 可拖拽的增益范围
-    private let m_validMaxdB = 15
-    private let m_validMindB = -15
+    private let m_validMaxdB = 20
+    private let m_validMindB = -20
     
     // 可视的增益范围
     private var m_maxdB = 20

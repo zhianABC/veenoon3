@@ -39,6 +39,7 @@
 @implementation ZaoShengYaXian_UIView
 @synthesize _channelBtns;
 @synthesize _currentObj;
+@synthesize ctrl;
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.
@@ -132,7 +133,7 @@
         [_limiter setThresHoldWithR:pressValue];
     }
     
-    yaxianL = [[UILabel alloc] initWithFrame:CGRectMake(x+35, y+155, 50, 20)];
+    yaxianL = [[UILabel alloc] initWithFrame:CGRectMake(x+30, y+155, 60, 20)];
     yaxianL.text = [pressStr stringByAppendingString:@" dB"];
     yaxianL.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:yaxianL];
@@ -141,6 +142,17 @@
     yaxianL.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR2;
     yaxianL.layer.cornerRadius = 5;
     yaxianL.clipsToBounds = YES;
+    
+    
+    UIButton* btnEdit = [UIButton buttonWithType:UIButtonTypeCustom];
+    [contentView addSubview:btnEdit];
+    btnEdit.frame = CGRectMake(CGRectGetMinX(yaxianL.frame),
+                               CGRectGetMinY(yaxianL.frame)-15,
+                               60,
+                               50);
+    [btnEdit addTarget:self
+                action:@selector(editGainAction:)
+      forControlEvents:UIControlEventTouchUpInside];
     
     x+=200;
     x+=10;
@@ -175,7 +187,7 @@
         [btnJH2 setCircleValue:f];
     }
     
-    zaoshengL = [[UILabel alloc] initWithFrame:CGRectMake(x+35, y+155, 50, 20)];
+    zaoshengL = [[UILabel alloc] initWithFrame:CGRectMake(x+30, y+155, 60, 20)];
     zaoshengL.text = [noiseStr stringByAppendingString:@" dB"];
     zaoshengL.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:zaoshengL];
@@ -185,27 +197,163 @@
     zaoshengL.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR2;
     zaoshengL.layer.cornerRadius = 5;
     zaoshengL.clipsToBounds = YES;
+    
+    btnEdit = [UIButton buttonWithType:UIButtonTypeCustom];
+    [contentView addSubview:btnEdit];
+    btnEdit.frame = CGRectMake(CGRectGetMinX(zaoshengL.frame),
+                               CGRectGetMinY(zaoshengL.frame)-15,
+                               60,
+                               50);
+    [btnEdit addTarget:self
+                action:@selector(editNSAction:)
+      forControlEvents:UIControlEventTouchUpInside];
 }
+
+#pragma mark -- Edit Alert ---
+
+- (void) editGainAction:(id)sender{
+    
+    NSString *alert = [NSString stringWithFormat:@"压限器PS，范围(%d ~ %d)",
+                       _pressMin,
+                       _pressMax];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                             message:alert preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"dB";
+        textField.text = @"";//[yaxianL.text stringByReplacingOccurrencesOfString:@" dB" withString:@""];
+        textField.keyboardType = UIKeyboardTypeDecimalPad;
+    }];
+    
+    IMP_BLOCK_SELF(ZaoShengYaXian_UIView);
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        UITextField *alValTxt = alertController.textFields.firstObject;
+        NSString *val = alValTxt.text;
+        if (val && [val length] > 0) {
+            
+            [block_self doSetGainValue:[val floatValue]];
+        }
+    }]];
+    
+    [self.ctrl presentViewController:alertController
+                            animated:YES
+                          completion:nil];
+}
+
+- (void) doSetGainValue:(float)val{
+    
+    if(val < _pressMin)
+        val = _pressMin;
+    if(val > _pressMax)
+        val = _pressMax;
+    
+    float max = _pressMax - _pressMin;
+    if(max)
+    {
+        float gtVal = (val - _pressMin)/max;
+        [btnJH1 setCircleValue:gtVal];
+    }
+    
+    yaxianL.text = [NSString stringWithFormat:@"%0.1f dB", val];
+    
+    [_currentObj._proxyObj controlMixPress:[NSString stringWithFormat:@"%0.1f", val]];
+    [_limiter setThresHoldWithR:val];
+}
+
+
+- (void) editNSAction:(id)sender{
+    
+    NSString *alert = [NSString stringWithFormat:@"噪声门，范围(%d ~ %d)",
+                       _noiseMin,
+                       _noiseMax];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                             message:alert preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"dB";
+        textField.text = @"";//zaoshengL.text;
+        textField.keyboardType = UIKeyboardTypeDecimalPad;
+    }];
+    
+    IMP_BLOCK_SELF(ZaoShengYaXian_UIView);
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        UITextField *alValTxt = alertController.textFields.firstObject;
+        NSString *val = alValTxt.text;
+        if (val && [val length] > 0) {
+            
+            [block_self doSetNSValue:[val floatValue]];
+        }
+    }]];
+    
+    [self.ctrl presentViewController:alertController
+                            animated:YES
+                          completion:nil];
+}
+
+- (void) doSetNSValue:(float)val{
+    
+    if(val < _noiseMin)
+        val = _noiseMin;
+    if(val > _noiseMax)
+        val = _noiseMax;
+    
+    float max = _noiseMax - _noiseMin;
+    if(max)
+    {
+        float gtVal = (val - _noiseMin)/max;
+        [btnJH2 setCircleValue:gtVal];
+    }
+    
+    zaoshengL.text = [NSString stringWithFormat:@"%0.1f dB", val];
+    [_currentObj._proxyObj controlMixNoise:[NSString stringWithFormat:@"%0.1f", val]];
+}
+
+#pragma mark --- SlideButton Delegate ---
 
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
     int tag = (int) slbtn.tag;
-    if (tag == 1) {
-        int k = (value *(_pressMax-_pressMin)) + _pressMin;
-        NSString *valueStr= [NSString stringWithFormat:@"%d dB", k];
+    if (tag == 1)
+    {
+        float k = (value *(_pressMax-_pressMin)) + _pressMin;
+        NSString *valueStr= [NSString stringWithFormat:@"%0.1f dB", k];
         yaxianL.text = valueStr;
         
-        [_currentObj._proxyObj controlMixPress:[NSString stringWithFormat:@"%d", k]];
+        [_currentObj._proxyObj controlMixPress:[NSString stringWithFormat:@"%0.1f", k]];
         
         [_limiter setThresHoldWithR:k];
         
-    } else {
-        int k = (value *(_noiseMax-_noiseMin)) + _noiseMin;
-        NSString *valueStr= [NSString stringWithFormat:@"%d dB", k];
+    }
+    else
+    {
+        
+        float k = (value *(_noiseMax-_noiseMin)) + _noiseMin;
+        NSString *valueStr= [NSString stringWithFormat:@"%0.1f dB", k];
         zaoshengL.text = valueStr;
         
-        [_currentObj._proxyObj controlMixNoise:[NSString stringWithFormat:@"%d", k]];
+        [_currentObj._proxyObj controlMixNoise:[NSString stringWithFormat:@"%0.1f", k]];
     }
 }
+
+- (void) didEndSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
+    
+    IMP_BLOCK_SELF(ZaoShengYaXian_UIView);
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+                                 (int64_t)(200.0 * NSEC_PER_MSEC)),
+                   dispatch_get_main_queue(), ^{
+                       
+                       [block_self didSlideButtonValueChanged:value slbtn:slbtn];
+                   });
+}
+
 
 @end

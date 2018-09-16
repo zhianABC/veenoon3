@@ -11,9 +11,9 @@
 #import "SlideButton.h"
 
 @interface JunHengQi_UIView ()<SlideButtonDelegate, MixFilterGraphViewDelegate> {
-    UILabel *gaotongL;
-    UILabel *gaotongL2;
-    
+   
+    UILabel *jhGainLabel;
+   
     SlideButton *btnJH;
     
     NSMutableArray *_peqRateArray;
@@ -28,6 +28,7 @@
 
 @implementation JunHengQi_UIView
 @synthesize _currentObj;
+@synthesize ctrl;
 
 -(id) initWithFrame:(CGRect)frame withAudiMix:(AudioEMix*) audioMix
 {
@@ -52,20 +53,6 @@
         int startH = CGRectGetMaxY(fglm.frame);
         int startX = 420;
         
-//        UILabel *addLabel = [[UILabel alloc] init];
-//        addLabel.text = @"-12dB";
-//        addLabel.font = [UIFont systemFontOfSize: 13];
-//        addLabel.textColor = [UIColor whiteColor];
-//        addLabel.frame = CGRectMake(startX-60, startH+115, 120, 20);
-//        [self addSubview:addLabel];
-//
-//        addLabel = [[UILabel alloc] init];
-//        addLabel.text = @"12dB";
-//        addLabel.font = [UIFont systemFontOfSize: 13];
-//        addLabel.textColor = [UIColor whiteColor];
-//        addLabel.frame = CGRectMake(startX+80, startH+115, 120, 20);
-//        [self addSubview:addLabel];
-        
         btnJH = [[SlideButton alloc] initWithFrame:CGRectMake(startX-33,
                                                                  startH+30,
                                                                  120, 120)];
@@ -83,6 +70,8 @@
         _peqMax = [[peqDic objectForKey:@"max"] intValue];
         _peqMin = [[peqDic objectForKey:@"min"] intValue];
         
+        [fglm setValidGainRangeWithMax:_peqMax min:_peqMin];
+        
         NSString *peqStr = _currentObj._proxyObj._mixPEQ;
         float highValue = [peqStr floatValue];
         float highMax = (_peqMax - _peqMin);
@@ -93,18 +82,27 @@
             [btnJH setCircleValue:f];
         }
         
-        gaotongL = [[UILabel alloc] init];
-        gaotongL.text = [peqStr stringByAppendingString:@" dB"];
-        gaotongL.font = [UIFont systemFontOfSize: 13];
-        gaotongL.textColor = [UIColor whiteColor];
-        gaotongL.frame = CGRectMake(0, CGRectGetMaxY(btnJH.frame), 60, 20);
-        [self addSubview:gaotongL];
-        gaotongL.textAlignment = NSTextAlignmentCenter;
-        gaotongL.layer.cornerRadius = 5;
-        gaotongL.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR;
-        gaotongL.center = CGPointMake(btnJH.center.x, gaotongL.center.y);
-        gaotongL.clipsToBounds = YES;
+        jhGainLabel = [[UILabel alloc] init];
+        jhGainLabel.text = [NSString stringWithFormat:@"%0.1f dB", [peqStr floatValue]];
+        jhGainLabel.font = [UIFont systemFontOfSize: 13];
+        jhGainLabel.textColor = [UIColor whiteColor];
+        jhGainLabel.frame = CGRectMake(0, CGRectGetMaxY(btnJH.frame), 60, 20);
+        [self addSubview:jhGainLabel];
+        jhGainLabel.textAlignment = NSTextAlignmentCenter;
+        jhGainLabel.layer.cornerRadius = 5;
+        jhGainLabel.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR;
+        jhGainLabel.center = CGPointMake(btnJH.center.x, jhGainLabel.center.y);
+        jhGainLabel.clipsToBounds = YES;
      
+        UIButton* btnEdit = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self addSubview:btnEdit];
+        btnEdit.frame = CGRectMake(CGRectGetMinX(jhGainLabel.frame),
+                                   CGRectGetMinY(jhGainLabel.frame)-15,
+                                   60,
+                                   50);
+        [btnEdit addTarget:self
+                    action:@selector(editGainAction:)
+          forControlEvents:UIControlEventTouchUpInside];
         
         [self drawGraphic];
     }
@@ -112,22 +110,68 @@
     return self;
 }
 
-/*
- 
- _peqRateArray = {"70":0x0b,
- "180":0x0c,
- "320":0x0d,
- "600":0x0e,
- "1K":0x0f,
- "3K":0x10,
- "6K":0x11,
- '12K':0x12,
- '14K':0x13,
- '16K':0x14,}
- 
+- (void) editGainAction:(id)sender{
+    
+    NSString *alert = [NSString stringWithFormat:@"增益，范围(%d ~ %d)",
+                       _peqMin,
+                       _peqMax];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                             message:alert preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"增益";
+        textField.text = @"";//jhGainLabel.text;
+        textField.keyboardType = UIKeyboardTypeDecimalPad;
+    }];
+    
+    IMP_BLOCK_SELF(JunHengQi_UIView);
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        UITextField *alValTxt = alertController.textFields.firstObject;
+        NSString *val = alValTxt.text;
+        if (val && [val length] > 0) {
+            
+            [block_self doSetJHGainValue:[val floatValue]];
+        }
+    }]];
+    
+    [self.ctrl presentViewController:alertController
+                            animated:YES
+                          completion:nil];
+}
+
+- (void) doSetJHGainValue:(float)val{
+    
+    if(val < _peqMin)
+        val = _peqMin;
+    if(val > _peqMax)
+        val = _peqMax;
+    
+    float max = _peqMax - _peqMin;
+    if(max)
+    {
+        float gtVal = (val - _peqMin)/max;
+        [btnJH setCircleValue:gtVal];
+    }
+    
+    jhGainLabel.text = [NSString stringWithFormat:@"%0.1f dB", val];
+    
+    if(_curIndex < [_peqRateArray count])
+    {
+        id rateKey = [_peqRateArray objectAtIndex:_curIndex];
+        [_currentObj._proxyObj controlMixPEQ:[NSString stringWithFormat:@"%0.1f", val]
+                                    withRate:rateKey];
+    }
+    
+    [fglm setPEQWithBand:_curIndex
+                    gain:val];
+    
+}
 
 
- */
 
 - (void) drawGraphic{
     
@@ -148,15 +192,17 @@
    // [fglm refreshUI];
 }
 
+#pragma mark -- SlideButton delegate ---
+
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
     float k = (value *(_peqMax-_peqMin)) + _peqMin;
-    gaotongL.text = [NSString stringWithFormat:@"%0.0f dB", k];
+    jhGainLabel.text = [NSString stringWithFormat:@"%0.1f dB", k];
     
     if(_curIndex < [_peqRateArray count])
     {
         id rateKey = [_peqRateArray objectAtIndex:_curIndex];
-        [_currentObj._proxyObj controlMixPEQ:[NSString stringWithFormat:@"%0.0f", k]
+        [_currentObj._proxyObj controlMixPEQ:[NSString stringWithFormat:@"%0.1f", k]
                                     withRate:rateKey];
     }
     
@@ -164,6 +210,20 @@
                     gain:k];
 }
 
+- (void) didEndSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
+    
+    IMP_BLOCK_SELF(JunHengQi_UIView);
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+                                 (int64_t)(200.0 * NSEC_PER_MSEC)),
+                   dispatch_get_main_queue(), ^{
+                       
+                       [block_self didSlideButtonValueChanged:value slbtn:slbtn];
+                   });
+}
+
+
+#pragma mark --- filterGraphView --
 - (void)filterGraphViewPEQFilterBandChoosedWithBand:(NSInteger)band{
     
     _curIndex = (int)band;
@@ -180,7 +240,7 @@
             f = fabsf(f);
             [btnJH setCircleValue:f];
             
-            gaotongL.text = [NSString stringWithFormat:@"%0.0f dB", gain];
+            jhGainLabel.text = [NSString stringWithFormat:@"%0.1f dB", gain];
         }
     }
     
@@ -194,7 +254,7 @@
     {
         id rateKey = [_peqRateArray objectAtIndex:_curIndex];
 
-        [_currentObj._proxyObj controlMixPEQ:[NSString stringWithFormat:@"%0.0f", gain]
+        [_currentObj._proxyObj controlMixPEQ:[NSString stringWithFormat:@"%0.1f", gain]
                                     withRate:rateKey];
         
         float highMax = (_peqMax - _peqMin);
@@ -204,7 +264,7 @@
             f = fabsf(f);
             [btnJH setCircleValue:f];
             
-            gaotongL.text = [NSString stringWithFormat:@"%0.0f dB", gain];
+            jhGainLabel.text = [NSString stringWithFormat:@"%0.1f dB", gain];
         }
     }
 }

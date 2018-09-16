@@ -326,6 +326,8 @@
 }
 
 
+#pragma mark -- SlideButton Delegate
+
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
     float k = (value *(maxTh-minTh)) + minTh;
@@ -333,6 +335,19 @@
     [self setGainShowTextValue:k];
     [self sendGainValue:k];
 }
+
+- (void) didEndSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
+    
+    float k = (value *(maxTh-minTh)) + minTh;
+    
+    [self setGainShowTextValue:k];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(200.0 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
+        
+        [self sendGainValue:k];
+    });
+}
+
 
 - (void) setGainShowTextValue:(float)gain{
     
