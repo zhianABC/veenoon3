@@ -13,6 +13,7 @@
 #import "RegulusSDK.h"
 #import "DataCenter.h"
 #import "DataSync.h"
+#import "UserSensorObj.h"
 
 @interface UserDeviceStateViewController () {
     UIButton *btnDevice;
@@ -117,19 +118,19 @@
 
 - (void) createViews {
     CGRect vrc = CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-64-50);
-    if (deviceLoad) {
+    if (deviceLoad && _deviceStateView == nil) {
         _deviceStateView = [[UserDeviceStateView alloc] initWithFrame:vrc withData:_deviceDataArray];
         [self.view addSubview:_deviceStateView];
         _deviceStateView.hidden = NO;
     }
     
-    if (envLoad) {
+    if (_envStateView == nil && [_envDataArray count]) {
         _envStateView = [[UserEnvStateView alloc] initWithFrame:vrc withData:_envDataArray];
         [self.view addSubview:_envStateView];
         _envStateView.hidden = YES;
     }
     
-    if (monitorLoad) {
+    if (monitorLoad && _monitorStateView == nil) {
         _monitorStateView = [[UserMonitorStateView alloc] initWithFrame:vrc withData:_monitorDataArray];
         [self.view addSubview:_monitorStateView];
         _monitorStateView.hidden = YES;
@@ -155,11 +156,41 @@
     } else {
         _envDataArray = [NSMutableArray array];
     }
-    [_envDataArray addObject:[NSMutableArray array]];
-    envLoad = YES;
     
-    [self createViews];
+    RgsAreaObj *areaObj = [DataSync sharedDataSync]._currentArea;
+    NSInteger area_id = areaObj.m_id;
+    
+    NSMutableArray *sensorArray = [NSMutableArray array];
+    
+    
+    [[RegulusSDK sharedRegulusSDK] GetDrivers:area_id
+                                   completion:^(BOOL result,NSArray * drivers,NSError * error) {
+                                       if (result) {
+                                           for (RgsDriverObj *driverObj in drivers) {
+                                               if ([@"Sensor" isEqualToString:driverObj.info.system]) {
+                                                   [sensorArray addObject:driverObj];
+                                               }
+                                           }
+                                           IMP_BLOCK_SELF(UserDeviceStateViewController);
+                                           
+                                           [block_self getDriverConnection:sensorArray];
+                                       }
+                                   }];
 }
+- (void) getDriverConnection:(NSMutableArray*)driverArray {
+    
+    for (RgsDriverObj *driverObj in driverArray) {
+    
+        UserSensorObj *userSensor = [[UserSensorObj alloc] init];
+        userSensor.rgsDriverObj = driverObj;
+        [_envDataArray addObject:userSensor];
+    }
+
+    [self createViews];
+    
+    
+}
+
 - (void) getDeviceDataArray{
     if (_deviceDataArray) {
         [_deviceDataArray removeAllObjects];
