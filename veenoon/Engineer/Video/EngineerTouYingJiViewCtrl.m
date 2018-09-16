@@ -83,7 +83,9 @@
     
     NSString *powerOn = [self._currentObj._proxyObj getDevicePower];
     if ([@"ON" isEqualToString:powerOn]) {
-        [_powerOnBtn setHighlighted:YES];
+        [_powerOnBtn setImage:[UIImage imageNamed:@"engineer_lubo_s.png"] forState:UIControlStateNormal];
+    } else {
+        [_powerOnBtn setImage:[UIImage imageNamed:@"engineer_lubo_n.png"] forState:UIControlStateNormal];
     }
     
     [_powerOnBtn addTarget:self
@@ -403,11 +405,11 @@
     
     NSString *powerOn = [self._currentObj._proxyObj getDevicePower];
     if ([@"ON" isEqualToString:powerOn]) {
-        [_powerOnBtn setHighlighted:YES];
-        [vcam controlDevicePower:@"ON"];
-    } else {
-        [_powerOnBtn setHighlighted:NO];
+        [_powerOnBtn setImage:[UIImage imageNamed:@"engineer_lubo_n.png"] forState:UIControlStateNormal];
         [vcam controlDevicePower:@"OFF"];
+    } else {
+        [_powerOnBtn setImage:[UIImage imageNamed:@"engineer_lubo_s.png"] forState:UIControlStateNormal];
+        [vcam controlDevicePower:@"ON"];
     }
 }
 - (void) powerOffAction:(id)sender{
