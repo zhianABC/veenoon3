@@ -45,7 +45,7 @@
     [bottomBar addSubview:cancelBtn];
     [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
     [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [cancelBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [cancelBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     cancelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [cancelBtn addTarget:self
                   action:@selector(cancelAction:)
@@ -56,7 +56,7 @@
     [bottomBar addSubview:okBtn];
     [okBtn setTitle:@"确认" forState:UIControlStateNormal];
     [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [okBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [okBtn addTarget:self
               action:@selector(okAction:)
@@ -175,7 +175,7 @@
     okPlayerBtn.clipsToBounds = YES;
     [okPlayerBtn setTitle:@"ok" forState:UIControlStateNormal];
     [okPlayerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [okPlayerBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [okPlayerBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     okPlayerBtn.titleLabel.font = [UIFont boldSystemFontOfSize:24];
     [self.view addSubview:okPlayerBtn];
     

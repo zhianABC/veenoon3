@@ -26,18 +26,18 @@
         self.backgroundColor = [UIColor clearColor];
         
         UIView *view = [[UIView alloc] initWithFrame:self.bounds];
-        view.backgroundColor = RGB(1, 138, 182);
+        view.backgroundColor = ADMIN_BLACK_COLOR;
         view.alpha = 0.9;
         
         [self addSubview:view];
         
         UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"main_view_title.png"]];
-        [self addSubview:titleIcon];
+//        [self addSubview:titleIcon];
         titleIcon.frame = CGRectMake(60, 40, 70, 10);
         
         UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 63, SCREEN_WIDTH, 1)];
         line.backgroundColor = RGB(75, 163, 202);
-        [self addSubview:line];
+//        [self addSubview:line];
         
         UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
         [self addSubview:bottomBar];
@@ -52,7 +52,7 @@
         [bottomBar addSubview:cancelBtn];
         [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
         [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [cancelBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+        [cancelBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
         cancelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
         [cancelBtn addTarget:self
                       action:@selector(cancelAction:)
@@ -63,7 +63,7 @@
         [bottomBar addSubview:okBtn];
         [okBtn setTitle:@"确认" forState:UIControlStateNormal];
         [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+        [okBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
         okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
         [okBtn addTarget:self
                   action:@selector(okAction:)

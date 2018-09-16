@@ -78,7 +78,7 @@
     [bottomBar addSubview:cancelBtn];
     [cancelBtn setTitle:@"返回" forState:UIControlStateNormal];
     [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [cancelBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [cancelBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     cancelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [cancelBtn addTarget:self
                   action:@selector(cancelAction:)
@@ -89,7 +89,7 @@
     [bottomBar addSubview:okBtn];
     [okBtn setTitle:@"确认" forState:UIControlStateNormal];
     [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [okBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [okBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [okBtn addTarget:self
                   action:@selector(okAction:)
@@ -193,7 +193,7 @@
     registerBtn.frame = CGRectMake(SCREEN_WIDTH/2 - w/2 +10, CGRectGetMaxY(_inputPannel.frame)+120, w, 50);
     [registerBtn setTitle:@"创建您的TESLARIA账户" forState:UIControlStateNormal];
     [registerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [registerBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [registerBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     registerBtn.titleLabel.font = [UIFont systemFontOfSize:13];
     [registerBtn addTarget:self
                   action:@selector(registerAction:)

@@ -49,6 +49,7 @@
     if(obj)
     {
         self._drNameLabel.text = [obj objectForKey:@"name"];
+        
     }
     else
     {
@@ -65,7 +66,7 @@
         if(image)
             [self setBackgroundImage:image
                             forState:UIControlStateNormal];
-        
+        self._drNameLabel.textColor = NEW_ER_BUTTON_SD_COLOR;
         
     }
     

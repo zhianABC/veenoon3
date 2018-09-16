@@ -106,7 +106,7 @@
     [bottomBar addSubview:cancelBtn];
     [cancelBtn setTitle:@"返回" forState:UIControlStateNormal];
     [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [cancelBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [cancelBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     cancelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [cancelBtn addTarget:self
                   action:@selector(cancelAction:)
@@ -126,7 +126,7 @@
     [bottomBar addSubview:saveBtn];
     [saveBtn setTitle:@"保存" forState:UIControlStateNormal];
     [saveBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [saveBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [saveBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     saveBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [saveBtn addTarget:self
                 action:@selector(saveAction:)

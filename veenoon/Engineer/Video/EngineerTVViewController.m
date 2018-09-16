@@ -112,7 +112,7 @@
     okPlayerBtn.clipsToBounds = YES;
     [okPlayerBtn setTitle:@"ok" forState:UIControlStateNormal];
     [okPlayerBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [okPlayerBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+    [okPlayerBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     okPlayerBtn.titleLabel.font = [UIFont boldSystemFontOfSize:24];
     [self.view addSubview:okPlayerBtn];
     

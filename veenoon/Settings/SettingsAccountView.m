@@ -129,7 +129,7 @@
         [self addSubview:updateVersionBtn];
         [updateVersionBtn setTitle:@"更新" forState:UIControlStateNormal];
         [updateVersionBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [updateVersionBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+        [updateVersionBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
         updateVersionBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
         [updateVersionBtn addTarget:self
                       action:@selector(updateVersionAction:)
@@ -163,7 +163,7 @@
         [self addSubview:deleteSceanBtn];
         [deleteSceanBtn setTitle:@"删除" forState:UIControlStateNormal];
         [deleteSceanBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [deleteSceanBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+        [deleteSceanBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
         deleteSceanBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
         [deleteSceanBtn addTarget:self
                              action:@selector(deleteSceanAction:)
@@ -178,7 +178,7 @@
         [self addSubview:resetSystemBtn];
         [resetSystemBtn setTitle:@"确定" forState:UIControlStateNormal];
         [resetSystemBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [resetSystemBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+        [resetSystemBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
         resetSystemBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
         [resetSystemBtn addTarget:self
                            action:@selector(resetSystemAction:)
@@ -193,7 +193,7 @@
         [self addSubview:outOfSystemBtn];
         [outOfSystemBtn setTitle:@"确定" forState:UIControlStateNormal];
         [outOfSystemBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [outOfSystemBtn setTitleColor:RGB(255, 180, 0) forState:UIControlStateHighlighted];
+        [outOfSystemBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
         outOfSystemBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
         [outOfSystemBtn addTarget:self
                            action:@selector(outSystemAction:)
