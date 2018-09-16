@@ -45,6 +45,8 @@
     WebClient *_client;
     
     int _curEditIndex;
+    
+    UIButton *editBtn;
 }
 @property (nonatomic, strong) NSMutableArray *roomList;
 
@@ -98,6 +100,16 @@
     bottomBar.userInteractionEnabled = YES;
     bottomBar.image = [UIImage imageNamed:@"botomo_icon_black.png"];
     
+    editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    editBtn.frame = CGRectMake(SCREEN_WIDTH-20-160, 0,160, 50);
+    [bottomBar addSubview:editBtn];
+    [editBtn setTitle:@"清空房间" forState:UIControlStateNormal];
+    [editBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [editBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
+    editBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [editBtn addTarget:self action:@selector(clearAction:)
+      forControlEvents:UIControlEventTouchUpInside];
+    
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     backBtn.frame = CGRectMake(60, SCREEN_HEIGHT - 48, 42, 42);
     [self.view addSubview:backBtn];
@@ -130,6 +142,37 @@
 //    [btnBack addTarget:self
 //                action:@selector(backupAction:)
 //      forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void) clearAction:(id)sender{
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil
+                                                                   message:@"您确定要清空房间列表吗? "
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *takeAction = [UIAlertAction
+                                 actionWithTitle:@"确定"
+                                 style:UIAlertActionStyleDefault
+                                 handler:^(UIAlertAction * _Nonnull action) {
+                                     [[DataBase sharedDatabaseInstance] deleteMeetingRoom];
+                                     
+                                     self.roomList = [[DataBase sharedDatabaseInstance] getMeetingRooms];
+                                     
+                                     [self showRoomList];
+                                 }];
+    [alert addAction:takeAction];
+    
+    
+    UIAlertAction *cancelAction = [UIAlertAction
+                                   actionWithTitle:@"取消"
+                                   style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:cancelAction];
+    
+    
+    [self presentViewController:alert animated:YES
+                     completion:nil];
+    
+    
 }
 
 - (void) backupAction:(id)sender{
