@@ -526,6 +526,7 @@
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setObject:[NSNumber numberWithInteger:[plug getID]] forKey:@"id"];
         [dic setObject:[plug deviceName] forKey:@"name"];
+        [dic setObject:[NSString stringWithFormat:@"%@", [plug class]] forKey:@"class"];
         if(plug._show_icon_name)
             [dic setObject:plug._show_icon_name forKey:@"icon"];
         if(plug._show_icon_sel_name)
@@ -569,13 +570,14 @@
                     action:@selector(buttonAction:)
           forControlEvents:UIControlEventTouchUpInside];
         
-        UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(btnlongPressed:)];
+        UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc]
+                                                   initWithTarget:self
+                                                   action:@selector(btnlongPressed:)];
         [cellBtn addGestureRecognizer:longPress];
-        
         [btncells addObject:cellBtn];
         
         
-        if(_isEditingScenario)
+        if(plug._isSelected)
         {
             [cellBtn setEditChanged];
         }
@@ -666,46 +668,7 @@
 }
 
 -(void)buttonAction:(DevicePlugButton*)cellBtn{
-    
-    int tag = (int)cellBtn.tag;
-    int baseTag = tag/1000;
-    
-    int index = tag%1000;
-    
-    NSArray *devices = nil;
-    if(baseTag == 1)//音频
-    {
-        if(_isEditingScenario)
-        {
-            devices = _scenario._audioDevices;
-        }
-        else
-        {
-            devices = [_selectedDevices objectForKey:@"audio"];
-        }
-    }
-    else if(baseTag == 2)//视频
-    {
-        if(_isEditingScenario)
-        {
-            devices = _scenario._videoDevices;
-        }
-        else
-        {
-        devices = [_selectedDevices objectForKey:@"video"];
-        }
-    }
-    else
-    {
-        if(_isEditingScenario)
-        {
-            devices = _scenario._envDevices;
-        }
-        else
-        {
-        devices = [_selectedDevices objectForKey:@"env"];
-        }
-    }
+
     
     if(_isEditMode)//删除模式
     {
@@ -714,67 +677,56 @@
     
     
     NSMutableDictionary *data = (NSMutableDictionary*)cellBtn._mydata;
-    NSString *name = [data objectForKey:@"name"];
+    //NSString *name = [data objectForKey:@"name"];
+    NSString *class = [data objectForKey:@"class"];
     
     /////////
     id notifykey = [NSString stringWithFormat:@"%d-%@",
               [[data objectForKey:@"id"] intValue],
-              [data objectForKey:@"name"]];
+              [data objectForKey:@"class"]];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:notifykey
                                                         object:nil];
     /////////
     
-    BasePlugElement *plug = [devices objectAtIndex:index];
+    BasePlugElement *plug = cellBtn._plug;
+    
+    int baseTag = (int)cellBtn.tag/1000;
 
-    if ([name isEqualToString:audio_power_sequencer]) {
+    if ([class isEqualToString:@"APowerESet"]) {
         
         EngineerElectronicSysConfigViewCtrl *ctrl = [[EngineerElectronicSysConfigViewCtrl alloc] init];
         ctrl._number = 8;
-        if(baseTag == 1)//Audio
-        {
-            ctrl._electronicSysArray = @[plug];
-        }
+        ctrl._electronicSysArray = @[plug];
         [self.navigationController pushViewController:ctrl animated:YES];
         
     }
-    else if ([name isEqualToString:@"16路电源管理"]) {
-        
-        EngineerElectronicSysConfigViewCtrl *ctrl = [[EngineerElectronicSysConfigViewCtrl alloc] init];
-        ctrl._number = 16;
-        if(baseTag == 1)//Audio
-        {
-            ctrl._electronicSysArray = @[plug];
-        }
-        ctrl._electronicSysArray = nil;
-        [self.navigationController pushViewController:ctrl animated:YES];
-    }
-    
+  
     if(baseTag == 1)
     {
         
         // player array
-        if ([name isEqualToString:@"播放器"]) {
+        if ([class isEqualToString:@"AudioEPlayer"]) {
             EngineerPlayerSettingsViewCtrl *ctrl = [[EngineerPlayerSettingsViewCtrl alloc] init];
             ctrl._playerSysArray = @[plug];
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         
         // wuxian array
-        if ([name isEqualToString:@"无线麦"]) {
+        if ([class isEqualToString:@"AudioEWirlessMike"]) {
             EngineerWirlessYaoBaoViewCtrl *ctrl = [[EngineerWirlessYaoBaoViewCtrl alloc] init];
             ctrl._wirelessYaoBaoSysArray = @[plug];
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
-        if ([name isEqualToString:audio_mixer_name]) {
+        if ([class isEqualToString:@"AudioEMix"]) {
             EngineerHunYinSysViewController *ctrl = [[EngineerHunYinSysViewController alloc] init];
             ctrl._hunyinSysArray = @[plug];
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         
         // wuxian array
-        if ([name isEqualToString:@"有线会议麦"]) {
+        if ([class isEqualToString:@"AudioEHand2Hand"]) {
             EngineerHandtoHandViewCtrl *ctrl = [[EngineerHandtoHandViewCtrl alloc] init];
             //传
             ctrl._handToHandSysArray = @[plug];
@@ -782,14 +734,14 @@
         }
         
         // wuxian array
-        if ([name isEqualToString:@"无线会议麦"]) {
+        if ([class isEqualToString:@"AudioEWirlessMeetingSys"]) {
             EngineerWirelessMeetingViewCtrl *ctrl = [[EngineerWirelessMeetingViewCtrl alloc] init];
             ctrl._wirelessMeetingArray = nil;// [NSMutableArray arrayWithObject:data];
             ctrl._number = 12;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
-        if ([name isEqualToString:audio_process_name]) {
+        if ([class isEqualToString:@"AudioEProcessor"]) {
             EngineerAudioProcessViewCtrl *ctrl = [[EngineerAudioProcessViewCtrl alloc] init];
             ctrl._audioProcessArray = @[plug];
             ctrl._currentAudioDevices = _scenario._audioDevices;
@@ -797,7 +749,7 @@
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
-        if ([name isEqualToString:@"功放"]) {
+        if ([class isEqualToString:@"AudioEMinMax"]) {
             EngineerPVExpendViewCtrl *ctrl = [[EngineerPVExpendViewCtrl alloc] init];
             ctrl._pvExpendArray = nil;// [NSMutableArray arrayWithObject:data];
             ctrl._number=16;
@@ -807,14 +759,14 @@
     else if(baseTag == 2)
     {
         // wuxian array
-        if ([name isEqualToString:@"视频播放器"]) {
+        if ([class isEqualToString:@"VDVDPlayerSet"]) {
             EngineerDVDViewController *ctrl = [[EngineerDVDViewController alloc] init];
             ctrl._dvdSysArray = @[plug];
             
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
-        if ([name isEqualToString:video_camera_name]) {
+        if ([class isEqualToString:@"VCameraSettingSet"]) {
             EngineerCameraViewController *ctrl = [[EngineerCameraViewController alloc] init];
             
             ctrl._cameraSysArray = @[plug];
@@ -822,7 +774,7 @@
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
-        if ([name isEqualToString:@"远程视讯"]) {
+        if ([class isEqualToString:@"VRemoteSettingsSet"]) {
             EngineerRemoteVideoViewCtrl *ctrl = [[EngineerRemoteVideoViewCtrl alloc] init];
             
             ctrl._cameraArray = @[plug];
@@ -830,7 +782,7 @@
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
-        if ([name isEqualToString:video_process_name]) {
+        if ([class isEqualToString:@"VVideoProcessSet"]) {
             EngineerVideoProcessViewCtrl *ctrl = [[EngineerVideoProcessViewCtrl alloc] init];
             ctrl._videoProcessArray = @[plug];
             
@@ -840,7 +792,7 @@
         }
         
         // wuxian array
-        if ([name isEqualToString:@"拼接屏"]) {
+        if ([class isEqualToString:@"VPinJieSet"]) {
             EngineerVideoPinJieViewCtrl *ctrl = [[EngineerVideoPinJieViewCtrl alloc] init];
             ctrl._rowNumber=6;
             ctrl._colNumber=8;
@@ -848,19 +800,19 @@
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
-        if ([name isEqualToString:@"液晶电视"]) {
+        if ([class isEqualToString:@"VTVSet"]) {
             EngineerTVViewController *ctrl = [[EngineerTVViewController alloc] init];
             ctrl._videoTVArray = @[plug];
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
-        if ([name isEqualToString:@"录播机"]) {
+        if ([class isEqualToString:@"VLuBoJiSet"]) {
             EngineerLuBoJiViewController *ctrl = [[EngineerLuBoJiViewController alloc] init];
             ctrl._lubojiArray = @[plug];
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
-        if ([name isEqualToString:video_touying_name]) {
+        if ([class isEqualToString:@"VTouyingjiSet"]) {
             EngineerTouYingJiViewCtrl *ctrl = [[EngineerTouYingJiViewCtrl alloc] init];
             ctrl._touyingjiArray = @[plug];
             [self.navigationController pushViewController:ctrl animated:YES];
@@ -868,72 +820,72 @@
     }
     else
     {
-        if ([name isEqualToString:@"照明"]) {
+        if ([class isEqualToString:@"EDimmerLight"]) {
             
             EngineerLightViewController *ctrl = [[EngineerLightViewController alloc] init];
             ctrl._lightSysArray = @[plug];
             [self.navigationController pushViewController:ctrl animated:YES];
         }
-        else if ([name isEqualToString:@"开关照明"]) {
+        else if ([class isEqualToString:@"EDimmerSwitchLight"]) {
             
             EngineerDimmerSwitchViewController *ctrl = [[EngineerDimmerSwitchViewController alloc] init];
             ctrl._lightSysArray = @[plug];
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
-        if ([name isEqualToString:@"空调"]) {
+        if ([class isEqualToString:@"AirConditionPlug"]) {
             EngineerAireConditionViewCtrl *ctrl = [[EngineerAireConditionViewCtrl alloc] init];
             ctrl._airSysArray = @[plug];
             ctrl._number=8;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
-        if ([name isEqualToString:env_blind_name]) {
+        if ([class isEqualToString:@"BlindPlugin"]) {
             EngineerElectronicAutoViewCtrl *ctrl = [[EngineerElectronicAutoViewCtrl alloc] init];
             ctrl._electronicSysArray = @[plug];
             ctrl._number=8;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array
-        if ([name isEqualToString:@"新风"]) {
-            EngineerNewWindViewCtrl *ctrl = [[EngineerNewWindViewCtrl alloc] init];
-            ctrl._windSysArray= nil;// [NSMutableArray arrayWithObject:data];
-            ctrl._number=8;
-            [self.navigationController pushViewController:ctrl animated:YES];
-        }
-        // wuxian array
-        if ([name isEqualToString:@"地暖"]) {
-            EngineerFloorWarmViewCtrl *ctrl = [[EngineerFloorWarmViewCtrl alloc] init];
-            ctrl._floorWarmSysArray= nil;// [NSMutableArray arrayWithObject:data];
-            ctrl._number=8;
-            [self.navigationController pushViewController:ctrl animated:YES];
-        }
-        // wuxian array
-        if ([name isEqualToString:@"空气净化"]) {
-            EngineerAirCleanViewCtrl *ctrl = [[EngineerAirCleanViewCtrl alloc] init];
-            ctrl._airCleanSysArray= nil;// [NSMutableArray arrayWithObject:data];
-            ctrl._number=8;
-            [self.navigationController pushViewController:ctrl animated:YES];
-        }
-        // wuxian array
-        if ([name isEqualToString:@"加湿器"]) {
-            EngineerAddWetViewCtrl *ctrl = [[EngineerAddWetViewCtrl alloc] init];
-            ctrl._addWetSysArray= nil;// [NSMutableArray arrayWithObject:data];
-            ctrl._number=8;
-            [self.navigationController pushViewController:ctrl animated:YES];
-        }
-        // wuxian array
-        if ([name isEqualToString:@"监控"]) {
-            EngineerMonitorViewCtrl *ctrl = [[EngineerMonitorViewCtrl alloc] init];
-            ctrl._monitorRoomList = nil;// [NSMutableArray arrayWithObject:data];
-            ctrl._number=8;
-            [self.navigationController pushViewController:ctrl animated:YES];
-        }
-        // wuxian array
-        if ([name isEqualToString:@"能耗统计"]) {
-            EngineerInfoCollectViewCtrl *ctrl = [[EngineerInfoCollectViewCtrl alloc] init];
-            [self.navigationController pushViewController:ctrl animated:YES];
-        }
+//        if ([class isEqualToString:@"EDimmerSwitchLight"]) {
+//            EngineerNewWindViewCtrl *ctrl = [[EngineerNewWindViewCtrl alloc] init];
+//            ctrl._windSysArray= nil;// [NSMutableArray arrayWithObject:data];
+//            ctrl._number=8;
+//            [self.navigationController pushViewController:ctrl animated:YES];
+//        }
+//        // wuxian array
+//        if ([name isEqualToString:@"地暖"]) {
+//            EngineerFloorWarmViewCtrl *ctrl = [[EngineerFloorWarmViewCtrl alloc] init];
+//            ctrl._floorWarmSysArray= nil;// [NSMutableArray arrayWithObject:data];
+//            ctrl._number=8;
+//            [self.navigationController pushViewController:ctrl animated:YES];
+//        }
+//        // wuxian array
+//        if ([name isEqualToString:@"空气净化"]) {
+//            EngineerAirCleanViewCtrl *ctrl = [[EngineerAirCleanViewCtrl alloc] init];
+//            ctrl._airCleanSysArray= nil;// [NSMutableArray arrayWithObject:data];
+//            ctrl._number=8;
+//            [self.navigationController pushViewController:ctrl animated:YES];
+//        }
+//        // wuxian array
+//        if ([name isEqualToString:@"加湿器"]) {
+//            EngineerAddWetViewCtrl *ctrl = [[EngineerAddWetViewCtrl alloc] init];
+//            ctrl._addWetSysArray= nil;// [NSMutableArray arrayWithObject:data];
+//            ctrl._number=8;
+//            [self.navigationController pushViewController:ctrl animated:YES];
+//        }
+//        // wuxian array
+//        if ([name isEqualToString:@"监控"]) {
+//            EngineerMonitorViewCtrl *ctrl = [[EngineerMonitorViewCtrl alloc] init];
+//            ctrl._monitorRoomList = nil;// [NSMutableArray arrayWithObject:data];
+//            ctrl._number=8;
+//            [self.navigationController pushViewController:ctrl animated:YES];
+//        }
+//        // wuxian array
+//        if ([name isEqualToString:@"能耗统计"]) {
+//            EngineerInfoCollectViewCtrl *ctrl = [[EngineerInfoCollectViewCtrl alloc] init];
+//            [self.navigationController pushViewController:ctrl animated:YES];
+//        }
     }
     
 }
@@ -992,80 +944,100 @@
     
 }
 
-- (void) btnlongPressed:(id)sender{
+- (void) btnlongPressed:(UIGestureRecognizer*)sender{
     
+    DevicePlugButton *cellBtn = sender.view;
+    if(![cellBtn isKindOfClass:[DevicePlugButton class]])
+        return;
     
+    BasePlugElement *plug = cellBtn._plug;
     
+    RgsDriverObj *dr = (RgsDriverObj*)plug._driver;
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                             message:@"重命名" preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"设备名";
+        textField.text = dr.name;
+    }];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        UITextField *drNameTxt = alertController.textFields.firstObject;
+        NSString *drName = drNameTxt.text;
+        if (drName && [drName length] > 0) {
+            
+            
+            [[RegulusSDK sharedRegulusSDK] RenameDriver:dr.m_id
+                                                   name:drName
+                                             completion:^(BOOL result, NSError *error) {
+                                                 
+                                                 dr.name = drName;
+                                                 plug._name = drName;
+                                                 cellBtn._drNameLabel.text = drName;
+                                             }];
+            
+        }
+    }]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
+    [self presentViewController:alertController animated:true completion:nil];
    
 }
 
 - (void) delButton:(UIButton*)cellBtn{
     
-    UIView *supBtn = cellBtn.superview;
-    
-    int tag = (int)supBtn.tag;
-    int baseTag = tag/1000;
-    int idx = tag%1000;
-    
-    NSMutableArray *dataArray = nil;
-    NSMutableArray *btnCells = _drCells;
-    if(baseTag == 1)//音频
-    {
-        dataArray = [_selectedDevices objectForKey:@"audio"];
-    }
-    else if(baseTag == 2)//视频
-    {
-        dataArray = [_selectedDevices objectForKey:@"video"];
-    }
-    else//环境
-    {
-        dataArray = [_selectedDevices objectForKey:@"env"];
-    }
-
-    [dataArray removeObjectAtIndex:idx];
-
-    [UIView animateWithDuration:0.25
-                     animations:^{
-                         
-                         supBtn.transform = CGAffineTransformMakeScale(0, 0);
-                         
-                     } completion:^(BOOL finished) {
-                         
-                         [supBtn removeFromSuperview];
-                     }];
-    
-    
-    //int x = audioStartX;
-    
+    DevicePlugButton *supBtn = (DevicePlugButton*)cellBtn.superview;
     if([supBtn isKindOfClass:[DevicePlugButton class]])
     {
-        [(DevicePlugButton*)supBtn removeMyObserver];
-        [((DevicePlugButton*)supBtn)._drNameLabel removeFromSuperview];
+        NSMutableArray *dataArray = nil;
+        NSMutableArray *btnCells = _drCells;
+        BasePlugElement *plug = supBtn._plug;
+        int baseTag = supBtn._deviceType;
+        if(baseTag == 1000)//音频
+        {
+            dataArray = [_selectedDevices objectForKey:@"audio"];
+        }
+        else if(baseTag == 2000)//视频
+        {
+            dataArray = [_selectedDevices objectForKey:@"video"];
+        }
+        else if(baseTag == 3000)
+        {
+            dataArray = [_selectedDevices objectForKey:@"env"];
+        }
+        else if(baseTag == 4000)
+        {
+            dataArray = [_selectedDevices objectForKey:@"chuangan"];
+        }
+        else if(baseTag == 5000)
+        {
+            dataArray = [_selectedDevices objectForKey:@"port"];
+        }
+        [dataArray removeObject:plug];
+        
+        [UIView animateWithDuration:0.25
+                         animations:^{
+                             
+                             supBtn.transform = CGAffineTransformMakeScale(0, 0);
+                             
+                         } completion:^(BOOL finished) {
+                             
+                             [supBtn removeFromSuperview];
+                         }];
+        
+        
+        //int x = audioStartX;
+        
+        if([supBtn isKindOfClass:[DevicePlugButton class]])
+        {
+            [(DevicePlugButton*)supBtn removeMyObserver];
+            [((DevicePlugButton*)supBtn)._drNameLabel removeFromSuperview];
+        }
+        
+        [btnCells removeObject:supBtn];
     }
-    
-    [btnCells removeObject:supBtn];
-    
-    
-    /*
-    //重新排序
-    for(int i = 0; i < [_drCells count]; i++)
-    {
-        [UIView beginAnimations:nil context:nil];
-        
-        UIButton *b = [btnCells objectAtIndex:i];
-        b.frame = CGRectMake(x,
-                             audioStartY,
-                             E_CELL_WIDTH,
-                             E_CELL_WIDTH);
-        
-        [UIView commitAnimations];
-        
-        b.tag = baseTag*1000+i;
-        
-        x+=E_CELL_WIDTH;
-        x+=space;
-    }
-     */
     
 }
 
@@ -1077,7 +1049,7 @@
     [[_content subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     int lastType = 0;
-    
+    BOOL nextLine = NO;
     for(int i = 0; i < [_drCells count]; i++)
     {
         DevicePlugButton *btn = [_drCells objectAtIndex:i];
@@ -1090,8 +1062,15 @@
         {
             if(lastType != 0)
             {
-                _yVal += E_CELL_WIDTH;
-                _yVal += 40;
+                if(nextLine)
+                {
+                    _yVal+=10;
+                }
+                else
+                {
+                    _yVal += 40;
+                    _yVal += E_CELL_WIDTH;
+                }
                 x = audioStartX;
             }
             
@@ -1171,6 +1150,7 @@
         x+=E_CELL_WIDTH;
         x+=space;
         
+        nextLine = NO;
         
         if(x >= (CGRectGetWidth(_content.frame) - E_CELL_WIDTH))
         {
@@ -1180,6 +1160,8 @@
                 _yVal += 30;
                 
                 x = audioStartX;
+                
+                nextLine = YES;
             }
         }
         

@@ -35,12 +35,16 @@
         self._show_icon_name = @"hj_icon_3.png";
         self._show_icon_sel_name = @"hj_icon_3_sel.png";
         
+        self._typeName = env_blind_name;
     }
     
     return self;
 }
 
 - (NSString*) deviceName{
+    
+    if(self._name)
+        return self._name;
     
     return env_blind_name;
 }
@@ -80,6 +84,7 @@
                                              if (result) {
                                                  
                                                  block_self._driver = driver;
+                                                 block_self._name = driver.name;
                                                  
                                                  [[NSNotificationCenter defaultCenter] postNotificationName:@"NotifyRefreshTableWithCom" object:nil];
                                              }
@@ -176,6 +181,7 @@
     {
         RgsDriverObj *dr = _driver;
         [config setObject:[NSNumber numberWithInteger:dr.m_id] forKey:@"driver_id"];
+        [config setObject:[NSNumber numberWithBool:self._isSelected] forKey:@"s"];
     }
     return config;
 }
@@ -186,6 +192,7 @@
     [config setObject:valMap forKey:@"opt_value_map"];
     
     int driver_id = [[config objectForKey:@"driver_id"] intValue];
+    self._isSelected = [[config objectForKey:@"s"] boolValue];
     
     IMP_BLOCK_SELF(BlindPlugin);
     [[RegulusSDK sharedRegulusSDK] GetRgsObjectByID:driver_id
@@ -203,6 +210,8 @@
     
     self._driver = rgsd;
     self._driverInfo = rgsd.info;
+    
+    self._name = rgsd.name;
     
     IMP_BLOCK_SELF(BlindPlugin);
     

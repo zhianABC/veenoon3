@@ -12,6 +12,7 @@
 
 @optional
 - (void) didEndLoadingDiverValues;
+- (void) didEndLoadingUserData;
 
 @end
 

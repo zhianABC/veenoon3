@@ -12,9 +12,13 @@
 {
     UIView   *contentView;
     NSMutableArray *_channelBtns;
+    
+    UIAlertController *alertController;
 }
 @property (nonatomic, strong) NSMutableArray *_channelBtns;
 @property (nonatomic, strong) NSArray *_proxys;
+@property (nonatomic, weak) UIViewController *ctrl;
+
 
 - (void) layoutChannelBtns:(int)num selectedIndex:(int)selectedIndex;
 

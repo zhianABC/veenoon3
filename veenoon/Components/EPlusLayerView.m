@@ -64,6 +64,7 @@
 - (void) setIconContentsGravity:(NSString*)style{
     
     _sticker.layer.contentsGravity = style;
+    _stickerCopy.layer.contentsGravity = style;
 }
 - (id)initWithFrame:(CGRect)frame
 {

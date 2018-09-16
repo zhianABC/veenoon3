@@ -64,6 +64,11 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    [_tableView reloadData];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -260,7 +265,7 @@
             
             if(obj)
             {
-                obj._name = [device objectForKey:@"name"];
+                obj._name = driver.name;
                 obj._brand = [device objectForKey:@"brand"];
                 obj._type = [device objectForKey:@"ptype"];
                 obj._driverUUID = [device objectForKey:@"driver"];
@@ -549,7 +554,7 @@
 //        return 120;
 //    }
     
-    return 60;
+    return 40;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -590,53 +595,53 @@
     
     UIImage *img = [UIImage imageNamed:data._plugicon];
     UIImageView *iconImage = [[UIImageView alloc] initWithImage:img];
-    iconImage.frame = CGRectMake(tableWidth-30, 12, 16, 16);
+    iconImage.frame = CGRectMake(10, 12, 16, 16);
     [cell.contentView addSubview:iconImage];
     iconImage.contentMode = UIViewContentModeScaleAspectFit;
     
     
-    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(10,
+    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(40,
                                                                 10,
-                                                                tableWidth-20, 20)];
+                                                                100, 20)];
     titleL.backgroundColor = [UIColor clearColor];
     [cell.contentView addSubview:titleL];
-    titleL.font = [UIFont systemFontOfSize:15];
+    titleL.font = [UIFont systemFontOfSize:13];
     titleL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
     
-    UILabel* subL = [[UILabel alloc] initWithFrame:CGRectMake(10,
-                                                              30,
-                                                              tableWidth-35, 20)];
+    UILabel* subL = [[UILabel alloc] initWithFrame:CGRectMake(150,
+                                                              10,
+                                                              200, 20)];
     subL.backgroundColor = [UIColor clearColor];
     [cell.contentView addSubview:subL];
-    subL.font = [UIFont systemFontOfSize:14];
+    subL.font = [UIFont systemFontOfSize:13];
     subL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+    subL.textAlignment = NSTextAlignmentRight;
     
     
-    titleL.text = data._name;
-    subL.text = [NSString stringWithFormat:@"%@ %@",
-                 data._brand,
-                 data._type];
+    titleL.text = [data deviceName];
+    subL.text = [NSString stringWithFormat:@"%@ %@", data._brand, data._type];
     
-    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 59, tableWidth, 1)];
+    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 39, tableWidth, 1)];
     line.backgroundColor =  USER_GRAY_COLOR;
     [cell.contentView addSubview:line];
     
     
+    UILabel* driverIDL = nil;
     if(data._driver)
     {
-        UILabel* driverIDL = [[UILabel alloc] initWithFrame:CGRectMake(10,
-                                                                  30,
-                                                                  tableWidth-20, 20)];
+        driverIDL = [[UILabel alloc] initWithFrame:CGRectMake(tableWidth - 90,
+                                                                  10,
+                                                                  80, 20)];
         driverIDL.backgroundColor = [UIColor clearColor];
         [cell.contentView addSubview:driverIDL];
-        driverIDL.font = [UIFont systemFontOfSize:12];
+        driverIDL.font = [UIFont systemFontOfSize:13];
         driverIDL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
         driverIDL.textAlignment = NSTextAlignmentRight;
         driverIDL.text = [NSString stringWithFormat:@"ID: %d",
                           (int)((RgsDriverObj*)data._driver).m_id];
         
     }
-    int lh = 60;
+    int lh = 40;
     
     id key = [NSString stringWithFormat:@"%d-%d",
               (int)indexPath.section,
@@ -657,6 +662,23 @@
         UILabel *lineSel = [[UILabel alloc] initWithFrame:CGRectMake(tableWidth-3, 0, 3, lh)];
         lineSel.backgroundColor =  YELLOW_COLOR;
         [cell.contentView addSubview:lineSel];
+        
+        titleL.textColor  = YELLOW_COLOR;
+        subL.textColor  = YELLOW_COLOR;
+        
+        if(driverIDL)
+            driverIDL.textColor  = YELLOW_COLOR;
+        
+        UIImage *img = [UIImage imageNamed:data._plugicon_s];
+        iconImage.image = img;
+    }
+    else
+    {
+        titleL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+        subL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+        
+        if(driverIDL)
+            driverIDL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
     }
     
 
@@ -734,51 +756,149 @@
     
 }
 
+
+
+- (nullable NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    IMP_BLOCK_SELF(EngineerToUseTeslariViewCtrl);
+    
+//    UITableViewRowAction *down = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal
+//                                                                    title:@"重命名"
+//                                                                  handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+//
+//                                                                      [block_self renameDriverAtIndex:(int)indexPath.row andCol:(int)indexPath.section];
+//                                                                  }];
+//    down.backgroundColor = [UIColor orangeColor];
+    
+    
+    UITableViewRowAction *del = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault
+                                                                   title:@"删除"
+                                                                 handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+                                                                     
+                                                                     [block_self removeDriverAtIndex:(int)indexPath.row andCol:(int)indexPath.section];
+                                                                 }];
+    
+    return @[del];
+}
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if(editingStyle == UITableViewCellEditingStyleDelete)
     {
         
-        BasePlugElement *data = nil;
-        NSMutableArray *ma = nil;
-        if(indexPath.section == 0)
-        {
-            data = [_audioDrivers objectAtIndex:indexPath.row];
-            ma = _audioDrivers;
-        }
-        else if(indexPath.section == 1)
-        {
-            data = [_videoDrivers objectAtIndex:indexPath.row];
-            ma = _videoDrivers;
-        }
-        else if(indexPath.section == 2)
-        {
-            data = [_envDrivers objectAtIndex:indexPath.row];
-            ma = _envDrivers;
-        }
-        else if(indexPath.section == 3)
-        {
-            data = [_chuanganDrivers objectAtIndex:indexPath.row];
-            ma = _chuanganDrivers;
-        }
-        else if(indexPath.section == 4)
-        {
-            data = [_portDrivers objectAtIndex:indexPath.row];
-            ma = _portDrivers;
-        }
         
-        if(data._driver)
-        {
-            [data removeDriver];
-        }
-        
-        [ma removeObject:data];
-        
-        [_tableView reloadData];
  
     }
 }
 
+
+- (void) renameDriverAtIndex:(int)row andCol:(int)col{
+    
+    BasePlugElement *data = nil;
+    NSMutableArray *ma = nil;
+    if(col == 0)
+    {
+        data = [_audioDrivers objectAtIndex:row];
+        ma = _audioDrivers;
+    }
+    else if(col == 1)
+    {
+        data = [_videoDrivers objectAtIndex:row];
+        ma = _videoDrivers;
+    }
+    else if(col == 2)
+    {
+        data = [_envDrivers objectAtIndex:row];
+        ma = _envDrivers;
+    }
+    else if(col == 3)
+    {
+        data = [_chuanganDrivers objectAtIndex:row];
+        ma = _chuanganDrivers;
+    }
+    else if(col == 4)
+    {
+        data = [_portDrivers objectAtIndex:row];
+        ma = _portDrivers;
+    }
+    
+    if(data._driver)
+    {
+        RgsDriverObj *dr = (RgsDriverObj*)data._driver;
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                                 message:@"重命名" preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.placeholder = @"设备名";
+            textField.text = dr.name;
+        }];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            UITextField *drNameTxt = alertController.textFields.firstObject;
+            NSString *drName = drNameTxt.text;
+            if (drName && [drName length] > 0) {
+                
+                
+                [[RegulusSDK sharedRegulusSDK] RenameDriver:dr.m_id
+                                                       name:drName
+                                                 completion:^(BOOL result, NSError *error) {
+                                                     
+                                                     dr.name = drName;
+                                                     data._name = drName;
+                                                     [_tableView reloadData];
+                                                     
+                                                 }];
+                
+            }
+        }]];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+        
+        [self presentViewController:alertController animated:true completion:nil];
+    }
+}
+
+
+- (void) removeDriverAtIndex:(int)row andCol:(int)col{
+    
+    BasePlugElement *data = nil;
+    NSMutableArray *ma = nil;
+    if(col == 0)
+    {
+        data = [_audioDrivers objectAtIndex:row];
+        ma = _audioDrivers;
+    }
+    else if(col == 1)
+    {
+        data = [_videoDrivers objectAtIndex:row];
+        ma = _videoDrivers;
+    }
+    else if(col == 2)
+    {
+        data = [_envDrivers objectAtIndex:row];
+        ma = _envDrivers;
+    }
+    else if(col == 3)
+    {
+        data = [_chuanganDrivers objectAtIndex:row];
+        ma = _chuanganDrivers;
+    }
+    else if(col == 4)
+    {
+        data = [_portDrivers objectAtIndex:row];
+        ma = _portDrivers;
+    }
+    
+    if(data._driver)
+    {
+        [data removeDriver];
+    }
+    
+    [ma removeObject:data];
+    
+    [_tableView reloadData];
+}
 
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     

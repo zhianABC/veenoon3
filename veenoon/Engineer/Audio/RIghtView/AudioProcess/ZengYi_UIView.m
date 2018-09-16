@@ -40,7 +40,6 @@
 
 @implementation ZengYi_UIView
 @synthesize _curProxy;
-
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.
@@ -147,6 +146,7 @@
 }
 
 - (void) updateCurrentStateData {
+    
     float kdb = [_curProxy getDigitalGain];
     float max = (maxTh - minTh);
     if(max)
@@ -156,8 +156,7 @@
         [btnJH2 setCircleValue:f];
     }
     
-    NSString *valueStr= [NSString stringWithFormat:@"%0.1fdB", kdb];
-    zaoshengL.text = valueStr;
+    [self setGainShowTextValue:kdb];
     
     [lineBtn setTitle:_curProxy._mode
              forState:UIControlStateNormal];
@@ -232,26 +231,118 @@
     btnJH2.delegate = self;
     btnJH2.tag = 2;
     [self addSubview:btnJH2];
+
+    UIButton *btnEdit = [UIButton buttonWithType:UIButtonTypeCustom];
+    [contentView addSubview:btnEdit];
+    btnEdit.frame = CGRectMake(730, 135+85, 60, 50);
+    [btnEdit addTarget:self
+                action:@selector(editValAction:)
+      forControlEvents:UIControlEventTouchUpInside];
     
-    zaoshengL = [[UILabel alloc] initWithFrame:CGRectMake(730, 135+100, 60, 20)];
-    zaoshengL.text = @"-12dB";
+    zaoshengL = [[UILabel alloc] initWithFrame:CGRectMake(0, 15, 60, 20)];
     zaoshengL.textAlignment = NSTextAlignmentCenter;
-    [contentView addSubview:zaoshengL];
+    [btnEdit addSubview:zaoshengL];
     zaoshengL.font = [UIFont systemFontOfSize:13];
     zaoshengL.textColor = NEW_ER_BUTTON_SD_COLOR;
     zaoshengL.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR2;
     zaoshengL.layer.cornerRadius = 5;
-    zaoshengL.clipsToBounds=YES;
+    zaoshengL.clipsToBounds = YES;
+    [self setGainShowTextValue:-12];
+    
 }
+
+- (void) editValAction:(id)sender{
+    
+    
+    NSString *defl = zaoshengL.text;
+    
+    IMP_BLOCK_SELF(ZengYi_UIView);
+
+    NSString *alert = [NSString stringWithFormat:@"设置增益，范围[%d ~ %d(dB)]", minTh, maxTh];
+    alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                             message:alert preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        
+        textField.placeholder = @"增益";
+        textField.text = defl;
+        textField.keyboardType = UIKeyboardTypeDecimalPad;
+        
+        // 监听文字改变的方法，也可以通过通知
+        [textField addTarget:block_self
+                      action:@selector(textFieldDidReturn:)
+            forControlEvents:UIControlEventEditingDidEndOnExit];
+    }];
+    
+    
+   
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        UITextField *alValTxt = alertController.textFields.firstObject;
+        NSString *val = alValTxt.text;
+        if (val && [val length] > 0) {
+            
+            [block_self doSetGainValue:[val floatValue]];
+        }
+    }]];
+    
+    [self.ctrl presentViewController:alertController
+                            animated:YES
+                          completion:nil];
+}
+
+- (void) textFieldDidReturn:(UITextField*)alValTxt{
+    
+    [alertController dismissViewControllerAnimated:YES
+                                        completion:nil];
+    
+    NSString *val = alValTxt.text;
+    if (val && [val length] > 0) {
+        
+        [self doSetGainValue:[val floatValue]];
+    }
+}
+
+- (void) doSetGainValue:(float)val{
+    
+    float fv = val;
+    if(fv < minTh)
+        fv = minTh;
+    else if(fv > maxTh)
+        fv = maxTh;
+
+    float max = (maxTh - minTh);
+    if(max)
+    {
+        float f = (fv - minTh)/max;
+        f = fabsf(f);
+        [btnJH2 setCircleValue:f];
+    }
+    
+    [self setGainShowTextValue:fv];
+    [self sendGainValue:fv];
+}
+
 
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
     float k = (value *(maxTh-minTh)) + minTh;
-    NSString *valueStr= [NSString stringWithFormat:@"%0.1f dB", k];
     
+    [self setGainShowTextValue:k];
+    [self sendGainValue:k];
+}
+
+- (void) setGainShowTextValue:(float)gain{
+    
+    NSString *valueStr = [NSString stringWithFormat:@"%0.1f", gain];
     zaoshengL.text = valueStr;
+}
+
+- (void) sendGainValue:(float) v{
     
-    [_curProxy controlDeviceDigitalGain:[valueStr floatValue]];
+    [_curProxy controlDeviceDigitalGain:v];
 }
 
 - (void) createContentViewBtns {
@@ -511,6 +602,9 @@
         
         zerodbBtn.alpha = 1;
         zerodbBtn.enabled = YES;
+        
+        
+        [self update48VButtonState];
     }
     else
     {
@@ -519,6 +613,8 @@
         
         zerodbBtn.alpha = 0.8;
         zerodbBtn.enabled = NO;
+        
+        //如果开着48V，关闭它
     }
     
     if ([_deviceSelector isPopoverVisible]) {

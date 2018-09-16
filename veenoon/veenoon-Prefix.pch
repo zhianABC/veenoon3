@@ -72,7 +72,7 @@
 #define TESLARIA_SLIDER_X   SCREEN_WIDTH - 90
 #define TESLARIA_SLIDER_Y   SCREEN_HEIGHT/2+10
 
-#define YELLOW_COLOR            RGB(255, 180, 0)
+#define YELLOW_COLOR            RGB(242, 148, 20)
 #define DARK_BLUE_COLOR         RGB(0, 89, 118)
 #define M_GREEN_COLOR           RGB(0, 79, 105)
 #define M_GREEN_LINE            RGB(1, 138, 182)

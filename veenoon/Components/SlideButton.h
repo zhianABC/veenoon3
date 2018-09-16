@@ -16,7 +16,7 @@
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn;
 - (void) didEndSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn;
 - (void) didTappedMSelf:(SlideButton*)slbtn;
-
+- (void) didLongPressSlideButton:(SlideButton*)slbtn;
 @end
 
 @interface SlideButton : UIView
@@ -31,6 +31,10 @@
 @property (nonatomic, strong) UIImage *_lightBackgroundImage;
 
 @property (nonatomic, strong) id data;
+
+@property (nonatomic, assign) BOOL longPressEnabled;
+
+- (id) initWithOffsetFrame:(CGRect)frame offset:(float)offset;
 
 - (void) setCircleValue:(float) value;
 - (void) changeButtonBackgroundImage:(UIImage *)image;

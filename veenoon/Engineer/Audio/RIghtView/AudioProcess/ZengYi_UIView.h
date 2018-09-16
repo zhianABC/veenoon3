@@ -13,6 +13,7 @@
 @interface ZengYi_UIView : APBaseView {
     
 }
+
 - (id)initWithFrame:(CGRect)frame withProxy:(NSArray*)proxys;
 - (void) updateProxyCommandValIsLoaded;
 

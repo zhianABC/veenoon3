@@ -3,6 +3,25 @@
 <plist version="1.0">
 <array>
 	<dict>
+		<key>fk</key>
+		<dict>
+			<key>id</key>
+			<integer>309</integer>
+			<key>name</key>
+			<string>反馈抑制</string>
+			<key>type</key>
+			<string>标识图标</string>
+			<key>icon</key>
+			<string>a_icon_6.png</string>
+			<key>icon_sel</key>
+			<string>a_icon_6.png</string>
+			<key>icon_s</key>
+			<string>s3_16.png</string>
+			<key>user_show_icon_s</key>
+			<string>enginner_fankuiyizhi_s.png</string>
+			<key>user_show_icon</key>
+			<string>enginner_fankuiyizhi_n.png</string>
+		</dict>
 		<key>id</key>
 		<integer>1</integer>
 		<key>title</key>
@@ -22,6 +41,8 @@
 				<string>a_player_1.png</string>
 				<key>icon_s</key>
 				<string>s3_19.png</string>
+				<key>icon_drag</key>
+				<string>a_processor_ico_player.png</string>
 				<key>user_show_icon</key>
 				<string>cd_player_n.png</string>
 				<key>user_show_icon_s</key>
@@ -40,6 +61,8 @@
 				<string>v_icon_22.png</string>
 				<key>icon_s</key>
 				<string>s3_13.png</string>
+				<key>icon_drag</key>
+				<string>a_processor_ico_disk.png</string>
 				<key>user_show_icon</key>
 				<string>sd_player_n.png</string>
 				<key>user_show_icon_s</key>
@@ -58,6 +81,8 @@
 				<string>a_usb.png</string>
 				<key>icon_s</key>
 				<string>s3_08.png</string>
+				<key>icon_drag</key>
+				<string>a_processor_ico_usb.png</string>
 				<key>user_show_icon</key>
 				<string>usb_player_n.png</string>
 				<key>user_show_icon_s</key>
@@ -76,28 +101,12 @@
 				<string>a_sd.png</string>
 				<key>icon_s</key>
 				<string>s3_10.png</string>
+				<key>icon_drag</key>
+				<string>a_processor_ico_sd.png</string>
 				<key>user_show_icon</key>
 				<string>user_video_dvd_n.png</string>
 				<key>user_show_icon_s</key>
 				<string>user_video_dvd_s.png</string>
-			</dict>
-			<dict>
-				<key>id</key>
-				<integer>309</integer>
-				<key>name</key>
-				<string>反馈抑制</string>
-				<key>type</key>
-				<string>标识图标</string>
-				<key>icon</key>
-				<string>a_icon_6.png</string>
-				<key>icon_sel</key>
-				<string>a_icon_6.png</string>
-				<key>icon_s</key>
-				<string>s3_16.png</string>
-				<key>user_show_icon_s</key>
-				<string>enginner_fankuiyizhi_s.png</string>
-				<key>user_show_icon</key>
-				<string>enginner_fankuiyizhi_n.png</string>
 			</dict>
 		</array>
 	</dict>

@@ -52,6 +52,8 @@
         
         self._linkVal = nil;
         
+        self._typeName = audio_power_sequencer;
+        
         self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionary];
         
     }
@@ -60,6 +62,9 @@
 }
 
 - (NSString*) deviceName{
+    
+    if(self._name)
+        return self._name;
     
     return audio_power_sequencer;
 }
@@ -119,6 +124,7 @@
                                              if (result) {
                                                  
                                                  block_self._driver = driver;
+                                                 block_self._name = driver.name;
                                                  
                                                  [[NSNotificationCenter defaultCenter] postNotificationName:@"NotifyRefreshTableWithCom" object:nil];
                                              }
@@ -411,6 +417,7 @@
     {
         RgsDriverObj *dr = _driver;
         [config setObject:[NSNumber numberWithInteger:dr.m_id] forKey:@"driver_id"];
+        [config setObject:[NSNumber numberWithBool:self._isSelected] forKey:@"s"];
     }
     return config;
 }
@@ -421,6 +428,7 @@
     [config setObject:valMap forKey:@"opt_value_map"];
     
     int driver_id = [[config objectForKey:@"driver_id"] intValue];
+    self._isSelected = [[config objectForKey:@"s"] boolValue];
     
     IMP_BLOCK_SELF(APowerESet);
     [[RegulusSDK sharedRegulusSDK] GetRgsObjectByID:driver_id
@@ -438,6 +446,8 @@
     
     self._driver = rgsd;
     self._driverInfo = rgsd.info;
+    
+    self._name = rgsd.name;
     
     IMP_BLOCK_SELF(APowerESet);
     

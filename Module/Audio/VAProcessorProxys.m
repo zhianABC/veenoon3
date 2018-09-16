@@ -2631,29 +2631,33 @@
 - (void) controlDeviceMode:(NSString*)mode{
     
     _isSetOK = YES;
-    
-    RgsCommandInfo *cmd = nil;
-    
-    if(_cmdMap)
-    cmd = [_cmdMap objectForKey:@"SET_MODE"];
     self._mode = mode;
     
-    if(cmd)
+    
+    NSMutableArray *opts = [NSMutableArray array];
+    RgsSceneOperation *opt = nil;
+    
+    if([mode isEqualToString:@"LINE"])
     {
-        NSMutableDictionary * param = [NSMutableDictionary dictionary];
-        if([cmd.params count])
+        //关闭48v
+        if(_is48V)
         {
-            RgsCommandParamInfo * param_info = [cmd.params objectAtIndex:0];
-            if(param_info.type == RGS_PARAM_TYPE_LIST)
-            {
-                [param setObject:mode forKey:param_info.name];
-            }
-            
+            //Close
+            _is48V = NO;
+            opt = [self generateEventOperation_48v];
+            if(opt)
+                [opts addObject:opt];
         }
-        [[RegulusSDK sharedRegulusSDK] ControlDevice:_rgsProxyObj.m_id
-                                                 cmd:cmd.name
-                                               param:param completion:nil];
     }
+
+    
+    opt = [self generateEventOperation_Mode];
+    if(opt)
+        [opts addObject:opt];
+    
+    if([opts count])
+        [[RegulusSDK sharedRegulusSDK] ControlDeviceByOperation:opts
+                                                     completion:nil];
 }
 
 - (void) controlDeviceMicDb:(NSString*)db{

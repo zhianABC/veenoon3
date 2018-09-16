@@ -46,9 +46,10 @@
         _connectionL.font = [UIFont systemFontOfSize:15];
         _connectionL.text = @"串口号: ";
         
-        _conField = [[UITextField alloc] initWithFrame:CGRectMake(30+80,
+        _conField = [[UITextField alloc] initWithFrame:CGRectMake(150,
                                                                   15,
-                                                                  frame.size.width - 140-30, 30)];
+                                                                  frame.size.width - 150-20-40,
+                                                                  30)];
         _conField.backgroundColor = [UIColor clearColor];
         _conField.returnKeyType = UIReturnKeyDone;
         _conField.text = @"";
@@ -81,7 +82,7 @@
 
 - (void) fillComConnection:(RgsConnectionObj *)connect{
     
-    _connectionL.text = @"串口号: ";
+    _connectionL.text = connect.name;
     self._connectObj = connect;
     
     if(connect)
@@ -117,7 +118,7 @@
         RgsConnectionObj *connect = [connections objectAtIndex:0];
         
         _conField.text = [NSString stringWithFormat:@"%d:%@ %@",
-                          connect.driver_id,
+                          (int)connect.driver_id,
                           connect.driver_name,
                           connect.name];
     }
@@ -242,7 +243,7 @@
         ipTextField.delegate = self;
         ipTextField.backgroundColor = [UIColor clearColor];
         ipTextField.returnKeyType = UIReturnKeyDone;
-        ipTextField.text = @"192.168.1.100";
+        ipTextField.text = @"";
         ipTextField.textColor = [UIColor whiteColor];
         ipTextField.borderStyle = UITextBorderStyleNone;
         ipTextField.textAlignment = NSTextAlignmentLeft;
@@ -273,7 +274,7 @@
         portTextField.delegate = self;
         portTextField.backgroundColor = [UIColor clearColor];
         portTextField.returnKeyType = UIReturnKeyDone;
-        portTextField.text = @"2000";
+        portTextField.text = @"";
         portTextField.textColor = [UIColor whiteColor];
         portTextField.borderStyle = UITextBorderStyleNone;
         portTextField.textAlignment = NSTextAlignmentLeft;
@@ -369,8 +370,13 @@
 }
 
 - (void) saveCurrentSetting{
+    
     if (_isAirQuality) {
-        [RegulusSDK RgsWifiConfWithPassword:portTextField.text taskCount:3 timeIntevel:10 callback:^(NSError *error) {
+        
+        [RegulusSDK RgsWifiConfWithPassword:portTextField.text
+                                  taskCount:3
+                                timeIntevel:10
+                                   callback:^(NSError *error) {
             if (error) {
                 [KVNProgress showErrorWithStatus:[error localizedDescription]];
             }
@@ -378,7 +384,9 @@
                 [KVNProgress dismiss];
             }
         }];
-    } else {
+    }
+    else
+    {
         _plugDriver._ipaddress = ipTextField.text;
         _plugDriver._port = portTextField.text;
         [_plugDriver uploadDriverIPProperty];
@@ -399,14 +407,17 @@
 }
 
 - (void) refreshLabelToAirQuality {
-    if (_isAirQuality) {
+    
+    if (_isAirQuality)
+    {
         _iptitleL.text = @"SSID: ";
         _porttitleL.text = @"密码: ";
         
         ipTextField.userInteractionEnabled = NO;
         ipTextField.text = [RegulusSDK GetWifiSSID];
-        
-    } else {
+    }
+    else
+    {
         _iptitleL.text = @"IP地址: ";
         _porttitleL.text = @"端口号: ";
         ipTextField.userInteractionEnabled = YES;

@@ -116,8 +116,6 @@ static DataSync* dSyncInstance = nil;
 
 - (void) reloginRegulus{
     
-#ifdef OPEN_REG_LIB_DEF
-    
     if(_currentReglusLogged)
     {
         NSString *regulus_gateway_id = [_currentReglusLogged objectForKey:@"gw_id"];
@@ -134,9 +132,6 @@ static DataSync* dSyncInstance = nil;
                                       }];
         }
     }
-     
-    
-#endif
     
 }
 
@@ -194,8 +189,6 @@ static DataSync* dSyncInstance = nil;
     
 #ifdef OPEN_REG_LIB_DEF
     
-    IMP_BLOCK_SELF(DataSync);
-    
     self._currentArea = nil;
     for(RgsAreaObj *area in RgsAreaObjs)
     {
@@ -252,7 +245,7 @@ static DataSync* dSyncInstance = nil;
     }
 }
 
-- (NSDictionary*) getCurrentDrivers {
+- (NSArray*) getCurrentDrivers {
     return self._currentAreaDrivers;
 }
 
