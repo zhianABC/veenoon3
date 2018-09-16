@@ -476,6 +476,8 @@
     [_curProxy controlZaoshengRecoveryTime:valueStr];
 }
 
+#pragma mark -- SlideButton Delegate --
+
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
     int tag = (int) slbtn.tag;
@@ -484,7 +486,7 @@
         int k = (value *(maxTh-minTh)) + minTh;
         NSString *valueStr = [NSString stringWithFormat:@"%d", k];
         fazhiL.text = valueStr;
-        [_curProxy controlZaoshengFazhi:[NSString stringWithFormat:@"%d", k]];
+        [_curProxy controlZaoshengFazhi:valueStr];
         
     } else if (tag == 2) {
         
@@ -503,6 +505,54 @@
         [_curProxy controlZaoshengRecoveryTime:valueStr];
     }
 }
+
+
+- (void) didEndSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
+    
+    int tag = (int) slbtn.tag;
+    if (tag == 1)
+    {
+        
+        int k = (value *(maxTh-minTh)) + minTh;
+        NSString *valueStr = [NSString stringWithFormat:@"%d", k];
+        fazhiL.text = valueStr;
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(200.0 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
+            
+            [_curProxy controlZaoshengFazhi:valueStr];
+        });
+    }
+    else if (tag == 2)
+    {
+        
+        int k = (value *(maxStartDur-minStartDur)) + minStartDur;
+        NSString *valueStr= [NSString stringWithFormat:@"%d", k];
+        
+        qidongshijianL.text = [NSString stringWithFormat:@"%@",valueStr];;
+        
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(200.0 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
+            
+            [_curProxy controlZaoshengStartTime:valueStr];
+        });
+    }
+    else
+    {
+        int k = (value *(maxRecoveDur-minRecoveDur)) + minRecoveDur;
+        NSString *valueStr= [NSString stringWithFormat:@"%d", k];
+        huifushijianL.text = [NSString stringWithFormat:@"%@",valueStr];;
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(200.0 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
+            
+            [_curProxy controlZaoshengRecoveryTime:valueStr];
+        });
+        
+    }
+    
+
+}
+
+
 - (void) zhitongBtnAction:(id) sender {
     if(_curProxy == nil)
         return;

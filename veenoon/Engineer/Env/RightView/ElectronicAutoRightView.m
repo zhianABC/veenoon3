@@ -82,11 +82,11 @@ CustomPickerViewDelegate> {
 
 - (id)initWithFrame:(CGRect)frame withPlugin:(BlindPlugin*) blindPlugin {
     
-    _currentBlind = blindPlugin;
     
     if(self = [super initWithFrame:frame]) {
         self.backgroundColor = RIGHT_VIEW_CORNER_SD_COLOR;
        
+        _currentBlind = blindPlugin;
         
         self._value = [NSMutableDictionary dictionary];
         

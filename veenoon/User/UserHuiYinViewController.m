@@ -297,6 +297,7 @@
 }
 
 - (void) biaozhunmoshiAction:(id)sender{
+    
     [_yuyinjiliBtn setImage:[UIImage imageNamed:@"yuyinjili_n.png"] forState:UIControlStateNormal];
     [_yuyinjiliBtn setTitleColor:NEW_UR_BUTTON_GRAY_COLOR forState:UIControlStateNormal];
     [_biaozhunmoshiBtn setImage:[UIImage imageNamed:@"biaozhunmoshi_s.png"] forState:UIControlStateNormal];

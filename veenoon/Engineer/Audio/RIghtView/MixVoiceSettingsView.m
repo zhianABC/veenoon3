@@ -33,6 +33,8 @@
 
     
     NSString *_zhuxiDaibiao;
+    
+    int _curSection;
 }
 @property (nonatomic, strong) NSMutableArray *_btns;
 @property (nonatomic, strong) UIButton *_selectedBtn;
@@ -54,31 +56,38 @@
 
 - (id)initWithFrame:(CGRect)frame withAudioMixSet:(AudioEMix*) audioEMix
 {
-    self._currentObj = audioEMix;
-    
+
     if(self = [super initWithFrame:frame])
     {
+        self._currentObj = audioEMix;
+        
         self.backgroundColor = RIGHT_VIEW_CORNER_SD_COLOR;
         
         _btns = [[NSMutableArray alloc] init];
         
         self._selectedBtn = nil;
         
+        [self createYuYinJiLiView];
+        [self createBiaoZhunFaYanView];
+        [self createShexiangzhuizongView];
+//
+         [self checkStates];
+        
+        
+        _curSection = -1;
+        
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,
                                                                    60,
                                                                    frame.size.width,
-                                                                   frame.size.height-400)];
+                                                                   frame.size.height)];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.backgroundColor = [UIColor clearColor];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         [self addSubview:_tableView];
+        _tableView.scrollEnabled = NO;
         
-        [self createYuYinJiLiView];
-        [self createBiaoZhunFaYanView];
-        [self createShexiangzhuizongView];
-        
-        [self checkStates];
+       
     }
     
     return self;
@@ -109,10 +118,7 @@
     {
         if([proxy._workMode isEqualToString:@"Speak"])
         {
-            _shexiangzhuizongView.hidden=YES;
-            _biaozhunfayanView.hidden=YES;
-            _yuyinjiliView.hidden=NO;
-            
+
             if(proxy._fayanPriority)
             {
                 [self shedingzhuxiAction:_shedingzhuxiBtn];
@@ -124,10 +130,6 @@
         }
         else
         {
-            _shexiangzhuizongView.hidden=YES;
-            _yuyinjiliView.hidden=YES;
-            _biaozhunfayanView.hidden=NO;
-            
             NSString *isBiaoZhunFaYan = proxy._workMode;
             if ([@"Work" isEqualToString:isBiaoZhunFaYan]) {
                 biaozhunfayanBtn.selected = YES;
@@ -147,14 +149,30 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
-    return 1;
+    return 4;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return 4;
+    if(_curSection >= 0 && _curSection != 2)
+    {
+        if(section == _curSection)
+            return 1;
+    }
+
+    return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if(_curSection == 0)
+        return CGRectGetHeight(_yuyinjiliView.frame);
+    
+    if(_curSection == 1)
+        return CGRectGetHeight(_biaozhunfayanView.frame);
+    
+    if(_curSection == 3)
+        return CGRectGetHeight(_shexiangzhuizongView.frame);
+    
     return 44;
 }
 
@@ -169,22 +187,52 @@
         
         //cell.editing = NO;
     }
-    [[cell.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
     cell.backgroundColor = [UIColor clearColor];
     
+    [[cell.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
-    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(10,
+    if(indexPath.section == 0)
+    {
+        [cell.contentView addSubview:_yuyinjiliView];
+    }
+    else if(indexPath.section == 1)
+    {
+        [cell.contentView addSubview:_biaozhunfayanView];
+        [self showWorkVoiceView];
+    }
+    else if(indexPath.section == 3)
+    {
+        [cell.contentView addSubview:_shexiangzhuizongView];
+    }
+    
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    
+    return 44;
+}
+
+
+- (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    
+    UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0,
+                                                              self.frame.size.width, 44)];
+    header.backgroundColor = [UIColor clearColor];
+    
+    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(15,
                                                                 12,
                                                                 CGRectGetWidth(self.frame)-30, 20)];
     titleL.backgroundColor = [UIColor clearColor];
-    [cell.contentView addSubview:titleL];
+    [header addSubview:titleL];
     titleL.font = [UIFont systemFontOfSize:13];
     titleL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
-    if (indexPath.row == 0) {
+    if (section == 0) {
         titleL.text = @"语音激励";
-    } else if (indexPath.row == 1) {
+    } else if (section == 1) {
         titleL.text = @"标准发言";
-    } else if (indexPath.row == 2) {
+    } else if (section == 2) {
         titleL.text = audio_process_name;
     } else {
         titleL.text = @"摄像追踪";
@@ -193,61 +241,104 @@
     UIImageView *icon = [[UIImageView alloc]
                          initWithFrame:CGRectMake(CGRectGetMaxX(titleL.frame)+5, 17, 10, 10)];
     icon.image = [UIImage imageNamed:@"remote_video_right.png"];
-    [cell.contentView addSubview:icon];
+    [header addSubview:icon];
     icon.alpha = 0.8;
     icon.layer.contentsGravity = kCAGravityResizeAspect;
     
+    if(_curSection == section && section != 2)
+    {
+        icon.transform = CGAffineTransformMakeRotation(M_PI_2);
+    }
+    
+    
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 43, self.frame.size.width, 1)];
     line.backgroundColor =  TITLE_LINE_COLOR;
-    [cell.contentView addSubview:line];
+    [header addSubview:line];
     
-    return cell;
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = header.bounds;
+    [header addSubview:btn];
+    btn.tag = section;
+    [btn addTarget:self
+            action:@selector(buttonAction:)
+  forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    return header;
+}
+
+- (void) buttonAction:(UIButton*)btn{
+    
+    int targetIndx = (int)btn.tag;
+    
+    if(_curSection != targetIndx)
+    {
+        _curSection = targetIndx;
+        
+        if(_curSection == 2)
+        {
+            [self yinpinchuliAction:nil];
+        }
+    }
+    else
+    {
+        _curSection = -1;
+    }
+    
+    if(_curSection == 0)
+    {
+        [_currentObj._proxyObj controlWorkMode:@"Speak"];
+        [self checkStates];
+    }
+    
+    [_tableView reloadData];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    int targetIndx = (int)indexPath.row;
     
-    if (targetIndx == 0) {
-        [self yuyinjiliAction:nil];
-    } else if (targetIndx == 1) {
-        [self biaozhunfayanAction:nil];
-    } else if (targetIndx == 2) {
-        [self yinpinchuliAction:nil];
-    } else {
-        [self shexiangzhuizongAction:nil];
-    }
+
 }
 
+- (void) showWorkVoiceView{
 
-- (void) yuyinjiliAction:(id)sender{
-    
-    _shexiangzhuizongView.hidden=YES;
-    _biaozhunfayanView.hidden=YES;
-    _yuyinjiliView.hidden=NO;
-    
-    // control yuyinjili
-    [_currentObj._proxyObj controlWorkMode:@"Speak"];
-}
-- (void) biaozhunfayanAction:(id)sender{
-    
-    _shexiangzhuizongView.hidden=YES;
-    _yuyinjiliView.hidden=YES;
-    _biaozhunfayanView.hidden=NO;
-    
-    // control biaozhunfayan
-    [_currentObj._proxyObj controlWorkMode:@"Work"];
-    
     NSString *isBiaoZhunFaYan = _currentObj._proxyObj._workMode;
-    if ([@"Work" isEqualToString:isBiaoZhunFaYan]) {
+    if ([@"Work" isEqualToString:isBiaoZhunFaYan])
+    {
         biaozhunfayanBtn.selected = YES;
         [biaozhunfayanBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
         [biaozhunfayanBtn changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
-    } else {
+    } else
+    {
         biaozhunfayanBtn.selected = NO;
         [biaozhunfayanBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [biaozhunfayanBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
     }
+}
+
+- (void) biaozhunfayanAction:(id)sender{
+    
+    NSString *isBiaoZhunFaYan = _currentObj._proxyObj._workMode;
+    if ([@"Work" isEqualToString:isBiaoZhunFaYan])
+    {
+        biaozhunfayanBtn.selected = NO;
+        [biaozhunfayanBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [biaozhunfayanBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
+        
+        [_currentObj._proxyObj controlWorkMode:@"Speak"];
+        
+    }
+    else
+    {
+        biaozhunfayanBtn.selected = YES;
+        [biaozhunfayanBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateNormal];
+        [biaozhunfayanBtn changeNormalColor:NEW_ER_BUTTON_BL_COLOR];
+        
+        [_currentObj._proxyObj controlWorkMode:@"Work"];
+    }
+    
+    
+    
 }
 - (void) yinpinchuliAction:(id)sender{
     
@@ -256,17 +347,17 @@
     }
 }
 - (void) shexiangzhuizongAction:(id)sender{
-    _biaozhunfayanView.hidden=YES;
-    _yuyinjiliView.hidden=YES;
-    _shexiangzhuizongView.hidden=NO;
+    
 }
 
 - (void) createShexiangzhuizongView {
-    _shexiangzhuizongView = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height/2-150, self.frame.size.width, self.frame.size.height/2-1)];
     
-    [self addSubview:_shexiangzhuizongView];
+    _shexiangzhuizongView = [[UIView alloc] initWithFrame:CGRectMake(0,
+                                                                     0,
+                                                                     self.frame.size.width,
+                                                                     240)];
     
-    UILabel *titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, 110, _shexiangzhuizongView.frame.size.width, 20)];
+    UILabel *titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, _shexiangzhuizongView.frame.size.width, 20)];
     titleL.font = [UIFont systemFontOfSize:13];
     titleL.textAlignment = NSTextAlignmentCenter;
     titleL.text = @"摄像机协议";
@@ -275,7 +366,7 @@
     
     int x = 70;
     _shexiangxieyiBtn = [UIButton buttonWithColor:RGB(0, 146, 174) selColor:nil];
-    _shexiangxieyiBtn.frame = CGRectMake(x, CGRectGetMaxY(titleL.frame) + 30, self.frame.size.width-2*x, 25);
+    _shexiangxieyiBtn.frame = CGRectMake(x, CGRectGetMaxY(titleL.frame) + 15, self.frame.size.width-2*x, 25);
     _shexiangxieyiBtn.clipsToBounds = YES;
     _shexiangxieyiBtn.layer.cornerRadius = 5;
     [_shexiangzhuizongView addSubview:_shexiangxieyiBtn];
@@ -284,74 +375,72 @@
     
     
     _picker = [[CustomPickerView alloc]
-               initWithFrame:CGRectMake(_shexiangzhuizongView.frame.size.width/2-100, 170, 200, 120) withGrayOrLight:@"picker_player.png"];
+               initWithFrame:CGRectMake(_shexiangzhuizongView.frame.size.width/2-100, 90, 200, 150) withGrayOrLight:@"picker_player.png"];
     
-    NSMutableArray *dataArray = [_currentObj._proxyObj getCameraPol];
-    if (dataArray) {
-        _picker._pickerDataArray = @[@{@"values":dataArray}];
-    } else {
-        NSArray *dummyDataArray = [NSArray arrayWithObjects:@"PELCOP", @"PELCOD", @"VISCA", nil];
-        _picker._pickerDataArray = @[@{@"values":dummyDataArray}];
+    NSArray *dataArray = [_currentObj._proxyObj getCameraPol];
+    if (!dataArray) {
+        dataArray = [NSArray arrayWithObjects:@"PELCOP", @"PELCOD", @"VISCA", nil];
+        
     }
     
-    _picker._selectColor = YELLOW_COLOR;
-    _picker._rowNormalColor = [UIColor whiteColor];
-    _picker.delegate_ = self;
-    _picker.tag = 1;
-    [_picker selectRow:0 inComponent:0];
-    IMP_BLOCK_SELF(MixVoiceSettingsView);
-    _picker._selectionBlock = ^(NSDictionary *values)
+    if(dataArray && [dataArray count])
     {
-        [block_self didPickerValue:values];
-    };
+        _picker._pickerDataArray = @[@{@"values":dataArray}];
+        _picker._selectColor = YELLOW_COLOR;
+        _picker._rowNormalColor = [UIColor whiteColor];
+        _picker.delegate_ = self;
+        _picker.tag = 1;
+        
+        int row = 0;
+        if(_currentObj._proxyObj._currentCameraPol)
+            row = (int)[dataArray indexOfObject:_currentObj._proxyObj._currentCameraPol];
+        
+        
+        [_picker selectRow:row inComponent:0];
+        IMP_BLOCK_SELF(MixVoiceSettingsView);
+        _picker._selectionBlock = ^(NSDictionary *values)
+        {
+            [block_self didPickerValue:values];
+        };
+    }
     
     [_shexiangzhuizongView addSubview:_picker];
-    _picker.hidden = YES;
-    
-    _shexiangzhuizongView.hidden=YES;
-    
+  
     if(_currentObj._proxyObj._cameraPol)
     {
         [_shexiangxieyiBtn setTitle:_currentObj._proxyObj._currentCameraPol
                            forState:UIControlStateNormal];
     }
 }
--(void) shexiangxieyiAction:(id)sender {
-    if (_picker.hidden) {
-        _picker.hidden = NO;
-    } else {
-        _picker.hidden=YES;
-    }
-}
+
 
 - (void) didPickerValue:(NSDictionary *)values{
     
     if(_picker.tag == 1)
     {
-        [_shexiangxieyiBtn setTitle:_picker._unitString forState:UIControlStateNormal];
+        NSString *val = [values objectForKey:@0];
         
-        [_currentObj._proxyObj controlDeviceCameraPol:_picker._unitString];
+        [_shexiangxieyiBtn setTitle:val forState:UIControlStateNormal];
+        [_currentObj._proxyObj controlDeviceCameraPol:val];
     }
     
-    _picker.hidden = YES;
-    
+ 
 }
 
 - (void) createYuYinJiLiView {
     
     _yuyinjiliView = [[UIView alloc] initWithFrame:CGRectMake(0,
-                                                              self.frame.size.height/2-100,
+                                                              0,
                                                               self.frame.size.width,
-                                                              self.frame.size.height/2-1)];
-    
-    [self addSubview:_yuyinjiliView];
+                                                              270)];
     
     int bw = 120;
-    int top = 40;
+    int top = 20;
     int gap = 5;
     int x = self.frame.size.width/2 - gap/2 - bw;
+    
     _shedingzhuxiBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
-    _shedingzhuxiBtn.frame = CGRectMake(x, top, bw, 25);
+    _shedingzhuxiBtn.frame = CGRectMake(x, top, bw, 28);
     _shedingzhuxiBtn.clipsToBounds = YES;
     _shedingzhuxiBtn.layer.cornerRadius = 5;
     [_yuyinjiliView addSubview:_shedingzhuxiBtn];
@@ -361,24 +450,26 @@
     
     x = self.frame.size.width/2 + gap/2;
     _fayanrenshuBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
-    _fayanrenshuBtn.frame = CGRectMake(x, top, bw, 25);
+    _fayanrenshuBtn.frame = CGRectMake(x, top, bw, 28);
     _fayanrenshuBtn.clipsToBounds = YES;
     _fayanrenshuBtn.layer.cornerRadius = 5;
     [_yuyinjiliView addSubview:_fayanrenshuBtn];
     [_fayanrenshuBtn setTitle:@"设定代表" forState:UIControlStateNormal];
     [_fayanrenshuBtn addTarget:self action:@selector(fayanrenshuAction:) forControlEvents:UIControlEventTouchUpInside];
     _fayanrenshuBtn.titleLabel.font = [UIFont systemFontOfSize:15];
-    _yuyinjiliView.hidden = YES;
+    
 }
 
 - (void) createBiaoZhunFaYanView {
     
-    _biaozhunfayanView = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height/2-100, self.frame.size.width, self.frame.size.height/2-1)];
+    _biaozhunfayanView = [[UIView alloc] initWithFrame:CGRectMake(0,
+                                                                  0,
+                                                                  self.frame.size.width,
+                                                                  90)];
     
-    [self addSubview:_biaozhunfayanView];
-    
-    biaozhunfayanBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_BL_COLOR];
-    biaozhunfayanBtn.frame = CGRectMake(_biaozhunfayanView.frame.size.width/2-35, _biaozhunfayanView.frame.size.height/2 -10, 70, 30);
+    biaozhunfayanBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR
+                                        selColor:NEW_ER_BUTTON_BL_COLOR];
+    biaozhunfayanBtn.frame = CGRectMake(_biaozhunfayanView.frame.size.width/2-45, 28, 90, 34);
     biaozhunfayanBtn.clipsToBounds = YES;
     biaozhunfayanBtn.layer.cornerRadius = 5;
     [_biaozhunfayanView addSubview:biaozhunfayanBtn];
@@ -386,7 +477,6 @@
     [biaozhunfayanBtn addTarget:self action:@selector(biaozhunfayanAction:) forControlEvents:UIControlEventTouchUpInside];
     biaozhunfayanBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     
-    _biaozhunfayanView.hidden=YES;
 }
 
 - (void) shedingzhuxiAction:(id)sender {
@@ -406,8 +496,8 @@
     
     int colNumber = 4;
     int space = 5;
-    int cellWidth = 115/2;
-    int cellHeight = 115/2;
+    int cellWidth = 58;
+    int cellHeight = 58;
     int leftRight = (self.frame.size.width - 4*cellWidth - 3*5)/2;
     int top = _shedingzhuxiBtn.frame.origin.y + 45;
     
@@ -417,6 +507,7 @@
     
     int count = (max - min) + 1;
     
+   // int maxY = 0;
     for (int index = 0; index < count; index++) {
         
         int row = index/colNumber;
@@ -446,7 +537,13 @@
         min++;
         
         btn.tag = min;
+        
+       // maxY = CGRectGetMaxY(btn.frame);
     }
+    
+//    CGRect rc = _yuyinjiliView.frame;
+//    rc.size.height = maxY + 20;
+//    _yuyinjiliView.frame = rc;
 }
 - (void) setPriorityAction:(id)sender {
     
@@ -496,8 +593,8 @@
     
     int colNumber = 4;
     int space = 5;
-    int cellWidth = 115/2;
-    int cellHeight = 115/2;
+    int cellWidth = 58;
+    int cellHeight = 58;
     int leftRight = (self.frame.size.width - 4*cellWidth - 3*5)/2;
     int top = _shedingzhuxiBtn.frame.origin.y + 45;
     

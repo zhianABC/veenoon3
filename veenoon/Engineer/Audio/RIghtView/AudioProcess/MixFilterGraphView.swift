@@ -130,8 +130,8 @@ class MixFilterGraphView: UIView {
     private let movePointHighlightedStrokeColor = UIColor(red: 43.0/255.0, green: 225.0/255.0, blue: 249.0/255.0, alpha: 1.0)
     
     // 可拖拽的增益范围
-    private let m_validMaxdB = 15
-    private let m_validMindB = -15
+    private var m_validMaxdB = 15
+    private var m_validMindB = -15
     
     // 可视的增益范围
     private var m_maxdB = 12
@@ -1098,6 +1098,11 @@ class MixFilterGraphView: UIView {
         m_maxdB = max
         m_mindB = min
         setNeedsDisplay()
+    }
+    
+   @objc func setValidGainRange(max: Int, min: Int) {
+        m_validMaxdB = max
+        m_validMindB = min
     }
     
     // 外部接口函数：设置PEQ段数

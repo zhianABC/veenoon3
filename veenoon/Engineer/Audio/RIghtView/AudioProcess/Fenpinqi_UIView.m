@@ -29,8 +29,11 @@
 
 @implementation Fenpinqi_UIView
 @synthesize _currentObj;
+@synthesize ctrl;
+
 
 -(id) initWithFrame:(CGRect)frame withAudiMix:(AudioEMix*) audioMix {
+   
     if(self = [super initWithFrame:frame]) {
         
         self._currentObj = audioMix;
@@ -115,6 +118,16 @@
         _highFilterL.center = CGPointMake(_highFilterSlider.center.x, _highFilterL.center.y);
         _highFilterL.clipsToBounds = YES;
         
+        UIButton* btnEdit = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self addSubview:btnEdit];
+        btnEdit.frame = CGRectMake(CGRectGetMinX(_highFilterL.frame),
+                                   CGRectGetMinY(_highFilterL.frame)-15,
+                                   60,
+                                   50);
+        [btnEdit addTarget:self
+                    action:@selector(editHighFilterAction:)
+          forControlEvents:UIControlEventTouchUpInside];
+        
         int gap = 450;
         
         UILabel *addLabel2 = [[UILabel alloc] init];
@@ -155,7 +168,6 @@
         }
         
         _lowFilgerL = [[UILabel alloc] init];
-        _lowFilgerL.text = [NSString stringWithFormat:@"%@ KHz",lowFilter];
         _lowFilgerL.font = [UIFont systemFontOfSize: 13];
         _lowFilgerL.textColor = [UIColor whiteColor];
         _lowFilgerL.frame = CGRectMake(0, CGRectGetMaxY(_lowFilterSlider.frame), 60, 20);
@@ -166,28 +178,152 @@
         _lowFilgerL.center = CGPointMake(_lowFilterSlider.center.x, _lowFilgerL.center.y);
         _lowFilgerL.clipsToBounds = YES;
         
-        
-        
-        NSString *hz = @"Hz";
-        int freq  = highValue;
-        int showValue = freq;
-        if(freq > 1000)
-        {
-            hz = @"KHz";
-            showValue = freq/1000;
-        }
-        
-        _highFilterL.text = [NSString stringWithFormat:@"%d %@",
-                             showValue,
-                             hz];
-        
+        btnEdit = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self addSubview:btnEdit];
+        btnEdit.frame = CGRectMake(CGRectGetMinX(_lowFilgerL.frame),
+                                   CGRectGetMinY(_lowFilgerL.frame)-15,
+                                   60,
+                                   50);
+        [btnEdit addTarget:self
+                    action:@selector(editLowFilterAction:)
+          forControlEvents:UIControlEventTouchUpInside];
+    
+        _highFilterL.text = [self fomartHzKHz:highValue];
+        _lowFilgerL.text = [self fomartHzKHz:lowWalue];
         
     }
     
     return self;
 }
 
+- (NSString*) fomartHzKHz:(float)freq{
+    
+    NSString *hz = @"Hz";
+    float showValue = freq;
+    if(freq > 1000)
+    {
+        hz = @"KHz";
+        showValue = freq/1000;
+    }
+    
+   return [NSString stringWithFormat:@"%0.0f %@",
+           showValue, hz];
+}
 
+
+- (void) editHighFilterAction:(id)sender{
+    
+    NSString *alert = [NSString stringWithFormat:@"高通频率，范围(%d ~ %d)",
+                       _highFilterMin,
+                       _highFilterMax];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                             message:alert preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"频率";
+        textField.text = @"";//_highFilterL.text;
+        textField.keyboardType = UIKeyboardTypeDecimalPad;
+    }];
+    
+    IMP_BLOCK_SELF(Fenpinqi_UIView);
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        UITextField *alValTxt = alertController.textFields.firstObject;
+        NSString *val = alValTxt.text;
+        if (val && [val length] > 0) {
+            
+            [block_self doSetHighFilterValue:[val intValue]];
+        }
+    }]];
+    
+    [self.ctrl presentViewController:alertController
+                            animated:YES
+                          completion:nil];
+}
+
+- (void) doSetHighFilterValue:(int)val{
+    
+    if(val < _highFilterMin)
+        val = _highFilterMin;
+    if(val > _highFilterMax)
+        val = _highFilterMax;
+    
+    float max = _highFilterMax - _highFilterMin;
+    if(max)
+    {
+        float gtVal = (val - _highFilterMin)/max;
+        [_highFilterSlider setCircleValue:gtVal];
+    }
+    
+    _highFilterL.text = [self fomartHzKHz:val];
+    
+    [_currentObj._proxyObj controlHighFilter:[NSString stringWithFormat:@"%d", val]];
+    [fglm setHPFilterWithFreq:val];
+    
+}
+
+
+- (void) editLowFilterAction:(id)sender{
+ 
+    NSString *alert = [NSString stringWithFormat:@"低通频率，范围(%d ~ %d)",
+                       _lowFilterMin,
+                       _lowFilterMax];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                             message:alert preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"频率";
+        textField.text = @"";//_lowFilgerL.text;
+        textField.keyboardType = UIKeyboardTypeDecimalPad;
+    }];
+    
+    IMP_BLOCK_SELF(Fenpinqi_UIView);
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        UITextField *alValTxt = alertController.textFields.firstObject;
+        NSString *val = alValTxt.text;
+        if (val && [val length] > 0) {
+            
+            [block_self doSetLowFilterValue:[val intValue]];
+        }
+    }]];
+    
+    [self.ctrl presentViewController:alertController
+                            animated:YES
+                          completion:nil];
+}
+
+
+- (void) doSetLowFilterValue:(int)val{
+    
+    if(val < _lowFilterMin)
+        val = _lowFilterMin;
+    if(val > _lowFilterMax)
+        val = _lowFilterMax;
+    
+    float max = _lowFilterMax - _lowFilterMin;
+    if(max)
+    {
+        float gtVal = (val - _lowFilterMin)/max;
+        [_lowFilterSlider setCircleValue:gtVal];
+    }
+    
+    _lowFilgerL.text = [self fomartHzKHz:val];
+    
+    int ctrlVal = val/1000;
+    [_currentObj._proxyObj controlHighFilter:[NSString stringWithFormat:@"%d", ctrlVal]];
+    
+    [fglm setHPFilterWithFreq:val];
+    
+}
+
+#pragma mark --- SlideButton Delegate ---
 
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
@@ -195,16 +331,7 @@
     {
         float freq = (value *(_highFilterMax-_highFilterMin)) + _highFilterMin;
         
-        NSString *hz = @"Hz";
-        float showValue = freq;
-        if(freq > 1000)
-        {
-            hz = @"KHz";
-            showValue = freq/1000;
-        }
-        
-        _highFilterL.text = [NSString stringWithFormat:@"%0.0f %@",
-                             showValue, hz];
+        _highFilterL.text = [self fomartHzKHz:freq];
         
         [_currentObj._proxyObj controlHighFilter:[NSString stringWithFormat:@"%0.0f", freq]];
         
@@ -215,16 +342,7 @@
         {
             float freq = (value *(_lowFilterMax-_lowFilterMin)) + _lowFilterMin;
             
-            NSString *hz = @"Hz";
-            float showValue = freq;
-            if(freq > 1000)
-            {
-                hz = @"KHz";
-                showValue = freq/1000;
-            }
-            
-            _lowFilgerL.text = [NSString stringWithFormat:@"%0.0f %@",
-                                showValue, hz];
+            _lowFilgerL.text = [self fomartHzKHz:freq];
             
             NSString *ctrlVal = [NSString stringWithFormat:@"%0.0f", freq/1000.0];
             //单位是KHz
@@ -233,24 +351,32 @@
             [fglm setLPFilterWithFreq:freq];
         }
 }
+
+
+- (void) didEndSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
+    
+    IMP_BLOCK_SELF(Fenpinqi_UIView);
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+                                 (int64_t)(200.0 * NSEC_PER_MSEC)),
+                   dispatch_get_main_queue(), ^{
+                       
+                       [block_self didSlideButtonValueChanged:value slbtn:slbtn];
+                   });
+}
+
+
+
+#pragma mark --- Filter Gaphic View Deleagte ---
+
 - (void)filterGraphViewPEQFilterBandChoosedWithBand:(NSInteger)band{
     
     
 }
 
 - (void)filterGraphViewHPFilterChangedWithFreq:(float)freq{
-    
-    NSString *hz = @"Hz";
-    float showValue = freq;
-    if(freq > 1000)
-    {
-        hz = @"KHz";
-        showValue = freq/1000;
-    }
-    
-    _highFilterL.text = [NSString stringWithFormat:@"%0.0f %@",
-                         showValue,
-                         hz];
+
+    _highFilterL.text = [self fomartHzKHz:freq];
      [_currentObj._proxyObj controlHighFilter:[NSString stringWithFormat:@"%0.0f", freq]];
     
     float highValue = freq;
@@ -264,19 +390,14 @@
 }
 - (void)filterGraphViewLPFilterChangedWithFreq:(float)freq{
     
-    NSString *hz = @"Hz";
+    _lowFilgerL.text = [self fomartHzKHz:freq];
+    
+
     float showValue = freq;
     if(freq > 1000)
     {
-        hz = @"KHz";
         showValue = freq/1000;
     }
-    
-    _lowFilgerL.text = [NSString stringWithFormat:@"%0.0f %@",
-                        showValue,
-                        hz];
-    
-    
     [_currentObj._proxyObj controlLowFilter:[NSString stringWithFormat:@"%0.0f", showValue]];
     
     float lowWalue = freq;

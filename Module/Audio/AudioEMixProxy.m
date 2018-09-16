@@ -628,6 +628,8 @@
 
 - (NSMutableArray*)getCameraPol{
     
+    [_cameraPol removeAllObjects];
+    
     RgsCommandInfo *cmd = nil;
     cmd = [_cmdMap objectForKey:@"SET_CAM_POL"];
     if(cmd)

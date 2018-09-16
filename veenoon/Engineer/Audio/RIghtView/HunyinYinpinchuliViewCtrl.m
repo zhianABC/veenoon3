@@ -121,14 +121,17 @@
     
     fenpinqi = [[Fenpinqi_UIView alloc] initWithFrame:vrc withAudiMix:_currentObj];
     [self.view addSubview:fenpinqi];
+    fenpinqi.ctrl = self;
     fenpinqi.hidden = NO;
     
     junhengqi = [[JunHengQi_UIView alloc] initWithFrame:vrc withAudiMix:_currentObj];
     [self.view addSubview:junhengqi];
+    junhengqi.ctrl = self;
     junhengqi.hidden = YES;
     
     zaoshengView = [[ZaoShengYaXian_UIView alloc] initWithFrame:vrc withAudiMix:_currentObj];
     [self.view addSubview:zaoshengView];
+    zaoshengView.ctrl = self;
     zaoshengView.hidden = YES;
     
 }

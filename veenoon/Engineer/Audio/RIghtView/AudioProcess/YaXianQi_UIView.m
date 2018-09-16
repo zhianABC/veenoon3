@@ -19,10 +19,10 @@
 {
     UIButton *channelBtn;
     
-    UILabel *lableL1;
-    UILabel *lableL2;
-    UILabel *lableL3;
-    UILabel *lableL4;
+    UILabel *gainLabel;
+    UILabel *qLabel;
+    UILabel *sTimeLabel;
+    UILabel *rTimeLabel;
     
     SlideButton *xielvSlide;
     SlideButton *qidongshijianSlide;
@@ -143,7 +143,7 @@
     [_limiter setThresHoldWithR:value];
     
     if (zengyiDB) {
-        lableL1.text = [zengyiDB stringByAppendingString:@" dB"];
+        gainLabel.text = zengyiDB;
     }
     
     //////
@@ -153,14 +153,14 @@
     int maxR = (maxRadio- minRadio);
     if(maxR)
     {
-        float f = (xielvValue - minRadio)/maxR;
+        float f = (float)(xielvValue - minRadio)/maxR;
         f = fabsf(f);
         [xielvSlide setCircleValue:f];
     }
     
     [_limiter setRatioWithR:xielvValue];
 
-    lableL2.text = xielv;
+    qLabel.text = xielv;
     
     
     NSString *startTime = [_curProxy getYaxianStartTime];
@@ -174,7 +174,7 @@
         [qidongshijianSlide setCircleValue:f];
     }
     
-    lableL3.text = [NSString stringWithFormat:@"%0.0f ms", startTimeValue];
+    sTimeLabel.text = [NSString stringWithFormat:@"%0.0f", startTimeValue];
     
     
     NSString *huifuTime = [_curProxy getYaxianRecoveryTime];
@@ -188,7 +188,7 @@
         [huifushijianSlide setCircleValue:f];
     }
     
-    lableL4.text = [NSString stringWithFormat:@"%0.0f ms", huifuTimeValue];
+    rTimeLabel.text = [NSString stringWithFormat:@"%0.0f", huifuTimeValue];
     
     BOOL isYaXianStarted = [_curProxy isYaXianStarted];
     
@@ -209,14 +209,14 @@
     w = w-m;
     
     int y = (CGRectGetHeight(contentView.frame) - w)/2;
-    CGRect rc = CGRectMake(50, y+20, w, w);
+    CGRect rc = CGRectMake(50, y+5, w, w);
     
     _limiter = [[LimiterView alloc] initWithFrame:rc];
     [contentView addSubview:_limiter];
     _limiter.backgroundColor = [UIColor clearColor];
     
     int x = CGRectGetMaxX(_limiter.frame);
-    y = CGRectGetHeight(contentView.frame)/2-50;
+    y = CGRectGetMinY(_limiter.frame)+30;
     x+=10;
     
     UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(x, y, 120, 20)];
@@ -235,14 +235,24 @@
     [contentView addSubview:fazhiSlider];
     
 
-    lableL1 = [[UILabel alloc] initWithFrame:CGRectMake(x+30, y+20+120, 60, 20)];
-    lableL1.textAlignment = NSTextAlignmentCenter;
-    [contentView addSubview:lableL1];
-    lableL1.font = [UIFont systemFontOfSize:13];
-    lableL1.textColor = NEW_ER_BUTTON_SD_COLOR;
-    lableL1.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR2;
-    lableL1.layer.cornerRadius = 5;
-    lableL1.clipsToBounds=YES;
+    gainLabel = [[UILabel alloc] initWithFrame:CGRectMake(x+30, y+20+120, 60, 20)];
+    gainLabel.textAlignment = NSTextAlignmentCenter;
+    [contentView addSubview:gainLabel];
+    gainLabel.font = [UIFont systemFontOfSize:13];
+    gainLabel.textColor = NEW_ER_BUTTON_SD_COLOR;
+    gainLabel.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR2;
+    gainLabel.layer.cornerRadius = 5;
+    gainLabel.clipsToBounds=YES;
+    
+    UIButton* btnEdit = [UIButton buttonWithType:UIButtonTypeCustom];
+    [contentView addSubview:btnEdit];
+    btnEdit.frame = CGRectMake(CGRectGetMinX(gainLabel.frame),
+                               CGRectGetMinY(gainLabel.frame)-15,
+                               60,
+                               50);
+    [btnEdit addTarget:self
+                action:@selector(editGainAction:)
+      forControlEvents:UIControlEventTouchUpInside];
     
     x+=120;
     x+=10;
@@ -262,14 +272,24 @@
     xielvSlide.tag = 2;
     [contentView addSubview:xielvSlide];
 
-    lableL2 = [[UILabel alloc] initWithFrame:CGRectMake(x+30, y+20+120, 60, 20)];
-    lableL2.textAlignment = NSTextAlignmentCenter;
-    [contentView addSubview:lableL2];
-    lableL2.font = [UIFont systemFontOfSize:13];
-    lableL2.textColor = NEW_ER_BUTTON_SD_COLOR;
-    lableL2.backgroundColor=NEW_ER_BUTTON_GRAY_COLOR2;
-    lableL2.layer.cornerRadius = 5;
-    lableL2.clipsToBounds=YES;
+    qLabel = [[UILabel alloc] initWithFrame:CGRectMake(x+30, y+20+120, 60, 20)];
+    qLabel.textAlignment = NSTextAlignmentCenter;
+    [contentView addSubview:qLabel];
+    qLabel.font = [UIFont systemFontOfSize:13];
+    qLabel.textColor = NEW_ER_BUTTON_SD_COLOR;
+    qLabel.backgroundColor=NEW_ER_BUTTON_GRAY_COLOR2;
+    qLabel.layer.cornerRadius = 5;
+    qLabel.clipsToBounds=YES;
+    
+    btnEdit = [UIButton buttonWithType:UIButtonTypeCustom];
+    [contentView addSubview:btnEdit];
+    btnEdit.frame = CGRectMake(CGRectGetMinX(qLabel.frame),
+                               CGRectGetMinY(qLabel.frame)-15,
+                               60,
+                               50);
+    [btnEdit addTarget:self
+                action:@selector(editQAction:)
+      forControlEvents:UIControlEventTouchUpInside];
     
     x+=120;
     x+=10;
@@ -289,14 +309,25 @@
     qidongshijianSlide.tag = 3;
     [contentView addSubview:qidongshijianSlide];
     
-    lableL3 = [[UILabel alloc] initWithFrame:CGRectMake(x+30, y+20+120, 60, 20)];
-    lableL3.textAlignment = NSTextAlignmentCenter;
-    [contentView addSubview:lableL3];
-    lableL3.font = [UIFont systemFontOfSize:13];
-    lableL3.textColor = YELLOW_COLOR;
-    lableL3.layer.cornerRadius=5;
-    lableL3.clipsToBounds=YES;
-    lableL3.backgroundColor=NEW_ER_BUTTON_GRAY_COLOR2;
+    sTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(x+30, y+20+120, 60, 20)];
+    sTimeLabel.textAlignment = NSTextAlignmentCenter;
+    [contentView addSubview:sTimeLabel];
+    sTimeLabel.font = [UIFont systemFontOfSize:13];
+    sTimeLabel.textColor = YELLOW_COLOR;
+    sTimeLabel.layer.cornerRadius=5;
+    sTimeLabel.clipsToBounds=YES;
+    sTimeLabel.backgroundColor=NEW_ER_BUTTON_GRAY_COLOR2;
+    
+    btnEdit = [UIButton buttonWithType:UIButtonTypeCustom];
+    [contentView addSubview:btnEdit];
+    btnEdit.frame = CGRectMake(CGRectGetMinX(sTimeLabel.frame),
+                               CGRectGetMinY(sTimeLabel.frame)-15,
+                               60,
+                               50);
+    [btnEdit addTarget:self
+                action:@selector(editSTAction:)
+      forControlEvents:UIControlEventTouchUpInside];
+    
     x+=120;
     x+=10;
     
@@ -315,17 +346,31 @@
     huifushijianSlide.tag = 4;
     [contentView addSubview:huifushijianSlide];
     
-    lableL4 = [[UILabel alloc] initWithFrame:CGRectMake(x+30, y+20+120, 60, 20)];
-    lableL4.textAlignment = NSTextAlignmentCenter;
-    [contentView addSubview:lableL4];
-    lableL4.font = [UIFont systemFontOfSize:13];
-    lableL4.textColor = YELLOW_COLOR;
-    lableL4.layer.cornerRadius=5;
-    lableL4.clipsToBounds=YES;
-    lableL4.backgroundColor=NEW_ER_BUTTON_GRAY_COLOR2;
+    rTimeLabel = [[UILabel alloc] initWithFrame:CGRectMake(x+30, y+20+120, 60, 20)];
+    rTimeLabel.textAlignment = NSTextAlignmentCenter;
+    [contentView addSubview:rTimeLabel];
+    rTimeLabel.font = [UIFont systemFontOfSize:13];
+    rTimeLabel.textColor = YELLOW_COLOR;
+    rTimeLabel.layer.cornerRadius=5;
+    rTimeLabel.clipsToBounds=YES;
+    rTimeLabel.backgroundColor=NEW_ER_BUTTON_GRAY_COLOR2;
+    
+    btnEdit = [UIButton buttonWithType:UIButtonTypeCustom];
+    [contentView addSubview:btnEdit];
+    btnEdit.frame = CGRectMake(CGRectGetMinX(rTimeLabel.frame),
+                               CGRectGetMinY(rTimeLabel.frame)-15,
+                               60,
+                               50);
+    [btnEdit addTarget:self
+                action:@selector(editRTAction:)
+      forControlEvents:UIControlEventTouchUpInside];
+    
     
     _enableStartBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:THEME_RED_COLOR];
-    _enableStartBtn.frame = CGRectMake(contentView.frame.size.width/2 + 110, contentView.frame.size.height - 40, 50, 30);
+    _enableStartBtn.frame = CGRectMake(contentView.frame.size.width/2 + 110,
+                                       CGRectGetMaxY(rTimeLabel.frame)+30,
+                                       50,
+                                       30);
     _enableStartBtn.layer.cornerRadius = 5;
     _enableStartBtn.layer.borderWidth = 2;
     _enableStartBtn.layer.borderColor = [UIColor clearColor].CGColor;;
@@ -338,7 +383,199 @@
     [contentView addSubview:_enableStartBtn];
 }
 
--(void) enableStartBtnAction:(id) sender {
+
+- (void) editGainAction:(id)sender{
+    
+    NSString *alert = [NSString stringWithFormat:@"阀值，范围[%d ~ %d(dB)]",
+                       minTh,
+                       maxTh];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                             message:alert preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"阀值";
+        textField.text = gainLabel.text;
+        textField.keyboardType = UIKeyboardTypeDecimalPad;
+    }];
+    
+    IMP_BLOCK_SELF(YaXianQi_UIView);
+
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        UITextField *alValTxt = alertController.textFields.firstObject;
+        NSString *val = alValTxt.text;
+        if (val && [val length] > 0) {
+            
+            [block_self doSetGainValue:[val intValue]];
+        }
+    }]];
+    
+    [self.ctrl presentViewController:alertController animated:true completion:nil];
+}
+
+- (void) doSetGainValue:(int)val{
+    
+    int gain = val;
+
+    if(maxTh - minTh)
+    {
+        float gtVal = (float)(gain - minTh)/(maxTh - minTh);
+        [fazhiSlider setCircleValue:gtVal];
+    }
+    
+    gainLabel.text = [NSString stringWithFormat:@"%d", gain];
+    
+    [_limiter setThresHoldWithR:gain];
+    [_curProxy controlYaxianFazhi:[NSString stringWithFormat:@"%d", gain]];
+}
+
+- (void) editQAction:(id)sender{
+    
+    NSString *alert = [NSString stringWithFormat:@"斜率，范围(%d ~ %d)",
+                       minRadio,
+                       maxRadio];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                             message:alert preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"斜率";
+        textField.text = qLabel.text;
+        textField.keyboardType = UIKeyboardTypeDecimalPad;
+    }];
+    
+    IMP_BLOCK_SELF(YaXianQi_UIView);
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        UITextField *alValTxt = alertController.textFields.firstObject;
+        NSString *val = alValTxt.text;
+        if (val && [val length] > 0) {
+            
+            [block_self doSetQValue:[val intValue]];
+        }
+    }]];
+    
+    [self.ctrl presentViewController:alertController animated:true completion:nil];
+}
+
+- (void) doSetQValue:(int)val{
+    
+    float max = maxRadio - minRadio;
+    if(max)
+    {
+        float gtVal = (val - minRadio)/max;
+        [xielvSlide setCircleValue:gtVal];
+    }
+    
+    NSString *valueStr = [NSString stringWithFormat:@"%d", val];
+    qLabel.text = valueStr;
+    
+    [_limiter setRatioWithR:val];
+    [_curProxy controlYaxianXielv:valueStr];
+    
+}
+
+
+- (void) editSTAction:(id)sender{
+    
+    NSString *alert = [NSString stringWithFormat:@"启动时间，范围(%d ~ %d)",
+                       minStartDur,
+                       maxStartDur];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                             message:alert preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"启动时间";
+        textField.text = sTimeLabel.text;
+        textField.keyboardType = UIKeyboardTypeDecimalPad;
+    }];
+    
+    IMP_BLOCK_SELF(YaXianQi_UIView);
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        UITextField *alValTxt = alertController.textFields.firstObject;
+        NSString *val = alValTxt.text;
+        if (val && [val length] > 0) {
+            
+            [block_self doSetSTValue:[val intValue]];
+        }
+    }]];
+    
+    [self.ctrl presentViewController:alertController animated:true completion:nil];
+}
+
+- (void) doSetSTValue:(int)val{
+    
+    float max = maxStartDur - minStartDur;
+    if(max)
+    {
+        float gtVal = (val - minStartDur)/max;
+        [qidongshijianSlide setCircleValue:gtVal];
+    }
+    
+    NSString *valueStr = [NSString stringWithFormat:@"%d", val];
+    sTimeLabel.text = valueStr;
+    
+    [_curProxy controlYaxianStartTime:valueStr];
+
+}
+
+
+- (void) editRTAction:(id)sender{
+    
+    NSString *alert = [NSString stringWithFormat:@"恢复时间，范围(%d ~ %d)",
+                       minRecoveDur,
+                       maxRecoveDur];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                             message:alert preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"恢复时间";
+        textField.text = rTimeLabel.text;
+        textField.keyboardType = UIKeyboardTypeDecimalPad;
+    }];
+    
+    IMP_BLOCK_SELF(YaXianQi_UIView);
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        UITextField *alValTxt = alertController.textFields.firstObject;
+        NSString *val = alValTxt.text;
+        if (val && [val length] > 0) {
+            
+            [block_self doSetRTValue:[val intValue]];
+        }
+    }]];
+    
+    [self.ctrl presentViewController:alertController animated:true completion:nil];
+}
+
+- (void) doSetRTValue:(int)val{
+    
+    float max = maxRecoveDur - minRecoveDur;
+    if(max)
+    {
+        float gtVal = (val - minRecoveDur)/max;
+        [huifushijianSlide setCircleValue:gtVal];
+    }
+    
+    NSString *valueStr = [NSString stringWithFormat:@"%d", val];
+    rTimeLabel.text = valueStr;
+    
+   [_curProxy controlYaxianRecoveryTime:valueStr];
+    
+}
+
+- (void) enableStartBtnAction:(id) sender {
     BOOL isYaXianStarted = [_curProxy isYaXianStarted];
     
     isYaXianStarted = !isYaXianStarted;
@@ -397,46 +634,71 @@
     [self updateYaXianQi];
     
 }
-- (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
-    
-    int tag = (int) slbtn.tag;
-    if (tag == 1) {
-        float k = (value *(maxTh-minTh)) + minTh;
-        NSString *valueStr= [NSString stringWithFormat:@"%0.1f dB", k];
-        
-        lableL1.text = valueStr;
-        
-        [_limiter setThresHoldWithR:k];
-        
-        [_curProxy controlYaxianFazhi:[NSString stringWithFormat:@"%0.1f", k]];
 
-    } else if (tag == 2) {
+#pragma mark -- SlideButton Delegate ----
+
+- (void) processSlideValue:(float)value tag:(int)tag{
+    
+    if (tag == 1)
+    {
+        float k = (value *(maxTh-minTh)) + minTh;
+        NSString *valueStr= [NSString stringWithFormat:@"%0.1f", k];
+        
+        gainLabel.text = valueStr;
+        [_limiter setThresHoldWithR:k];
+        [_curProxy controlYaxianFazhi:valueStr];
+    }
+    else if (tag == 2)
+    {
         int k = (value * (maxRadio - minRadio)) + minRadio;
         NSString *valueStr = [NSString stringWithFormat:@"%d", k];
         
-        lableL2.text = valueStr;
-        
+        qLabel.text = valueStr;
         [_limiter setRatioWithR:k];
-        
         [_curProxy controlYaxianXielv:valueStr];
         
-    } else if (tag == 3) {
-        
+    }
+    else if (tag == 3)
+    {
         int k = (value *(maxStartDur - minStartDur)) + minStartDur;
         NSString *valueStr= [NSString stringWithFormat:@"%d", k];
         
-        lableL3.text = [NSString stringWithFormat:@"%@ ms",valueStr];
-        
+        sTimeLabel.text = valueStr;
         [_curProxy controlYaxianStartTime:valueStr];
-    } else {
+        
+    }
+    else
+    {
         int k = (value *(maxRecoveDur - minRecoveDur)) + minRecoveDur;
-        NSString *valueStr= [NSString stringWithFormat:@"%d", k];
+        NSString *valueStr = [NSString stringWithFormat:@"%d", k];
         
-        lableL4.text = [NSString stringWithFormat:@"%@ ms",valueStr];
-        
+        rTimeLabel.text = valueStr;
         [_curProxy controlYaxianRecoveryTime:valueStr];
     }
 }
+
+- (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
+    
+    int tag = (int) slbtn.tag;
+    
+    [self processSlideValue:value tag:tag];
+}
+
+
+- (void) didEndSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
+    
+    IMP_BLOCK_SELF(YaXianQi_UIView);
+    
+    int tag = (int) slbtn.tag;
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+                                 (int64_t)(200.0 * NSEC_PER_MSEC)),
+                   dispatch_get_main_queue(), ^{
+                       
+                       [block_self processSlideValue:value tag:tag];
+                   });
+}
+
 
 - (void) onCopyData:(id)sender{
     
