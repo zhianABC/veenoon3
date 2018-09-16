@@ -32,6 +32,8 @@
 - (void) updateMeetingRoomAreaId:(int)room_id areaId:(int)area_id;
 - (NSMutableArray*) getMeetingRooms;
 
+- (void) deleteMeetingRoom;
+
 
 - (int) saveScenario:(NSDictionary*)scenario;
 - (int) deleteScenario:(NSDictionary*)scenario;

@@ -190,7 +190,8 @@
     float labelStartX = (SCREEN_WIDTH - maxWidth*2 - 60 - 15)/2.0;
     int labelStartY = 480;
     
-    labelStartX=labelStartX-35;
+    labelStartX=labelStartX-57;
+    
     UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(labelStartX,
                                                                 labelStartY,
                                                                 maxWidth, 20)];
@@ -205,8 +206,8 @@
     [_productTypePikcer removeArray];
     _productTypePikcer.delegate_=self;
     _productTypePikcer.tag = 101;
-    _productTypePikcer.fontSize = 14;
-    _productTypePikcer._selectColor = RGB(253, 180, 0);
+    _productTypePikcer.fontSize = 16;
+    _productTypePikcer._selectColor = NEW_ER_BUTTON_SD_COLOR;
     _productTypePikcer._rowNormalColor = [UIColor whiteColor];
     [self.view addSubview:_productTypePikcer];
     
@@ -227,7 +228,7 @@
                                                                               maxWidth, 160)];
     _brandPicker.tag=102;
     [_brandPicker  removeArray];
-    _brandPicker._selectColor = RGB(253, 180, 0);
+    _brandPicker._selectColor = NEW_ER_BUTTON_SD_COLOR;
     _brandPicker._rowNormalColor = [UIColor whiteColor];
     [self.view addSubview:_brandPicker];
     
@@ -245,7 +246,7 @@
     _productCategoryPicker = [[CenterCustomerPickerView alloc] initWithFrame:CGRectMake(x1, labelStartY+20, maxWidth, 160)];
     _productCategoryPicker.tag=103;
     [_productCategoryPicker removeArray];
-    _productCategoryPicker._selectColor = RGB(253, 180, 0);
+    _productCategoryPicker._selectColor = NEW_ER_BUTTON_SD_COLOR;
     _productCategoryPicker._rowNormalColor = [UIColor whiteColor];
     [self.view addSubview:_productCategoryPicker];
     

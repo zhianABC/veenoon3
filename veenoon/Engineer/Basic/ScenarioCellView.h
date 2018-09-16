@@ -27,5 +27,6 @@
 - (void) fillData:(Scenario*)data;
 - (void) refreshDraggedData:(NSDictionary*)data;
 
+- (Scenario*) getData;
 
 @end

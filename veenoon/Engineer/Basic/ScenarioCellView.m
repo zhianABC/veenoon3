@@ -75,7 +75,10 @@
     
     return self;
 }
-
+- (Scenario*) getData {
+    
+    return self._scen;
+}
 - (void) fillData:(Scenario *)data
 {
     self._scen = data;

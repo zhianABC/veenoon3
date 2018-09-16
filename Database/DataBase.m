@@ -24,6 +24,21 @@
 
 static DataBase* sharedInstance = nil;
 
+- (void) deleteMeetingRoom {
+    NSString *s = [NSString stringWithFormat:@"delete from tblMeetingRoomCachedTable"];
+    const char *sqlStatement = [s UTF8String];
+    sqlite3_stmt *statement;
+    
+    int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
+    if (success != SQLITE_OK) {
+        NSLog(@"Error: failed to access:tblMeetingRoomCachedTable");
+        return;
+    }
+    
+    success = sqlite3_step(statement);
+    sqlite3_finalize(statement);
+}
+
 + (DataBase*)sharedDatabaseInstance{
     
     if(sharedInstance == nil){

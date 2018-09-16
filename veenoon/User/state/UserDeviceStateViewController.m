@@ -187,7 +187,7 @@
                  [driverIDs addObject:[NSNumber numberWithInteger:proxy_obj.driver_id]];
              }
              
-             NSMutableArray *currentDrivers = [[DataSync sharedDataSync] getCurrentDrivers];
+             NSArray *currentDrivers = [[DataSync sharedDataSync] getCurrentDrivers];
              NSMutableDictionary *mapDrivers = [[DataCenter defaultDataCenter] getAllDrivers];
              
              [[RegulusSDK sharedRegulusSDK] GetProxysCurState:proxy_ids completion:^(BOOL result, NSArray *state_list, NSError *error) {
