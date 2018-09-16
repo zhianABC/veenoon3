@@ -57,7 +57,9 @@
     
     return _RgsSceneDeviceOperationShadow;
 }
-
+- (NSString*) getDevicePower {
+    return self._power;
+}
 - (void) recoverWithDictionary:(NSArray*)datas{
     
     for(RgsSceneDeviceOperation *dopt in datas)

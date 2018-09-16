@@ -62,7 +62,7 @@
     [self.view addSubview:line2];
     
     _botomView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-132, SCREEN_WIDTH, 134)];
-    _botomView.contentSize =  CGSizeMake(SCREEN_WIDTH*2 + 300, 132);
+    _botomView.contentSize =  CGSizeMake(SCREEN_WIDTH+560, 132);
     _botomView.scrollEnabled=YES;
     _botomView.backgroundColor = USER_GRAY_COLOR;
     [self.view addSubview:_botomView];
@@ -106,20 +106,20 @@
     _floorWarmBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*6, height, 80, 100)];
     [_floorWarmBtn buttonWithIcon:[UIImage imageNamed:@"floor_warm_n.png"] selectedIcon:[UIImage imageNamed:@"floor_warm_s.png"] text:@"地暖" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_floorWarmBtn addTarget:self action:@selector(floorWarmSysAction:) forControlEvents:UIControlEventTouchUpInside];
-    [_botomView addSubview:_floorWarmBtn];
+//    [_botomView addSubview:_floorWarmBtn];
     
-    _airCleanBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*7, height, 80, 100)];
+    _airCleanBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*6, height, 80, 100)];
     [_airCleanBtn buttonWithIcon:[UIImage imageNamed:@"air_clean_sys_n.png"] selectedIcon:[UIImage imageNamed:@"air_clean_sys_s.png"] text:@"空气净化" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_airCleanBtn addTarget:self action:@selector(airCleanSysAction:) forControlEvents:UIControlEventTouchUpInside];
     [_botomView addSubview:_airCleanBtn];
     
-    _addWetBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*8, height, 80, 100)];
+    _addWetBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*7, height, 80, 100)];
     [_addWetBtn buttonWithIcon:[UIImage imageNamed:@"add_wet_sys_n.png"] selectedIcon:[UIImage imageNamed:@"add_wet_sys_s.png"] text:@"加湿器" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_addWetBtn addTarget:self action:@selector(addWetSysAction:) forControlEvents:UIControlEventTouchUpInside];
     [_botomView addSubview:_addWetBtn];
     
     
-    _monitorBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*9, height, 80, 100)];
+    _monitorBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*8, height, 80, 100)];
     [_monitorBtn buttonWithIcon:[UIImage imageNamed:@"monitor_sys_n.png"] selectedIcon:[UIImage imageNamed:@"monitor_sys_s.png"] text:@"监控" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_monitorBtn addTarget:self action:@selector(monitorSysAction:) forControlEvents:UIControlEventTouchUpInside];
     [_botomView addSubview:_monitorBtn];
@@ -127,7 +127,7 @@
     _energyCollectBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*10, height, 80, 100)];
     [_energyCollectBtn buttonWithIcon:[UIImage imageNamed:@"energy_collect_n.png"] selectedIcon:[UIImage imageNamed:@"energy_collect_s.png"] text:@"能耗统计" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_energyCollectBtn addTarget:self action:@selector(energySysAction:) forControlEvents:UIControlEventTouchUpInside];
-    [_botomView addSubview:_energyCollectBtn];
+//    [_botomView addSubview:_energyCollectBtn];
     
     
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];

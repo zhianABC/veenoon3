@@ -85,13 +85,12 @@
     titleL.text = [NSString stringWithFormat:@"%@ - 场景应用",_currentRoom.room_name];
     
     UIButton *btnState = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnState.frame = CGRectMake(60, SCREEN_HEIGHT - 50, 60, 50);
+    btnState.frame = CGRectMake(60, SCREEN_HEIGHT - 50, 60, 40);
     [btnState setImage:[UIImage imageNamed:@"state_summary_white.png"]
               forState:UIControlStateNormal];
     [btnState setImage:[UIImage imageNamed:@"state_summary.png"]
              forState:UIControlStateHighlighted];
     [self.view addSubview:btnState];
-    btnState.center = CGPointMake(SCREEN_WIDTH/4, btnState.center.y);
     [btnState addTarget:self
                  action:@selector(stateAction:)
        forControlEvents:UIControlEventTouchUpInside];
@@ -103,7 +102,6 @@
     [btnAuto setImage:[UIImage imageNamed:@"sync_icon.png"]
              forState:UIControlStateHighlighted];
     [self.view addSubview:btnAuto];
-    btnAuto.center = CGPointMake(SCREEN_WIDTH*3/4.0, btnState.center.y);
     [btnAuto addTarget:self
                  action:@selector(autoAyncAction:)
        forControlEvents:UIControlEventTouchUpInside];
@@ -142,7 +140,7 @@
 #endif
     
     UIButton *btnSync = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnSync.frame = CGRectMake(SCREEN_WIDTH - 90, 42, 42, 42);
+    btnSync.frame = CGRectMake(SCREEN_WIDTH - 120, 42, 60, 50);
     [btnSync setImage:[UIImage imageNamed:@"sync_data_n.png"] forState:UIControlStateNormal];
     [btnSync setImage:[UIImage imageNamed:@"sync_data_s.png"] forState:UIControlStateHighlighted];
         [self.view addSubview:btnSync];

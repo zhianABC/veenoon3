@@ -33,6 +33,7 @@
 - (NSArray*)getDirectOptions;
 
 - (void) controlDevicePower:(NSString*)power;
+- (NSString*) getDevicePower;
 - (void) controlDeviceInput:(NSString*)input;
 
 - (BOOL) isSetChanged;

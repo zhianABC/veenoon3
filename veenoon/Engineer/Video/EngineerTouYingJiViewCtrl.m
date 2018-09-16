@@ -81,6 +81,13 @@
     [_powerOnBtn setImage:[UIImage imageNamed:@"engineer_lubo_s.png"] forState:UIControlStateHighlighted];
     [self.view addSubview:_powerOnBtn];
     
+    NSString *powerOn = [self._currentObj._proxyObj getDevicePower];
+    if ([@"ON" isEqualToString:powerOn]) {
+        [_powerOnBtn setImage:[UIImage imageNamed:@"engineer_lubo_s.png"] forState:UIControlStateNormal];
+    } else {
+        [_powerOnBtn setImage:[UIImage imageNamed:@"engineer_lubo_n.png"] forState:UIControlStateNormal];
+    }
+    
     [_powerOnBtn addTarget:self
                  action:@selector(powerOnAction:)
        forControlEvents:UIControlEventTouchUpInside];
@@ -394,13 +401,16 @@
 
 - (void) powerOnAction:(id)sender{
     
-    _powerOnBtn.hidden = YES;
-    _powerOffBtn.hidden = NO;
-    
     VProjectProxys *vcam = _currentObj._proxyObj;
-    if(vcam)
-        [vcam controlDevicePower:@"ON"];
     
+    NSString *powerOn = [self._currentObj._proxyObj getDevicePower];
+    if ([@"ON" isEqualToString:powerOn]) {
+        [_powerOnBtn setImage:[UIImage imageNamed:@"engineer_lubo_n.png"] forState:UIControlStateNormal];
+        [vcam controlDevicePower:@"OFF"];
+    } else {
+        [_powerOnBtn setImage:[UIImage imageNamed:@"engineer_lubo_s.png"] forState:UIControlStateNormal];
+        [vcam controlDevicePower:@"ON"];
+    }
 }
 - (void) powerOffAction:(id)sender{
     
