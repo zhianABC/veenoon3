@@ -80,7 +80,7 @@
     [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
     [editBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [editBtn setTitleColor:RGB(242, 148, 20) forState:UIControlStateHighlighted];
-    editBtn.titleLabel.font = [UIFont boldSystemFontOfSize:20];
+    editBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [editBtn addTarget:self action:@selector(editAction:)
       forControlEvents:UIControlEventTouchUpInside];
 
