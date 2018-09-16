@@ -452,6 +452,23 @@
     _proxysView.scrollEnabled = YES;
 }
 
+- (void) didSliderMuteChanged:(BOOL)mute object:(id)object{
+    
+    JSlideView *jsl = object;
+    if(jsl && [jsl isKindOfClass:[JSlideView class]])
+    {
+        id data = jsl.data;
+        if([data isKindOfClass:[VAProcessorProxys class]])
+        {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(200.0 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
+            
+                [(VAProcessorProxys*)data controlDigtalMute:mute];
+            });
+            
+        }
+    }
+}
+
 
 - (void) okAction:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];

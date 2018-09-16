@@ -13,6 +13,7 @@
 @optional
 - (void) didSliderValueChanged:(float)value object:(id)object;
 - (void) didSliderEndChanged:(id)object;
+- (void) didSliderMuteChanged:(BOOL)mute object:(id)object;
 
 @end
 

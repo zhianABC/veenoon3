@@ -51,7 +51,7 @@
         
         roadSlider = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"v_slider_road.png"]];
         [self addSubview:roadSlider];
-        roadSlider.image = [UIImage imageNamed:@"v_slider_road_n.png"];
+        roadSlider.image = [UIImage imageNamed:@"user_audio_slider_road_gray.png"];
         roadSlider.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds)+2);;
         roadSlider.clipsToBounds = YES;
         
@@ -71,7 +71,7 @@
         valueLabel.font = [UIFont systemFontOfSize:13];
         valueLabel.textAlignment = NSTextAlignmentCenter;
         
-        stepValue = 0.1;
+        stepValue = 1;
         
         mute = NO;
         
@@ -96,16 +96,24 @@
     valueLabel.text = [NSString stringWithFormat:@"%d", (scalValue)];
     curValue = scalValue;
     
-    if (scalValue == minValue) {
+    if (scalValue <= minValue)
+    {
         
         sliderThumb.image = [UIImage imageNamed:@"jslide_thumb_n.png"];
         
-    } else {
+        if(!mute)
+         indicator.image = [UIImage imageNamed:@"wireless_slide_n.png"];
+        
+    }
+    else
+    {
         
         sliderThumb.image = [UIImage imageNamed:@"jslide_thumb.png"];
         
+        if(!mute)
+        indicator.image = [UIImage imageNamed:@"wireless_slide_s.png"];
+        
     }
-    
     
     CGRect rc = roadSliderHighlight.frame;
     rc.origin.y = CGRectGetMidY(sliderThumb.frame);
@@ -146,16 +154,29 @@
     if(mute)
     {
         mute = NO;
-        indicator.alpha = 1;
+        //indicator.alpha = 1;
         
-        
+        float f = [self getScaleValue];
+        if(f > minValue)
+        {
+            indicator.image = [UIImage imageNamed:@"wireless_slide_s.png"];
+        }
+        else
+        {
+            indicator.image = [UIImage imageNamed:@"wireless_slide_n.png"];
+        }
     }
     else
     {
         mute = YES;
-        indicator.alpha = 0.3;
+        //indicator.alpha = 0.3;
         
-        
+        indicator.image = [UIImage imageNamed:@"wireless_slide_mute.png"];
+    }
+    
+    if(delegate && [delegate respondsToSelector:@selector(didSliderMuteChanged:object:)])
+    {
+        [delegate didSliderMuteChanged:mute object:self];
     }
 }
 
@@ -172,37 +193,6 @@
     {
         beginPoint.y = CGRectGetMaxY(roadSlider.frame);
     }
-    /*
-    CGPoint p = [[touches anyObject] locationInView:self];
-    CGRect rc = slider.frame;
-    
-    rc = CGRectMake(rc.origin.x, rc.origin.y, rc.size.width, rc.size.height);
-    
-	if (CGRectContainsPoint(rc, p)) {
-        
-        CGPoint colorPoint = p;
-        colorPoint.x = slider.center.x;
-        if(colorPoint.y < topEdge)
-            colorPoint.y = topEdge;
-        if(colorPoint.y > rc.size.height - bottomEdge)
-            colorPoint.y = rc.size.height - bottomEdge;
-        sliderThumb.center = colorPoint;
-        
-        
-        int h = rc.size.height - topEdge - bottomEdge;
-        int subh = (rc.size.height - bottomEdge) - sliderThumb.center.y;
-        float value = (maxValue - minValue)*(float)subh/h + minValue;
-        
-       
-        [self resetScalValue:value];
-        
-        if(delegate && [delegate respondsToSelector:@selector(didSliderValueChanged:object:)])
-        {
-            
-            [delegate didSliderValueChanged:value object:self];
-        }
-    }
-     */
 }
 
 - (void) moveToBeginPoint{
