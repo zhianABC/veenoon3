@@ -34,6 +34,13 @@
     UIButton *iBtn;
     
     int topy;
+    
+    BOOL _isEditMode;
+    
+    UIButton *editBtn;
+    UIButton *_doneBtn;
+    
+    NSMutableArray *_deleteCells;
 }
 @property (nonatomic, strong) NSMutableArray *_sBtns;
 @property (nonatomic, strong) NSMutableDictionary *_map;
@@ -57,6 +64,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    _isEditMode = NO;
+    _deleteCells = [NSMutableArray array];
     
     self.view.backgroundColor = LOGIN_BLACK_COLOR;
 
@@ -95,6 +105,29 @@
     [cancelBtn addTarget:self
                   action:@selector(backAction:)
         forControlEvents:UIControlEventTouchUpInside];
+    
+    editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    editBtn.frame = CGRectMake(SCREEN_WIDTH-120, 60, 60, 40);
+    [self.view addSubview:editBtn];
+    [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
+    [editBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [editBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
+    editBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [editBtn addTarget:self action:@selector(editAction:)
+      forControlEvents:UIControlEventTouchUpInside];
+    
+    _doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _doneBtn.frame = CGRectMake(SCREEN_WIDTH-120, 60, 60, 40);
+    [self.view addSubview:_doneBtn];
+    [_doneBtn setTitle:@"完成" forState:UIControlStateNormal];
+    [_doneBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_doneBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
+    _doneBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [_doneBtn addTarget:self
+                 action:@selector(doneAction:)
+       forControlEvents:UIControlEventTouchUpInside];
+    _doneBtn.hidden = YES;
+    
     
     UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT,
                                                                       ENGINEER_VIEW_TOP,
@@ -170,6 +203,87 @@
                                                object:nil];
 }
 
+- (void) doneAction:(id)sender{
+    
+    _isEditMode = NO;
+    
+    _doneBtn.hidden = YES;
+    editBtn.hidden = NO;
+    
+    for(UIButton *btn in _deleteCells)
+    {
+        [btn removeFromSuperview];
+    }
+    
+    [_deleteCells removeAllObjects];
+    
+    
+    [self layoutScenarios];
+    
+}
+
+-(void) editAction:(id)sender {
+    if(_isEditMode)
+        return;
+    _isEditMode = YES;
+    
+    _doneBtn.hidden = NO;
+    editBtn.hidden = YES;
+    
+    [_deleteCells removeAllObjects];
+    
+    int size = (int)[_sBtns count];
+    int index = 0;
+    for(ScenarioCellView *btn in _sBtns)
+    {
+        if (index == size - 1) {
+            continue;
+        }
+        UIButton *btnDel = [UIButton buttonWithType:UIButtonTypeCustom];
+        btnDel.frame = btn.bounds;
+        btnDel.tag = btn.tag;
+        
+        [btn addSubview:btnDel];
+        
+        [btnDel setImage:[UIImage imageNamed:@"red_del_icon.png"]
+                forState:UIControlStateNormal];
+        
+        btnDel.imageEdgeInsets = UIEdgeInsetsMake(-75, -75, 0, 0);
+        
+        [btnDel addTarget:self
+                   action:@selector(delButton:)
+         forControlEvents:UIControlEventTouchUpInside];
+        
+        [_deleteCells addObject:btnDel];
+        
+        index++;
+    }
+}
+
+- (void) delButton:(UIButton*)cellBtn{
+    
+    ScenarioCellView *supBtn = (ScenarioCellView*)cellBtn.superview;
+    if([supBtn isKindOfClass:[ScenarioCellView class]])
+    {
+        Scenario *sen = [supBtn getData];
+        if (sen) {
+            [[RegulusSDK sharedRegulusSDK] DeleteDriver:sen._rgsSceneObj.m_id
+                                             completion:^(BOOL result, NSError *error) {
+                if (result) {
+                    
+                    [supBtn removeFromSuperview];
+                    
+                    
+                    [_sBtns removeObject:supBtn];
+                    
+                    [self._scenarioArray removeObject:sen];
+                    
+                }
+            }];
+        }
+    }
+    
+}
 
 - (void) iconAction:(id)sender{
     
