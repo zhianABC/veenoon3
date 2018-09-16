@@ -176,6 +176,7 @@
         titleL.backgroundColor = [UIColor clearColor];
         titleL.textAlignment = NSTextAlignmentCenter;
         [btn addSubview:titleL];
+        titleL.alpha = 0.5;
         titleL.font = [UIFont boldSystemFontOfSize:11];
         titleL.textColor  = [UIColor whiteColor];
         titleL.text = [@"CH " stringByAppendingString:[NSString stringWithFormat:@"0%d",i+1]];
@@ -253,7 +254,8 @@
         [_selectedBtnArray addObject:slbtn];
 
         UILabel *numberL = [_buttonNumberArray objectAtIndex:slbtn.tag];
-        numberL.textColor = YELLOW_COLOR;
+        numberL.textColor = NEW_ER_BUTTON_SD_COLOR;
+        numberL.alpha = 1.0;
 
         [slbtn enableValueSet:YES];
         
@@ -267,7 +269,8 @@
         [_selectedBtnArray removeObject:slbtn];
 
         UILabel *numberL = [_buttonNumberArray objectAtIndex:slbtn.tag];
-        numberL.textColor = [UIColor whiteColor];;
+        numberL.textColor = [UIColor whiteColor];
+        numberL.alpha = 0.5;
 
         [slbtn enableValueSet:NO];
         

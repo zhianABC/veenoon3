@@ -62,7 +62,7 @@
     
     okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
-    [bottomBar addSubview:okBtn];
+//    [bottomBar addSubview:okBtn];
     [okBtn setTitle:@"保存" forState:UIControlStateNormal];
     [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [okBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];

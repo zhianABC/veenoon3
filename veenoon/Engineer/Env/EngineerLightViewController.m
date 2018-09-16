@@ -187,6 +187,7 @@
     
         UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2-40, 0, 80, 20)];
         titleL.backgroundColor = [UIColor clearColor];
+        titleL.alpha = 0.5;
         titleL.textAlignment = NSTextAlignmentCenter;
         [btn addSubview:titleL];
         titleL.font = [UIFont boldSystemFontOfSize:11];
@@ -381,7 +382,8 @@
         [_selectedBtnArray addObject:slbtn];
 
         UILabel *numberL = [_buttonNumberArray objectAtIndex:slbtn.tag];
-        numberL.textColor = YELLOW_COLOR;
+        numberL.textColor = NEW_ER_BUTTON_SD_COLOR;
+        numberL.alpha = 1.0;
 
         [slbtn enableValueSet:YES];
         
@@ -393,7 +395,8 @@
 
         UILabel *numberL = [_buttonNumberArray objectAtIndex:slbtn.tag];
         numberL.textColor = [UIColor whiteColor];;
-
+        numberL.alpha = 0.5;
+        
         [slbtn enableValueSet:NO];
     }
 }
@@ -415,7 +418,8 @@
         [_selectedBtnArray addObject:button];
         
         UILabel *numberL = [_buttonNumberArray objectAtIndex:tag];
-        numberL.textColor = YELLOW_COLOR;
+        numberL.alpha = 1.0;
+        numberL.textColor = NEW_ER_BUTTON_SD_COLOR;
         
         [button enableValueSet:YES];
     } else {
@@ -424,6 +428,7 @@
         
         UILabel *numberL = [_buttonNumberArray objectAtIndex:tag];
         numberL.textColor = [UIColor whiteColor];;
+        numberL.alpha = 0.5;
         
         [btn enableValueSet:NO];
     }
