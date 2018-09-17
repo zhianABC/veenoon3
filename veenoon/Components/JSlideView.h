@@ -34,6 +34,7 @@
 @property (nonatomic, assign) float stepValue;
 
 @property (nonatomic, strong) id data;
+@property (nonatomic, assign) BOOL isUnLineStyle;
 
 - (id) initWithSliderBg:(UIImage*)sliderBg frame:(CGRect)frame;
 

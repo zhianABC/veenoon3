@@ -1159,88 +1159,8 @@
         
         [[DataBase sharedDatabaseInstance] saveMeetingRoom:room];
         
-        
-#ifdef REALTIME_NETWORK_MODEL
-        if(_client == nil)
-        {
-            _client = [[WebClient alloc] initWithDelegate:self];
-        }
-        
-        _client._method = @"/addroom";
-        _client._httpMethod = @"POST";
-        
-        NSMutableDictionary *param = [NSMutableDictionary dictionary];
-        
-        _client._requestParam = param;
-        
-        User *u = [UserDefaultsKV getUser];
-        if(u)
-        {
-            [param setObject:u._userId forKey:@"userID"];
-        }
 
-        [param setObject:userid forKey:@"regulusUserID"];
-        [param setObject:regulusid forKey:@"regulusID"];
-        [param setObject:@"房间" forKey:@"roomName"];
-        [param setObject:@"111111" forKey:@"regulusPassword"];
-        
-        IMP_BLOCK_SELF(EngineerMeetingRoomListViewCtrl);
-
-        
-        [KVNProgress show];
-        
-        [_client requestWithSusessBlock:^(id lParam, id rParam) {
-            
-            NSString *response = lParam;
-             NSLog(@"%@", response);
-            
-            [KVNProgress dismiss];
-            
-            SBJson4ValueBlock block = ^(id v, BOOL *stop) {
-                
-                
-                if([v isKindOfClass:[NSDictionary class]])
-                {
-                    int code = [[v objectForKey:@"code"] intValue];
-                    
-                    if(code == 200)
-                    {
-                        if([v objectForKey:@"data"])
-                        {
-                            [block_self successAddRoom:[v objectForKey:@"data"]];
-                        }
-                    }
-                    return;
-                }
-                
-                
-            };
-            
-            SBJson4ErrorBlock eh = ^(NSError* err) {
-                
-                
-                
-                NSLog(@"OOPS: %@", err);
-            };
-            
-            id parser = [SBJson4Parser multiRootParserWithBlock:block
-                                                   errorHandler:eh];
-            
-            id data = [response dataUsingEncoding:NSUTF8StringEncoding];
-            [parser parse:data];
-            
-            
-        } FailBlock:^(id lParam, id rParam) {
-            
-            NSString *response = lParam;
-            NSLog(@"%@", response);
-            
-            [KVNProgress dismiss];
-        }];
-        
-#else
         [self successAddRoom:room];
-#endif
     
     }
 }

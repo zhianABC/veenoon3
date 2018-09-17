@@ -370,7 +370,6 @@
     _shexiangxieyiBtn.clipsToBounds = YES;
     _shexiangxieyiBtn.layer.cornerRadius = 5;
     [_shexiangzhuizongView addSubview:_shexiangxieyiBtn];
-    [_shexiangxieyiBtn addTarget:self action:@selector(shexiangxieyiAction:) forControlEvents:UIControlEventTouchUpInside];
     _shexiangxieyiBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     
     

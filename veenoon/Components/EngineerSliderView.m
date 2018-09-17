@@ -8,6 +8,8 @@
 
 #import "EngineerSliderView.h"
 
+
+
 @interface EngineerSliderView ()
 {
     UIImageView *roadSlider;
@@ -16,13 +18,16 @@
     
     CGPoint beginPoint;
     
-    int curValue;
+    float curValue;
     
     BOOL _isMute;
     
     UIButton *_muteBtn;
 }
-
+@property (nonatomic, assign) float m_p0y;
+@property (nonatomic, assign) float m_availbel_h;
+@property (nonatomic, assign) float m_bellow_0;
+@property (nonatomic, assign) float m_abbove_0;
 @end
 
 @implementation EngineerSliderView
@@ -32,6 +37,11 @@
 @synthesize maxValue;
 @synthesize minValue;
 @synthesize stepValue;
+@synthesize isUnLineStyle;
+@synthesize m_p0y;
+@synthesize m_availbel_h;
+@synthesize m_bellow_0;
+@synthesize m_abbove_0;
 
 - (id) initWithSliderBg:(UIImage*)sliderBg frame:(CGRect)frame{
     
@@ -73,7 +83,7 @@
         
         UILabel *zengyiLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 5, frame.size.width, 30)];
         [self addSubview:zengyiLabel];
-        zengyiLabel.text=@"增益";
+        zengyiLabel.text = @"增益";
         zengyiLabel.textColor = [UIColor whiteColor];
         zengyiLabel.font = [UIFont systemFontOfSize:14];
         zengyiLabel.textAlignment = NSTextAlignmentCenter;
@@ -87,14 +97,16 @@
            forControlEvents:UIControlEventTouchUpInside];
         
         stepValue = 1;
+        
+        
     }
     
     return self;
 }
 
-- (void) resetScalValue:(int) scalValue {
+- (void) resetScalValue:(float) scalValue {
     
-    valueLabel.text = [NSString stringWithFormat:@"%d", (scalValue)];
+    valueLabel.text = [NSString stringWithFormat:@"%0.1f", (scalValue)];
     curValue = scalValue;
     
     if (scalValue == minValue) {
@@ -198,10 +210,7 @@
             colorPoint.y = rc.size.height - bottomEdge;
         sliderThumb.center = colorPoint;
         
-        int h = rc.size.height - topEdge - bottomEdge;
-        int subh = (rc.size.height - bottomEdge) - sliderThumb.center.y;
-        int value = (maxValue - minValue)*(int)subh/h + minValue;
-        
+        float value = [self getScaleValue];
         [self resetScalValue:value];
         
         if(delegate && [delegate respondsToSelector:@selector(didSliderValueChanged:object:)])
@@ -250,13 +259,8 @@
         if(colorPoint.y > rc.size.height - bottomEdge)
             colorPoint.y = rc.size.height - bottomEdge;
         sliderThumb.center = colorPoint;
-        
-        
-        int h = rc.size.height - topEdge - bottomEdge;
-        int subh = (rc.size.height - bottomEdge) - sliderThumb.center.y;
-        
-        int value = (maxValue - minValue)*(int)subh/h + minValue;
-        
+
+        float value = [self getScaleValue];
         [self resetScalValue:value];
        
         if(delegate && [delegate respondsToSelector:@selector(didSliderValueChanged:object:)])
@@ -296,13 +300,39 @@
 
 }
 
-- (int) getScaleValue{
+- (float) getScaleValue{
     
     CGRect rc = slider.frame;
     int h = rc.size.height - topEdge - bottomEdge;
-    int subh = (rc.size.height - bottomEdge) - sliderThumb.center.y;
     
-    int value = (maxValue - minValue)*(int)subh/h + minValue;
+    float value = 0;
+    if(isUnLineStyle)//非线性变化
+    {
+        if(sliderThumb.center.y <= m_p0y)
+        {
+            //0以上
+            
+           float f = 1.0 - (float)(sliderThumb.center.y - topEdge)/m_abbove_0;
+        
+            value = (maxValue)*f;
+        }
+        else//0以下
+        {
+           float f = (float)(sliderThumb.center.y - m_p0y)/m_bellow_0;
+            
+            value = minValue*f;
+        }
+    }
+    else//线性变化
+    {
+        int subh = (rc.size.height - bottomEdge) - sliderThumb.center.y;
+        value = (maxValue - minValue)*(int)subh/h + minValue;
+    }
+    
+    if(value > maxValue)
+        value = maxValue;
+    if(value < minValue)
+        value = minValue;
     
     return value;
 }
@@ -312,10 +342,15 @@
     topEdge = CGRectGetMinY(roadSlider.frame);
     bottomEdge = CGRectGetHeight(self.frame) - CGRectGetMaxY(roadSlider.frame);
     
+    self.m_p0y = topEdge + 134;
+    self.m_availbel_h = CGRectGetHeight(self.frame) - topEdge - bottomEdge;
+    self.m_abbove_0 = 134;
+    self.m_bellow_0 = 226;
+    
     sliderThumb.center = CGPointMake(slider.frame.origin.x+slider.bounds.size.width/2.0,
                                      self.frame.size.height - bottomEdge);
     
-    int value = [self getScaleValue];
+    float value = [self getScaleValue];
     
     [self resetScalValue:value];
 }
@@ -324,8 +359,27 @@
     
     CGRect rc = slider.frame;
     int h = rc.size.height - topEdge - bottomEdge;
-    int subh = ((int)(value - minValue)*h)/(maxValue - minValue);
-    int cy = (rc.size.height - bottomEdge) - subh;
+    float cy = 0;
+    if(isUnLineStyle)
+    {
+        if(value >= 0)
+        {
+            float f = (float)(maxValue - value)/maxValue;
+            cy = f * m_abbove_0 + topEdge;
+        }
+        else
+        {
+           float f = (float)value/minValue;
+            cy = m_p0y + f*m_bellow_0;
+        }
+    }
+    else
+    {
+        int subh = ((int)(value - minValue)*h)/(maxValue - minValue);
+        cy = (rc.size.height - bottomEdge) - subh;
+        
+    }
+    
     
     sliderThumb.center = CGPointMake(slider.frame.origin.x+slider.bounds.size.width/2.0,
                                      cy);

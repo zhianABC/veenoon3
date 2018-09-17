@@ -214,13 +214,33 @@
 - (void) didSliderValueChanged:(float)value object:(id)object {
    
     float circleValue = value;
-    
     [_currentObj._proxyObj controlDeviceVol:circleValue force:YES];
 }
 
-- (void) didSliderEndChanged:(id)object {
+- (void) didSliderEndChanged:(float)value object:(id)object{
     
+    IMP_BLOCK_SELF(EngineerHunYinSysViewController);
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+                                 (int64_t)(200.0 * NSEC_PER_MSEC)),
+                   dispatch_get_main_queue(), ^{
+                       
+                       [block_self didSliderValueChanged:value object:object];
+                   });
+
 }
+
+- (void) didSliderMuteChanged:(BOOL)mute object:(id)object{
+    
+    if(mute)
+    {
+        float circleValue = 0;
+        [_zengyiSlider setScaleValue:circleValue];
+        [_currentObj._proxyObj controlDeviceVol:circleValue force:YES];
+    }
+}
+
+
 
 - (void) okAction:(id)sender{
     if (!isSettings) {

@@ -150,8 +150,9 @@
     
     [_zengyiSlider setRoadImage:[UIImage imageNamed:@"e_v_slider_road.png"]];
     [_zengyiSlider setIndicatorImage:[UIImage imageNamed:@"wireless_slide_s.png"]];
-    _zengyiSlider.topEdge = 90;
-    _zengyiSlider.bottomEdge = 79;
+    _zengyiSlider.topEdge = 100;
+    _zengyiSlider.bottomEdge = 60;
+    _zengyiSlider.isUnLineStyle = YES;
     _zengyiSlider.maxValue = maxAnalogyGain;
     _zengyiSlider.minValue = minAnalogyGain;
     _zengyiSlider.delegate = self;

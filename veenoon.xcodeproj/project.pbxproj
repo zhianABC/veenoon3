@@ -602,7 +602,6 @@
 		EB23AEBB1FD1A98D00D1570F /* remote_video_up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB23AEB71FD1A98D00D1570F /* remote_video_up@2x.png */; };
 		EB23AEBC1FD1A98D00D1570F /* remote_video_right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB23AEB81FD1A98D00D1570F /* remote_video_right@2x.png */; };
 		EB2982091FD5793F007B5C20 /* engineer_login_input_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB2982081FD5793F007B5C20 /* engineer_login_input_n@2x.png */; };
-		EB29820C1FD57FC2007B5C20 /* EngineerShootQRCode.m in Sources */ = {isa = PBXBuildFile; fileRef = EB29820B1FD57FC2007B5C20 /* EngineerShootQRCode.m */; };
 		EB2982151FD58699007B5C20 /* EngineerMeetingRoomListViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = EB2982141FD58699007B5C20 /* EngineerMeetingRoomListViewCtrl.m */; };
 		EB2E70651FC1B3E1009C477C /* settings_view_botom_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB2E70631FC1B3E1009C477C /* settings_view_botom_line@2x.png */; };
 		EB2E70661FC1B3E1009C477C /* settings_view_top_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB2E70641FC1B3E1009C477C /* settings_view_top_line@2x.png */; };
@@ -1820,8 +1819,6 @@
 		EB23AEB71FD1A98D00D1570F /* remote_video_up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "remote_video_up@2x.png"; sourceTree = "<group>"; };
 		EB23AEB81FD1A98D00D1570F /* remote_video_right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "remote_video_right@2x.png"; sourceTree = "<group>"; };
 		EB2982081FD5793F007B5C20 /* engineer_login_input_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "engineer_login_input_n@2x.png"; sourceTree = "<group>"; };
-		EB29820A1FD57FC1007B5C20 /* EngineerShootQRCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EngineerShootQRCode.h; sourceTree = "<group>"; };
-		EB29820B1FD57FC2007B5C20 /* EngineerShootQRCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EngineerShootQRCode.m; sourceTree = "<group>"; };
 		EB2982131FD58699007B5C20 /* EngineerMeetingRoomListViewCtrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EngineerMeetingRoomListViewCtrl.h; sourceTree = "<group>"; };
 		EB2982141FD58699007B5C20 /* EngineerMeetingRoomListViewCtrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EngineerMeetingRoomListViewCtrl.m; sourceTree = "<group>"; };
 		EB2E70631FC1B3E1009C477C /* settings_view_botom_line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings_view_botom_line@2x.png"; sourceTree = "<group>"; };
@@ -3821,8 +3818,6 @@
 				3425E98B1FE571CE003559F7 /* ComSettingView.m */,
 				EB2982131FD58699007B5C20 /* EngineerMeetingRoomListViewCtrl.h */,
 				EB2982141FD58699007B5C20 /* EngineerMeetingRoomListViewCtrl.m */,
-				EB29820A1FD57FC1007B5C20 /* EngineerShootQRCode.h */,
-				EB29820B1FD57FC2007B5C20 /* EngineerShootQRCode.m */,
 				EB03F54A1FBDEB9C00865541 /* EnginnerHomeViewController.h */,
 				EB03F5481FBDEB8900865541 /* EnginnerHomeViewController.m */,
 				EB5F7F851FD593EE00351888 /* EngineerSysSelectViewCtrl.h */,
@@ -5006,7 +5001,6 @@
 				3495268120F0C5B700A6BF00 /* DSwitchLightRightView.m in Sources */,
 				EB09EF371FD9801400C968CA /* EngineerEnvDevicePluginViewCtrl.m in Sources */,
 				04D27A2A1AF8470100305E39 /* SelDataViewController.m in Sources */,
-				EB29820C1FD57FC2007B5C20 /* EngineerShootQRCode.m in Sources */,
 				EB09C47C1FD25B4300776540 /* UserLightConfigViewCtrl.m in Sources */,
 				345492FC1FE638F300793E2E /* SlideButton.m in Sources */,
 				EB795B622042E890005D1F47 /* HuiShengXiaoChu_UIView.m in Sources */,

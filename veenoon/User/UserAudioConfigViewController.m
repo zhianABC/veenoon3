@@ -361,10 +361,11 @@
                            frame:CGRectZero];
         [_proxysView addSubview:sliderCtrl];
         [sliderCtrl setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
-        sliderCtrl.topEdge = 60;
-        sliderCtrl.bottomEdge = 55;
+        sliderCtrl.topEdge = 54;
+        sliderCtrl.bottomEdge = 54;
         sliderCtrl.maxValue = 12;
         sliderCtrl.minValue = -70;
+        sliderCtrl.isUnLineStyle = YES;
         [sliderCtrl resetScale];
         sliderCtrl.delegate = self;
         sliderCtrl.data = vap;

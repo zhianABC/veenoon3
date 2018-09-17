@@ -134,7 +134,7 @@
     }
     
     yaxianL = [[UILabel alloc] initWithFrame:CGRectMake(x+30, y+155, 60, 20)];
-    yaxianL.text = [pressStr stringByAppendingString:@" dB"];
+    yaxianL.text = [NSString stringWithFormat:@"%0.0f", pressValue];
     yaxianL.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:yaxianL];
     yaxianL.font = [UIFont systemFontOfSize:13];
@@ -188,7 +188,7 @@
     }
     
     zaoshengL = [[UILabel alloc] initWithFrame:CGRectMake(x+30, y+155, 60, 20)];
-    zaoshengL.text = [noiseStr stringByAppendingString:@" dB"];
+    zaoshengL.text = [NSString stringWithFormat:@"%0.0f", noiseValue];
     zaoshengL.textAlignment = NSTextAlignmentCenter;
     [contentView addSubview:zaoshengL];
     zaoshengL.font = [UIFont systemFontOfSize:13];
@@ -220,7 +220,7 @@
                                                                              message:alert preferredStyle:UIAlertControllerStyleAlert];
     
     [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.placeholder = @"dB";
+        textField.placeholder = @"";
         textField.text = @"";//[yaxianL.text stringByReplacingOccurrencesOfString:@" dB" withString:@""];
         textField.keyboardType = UIKeyboardTypeDecimalPad;
     }];
@@ -258,9 +258,9 @@
         [btnJH1 setCircleValue:gtVal];
     }
     
-    yaxianL.text = [NSString stringWithFormat:@"%0.1f dB", val];
+    yaxianL.text = [NSString stringWithFormat:@"%0.0f", val];
     
-    [_currentObj._proxyObj controlMixPress:[NSString stringWithFormat:@"%0.1f", val]];
+    [_currentObj._proxyObj controlMixPress:[NSString stringWithFormat:@"%0.0f", val]];
     [_limiter setThresHoldWithR:val];
 }
 
@@ -274,7 +274,7 @@
                                                                              message:alert preferredStyle:UIAlertControllerStyleAlert];
     
     [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.placeholder = @"dB";
+        textField.placeholder = @"";
         textField.text = @"";//zaoshengL.text;
         textField.keyboardType = UIKeyboardTypeDecimalPad;
     }];
@@ -312,8 +312,8 @@
         [btnJH2 setCircleValue:gtVal];
     }
     
-    zaoshengL.text = [NSString stringWithFormat:@"%0.1f dB", val];
-    [_currentObj._proxyObj controlMixNoise:[NSString stringWithFormat:@"%0.1f", val]];
+    zaoshengL.text = [NSString stringWithFormat:@"%0.0f", val];
+    [_currentObj._proxyObj controlMixNoise:[NSString stringWithFormat:@"%0.0f", val]];
 }
 
 #pragma mark --- SlideButton Delegate ---
@@ -324,10 +324,10 @@
     if (tag == 1)
     {
         float k = (value *(_pressMax-_pressMin)) + _pressMin;
-        NSString *valueStr= [NSString stringWithFormat:@"%0.1f dB", k];
+        NSString *valueStr= [NSString stringWithFormat:@"%0.0f", k];
         yaxianL.text = valueStr;
         
-        [_currentObj._proxyObj controlMixPress:[NSString stringWithFormat:@"%0.1f", k]];
+        [_currentObj._proxyObj controlMixPress:[NSString stringWithFormat:@"%0.0f", k]];
         
         [_limiter setThresHoldWithR:k];
         
@@ -336,10 +336,10 @@
     {
         
         float k = (value *(_noiseMax-_noiseMin)) + _noiseMin;
-        NSString *valueStr= [NSString stringWithFormat:@"%0.1f dB", k];
+        NSString *valueStr= [NSString stringWithFormat:@"%0.0f", k];
         zaoshengL.text = valueStr;
         
-        [_currentObj._proxyObj controlMixNoise:[NSString stringWithFormat:@"%0.1f", k]];
+        [_currentObj._proxyObj controlMixNoise:[NSString stringWithFormat:@"%0.0f", k]];
     }
 }
 
