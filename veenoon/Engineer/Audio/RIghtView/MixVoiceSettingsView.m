@@ -326,7 +326,6 @@
         [biaozhunfayanBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
         
         [_currentObj._proxyObj controlWorkMode:@"Speak"];
-        
     }
     else
     {
@@ -336,9 +335,6 @@
         
         [_currentObj._proxyObj controlWorkMode:@"Work"];
     }
-    
-    
-    
 }
 - (void) yinpinchuliAction:(id)sender{
     
