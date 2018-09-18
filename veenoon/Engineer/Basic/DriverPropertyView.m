@@ -385,6 +385,7 @@
 - (void) recoverSetting {
     
     [_connectionView removeFromSuperview];
+    [_fieldVals removeAllObjects];
     RgsDriverInfo * info = _plugDriver._driverInfo;
     
     _isIR = NO;

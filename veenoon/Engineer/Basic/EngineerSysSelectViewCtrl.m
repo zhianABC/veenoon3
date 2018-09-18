@@ -49,6 +49,7 @@
 @implementation EngineerSysSelectViewCtrl
 @synthesize _sceneDrivers;
 @synthesize _scenes;
+@synthesize _localPrjName;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -154,135 +155,6 @@
 }
 
 
-- (void) getScenarioList{
-  
-    MeetingRoom *room = [DataCenter defaultDataCenter]._currentRoom;
-    if(room == nil)
-    {
-        return;
-    }
-    
-    if(_client == nil)
-    {
-        _client = [[WebClient alloc] initWithDelegate:self];
-    }
-    
-    _client._method = @"/getscenariolist";
-    _client._httpMethod = @"GET";
-    
-    NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    
-    _client._requestParam = param;
-    
-    
-    [param setObject:room.regulus_id forKey:@"regulusID"];
-    
-    IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
-    
-    [KVNProgress show];
-    
-    [_client requestWithSusessBlock:^(id lParam, id rParam) {
-        
-        NSString *response = lParam;
-        //NSLog(@"%@", response);
-        
-        [KVNProgress dismiss];
-        
-        SBJson4ValueBlock block = ^(id v, BOOL *stop) {
-            
-            
-            if([v isKindOfClass:[NSDictionary class]])
-            {
-                int code = [[v objectForKey:@"code"] intValue];
-                
-                if(code == 200)
-                {
-                    if([v objectForKey:@"data"])
-                    {
-                        [block_self saveScenarioList:[v objectForKey:@"data"]];
-                    }
-                }
-                return;
-            }
-            
-            
-        };
-        
-        SBJson4ErrorBlock eh = ^(NSError* err) {
-            
-            
-            
-            NSLog(@"OOPS: %@", err);
-        };
-        
-        id parser = [SBJson4Parser multiRootParserWithBlock:block
-                                               errorHandler:eh];
-        
-        id data = [response dataUsingEncoding:NSUTF8StringEncoding];
-        [parser parse:data];
-        
-        
-    } FailBlock:^(id lParam, id rParam) {
-        
-        NSString *response = lParam;
-        NSLog(@"%@", response);
-        
-        [KVNProgress dismiss];
-    }];
-}
-
-- (void) saveScenarioList:(NSArray*)list{
-    
-    for(NSDictionary *rd in list)
-    {
-        NSString *scenario_content = [rd objectForKey:@"scenario_content"];
-        NSData *data = [scenario_content dataUsingEncoding:NSUTF8StringEncoding];
-        
-        NSError *error = nil;
-        NSDictionary *s = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-        
-        NSMutableDictionary *scenario = [NSMutableDictionary dictionaryWithDictionary:s];
-        
-        NSString *regulus_id = [rd objectForKey:@"regulus_id"];
-        if(regulus_id)
-        {
-            [scenario setObject:regulus_id forKey:@"regulus_id"];
-        }
-        
-        NSString *scenario_c_name = [rd objectForKey:@"scenario_c_name"];
-        if(scenario_c_name)
-        {
-            [scenario setObject:scenario_c_name forKey:@"name"];
-        }
-        
-        NSString *scenario_e_name = [rd objectForKey:@"scenario_e_name"];
-        if(scenario_e_name)
-        {
-            [scenario setObject:scenario_e_name forKey:@"en_name"];
-        }
-        
-        NSString *scenario_picture = [rd objectForKey:@"scenario_picture"];
-        if(scenario_picture)
-        {
-            [scenario setObject:scenario_picture forKey:@"small_icon"];
-        }
-        
-        NSString *scenario_user_icon_name = [rd objectForKey:@"scenario_user_icon_name"];
-        if(scenario_user_icon_name)
-        {
-            [scenario setObject:scenario_user_icon_name forKey:@"icon_user"];
-        }
-        
-        [[DataBase sharedDatabaseInstance] saveScenario:scenario];
-    
-    }
-    
-    if([_scenes count])
-    {
-        [self updateScenarioDrivers];
-    }
-}
-
 - (void) checkArea{
     
 #ifdef OPEN_REG_LIB_DEF
@@ -328,10 +200,6 @@
             int room_id = room.server_room_id;
             room.area_id = (int)areaObj.m_id;
             
-#ifdef   REALTIME_NETWORK_MODEL
-            [room syncAreaToServer];
-#endif
-            
             [[DataBase sharedDatabaseInstance] updateMeetingRoomAreaId:room_id
                                                                 areaId:(int)areaObj.m_id];
         }
@@ -370,8 +238,10 @@
     
     [_sceneDrivers removeAllObjects];
     
+    BOOL isLocal = [DataCenter defaultDataCenter]._isLocalPrj;
+    
     MeetingRoom *room = [DataCenter defaultDataCenter]._currentRoom;
-    if(room)
+    if(room || isLocal)
     {
         for(RgsSceneObj *dr in _scenes)
         {
@@ -531,43 +401,49 @@
 
 }
 
+
+- (void) doNewArea{
+    
+    IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
+    
+    [[RegulusSDK sharedRegulusSDK] NewProject:@"Veenoon"
+                                   completion:^(BOOL result, NSError *error) {
+                                       
+                                        [KVNProgress dismiss];
+                                       
+                                       if(result)
+                                       {
+                                           [block_self setNewProject];
+                                       }
+                                       else
+                                       {
+                                           NSLog(@"%@", [error description]);
+                                       }
+                                   }];
+}
+
 - (void) clearAndNewProject:(UIButton*)sender{
+ 
+   
     
-#if LOGIN_REGULUS
+    BOOL isLocal = [DataCenter defaultDataCenter]._isLocalPrj;
     
-    sender.enabled = NO;
+    if(isLocal)
+    {
+        [self actionNewArea];
+        return;
+    }
     
+     [KVNProgress show];
     if([DataSync sharedDataSync]._currentReglusLogged)
     {
-        IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
-        
-        [[RegulusSDK sharedRegulusSDK] NewProject:@"Veenoon"
-                                       completion:^(BOOL result, NSError *error) {
-            
-            sender.enabled = YES;
-            
-            if(result)
-            {
-                [block_self setNewProject];
-            }
-            else
-            {
-                NSLog(@"%@", [error description]);
-            }
-        }];
-        
-        
+        [self doNewArea];
     }
     else
     {
         [KVNProgress showErrorWithStatus:@"未登录"];
-        
-        sender.enabled = YES;
     }
     
-#else
-    [self setNewProject];
-#endif
 }
 
 
@@ -598,7 +474,10 @@
         [[DataSync sharedDataSync] newVeenoonArea];
         
         MeetingRoom *room = [DataCenter defaultDataCenter]._currentRoom;
-        [[DataBase sharedDatabaseInstance] deleteScenarioByRoom:room.regulus_id];
+        if(room)
+        {
+            [[DataBase sharedDatabaseInstance] deleteScenarioByRoom:room.regulus_id];
+        }
         [_sceneDrivers removeAllObjects];
         
         EngineerNewTeslariViewCtrl *ctrl = [[EngineerNewTeslariViewCtrl alloc] init];

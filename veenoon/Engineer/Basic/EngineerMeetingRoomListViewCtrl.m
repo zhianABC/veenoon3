@@ -26,8 +26,13 @@
 #import "UIImageView+WebCache.h"
 #import "UserDefaultsKV.h"
 
+#import "UIButton+Color.h"
+
+#import "KVNProgress.h"
+
 
 @interface EngineerMeetingRoomListViewCtrl () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, JCActionViewDelegate, ReaderCodeDelegate>{
+    
     NSMutableArray *lableArray;
     NSMutableArray *roomImageArray;
     
@@ -47,6 +52,11 @@
     int _curEditIndex;
     
     UIButton *editBtn;
+    
+    UIScrollView *_offlineScroll;
+    
+    UIButton *_tab1;
+    UIButton *_tab2;
 }
 @property (nonatomic, strong) NSMutableArray *roomList;
 
@@ -56,6 +66,9 @@
 
 @property (nonatomic, strong) ReaderCodeViewController *reader_;
 @property (nonatomic, strong) NSString *qrcode;
+
+@property (nonatomic, strong) NSMutableArray *_offlineProjs;
+
 @end
 
 @implementation EngineerMeetingRoomListViewCtrl
@@ -67,6 +80,8 @@
 @synthesize reader_;
 @synthesize qrcode;
 
+@synthesize _offlineProjs;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -76,13 +91,51 @@
     roomImageArray = [[NSMutableArray alloc] init];
     selectedRoomIndex = -1;
     
-    scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0,
+    CGRect StatusRect = [[UIApplication sharedApplication] statusBarFrame];
+    int topSpace = StatusRect.size.height+20;
+    
+    int xx = 100;
+    int ww = SCREEN_WIDTH/2 - 100;
+    _tab1 = [[UIButton alloc] initWithFrame:CGRectMake(xx,
+                                                      topSpace,
+                                                      ww,
+                                                      44)];
+    _tab1.titleLabel.font = [UIFont boldSystemFontOfSize:16];
+    [_tab1 setTitle:@"在线系统配置" forState:UIControlStateNormal];
+    [self.view addSubview:_tab1];
+    [_tab1 setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+    _tab1.tag = 1;
+    [_tab1 addTarget:self
+              action:@selector(buttonAction:)
+    forControlEvents:UIControlEventTouchUpInside];
+    
+    _tab2 = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_tab1.frame),
+                                                       topSpace,
+                                                       ww,
+                                                       44)];
+    _tab2.titleLabel.font = [UIFont boldSystemFontOfSize:16];
+    [_tab2 setTitle:@"离线系统配置" forState:UIControlStateNormal];
+    [self.view addSubview:_tab2];
+    [_tab2 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _tab2.tag = 2;
+    [_tab2 addTarget:self
+              action:@selector(buttonAction:)
+    forControlEvents:UIControlEventTouchUpInside];
+
+    scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 100,
                                                                 SCREEN_WIDTH,
-                                                                SCREEN_HEIGHT-50)];
+                                                                SCREEN_HEIGHT-150)];
     scroolView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:scroolView];
     
-    //[[DataCenter defaultDataCenter] syncDriversWithServer];
+    
+    _offlineScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 100,
+                                                                    SCREEN_WIDTH,
+                                                                    SCREEN_HEIGHT-150)];
+    _offlineScroll.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:_offlineScroll];
+    _offlineScroll.hidden = YES;
+    
     
     self.roomList = [[DataBase sharedDatabaseInstance] getMeetingRooms];
     
@@ -120,28 +173,32 @@
     [backBtn addTarget:self
                 action:@selector(backAction:)
       forControlEvents:UIControlEventTouchUpInside];
+
+    //[self loadLocalProjects];
+}
+
+
+- (void) loadLocalProjects{
     
-//    UIButton *btnSync = [UIButton buttonWithType:UIButtonTypeCustom];
-//    btnSync.frame = CGRectMake(60, SCREEN_HEIGHT - 48, 42, 42);
-//    [btnSync setImage:[UIImage imageNamed:@"sync_data_n.png"] forState:UIControlStateNormal];
-//    [btnSync setImage:[UIImage imageNamed:@"sync_data_s.png"] forState:UIControlStateHighlighted];
-//    [self.view addSubview:btnSync];
-//    btnSync.layer.cornerRadius = 5;
-//    btnSync.clipsToBounds = YES;
-//    [btnSync addTarget:self
-//                action:@selector(dataSyncAction:)
-//      forControlEvents:UIControlEventTouchUpInside];
-//
-//    UIButton *btnBack = [UIButton buttonWithType:UIButtonTypeCustom];
-//    btnBack.frame = CGRectMake(SCREEN_WIDTH - 90, SCREEN_HEIGHT - 48, 42, 42);
-//    [btnBack setImage:[UIImage imageNamed:@"backup_data_n.png"] forState:UIControlStateNormal];
-//    [btnBack setImage:[UIImage imageNamed:@"backup_data_s.png"] forState:UIControlStateHighlighted];
-//    [self.view addSubview:btnBack];
-//    btnBack.layer.cornerRadius = 5;
-//    btnBack.clipsToBounds = YES;
-//    [btnBack addTarget:self
-//                action:@selector(backupAction:)
-//      forControlEvents:UIControlEventTouchUpInside];
+    self._offlineProjs = [NSMutableArray array];
+    
+    [[RegulusSDK sharedRegulusSDK] GetProjectsFromLocal:^(BOOL result, NSArray *names, NSError *error) {
+        
+        if(result)
+        {
+            if([names count])
+            {
+                [self._offlineProjs addObjectsFromArray:names];
+            }
+            
+            [self layoutOfflineProjects];
+        }
+        
+    }];
+    
+    
+    
+    
 }
 
 - (void) clearAction:(id)sender{
@@ -173,6 +230,48 @@
                      completion:nil];
     
     
+}
+
+
+- (void) buttonAction:(UIButton*)sender{
+    
+    if(sender.tag == 1)
+    {
+        scroolView.hidden = NO;
+        _offlineScroll.hidden = YES;
+        
+        editBtn.hidden = NO;
+        
+        [_tab1 setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+        [_tab2 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    }
+    else
+    {
+        
+        editBtn.hidden  = YES;
+        
+        scroolView.hidden = YES;
+        _offlineScroll.hidden = NO;
+
+        [_tab1 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_tab2 setTitleColor:YELLOW_COLOR forState:UIControlStateNormal];
+        
+        [KVNProgress show];
+        
+        [[RegulusSDK sharedRegulusSDK] UseLocalModel:^(BOOL result, NSError *error)
+         {
+             [KVNProgress dismiss];
+             
+             if(result)
+             {
+                 [self loadLocalProjects];
+             }
+             else
+             {
+                 [self downloadOfflineResources];
+             }
+         }];
+    }
 }
 
 - (void) backupAction:(id)sender{
@@ -383,11 +482,12 @@
     }
 }
 
+
 - (void) showRoomList{
     
     [[scroolView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
-    int top = 100;
+    int top = 0;
     int leftRight = 75;
     int space = 15;
     
@@ -1183,6 +1283,153 @@
     [self showRoomList];
     
     [self cancelZbarController:nil];
+}
+
+#pragma mark -- Local Mode ---
+
+- (void) downloadOfflineResources{
+    
+    [KVNProgress showWithStatus:@"正在下载离线包"];
+    [[RegulusSDK sharedRegulusSDK]RequestDownLocalResourceFiles:^(BOOL result, NSError *error) {
+        if (!result) {
+            [KVNProgress showErrorWithStatus:[error localizedDescription]];
+        }
+        else{
+            [KVNProgress showSuccessWithStatus:@"下载完成"];
+            
+            [self loadLocalProjects];
+        }
+    }];
+}
+
+- (void) layoutOfflineProjects{
+    
+    [[_offlineScroll subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    
+    int top = 0;
+    int leftRight = 75;
+    int space = 15;
+    
+    int cellWidth = 278;
+    int cellHeight = 156;
+    int index = 0;
+    
+    NSMutableArray *cellData = [NSMutableArray array];
+    [cellData addObjectsFromArray:_offlineProjs];
+    [cellData addObject:@{@"p":@"1"}];
+    
+    for (int idx = 0; idx < [cellData count]; idx++) {
+        
+        id  prj = [cellData objectAtIndex:idx];
+        
+        int row = index/3;
+        int col = index%3;
+        
+        int startX = col*cellWidth+col*space+leftRight;
+        int startY = row*cellHeight+space*row+top;
+        
+        UIButton *prjBtn = [UIButton buttonWithColor:RGB(0x35,0x35,0x35) selColor:nil];
+        prjBtn.frame = CGRectMake(startX, startY, 278, 156);
+        prjBtn.layer.cornerRadius = 5;
+        prjBtn.clipsToBounds = YES;
+        
+        if([prj isKindOfClass:[NSDictionary class]])
+        {
+            //plus +1
+            UIImage *img = [UIImage imageNamed:@"room_add_pg.png"];
+            UIImageView *roomeImageView = [[UIImageView alloc] initWithImage:img];
+            roomeImageView.userInteractionEnabled=YES;
+            roomeImageView.contentMode = UIViewContentModeScaleAspectFill;
+            roomeImageView.clipsToBounds=YES;
+            roomeImageView.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
+            [_offlineScroll addSubview:roomeImageView];
+            
+            UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+            btn.frame = roomeImageView.frame;
+            [_offlineScroll addSubview:btn];
+            [btn addTarget:self
+                    action:@selector(newLocalProject:)
+          forControlEvents:UIControlEventTouchUpInside];
+        }
+        else
+        {
+            
+            [_offlineScroll addSubview:prjBtn];
+            
+            prjBtn.tag = idx;
+            [prjBtn addTarget:self
+                       action:@selector(locationPrjBtnAction:)
+             forControlEvents:UIControlEventTouchUpInside];
+            
+            UIImage *img = [UIImage imageNamed:@"project_icon.png"];
+            UIImageView *iconView = [[UIImageView alloc] initWithImage:img];
+            [prjBtn addSubview:iconView];
+            iconView.center = CGPointMake(cellWidth/2, cellHeight*0.4);
+            
+            UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(iconView.frame)+5, cellWidth-20, 30)];
+            titleL.backgroundColor = [UIColor clearColor];
+            [prjBtn addSubview:titleL];
+            titleL.font = [UIFont boldSystemFontOfSize:16];
+            titleL.textColor  = [UIColor whiteColor];
+            titleL.textAlignment = NSTextAlignmentCenter;
+            titleL.text = prj;
+
+        }
+        
+        
+        index++;
+    }
+}
+
+- (void) locationPrjBtnAction:(UIButton*)sender{
+    
+    if(sender.tag < [_offlineProjs count])
+    {
+         id  prj = [_offlineProjs objectAtIndex:sender.tag];
+        
+        [[RegulusSDK sharedRegulusSDK] LoadLocalProject:prj completion:^(BOOL result, NSError *error) {
+            
+            if(result)
+            {
+                [DataCenter defaultDataCenter]._isLocalPrj = YES;
+                [DataSync sharedDataSync]._currentReglusLogged = nil;
+                [DataCenter defaultDataCenter]._currentRoom = nil;
+                
+
+                EngineerSysSelectViewCtrl *lctrl = [[EngineerSysSelectViewCtrl alloc] init];
+                lctrl._localPrjName = prj;
+                [self.navigationController pushViewController:lctrl animated:YES];
+            }
+            
+        }];
+    }
+   
+    
+}
+
+- (void) newLocalProject:(id)sender{
+    
+    [KVNProgress show];
+    [[RegulusSDK sharedRegulusSDK] NewLocalProject:@"TeslariaTmp"
+                                          hardware:@"EOC500"
+                                        completion:^(BOOL result, NSError *error) {
+        if (result)
+        {
+            [DataCenter defaultDataCenter]._isLocalPrj = YES;
+            [DataSync sharedDataSync]._currentReglusLogged = nil;
+            [DataCenter defaultDataCenter]._currentRoom = nil;
+            
+            EngineerSysSelectViewCtrl *lctrl = [[EngineerSysSelectViewCtrl alloc] init];
+            [self.navigationController pushViewController:lctrl animated:YES];
+            
+        }
+        else{
+            [KVNProgress showErrorWithStatus:[error localizedDescription]];
+        }
+                                            
+      [KVNProgress dismiss];
+                                            
+    }];
 }
 
 @end
