@@ -121,14 +121,14 @@
     portDNSLabel.textColor  = [UIColor whiteColor];
     portDNSLabel.text = @"设置场景";
     
-    portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, CGRectGetMaxY(portDNSLabel.frame)+20, SCREEN_WIDTH-80, 20)];
-    portDNSLabel.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont systemFontOfSize:16];
-    portDNSLabel.textColor  = [UIColor colorWithWhite:1.0 alpha:0.9];
-    portDNSLabel.text = @"在场景内，可选择您所需要配置的设备";
+    UILabel* tipsL = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, CGRectGetMaxY(portDNSLabel.frame)+20, SCREEN_WIDTH-80, 20)];
+    tipsL.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:tipsL];
+    tipsL.font = [UIFont systemFontOfSize:16];
+    tipsL.textColor  = [UIColor colorWithWhite:1.0 alpha:0.9];
+    tipsL.text = @"在场景内，可选择您所需要配置的设备";
     
-    topy = CGRectGetMaxY(portDNSLabel.frame)+20;
+    topy = CGRectGetMaxY(tipsL.frame)+20;
 
     UIButton *goHomeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     goHomeBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0, 160, 50);

@@ -48,27 +48,18 @@
         
         self._selectColor = RGB(230, 151, 50);
         self._rowNormalColor = SINGAL_COLOR;
-        
-        
-        
-//        _background = [[UIImageView alloc] initWithFrame:self.bounds];
-//        _background.layer.contentsGravity = kCAGravityResize;
-//        _background.clipsToBounds = YES;
-//        if([grayOrLight isEqualToString:@"gray"])
-//            _background.image = [UIImage imageNamed:@"gray_slide_bg.png"];
-//        else
-//        {
-//            _background.image = [UIImage imageNamed:grayOrLight];
-//        }
-//
-//
-//        [self addSubview:_background];
-        //_background.contentMode = UIViewContentModeScaleAspectFill;
+    
         
         _cellWidth = frame.size.width;
         
-        _myPickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0.0, 0,
-                                                                       frame.size.width,
+        if(_cellWidth < 320)
+        {
+            _cellWidth = 320;
+        }
+        int xx = (frame.size.width - _cellWidth)/2.0;
+        
+        _myPickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(xx, 0,
+                                                                       _cellWidth,
                                                                        frame.size.height)];
         _myPickerView.delegate = self;
         _myPickerView.dataSource = self;
@@ -98,6 +89,58 @@
 //        [self addSubview:btnSave];
 //
         
+    }
+    return self;
+}
+
+- (id)initWithConfirm:(CGRect)frame{
+    
+    if (self = [super initWithFrame:frame]) {
+        // Initialization code
+        //self.backgroundColor = [UIColor redColor];
+        
+        self._selectColor = RGB(230, 151, 50);
+        self._rowNormalColor = SINGAL_COLOR;
+        
+        _cellWidth = frame.size.width;
+        
+        if(_cellWidth < 320)
+        {
+            _cellWidth = 320;
+        }
+        int xx = (frame.size.width - _cellWidth)/2.0;
+        
+        _myPickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(xx, 0,
+                                                                       _cellWidth,
+                                                                       frame.size.height-44)];
+        _myPickerView.delegate = self;
+        _myPickerView.dataSource = self;
+        _myPickerView.showsSelectionIndicator = YES;
+        
+        [self addSubview:_myPickerView];
+        
+        
+        for(UIView *speartorView in _myPickerView.subviews)
+        {
+            if (speartorView.frame.size.height < 2)//取出分割线view
+            {
+                speartorView.backgroundColor = [UIColor redColor];//隐藏分割线
+            }
+        }
+        
+        _values = [[NSMutableDictionary alloc] init];
+        
+        btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
+        btnSave.frame = CGRectMake(xx, frame.size.height-44, _cellWidth, 44);
+        [btnSave setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [btnSave setTitle:@"确定" forState:UIControlStateNormal];
+        btnSave.titleLabel.font = [UIFont systemFontOfSize:16];
+        [btnSave addTarget:self
+                    action:@selector(confirmAction:)
+          forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:btnSave];
+        
+
     }
     return self;
 }

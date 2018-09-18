@@ -20,6 +20,7 @@
 #import "DataCenter.h"
 #import "SBJson4.h"
 #import "MeetingRoom.h"
+#import "CustomPickerView.h"
 
 #ifdef OPEN_REG_LIB_DEF
 #import "RegulusSDK.h"
@@ -43,6 +44,7 @@
 }
 @property (nonatomic, strong) NSMutableArray *_sceneDrivers;
 @property (nonatomic, strong) NSArray *_scenes;
+@property (nonatomic, strong) NSArray *_offlineProjs;
 
 @end
 
@@ -50,6 +52,7 @@
 @synthesize _sceneDrivers;
 @synthesize _scenes;
 @synthesize _localPrjName;
+@synthesize _offlineProjs;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -74,37 +77,60 @@
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *login = [UIButton buttonWithColor:[UIColor whiteColor] selColor:LINE_COLOR];
-    login.frame = CGRectMake(SCREEN_WIDTH/2 - 180, SCREEN_HEIGHT/2 - 80, 360, 44);
-    login.layer.cornerRadius = 8;
-    //login.layer.borderWidth = 1;
-    //login.layer.borderColor = [UIColor whiteColor].CGColor;
-    login.clipsToBounds = YES;
-    [self.view addSubview:login];
-    [login setTitle:@"设置新的系统" forState:UIControlStateNormal];
-    //[login setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [login setTitleColor:ADMIN_BLACK_COLOR forState:UIControlStateNormal];
-    login.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    UIButton *newSysBtn = [UIButton buttonWithColor:[UIColor whiteColor] selColor:LINE_COLOR];
+    newSysBtn.frame = CGRectMake(SCREEN_WIDTH/2 - 180, SCREEN_HEIGHT/2 - 80, 360, 44);
+    newSysBtn.layer.cornerRadius = 8;
+    newSysBtn.clipsToBounds = YES;
+    [self.view addSubview:newSysBtn];
+    [newSysBtn setTitle:@"设置新的系统" forState:UIControlStateNormal];
+    [newSysBtn setTitleColor:ADMIN_BLACK_COLOR forState:UIControlStateNormal];
+    newSysBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     
-    [login addTarget:self
+    [newSysBtn addTarget:self
               action:@selector(renewSysAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *signup = [UIButton buttonWithColor:nil selColor:[UIColor whiteColor]];
-    signup.frame = CGRectMake(SCREEN_WIDTH/2 - 180, SCREEN_HEIGHT/2 +20, 360, 44);
-    signup.layer.cornerRadius = 8;
-    signup.layer.borderWidth = 1;
-    signup.layer.borderColor = [UIColor whiteColor].CGColor;
-    signup.clipsToBounds = YES;
-    [self.view addSubview:signup];
-    [signup setTitle:@"链接已有系统" forState:UIControlStateNormal];
-    [signup setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [signup setTitleColor:ADMIN_BLACK_COLOR forState:UIControlStateHighlighted];
-    signup.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    UIButton *linkSysBtn = [UIButton buttonWithColor:nil selColor:[UIColor whiteColor]];
+    linkSysBtn.frame = CGRectMake(SCREEN_WIDTH/2 - 180, SCREEN_HEIGHT/2 +20, 360, 44);
+    linkSysBtn.layer.cornerRadius = 8;
+    linkSysBtn.layer.borderWidth = 1;
+    linkSysBtn.layer.borderColor = [UIColor whiteColor].CGColor;
+    linkSysBtn.clipsToBounds = YES;
+    [self.view addSubview:linkSysBtn];
+    [linkSysBtn setTitle:@"链接已有系统" forState:UIControlStateNormal];
+    [linkSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [linkSysBtn setTitleColor:ADMIN_BLACK_COLOR forState:UIControlStateHighlighted];
+    linkSysBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     
-    [signup addTarget:self
+    [linkSysBtn addTarget:self
                action:@selector(linktoSysAction:)
      forControlEvents:UIControlEventTouchUpInside];
+    
+    BOOL isLocal = [DataCenter defaultDataCenter]._isLocalPrj;
+    if(!isLocal)
+    {
+        
+        linkSysBtn.center = CGPointMake(newSysBtn.center.x, SCREEN_HEIGHT/2);
+        newSysBtn.center = CGPointMake(newSysBtn.center.x, CGRectGetMidY(linkSysBtn.frame) - 100);
+        
+        UIButton *importSysBtn = [UIButton buttonWithColor:nil selColor:[UIColor whiteColor]];
+        importSysBtn.frame = CGRectMake(SCREEN_WIDTH/2 - 180, SCREEN_HEIGHT/2 +20, 360, 44);
+        importSysBtn.layer.cornerRadius = 8;
+        importSysBtn.layer.borderWidth = 1;
+        importSysBtn.layer.borderColor = [UIColor whiteColor].CGColor;
+        importSysBtn.clipsToBounds = YES;
+        [self.view addSubview:importSysBtn];
+        [importSysBtn setTitle:@"导入离线系统" forState:UIControlStateNormal];
+        [importSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [importSysBtn setTitleColor:ADMIN_BLACK_COLOR forState:UIControlStateHighlighted];
+        importSysBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+        
+        [importSysBtn addTarget:self
+                       action:@selector(importSysAction:)
+             forControlEvents:UIControlEventTouchUpInside];
+        
+        importSysBtn.center = CGPointMake(newSysBtn.center.x, CGRectGetMidY(linkSysBtn.frame)+100);
+    }
 
   
     UIView *touchView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 500)];
@@ -154,6 +180,118 @@
     
 }
 
+#pragma mark -- import Project --
+- (void) importSysAction:(id)sender{
+    
+    IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil
+                                                                   message:@"导入项目 "
+                                                            preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *localAction = [UIAlertAction
+                                 actionWithTitle:@"从本地导入"
+                                 style:UIAlertActionStyleDefault
+                                 handler:^(UIAlertAction * _Nonnull action) {
+                                     
+                                     [block_self importFromLocal];
+                                     
+                                 }];
+    [alert addAction:localAction];
+    
+    UIAlertAction *cloudAction = [UIAlertAction
+                                 actionWithTitle:@"从云账户导入"
+                                 style:UIAlertActionStyleDefault
+                                 handler:^(UIAlertAction * _Nonnull action) {
+                                     
+                                     [block_self importFromCloud];
+                                 }];
+    [alert addAction:cloudAction];
+    
+    UIAlertAction *usbAction = [UIAlertAction
+                                 actionWithTitle:@"从U盘导入"
+                                 style:UIAlertActionStyleDefault
+                                 handler:^(UIAlertAction * _Nonnull action) {
+                                     
+                                     [block_self importFromUSB];
+                                 }];
+    [alert addAction:usbAction];
+    
+    UIAlertAction *cancelAction = [UIAlertAction
+                                   actionWithTitle:@"取消"
+                                   style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:cancelAction];
+    
+    
+    alert.popoverPresentationController.sourceView = self.view;
+    alert.popoverPresentationController.sourceRect = CGRectMake(0,0,1.0,1.0);
+    
+
+    [self presentViewController:alert animated:YES
+                     completion:nil];
+}
+
+- (void) importFromCloud{
+    
+    
+}
+
+- (void) importFromUSB{
+    
+    
+}
+
+- (void) importFromLocal{
+    
+    [KVNProgress show];
+    [[RegulusSDK sharedRegulusSDK] GetProjectsFromLocal:^(BOOL result, NSArray *names, NSError *error) {
+        
+        [KVNProgress dismiss];
+        if(result)
+        {
+            if([names count])
+            {
+               self._offlineProjs = names;
+            }
+        }
+        
+        [self chooseLocalProject];
+        
+    }];
+    
+}
+
+- (void) chooseLocalProject{
+    
+    if(self._offlineProjs && [_offlineProjs count])
+    {
+        CustomPickerView* picker = [[CustomPickerView alloc]
+                   initWithConfirm:CGRectMake(0, SCREEN_HEIGHT - 160, SCREEN_WIDTH, 160)];
+        
+        
+        picker._pickerDataArray = @[@{@"values":_offlineProjs}];
+        
+        
+        picker._selectColor = YELLOW_COLOR;
+        picker._rowNormalColor = [UIColor whiteColor];
+        //picker.delegate_ = self;
+        [picker selectRow:0 inComponent:0];
+        IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
+        picker._selectionBlock = ^(NSDictionary *values)
+        {
+            [block_self didPickProjectName:values];
+        };
+    }
+    else
+    {
+        [KVNProgress showWithStatus:@"没有可导入的项目"];
+    }
+}
+
+- (void) didPickProjectName:(NSDictionary*)values{
+    
+    
+}
 
 - (void) checkArea{
     

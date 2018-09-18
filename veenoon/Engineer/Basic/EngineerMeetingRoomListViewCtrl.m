@@ -178,28 +178,7 @@
 }
 
 
-- (void) loadLocalProjects{
-    
-    self._offlineProjs = [NSMutableArray array];
-    
-    [[RegulusSDK sharedRegulusSDK] GetProjectsFromLocal:^(BOOL result, NSArray *names, NSError *error) {
-        
-        if(result)
-        {
-            if([names count])
-            {
-                [self._offlineProjs addObjectsFromArray:names];
-            }
-            
-            [self layoutOfflineProjects];
-        }
-        
-    }];
-    
-    
-    
-    
-}
+
 
 - (void) clearAction:(id)sender{
     
@@ -1286,6 +1265,26 @@
 }
 
 #pragma mark -- Local Mode ---
+
+- (void) loadLocalProjects{
+    
+    self._offlineProjs = [NSMutableArray array];
+    
+    [[RegulusSDK sharedRegulusSDK] GetProjectsFromLocal:^(BOOL result, NSArray *names, NSError *error) {
+        
+        if(result)
+        {
+            if([names count])
+            {
+                [self._offlineProjs addObjectsFromArray:names];
+            }
+            
+            [self layoutOfflineProjects];
+        }
+        
+    }];
+    
+}
 
 - (void) downloadOfflineResources{
     
