@@ -193,7 +193,6 @@
 		3421B34A2150C43A008773F0 /* up_cloud_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3421B3482150C436008773F0 /* up_cloud_selected@2x.png */; };
 		3421B34B2150C43A008773F0 /* up_cloud_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3421B3492150C439008773F0 /* up_cloud_white@2x.png */; };
 		3421B34D2150CAC9008773F0 /* project_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3421B34C2150CAC9008773F0 /* project_icon@2x.png */; };
-		3421B3502150DF64008773F0 /* JCActionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3421B34F2150DF63008773F0 /* JCActionView.m */; };
 		3421EA2D1FC4136600DC5378 /* CustomPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3421EA2B1FC4136600DC5378 /* CustomPickerView.m */; };
 		3421EA301FC4161300DC5378 /* ColumnsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3421EA2F1FC4161300DC5378 /* ColumnsView.m */; };
 		3422A5B51FCC17AE00F6D3C2 /* battery@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3422A5B41FCC17AD00F6D3C2 /* battery@2x.png */; };
@@ -1282,8 +1281,6 @@
 		3421B3482150C436008773F0 /* up_cloud_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "up_cloud_selected@2x.png"; sourceTree = "<group>"; };
 		3421B3492150C439008773F0 /* up_cloud_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "up_cloud_white@2x.png"; sourceTree = "<group>"; };
 		3421B34C2150CAC9008773F0 /* project_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "project_icon@2x.png"; sourceTree = "<group>"; };
-		3421B34E2150DF62008773F0 /* JCActionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JCActionView.h; path = ../../Desktop/work/new_exas_union/Hint/JCActionView.h; sourceTree = "<group>"; };
-		3421B34F2150DF63008773F0 /* JCActionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JCActionView.m; path = ../../Desktop/work/new_exas_union/Hint/JCActionView.m; sourceTree = "<group>"; };
 		3421EA2B1FC4136600DC5378 /* CustomPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomPickerView.m; sourceTree = "<group>"; };
 		3421EA2C1FC4136600DC5378 /* CustomPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomPickerView.h; sourceTree = "<group>"; };
 		3421EA2E1FC4161300DC5378 /* ColumnsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColumnsView.h; sourceTree = "<group>"; };
@@ -2470,8 +2467,6 @@
 				049BA65C1AF7B63F00F17584 /* Database */,
 				04DE1FE51AD6B52400D49E2F /* CMNavigationController.h */,
 				04DE1FE61AD6B52400D49E2F /* CMNavigationController.m */,
-				3421B34E2150DF62008773F0 /* JCActionView.h */,
-				3421B34F2150DF63008773F0 /* JCActionView.m */,
 				04DE1EC61AD6B22F00D49E2F /* BaseViewController.h */,
 				04DE1EC71AD6B22F00D49E2F /* BaseViewController.m */,
 				049BA6641AF7B82700F17584 /* ChooseCountryViewController.h */,
@@ -5032,7 +5027,6 @@
 				04DE1E8A1AD6AEE000D49E2F /* MaskRender.m in Sources */,
 				EBC71B0B203AF90700DD0A98 /* VideoProcessRightView.m in Sources */,
 				04DE1EB21AD6AEE000D49E2F /* SDWebImagePrefetcher.m in Sources */,
-				3421B3502150DF64008773F0 /* JCActionView.m in Sources */,
 				EB217FCC1FD42660003F5A8F /* UserAddWetViewCtrl.m in Sources */,
 				04D7197F1DADE098002153D7 /* NSDate-Helper.m in Sources */,
 				EB09EF2F1FD978C700C968CA /* EngineerToUseTeslariViewCtrl.m in Sources */,
