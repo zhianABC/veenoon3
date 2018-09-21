@@ -21,13 +21,15 @@
 #import "SBJson4.h"
 #import "MeetingRoom.h"
 #import "CustomPickerView.h"
+#import "JCActionView.h"
+#import "AppDelegate.h"
 
 #ifdef OPEN_REG_LIB_DEF
 #import "RegulusSDK.h"
 
 #endif
 
-@interface EngineerSysSelectViewCtrl ()<UIScrollViewDelegate>{
+@interface EngineerSysSelectViewCtrl ()<UIScrollViewDelegate,JCActionViewDelegate>{
     
     EngineerDNSSettingView *_dnsView;
     EngineerPortSettingView *_portView;
@@ -183,52 +185,32 @@
 #pragma mark -- import Project --
 - (void) importSysAction:(id)sender{
     
-    IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
+    JCActionView *jcAction = [[JCActionView alloc] initWithTitles:@[@"从本地导入", @"从云账户导入", @"从U盘导入"]
+                                                            frame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    jcAction.delegate_ = self;
+    jcAction.tag = 2017;
     
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil
-                                                                   message:@"导入项目 "
-                                                            preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    UIAlertAction *localAction = [UIAlertAction
-                                 actionWithTitle:@"从本地导入"
-                                 style:UIAlertActionStyleDefault
-                                 handler:^(UIAlertAction * _Nonnull action) {
-                                     
-                                     [block_self importFromLocal];
-                                     
-                                 }];
-    [alert addAction:localAction];
-    
-    UIAlertAction *cloudAction = [UIAlertAction
-                                 actionWithTitle:@"从云账户导入"
-                                 style:UIAlertActionStyleDefault
-                                 handler:^(UIAlertAction * _Nonnull action) {
-                                     
-                                     [block_self importFromCloud];
-                                 }];
-    [alert addAction:cloudAction];
-    
-    UIAlertAction *usbAction = [UIAlertAction
-                                 actionWithTitle:@"从U盘导入"
-                                 style:UIAlertActionStyleDefault
-                                 handler:^(UIAlertAction * _Nonnull action) {
-                                     
-                                     [block_self importFromUSB];
-                                 }];
-    [alert addAction:usbAction];
-    
-    UIAlertAction *cancelAction = [UIAlertAction
-                                   actionWithTitle:@"取消"
-                                   style:UIAlertActionStyleCancel handler:nil];
-    [alert addAction:cancelAction];
-    
-    
-    alert.popoverPresentationController.sourceView = self.view;
-    alert.popoverPresentationController.sourceRect = CGRectMake(0,0,1.0,1.0);
+    AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    [app.window addSubview:jcAction];
+    [jcAction animatedShow];
     
 
-    [self presentViewController:alert animated:YES
-                     completion:nil];
+}
+
+- (void) didJCActionButtonIndex:(int)index actionView:(UIView*)actionView{
+    
+    if(index == 0)
+    {
+        [self importFromLocal];
+    }
+    else if(index == 1)
+    {
+         [self importFromCloud];
+    }
+    else if(index == 2)
+    {
+         [self importFromUSB];
+    }
 }
 
 - (void) importFromCloud{
@@ -238,8 +220,62 @@
 
 - (void) importFromUSB{
     
-    
+    [KVNProgress show];
+    [[RegulusSDK sharedRegulusSDK] GetProjectsFromUdisc:^(BOOL result, NSArray *names, NSError *error) {
+        
+        [KVNProgress dismiss];
+        if(result)
+        {
+            if([names count])
+            {
+                self._offlineProjs = names;
+            }
+        }
+        
+        [self chooseUSDProject];
+
+    }];
 }
+
+- (void) chooseUSDProject{
+    
+    if(self._offlineProjs && [_offlineProjs count])
+    {
+        CustomPickerView* picker = [[CustomPickerView alloc]
+                                    initWithConfirm:CGRectMake(0, SCREEN_HEIGHT - 210, SCREEN_WIDTH, 210)];
+        
+        
+        picker._pickerDataArray = @[@{@"values":_offlineProjs}];
+        
+        
+        picker._selectColor = [UIColor blackColor];
+        picker._rowNormalColor = [UIColor blackColor];
+        [picker selectRow:0 inComponent:0];
+        IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
+        
+        AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+        [app.window addSubview:picker];
+        
+        picker._selectionBlock = ^(NSDictionary *values)
+        {
+            [block_self didPickUSBProjectName:values];
+        };
+    }
+    else
+    {
+        [KVNProgress showWithStatus:@"没有可导入的项目"];
+    }
+}
+
+- (void) didPickUSBProjectName:(NSDictionary*)values{
+    
+    NSString *prjName = [values objectForKey:@0];
+    [[RegulusSDK sharedRegulusSDK] ImportProjectFromUdisc:prjName completion:^(BOOL result, NSError *error) {
+        
+        [KVNProgress showWithStatus:@"已导入"];
+    }];
+}
+
 
 - (void) importFromLocal{
     
@@ -266,15 +302,18 @@
     if(self._offlineProjs && [_offlineProjs count])
     {
         CustomPickerView* picker = [[CustomPickerView alloc]
-                   initWithConfirm:CGRectMake(0, SCREEN_HEIGHT - 160, SCREEN_WIDTH, 160)];
+                   initWithConfirm:CGRectMake(0, SCREEN_HEIGHT - 210, SCREEN_WIDTH, 210)];
         
         
         picker._pickerDataArray = @[@{@"values":_offlineProjs}];
         
         
-        picker._selectColor = YELLOW_COLOR;
-        picker._rowNormalColor = [UIColor whiteColor];
-        //picker.delegate_ = self;
+        picker._selectColor = [UIColor blackColor];
+        picker._rowNormalColor = [UIColor blackColor];
+        
+        AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+        [app.window addSubview:picker];
+        
         [picker selectRow:0 inComponent:0];
         IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
         picker._selectionBlock = ^(NSDictionary *values)
@@ -290,7 +329,9 @@
 
 - (void) didPickProjectName:(NSDictionary*)values{
     
-    
+    NSString *prjName = [values objectForKey:@0];
+    [[RegulusSDK sharedRegulusSDK] ImportProjectFromLocal:prjName
+                                               completion:nil];
 }
 
 - (void) checkArea{

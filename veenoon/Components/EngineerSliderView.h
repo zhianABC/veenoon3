@@ -40,11 +40,15 @@
 
 @property (nonatomic, assign) BOOL isUnLineStyle;
 
+@property (nonatomic, strong) UIImage *indicatorImgN;
+@property (nonatomic, strong) UIImage *indicatorImgS;
+
+
 - (id) initWithSliderBg:(UIImage*)sliderBg frame:(CGRect)frame;
 
 - (void) setMuteVal:(BOOL)mute;
 
-- (void) setRoadImage:(UIImage *)image;
+- (void) setRoadImage:(UIImage *)image;//wireless_slide_light_n@2x
 - (void) setIndicatorImage:(UIImage *)image;
 - (void) resetScale;
 - (void) setScaleValue:(int)value;

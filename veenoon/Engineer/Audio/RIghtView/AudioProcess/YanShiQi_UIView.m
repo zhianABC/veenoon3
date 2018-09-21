@@ -250,9 +250,19 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     
+    channelBtn.frame = CGRectMake(0, 20, 300, 36);
+    int y = CGRectGetMaxY(channelBtn.frame)+10;
+    contentView.frame = CGRectMake(0, y, self.frame.size.width, 340);
+
+    
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
+    
+    channelBtn.frame = CGRectMake(0, 50, 300, 36);
+    int y = CGRectGetMaxY(channelBtn.frame)+10;
+    contentView.frame = CGRectMake(0, y, self.frame.size.width, 340);
+
     
     int index = (int) textField.tag;
     if (index == 1) {

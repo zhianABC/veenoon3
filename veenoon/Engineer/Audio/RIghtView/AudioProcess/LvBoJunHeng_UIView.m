@@ -296,10 +296,7 @@
     }];
     
     IMP_BLOCK_SELF(LvBoJunHeng_UIView);
-    
 
-    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
-    
     [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         UITextField *alValTxt = alertController.textFields.firstObject;
@@ -309,6 +306,8 @@
             [block_self doSetHFilterValue:[val intValue]];
         }
     }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
     
     [self.ctrl presentViewController:alertController animated:true completion:nil];
 }
@@ -677,10 +676,7 @@
     }];
     
     IMP_BLOCK_SELF(LvBoJunHeng_UIView);
-    
-    
-    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
-    
+
     [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         UITextField *alValTxt = alertController.textFields.firstObject;
@@ -690,6 +686,8 @@
             [block_self doSetBrandFreqValue:[val intValue]];
         }
     }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
     
     [self.ctrl presentViewController:alertController
                             animated:YES
@@ -737,9 +735,6 @@
     
     IMP_BLOCK_SELF(LvBoJunHeng_UIView);
     
-    
-    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
-    
     [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         UITextField *alValTxt = alertController.textFields.firstObject;
@@ -749,6 +744,8 @@
             [block_self doSetBrandGainValue:[val intValue]];
         }
     }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
     
     [self.ctrl presentViewController:alertController
                             animated:YES
@@ -1100,9 +1097,7 @@
     }];
     
     IMP_BLOCK_SELF(LvBoJunHeng_UIView);
-    
-    
-    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+
     
     [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
@@ -1113,6 +1108,8 @@
             [block_self doSetLowFreqValue:[val intValue]];
         }
     }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
     
     [self.ctrl presentViewController:alertController
                             animated:YES

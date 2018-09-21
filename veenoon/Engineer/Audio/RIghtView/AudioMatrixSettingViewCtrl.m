@@ -154,7 +154,7 @@
     _muteBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [_muteBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_muteBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
-    [_muteBtn setTitle:@"复位" forState:UIControlStateNormal];
+    [_muteBtn setTitle:@"取消" forState:UIControlStateNormal];
     [_maskView addSubview:_muteBtn];
     [_muteBtn addTarget:self
                  action:@selector(clearAction:)
@@ -323,6 +323,8 @@
 }
 
 - (void) clearAction:(UIButton*)sender{
+    self._selectBtn = nil;
+    [_maskView removeFromSuperview];
     
 }
 

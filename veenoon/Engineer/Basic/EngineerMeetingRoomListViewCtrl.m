@@ -755,6 +755,9 @@
     
     if(_currentRoom)
     {
+       
+        [DataCenter defaultDataCenter]._isLocalPrj = NO;
+        
         [DataCenter defaultDataCenter]._currentRoom = _currentRoom;
         
         _currentRoom.regulus_user_id = _regulus_user_id;

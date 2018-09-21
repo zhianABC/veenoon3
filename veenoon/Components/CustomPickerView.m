@@ -97,7 +97,7 @@
     
     if (self = [super initWithFrame:frame]) {
         // Initialization code
-        //self.backgroundColor = [UIColor redColor];
+        self.backgroundColor = [UIColor whiteColor];
         
         self._selectColor = RGB(230, 151, 50);
         self._rowNormalColor = SINGAL_COLOR;
@@ -158,7 +158,7 @@
         [delegate_ didConfirmPickerValue:_unitString];
     }
     
-    
+    [self removeFromSuperview];
 }
 
 

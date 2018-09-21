@@ -28,6 +28,8 @@
 @property (nonatomic, assign) float m_availbel_h;
 @property (nonatomic, assign) float m_bellow_0;
 @property (nonatomic, assign) float m_abbove_0;
+
+
 @end
 
 @implementation EngineerSliderView
@@ -42,6 +44,10 @@
 @synthesize m_availbel_h;
 @synthesize m_bellow_0;
 @synthesize m_abbove_0;
+
+@synthesize indicatorImgN;
+@synthesize indicatorImgS;
+
 
 - (id) initWithSliderBg:(UIImage*)sliderBg frame:(CGRect)frame{
     
@@ -98,6 +104,8 @@
         
         stepValue = 1;
         
+        self.indicatorImgN = [UIImage imageNamed:@"wireless_slide_n.png"];
+        self.indicatorImgS = [UIImage imageNamed:@"wireless_slide_s.png"];
         
     }
     
@@ -112,13 +120,13 @@
     if (scalValue == minValue) {
         
         if(!_isMute)
-            [self setIndicatorImage: [UIImage imageNamed:@"wireless_slide_n.png"]];
+            [self setIndicatorImage: indicatorImgN];
         sliderThumb.image = [UIImage imageNamed:@"jslide_thumb_n.png"];
         
     } else {
         
         if(!_isMute)
-            [self setIndicatorImage: [UIImage imageNamed:@"wireless_slide_s.png"]];
+            [self setIndicatorImage: indicatorImgS];
         
         sliderThumb.image = [UIImage imageNamed:@"jslide_thumb.png"];
         
@@ -169,11 +177,11 @@
     {
         if (curValue <= minValue) {
             
-            [self setIndicatorImage: [UIImage imageNamed:@"wireless_slide_n.png"]];
+            [self setIndicatorImage: indicatorImgN];
             
         } else {
             
-            [self setIndicatorImage: [UIImage imageNamed:@"wireless_slide_s.png"]];
+            [self setIndicatorImage: indicatorImgS];
         }
     }
     
