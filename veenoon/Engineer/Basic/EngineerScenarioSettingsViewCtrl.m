@@ -58,6 +58,7 @@
 @synthesize _map;
 @synthesize regulus_id;
 @synthesize _curSecenario;
+@synthesize localPrjName;
 
 
 - (void) initDat {
@@ -238,18 +239,64 @@
     }
     else
     {
-        //cancelBtn.hidden = YES;
-        [self loadSenseFromRegulusCtrl];
+        if(localPrjName)
+        {
+            [[DataCenter defaultDataCenter] prepareDrivers];
+            
+            if([DataSync sharedDataSync]._currentArea == nil)
+            {
+                [self checkArea];
+            }
+            else
+            {
+                [self loadSenseFromRegulusCtrl];
+            }
+        }
+        else
+        {
+            [self loadSenseFromRegulusCtrl];
+        }
     }
     
     //获取Regulus支持的插件
     [[DataSync sharedDataSync] syncRegulusDrivers];
     
     
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(notifyReloadScenario:)
                                                  name:@"Notify_Reload_Senario"
                                                object:nil];
+}
+
+- (void) checkArea{
+    
+    IMP_BLOCK_SELF(EngineerScenarioSettingsViewCtrl);
+    
+    [[RegulusSDK sharedRegulusSDK] GetAreas:^(NSArray *RgsAreaObjs, NSError *error) {
+        if (error) {
+            
+            [KVNProgress showErrorWithStatus:@"连接中控出错!"];
+        }
+        else
+        {
+            RgsAreaObj *areaObj = nil;
+            for(RgsAreaObj *obj in RgsAreaObjs)
+            {
+                if([obj.name isEqualToString:VEENOON_AREA_NAME])
+                {
+                    areaObj = obj;
+                    break;
+                }
+            }
+            if(areaObj)
+            {
+                [DataSync sharedDataSync]._currentArea = areaObj;
+                [block_self loadSenseFromRegulusCtrl];
+            }
+        }
+    }];
+    
 }
 
 - (void) saveLocalProjectAction:(id)sender{

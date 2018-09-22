@@ -20,7 +20,7 @@
 #import "DataCenter.h"
 #import "SBJson4.h"
 #import "MeetingRoom.h"
-#import "CustomPickerView.h"
+#import "SelPickerView.h"
 #import "JCActionView.h"
 #import "AppDelegate.h"
 
@@ -153,7 +153,7 @@
                                                                     0,
                                                                     SCREEN_WIDTH,
                                                                     SCREEN_HEIGHT)];
-    _switchContent.delegate=self;
+    _switchContent.delegate = self;
     [_container addSubview:_switchContent];
     _switchContent.pagingEnabled = YES;
     [_switchContent setContentSize:CGSizeMake(SCREEN_WIDTH*2, SCREEN_HEIGHT)];
@@ -241,29 +241,25 @@
     
     if(self._offlineProjs && [_offlineProjs count])
     {
-        CustomPickerView* picker = [[CustomPickerView alloc]
-                                    initWithConfirm:CGRectMake(0, SCREEN_HEIGHT - 210, SCREEN_WIDTH, 210)];
-        
-        
-        picker._pickerDataArray = @[@{@"values":_offlineProjs}];
-        
-        
-        picker._selectColor = [UIColor blackColor];
-        picker._rowNormalColor = [UIColor blackColor];
-        [picker selectRow:0 inComponent:0];
-        IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
-        
         AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-        [app.window addSubview:picker];
+        SelPickerView *_levelSetting = [[SelPickerView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
         
-        picker._selectionBlock = ^(NSDictionary *values)
+        _levelSetting._pickerDataArray = @[@{@"values":_offlineProjs}];
+        
+        [_levelSetting showInView:app.window];
+        
+        [_levelSetting selectRow:0 inComponent:0];
+        
+        IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
+        _levelSetting._selectionBlock = ^(NSDictionary *values)
         {
             [block_self didPickUSBProjectName:values];
         };
+    
     }
     else
     {
-        [KVNProgress showWithStatus:@"没有可导入的项目"];
+        [KVNProgress showSuccessWithStatus:@"没有可导入的项目"];
     }
 }
 
@@ -272,7 +268,8 @@
     NSString *prjName = [values objectForKey:@0];
     [[RegulusSDK sharedRegulusSDK] ImportProjectFromUdisc:prjName completion:^(BOOL result, NSError *error) {
         
-        [KVNProgress showWithStatus:@"已导入"];
+        [KVNProgress showSuccessWithStatus:@"已导入"];
+        
     }];
 }
 
@@ -280,9 +277,11 @@
 - (void) importFromLocal{
     
     [KVNProgress show];
+    
     [[RegulusSDK sharedRegulusSDK] GetProjectsFromLocal:^(BOOL result, NSArray *names, NSError *error) {
         
         [KVNProgress dismiss];
+        
         if(result)
         {
             if([names count])
@@ -301,29 +300,25 @@
     
     if(self._offlineProjs && [_offlineProjs count])
     {
-        CustomPickerView* picker = [[CustomPickerView alloc]
-                   initWithConfirm:CGRectMake(0, SCREEN_HEIGHT - 210, SCREEN_WIDTH, 210)];
-        
-        
-        picker._pickerDataArray = @[@{@"values":_offlineProjs}];
-        
-        
-        picker._selectColor = [UIColor blackColor];
-        picker._rowNormalColor = [UIColor blackColor];
-        
         AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-        [app.window addSubview:picker];
+        SelPickerView *_levelSetting = [[SelPickerView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
         
-        [picker selectRow:0 inComponent:0];
+        _levelSetting._pickerDataArray = @[@{@"values":_offlineProjs}];
+        
+        [_levelSetting showInView:app.window];
+        
+        [_levelSetting selectRow:0 inComponent:0];
+        
         IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
-        picker._selectionBlock = ^(NSDictionary *values)
+        _levelSetting._selectionBlock = ^(NSDictionary *values)
         {
             [block_self didPickProjectName:values];
         };
+        
     }
     else
     {
-        [KVNProgress showWithStatus:@"没有可导入的项目"];
+        [KVNProgress showSuccessWithStatus:@"没有可导入的项目"];
     }
 }
 
@@ -331,7 +326,11 @@
     
     NSString *prjName = [values objectForKey:@0];
     [[RegulusSDK sharedRegulusSDK] ImportProjectFromLocal:prjName
-                                               completion:nil];
+                                               completion:^(BOOL result, NSError *error) {
+                                                   
+                                                   [KVNProgress showWithStatus:@"已导入"];
+                                                   
+                                               }];
 }
 
 - (void) checkArea{
