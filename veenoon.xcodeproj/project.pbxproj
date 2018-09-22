@@ -203,6 +203,8 @@
 		342327582155E0840082EE88 /* SelPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 342327572155E0840082EE88 /* SelPickerView.m */; };
 		3423275B2155E89E0082EE88 /* EngineerLocalPrjsListViewCtrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3423275A2155E89E0082EE88 /* EngineerLocalPrjsListViewCtrl.m */; };
 		3423275D2155EB5C0082EE88 /* offline_remove_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3423275C2155EB5C0082EE88 /* offline_remove_icon@2x.png */; };
+		342327602155F32A0082EE88 /* local_prj_save_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3423275E2155F3270082EE88 /* local_prj_save_s@2x.png */; };
+		342327612155F32A0082EE88 /* local_prj_save_n@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3423275F2155F3290082EE88 /* local_prj_save_n@2x.png */; };
 		342389B02026D93500885405 /* JCActionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 342389AF2026D93500885405 /* JCActionView.m */; };
 		342389B32026F48700885405 /* Groups2PickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 342389B12026F48500885405 /* Groups2PickerView.m */; };
 		34238A572060DD260004C6D9 /* right_white_ico@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34238A562060DD260004C6D9 /* right_white_ico@2x.png */; };
@@ -1299,6 +1301,8 @@
 		342327592155E89E0082EE88 /* EngineerLocalPrjsListViewCtrl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EngineerLocalPrjsListViewCtrl.h; sourceTree = "<group>"; };
 		3423275A2155E89E0082EE88 /* EngineerLocalPrjsListViewCtrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EngineerLocalPrjsListViewCtrl.m; sourceTree = "<group>"; };
 		3423275C2155EB5C0082EE88 /* offline_remove_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "offline_remove_icon@2x.png"; sourceTree = "<group>"; };
+		3423275E2155F3270082EE88 /* local_prj_save_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "local_prj_save_s@2x.png"; sourceTree = "<group>"; };
+		3423275F2155F3290082EE88 /* local_prj_save_n@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "local_prj_save_n@2x.png"; sourceTree = "<group>"; };
 		342389AE2026D93300885405 /* JCActionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCActionView.h; sourceTree = "<group>"; };
 		342389AF2026D93500885405 /* JCActionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCActionView.m; sourceTree = "<group>"; };
 		342389B12026F48500885405 /* Groups2PickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Groups2PickerView.m; sourceTree = "<group>"; };
@@ -2721,6 +2725,8 @@
 		04DE1ECB1AD6B3BA00D49E2F /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
+				3423275F2155F3290082EE88 /* local_prj_save_n@2x.png */,
+				3423275E2155F3270082EE88 /* local_prj_save_s@2x.png */,
 				3423275C2155EB5C0082EE88 /* offline_remove_icon@2x.png */,
 				3421B34C2150CAC9008773F0 /* project_icon@2x.png */,
 				3421B3482150C436008773F0 /* up_cloud_selected@2x.png */,
@@ -4263,6 +4269,7 @@
 				341C610A1FDD0DBF003A5490 /* a_icon_7@2x.png in Resources */,
 				EBAE5BA61FDD20C400C10C4D /* engineer_env_nenghao_n@2x.png in Resources */,
 				EB217FD31FD4275E003F5A8F /* user_add_wet_bt1_n@2x.png in Resources */,
+				342327612155F32A0082EE88 /* local_prj_save_n@2x.png in Resources */,
 				EB1A04731FC71EEC007CC1F2 /* huatong_player_n@2x.png in Resources */,
 				EBF6A7441FC851E500260FF0 /* audio_player_last_n@2x.png in Resources */,
 				EBDF1BF91FC5ABB500A756EA /* camera_n@2x.png in Resources */,
@@ -4625,6 +4632,7 @@
 				EB3B73A51FE61F13001941CF /* audio_player_r_next_n@2x.png in Resources */,
 				EB1A56091FEF8708000B18E6 /* engineer_dial_phone_s@2x.png in Resources */,
 				EB09C4A61FD3A6DF00776540 /* user_aircondition_s@2x.png in Resources */,
+				342327602155F32A0082EE88 /* local_prj_save_s@2x.png in Resources */,
 				EB23AEB01FD1972400D1570F /* luboji_bofang_s@2x.png in Resources */,
 				EB19B66C20581D2C003F1546 /* audio_corner_bofangqi@2x.png in Resources */,
 				EB4EC10A1FE7E178000B3101 /* huatong_yellow_n@2x.png in Resources */,
