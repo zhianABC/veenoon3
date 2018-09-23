@@ -13,6 +13,7 @@
 @synthesize minValue;
 @synthesize maxL;
 @synthesize _isShowValue;
+@synthesize ctrl;
 
 @synthesize delegate;
 
@@ -68,10 +69,73 @@
         maxL.textAlignment = NSTextAlignmentRight;
         maxL.text = @"180s";
         
+        curValue = 1;
+        
+        UIButton *btnEdit = [UIButton buttonWithType:UIButtonTypeCustom];
+        [self addSubview:btnEdit];
+        btnEdit.frame = CGRectMake(frame.size.width - 80,
+                                   0,
+                                   80,
+                                   frame.size.height);
+        [btnEdit addTarget:self
+                    action:@selector(editValAction:)
+          forControlEvents:UIControlEventTouchUpInside];
+
+        
     }
     
     return self;
 }
+
+- (void) editValAction:(id)sender{
+    
+    NSString *defl = valueLabel.text;
+    defl = [defl stringByReplacingOccurrencesOfString:@"s" withString:@""];
+    
+    IMP_BLOCK_SELF(JHSlideView);
+    
+    NSString *alert = @"设置时间，范围1s - 180s";
+    UIAlertController* alertController = [UIAlertController alertControllerWithTitle:nil
+                                                          message:alert preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        
+        textField.placeholder = @"时间";
+        textField.text = defl;
+        textField.keyboardType = UIKeyboardTypeDecimalPad;
+    }];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        UITextField *alValTxt = alertController.textFields.firstObject;
+        NSString *val = alValTxt.text;
+        if (val && [val length] > 0) {
+            
+            [block_self doSetValValue:[val intValue]];
+        }
+    }]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
+    
+    [self.ctrl presentViewController:alertController
+                            animated:YES
+                          completion:nil];
+}
+
+- (void) doSetValValue:(int)val{
+    
+    int fv = val;
+    if(fv < minValue)
+        fv = minValue;
+    else if(fv > maxValue)
+        fv = maxValue;
+    
+    [self setScaleValue:fv];
+    
+}
+
+
 
 - (void) setRoadImage:(UIImage *)image{
     
@@ -154,11 +218,16 @@
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
     
-   
+    if(delegate && [delegate respondsToSelector:@selector(didSlideEndValueChanged:index:)])
+    {
+        [delegate didSlideEndValueChanged:curValue index:(int)self.tag];
+    }
     
 }
 
 - (void) sliderValueChanged:(int)value{
+    
+    curValue = value;
     
     if(_isShowValue)
     {

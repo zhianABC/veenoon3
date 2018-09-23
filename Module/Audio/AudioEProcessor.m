@@ -424,8 +424,6 @@
     return nil;
 }
 
-
-
 - (NSDictionary *)objectToJson{
     
     NSMutableDictionary *allData = [NSMutableDictionary dictionary];

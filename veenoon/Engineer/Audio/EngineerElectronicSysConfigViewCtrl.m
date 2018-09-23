@@ -114,6 +114,7 @@
         [UIView commitAnimations];
     }
     [self.view addSubview:_rightView];
+    _rightView.ctrl = self;
     
     _rightView._objSet = _currentObj;
     [_rightView refreshView:_currentObj];
@@ -361,7 +362,7 @@
         }
     }
 }
-- (void) didControlRelayDuration:(int)relayIndex withDuration:(int)duration {
+- (void) didControlRelayDuration:(int)relayIndex withDuration:(int)duration end:(BOOL)end{
     
     if (relayIndex == -1) {
         
@@ -408,20 +409,38 @@
     }
     else
     {
-        LightSliderButton *slider = [_buttonArray objectAtIndex:relayIndex];
-        
-        BOOL isEnabel = !slider._isEnabel;
-        int index = (int) slider.tag;
-        APowerESetProxy *powerProxy = [_powerProxys objectAtIndex:index];
-        if (isEnabel) {
-            [powerProxy controlRelayDuration:YES
-                                withDuration:duration
-                                        exec:YES];
-        } else {
-            [powerProxy controlRelayDuration:NO
-                                withDuration:duration
-                                        exec:YES];
+        if(end)
+        {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+                                         (int64_t)(200.0 * NSEC_PER_MSEC)),
+                           dispatch_get_main_queue(), ^{
+                               
+                               [self sendCtrlCmds:relayIndex withDuration:duration];
+                           });
         }
+        else
+        {
+            [self sendCtrlCmds:relayIndex withDuration:duration];
+        }
+        
+    }
+}
+
+- (void) sendCtrlCmds:(int)relayIndex withDuration:(int)duration{
+    
+    LightSliderButton *slider = [_buttonArray objectAtIndex:relayIndex];
+    
+    BOOL isEnabel = !slider._isEnabel;
+    int index = (int) slider.tag;
+    APowerESetProxy *powerProxy = [_powerProxys objectAtIndex:index];
+    if (isEnabel) {
+        [powerProxy controlRelayDuration:YES
+                            withDuration:duration
+                                    exec:YES];
+    } else {
+        [powerProxy controlRelayDuration:NO
+                            withDuration:duration
+                                    exec:YES];
     }
 }
 

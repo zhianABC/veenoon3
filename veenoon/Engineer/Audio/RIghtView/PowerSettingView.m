@@ -36,6 +36,7 @@
 @implementation PowerSettingView
 @synthesize _objSet;
 @synthesize _delegate;
+@synthesize ctrl;
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -225,9 +226,9 @@
         
         int duration = [durationStr intValue];
         
-        if(_delegate && [_delegate respondsToSelector:@selector(didControlRelayDuration:withDuration:)])
+        if(_delegate && [_delegate respondsToSelector:@selector(didControlRelayDuration:withDuration:end:)])
         {
-            [_delegate didControlRelayDuration:-1 withDuration:duration];
+            [_delegate didControlRelayDuration:-1 withDuration:duration end:NO];
         }
     }
     else
@@ -327,7 +328,8 @@
         slider.maxValue = 180;
         slider.delegate = self;
         slider.tag = i;
-    
+        slider.ctrl = self.ctrl;
+        
         NSMutableDictionary *dic = [vals objectAtIndex:i];
         int val = [[dic objectForKey:@"seconds"] intValue];
         
@@ -344,9 +346,17 @@
     
     [_objSet setLabDelaySecs:value withIndex:index];
     
-    if(_delegate && [_delegate respondsToSelector:@selector(didControlRelayDuration:withDuration:)])
+    if(_delegate && [_delegate respondsToSelector:@selector(didControlRelayDuration:withDuration:end:)])
     {
-        [_delegate didControlRelayDuration:index withDuration:value];
+        [_delegate didControlRelayDuration:index withDuration:value end:NO];
+    }
+}
+
+- (void) didSlideEndValueChanged:(int)value index:(int)index{
+    
+    if(_delegate && [_delegate respondsToSelector:@selector(didControlRelayDuration:withDuration:end:)])
+    {
+        [_delegate didControlRelayDuration:index withDuration:value end:YES];
     }
 }
 

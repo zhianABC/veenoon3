@@ -12,6 +12,7 @@
 
 @optional
 - (void) didSlideValueChanged:(int)value index:(int)index;
+- (void) didSlideEndValueChanged:(int)value index:(int)index;
 
 @end
 
@@ -23,7 +24,8 @@
     
     UILabel *valueLabel;
     UILabel *maxL;
-    
+
+    int curValue;
 }
 @property (nonatomic, assign) int maxValue;
 @property (nonatomic, assign) int minValue;
@@ -31,6 +33,7 @@
 @property (nonatomic, assign) BOOL _isShowValue;
 
 @property (nonatomic, weak) id <JHSlideViewDelegate> delegate;
+@property (nonatomic, weak) UIViewController *ctrl;
 
 - (id) initWithSliderBg:(UIImage*)sliderBg frame:(CGRect)frame;
 
