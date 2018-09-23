@@ -95,19 +95,19 @@
     
     
     btnChuangan = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnChuangan.frame = CGRectMake(80, SCREEN_HEIGHT - 50, 60, 50);
+    btnChuangan.frame = CGRectMake(120, SCREEN_HEIGHT - 50, 120, 50);
     [btnChuangan setImage:[UIImage imageNamed:@"auto_chuangan_s.png"]
             forState:UIControlStateNormal];
     [btnChuangan setImage:[UIImage imageNamed:@"auto_chuangan_s.png"]
             forState:UIControlStateHighlighted];
     [self.view addSubview:btnChuangan];
-    btnChuangan.center = CGPointMake(80, btnChuangan.center.y);
+    btnChuangan.center = CGPointMake(120, btnChuangan.center.y);
     [btnChuangan addTarget:self
                action:@selector(chuanganAction:)
      forControlEvents:UIControlEventTouchUpInside];
     
     btnPre = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnPre.frame = CGRectMake(60, SCREEN_HEIGHT - 50, 60, 50);
+    btnPre.frame = CGRectMake(60, SCREEN_HEIGHT - 50, 120, 50);
     [btnPre setImage:[UIImage imageNamed:@"auto_run_pre_w.png"]
               forState:UIControlStateNormal];
     [btnPre setImage:[UIImage imageNamed:@"auto_run_pre.png"]
@@ -119,13 +119,13 @@
        forControlEvents:UIControlEventTouchUpInside];
     
     btnWeek = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnWeek.frame = CGRectMake(SCREEN_WIDTH-80, SCREEN_HEIGHT - 50, 60, 50);
+    btnWeek.frame = CGRectMake(SCREEN_WIDTH-120, SCREEN_HEIGHT - 50, 120, 50);
     [btnWeek setImage:[UIImage imageNamed:@"auto_run_week_w.png"]
              forState:UIControlStateNormal];
     [btnWeek setImage:[UIImage imageNamed:@"auto_run_week.png"]
              forState:UIControlStateHighlighted];
     [self.view addSubview:btnWeek];
-    btnWeek.center = CGPointMake(SCREEN_WIDTH-80, btnWeek.center.y);
+    btnWeek.center = CGPointMake(SCREEN_WIDTH-120, btnWeek.center.y);
     [btnWeek addTarget:self
                 action:@selector(autoWeekAction:)
       forControlEvents:UIControlEventTouchUpInside];
