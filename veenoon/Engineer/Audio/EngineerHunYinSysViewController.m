@@ -215,6 +215,11 @@
    
     float circleValue = value;
     [_currentObj._proxyObj controlDeviceVol:circleValue force:YES];
+    
+    if(value > 0.0)
+    {
+        [_zengyiSlider setMuteVal:NO];
+    }
 }
 
 - (void) didSliderEndChanged:(float)value object:(id)object{

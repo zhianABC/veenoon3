@@ -155,8 +155,7 @@
             if([names count])
             {
                 [self._offlineProjs addObjectsFromArray:names];
-                [self._offlineProjs addObjectsFromArray:names];
-                [self._offlineProjs addObjectsFromArray:names];
+                
             }
             
             [self layoutOfflineProjects];

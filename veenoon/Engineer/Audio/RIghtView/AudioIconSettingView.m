@@ -57,7 +57,7 @@
         
         NSString *name = @"";
         if ([basePlugin isKindOfClass:[AudioEMix class]]) {
-            name = audio_mixer_name;
+            name = [basePlugin deviceName];
         } else if ([basePlugin isKindOfClass:[AudioEHand2Hand class]]) {
             name = audio_handtohand_name;
         } else if ([basePlugin isKindOfClass:[AudioEWirlessMike class]]) {

@@ -132,7 +132,7 @@
     topy = CGRectGetMaxY(tipsL.frame)+20;
 
     UIButton *goHomeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    goHomeBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0, 160, 50);
+    goHomeBtn.frame = CGRectMake(10, 0, 160, 50);
     [bottomBar addSubview:goHomeBtn];
     [goHomeBtn setImage:[UIImage imageNamed:@"gohome_icon.png"]
                forState:UIControlStateNormal];
@@ -144,8 +144,8 @@
     
     
     editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    editBtn.frame = CGRectMake(10, 0, 160, 50);
-    [bottomBar addSubview:editBtn];
+    editBtn.frame = CGRectMake(SCREEN_WIDTH - 160 - 10, ENGINEER_VIEW_TOP-10, 160, 44);
+    [self.view addSubview:editBtn];
     [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
     [editBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [editBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
@@ -154,8 +154,8 @@
       forControlEvents:UIControlEventTouchUpInside];
     
     _doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _doneBtn.frame = CGRectMake(10, 0, 160, 50);
-    [bottomBar addSubview:_doneBtn];
+    _doneBtn.frame = CGRectMake(SCREEN_WIDTH - 160 - 10, ENGINEER_VIEW_TOP-10, 160, 44);
+    [self.view addSubview:_doneBtn];
     [_doneBtn setTitle:@"完成" forState:UIControlStateNormal];
     [_doneBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_doneBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
@@ -166,21 +166,6 @@
     _doneBtn.hidden = YES;
 
     
-    int w3 = (SCREEN_WIDTH - editBtn.center.x*2)/3;
-    
-    UIButton *upCloud = [UIButton buttonWithType:UIButtonTypeCustom];
-    upCloud.frame = CGRectMake(0, 0,160, 50);
-    [bottomBar addSubview:upCloud];
-    [upCloud setImage:[UIImage imageNamed:@"up_cloud_white.png"]
-          forState:UIControlStateNormal];
-    [upCloud setImage:[UIImage imageNamed:@"up_cloud_selected.png"]
-             forState:UIControlStateHighlighted];
-    [upCloud addTarget:self
-             action:@selector(uploadAction:)
-   forControlEvents:UIControlEventTouchUpInside];
-    upCloud.center = CGPointMake(CGRectGetMidX(editBtn.frame)+w3, editBtn.center.y);
-
-    
     iBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     iBtn.frame = CGRectMake(0, 0,160, 50);
     [bottomBar addSubview:iBtn];
@@ -189,33 +174,41 @@
     [iBtn addTarget:self
              action:@selector(iconAction:)
    forControlEvents:UIControlEventTouchUpInside];
-    iBtn.center = CGPointMake(CGRectGetMidX(editBtn.frame)+w3*2, iBtn.center.y);
+    iBtn.center = CGPointMake(SCREEN_WIDTH/2, iBtn.center.y);
 
     
-    BOOL isLocalProject = [DataCenter defaultDataCenter]._isLocalPrj;
+    UIButton *upCloud = [UIButton buttonWithType:UIButtonTypeCustom];
+    upCloud.frame = CGRectMake(SCREEN_WIDTH - 160 - 10, 0,160, 50);
+    [bottomBar addSubview:upCloud];
     
+    
+    BOOL isLocalProject = [DataCenter defaultDataCenter]._isLocalPrj;
     if(isLocalProject)
     {
         _isSaved = NO;
         
-        //如果是本地的，需要存储
-        UIButton* btnSaveLocalPrj = [UIButton buttonWithType:UIButtonTypeCustom];
-        btnSaveLocalPrj.frame = CGRectMake(SCREEN_WIDTH - 160 - 10, 20, 160, 44);
-        [self.view addSubview:btnSaveLocalPrj];
-        [btnSaveLocalPrj setTitle:@"存储" forState:UIControlStateNormal];
-        [btnSaveLocalPrj setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [btnSaveLocalPrj setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
-        btnSaveLocalPrj.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-        [btnSaveLocalPrj addTarget:self
-                            action:@selector(saveLocalProjectAction:)
-                  forControlEvents:UIControlEventTouchUpInside];
+        [upCloud setImage:[UIImage imageNamed:@"local_prj_save_n.png"]
+                 forState:UIControlStateNormal];
+        [upCloud setImage:[UIImage imageNamed:@"local_prj_save_s.png"]
+                 forState:UIControlStateHighlighted];
+        [upCloud addTarget:self
+                    action:@selector(saveLocalProjectAction:)
+          forControlEvents:UIControlEventTouchUpInside];
         
-        btnSaveLocalPrj.center = CGPointMake(btnSaveLocalPrj.center.x, portDNSLabel.center.y-10);
     }
     else
     {
         //如果不是本地的，直接默认认为已存储
         _isSaved = YES;
+        
+        [upCloud setImage:[UIImage imageNamed:@"up_cloud_white.png"]
+                 forState:UIControlStateNormal];
+        [upCloud setImage:[UIImage imageNamed:@"up_cloud_selected.png"]
+                 forState:UIControlStateHighlighted];
+        [upCloud addTarget:self
+                    action:@selector(uploadAction:)
+          forControlEvents:UIControlEventTouchUpInside];
+        
     }
     
     
