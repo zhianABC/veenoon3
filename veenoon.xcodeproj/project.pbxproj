@@ -698,6 +698,7 @@
 		EB4131A3214E94EB00CCC6E1 /* shidu_zhishu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB41319F214E94EA00CCC6E1 /* shidu_zhishu@2x.png */; };
 		EB4131A4214E94EB00CCC6E1 /* syc_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB4131A0214E94EA00CCC6E1 /* syc_icon@2x.png */; };
 		EB4131A5214E94EB00CCC6E1 /* wendu_zhishu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB4131A1214E94EA00CCC6E1 /* wendu_zhishu@2x.png */; };
+		EB4131A82157585E00CCC6E1 /* ChuanGanAutoSetView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB4131A72157585E00CCC6E1 /* ChuanGanAutoSetView.m */; };
 		EB478FFC2061341F00EDCD64 /* UserBaseViewControllor.m in Sources */ = {isa = PBXBuildFile; fileRef = EB478FFB2061341F00EDCD64 /* UserBaseViewControllor.m */; };
 		EB479001206145C000EDCD64 /* UserDVDSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB479000206145C000EDCD64 /* UserDVDSettingsViewController.m */; };
 		EB479005206146D500EDCD64 /* user_corner_sd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB479002206146D400EDCD64 /* user_corner_sd@2x.png */; };
@@ -1935,6 +1936,8 @@
 		EB41319F214E94EA00CCC6E1 /* shidu_zhishu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shidu_zhishu@2x.png"; sourceTree = "<group>"; };
 		EB4131A0214E94EA00CCC6E1 /* syc_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "syc_icon@2x.png"; sourceTree = "<group>"; };
 		EB4131A1214E94EA00CCC6E1 /* wendu_zhishu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wendu_zhishu@2x.png"; sourceTree = "<group>"; };
+		EB4131A62157585E00CCC6E1 /* ChuanGanAutoSetView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChuanGanAutoSetView.h; sourceTree = "<group>"; };
+		EB4131A72157585E00CCC6E1 /* ChuanGanAutoSetView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChuanGanAutoSetView.m; sourceTree = "<group>"; };
 		EB478FFA2061341F00EDCD64 /* UserBaseViewControllor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserBaseViewControllor.h; sourceTree = "<group>"; };
 		EB478FFB2061341F00EDCD64 /* UserBaseViewControllor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UserBaseViewControllor.m; sourceTree = "<group>"; };
 		EB478FFF206145C000EDCD64 /* UserDVDSettingsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UserDVDSettingsViewController.h; sourceTree = "<group>"; };
@@ -3670,6 +3673,8 @@
 				3421B09A210B00C1001C4B22 /* AutoRunViewController.m */,
 				3421B09C210B00D3001C4B22 /* AutoRunSetView.h */,
 				3421B09D210B00D3001C4B22 /* AutoRunSetView.m */,
+				EB4131A62157585E00CCC6E1 /* ChuanGanAutoSetView.h */,
+				EB4131A72157585E00CCC6E1 /* ChuanGanAutoSetView.m */,
 				341DD3C221183DF0007CD30F /* AutoRunCell.h */,
 				341DD3C321183DF0007CD30F /* AutoRunCell.m */,
 				EBDF1C1A1FC5CCEF00A756EA /* UserScnarioConfigViewController.h */,
@@ -5113,6 +5118,7 @@
 				EBD009C820907B0700920849 /* VTVSet.m in Sources */,
 				EB36AAB21FCD939E009A0FD8 /* UserYouXianViewController.m in Sources */,
 				341E75E4209BF94C00E69DB2 /* VAProcessorProxys.m in Sources */,
+				EB4131A82157585E00CCC6E1 /* ChuanGanAutoSetView.m in Sources */,
 				EBAE5BBB1FE0070600C10C4D /* EngineerPresetScenarioViewCtrl.m in Sources */,
 				3456C1AB20A0A382001FAB61 /* EDimmerLightProxys.m in Sources */,
 				34DE8E992066408C0061B48D /* Scenario.m in Sources */,

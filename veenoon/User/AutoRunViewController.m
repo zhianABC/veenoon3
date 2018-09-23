@@ -15,7 +15,7 @@
 #import "RegulusSDK.h"
 #import "AutoRunCell.h"
 #import "KVNProgress.h"
-
+#import "ChuanGanAutoSetView.h"
 
 @interface AutoRunViewController () <AutoRunCellDelegate>
 {
@@ -188,9 +188,9 @@
     [btnWeek setImage:[UIImage imageNamed:@"auto_run_week_w.png"]
              forState:UIControlStateNormal];
     
-    _auto_mode = 0;
+    _auto_mode = 2;
     
-//    [self layoutAutoCells];
+    [self layoutAutoCells];
     
     titleL.text = @"传感器设置";
 }
@@ -365,9 +365,20 @@
         
         [autoView show];
     }
-    else
+    else if (_auto_mode == 1)
     {
         AutoRunSetView *autoView = [[AutoRunSetView alloc] initWithWeeks:CGRectMake(0,
+                                                                                    0,
+                                                                                    SCREEN_WIDTH,
+                                                                                    SCREEN_HEIGHT)];
+        [self.view addSubview:autoView];
+        autoView._scenarios = _scenarios;
+        autoView.ctrl = self;
+        autoView._schedule = sch;
+        
+        [autoView show];
+    } else {
+        ChuanGanAutoSetView *autoView = [[ChuanGanAutoSetView alloc] initWithWeeks:CGRectMake(0,
                                                                                     0,
                                                                                     SCREEN_WIDTH,
                                                                                     SCREEN_HEIGHT)];
