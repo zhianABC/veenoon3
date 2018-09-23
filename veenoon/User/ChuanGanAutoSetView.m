@@ -139,7 +139,7 @@
         whiteView.backgroundColor = [UIColor whiteColor];
         
         
-        int x = 90;
+        int x = 85;
         int y = 80;
         
         
@@ -190,7 +190,7 @@
         
         _wenshipmL1 = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_tempraturePicker.frame),
                                                          y+65,
-                                                         30, 20)];
+                                                         50, 20)];
         _wenshipmL1.backgroundColor = [UIColor clearColor];
         [whiteView addSubview:_wenshipmL1];
         _wenshipmL1.font = [UIFont systemFontOfSize:15];
@@ -264,7 +264,7 @@
         
         _wenshipmL2 = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_tempraturePicker2.frame),
                                                          y+65,
-                                                         40, 20)];
+                                                         50, 20)];
         _wenshipmL2.backgroundColor = [UIColor clearColor];
         [whiteView addSubview:_wenshipmL2];
         _wenshipmL2.font = [UIFont systemFontOfSize:15];
