@@ -358,4 +358,12 @@
     [_currentProxy controlZiDongHunYinZengYi:[NSString stringWithFormat:@"%f", k]];
 }
 
+- (void) didEndSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(200.0 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
+        
+        [self didSlideButtonValueChanged:value slbtn:slbtn];
+    });
+}
+
 @end
