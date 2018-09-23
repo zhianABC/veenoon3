@@ -475,8 +475,6 @@
     
     if(jsonresult)
     {
-        jsonresult = [jsonresult stringByReplacingOccurrencesOfString:@" "
-                                                           withString:@""];
         jsonresult = [jsonresult stringByReplacingOccurrencesOfString:@"\n"
                                                            withString:@""];
     }

@@ -124,26 +124,26 @@
     
 }
 
-- (void) createConnection:(RgsConnectionObj*)source withConnect:(RgsConnectionObj*)target{
-    
-    if(target && source)
-    {
-        
-        RgsConnectionObj * com_connt_obj = target;
-        RgsConnectionObj * cam_connt_obj = source;
-        
-        //IMP_BLOCK_SELF(VDVDPlayerSet);
-        
-        [com_connt_obj Connect:cam_connt_obj completion:^(BOOL result, NSError *error) {
-            if(result)
-            {
-                //block_self._com = target;
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"NotifyRefreshTableWithCom" object:nil];
-            }
-        }];
-    }
-}
+//- (void) createConnection:(RgsConnectionObj*)source withConnect:(RgsConnectionObj*)target{
+//    
+//    if(target && source)
+//    {
+//        
+//        RgsConnectionObj * com_connt_obj = target;
+//        RgsConnectionObj * cam_connt_obj = source;
+//        
+//        //IMP_BLOCK_SELF(VDVDPlayerSet);
+//        
+//        [com_connt_obj Connect:cam_connt_obj completion:^(BOOL result, NSError *error) {
+//            if(result)
+//            {
+//                //block_self._com = target;
+//                
+//                [[NSNotificationCenter defaultCenter] postNotificationName:@"NotifyRefreshTableWithCom" object:nil];
+//            }
+//        }];
+//    }
+//}
 
 
 - (NSDictionary *)objectToJson{

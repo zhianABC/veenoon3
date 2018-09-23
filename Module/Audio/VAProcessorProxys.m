@@ -122,7 +122,7 @@
         
         _inverted = NO;
         self._is48V = NO;
-        self._micDb = @"0db";
+        self._micDb = @"0dB";
         
         self._mode = @"LINE"; //LINE or MIC
         
@@ -945,7 +945,7 @@
     self._digitalGain = 0;
     self._inverted = NO;
     self._is48V = NO;
-    self._micDb = @"0db";
+    self._micDb = @"0dB";
     self._mode = @"LINE";
     
     
