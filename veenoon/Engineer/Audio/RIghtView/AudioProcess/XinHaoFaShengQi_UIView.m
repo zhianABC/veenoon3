@@ -149,7 +149,7 @@
     {
         float f2 = (value2 - minRate)/max2;
         f2 = fabsf(f2);
-        [xinhaoZengyiSlider setCircleValue:f2];
+        [xinhaoPinlvSlider setCircleValue:f2];
     }
     
     if (pinlvDB) {
@@ -232,6 +232,16 @@
     zhengxuanboL.clipsToBounds=YES;
     zhengxuanboL.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR2;
     
+    UIButton* btnEdit = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self addSubview:btnEdit];
+    btnEdit.frame = CGRectMake(CGRectGetMinX(zhengxuanboL.frame),
+                               CGRectGetMinY(zhengxuanboL.frame)-15,
+                               80,
+                               50);
+    [btnEdit addTarget:self
+                action:@selector(editFreqAction:)
+      forControlEvents:UIControlEventTouchUpInside];
+    
     
     zerodbBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     zerodbBtn.frame = CGRectMake(CGRectGetMaxX(zhengxuanboL.frame)+90, btnY+30+topY, 120, 30);
@@ -294,7 +304,125 @@
     zengyiL.clipsToBounds=YES;
     zengyiL.backgroundColor=NEW_ER_BUTTON_GRAY_COLOR2;
     
+    btnEdit = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self addSubview:btnEdit];
+    btnEdit.frame = CGRectMake(CGRectGetMinX(zengyiL.frame),
+                               CGRectGetMinY(zengyiL.frame)-15,
+                               60,
+                               50);
+    [btnEdit addTarget:self
+                action:@selector(editDbAction:)
+      forControlEvents:UIControlEventTouchUpInside];
+    
 }
+
+- (void) editFreqAction:(id)sender{
+    
+    NSString *alert = [NSString stringWithFormat:@"频率，范围[%d ~ %d(Hz)]",
+                       minRate,
+                       maxRate];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                             message:alert preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"频率";
+        textField.text = zhengxuanboL.text;
+        textField.keyboardType = UIKeyboardTypeDecimalPad;
+    }];
+    
+    IMP_BLOCK_SELF(XinHaoFaShengQi_UIView);
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        UITextField *alValTxt = alertController.textFields.firstObject;
+        NSString *val = alValTxt.text;
+        if (val && [val length] > 0) {
+            
+            [block_self doSetFreqValue:[val intValue]];
+        }
+    }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
+    
+    [self.ctrl presentViewController:alertController animated:true completion:nil];
+    
+}
+
+- (void) doSetFreqValue:(int)val{
+    
+    int freq = val;
+    
+    if(freq < minRate)
+        freq = minRate;
+    if(freq > maxRate)
+        freq = maxRate;
+    
+    if(maxRate - minRate)
+    {
+        float gtVal = (float)(freq - minRate)/(maxRate - minRate);
+        [xinhaoPinlvSlider setCircleValue:gtVal];
+    }
+    
+    NSString *freqStr = [NSString stringWithFormat:@"%d", freq];
+    
+    zhengxuanboL.text = freqStr;
+    [_currentSignalProxy controlXinhaofashengZengYi:freqStr];
+    
+}
+
+- (void) editDbAction:(id)sender{
+    
+    NSString *alert = [NSString stringWithFormat:@"增益，范围[%d ~ %d(dB)]",
+                       minZengyi,
+                       maxZengyi];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                             message:alert preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"增益";
+        textField.text = zengyiL.text;
+        textField.keyboardType = UIKeyboardTypeDecimalPad;
+    }];
+    
+    IMP_BLOCK_SELF(XinHaoFaShengQi_UIView);
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        UITextField *alValTxt = alertController.textFields.firstObject;
+        NSString *val = alValTxt.text;
+        if (val && [val length] > 0) {
+            
+            [block_self doSetDbValue:[val intValue]];
+        }
+    }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
+    
+    [self.ctrl presentViewController:alertController animated:true completion:nil];
+}
+
+- (void) doSetDbValue:(int)val{
+    
+    int db = val;
+    
+    if(db < minZengyi)
+        db = minZengyi;
+    if(db > maxZengyi)
+        db = maxZengyi;
+    
+    if(maxZengyi - minZengyi)
+    {
+        float gtVal = (float)(db - minZengyi)/(maxZengyi - minZengyi);
+        [xinhaoZengyiSlider setCircleValue:gtVal];
+    }
+    
+    NSString *dbStr = [NSString stringWithFormat:@"%d", db];
+    
+    zengyiL.text = dbStr;
+    [_currentSignalProxy controlXinhaofashengZengYi:dbStr];
+    
+}
+
 
 - (void) channelBtnAction:(UIButton*)sender{
     
@@ -380,6 +508,14 @@
         
         [_currentSignalProxy controlXinhaofashengPinlv:[NSString stringWithFormat:@"%.f", k]];
     }
+}
+
+- (void) didEndSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(200.0 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
+        
+        [self didSlideButtonValueChanged:value slbtn:slbtn];
+    });
 }
 
 -(void) zhengxuanboAction:(UIButton*) sender {
