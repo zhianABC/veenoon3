@@ -187,6 +187,8 @@
                 titleL.text = scenarioName;
                 
                 [[DataBase sharedDatabaseInstance] saveScenario:sdic];
+                
+                [_scen uploadToRegulusCenter];
             }
         }
     }]];

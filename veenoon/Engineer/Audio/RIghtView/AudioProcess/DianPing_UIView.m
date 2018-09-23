@@ -131,7 +131,7 @@
     if(dbMax - dbMin > 0)
     {
         float value = [_curProxy getAnalogyGain];
-        NSString *valueStr= [NSString stringWithFormat:@"%0.1f dB", value];
+        NSString *valueStr= [NSString stringWithFormat:@"%0.1f", value];
         labelL1.text = valueStr;
         
         float percent = (value - dbMin)/(dbMax - dbMin);
@@ -245,14 +245,82 @@
     labelL1.layer.cornerRadius=5;
     labelL1.clipsToBounds=YES;
     
+    
+    UIButton* btnEdit = [UIButton buttonWithType:UIButtonTypeCustom];
+    [contentView addSubview:btnEdit];
+    btnEdit.frame = CGRectMake(CGRectGetMinX(labelL1.frame),
+                               CGRectGetMinY(labelL1.frame)-15,
+                               60,
+                               50);
+    [btnEdit addTarget:self
+                action:@selector(editDbAction:)
+      forControlEvents:UIControlEventTouchUpInside];
+    
 }
+
+- (void) editDbAction:(id)sender{
+    
+    NSString *alert = [NSString stringWithFormat:@"增益，范围[%0.0f ~ %0.0f(dB)]",
+                       dbMin,
+                       dbMax];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                             message:alert preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"增益";
+        textField.text = labelL1.text;
+        textField.keyboardType = UIKeyboardTypeDecimalPad;
+    }];
+    
+    IMP_BLOCK_SELF(DianPing_UIView);
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        UITextField *alValTxt = alertController.textFields.firstObject;
+        NSString *val = alValTxt.text;
+        if (val && [val length] > 0) {
+            
+            [block_self doSetDbValue:[val floatValue]];
+        }
+    }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
+    
+    [self.ctrl presentViewController:alertController animated:true completion:nil];
+}
+
+- (void) doSetDbValue:(float)val{
+    
+    float db = val;
+    
+    if(db < dbMin)
+        db = dbMin;
+    if(db > dbMax)
+        db = dbMax;
+    
+    if(dbMax - dbMin)
+    {
+        float gtVal = (float)(db - dbMin)/(dbMax - dbMin);
+        [analogyDbSlider setCircleValue:gtVal];
+    }
+    
+    NSString *valueStr= [NSString stringWithFormat:@"%0.1f", db];
+    labelL1.text = valueStr;
+    
+    if(_curProxy)
+    {
+        [_curProxy controlDeviceDb:db
+                             force:YES];
+    }
+}
+
 
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
     if(dbMax - dbMin > 0)
     {
         float k = (value *(dbMax-dbMin)) + dbMin;
-        NSString *valueStr= [NSString stringWithFormat:@"%0.1f dB", k];
+        NSString *valueStr= [NSString stringWithFormat:@"%0.1f", k];
         labelL1.text = valueStr;
     
         if(_curProxy)
@@ -262,6 +330,15 @@
         }
     }
     
+    
+}
+
+- (void) didEndSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(200.0 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
+        
+        [self didSlideButtonValueChanged:value slbtn:slbtn];
+    });
     
 }
 

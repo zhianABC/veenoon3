@@ -167,6 +167,7 @@
     xinhaoView = [[XinHaoFaShengQi_UIView alloc] initWithFrameProxy:vrc withAudio:_processor withProxy:self._processor._singalProxy];
     [self.view addSubview:xinhaoView];
     xinhaoView.hidden = NO;
+    xinhaoView.ctrl = self;
     
     [xinhaoView updateProxyCommandValIsLoaded];
     xinhaoView._proxys = _processor._outAudioProxys;
@@ -175,6 +176,7 @@
     dianpingView = [[DianPing_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._outAudioProxys];
     [self.view addSubview:dianpingView];
     dianpingView.hidden = YES;
+    dianpingView.ctrl = self;
     
     dianpingView._proxys = _processor._outAudioProxys;
     [dianpingView layoutChannelBtns:numProxys selectedIndex:0];
@@ -182,6 +184,7 @@
     lvbojunhengView = [[LvBoJunHeng_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._outAudioProxys];
     [self.view addSubview:lvbojunhengView];
     lvbojunhengView.hidden = YES;
+    lvbojunhengView.ctrl = self;
     
     lvbojunhengView._proxys = _processor._outAudioProxys;
     [lvbojunhengView layoutChannelBtns:numProxys selectedIndex:0];
@@ -189,6 +192,7 @@
     yaxianView = [[YaXianQi_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._outAudioProxys];
     [self.view addSubview:yaxianView];
     yaxianView.hidden = YES;
+    yaxianView.ctrl = self;
     
     yaxianView._proxys = _processor._outAudioProxys;
     [yaxianView layoutChannelBtns:numProxys selectedIndex:0];
@@ -196,6 +200,7 @@
     yanshiView = [[YanShiQi_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._outAudioProxys];
     [self.view addSubview:yanshiView];
     yanshiView.hidden = YES;
+    yanshiView.ctrl = self;
     
     yanshiView._proxys = _processor._outAudioProxys;
     [yanshiView layoutChannelBtns:numProxys selectedIndex:0];
