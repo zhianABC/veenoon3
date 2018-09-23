@@ -85,7 +85,7 @@
     titleL.text = [NSString stringWithFormat:@"%@ - 场景应用",_currentRoom.room_name];
     
     UIButton *btnState = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnState.frame = CGRectMake(60, SCREEN_HEIGHT - 50, 60, 40);
+    btnState.frame = CGRectMake(50, SCREEN_HEIGHT - 50, 120, 40);
     [btnState setImage:[UIImage imageNamed:@"state_summary_white.png"]
               forState:UIControlStateNormal];
     [btnState setImage:[UIImage imageNamed:@"state_summary.png"]
@@ -96,7 +96,7 @@
        forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *btnAuto = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnAuto.frame = CGRectMake(SCREEN_WIDTH-120, SCREEN_HEIGHT - 50, 60, 50);
+    btnAuto.frame = CGRectMake(SCREEN_WIDTH-165, SCREEN_HEIGHT - 50, 120, 50);
     [btnAuto setImage:[UIImage imageNamed:@"syc_icon_white.png"]
               forState:UIControlStateNormal];
     [btnAuto setImage:[UIImage imageNamed:@"sync_icon.png"]
