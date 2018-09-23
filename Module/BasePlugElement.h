@@ -59,6 +59,7 @@
 
 @property (nonatomic, assign) BOOL _isSelected;
 
+@property (nonatomic, strong) NSMutableDictionary *config;
 
 - (int) getID;
 

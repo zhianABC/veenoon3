@@ -558,6 +558,8 @@
         
         cellBtn._drNameLabel = btnL;
         
+        [cellBtn refreshPlugName];
+        
         
         [cellBtn setBackgroundImage:eImg forState:UIControlStateNormal];
         

@@ -16,5 +16,4 @@
 
 //<RgsConnectionObj>
 @property (nonatomic, strong) NSArray *_irConnections;
-@property (nonatomic, strong) NSMutableDictionary *config;
 @end

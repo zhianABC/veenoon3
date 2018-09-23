@@ -17,7 +17,6 @@
 {
     
 }
-@property (nonatomic, strong) NSMutableDictionary *config;
 
 @end
 
@@ -31,7 +30,6 @@
 @synthesize _localSavedCommands;
 
 @synthesize _localSavedProxys;
-@synthesize config;
 
 - (id) init
 {
@@ -133,34 +131,34 @@
 - (NSDictionary *)userData{
     
     self.config = [NSMutableDictionary dictionary];
-    [config setValue:[NSString stringWithFormat:@"%@", [self class]] forKey:@"class"];
+    [self.config setValue:[NSString stringWithFormat:@"%@", [self class]] forKey:@"class"];
     if(_driver)
     {
         RgsDriverObj *dr = _driver;
-        [config setObject:[NSNumber numberWithInteger:dr.m_id] forKey:@"driver_id"];
-        [config setObject:[NSNumber numberWithBool:self._isSelected] forKey:@"s"];
+        [self.config setObject:[NSNumber numberWithInteger:dr.m_id] forKey:@"driver_id"];
+        [self.config setObject:[NSNumber numberWithBool:self._isSelected] forKey:@"s"];
     }
     
     if (_proxyObj) {
         VVideoProcessSetProxy *proxy = (VVideoProcessSetProxy*) _proxyObj;
         
         if(proxy._inputDevices)
-            [config setObject:proxy._inputDevices forKey:@"input_devices"];
+            [self.config setObject:proxy._inputDevices forKey:@"input_devices"];
         
         if(proxy._outputDevices)
-            [config setObject:proxy._outputDevices forKey:@"output_devices"];
+            [self.config setObject:proxy._outputDevices forKey:@"output_devices"];
         
     }
-    return config;
+    return self.config;
 }
 
 - (void) createByUserData:(NSDictionary*)userdata withMap:(NSDictionary*)valMap{
     
     self.config = [NSMutableDictionary dictionaryWithDictionary:userdata];
-    [config setObject:valMap forKey:@"opt_value_map"];
+    [self.config setObject:valMap forKey:@"opt_value_map"];
     
-    int driver_id = [[config objectForKey:@"driver_id"] intValue];
-    self._isSelected = [[config objectForKey:@"s"] boolValue];
+    int driver_id = [[self.config objectForKey:@"driver_id"] intValue];
+    self._isSelected = [[self.config objectForKey:@"s"] boolValue];
     
     IMP_BLOCK_SELF(VVideoProcessSet);
     [[RegulusSDK sharedRegulusSDK] GetRgsObjectByID:driver_id
@@ -211,8 +209,8 @@
     
     id key = [NSString stringWithFormat:@"%d", (int)driver.m_id];
     
-    NSDictionary *inp = [config objectForKey:@"input_devices"];
-    NSDictionary *oup = [config objectForKey:@"output_devices"];
+    NSDictionary *inp = [self.config objectForKey:@"input_devices"];
+    NSDictionary *oup = [self.config objectForKey:@"output_devices"];
     
     if([inp count])
     {
@@ -232,7 +230,7 @@
     vpro._deviceId = driver.m_id;
     [vpro checkRgsProxyCommandLoad:cmds];
     
-    NSDictionary *map = [config objectForKey:@"opt_value_map"];
+    NSDictionary *map = [self.config objectForKey:@"opt_value_map"];
     [vpro recoverWithDictionary:[map objectForKey:key]];
     
     self._proxyObj = vpro;
