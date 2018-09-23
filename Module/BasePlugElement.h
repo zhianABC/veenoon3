@@ -18,6 +18,7 @@
     id _driver;
 
     NSArray *_connections;
+    NSMutableDictionary *config;
 }
 
 @property (nonatomic, strong) NSString *_typeName;
