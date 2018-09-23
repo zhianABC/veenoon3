@@ -96,8 +96,8 @@
         [_pmArray removeAllObjects];
     } else {
         _pmArray = [NSMutableArray array];
-        for (int i = 0; i < 1001; i++) {
-            NSString *wendu = [NSString stringWithFormat:@"%d", i];
+        for (int i = 0; i < 200; i++) {
+            NSString *wendu = [NSString stringWithFormat:@"%d", i*5];
             [_pmArray addObject:wendu];
         }
     }
