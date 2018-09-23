@@ -142,7 +142,7 @@
     
     //
     
-    _auto_mode = 0;
+    _auto_mode = 2;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(notifyRefreshItems:)
@@ -378,10 +378,10 @@
         
         [autoView show];
     } else {
-        ChuanGanAutoSetView *autoView = [[ChuanGanAutoSetView alloc] initWithWeeks:CGRectMake(0,
+        ChuanGanAutoSetView *autoView = [[ChuanGanAutoSetView alloc] initWithPicker:CGRectMake(0,
                                                                                     0,
                                                                                     SCREEN_WIDTH,
-                                                                                    SCREEN_HEIGHT)];
+                                                                                    SCREEN_HEIGHT) withScnearios:_scenarios];
         [self.view addSubview:autoView];
         autoView._scenarios = _scenarios;
         autoView.ctrl = self;

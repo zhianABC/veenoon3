@@ -19,8 +19,8 @@
 
 @property (nonatomic, strong) RgsSchedulerObj *_schedule;
 
-- (id) initWithDateAndTime:(CGRect)frame;
-- (id) initWithWeeks:(CGRect)frame;
+
+- (id) initWithPicker:(CGRect)frame withScnearios:(NSArray*) scenarios;
 
 - (void) show;
 
