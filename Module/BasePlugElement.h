@@ -18,6 +18,7 @@
     id _driver;
 
     NSArray *_connections;
+    NSMutableDictionary *config;
 }
 
 @property (nonatomic, strong) NSString *_typeName;
@@ -59,6 +60,7 @@
 
 @property (nonatomic, assign) BOOL _isSelected;
 
+@property (nonatomic, strong) NSMutableDictionary *config;
 
 - (int) getID;
 

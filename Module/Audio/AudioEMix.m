@@ -16,12 +16,11 @@
 {
     
 }
-@property (nonatomic, strong) NSMutableDictionary *config;
+
 
 @end
 
 @implementation AudioEMix
-@synthesize config;
 
 @synthesize _comDriver;
 @synthesize _comDriverInfo;
@@ -430,23 +429,23 @@
 - (NSDictionary *)userData{
     
     self.config = [NSMutableDictionary dictionary];
-    [config setValue:[NSString stringWithFormat:@"%@", [self class]] forKey:@"class"];
+    [self.config setValue:[NSString stringWithFormat:@"%@", [self class]] forKey:@"class"];
     if(_driver)
     {
         RgsDriverObj *dr = _driver;
-        [config setObject:[NSNumber numberWithInteger:dr.m_id] forKey:@"driver_id"];
-        [config setObject:[NSNumber numberWithBool:self._isSelected] forKey:@"s"];
+        [self.config setObject:[NSNumber numberWithInteger:dr.m_id] forKey:@"driver_id"];
+        [self.config setObject:[NSNumber numberWithBool:self._isSelected] forKey:@"s"];
     }
-    return config;
+    return self.config;
 }
 
 - (void) createByUserData:(NSDictionary*)userdata withMap:(NSDictionary*)valMap{
     
     self.config = [NSMutableDictionary dictionaryWithDictionary:userdata];
-    [config setObject:valMap forKey:@"opt_value_map"];
+    [self.config setObject:valMap forKey:@"opt_value_map"];
     
-    int driver_id = [[config objectForKey:@"driver_id"] intValue];
-    self._isSelected = [[config objectForKey:@"s"] boolValue];
+    int driver_id = [[self.config objectForKey:@"driver_id"] intValue];
+    self._isSelected = [[self.config objectForKey:@"s"] boolValue];
     
     IMP_BLOCK_SELF(AudioEMix);
     [[RegulusSDK sharedRegulusSDK] GetRgsObjectByID:driver_id
@@ -511,7 +510,7 @@
     }
     
     id key = [NSString stringWithFormat:@"%d", (int)proxy._rgsProxyObj.m_id];
-    NSDictionary *map = [config objectForKey:@"opt_value_map"];
+    NSDictionary *map = [self.config objectForKey:@"opt_value_map"];
     [proxy recoverWithDictionary:[map objectForKey:key]];
 }
 

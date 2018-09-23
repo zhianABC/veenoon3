@@ -9,8 +9,10 @@
 #import "EngineerNewTeslariViewCtrl.h"
 #import "EngineerAudioDevicePluginViewCtrl.h"
 
+#import "RegulusSDK.h"
 #import "DataSync.h"
 #import "DataCenter.h"
+#import "KVNProgress.h"
 
 
 @interface EngineerNewTeslariViewCtrl () {
@@ -26,6 +28,7 @@
 @synthesize _mapDrivers;
 @synthesize _driver_objs;
 @synthesize _area_objs;
+@synthesize _isLocal;
 
 
 - (void)viewDidLoad {
@@ -84,6 +87,13 @@
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
+    if(_isLocal)
+    {
+        //准备插件
+        [[DataCenter defaultDataCenter] prepareDrivers];
+        [self actionNewArea];
+    }
+    
 #if LOGIN_REGULUS
     
     //获取Regulus支持的插件
@@ -93,9 +103,23 @@
     
 #endif
     
+
+}
+
+- (void) actionNewArea{
+    
+    //[KVNProgress dismiss];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [[DataSync sharedDataSync] newVeenoonArea];
+    
+    });
     
     
 }
+
+
 
 - (void) okAction:(id)sender{
     

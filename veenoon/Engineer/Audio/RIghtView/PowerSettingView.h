@@ -11,7 +11,7 @@
 @protocol PowerSettingViewDelegate <NSObject>
 @optional
 // -1 means all
-- (void) didControlRelayDuration:(int)relayIndex withDuration:(int)duration;
+- (void) didControlRelayDuration:(int)relayIndex withDuration:(int)duration end:(BOOL)end;
 - (void) didControlSwitchAllPower:(BOOL) isPowerOn;
 @end
 
@@ -24,6 +24,7 @@
 }
 @property (nonatomic, strong) APowerESet *_objSet;
 @property (nonatomic, weak) id <PowerSettingViewDelegate> _delegate;
+@property (nonatomic, weak) UIViewController *ctrl;
 
 - (void) showLabs:(int)n;
 //- (void) show16Labs;

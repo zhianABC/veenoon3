@@ -47,8 +47,8 @@
     }
     
 
-    if (_blindArray) {
-        _currentBlind = [_blindArray objectAtIndex:0];
+    if ([_blindArray count]) {
+        self._currentBlind = [_blindArray objectAtIndex:0];
     }
 
     btnArray_ = [NSMutableArray array];
@@ -86,9 +86,21 @@
     forControlEvents:UIControlEventTouchUpInside];
 
 
+    
+    
+    if(self._currentBlind)
+    {
+        [self layoutElecAutoUI];
+        
+    }
+}
+
+- (void) layoutElecAutoUI{
+    
     int height = 260;
     int width = 100;
     int rowGap = 70;
+    
     
     int number = [self._currentBlind._proxyObj getChannelNumber];
     
@@ -107,12 +119,12 @@
         
         [btnArray_ addObject:diandongchuanglianBtn];
     }
-
+    
     int playerHeight = 270;
-
+    
     int btnGap = 80;
     int buttonSX = SCREEN_WIDTH/2 - btnGap - 120;
-
+    
     upBtn = [UIButton buttonWithColor:NEW_UR_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
     upBtn.frame = CGRectMake(buttonSX, SCREEN_HEIGHT-playerHeight, 80, 80);
     upBtn.layer.cornerRadius = 5;
@@ -122,11 +134,11 @@
     [upBtn setImage:[UIImage imageNamed:@"user_electronic_up.png"] forState:UIControlStateNormal];
     [upBtn setImage:[UIImage imageNamed:@"user_electronic_up.png"] forState:UIControlStateHighlighted];
     [self.view addSubview:upBtn];
-
+    
     [upBtn addTarget:self
-                       action:@selector(upAction:)
-             forControlEvents:UIControlEventTouchUpInside];
-
+              action:@selector(upAction:)
+    forControlEvents:UIControlEventTouchUpInside];
+    
     playBtn = [UIButton buttonWithColor:NEW_UR_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
     playBtn.frame = CGRectMake(buttonSX + btnGap + 80, SCREEN_HEIGHT-playerHeight, 80, 80);
     playBtn.layer.cornerRadius = 5;
@@ -137,10 +149,10 @@
     [playBtn setImage:[UIImage imageNamed:@"user_electronic_play.png"] forState:UIControlStateHighlighted];
     playBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [self.view addSubview:playBtn];
-
+    
     [playBtn addTarget:self action:@selector(playAction:)
-             forControlEvents:UIControlEventTouchUpInside];
-
+      forControlEvents:UIControlEventTouchUpInside];
+    
     downBtn = [UIButton buttonWithColor:NEW_UR_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
     downBtn.frame = CGRectMake(buttonSX + btnGap*2 + 80*2, SCREEN_HEIGHT-playerHeight, 80, 80);
     downBtn.layer.cornerRadius = 5;
@@ -150,11 +162,12 @@
     [downBtn setImage:[UIImage imageNamed:@"user_electronic_down.png"] forState:UIControlStateNormal];
     [downBtn setImage:[UIImage imageNamed:@"user_electronic_down.png"] forState:UIControlStateHighlighted];
     [self.view addSubview:downBtn];
-
+    
     [downBtn addTarget:self
-                    action:@selector(downAction:)
-          forControlEvents:UIControlEventTouchUpInside];
+                action:@selector(downAction:)
+      forControlEvents:UIControlEventTouchUpInside];
 }
+
 - (void) upAction:(UIButton*)sender{
     
     int statue = 1;

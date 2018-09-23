@@ -44,6 +44,7 @@
 @synthesize _isSelected;
 
 @synthesize _typeName;
+@synthesize config;
 
 - (id) init
 {

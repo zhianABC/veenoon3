@@ -100,6 +100,7 @@
 }
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     
     self.view.backgroundColor = LOGIN_BLACK_COLOR;

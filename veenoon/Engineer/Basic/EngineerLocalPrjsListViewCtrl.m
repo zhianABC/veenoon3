@@ -29,6 +29,7 @@
 
 #import "KVNProgress.h"
 #import "EngineerScenarioSettingsViewCtrl.h"
+#import "EngineerNewTeslariViewCtrl.h"
 
 @interface EngineerLocalPrjsListViewCtrl () {
     
@@ -301,8 +302,12 @@
             [DataSync sharedDataSync]._currentReglusLogged = nil;
             [DataCenter defaultDataCenter]._currentRoom = nil;
             
-            EngineerSysSelectViewCtrl *lctrl = [[EngineerSysSelectViewCtrl alloc] init];
+            EngineerNewTeslariViewCtrl *lctrl = [[EngineerNewTeslariViewCtrl alloc] init];
+            lctrl._isLocal = YES;
             [self.navigationController pushViewController:lctrl animated:YES];
+            
+//            EngineerSysSelectViewCtrl *lctrl = [[EngineerSysSelectViewCtrl alloc] init];
+//            [self.navigationController pushViewController:lctrl animated:YES];
             
         }
         else{

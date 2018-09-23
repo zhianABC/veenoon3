@@ -25,4 +25,6 @@
 
 - (void) setEditChanged;
 
+- (void) refreshPlugName;
+
 @end

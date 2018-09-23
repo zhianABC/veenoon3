@@ -12,4 +12,5 @@
 @interface EngineerNewTeslariViewCtrl : UIViewController {
     
 }
+@property (nonatomic, assign) BOOL _isLocal;
 @end

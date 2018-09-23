@@ -74,6 +74,21 @@
     _plug._isSelected = YES;
 }
 
+- (void) refreshPlugName{
+    
+    if(_plug.config && _plug._driver == nil)
+    {
+        int driver_id = [[_plug.config objectForKey:@"driver_id"] intValue];
+        [[RegulusSDK sharedRegulusSDK] GetRgsObjectByID:driver_id completion:^(BOOL result, id RgsObject, NSError *error) {
+            
+            RgsDriverObj * ndr = RgsObject;
+            _plug._name = ndr.name;
+            _drNameLabel.text = ndr.name;
+            
+        }];
+    }
+}
+
 - (void) removeMyObserver{
     
     self._plug = nil;
