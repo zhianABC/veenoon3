@@ -347,7 +347,16 @@
 
 - (void) buttonAddAction:(UIButton*)sender{
     
-    [self showAutoRunView:nil];
+    if ([self._scenarios count]) {
+        [self showAutoRunView:nil];
+    } else {
+        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"提醒"
+                                                    message:@"当前系统没有存储任何场景."
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles: nil];
+        [av show];
+    }
 }
 
 
