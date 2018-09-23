@@ -184,7 +184,7 @@
             [dic setObject:@"0" forKey:@"gain"];
             [dic setObject:@"43" forKey:@"q"];
             [dic setObject:@"6.00" forKey:@"q_val"];
-            [dic setObject:@"True" forKey:@"enable"];
+            [dic setObject:@"False" forKey:@"enable"];
             [dic setObject:@"0" forKey:@"is_set"];
             
             [dic setObject:[NSString stringWithFormat:@"%d", i+1]
@@ -1086,16 +1086,24 @@
 - (void) clearPEQ{
     
     self._lvbojunhengGaotongType = @"Bessel";
-    self._lvboGaotongArray = [NSArray array];
+    self._lvbojunhengDitongType = @"Bessel";
     
-    self._lvbojunhengDitongType = @"";
-    self._lvboDitongArray = [NSArray array];
+    self._islvboGaotongStart = NO;
+    self._islvboDitongStart = NO;
     
-    self._lvboGaotongXielvArray = [NSArray array];
-    self._lvbojunhengGaotongXielv = @"0";
+   
+    self._lvbojunhengGaotongXielv = @"-6dB";
+    if([_lvboGaotongXielvArray count])
+    {
+        self._lvbojunhengGaotongXielv = [_lvboGaotongXielvArray objectAtIndex:0];
+    }
     
-    self._lvboDitongXielvArray = [NSArray array];
-    self._lvboDitongSL = @"-6db";
+
+    self._lvboDitongSL = @"-6dB";
+    if([_lvboDitongXielvArray count])
+    {
+        self._lvboDitongSL = [_lvboDitongXielvArray objectAtIndex:0];
+    }
     
     self._lvboBoDuanArray = [NSArray array];
     
@@ -1121,7 +1129,7 @@
         [dic setObject:@"0" forKey:@"gain"];
         [dic setObject:@"43" forKey:@"q"];
         [dic setObject:@"6.00" forKey:@"q_val"];
-        [dic setObject:@"True" forKey:@"enable"];
+        [dic setObject:@"False" forKey:@"enable"];
         [dic setObject:@"1" forKey:@"is_set"];
         
         [dic setObject:[NSString stringWithFormat:@"%d", i+1]
@@ -1192,7 +1200,7 @@
 }
 - (void) clearCompressorLimiter{
     
-    self._isyaxianStart         = YES;
+    self._isyaxianStart         = NO;
     self._yaxianFazhi           = @"0";
     self._yaxianXielv           = @"2";
     self._yaxianStartTime       = @"20";

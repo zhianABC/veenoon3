@@ -151,6 +151,7 @@
     haomiaoField.textAlignment = NSTextAlignmentLeft;
     haomiaoField.font = [UIFont systemFontOfSize:13];
     haomiaoField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    haomiaoField.keyboardType = UIKeyboardTypeNumberPad;
     [contentView addSubview:haomiaoField];
     haomiaoField.tag = 1;
     
@@ -171,6 +172,7 @@
     miField.textAlignment = NSTextAlignmentLeft;
     miField.font = [UIFont systemFontOfSize:13];
     miField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    miField.keyboardType = UIKeyboardTypeNumberPad;
     [contentView addSubview:miField];
     miField.tag = 2;
     
@@ -191,6 +193,7 @@
     yingchiFiedld.textAlignment = NSTextAlignmentLeft;
     yingchiFiedld.font = [UIFont systemFontOfSize:13];
     yingchiFiedld.clearButtonMode = UITextFieldViewModeWhileEditing;
+    yingchiFiedld.keyboardType = UIKeyboardTypeNumberPad;
     [contentView addSubview:yingchiFiedld];
     yingchiFiedld.tag = 3;
     
@@ -214,7 +217,7 @@
         [xielvSlider3 setCircleValue:f];
     }
     if (zengyiDB) {
-        labelL1.text = [zengyiDB stringByAppendingString:@" ms"];
+        labelL1.text = zengyiDB;
     }
     
     float mi = value / 1000 * 340.0;
@@ -225,7 +228,7 @@
     NSString *yingchiString = [NSString stringWithFormat:@"%.3f", yingchi];
     yingchiFiedld.text = yingchiString;
     
-    NSString *haomiaoStr = [NSString stringWithFormat:@"%.2f", value];
+    NSString *haomiaoStr = [NSString stringWithFormat:@"%.0f", value];
     haomiaoField.text = haomiaoStr;
 }
 
@@ -250,7 +253,7 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
     
-    channelBtn.frame = CGRectMake(0, 20, 300, 36);
+    channelBtn.frame = CGRectMake(0, 0, 300, 36);
     int y = CGRectGetMaxY(channelBtn.frame)+10;
     contentView.frame = CGRectMake(0, y, self.frame.size.width, 340);
 
@@ -266,9 +269,17 @@
     
     int index = (int) textField.tag;
     if (index == 1) {
+        
         NSString *haomiaoStr = textField.text;
-        [_curProxy controlYanshiqiSlide:haomiaoStr];
-        haomiaoField.text = haomiaoStr;
+        
+        float hm = [haomiaoStr floatValue];
+        if(hm > maxDuration)
+        {
+            hm = maxDuration;
+        }
+        NSString *valueStr= [NSString stringWithFormat:@"%0.0f", hm];
+        [_curProxy controlYanshiqiSlide:valueStr];
+        haomiaoField.text = valueStr;
         
         float haomiao = roundf([textField.text floatValue]);
         
@@ -285,7 +296,7 @@
         float mi = [miString floatValue];
         
         float haomiao = roundf(mi/340*1000.0);
-        NSString *haomiaoString = [NSString stringWithFormat:@"%.2f", haomiao];
+        NSString *haomiaoString = [NSString stringWithFormat:@"%.0f", haomiao];
         [_curProxy controlYanshiqiSlide:haomiaoString];
         haomiaoField.text = haomiaoString;
         
@@ -300,7 +311,7 @@
         miField.text = miString;
         
         float haomiao = roundf(mi/340*1000.0);
-        NSString *haomiaoString = [NSString stringWithFormat:@"%.2f", haomiao];
+        NSString *haomiaoString = [NSString stringWithFormat:@"%.0f", haomiao];
         haomiaoField.text = haomiaoString;
         [_curProxy controlYanshiqiSlide:haomiaoString];
         
@@ -316,7 +327,7 @@
         [xielvSlider3 setCircleValue:f];
     }
     if (zengyiDB) {
-        labelL1.text = [zengyiDB stringByAppendingString:@" ms"];
+        labelL1.text = zengyiDB;
     }
 }
 
@@ -330,13 +341,21 @@
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
     float k = roundf((value *(maxDuration-minDuration)) + minDuration);
-    NSString *valueStr= [NSString stringWithFormat:@"%0.2f ms", k];
+    NSString *valueStr= [NSString stringWithFormat:@"%0.0f", k];
     
     labelL1.text = valueStr;
     
-    [_curProxy controlYanshiqiSlide:[NSString stringWithFormat:@"%0.2f", k]];
+    [_curProxy controlYanshiqiSlide:[NSString stringWithFormat:@"%0.0f", k]];
     
     [self updateYanshiqi];
+}
+
+- (void) didEndSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(200.0 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
+        
+        [self didSlideButtonValueChanged:value slbtn:slbtn];
+    });
 }
 
 - (void) onCopyData:(id)sender{

@@ -139,7 +139,7 @@
     }
     
     if (zengyiDB) {
-        zengyiL.text = [zengyiDB stringByAppendingString:@" dB"];
+        zengyiL.text = zengyiDB;
     }
     
     NSString *pinlvDB = [_currentSignalProxy getXinhaofashengPinlv];
@@ -153,7 +153,7 @@
     }
     
     if (pinlvDB) {
-        zhengxuanboL.text = [NSString stringWithFormat:@"%d Hz", value2];
+        zhengxuanboL.text = [NSString stringWithFormat:@"%d", value2];
     }
     
     NSString *zhengxuan = [_currentSignalProxy getXinhaofashengZhengXuan];
@@ -294,7 +294,6 @@
     zengyiL.clipsToBounds=YES;
     zengyiL.backgroundColor=NEW_ER_BUTTON_GRAY_COLOR2;
     
-//    [self createOutPutComps];
 }
 
 - (void) channelBtnAction:(UIButton*)sender{
@@ -368,14 +367,14 @@
     int tag = (int) slbtn.tag;
     if (tag == 2) {
         float k = roundf((value *(maxZengyi-minZengyi)) + minZengyi);
-        NSString *valueStr= [NSString stringWithFormat:@"%.f dB", k];
+        NSString *valueStr= [NSString stringWithFormat:@"%.f", k];
         
         zengyiL.text = valueStr;
         
         [_currentSignalProxy controlXinhaofashengZengYi:[NSString stringWithFormat:@"%.f", k]];
     } else {
         float k = roundf((value *(maxRate-minRate)) + minRate);
-        NSString *valueStr= [NSString stringWithFormat:@"%.f Hz", k];
+        NSString *valueStr= [NSString stringWithFormat:@"%.f", k];
         
         zhengxuanboL.text = valueStr;
         

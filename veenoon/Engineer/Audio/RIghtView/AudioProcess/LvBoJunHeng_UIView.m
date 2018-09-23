@@ -1369,6 +1369,7 @@
     {
         [gaotongStartBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
     }
+    [fglm setHPFilterWithByp:!isGaoTongStarted];
     
     ////
     dispaly = @"";
@@ -1408,7 +1409,7 @@
         [ditongStartBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
     }
     ///
-    
+    [fglm setLPFilterWithByp:!isDiTongStarted];
     
     NSDictionary *set = [_curProxy getWaveOptions];
     
