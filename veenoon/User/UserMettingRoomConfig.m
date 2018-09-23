@@ -143,7 +143,7 @@
     btnSync.frame = CGRectMake(SCREEN_WIDTH - 120, 42, 60, 50);
     [btnSync setImage:[UIImage imageNamed:@"sync_data_n.png"] forState:UIControlStateNormal];
     [btnSync setImage:[UIImage imageNamed:@"sync_data_s.png"] forState:UIControlStateHighlighted];
-        [self.view addSubview:btnSync];
+        //[self.view addSubview:btnSync];
     btnSync.layer.cornerRadius = 5;
     btnSync.clipsToBounds = YES;
     [btnSync addTarget:self

@@ -119,6 +119,8 @@
     {
         self._scenarios = scenarios;
         
+        [self initArray];
+        
         self.backgroundColor = [UIColor clearColor];
         
         maskView = [[UIView alloc] initWithFrame:self.bounds];
@@ -373,18 +375,27 @@
         
         _tempraturePicker._pickerDataArray = @[@{@"values":_tempraturArray}];
         _tempraturePicker2._pickerDataArray = @[@{@"values":_tempraturArray}];
+        
+        [_tempraturePicker selectRow:0 inComponent:0];
+        [_tempraturePicker2 selectRow:0 inComponent:0];
     } else if ([@"湿度" isEqualToString:data]) {
         _wenshipmL1.text = @"%";
         _wenshipmL2.text = @"%";
         
         _tempraturePicker._pickerDataArray = @[@{@"values":_shiduArray}];
         _tempraturePicker2._pickerDataArray = @[@{@"values":_shiduArray}];
+        
+        [_tempraturePicker selectRow:0 inComponent:0];
+        [_tempraturePicker2 selectRow:0 inComponent:0];
     } else {
         _wenshipmL1.text = @"μg/m³";
         _wenshipmL2.text = @"μg/m³";
         
         _tempraturePicker._pickerDataArray = @[@{@"values":_pmArray}];
         _tempraturePicker2._pickerDataArray = @[@{@"values":_pmArray}];
+        
+        [_tempraturePicker selectRow:0 inComponent:0];
+        [_tempraturePicker2 selectRow:0 inComponent:0];
     }
     
 }

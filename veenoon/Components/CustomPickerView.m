@@ -161,7 +161,6 @@
     [self removeFromSuperview];
 }
 
-
 - (void)selectRow:(NSInteger)row inComponent:(NSInteger)component {
     
     _comSelected = component;

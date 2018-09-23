@@ -89,9 +89,9 @@
     [_maskView addSubview:_wait];
     _wait.center = CGPointMake(768/2, 1024/2);
     
-    [UMConfigure initWithAppkey:UMENG_KEY channel:nil];
-    [MobClick setScenarioType:E_UM_NORMAL];
-    [MobClick setCrashReportEnabled:NO];
+//    [UMConfigure initWithAppkey:UMENG_KEY channel:nil];
+//    [MobClick setScenarioType:E_UM_NORMAL];
+//    [MobClick setCrashReportEnabled:YES];
     
     return YES;
 }
