@@ -64,6 +64,9 @@
    forControlEvents:UIControlEventTouchUpInside];
     [self addTarget:self action:@selector(touchUpOutside:)
    forControlEvents:UIControlEventTouchUpOutside];
+    
+    [self addTarget:self action:@selector(touchUpOutside:)
+   forControlEvents:UIControlEventTouchCancel];
 }
 - (void) touchDown:(id)sender{
     _icon.image = _selImg;

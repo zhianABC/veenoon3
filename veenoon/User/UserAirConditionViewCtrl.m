@@ -98,17 +98,14 @@
     forControlEvents:UIControlEventTouchUpInside];
     
     
-    AirConditionPlug *ss = [[AirConditionPlug alloc] init];
-    RgsDriverObj *driver = [[RgsDriverObj alloc] init];
-    ss._driver = driver;
+    if([_conditionRoomList count])
+    {
     
-    [_conditionRoomList addObject:ss];
-    
-    AirConditionPlug *ss1 = [[AirConditionPlug alloc] init];
-    RgsDriverObj *driver1 = [[RgsDriverObj alloc] init];
-    ss1._driver = driver1;
-    
-    [_conditionRoomList addObject:ss1];
+        [self layoutDriverUI];
+    }
+}
+
+- (void) layoutDriverUI{
     
     int scrollHeight = 508;
     int cellWidth = 100;
@@ -164,7 +161,7 @@
     [zhilengBtn setImage:[UIImage imageNamed:@"user_aircon_cold_n.png"] forState:UIControlStateHighlighted];
     [self.view addSubview:zhilengBtn];
     [zhilengBtn addTarget:self action:@selector(zhilengAction:)
-       forControlEvents:UIControlEventTouchUpInside];
+         forControlEvents:UIControlEventTouchUpInside];
     
     zhireBtn = [UIButton buttonWithColor:NEW_UR_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
     zhireBtn.frame = CGRectMake(SCREEN_WIDTH/2 - 40-rowGap2-80, SCREEN_HEIGHT-270, 80, 80);
@@ -176,7 +173,7 @@
     [zhireBtn setImage:[UIImage imageNamed:@"user_aircon_hot_n.png"] forState:UIControlStateHighlighted];
     [self.view addSubview:zhireBtn];
     [zhireBtn addTarget:self action:@selector(zhireAction:)
-         forControlEvents:UIControlEventTouchUpInside];
+       forControlEvents:UIControlEventTouchUpInside];
     
     
     markerLayer = [[MapMarkerLayer alloc] initWithFrame:CGRectMake(SCREEN_WIDTH/2 - 40, SCREEN_HEIGHT-270, 80, 80)];
@@ -214,17 +211,17 @@
     
     
     NSMutableDictionary *dic11 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"80", @"LX",
-                                 @"0", @"LY",
-                                 nil];
+                                  @"0", @"LY",
+                                  nil];
     NSMutableDictionary *dic12 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"80", @"LX",
-                                 @"80", @"LY",
-                                 nil];
+                                  @"80", @"LY",
+                                  nil];
     NSMutableDictionary *dic13 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"40", @"LX",
-                                 @"80", @"LY",
-                                 nil];
+                                  @"80", @"LY",
+                                  nil];
     NSMutableDictionary *dic14 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"40", @"LX",
-                                 @"40", @"LY",
-                                 nil];
+                                  @"40", @"LY",
+                                  nil];
     NSMutableDictionary *dic15 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"80", @"LX",
                                   @"0", @"LY",
                                   nil];
@@ -273,7 +270,7 @@
     [aireWindBtn setImage:[UIImage imageNamed:@"user_aircon_wind_n.png"] forState:UIControlStateHighlighted];
     [self.view addSubview:aireWindBtn];
     [aireWindBtn addTarget:self action:@selector(airWindAction:)
-       forControlEvents:UIControlEventTouchUpInside];
+          forControlEvents:UIControlEventTouchUpInside];
     
     
     aireFireBtn = [UIButton buttonWithColor:NEW_UR_BUTTON_GRAY_COLOR selColor:NEW_ER_BUTTON_SD_COLOR];
@@ -286,7 +283,7 @@
     [aireFireBtn setImage:[UIImage imageNamed:@"user_aircon_fire_n.png"] forState:UIControlStateHighlighted];
     [self.view addSubview:aireFireBtn];
     [aireFireBtn addTarget:self action:@selector(airFireAction:)
-       forControlEvents:UIControlEventTouchUpInside];
+          forControlEvents:UIControlEventTouchUpInside];
     
     if([_conditionBtnList count])
     {
