@@ -456,7 +456,7 @@
 
 - (void) uploadToRegulusCenter{
     
-    if(regulus_id == nil || _rgsDriver == nil)
+    if(_rgsDriver == nil)
     {
         return;
     }
@@ -558,10 +558,14 @@
     
     if(success)
     {
-        [_scenarioData setObject:regulus_id forKey:@"regulus_id"];
+        if(regulus_id){
+            
+            [_scenarioData setObject:regulus_id forKey:@"regulus_id"];
+            //保存数据库
+            [[DataBase sharedDatabaseInstance] saveScenario:_scenarioData];
+        }
         
-        //保存数据库
-        [[DataBase sharedDatabaseInstance] saveScenario:_scenarioData];
+        
         [self performSelectorOnMainThread:@selector(uploadToRegulusCenter)
                                withObject:nil
                             waitUntilDone:NO];

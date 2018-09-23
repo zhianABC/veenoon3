@@ -30,6 +30,8 @@
 @property (nonatomic, strong) NSDictionary *_cpFeedback;
 @property (nonatomic, strong) NSDictionary *_cpElecLevel;
 
+@property (nonatomic, assign) BOOL _isLocalPrj;
+
 + (DataCenter*)defaultDataCenter;
 
 - (void) syncDriversWithServer;

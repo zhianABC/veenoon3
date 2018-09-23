@@ -26,8 +26,14 @@
 #import "UIImageView+WebCache.h"
 #import "UserDefaultsKV.h"
 
+#import "UIButton+Color.h"
+
+#import "KVNProgress.h"
+#import "EngineerLocalPrjsListViewCtrl.h"
+
 
 @interface EngineerMeetingRoomListViewCtrl () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, JCActionViewDelegate, ReaderCodeDelegate>{
+    
     NSMutableArray *lableArray;
     NSMutableArray *roomImageArray;
     
@@ -47,6 +53,11 @@
     int _curEditIndex;
     
     UIButton *editBtn;
+    
+    UIScrollView *_offlineScroll;
+    
+    UIButton *_tab1;
+    UIButton *_tab2;
 }
 @property (nonatomic, strong) NSMutableArray *roomList;
 
@@ -56,6 +67,9 @@
 
 @property (nonatomic, strong) ReaderCodeViewController *reader_;
 @property (nonatomic, strong) NSString *qrcode;
+
+@property (nonatomic, strong) NSMutableArray *_offlineProjs;
+
 @end
 
 @implementation EngineerMeetingRoomListViewCtrl
@@ -67,6 +81,8 @@
 @synthesize reader_;
 @synthesize qrcode;
 
+@synthesize _offlineProjs;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -76,13 +92,37 @@
     roomImageArray = [[NSMutableArray alloc] init];
     selectedRoomIndex = -1;
     
-    scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0,
+    CGRect StatusRect = [[UIApplication sharedApplication] statusBarFrame];
+    int topSpace = StatusRect.size.height+60;
+
+    int tabWidth = 200;
+    int xx = SCREEN_WIDTH/2 - tabWidth/2;
+    _tab1 = [[UIButton alloc] initWithFrame:CGRectMake(xx,
+                                                      topSpace,
+                                                      tabWidth,
+                                                      44)];
+    _tab1.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [_tab1 setTitle:@"在线配置" forState:UIControlStateNormal];
+    [self.view addSubview:_tab1];
+    [_tab1 setTitleColor:[UIColor whiteColor]
+                forState:UIControlStateNormal];
+
+    
+
+    scroolView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 140,
                                                                 SCREEN_WIDTH,
-                                                                SCREEN_HEIGHT-50)];
+                                                                SCREEN_HEIGHT-150)];
     scroolView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:scroolView];
     
-    //[[DataCenter defaultDataCenter] syncDriversWithServer];
+    
+    _offlineScroll = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 100,
+                                                                    SCREEN_WIDTH,
+                                                                    SCREEN_HEIGHT-150)];
+    _offlineScroll.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:_offlineScroll];
+    _offlineScroll.hidden = YES;
+    
     
     self.roomList = [[DataBase sharedDatabaseInstance] getMeetingRooms];
     
@@ -101,14 +141,24 @@
     bottomBar.image = [UIImage imageNamed:@"botomo_icon_black.png"];
     
     editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    editBtn.frame = CGRectMake(SCREEN_WIDTH-20-160, 0,160, 50);
-    [bottomBar addSubview:editBtn];
+    editBtn.frame = CGRectMake(SCREEN_WIDTH-20-160, StatusRect.size.height+20,160, 50);
+    [self.view addSubview:editBtn];
     [editBtn setTitle:@"清空房间" forState:UIControlStateNormal];
     [editBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [editBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
     editBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     [editBtn addTarget:self action:@selector(clearAction:)
       forControlEvents:UIControlEventTouchUpInside];
+    
+    _tab2 = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH-20-160, 0,160, 50)];
+    _tab2.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [_tab2 setTitle:@"离线配置" forState:UIControlStateNormal];
+    [bottomBar addSubview:_tab2];
+    [_tab2 setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _tab2.tag = 2;
+    [_tab2 addTarget:self
+              action:@selector(buttonAction:)
+    forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     backBtn.frame = CGRectMake(60, SCREEN_HEIGHT - 48, 42, 42);
@@ -120,29 +170,12 @@
     [backBtn addTarget:self
                 action:@selector(backAction:)
       forControlEvents:UIControlEventTouchUpInside];
-    
-//    UIButton *btnSync = [UIButton buttonWithType:UIButtonTypeCustom];
-//    btnSync.frame = CGRectMake(60, SCREEN_HEIGHT - 48, 42, 42);
-//    [btnSync setImage:[UIImage imageNamed:@"sync_data_n.png"] forState:UIControlStateNormal];
-//    [btnSync setImage:[UIImage imageNamed:@"sync_data_s.png"] forState:UIControlStateHighlighted];
-//    [self.view addSubview:btnSync];
-//    btnSync.layer.cornerRadius = 5;
-//    btnSync.clipsToBounds = YES;
-//    [btnSync addTarget:self
-//                action:@selector(dataSyncAction:)
-//      forControlEvents:UIControlEventTouchUpInside];
-//
-//    UIButton *btnBack = [UIButton buttonWithType:UIButtonTypeCustom];
-//    btnBack.frame = CGRectMake(SCREEN_WIDTH - 90, SCREEN_HEIGHT - 48, 42, 42);
-//    [btnBack setImage:[UIImage imageNamed:@"backup_data_n.png"] forState:UIControlStateNormal];
-//    [btnBack setImage:[UIImage imageNamed:@"backup_data_s.png"] forState:UIControlStateHighlighted];
-//    [self.view addSubview:btnBack];
-//    btnBack.layer.cornerRadius = 5;
-//    btnBack.clipsToBounds = YES;
-//    [btnBack addTarget:self
-//                action:@selector(backupAction:)
-//      forControlEvents:UIControlEventTouchUpInside];
+
+    //[self loadLocalProjects];
 }
+
+
+
 
 - (void) clearAction:(id)sender{
     
@@ -173,6 +206,14 @@
                      completion:nil];
     
     
+}
+
+
+- (void) buttonAction:(UIButton*)sender{
+
+    EngineerLocalPrjsListViewCtrl *offline = [[EngineerLocalPrjsListViewCtrl alloc] init];
+    [self.navigationController pushViewController:offline animated:YES];
+
 }
 
 - (void) backupAction:(id)sender{
@@ -383,11 +424,12 @@
     }
 }
 
+
 - (void) showRoomList{
     
     [[scroolView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
-    int top = 100;
+    int top = 0;
     int leftRight = 75;
     int space = 15;
     
@@ -676,6 +718,9 @@
     
     if(_currentRoom)
     {
+       
+        [DataCenter defaultDataCenter]._isLocalPrj = NO;
+        
         [DataCenter defaultDataCenter]._currentRoom = _currentRoom;
         
         _currentRoom.regulus_user_id = _regulus_user_id;
@@ -1159,88 +1204,8 @@
         
         [[DataBase sharedDatabaseInstance] saveMeetingRoom:room];
         
-        
-#ifdef REALTIME_NETWORK_MODEL
-        if(_client == nil)
-        {
-            _client = [[WebClient alloc] initWithDelegate:self];
-        }
-        
-        _client._method = @"/addroom";
-        _client._httpMethod = @"POST";
-        
-        NSMutableDictionary *param = [NSMutableDictionary dictionary];
-        
-        _client._requestParam = param;
-        
-        User *u = [UserDefaultsKV getUser];
-        if(u)
-        {
-            [param setObject:u._userId forKey:@"userID"];
-        }
 
-        [param setObject:userid forKey:@"regulusUserID"];
-        [param setObject:regulusid forKey:@"regulusID"];
-        [param setObject:@"房间" forKey:@"roomName"];
-        [param setObject:@"111111" forKey:@"regulusPassword"];
-        
-        IMP_BLOCK_SELF(EngineerMeetingRoomListViewCtrl);
-
-        
-        [KVNProgress show];
-        
-        [_client requestWithSusessBlock:^(id lParam, id rParam) {
-            
-            NSString *response = lParam;
-             NSLog(@"%@", response);
-            
-            [KVNProgress dismiss];
-            
-            SBJson4ValueBlock block = ^(id v, BOOL *stop) {
-                
-                
-                if([v isKindOfClass:[NSDictionary class]])
-                {
-                    int code = [[v objectForKey:@"code"] intValue];
-                    
-                    if(code == 200)
-                    {
-                        if([v objectForKey:@"data"])
-                        {
-                            [block_self successAddRoom:[v objectForKey:@"data"]];
-                        }
-                    }
-                    return;
-                }
-                
-                
-            };
-            
-            SBJson4ErrorBlock eh = ^(NSError* err) {
-                
-                
-                
-                NSLog(@"OOPS: %@", err);
-            };
-            
-            id parser = [SBJson4Parser multiRootParserWithBlock:block
-                                                   errorHandler:eh];
-            
-            id data = [response dataUsingEncoding:NSUTF8StringEncoding];
-            [parser parse:data];
-            
-            
-        } FailBlock:^(id lParam, id rParam) {
-            
-            NSString *response = lParam;
-            NSLog(@"%@", response);
-            
-            [KVNProgress dismiss];
-        }];
-        
-#else
         [self successAddRoom:room];
-#endif
     
     }
 }

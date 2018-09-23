@@ -27,7 +27,7 @@ extern NSString * const KVNProgressViewParameterSuperview;
 /** The minimum time (in seconds) the hud will be displayed. No matter if <code>dismiss</code> is called. */
 static NSTimeInterval const KVNMinimumDisplayTime = 0.3;
 /** The minimum time (in seconds) the success will be displayed. */
-static NSTimeInterval const KVNMinimumSuccessDisplayTime = 2.0;
+static NSTimeInterval const KVNMinimumSuccessDisplayTime = 1;
 /** The minimum time (in seconds) the error will be displayed. */
 static NSTimeInterval const KVNMinimumErrorDisplayTime = 3.0;
 

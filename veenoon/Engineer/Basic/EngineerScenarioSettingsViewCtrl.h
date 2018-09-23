@@ -12,8 +12,8 @@
 @interface EngineerScenarioSettingsViewCtrl : BaseViewController {
     
 }
-
 @property (nonatomic, strong) NSMutableArray *_scenarioArray;
+@property (nonatomic, strong) NSString* localPrjName;
 
 @end
 

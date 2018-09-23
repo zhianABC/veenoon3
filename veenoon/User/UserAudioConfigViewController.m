@@ -361,10 +361,11 @@
                            frame:CGRectZero];
         [_proxysView addSubview:sliderCtrl];
         [sliderCtrl setRoadImage:[UIImage imageNamed:@"v_slider_road.png"]];
-        sliderCtrl.topEdge = 60;
-        sliderCtrl.bottomEdge = 55;
+        sliderCtrl.topEdge = 54;
+        sliderCtrl.bottomEdge = 54;
         sliderCtrl.maxValue = 12;
         sliderCtrl.minValue = -70;
+        sliderCtrl.isUnLineStyle = YES;
         [sliderCtrl resetScale];
         sliderCtrl.delegate = self;
         sliderCtrl.data = vap;
@@ -450,6 +451,23 @@
     }
     
     _proxysView.scrollEnabled = YES;
+}
+
+- (void) didSliderMuteChanged:(BOOL)mute object:(id)object{
+    
+    JSlideView *jsl = object;
+    if(jsl && [jsl isKindOfClass:[JSlideView class]])
+    {
+        id data = jsl.data;
+        if([data isKindOfClass:[VAProcessorProxys class]])
+        {
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(200.0 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
+            
+                [(VAProcessorProxys*)data controlDigtalMute:mute];
+            });
+            
+        }
+    }
 }
 
 

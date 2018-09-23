@@ -41,6 +41,8 @@
     UIButton *_doneBtn;
     
     NSMutableArray *_deleteCells;
+    
+    BOOL _isSaved;
 }
 @property (nonatomic, strong) NSMutableArray *_sBtns;
 @property (nonatomic, strong) NSMutableDictionary *_map;
@@ -56,6 +58,7 @@
 @synthesize _map;
 @synthesize regulus_id;
 @synthesize _curSecenario;
+@synthesize localPrjName;
 
 
 - (void) initDat {
@@ -74,7 +77,9 @@
     self._map = [NSMutableDictionary dictionary];
     
     MeetingRoom *room = [DataCenter defaultDataCenter]._currentRoom;
-    self.regulus_id = room.regulus_id;
+    if(room){
+        self.regulus_id = room.regulus_id;
+    }
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 63, SCREEN_WIDTH, 1)];
     line.backgroundColor = RGB(75, 163, 202);
@@ -95,38 +100,17 @@
     bottomBar.userInteractionEnabled = YES;
     bottomBar.image = [UIImage imageNamed:@"botomo_icon_black.png"];
     
-    UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    cancelBtn.frame = CGRectMake(0, 0,160, 50);
-    [bottomBar addSubview:cancelBtn];
-    [cancelBtn setTitle:@"返回" forState:UIControlStateNormal];
-    [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [cancelBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
-    cancelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-    [cancelBtn addTarget:self
-                  action:@selector(backAction:)
-        forControlEvents:UIControlEventTouchUpInside];
-    
-    editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    editBtn.frame = CGRectMake(SCREEN_WIDTH-120, 60, 60, 40);
-    [self.view addSubview:editBtn];
-    [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
-    [editBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [editBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
-    editBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-    [editBtn addTarget:self action:@selector(editAction:)
-      forControlEvents:UIControlEventTouchUpInside];
-    
-    _doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _doneBtn.frame = CGRectMake(SCREEN_WIDTH-120, 60, 60, 40);
-    [self.view addSubview:_doneBtn];
-    [_doneBtn setTitle:@"完成" forState:UIControlStateNormal];
-    [_doneBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_doneBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
-    _doneBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-    [_doneBtn addTarget:self
-                 action:@selector(doneAction:)
-       forControlEvents:UIControlEventTouchUpInside];
-    _doneBtn.hidden = YES;
+//    UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    cancelBtn.frame = CGRectMake(0, 0,160, 50);
+//    [bottomBar addSubview:cancelBtn];
+//    [cancelBtn setTitle:@"返回" forState:UIControlStateNormal];
+//    [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [cancelBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
+//    cancelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+//    [cancelBtn addTarget:self
+//                  action:@selector(backAction:)
+//        forControlEvents:UIControlEventTouchUpInside];
+//
     
     
     UILabel *portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT,
@@ -138,14 +122,14 @@
     portDNSLabel.textColor  = [UIColor whiteColor];
     portDNSLabel.text = @"设置场景";
     
-    portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, CGRectGetMaxY(portDNSLabel.frame)+20, SCREEN_WIDTH-80, 20)];
-    portDNSLabel.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont systemFontOfSize:16];
-    portDNSLabel.textColor  = [UIColor colorWithWhite:1.0 alpha:0.9];
-    portDNSLabel.text = @"在场景内，可选择您所需要配置的设备";
+    UILabel* tipsL = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, CGRectGetMaxY(portDNSLabel.frame)+20, SCREEN_WIDTH-80, 20)];
+    tipsL.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:tipsL];
+    tipsL.font = [UIFont systemFontOfSize:16];
+    tipsL.textColor  = [UIColor colorWithWhite:1.0 alpha:0.9];
+    tipsL.text = @"在场景内，可选择您所需要配置的设备";
     
-    topy = CGRectGetMaxY(portDNSLabel.frame)+20;
+    topy = CGRectGetMaxY(tipsL.frame)+20;
 
     UIButton *goHomeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     goHomeBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0, 160, 50);
@@ -159,16 +143,82 @@
     forControlEvents:UIControlEventTouchUpInside];
     
     
+    editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    editBtn.frame = CGRectMake(10, 0, 160, 50);
+    [bottomBar addSubview:editBtn];
+    [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
+    [editBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [editBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
+    editBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [editBtn addTarget:self action:@selector(editAction:)
+      forControlEvents:UIControlEventTouchUpInside];
+    
+    _doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _doneBtn.frame = CGRectMake(10, 0, 160, 50);
+    [bottomBar addSubview:_doneBtn];
+    [_doneBtn setTitle:@"完成" forState:UIControlStateNormal];
+    [_doneBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_doneBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
+    _doneBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [_doneBtn addTarget:self
+                 action:@selector(doneAction:)
+       forControlEvents:UIControlEventTouchUpInside];
+    _doneBtn.hidden = YES;
+
+    
+    int w3 = (SCREEN_WIDTH - editBtn.center.x*2)/3;
+    
+    UIButton *upCloud = [UIButton buttonWithType:UIButtonTypeCustom];
+    upCloud.frame = CGRectMake(0, 0,160, 50);
+    [bottomBar addSubview:upCloud];
+    [upCloud setImage:[UIImage imageNamed:@"up_cloud_white.png"]
+          forState:UIControlStateNormal];
+    [upCloud setImage:[UIImage imageNamed:@"up_cloud_selected.png"]
+             forState:UIControlStateHighlighted];
+    [upCloud addTarget:self
+             action:@selector(uploadAction:)
+   forControlEvents:UIControlEventTouchUpInside];
+    upCloud.center = CGPointMake(CGRectGetMidX(editBtn.frame)+w3, editBtn.center.y);
+
+    
     iBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    iBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
+    iBtn.frame = CGRectMake(0, 0,160, 50);
     [bottomBar addSubview:iBtn];
     [iBtn setImage:[UIImage imageNamed:@"i_btn_white.png"]
           forState:UIControlStateNormal];
     [iBtn addTarget:self
              action:@selector(iconAction:)
    forControlEvents:UIControlEventTouchUpInside];
-    iBtn.center = CGPointMake(SCREEN_WIDTH/2, iBtn.center.y);
+    iBtn.center = CGPointMake(CGRectGetMidX(editBtn.frame)+w3*2, iBtn.center.y);
 
+    
+    BOOL isLocalProject = [DataCenter defaultDataCenter]._isLocalPrj;
+    
+    if(isLocalProject)
+    {
+        _isSaved = NO;
+        
+        //如果是本地的，需要存储
+        UIButton* btnSaveLocalPrj = [UIButton buttonWithType:UIButtonTypeCustom];
+        btnSaveLocalPrj.frame = CGRectMake(SCREEN_WIDTH - 160 - 10, 20, 160, 44);
+        [self.view addSubview:btnSaveLocalPrj];
+        [btnSaveLocalPrj setTitle:@"存储" forState:UIControlStateNormal];
+        [btnSaveLocalPrj setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [btnSaveLocalPrj setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
+        btnSaveLocalPrj.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+        [btnSaveLocalPrj addTarget:self
+                            action:@selector(saveLocalProjectAction:)
+                  forControlEvents:UIControlEventTouchUpInside];
+        
+        btnSaveLocalPrj.center = CGPointMake(btnSaveLocalPrj.center.x, portDNSLabel.center.y-10);
+    }
+    else
+    {
+        //如果不是本地的，直接默认认为已存储
+        _isSaved = YES;
+    }
+    
+    
     _settingview = [[SIconSelectView alloc]
                     initWithFrame:CGRectMake(0,
                                              SCREEN_HEIGHT,
@@ -189,18 +239,112 @@
     }
     else
     {
-        cancelBtn.hidden = YES;
-        [self loadSenseFromRegulusCtrl];
+        if(localPrjName)
+        {
+            [[DataCenter defaultDataCenter] prepareDrivers];
+            
+            if([DataSync sharedDataSync]._currentArea == nil)
+            {
+                [self checkArea];
+            }
+            else
+            {
+                [self loadSenseFromRegulusCtrl];
+            }
+        }
+        else
+        {
+            [self loadSenseFromRegulusCtrl];
+        }
     }
     
     //获取Regulus支持的插件
     [[DataSync sharedDataSync] syncRegulusDrivers];
     
     
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(notifyReloadScenario:)
                                                  name:@"Notify_Reload_Senario"
                                                object:nil];
+}
+
+- (void) checkArea{
+    
+    IMP_BLOCK_SELF(EngineerScenarioSettingsViewCtrl);
+    
+    [[RegulusSDK sharedRegulusSDK] GetAreas:^(NSArray *RgsAreaObjs, NSError *error) {
+        if (error) {
+            
+            [KVNProgress showErrorWithStatus:@"连接中控出错!"];
+        }
+        else
+        {
+            RgsAreaObj *areaObj = nil;
+            for(RgsAreaObj *obj in RgsAreaObjs)
+            {
+                if([obj.name isEqualToString:VEENOON_AREA_NAME])
+                {
+                    areaObj = obj;
+                    break;
+                }
+            }
+            if(areaObj)
+            {
+                [DataSync sharedDataSync]._currentArea = areaObj;
+                [block_self loadSenseFromRegulusCtrl];
+            }
+        }
+    }];
+    
+}
+
+- (void) saveLocalProjectAction:(id)sender{
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"请输入保存的名称" preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"工程名称";
+    }];
+    
+    IMP_BLOCK_SELF(EngineerScenarioSettingsViewCtrl);
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UITextField *envirnmentNameTextField = alertController.textFields.firstObject;
+        NSString *nameTxt = envirnmentNameTextField.text;
+        if (nameTxt && [nameTxt length] > 0) {
+            
+            [block_self doSaveCurrentLocalProject:nameTxt];
+            
+        }
+    }]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
+    [self presentViewController:alertController animated:true completion:nil];
+}
+
+
+- (void) doSaveCurrentLocalProject:(NSString*)name{
+    
+    [KVNProgress show];
+    [[RegulusSDK sharedRegulusSDK] SaveLocalProject:name completion:^(BOOL result, NSError *error) {
+        
+        [KVNProgress dismiss];
+        if(result)
+        {
+            _isSaved = YES;
+            [self backToPrevStartPage];
+        }
+        
+    }];
+}
+
+
+//TODO: 上传到云端备份
+- (void) uploadAction:(id)sender{
+    
+    
 }
 
 - (void) doneAction:(id)sender{
@@ -320,7 +464,8 @@
     }
 }
 
-- (void) gohomeAction:(id)sender{
+
+- (void) backToPrevStartPage{
     
     //返回到场景列表页面
     UIViewController *engCtrl = nil;
@@ -337,6 +482,48 @@
     
     if(engCtrl){
         [self.navigationController popToViewController:engCtrl animated:YES];
+    }
+}
+
+- (void) gohomeAction:(id)sender{
+    
+    if(_isSaved)
+    {
+        [self backToPrevStartPage];
+    }
+    else
+    {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil
+                                                                       message:@"您还没有存储当前编辑的工程，现在要保存吗？"
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        
+        
+        IMP_BLOCK_SELF(EngineerScenarioSettingsViewCtrl);
+        UIAlertAction *sveAction = [UIAlertAction
+                                     actionWithTitle:@"保存"
+                                     style:UIAlertActionStyleDefault
+                                     handler:^(UIAlertAction * _Nonnull action) {
+                                         [block_self saveLocalProjectAction:sender];
+                                     }];
+        [alert addAction:sveAction];
+        
+        UIAlertAction *noSave = [UIAlertAction
+                                     actionWithTitle:@"不保存"
+                                     style:UIAlertActionStyleDefault
+                                     handler:^(UIAlertAction * _Nonnull action) {
+                                         [block_self backToPrevStartPage];
+                                     }];
+        [alert addAction:noSave];
+        
+        
+        UIAlertAction *cancelAction = [UIAlertAction
+                                       actionWithTitle:@"取消"
+                                       style:UIAlertActionStyleCancel handler:nil];
+        [alert addAction:cancelAction];
+        
+        
+        [self presentViewController:alert animated:YES
+                         completion:nil];
     }
 }
 
@@ -476,6 +663,7 @@
         }
         else
         {
+            cell.tag = 401;
             [cell fillData:nil];
         }
         
@@ -536,7 +724,8 @@
             CGRect rect = [self.view convertRect:cell.frame fromView:scroolView];
             if (CGRectContainsPoint(rect, viewPoint)) {
 
-                [cell refreshDraggedData:data];
+                if(cell.tag != 401)
+                    [cell refreshDraggedData:data];
                 
                 break;
                 

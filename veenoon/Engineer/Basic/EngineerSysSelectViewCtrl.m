@@ -20,13 +20,16 @@
 #import "DataCenter.h"
 #import "SBJson4.h"
 #import "MeetingRoom.h"
+#import "SelPickerView.h"
+#import "JCActionView.h"
+#import "AppDelegate.h"
 
 #ifdef OPEN_REG_LIB_DEF
 #import "RegulusSDK.h"
 
 #endif
 
-@interface EngineerSysSelectViewCtrl ()<UIScrollViewDelegate>{
+@interface EngineerSysSelectViewCtrl ()<UIScrollViewDelegate,JCActionViewDelegate>{
     
     EngineerDNSSettingView *_dnsView;
     EngineerPortSettingView *_portView;
@@ -43,12 +46,15 @@
 }
 @property (nonatomic, strong) NSMutableArray *_sceneDrivers;
 @property (nonatomic, strong) NSArray *_scenes;
+@property (nonatomic, strong) NSArray *_offlineProjs;
 
 @end
 
 @implementation EngineerSysSelectViewCtrl
 @synthesize _sceneDrivers;
 @synthesize _scenes;
+@synthesize _localPrjName;
+@synthesize _offlineProjs;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -73,37 +79,60 @@
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *login = [UIButton buttonWithColor:[UIColor whiteColor] selColor:LINE_COLOR];
-    login.frame = CGRectMake(SCREEN_WIDTH/2 - 180, SCREEN_HEIGHT/2 - 80, 360, 44);
-    login.layer.cornerRadius = 8;
-    //login.layer.borderWidth = 1;
-    //login.layer.borderColor = [UIColor whiteColor].CGColor;
-    login.clipsToBounds = YES;
-    [self.view addSubview:login];
-    [login setTitle:@"设置新的系统" forState:UIControlStateNormal];
-    //[login setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [login setTitleColor:ADMIN_BLACK_COLOR forState:UIControlStateNormal];
-    login.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    UIButton *newSysBtn = [UIButton buttonWithColor:[UIColor whiteColor] selColor:LINE_COLOR];
+    newSysBtn.frame = CGRectMake(SCREEN_WIDTH/2 - 180, SCREEN_HEIGHT/2 - 80, 360, 44);
+    newSysBtn.layer.cornerRadius = 8;
+    newSysBtn.clipsToBounds = YES;
+    [self.view addSubview:newSysBtn];
+    [newSysBtn setTitle:@"设置新的系统" forState:UIControlStateNormal];
+    [newSysBtn setTitleColor:ADMIN_BLACK_COLOR forState:UIControlStateNormal];
+    newSysBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     
-    [login addTarget:self
+    [newSysBtn addTarget:self
               action:@selector(renewSysAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *signup = [UIButton buttonWithColor:nil selColor:[UIColor whiteColor]];
-    signup.frame = CGRectMake(SCREEN_WIDTH/2 - 180, SCREEN_HEIGHT/2 +20, 360, 44);
-    signup.layer.cornerRadius = 8;
-    signup.layer.borderWidth = 1;
-    signup.layer.borderColor = [UIColor whiteColor].CGColor;
-    signup.clipsToBounds = YES;
-    [self.view addSubview:signup];
-    [signup setTitle:@"链接已有系统" forState:UIControlStateNormal];
-    [signup setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [signup setTitleColor:ADMIN_BLACK_COLOR forState:UIControlStateHighlighted];
-    signup.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    UIButton *linkSysBtn = [UIButton buttonWithColor:nil selColor:[UIColor whiteColor]];
+    linkSysBtn.frame = CGRectMake(SCREEN_WIDTH/2 - 180, SCREEN_HEIGHT/2 +20, 360, 44);
+    linkSysBtn.layer.cornerRadius = 8;
+    linkSysBtn.layer.borderWidth = 1;
+    linkSysBtn.layer.borderColor = [UIColor whiteColor].CGColor;
+    linkSysBtn.clipsToBounds = YES;
+    [self.view addSubview:linkSysBtn];
+    [linkSysBtn setTitle:@"链接已有系统" forState:UIControlStateNormal];
+    [linkSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [linkSysBtn setTitleColor:ADMIN_BLACK_COLOR forState:UIControlStateHighlighted];
+    linkSysBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     
-    [signup addTarget:self
+    [linkSysBtn addTarget:self
                action:@selector(linktoSysAction:)
      forControlEvents:UIControlEventTouchUpInside];
+    
+    BOOL isLocal = [DataCenter defaultDataCenter]._isLocalPrj;
+    if(!isLocal)
+    {
+        
+        linkSysBtn.center = CGPointMake(newSysBtn.center.x, SCREEN_HEIGHT/2);
+        newSysBtn.center = CGPointMake(newSysBtn.center.x, CGRectGetMidY(linkSysBtn.frame) - 100);
+        
+        UIButton *importSysBtn = [UIButton buttonWithColor:nil selColor:[UIColor whiteColor]];
+        importSysBtn.frame = CGRectMake(SCREEN_WIDTH/2 - 180, SCREEN_HEIGHT/2 +20, 360, 44);
+        importSysBtn.layer.cornerRadius = 8;
+        importSysBtn.layer.borderWidth = 1;
+        importSysBtn.layer.borderColor = [UIColor whiteColor].CGColor;
+        importSysBtn.clipsToBounds = YES;
+        [self.view addSubview:importSysBtn];
+        [importSysBtn setTitle:@"导入离线系统" forState:UIControlStateNormal];
+        [importSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [importSysBtn setTitleColor:ADMIN_BLACK_COLOR forState:UIControlStateHighlighted];
+        importSysBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+        
+        [importSysBtn addTarget:self
+                       action:@selector(importSysAction:)
+             forControlEvents:UIControlEventTouchUpInside];
+        
+        importSysBtn.center = CGPointMake(newSysBtn.center.x, CGRectGetMidY(linkSysBtn.frame)+100);
+    }
 
   
     UIView *touchView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 500)];
@@ -124,7 +153,7 @@
                                                                     0,
                                                                     SCREEN_WIDTH,
                                                                     SCREEN_HEIGHT)];
-    _switchContent.delegate=self;
+    _switchContent.delegate = self;
     [_container addSubview:_switchContent];
     _switchContent.pagingEnabled = YES;
     [_switchContent setContentSize:CGSizeMake(SCREEN_WIDTH*2, SCREEN_HEIGHT)];
@@ -153,134 +182,155 @@
     
 }
 
+#pragma mark -- import Project --
+- (void) importSysAction:(id)sender{
+    
+    JCActionView *jcAction = [[JCActionView alloc] initWithTitles:@[@"从本地导入", @"从云账户导入", @"从U盘导入"]
+                                                            frame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    jcAction.delegate_ = self;
+    jcAction.tag = 2017;
+    
+    AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    [app.window addSubview:jcAction];
+    [jcAction animatedShow];
+    
 
-- (void) getScenarioList{
-  
-    MeetingRoom *room = [DataCenter defaultDataCenter]._currentRoom;
-    if(room == nil)
+}
+
+- (void) didJCActionButtonIndex:(int)index actionView:(UIView*)actionView{
+    
+    if(index == 0)
     {
-        return;
+        [self importFromLocal];
     }
-    
-    if(_client == nil)
+    else if(index == 1)
     {
-        _client = [[WebClient alloc] initWithDelegate:self];
+         [self importFromCloud];
     }
+    else if(index == 2)
+    {
+         [self importFromUSB];
+    }
+}
+
+- (void) importFromCloud{
     
-    _client._method = @"/getscenariolist";
-    _client._httpMethod = @"GET";
     
-    NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    
-    _client._requestParam = param;
-    
-    
-    [param setObject:room.regulus_id forKey:@"regulusID"];
-    
-    IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
+}
+
+- (void) importFromUSB{
     
     [KVNProgress show];
-    
-    [_client requestWithSusessBlock:^(id lParam, id rParam) {
-        
-        NSString *response = lParam;
-        //NSLog(@"%@", response);
+    [[RegulusSDK sharedRegulusSDK] GetProjectsFromUdisc:^(BOOL result, NSArray *names, NSError *error) {
         
         [KVNProgress dismiss];
-        
-        SBJson4ValueBlock block = ^(id v, BOOL *stop) {
-            
-            
-            if([v isKindOfClass:[NSDictionary class]])
+        if(result)
+        {
+            if([names count])
             {
-                int code = [[v objectForKey:@"code"] intValue];
-                
-                if(code == 200)
-                {
-                    if([v objectForKey:@"data"])
-                    {
-                        [block_self saveScenarioList:[v objectForKey:@"data"]];
-                    }
-                }
-                return;
+                self._offlineProjs = names;
             }
-            
-            
-        };
+        }
         
-        SBJson4ErrorBlock eh = ^(NSError* err) {
-            
-            
-            
-            NSLog(@"OOPS: %@", err);
-        };
-        
-        id parser = [SBJson4Parser multiRootParserWithBlock:block
-                                               errorHandler:eh];
-        
-        id data = [response dataUsingEncoding:NSUTF8StringEncoding];
-        [parser parse:data];
-        
-        
-    } FailBlock:^(id lParam, id rParam) {
-        
-        NSString *response = lParam;
-        NSLog(@"%@", response);
-        
-        [KVNProgress dismiss];
+        [self chooseUSDProject];
+
     }];
 }
 
-- (void) saveScenarioList:(NSArray*)list{
+- (void) chooseUSDProject{
     
-    for(NSDictionary *rd in list)
+    if(self._offlineProjs && [_offlineProjs count])
     {
-        NSString *scenario_content = [rd objectForKey:@"scenario_content"];
-        NSData *data = [scenario_content dataUsingEncoding:NSUTF8StringEncoding];
+        AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+        SelPickerView *_levelSetting = [[SelPickerView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
         
-        NSError *error = nil;
-        NSDictionary *s = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+        _levelSetting._pickerDataArray = @[@{@"values":_offlineProjs}];
         
-        NSMutableDictionary *scenario = [NSMutableDictionary dictionaryWithDictionary:s];
+        [_levelSetting showInView:app.window];
         
-        NSString *regulus_id = [rd objectForKey:@"regulus_id"];
-        if(regulus_id)
+        [_levelSetting selectRow:0 inComponent:0];
+        
+        IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
+        _levelSetting._selectionBlock = ^(NSDictionary *values)
         {
-            [scenario setObject:regulus_id forKey:@"regulus_id"];
-        }
-        
-        NSString *scenario_c_name = [rd objectForKey:@"scenario_c_name"];
-        if(scenario_c_name)
-        {
-            [scenario setObject:scenario_c_name forKey:@"name"];
-        }
-        
-        NSString *scenario_e_name = [rd objectForKey:@"scenario_e_name"];
-        if(scenario_e_name)
-        {
-            [scenario setObject:scenario_e_name forKey:@"en_name"];
-        }
-        
-        NSString *scenario_picture = [rd objectForKey:@"scenario_picture"];
-        if(scenario_picture)
-        {
-            [scenario setObject:scenario_picture forKey:@"small_icon"];
-        }
-        
-        NSString *scenario_user_icon_name = [rd objectForKey:@"scenario_user_icon_name"];
-        if(scenario_user_icon_name)
-        {
-            [scenario setObject:scenario_user_icon_name forKey:@"icon_user"];
-        }
-        
-        [[DataBase sharedDatabaseInstance] saveScenario:scenario];
+            [block_self didPickUSBProjectName:values];
+        };
     
     }
-    
-    if([_scenes count])
+    else
     {
-        [self updateScenarioDrivers];
+        [KVNProgress showSuccessWithStatus:@"没有可导入的项目"];
     }
+}
+
+- (void) didPickUSBProjectName:(NSDictionary*)values{
+    
+    NSString *prjName = [values objectForKey:@0];
+    [[RegulusSDK sharedRegulusSDK] ImportProjectFromUdisc:prjName completion:^(BOOL result, NSError *error) {
+        
+        [KVNProgress showSuccessWithStatus:@"已导入"];
+        
+    }];
+}
+
+
+- (void) importFromLocal{
+    
+    [KVNProgress show];
+    
+    [[RegulusSDK sharedRegulusSDK] GetProjectsFromLocal:^(BOOL result, NSArray *names, NSError *error) {
+        
+        [KVNProgress dismiss];
+        
+        if(result)
+        {
+            if([names count])
+            {
+               self._offlineProjs = names;
+            }
+        }
+        
+        [self chooseLocalProject];
+        
+    }];
+    
+}
+
+- (void) chooseLocalProject{
+    
+    if(self._offlineProjs && [_offlineProjs count])
+    {
+        AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+        SelPickerView *_levelSetting = [[SelPickerView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        
+        _levelSetting._pickerDataArray = @[@{@"values":_offlineProjs}];
+        
+        [_levelSetting showInView:app.window];
+        
+        [_levelSetting selectRow:0 inComponent:0];
+        
+        IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
+        _levelSetting._selectionBlock = ^(NSDictionary *values)
+        {
+            [block_self didPickProjectName:values];
+        };
+        
+    }
+    else
+    {
+        [KVNProgress showSuccessWithStatus:@"没有可导入的项目"];
+    }
+}
+
+- (void) didPickProjectName:(NSDictionary*)values{
+    
+    NSString *prjName = [values objectForKey:@0];
+    [[RegulusSDK sharedRegulusSDK] ImportProjectFromLocal:prjName
+                                               completion:^(BOOL result, NSError *error) {
+                                                   
+                                                   [KVNProgress showWithStatus:@"已导入"];
+                                                   
+                                               }];
 }
 
 - (void) checkArea{
@@ -328,10 +378,6 @@
             int room_id = room.server_room_id;
             room.area_id = (int)areaObj.m_id;
             
-#ifdef   REALTIME_NETWORK_MODEL
-            [room syncAreaToServer];
-#endif
-            
             [[DataBase sharedDatabaseInstance] updateMeetingRoomAreaId:room_id
                                                                 areaId:(int)areaObj.m_id];
         }
@@ -370,8 +416,10 @@
     
     [_sceneDrivers removeAllObjects];
     
+    BOOL isLocal = [DataCenter defaultDataCenter]._isLocalPrj;
+    
     MeetingRoom *room = [DataCenter defaultDataCenter]._currentRoom;
-    if(room)
+    if(room || isLocal)
     {
         for(RgsSceneObj *dr in _scenes)
         {
@@ -531,43 +579,49 @@
 
 }
 
+
+- (void) doNewArea{
+    
+    IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
+    
+    [[RegulusSDK sharedRegulusSDK] NewProject:@"Veenoon"
+                                   completion:^(BOOL result, NSError *error) {
+                                       
+                                        [KVNProgress dismiss];
+                                       
+                                       if(result)
+                                       {
+                                           [block_self setNewProject];
+                                       }
+                                       else
+                                       {
+                                           NSLog(@"%@", [error description]);
+                                       }
+                                   }];
+}
+
 - (void) clearAndNewProject:(UIButton*)sender{
+ 
+   
     
-#if LOGIN_REGULUS
+    BOOL isLocal = [DataCenter defaultDataCenter]._isLocalPrj;
     
-    sender.enabled = NO;
+    if(isLocal)
+    {
+        [self actionNewArea];
+        return;
+    }
     
+     [KVNProgress show];
     if([DataSync sharedDataSync]._currentReglusLogged)
     {
-        IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
-        
-        [[RegulusSDK sharedRegulusSDK] NewProject:@"Veenoon"
-                                       completion:^(BOOL result, NSError *error) {
-            
-            sender.enabled = YES;
-            
-            if(result)
-            {
-                [block_self setNewProject];
-            }
-            else
-            {
-                NSLog(@"%@", [error description]);
-            }
-        }];
-        
-        
+        [self doNewArea];
     }
     else
     {
         [KVNProgress showErrorWithStatus:@"未登录"];
-        
-        sender.enabled = YES;
     }
     
-#else
-    [self setNewProject];
-#endif
 }
 
 
@@ -598,7 +652,10 @@
         [[DataSync sharedDataSync] newVeenoonArea];
         
         MeetingRoom *room = [DataCenter defaultDataCenter]._currentRoom;
-        [[DataBase sharedDatabaseInstance] deleteScenarioByRoom:room.regulus_id];
+        if(room)
+        {
+            [[DataBase sharedDatabaseInstance] deleteScenarioByRoom:room.regulus_id];
+        }
         [_sceneDrivers removeAllObjects];
         
         EngineerNewTeslariViewCtrl *ctrl = [[EngineerNewTeslariViewCtrl alloc] init];

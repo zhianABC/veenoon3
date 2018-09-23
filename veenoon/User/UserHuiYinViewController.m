@@ -308,7 +308,7 @@
     
     _peoplePicker.hidden=YES;
     
-    [_processor._proxyObj controlWorkMode:@"标准发言"];
+    [_processor._proxyObj controlWorkMode:@"Work"];
 }
 
 - (void) yuyinjiliAction:(id)sender{
@@ -322,7 +322,7 @@
     
     _peoplePicker.hidden=YES;
     
-    [_processor._proxyObj controlWorkMode:@"语音激励"];
+    [_processor._proxyObj controlWorkMode:@"Speak"];
 }
 
 - (void) okAction:(id)sender{

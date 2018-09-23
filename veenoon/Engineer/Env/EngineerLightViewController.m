@@ -106,8 +106,9 @@
                      frame:CGRectZero];
     [self.view addSubview:_zengyiSlider];
     
-    //[_zengyiSlider setRoadImage:[UIImage imageNamed:@"e_v_slider_road.png"]];
-    [_zengyiSlider setIndicatorImage:[UIImage imageNamed:@"wireless_slide_s.png"]];
+    _zengyiSlider.indicatorImgS = [UIImage imageNamed:@"wireless_slide_light_s.png"];
+    _zengyiSlider.indicatorImgN = [UIImage imageNamed:@"wireless_slide_light_n.png"];
+    [_zengyiSlider setIndicatorImage:[UIImage imageNamed:@"wireless_slide_light_s.png"]];
     _zengyiSlider.topEdge = 90;
     _zengyiSlider.bottomEdge = 55;
     _zengyiSlider.maxValue = 100;

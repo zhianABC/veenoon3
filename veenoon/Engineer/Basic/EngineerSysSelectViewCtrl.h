@@ -9,6 +9,6 @@
 @interface EngineerSysSelectViewCtrl : UIViewController {
     
 }
-
+@property (nonatomic, strong) NSString *_localPrjName;
 
 @end

@@ -125,7 +125,10 @@
     {
         MeetingRoom *room = [DataCenter defaultDataCenter]._currentRoom;
         self._scenario = [[Scenario alloc] init];
-        self._scenario.regulus_id = room.regulus_id;
+        
+        if(room){
+            self._scenario.regulus_id = room.regulus_id;
+        }
         
         _isEditingScenario = NO;
         

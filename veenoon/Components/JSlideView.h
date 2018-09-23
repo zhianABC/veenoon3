@@ -13,6 +13,7 @@
 @optional
 - (void) didSliderValueChanged:(float)value object:(id)object;
 - (void) didSliderEndChanged:(id)object;
+- (void) didSliderMuteChanged:(BOOL)mute object:(id)object;
 
 @end
 
@@ -33,6 +34,7 @@
 @property (nonatomic, assign) float stepValue;
 
 @property (nonatomic, strong) id data;
+@property (nonatomic, assign) BOOL isUnLineStyle;
 
 - (id) initWithSliderBg:(UIImage*)sliderBg frame:(CGRect)frame;
 

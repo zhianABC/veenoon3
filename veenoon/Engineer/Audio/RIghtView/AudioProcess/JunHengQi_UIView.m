@@ -125,9 +125,7 @@
     }];
     
     IMP_BLOCK_SELF(JunHengQi_UIView);
-    
-    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
-    
+
     [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         UITextField *alValTxt = alertController.textFields.firstObject;
@@ -137,6 +135,8 @@
             [block_self doSetJHGainValue:[val floatValue]];
         }
     }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
     
     [self.ctrl presentViewController:alertController
                             animated:YES
@@ -157,7 +157,8 @@
         [btnJH setCircleValue:gtVal];
     }
     
-    jhGainLabel.text = [NSString stringWithFormat:@"%0.0f dB", val];
+    int gv = val;
+    jhGainLabel.text = [NSString stringWithFormat:@"%d dB", gv];
     
     if(_curIndex < [_peqRateArray count])
     {
@@ -197,12 +198,13 @@
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
     float k = (value *(_peqMax-_peqMin)) + _peqMin;
-    jhGainLabel.text = [NSString stringWithFormat:@"%0.0f dB", k];
+    int gv = k;
+    jhGainLabel.text = [NSString stringWithFormat:@"%d dB", gv];
     
     if(_curIndex < [_peqRateArray count])
     {
         id rateKey = [_peqRateArray objectAtIndex:_curIndex];
-        [_currentObj._proxyObj controlMixPEQ:[NSString stringWithFormat:@"%0.0f", k]
+        [_currentObj._proxyObj controlMixPEQ:[NSString stringWithFormat:@"%d", gv]
                                     withRate:rateKey];
     }
     
@@ -240,7 +242,8 @@
             f = fabsf(f);
             [btnJH setCircleValue:f];
             
-            jhGainLabel.text = [NSString stringWithFormat:@"%0.0f dB", gain];
+            int gv = gain;
+            jhGainLabel.text = [NSString stringWithFormat:@"%d dB", gv];
         }
     }
     
@@ -254,7 +257,8 @@
     {
         id rateKey = [_peqRateArray objectAtIndex:_curIndex];
 
-        [_currentObj._proxyObj controlMixPEQ:[NSString stringWithFormat:@"%0.0f", gain]
+        int gv = gain;
+        [_currentObj._proxyObj controlMixPEQ:[NSString stringWithFormat:@"%d", gv]
                                     withRate:rateKey];
         
         float highMax = (_peqMax - _peqMin);
@@ -264,7 +268,8 @@
             f = fabsf(f);
             [btnJH setCircleValue:f];
             
-            jhGainLabel.text = [NSString stringWithFormat:@"%0.0f dB", gain];
+            
+            jhGainLabel.text = [NSString stringWithFormat:@"%d dB", gv];
         }
     }
 }

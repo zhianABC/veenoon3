@@ -91,7 +91,7 @@
     
     [UMConfigure initWithAppkey:UMENG_KEY channel:nil];
     [MobClick setScenarioType:E_UM_NORMAL];
-    [MobClick setCrashReportEnabled:YES];
+    [MobClick setCrashReportEnabled:NO];
     
     return YES;
 }

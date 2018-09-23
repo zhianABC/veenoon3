@@ -39,6 +39,8 @@ static DataCenter *_globalDataInstanse;
 @synthesize _cpFeedback;
 @synthesize _cpElecLevel;
 
+@synthesize _isLocalPrj;
+
 
 + (DataCenter*)defaultDataCenter{
 	

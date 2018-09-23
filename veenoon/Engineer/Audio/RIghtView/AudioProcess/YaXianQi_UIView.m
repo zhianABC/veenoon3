@@ -400,8 +400,6 @@
     
     IMP_BLOCK_SELF(YaXianQi_UIView);
 
-    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
-    
     [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         UITextField *alValTxt = alertController.textFields.firstObject;
@@ -411,6 +409,8 @@
             [block_self doSetGainValue:[val intValue]];
         }
     }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
     
     [self.ctrl presentViewController:alertController animated:true completion:nil];
 }
@@ -446,9 +446,7 @@
     }];
     
     IMP_BLOCK_SELF(YaXianQi_UIView);
-    
-    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
-    
+
     [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         UITextField *alValTxt = alertController.textFields.firstObject;
@@ -458,6 +456,9 @@
             [block_self doSetQValue:[val intValue]];
         }
     }]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
     
     [self.ctrl presentViewController:alertController animated:true completion:nil];
 }
@@ -496,8 +497,6 @@
     
     IMP_BLOCK_SELF(YaXianQi_UIView);
     
-    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
-    
     [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         UITextField *alValTxt = alertController.textFields.firstObject;
@@ -507,6 +506,8 @@
             [block_self doSetSTValue:[val intValue]];
         }
     }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
     
     [self.ctrl presentViewController:alertController animated:true completion:nil];
 }
@@ -544,8 +545,6 @@
     
     IMP_BLOCK_SELF(YaXianQi_UIView);
     
-    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
-    
     [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         UITextField *alValTxt = alertController.textFields.firstObject;
@@ -555,6 +554,8 @@
             [block_self doSetRTValue:[val intValue]];
         }
     }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
     
     [self.ctrl presentViewController:alertController animated:true completion:nil];
 }

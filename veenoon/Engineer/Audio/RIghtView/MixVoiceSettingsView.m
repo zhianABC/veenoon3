@@ -326,7 +326,6 @@
         [biaozhunfayanBtn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
         
         [_currentObj._proxyObj controlWorkMode:@"Speak"];
-        
     }
     else
     {
@@ -336,9 +335,6 @@
         
         [_currentObj._proxyObj controlWorkMode:@"Work"];
     }
-    
-    
-    
 }
 - (void) yinpinchuliAction:(id)sender{
     
@@ -370,7 +366,6 @@
     _shexiangxieyiBtn.clipsToBounds = YES;
     _shexiangxieyiBtn.layer.cornerRadius = 5;
     [_shexiangzhuizongView addSubview:_shexiangxieyiBtn];
-    [_shexiangxieyiBtn addTarget:self action:@selector(shexiangxieyiAction:) forControlEvents:UIControlEventTouchUpInside];
     _shexiangxieyiBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     
     
