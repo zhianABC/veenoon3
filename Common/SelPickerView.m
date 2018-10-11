@@ -227,7 +227,8 @@
     NSDictionary *section = [_pickerDataArray objectAtIndex:component];
     
     CGFloat componentWidth = [[section objectForKey:@"width"] floatValue];
-    
+    if(componentWidth <= 0)
+        componentWidth = 320;
     NSArray *values = [section objectForKey:@"values"];
 
     UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, componentWidth, 50)];
