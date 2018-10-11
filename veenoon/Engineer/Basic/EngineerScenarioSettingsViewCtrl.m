@@ -347,19 +347,23 @@
     _doneBtn.hidden = YES;
     editBtn.hidden = NO;
     
-    for(UIButton *btn in _deleteCells)
+    if([_deleteCells count])
     {
-        [btn removeFromSuperview];
+        for(UIButton *btn in _deleteCells)
+        {
+            [btn removeFromSuperview];
+        }
+        
+        [_deleteCells removeAllObjects];
+        
+        
+        [self layoutScenarios];
     }
-    
-    [_deleteCells removeAllObjects];
-    
-    
-    [self layoutScenarios];
     
 }
 
 -(void) editAction:(id)sender {
+    
     if(_isEditMode)
         return;
     _isEditMode = YES;

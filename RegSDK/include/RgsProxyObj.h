@@ -44,4 +44,16 @@
  */
 @property NSString * classify;
 
+
+/*!
+ 所属区域id
+ */
+@property NSInteger area_id;
+
+/*!
+ 所属区域名称
+ */
+@property NSString * location;
+
+
 @end

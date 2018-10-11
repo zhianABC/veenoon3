@@ -33,6 +33,7 @@
 #import "RgsProxyStateInfo.h"
 #import "RgsSystemInfo.h"
 #import "RgsUpdatePacketInfo.h"
+#import "RgsAutomationObj.h"
 
 
 @protocol RegulusSDKDelegate <NSObject>
@@ -885,7 +886,7 @@
 
 /*!
  @since 3.15.1
- @brief 请求代理关联代理
+ @brief 新建工程
  @param author 工程创建者
  @param hardware 设备类型，由GetLocalProjectHardware获取
  @param completion 成功返回YES 失败返回NO
@@ -936,7 +937,7 @@
  @param name 工程名字
  @param completion 成功返回YES 失败返回NO
  */
--(void)ImportProjectFromLocal:(NSString *)name completion:(void (^)(BOOL result, NSError * error))completion;
+-(void)ImportProjectFromLocal:(NSString *)name completion:(void (^)(BOOL, NSError *))completion;
 
 /*!
  @since 3.15.1
@@ -944,7 +945,7 @@
  @param name 保存的工程名字
  @param completion 成功返回YES 失败返回NO
  */
--(void)ExportProjectToLocal:(NSString *)name completion:(void (^)(BOOL result, NSError * error))completion;
+-(void)ExportProjectToLocal:(NSString *)name completion:(void (^)(BOOL, NSError *))completion;
 
 /*!
  @since 3.15.1
@@ -966,7 +967,123 @@
  @since 3.15.1
  @brief 获取当前登录的模式
  */
--(RgsLoginStatus) GetLoginModel;
+-(RgsLoginStatus)GetLoginModel;
+
+
+/*!
+ @since 3.16.1
+ @brief 创建自动化
+ @param name 名称
+ @param img 图标
+ @param iftype 条件组合类型 或、与
+ @param ifthis 自动化条件
+ @param thenthat 动作
+ @param completion      回调block 正常时返回YES 返回RgsAutomationPbj
+ @see RgsAutomationPbj
+ */
+-(void)CreateAutomation:(NSString *)name
+                    img:(NSString *)img
+                   iftype:(RgsCondIfType)iftype
+                 ifthis:(NSArray<RgsSceneOperation *> *)ifthis
+               thenthat:(NSArray<RgsSceneOperation *> *)thenthat
+             completion:(void(^)(BOOL result,RgsAutomationObj * auto_obj ,NSError * error)) completion;
+
+/*!
+ @since 3.16.1
+ @brief 修改自动化
+ @param auto_id 自动化ID
+ @param name 名称
+ @param img 图标
+ @param iftype 条件组合类型 或、与
+ @param ifthis 自动化条件
+ @param thenthat 动作
+ @param completion      回调block 正常时返回YES 返回RgsAutomationPbj
+ @see RgsAutomationPbj
+ */
+-(void)SetAutomation:(NSInteger)auto_id
+                name:(NSString *)name
+                 img:(NSString *)img
+              iftype:(RgsCondIfType)iftype
+              ifthis:(NSArray<RgsSceneOperation *> *)ifthis
+            thenthat:(NSArray<RgsSceneOperation *> *)thenthat
+             completion:(void(^)(BOOL result,RgsAutomationObj * auto_obj ,NSError * error)) completion;
+
+/*!
+ @since 3.16.1
+ @brief 获取所有自动化结构
+ @param completion      回调block 正常时返回YES 返回RgsAutomationPbj列表
+ @see RgsAutomationPbj
+ */
+-(void)GetAutomation:(void(^)(BOOL result,NSArray <RgsAutomationObj *> * auto_objs,NSError * error)) completion;
+
+/*!
+ @since 3.16.1
+ @brief 删除自动化结构
+ @param auto_id 自动化ID
+ @param completion      回调block 正常时返回YES
+ @see RgsAutomationPbj
+ */
+-(void)DelAutomation:(NSInteger)auto_id completion:(void(^)(BOOL result,NSError * error)) completion;
+
+/*!
+ @since 3.16.1
+ @brief 获取自动化触发条件
+ @param auto_id 自动化ID
+ @param completion      回调block 正常时返回YES 返回RgsSceneOperation列表
+ @see RgsSceneOperation
+ */
+-(void)GetAutomationIf:(NSInteger)auto_id completion:(void(^)(BOOL result,NSArray <RgsSceneOperation *>* if_this,NSError * error)) completion;
+
+/*!
+ @since 3.16.1
+ @brief 获取自动化动作
+ @param auto_id 自动化ID
+ @param completion      回调block 正常时返回YES 返回RgsSceneOperation列表
+ @see RgsSceneOperation
+ */
+-(void)GetAutomationThen:(NSInteger)auto_id completion:(void(^)(BOOL result,NSArray <RgsSceneOperation *>* then_that,NSError * error)) completion;
+
+
+
+
+
+/*!
+ @since 3.16.1
+ @brief 根据类型查询区域代理
+ @param area_id    区域ID
+ @param type 代理类型
+ @param completion      回调block 正常时返回YES proxys:RgsProxyObj列表
+ @see RgsProxyObj
+ */
+-(void)GetAreaProxysByType:(NSInteger)area_id type:(NSString *)type completion:(void(^)(BOOL result,NSArray * proxys,NSError * error)) completion;
+
+/*!
+ @since 3.16.1
+ @brief 新建用户场景
+ @param name 名称
+ @param img 图标
+ @param operations 场景动作
+ @param completion      回调block 正常时返回YES
+ @see RgsSceneObj
+ */
+-(void)CreateUserScene:(NSString *)name img:(NSString * )img
+            operations:(NSArray<RgsSceneOperation *> *)operations
+            completion:(void(^)(BOOL result,RgsSceneObj * scene_obj ,NSError * error)) completion;
+
+/*!
+ @since 3.16.1
+ @brief 修改用户场景
+ @param scene_id 场景ID
+ @param name 名称
+ @param img 图标
+ @param operations 场景动作
+ @param completion      回调block 正常时返回YES
+ @see RgsSceneObj
+ */
+-(void)SetUserScene:(NSInteger)scene_id name:(NSString *)name
+            img:(NSString *)img
+     operations:(NSArray<RgsSceneOperation *> *)operations
+     completion:(void(^)(BOOL result,RgsSceneObj * scene_obj ,NSError * error)) completion;
 
 @end
 

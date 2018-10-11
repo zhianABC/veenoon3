@@ -142,7 +142,7 @@ static DataSync* dSyncInstance = nil;
     
     if(_currentReglusLogged)
     {
-        /*
+        
         NSString *regulus_gateway_id = [_currentReglusLogged objectForKey:@"gw_id"];
         NSString *regulus_user_id = [_currentReglusLogged objectForKey:@"user_id"];
         
@@ -150,9 +150,9 @@ static DataSync* dSyncInstance = nil;
         {
             [[RegulusSDK sharedRegulusSDK] Logout:nil];
             
-            //[DataSync sharedDataSync]._currentReglusLogged = nil;
+            [DataSync sharedDataSync]._currentReglusLogged = nil;
         }
-         */
+         
         
         
     }

@@ -94,6 +94,12 @@ typedef NS_ENUM(NSInteger,RgsNotifyStatus){
     RGS_NOTIFY_STATUS_TIMEOUT,
 };
 
+typedef NS_ENUM(NSInteger,RgsCondIfType)
+{
+    RGS_COND_IF_TYPE_OR = 0,
+    RGS_COND_IF_TYPE_AND,
+};
+
 
 @interface RgsConstants:NSObject
 @end
