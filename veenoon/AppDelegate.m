@@ -18,6 +18,7 @@
 #import "InvitationCodeViewCotroller.h"
 #import <UMCommon/UMCommon.h>
 #import <UMAnalytics/MobClick.h>
+#import "KVNProgress.h"
 
 @interface AppDelegate () <RegulusSDKDelegate>
 {
@@ -176,6 +177,44 @@
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"Notify_Study_IR"
                                                             object:dic];
+    }
+}
+
+-(void) onUploadProject:(RgsNotifyStatus) status persent:(CGFloat)persent error:(NSError *)error{
+    
+    //NSLog(@"%f - %d", persent, status);
+    
+    if(status == RGS_NOTIFY_STATUS_DONE)
+    {
+        [KVNProgress showSuccess];
+    }
+    else if(status != RGS_NOTIFY_STATUS_START)
+    {
+        [KVNProgress dismiss];
+    }
+}
+
+-(void) onExportProject:(RgsNotifyStatus) status{
+    
+    if(status == RGS_NOTIFY_STATUS_DONE)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"Notify_Export_Done"
+                                                            object:nil];
+    }
+    else if(status != RGS_NOTIFY_STATUS_START)
+    {
+        [KVNProgress dismiss];
+    }
+}
+-(void) onImportProject:(RgsNotifyStatus) status{
+    
+    if(status == RGS_NOTIFY_STATUS_DONE)
+    {
+        [KVNProgress showSuccessWithStatus:@"已导入"];
+    }
+    else if(status != RGS_NOTIFY_STATUS_START)
+    {
+        [KVNProgress dismiss];
     }
 }
 

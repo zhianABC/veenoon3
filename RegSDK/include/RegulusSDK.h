@@ -937,7 +937,7 @@
  @param name 工程名字
  @param completion 成功返回YES 失败返回NO
  */
--(void)ImportProjectFromLocal:(NSString *)name completion:(void (^)(BOOL, NSError *))completion;
+-(void)ImportProjectFromLocal:(NSString *)name completion:(void (^)(BOOL result,NSError * error))completion;
 
 /*!
  @since 3.15.1
@@ -945,7 +945,7 @@
  @param name 保存的工程名字
  @param completion 成功返回YES 失败返回NO
  */
--(void)ExportProjectToLocal:(NSString *)name completion:(void (^)(BOOL, NSError *))completion;
+-(void)ExportProjectToLocal:(NSString *)name completion:(void (^)(BOOL result,NSError * error))completion;
 
 /*!
  @since 3.15.1

@@ -43,6 +43,8 @@
     NSMutableArray *_deleteCells;
     
     BOOL _isSaved;
+    
+    WebClient *_client;
 }
 @property (nonatomic, strong) NSMutableArray *_sBtns;
 @property (nonatomic, strong) NSMutableDictionary *_map;
@@ -260,6 +262,13 @@
                                              selector:@selector(notifyReloadScenario:)
                                                  name:@"Notify_Reload_Senario"
                                                object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(uploadRpFile:)
+                                                 name:@"Notify_Export_Done"
+                                               object:nil];
+    
+    
 }
 
 - (void) checkArea{
@@ -337,7 +346,68 @@
 //TODO: 上传到云端备份
 - (void) uploadAction:(id)sender{
     
+    [KVNProgress show];
     
+    [[RegulusSDK sharedRegulusSDK] ExportProjectToLocal:[NSString stringWithFormat:@"%@",self.regulus_id]
+                                             completion:^(BOOL result,NSError * error) {
+                                                 
+                                             }];
+
+    
+    
+    
+    
+}
+
+- (void) uploadRpFile:(id)sender{
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *dir = [documentsDirectory stringByAppendingPathComponent:@"Project"];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    if(![fileManager fileExistsAtPath:dir]){
+        [fileManager createDirectoryAtPath:dir withIntermediateDirectories:NO attributes:nil error:nil];
+    }
+    
+    NSString *filename = [NSString stringWithFormat:@"%@.rp",self.regulus_id];
+    NSString *filePath = [dir stringByAppendingPathComponent:filename];
+    
+   if(![fileManager fileExistsAtPath:filePath])
+   {
+       [KVNProgress showErrorWithStatus:@"未导出工程文件"];
+       return;
+   }
+    
+    NSData *data = [NSData dataWithContentsOfFile:filePath];
+    
+    NSMutableDictionary *param = [NSMutableDictionary dictionary];
+    [param setObject:@"project" forKey:@"type"];
+    [param setObject:self.regulus_id forKey:@"regulus_id"];
+    
+    [KVNProgress showWithStatus:@"云备份"];
+    
+    if(_client == nil)
+    {
+        _client = [[WebClient alloc] initWithDelegate:self];
+    }
+    
+    _client._method = @"/uploadprojectfile";
+    _client._httpMethod = @"POST";
+    
+    _client._requestParam = param;
+    
+    [param setObject:@"file" forKey:@"filename"];
+    [param setObject:data forKey:@"photo"];
+    
+    [_client requestWithSusessBlockWithImage:^(id lParam, id rParam) {
+        
+        [KVNProgress showSuccess];
+        
+    } FailBlock:^(id lParam, id rParam) {
+        
+        [KVNProgress dismiss];
+    }];
 }
 
 - (void) doneAction:(id)sender{
