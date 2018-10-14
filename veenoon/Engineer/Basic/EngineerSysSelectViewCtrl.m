@@ -83,7 +83,7 @@
         forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *newSysBtn = [UIButton buttonWithColor:[UIColor whiteColor] selColor:LINE_COLOR];
-    newSysBtn.frame = CGRectMake(SCREEN_WIDTH/2 - 180, SCREEN_HEIGHT/2 - 80, 360, 44);
+    newSysBtn.frame = CGRectMake(SCREEN_WIDTH/2 - 180, SCREEN_HEIGHT/2 - 20, 360, 44);
     newSysBtn.layer.cornerRadius = 8;
     newSysBtn.clipsToBounds = YES;
     [self.view addSubview:newSysBtn];
@@ -96,7 +96,7 @@
     forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *linkSysBtn = [UIButton buttonWithColor:nil selColor:[UIColor whiteColor]];
-    linkSysBtn.frame = CGRectMake(SCREEN_WIDTH/2 - 180, SCREEN_HEIGHT/2 +20, 360, 44);
+    linkSysBtn.frame = CGRectMake(SCREEN_WIDTH/2 - 180, SCREEN_HEIGHT/2 +60, 360, 44);
     linkSysBtn.layer.cornerRadius = 8;
     linkSysBtn.layer.borderWidth = 1;
     linkSysBtn.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -115,26 +115,20 @@
     if(!isLocal)
     {
         
-        linkSysBtn.center = CGPointMake(newSysBtn.center.x, SCREEN_HEIGHT/2);
-        newSysBtn.center = CGPointMake(newSysBtn.center.x, CGRectGetMidY(linkSysBtn.frame) - 100);
+        linkSysBtn.center = CGPointMake(newSysBtn.center.x, SCREEN_HEIGHT/2+20);
+        newSysBtn.center = CGPointMake(newSysBtn.center.x, CGRectGetMidY(linkSysBtn.frame) - 80);
         
-        UIButton *importSysBtn = [UIButton buttonWithColor:nil selColor:[UIColor whiteColor]];
-        importSysBtn.frame = CGRectMake(SCREEN_WIDTH/2 - 180, SCREEN_HEIGHT/2 +20, 360, 44);
-        importSysBtn.layer.cornerRadius = 8;
-        importSysBtn.layer.borderWidth = 1;
-        importSysBtn.layer.borderColor = [UIColor whiteColor].CGColor;
-        importSysBtn.clipsToBounds = YES;
+        UIButton *importSysBtn = [UIButton buttonWithColor:nil selColor:nil];
+        importSysBtn.frame = CGRectMake(SCREEN_WIDTH - 220, 80, 200, 44);
         [self.view addSubview:importSysBtn];
-        [importSysBtn setTitle:@"导入离线系统" forState:UIControlStateNormal];
+        [importSysBtn setTitle:@"载入离线配置" forState:UIControlStateNormal];
         [importSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [importSysBtn setTitleColor:ADMIN_BLACK_COLOR forState:UIControlStateHighlighted];
+        [importSysBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
         importSysBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
         
         [importSysBtn addTarget:self
                        action:@selector(importSysAction:)
              forControlEvents:UIControlEventTouchUpInside];
-        
-        importSysBtn.center = CGPointMake(newSysBtn.center.x, CGRectGetMidY(linkSysBtn.frame)+100);
     }
 
   
