@@ -46,9 +46,28 @@
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(notifyConnectionsLoad:) name:@"Notify_Connections_Loaded"
                                                    object:nil];
+        
+        [[NSNotificationCenter defaultCenter]
+         addObserver:self
+         selector:@selector(onStateChange:)
+         name:@"RgsDeviceNotify"
+         object:nil];
+        
         [self reloadConnects];
     }
     return self;
+}
+
+-(void)onStateChange:(NSNotification *)notify
+{
+    
+    //TODO: 处理温度/湿度/PM2.5的刷新
+    RgsDeviceNoteObj * dev_notify = notify.object;
+    if (1/*dev_notify.device_id == _proxy_id*/) {
+        
+        //dev_notify.param
+        
+    }
 }
 
 - (void) notifyConnectionsLoad:(id)sender{
@@ -219,10 +238,6 @@
         }
         
     }];
-    
-    
-    
-    
     
 //    NSString *state = [dataDic objectForKey:@"state"];
 //    if ([state isEqualToString:@"True"]) {

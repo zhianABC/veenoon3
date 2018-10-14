@@ -202,7 +202,7 @@
     float width = [[section objectForKey:@"width"] floatValue];
     if(width <= 0)
     {
-        width = self.frame.size.width;
+        width = pickerView.frame.size.width;
     }
     
     return width;

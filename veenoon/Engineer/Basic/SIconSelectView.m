@@ -36,22 +36,22 @@
     self._icondata = @[@{@"title":@"环境照明",@"icon":@"ce_l_01.png",
                          @"iconbig":@"senario_02_03.png",
                          @"icon_user":@"senario_02_03_big.png",
-                         @"en_name":@"Ambient lighting"
+                         @"en_name":@"Lighting"
                          },
                        @{@"title":@"环境控制",@"icon":@"ce_l_02.png",
                          @"iconbig":@"senario_02_07.png",
                          @"icon_user":@"senario_02_07_big.png",
-                         @"en_name":@"Environmental control"
+                         @"en_name":@"Environmental"
                          },
                        @{@"title":@"宾客接待",@"icon":@"ce_l_03.png",
                          @"iconbig":@"senario_02_11.png",
                          @"icon_user":@"senario_02_11_big.png",
-                         @"en_name":@"Guests reception"
+                         @"en_name":@"Guest reception"
                          },
                        @{@"title":@"专业培训",@"icon":@"ce_l_04.png",
                          @"iconbig":@"senario_02_15.png",
                          @"icon_user":@"senario_02_15_big.png",
-                         @"en_name":@"Training"
+                         @"en_name":@"Professional"
                          },
                        @{@"title":@"讨论会议",@"icon":@"ce_l_05.png",
                          @"iconbig":@"senario_02_18.png",
