@@ -63,7 +63,7 @@
     
     //TODO: 处理温度/湿度/PM2.5的刷新
     RgsDeviceNoteObj * dev_notify = notify.object;
-    if (/*dev_notify.device_id == _proxy_id*/) {
+    if (1/*dev_notify.device_id == _proxy_id*/) {
         
         //dev_notify.param
         
