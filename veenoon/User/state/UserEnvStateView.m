@@ -13,6 +13,7 @@
 @interface UserEnvStateView () <UITableViewDelegate, UITableViewDataSource>
 {
     UITableView *_tableView;
+    NSMutableArray *_currentDeviceArray;
 }
 @end
 
@@ -30,6 +31,12 @@
         self._dataArray = dataArray;
         
         self.backgroundColor = [UIColor clearColor];
+        
+        if ([_currentDeviceArray count]) {
+            [_currentDeviceArray removeAllObjects];
+        } else {
+            _currentDeviceArray = [NSMutableArray array];
+        }
         
         int top = 20;
         
@@ -63,10 +70,19 @@
     
     //TODO: 处理温度/湿度/PM2.5的刷新
     RgsDeviceNoteObj * dev_notify = notify.object;
-    if (1/*dev_notify.device_id == _proxy_id*/) {
-        
-        //dev_notify.param
-        
+    NSString *notfiyDeviceID = [NSString stringWithFormat:@"%d", (int) dev_notify.device_id];
+    NSString *notifyValue = [dev_notify.param objectForKey:@"value"];
+    for (NSMutableDictionary *dataDic in _currentDeviceArray) {
+        NSString *idStr = [dataDic objectForKey:@"id"];
+        if ([notfiyDeviceID isEqualToString:idStr]) {
+            NSString *danwei = [dataDic objectForKey:@"danwei"];
+            UILabel *valueL = [dataDic objectForKey:@"label"];
+            
+            
+            valueL.text = [notifyValue stringByAppendingString:danwei];
+            
+            break;
+        }
     }
 }
 
@@ -231,8 +247,16 @@
             
             [[RegulusSDK sharedRegulusSDK] GetProxyCurState:proxy.m_id completion:^(BOOL result, NSDictionary *state, NSError *error) {
                 
-                if([state count])
+                if([state count]) {
                     valueL.text = [[state objectForKey:@"value"] stringByAppendingString:danwei];
+                    NSMutableDictionary *dataDic = [NSMutableDictionary dictionary];
+                    [dataDic setObject:valueL forKey:@"label"];
+                    [dataDic setObject:danwei forKey:@"danwei"];
+                    NSString *idStr = [NSString stringWithFormat:@"%d", (int)proxy.m_id];
+                    [dataDic setObject:idStr forKey:@"id"];
+                    
+                    [_currentDeviceArray addObject:dataDic];
+                }
                 
             }];
         }
