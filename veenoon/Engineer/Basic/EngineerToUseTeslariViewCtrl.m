@@ -17,6 +17,7 @@
 #import "EngineerPresetScenarioViewCtrl.h"
 #import "DataCenter.h"
 #import "KVNProgress.h"
+#import "AirQualityPlug.h"
 
 @interface EngineerToUseTeslariViewCtrl () <UITableViewDelegate, UITableViewDataSource> {
     
@@ -718,8 +719,8 @@
     _propertyView._plugDriver = data;
     
     // if 空气质量,refresh label
-    if ([other_air_quality isEqualToString:[data deviceName]]) {
-        _propertyView._isAirQuality = YES;
+    if ([data isKindOfClass:[AirQualityPlug class]]) {
+        _propertyView._isAirQuality = NO;
         [_propertyView refreshLabelToAirQuality];
     } else {
         _propertyView._isAirQuality = NO;
