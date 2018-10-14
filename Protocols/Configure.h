@@ -237,19 +237,25 @@ static inline NSMutableData* internalPreparePOSTData(NSDictionary*param, BOOL en
 ////////////////////// insert image ///////////////////////////////////
 static inline NSData* prepareUploadData(NSMutableDictionary *info, float quality)
 {
-    UIImage *image = [info objectForKey:@"photo"];
-    if(image==nil){
-		return internalPreparePOSTData(info, YES);
-	}
+    id image = [info objectForKey:@"photo"];
     
-	float q = quality;
-	
-	
-    NSData *data = UIImageJPEGRepresentation(image, q);
-	
-	//NSLog(@"%d", [data bytes]);
-	
+    NSData *data = nil;
     NSString *content_type = @"image/jpg";
+    if([image isKindOfClass:[UIImage class]])
+    {
+        if(image==nil){
+            return internalPreparePOSTData(info, YES);
+        }
+        
+        float q = quality;
+        data = UIImageJPEGRepresentation(image, q);
+    }
+	else
+    {
+        data = image;
+        content_type = @"text/xml";
+
+    }
     
     [info removeObjectForKey:@"photo"];
     [info removeObjectForKey:@"quality"];
@@ -267,12 +273,6 @@ static inline NSData* prepareUploadData(NSMutableDictionary *info, float quality
 	
 	
     [cooked appendData:[filename_str dataUsingEncoding:NSUTF8StringEncoding]];
-	
-
-//	NSString *string = [[NSString alloc] initWithData:cooked encoding:NSUTF8StringEncoding];
-//	NSLog(@"cooked = %@", string);
-//	[string release];
-	
     [cooked appendData:data];    
     
     NSString *endmark = [NSString stringWithFormat: @"\r\n--%@--", POSTDataSeparator];

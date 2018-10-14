@@ -7,8 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ASIHTTPRequest.h"
-
 
 @protocol HttpFileGetterDelegate
 
@@ -22,34 +20,29 @@
 @interface HttpFileGetter : NSObject {
 	NSURLConnection    *connection;
 	NSMutableData      *characterBuffer;
+	
 	BOOL               done;
 	
 	NSString		  *url_;
 	NSThread		  *_subThreed;
 	
-	id				delegate_;
 	BOOL			bLoading_;
 	UIImage			*photo;
 	
-	long long				total_;
-	long long				received_;
+	long long		total_;
+	long long		received_;
 	NSString		*fileName_;
-	
-	id  targetUpdate;
     
     BOOL isCancel;
-    
-    ASIHTTPRequest *_request;
 	
 }
-@property (nonatomic, retain) NSURLConnection		*connection;
-@property (nonatomic, retain) NSMutableData			*characterBuffer;
-//@property (nonatomic, assign) NSAutoreleasePool		*uploadPool;
-@property (nonatomic, retain) NSString				*url_;
-@property (nonatomic, retain) UIImage				*photo;
-@property (nonatomic, assign) id <HttpFileGetterDelegate> delegate_;
-@property (nonatomic, retain) NSString				*fileName_;
-@property (nonatomic, assign) id targetUpdate;
+@property (nonatomic, strong) NSURLConnection		*connection;
+@property (nonatomic, strong) NSMutableData			*characterBuffer;
+@property (nonatomic, strong) NSString				*url_;
+@property (nonatomic, strong) UIImage				*photo;
+@property (nonatomic, weak) id                       delegate_;
+@property (nonatomic, strong) NSString				*fileSavedPath;
+@property (nonatomic, weak) id targetUpdate;
 
 
 /*****************************************

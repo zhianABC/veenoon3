@@ -23,13 +23,14 @@
 #import "SelPickerView.h"
 #import "JCActionView.h"
 #import "AppDelegate.h"
+#import "HttpFileGetter.h"
 
 #ifdef OPEN_REG_LIB_DEF
 #import "RegulusSDK.h"
 
 #endif
 
-@interface EngineerSysSelectViewCtrl ()<UIScrollViewDelegate,JCActionViewDelegate>{
+@interface EngineerSysSelectViewCtrl ()<UIScrollViewDelegate,JCActionViewDelegate, HttpFileGetterDelegate>{
     
     EngineerDNSSettingView *_dnsView;
     EngineerPortSettingView *_portView;
@@ -43,6 +44,8 @@
     UIImageView *_aniWaitDialog;
     
     WebClient *_client;
+    
+    HttpFileGetter *_downloader;
 }
 @property (nonatomic, strong) NSMutableArray *_sceneDrivers;
 @property (nonatomic, strong) NSArray *_scenes;
@@ -215,7 +218,57 @@
 
 - (void) importFromCloud{
     
+    MeetingRoom *room = [DataCenter defaultDataCenter]._currentRoom;
+    if(room)
+    {
+        if(_downloader == nil)
+       {
+           _downloader = [[HttpFileGetter alloc] init];
+           _downloader.delegate_ = self;
+       }
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        NSString *dir = [documentsDirectory stringByAppendingPathComponent:@"Project"];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        
+        if(![fileManager fileExistsAtPath:dir]){
+            [fileManager createDirectoryAtPath:dir withIntermediateDirectories:NO attributes:nil error:nil];
+        }
+        
+        NSString *filename = [NSString stringWithFormat:@"%@.rp",room.regulus_id];
+        NSString *filePath = [dir stringByAppendingPathComponent:filename];
+        
+        NSString *url = [NSString stringWithFormat:@"%@/projectfile/%@", WEB_API_URL, filename];
+        
+        _downloader.fileSavedPath = filePath;
+        
+        [KVNProgress show];
+        [_downloader startLoading:url];
+        
+    }
+
     
+    
+}
+
+- (void) didEndLoadingFile:(id)object success:(BOOL)success{
+    
+    [KVNProgress dismiss];
+    if(success)
+    {
+        [KVNProgress showSuccess];
+        MeetingRoom *room = [DataCenter defaultDataCenter]._currentRoom;
+        NSString *filename = [NSString stringWithFormat:@"%@",room.regulus_id];
+        
+        [KVNProgress showWithStatus:@"正在导入"];
+        [[RegulusSDK sharedRegulusSDK] ImportProjectFromLocal:filename
+                                                   completion:^(BOOL result, NSError *error) {
+                                                       
+                                                       //[KVNProgress showSuccessWithStatus:@"已导入"];
+                                                       
+                                                   }];
+    }
 }
 
 - (void) importFromUSB{
@@ -266,9 +319,12 @@
 - (void) didPickUSBProjectName:(NSDictionary*)values{
     
     NSString *prjName = [values objectForKey:@0];
+    
+    [KVNProgress showWithStatus:@"正在导入"];
+    
     [[RegulusSDK sharedRegulusSDK] ImportProjectFromUdisc:prjName completion:^(BOOL result, NSError *error) {
         
-        [KVNProgress showSuccessWithStatus:@"已导入"];
+        //[KVNProgress showSuccessWithStatus:@"已导入"];
         
     }];
 }
@@ -325,10 +381,13 @@
 - (void) didPickProjectName:(NSDictionary*)values{
     
     NSString *prjName = [values objectForKey:@0];
+    
+    [KVNProgress showWithStatus:@"正在导入"];
+    
     [[RegulusSDK sharedRegulusSDK] ImportProjectFromLocal:prjName
                                                completion:^(BOOL result, NSError *error) {
                                                    
-                                                   [KVNProgress showWithStatus:@"已导入"];
+                                                   
                                                    
                                                }];
 }

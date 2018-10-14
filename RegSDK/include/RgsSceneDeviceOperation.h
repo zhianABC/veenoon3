@@ -36,6 +36,18 @@
  操作描述 3.9.1
  */
 @property NSString * descripe;
+
+
+/*!
+ 设备名称
+ */
+@property NSString * name;
+
+/*!
+ 所在位置
+ */
+@property NSString * location;
+
 @end
 
 /*!
@@ -49,6 +61,7 @@ typedef NS_ENUM(NSInteger,RgsCondType)
     RGS_COND_TYPE_GE,       // >=
     RGS_COND_TYPE_LE,       // <=
     RGS_COND_TYPE_NE,       // !=
+    RGS_COND_TYPE_CONTAIN   //包含
 };
 
 /*!
@@ -74,11 +87,30 @@ typedef NS_ENUM(NSInteger,RgsCondType)
  */
 @property NSString * state_value;
 
+
+/*!
+ 操作描述
+ */
+@property NSString * descripe;
+
+
+/*!
+ 设备名称
+ */
+@property NSString * name;
+
+/*!
+ 所在位置
+ */
+@property NSString * location;
+
 /*!
  条件下的操作列表
  @see RgsSceneOperation
  */
 @property NSArray * operations;
+
+
 
 /*!
  @since 3.0.0
@@ -138,6 +170,11 @@ typedef NS_ENUM(NSInteger,RgsCondType)
  @brief 设置描述
  */
 -(void)set_descripe:(NSString *)descripe;
+
+
+-(void)set_location:(NSString *)location;
+
+-(void)set_name:(NSString *)name;
 @end
 
 

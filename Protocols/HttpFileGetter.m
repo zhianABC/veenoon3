@@ -15,21 +15,17 @@
 @synthesize url_;
 @synthesize delegate_;
 @synthesize photo;
-@synthesize fileName_;
+@synthesize fileSavedPath;
 @synthesize targetUpdate;
 
 - (void)httpConnectStart {
     NSAssert2([NSThread isMainThread], @"%s at line %d called on secondary thread", __FUNCTION__, __LINE__);
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
-    
-    [UIApplication sharedApplication].idleTimerDisabled = YES;
 }
 - (void)httpConnectEnd {
     NSAssert2([NSThread isMainThread], @"%s at line %d called on secondary thread", __FUNCTION__, __LINE__);
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-
 	
-    [UIApplication sharedApplication].idleTimerDisabled = NO;
 	//bLoading_ = NO;
 }
 
@@ -41,12 +37,14 @@
 	if([characterBuffer length] >= total_){
 		
 		NSData* imageData = [characterBuffer copy];
-		NSArray* paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-		NSString* cachesDirectory = [paths objectAtIndex:0];
-		NSString* fullPathToFile = [cachesDirectory stringByAppendingPathComponent:fileName_];
-		[imageData writeToFile:fullPathToFile atomically:NO];
+        NSFileManager *fm = [NSFileManager defaultManager];
+        if([fm fileExistsAtPath:fileSavedPath])
+        {
+            [fm removeItemAtPath:fileSavedPath error:nil];
+        }
         
-        [imageData release];
+		[imageData writeToFile:fileSavedPath atomically:YES];
+        
 		
         if(delegate_ && [delegate_ respondsToSelector:@selector(didEndLoadingFile:success:)]){
             [delegate_ didEndLoadingFile:self success:YES];
@@ -65,7 +63,7 @@
 	
 	_subThreed = [NSThread currentThread];
 	
-	//self.uploadPool = [[NSAutoreleasePool alloc] init];
+	
 	self.characterBuffer = [NSMutableData data];
 	done = NO;
 	
@@ -100,9 +98,7 @@
 	
     // Release resources used only in this thread.
    
-    //[uploadPool release];
-   // self.uploadPool = nil;
-	
+   
 	_subThreed = nil;
 	
 	bLoading_ = NO;
@@ -110,6 +106,9 @@
 	
 }
 - (void) startLoading:(NSString*) url{
+    
+    if(bLoading_)
+        return;
 	
 	if(url == nil){
 		NSLog(@"Error: nil url");
@@ -129,86 +128,14 @@
 	total_ = 1;
 	
 	self.url_ = url;
-    
-    NSArray* paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-    NSString* cachesDirectory = [paths objectAtIndex:0];
-    NSString* savedPath = [cachesDirectory stringByAppendingPathComponent:fileName_];
-    
-    NSFileManager *fm = [NSFileManager defaultManager];
-    [fm removeItemAtPath:savedPath error:nil];
-    
-    
-    [UIApplication sharedApplication].idleTimerDisabled = YES;
-    
-    _request = [ASIHTTPRequest requestWithURL:[NSURL URLWithString:[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
-    [_request setDownloadDestinationPath:savedPath];
-    [_request setDownloadProgressDelegate:self];
-    [_request showAccurateProgress];
-    [_request setDelegate:self];
-    [_request setTimeOutSeconds:30];
-    [_request setAllowResumeForFileDownloads:YES];
-
-    [_request startAsynchronous];
-    
-    
-    
-	//[NSThread detachNewThreadSelector:@selector(downloadImage:) toTarget:self withObject:url];
+	
+	[NSThread detachNewThreadSelector:@selector(downloadImage:) toTarget:self withObject:url];
 }
-
-- (void) setProgress:(float)progress{
-    
-    if(delegate_ && [delegate_ respondsToSelector:@selector(didLoadingProgress:progress:)]){
-        [delegate_ didLoadingProgress:self progress:progress];
-    }
-    
-    //[self updateProgress];
-    
-}
-
-//ASIHTTPRequestDelegate,下载完成时,执行的方法
-- (void)requestFinished:(ASIHTTPRequest *)request {
-    
-    bLoading_ = NO;
-    
-    [_request setDelegate:nil];
-    _request = nil;
-    
-    
-    [UIApplication sharedApplication].idleTimerDisabled = NO;
-    
-    if(delegate_ && [delegate_ respondsToSelector:@selector(didEndLoadingFile:success:)]){
-        [delegate_ didEndLoadingFile:self success:YES];
-    }
-    
-}
-
-- (void)requestFailed:(ASIHTTPRequest *)request{
-    
-    bLoading_ = NO;
-    [_request setDelegate:nil];
-    _request = nil;
-    
-    NSLog(@"%@", [request.error description]);
-    
-    [UIApplication sharedApplication].idleTimerDisabled = NO;
-    
-    if(delegate_ && [delegate_ respondsToSelector:@selector(didEndLoadingFile:success:)]){
-        [delegate_ didEndLoadingFile:self success:NO];
-    }
-}
-
 
 - (void) cancel{
     
     isCancel = YES;
     delegate_ = nil;
-    
-    if(_request)
-    {
-        [_request setDelegate:nil];
-        [_request cancel];
-        _request = nil;
-    }
     
 	if(self.connection){
 		[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
@@ -316,16 +243,11 @@
 }
 
 - (void)dealloc{
-	[fileName_ release];
+	
 	delegate_ = nil;
-	[photo release];
-	[url_ release];
-	//connection.delegate = nil;
+	
 	[connection cancel];
-	[connection release];
-	[characterBuffer release];
-	//[uploadPool release];
-	[super dealloc];
+	
 }
 
 
