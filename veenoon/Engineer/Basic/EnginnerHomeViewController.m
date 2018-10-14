@@ -59,20 +59,27 @@
     [_topBar addSubview:centerTitleLabel];
     
     
-    int inputHeight = 280;
-    UIView *_topBar2 = [[UIView alloc] initWithFrame:CGRectMake(0, inputHeight, SCREEN_WIDTH, 64)];
+    
+    _inputPannel = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 180)];
+    _inputPannel.userInteractionEnabled = YES;
+    [self.view addSubview:_inputPannel];
+    _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+    
+    UIView *_topBar2 = [[UIView alloc] initWithFrame:CGRectMake(0, 26, SCREEN_WIDTH, 64)];
     _topBar2.backgroundColor = DARK_GRAY_COLOR;
-    [self.view addSubview:_topBar2];
+    [_inputPannel addSubview:_topBar2];
     
-    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, inputHeight+63, SCREEN_WIDTH, 1)];
+    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 26+63, SCREEN_WIDTH, 1)];
     line.backgroundColor = RGB(56, 56, 56);
-    [self.view addSubview:line];
+    [_inputPannel addSubview:line];
     
-    UIView *_topBar3 = [[UIView alloc] initWithFrame:CGRectMake(0, inputHeight+64, SCREEN_WIDTH, 64)];
+    UIView *_topBar3 = [[UIView alloc] initWithFrame:CGRectMake(0, 90, SCREEN_WIDTH, 64)];
     _topBar3.backgroundColor = DARK_GRAY_COLOR;
-    [self.view addSubview:_topBar3];
+    [_inputPannel addSubview:_topBar3];
     
-    _userNameField = [[UITextField alloc] initWithFrame:CGRectMake(0, inputHeight + 10, SCREEN_WIDTH, 44)];
+    
+    
+    _userNameField = [[UITextField alloc] initWithFrame:CGRectMake(0, 90-54, SCREEN_WIDTH, 44)];
     _userNameField.delegate = self;
     _userNameField.backgroundColor = [UIColor clearColor];
     _userNameField.returnKeyType = UIReturnKeyNext;
@@ -83,10 +90,10 @@
     _userNameField.placeholder=@"ID";
     _userNameField.clearButtonMode = UITextFieldViewModeWhileEditing;
     [_userNameField setValue:PLACE_HOLDER_COLOR forKeyPath:@"_placeholderLabel.textColor"];
-    [self.view addSubview:_userNameField];
+    [_inputPannel addSubview:_userNameField];
     
     
-    _userPwdField = [[UITextField alloc] initWithFrame:CGRectMake(0, inputHeight + 10+64, SCREEN_WIDTH, 44)];
+    _userPwdField = [[UITextField alloc] initWithFrame:CGRectMake(0, 104, SCREEN_WIDTH, 44)];
     _userPwdField.delegate = self;
     _userPwdField.backgroundColor = [UIColor clearColor];
     _userPwdField.returnKeyType = UIReturnKeyDone;
@@ -98,11 +105,11 @@
     _userPwdField.secureTextEntry=YES;
     _userPwdField.clearButtonMode = UITextFieldViewModeWhileEditing;
     [_userPwdField setValue:PLACE_HOLDER_COLOR forKeyPath:@"_placeholderLabel.textColor"];
-    [self.view addSubview:_userPwdField];
+    [_inputPannel addSubview:_userPwdField];
     
     
     UIButton *signup = [UIButton buttonWithColor:nil selColor:[UIColor whiteColor]];
-    signup.frame = CGRectMake(SCREEN_WIDTH/2 - 125, inputHeight+128+150, 250, 36);
+    signup.frame = CGRectMake(SCREEN_WIDTH/2 - 125, 260+128+150, 250, 36);
     signup.layer.cornerRadius = 8;
     signup.layer.borderWidth = 0.5;
     signup.layer.borderColor = [UIColor whiteColor].CGColor;
@@ -131,11 +138,16 @@
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
-    
+    if (textField == _userNameField) {
+        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 70);
+    }
+    if (textField == _userPwdField) {
+        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 100);
+    }
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
-    
+    _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{

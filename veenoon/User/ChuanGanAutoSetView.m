@@ -146,7 +146,7 @@
         _youjiwuPicker = [[CustomPickerView alloc]
                    initWithFrame:CGRectMake(x, y, 80, 150) withGrayOrLight:@"picker_player.png"];
         
-        _youjiwuPicker._pickerDataArray = @[@{@"values":@[@"温度",@"湿度",@"PM2,5"]}];
+        _youjiwuPicker._pickerDataArray = @[@{@"values":@[@"温度",@"湿度",@"PM2.5"]}];
         _youjiwuPicker._selectColor = [UIColor blackColor];
         _youjiwuPicker._rowNormalColor = [UIColor grayColor];
         _youjiwuPicker.delegate_ = self;

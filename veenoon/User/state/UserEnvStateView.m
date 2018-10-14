@@ -111,28 +111,28 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    return 54;
+    return 44;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 64;
+    return 54;
 }
 
 
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     
     UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0,
-                                                              self.frame.size.width, 64)];
+                                                              self.frame.size.width, 54)];
     header.backgroundColor = USER_GRAY_COLOR;
     
-    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(30, 63,
+    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(30, 53,
                                                               self.frame.size.width-140, 1)];
     line.backgroundColor =  NEW_ER_BUTTON_GRAY_COLOR2;
     [header addSubview:line];
     
     
     UILabel *rowL = [[UILabel alloc] initWithFrame:CGRectMake(30,
-                                                              12,
+                                                              7,
                                                               CGRectGetWidth(self.frame)-20, 40)];
     rowL.backgroundColor = [UIColor clearColor];
     [header addSubview:rowL];
@@ -170,11 +170,11 @@
     UIImageView *titleIcon = [[UIImageView alloc] init];
 
     [cell addSubview:titleIcon];
-    titleIcon.frame = CGRectMake(30, 17, 20, 20);
+    titleIcon.frame = CGRectMake(30, 12, 20, 20);
     
     
     UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(60,
-                                                                12,
+                                                                2,
                                                                 CGRectGetWidth(self.frame)/2-110, 40)];
     titleL.backgroundColor = [UIColor clearColor];
     [cell.contentView addSubview:titleL];
@@ -210,7 +210,7 @@
     }
     
     UILabel* valueL = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame)-192,
-                                                                17,
+                                                                12,
                                                                 80, 20)];
     valueL.backgroundColor = [UIColor clearColor];
     [cell.contentView addSubview:valueL];
@@ -253,7 +253,7 @@
     
     
     
-    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(30, 53,
+    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(30, 43,
                                                               self.frame.size.width-140, 1)];
     line.backgroundColor =  NEW_ER_BUTTON_GRAY_COLOR2;
     [cell addSubview:line];
