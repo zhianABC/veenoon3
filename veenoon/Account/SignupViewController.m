@@ -16,9 +16,11 @@
 #import "WaitDialog.h"
 #import "User.h"
 #import "UserDefaultsKV.h"
+#import "M80AttributedLabel.h"
+#import "CheckButton.h"
 
 
-@interface SignupViewController () <AreaPickViewDelegate>{
+@interface SignupViewController () <AreaPickViewDelegate, M80AttributedLabelDelegate>{
     //输入部分
     UIView *_inputPannel;
     UIButton *_countryBtn;
@@ -44,6 +46,8 @@
     int secondsCount;
     
     WebClient *_http;
+    
+    CheckButton *_privacyBtn;
 }
 @property (nonatomic, strong) NSString *_province;
 @property (nonatomic, strong) NSString *_city;
@@ -302,10 +306,40 @@
     UILabel *line11 = [[UILabel alloc] initWithFrame:CGRectMake(left, top+358, w, 1)];
     line11.backgroundColor = WHITE_LINE_COLOR;
     [_inputPannel addSubview:line11];
+    
+    int gap = 90;
+    _privacyBtn = [[CheckButton alloc] initWithIcon:[UIImage imageNamed:@"check_box_unsel.png"]
+                                                    down:[UIImage imageNamed:@"check_box_p.png"]
+                                                   title:@""
+                                                   frame:CGRectMake(left-35+gap, top+380, 60, 40)];
+    [_inputPannel addSubview:_privacyBtn];
+    [_privacyBtn allowUnCheck:YES];
 
+    M80AttributedLabel* rowName = [[M80AttributedLabel alloc] initWithFrame:CGRectMake(left+gap, top+390, w+60, 40)];
+    rowName.backgroundColor = [UIColor clearColor];
+    rowName.font = [UIFont systemFontOfSize:13];
+    rowName.lineSpacing = 2.0;
+    rowName.paragraphSpacing = 2.0;
+    rowName.autoDetectLinks = NO;
+    rowName.textAlignment = 0;
+    
+    rowName.delegate = self;
+    
+    rowName.textColor = [UIColor whiteColor];
+    [_inputPannel addSubview:rowName];
+    NSString *prex = @"已阅读并同意 ";
+    [rowName appendText:prex];
+    NSString *str = @"隐私协议和在线服务系列协议";
+    
+    [rowName appendText:str];
+    [rowName appendText:@""];
+    rowName.underLineForLink = NO;
+    
+    rowName.linkColor = NEW_ER_BUTTON_SD_COLOR;
+    [rowName addCustomLink:@"" forRange:NSMakeRange([prex length], [str length])];
 
     loginBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    loginBtn.frame = CGRectMake(left, top+400, w+60, 40);
+    loginBtn.frame = CGRectMake(left, top+420, w+60, 40);
     [loginBtn setTitle:@"* 如果您已经使用过了TESLARIA服务，则应返回以使用该账号登录 *" forState:UIControlStateNormal];
     [loginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     loginBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -315,6 +349,13 @@
                     action:@selector(loginBtnAction:)
           forControlEvents:UIControlEventTouchUpInside];
 
+}
+
+- (void)m80AttributedLabel:(M80AttributedLabel *)label
+             clickedOnLink:(id)linkData{
+    NSLog(@"");
+    
+    
 }
 - (void) loginBtnAction:(UIButton*) btn {
 
