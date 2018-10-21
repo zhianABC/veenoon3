@@ -314,6 +314,7 @@
 		34615F0B1FC9BD7B002DFCE0 /* jslide_thumb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34615F071FC9BD7B002DFCE0 /* jslide_thumb@2x.png */; };
 		34615F0D1FC9BEC7002DFCE0 /* v_slider_bg_light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34615F0C1FC9BEC7002DFCE0 /* v_slider_bg_light@2x.png */; };
 		34615F0F1FC9C264002DFCE0 /* v_slider_road@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34615F0E1FC9C263002DFCE0 /* v_slider_road@2x.png */; };
+		34629126217C394B00128B79 /* USenceBlockView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34629125217C394B00128B79 /* USenceBlockView.m */; };
 		346310A8210C160900B26E17 /* state_summary_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 346310A4210C15FF00B26E17 /* state_summary_white@2x.png */; };
 		346310A9210C160900B26E17 /* state_summary@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 346310A5210C160200B26E17 /* state_summary@2x.png */; };
 		346310AA210C160900B26E17 /* syc_icon_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 346310A6210C160500B26E17 /* syc_icon_white@2x.png */; };
@@ -1449,6 +1450,8 @@
 		34615F081FC9BD7B002DFCE0 /* JSlideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSlideView.h; sourceTree = "<group>"; };
 		34615F0C1FC9BEC7002DFCE0 /* v_slider_bg_light@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "v_slider_bg_light@2x.png"; sourceTree = "<group>"; };
 		34615F0E1FC9C263002DFCE0 /* v_slider_road@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "v_slider_road@2x.png"; sourceTree = "<group>"; };
+		34629124217C394B00128B79 /* USenceBlockView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = USenceBlockView.h; sourceTree = "<group>"; };
+		34629125217C394B00128B79 /* USenceBlockView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = USenceBlockView.m; sourceTree = "<group>"; };
 		346310A4210C15FF00B26E17 /* state_summary_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "state_summary_white@2x.png"; sourceTree = "<group>"; };
 		346310A5210C160200B26E17 /* state_summary@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "state_summary@2x.png"; sourceTree = "<group>"; };
 		346310A6210C160500B26E17 /* syc_icon_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "syc_icon_white@2x.png"; sourceTree = "<group>"; };
@@ -3702,6 +3705,8 @@
 				EB03F54C1FBDEC6000865541 /* UserHomeViewController.m */,
 				EBDF1BFD1FC5B9F500A756EA /* UserMeetingRoomConfig.h */,
 				EBDF1BFE1FC5BA0900A756EA /* UserMettingRoomConfig.m */,
+				34629124217C394B00128B79 /* USenceBlockView.h */,
+				34629125217C394B00128B79 /* USenceBlockView.m */,
 				3421B099210B00C1001C4B22 /* AutoRunViewController.h */,
 				3421B09A210B00C1001C4B22 /* AutoRunViewController.m */,
 				3421B09C210B00D3001C4B22 /* AutoRunSetView.h */,
@@ -5279,6 +5284,7 @@
 				EB1A55D21FEAA10E000B18E6 /* EngineerDVDViewController.m in Sources */,
 				EB09EF351FD9800300C968CA /* EngineerVideoDevicePluginViewCtrl.m in Sources */,
 				EB5CF03F1FD3DC92007958C9 /* UserNewWindViewCtrl.m in Sources */,
+				34629126217C394B00128B79 /* USenceBlockView.m in Sources */,
 				EB7333F42041046400AE60B8 /* AirCleanRightView.m in Sources */,
 				EB62DF7720D7A04D00144EE0 /* TeslariaComboChooser.m in Sources */,
 				34A8965320443184007934E1 /* GradeLineView.m in Sources */,
