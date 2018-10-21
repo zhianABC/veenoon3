@@ -80,6 +80,20 @@ typedef UITableViewCell * (^IndexPathBlock)(UITableView*tableView,NSIndexPath *i
                   WithContent:(NSString *)content
                 WithImageName:(NSString *)imageName
              WithSureBtnTitle:(NSString *)sureTitle;
+
+/**
+ 不带背景的弹框
+ 
+ @param title 标题
+ @param content 内容
+ @param imageName 图片名称
+ @param sureTitle 确定文字
+ @return FQCustomAlert
+ */
+-(instancetype)initWithTitleNoImage:(NSString *)title
+                 WithContent:(NSString *)content
+            WithSureBtnTitle:(NSString *)sureTitle;
+
 /**
  确定取消按钮的弹框
 

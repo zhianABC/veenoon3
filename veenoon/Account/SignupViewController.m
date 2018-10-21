@@ -355,8 +355,12 @@
 - (void)m80AttributedLabel:(M80AttributedLabel *)label
              clickedOnLink:(id)linkData{
     NSLog(@"");
+    NSString *txtPath=[[NSBundle mainBundle]pathForResource:@"privatecy" ofType:@"txt"];
+    NSStringEncoding *useEncodeing = nil;
     
-    FQCustomAlert *alertView = [[FQCustomAlert alloc]initWithTitle:@"规则说明" WithContent:@"系统将随机从题库中抽取一套题，其中有单选、多选类型题目，请您认真审题后选出您认为正确的选项，系统将随机从题库中抽取一套题，其中有单选、多选类型题目，请您认真审题后选出您认为正确的选项" WithImageName:@"activity_cloud" WithSureBtnTitle:@"AAA"];
+    NSString *body = [NSString stringWithContentsOfFile:txtPath usedEncoding:useEncodeing error:nil];
+   
+    FQCustomAlert *alertView = [[FQCustomAlert alloc]initWithTitleNoImage:@"规则说明" WithContent:body WithSureBtnTitle:@"AAA"];
     [alertView show];
 
 }
@@ -408,6 +412,18 @@
 }
 
 - (void) okAction:(UIButton*)btn{
+    
+    BOOL isChecked = [_privacyBtn isChecked];
+    if (!isChecked) {
+        UIAlertView *alert  = [[UIAlertView alloc] initWithTitle:nil
+                                                         message:@"请同意TESLARIA的隐私协议"
+                                                        delegate:nil
+                                               cancelButtonTitle:@"确定"
+                                               otherButtonTitles:nil, nil];
+        [alert show];
+        
+        return;
+    }
     
     [self stopTimer];
     
