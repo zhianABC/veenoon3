@@ -158,8 +158,7 @@
     BOOL        _studying;
     
     BOOL        _isIR;
-    
-    
+
 }
 @property (nonatomic, strong) NSMutableArray *_connection_cells;
 @property (nonatomic, strong) NSArray *_studyItems;
@@ -194,6 +193,7 @@
         self.clipsToBounds = YES;
         self.layer.borderColor = USER_GRAY_COLOR.CGColor;
         self.layer.borderWidth = 1;
+        
         
         UIImageView *titleBar = [[UIImageView alloc] initWithFrame:CGRectMake(0,
                                                                               0,
@@ -282,6 +282,8 @@
         _connectionView = [[DriverConnectionsView alloc] initWithFrame:self.bounds];
         
     }
+    
+    
     [self addSubview:_connectionView];
     
     _connectionView._plug = _plugDriver;
@@ -385,8 +387,12 @@
 - (void) recoverSetting {
     
     [_connectionView removeFromSuperview];
+    
+    
     [_fieldVals removeAllObjects];
     RgsDriverInfo * info = _plugDriver._driverInfo;
+    
+    self._studyItems = nil;
     
     _isIR = NO;
     if([info.system isEqualToString:@"IR Controller"])
@@ -405,6 +411,7 @@
             self._studyItems = _plugDriver._irCodeKeys;
         }
     }
+    
 
     if([_plugDriver._connections count] == 0)
     {

@@ -1160,7 +1160,9 @@
     if([barcode length])
     {
         NSRange range = [barcode rangeOfString:@"RGS_"];
-        if(range.location != NSNotFound)
+        NSRange range1 = [barcode rangeOfString:@"TESLARIA_"];
+        if(range.location != NSNotFound
+           || range1.location != NSNotFound)
         {
             [self testRegDevice:barcode];
         }

@@ -97,17 +97,6 @@
     {
         [userSensor getMyConnects];
     }
-    
-     //    if (result) {
-     //        for (RgsConnectionObj *connectObj in connects) {
-     //            [connectObj GetBoundings:^(BOOL result, NSArray *connections, NSError *error) {
-     //                if ([connections count]) {
-     //                    [connectObjArray addObject:[connections objectAtIndex:0]];
-     //                }
-     //            }];
-     //        }
-     //    }
-    
 }
 
 #pragma mark -

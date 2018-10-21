@@ -720,7 +720,7 @@
     
     // if 空气质量,refresh label
     if ([data isKindOfClass:[AirQualityPlug class]]) {
-        _propertyView._isAirQuality = NO;
+        _propertyView._isAirQuality = YES;
         [_propertyView refreshLabelToAirQuality];
     } else {
         _propertyView._isAirQuality = NO;

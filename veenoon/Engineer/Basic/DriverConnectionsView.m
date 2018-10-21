@@ -33,6 +33,7 @@
 @synthesize _plug;
 @synthesize _canconnects;
 @synthesize _connectIdx;
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -85,6 +86,7 @@
 - (void) handleTapGesture:(id)sender{
     
     [self removeFromSuperview];
+   
 }
 
 - (void) showFromPoint:(CGPoint)pt{
@@ -251,6 +253,7 @@
         
         
         [self removeFromSuperview];
+       
     }
     
 }

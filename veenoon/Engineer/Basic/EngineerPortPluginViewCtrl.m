@@ -392,7 +392,7 @@
     [_hongwaizhuanhuanqiBtn setBtnHighlited:YES];
     [_chumopingBtn setBtnHighlited:NO];
     
-    [self choosedDevice:@"红外转发器"];
+    [self choosedDevice:@"红外"];
     
 }
 - (void) chumopingAction:(id)sender{
