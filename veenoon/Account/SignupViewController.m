@@ -18,6 +18,7 @@
 #import "UserDefaultsKV.h"
 #import "M80AttributedLabel.h"
 #import "CheckButton.h"
+#import "FQCustomAlert.h"
 
 
 @interface SignupViewController () <AreaPickViewDelegate, M80AttributedLabelDelegate>{
@@ -355,7 +356,9 @@
              clickedOnLink:(id)linkData{
     NSLog(@"");
     
-    
+    FQCustomAlert *alertView = [[FQCustomAlert alloc]initWithTitle:@"规则说明" WithContent:@"系统将随机从题库中抽取一套题，其中有单选、多选类型题目，请您认真审题后选出您认为正确的选项，系统将随机从题库中抽取一套题，其中有单选、多选类型题目，请您认真审题后选出您认为正确的选项" WithImageName:@"activity_cloud" WithSureBtnTitle:@"AAA"];
+    [alertView show];
+
 }
 - (void) loginBtnAction:(UIButton*) btn {
 
