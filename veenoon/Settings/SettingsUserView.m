@@ -10,8 +10,10 @@
 #import "UIButton+Color.h"
 #import "UserDefaultsKV.h"
 #import "AppDelegate.h"
+#import "M80AttributedLabel.h"
+#import "FQCustomAlert.h"
 
-@interface SettingsUserView () {
+@interface SettingsUserView ()<M80AttributedLabelDelegate> {
     UIButton *registerBtn;
     UILabel *_timerLabel;
     
@@ -387,6 +389,33 @@
         sec2Top = CGRectGetMaxY(line9.frame);
         sec2Top+=10;
         
+        
+        int gap = 90;
+        int w = CGRectGetWidth(_content.frame);
+        M80AttributedLabel* rowName = [[M80AttributedLabel alloc] initWithFrame:CGRectMake(fieldLx+gap, sec2Top+10, w+60, 40)];
+        rowName.backgroundColor = [UIColor clearColor];
+        rowName.font = [UIFont systemFontOfSize:13];
+        rowName.lineSpacing = 2.0;
+        rowName.paragraphSpacing = 2.0;
+        rowName.autoDetectLinks = NO;
+        rowName.textAlignment = 0;
+        
+        rowName.delegate = self;
+        
+        rowName.textColor = [UIColor whiteColor];
+        [_content addSubview:rowName];
+        NSString *prex = @"查看 ";
+        [rowName appendText:prex];
+        NSString *str = @"隐私协议和在线服务系列协议";
+        
+        [rowName appendText:str];
+        [rowName appendText:@""];
+        rowName.underLineForLink = NO;
+        
+        rowName.linkColor = NEW_ER_BUTTON_SD_COLOR;
+        [rowName addCustomLink:@"" forRange:NSMakeRange([prex length], [str length])];
+        
+        
         UIButton *logout = [UIButton buttonWithColor:USER_GRAY_COLOR
                                             selColor:nil];
         logout.frame = CGRectMake(0, self.frame.size.height - 50,
@@ -400,6 +429,19 @@
 
     }
     return self;
+}
+
+- (void)m80AttributedLabel:(M80AttributedLabel *)label
+             clickedOnLink:(id)linkData{
+    NSLog(@"");
+    NSString *txtPath=[[NSBundle mainBundle]pathForResource:@"privatecy" ofType:@"txt"];
+    NSStringEncoding *useEncodeing = nil;
+    
+    NSString *body = [NSString stringWithContentsOfFile:txtPath usedEncoding:useEncodeing error:nil];
+    
+    FQCustomAlert *alertView = [[FQCustomAlert alloc]initWithTitleNoImage:@"规则说明" WithContent:body WithSureBtnTitle:@"AAA"];
+    [alertView show];
+    
 }
 
 - (void) logoutAction:(id)sender{

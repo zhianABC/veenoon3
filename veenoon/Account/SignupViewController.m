@@ -18,6 +18,7 @@
 #import "UserDefaultsKV.h"
 #import "M80AttributedLabel.h"
 #import "CheckButton.h"
+#import "FQCustomAlert.h"
 
 
 @interface SignupViewController () <AreaPickViewDelegate, M80AttributedLabelDelegate>{
@@ -354,8 +355,14 @@
 - (void)m80AttributedLabel:(M80AttributedLabel *)label
              clickedOnLink:(id)linkData{
     NSLog(@"");
+    NSString *txtPath=[[NSBundle mainBundle]pathForResource:@"privatecy" ofType:@"txt"];
+    NSStringEncoding *useEncodeing = nil;
     
-    
+    NSString *body = [NSString stringWithContentsOfFile:txtPath usedEncoding:useEncodeing error:nil];
+   
+    FQCustomAlert *alertView = [[FQCustomAlert alloc]initWithTitleNoImage:@"规则说明" WithContent:body WithSureBtnTitle:@"AAA"];
+    [alertView show];
+
 }
 - (void) loginBtnAction:(UIButton*) btn {
 
@@ -405,6 +412,18 @@
 }
 
 - (void) okAction:(UIButton*)btn{
+    
+    BOOL isChecked = [_privacyBtn isChecked];
+    if (!isChecked) {
+        UIAlertView *alert  = [[UIAlertView alloc] initWithTitle:nil
+                                                         message:@"请同意TESLARIA的隐私协议"
+                                                        delegate:nil
+                                               cancelButtonTitle:@"确定"
+                                               otherButtonTitles:nil, nil];
+        [alert show];
+        
+        return;
+    }
     
     [self stopTimer];
     

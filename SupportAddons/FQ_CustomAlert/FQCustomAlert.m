@@ -14,11 +14,14 @@
 #define APPScreen_Height_Scale(s) s*(SCREEN_HEIGHT/667)
 
 #import "FQCustomAlert.h"
+#import <WebKit/WebKit.h>
 
-@interface FQCustomAlert ()<UITableViewDataSource,UITableViewDelegate>{
+@interface FQCustomAlert ()<UITableViewDataSource,UITableViewDelegate, WKNavigationDelegate,WKUIDelegate>{
     UIView *_bgView;
     UIView *_alertView;
     UITableView *_tableView;
+    
+    
 }
 
 @property (nonatomic, strong) NSMutableArray <FQCustomModel *> *dataSouseArray;
@@ -249,6 +252,91 @@
     }
     return self;
 }
+
+
+#pragma -mark 带背景提示框
+-(instancetype)initWithTitleNoImage:(NSString *)title
+                 WithContent:(NSString *)content
+            WithSureBtnTitle:(NSString *)sureTitle{
+    self = [super init];
+    if (self) {
+        self.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+        /** 半透明背景*/
+        _bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        _bgView.backgroundColor = RGBCOLOR(0, 0, 0, 0.3);
+        [self addSubview:_bgView];
+        
+        /** 父控件view*/
+        UIView *alertView = [[UIView alloc]initWithFrame:CGRectMake(0.1*SCREEN_WIDTH, 0.15*SCREEN_HEIGHT, 0.8*SCREEN_WIDTH, 0.7*SCREEN_HEIGHT)];
+        alertView.center = _bgView.center;
+        //alertView.backgroundColor = [UIColor cyanColor];
+        [_bgView addSubview:alertView];
+        _alertView = alertView;
+        
+        //config...
+        /** 红色view*/
+        UIView *redView = [[UIView alloc]init];
+        redView.frame = CGRectMake(APPScreen_Width_Scale(15), APPScreen_Height_Scale(20), alertView.frame.size.width - 2*APPScreen_Width_Scale(15), alertView.frame.size.height - 2*APPScreen_Height_Scale(5));
+        redView.backgroundColor = [UIColor whiteColor];
+        redView.layer.cornerRadius = 6.0;
+        redView.layer.masksToBounds = YES;
+        [_alertView addSubview:redView];
+        /** 背景图*/
+//        UIImageView *imageV = [[UIImageView alloc]initWithFrame:CGRectMake(0, redView.frame.origin.x+18, alertView.frame.size.width, alertView.frame.size.width/2.6)];
+//        imageV.image = [UIImage imageNamed:imageName];
+//        [alertView addSubview:imageV];
+        /** 关闭按钮*/
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.frame =CGRectMake(alertView.frame.size.width- 30, 10, 30, 30);
+        button.center = CGPointMake(CGRectGetMaxX(redView.frame), redView.frame.origin.y);
+        button.tag = 0;
+        [button setTitle:@"✖️" forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+        [alertView addSubview:button];
+        button.backgroundColor = [UIColor whiteColor];
+        button.layer.cornerRadius = 30/2;
+        button.layer.masksToBounds = YES;
+        button.layer.borderWidth = 1.0;
+        button.layer.borderColor = [[UIColor whiteColor] CGColor];
+        /** 计算文字*/
+        CGSize size = [self labelAutoCalculateRectWith:content FontSize:APPScreen_Width_Scale(14) MaxSize:CGSizeMake(alertView.frame.size.width - 2*APPScreen_Width_Scale(30), CGFLOAT_MAX)];
+        /** 最大高度*/
+        CGFloat height = MIN(size.height+APPScreen_Height_Scale(15), 0.8*SCREEN_HEIGHT - APPScreen_Height_Scale(35));
+        /** 加载文字*/
+        NSString *jScript = @"var meta = document.createElement('meta'); meta.setAttribute('name', 'viewport'); meta.setAttribute('content', 'width=device-width'); document.getElementsByTagName('head')[0].appendChild(meta);";;
+        WKUserScript *wkUScript = [[WKUserScript alloc] initWithSource:jScript injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:YES];
+        WKUserContentController *wkUController = [[WKUserContentController alloc] init];
+        
+        [wkUController addUserScript:wkUScript];
+        
+        WKWebViewConfiguration *config = [WKWebViewConfiguration new];
+        //初始化偏好设置属性：preferences
+        config.preferences = [WKPreferences new];
+        //The minimum font size in points default is 0;
+        config.preferences.minimumFontSize = 12;
+        //是否支持JavaScript
+        config.preferences.javaScriptEnabled = YES;
+        
+        //不通过用户交互，是否可以打开窗口
+        config.preferences.javaScriptCanOpenWindowsAutomatically = NO;
+        
+        config.userContentController = wkUController;
+        
+        WKWebView *_webView = [[WKWebView alloc]initWithFrame:CGRectMake(15, 15, redView.frame.size.width-30, height-65) configuration:config];
+        _webView.UIDelegate = self;
+        _webView.navigationDelegate = self;
+        
+        _webView.backgroundColor = [UIColor whiteColor];
+        
+        [redView addSubview:_webView];
+        
+        [_webView loadHTMLString:content baseURL:nil];
+        
+        NSLog(@"%f---",height);
+    }
+    return self;
+}
+
 
 #pragma -mark 列表选择弹框
 -(FQCustomAlert * )initWithTitle:(NSString *)title
