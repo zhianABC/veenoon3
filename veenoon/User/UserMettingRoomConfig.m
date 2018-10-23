@@ -17,8 +17,9 @@
 #import "MeetingRoom.h"
 #import "AutoRunViewController.h"
 #import "UserDeviceStateViewController.h"
+#import "USenceBlockView.h"
 
-@interface UserMeetingRoomConfig () <ScenarioDelegate>{
+@interface UserMeetingRoomConfig () <ScenarioDelegate, USenceBlockViewDelegate>{
 
     UIButton *_trainingBtn;
     UIButton *_envirementControlBtn;
@@ -329,7 +330,10 @@
         }
         
         s._rgsSceneObj = dr;
-        [s syncDataFromRegulus];
+        
+        //不在这儿加载了，在下面函数中加载。
+        //[s syncDataFromRegulus];
+        
         [_sceneDrivers addObject:s];
     }
     
@@ -360,6 +364,15 @@
         
         Scenario *scen = [_sceneDrivers objectAtIndex:i];
         
+        CGRect rc = CGRectMake(x, y, w, 210);
+        USenceBlockView *block = [[USenceBlockView alloc] initWithFrame:rc];
+        block._senario = scen;
+        [block refreshData];
+        block.delegate = self;
+        [_content addSubview:block];
+        block.tag = i;
+        
+        /*
         NSDictionary *sDic = [scen senarioData];
         
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -410,10 +423,10 @@
         titleEnL.tag = 103;
         titleEnL.textAlignment = NSTextAlignmentLeft;
         titleEnL.center = CGPointMake(titleEnL.center.x, 120);
-        
+        */
         
         UILongPressGestureRecognizer *longPress0 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed0:)];
-        [btn addGestureRecognizer:longPress0];
+        [block addGestureRecognizer:longPress0];
     }
     
     _content.contentSize = CGSizeMake(_content.frame.size.width,
@@ -447,37 +460,33 @@
     
 }
 
-- (void) userTrainingAction:(UIButton*)sender{
+- (void) didSelectRoomScenario:(Scenario*)s cell:(USenceBlockView*)cellView
+{
+    Scenario *scen = s;
+    id key = [NSNumber numberWithInteger:scen._rgsSceneObj.m_id];
     
-    id key = [NSNumber numberWithInteger:sender.tag];
-    Scenario *scen = [_sceneDrivers objectAtIndex:[key intValue]];
-
     if([_mapSelect objectForKey:key])
     {
         //取消
-        [sender setImage:_nor_image forState:UIControlStateNormal];
-        [sender setImage:_sel_image forState:UIControlStateHighlighted];
-
+        [cellView selectedCell:NO];
+        
         [_mapSelect removeObjectForKey:key];
     }
     else
     {
         
-        UIButton *btn = [_mapSelect objectForKey:@"selected_btn"];
-        if(btn)
+        USenceBlockView *cell = [_mapSelect objectForKey:@"selected_btn"];
+        if(cell)
         {
-            id oldkey = [NSNumber numberWithInteger:btn.tag];
+            id oldkey = [NSNumber numberWithInteger:cell._senario._rgsSceneObj.m_id];
             
-            [btn setImage:_nor_image forState:UIControlStateNormal];
-            [btn setImage:_sel_image forState:UIControlStateHighlighted];
+            [cell selectedCell:NO];
             
             [_mapSelect removeObjectForKey:oldkey];
         }
         
-        //选中
-        [sender setImage:_sel_image forState:UIControlStateNormal];
-        [sender setImage:_sel_image forState:UIControlStateHighlighted];
-
+        [cellView selectedCell:YES];
+          
         [KVNProgress show];
         
         RgsSceneObj * scene_obj = scen._rgsSceneObj;
@@ -485,21 +494,19 @@
         {
             [[RegulusSDK sharedRegulusSDK] ExecScene:scene_obj.m_id
                                           completion:^(BOOL result, NSError *error) {
-                if (result) {
-                    [KVNProgress showSuccess];
-                }
-                else{
-                    [KVNProgress showErrorWithStatus:@"执行失败！"];
-                }
-            }];
+                                              if (result) {
+                                                  [KVNProgress showSuccess];
+                                              }
+                                              else{
+                                                  [KVNProgress showErrorWithStatus:@"执行失败！"];
+                                              }
+                                          }];
         }
         
         [_mapSelect setObject:scen forKey:key];
-        [_mapSelect setObject:sender forKey:@"selected_btn"];
+        [_mapSelect setObject:cellView forKey:@"selected_btn"];
     }
-    
 }
-
 
 
 - (void) backAction:(id)sender{

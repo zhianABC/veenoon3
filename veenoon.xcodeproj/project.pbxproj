@@ -315,6 +315,9 @@
 		34615F0D1FC9BEC7002DFCE0 /* v_slider_bg_light@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34615F0C1FC9BEC7002DFCE0 /* v_slider_bg_light@2x.png */; };
 		34615F0F1FC9C264002DFCE0 /* v_slider_road@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34615F0E1FC9C263002DFCE0 /* v_slider_road@2x.png */; };
 		34629126217C394B00128B79 /* USenceBlockView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34629125217C394B00128B79 /* USenceBlockView.m */; };
+		34629134217C701200128B79 /* WSDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34629130217C701200128B79 /* WSDatePickerView.m */; };
+		34629135217C701200128B79 /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 34629131217C701200128B79 /* NSDate+Extension.m */; };
+		34629136217C701200128B79 /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 34629132217C701200128B79 /* UIView+Extension.m */; };
 		346310A8210C160900B26E17 /* state_summary_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 346310A4210C15FF00B26E17 /* state_summary_white@2x.png */; };
 		346310A9210C160900B26E17 /* state_summary@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 346310A5210C160200B26E17 /* state_summary@2x.png */; };
 		346310AA210C160900B26E17 /* syc_icon_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 346310A6210C160500B26E17 /* syc_icon_white@2x.png */; };
@@ -1452,6 +1455,12 @@
 		34615F0E1FC9C263002DFCE0 /* v_slider_road@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "v_slider_road@2x.png"; sourceTree = "<group>"; };
 		34629124217C394B00128B79 /* USenceBlockView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = USenceBlockView.h; sourceTree = "<group>"; };
 		34629125217C394B00128B79 /* USenceBlockView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = USenceBlockView.m; sourceTree = "<group>"; };
+		3462912C217C701200128B79 /* NSDate+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extension.h"; sourceTree = "<group>"; };
+		3462912D217C701200128B79 /* WSDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WSDatePickerView.h; sourceTree = "<group>"; };
+		3462912E217C701200128B79 /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
+		34629130217C701200128B79 /* WSDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WSDatePickerView.m; sourceTree = "<group>"; };
+		34629131217C701200128B79 /* NSDate+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extension.m"; sourceTree = "<group>"; };
+		34629132217C701200128B79 /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
 		346310A4210C15FF00B26E17 /* state_summary_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "state_summary_white@2x.png"; sourceTree = "<group>"; };
 		346310A5210C160200B26E17 /* state_summary@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "state_summary@2x.png"; sourceTree = "<group>"; };
 		346310A6210C160500B26E17 /* syc_icon_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "syc_icon_white@2x.png"; sourceTree = "<group>"; };
@@ -2646,6 +2655,7 @@
 		04DE1E401AD6AEE000D49E2F /* SupportAddons */ = {
 			isa = PBXGroup;
 			children = (
+				3462912B217C701200128B79 /* WSDaePickerView */,
 				EB50A4A5217C384700AB2D3D /* FQ_CustomAlert */,
 				EBAA7DDB21759A1F0045FF70 /* M80AttributedLabel */,
 				34766EB820CE2237006B9E82 /* Base64 */,
@@ -3549,6 +3559,19 @@
 			path = SenarioIcon;
 			sourceTree = "<group>";
 		};
+		3462912B217C701200128B79 /* WSDaePickerView */ = {
+			isa = PBXGroup;
+			children = (
+				3462912C217C701200128B79 /* NSDate+Extension.h */,
+				34629131217C701200128B79 /* NSDate+Extension.m */,
+				3462912D217C701200128B79 /* WSDatePickerView.h */,
+				34629130217C701200128B79 /* WSDatePickerView.m */,
+				3462912E217C701200128B79 /* UIView+Extension.h */,
+				34629132217C701200128B79 /* UIView+Extension.m */,
+			);
+			path = WSDaePickerView;
+			sourceTree = "<group>";
+		};
 		34766E9920CE1E77006B9E82 /* include */ = {
 			isa = PBXGroup;
 			children = (
@@ -4277,9 +4300,9 @@
 				TargetAttributes = {
 					04DE1DD11AD68C5E00D49E2F = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = ES8777A4V4;
+						DevelopmentTeam = 9FDG53LV84;
 						LastSwiftMigration = 0920;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 					04DE1DEA1AD68C5E00D49E2F = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -5100,6 +5123,7 @@
 				EB09C4A21FD3A00200776540 /* UserAirConditionViewCtrl.m in Sources */,
 				EB478FFC2061341F00EDCD64 /* UserBaseViewControllor.m in Sources */,
 				341E652721045A42007EB685 /* NetworkChecker.m in Sources */,
+				34629135217C701200128B79 /* NSDate+Extension.m in Sources */,
 				EB1717931FF5E6B600CBDB81 /* EngineerTouYingJiViewCtrl.m in Sources */,
 				EBDB4547205D56D5000ABAB0 /* LightSliderButton.m in Sources */,
 				04DE1EAD1AD6AEE000D49E2F /* SDWebImageCompat.m in Sources */,
@@ -5267,6 +5291,7 @@
 				344F5F5620EBBA24007CAB97 /* AirConditionRightView.m in Sources */,
 				341671841FBA9765001D33D0 /* SignupViewController.m in Sources */,
 				EB03F5491FBDEB8900865541 /* EnginnerHomeViewController.m in Sources */,
+				34629136217C701200128B79 /* UIView+Extension.m in Sources */,
 				EB62DFFC20DE85E300144EE0 /* AudioEProcessorAutoMixProxy.m in Sources */,
 				343733AE1FE402E80071C902 /* JHSlideView.m in Sources */,
 				349DADE3206E8D02001593DE /* AudioEPlayer.m in Sources */,
@@ -5288,6 +5313,7 @@
 				EB7333F42041046400AE60B8 /* AirCleanRightView.m in Sources */,
 				EB62DF7720D7A04D00144EE0 /* TeslariaComboChooser.m in Sources */,
 				34A8965320443184007934E1 /* GradeLineView.m in Sources */,
+				34629134217C701200128B79 /* WSDatePickerView.m in Sources */,
 				EBF6A72C1FC8486000260FF0 /* UserAudioPlayerSettingsViewCtrl.m in Sources */,
 				EB5A47FD208AE2D500564C06 /* BrandCategoryNoUtil.m in Sources */,
 				34CC7855209AE0D10057A2C1 /* UIImage+KVNImageEffects.m in Sources */,
@@ -5353,8 +5379,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: JingLong Zhou (B4CA7N586P)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: JingLong Zhou (B4CA7N586P)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: AS-CN (Beijing) Co., Ltd.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: AS-CN (Beijing) Co., Ltd.";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -5396,8 +5422,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: JingLong Zhou (B4CA7N586P)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: JingLong Zhou (B4CA7N586P)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: AS-CN (Beijing) Co., Ltd.";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: AS-CN (Beijing) Co., Ltd.";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -5422,10 +5448,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: JingLong Zhou (B4CA7N586P)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: JingLong Zhou (B4CA7N586P)";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = ES8777A4V4;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9FDG53LV84;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5444,10 +5470,9 @@
 					"$(PROJECT_DIR)/RegSDK",
 				);
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sz1.veenoon;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sz.veenoon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "86cd8fd0-e315-4fd2-a661-eaf71e7f10d0";
-				PROVISIONING_PROFILE_SPECIFIER = DevTest;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "veenoon/Engineer/Audio/RIghtView/AudioProcess/veenoon-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
@@ -5461,10 +5486,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: JingLong Zhou (B4CA7N586P)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: JingLong Zhou (B4CA7N586P)";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = ES8777A4V4;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9FDG53LV84;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5483,10 +5508,9 @@
 					"$(PROJECT_DIR)/RegSDK",
 				);
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sz1.veenoon;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sz.veenoon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "86cd8fd0-e315-4fd2-a661-eaf71e7f10d0";
-				PROVISIONING_PROFILE_SPECIFIER = DevTest;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "veenoon/Engineer/Audio/RIghtView/AudioProcess/veenoon-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				VALID_ARCHS = "arm64 armv7 armv7s";

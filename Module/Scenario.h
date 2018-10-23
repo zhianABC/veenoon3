@@ -59,5 +59,6 @@
 
 - (void) uploadToRegulusCenter;
 
+- (BOOL) checkNeedReload;
 
 @end

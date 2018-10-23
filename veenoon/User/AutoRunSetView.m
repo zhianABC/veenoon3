@@ -17,6 +17,7 @@
 #import "Utilities.h"
 #import "NSDate-Helper.h"
 #import "KVNProgress.h"
+#import "WSDatePickerView.h"
 
 #define SCEN_PICKER_WIDTH  300
 
@@ -27,9 +28,11 @@ UITableViewDataSource>
 {
     UIView *whiteView;
     
-    UIDatePicker *_datePicker;
+    //UIDatePicker *_datePicker;
     UIPickerView *_scriptPicker;
     UITableView *_weakPicker;
+    
+    WSDatePickerView * timepicker;
     
     int col;
     
@@ -52,6 +55,7 @@ UITableViewDataSource>
 @synthesize _selected;
 @synthesize ctrl;
 @synthesize _schedule;
+
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -95,13 +99,12 @@ UITableViewDataSource>
         colL.text = @"时间";
         
         
-        _datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(x,
-                                                                     40,
-                                                                     300,
-                                                                     300)];
-        _datePicker.datePickerMode = UIDatePickerModeDateAndTime;
-        [whiteView addSubview:_datePicker];
-        [_datePicker setLocale:[NSLocale currentLocale]];
+        CGRect rc = CGRectMake(x, 40, 300, 300);
+        timepicker = [[WSDatePickerView alloc]
+                                         initWithDateStyle:DateStyleShowYearMonthDayHourMinute frame:rc];
+        timepicker.dateLabelColor = [UIColor orangeColor];//年-月-日-时-分 颜色
+        timepicker.datePickerColor = [UIColor blackColor];//滚轮日期颜色
+        [whiteView addSubview:timepicker];
         
         
         x+=300;
@@ -120,7 +123,7 @@ UITableViewDataSource>
         colL.text = @"执行场景";
         
         self._scripts = [NSMutableArray array];
-        self._weaks = [NSMutableArray array];
+        //self._weaks = [NSMutableArray array];
         
         _scriptPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(x, 40,
                                                                        300,
@@ -180,8 +183,35 @@ UITableViewDataSource>
         int x = (frame.size.width - 800)/2.0;
         
         UILabel* colL = [[UILabel alloc] initWithFrame:CGRectMake(x,
-                                                                  10,
-                                                                  300, 20)];
+                                                         10,
+                                                         200, 20)];
+        colL.backgroundColor = [UIColor clearColor];
+        [whiteView addSubview:colL];
+        colL.font = [UIFont systemFontOfSize:15];
+        colL.textColor  = [UIColor blackColor];
+        colL.textAlignment = NSTextAlignmentCenter;
+        colL.text = @"重复";
+        
+        self._selected = [NSMutableDictionary dictionary];
+        
+        _weakPicker = [[UITableView alloc] initWithFrame:CGRectMake(x,
+                                                                    40,
+                                                                    200,
+                                                                    300)
+                                                   style:UITableViewStylePlain];
+        _weakPicker.delegate = self;
+        _weakPicker.dataSource = self;
+        _weakPicker.backgroundColor = [UIColor clearColor];
+        _weakPicker.separatorColor = [UIColor clearColor];
+        _weakPicker.separatorStyle = UITableViewCellSeparatorStyleNone;
+        [whiteView addSubview:_weakPicker];
+        
+        x+=200;
+        x+=50;
+        
+        colL = [[UILabel alloc] initWithFrame:CGRectMake(x,
+                                                         10,
+                                                         300, 20)];
         colL.backgroundColor = [UIColor clearColor];
         [whiteView addSubview:colL];
         colL.font = [UIFont systemFontOfSize:15];
@@ -190,15 +220,22 @@ UITableViewDataSource>
         colL.text = @"开始时间";
         
         
-        _datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(x,
-                                                                     40,
-                                                                     300,
-                                                                     300)];
-        _datePicker.datePickerMode = UIDatePickerModeDateAndTime;
-        [whiteView addSubview:_datePicker];
-        [_datePicker setLocale:[NSLocale currentLocale]];
-        _datePicker.minimumDate = [NSDate date];
+        CGRect rc = CGRectMake(x, 40, 300, 300);
+        timepicker = [[WSDatePickerView alloc]
+                                         initWithDateStyle:DateStyleShowHourMinute frame:rc];
+        timepicker.dateLabelColor = [UIColor orangeColor];//年-月-日-时-分 颜色
+        timepicker.datePickerColor = [UIColor blackColor];//滚轮日期颜色
+        [whiteView addSubview:timepicker];
         
+//        _datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(x,
+//                                                                     40,
+//                                                                     300,
+//                                                                     300)];
+//        _datePicker.datePickerMode = UIDatePickerModeCountDownTimer;
+//        [whiteView addSubview:_datePicker];
+//        [_datePicker setLocale:[NSLocale currentLocale]];
+//        _datePicker.minimumDate = [NSDate date];
+//
         x+=300;
         x+=50;
         
@@ -225,33 +262,6 @@ UITableViewDataSource>
         _scriptPicker.showsSelectionIndicator = YES;
         
         [whiteView addSubview:_scriptPicker];
-        
-        x+=200;
-        x+=50;
-        
-        colL = [[UILabel alloc] initWithFrame:CGRectMake(x,
-                                                         10,
-                                                         200, 20)];
-        colL.backgroundColor = [UIColor clearColor];
-        [whiteView addSubview:colL];
-        colL.font = [UIFont systemFontOfSize:15];
-        colL.textColor  = [UIColor blackColor];
-        colL.textAlignment = NSTextAlignmentCenter;
-        colL.text = @"重复";
-        
-        self._selected = [NSMutableDictionary dictionary];
-        
-        _weakPicker = [[UITableView alloc] initWithFrame:CGRectMake(x,
-                                                                    40,
-                                                                    200,
-                                                                    300)
-                                                   style:UITableViewStylePlain];
-        _weakPicker.delegate = self;
-        _weakPicker.dataSource = self;
-        _weakPicker.backgroundColor = [UIColor clearColor];
-        _weakPicker.separatorColor = [UIColor clearColor];
-        _weakPicker.separatorStyle = UITableViewCellSeparatorStyleNone;
-        [whiteView addSubview:_weakPicker];
         
         UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0,
                                                                   CGRectGetHeight(whiteView.frame)-50,
@@ -303,7 +313,7 @@ UITableViewDataSource>
     
     NSMutableDictionary *datas = [NSMutableDictionary dictionary];
     
-    NSDate *date =_datePicker.date;
+    NSDate *date = [timepicker getSelectedDate];
     
     NSInteger m_id = 0;
     NSString *atName = @"自动化";
@@ -581,22 +591,31 @@ UITableViewDataSource>
         
         NSString *datestr = [NSString stringWithFormat:@"%@ %@", ymd,hms];
         
-        _datePicker.minimumDate = nil;
+        timepicker.minLimitDate = nil;
     
-        _datePicker.date = [NSDate dateFromString:datestr
+        NSDate *curdate = [NSDate dateFromString:datestr
                                        withFormat:@"yyyy-MM-dd HH:mm:ss"];
+        
+        [timepicker setCurrentDate:curdate];
     }
     else
     {
-        _datePicker.minimumDate = [NSDate date];
+        timepicker.minLimitDate = [NSDate date];
     }
-    [_weaks addObject:@{@"name":@"周日",@"value":@"Sun"}];
-    [_weaks addObject:@{@"name":@"周一",@"value":@"Mon"}];
-    [_weaks addObject:@{@"name":@"周二",@"value":@"Tues"}];
-    [_weaks addObject:@{@"name":@"周三",@"value":@"Wed"}];
-    [_weaks addObject:@{@"name":@"周四",@"value":@"Thurs"}];
-    [_weaks addObject:@{@"name":@"周五",@"value":@"Fri"}];
-    [_weaks addObject:@{@"name":@"周六",@"value":@"Sat"}];
+    if(_weaks)
+    {
+        [_weaks addObject:@{@"name":@"周日",@"value":@"Sun"}];
+        [_weaks addObject:@{@"name":@"周一",@"value":@"Mon"}];
+        [_weaks addObject:@{@"name":@"周二",@"value":@"Tues"}];
+        [_weaks addObject:@{@"name":@"周三",@"value":@"Wed"}];
+        [_weaks addObject:@{@"name":@"周四",@"value":@"Thurs"}];
+        [_weaks addObject:@{@"name":@"周五",@"value":@"Fri"}];
+        [_weaks addObject:@{@"name":@"周六",@"value":@"Sat"}];
+        
+        [_weakPicker reloadData];
+        
+        timepicker.minLimitDate = nil;
+    }
     
     [_scriptPicker selectRow:currentRow
                  inComponent:0
@@ -616,9 +635,7 @@ UITableViewDataSource>
             }
         }
     }
-
     
-    [_weakPicker reloadData];
 }
 
 

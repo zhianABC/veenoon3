@@ -40,25 +40,10 @@
                                  nil];
     NSMutableDictionary *dic2 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"上海", @"name",
                                  nil];
-    NSMutableDictionary *dic3 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"乌鲁木齐", @"name",
-                                 nil];
-    NSMutableDictionary *dic4 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"齐齐哈尔", @"name",
-                                 nil];
-    NSMutableDictionary *dic5 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"广州", @"name",
-                                 nil];
-    NSMutableDictionary *dic6 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"大连", @"name",
-                                 nil];
-    NSMutableDictionary *dic7 = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"深圳", @"name",
-                                 nil];
     
     [_monitorRoomList addObject:dic1];
     [_monitorRoomList addObject:dic2];
-    [_monitorRoomList addObject:dic3];
-    [_monitorRoomList addObject:dic4];
-    [_monitorRoomList addObject:dic5];
-    [_monitorRoomList addObject:dic6];
-    [_monitorRoomList addObject:dic7];
-    
+       
     [super setTitleAndImage:@"env_corner_jiankong.png" withTitle:@"监控"];
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];

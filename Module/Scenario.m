@@ -163,6 +163,14 @@
 
 }
 
+- (BOOL) checkNeedReload{
+    
+    if(_rgsSceneEvent)
+        return NO;
+    
+    return YES;
+}
+
 - (void) fillWithData:(NSMutableDictionary*)data{
     
     self._scenarioData = [NSMutableDictionary dictionaryWithDictionary:data];
