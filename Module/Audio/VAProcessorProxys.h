@@ -113,6 +113,8 @@
  SET_PEQ
  */
 
+- (void) getCurrentDataState;
+
 - (void) checkRgsProxyCommandLoad;
 
 //批量获取后，赋值

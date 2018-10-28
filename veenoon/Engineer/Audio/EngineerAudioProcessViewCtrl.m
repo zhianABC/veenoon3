@@ -60,7 +60,7 @@
 // <VAProcessorProxys>
 @property (nonatomic, strong) NSMutableArray * _inputProxys;
 @property (nonatomic, strong) NSMutableArray * _outputProxys;
-
+@property (nonatomic, strong) NSMutableDictionary * _proxysMap;
 @end
 
 @implementation EngineerAudioProcessViewCtrl
@@ -72,8 +72,9 @@
 @synthesize _outputProxys;
 
 @synthesize _currentAudioDevices;
-
 @synthesize _isChoosedCmdToScenario;
+
+@synthesize _proxysMap;
 
 - (void) viewWillAppear:(BOOL)animated
 {
@@ -205,6 +206,11 @@
     
     [self.view bringSubviewToFront:bottomBar];
     
+    self._proxysMap = [NSMutableDictionary dictionary];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(notifyProxyGotCurStateVals:)
+                                                 name:NOTIFY_PROXY_CUR_STATE_GOT_LB
+                                               object:nil];
     
     [self getCurrentDeviceDriverProxys];
 }
@@ -334,6 +340,8 @@
 
 - (void) initChannels{
     
+    [self._proxysMap removeAllObjects];
+    
     [[_proxysView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     [_inputBtnArray removeAllObjects];
@@ -377,6 +385,9 @@
                 vap._rgsProxyObj = proxy;
                 [_inputProxys addObject:vap];
                 
+                if(![_curProcessor.config count])
+                    [vap getCurrentDataState];
+                
                 //[vap checkRgsProxyCommandLoad];
             }
             else if([proxy.type isEqualToString:@"Audio Out"])
@@ -384,6 +395,9 @@
                 VAProcessorProxys *vap = [[VAProcessorProxys alloc] init];
                 vap._rgsProxyObj = proxy;
                 [_outputProxys addObject:vap];
+                
+                if(![_curProcessor.config count])
+                    [vap getCurrentDataState];
                 
                 //[vap checkRgsProxyCommandLoad];
             }
@@ -439,6 +453,12 @@
         btn.data = vap;
         [_proxysView addSubview:btn];
         
+        //将旋钮和ProxyId做成map，更新旋钮的初始状态
+        if(vap._rgsProxyObj){
+            [self._proxysMap setObject:btn
+                                forKey:[NSNumber numberWithInteger:vap._rgsProxyObj.m_id]];
+        }
+        
         [_inputBtnArray addObject:btn];
         
         btn._titleLabel.text = vap._rgsProxyObj.name;
@@ -486,6 +506,11 @@
         btn.data = vap;
         [_proxysView addSubview:btn];
         
+        //将旋钮和ProxyId做成map，更新旋钮的初始状态
+        if(vap._rgsProxyObj){
+            [self._proxysMap setObject:btn
+                                forKey:[NSNumber numberWithInteger:vap._rgsProxyObj.m_id]];
+        }
         
         btn._titleLabel.text = vap._rgsProxyObj.name;
         
@@ -498,6 +523,21 @@
         index++;
     }
     //[_curProcessor syncDriverIPProperty];
+}
+
+#pragma mark --Proxy Current State Got
+- (void) notifyProxyGotCurStateVals:(NSNotification*)notify{
+    
+    id key = [notify.object objectForKey:@"proxy"];
+    
+    id ctrl = [_proxysMap objectForKey:key];
+    if([ctrl isKindOfClass:[SlideButton class]])
+    {
+        SlideButton *pbtn = ctrl;
+        VAProcessorProxys *vap = pbtn.data;
+        float p = fabs(([vap getAnalogyGain] - minAnalogyGain)/(maxAnalogyGain-minAnalogyGain));
+        [pbtn setCircleValue:p];
+    }
 }
 
 //value = 0....1
@@ -844,4 +884,11 @@
 - (void) cancelAction:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+- (void) dealloc
+{
+    [self._proxysMap removeAllObjects];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 @end

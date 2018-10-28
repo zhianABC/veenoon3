@@ -117,8 +117,8 @@
     {
         _isMute = NO;
         _isDigitalMute = NO;
-        _voiceDb = 0;
-        _digitalGain = 0;
+        _voiceDb = -70;
+        _digitalGain = -70;
         
         _inverted = NO;
         self._is48V = NO;
@@ -181,10 +181,10 @@
             
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
             [dic setObject:freq forKey:@"freq"];
-            [dic setObject:@"0" forKey:@"gain"];
-            [dic setObject:@"43" forKey:@"q"];
+            [dic setObject:@"-20" forKey:@"gain"];
+            [dic setObject:@"0" forKey:@"q"];
             [dic setObject:@"6.00" forKey:@"q_val"];
-            [dic setObject:@"False" forKey:@"enable"];
+            [dic setObject:@"True" forKey:@"enable"];
             [dic setObject:@"0" forKey:@"is_set"];
             
             [dic setObject:[NSString stringWithFormat:@"%d", i+1]
@@ -203,6 +203,165 @@
     }
     
     return self;
+}
+
+- (void) getCurrentDataState
+{
+    if(_rgsProxyObj)
+    {
+        IMP_BLOCK_SELF(VAProcessorProxys);
+        [[RegulusSDK sharedRegulusSDK] GetProxyCurState:_rgsProxyObj.m_id completion:^(BOOL result, NSDictionary *state, NSError *error) {
+            if (result) {
+                if ([state count])
+                {
+                    [block_self parseStateInitsValues:state];
+                }
+            }
+        }];
+    }
+}
+
+- (void) parseStateInitsValues:(NSDictionary*)state{
+    
+    id val = [state objectForKey:@"48V"];
+    if([val isEqualToString:@"True"])
+    {
+        self._is48V = YES;
+    }
+    else
+    {
+        self._is48V = NO;
+    }
+    
+    val = [state objectForKey:@"AG"];
+    self._voiceDb = [val floatValue];
+    
+    val = [state objectForKey:@"DG"];
+    self._digitalGain = [val floatValue];
+    
+    val = [state objectForKey:@"DELAY"];
+    self._yanshiqiSlide = [NSString stringWithFormat:@"%0.2f", [val floatValue]];
+    
+    val = [state objectForKey:@"D_MUTE"];
+    if([val isEqualToString:@"True"])
+    {
+        self._isDigitalMute = YES;
+    }
+    else
+    {
+        self._isDigitalMute = NO;
+    }
+    
+    val = [state objectForKey:@"FB_CTRL"];
+    if([val isEqualToString:@"True"])
+    {
+        self._isFanKuiYiZhiStarted = YES;
+    }
+    else
+    {
+        self._isFanKuiYiZhiStarted = NO;
+    }
+    
+    val = [state objectForKey:@"HIGH_FILTER_ENABLE"];
+    if([val isEqualToString:@"True"])
+    {
+        self._islvboGaotongStart = YES;
+    }
+    else
+    {
+        self._islvboGaotongStart = NO;
+    }
+    
+    val = [state objectForKey:@"HIGH_FILTER_RATE"];
+    self._lvboGaotongPinLv = [NSString stringWithFormat:@"%d", [val intValue]];
+    
+    val = [state objectForKey:@"HIGH_FILTER_SL"];
+    self._lvbojunhengGaotongXielv = val;
+    
+    val = [state objectForKey:@"HIGH_FILTER_TYPE"];
+    self._lvbojunhengGaotongType = val;
+    
+    val = [state objectForKey:@"INVERTED"];
+    if([val isEqualToString:@"True"])
+    {
+        self._inverted = YES;
+    }
+    else
+    {
+        self._inverted = NO;
+    }
+    
+    
+    val = [state objectForKey:@"LOW_FILTER_ENABLE"];
+    if([val isEqualToString:@"True"])
+    {
+        self._islvboDitongStart = YES;
+    }
+    else
+    {
+        self._islvboDitongStart = NO;
+    }
+    
+    val = [state objectForKey:@"LOW_FILTER_RATE"];
+    self._lvboDitongFreq = [NSString stringWithFormat:@"%d", [val intValue]];
+    
+    val = [state objectForKey:@"LOW_FILTER_SL"];
+    self._lvbojunhengGaotongXielv = val;
+    
+    val = [state objectForKey:@"LOW_FILTER_TYPE"];
+    self._lvbojunhengDitongType = val;
+    
+    
+    self._micDb = [state objectForKey:@"MIC_DB"];
+    
+    val = [state objectForKey:@"MUTE"];
+    if([val isEqualToString:@"True"])
+    {
+        self._isMute = YES;
+    }
+    else
+    {
+        self._isMute = NO;
+    }
+    
+    self._mode = [state objectForKey:@"Mode"];
+    
+    val = [state objectForKey:@"NOISE_GATE_ENABLE"];
+    if([val isEqualToString:@"True"])
+    {
+        self._isZaoshengStarted = YES;
+    }
+    else
+    {
+        self._isZaoshengStarted = NO;
+    }
+    
+    
+    val = [state objectForKey:@"PRESS_LIMIT_ENABLE"];
+    if([val isEqualToString:@"True"])
+    {
+        self._isyaxianStart = YES;
+    }
+    else
+    {
+        self._isyaxianStart = NO;
+    }
+    
+    val = [state objectForKey:@"PRESS_LIMIT_RECOVER_DUR"];
+    self._yaxianRecoveryTime = [NSString stringWithFormat:@"%d", [val intValue]];
+    
+    val = [state objectForKey:@"PRESS_LIMIT_START_DUR"];
+    self._yaxianStartTime = [NSString stringWithFormat:@"%d", [val intValue]];
+    
+    val = [state objectForKey:@"PRESS_LIMIT_SL"];
+    self._yaxianXielv = [NSString stringWithFormat:@"%d", [val intValue]];
+    
+    val = [state objectForKey:@"PRESS_LIMIT_TH"];
+    self._yaxianFazhi = [NSString stringWithFormat:@"%d", [val intValue]];
+    
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_PROXY_CUR_STATE_GOT_LB
+                                                        object:@{@"proxy":@(_rgsProxyObj.m_id)}];
 }
 
 - (NSDictionary *)getScenarioSliceLocatedShadow{
@@ -225,7 +384,6 @@
         if([cmd isEqualToString:@"SET_ANALOGY_GRAIN"])
         {
             _voiceDb = [[param objectForKey:@"AG"] floatValue];
-
         }
         else if([cmd isEqualToString:@"SET_MUTE"])
         {
@@ -645,33 +803,33 @@
     self._lvboGaotongXielvArray = [self getHighSL];
     
     
-    if([self._lvboGaotongArray count])
-        self._lvbojunhengGaotongType = [self._lvboGaotongArray objectAtIndex:0];
-    
-    if([self._lvboGaotongXielvArray count])
-    {
-        self._lvbojunhengGaotongXielv = [_lvboGaotongXielvArray objectAtIndex:0];
-    }
+//    if([self._lvboGaotongArray count])
+//        self._lvbojunhengGaotongType = [self._lvboGaotongArray objectAtIndex:0];
+//
+//    if([self._lvboGaotongXielvArray count])
+//    {
+//        self._lvbojunhengGaotongXielv = [_lvboGaotongXielvArray objectAtIndex:0];
+//    }
     
     
     self._lvboDitongArray = [self getLowFilters];
-    if([self._lvboDitongArray count])
-        self._lvbojunhengDitongType = [self._lvboDitongArray objectAtIndex:0];
-    
+//    if([self._lvboDitongArray count])
+//        self._lvbojunhengDitongType = [self._lvboDitongArray objectAtIndex:0];
+//
     self._lvboDitongXielvArray = [self getLowSL];
-    if([self._lvboDitongXielvArray count])
-        self._lvboDitongSL = [self._lvboDitongXielvArray objectAtIndex:0];
-    
+//    if([self._lvboDitongXielvArray count])
+//        self._lvboDitongSL = [self._lvboDitongXielvArray objectAtIndex:0];
+//
     
     self._lvboBoDuanArray = [self getWaveTypes];
-    if([self._lvboBoDuanArray count])
-    {
-        NSString *bandDefType = [self._lvboBoDuanArray objectAtIndex:0];
-        for(NSMutableDictionary *dic in waves16_feq_gain_q)
-        {
-            [dic setObject:bandDefType forKey:@"type"];
-        }
-    }
+//    if([self._lvboBoDuanArray count])
+//    {
+//        NSString *bandDefType = [self._lvboBoDuanArray objectAtIndex:0];
+//        for(NSMutableDictionary *dic in waves16_feq_gain_q)
+//        {
+//            [dic setObject:bandDefType forKey:@"type"];
+//        }
+//    }
     
 }
 
@@ -1126,10 +1284,10 @@
         
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setObject:freq forKey:@"freq"];
-        [dic setObject:@"0" forKey:@"gain"];
-        [dic setObject:@"43" forKey:@"q"];
+        [dic setObject:@"-20" forKey:@"gain"];
+        [dic setObject:@"0" forKey:@"q"];
         [dic setObject:@"6.00" forKey:@"q_val"];
-        [dic setObject:@"False" forKey:@"enable"];
+        [dic setObject:@"True" forKey:@"enable"];
         [dic setObject:@"1" forKey:@"is_set"];
         
         [dic setObject:[NSString stringWithFormat:@"%d", i+1]

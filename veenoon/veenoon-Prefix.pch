@@ -154,4 +154,6 @@
 
 #define LOGIN_REGULUS 1
 
+#define NOTIFY_PROXY_CUR_STATE_GOT_LB @"NotifyProxyWhenGotCurStateVals"
+
 typedef void (^RightSetViewCallbackBlock)(int deviceIndex);
