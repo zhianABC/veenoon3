@@ -402,7 +402,7 @@
     
     [_client requestWithSusessBlockWithImage:^(id lParam, id rParam) {
         
-        [KVNProgress showSuccess];
+        [KVNProgress showSuccessWithStatus:@"上传完成"];
         
     } FailBlock:^(id lParam, id rParam) {
         

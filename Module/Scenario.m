@@ -474,18 +474,23 @@
     
     NSMutableDictionary *udata = [NSMutableDictionary dictionary];
     NSError *error = nil;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_scenarioData
-                                                       options:NSJSONWritingPrettyPrinted
-                                                         error: &error];
-    
-    NSString *jsonresult = [[NSString alloc] initWithData:jsonData
-                                                 encoding:NSUTF8StringEncoding];
-    
-    if(jsonresult)
-    {
-        jsonresult = [jsonresult stringByReplacingOccurrencesOfString:@"\n"
-                                                           withString:@""];
+    NSString *jsonresult = nil;
+    if (@available(iOS 11.0, *)) {
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_scenarioData
+                                                           options:NSJSONWritingSortedKeys
+                                                             error: &error];
+        jsonresult = [[NSString alloc] initWithData:jsonData
+                                        encoding:NSUTF8StringEncoding];
+    } else {
+        // Fallback on earlier versions
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:_scenarioData
+                                                           options:NSJSONWritingPrettyPrinted
+                                                             error: &error];
+        jsonresult = [[NSString alloc] initWithData:jsonData
+                                        encoding:NSUTF8StringEncoding];
+        jsonresult = [jsonresult stringByReplacingOccurrencesOfString:@"\n" withString:@""];
     }
+
     
     if(jsonresult == nil)
         jsonresult  = @"";

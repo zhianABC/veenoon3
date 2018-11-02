@@ -169,6 +169,28 @@
     return YES;
 }
 
+- (void) faildGetWifiConnect{
+    
+    User *u = [[DataBase sharedDatabaseInstance] queryUser:_userNameField.text];
+    if (u) {
+        if([_userNameField.text isEqualToString:u._cellphone] &&
+           [_userPwdField.text isEqualToString:u._password]) {
+            
+            if(u.is_engineer)
+            {
+                [self successLogin];
+            }
+            
+        } else {
+            
+            [Utilities showMessage:@"用户名或密码错误！" ctrl:self];
+        }
+    } else {
+        
+        [Utilities showMessage:@"没有离线登录的账号！" ctrl:self];
+    }
+}
+
 -(void) loginAction:(UIButton*) sender {
 
     NSString *userName = _userNameField.text;
@@ -183,6 +205,15 @@
         
         [Utilities showMessage:@"请输入密码！" ctrl:self];
         
+        return;
+    }
+    
+    if([[NetworkChecker sharedNetworkChecker] networkStatus] == NotReachable) {
+        //没有网络的情况下
+        
+        [self faildGetWifiConnect];
+        
+        //返回
         return;
     }
     
@@ -255,6 +286,8 @@
         NSString *response = lParam;
         NSLog(@"%@", response);
         
+        [block_self faildGetWifiConnect];
+        
         [KVNProgress dismiss];
     }];
 }
@@ -262,6 +295,9 @@
 - (void) processLoginData:(NSDictionary*)data{
     
     User *u = [[User alloc] initWithDicionary:data];
+    
+    u._password = _userPwdField.text;
+    [[DataBase sharedDatabaseInstance] saveUserData:u];
     
     if(u.is_engineer)
     {

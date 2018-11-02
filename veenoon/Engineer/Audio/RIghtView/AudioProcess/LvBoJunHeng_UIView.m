@@ -1422,6 +1422,11 @@
     maxQ = [[set objectForKey:@"Q_max"] intValue];
     minQ = [[set objectForKey:@"Q_min"] intValue];
     
+    int index = [_curProxy indexOfHighFilterSLValue];
+    [fglm setHPFilterWithSlope:index];
+    
+    index = [_curProxy indexOfLowFilterSLValue];
+    [fglm setLPFilterWithSlope:index];
     
     [self updateAllBand];
     [self updateCurrentBrand];

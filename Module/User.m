@@ -25,7 +25,7 @@
 @synthesize zone;
 
 @synthesize _cellphone;
-
+@synthesize _password;
 
 @synthesize address;
 @synthesize license;

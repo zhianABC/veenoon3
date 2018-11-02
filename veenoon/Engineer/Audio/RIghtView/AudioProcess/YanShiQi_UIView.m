@@ -74,6 +74,8 @@
         [self contentViewComps];
         
         [self createContentViewBtns];
+        
+        self.showOpMenus = NO;
     }
     
     return self;

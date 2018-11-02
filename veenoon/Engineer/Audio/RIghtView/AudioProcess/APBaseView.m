@@ -21,6 +21,7 @@
 @synthesize _channelBtns;
 @synthesize _proxys;
 @synthesize ctrl;
+@synthesize showOpMenus;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -36,6 +37,8 @@
         tapGesture.cancelsTouchesInView =  NO;
         tapGesture.numberOfTapsRequired = 1;
         [self addGestureRecognizer:tapGesture];
+        
+        self.showOpMenus = YES;
         
         //[self layoutChannelBtns:16];
        
@@ -103,22 +106,31 @@
 
 - (void) longPressed0:(UILongPressGestureRecognizer*)sender{
     
-    UIView* view = sender.view;
+    if(!showOpMenus)
+        return;
     
-    if([view isKindOfClass:[UIButton class]])
+    if(sender.state == UIGestureRecognizerStateBegan)
     {
-        [self becomeFirstResponder];
-        UIButton *btn = (UIButton*) view;
-        [self channelBtnAction:btn];
-        CGRect rect = [self convertRect:view.frame fromView:view.superview];
+    
+        UIView* view = sender.view;
         
-        UIMenuController *menu = [UIMenuController sharedMenuController];
-        
-        //初始化menu
-        [menu setMenuItems:[self getLongTouchMessageCellMenuList]];
-        [menu setTargetRect:rect inView:self];
-        [menu setMenuVisible:YES animated:YES];
-        
+        if([view isKindOfClass:[UIButton class]])
+        {
+            
+            UIMenuController *menu = [UIMenuController sharedMenuController];
+            
+            [self becomeFirstResponder];
+            UIButton *btn = (UIButton*) view;
+            [self channelBtnAction:btn];
+            CGRect rect = [self convertRect:view.frame fromView:view.superview];
+            
+            //初始化menu
+            [menu setMenuItems:[self getLongTouchMessageCellMenuList]];
+            [menu setTargetRect:rect inView:self];
+            [menu setMenuVisible:YES animated:YES];
+            
+        }
+    
     }
     
 }

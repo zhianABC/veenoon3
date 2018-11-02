@@ -18,6 +18,8 @@
 #import "EngineerPresetScenarioViewCtrl.h"
 #import "UIButton+Color.h"
 #import "DataCenter.h"
+#import "NetworkChecker.h"
+#import "Utilities.h"
 
 @interface HomeViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate, JCActionViewDelegate> {
     
@@ -62,8 +64,13 @@
                                             userInfo:nil
                                              repeats:NO];
     
-    
-    [[DataSync sharedDataSync] logoutCurrentRegulus];
+
+    if([[NetworkChecker sharedNetworkChecker] networkStatus] == NotReachable) {
+        //没有网络的情况下
+        
+        [Utilities showMessage:@"请检查您的网络设置" ctrl:self];
+     
+    }
 
 }
 
@@ -81,9 +88,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-//    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
-//        self.edgesForExtendedLayout = UIRectEdgeNone;
-//    }
     
     //准备插件
     [[DataCenter defaultDataCenter] prepareDrivers];
@@ -109,6 +113,7 @@
     inset.top = -StatusRect.size.height;
     _content.contentInset = inset;
     
+    [[DataSync sharedDataSync] logoutCurrentRegulus];
 }
 
 

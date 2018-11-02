@@ -16,6 +16,7 @@
 #import "UIImageView+WebCache.h"
 #import "UIButton+Color.h"
 #import "DataSync.h"
+#import "NetworkChecker.h"
 
 @interface UserHomeViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, JCActionViewDelegate>{
     NSMutableArray *lableArray;
@@ -182,6 +183,8 @@
     [btnSync addTarget:self
                 action:@selector(dataSyncAction:)
       forControlEvents:UIControlEventTouchUpInside];
+    
+    [[DataSync sharedDataSync] logoutCurrentRegulus];
 }
 
 - (void) dataSyncAction:(id)sender{
@@ -230,6 +233,14 @@
 
 -(void)handleTapGesture:(UIGestureRecognizer*)gestureRecognizer{
     long index = gestureRecognizer.view.tag;
+    
+    if([[NetworkChecker sharedNetworkChecker] networkStatus] == NotReachable) {
+        //没有网络的情况下
+        
+        [Utilities showMessage:@"请检查您的网络设置" ctrl:self];
+        
+        return;
+    }
     
     MeetingRoom *dic = [roomList objectAtIndex:index];
     

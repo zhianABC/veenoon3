@@ -155,10 +155,10 @@
         self._lvboDitongArray = [NSArray array];
         
         self._lvboGaotongXielvArray = [NSArray array];
-        self._lvbojunhengGaotongXielv = @"0";
+        self._lvbojunhengGaotongXielv = @"-6dB";
         
         self._lvboDitongXielvArray = [NSArray array];
-        self._lvboDitongSL = @"-6db";
+        self._lvboDitongSL = @"-6dB";
        
         self._lvboBoDuanArray = [NSArray array];
         
@@ -181,7 +181,7 @@
             
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
             [dic setObject:freq forKey:@"freq"];
-            [dic setObject:@"-20" forKey:@"gain"];
+            [dic setObject:@"0" forKey:@"gain"];
             [dic setObject:@"0" forKey:@"q"];
             [dic setObject:@"6.00" forKey:@"q_val"];
             [dic setObject:@"True" forKey:@"enable"];
@@ -209,15 +209,18 @@
 {
     if(_rgsProxyObj)
     {
-        IMP_BLOCK_SELF(VAProcessorProxys);
-        [[RegulusSDK sharedRegulusSDK] GetProxyCurState:_rgsProxyObj.m_id completion:^(BOOL result, NSDictionary *state, NSError *error) {
-            if (result) {
-                if ([state count])
-                {
-                    [block_self parseStateInitsValues:state];
-                }
-            }
-        }];
+ //       IMP_BLOCK_SELF(VAProcessorProxys);
+//        [[RegulusSDK sharedRegulusSDK] GetProxyCurState:_rgsProxyObj.m_id completion:^(BOOL result, NSDictionary *state, NSError *error) {
+//            if (result) {
+//                if ([state count])
+//                {
+//                    [block_self parseStateInitsValues:state];
+//                }
+//            }
+//        }];
+        
+        [[RegulusSDK sharedRegulusSDK] QueryProxyStateInCallBack:_rgsProxyObj.m_id completion:nil];
+
     }
 }
 
@@ -360,8 +363,8 @@
     self._yaxianFazhi = [NSString stringWithFormat:@"%d", [val intValue]];
     
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_PROXY_CUR_STATE_GOT_LB
-                                                        object:@{@"proxy":@(_rgsProxyObj.m_id)}];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_PROXY_CUR_STATE_GOT_LB
+//                                                        object:@{@"proxy":@(_rgsProxyObj.m_id)}];
 }
 
 - (NSDictionary *)getScenarioSliceLocatedShadow{
@@ -1284,7 +1287,7 @@
         
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setObject:freq forKey:@"freq"];
-        [dic setObject:@"-20" forKey:@"gain"];
+        [dic setObject:@"0" forKey:@"gain"];
         [dic setObject:@"0" forKey:@"q"];
         [dic setObject:@"6.00" forKey:@"q_val"];
         [dic setObject:@"True" forKey:@"enable"];
@@ -2207,6 +2210,21 @@
     return self._lvboGaotongXielvArray;
 }
 
+- (int) indexOfHighFilterSLValue{
+    
+    int res = 0;
+    
+    if(_lvbojunhengGaotongXielv)
+    {
+        res = (int)[_lvboGaotongXielvArray indexOfObject:_lvbojunhengGaotongXielv];
+        
+        if(res < 0)
+            res = 0;
+    }
+    
+    return res;
+}
+
 - (void) sendHighFilterCmd{
     
     _isSetOK = YES;
@@ -2349,6 +2367,21 @@
     
     return _lvboDitongXielvArray;
     
+}
+
+- (int) indexOfLowFilterSLValue{
+    
+    int res = 0;
+    
+    if(_lvboDitongSL)
+    {
+        res = (int)[_lvboDitongXielvArray indexOfObject:_lvboDitongSL];
+        
+        if(res < 0)
+            res = 0;
+    }
+    
+    return res;
 }
 
 - (NSDictionary*)getLowRateRange{

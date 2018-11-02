@@ -14,6 +14,7 @@
 #import "DataSync.h"
 #import "EngineerPortPluginViewCtrl.h"
 #import "DataCenter.h"
+#import "WaitDialog.h"
 
 @interface EnginnerChuanGanDevicePluginViewCtrl () <CenterCustomerPickerViewDelegate> {
     IconCenterTextButton *_rentichuanganBtn;
@@ -290,6 +291,9 @@
     
     NSArray *arr = [nameDriverMap objectForKey:type];
     
+    if(!arr || [arr count] == 0)
+        return;
+    
     NSMutableArray *brands = [NSMutableArray array];
     
     self._tmpMap = [NSMutableDictionary dictionary];
@@ -358,6 +362,14 @@
         
         id key = [device objectForKey:@"driver"];
         obj._driverInfo = [[DataSync sharedDataSync] driverInfoByUUID:key];
+        
+        if(obj._driverInfo == nil)
+        {
+            [[WaitDialog sharedAlertDialog] setTitle:@"未找到对应设备的插件信息"];
+            [[WaitDialog sharedAlertDialog] animateShow];
+            
+            return;
+        }
         
         obj._plugicon = [device objectForKey:@"icon"];
         obj._plugicon_s = [device objectForKey:@"icon_s"];

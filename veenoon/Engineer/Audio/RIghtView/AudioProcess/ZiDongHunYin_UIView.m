@@ -65,7 +65,7 @@
     int weiYi = 30;
     
     UILabel *addLabel2 = [[UILabel alloc] init];
-    addLabel2.text = @"增益 (dB)";
+    addLabel2.text = @"衰减值 (dB)";
     addLabel2.font = [UIFont systemFontOfSize: 13];
     addLabel2.textColor = [UIColor whiteColor];
     addLabel2.frame = CGRectMake(startX+gap+weiYi, labelY-10, 120, 20);

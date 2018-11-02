@@ -10,6 +10,7 @@
 #import <sqlite3.h>
 
 @class MeetingRoom;
+@class User;
 
 @interface DataBase : NSObject {
 
@@ -39,5 +40,9 @@
 - (int) deleteScenario:(NSDictionary*)scenario;
 - (void) deleteScenarioByRoom:(NSString*)regulus_id;
 - (NSMutableArray*) getSavedScenario:(NSString*)regulus_id;
+
+- (int) saveUserData:(User*)user;
+- (User*) queryUser:(NSString*)cellphone;
+
 
 @end

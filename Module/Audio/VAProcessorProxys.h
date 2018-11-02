@@ -114,6 +114,7 @@
  */
 
 - (void) getCurrentDataState;
+- (void) parseStateInitsValues:(NSDictionary*)state;
 
 - (void) checkRgsProxyCommandLoad;
 
@@ -199,6 +200,7 @@
 - (NSString*) getGaoTongXieLv;
 - (void) controlGaoTongXieLv:(NSString*) gaotongxielv;
 - (NSArray*) getLvBoGaoTongXielvArray;
+- (int) indexOfHighFilterSLValue;
 
 - (NSString*) getDiTongType;
 - (void) controlDiTongType:(NSString*) ditongtype;
@@ -207,6 +209,7 @@
 - (NSString*) getDiTongXieLv;
 - (void) controlDiTongXieLv:(NSString*) ditongxielv;
 - (NSArray*) getLvBoDiTongXielvArray;
+- (int) indexOfLowFilterSLValue;
 
 - (void) controlBandLineType:(NSString*) lineType band:(int)band;
 - (NSArray*) getLvBoBoDuanArray;

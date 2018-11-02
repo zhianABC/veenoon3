@@ -117,7 +117,11 @@
 
 -(void)onRecvDeviceNotify:(RgsDeviceNoteObj *)notify
 {
-    NSLog(@"dev:%ld,notify:%@,param:%@\n",notify.device_id,notify.notify,notify.param);
+    
+    NSLog(@"dev:%ld,notify:%@,param:%@\n",
+          notify.device_id,
+          notify.notify,
+          notify.param);
     [[NSNotificationCenter defaultCenter] postNotificationName:@"RgsDeviceNotify"
                                                         object:notify];
 }

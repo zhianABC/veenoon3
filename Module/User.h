@@ -21,6 +21,7 @@
 @property (nonatomic, strong) NSString *zone;
 
 @property (nonatomic, strong) NSString *_cellphone;
+@property (nonatomic, strong) NSString *_password;
 
 
 @property (nonatomic, strong) NSString *address;

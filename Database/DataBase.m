@@ -130,6 +130,8 @@ static DataBase* sharedInstance = nil;
         
         [self checkScheduleTable];
         
+        [self checkUserTable];
+        
 		return 1;
 	}
 	else {
@@ -954,6 +956,194 @@ static DataBase* sharedInstance = nil;
     return;
 }
 
+
+
+- (void) checkUserTable
+{
+    //userId, userName, userPwd, token, lastLoginDate
+    NSString *s = @"SELECT * FROM sqlite_master WHERE type='table' AND name='tblUserT'";
+    
+    const char *sqlStatement = [s UTF8String];
+    sqlite3_stmt *statement;
+    
+    int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
+    if (success != SQLITE_OK) {
+        NSLog(@"Error: failed to tblUserT");
+        return;
+    }
+    
+    BOOL have = NO;
+    while (sqlite3_step(statement) == SQLITE_ROW) {
+        
+        have = YES;
+    }
+    sqlite3_finalize(statement);
+    
+    if(!have)
+    {
+        //create table
+        s = @"CREATE TABLE tblUserT(id INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL  UNIQUE, cellphone TEXT, password TEXT, data BLOB)";
+        
+        const char * sql = [s UTF8String];
+        sqlite3_stmt *delete_statement = nil;
+        
+        if (sqlite3_prepare_v2(database_, sql, -1, &delete_statement, NULL) != SQLITE_OK) {
+            NSLog(@"Not Prepared DataBase!");
+        }
+        
+        sqlite3_step(delete_statement);
+        sqlite3_finalize(delete_statement);
+    }
+}
+
+- (BOOL)checkUserIsExist:(NSString*)cellphone{
+    
+    const char *sqlStatement = "select * from tblUserT where cellphone = ?";
+    sqlite3_stmt *statement;
+    
+    int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
+    if (success != SQLITE_OK) {
+        NSLog(@"Error: failed to tblUserT");
+        return NO;
+    }
+    
+    sqlite3_bind_text(statement, 1, [cellphone UTF8String], -1, SQLITE_TRANSIENT);
+    
+    
+    BOOL result = NO;
+    while (sqlite3_step(statement) == SQLITE_ROW) {
+        
+        result = YES;
+        
+        break;
+        
+    }
+    sqlite3_finalize(statement);
+    
+    return result;
+}
+
+- (void) updateUser:(User*)user{
+    
+    const char *sqlStatement = "UPDATE tblUserT SET password=?, data=? where cellphone=?";
+    sqlite3_stmt *statement;
+    
+    int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
+    if (success != SQLITE_OK) {
+        NSLog(@"Error: failed to tblUserT");
+        return;
+    }
+    
+    NSString *value = user._password;
+    if(value == nil)
+        value = @"";
+    sqlite3_bind_text(statement, 1, [value UTF8String], -1, SQLITE_TRANSIENT);
+    
+    NSData *archiveData = [NSKeyedArchiver archivedDataWithRootObject:user];
+    sqlite3_bind_blob(statement, 2, [archiveData bytes], (int)[archiveData length], NULL);
+    
+    value = user._cellphone;
+    if(value == nil)
+        value = @"";
+    sqlite3_bind_text(statement, 3, [value UTF8String], -1, SQLITE_TRANSIENT);
+    
+    
+    success = sqlite3_step(statement);
+    sqlite3_finalize(statement);
+    
+    if (success == SQLITE_ERROR) {
+        NSLog(@"Error: failed to insert into tblUserT with message.");
+        return;
+    }
+    
+}
+
+- (int) saveUserData:(User*)user{
+    
+    BOOL yesOrNo = [self checkUserIsExist:user._cellphone];
+    if(yesOrNo)
+    {
+        [self updateUser:user];
+        return 1;
+    }
+    
+    const char *sqlStatement = "insert into tblUserT (cellphone, password, data) VALUES (?,?,?)";
+    sqlite3_stmt *statement;
+    
+    int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
+    if (success != SQLITE_OK) {
+        NSLog(@"Error: failed to tblUserT");
+        return -1;
+    }
+
+    NSString *value = user._cellphone;
+    if(value == nil)
+        value = @"";
+    sqlite3_bind_text(statement, 1, [value UTF8String], -1, SQLITE_TRANSIENT);
+    
+    value = user._password;
+    if(value == nil)
+        value = @"";
+    sqlite3_bind_text(statement, 2, [value UTF8String], -1, SQLITE_TRANSIENT);
+    
+    NSData *archiveData = [NSKeyedArchiver archivedDataWithRootObject:user];
+    sqlite3_bind_blob(statement, 3, [archiveData bytes], (int)[archiveData length], NULL);
+    
+    success = sqlite3_step(statement);
+    sqlite3_finalize(statement);
+    
+    if (success == SQLITE_ERROR) {
+        NSLog(@"Error: failed to insert into tblUserT with message.");
+        return -1;
+    }
+    
+    // NOTE: return the id which insert a record.
+    // we must refresh the dial.id at once,because when we del curren tial by id
+    int tid = (int)sqlite3_last_insert_rowid(database_);
+    
+    return tid;
+}
+
+- (User*) queryUser:(NSString*)cellphone{
+    
+    const char *sqlStatement = "select * from tblUserT where cellphone = ?";
+    sqlite3_stmt *statement;
+    
+    int success = sqlite3_prepare_v2(database_, sqlStatement, -1, &statement, NULL);
+    if (success != SQLITE_OK) {
+        NSLog(@"Error: failed to tblUserT");
+        return nil;
+    }
+    
+    sqlite3_bind_text(statement, 1, [cellphone UTF8String], -1, SQLITE_TRANSIENT);
+    
+    User *u = nil;
+    
+    while (sqlite3_step(statement) == SQLITE_ROW) {
+        
+        char* col1 = (char*)sqlite3_column_text(statement, 1);
+        char* col2 = (char*)sqlite3_column_text(statement, 2);
+       
+        const void* achievement_id       = sqlite3_column_blob(statement, 3);
+        int achievement_idSize           = sqlite3_column_bytes(statement, 3);
+        
+        if(achievement_id)
+        {
+            NSData *data = [[NSData alloc] initWithBytes:achievement_id length:achievement_idSize];
+            u = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+           
+            u._cellphone = [NSString stringWithUTF8String:col1];
+            u._password = [NSString stringWithUTF8String:col2];
+            
+            break;
+        }
+        
+        
+    }
+    sqlite3_finalize(statement);
+    
+    return u;
+}
 
 
 

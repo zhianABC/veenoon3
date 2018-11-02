@@ -57,6 +57,8 @@
         contentView.frame  = CGRectMake(0, y, frame.size.width, 340);
         
         [self contentViewComps];
+        
+        self.showOpMenus = NO;
     }
     
     return self;

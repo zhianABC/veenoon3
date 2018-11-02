@@ -207,10 +207,13 @@
     [self.view bringSubviewToFront:bottomBar];
     
     self._proxysMap = [NSMutableDictionary dictionary];
+    
+    /*
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(notifyProxyGotCurStateVals:)
-                                                 name:NOTIFY_PROXY_CUR_STATE_GOT_LB
+                                                 name:@"RgsDeviceNotify"
                                                object:nil];
+     */
     
     [self getCurrentDeviceDriverProxys];
 }
@@ -528,15 +531,26 @@
 #pragma mark --Proxy Current State Got
 - (void) notifyProxyGotCurStateVals:(NSNotification*)notify{
     
-    id key = [notify.object objectForKey:@"proxy"];
+    RgsDeviceNoteObj *obj = notify.object;
     
-    id ctrl = [_proxysMap objectForKey:key];
-    if([ctrl isKindOfClass:[SlideButton class]])
+    if(obj.device_id && [obj.param isKindOfClass:[NSDictionary class]])
     {
-        SlideButton *pbtn = ctrl;
-        VAProcessorProxys *vap = pbtn.data;
-        float p = fabs(([vap getAnalogyGain] - minAnalogyGain)/(maxAnalogyGain-minAnalogyGain));
-        [pbtn setCircleValue:p];
+        id key = [NSNumber numberWithInteger:obj.device_id];
+        
+        id ctrl = [_proxysMap objectForKey:key];
+        if([ctrl isKindOfClass:[SlideButton class]])
+        {
+            SlideButton *pbtn = ctrl;
+            VAProcessorProxys *proxy = pbtn.data;
+            
+            [proxy parseStateInitsValues:obj.param];
+            
+            float p = fabs(([proxy getAnalogyGain] - minAnalogyGain)/(maxAnalogyGain-minAnalogyGain));
+            [pbtn setCircleValue:p];
+            
+            BOOL isMute = [proxy isProxyMute];
+            [pbtn muteSlider:isMute];
+        }
     }
 }
 
@@ -558,15 +572,20 @@
 
 - (void) didEndSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
-    id data = slbtn.data;
-    if([data isKindOfClass:[VAProcessorProxys class]])
-    {
-        float circleValue = minAnalogyGain + (value * (maxAnalogyGain - minAnalogyGain));
-        [(VAProcessorProxys*)data controlDeviceDb:circleValue
-                                            force:YES];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(200.0 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
         
-        [_zengyiSlider setScaleValue:circleValue];
-    }
+        id data = slbtn.data;
+        if([data isKindOfClass:[VAProcessorProxys class]])
+        {
+            float circleValue = minAnalogyGain + (value * (maxAnalogyGain - minAnalogyGain));
+            
+            [(VAProcessorProxys*)data controlDeviceDb:circleValue
+                                                force:YES];
+            
+            [_zengyiSlider setScaleValue:circleValue];
+        }
+    });
+
 }
 
 
@@ -631,9 +650,15 @@
         }
     }
     
-    if([opts count])
-        [[RegulusSDK sharedRegulusSDK] ControlDeviceByOperation:opts
-                                                     completion:nil];
+    if([opts count]){
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(200.0 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
+            
+            [[RegulusSDK sharedRegulusSDK] ControlDeviceByOperation:opts
+                                                         completion:nil];
+        });
+
+    }
 }
 
 - (void) didSliderMuteChanged:(BOOL)mute object:(id)object{

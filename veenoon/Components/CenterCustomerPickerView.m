@@ -111,12 +111,15 @@
     NSDictionary *section = [_pickerDataArray objectAtIndex:component];
     NSArray *values = [section objectForKey:@"values"];
     
-    NSString *value = [values objectAtIndex:row];
-    
-    [_values setObject:@{@"value":value, @"index":[NSNumber numberWithInteger:row]}
-                forKey:[NSNumber numberWithInteger:component]];
-    
-    self._unitString = value;
+    if(row < [values count])
+    {
+        NSString *value = [values objectAtIndex:row];
+        
+        [_values setObject:@{@"value":value, @"index":[NSNumber numberWithInteger:row]}
+                    forKey:[NSNumber numberWithInteger:component]];
+        
+        self._unitString = value;
+    }
     
     [_myPickerView selectRow:row inComponent:component animated:YES];
 }
@@ -136,21 +139,24 @@
     
     _rowSelected = (int)row;
     
-    NSString *value = [values objectAtIndex:row];
-    [_values setObject:@{@"value":value, @"index":[NSNumber numberWithInteger:row]}
-                forKey:[NSNumber numberWithInteger:component]];
-    
-    self._unitString = value;
-    
-    [pickerView reloadComponent:component];
-    
-    if ([self.delegate_ respondsToSelector:@selector(didChangedPickerValue:)]) {
-        [self.delegate_ didChangedPickerValue:_values];
-    }
-    
-    
-    if ([self.delegate_ respondsToSelector:@selector(didScrollPickerValue:obj:)]) {
-        [self.delegate_ didScrollPickerValue:value obj:self];
+    if(row < [values count])
+    {
+        NSString *value = [values objectAtIndex:row];
+        [_values setObject:@{@"value":value, @"index":[NSNumber numberWithInteger:row]}
+                    forKey:[NSNumber numberWithInteger:component]];
+        
+        self._unitString = value;
+        
+        [pickerView reloadComponent:component];
+        
+        if ([self.delegate_ respondsToSelector:@selector(didChangedPickerValue:)]) {
+            [self.delegate_ didChangedPickerValue:_values];
+        }
+        
+        
+        if ([self.delegate_ respondsToSelector:@selector(didScrollPickerValue:obj:)]) {
+            [self.delegate_ didScrollPickerValue:value obj:self];
+        }
     }
 }
 
@@ -191,32 +197,35 @@
         componentWidth = _cellWidth;
     }
     
-    
-    NSArray *values = [section objectForKey:@"values"];
-    
     UILabel *tL = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, componentWidth, 30)];
     tL.backgroundColor = [UIColor clearColor];
     tL.textAlignment = NSTextAlignmentCenter;
     
-    id valueRow = [values objectAtIndex:row];
-    if([valueRow isKindOfClass:[NSString class]])
+    NSArray *values = [section objectForKey:@"values"];
+    if(row < [values count])
     {
-        tL.text = valueRow;
-    }
-    else if([valueRow isKindOfClass:[NSDictionary class]])
-    {
-        tL.text = [valueRow objectForKey:@"title"];
-    }
-    
-    if (_rowSelected == row) {
-        tL.textColor = _selectColor;
-    } else {
-        tL.textColor = _rowNormalColor;
-    }
-    if (fontSize > 1) {
-        tL.font = [UIFont boldSystemFontOfSize:fontSize];
-    } else {
         
+        
+        id valueRow = [values objectAtIndex:row];
+        if([valueRow isKindOfClass:[NSString class]])
+        {
+            tL.text = valueRow;
+        }
+        else if([valueRow isKindOfClass:[NSDictionary class]])
+        {
+            tL.text = [valueRow objectForKey:@"title"];
+        }
+        
+        if (_rowSelected == row) {
+            tL.textColor = _selectColor;
+        } else {
+            tL.textColor = _rowNormalColor;
+        }
+        if (fontSize > 1) {
+            tL.font = [UIFont boldSystemFontOfSize:fontSize];
+        } else {
+            
+        }
     }
     
     //_unitString = tL.text;

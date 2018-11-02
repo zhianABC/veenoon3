@@ -73,9 +73,9 @@
         } else if (_type == 4) {
             titleL.text = @"选择波段";
         } else if (_type == 5) {
-            titleL.text = @"线路";
+            titleL.text = @"电平类型";
         } else if (_type == 6) {
-            titleL.text = @"话筒";
+            titleL.text = @"灵敏度";
         }
     }
     

@@ -25,6 +25,7 @@
 #import "DataCenter.h"
 #import "M80AttributedLabel.h"
 #import "FQCustomAlert.h"
+#import "DataBase.h"
 
 #define T7DaySecs (7*24*3600)
 
@@ -319,10 +320,10 @@
     if([[NetworkChecker sharedNetworkChecker] networkStatus] == NotReachable) {
         //没有网络的情况下
         
-        User *u = [UserDefaultsKV getUser];
+        User *u = [[DataBase sharedDatabaseInstance] queryUser:_userName.text];
         if (u) {
             if([_userName.text isEqualToString:u._cellphone] &&
-               [_userPwd.text isEqualToString:[UserDefaultsKV getUserPwd]]) {
+               [_userPwd.text isEqualToString:u._password]) {
                 
                 [self checkUserActive];
                 
@@ -424,6 +425,8 @@
     [UserDefaultsKV saveUserPwd:_userPwd.text];
     [UserDefaultsKV saveUser:u];
     
+    u._password = _userPwd.text;
+    [[DataBase sharedDatabaseInstance] saveUserData:u];
     
     [self checkUserActive];
  }

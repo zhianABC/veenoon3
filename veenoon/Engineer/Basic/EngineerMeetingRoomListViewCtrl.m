@@ -172,6 +172,8 @@
       forControlEvents:UIControlEventTouchUpInside];
 
     //[self loadLocalProjects];
+    
+    [[DataSync sharedDataSync] logoutCurrentRegulus];
 }
 
 
