@@ -22,13 +22,11 @@
 
 - (void) getCurrentDataState;
 
-- (NSDictionary *)getChLevelRecords;
+- (BOOL) haveProxyCommandLoaded;
 
 - (void) checkRgsProxyCommandLoad:(NSArray*)cmds;
 
-- (int)getNumberOfLights;
-
-- (void) controlDeviceLightPower:(int)powerValue ch:(int)ch;
+- (void) controlDeviceLightPower:(int)powerValue;
 
 - (BOOL) isSetChanged;
 

@@ -17,8 +17,6 @@
 {
     
 }
-@property (nonatomic, strong) NSMutableDictionary *_rgOpts;
-
 @end
 
 @implementation EDimmerLight
@@ -28,8 +26,6 @@
 
 @synthesize _localSavedCommands;
 @synthesize _proxys;
-
-@synthesize _rgOpts;
 
 - (id) init
 {
@@ -216,21 +212,8 @@
 - (void) prepareChannels:(NSArray*)proxys{
     
     self._proxys = [NSMutableArray array];
-    self._rgOpts = [NSMutableDictionary dictionary];
     
     NSDictionary *map = [self.config objectForKey:@"opt_value_map"];
-
-    id key = [NSString stringWithFormat:@"%d", (int)((RgsDriverObj*)_driver).m_id];
-    NSArray *datas = [map objectForKey:key];
-    for(RgsSceneDeviceOperation *dopt in datas)
-    {
-        NSString *cmd = dopt.cmd;
-        
-        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:dopt.dev_id
-                                                                          cmd:dopt.cmd
-                                                                        param:dopt.param];
-        [_rgOpts setObject:opt forKey:cmd];
-    }
     
     for(int i = 0; i < [proxys count]; i++)
     {

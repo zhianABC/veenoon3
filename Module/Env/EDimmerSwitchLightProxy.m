@@ -17,8 +17,7 @@
 }
 @property (nonatomic, strong) NSArray *_rgsCommands;
 @property (nonatomic, strong) NSMutableDictionary *_cmdMap;
-@property (nonatomic, strong) NSMutableArray *_rgsOpts;
-@property (nonatomic, strong) NSMutableDictionary* _channelsMap;
+@property (nonatomic, strong) NSMutableDictionary *_rgsOpts;
 
 @end
 
@@ -31,8 +30,6 @@
 @synthesize _deviceId;
 @synthesize _rgsOpts;
 
-@synthesize _channelsMap;
-
 @synthesize _power;
 
 - (id) init
@@ -40,11 +37,7 @@
     if(self = [super init])
     {
         self._power = 0;
-        
-        self._channelsMap = [NSMutableDictionary dictionary];
-        
-        self._rgsOpts = [NSMutableArray array];
-        
+    
        
     }
     
@@ -70,17 +63,24 @@
 
 - (void) parseStateInitsValues:(NSDictionary*)state{
     
-//    id val = [state objectForKey:@"STATUS"];
-//    self._relayStatus = val;
-//
+    id val = [state objectForKey:@"SWITCH"];
+    if(val && [val isEqualToString:@"On"])
+    {
+        self._power = 1;
+    }
+    else
+    {
+        self._power = 0;
+    }
+
 //    val = [state objectForKey:@"LINK_DUR"];
 //    self._linkDuration = [val intValue];
 //
 //    val = [state objectForKey:@"BREAK_DUR"];
 //    self._breakDuration = [val intValue];
     
-//    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_PROXY_CUR_STATE_GOT_LB
-//                                                        object:@{@"proxy":@(_rgsProxyObj.m_id)}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_PROXY_CUR_STATE_GOT_LB
+                                                        object:@{@"proxy":@(_rgsProxyObj.m_id)}];
 }
 
 
@@ -89,15 +89,12 @@
     return _isSetOK;
 }
 
-- (NSDictionary *)getChLevelRecords{
-    
-    return _channelsMap;
-}
-
 
 - (void) recoverWithDictionary:(NSArray*)datas{
     
-    self._rgsOpts = [NSMutableArray array];
+    self._rgsOpts = [NSMutableDictionary dictionary];
+    
+    self._power = 0;
     
     for(RgsSceneDeviceOperation *dopt in datas)
     {
@@ -106,25 +103,19 @@
         NSString *cmd = dopt.cmd;
         NSDictionary *param = dopt.param;
         
-        if([cmd isEqualToString:@"SET_CH"])
+        if([cmd isEqualToString:@"SET_SWITCH"])
         {
-            NSString *onoff = [param objectForKey:@"POWER"];
-            int ch = [[param objectForKey:@"CH"] intValue];
-            
-            BOOL lv = YES;
-            if([onoff isEqualToString:@"OFF"])
-                lv = NO;
-            
-            [self._channelsMap setObject:[NSNumber numberWithInt:lv]
-                                  forKey:[NSString stringWithFormat:@"%d", ch]];
-            
-            
-            RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:dopt.dev_id
-                                                                              cmd:dopt.cmd
-                                                                            param:dopt.param];
-            [_rgsOpts addObject:opt];
+            NSString *sval = [param objectForKey:@"SWITCH"];
+            if(sval && [sval isEqualToString:@"On"])
+            {
+                self._power = 1;
+            }
         }
         
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:dopt.dev_id
+                                                                          cmd:dopt.cmd
+                                                                        param:dopt.param];
+        [_rgsOpts setObject:opt forKey:cmd];
     }
     
 }
@@ -180,39 +171,11 @@
     
 }
 
-- (int)getNumberOfLights{
-    
-    int max = 0;
-    RgsCommandInfo *cmd = [self._cmdMap objectForKey:@"SET_CH"];
-    if(cmd)
-    {
-        for(RgsCommandParamInfo *cmdparam in cmd.params)
-        {
-            if([cmdparam.name isEqualToString:@"CH"])
-            {
-                max = [cmdparam.max intValue];
-                break;
-            }
-        }
-    }
-    
-    //不要初始化了，没有操控的channel就不需要执行
-//    for(int i = 0; i < max; i++){
-//
-//        [_channelsMap setObject:@0 forKey:[NSNumber numberWithInt:i]];
-//    }
-    
-    return max;
-}
-
-- (void) controlDeviceLightPower:(int)powerValue ch:(int)ch{
+- (void) controlDeviceLightPower:(int)powerValue{
     
     RgsCommandInfo *cmd = nil;
-    cmd = [_cmdMap objectForKey:@"SET_CH"];
+    cmd = [_cmdMap objectForKey:@"SET_SWITCH"];
     self._power = powerValue;
-    
-    [self._channelsMap setObject:[NSNumber numberWithInt:_power]
-                          forKey:[NSString stringWithFormat:@"%d", ch]];
     
     if(cmd)
     {
@@ -221,17 +184,12 @@
         {
             for(RgsCommandParamInfo *param_info in cmd.params)
             {
-                if([param_info.name isEqualToString:@"CH"])
+                if([param_info.name isEqualToString:@"SWITCH"])
                 {
-                    [param setObject:[NSString stringWithFormat:@"%d", ch]
-                              forKey:param_info.name];
-                }
-                else if([param_info.name isEqualToString:@"POWER"])
-                {
-                    NSString *onoff = @"OFF";
+                    NSString *onoff = @"Off";
                     if(_power)
                     {
-                        onoff = @"ON";
+                        onoff = @"On";
                     }
                     [param setObject:onoff
                               forKey:param_info.name];
@@ -255,68 +213,70 @@
     RgsCommandInfo *cmd = nil;
     
     if(_cmdMap)
-        cmd = [_cmdMap objectForKey:@"SET_CH"];
+        cmd = [_cmdMap objectForKey:@"SET_SWITCH"];
+    
+    NSMutableArray *event_opts = [NSMutableArray array];
     
     if(cmd)
     {
-        NSMutableArray *event_opts = [NSMutableArray array];
-        for(id chkey in [_channelsMap allKeys])
+        
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
         {
-            
-            int iCh = [chkey intValue];
-            int iPower = [[_channelsMap objectForKey:chkey] intValue];
-            
-            NSMutableDictionary * param = [NSMutableDictionary dictionary];
-            if([cmd.params count])
+            for(RgsCommandParamInfo *param_info in cmd.params)
             {
-                for(RgsCommandParamInfo *param_info in cmd.params)
+                if([param_info.name isEqualToString:@"SWITCH"])
                 {
-                    if([param_info.name isEqualToString:@"CH"])
+                    NSString *onoff = @"Off";
+                    if(_power)
                     {
-                        [param setObject:[NSString stringWithFormat:@"%d", iCh]
-                                  forKey:param_info.name];
+                        onoff = @"On";
                     }
-                    else if([param_info.name isEqualToString:@"POWER"])
-                    {
-                        NSString *onoff = @"OFF";
-                        if(iPower)
-                        {
-                            onoff = @"ON";
-                        }
-                        
-                        [param setObject:onoff
-                                  forKey:param_info.name];
-                    }
+                    
+                    [param setObject:onoff
+                              forKey:param_info.name];
                 }
             }
-            
-            if(_rgsProxyObj)
-            {
-                _deviceId = _rgsProxyObj.m_id;
-            }
-            RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc]init];
-            scene_opt.dev_id = _deviceId;
-            scene_opt.cmd = cmd.name;
-            scene_opt.param = param;
-            
-
-            RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
-                                                                              cmd:scene_opt.cmd
-                                                                            param:scene_opt.param];
-            
-            [event_opts addObject:opt];
-            
-            [_rgsOpts addObject:opt];
         }
+        
+        if(_rgsProxyObj)
+        {
+            _deviceId = _rgsProxyObj.m_id;
+        }
+        RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc]init];
+        scene_opt.dev_id = _deviceId;
+        scene_opt.cmd = cmd.name;
+        scene_opt.param = param;
+        
+        
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
+                                                                          cmd:scene_opt.cmd
+                                                                        param:scene_opt.param];
+        
+        [event_opts addObject:opt];
         
         return event_opts;
     }
     else
     {
-        return _rgsOpts;
+        RgsSceneOperation * opt = [_rgsOpts objectForKey:@"SET_SWITCH"];
+        
+        if(opt)
+            [event_opts addObject:opt];
+        
+        return event_opts;
     }
     
     return nil;
+}
+
+- (BOOL) haveProxyCommandLoaded{
+    
+    if(_rgsCommands)
+        return YES;
+    
+    return NO;
+    
 }
 
 @end

@@ -35,6 +35,7 @@
 }
 @property (nonatomic, strong) EDimmerSwitchLight *_curProcessor;
 @property (nonatomic, strong) NSArray *_proxys;
+@property (nonatomic, strong) NSMutableDictionary *_proxyObjMap;
 
 @end
 
@@ -43,6 +44,7 @@
 @synthesize _number;
 @synthesize _curProcessor;
 @synthesize _proxys;
+@synthesize _proxyObjMap;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -101,6 +103,11 @@
                                                            SCREEN_HEIGHT-64-50)];
     [self.view addSubview:_proxysView];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(notifyProxyGotCurStateVals:)
+                                                 name:NOTIFY_PROXY_CUR_STATE_GOT_LB
+                                               object:nil];
+    
     [self getCurrentDeviceDriverProxys];
     
 }
@@ -142,16 +149,38 @@
     int colNumber = 8;
     int space = ENGINEER_VIEW_COLUMN_GAP;
     
+    NSMutableArray *tmpProxyObjs = [NSMutableArray array];
     
-    NSDictionary *chLevelMap = [(EDimmerSwitchLightProxy*)_curProcessor._proxyObj getChLevelRecords];
+    if([_curProcessor._proxys count])//已经创建过
+    {
+        tmpProxyObjs = _curProcessor._proxys;
+    }
+    else //没创建过
+    {
+        //创建
+        for (int i = 0; i < [_proxys count]; i++) {
+            
+            RgsProxyObj * rgsProxy = [_proxys objectAtIndex:i];
+            
+            EDimmerSwitchLightProxy *apxy = [[EDimmerSwitchLightProxy alloc] init];
+            apxy._rgsProxyObj = rgsProxy;
+            [tmpProxyObjs addObject:apxy];
+        }
+        
+        _curProcessor._proxys = tmpProxyObjs;
+    }
     
-    for (int i = 0; i < self._number; i++) {
+    
+    self._proxyObjMap = [NSMutableDictionary dictionary];
+    
+    for (int i = 0; i < [tmpProxyObjs count]; i++) {
         
         int row = index/colNumber;
         int col = index%colNumber;
         int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+top;
 
+        EDimmerSwitchLightProxy *apxy = [tmpProxyObjs objectAtIndex:i];
         
         LightSliderButton *btn = [[LightSliderButton alloc] initWithFrame:CGRectMake(startX, startY, 120, 120)];
         btn.tag = i;
@@ -163,15 +192,9 @@
 
         [btn hiddenProgress];
         
-        [btn turnOnOff:NO];
+        btn.data = apxy;
         
-        id key = [NSString stringWithFormat:@"%d", i+1];
-        if([chLevelMap objectForKey:key])
-        {
-            BOOL power = [[chLevelMap objectForKey:key] boolValue];
-            [btn turnOnOff:power];
-        }
-        
+        [btn turnOnOff:apxy._power];
     
         UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2-40, 0, 80, 20)];
         titleL.backgroundColor = [UIColor clearColor];
@@ -185,9 +208,50 @@
         
         [_buttonArray addObject:btn];
         
+        if(apxy._rgsProxyObj){
+            [_proxyObjMap setObject:btn forKey:@(apxy._rgsProxyObj.m_id)];
+            [apxy getCurrentDataState];
+        }
+        
         index++;
     }
     
+    if([tmpProxyObjs count])
+    {
+        //只读取一个，因为所有的out的commands相同
+        NSMutableArray *proxyids = [NSMutableArray array];
+        EDimmerSwitchLightProxy *ape = [tmpProxyObjs objectAtIndex:0];
+        [proxyids addObject:[NSNumber numberWithInteger:ape._rgsProxyObj.m_id]];
+        
+        IMP_BLOCK_SELF(EngineerDimmerSwitchViewController);
+        
+        if(![ape haveProxyCommandLoaded])
+        {
+            [KVNProgress show];
+            [[RegulusSDK sharedRegulusSDK] GetProxyCommandDict:proxyids
+                                                    completion:^(BOOL result, NSDictionary *commd_dict, NSError *error) {
+                                                        
+                                                        [block_self loadAllCommands:commd_dict];
+                                                        
+                                                    }];
+        }
+    }
+}
+
+
+- (void) loadAllCommands:(NSDictionary*)commd_dict{
+    
+    if([[commd_dict allValues] count])
+    {
+        NSArray *cmds = [[commd_dict allValues] objectAtIndex:0];
+        
+        for(EDimmerSwitchLightProxy *vap in _curProcessor._proxys)
+        {
+            [vap checkRgsProxyCommandLoad:cmds];
+        }
+    }
+    
+    [KVNProgress dismiss];
 }
 
 - (void) getCurrentDeviceDriverProxys{
@@ -195,18 +259,29 @@
     if(_curProcessor == nil)
         return;
     
-#ifdef OPEN_REG_LIB_DEF
+    //如果有，就不需要重新请求了
+    if([_curProcessor._proxys count])
+    {
+        [self layoutChannels];
+        return;
+    }
     
     IMP_BLOCK_SELF(EngineerDimmerSwitchViewController);
     
     RgsDriverObj *driver = _curProcessor._driver;
     if([driver isKindOfClass:[RgsDriverObj class]])
     {
-        
-        [[RegulusSDK sharedRegulusSDK] GetDriverCommands:driver.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
+        [[RegulusSDK sharedRegulusSDK] GetDriverProxys:driver.m_id completion:^(BOOL result, NSArray *proxys, NSError *error) {
             if (result) {
-                if ([commands count]) {
-                    [block_self loadedLightCommands:commands];
+                if ([proxys count]) {
+                    NSMutableArray *proxysArray = [NSMutableArray array];
+                    for (RgsProxyObj *proxyObj in proxys) {
+                        if ([proxyObj.type isEqualToString:@"light_v2"]) {
+                            [proxysArray addObject:proxyObj];
+                        }
+                    }
+                    block_self._proxys = proxysArray;
+                    [block_self layoutChannels];
                 }
             }
             else{
@@ -214,41 +289,13 @@
             }
         }];
     }
-#endif
 }
 
-- (void) loadedLightCommands:(NSArray*)cmds{
-    
-    RgsDriverObj *driver = _curProcessor._driver;
-    
-    id proxy = _curProcessor._proxyObj;
-    
-    EDimmerSwitchLightProxy *vpro = nil;
-    if(proxy && [proxy isKindOfClass:[EDimmerSwitchLightProxy class]])
-    {
-        vpro = proxy;
-    }
-    else
-    {
-        vpro = [[EDimmerSwitchLightProxy alloc] init];
-    }
-    
-    vpro._deviceId = driver.m_id;
-    [vpro checkRgsProxyCommandLoad:cmds];
-    
-    
-    self._curProcessor._proxyObj = vpro;
-    //[_curProcessor syncDriverIPProperty];
-    
-    self._number = [vpro getNumberOfLights];
-    [self layoutChannels];
-}
 
 - (void) didTappedMSelf:(LightSliderButton*)slbtn{
 
-    EDimmerSwitchLightProxy *vpro = self._curProcessor._proxyObj;
-    int ch = (int)slbtn.tag + 1;
-    
+    EDimmerSwitchLightProxy *vpro = slbtn.data;
+
     // want to choose it
     if (![_selectedBtnArray containsObject:slbtn]) {
         
@@ -262,7 +309,7 @@
         
         if([vpro isKindOfClass:[EDimmerSwitchLightProxy class]])
         {
-            [vpro controlDeviceLightPower:1 ch:ch];
+            [vpro controlDeviceLightPower:1];
         }
         
     } else {
@@ -277,7 +324,7 @@
         
         if([vpro isKindOfClass:[EDimmerSwitchLightProxy class]])
         {
-            [vpro controlDeviceLightPower:0 ch:ch];
+            [vpro controlDeviceLightPower:0];
         }
     }
 }
@@ -321,7 +368,35 @@
     }
 }
 
+
+#pragma mark --Proxy Current State Got
+- (void) notifyProxyGotCurStateVals:(NSNotification*)notify{
+    
+    NSDictionary *obj = notify.object;
+    
+    if(obj && [obj objectForKey:@"proxy"])
+    {
+        id key = [obj objectForKey:@"proxy"];
+        
+        id ctrl = [_proxyObjMap objectForKey:key];
+        if([ctrl isKindOfClass:[LightSliderButton class]])
+        {
+            LightSliderButton *pbtn = ctrl;
+            EDimmerSwitchLightProxy *apxy = pbtn.data;
+            
+            [pbtn turnOnOff:apxy._power];
+        }
+    }
+}
+
 - (void) cancelAction:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+- (void) dealloc
+{
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 @end

@@ -1218,15 +1218,19 @@
         }
         else if([dev isKindOfClass:[EDimmerSwitchLight class]])
         {
-            EDimmerSwitchLightProxy *proj = ((EDimmerSwitchLight*)dev)._proxyObj;
-            if([proj isSetChanged])
+            NSArray *proxys = ((EDimmerSwitchLight*)dev)._proxys;
+            
+            for(EDimmerSwitchLightProxy *proxy in proxys)
             {
-                NSArray *rsps = [proj generateEventOperation_ChPower];
-                if(rsps && [rsps count])
+                if([proxy isSetChanged])
                 {
-                    for(id rsp in rsps)
+                    NSArray *rsps = [proxy generateEventOperation_ChPower];
+                    if(rsps && [rsps count])
                     {
-                        [self addEventOperation:rsp];
+                        for(id rsp in rsps)
+                        {
+                            [self addEventOperation:rsp];
+                        }
                     }
                 }
             }

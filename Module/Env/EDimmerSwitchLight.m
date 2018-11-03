@@ -24,7 +24,7 @@
     
 }
 @synthesize _localSavedCommands;
-@synthesize _proxyObj;
+@synthesize _proxys;
 
 - (id) init
 {
@@ -163,42 +163,45 @@
     self._name = rgsd.name;
     
     IMP_BLOCK_SELF(EDimmerSwitchLight);
-    [[RegulusSDK sharedRegulusSDK] GetDriverCommands:rgsd.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
-        if (result) {
-            if ([commands count]) {
-                [block_self loadedLightCommands:commands];
-            }
-        }
-        
-    }];
+    [[RegulusSDK sharedRegulusSDK] GetDriverProxys:rgsd.m_id
+                                        completion:^(BOOL result, NSArray *proxys, NSError *error) {
+                                            if (result) {
+                                                if ([proxys count]) {
+                                                    
+                                                    NSMutableArray *proxysArray = [NSMutableArray array];
+                                                    for (RgsProxyObj *proxyObj in proxys) {
+                                                        if ([proxyObj.type isEqualToString:@"light_v2"]) {
+                                                            [proxysArray addObject:proxyObj];
+                                                        }
+                                                    }
+                                                    [block_self prepareChannels:proxysArray];
+                                                }
+                                            }
+                                        }];
 }
 
-- (void) loadedLightCommands:(NSArray*)cmds{
+
+
+- (void) prepareChannels:(NSArray*)proxys{
     
-    RgsDriverObj *driver = self._driver;
-    
-    id proxy = self._proxyObj;
-    
-    EDimmerSwitchLightProxy *vpro = nil;
-    if(proxy && [proxy isKindOfClass:[EDimmerSwitchLightProxy class]])
-    {
-        vpro = proxy;
-    }
-    else
-    {
-        vpro = [[EDimmerSwitchLightProxy alloc] init];
-    }
-    
-    id key = [NSString stringWithFormat:@"%d", (int)driver.m_id];
+    self._proxys = [NSMutableArray array];
     
     NSDictionary *map = [self.config objectForKey:@"opt_value_map"];
-    [vpro recoverWithDictionary:[map objectForKey:key]];
     
-    vpro._deviceId = driver.m_id;
-    [vpro checkRgsProxyCommandLoad:cmds];
-    
-    self._proxyObj = vpro;
-    
+    for(int i = 0; i < [proxys count]; i++)
+    {
+        RgsProxyObj *proxy = [proxys objectAtIndex:i];
+        
+        id key = [NSString stringWithFormat:@"%d", (int)proxy.m_id];
+        
+        EDimmerSwitchLightProxy *apxy = [[EDimmerSwitchLightProxy alloc] init];
+        apxy._rgsProxyObj = proxy;
+        
+        NSArray *vals = [map objectForKey:key];
+        [apxy recoverWithDictionary:vals];
+        
+        [_proxys addObject:apxy];
+    }
 }
 
 @end
