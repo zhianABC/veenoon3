@@ -36,6 +36,9 @@
 @synthesize _grayBackgroundImage;
 @synthesize _lightBackgroundImage;
 @synthesize _isEnabel;
+
+@synthesize data;
+
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.

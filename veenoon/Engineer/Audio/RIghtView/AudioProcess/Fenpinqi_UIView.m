@@ -374,10 +374,10 @@
     
 }
 
-- (void)filterGraphViewHPFilterChangedWithFreq:(float)freq{
-
+- (void) doSetHPFreq:(float)freq{
+    
     _highFilterL.text = [self fomartHzKHz:freq];
-     [_currentObj._proxyObj controlHighFilter:[NSString stringWithFormat:@"%0.0f", freq]];
+    [_currentObj._proxyObj controlHighFilter:[NSString stringWithFormat:@"%0.0f", freq]];
     
     float highValue = freq;
     float highMax = (_highFilterMax - _highFilterMin);
@@ -388,11 +388,12 @@
         [_highFilterSlider setCircleValue:f];
     }
 }
-- (void)filterGraphViewLPFilterChangedWithFreq:(float)freq{
+
+- (void) doSetLPFreq:(float)freq{
     
     _lowFilgerL.text = [self fomartHzKHz:freq];
     
-
+    
     float showValue = freq;
     if(freq > 1000)
     {
@@ -409,5 +410,34 @@
         [_lowFilterSlider setCircleValue:f];
     }
 }
+
+- (void)filterGraphViewHPFilterChangedWithFreq:(float)freq{
+
+    [self doSetHPFreq:freq];
+}
+- (void)filterGraphViewLPFilterChangedWithFreq:(float)freq{
+    
+    [self doSetLPFreq:freq];
+}
+
+- (void)filterGraphViewHPFilterChangedEndWithFreq:(float)freq {
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(200.0 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
+        
+        [self doSetHPFreq:freq];
+        
+    });
+}
+
+
+- (void)filterGraphViewLPFilterChangedEndWithFreq:(float)freq {
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(200.0 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
+        
+        [self doSetLPFreq:freq];
+        
+    });
+}
+
 
 @end

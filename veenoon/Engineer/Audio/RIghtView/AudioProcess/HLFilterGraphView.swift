@@ -12,6 +12,9 @@ import UIKit
     func filterGraphViewPEQFilterBandChoosed(band: Int)
     func filterGraphViewHPFilterChanged(freq: Float)
     func filterGraphViewLPFilterChanged(freq: Float)
+    
+    func filterGraphViewHPFilterChangedEnd(freq: Float)
+    func filterGraphViewLPFilterChangedEnd(freq: Float)
 }
 @IBDesignable
 class HLFilterGraphView: UIView {
@@ -279,6 +282,18 @@ class HLFilterGraphView: UIView {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         for i in 0 ..< (m_peqBand+2) {
+            
+            if bPressed[i] == true {
+                if i == m_peqBand {
+                    delegate?.filterGraphViewHPFilterChangedEnd(freq: hpf_freq)
+                    
+                }
+                else if i == (m_peqBand + 1) {
+                    //低通
+                    delegate?.filterGraphViewLPFilterChangedEnd(freq: lpf_freq)
+                    
+                }
+            }
             
             if(touched_move_point_i != i)
             {

@@ -172,11 +172,11 @@
     [dic setObject:key forKey:@"key"];
     if(status == RGS_IR_RECORD_DONE)
     {
-        [dic setObject:@1 forKey:@"result"];
+        [dic setObject:@(1) forKey:@"result"];
     }
-    else
+    else if(status == RGS_IR_RECORD_TIMEOUT)
     {
-        [dic setObject:@0 forKey:@"result"];
+        [dic setObject:@(2) forKey:@"result"];
     }
     
     if(status != RGS_IR_RECORD_WAIT)

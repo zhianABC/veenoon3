@@ -249,14 +249,15 @@
     
     
 }
-- (void)filterGraphViewPEQFilterChangedWithBand:(NSInteger)band freq:(float)freq gain:(float)gain{
+
+- (void) doSetPEQWithBand:(NSInteger)band freq:(float)freq gain:(float)gain{
     
     _curIndex = (int)band;
     
     if(_curIndex < [_peqRateArray count])
     {
         id rateKey = [_peqRateArray objectAtIndex:_curIndex];
-
+        
         int gv = gain;
         [_currentObj._proxyObj controlMixPEQ:[NSString stringWithFormat:@"%d", gv]
                                     withRate:rateKey];
@@ -273,6 +274,20 @@
         }
     }
 }
+
+- (void)filterGraphViewPEQFilterChangedWithBand:(NSInteger)band freq:(float)freq gain:(float)gain{
+    
+    [self doSetPEQWithBand:band freq:freq gain:gain];
+}
+
+- (void)filterGraphViewPEQFilterChangedEndWithBand:(NSInteger)band freq:(float)freq gain:(float)gain{
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(200.0 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
+        
+        [self doSetPEQWithBand:band freq:freq gain:gain];
+    });
+}
+
 
 - (void)filterGraphViewPEQFilterChangedWithBand:(NSInteger)band qIndex:(NSInteger)qIndex qValue:(float)qValue{
     

@@ -62,6 +62,8 @@
 @interface Scenario ()
 {
     WebClient *_client;
+    
+    RgsSceneOperation * optDelay;
 }
 @property (nonatomic, strong) RgsDriverObj *_rgsDriver;
 @property (nonatomic, strong) RgsSceneObj *_rgsScene;
@@ -145,6 +147,10 @@
     if(regulus_id)
         [_scenarioData setObject:regulus_id
                           forKey:@"regulus_id"];
+    
+    optDelay = [[RgsSceneOperation alloc] initCmdWithParam:1
+                                                       cmd:@"Sleep"
+                                                     param:@{@"MS":@"100"}];
     
 }
 
@@ -882,6 +888,8 @@
 
     NSMutableArray *audios = [_scenarioData objectForKey:@"audio"];
     
+    NSMutableArray *powerOpts = [NSMutableArray array];
+    
     for(BasePlugElement* ap in _audioDevices)
     {
         if(!ap._isSelected){
@@ -980,7 +988,8 @@
             RgsSceneOperation* rsp = [(APowerESet*)ap generateEventOperation_power];
             if(rsp)
             {
-                [self addEventOperation:rsp];
+                [powerOpts addObject:rsp];
+                //[self addEventOperation:rsp];
             }
             else
             {
@@ -989,20 +998,23 @@
                     RgsSceneOperation* rsp = [proxy generateEventOperation_status];
                     if(rsp)
                     {
-                        [self addEventOperation:rsp];
+                        [powerOpts addObject:optDelay];
+                        [powerOpts addObject:rsp];
+                        //[self addEventOperation:optDelay];
+                        //[self addEventOperation:rsp];
                     }
                     
-                    rsp = [proxy generateEventOperation_breakDur];
-                    if(rsp)
-                    {
-                        [self addEventOperation:rsp];
-                    }
-                    
-                    rsp = [proxy generateEventOperation_linkDur];
-                    if(rsp)
-                    {
-                        [self addEventOperation:rsp];
-                    }
+//                    rsp = [proxy generateEventOperation_breakDur];
+//                    if(rsp)
+//                    {
+//                        [self addEventOperation:rsp];
+//                    }
+//
+//                    rsp = [proxy generateEventOperation_linkDur];
+//                    if(rsp)
+//                    {
+//                        [self addEventOperation:rsp];
+//                    }
                 }
             }
             NSDictionary *data = [ap userData];
@@ -1063,6 +1075,22 @@
         }
     }
     
+    //电源开关放在整个场景的前面
+    if([powerOpts count])
+    {
+        //开启后要等1分钟
+        RgsSceneOperation* opt60sDelay = [[RgsSceneOperation alloc] initCmdWithParam:1
+                                                           cmd:@"Sleep"
+                                                         param:@{@"MS":@"60000"}];
+        
+        [_eventOperations insertObject:opt60sDelay atIndex:0];
+        
+        for(int i = (int)[powerOpts count] - 1; i>=0; i--)
+        {
+            [_eventOperations insertObject:[powerOpts objectAtIndex:i]
+                                   atIndex:0];
+        }
+    }
     
     if([audios count] == 0)
         [_scenarioData removeObjectForKey:@"audio"];

@@ -32,6 +32,8 @@
 @property (nonatomic, strong) UIImage *_grayBackgroundImage;
 @property (nonatomic, strong) UIImage *_lightBackgroundImage;
 
+@property (nonatomic, strong) id data;
+
 - (void) setCircleValue:(float) value;
 - (void) changeButtonBackgroundImage:(UIImage *)image;
 

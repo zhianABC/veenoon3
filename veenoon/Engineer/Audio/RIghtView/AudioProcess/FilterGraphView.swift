@@ -22,6 +22,10 @@ class DataModel: NSObject {
     func filterGraphViewPEQFilterBandChoosed(band: Int)
     func filterGraphViewPEQFilterChanged(band: Int, freq: Float, gain: Float)
     func filterGraphViewPEQFilterChanged(band: Int, qIndex: Int, qValue: Float)
+    
+    func filterGraphViewHPFilterChangedEnd(freq: Float)
+    func filterGraphViewLPFilterChangedEnd(freq: Float)
+    func filterGraphViewPEQFilterChangedEnd(band: Int, freq: Float, gain: Float)
 }
 @IBDesignable
 class FilterGraphView: UIView {
@@ -298,6 +302,20 @@ class FilterGraphView: UIView {
     // 触摸释放处理
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for i in 0 ..< (m_peqBand+2) {
+           
+            if bPressed[i] == true {
+                if i == m_peqBand {
+                    delegate?.filterGraphViewHPFilterChangedEnd(freq: hpf_freq)
+                }
+                else if i == (m_peqBand + 1) {
+                    delegate?.filterGraphViewLPFilterChangedEnd(freq: lpf_freq)
+                }
+                else {
+                    
+                    delegate?.filterGraphViewPEQFilterChangedEnd(band: i, freq: eq_freq[i], gain: eq_gain[i])
+                }
+            }
+            
             bPressed[i] = false
         }
     }

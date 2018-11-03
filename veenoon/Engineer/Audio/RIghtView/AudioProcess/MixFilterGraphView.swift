@@ -17,9 +17,12 @@ class MDataModel: NSObject {
 }
 
 @objc protocol MixFilterGraphViewDelegate: NSObjectProtocol {
+
     func filterGraphViewPEQFilterBandChoosed(band: Int)
     func filterGraphViewPEQFilterChanged(band: Int, freq: Float, gain: Float)
     func filterGraphViewPEQFilterChanged(band: Int, qIndex: Int, qValue: Float)
+    
+    func filterGraphViewPEQFilterChangedEnd(band: Int, freq: Float, gain: Float)
 }
 @IBDesignable
 class MixFilterGraphView: UIView {
@@ -244,36 +247,8 @@ class MixFilterGraphView: UIView {
         
         for i in 0 ..< (m_peqBand+2) {
             if bPressed[i] == true {
-                if i == m_peqBand {
-                    //高通
-                    /*
-                    hpf_freq = Float(posToFreq(pos: Double(lastX) - Double(m_borderRect.origin.x)))
-                    if (hpf_freq < m_validLowFreq) {
-                        hpf_freq = m_validLowFreq
-                    }
-                    else if (hpf_freq > m_validHighFreq) {
-                        hpf_freq = m_validHighFreq
-                    }
+                if i < m_peqBand {
                     
-                    delegate?.filterGraphViewHPFilterChanged(freq: hpf_freq)
-                     */
-                }
-                else if i == (m_peqBand + 1) {
-                    //低通
-                     /*
-                    lpf_freq = Float(posToFreq(pos: Double(lastX) - Double(m_borderRect.origin.x)))
-                    if (lpf_freq < m_validLowFreq) {
-                        lpf_freq = m_validLowFreq
-                    }
-                    else if (lpf_freq > m_validHighFreq) {
-                        lpf_freq = m_validHighFreq
-                    }
-                    
-                    delegate?.filterGraphViewLPFilterChanged(freq: lpf_freq)
-                    */
-                }
-                else {
-                    //eq_freq[i] = Float(posToFreq(pos: Double(lastX) - Double(m_borderRect.origin.x)))
                     eq_gain[i] = Float(Double(m_maxdB) - (Double(lastY - m_borderRect.origin.y) * (Double(m_maxdB - m_mindB) / Double(m_borderRect.height))))
                     
                     if (eq_gain[i] > Float(m_validMaxdB)) {
@@ -282,13 +257,6 @@ class MixFilterGraphView: UIView {
                     else if (eq_gain[i] < Float(m_validMindB)) {
                         eq_gain[i] = Float(m_validMindB)
                     }
-                    
-//                    if (eq_freq[i] < m_validLowFreq) {
-//                        eq_freq[i] = m_validLowFreq
-//                    }
-//                    else if (eq_freq[i] > m_validHighFreq) {
-//                        eq_freq[i] = m_validHighFreq
-//                    }
                     
                     delegate?.filterGraphViewPEQFilterChanged(band: i, freq: eq_freq[i], gain: eq_gain[i])
                 }
@@ -303,6 +271,12 @@ class MixFilterGraphView: UIView {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         for i in 0 ..< (m_peqBand+2) {
+            
+            if bPressed[i] == true {
+                if i < m_peqBand {
+                    delegate?.filterGraphViewPEQFilterChangedEnd(band: i, freq: eq_freq[i], gain: eq_gain[i])
+                }
+            }
             
             if(touched_move_point_i != i)
             {

@@ -23,6 +23,9 @@
 
 @property (nonatomic, assign) int _level;
 
+- (void) getCurrentDataState;
+- (BOOL) isOnOff;
+
 - (void) controlRelayStatus:(NSString*)relayStatus;
 - (void) controlRelayDuration:(BOOL)isBreak withDuration:(int)duration exec:(BOOL)exec;
 

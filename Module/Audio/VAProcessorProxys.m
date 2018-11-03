@@ -860,11 +860,11 @@
     
     IMP_BLOCK_SELF(VAProcessorProxys);
     
-    [KVNProgress show];
+    //[KVNProgress show];
     
     [[RegulusSDK sharedRegulusSDK] GetProxyCommands:_rgsProxyObj.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
         
-        [KVNProgress dismiss];
+        //[KVNProgress dismiss];
         
         if (result)
         {
@@ -889,7 +889,7 @@
             
             [block_self callDelegateDidLoad];
             
-            [KVNProgress dismiss];
+            //[KVNProgress dismiss];
         }
        
     }];

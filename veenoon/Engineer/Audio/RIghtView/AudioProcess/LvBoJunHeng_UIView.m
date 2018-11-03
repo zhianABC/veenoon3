@@ -1596,7 +1596,7 @@
     [self updateCurrentBrand];
 }
 
-- (void)filterGraphViewPEQFilterChangedWithBand:(NSInteger)band freq:(float)freq gain:(float)gain{
+- (void) doSetPEQWithBand:(NSInteger)band freq:(float)freq gain:(float)gain{
     
     NSMutableArray *waves16_feq_gain_q = _curProxy.waves16_feq_gain_q;
     
@@ -1607,7 +1607,7 @@
         [_curProxy controlBrandFreqAndGain:[NSString stringWithFormat:@"%0.0f", freq]
                                       gain:[NSString stringWithFormat:@"%0.1f", gain]
                                      brand:(int)band];
-       
+        
         
         if(band == _channelSelIndex)
         {
@@ -1627,6 +1627,12 @@
             }
         }
     }
+    
+}
+
+- (void)filterGraphViewPEQFilterChangedWithBand:(NSInteger)band freq:(float)freq gain:(float)gain{
+    
+    [self doSetPEQWithBand:band freq:freq gain:gain];
         
 }
 - (void)filterGraphViewPEQFilterChangedWithBand:(NSInteger)band qIndex:(NSInteger)qIndex qValue:(float)qValue{
@@ -1652,8 +1658,8 @@
     
 }
 
-- (void)filterGraphViewHPFilterChangedWithFreq:(float)freq{
-    
+- (void) doSetHPFreq:(float)freq{
+ 
     gaotongFeqL.text = [NSString stringWithFormat:@"%0.0f", freq];
     [_curProxy controlHighFilterFreq:[NSString stringWithFormat:@"%0.0f", freq]];
     
@@ -1666,8 +1672,15 @@
         [gaotongFeqSlider setCircleValue:gtVal];
     }
 }
-- (void)filterGraphViewLPFilterChangedWithFreq:(float)freq{
+
+- (void)filterGraphViewHPFilterChangedWithFreq:(float)freq{
     
+    [self doSetHPFreq:freq];
+    
+}
+
+- (void) doSetLPFreq:(float)freq{
+
     ditongFreqL.text = [NSString stringWithFormat:@"%0.0f", freq];
     [_curProxy controlLowFilterFreq:[NSString stringWithFormat:@"%0.0f", freq]];
     
@@ -1679,6 +1692,35 @@
         float gtVal = (freq - min)/(max - min);
         [ditongFreqSlider setCircleValue:gtVal];
     }
+}
+
+- (void)filterGraphViewLPFilterChangedWithFreq:(float)freq{
+    
+    [self doSetLPFreq:freq];
+}
+
+- (void)filterGraphViewHPFilterChangedEndWithFreq:(float)freq{
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(200.0 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
+        
+        [self doSetHPFreq:freq];
+        
+    });
+}
+- (void)filterGraphViewLPFilterChangedEndWithFreq:(float)freq{
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(200.0 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
+        
+        [self doSetLPFreq:freq];
+        
+    });
+}
+- (void)filterGraphViewPEQFilterChangedEndWithBand:(NSInteger)band freq:(float)freq gain:(float)gain{
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(200.0 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
+        
+        [self doSetPEQWithBand:band freq:freq gain:gain];
+    });
 }
 
 

@@ -541,6 +541,10 @@
         
     }
     
+    //初始化
+    _studying = NO;
+    _curIndex = -1;
+    
     self._studyItems = codeKeys;
     _plugDriver._irCodeKeys = codeKeys;
     
@@ -603,12 +607,14 @@
     UITableViewCell *cell = (UITableViewCell*)[tableView dequeueReusableCellWithIdentifier:kCellID];
     if(cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:kCellID];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+       
         
         //cell.editing = NO;
     }
     [[cell.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     cell.backgroundColor = [UIColor clearColor];
+    
+     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     if(indexPath.section == 0)
     {
@@ -696,6 +702,8 @@
     }
     else if(indexPath.section == 2)
     {
+         cell.selectionStyle = UITableViewCellSelectionStyleGray;
+        
         //红外学习
         UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(110,
                                                                     12,
@@ -736,6 +744,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    
+    if(!_studying)
+    {
+        _curIndex = (int)indexPath.row;
+        [self tryToStudyNextIRKey];
+    }
 
 }
 
@@ -778,7 +792,7 @@
         
         if(_studying)
         {
-            rowL.text = @"正在学习";
+            rowL.text = @"停止学习";
         }
         else
         {
@@ -814,14 +828,14 @@
                      action:@selector(buttonStudy:)
            forControlEvents:UIControlEventTouchUpInside];
         
-        if(_studying)
-        {
-            btnStudy.enabled = NO;
-        }
-        else
-        {
-            btnStudy.enabled = YES;
-        }
+//        if(_studying)
+//        {
+//            btnStudy.enabled = NO;
+//        }
+//        else
+//        {
+//            btnStudy.enabled = YES;
+//        }
     }
     
     return header;
@@ -846,17 +860,29 @@
                 {
                     [dic setObject:@"已学习" forKey:@"state"];
                 }
+                else if([result intValue] == 2)
+                {
+                    [dic setObject:@"学习超时" forKey:@"state"];
+                }
                 else
                 {
                     [dic setObject:@"未学习" forKey:@"state"];
                 }
             }
             
+            //如果正在学习，找下一个需要学习的
+            if(_studying){
             [NSTimer scheduledTimerWithTimeInterval:1.5
                                              target:self
                                            selector:@selector(tryNextKey:)
                                            userInfo:nil
                                             repeats:NO];
+            }
+            else
+            {
+                _curIndex = -1;
+            }
+            
             
         }
     }
@@ -873,17 +899,31 @@
 
 - (void) buttonStudy:(UIButton*)sender{
     
-    _curIndex = -1;
-    _studying = YES;
-
-    [self findNextNeedStudy];
-    [self tryToStudyNextIRKey];
+    if(!_studying)
+    {
+        _curIndex = -1;
+        _studying = YES;
+        
+        [self findNextNeedStudy];
+        [self tryToStudyNextIRKey];
+    }
+    else
+    {
+        _studying = NO;
+        _curIndex = -1;
+        [_tableView reloadData];
+    }
 }
 
 - (void) findNextNeedStudy{
     
     BOOL find = NO;
-    for(int i = 0; i < [_studyItems count]; i++)
+    
+    int from = _curIndex+1;
+    if(from < 0)
+        from = 0;
+    
+    for(int i = from; i < [_studyItems count]; i++)
     {
         NSDictionary *dic = [_studyItems objectAtIndex:i];
         BOOL result = [[dic objectForKey:@"result"] boolValue];

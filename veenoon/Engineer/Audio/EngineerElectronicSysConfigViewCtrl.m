@@ -26,8 +26,6 @@
     NSMutableArray *_buttonChannelArray;
     NSMutableArray *_buttonNumberArray;
     
-    NSMutableArray *_selectedBtnArray;
-    
     BOOL isSettings;
     PowerSettingView *_rightView;
     UIButton *okBtn;
@@ -36,6 +34,7 @@
 }
 @property (nonatomic, strong) NSArray *_proxys;
 @property (nonatomic, strong) NSMutableArray * _powerProxys;
+@property (nonatomic, strong) NSMutableDictionary *_proxyObjMap;
 
 @end
 
@@ -46,6 +45,7 @@
 @synthesize _powerProxys;
 
 @synthesize _proxys;
+@synthesize _proxyObjMap;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -56,7 +56,6 @@
     _buttonSeideArray = [[NSMutableArray alloc] init];
     _buttonChannelArray = [[NSMutableArray alloc] init];
     _buttonNumberArray = [[NSMutableArray alloc] init];
-    _selectedBtnArray = [[NSMutableArray alloc] init];
     
     [self setTitleAndImage:@"env_corner_dianyuanguanli.png" withTitle:@"电源管理"];
     
@@ -89,6 +88,11 @@
                                                            SCREEN_WIDTH,
                                                            SCREEN_HEIGHT-64-50)];
     [self.view addSubview:_proxysView];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(notifyProxyGotCurStateVals:)
+                                                 name:NOTIFY_PROXY_CUR_STATE_GOT_LB
+                                               object:nil];
     
     
     [self showRightView];
@@ -155,6 +159,9 @@
         _currentObj._proxys = _powerProxys;
     }
     
+    
+    self._proxyObjMap = [NSMutableDictionary dictionary];
+    
     for (int i = 0; i < [_powerProxys count]; i++) {
         
         int row = index/colNumber;
@@ -167,16 +174,12 @@
         btn.tag = i;
         btn.delegate = self;
         [_proxysView addSubview:btn];
-        
         btn._grayBackgroundImage = [UIImage imageNamed:@"dianyuanshishiqi_n.png"];
         btn._lightBackgroundImage = [UIImage imageNamed:@"dianyuanshishiqi_s.png"];
-        
         [btn hiddenProgress];
-        
         [btn turnOnOff:NO];
         
-        
-        
+    
         UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2-40, 0, 80, 20)];
         titleL.backgroundColor = [UIColor clearColor];
         titleL.textAlignment = NSTextAlignmentCenter;
@@ -188,13 +191,14 @@
         
         [_buttonArray addObject:btn];
         
-        NSDictionary *dic = [_currentObj getLabValueWithIndex:i];
-        if(dic && [[dic objectForKey:@"status"] isEqualToString:@"ON"]){
-            [btn turnOnOff:YES];
+        
+        APowerESetProxy *apxy = [_powerProxys objectAtIndex:i];
+        btn.data = apxy;
+        
+        if(apxy._rgsProxyObj){
+            [_proxyObjMap setObject:btn forKey:@(apxy._rgsProxyObj.m_id)];
             
-            titleL.textColor = YELLOW_COLOR;
-            
-            [_selectedBtnArray addObject:btn];
+            [apxy getCurrentDataState];
         }
         
         index++;
@@ -286,6 +290,46 @@
 #endif
 }
 
+
+#pragma mark --Proxy Current State Got
+- (void) notifyProxyGotCurStateVals:(NSNotification*)notify{
+    
+    NSDictionary *obj = notify.object;
+    
+    if(obj && [obj objectForKey:@"proxy"])
+    {
+        id key = [obj objectForKey:@"proxy"];
+        
+        id ctrl = [_proxyObjMap objectForKey:key];
+        if([ctrl isKindOfClass:[LightSliderButton class]])
+        {
+            LightSliderButton *pbtn = ctrl;
+            APowerESetProxy *proxyObj = pbtn.data;
+            if ([proxyObj isOnOff]) {
+                
+                UILabel *numberL = [_buttonNumberArray objectAtIndex:pbtn.tag];
+                numberL.textColor = YELLOW_COLOR;
+                
+                [pbtn enableValueSet:YES];
+                
+                [_currentObj setLabValue:YES
+                               withIndex:(int)pbtn.tag];
+                
+            }
+            else
+            {
+                UILabel *numberL = [_buttonNumberArray objectAtIndex:pbtn.tag];
+                numberL.textColor = [UIColor whiteColor];;
+                
+                [pbtn enableValueSet:NO];
+                
+                [_currentObj setLabValue:NO
+                               withIndex:(int)pbtn.tag];
+            }
+        }
+    }
+}
+
 - (void) didTappedMSelf:(LightSliderButton*)slbtn{
     
     int idx = (int)slbtn.tag;
@@ -294,45 +338,39 @@
     if(idx < [_powerProxys count])
     {
         proxyObj = [_powerProxys objectAtIndex:idx];
+        if(proxyObj && [proxyObj isKindOfClass:[APowerESetProxy class]])
+        {
+            if (![proxyObj isOnOff]) {
+                
+                UILabel *numberL = [_buttonNumberArray objectAtIndex:slbtn.tag];
+                numberL.textColor = YELLOW_COLOR;
+                
+                [slbtn enableValueSet:YES];
+                
+                [_currentObj setLabValue:YES
+                               withIndex:idx];
+                
+                //控制 开
+                [proxyObj controlRelayStatus:@"Link"];
+                
+            }
+            else
+            {
+                UILabel *numberL = [_buttonNumberArray objectAtIndex:slbtn.tag];
+                numberL.textColor = [UIColor whiteColor];;
+                
+                [slbtn enableValueSet:NO];
+                
+                [_currentObj setLabValue:NO
+                               withIndex:idx];
+                
+                //控制 关
+                [proxyObj controlRelayStatus:@"Break"];
+            }
+        }
     }
     
-    // want to choose it
-    if (![_selectedBtnArray containsObject:slbtn]) {
-        
-        [_selectedBtnArray addObject:slbtn];
-        
-        UILabel *numberL = [_buttonNumberArray objectAtIndex:slbtn.tag];
-        numberL.textColor = YELLOW_COLOR;
-        
-        [slbtn enableValueSet:YES];
-        
-        if(proxyObj && [proxyObj isKindOfClass:[APowerESetProxy class]])
-        {
-            [_currentObj setLabValue:YES
-                           withIndex:idx];
-            
-            //控制 开
-            [proxyObj controlRelayStatus:@"Link"];
-        }
-        
-    } else {
-        // remove it
-        [_selectedBtnArray removeObject:slbtn];
-        
-        UILabel *numberL = [_buttonNumberArray objectAtIndex:slbtn.tag];
-        numberL.textColor = [UIColor whiteColor];;
-        
-        [slbtn enableValueSet:NO];
-        
-        if(proxyObj && [proxyObj isKindOfClass:[APowerESetProxy class]])
-        {
-            [_currentObj setLabValue:NO
-                           withIndex:idx];
-            
-            //控制 关
-            [proxyObj controlRelayStatus:@"Break"];
-        }
-    }
+    
 }
 
 - (void) didControlSwitchAllPower:(BOOL) isPowerOn{
@@ -447,4 +485,10 @@
 - (void) cancelAction:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 @end
