@@ -250,8 +250,6 @@
     
     NSDictionary *map = [self.config objectForKey:@"opt_value_map"];
     [vpro recoverWithDictionary:[map objectForKey:key]];
-
-
 }
 
 

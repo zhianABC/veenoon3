@@ -18,7 +18,7 @@
 }
 @property (nonatomic, strong) NSArray *_rgsCommands;
 @property (nonatomic, strong) NSMutableDictionary *_cmdMap;
-@property (nonatomic, strong) NSMutableDictionary *_RgsSceneDeviceOperationShadow;
+@property (nonatomic, strong) NSMutableDictionary *_optMaps;
 
 @property (nonatomic, strong) NSMutableDictionary *_pointsData;
 
@@ -27,12 +27,16 @@
 @implementation BlindPluginProxy {
     
 }
+
 @synthesize _rgsCommands;
 @synthesize _rgsProxyObj;
 @synthesize _cmdMap;
 @synthesize delegate;
 @synthesize _deviceId;
 @synthesize _channelNumber;
+
+@synthesize _optMaps;
+@synthesize _rgsOpts;
 
 - (NSDictionary*)getChRecords{
     
@@ -90,6 +94,13 @@
 }
 - (void) controlStatue:(int)state withCh:(int)ch {
     
+    if(_optMaps == nil)
+    {
+        self._optMaps = [NSMutableDictionary dictionary];
+    }
+    
+    
+    
     RgsCommandInfo *cmd = nil;
     cmd = [_cmdMap objectForKey:@"SET_CH"];
     
@@ -101,6 +112,9 @@
     } else if (state == 3) {
         status = @"REV";
     }
+    
+    if(state != 2)//停止的命令就不要了
+        [self._optMaps setObject:status forKey:[NSNumber numberWithInt:ch]];
     
     if(cmd)
     {
@@ -128,6 +142,73 @@
                                                param:param completion:nil];
     }
 }
+
+////生成场景片段
+- (NSArray*) generateEventOperation_ChState{
+    
+    RgsCommandInfo *cmd = nil;
+    
+    if(_cmdMap)
+        cmd = [_cmdMap objectForKey:@"SET_CH"];
+
+    self._rgsOpts = [NSMutableArray array];
+    
+    if(cmd)
+    {
+        NSMutableArray *event_opts = [NSMutableArray array];
+        for(id chkey in [_optMaps allKeys])
+        {
+            
+            int iCh = [chkey intValue];
+            NSString* status = [_optMaps objectForKey:chkey];
+            
+            NSMutableDictionary * param = [NSMutableDictionary dictionary];
+            if([cmd.params count])
+            {
+                for(RgsCommandParamInfo *param_info in cmd.params)
+                {
+                    if([param_info.name isEqualToString:@"CH"])
+                    {
+                        [param setObject:[NSString stringWithFormat:@"%d", iCh]
+                                  forKey:param_info.name];
+                    }
+                    else if([param_info.name isEqualToString:@"STATUS"])
+                    {
+                        [param setObject:status
+                                  forKey:param_info.name];
+                    }
+                }
+            }
+            
+            if(_rgsProxyObj)
+            {
+                _deviceId = _rgsProxyObj.m_id;
+            }
+            RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc]init];
+            scene_opt.dev_id = _deviceId;
+            scene_opt.cmd = cmd.name;
+            scene_opt.param = param;
+            
+            
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
+                                                                              cmd:scene_opt.cmd
+                                                                            param:scene_opt.param];
+            
+            [event_opts addObject:opt];
+            
+            [_rgsOpts addObject:opt];
+        }
+        
+        return event_opts;
+    }
+    else
+    {
+        return _rgsOpts;
+    }
+    
+    return nil;
+}
+
 - (void) checkRgsProxyCommandLoad:(NSArray*)cmds{
     
     if(_rgsCommands){
@@ -162,7 +243,33 @@
 
 - (void) recoverWithDictionary:(NSArray*)datas{
     
-    _isSetOK = YES;
+    self._rgsOpts = [NSMutableArray array];
+    self._optMaps = [NSMutableDictionary dictionary];
+    
+    for(RgsSceneDeviceOperation *dopt in datas)
+    {
+        _isSetOK = YES;
+        
+        NSString *cmd = dopt.cmd;
+        NSDictionary *param = dopt.param;
+        
+        if([cmd isEqualToString:@"SET_CH"])
+        {
+            NSString *status = [param objectForKey:@"STATUS"];
+            int ch = [[param objectForKey:@"CH"] intValue];
+            
+            [self._optMaps setObject:status
+                                  forKey:[NSNumber numberWithInt:ch]];
+            
+            
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:dopt.dev_id
+                                                                              cmd:dopt.cmd
+                                                                            param:dopt.param];
+            [_rgsOpts addObject:opt];
+        }
+        
+    }
+    
 }
 
 @end

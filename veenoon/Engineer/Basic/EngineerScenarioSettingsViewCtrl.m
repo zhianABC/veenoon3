@@ -23,9 +23,12 @@
 #import "EngineerNewTeslariViewCtrl.h"
 #import "MeetingRoom.h"
 #import "ScenarioCellView.h"
+#import "JCActionView.h"
+#import "AppDelegate.h"
+#import "Utilities.h"
 
 
-@interface EngineerScenarioSettingsViewCtrl ()<SIconSelectViewDelegate, ScenarioDelegate, ScenarioCellViewDelegate>{
+@interface EngineerScenarioSettingsViewCtrl ()<SIconSelectViewDelegate, ScenarioDelegate, ScenarioCellViewDelegate, JCActionViewDelegate>{
     
     UIButton *_selectSysBtn;
     SIconSelectView *_settingview;
@@ -346,6 +349,69 @@
 //TODO: 上传到云端备份
 - (void) uploadAction:(id)sender{
     
+    JCActionView *jcAction = [[JCActionView alloc] initWithTitles:@[@"备份到云账户", @"备份到U盘"]
+                                                            frame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    jcAction.delegate_ = self;
+    
+    AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    [app.window addSubview:jcAction];
+    [jcAction animatedShow];
+    
+}
+
+- (void) didJCActionButtonIndex:(int)index actionView:(UIView*)actionView{
+    
+    if(index == 0)
+    {
+        [self exportProjectToCloud];
+    }
+    else if(index == 1)
+    {
+        [self exportProjectToUdisk];
+    }
+}
+
+- (void) exportProjectToUdisk{
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示"
+                                                                             message:@"请输入保存的名称" preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"工程名称";
+    }];
+    
+    IMP_BLOCK_SELF(EngineerScenarioSettingsViewCtrl);
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UITextField *envirnmentNameTextField = alertController.textFields.firstObject;
+        NSString *nameTxt = envirnmentNameTextField.text;
+        if (nameTxt && [nameTxt length] > 0) {
+            
+            [block_self doSaveCurrentProjectToUDisk:nameTxt];
+            
+        }
+    }]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
+    [self presentViewController:alertController animated:true completion:nil];
+}
+
+- (void) doSaveCurrentProjectToUDisk:(NSString*)name{
+
+    [KVNProgress show];
+    
+    [[RegulusSDK sharedRegulusSDK] ExportProjectToUdisc:name completion:^(BOOL result, NSError *error) {
+        
+        if(result)
+        {
+            [KVNProgress showSuccessWithStatus:@"备份完成"];
+        }
+    }];
+}
+
+- (void) exportProjectToCloud{
+    
     [KVNProgress show];
     
     [[RegulusSDK sharedRegulusSDK] ExportProjectToLocal:[NSString stringWithFormat:@"%@",self.regulus_id]
@@ -402,7 +468,7 @@
     
     [_client requestWithSusessBlockWithImage:^(id lParam, id rParam) {
         
-        [KVNProgress showSuccessWithStatus:@"上传完成"];
+        [KVNProgress showSuccessWithStatus:@"备份完成"];
         
     } FailBlock:^(id lParam, id rParam) {
         

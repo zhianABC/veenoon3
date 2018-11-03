@@ -1236,6 +1236,19 @@
         }
         else if([dev isKindOfClass:[BlindPlugin class]])
         {
+            BlindPluginProxy *proj = ((BlindPlugin*)dev)._proxyObj;
+            if(proj)
+            {
+                NSArray *rsps = [proj generateEventOperation_ChState];
+                if(rsps && [rsps count])
+                {
+                    for(id rsp in rsps)
+                    {
+                        [self addEventOperation:rsp];
+                    }
+                }
+            }
+            
             NSDictionary *data = [dev userData];
             [evns addObject:data];
         }

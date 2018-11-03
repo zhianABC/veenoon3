@@ -24,6 +24,7 @@
 @property (nonatomic, strong) RgsProxyObj *_rgsProxyObj;
 @property (nonatomic, assign) NSUInteger _deviceId;
 @property (nonatomic, assign) int _channelNumber;
+@property (nonatomic, strong) NSMutableArray *_rgsOpts;
 
 - (void) checkRgsProxyCommandLoad:(NSArray*)cmds;
 /////场景还原
@@ -34,4 +35,9 @@
 - (void) controlStatue:(int)state withCh:(int)ch; 
 
 - (int) getChannelNumber;
+
+////生成场景片段
+- (NSArray*) generateEventOperation_ChState;
+
+
 @end
