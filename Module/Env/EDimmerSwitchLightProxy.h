@@ -20,6 +20,8 @@
 
 @property (nonatomic, assign) int _power;
 
+- (void) getCurrentDataState;
+
 - (NSDictionary *)getChLevelRecords;
 
 - (void) checkRgsProxyCommandLoad:(NSArray*)cmds;

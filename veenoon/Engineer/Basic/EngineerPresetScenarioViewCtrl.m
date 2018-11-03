@@ -519,8 +519,16 @@
     {
         BasePlugElement *plug = [datas objectAtIndex:i];
         
+        int drid = [plug getID];
+        if(drid == 0)
+        {
+            if(plug.config && [plug.config objectForKey:@"driver_id"])
+            {
+                drid = [[plug.config objectForKey:@"driver_id"] intValue];
+            }
+        }
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        [dic setObject:[NSNumber numberWithInteger:[plug getID]] forKey:@"id"];
+        [dic setObject:[NSNumber numberWithInteger:drid] forKey:@"id"];
         [dic setObject:[plug deviceName] forKey:@"name"];
         [dic setObject:[NSString stringWithFormat:@"%@", [plug class]] forKey:@"class"];
         if(plug._show_icon_name)
@@ -665,17 +673,19 @@
     }
 }
 
--(void)buttonAction:(DevicePlugButton*)cellBtn{
+- (void)buttonAction:(DevicePlugButton*)cellBtn{
 
-    
     if(_isEditMode)//删除模式
     {
         return;
     }
-    
-    
     NSMutableDictionary *data = (NSMutableDictionary*)cellBtn._mydata;
-    //NSString *name = [data objectForKey:@"name"];
+    
+    if(![data isKindOfClass:[NSDictionary class]])
+    {
+        return;
+    }
+    
     NSString *class = [data objectForKey:@"class"];
     
     /////////

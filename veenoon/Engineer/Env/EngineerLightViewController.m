@@ -36,19 +36,22 @@
     UIView *_proxysView;
 }
 @property (nonatomic, strong) EDimmerLight *_curProcessor;
-
-
+@property (nonatomic, strong) NSArray *_proxys;
+@property (nonatomic, strong) NSMutableDictionary *_proxyObjMap;
 @end
 
 @implementation EngineerLightViewController
 @synthesize _lightSysArray;
 @synthesize _number;
 @synthesize _curProcessor;
+@synthesize _proxys;
+@synthesize _proxyObjMap;
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    isSettings=NO;
+    isSettings = NO;
     
     _buttonArray = [[NSMutableArray alloc] init];
     _buttonSeideArray = [[NSMutableArray alloc] init];
@@ -117,12 +120,19 @@
     [_zengyiSlider resetScale];
     _zengyiSlider.center = CGPointMake(TESLARIA_SLIDER_X, TESLARIA_SLIDER_Y);
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(notifyProxyGotCurStateVals:)
+                                                 name:NOTIFY_PROXY_CUR_STATE_GOT_LB
+                                               object:nil];
+    
     [self getCurrentDeviceDriverProxys];
     
     UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture2:)];
     tapGesture.cancelsTouchesInView =  NO;
     tapGesture.numberOfTapsRequired = 1;
     [_proxysView addGestureRecognizer:tapGesture];
+    
+    
 }
 
 - (void) handleTapGesture2:(UIGestureRecognizer*)sender{
@@ -163,28 +173,49 @@
     int space = ENGINEER_VIEW_COLUMN_GAP;
     
     
-    NSDictionary *chLevelMap = [(EDimmerLightProxys*)_curProcessor._proxyObj getChLevelRecords];
+    NSMutableArray *tmpProxyObjs = [NSMutableArray array];
     
-    for (int i = 0; i < self._number; i++) {
+    if([_curProcessor._proxys count])//已经创建过
+    {
+        tmpProxyObjs = _curProcessor._proxys;
+    }
+    else //没创建过
+    {
+        //创建
+        for (int i = 0; i < [_proxys count]; i++) {
+            
+            RgsProxyObj * rgsProxy = [_proxys objectAtIndex:i];
+            
+            EDimmerLightProxys *apxy = [[EDimmerLightProxys alloc] init];
+            apxy._rgsProxyObj = rgsProxy;
+            [tmpProxyObjs addObject:apxy];
+        }
+        
+        _curProcessor._proxys = tmpProxyObjs;
+    }
+    
+    
+    self._proxyObjMap = [NSMutableDictionary dictionary];
+    
+    for (int i = 0; i < [tmpProxyObjs count]; i++) {
         
         int row = index/colNumber;
         int col = index%colNumber;
         int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+top;
         
+        EDimmerLightProxys *apxy = [tmpProxyObjs objectAtIndex:i];
+        
         LightSliderButton *btn = [[LightSliderButton alloc] initWithFrame:CGRectMake(startX, startY, 120, 120)];
         btn.tag = i;
         btn.delegate = self;
         [_proxysView addSubview:btn];
         
-        id key = [NSString stringWithFormat:@"%d", i+1];
-        if([chLevelMap objectForKey:key])
-        {
-            int level = [[chLevelMap objectForKey:key] intValue];
-            float f = level/100.0;
-            [btn setCircleValue:f];
-        }
+        btn.data = apxy;
         
+        int level = apxy._level;
+        float f = level/100.0;
+        [btn setCircleValue:f];
     
         UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2-40, 0, 80, 20)];
         titleL.backgroundColor = [UIColor clearColor];
@@ -198,40 +229,105 @@
         
         [_buttonArray addObject:btn];
         
+        if(apxy._rgsProxyObj){
+            [_proxyObjMap setObject:btn forKey:@(apxy._rgsProxyObj.m_id)];
+            
+            [apxy getCurrentDataState];
+        }
+        
         index++;
     }
     
+    if([tmpProxyObjs count])
+    {
+        //只读取一个，因为所有的out的commands相同
+        NSMutableArray *proxyids = [NSMutableArray array];
+        EDimmerLightProxys *ape = [tmpProxyObjs objectAtIndex:0];
+        [proxyids addObject:[NSNumber numberWithInteger:ape._rgsProxyObj.m_id]];
+        
+        IMP_BLOCK_SELF(EngineerLightViewController);
+        
+        if(![ape haveProxyCommandLoaded])
+        {
+            [KVNProgress show];
+            [[RegulusSDK sharedRegulusSDK] GetProxyCommandDict:proxyids
+                                                    completion:^(BOOL result, NSDictionary *commd_dict, NSError *error) {
+                                                        
+                                                        [block_self loadAllCommands:commd_dict];
+                                                        
+                                                    }];
+        }
+    }
 }
+
+
+- (void) loadAllCommands:(NSDictionary*)commd_dict{
+    
+    if([[commd_dict allValues] count])
+    {
+        NSArray *cmds = [[commd_dict allValues] objectAtIndex:0];
+        
+        for(EDimmerLightProxys *vap in _curProcessor._proxys)
+        {
+            [vap checkRgsProxyCommandLoad:cmds];
+        }
+    }
+    
+    [KVNProgress dismiss];
+}
+
+
+#pragma mark --Proxy Current State Got
+- (void) notifyProxyGotCurStateVals:(NSNotification*)notify{
+    
+    NSDictionary *obj = notify.object;
+    
+    if(obj && [obj objectForKey:@"proxy"])
+    {
+        id key = [obj objectForKey:@"proxy"];
+        
+        id ctrl = [_proxyObjMap objectForKey:key];
+        if([ctrl isKindOfClass:[LightSliderButton class]])
+        {
+            LightSliderButton *pbtn = ctrl;
+            EDimmerLightProxys *apxy = pbtn.data;
+            
+            int level = apxy._level;
+            float f = level/100.0;
+            [pbtn setCircleValue:f];
+        }
+    }
+}
+
 
 - (void) getCurrentDeviceDriverProxys{
     
     if(_curProcessor == nil)
         return;
     
-#ifdef OPEN_REG_LIB_DEF
+    //如果有，就不需要重新请求了
+    if([_curProcessor._proxys count])
+    {
+        [self layoutChannels];
+        return;
+    }
     
     IMP_BLOCK_SELF(EngineerLightViewController);
     
     RgsDriverObj *driver = _curProcessor._driver;
     if([driver isKindOfClass:[RgsDriverObj class]])
     {
-//        [[RegulusSDK sharedRegulusSDK] GetDriverProxys:driver.m_id completion:^(BOOL result, NSArray *proxys, NSError *error) {
-//            if (result) {
-//                if ([proxys count]) {
-//
-//                   // block_self._proxys = proxys;
-//                   // [block_self initChannels];
-//                }
-//            }
-//            else{
-//                [KVNProgress showErrorWithStatus:[error description]];
-//            }
-//        }];
-        
-        [[RegulusSDK sharedRegulusSDK] GetDriverCommands:driver.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
+        [[RegulusSDK sharedRegulusSDK] GetDriverProxys:driver.m_id completion:^(BOOL result, NSArray *proxys, NSError *error) {
             if (result) {
-                if ([commands count]) {
-                    [block_self loadedLightCommands:commands];
+                if ([proxys count]) {
+                    NSMutableArray *proxysArray = [NSMutableArray array];
+                    for (RgsProxyObj *proxyObj in proxys) {
+                        if ([proxyObj.type isEqualToString:@"light_v2"]) {
+                            [proxysArray addObject:proxyObj];
+                        }
+                    }
+                    block_self._proxys = proxysArray;
+                    [block_self layoutChannels];
                 }
             }
             else{
@@ -239,60 +335,34 @@
             }
         }];
     }
-#endif
-}
-
-- (void) loadedLightCommands:(NSArray*)cmds{
-    
-    RgsDriverObj *driver = _curProcessor._driver;
-    
-    id proxy = _curProcessor._proxyObj;
-    
-    EDimmerLightProxys *vpro = nil;
-    if(proxy && [proxy isKindOfClass:[EDimmerLightProxys class]])
-    {
-        vpro = proxy;
-    }
-    else
-    {
-        vpro = [[EDimmerLightProxys alloc] init];
-    }
-    
-    vpro._deviceId = driver.m_id;
-    [vpro checkRgsProxyCommandLoad:cmds];
-    
-    
-    self._curProcessor._proxyObj = vpro;
-    //[_curProcessor syncDriverIPProperty];
-    
-    self._number = [vpro getNumberOfLights];
-    [self layoutChannels];
 }
 
 - (void) didSliderValueChanged:(float)value object:(id)object {
     
     float circleValue = (value + 0.0f)/100.0f;
-    
-     EDimmerLightProxys *vpro = self._curProcessor._proxyObj;
+
+    NSMutableArray *opts = [NSMutableArray array];
     
     for (LightSliderButton *button in _selectedBtnArray) {
         
         [button setCircleValue:circleValue];
+       
+        EDimmerLightProxys *apxy = button.data;
         
-        int ch = (int)button.tag + 1;
-        if([vpro isKindOfClass:[EDimmerLightProxys class]])
+        if([apxy isKindOfClass:[EDimmerLightProxys class]])
         {
-            [vpro controlDeviceLightLevel:(int)value
-                                       ch:ch
+            [apxy controlDeviceLightLevel:(int)value
                                      exec:NO];
-
+            
+            //控制命令
+            NSArray *tmps = [apxy generateEventOperation_ChLevel];
+    
+            [opts addObjectsFromArray:tmps];
         }
     }
     
-    if(vpro)
+    if(opts)
     {
-        //控制命令
-        NSArray *opts = [vpro generateEventOperation_ChLevel];
         
         if([opts count])
             [[RegulusSDK sharedRegulusSDK] ControlDeviceByOperation:opts
@@ -302,37 +372,33 @@
 
 - (void) didSliderEndChanged:(float)value object:(id)object {
     
-//    EngineerSliderView *sliderCtrl = object;
-//    float value = [sliderCtrl getScaleValue];
-//
     float circleValue = (value)/100.0f;
-    
-    EDimmerLightProxys *vpro = self._curProcessor._proxyObj;
+ 
+    NSMutableArray *opts = [NSMutableArray array];
     
     for (LightSliderButton *button in _selectedBtnArray) {
         
         [button setCircleValue:circleValue];
         
-        int ch = (int)button.tag + 1;
-        if([vpro isKindOfClass:[EDimmerLightProxys class]])
+        EDimmerLightProxys *apxy = button.data;
+        
+        if([apxy isKindOfClass:[EDimmerLightProxys class]])
         {
-            [vpro controlDeviceLightLevel:(int)value
-                                       ch:ch
+            [apxy controlDeviceLightLevel:(int)value
                                      exec:NO];
             
+            //控制命令
+            NSArray *tmps = [apxy generateEventOperation_ChLevel];
+            
+            [opts addObjectsFromArray:tmps];
         }
     }
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(200.0 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
         
-        if(vpro)
-        {
-            //控制命令
-            NSArray *opts = [vpro generateEventOperation_ChLevel];
-            
-            if([opts count])
-                [[RegulusSDK sharedRegulusSDK] ControlDeviceByOperation:opts
-                                                             completion:nil];
-        }
+       //控制命令
+        if([opts count])
+            [[RegulusSDK sharedRegulusSDK] ControlDeviceByOperation:opts
+                                                         completion:nil];
     });
     
 }
@@ -343,12 +409,10 @@
     
     int circleValue = value*100.0f;
     
-    EDimmerLightProxys *vpro = self._curProcessor._proxyObj;
-    int ch = (int)slbtn.tag + 1;
+    EDimmerLightProxys *vpro = slbtn.data;
     if([vpro isKindOfClass:[EDimmerLightProxys class]])
     {
         [vpro controlDeviceLightLevel:circleValue
-                                   ch:ch
                                  exec:YES];
     }
     
@@ -360,15 +424,13 @@
     int circleValue = value*100.0f;
     [_zengyiSlider setScaleValue:circleValue];
     
-    EDimmerLightProxys *vpro = self._curProcessor._proxyObj;
-    int ch = (int)slbtn.tag + 1;
+    EDimmerLightProxys *vpro = slbtn.data;
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(200.0 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
         
         if([vpro isKindOfClass:[EDimmerLightProxys class]])
         {
             [vpro controlDeviceLightLevel:circleValue
-                                       ch:ch
                                      exec:YES];
         }
     });

@@ -36,6 +36,7 @@
 
 //<IconCenterTextButton,IconCenterTextButton...>
 @property (nonatomic, strong) NSMutableArray *_channelBtns;
+@property (nonatomic, strong) NSArray *_proxys;
 
 @end
 
@@ -44,6 +45,8 @@
 @synthesize _curProcessor;
 @synthesize _devices;
 @synthesize _channelBtns;
+
+@synthesize _proxys;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -266,18 +269,29 @@
     if(_curProcessor == nil)
         return;
     
-#ifdef OPEN_REG_LIB_DEF
+    //如果有，就不需要重新请求了
+    if([_curProcessor._proxys count])
+    {
+        [self layoutChannels];
+        return;
+    }
     
     IMP_BLOCK_SELF(UserLightConfigViewCtrl);
     
     RgsDriverObj *driver = _curProcessor._driver;
     if([driver isKindOfClass:[RgsDriverObj class]])
     {
-        
-        [[RegulusSDK sharedRegulusSDK] GetDriverCommands:driver.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
+        [[RegulusSDK sharedRegulusSDK] GetDriverProxys:driver.m_id completion:^(BOOL result, NSArray *proxys, NSError *error) {
             if (result) {
-                if ([commands count]) {
-                    [block_self loadedLightCommands:commands];
+                if ([proxys count]) {
+                    NSMutableArray *proxysArray = [NSMutableArray array];
+                    for (RgsProxyObj *proxyObj in proxys) {
+                        if ([proxyObj.type isEqualToString:@"light_v2"]) {
+                            [proxysArray addObject:proxyObj];
+                        }
+                    }
+                    block_self._proxys = proxysArray;
+                    [block_self layoutChannels];
                 }
             }
             else{
@@ -285,37 +299,35 @@
             }
         }];
     }
-#endif
 }
 
-- (void) loadedLightCommands:(NSArray*)cmds{
+- (void) layoutChannels{
     
     [[_proxysView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [_channelBtns removeAllObjects];
     
+    NSMutableArray *tmpProxyObjs = [NSMutableArray array];
     
-    RgsDriverObj *driver = _curProcessor._driver;
-    
-    id proxy = _curProcessor._proxyObj;
-    
-    EDimmerLightProxys *vpro = nil;
-    if(proxy && [proxy isKindOfClass:[EDimmerLightProxys class]])
+    if([_curProcessor._proxys count])//已经创建过
     {
-        vpro = proxy;
+        tmpProxyObjs = _curProcessor._proxys;
     }
-    else
+    else //没创建过
     {
-        vpro = [[EDimmerLightProxys alloc] init];
+        //创建
+        for (int i = 0; i < [_proxys count]; i++) {
+            
+            RgsProxyObj * rgsProxy = [_proxys objectAtIndex:i];
+            
+            EDimmerLightProxys *apxy = [[EDimmerLightProxys alloc] init];
+            apxy._rgsProxyObj = rgsProxy;
+            [tmpProxyObjs addObject:apxy];
+        }
+        
+        _curProcessor._proxys = tmpProxyObjs;
     }
     
-    vpro._deviceId = driver.m_id;
-    [vpro checkRgsProxyCommandLoad:cmds];
-    
-    
-    self._curProcessor._proxyObj = vpro;
-    
-    int count = [vpro getNumberOfLights];
-    //[self layoutChannels];
+    int count = (int)[tmpProxyObjs count];
     
     int countOfPage = 8;
     
@@ -333,10 +345,10 @@
         pages++;
     }
     
-    NSDictionary *chLevelMap = [(EDimmerLightProxys*)_curProcessor._proxyObj getChLevelRecords];
-    
     int x = left;
     for (int i = 0; i < count; i++) {
+        
+        EDimmerLightProxys *apxy = [tmpProxyObjs objectAtIndex:i];
         
         if(i % countOfPage == 0 && i) {
             x = i/countOfPage * SCREEN_WIDTH + left;
@@ -368,44 +380,77 @@
         lightSlider.tag = i;
         lightSlider.delegate = self;
         
-        //lightSlider
-        id key = [NSString stringWithFormat:@"%d", i+1];
-        if([chLevelMap objectForKey:key])
+        lightSlider.data = apxy;
+        
+        int level = apxy._level;
+        [lightSlider setScaleValue:level];
+        
+        if(level > 0)
         {
-            int level = [[chLevelMap objectForKey:key] intValue];
-            [lightSlider setScaleValue:level];
+            [lightBtn setBtnHighlited:YES];
             
-            if(level > 0)
-            {
-                [lightBtn setBtnHighlited:YES];
-                
-                float alpha = level/100.0;
-                if(alpha < 0.2)
-                    alpha = 0.2;
-                [lightBtn setBtnAlpha:alpha];
-            }
+            float alpha = level/100.0;
+            if(alpha < 0.2)
+                alpha = 0.2;
+            [lightBtn setBtnAlpha:alpha];
         }
         
         x+=120;
         
         [_channelBtns addObject:lightBtn];
     }
+    
+    if([tmpProxyObjs count])
+    {
+        //只读取一个，因为所有的out的commands相同
+        NSMutableArray *proxyids = [NSMutableArray array];
+        EDimmerLightProxys *ape = [tmpProxyObjs objectAtIndex:0];
+        [proxyids addObject:[NSNumber numberWithInteger:ape._rgsProxyObj.m_id]];
+        
+        IMP_BLOCK_SELF(UserLightConfigViewCtrl);
+        
+        if(![ape haveProxyCommandLoaded])
+        {
+            [KVNProgress show];
+            [[RegulusSDK sharedRegulusSDK] GetProxyCommandDict:proxyids
+                                                    completion:^(BOOL result, NSDictionary *commd_dict, NSError *error) {
+                                                        
+                                                        [block_self loadAllCommands:commd_dict];
+                                                        
+                                                    }];
+        }
+    }
 }
+
+
+- (void) loadAllCommands:(NSDictionary*)commd_dict{
+    
+    if([[commd_dict allValues] count])
+    {
+        NSArray *cmds = [[commd_dict allValues] objectAtIndex:0];
+        
+        for(EDimmerLightProxys *vap in _curProcessor._proxys)
+        {
+            [vap checkRgsProxyCommandLoad:cmds];
+        }
+    }
+    
+    [KVNProgress dismiss];
+}
+
 
 - (void) didSliderValueChanged:(float)value object:(id)object{
     
     int circleValue = value;
     
-    EDimmerLightProxys *vpro = self._curProcessor._proxyObj;
-    int ch = 1;
-    
-    if([object isKindOfClass:[JLightSliderView class]])
-        ch = (int)((JLightSliderView*)object).tag + 1;
+    JLightSliderView *btn = object;
+    EDimmerLightProxys *vpro = btn.data;
+   
+    int ch = (int)btn.tag + 1;
     
     if([vpro isKindOfClass:[EDimmerLightProxys class]])
     {
         [vpro controlDeviceLightLevel:circleValue
-                                   ch:ch
                                  exec:YES];
     }
     
@@ -433,13 +478,11 @@
     
     JLightSliderView *sliderCtrl = object;
     int value = [sliderCtrl getScaleValue];
-    EDimmerLightProxys *vpro = self._curProcessor._proxyObj;
+   
+    EDimmerLightProxys *vpro = sliderCtrl.data;
     
-    int ch = 1;
-    
-    if([object isKindOfClass:[JLightSliderView class]])
-        ch = (int)((JLightSliderView*)object).tag + 1;
-    
+    int ch = (int)sliderCtrl.tag + 1;
+
     if(ch - 1 < [_channelBtns count])
     {
         IconCenterTextButton *lightBtn =  [_channelBtns objectAtIndex:ch-1];
@@ -466,7 +509,6 @@
             if([vpro isKindOfClass:[EDimmerLightProxys class]])
             {
                 [vpro controlDeviceLightLevel:value
-                                           ch:ch
                                          exec:YES];
             }
         }

@@ -20,13 +20,14 @@
 
 @property (nonatomic, assign) int _level;
 
-- (NSDictionary *)getChLevelRecords;
+- (void) getCurrentDataState;
 
 - (void) checkRgsProxyCommandLoad:(NSArray*)cmds;
 
-- (int)getNumberOfLights;
+- (BOOL) haveProxyCommandLoaded;
 
-- (void) controlDeviceLightLevel:(int)levelValue ch:(int)ch exec:(BOOL)exec;
+
+- (void) controlDeviceLightLevel:(int)levelValue exec:(BOOL)exec;
 
 - (BOOL) isSetChanged;
 

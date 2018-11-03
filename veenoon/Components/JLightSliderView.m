@@ -32,6 +32,8 @@
 @synthesize maxValue;
 @synthesize minValue;
 
+@synthesize data;
+
 - (id) initWithSliderBg:(UIImage*)sliderBg frame:(CGRect)frame{
     
     

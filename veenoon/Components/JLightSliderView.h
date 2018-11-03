@@ -29,6 +29,8 @@
 @property (nonatomic, assign) int topEdge;
 @property (nonatomic, assign) int bottomEdge;
 
+@property (nonatomic, strong) id data;
+
 @property (nonatomic, assign) int maxValue;
 @property (nonatomic, assign) int minValue;
 

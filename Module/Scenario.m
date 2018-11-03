@@ -1195,21 +1195,26 @@
         
         if([dev isKindOfClass:[EDimmerLight class]])
         {
-            EDimmerLightProxys *proj = ((EDimmerLight*)dev)._proxyObj;
-            if([proj isSetChanged])
+            NSArray *proxys = ((EDimmerLight*)dev)._proxys;
+            
+            for(EDimmerLightProxys *proxy in proxys)
             {
-                NSArray *rsps = [proj generateEventOperation_ChLevel];
-                if(rsps && [rsps count])
+                if([proxy isSetChanged])
                 {
-                    for(id rsp in rsps)
+                    NSArray *rsps = [proxy generateEventOperation_ChLevel];
+                    if(rsps && [rsps count])
                     {
-                        [self addEventOperation:rsp];
+                        for(id rsp in rsps)
+                        {
+                            [self addEventOperation:rsp];
+                        }
                     }
                 }
             }
             
             NSDictionary *data = [dev userData];
             [evns addObject:data];
+            
         }
         else if([dev isKindOfClass:[EDimmerSwitchLight class]])
         {

@@ -17,16 +17,19 @@
 {
     
 }
+@property (nonatomic, strong) NSMutableDictionary *_rgOpts;
 
 @end
 
 @implementation EDimmerLight
 {
-    
+    BOOL _isSetOK;
 }
 
 @synthesize _localSavedCommands;
-@synthesize _proxyObj;
+@synthesize _proxys;
+
+@synthesize _rgOpts;
 
 - (id) init
 {
@@ -81,6 +84,44 @@
                                          }];
     }
 }
+
+
+- (void) prepareAllCmds
+{
+    
+    if([_proxys count])
+    {
+        NSMutableArray *proxyids = [NSMutableArray array];
+        //只读取一个，因为所有的Channel的commands相同
+        EDimmerLightProxys *vap = [_proxys objectAtIndex:0];
+        [proxyids addObject:[NSNumber numberWithInt:(int)vap._rgsProxyObj.m_id]];
+        
+        IMP_BLOCK_SELF(EDimmerLight);
+        
+        [[RegulusSDK sharedRegulusSDK] GetProxyCommandDict:proxyids
+                                                completion:^(BOOL result, NSDictionary *commd_dict, NSError *error) {
+                                                    
+                                                    [block_self loadCommands:commd_dict];
+                                                    
+                                                }];
+    }
+    
+}
+
+- (void) loadCommands:(NSDictionary*)commd_dict{
+    
+    if([[commd_dict allValues] count])
+    {
+        NSArray *cmds = [[commd_dict allValues] objectAtIndex:0];
+        
+        for(EDimmerLightProxys *vap in _proxys)
+        {
+            [vap checkRgsProxyCommandLoad:cmds];
+        }
+    }
+    
+}
+
 
 - (void) removeDriver{
     
@@ -153,44 +194,58 @@
     self._name = rgsd.name;
     
     IMP_BLOCK_SELF(EDimmerLight);
-    [[RegulusSDK sharedRegulusSDK] GetDriverCommands:rgsd.m_id
-                                          completion:^(BOOL result, NSArray *commands, NSError *error) {
-        if (result) {
-            if ([commands count]) {
-                [block_self loadedLightCommands:commands];
-            }
-        }
-        
-    }];
+    [[RegulusSDK sharedRegulusSDK] GetDriverProxys:rgsd.m_id
+                                        completion:^(BOOL result, NSArray *proxys, NSError *error) {
+                                            if (result) {
+                                                if ([proxys count]) {
+                                                    
+                                                    NSMutableArray *proxysArray = [NSMutableArray array];
+                                                    for (RgsProxyObj *proxyObj in proxys) {
+                                                        if ([proxyObj.type isEqualToString:@"light_v2"]) {
+                                                            [proxysArray addObject:proxyObj];
+                                                        }
+                                                    }
+                                                    [block_self prepareChannels:proxysArray];
+                                                }
+                                            }
+                                        }];
 }
 
 
-- (void) loadedLightCommands:(NSArray*)cmds{
+
+- (void) prepareChannels:(NSArray*)proxys{
     
-    RgsDriverObj *driver = self._driver;
-    
-    id proxy = self._proxyObj;
-    
-    EDimmerLightProxys *vpro = nil;
-    if(proxy && [proxy isKindOfClass:[EDimmerLightProxys class]])
-    {
-        vpro = proxy;
-    }
-    else
-    {
-        vpro = [[EDimmerLightProxys alloc] init];
-    }
-    
-    id key = [NSString stringWithFormat:@"%d", (int)driver.m_id];
+    self._proxys = [NSMutableArray array];
+    self._rgOpts = [NSMutableDictionary dictionary];
     
     NSDictionary *map = [self.config objectForKey:@"opt_value_map"];
-    [vpro recoverWithDictionary:[map objectForKey:key]];
+
+    id key = [NSString stringWithFormat:@"%d", (int)((RgsDriverObj*)_driver).m_id];
+    NSArray *datas = [map objectForKey:key];
+    for(RgsSceneDeviceOperation *dopt in datas)
+    {
+        NSString *cmd = dopt.cmd;
+        
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:dopt.dev_id
+                                                                          cmd:dopt.cmd
+                                                                        param:dopt.param];
+        [_rgOpts setObject:opt forKey:cmd];
+    }
     
-    vpro._deviceId = driver.m_id;
-    [vpro checkRgsProxyCommandLoad:cmds];
-    
-    self._proxyObj = vpro;
-   
+    for(int i = 0; i < [proxys count]; i++)
+    {
+        RgsProxyObj *proxy = [proxys objectAtIndex:i];
+        
+        id key = [NSString stringWithFormat:@"%d", (int)proxy.m_id];
+        
+        EDimmerLightProxys *apxy = [[EDimmerLightProxys alloc] init];
+        apxy._rgsProxyObj = proxy;
+        
+        NSArray *vals = [map objectForKey:key];
+        [apxy recoverWithDictionary:vals];
+        
+        [_proxys addObject:apxy];
+    }
 }
 
 

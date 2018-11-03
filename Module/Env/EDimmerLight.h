@@ -15,11 +15,9 @@
 }
 
 @property (nonatomic, strong) NSArray *_localSavedCommands;
-
-//<EDimmerLightProxys>
-@property (nonatomic, strong) id _proxyObj;
+@property (nonatomic, strong) NSMutableArray *_proxys;
 
 - (NSString*) deviceName;
-
+- (void) prepareAllCmds;
 
 @end

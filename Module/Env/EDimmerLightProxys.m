@@ -17,8 +17,7 @@
 }
 @property (nonatomic, strong) NSArray *_rgsCommands;
 @property (nonatomic, strong) NSMutableDictionary *_cmdMap;
-@property (nonatomic, strong) NSMutableArray *_rgOpts;
-@property (nonatomic, strong) NSMutableDictionary* _channelsMap;
+@property (nonatomic, strong) NSMutableDictionary *_rgsOpts;
 
 @end
 
@@ -29,43 +28,56 @@
 @synthesize _cmdMap;
 
 @synthesize _deviceId;
-@synthesize _rgOpts;
-
-@synthesize _channelsMap;
 
 @synthesize _level;
+@synthesize _rgsOpts;
 
 - (id) init
 {
     if(self = [super init])
     {
         self._level = 0;
-        
-        self._channelsMap = [NSMutableDictionary dictionary];
-        
-        self._rgOpts = [NSMutableArray array];
-        
        
     }
     
     return self;
 }
 
+- (void) getCurrentDataState
+{
+
+    if(_rgsProxyObj)
+    {
+        IMP_BLOCK_SELF(EDimmerLightProxys);
+        [[RegulusSDK sharedRegulusSDK] GetProxyCurState:_rgsProxyObj.m_id completion:^(BOOL result, NSDictionary *state, NSError *error) {
+            if (result) {
+                if ([state count])
+                {
+                    [block_self parseStateInitsValues:state];
+                }
+            }
+        }];
+        
+    }
+}
+
+- (void) parseStateInitsValues:(NSDictionary*)state{
+    
+    id val = [state objectForKey:@"LEVEL"];
+    self._level = [val intValue];
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_PROXY_CUR_STATE_GOT_LB
+                                                        object:@{@"proxy":@(_rgsProxyObj.m_id)}];
+}
 - (BOOL) isSetChanged{
     
     return _isSetOK;
 }
 
-- (NSDictionary *)getChLevelRecords{
-    
-    return _channelsMap;
-}
-
-
 
 - (void) recoverWithDictionary:(NSArray*)datas
 {
-    self._rgOpts = [NSMutableArray array];
+    self._rgsOpts = [NSMutableDictionary dictionary];
     
     for(RgsSceneDeviceOperation *dopt in datas)
     {
@@ -74,20 +86,15 @@
         NSString *cmd = dopt.cmd;
         NSDictionary *param = dopt.param;
         
-        if([cmd isEqualToString:@"SET_CH_LEVEL"])
+        if([cmd isEqualToString:@"SET_LIGHT_LEVEL"])
         {
-            int lv = [[param objectForKey:@"LEVEL"] intValue];
-            int ch = [[param objectForKey:@"CH"] intValue];
-            
-            [self._channelsMap setObject:[NSNumber numberWithInt:lv]
-                                  forKey:[NSString stringWithFormat:@"%d", ch]];
-            
-            
-            RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:dopt.dev_id
-                                                                              cmd:dopt.cmd
-                                                                            param:dopt.param];
-            [_rgOpts addObject:opt];
+            self._level = [[param objectForKey:@"LEVEL"] intValue];
         }
+        
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:dopt.dev_id
+                                                                          cmd:dopt.cmd
+                                                                        param:dopt.param];
+        [_rgsOpts setObject:opt forKey:cmd];
     }
  
 }
@@ -143,39 +150,11 @@
     
 }
 
-- (int)getNumberOfLights{
-    
-    int max = 0;
-    RgsCommandInfo *cmd = [self._cmdMap objectForKey:@"SET_CH_LEVEL"];
-    if(cmd)
-    {
-        for(RgsCommandParamInfo *cmdparam in cmd.params)
-        {
-            if([cmdparam.name isEqualToString:@"CH"])
-            {
-                max = [cmdparam.max intValue];
-                break;
-            }
-        }
-    }
-    
-    //不要初始化了，没有操控的channel就不需要执行
-//    for(int i = 0; i < max; i++){
-//
-//        [_channelsMap setObject:@0 forKey:[NSNumber numberWithInt:i]];
-//    }
-    
-    return max;
-}
-
-- (void) controlDeviceLightLevel:(int)levelValue ch:(int)ch exec:(BOOL)exec{
+- (void) controlDeviceLightLevel:(int)levelValue exec:(BOOL)exec{
     
     RgsCommandInfo *cmd = nil;
-    cmd = [_cmdMap objectForKey:@"SET_CH_LEVEL"];
+    cmd = [_cmdMap objectForKey:@"SET_LIGHT_LEVEL"];
     self._level = levelValue;
-    
-    [self._channelsMap setObject:[NSNumber numberWithInt:_level]
-                          forKey:[NSString stringWithFormat:@"%d", ch]];
     
     if(cmd && exec)
     {
@@ -184,12 +163,7 @@
         {
             for(RgsCommandParamInfo *param_info in cmd.params)
             {
-                if([param_info.name isEqualToString:@"CH"])
-                {
-                    [param setObject:[NSString stringWithFormat:@"%d", ch]
-                              forKey:param_info.name];
-                }
-                else if([param_info.name isEqualToString:@"LEVEL"])
+                if([param_info.name isEqualToString:@"LEVEL"])
                 {
                     [param setObject:[NSString stringWithFormat:@"%d", _level]
                               forKey:param_info.name];
@@ -214,66 +188,67 @@
     
     RgsCommandInfo *cmd = nil;
     
+    NSMutableArray *event_opts = [NSMutableArray array];
+
+    
     if(_cmdMap)
-        cmd = [_cmdMap objectForKey:@"SET_CH_LEVEL"];
+        cmd = [_cmdMap objectForKey:@"SET_LIGHT_LEVEL"];
     
     if(cmd)
     {
-        NSMutableArray *event_opts = [NSMutableArray array];
-
-        for(id chkey in [_channelsMap allKeys])
+        NSMutableDictionary * param = [NSMutableDictionary dictionary];
+        if([cmd.params count])
         {
-            
-            int iCh = [chkey intValue];
-            int iLevel = [[_channelsMap objectForKey:chkey] intValue];
-            
-            NSMutableDictionary * param = [NSMutableDictionary dictionary];
-            if([cmd.params count])
+            for(RgsCommandParamInfo *param_info in cmd.params)
             {
-                for(RgsCommandParamInfo *param_info in cmd.params)
+                if([param_info.name isEqualToString:@"LEVEL"])
                 {
-                    if([param_info.name isEqualToString:@"CH"])
-                    {
-                        [param setObject:[NSString stringWithFormat:@"%d", iCh]
-                                  forKey:param_info.name];
-                    }
-                    else if([param_info.name isEqualToString:@"LEVEL"])
-                    {
-                        [param setObject:[NSString stringWithFormat:@"%d", iLevel]
-                                  forKey:param_info.name];
-                    }
+                    [param setObject:[NSString stringWithFormat:@"%d", _level]
+                              forKey:param_info.name];
                 }
             }
-            //NSLog(@"=====%@", [NSString stringWithFormat:@"%d", iLevel]);
-            if(_rgsProxyObj)
-            {
-                _deviceId = _rgsProxyObj.m_id;
-            }
-            RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc]init];
-            scene_opt.dev_id = _deviceId;
-            scene_opt.cmd = cmd.name;
-            scene_opt.param = param;
-            
-            
-            RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
-                                                                              cmd:scene_opt.cmd
-                                                                            param:scene_opt.param];
-            
-            [event_opts addObject:opt];
-            
-            [_rgOpts addObject:opt];
         }
+        //NSLog(@"=====%@", [NSString stringWithFormat:@"%d", iLevel]);
+        if(_rgsProxyObj)
+        {
+            _deviceId = _rgsProxyObj.m_id;
+        }
+        RgsSceneDeviceOperation * scene_opt = [[RgsSceneDeviceOperation alloc]init];
+        scene_opt.dev_id = _deviceId;
+        scene_opt.cmd = cmd.name;
+        scene_opt.param = param;
         
+        
+        RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scene_opt.dev_id
+                                                                          cmd:scene_opt.cmd
+                                                                        param:scene_opt.param];
+        
+        [event_opts addObject:opt];
         
         
         return event_opts;
     }
     else
     {
-        return _rgOpts;
+        RgsSceneOperation * opt = [_rgsOpts objectForKey:@"SET_LIGHT_LEVEL"];
+       
+        if(opt)
+            [event_opts addObject:opt];
+        
+        return event_opts;
     }
     
     return nil;
 }
+
+- (BOOL) haveProxyCommandLoaded{
+    
+    if(_rgsCommands)
+        return YES;
+    
+    return NO;
+    
+}
+
 
 @end

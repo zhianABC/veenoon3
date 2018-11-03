@@ -34,7 +34,7 @@
     UIView *_proxysView;
 }
 @property (nonatomic, strong) EDimmerSwitchLight *_curProcessor;
-
+@property (nonatomic, strong) NSArray *_proxys;
 
 @end
 
@@ -42,6 +42,7 @@
 @synthesize _lightSysArray;
 @synthesize _number;
 @synthesize _curProcessor;
+@synthesize _proxys;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
