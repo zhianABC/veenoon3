@@ -164,6 +164,9 @@
         textField.placeholder = @"英文名称";
     }];
     
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+
+    
     [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         if([alertController.textFields count] == 2)
@@ -193,7 +196,6 @@
         }
     }]];
     
-    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
     
     [self.ctrl presentViewController:alertController animated:true completion:nil];
 }

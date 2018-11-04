@@ -227,6 +227,8 @@
     
     IMP_BLOCK_SELF(Fenpinqi_UIView);
     
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
     [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         UITextField *alValTxt = alertController.textFields.firstObject;
@@ -236,7 +238,7 @@
             [block_self doSetHighFilterValue:[val intValue]];
         }
     }]];
-    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
     
     
     [self.ctrl presentViewController:alertController
@@ -282,6 +284,8 @@
     
     IMP_BLOCK_SELF(Fenpinqi_UIView);
 
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
     [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         UITextField *alValTxt = alertController.textFields.firstObject;
@@ -291,7 +295,7 @@
             [block_self doSetLowFilterValue:[val intValue]];
         }
     }]];
-    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
     
     
     [self.ctrl presentViewController:alertController
