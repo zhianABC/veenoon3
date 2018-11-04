@@ -24,6 +24,16 @@
 #import "IconCenterTextButton.h"
 #import "Scenario.h"
 
+#import "AudioEProcessor.h"
+#import "VVideoProcessSet.h"
+#import "EDimmerLight.h"
+#import "EDimmerSwitchLight.h"
+#import "AirConditionPlug.h"
+#import "BlindPlugin.h"
+
+
+
+
 @interface UserScnarioConfigViewController () {
     IconCenterTextButton *_audioSysBtn;
     IconCenterTextButton *_videoSysBtn;
@@ -51,8 +61,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-    
     UIImageView *titleIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"user_training_bg.png"]];
     [self.view addSubview:titleIcon];
     titleIcon.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -70,53 +78,128 @@
     int left = 70;
     int rowGap = (SCREEN_WIDTH - left * 2)/5;
     int height = 10;
-    _audioSysBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left, height, 80, 100)];
-    [_audioSysBtn buttonWithIcon:[UIImage imageNamed:@"audio_sys_n.png"] selectedIcon:[UIImage imageNamed:@"audio_sys_s.png"] text:@"音频系统" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
-    [_audioSysBtn addTarget:self action:@selector(audioSysAction:) forControlEvents:UIControlEventTouchUpInside];
-    [_botomView addSubview:_audioSysBtn];
     
     
-    _videoSysBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap, height, 80, 100)];
-    [_videoSysBtn buttonWithIcon:[UIImage imageNamed:@"video_sys_n.png"] selectedIcon:[UIImage imageNamed:@"video_sys_s.png"] text:@"视频系统" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
-    [_videoSysBtn addTarget:self action:@selector(videoSysAction:) forControlEvents:UIControlEventTouchUpInside];
-    [_botomView addSubview:_videoSysBtn];
+    BOOL hasAudioSys = NO;
+    BOOL hasVideoSys = NO;
+    BOOL hasLightSys = NO;
+    BOOL hasAirConditon = NO;
+    BOOL hasMaDa = NO;
+    BOOL hasNewWind = NO;
+    BOOL hasDinuan = NO;
+    BOOL hasKongqiJinghua = NO;
+    BOOL hasJiaShi = NO;
     
-    _lightSysBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*2, height, 80, 100)];
-    [_lightSysBtn buttonWithIcon:[UIImage imageNamed:@"light_sys_n.png"] selectedIcon:[UIImage imageNamed:@"light_sys_s.png"] text:@"灯光" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
-    [_lightSysBtn addTarget:self action:@selector(lightSysAction:) forControlEvents:UIControlEventTouchUpInside];
-    [_botomView addSubview:_lightSysBtn];
+    NSMutableArray *audioArray = self._data._audioDevices;
+    for (BasePlugElement *element in audioArray) {
+        if ([element isKindOfClass:[AudioEProcessor class]]) {
+            hasAudioSys = YES;
+            break;
+        }
+    }
+    
+    NSMutableArray *videoArray = self._data._videoDevices;
+    for (BasePlugElement *element in videoArray) {
+        if ([element isKindOfClass:[VVideoProcessSet class]]) {
+            hasVideoSys = YES;
+            break;
+        }
+    }
+    
+    NSMutableArray *envArray = self._data._envDevices;
+    for (BasePlugElement *element in envArray) {
+        if ([element isKindOfClass:[EDimmerLight class]]
+            || [element isKindOfClass:[EDimmerSwitchLight class]]) {
+            hasLightSys = YES;
+        } else if ([element isKindOfClass:[AirConditionPlug class]]) {
+            hasAirConditon = YES;
+        } else if ([element isKindOfClass:[BlindPlugin class]]) {
+            hasMaDa = YES;
+        }
+    }
+    
+    int index = 0;
+    
+    if (hasAudioSys) {
+        _audioSysBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left, height, 80, 100)];
+        [_audioSysBtn buttonWithIcon:[UIImage imageNamed:@"audio_sys_n.png"] selectedIcon:[UIImage imageNamed:@"audio_sys_s.png"] text:@"音频系统" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
+        [_audioSysBtn addTarget:self action:@selector(audioSysAction:) forControlEvents:UIControlEventTouchUpInside];
+        [_botomView addSubview:_audioSysBtn];
+        index++;
+    }
+    
+    if (hasVideoSys) {
+        _videoSysBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*index, height, 80, 100)];
+        [_videoSysBtn buttonWithIcon:[UIImage imageNamed:@"video_sys_n.png"] selectedIcon:[UIImage imageNamed:@"video_sys_s.png"] text:@"视频系统" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
+        [_videoSysBtn addTarget:self action:@selector(videoSysAction:) forControlEvents:UIControlEventTouchUpInside];
+        [_botomView addSubview:_videoSysBtn];
+        
+        index++;
+    }
+    
+    if (hasLightSys) {
+        _lightSysBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*index, height, 80, 100)];
+        [_lightSysBtn buttonWithIcon:[UIImage imageNamed:@"light_sys_n.png"] selectedIcon:[UIImage imageNamed:@"light_sys_s.png"] text:@"灯光" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
+        [_lightSysBtn addTarget:self action:@selector(lightSysAction:) forControlEvents:UIControlEventTouchUpInside];
+        [_botomView addSubview:_lightSysBtn];
+        
+        index++;
+    }
     
     
-    _airConditionBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*3, height, 80, 100)];
-    [_airConditionBtn buttonWithIcon:[UIImage imageNamed:@"air_condition_n.png"] selectedIcon:[UIImage imageNamed:@"air_condition_s.png"] text:@"空调" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
-    [_airConditionBtn addTarget:self action:@selector(airConditionSysAction:) forControlEvents:UIControlEventTouchUpInside];
-    [_botomView addSubview:_airConditionBtn];
+    if (hasAirConditon) {
+        _airConditionBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*index, height, 80, 100)];
+        [_airConditionBtn buttonWithIcon:[UIImage imageNamed:@"air_condition_n.png"] selectedIcon:[UIImage imageNamed:@"air_condition_s.png"] text:@"空调" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
+        [_airConditionBtn addTarget:self action:@selector(airConditionSysAction:) forControlEvents:UIControlEventTouchUpInside];
+        [_botomView addSubview:_airConditionBtn];
+        
+        index++;
+    }
     
-    _electricAutoBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*4, height, 80, 100)];
-    [_electricAutoBtn buttonWithIcon:[UIImage imageNamed:@"electric_auto_n.png"] selectedIcon:[UIImage imageNamed:@"electric_auto_s.png"] text:@"电动马达" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
-    [_electricAutoBtn addTarget:self action:@selector(electricSysAction:) forControlEvents:UIControlEventTouchUpInside];
-    [_botomView addSubview:_electricAutoBtn];
+    if (hasMaDa) {
+        _electricAutoBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*index, height, 80, 100)];
+        [_electricAutoBtn buttonWithIcon:[UIImage imageNamed:@"electric_auto_n.png"] selectedIcon:[UIImage imageNamed:@"electric_auto_s.png"] text:@"电动马达" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
+        [_electricAutoBtn addTarget:self action:@selector(electricSysAction:) forControlEvents:UIControlEventTouchUpInside];
+        [_botomView addSubview:_electricAutoBtn];
+        
+        index++;
+    }
     
     
-    _newWindBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*5, height, 80, 100)];
-    [_newWindBtn buttonWithIcon:[UIImage imageNamed:@"new_wind_sys_n.png"] selectedIcon:[UIImage imageNamed:@"new_wind_sys_s.png"] text:@"新风" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
-    [_newWindBtn addTarget:self action:@selector(newWindSysAction:) forControlEvents:UIControlEventTouchUpInside];
-    [_botomView addSubview:_newWindBtn];
+    if (hasNewWind) {
+        _newWindBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*index, height, 80, 100)];
+        [_newWindBtn buttonWithIcon:[UIImage imageNamed:@"new_wind_sys_n.png"] selectedIcon:[UIImage imageNamed:@"new_wind_sys_s.png"] text:@"新风" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
+        [_newWindBtn addTarget:self action:@selector(newWindSysAction:) forControlEvents:UIControlEventTouchUpInside];
+        [_botomView addSubview:_newWindBtn];
+        
+        index++;
+    }
+    
+    if (hasDinuan) {
+        
+    }
     
     _floorWarmBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*6, height, 80, 100)];
     [_floorWarmBtn buttonWithIcon:[UIImage imageNamed:@"floor_warm_n.png"] selectedIcon:[UIImage imageNamed:@"floor_warm_s.png"] text:@"地暖" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_floorWarmBtn addTarget:self action:@selector(floorWarmSysAction:) forControlEvents:UIControlEventTouchUpInside];
 //    [_botomView addSubview:_floorWarmBtn];
     
-    _airCleanBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*6, height, 80, 100)];
-    [_airCleanBtn buttonWithIcon:[UIImage imageNamed:@"air_clean_sys_n.png"] selectedIcon:[UIImage imageNamed:@"air_clean_sys_s.png"] text:@"空气净化" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
-    [_airCleanBtn addTarget:self action:@selector(airCleanSysAction:) forControlEvents:UIControlEventTouchUpInside];
-    [_botomView addSubview:_airCleanBtn];
     
-    _addWetBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*7, height, 80, 100)];
-    [_addWetBtn buttonWithIcon:[UIImage imageNamed:@"add_wet_sys_n.png"] selectedIcon:[UIImage imageNamed:@"add_wet_sys_s.png"] text:@"加湿器" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
-    [_addWetBtn addTarget:self action:@selector(addWetSysAction:) forControlEvents:UIControlEventTouchUpInside];
-    [_botomView addSubview:_addWetBtn];
+    if (hasKongqiJinghua) {
+        _airCleanBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*index, height, 80, 100)];
+        [_airCleanBtn buttonWithIcon:[UIImage imageNamed:@"air_clean_sys_n.png"] selectedIcon:[UIImage imageNamed:@"air_clean_sys_s.png"] text:@"空气净化" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
+        [_airCleanBtn addTarget:self action:@selector(airCleanSysAction:) forControlEvents:UIControlEventTouchUpInside];
+        [_botomView addSubview:_airCleanBtn];
+        index++;
+    }
+    
+    
+    if (hasJiaShi) {
+        _addWetBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*index, height, 80, 100)];
+        [_addWetBtn buttonWithIcon:[UIImage imageNamed:@"add_wet_sys_n.png"] selectedIcon:[UIImage imageNamed:@"add_wet_sys_s.png"] text:@"加湿器" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
+        [_addWetBtn addTarget:self action:@selector(addWetSysAction:) forControlEvents:UIControlEventTouchUpInside];
+        [_botomView addSubview:_addWetBtn];
+    }
     
     
     _monitorBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*8, height, 80, 100)];
