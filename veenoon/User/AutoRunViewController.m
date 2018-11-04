@@ -353,7 +353,7 @@
         UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"提醒"
                                                     message:@"当前系统没有存储任何场景."
                                                    delegate:nil
-                                          cancelButtonTitle:@"OK"
+                                          cancelButtonTitle:@"确定"
                                           otherButtonTitles: nil];
         [av show];
     }
