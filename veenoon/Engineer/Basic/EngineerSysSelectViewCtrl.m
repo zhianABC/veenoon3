@@ -119,7 +119,7 @@
         newSysBtn.center = CGPointMake(newSysBtn.center.x, CGRectGetMidY(linkSysBtn.frame) - 80);
         
         UIButton *importSysBtn = [UIButton buttonWithColor:nil selColor:nil];
-        importSysBtn.frame = CGRectMake(SCREEN_WIDTH - 220, 80, 200, 44);
+        importSysBtn.frame = CGRectMake(SCREEN_WIDTH - 220, 40, 200, 44);
         [self.view addSubview:importSysBtn];
         [importSysBtn setTitle:@"载入离线配置" forState:UIControlStateNormal];
         [importSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -182,7 +182,7 @@
 #pragma mark -- import Project --
 - (void) importSysAction:(id)sender{
     
-    JCActionView *jcAction = [[JCActionView alloc] initWithTitles:@[@"从本地导入", @"从云账户导入", @"从U盘导入"]
+    JCActionView *jcAction = [[JCActionView alloc] initWithTitles:@[@"本地账户", @"云账户", @"U盘"]
                                                             frame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     jcAction.delegate_ = self;
     jcAction.tag = 2017;

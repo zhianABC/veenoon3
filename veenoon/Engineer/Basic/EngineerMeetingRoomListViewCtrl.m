@@ -141,7 +141,8 @@
     bottomBar.image = [UIImage imageNamed:@"botomo_icon_black.png"];
     
     editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    editBtn.frame = CGRectMake(SCREEN_WIDTH-20-160, StatusRect.size.height+20,160, 50);
+    int height = StatusRect.size.height;
+    editBtn.frame = CGRectMake(SCREEN_WIDTH-20-160,height +20,160, 50);
     [self.view addSubview:editBtn];
     [editBtn setTitle:@"清空房间" forState:UIControlStateNormal];
     [editBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

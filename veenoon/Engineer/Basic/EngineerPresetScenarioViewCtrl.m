@@ -278,7 +278,7 @@
 
     
     _setBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _setBtn.frame = CGRectMake(SCREEN_WIDTH-2-160, 20, 160, 44);
+    _setBtn.frame = CGRectMake(SCREEN_WIDTH-2-160, 40, 160, 44);
     [self.view addSubview:_setBtn];
     [_setBtn setTitle:@"编辑" forState:UIControlStateNormal];
     [_setBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];

@@ -150,7 +150,7 @@
     
     
     editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    editBtn.frame = CGRectMake(SCREEN_WIDTH - 160 - 10, ENGINEER_VIEW_TOP-10, 160, 44);
+    editBtn.frame = CGRectMake(SCREEN_WIDTH - 160 - 10, 40, 160, 44);
     [self.view addSubview:editBtn];
     [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
     [editBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -383,6 +383,8 @@
     
     IMP_BLOCK_SELF(EngineerScenarioSettingsViewCtrl);
     
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
     [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         UITextField *envirnmentNameTextField = alertController.textFields.firstObject;
         NSString *nameTxt = envirnmentNameTextField.text;
@@ -393,7 +395,7 @@
         }
     }]];
     
-    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
     
     [self presentViewController:alertController animated:true completion:nil];
 }
