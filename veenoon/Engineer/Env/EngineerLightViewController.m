@@ -111,12 +111,14 @@
     
     _zengyiSlider.indicatorImgS = [UIImage imageNamed:@"wireless_slide_light_s.png"];
     _zengyiSlider.indicatorImgN = [UIImage imageNamed:@"wireless_slide_light_n.png"];
+    _zengyiSlider.indicatorMuteImg = _zengyiSlider.indicatorImgN;
     [_zengyiSlider setIndicatorImage:[UIImage imageNamed:@"wireless_slide_light_s.png"]];
     _zengyiSlider.topEdge = 90;
     _zengyiSlider.bottomEdge = 55;
     _zengyiSlider.maxValue = 100;
     _zengyiSlider.minValue = 0;
     _zengyiSlider.delegate = self;
+    _zengyiSlider._muteEnabled = NO;
     [_zengyiSlider resetScale];
     _zengyiSlider.center = CGPointMake(TESLARIA_SLIDER_X, TESLARIA_SLIDER_Y);
     

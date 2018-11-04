@@ -14,7 +14,7 @@
 
 @optional
 - (void) tappedAutoRunCell:(RgsSchedulerObj*)sch;
-- (void) deleteAutoRunCell:(RgsSchedulerObj*)sch;
+- (void) deleteAutoRunCell:(RgsSchedulerObj*)sch view:(UIView*)cell;
 
 @end
 

@@ -42,7 +42,9 @@
 
 @property (nonatomic, strong) UIImage *indicatorImgN;
 @property (nonatomic, strong) UIImage *indicatorImgS;
+@property (nonatomic, strong) UIImage *indicatorMuteImg;
 
+@property (nonatomic, assign) BOOL _muteEnabled;
 
 - (id) initWithSliderBg:(UIImage*)sliderBg frame:(CGRect)frame;
 
