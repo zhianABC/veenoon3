@@ -410,6 +410,10 @@
         {
             [KVNProgress showSuccessWithStatus:@"备份完成"];
         }
+        else
+        {
+            [KVNProgress showErrorWithStatus:@"备份失败，请确认已正确安装U盘"];
+        }
     }];
 }
 

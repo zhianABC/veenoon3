@@ -118,9 +118,9 @@
     }
     else
     {
-        if(delegate && [delegate respondsToSelector:@selector(deleteAutoRunCell:)])
+        if(delegate && [delegate respondsToSelector:@selector(deleteAutoRunCell:view:)])
         {
-            [delegate deleteAutoRunCell:_sch];
+            [delegate deleteAutoRunCell:_sch view:self];
         }
     }
 }

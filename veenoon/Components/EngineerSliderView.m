@@ -48,6 +48,9 @@
 @synthesize indicatorImgN;
 @synthesize indicatorImgS;
 
+@synthesize indicatorMuteImg;
+@synthesize _muteEnabled;
+
 
 - (id) initWithSliderBg:(UIImage*)sliderBg frame:(CGRect)frame{
     
@@ -107,6 +110,8 @@
         self.indicatorImgN = [UIImage imageNamed:@"wireless_slide_n.png"];
         self.indicatorImgS = [UIImage imageNamed:@"wireless_slide_s.png"];
         
+        self.indicatorMuteImg = [UIImage imageNamed:@"wireless_slide_mute.png"];
+        self._muteEnabled = YES;
     }
     
     return self;
@@ -159,6 +164,9 @@
 
 - (void) muteAction:(id)sender{
     
+    if(_muteEnabled)
+    {
+    
     _isMute = !_isMute;
     
     [self updateMuteState];
@@ -167,12 +175,14 @@
     {
         [delegate didSliderMuteChanged:_isMute object:self];
     }
+        
+    }
 }
 
 - (void) updateMuteState{
     
     if(_isMute)
-        indicator.image = [UIImage imageNamed:@"wireless_slide_mute.png"];
+        indicator.image = indicatorMuteImg;
     else
     {
         if (curValue <= minValue) {

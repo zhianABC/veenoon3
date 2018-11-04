@@ -23,8 +23,7 @@
     
     NSMutableArray *_buttonSeideArray;
     NSMutableArray *_buttonChannelArray;
-    NSMutableArray *_buttonNumberArray;
-  
+
     
     BOOL isSettings;
     DSwitchLightRightView *_rightView;
@@ -54,7 +53,6 @@
     _buttonArray = [[NSMutableArray alloc] init];
     _buttonSeideArray = [[NSMutableArray alloc] init];
     _buttonChannelArray = [[NSMutableArray alloc] init];
-    _buttonNumberArray = [[NSMutableArray alloc] init];
     
     [super setTitleAndImage:@"env_corner_light.png" withTitle:@"照明"];
     
@@ -188,6 +186,7 @@
         btn.tag = i;
         btn.delegate = self;
         [_proxysView addSubview:btn];
+        btn.longPressEnabled = YES;
         
         btn._grayBackgroundImage = [UIImage imageNamed:@"dianyuanshishiqi_n.png"];
         btn._lightBackgroundImage = [UIImage imageNamed:@"dianyuanshishiqi_s.png"];
@@ -198,22 +197,19 @@
         
         [btn turnOnOff:apxy._power];
     
-        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2-40, 0, 80, 20)];
-        titleL.backgroundColor = [UIColor clearColor];
-        titleL.textAlignment = NSTextAlignmentCenter;
-        [btn addSubview:titleL];
-        titleL.alpha = 0.5;
-        titleL.font = [UIFont boldSystemFontOfSize:11];
-        titleL.textColor  = [UIColor whiteColor];
-        titleL.text = [@"CH " stringByAppendingString:[NSString stringWithFormat:@"0%d",i+1]];
-        [_buttonNumberArray addObject:titleL];
-        
+        btn._titleLabel.alpha = 0.5;
+        btn._titleLabel.text = [@"CH " stringByAppendingString:[NSString stringWithFormat:@"0%d",i+1]];
+
         [_buttonArray addObject:btn];
         
         if(!fromScenario)
         {
         if(apxy._rgsProxyObj){
+           
             [_proxyObjMap setObject:btn forKey:@(apxy._rgsProxyObj.m_id)];
+            
+            btn._titleLabel.text = apxy._rgsProxyObj.name;
+            
             [apxy getCurrentDataState];
         }
         }
@@ -297,6 +293,59 @@
 }
 
 
+
+#pragma mark -- Long Press Delegate -- 修改名字
+- (void) didLongPressSlideButton:(LightSliderButton*)slbtn{
+    
+    EDimmerSwitchLightProxy* proxy = slbtn.data;
+    if([proxy isKindOfClass:[EDimmerSwitchLightProxy class]])
+    {
+        NSString *alert = @"修改通道名称";
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                                 message:alert preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.placeholder = @"通道名称";
+            textField.text = proxy._rgsProxyObj.name;
+            //textField.keyboardType = UIKeyboardTypeDecimalPad;
+        }];
+        
+        
+        IMP_BLOCK_SELF(EngineerDimmerSwitchViewController);
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            UITextField *alValTxt = alertController.textFields.firstObject;
+            NSString *val = alValTxt.text;
+            if (val && [val length] > 0) {
+                
+                [block_self resetProxyName:val
+                                     proxy:proxy
+                                  slideBtn:slbtn];
+            }
+        }]];
+        
+        [self presentViewController:alertController animated:true completion:nil];
+    }
+}
+
+- (void) resetProxyName:(NSString*)name
+                  proxy:(EDimmerSwitchLightProxy*)proxy
+               slideBtn:(LightSliderButton*)btn{
+    
+    
+    btn._titleLabel.text = name;
+    proxy._rgsProxyObj.name = name;
+    
+    [[RegulusSDK sharedRegulusSDK] RenameProxy:proxy._rgsProxyObj.m_id
+                                          name:name
+                                    completion:nil];
+    
+}
+
+
 - (void) didTappedMSelf:(LightSliderButton*)slbtn{
 
     EDimmerSwitchLightProxy *vpro = slbtn.data;
@@ -304,9 +353,8 @@
     // want to choose it
     if (!vpro._power) {
     
-        UILabel *numberL = [_buttonNumberArray objectAtIndex:slbtn.tag];
-        numberL.textColor = NEW_ER_BUTTON_SD_COLOR;
-        numberL.alpha = 1.0;
+        slbtn._titleLabel.alpha = 1.0;
+        slbtn._titleLabel.textColor = NEW_ER_BUTTON_SD_COLOR;
 
         [slbtn enableValueSet:YES];
         
@@ -318,9 +366,8 @@
     } else {
         // remove it
      
-        UILabel *numberL = [_buttonNumberArray objectAtIndex:slbtn.tag];
-        numberL.textColor = [UIColor whiteColor];
-        numberL.alpha = 0.5;
+        slbtn._titleLabel.alpha = 0.5;
+        slbtn._titleLabel.textColor = [UIColor whiteColor];
 
         [slbtn enableValueSet:NO];
         
@@ -388,19 +435,14 @@
             
             [pbtn turnOnOff:apxy._power];
             
-            if(pbtn.tag < [_buttonNumberArray count])
-            {
-            UILabel *numberL = [_buttonNumberArray objectAtIndex:pbtn.tag];
-            
             if(apxy._power){
-                numberL.textColor = NEW_ER_BUTTON_SD_COLOR;
-                numberL.alpha = 1.0;
+                pbtn._titleLabel.alpha = 1.0;
+                pbtn._titleLabel.textColor = NEW_ER_BUTTON_SD_COLOR;
             }
             else
             {
-                numberL.textColor = [UIColor whiteColor];
-                numberL.alpha = 0.5;
-            }
+                pbtn._titleLabel.alpha = 0.5;
+                pbtn._titleLabel.textColor = [UIColor whiteColor];
             }
         }
     }

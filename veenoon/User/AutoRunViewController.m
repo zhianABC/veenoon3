@@ -32,6 +32,9 @@
     UILabel* titleL;
     
     BOOL _isEdit;
+    
+    UIButton *editBtn;
+    UIButton *addBtn;
 }
 @property (nonatomic, strong) NSMutableArray *_autoItems;
 
@@ -74,7 +77,7 @@
     [backBtn addTarget:self action:@selector(backAction:)
       forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     editBtn.frame = CGRectMake(SCREEN_WIDTH-120, 40, 60, 40);
     [self.view addSubview:editBtn];
     [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
@@ -173,9 +176,21 @@
     
     _isEdit = !_isEdit;
     
-    for(AutoRunCell *cell in _autoRunCells)
+    if(_isEdit)
     {
-        [cell setEditMode:_isEdit];
+        addBtn.hidden = YES;
+        [editBtn setTitle:@"完成" forState:UIControlStateNormal];
+        
+        for(AutoRunCell *cell in _autoRunCells)
+        {
+            [cell setEditMode:_isEdit];
+        }
+        
+    }
+    else
+    {
+        [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
+        [self getSchedules];
     }
     
 }
@@ -293,24 +308,24 @@
         }
         else
         {
-            UIButton *btn = [UIButton buttonWithColor:RGB(0x52, 0x4e, 0x4b)
+            addBtn = [UIButton buttonWithColor:RGB(0x52, 0x4e, 0x4b)
                                              selColor:nil];
-            btn.frame = CGRectMake(x, y, cellWidth, cellWidth);
-            [_content addSubview:btn];
-            btn.layer.cornerRadius = 5;
-            btn.clipsToBounds = YES;
-            btn.tag = i;
+            addBtn.frame = CGRectMake(x, y, cellWidth, cellWidth);
+            [_content addSubview:addBtn];
+            addBtn.layer.cornerRadius = 5;
+            addBtn.clipsToBounds = YES;
+            addBtn.tag = i;
             
-            UILabel* titleL = [[UILabel alloc] initWithFrame:btn.bounds];
+            UILabel* titleL = [[UILabel alloc] initWithFrame:addBtn.bounds];
             titleL.backgroundColor = [UIColor clearColor];
-            [btn addSubview:titleL];
+            [addBtn addSubview:titleL];
             titleL.font = [UIFont systemFontOfSize:16];
             titleL.textColor  = [UIColor whiteColor];
             titleL.textAlignment = NSTextAlignmentCenter;
             titleL.numberOfLines = 2;
             
             titleL.text = [sche objectForKey:@"name"];
-            [btn addTarget:self
+            [addBtn addTarget:self
                     action:@selector(buttonAddAction:)
           forControlEvents:UIControlEventTouchUpInside];
             
@@ -327,16 +342,24 @@
 
 }
 
-- (void) deleteAutoRunCell:(RgsSchedulerObj*)sch{
+- (void) deleteAutoRunCell:(RgsSchedulerObj*)sch view:(UIView*)cell{
     
-    IMP_BLOCK_SELF(AutoRunViewController);
+    //IMP_BLOCK_SELF(AutoRunViewController);
     if(sch)
     {
-    [[RegulusSDK sharedRegulusSDK] DelSchedulerByID:sch.m_id
-                                         completion:^(BOOL result, NSError *error) {
-                                            
-                                             [block_self getSchedules];
-                                         }];
+        [KVNProgress show];
+        [[RegulusSDK sharedRegulusSDK] DelSchedulerByID:sch.m_id
+                                             completion:^(BOOL result, NSError *error) {
+                                                 
+                                                 if(result)
+                                                 {
+                                                     [cell removeFromSuperview];
+                                                 }
+                                                 
+                                                 [KVNProgress dismiss];
+                                                 
+                                                 //[block_self getSchedules];
+                                             }];
     }
 }
 

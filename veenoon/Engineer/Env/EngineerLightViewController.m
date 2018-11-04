@@ -23,7 +23,6 @@
     
     NSMutableArray *_buttonSeideArray;
     NSMutableArray *_buttonChannelArray;
-    NSMutableArray *_buttonNumberArray;
     
     NSMutableArray *_selectedBtnArray;
     
@@ -56,7 +55,6 @@
     _buttonArray = [[NSMutableArray alloc] init];
     _buttonSeideArray = [[NSMutableArray alloc] init];
     _buttonChannelArray = [[NSMutableArray alloc] init];
-    _buttonNumberArray = [[NSMutableArray alloc] init];
     _selectedBtnArray = [[NSMutableArray alloc] init];
     
     [super setTitleAndImage:@"env_corner_light.png" withTitle:@"照明"];
@@ -111,12 +109,14 @@
     
     _zengyiSlider.indicatorImgS = [UIImage imageNamed:@"wireless_slide_light_s.png"];
     _zengyiSlider.indicatorImgN = [UIImage imageNamed:@"wireless_slide_light_n.png"];
+    _zengyiSlider.indicatorMuteImg = _zengyiSlider.indicatorImgN;
     [_zengyiSlider setIndicatorImage:[UIImage imageNamed:@"wireless_slide_light_s.png"]];
     _zengyiSlider.topEdge = 90;
     _zengyiSlider.bottomEdge = 55;
     _zengyiSlider.maxValue = 100;
     _zengyiSlider.minValue = 0;
     _zengyiSlider.delegate = self;
+    _zengyiSlider._muteEnabled = NO;
     [_zengyiSlider resetScale];
     _zengyiSlider.center = CGPointMake(TESLARIA_SLIDER_X, TESLARIA_SLIDER_Y);
     
@@ -212,6 +212,7 @@
         btn.tag = i;
         btn.delegate = self;
         [_proxysView addSubview:btn];
+        btn.longPressEnabled = YES;
         
         btn.data = apxy;
         
@@ -219,21 +220,17 @@
         float f = level/100.0;
         [btn setCircleValue:f];
     
-        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2-40, 0, 80, 20)];
-        titleL.backgroundColor = [UIColor clearColor];
-        titleL.alpha = 0.5;
-        titleL.textAlignment = NSTextAlignmentCenter;
-        [btn addSubview:titleL];
-        titleL.font = [UIFont boldSystemFontOfSize:11];
-        titleL.textColor  = [UIColor whiteColor];
-        titleL.text = [@"CH " stringByAppendingString:[NSString stringWithFormat:@"0%d",i+1]];
-        [_buttonNumberArray addObject:titleL];
+        btn._titleLabel.alpha = 0.5;
+        btn._titleLabel.text = [@"CH " stringByAppendingString:[NSString stringWithFormat:@"0%d",i+1]];
         
         [_buttonArray addObject:btn];
         
-        if(!fromScenario){
+        if(!fromScenario)
+        {
         if(apxy._rgsProxyObj){
             [_proxyObjMap setObject:btn forKey:@(apxy._rgsProxyObj.m_id)];
+            
+            btn._titleLabel.text = apxy._rgsProxyObj.name;
             
             [apxy getCurrentDataState];
         }
@@ -265,6 +262,8 @@
 }
 
 
+
+
 - (void) loadAllCommands:(NSDictionary*)commd_dict{
     
     if([[commd_dict allValues] count])
@@ -278,6 +277,55 @@
     }
     
     [KVNProgress dismiss];
+}
+
+#pragma mark -- Long Press Delegate -- 修改名字
+- (void) didLongPressSlideButton:(LightSliderButton*)slbtn{
+    
+    EDimmerLightProxys* proxy = slbtn.data;
+    if([proxy isKindOfClass:[EDimmerLightProxys class]])
+    {
+        NSString *alert = @"修改通道名称";
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                                 message:alert preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.placeholder = @"通道名称";
+            textField.text = proxy._rgsProxyObj.name;
+            //textField.keyboardType = UIKeyboardTypeDecimalPad;
+        }];
+        
+        
+        IMP_BLOCK_SELF(EngineerLightViewController);
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            UITextField *alValTxt = alertController.textFields.firstObject;
+            NSString *val = alValTxt.text;
+            if (val && [val length] > 0) {
+                
+                [block_self resetProxyName:val
+                                     proxy:proxy
+                                  slideBtn:slbtn];
+            }
+        }]];
+        
+        [self presentViewController:alertController animated:true completion:nil];
+    }
+}
+
+- (void) resetProxyName:(NSString*)name proxy:(EDimmerLightProxys*)proxy slideBtn:(LightSliderButton*)btn{
+    
+    
+    btn._titleLabel.text = name;
+    proxy._rgsProxyObj.name = name;
+    
+    [[RegulusSDK sharedRegulusSDK] RenameProxy:proxy._rgsProxyObj.m_id
+                                          name:name
+                                    completion:nil];
+    
 }
 
 
@@ -448,10 +496,9 @@
         
         [_selectedBtnArray addObject:slbtn];
 
-        UILabel *numberL = [_buttonNumberArray objectAtIndex:slbtn.tag];
-        numberL.textColor = NEW_ER_BUTTON_SD_COLOR;
-        numberL.alpha = 1.0;
-
+        slbtn._titleLabel.alpha = 1.0;
+        slbtn._titleLabel.textColor = NEW_ER_BUTTON_SD_COLOR;
+        
         [slbtn enableValueSet:YES];
         
     }
@@ -460,9 +507,8 @@
         // remove it
         [_selectedBtnArray removeObject:slbtn];
 
-        UILabel *numberL = [_buttonNumberArray objectAtIndex:slbtn.tag];
-        numberL.textColor = [UIColor whiteColor];;
-        numberL.alpha = 0.5;
+        slbtn._titleLabel.alpha = 0.5;
+        slbtn._titleLabel.textColor = [UIColor whiteColor];
         
         [slbtn enableValueSet:NO];
     }
@@ -484,18 +530,16 @@
         LightSliderButton *button = [_buttonArray objectAtIndex:tag];
         [_selectedBtnArray addObject:button];
         
-        UILabel *numberL = [_buttonNumberArray objectAtIndex:tag];
-        numberL.alpha = 1.0;
-        numberL.textColor = NEW_ER_BUTTON_SD_COLOR;
+        button._titleLabel.alpha = 1.0;
+        button._titleLabel.textColor = NEW_ER_BUTTON_SD_COLOR;
         
         [button enableValueSet:YES];
     } else {
         // remove it
         [_selectedBtnArray removeObject:btn];
         
-        UILabel *numberL = [_buttonNumberArray objectAtIndex:tag];
-        numberL.textColor = [UIColor whiteColor];;
-        numberL.alpha = 0.5;
+        btn._titleLabel.textColor = [UIColor whiteColor];
+        btn._titleLabel.alpha = 0.5;
         
         [btn enableValueSet:NO];
     }
