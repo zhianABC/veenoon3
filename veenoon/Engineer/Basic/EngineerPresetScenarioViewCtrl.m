@@ -290,7 +290,7 @@
     //_setBtn.hidden = YES;
     
     _doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _doneBtn.frame = CGRectMake(SCREEN_WIDTH-2-160, 20, 160, 44);
+    _doneBtn.frame = CGRectMake(SCREEN_WIDTH-2-160, 40, 160, 44);
     [self.view addSubview:_doneBtn];
     [_doneBtn setTitle:@"完成" forState:UIControlStateNormal];
     [_doneBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
