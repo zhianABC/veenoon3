@@ -128,6 +128,15 @@
     }
 }
 - (void) zhitongBtnAction:(id) sender {
+    if (!_curProxy._aecCodeIssue) {
+        UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"提示"
+                                                    message:@"请提供正确的AEC码"
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles: nil];
+        [av show];
+        return;
+    }
     if(_curProxy == nil)
         return;
     

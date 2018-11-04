@@ -31,6 +31,7 @@
 @property (nonatomic, strong) NSMutableArray *_inAudioProxys;
 //huishengxiaochu
 @property (nonatomic, assign) BOOL _isHuiShengXiaoChu;
+@property (nonatomic, assign) BOOL _aecCodeIssue;
 
 @property (nonatomic, strong) AudioEProcessorAutoMixProxy *_autoMixProxy;
 @property (nonatomic, strong) AudioEProcessorSignalProxy *_singalProxy;

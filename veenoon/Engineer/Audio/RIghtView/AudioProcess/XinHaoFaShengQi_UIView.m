@@ -55,7 +55,6 @@
 @implementation XinHaoFaShengQi_UIView
 @synthesize _currentSignalProxy;
 @synthesize _currentAudio;
-//@synthesize _channelBtns;
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.
@@ -174,11 +173,11 @@
     
     if([_currentSignalProxy._xinhaofashengOutputChanels count])
     {
-        for(int idx = 0; idx < [_channelBtns count]; idx++)
+        for(int idx = 0; idx < [self._channelBtns count]; idx++)
         {
             int tag = idx+1;
             
-            UIButton *btn = [_channelBtns objectAtIndex:idx];
+            UIButton *btn = [self._channelBtns objectAtIndex:idx];
             
             NSString *valName = [NSString stringWithFormat:@"Out%d", tag];
             
@@ -197,7 +196,7 @@
             else
             {
                 [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                [btn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
+                [btn changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
             }
         }
     }
@@ -456,7 +455,7 @@
     else
     {
         [sender setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [sender changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR2];
+        [sender changeNormalColor:NEW_ER_BUTTON_GRAY_COLOR];
     }
 
 }

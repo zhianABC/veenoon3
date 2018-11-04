@@ -315,6 +315,8 @@
     
     IMP_BLOCK_SELF(EngineerScenarioSettingsViewCtrl);
     
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
     [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         UITextField *envirnmentNameTextField = alertController.textFields.firstObject;
         NSString *nameTxt = envirnmentNameTextField.text;
@@ -324,8 +326,6 @@
             
         }
     }]];
-    
-    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
     
     [self presentViewController:alertController animated:true completion:nil];
 }
