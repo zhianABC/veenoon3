@@ -17,6 +17,7 @@
 - (void) didSlideButtonValueEndChanged:(float)value slbtn:(LightSliderButton*)slbtn;
 
 - (void) didTappedMSelf:(LightSliderButton*)slbtn;
+- (void) didLongPressSlideButton:(LightSliderButton*)slbtn;
 
 @end
 
@@ -33,6 +34,9 @@
 @property (nonatomic, strong) UIImage *_lightBackgroundImage;
 
 @property (nonatomic, strong) id data;
+
+@property (nonatomic, assign) BOOL longPressEnabled;
+
 
 - (void) setCircleValue:(float) value;
 - (void) changeButtonBackgroundImage:(UIImage *)image;

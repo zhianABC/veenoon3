@@ -25,6 +25,9 @@
     
     UILabel *_titleLabel;
     UILabel *_valueLabel;
+    
+    NSTimer *_testTimer;
+    BOOL _isLongPressed;
 }
 @end
 
@@ -38,6 +41,8 @@
 @synthesize _isEnabel;
 
 @synthesize data;
+
+@synthesize longPressEnabled;
 
 /*
  // Only override drawRect: if you perform custom drawing.
@@ -71,7 +76,7 @@
         _enabledTouchMove = NO;
         
         
-        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(frame), 20)];
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, CGRectGetWidth(frame)-30, 20)];
         _titleLabel.backgroundColor = [UIColor clearColor];
         [self addSubview:_titleLabel];
         _titleLabel.alpha = 0.5;
@@ -182,10 +187,52 @@
     [progress setProgress:value];
 }
 
+- (void) stopTimer{
+    
+    if(_testTimer && [_testTimer isValid])
+    {
+        [_testTimer invalidate];
+        _testTimer = nil;
+    }
+    
+}
+
+- (void) startTimer{
+    
+    _isLongPressed = NO;
+    
+    [self stopTimer];
+    
+    _testTimer = [NSTimer scheduledTimerWithTimeInterval:0.5
+                                                  target:self
+                                                selector:@selector(longPress:)
+                                                userInfo:nil
+                                                 repeats:NO];
+}
+
+- (void)longPress:(id)sender{
+    
+    [self stopTimer];
+    
+    _isLongPressed = YES;
+    
+    NSLog(@"------Long Press");
+    
+    if(delegate && [delegate respondsToSelector:@selector(didLongPressSlideButton:)])
+    {
+        [delegate didLongPressSlideButton:self];
+    }
+}
+
 
 -(void) touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event {
     
     _isMoved = NO;
+    
+    //长按
+    if(self.longPressEnabled){
+        [self startTimer];
+    }
     
     if(progress.hidden)
         return;
@@ -201,14 +248,14 @@
 
 -(void) touchesMoved:(NSSet*)touches withEvent:(UIEvent*)event {
     
-    _isMoved = YES;
+    if(self.longPressEnabled)
+    {
+        if(_beginPoint.y < CGRectGetMaxY(_titleLabel.frame))
+            return;
+    }
     
-    if(progress.hidden)
-        return;
-    
-    if(!_enabledTouchMove)
-        return;
-    
+    float step = 0;
+    float pan = 0;
     NSSet *allTouches = [event allTouches];
     switch ([allTouches count])
     {
@@ -217,12 +264,35 @@
             UITouch* touch = [touches anyObject];
             CGPoint previous = _beginPoint;
             CGPoint current = [touch locationInView:self];
-            float pan = previous.y - current.y;
-            float step = pan/_vheight;
+            pan = previous.y - current.y;
+            step = pan/_vheight;
             
-            [progress stepProgress:step];
+            
         }
             break;
+    }
+    if(fabsf(pan) <= 1)
+    {
+        return;
+    }
+    
+    _isMoved = YES;
+    
+    if(self.longPressEnabled)
+    {
+        [self stopTimer];
+    }
+    
+    if(progress.hidden)
+        return;
+    
+    if(!_enabledTouchMove)
+        return;
+    
+    
+    if(fabsf(pan) > 1)
+    {
+        [progress stepProgress:step];
     }
     
     if(delegate && [delegate respondsToSelector:@selector(didSlideButtonValueChanged:slbtn:)])
@@ -232,6 +302,14 @@
 }
 
 -(void) touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event {
+    
+    if(self.longPressEnabled)
+    {
+        [self stopTimer];
+        
+        if(_isLongPressed)
+            return;
+    }
     
     if(!_isMoved)
     {
