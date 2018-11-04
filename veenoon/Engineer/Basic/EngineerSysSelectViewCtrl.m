@@ -119,7 +119,7 @@
         newSysBtn.center = CGPointMake(newSysBtn.center.x, CGRectGetMidY(linkSysBtn.frame) - 80);
         
         UIButton *importSysBtn = [UIButton buttonWithColor:nil selColor:nil];
-        importSysBtn.frame = CGRectMake(SCREEN_WIDTH - 220, 80, 200, 44);
+        importSysBtn.frame = CGRectMake(SCREEN_WIDTH - 220, 40, 200, 44);
         [self.view addSubview:importSysBtn];
         [importSysBtn setTitle:@"载入离线配置" forState:UIControlStateNormal];
         [importSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
