@@ -319,6 +319,7 @@
         UITextField *tField = [_fieldVals objectForKey:[row objectForKey:@"name"]];
         if(tField)
         {
+            NSLog(@"%@", tField.text);
             [RegulusSDK RgsWifiConfWithPassword:tField.text
                                       taskCount:3
                                     timeIntevel:10
