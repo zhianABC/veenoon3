@@ -46,6 +46,7 @@
 
 @synthesize _proxys;
 @synthesize _proxyObjMap;
+@synthesize fromScenario;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -89,10 +90,13 @@
                                                            SCREEN_HEIGHT-64-50)];
     [self.view addSubview:_proxysView];
     
+    if(!fromScenario)
+    {
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(notifyProxyGotCurStateVals:)
                                                  name:NOTIFY_PROXY_CUR_STATE_GOT_LB
                                                object:nil];
+    }
     
     
     [self showRightView];
@@ -195,10 +199,13 @@
         APowerESetProxy *apxy = [_powerProxys objectAtIndex:i];
         btn.data = apxy;
         
+        if(!fromScenario)
+        {
         if(apxy._rgsProxyObj){
             [_proxyObjMap setObject:btn forKey:@(apxy._rgsProxyObj.m_id)];
             
             [apxy getCurrentDataState];
+        }
         }
         
         index++;

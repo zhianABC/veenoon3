@@ -524,6 +524,8 @@
     
     User *u = [UserDefaultsKV getUser];
     
+    if(u)
+    {
     companyField.text = u.companyname;
     
     NSString *baseString = @"所在地区：";
@@ -538,6 +540,7 @@
     telphoneField.text = u._cellphone;
     
     addressField.text = u.address;
+    }
 }
 
 @end

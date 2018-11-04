@@ -330,7 +330,7 @@
         NSMutableArray *proxyids = [NSMutableArray array];
         //只读取一个，因为所有的Channel的commands相同
         VAProcessorProxys *vap = [_outAudioProxys objectAtIndex:0];
-        [proxyids addObject:[NSNumber numberWithInt:vap._rgsProxyObj.m_id]];
+        [proxyids addObject:[NSNumber numberWithInteger:vap._rgsProxyObj.m_id]];
         
         IMP_BLOCK_SELF(AudioEProcessor);
         

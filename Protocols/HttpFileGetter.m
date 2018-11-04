@@ -34,7 +34,7 @@
     if(isCancel)return;
 	
 	//received_ == total_
-	if([characterBuffer length] >= total_){
+	if([characterBuffer length] >= total_ && statusCode == 200){
 		
 		NSData* imageData = [characterBuffer copy];
         NSFileManager *fm = [NSFileManager defaultManager];
@@ -231,6 +231,7 @@
 	if(httpResponse && [httpResponse respondsToSelector:@selector(allHeaderFields)]){
 		NSDictionary *httpResponseHeaderFields = [httpResponse allHeaderFields];
 		
+        statusCode = [httpResponse statusCode];
 		total_ = [[httpResponseHeaderFields objectForKey:@"Content-Length"] longLongValue];
 		
 		//NSLog(@"%lld", total_);

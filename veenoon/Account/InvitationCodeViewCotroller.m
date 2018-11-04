@@ -167,6 +167,8 @@
     
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     [params setObject:code forKey:@"invitationCode"];
+    
+    if(u)
     [params setObject:u._userId forKey:@"userID"];
     
     _autoClient._requestParam = params;

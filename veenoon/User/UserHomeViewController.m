@@ -173,24 +173,12 @@
                   action:@selector(backAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *btnSync = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnSync.frame = CGRectMake(60, SCREEN_HEIGHT - 48, 42, 42);
-    [btnSync setImage:[UIImage imageNamed:@"sync_data_n.png"] forState:UIControlStateNormal];
-    [btnSync setImage:[UIImage imageNamed:@"sync_data_s.png"] forState:UIControlStateHighlighted];
-//    [self.view addSubview:btnSync];
-    btnSync.layer.cornerRadius = 5;
-    btnSync.clipsToBounds = YES;
-    [btnSync addTarget:self
-                action:@selector(dataSyncAction:)
-      forControlEvents:UIControlEventTouchUpInside];
+    
     
     [[DataSync sharedDataSync] logoutCurrentRegulus];
 }
 
-- (void) dataSyncAction:(id)sender{
-    
-    [[DataSync sharedDataSync] syncDataFromServerToLocalDB];
-}
+
 
 - (void) longPressed0:(id)sender{
     

@@ -17,4 +17,5 @@
 }
 @property (nonatomic,strong) NSArray *_lightSysArray;
 @property (nonatomic,assign) int _number;
+@property (nonatomic,assign) BOOL fromScenario;
 @end

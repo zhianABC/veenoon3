@@ -63,7 +63,7 @@
 
 - (void) parseStateInitsValues:(NSDictionary*)state{
     
-    id val = [state objectForKey:@"SWITCH"];
+    id val = [state objectForKey:@"POWER"];
     if(val && [val isEqualToString:@"On"])
     {
         self._power = 1;

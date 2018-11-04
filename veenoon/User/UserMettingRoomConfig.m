@@ -18,8 +18,13 @@
 #import "AutoRunViewController.h"
 #import "UserDeviceStateViewController.h"
 #import "USenceBlockView.h"
+#import "JCActionView.h"
+#import "AppDelegate.h"
+#import "HttpFileGetter.h"
+#import "SelPickerView.h"
+#import "Utilities.h"
 
-@interface UserMeetingRoomConfig () <ScenarioDelegate, USenceBlockViewDelegate>{
+@interface UserMeetingRoomConfig () <ScenarioDelegate, USenceBlockViewDelegate, JCActionViewDelegate>{
 
     UIButton *_trainingBtn;
     UIButton *_envirementControlBtn;
@@ -29,6 +34,9 @@
     UIButton *_leaveMeetingBtn;
     
     UIScrollView *_content;
+    
+    HttpFileGetter * _downloader;
+
 }
 @property (nonatomic, strong) NSMutableDictionary *_mapSelect;
 
@@ -39,6 +47,8 @@
 @property (nonatomic, strong) UIImage *_nor_image;
 @property (nonatomic, strong) UIImage *_sel_image;
 @property (nonatomic, strong) Scenario *_curSecenario;
+
+@property (nonatomic, strong) NSArray *_offlineProjs;
 
 
 @end
@@ -54,6 +64,8 @@
 @synthesize _nor_image;
 @synthesize _sel_image;
 @synthesize _curSecenario;
+
+@synthesize _offlineProjs;
 
 
 - (void)viewDidLoad {
@@ -144,17 +156,171 @@
     btnSync.frame = CGRectMake(SCREEN_WIDTH - 120, 42, 60, 50);
     [btnSync setImage:[UIImage imageNamed:@"sync_data_n.png"] forState:UIControlStateNormal];
     [btnSync setImage:[UIImage imageNamed:@"sync_data_s.png"] forState:UIControlStateHighlighted];
-        //[self.view addSubview:btnSync];
+    [self.view addSubview:btnSync];
     btnSync.layer.cornerRadius = 5;
     btnSync.clipsToBounds = YES;
     [btnSync addTarget:self
                 action:@selector(dataSyncAction:)
       forControlEvents:UIControlEventTouchUpInside];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(endImportProjectRefresh:)
+                                                 name:@"Notify_Reload_Projects_After_Import_Action"
+                                               object:nil];
+}
+
+- (void) endImportProjectRefresh:(NSNotification*)notify{
+    
+    [KVNProgress showWithStatus:@"加载中..."];
+    
+    
+}
+
+- (void) relunchUI{
+    
+    [self checkArea];
 }
 
 - (void) dataSyncAction:(id)sender{
     
-    [[DataSync sharedDataSync] syncDataFromServerToLocalDB];
+    JCActionView *jcAction = [[JCActionView alloc] initWithTitles:@[@"从云账户导入", @"从U盘导入"]
+                                                            frame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    jcAction.delegate_ = self;
+    jcAction.tag = 2017;
+    
+    AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    [app.window addSubview:jcAction];
+    [jcAction animatedShow];
+    
+    
+}
+
+
+- (void) didJCActionButtonIndex:(int)index actionView:(UIView*)actionView{
+    
+    if(index == 0)
+    {
+        [self importFromCloud];
+    }
+    else if(index == 1)
+    {
+        [self importFromUSB];
+    }
+}
+
+- (void) importFromCloud{
+    
+    MeetingRoom *room = [DataCenter defaultDataCenter]._currentRoom;
+    if(room)
+    {
+        if(_downloader == nil)
+        {
+            _downloader = [[HttpFileGetter alloc] init];
+            _downloader.delegate_ = self;
+        }
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        NSString *dir = [documentsDirectory stringByAppendingPathComponent:@"Project"];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        
+        if(![fileManager fileExistsAtPath:dir]){
+            [fileManager createDirectoryAtPath:dir withIntermediateDirectories:NO attributes:nil error:nil];
+        }
+        
+        NSString *filename = [NSString stringWithFormat:@"%@.rp",room.regulus_id];
+        NSString *filePath = [dir stringByAppendingPathComponent:filename];
+        
+        NSString *url = [NSString stringWithFormat:@"%@/projectfile/%@", WEB_API_URL, filename];
+        
+        _downloader.fileSavedPath = filePath;
+        
+        [KVNProgress showWithStatus:@"下载中..."];
+        [_downloader startLoading:url];
+        
+    }
+
+}
+
+- (void) didEndLoadingFile:(id)object success:(BOOL)success{
+    
+    [KVNProgress dismiss];
+    if(success)
+    {
+        [KVNProgress showSuccess];
+        MeetingRoom *room = [DataCenter defaultDataCenter]._currentRoom;
+        NSString *filename = [NSString stringWithFormat:@"%@",room.regulus_id];
+        
+        [KVNProgress showWithStatus:@"正在导入"];
+        [[RegulusSDK sharedRegulusSDK] ImportProjectFromLocal:filename
+                                                   completion:^(BOOL result, NSError *error) {
+                                                       
+                                                       //[KVNProgress showSuccessWithStatus:@"已导入"];
+                                                       
+                                                   }];
+    }
+    else
+    {
+        [Utilities showMessage:@"没有找到备份文件" ctrl:self];
+    }
+}
+
+- (void) importFromUSB{
+    
+    [KVNProgress show];
+    [[RegulusSDK sharedRegulusSDK] GetProjectsFromUdisc:^(BOOL result, NSArray *names, NSError *error) {
+        
+        [KVNProgress dismiss];
+        if(result)
+        {
+            if([names count])
+            {
+                self._offlineProjs = names;
+            }
+        }
+        
+        [self chooseUSDProject];
+        
+    }];
+}
+
+- (void) chooseUSDProject{
+    
+    if(self._offlineProjs && [_offlineProjs count])
+    {
+        AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+        SelPickerView *_levelSetting = [[SelPickerView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        
+        _levelSetting._pickerDataArray = @[@{@"values":_offlineProjs}];
+        
+        [_levelSetting showInView:app.window];
+        
+        [_levelSetting selectRow:0 inComponent:0];
+        
+        IMP_BLOCK_SELF(UserMeetingRoomConfig);
+        _levelSetting._selectionBlock = ^(NSDictionary *values)
+        {
+            [block_self didPickUSBProjectName:values];
+        };
+        
+    }
+    else
+    {
+        [KVNProgress showSuccessWithStatus:@"没有可导入的项目"];
+    }
+}
+
+- (void) didPickUSBProjectName:(NSDictionary*)values{
+    
+    NSString *prjName = [values objectForKey:@0];
+    
+    [KVNProgress showWithStatus:@"正在导入"];
+    
+    [[RegulusSDK sharedRegulusSDK] ImportProjectFromUdisc:prjName completion:^(BOOL result, NSError *error) {
+        
+        //[KVNProgress showSuccessWithStatus:@"已导入"];
+        
+    }];
 }
 
 - (void) stateAction:(id)sender{
@@ -236,8 +402,10 @@
     [[DataBase sharedDatabaseInstance] saveMeetingRoom:_currentRoom];
     
     
+    /*
     [[RegulusSDK sharedRegulusSDK] SetDate:[NSDate date]
                                 completion:nil];
+     */
     
     
     [DataSync sharedDataSync]._currentReglusLogged = @{@"gw_id":_regulus_gateway_id,
@@ -249,8 +417,6 @@
 }
 
 - (void) checkArea{
-    
-#ifdef OPEN_REG_LIB_DEF
     
     IMP_BLOCK_SELF(UserMeetingRoomConfig);
     
@@ -265,12 +431,8 @@
         }
     }];
     
-#endif
-    
 }
 - (void) checkSceneData:(NSArray*)RgsAreaObjs{
-    
-#ifdef OPEN_REG_LIB_DEF
     
     IMP_BLOCK_SELF(UserMeetingRoomConfig);
     
@@ -301,9 +463,6 @@
     {
         [KVNProgress dismiss];
     }
-    
-    
-#endif
 }
 
 - (void) checkSceneDriver:(NSArray*)scenes{
@@ -319,6 +478,8 @@
     }
     
   
+    [_sceneDrivers removeAllObjects];
+    
     for(RgsSceneObj *dr in scenes)
     {
         id key = [NSNumber numberWithInt:(int)dr.m_id];
@@ -344,6 +505,8 @@
 
 
 - (void) layoutScenarios{
+    
+    [[_content subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
 
     int w = 325;
     int ox = (SCREEN_WIDTH - w*3)/2+30;
@@ -371,60 +534,7 @@
         block.delegate = self;
         [_content addSubview:block];
         block.tag = i;
-        
-        /*
-        NSDictionary *sDic = [scen senarioData];
-        
-        UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        btn.frame = CGRectMake(x, y, w, 210);
-        [btn setImage:_nor_image
-             forState:UIControlStateNormal];
-        [btn setImage:_sel_image
-             forState:UIControlStateHighlighted];
-        [btn addTarget:self action:@selector(userTrainingAction:) forControlEvents:UIControlEventTouchUpInside];
-        [_content addSubview:btn];
-        btn.tag = i;
-        
-        NSString *iconUser = [sDic objectForKey:@"icon_user"];
-        UIImage *img = [UIImage imageNamed:iconUser];
-        if(img)
-        {
-            UIImageView *iconView = [[UIImageView alloc] initWithImage:img];
-            [btn addSubview:iconView];
-            iconView.contentMode = UIViewContentModeCenter;
-            
-            iconView.center = CGPointMake(100, 105);
-        }
-        
-        NSString *name = [sDic objectForKey:@"name"];
-        
-        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(150, 0, 200, 40)];
-        titleL.backgroundColor = [UIColor clearColor];
-        [btn addSubview:titleL];
-        titleL.font = [UIFont boldSystemFontOfSize:20];
-        titleL.textColor  = [UIColor whiteColor];
-        titleL.text = name;
-        titleL.tag = 102;
-        titleL.textAlignment = NSTextAlignmentLeft;
-        titleL.center = CGPointMake(titleL.center.x, 90);
-        
-        NSString *en_name = [sDic objectForKey:@"en_name"];
-        if(en_name == nil)
-        {
-            en_name = @"";
-        }
-        
-        UILabel* titleEnL = [[UILabel alloc] initWithFrame:CGRectMake(150, 0, 300, 40)];
-        titleEnL.backgroundColor = [UIColor clearColor];
-        [btn addSubview:titleEnL];
-        titleEnL.font = [UIFont systemFontOfSize:20];
-        titleEnL.textColor  = [UIColor whiteColor];
-        titleEnL.text = en_name;
-        titleEnL.tag = 103;
-        titleEnL.textAlignment = NSTextAlignmentLeft;
-        titleEnL.center = CGPointMake(titleEnL.center.x, 120);
-        */
-        
+    
         UILongPressGestureRecognizer *longPress0 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressed0:)];
         [block addGestureRecognizer:longPress0];
     }
@@ -511,6 +621,11 @@
 
 - (void) backAction:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

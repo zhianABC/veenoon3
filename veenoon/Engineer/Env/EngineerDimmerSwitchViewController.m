@@ -24,8 +24,7 @@
     NSMutableArray *_buttonSeideArray;
     NSMutableArray *_buttonChannelArray;
     NSMutableArray *_buttonNumberArray;
-    
-    NSMutableArray *_selectedBtnArray;
+  
     
     BOOL isSettings;
     DSwitchLightRightView *_rightView;
@@ -45,6 +44,7 @@
 @synthesize _curProcessor;
 @synthesize _proxys;
 @synthesize _proxyObjMap;
+@synthesize fromScenario;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -55,7 +55,6 @@
     _buttonSeideArray = [[NSMutableArray alloc] init];
     _buttonChannelArray = [[NSMutableArray alloc] init];
     _buttonNumberArray = [[NSMutableArray alloc] init];
-    _selectedBtnArray = [[NSMutableArray alloc] init];
     
     [super setTitleAndImage:@"env_corner_light.png" withTitle:@"照明"];
     
@@ -103,10 +102,13 @@
                                                            SCREEN_HEIGHT-64-50)];
     [self.view addSubview:_proxysView];
     
+    if(!fromScenario)
+    {
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(notifyProxyGotCurStateVals:)
                                                  name:NOTIFY_PROXY_CUR_STATE_GOT_LB
                                                object:nil];
+    }
     
     [self getCurrentDeviceDriverProxys];
     
@@ -208,9 +210,12 @@
         
         [_buttonArray addObject:btn];
         
+        if(!fromScenario)
+        {
         if(apxy._rgsProxyObj){
             [_proxyObjMap setObject:btn forKey:@(apxy._rgsProxyObj.m_id)];
             [apxy getCurrentDataState];
+        }
         }
         
         index++;
@@ -297,10 +302,8 @@
     EDimmerSwitchLightProxy *vpro = slbtn.data;
 
     // want to choose it
-    if (![_selectedBtnArray containsObject:slbtn]) {
-        
-        [_selectedBtnArray addObject:slbtn];
-
+    if (!vpro._power) {
+    
         UILabel *numberL = [_buttonNumberArray objectAtIndex:slbtn.tag];
         numberL.textColor = NEW_ER_BUTTON_SD_COLOR;
         numberL.alpha = 1.0;
@@ -314,8 +317,7 @@
         
     } else {
         // remove it
-        [_selectedBtnArray removeObject:slbtn];
-
+     
         UILabel *numberL = [_buttonNumberArray objectAtIndex:slbtn.tag];
         numberL.textColor = [UIColor whiteColor];
         numberL.alpha = 0.5;
@@ -385,6 +387,21 @@
             EDimmerSwitchLightProxy *apxy = pbtn.data;
             
             [pbtn turnOnOff:apxy._power];
+            
+            if(pbtn.tag < [_buttonNumberArray count])
+            {
+            UILabel *numberL = [_buttonNumberArray objectAtIndex:pbtn.tag];
+            
+            if(apxy._power){
+                numberL.textColor = NEW_ER_BUTTON_SD_COLOR;
+                numberL.alpha = 1.0;
+            }
+            else
+            {
+                numberL.textColor = [UIColor whiteColor];
+                numberL.alpha = 0.5;
+            }
+            }
         }
     }
 }

@@ -435,47 +435,8 @@ UITableViewDataSource>
 - (void) saveScheduler:(NSDictionary*)datas{
     
     [[DataBase sharedDatabaseInstance] saveScenarioSchedule:datas];
-    
-#ifdef   REALTIME_NETWORK_MODEL
-    if(_client == nil)
-    {
-        _client = [[WebClient alloc] initWithDelegate:self];
-    }
-    
-    _client._method = @"/addautoset";
-    _client._httpMethod = @"POST";
-    
-    NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    
-    _client._requestParam = param;
-    
-    User *u = [UserDefaultsKV getUser];
-    if(u)
-    {
-        [param setObject:u._userId forKey:@"userID"];
-    }
-    
-    [param setObject:[datas objectForKey:@"m_id"] forKey:@"scenarioID"];
-    [param setObject:[datas objectForKey:@"name"] forKey:@"scenarioName"];
-    [param setObject:[datas objectForKey:@"date"] forKey:@"exceTime"];
-    [param setObject:[datas objectForKey:@"weeks"] forKey:@"workItems"];
-    
-    IMP_BLOCK_SELF(AutoRunSetView);
-    
-    [_client requestWithSusessBlock:^(id lParam, id rParam) {
-        
-        [block_self done];
-        
-    } FailBlock:^(id lParam, id rParam) {
-        
-        [block_self done];
-    }];
-    
-#else
     [self done];
-#endif
-    
-    
+
 }
 
 - (void) done{

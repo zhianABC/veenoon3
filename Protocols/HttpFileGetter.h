@@ -35,6 +35,7 @@
     
     BOOL isCancel;
 	
+    NSInteger statusCode;
 }
 @property (nonatomic, strong) NSURLConnection		*connection;
 @property (nonatomic, strong) NSMutableData			*characterBuffer;
