@@ -363,9 +363,17 @@
 
 
 - (void) doneAction:(id)sender{
-    float value = [_dbValue.text floatValue];
+    float dbValue = [_dbValue.text floatValue];
     
-    [self processSlideButtonValue:value];
+    float highMax = (maxDb - minDb);
+    
+    
+    if(highMax)
+    {
+        float f = (dbValue - minDb)/highMax;
+        f = fabsf(f);
+        [self processSlideButtonValue:f];
+    }
     
     self._selectBtn = nil;
     
