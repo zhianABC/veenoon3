@@ -150,7 +150,7 @@
     
     
     editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    editBtn.frame = CGRectMake(SCREEN_WIDTH - 160 - 10, 40, 160, 44);
+    editBtn.frame = CGRectMake(SCREEN_WIDTH - 160 - 10, 60, 160, 44);
     [self.view addSubview:editBtn];
     [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
     [editBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
