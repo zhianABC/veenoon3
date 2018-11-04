@@ -316,9 +316,7 @@
     
     [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
     
-    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:nil]];
-    
-    [self presentViewController:alertController animated:true completion:^(UIAlertAction * _Nonnull action) {
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         UITextField *envirnmentNameTextField = alertController.textFields.firstObject;
         NSString *nameTxt = envirnmentNameTextField.text;
         if (nameTxt && [nameTxt length] > 0) {
@@ -326,7 +324,9 @@
             [block_self doSaveCurrentLocalProject:nameTxt];
             
         }
-    }];
+    }]];
+    
+    [self presentViewController:alertController animated:true completion:nil];
 }
 
 
