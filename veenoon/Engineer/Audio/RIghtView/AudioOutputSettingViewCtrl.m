@@ -169,9 +169,10 @@
     xinhaoView.hidden = NO;
     xinhaoView.ctrl = self;
     
+    [xinhaoView layoutChannelBtns:numProxys selectedIndex:-1];
     [xinhaoView updateProxyCommandValIsLoaded];
     xinhaoView._proxys = _processor._outAudioProxys;
-    [xinhaoView layoutChannelBtns:numProxys selectedIndex:-1];
+    
     
     dianpingView = [[DianPing_UIView alloc] initWithFrameProxys:vrc withProxys:_processor._outAudioProxys];
     [self.view addSubview:dianpingView];
