@@ -165,42 +165,45 @@
     int btnStartX = 250;
     int btnY = 150;
     
-    UILabel *addLabel2 = [[UILabel alloc] init];
-    addLabel2.text = @"编组";
-    addLabel2.font = [UIFont boldSystemFontOfSize: 14];
-    addLabel2.textColor = [UIColor whiteColor];
-    addLabel2.frame = CGRectMake(btnStartX, btnY -30, 120, 20);
-    [contentView addSubview:addLabel2];
+//    UILabel *addLabel2 = [[UILabel alloc] init];
+//    addLabel2.text = @"编组";
+//    addLabel2.font = [UIFont boldSystemFontOfSize: 14];
+//    addLabel2.textColor = [UIColor whiteColor];
+//    addLabel2.frame = CGRectMake(btnStartX, btnY -30, 120, 20);
+//    [contentView addSubview:addLabel2];
+//
+//    UIButton *lineBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
+//    lineBtn.frame = CGRectMake(btnStartX, btnY, 120, 30);
+//    lineBtn.layer.cornerRadius = 5;
+//    lineBtn.layer.borderWidth = 2;
+//    lineBtn.layer.borderColor = [UIColor clearColor].CGColor;;
+//    lineBtn.clipsToBounds = YES;
+//    [lineBtn setTitle:@"  " forState:UIControlStateNormal];
+//    lineBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+//    lineBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+//    UIImageView *icon = [[UIImageView alloc]
+//                         initWithFrame:CGRectMake(lineBtn.frame.size.width - 20, 10, 10, 10)];
+//    icon.image = [UIImage imageNamed:@"remote_video_down.png"];
+//    [lineBtn addSubview:icon];
+//    icon.alpha = 0.8;
+//    icon.layer.contentsGravity = kCAGravityResizeAspect;
+//    [lineBtn addTarget:self
+//                action:@selector(lineBtnAction:)
+//      forControlEvents:UIControlEventTouchUpInside];
+//    [contentView addSubview:lineBtn];
     
-    UIButton *lineBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
-    lineBtn.frame = CGRectMake(btnStartX, btnY, 120, 30);
-    lineBtn.layer.cornerRadius = 5;
-    lineBtn.layer.borderWidth = 2;
-    lineBtn.layer.borderColor = [UIColor clearColor].CGColor;;
-    lineBtn.clipsToBounds = YES;
-    [lineBtn setTitle:@"  " forState:UIControlStateNormal];
-    lineBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-    lineBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    UIImageView *icon = [[UIImageView alloc]
-                         initWithFrame:CGRectMake(lineBtn.frame.size.width - 20, 10, 10, 10)];
-    icon.image = [UIImage imageNamed:@"remote_video_down.png"];
-    [lineBtn addSubview:icon];
-    icon.alpha = 0.8;
-    icon.layer.contentsGravity = kCAGravityResizeAspect;
-    [lineBtn addTarget:self
-                action:@selector(lineBtnAction:)
-      forControlEvents:UIControlEventTouchUpInside];
-    [contentView addSubview:lineBtn];
-    
-    invertBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
-    invertBtn.frame = CGRectMake(CGRectGetMaxX(lineBtn.frame)+20, btnY, 50, 30);
+    //int xx = CGRectGetMaxX(lineBtn.frame)+20;
+    int xx = btnStartX;
+    invertBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2
+                                 selColor:NEW_ER_BUTTON_BL_COLOR];
+    invertBtn.frame = CGRectMake(xx, btnY, 50, 30);
     invertBtn.layer.cornerRadius = 5;
     invertBtn.layer.borderWidth = 2;
     invertBtn.layer.borderColor = [UIColor clearColor].CGColor;;
     invertBtn.clipsToBounds = YES;
-    [invertBtn setTitle:@"  反相" forState:UIControlStateNormal];
+    [invertBtn setTitle:@"反相" forState:UIControlStateNormal];
     invertBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-    invertBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    //invertBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     [contentView addSubview:invertBtn];
     [invertBtn addTarget:self
                 action:@selector(invertBtnAction:)

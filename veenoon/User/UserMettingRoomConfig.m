@@ -173,12 +173,19 @@
     
     [KVNProgress showWithStatus:@"加载中..."];
     
+    [NSTimer scheduledTimerWithTimeInterval:10
+                                     target:self
+                                   selector:@selector(relunchUI:)
+                                   userInfo:nil
+                                    repeats:NO];
     
 }
 
-- (void) relunchUI{
+- (void) relunchUI:(id)sender{
     
-    [self checkArea];
+    [self performSelectorOnMainThread:@selector(checkArea)
+                           withObject:nil
+                        waitUntilDone:NO];
 }
 
 - (void) dataSyncAction:(id)sender{
@@ -244,10 +251,9 @@
 
 - (void) didEndLoadingFile:(id)object success:(BOOL)success{
     
-    [KVNProgress dismiss];
+    
     if(success)
     {
-        [KVNProgress showSuccess];
         MeetingRoom *room = [DataCenter defaultDataCenter]._currentRoom;
         NSString *filename = [NSString stringWithFormat:@"%@",room.regulus_id];
         
@@ -261,6 +267,7 @@
     }
     else
     {
+        [KVNProgress dismiss];
         [Utilities showMessage:@"没有找到备份文件" ctrl:self];
     }
 }
