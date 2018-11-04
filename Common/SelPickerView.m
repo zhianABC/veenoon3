@@ -62,7 +62,7 @@
         [_pickerContainer addSubview:btnOK];
         btnOK.layer.cornerRadius = 3;
         btnOK.clipsToBounds = YES;
-        [btnOK setTitle:NSLocalizedString(@"OK", nil) forState:UIControlStateNormal];
+        [btnOK setTitle:@"确定" forState:UIControlStateNormal];
         btnOK.titleLabel.font = [UIFont boldSystemFontOfSize:16];
         [btnOK addTarget:self action:@selector(doneAction:) forControlEvents:UIControlEventTouchUpInside];
         

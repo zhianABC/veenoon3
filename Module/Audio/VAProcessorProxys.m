@@ -118,7 +118,7 @@
         _isMute = NO;
         _isDigitalMute = NO;
         _voiceDb = -70;
-        _digitalGain = -70;
+        _digitalGain = -12;
         
         _inverted = NO;
         self._is48V = NO;

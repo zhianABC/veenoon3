@@ -461,9 +461,14 @@
       forControlEvents:UIControlEventTouchUpInside];
     [contentView addSubview:bianzuBtn];
     
+    int xx = CGRectGetMaxX(bianzuBtn.frame)+10;
+    /////隐藏编组
+    xx = CGRectGetMaxX(foureivBtn.frame)+20;
+    bianzuBtn.hidden = YES;
+    ////
     
     fanxiangBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
-    fanxiangBtn.frame = CGRectMake(CGRectGetMaxX(bianzuBtn.frame)+10, btnY, 50, 30);
+    fanxiangBtn.frame = CGRectMake(xx, btnY, 50, 30);
     fanxiangBtn.layer.cornerRadius = 5;
     fanxiangBtn.layer.borderWidth = 2;
     fanxiangBtn.layer.borderColor = [UIColor clearColor].CGColor;;

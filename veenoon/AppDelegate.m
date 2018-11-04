@@ -24,6 +24,8 @@
 {
     UIView *_maskView;
     UIActivityIndicatorView *_wait;
+    
+    BOOL _endingImportState;
 }
 @end
 
@@ -112,7 +114,19 @@
 //Regulus SDK delegate
 -(void)onConnectChanged:(BOOL)connect
 {
-    
+    if (connect) {
+        
+        if(_endingImportState)
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"Notify_Reload_Projects_After_Import_Action"
+                                                                object:nil];
+        }
+        
+        _endingImportState = NO;
+    }
+    else{
+        
+    }
 }
 
 -(void)onRecvDeviceNotify:(RgsDeviceNoteObj *)notify
@@ -216,11 +230,12 @@
     
     if(status == RGS_NOTIFY_STATUS_DONE)
     {
-        [KVNProgress showSuccessWithStatus:@"已导入"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"Notify_Reload_Projects_After_Import_Action"
-                                                            object:nil];
+        [KVNProgress showWithStatus:@"已导入，请稍侯..."];
+        _endingImportState = YES;
+        
     }
-    else if(status != RGS_NOTIFY_STATUS_START)
+    else if(status == RGS_NOTIFY_STATUS_FAILED
+            || status == RGS_NOTIFY_STATUS_TIMEOUT)
     {
         [KVNProgress dismiss];
     }
