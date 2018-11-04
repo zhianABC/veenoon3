@@ -29,6 +29,7 @@
 
 @implementation AudioEProcessor
 @synthesize _isHuiShengXiaoChu;
+@synthesize _aecCodeIssue;
 //中控上对应的数据
 @synthesize _inAudioProxys;
 @synthesize _outAudioProxys;

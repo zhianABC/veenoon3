@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "WebClient.h"
+#import "AudioEProcessor.h"
+
 @interface YinPinProcessCodeUIView : UIView {
     WebClient *_autoClient;
     UILabel *_networkStatus;
+    AudioEProcessor *_processor;
 }
-
+- (id)initWithFrame:(CGRect)frame withProxy:(AudioEProcessor*) processor;
 @end

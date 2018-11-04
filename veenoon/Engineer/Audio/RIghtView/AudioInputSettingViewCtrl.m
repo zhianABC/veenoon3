@@ -483,7 +483,7 @@
     
 }
 - (void) didAecButtonAction {
-    YinPinProcessCodeUIView *uiView = [[YinPinProcessCodeUIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    YinPinProcessCodeUIView *uiView = [[YinPinProcessCodeUIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) withProxy:_processor];
     
     [self.view addSubview:uiView];
 }

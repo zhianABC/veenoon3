@@ -10,20 +10,23 @@
 #import "NetworkChecker.h"
 #import "KVNProgress.h"
 #import "SBJson4.h"
-
+#import "AudioEProcessor.h"
 
 @interface YinPinProcessCodeUIView()<UITextFieldDelegate> {
     UIView *_inputPannel;
     UITextField *_invitationCode;
 }
-
+@property (nonatomic, strong) AudioEProcessor* _processor;
 @end
 
 @implementation YinPinProcessCodeUIView
+@synthesize _processor;
 
-- (id)initWithFrame:(CGRect)frame {
+- (id)initWithFrame:(CGRect)frame withProxy:(AudioEProcessor*) processor{
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor clearColor];
+        
+        self._processor = processor;
         
         UIView *view = [[UIView alloc] initWithFrame:self.bounds];
         view.backgroundColor = ADMIN_BLACK_COLOR;
@@ -153,6 +156,14 @@
                     NSDictionary *data = [v objectForKey:@"data"];
                     [block_self processLoginData:data];
                     
+                } else {
+                    self._processor._aecCodeIssue = NO;
+                    UIAlertView *av = [[UIAlertView alloc]initWithTitle:@"提示"
+                                                                message:@"请输入正确的AEC码"
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles: nil];
+                    [av show];
                 }
                 return;
             }
@@ -186,6 +197,8 @@
     NSLog(@"ssss");
     
     [self removeFromSuperview];
+    
+    self._processor._aecCodeIssue = YES;
 }
 
 - (void) cancelAction:(id)sender{
