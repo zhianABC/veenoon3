@@ -130,9 +130,7 @@
     [_maskView addSubview:title];
     title.font = [UIFont systemFontOfSize:16];
     title.textColor = [UIColor whiteColor];
-    
     title.center = CGPointMake(cx, title.center.y);
-    
     
 
     _dbValue = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(dbbtn.frame)+10, 60, 24)];
@@ -144,8 +142,15 @@
     _dbValue.layer.cornerRadius = 5;
     _dbValue.clipsToBounds = YES;
     _dbValue.backgroundColor = NEW_ER_BUTTON_GRAY_COLOR2;
-    
     _dbValue.center = CGPointMake(cx, _dbValue.center.y);
+    
+    UIButton* btnEdit = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_maskView addSubview:btnEdit];
+    btnEdit.frame = CGRectMake(0, CGRectGetMaxY(dbbtn.frame)+10, 60, 24);
+    btnEdit.center = CGPointMake(cx, _dbValue.center.y);
+    [btnEdit addTarget:self
+                action:@selector(editHighFilterFreqAction:)
+      forControlEvents:UIControlEventTouchUpInside];
     
     _muteBtn = [UIButton buttonWithColor:NEW_ER_BUTTON_GRAY_COLOR2 selColor:NEW_ER_BUTTON_BL_COLOR];
     _muteBtn.frame = CGRectMake(50, CGRectGetMaxY(_dbValue.frame)+10, 70, 30);
@@ -178,6 +183,47 @@
     doneBtn.center = CGPointMake(cx+40, _muteBtn.center.y);
     
     
+}
+
+- (void) editHighFilterFreqAction:(id)sender{
+    
+    NSString *alert = @"混音值，范围[-70 ~ 12]";
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                             message:alert preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"混音值";
+        textField.text = _dbValue.text;
+        textField.keyboardType = UIKeyboardTypeDecimalPad;
+    }];
+    
+    IMP_BLOCK_SELF(AudioMatrixSettingViewCtrl);
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        UITextField *alValTxt = alertController.textFields.firstObject;
+        
+        _dbValue.text = alValTxt.text;
+        
+        float dbValue = [_dbValue.text floatValue];
+        
+        float highMax = (maxDb - minDb);
+        
+        
+        if(highMax)
+        {
+            float f = (dbValue - minDb)/highMax;
+            f = fabsf(f);
+            [dbbtn setCircleValue:f];
+        }
+        
+    }]];
+    
+    
+    
+    [self presentViewController:alertController animated:true completion:nil];
 }
 
 - (void) showMatrix{
@@ -317,7 +363,13 @@
 
 
 - (void) doneAction:(id)sender{
+    float value = [_dbValue.text floatValue];
+    
+    [self processSlideButtonValue:value];
+    
     self._selectBtn = nil;
+    
+    
     [_maskView removeFromSuperview];
     
 }
