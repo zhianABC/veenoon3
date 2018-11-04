@@ -103,13 +103,13 @@
     return self;
 }
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
-    
-    
+    if (textField == _invitationCode) {
+        _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 30);
+    }
 }
 
-- (void)  textFieldDidEndEditing:(UITextField *)textField{
-    
-    
+- (void)textFieldDidEndEditing:(UITextField *)textField{
+    _inputPannel.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
