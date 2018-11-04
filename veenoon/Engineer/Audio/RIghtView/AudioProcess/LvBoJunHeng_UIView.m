@@ -285,7 +285,7 @@
 
 - (void) editHighFilterFreqAction:(id)sender{
     
-    NSString *alert = @"高通频率，范围[10Hz ~ 10KHz]";
+    NSString *alert = @"高通频率，范围[20Hz ~ 20KHz]";
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
                                                                              message:alert preferredStyle:UIAlertControllerStyleAlert];
     
@@ -1092,7 +1092,7 @@
 
 - (void) editLowFilterAction:(id)sender{
     
-    NSString *alert = @"设置低通频率, 范围10Hz ~ 10KHz";
+    NSString *alert = @"设置低通频率, 范围20Hz ~ 20KHz";
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
                                                                              message:alert preferredStyle:UIAlertControllerStyleAlert];
     
