@@ -30,6 +30,8 @@
 #import "KVNProgress.h"
 #import "EngineerScenarioSettingsViewCtrl.h"
 #import "EngineerNewTeslariViewCtrl.h"
+#import "UILabel+ContentSize.h"
+
 
 @interface EngineerLocalPrjsListViewCtrl () {
     
@@ -42,16 +44,22 @@
     
     UIButton *_tab1;
    
+    UIButton *_addBtn;
+    UIImageView *_addIcon;
+    
+    BOOL _isEditing;
 }
 
 
 @property (nonatomic, strong) NSMutableArray *_offlineProjs;
-
+@property (nonatomic, strong) NSMutableArray *_prjBtns;
 @end
 
 @implementation EngineerLocalPrjsListViewCtrl
 
 @synthesize _offlineProjs;
+@synthesize _prjBtns;
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -111,6 +119,11 @@
       forControlEvents:UIControlEventTouchUpInside];
 
     [self testOfflineMode];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(refreshLocalPrjList:)
+                                                 name:@"Notify_Refresh_Local_Prj_List"
+                                               object:nil];
 }
 
 - (void) backAction:(id)sender{
@@ -121,8 +134,30 @@
 
 - (void) editAction:(id)sender{
     
+    _isEditing = !_isEditing;
     
+    if(_isEditing)
+    {
+        [editBtn setTitle:@"完成" forState:UIControlStateNormal];
+        
+        for(UIButton *btn in _prjBtns)
+        {
+            UIView *icon = [btn viewWithTag:110];
+            if(icon)
+            icon.hidden = NO;
+        }
+        
+        _addBtn.hidden = YES;
+        _addIcon.hidden = YES;
+    }
+    else
+    {
+        [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
+        
+        [self loadLocalProjects];
+    }
 }
+
 
 - (void) testOfflineMode{
     
@@ -141,6 +176,13 @@
              [self downloadOfflineResources];
          }
      }];
+}
+
+- (void) refreshLocalPrjList:(NSNotification*)notify{
+    
+    [self performSelectorOnMainThread:@selector(loadLocalProjects)
+                           withObject:nil
+                        waitUntilDone:NO];
 }
 
 #pragma mark -- Local Mode ---
@@ -197,6 +239,8 @@
     [cellData addObjectsFromArray:_offlineProjs];
     [cellData addObject:@{@"p":@"1"}];
     
+    self._prjBtns = [NSMutableArray array];
+    
     for (int idx = 0; idx < [cellData count]; idx++) {
         
         id  prj = [cellData objectAtIndex:idx];
@@ -216,17 +260,17 @@
         {
             //plus +1
             UIImage *img = [UIImage imageNamed:@"offline_remove_icon.png"];
-            UIImageView *roomeImageView = [[UIImageView alloc] initWithImage:img];
-            roomeImageView.userInteractionEnabled=YES;
-            roomeImageView.contentMode = UIViewContentModeCenter;
-            roomeImageView.clipsToBounds=YES;
-            roomeImageView.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
-            [_offlineScroll addSubview:roomeImageView];
+            _addIcon = [[UIImageView alloc] initWithImage:img];
+            _addIcon.userInteractionEnabled=YES;
+            _addIcon.contentMode = UIViewContentModeCenter;
+            _addIcon.clipsToBounds=YES;
+            _addIcon.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
+            [_offlineScroll addSubview:_addIcon];
             
-            UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-            btn.frame = roomeImageView.frame;
-            [_offlineScroll addSubview:btn];
-            [btn addTarget:self
+            _addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            _addBtn.frame = _addIcon.frame;
+            [_offlineScroll addSubview:_addBtn];
+            [_addBtn addTarget:self
                     action:@selector(newLocalProject:)
           forControlEvents:UIControlEventTouchUpInside];
         }
@@ -234,6 +278,9 @@
         {
             
             [_offlineScroll addSubview:prjBtn];
+            
+            prjBtn.tag = idx;
+            [_prjBtns addObject:prjBtn];
             
             prjBtn.tag = idx;
             [prjBtn addTarget:self
@@ -245,13 +292,27 @@
             [prjBtn addSubview:iconView];
             iconView.center = CGPointMake(cellWidth/2, cellHeight*0.4);
             
-            UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(iconView.frame)+5, cellWidth-20, 30)];
+            UIImageView *rmIcon = [[UIImageView alloc]
+                                   initWithImage:[UIImage imageNamed:@"red_del_icon.png"]];
+            [prjBtn addSubview:rmIcon];
+            rmIcon.tag = 110;
+            rmIcon.center = CGPointMake(cellWidth-30, 30);
+            rmIcon.hidden = YES;
+            
+            UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(iconView.frame)+5, cellWidth-20, 40)];
             titleL.backgroundColor = [UIColor clearColor];
             [prjBtn addSubview:titleL];
             titleL.font = [UIFont boldSystemFontOfSize:16];
             titleL.textColor  = [UIColor whiteColor];
             titleL.textAlignment = NSTextAlignmentCenter;
             titleL.text = prj;
+            [titleL contentSize];
+            CGRect rc  = titleL.frame;
+            if(rc.size.height > 40)
+            {
+                rc.size.height = 40;
+                titleL.frame = rc;
+            }
 
         }
         
@@ -262,29 +323,41 @@
 
 - (void) locationPrjBtnAction:(UIButton*)sender{
     
-    if(sender.tag < [_offlineProjs count])
+    if(_isEditing)
     {
-         id  prj = [_offlineProjs objectAtIndex:sender.tag];
-        
-        [[RegulusSDK sharedRegulusSDK] LoadLocalProject:prj completion:^(BOOL result, NSError *error) {
+        if(sender.tag < [_offlineProjs count])
+        {
+            id  prj = [_offlineProjs objectAtIndex:sender.tag];
             
-            if(result)
-            {
-                [DataCenter defaultDataCenter]._isLocalPrj = YES;
-                [DataSync sharedDataSync]._currentReglusLogged = nil;
-                [DataCenter defaultDataCenter]._currentRoom = nil;
+            [[RegulusSDK sharedRegulusSDK] DelLocalProject:prj completion:^(BOOL result, NSError *error) {
                 
-                EngineerScenarioSettingsViewCtrl *ctrl = [[EngineerScenarioSettingsViewCtrl alloc] init];
-                ctrl.localPrjName = prj;
-                [self.navigationController pushViewController:ctrl animated:YES];
-
-
-//                EngineerSysSelectViewCtrl *lctrl = [[EngineerSysSelectViewCtrl alloc] init];
-//                lctrl._localPrjName = prj;
-//                [self.navigationController pushViewController:lctrl animated:YES];
-            }
+                if(result)
+                [sender removeFromSuperview];
+            }];
             
-        }];
+        }
+    }
+    else
+    {
+        if(sender.tag < [_offlineProjs count])
+        {
+            id  prj = [_offlineProjs objectAtIndex:sender.tag];
+            
+            [[RegulusSDK sharedRegulusSDK] LoadLocalProject:prj completion:^(BOOL result, NSError *error) {
+                
+                if(result)
+                {
+                    [DataCenter defaultDataCenter]._isLocalPrj = YES;
+                    [DataSync sharedDataSync]._currentReglusLogged = nil;
+                    [DataCenter defaultDataCenter]._currentRoom = nil;
+                    
+                    EngineerScenarioSettingsViewCtrl *ctrl = [[EngineerScenarioSettingsViewCtrl alloc] init];
+                    ctrl.localPrjName = prj;
+                    [self.navigationController pushViewController:ctrl animated:YES];
+                 }
+                
+            }];
+        }
     }
    
     
@@ -317,6 +390,11 @@
       [KVNProgress dismiss];
                                             
     }];
+}
+
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

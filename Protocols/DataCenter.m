@@ -71,7 +71,8 @@ static DataCenter *_globalDataInstanse;
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
     
     User *u = [UserDefaultsKV getUser];
-    [param setObject:u._userId forKey:@"userID"];
+    if(u)
+        [param setObject:u._userId forKey:@"userID"];
     
     _client._requestParam = param;
 

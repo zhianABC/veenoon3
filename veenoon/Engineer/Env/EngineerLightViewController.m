@@ -46,7 +46,7 @@
 @synthesize _curProcessor;
 @synthesize _proxys;
 @synthesize _proxyObjMap;
-
+@synthesize fromScenario;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -120,10 +120,12 @@
     [_zengyiSlider resetScale];
     _zengyiSlider.center = CGPointMake(TESLARIA_SLIDER_X, TESLARIA_SLIDER_Y);
     
+    if(!fromScenario){
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(notifyProxyGotCurStateVals:)
                                                  name:NOTIFY_PROXY_CUR_STATE_GOT_LB
                                                object:nil];
+    }
     
     [self getCurrentDeviceDriverProxys];
     
@@ -229,10 +231,12 @@
         
         [_buttonArray addObject:btn];
         
+        if(!fromScenario){
         if(apxy._rgsProxyObj){
             [_proxyObjMap setObject:btn forKey:@(apxy._rgsProxyObj.m_id)];
             
             [apxy getCurrentDataState];
+        }
         }
         
         index++;

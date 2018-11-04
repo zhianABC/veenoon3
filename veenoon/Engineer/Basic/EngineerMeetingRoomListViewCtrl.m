@@ -728,8 +728,10 @@
         _currentRoom.regulus_user_id = _regulus_user_id;
         [[DataBase sharedDatabaseInstance] saveMeetingRoom:_currentRoom];
         
+        /*
         [[RegulusSDK sharedRegulusSDK] SetDate:[NSDate date]
                                     completion:nil];
+         */
         
         [KVNProgress dismiss];
         
@@ -1203,8 +1205,11 @@
         room.regulus_user_id = userid;
         room.regulus_id = regulusid;
         
-         User *u = [UserDefaultsKV getUser];
-        room.user_id = [u._userId intValue];
+        User *u = [UserDefaultsKV getUser];
+        if(u)
+            room.user_id = [u._userId intValue];
+        else
+            room.user_id = 1;
         
         [[DataBase sharedDatabaseInstance] saveMeetingRoom:room];
         

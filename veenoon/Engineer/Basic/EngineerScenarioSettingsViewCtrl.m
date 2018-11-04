@@ -26,6 +26,7 @@
 #import "JCActionView.h"
 #import "AppDelegate.h"
 #import "Utilities.h"
+#import "EngineerLocalPrjsListViewCtrl.h"
 
 
 @interface EngineerScenarioSettingsViewCtrl ()<SIconSelectViewDelegate, ScenarioDelegate, ScenarioCellViewDelegate, JCActionViewDelegate>{
@@ -339,7 +340,7 @@
         if(result)
         {
             _isSaved = YES;
-            [self backToPrevStartPage];
+            [self backToLocalPrjsPage];
         }
         
     }];
@@ -597,6 +598,26 @@
     }
 }
 
+- (void) backToLocalPrjsPage{
+    
+    UIViewController *engCtrl = nil;
+    
+    NSArray *ctrls = self.navigationController.viewControllers;
+    for(UIViewController *vc in ctrls)
+    {
+        if([vc isKindOfClass:[EngineerLocalPrjsListViewCtrl class]])
+        {
+            engCtrl = vc;
+            break;
+        }
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"Notify_Refresh_Local_Prj_List"
+                                                        object:nil];
+    if(engCtrl){
+        [self.navigationController popToViewController:engCtrl animated:YES];
+    }
+}
 
 - (void) backToPrevStartPage{
     

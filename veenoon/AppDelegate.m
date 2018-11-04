@@ -217,6 +217,8 @@
     if(status == RGS_NOTIFY_STATUS_DONE)
     {
         [KVNProgress showSuccessWithStatus:@"已导入"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"Notify_Reload_Projects_After_Import_Action"
+                                                            object:nil];
     }
     else if(status != RGS_NOTIFY_STATUS_START)
     {

@@ -54,7 +54,7 @@ static DataBase* sharedInstance = nil;
     NSString *documentsDirectory = [paths objectAtIndex:0];
     
     User *u = [UserDefaultsKV getUser];
-    NSString *folder = @"def";
+    NSString *folder = @"admin";
     if(u)
     {
         folder = u._cellphone;
@@ -96,7 +96,7 @@ static DataBase* sharedInstance = nil;
     NSString *documentsDirectory = [paths objectAtIndex:0];
     
     User *u = [UserDefaultsKV getUser];
-    NSString *folder = @"def";
+    NSString *folder = @"admin";
     if(u)
     {
         folder = u._cellphone;

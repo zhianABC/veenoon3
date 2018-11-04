@@ -639,11 +639,6 @@
     BOOL res = [[object objectForKey:@"result"] boolValue];
     if(res)
     {
-        //编辑/保存
-      if(_isEditingScenario)
-      {
-          
-      }
         
         //返回到场景列表页面
         UIViewController *engCtrl = nil;
@@ -706,6 +701,7 @@
         EngineerElectronicSysConfigViewCtrl *ctrl = [[EngineerElectronicSysConfigViewCtrl alloc] init];
         ctrl._number = 8;
         ctrl._electronicSysArray = @[plug];
+        ctrl.fromScenario = _isEditingScenario;
         [self.navigationController pushViewController:ctrl animated:YES];
         
     }
@@ -832,12 +828,14 @@
             
             EngineerLightViewController *ctrl = [[EngineerLightViewController alloc] init];
             ctrl._lightSysArray = @[plug];
+            ctrl.fromScenario = _isEditingScenario;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         else if ([class isEqualToString:@"EDimmerSwitchLight"]) {
             
             EngineerDimmerSwitchViewController *ctrl = [[EngineerDimmerSwitchViewController alloc] init];
             ctrl._lightSysArray = @[plug];
+            ctrl.fromScenario = _isEditingScenario;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array

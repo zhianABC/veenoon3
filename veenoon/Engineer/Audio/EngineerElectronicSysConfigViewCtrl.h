@@ -16,5 +16,6 @@
 @property (nonatomic,strong) NSArray *_electronicSysArray;
 @property (nonatomic,strong) APowerESet *_currentObj;
 @property (nonatomic,assign) int _number;
+@property (nonatomic,assign) BOOL fromScenario;
 
 @end

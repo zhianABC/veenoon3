@@ -10,6 +10,8 @@
 #import "UIButton+Color.h"
 #import "UILabel+ContentSize.h"
 
+#define JCACTION_ROW_HEIGHT    60
+
 @interface JCActionView ()
 {
     UIView *content;
@@ -83,7 +85,7 @@
     if(self = [super initWithFrame:frame])
     {
         
-        int h = (int)[titles count]*51 - 1 + 55;
+        int h = (int)[titles count]*(JCACTION_ROW_HEIGHT+1) - 1 + JCACTION_ROW_HEIGHT+5;
         
         content = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, h)];
         content.backgroundColor = [UIColor whiteColor];
@@ -96,7 +98,9 @@
         for(NSString *til in titles)
         {
             UIButton *btnOK = [UIButton buttonWithColor:[UIColor whiteColor] selColor:LINE_COLOR];
-            btnOK.frame = CGRectMake(0, top, CGRectGetWidth(content.frame), 50);
+            btnOK.frame = CGRectMake(0, top,
+                                     CGRectGetWidth(content.frame),
+                                     JCACTION_ROW_HEIGHT);
             [content addSubview:btnOK];
             [btnOK setTitle:til forState:UIControlStateNormal];
             btnOK.titleLabel.font = [UIFont boldSystemFontOfSize:15];
@@ -120,12 +124,16 @@
         [content addSubview:line];
         
         UIButton *btnCancel = [UIButton buttonWithColor:[UIColor whiteColor] selColor:LINE_COLOR];
-        btnCancel.frame = CGRectMake(0, CGRectGetMaxY(line.frame), CGRectGetWidth(content.frame), 50);
+        btnCancel.frame = CGRectMake(0, CGRectGetMaxY(line.frame),
+                                     CGRectGetWidth(content.frame),
+                                     JCACTION_ROW_HEIGHT);
         [content addSubview:btnCancel];
         [btnCancel setTitle:@"取消" forState:UIControlStateNormal];
         btnCancel.titleLabel.font = [UIFont boldSystemFontOfSize:15];
         [btnCancel setTitleColor:COLOR_TEXT_A forState:UIControlStateNormal];
-        [btnCancel addTarget:self action:@selector(stopAction:) forControlEvents:UIControlEventTouchUpInside];
+        [btnCancel addTarget:self
+                      action:@selector(stopAction:)
+            forControlEvents:UIControlEventTouchUpInside];
 
         
     }
@@ -138,7 +146,7 @@
     if(self = [super initWithFrame:frame])
     {
         
-        int h = (int)[tils count]*51 - 1 + 55;
+        int h = (int)[tils count]*(JCACTION_ROW_HEIGHT+1) - 1 + JCACTION_ROW_HEIGHT+5;
         
         content = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, h)];
         content.backgroundColor = [UIColor whiteColor];
@@ -163,7 +171,7 @@
         for(NSString *til in tils)
         {
             UIButton *btnOK = [UIButton buttonWithColor:[UIColor whiteColor] selColor:LINE_COLOR];
-            btnOK.frame = CGRectMake(0, top, CGRectGetWidth(content.frame), 50);
+            btnOK.frame = CGRectMake(0, top, CGRectGetWidth(content.frame), JCACTION_ROW_HEIGHT);
             [content addSubview:btnOK];
             [btnOK setTitle:til forState:UIControlStateNormal];
             btnOK.titleLabel.font = [UIFont boldSystemFontOfSize:15];
@@ -182,17 +190,25 @@
             
         }
         
-        UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, top-1, CGRectGetWidth(content.frame), 5)];
+        UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0,
+                                                                  top-1,
+                                                                  CGRectGetWidth(content.frame),
+                                                                  5)];
         line.backgroundColor = RGB(0xf2, 0xf2, 0xf2);
         [content addSubview:line];
         
         UIButton *btnCancel = [UIButton buttonWithColor:[UIColor whiteColor] selColor:LINE_COLOR];
-        btnCancel.frame = CGRectMake(0, CGRectGetMaxY(line.frame), CGRectGetWidth(content.frame), 50);
+        btnCancel.frame = CGRectMake(0,
+                                     CGRectGetMaxY(line.frame),
+                                     CGRectGetWidth(content.frame),
+                                     JCACTION_ROW_HEIGHT);
         [content addSubview:btnCancel];
         [btnCancel setTitle:@"取消" forState:UIControlStateNormal];
         btnCancel.titleLabel.font = [UIFont boldSystemFontOfSize:15];
         [btnCancel setTitleColor:COLOR_TEXT_A forState:UIControlStateNormal];
-        [btnCancel addTarget:self action:@selector(stopAction:) forControlEvents:UIControlEventTouchUpInside];
+        [btnCancel addTarget:self
+                      action:@selector(stopAction:)
+            forControlEvents:UIControlEventTouchUpInside];
         
         
     }
