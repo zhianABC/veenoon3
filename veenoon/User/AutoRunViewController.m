@@ -40,6 +40,7 @@
 
 @property (nonatomic, strong) NSMutableArray *_subscribeItems;
 @property (nonatomic, strong) NSMutableArray *_weekItems;
+@property (nonatomic, strong) NSMutableArray *_envItems;
 
 @property (nonatomic, strong) NSMutableArray *_autoRunCells;
 
@@ -52,6 +53,7 @@
 
 @synthesize _subscribeItems;
 @synthesize _weekItems;
+@synthesize _envItems;
 
 @synthesize _autoRunCells;
 
@@ -152,8 +154,34 @@
                                                  name:@"Notify_Refresh_Items"
                                                object:nil];
     
-    [self getSchedules];
+    //[self getSchedules];
+    [self getEnvAutoSet];
     
+}
+
+- (void) getEnvAutoSet{
+ 
+    IMP_BLOCK_SELF(AutoRunViewController);
+    
+    [KVNProgress show];
+    
+    [[RegulusSDK sharedRegulusSDK] GetAutomation:^(BOOL result, NSArray<RgsAutomationObj *> *auto_objs, NSError *error) {
+            [block_self layoutAutoEnvItems:auto_objs];
+        
+    }];
+}
+
+- (void) layoutAutoEnvItems:(NSArray*)auto_objs{
+    
+    [KVNProgress dismiss];
+    
+    self._envItems = [NSMutableArray array];
+    
+    if(auto_objs)
+    [self._envItems addObjectsFromArray:auto_objs];
+    [self._envItems addObject:@{@"name":@"+", @"type":@"1"}];
+    
+    [self layoutAutoCells];
 }
 
 - (void) autoPreAction:(id)sender{
@@ -166,7 +194,15 @@
     
     _auto_mode = 0;
     
-    [self layoutAutoCells];
+    if([_autoItems count] == 0)
+    {
+        [self getSchedules];
+    }
+    else
+    {
+        [self layoutAutoCells];
+    }
+    
     
     titleL.text = @"预约设置";
 }
@@ -220,7 +256,15 @@
     
     _auto_mode = 1;
     
-    [self layoutAutoCells];
+    if([_autoItems count] == 0)
+    {
+        [self getSchedules];
+    }
+    else
+    {
+        [self layoutAutoCells];
+    }
+    
     
     titleL.text = @"日程设置";
 }
@@ -276,12 +320,15 @@
     int x = left;
     int y = 0;
     
-    NSMutableArray  *items = _subscribeItems;
+    NSArray  *items = _subscribeItems;
     if(_auto_mode == 1)
     {
         items = _weekItems;
     }
-    
+    else if(_auto_mode == 2)
+    {
+        items = _envItems;
+    }
     for(int i = 0; i < [items count]; i++)
     {
         id sche = [items objectAtIndex:i];
@@ -303,6 +350,20 @@
             at.delegate = self;
             
             [at showRgsSchedule:sch];
+            
+            [_autoRunCells addObject:at];
+        }
+        else if([sche isKindOfClass:[RgsAutomationObj class]])
+        {
+            RgsAutomationObj *sch = sche;
+            
+            AutoRunCell *at = [[AutoRunCell alloc]
+                               initWithFrame:CGRectMake(x, y, cellWidth, cellWidth)];
+            [_content addSubview:at];
+            at.button.tag = i;
+            at.delegate = self;
+            
+            [at showRgsAutoRun:sch];
             
             [_autoRunCells addObject:at];
         }
@@ -347,6 +408,8 @@
     //IMP_BLOCK_SELF(AutoRunViewController);
     if(sch)
     {
+        if(_auto_mode < 2)
+        {
         [KVNProgress show];
         [[RegulusSDK sharedRegulusSDK] DelSchedulerByID:sch.m_id
                                              completion:^(BOOL result, NSError *error) {
@@ -360,6 +423,7 @@
                                                  
                                                  //[block_self getSchedules];
                                              }];
+        }
     }
 }
 

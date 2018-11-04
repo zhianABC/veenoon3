@@ -236,6 +236,85 @@
 
 }
 
+
+- (void) showRgsAutoRun:(RgsAutomationObj *)sch{
+    
+    /*
+    self._sch = sch;
+    
+    NSDate *date = _sch.exce_time;
+    NSDate *startDate = _sch.start_date;
+    
+    NSDateFormatter *fm = [[NSDateFormatter alloc] init];
+    [fm setDateFormat:@"HH:mm"];
+    
+    NSString *times = [fm stringFromDate:date];
+    
+    dateL.text = times;
+    titleL.text = _sch.name;
+    
+    
+    NSArray *weeks = _sch.week_items;
+    if([weeks count])
+    {
+        
+        NSString *weekStr = @"";
+        
+        if([weeks count] == 7)
+        {
+            weekStr = @"每天";
+        }
+        else if([weeks count] == 5)
+        {
+            if(!([weeks containsObject:@"Sun"] || [weeks containsObject:@"Sat"]))
+            {
+                weekStr = @"工作日";
+            }
+            else
+            {
+                for(NSString *wk in weeks){
+                    
+                    NSString *wa = [self weekIdxFromSum:wk];
+                    
+                    if([weekStr length] == 0)
+                        weekStr = wa;
+                    else
+                    {
+                        weekStr = [NSString stringWithFormat:@"%@, %@", weekStr, wa];
+                    }
+                }
+            }
+        }
+        else
+        {
+            
+            for(NSString *wk in weeks){
+                
+                NSString *wa = [self weekIdxFromSum:wk];
+                
+                if([weekStr length] == 0)
+                    weekStr = wa;
+                else
+                {
+                    weekStr = [NSString stringWithFormat:@"%@, %@", weekStr, wa];
+                }
+            }
+        }
+        
+        weeksL.text = weekStr;
+        [weeksL contentSize];
+    }
+    else
+    {
+        [fm setDateFormat:@"yyyy-MM-dd"];
+        NSString *times = [fm stringFromDate:startDate];
+        weeksL.text = times;
+        
+    }
+     */
+    
+}
+
 - (void) loadData:(NSArray*)operatins{
     
     

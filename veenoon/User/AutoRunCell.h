@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class RgsSchedulerObj;
+@class RgsAutomationObj;
 
 @protocol AutoRunCellDelegate <NSObject>
 
@@ -26,6 +27,7 @@
 @property (nonatomic, weak) id <AutoRunCellDelegate> delegate;
 
 - (void) showRgsSchedule:(RgsSchedulerObj *)sch;
+- (void) showRgsAutoRun:(RgsAutomationObj *)sch;
 
 - (void) setEditMode:(BOOL)isEdit;
 
