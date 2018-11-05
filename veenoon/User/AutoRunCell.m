@@ -19,7 +19,7 @@
     
     UIImageView *_iconDelete;
 }
-@property (nonatomic, strong) RgsSchedulerObj *_sch;
+@property (nonatomic, strong) id _sch;
 
 @end
 
@@ -164,8 +164,8 @@
     
     self._sch = sch;
     
-    NSDate *date = _sch.exce_time;
-    NSDate *startDate = _sch.start_date;
+    NSDate *date = sch.exce_time;
+    NSDate *startDate = sch.start_date;
     
     NSDateFormatter *fm = [[NSDateFormatter alloc] init];
     [fm setDateFormat:@"HH:mm"];
@@ -173,10 +173,10 @@
     NSString *times = [fm stringFromDate:date];
     
     dateL.text = times;
-    titleL.text = _sch.name;
+    titleL.text = sch.name;
     
     
-    NSArray *weeks = _sch.week_items;
+    NSArray *weeks = sch.week_items;
     if([weeks count])
     {
         
@@ -239,80 +239,25 @@
 
 - (void) showRgsAutoRun:(RgsAutomationObj *)sch{
     
-    /*
     self._sch = sch;
     
-    NSDate *date = _sch.exce_time;
-    NSDate *startDate = _sch.start_date;
-    
-    NSDateFormatter *fm = [[NSDateFormatter alloc] init];
-    [fm setDateFormat:@"HH:mm"];
-    
-    NSString *times = [fm stringFromDate:date];
-    
-    dateL.text = times;
-    titleL.text = _sch.name;
-    
-    
-    NSArray *weeks = _sch.week_items;
-    if([weeks count])
+    NSString *names = sch.name;
+    NSArray *arrs = [names componentsSeparatedByString:@";"];
+    if([arrs count] == 3)
     {
+        dateL.frame = CGRectMake(0, 20, self.frame.size.width, 20);
+        titleL.frame = CGRectMake(0, 45, self.frame.size.width, 20);
+        weeksL.frame = CGRectMake(10, 70, self.frame.size.width-20, 20);
         
-        NSString *weekStr = @"";
         
-        if([weeks count] == 7)
-        {
-            weekStr = @"每天";
-        }
-        else if([weeks count] == 5)
-        {
-            if(!([weeks containsObject:@"Sun"] || [weeks containsObject:@"Sat"]))
-            {
-                weekStr = @"工作日";
-            }
-            else
-            {
-                for(NSString *wk in weeks){
-                    
-                    NSString *wa = [self weekIdxFromSum:wk];
-                    
-                    if([weekStr length] == 0)
-                        weekStr = wa;
-                    else
-                    {
-                        weekStr = [NSString stringWithFormat:@"%@, %@", weekStr, wa];
-                    }
-                }
-            }
-        }
-        else
-        {
-            
-            for(NSString *wk in weeks){
-                
-                NSString *wa = [self weekIdxFromSum:wk];
-                
-                if([weekStr length] == 0)
-                    weekStr = wa;
-                else
-                {
-                    weekStr = [NSString stringWithFormat:@"%@, %@", weekStr, wa];
-                }
-            }
-        }
+        dateL.text = [arrs objectAtIndex:0];
+        dateL.font = [UIFont systemFontOfSize:14];
         
-        weeksL.text = weekStr;
-        [weeksL contentSize];
+        titleL.text = [arrs objectAtIndex:1];
+        titleL.font = [UIFont systemFontOfSize:12];
+        
+        weeksL.text = [arrs objectAtIndex:2];
     }
-    else
-    {
-        [fm setDateFormat:@"yyyy-MM-dd"];
-        NSString *times = [fm stringFromDate:startDate];
-        weeksL.text = times;
-        
-    }
-     */
-    
 }
 
 - (void) loadData:(NSArray*)operatins{

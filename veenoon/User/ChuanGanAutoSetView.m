@@ -18,6 +18,8 @@
 #import "NSDate-Helper.h"
 #import "KVNProgress.h"
 #import "CustomPickerView.h"
+#import "UserSensorObj.h"
+#import "SensorProxy.h"
 
 #define SCEN_PICKER_WIDTH  300
 
@@ -26,11 +28,11 @@
     UIView *whiteView;
     
     CustomPickerView *_youjiwuPicker;
-    CustomPickerView *_tempraturePicker;
+    CustomPickerView *_condi1Picker;
     CustomPickerView *_weakPicker;
     CustomPickerView *_startStop1Picker;
     CustomPickerView *_scnearioPicker1;
-    CustomPickerView *_tempraturePicker2;
+    CustomPickerView *_condi2Picker;
     CustomPickerView *_startStop2Picker;
     CustomPickerView *_scnearioPicker2;
     
@@ -48,10 +50,14 @@
     NSMutableArray *_tempraturArray;
     NSMutableArray *_shiduArray;
     NSMutableArray *_pmArray;
+    
+    int _currentSensorType;
 }
 @property (nonatomic, strong) NSMutableArray *_scripts;
 @property (nonatomic, strong) NSMutableArray *_weaks;
 @property (nonatomic, strong) NSMutableDictionary *_selected;
+
+@property (nonatomic, strong) NSMutableArray *_sensorProxys;
 
 @end
 
@@ -62,6 +68,9 @@
 @synthesize _selected;
 @synthesize ctrl;
 @synthesize _schedule;
+@synthesize _sensor;
+
+@synthesize _sensorProxys;
 
 /*
  // Only override drawRect: if you perform custom drawing.
@@ -76,7 +85,7 @@
         [_tempraturArray removeAllObjects];
     } else {
         _tempraturArray = [NSMutableArray array];
-        for (int i = -40; i < 81; i++) {
+        for (int i = 80; i >= -40 ; i--) {
             NSString *wendu = [NSString stringWithFormat:@"%d", i];
             [_tempraturArray addObject:wendu];
         }
@@ -143,6 +152,7 @@
         int y = 80;
         
         
+        _currentSensorType = 2;
         _youjiwuPicker = [[CustomPickerView alloc]
                    initWithFrame:CGRectMake(x, y, 80, 150) withGrayOrLight:@"picker_player.png"];
         
@@ -169,26 +179,21 @@
         colL.text = @"高于";
         
         
-        _tempraturePicker = [[CustomPickerView alloc]
+        _condi1Picker = [[CustomPickerView alloc]
                             initWithFrame:CGRectMake(CGRectGetMaxX(colL.frame), y, 40, 150) withGrayOrLight:@"picker_player.png"];
-        NSMutableArray *wenduArray = [NSMutableArray array];
-        for (int i = -40; i < 81; i++) {
-            NSString *wendu = [NSString stringWithFormat:@"%d", i];
-            [wenduArray addObject:wendu];
-        }
+        _condi1Picker._pickerDataArray = @[@{@"values":_tempraturArray}];
+        _condi1Picker._selectColor = [UIColor blackColor];
+        _condi1Picker._rowNormalColor = [UIColor grayColor];
+        _condi1Picker.delegate_ = self;
+        [_condi1Picker selectRow:0 inComponent:0];
         
-        _tempraturePicker._pickerDataArray = @[@{@"values":wenduArray}];
-        _tempraturePicker._selectColor = [UIColor blackColor];
-        _tempraturePicker._rowNormalColor = [UIColor grayColor];
-        _tempraturePicker.delegate_ = self;
-        
-        _tempraturePicker._selectionBlock = ^(NSDictionary *values)
+        _condi1Picker._selectionBlock = ^(NSDictionary *values)
         {
             [block_self didTemprtruePickerValue:values];
         };
-        [whiteView addSubview:_tempraturePicker];
+        [whiteView addSubview:_condi1Picker];
         
-        _wenshipmL1 = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_tempraturePicker.frame),
+        _wenshipmL1 = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_condi1Picker.frame),
                                                          y+65,
                                                          50, 20)];
         _wenshipmL1.backgroundColor = [UIColor clearColor];
@@ -202,14 +207,10 @@
         _startStop1Picker = [[CustomPickerView alloc]
                           initWithFrame:CGRectMake(CGRectGetMaxX(_wenshipmL1.frame)+30, y, 80, 150) withGrayOrLight:@"picker_player.png"];
         
-        _startStop1Picker._pickerDataArray = @[@{@"values":@[@"启动",@"关闭"]}];
+        _startStop1Picker._pickerDataArray = @[@{@"values":@[@"启动"]}];
         _startStop1Picker._selectColor = [UIColor blackColor];
         _startStop1Picker._rowNormalColor = [UIColor grayColor];
         _startStop1Picker.delegate_ = self;
-        _startStop1Picker._selectionBlock = ^(NSDictionary *values)
-        {
-            [block_self startStop1Pickervalue:values];
-        };
         [whiteView addSubview:_startStop1Picker];
         
         
@@ -226,6 +227,8 @@
         _scnearioPicker1._selectColor = [UIColor blackColor];
         _scnearioPicker1._rowNormalColor = [UIColor grayColor];
         _scnearioPicker1.delegate_ = self;
+        [_scnearioPicker1 selectRow:0 inComponent:0];
+        
         _scnearioPicker1._selectionBlock = ^(NSDictionary *values)
         {
             [block_self scenarioPickervalue1:values];
@@ -242,27 +245,23 @@
         colL.textAlignment = NSTextAlignmentCenter;
         colL.text = @"低于";
         
-        _tempraturePicker2 = [[CustomPickerView alloc]
+        _condi2Picker = [[CustomPickerView alloc]
                              initWithFrame:CGRectMake(CGRectGetMaxX(colL.frame), y, 40, 150) withGrayOrLight:@"picker_player.png"];
-        NSMutableArray *wenduArray2 = [NSMutableArray array];
-        for (int i = -40; i < 81; i++) {
-            NSString *wendu = [NSString stringWithFormat:@"%d", i];
-            [wenduArray2 addObject:wendu];
-        }
-        _tempraturePicker2._pickerDataArray = @[@{@"values":wenduArray2}];
-        _tempraturePicker2._selectColor = [UIColor blackColor];
-        _tempraturePicker2._rowNormalColor = [UIColor grayColor];
-        _tempraturePicker2.delegate_ = self;
+        _condi2Picker._pickerDataArray = @[@{@"values":_tempraturArray}];
+        _condi2Picker._selectColor = [UIColor blackColor];
+        _condi2Picker._rowNormalColor = [UIColor grayColor];
+        _condi2Picker.delegate_ = self;
+        [_condi2Picker selectRow:0 inComponent:0];
         
-        _tempraturePicker2._selectionBlock = ^(NSDictionary *values)
+        _condi2Picker._selectionBlock = ^(NSDictionary *values)
         {
             [block_self didTemprtruePickerValue2:values];
         };
-        [whiteView addSubview:_tempraturePicker2];
+        [whiteView addSubview:_condi2Picker];
         
         
         
-        _wenshipmL2 = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_tempraturePicker2.frame),
+        _wenshipmL2 = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_condi2Picker.frame),
                                                          y+65,
                                                          50, 20)];
         _wenshipmL2.backgroundColor = [UIColor clearColor];
@@ -276,14 +275,10 @@
         _startStop2Picker = [[CustomPickerView alloc]
                              initWithFrame:CGRectMake(CGRectGetMaxX(_wenshipmL2.frame), y, 80, 150) withGrayOrLight:@"picker_player.png"];
         
-        _startStop2Picker._pickerDataArray = @[@{@"values":@[@"启动",@"关闭"]}];
+        _startStop2Picker._pickerDataArray = @[@{@"values":@[@"启动"]}];
         _startStop2Picker._selectColor = [UIColor blackColor];
         _startStop2Picker._rowNormalColor = [UIColor grayColor];
         _startStop2Picker.delegate_ = self;
-        _startStop2Picker._selectionBlock = ^(NSDictionary *values)
-        {
-            [block_self startStop2Pickervalue:values];
-        };
         [whiteView addSubview:_startStop2Picker];
         
         
@@ -298,6 +293,8 @@
         _scnearioPicker2._selectColor = [UIColor blackColor];
         _scnearioPicker2._rowNormalColor = [UIColor grayColor];
         _scnearioPicker2.delegate_ = self;
+        [_scnearioPicker2 selectRow:0 inComponent:0];
+        
         _scnearioPicker2._selectionBlock = ^(NSDictionary *values)
         {
             [block_self scenarioPickervalue2:values];
@@ -325,44 +322,50 @@
         
         
         currentRow = 0;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(notifyConnectionsLoad:) name:@"Notify_Connections_Loaded"
+                                                   object:nil];
     }
     
     return self;
 }
 
-- (void) scenarioPickervalue2:(NSDictionary *)values{
+- (void) notifyConnectionsLoad:(id)sender{
     
+    self._sensorProxys = [NSMutableArray array];
     
-    
+    for(RgsConnectionObj *connect in _sensor.connectionObjArray)
+    {
+        SensorProxy *sp = [[SensorProxy alloc] init];
+        sp.connection = connect;
+        [_sensorProxys addObject:sp];
+        [sp refreshData];
+    }
 }
 
-- (void) startStop2Pickervalue:(NSDictionary *)values{
+- (void) didTemprtruePickerValue:(NSDictionary *)values{
     
-    
-    
-}
-
-- (void) didTemprtruePickerValue2:(NSDictionary *)values{
-    
-    
+    //条件1
     
 }
 
 - (void) scenarioPickervalue1:(NSDictionary *)values{
     
-    
-    
-}
-
-- (void) startStop1Pickervalue:(NSDictionary *)values{
-    
-    
+    //场景1
     
 }
 
-- (void) didTemprtruePickerValue:(NSDictionary *)values{
+- (void) scenarioPickervalue2:(NSDictionary *)values{
     
+    //场景2
     
+}
+
+
+- (void) didTemprtruePickerValue2:(NSDictionary *)values{
+    
+    //条件2
     
 }
 
@@ -373,29 +376,37 @@
         _wenshipmL1.text = @"℃";
         _wenshipmL2.text = @"℃";
         
-        _tempraturePicker._pickerDataArray = @[@{@"values":_tempraturArray}];
-        _tempraturePicker2._pickerDataArray = @[@{@"values":_tempraturArray}];
+        _condi1Picker._pickerDataArray = @[@{@"values":_tempraturArray}];
+        _condi2Picker._pickerDataArray = @[@{@"values":_tempraturArray}];
         
-        [_tempraturePicker selectRow:0 inComponent:0];
-        [_tempraturePicker2 selectRow:0 inComponent:0];
+        [_condi1Picker selectRow:0 inComponent:0];
+        [_condi2Picker selectRow:0 inComponent:0];
+        
+        _currentSensorType = 2;
+        
     } else if ([@"湿度" isEqualToString:data]) {
         _wenshipmL1.text = @"%";
         _wenshipmL2.text = @"%";
         
-        _tempraturePicker._pickerDataArray = @[@{@"values":_shiduArray}];
-        _tempraturePicker2._pickerDataArray = @[@{@"values":_shiduArray}];
+        _condi1Picker._pickerDataArray = @[@{@"values":_shiduArray}];
+        _condi2Picker._pickerDataArray = @[@{@"values":_shiduArray}];
         
-        [_tempraturePicker selectRow:0 inComponent:0];
-        [_tempraturePicker2 selectRow:0 inComponent:0];
+        [_condi1Picker selectRow:0 inComponent:0];
+        [_condi2Picker selectRow:0 inComponent:0];
+        
+        _currentSensorType = 3;
+        
     } else {
         _wenshipmL1.text = @"μg/m³";
         _wenshipmL2.text = @"μg/m³";
         
-        _tempraturePicker._pickerDataArray = @[@{@"values":_pmArray}];
-        _tempraturePicker2._pickerDataArray = @[@{@"values":_pmArray}];
+        _condi1Picker._pickerDataArray = @[@{@"values":_pmArray}];
+        _condi2Picker._pickerDataArray = @[@{@"values":_pmArray}];
         
-        [_tempraturePicker selectRow:0 inComponent:0];
-        [_tempraturePicker2 selectRow:0 inComponent:0];
+        [_condi1Picker selectRow:0 inComponent:0];
+        [_condi2Picker selectRow:0 inComponent:0];
+        
+        _currentSensorType = 1;
     }
     
 }
@@ -403,7 +414,148 @@
 
 - (void) saveSchedule:(id)sender
 {
+    int proxyId = 0;
+    if(_currentSensorType > 0)
+    {
+        for(SensorProxy *sp in _sensorProxys)
+        {
+            if(sp._sensorType == _currentSensorType)
+            {
+                proxyId = sp._proxyId;
+                break;
+            }
+        }
+    }
+
+        
+    NSString *unit = @"";
+    NSString *name = @"自动化";
+    NSArray *datas = nil;
+    if(_currentSensorType == 2)
+    {
+        name = @"温度传感器";
+        datas = _tempraturArray;
+        unit = @"℃";
+    }
+    else if(_currentSensorType == 3)
+    {
+         name = @"湿度传感器";
+        datas = _shiduArray;
+        unit = @"%";
+    }
+    else if(_currentSensorType == 1)
+    {
+         name = @"PM2.5传感器";
+        datas = _pmArray;
+        unit = @"μg/m³";
+    }
     
+    if(proxyId)
+    {
+        NSDictionary *cond1 = [_condi1Picker resultOfCurrentValue];
+        NSDictionary *s1 = [_scnearioPicker1 resultOfCurrentValue];
+        
+        NSDictionary *cond2 = [_condi2Picker resultOfCurrentValue];
+        NSDictionary *s2 = [_scnearioPicker2 resultOfCurrentValue];
+        
+        Scenario *scenario1 = nil;
+        Scenario *scenario2 = nil;
+        if([s1 objectForKey:@"row"])
+        {
+            int row = [[s1 objectForKey:@"row"] intValue];
+            scenario1 = [_scenarios objectAtIndex:row];
+        }
+        if([s2 objectForKey:@"row"])
+        {
+            int row = [[s2 objectForKey:@"row"] intValue];
+            scenario2 = [_scenarios objectAtIndex:row];
+        }
+        
+        NSString *val1 = nil;
+        NSString *val2 = nil;
+        if([cond1 objectForKey:@"row"])
+        {
+            int row = [[cond1 objectForKey:@"row"] intValue];
+            if(row < [datas count])
+            {
+                val1 = [datas objectAtIndex:row];
+            }
+        }
+        if([cond2 objectForKey:@"row"])
+        {
+            int row = [[cond2 objectForKey:@"row"] intValue];
+            if(row < [datas count])
+            {
+                val2 = [datas objectAtIndex:row];
+            }
+        }
+        
+        if(scenario1 && scenario2 && val1 && val2)
+        {
+            NSMutableArray *opts1 = [NSMutableArray array];
+            RgsSceneOperation * opt = [[RgsSceneOperation alloc] initCmdWithParam:scenario1._rgsSceneObj.m_id
+                                                                              cmd:@"invoke"
+                                                                            param:nil];
+            [opts1 addObject:opt];
+            
+            RgsSceneOperation * if1 = [[RgsSceneOperation alloc] initCondWithParam:proxyId
+                                                                              cond:RGS_COND_TYPE_GE
+                                                                        param_name:@"value"
+                                                                       param_value:val1
+                                                                        operations:@[]];
+            
+            NSString *autoName = [NSString stringWithFormat:@"%@;高于 %@%@ 打开;%@",name,val1,unit,scenario1.name];
+            
+            [[RegulusSDK sharedRegulusSDK] CreateAutomation:autoName
+                                                        img:@"noimage"
+                                                     iftype:RGS_COND_IF_TYPE_OR
+                                                     ifthis:@[if1]
+                                                   thenthat:opts1 completion:^(BOOL result, RgsAutomationObj *auto_obj, NSError *error) {
+                                                       if(result)
+                                                       {
+                                                           NSLog(@"%@",auto_obj);
+                                                           [[NSNotificationCenter defaultCenter] postNotificationName:@"Notify_Refresh_Items"
+                                                                                                               object:nil];
+                                                       }
+                                                       else{
+                                                           NSLog(@"%@",[error localizedDescription]);
+                                                       }
+                                                   }];
+            
+            
+            NSMutableArray *opts2 = [NSMutableArray array];
+            opt = [[RgsSceneOperation alloc] initCmdWithParam:scenario2._rgsSceneObj.m_id
+                                                                              cmd:@"invoke"
+                                                                            param:nil];
+            [opts2 addObject:opt];
+            
+            RgsSceneOperation * if2 = [[RgsSceneOperation alloc] initCondWithParam:proxyId
+                                                                              cond:RGS_COND_TYPE_LE param_name:@"value"
+                                                                       param_value:val2
+                                                                        operations:@[]];
+            
+            
+            
+            autoName = [NSString stringWithFormat:@"%@;低于 %@%@ 打开;%@",name,val2,unit,scenario2.name];
+            
+            [[RegulusSDK sharedRegulusSDK] CreateAutomation:autoName
+                                                        img:@"noimage"
+                                                     iftype:RGS_COND_IF_TYPE_OR
+                                                     ifthis:@[if2]
+                                                   thenthat:opts2 completion:^(BOOL result, RgsAutomationObj *auto_obj, NSError *error) {
+                                                       if(result)
+                                                       {
+                                                           NSLog(@"%@",auto_obj);
+                                                           [[NSNotificationCenter defaultCenter] postNotificationName:@"Notify_Refresh_Items"
+                                                                                                               object:nil];
+                                                       }
+                                                       else{
+                                                           NSLog(@"%@",[error localizedDescription]);
+                                                       }
+                                                   }];
+        }
+        
+    }
 }
 
 - (void) handleTapGesture:(id)sender{
@@ -428,6 +580,8 @@
 
 - (void) show {
     
+    if([_sensor.connectionObjArray count] == 0)
+        [_sensor getMyConnects];
     
     [UIView animateWithDuration:0.25
                      animations:^{
@@ -442,5 +596,11 @@
     
 }
 
+
+- (void) dealloc
+{
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 @end

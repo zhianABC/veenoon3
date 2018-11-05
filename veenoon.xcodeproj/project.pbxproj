@@ -81,6 +81,7 @@
 		04DE1EC81AD6B22F00D49E2F /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DE1EC71AD6B22F00D49E2F /* BaseViewController.m */; };
 		04DE1ECA1AD6B33300D49E2F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04DE1EC91AD6B33300D49E2F /* AVFoundation.framework */; };
 		04DE1FE71AD6B52400D49E2F /* CMNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DE1FE61AD6B52400D49E2F /* CMNavigationController.m */; };
+		340C32BC21901F320057C2F5 /* SensorProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 340C32BB21901F320057C2F5 /* SensorProxy.m */; };
 		34141699204BC3D5002E0B00 /* AudioMatrixView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34141698204BC3D5002E0B00 /* AudioMatrixView.m */; };
 		341651E41ED8067100B16E91 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 341651E31ED8067100B16E91 /* MessageUI.framework */; };
 		341671811FBA974C001D33D0 /* WellcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 341671801FBA974C001D33D0 /* WellcomeViewController.m */; };
@@ -1165,6 +1166,8 @@
 		04DE1EC91AD6B33300D49E2F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		04DE1FE51AD6B52400D49E2F /* CMNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMNavigationController.h; sourceTree = "<group>"; };
 		04DE1FE61AD6B52400D49E2F /* CMNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMNavigationController.m; sourceTree = "<group>"; };
+		340C32BA21901F320057C2F5 /* SensorProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SensorProxy.h; sourceTree = "<group>"; };
+		340C32BB21901F320057C2F5 /* SensorProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SensorProxy.m; sourceTree = "<group>"; };
 		34141697204BC3D5002E0B00 /* AudioMatrixView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioMatrixView.h; sourceTree = "<group>"; };
 		34141698204BC3D5002E0B00 /* AudioMatrixView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioMatrixView.m; sourceTree = "<group>"; };
 		3415322C214663C800F378FF /* RgsUpdatePacketInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RgsUpdatePacketInfo.h; sourceTree = "<group>"; };
@@ -3739,6 +3742,8 @@
 				3421B09D210B00D3001C4B22 /* AutoRunSetView.m */,
 				EB4131A62157585E00CCC6E1 /* ChuanGanAutoSetView.h */,
 				EB4131A72157585E00CCC6E1 /* ChuanGanAutoSetView.m */,
+				340C32BA21901F320057C2F5 /* SensorProxy.h */,
+				340C32BB21901F320057C2F5 /* SensorProxy.m */,
 				341DD3C221183DF0007CD30F /* AutoRunCell.h */,
 				341DD3C321183DF0007CD30F /* AutoRunCell.m */,
 				EBDF1C1A1FC5CCEF00A756EA /* UserScnarioConfigViewController.h */,
@@ -5292,6 +5297,7 @@
 				348FC8D3208B748B00F7DB3D /* DActionView.m in Sources */,
 				EB9986DF20B6EA30007E4770 /* EngineerPortPluginViewCtrl.m in Sources */,
 				345B3E3820A55A5900BFF0F0 /* DriverConnectionsView.m in Sources */,
+				340C32BC21901F320057C2F5 /* SensorProxy.m in Sources */,
 				04DE1E8E1AD6AEE000D49E2F /* UIButton+Color.m in Sources */,
 				EB795B5C2042E861005D1F47 /* YaXianQi_UIView.m in Sources */,
 				344F5F5620EBBA24007CAB97 /* AirConditionRightView.m in Sources */,
