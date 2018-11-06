@@ -29,7 +29,7 @@
 @property (nonatomic, strong) NSMutableDictionary *_outputMap;
 
 - (void) checkRgsProxyCommandLoad;
-
+- (void) getCurrentDataState;
 
 //zidonghunyin
 - (NSDictionary*)getAutoMixCmdSettings;

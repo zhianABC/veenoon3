@@ -108,12 +108,12 @@
     portDNSLabel.textColor  = [UIColor whiteColor];
     portDNSLabel.text = @"请配置您的传感器管理系统";
     
-    portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, CGRectGetMaxY(portDNSLabel.frame)+20, SCREEN_WIDTH-80, 20)];
-    portDNSLabel.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont systemFontOfSize:16];
-    portDNSLabel.textColor  = [UIColor colorWithWhite:1.0 alpha:0.9];
-    portDNSLabel.text = @"选择您所需要设置的设备类型> 品牌 > 型号";
+    UILabel* portDNSLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, CGRectGetMaxY(portDNSLabel.frame)+20, SCREEN_WIDTH-80, 20)];
+    portDNSLabel1.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:portDNSLabel1];
+    portDNSLabel1.font = [UIFont systemFontOfSize:16];
+    portDNSLabel1.textColor  = [UIColor colorWithWhite:1.0 alpha:0.9];
+    portDNSLabel1.text = @"选择您所需要设置的设备类型> 品牌 > 型号";
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
@@ -149,20 +149,20 @@
     int rowGap = (SCREEN_WIDTH - left * 2)/6 -10;
     int height = 200;
     
-    _rentichuanganBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left, height, 140, 110)];
+    _rentichuanganBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left, height, 80, 110)];
     [_rentichuanganBtn buttonWithIcon:[UIImage imageNamed:@"rentichuangan_n.png"] selectedIcon:[UIImage imageNamed:@"rentichuangan_s.png"] text:@"人体感应" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_rentichuanganBtn addTarget:self action:@selector(rentichuangangAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_rentichuanganBtn];
     
     
-    _wenshiduBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap, height, 140, 110)];
+    _wenshiduBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap, height, 80, 110)];
     [_wenshiduBtn buttonWithIcon:[UIImage imageNamed:@"wenshiduchuangan_n.png"] selectedIcon:[UIImage imageNamed:@"wenshiduchuangan_s.png"] text:@"温湿度传感器" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_wenshiduBtn addTarget:self action:@selector(wenshiduchuanganAction:) forControlEvents:UIControlEventTouchUpInside];
 //    [self.view addSubview:_wenshiduBtn];
     
     
     
-    _kongqizhiliangBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap, height, 140, 110)];
+    _kongqizhiliangBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap, height, 80, 110)];
     [_kongqizhiliangBtn buttonWithIcon:[UIImage imageNamed:@"kongqichuangan_n.png"] selectedIcon:[UIImage imageNamed:@"kongqichuangan_s.png"] text:@"空气质量" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_kongqizhiliangBtn addTarget:self action:@selector(kongqizhiliangchuanganAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_kongqizhiliangBtn];

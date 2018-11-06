@@ -190,7 +190,7 @@
 
 - (void) dataSyncAction:(id)sender{
     
-    JCActionView *jcAction = [[JCActionView alloc] initWithTitles:@[@"从云账户导入", @"从U盘导入"]
+    JCActionView *jcAction = [[JCActionView alloc] initWithTitles:@[@"云账户", @"U盘"]
                                                             frame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     jcAction.delegate_ = self;
     jcAction.tag = 2017;

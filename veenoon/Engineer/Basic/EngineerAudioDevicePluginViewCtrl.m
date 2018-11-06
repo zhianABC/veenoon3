@@ -114,12 +114,12 @@
     portDNSLabel.textColor  = [UIColor whiteColor];
     portDNSLabel.text = @"请配置您的音频管理系统";
     
-    portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, CGRectGetMaxY(portDNSLabel.frame)+20, SCREEN_WIDTH-80, 20)];
-    portDNSLabel.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont systemFontOfSize:16];
-    portDNSLabel.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
-    portDNSLabel.text = @"选择您所需要设置的设备类型 > 品牌 > 型号";
+    UILabel* portDNSLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, CGRectGetMaxY(portDNSLabel.frame)+20, SCREEN_WIDTH-80, 20)];
+    portDNSLabel1.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:portDNSLabel1];
+    portDNSLabel1.font = [UIFont systemFontOfSize:16];
+    portDNSLabel1.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+    portDNSLabel1.text = @"选择您所需要设置的设备类型 > 品牌 > 型号";
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];

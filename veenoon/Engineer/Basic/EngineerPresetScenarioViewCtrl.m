@@ -220,6 +220,7 @@
     centerTitleL.textAlignment = NSTextAlignmentCenter;
     [topbar addSubview:centerTitleL];
     centerTitleL.text = @"设备调试";
+    centerTitleL.font = [UIFont boldSystemFontOfSize:18];
 
 
     _content = [[UIScrollView alloc] init];

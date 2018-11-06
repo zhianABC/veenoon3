@@ -1230,6 +1230,7 @@
                         for(id rsp in rsps)
                         {
                             [self addEventOperation:rsp];
+                            [self addEventOperation:optDelay];
                         }
                     }
                 }

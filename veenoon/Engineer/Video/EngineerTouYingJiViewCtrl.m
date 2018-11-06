@@ -15,6 +15,7 @@
 #import "RegulusSDK.h"
 #import "KVNProgress.h"
 #import "VProjectProxys.h"
+#import "Utilities.h"
 
 @interface EngineerTouYingJiViewCtrl () <CustomPickerViewDelegate>{
     UIButton *_powerOnBtn;
@@ -401,6 +402,25 @@
 
 - (void) powerOnAction:(id)sender{
     
+    id lastPowerTime = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastPowerTime"];
+    int nowTime = [[NSDate date] timeIntervalSince1970];
+    if(lastPowerTime)
+    {
+        int span = nowTime - [lastPowerTime intValue];
+        if(span < 300)
+        {
+            [Utilities showMessage:@"投影机保护中，请5分钟后尝试！" ctrl:self];
+            
+            return;
+        }
+        
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%d", nowTime]
+                                              forKey:@"lastPowerTime"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    
     VProjectProxys *vcam = _currentObj._proxyObj;
     
     NSString *powerOn = [self._currentObj._proxyObj getDevicePower];
@@ -413,6 +433,25 @@
     }
 }
 - (void) powerOffAction:(id)sender{
+    
+    id lastPowerTime = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastPowerTime"];
+    int nowTime = [[NSDate date] timeIntervalSince1970];
+    if(lastPowerTime)
+    {
+        int span = nowTime - [lastPowerTime intValue];
+        if(span < 300)
+        {
+            [Utilities showMessage:@"投影机保护中，请5分钟后尝试！" ctrl:self];
+            
+            return;
+        }
+        
+    }
+    
+    [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%d", nowTime]
+                                              forKey:@"lastPowerTime"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     
     _powerOnBtn.hidden = NO;
     _powerOffBtn.hidden = YES;
