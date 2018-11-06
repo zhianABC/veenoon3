@@ -726,6 +726,7 @@
         if ([class isEqualToString:@"AudioEMix"]) {
             EngineerHunYinSysViewController *ctrl = [[EngineerHunYinSysViewController alloc] init];
             ctrl._hunyinSysArray = @[plug];
+            ctrl.fromScenario = _isEditingScenario;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         

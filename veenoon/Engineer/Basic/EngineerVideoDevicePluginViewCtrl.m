@@ -581,6 +581,8 @@
             {
                 [mdic setObject:irInfo.serial forKey:@"driver"];
                 
+                [mdic setObject:irname forKey:@"IR"];
+                
                 //Veenoon插件Info库
                 [[DataCenter defaultDataCenter] saveDriver:mdic];
                 

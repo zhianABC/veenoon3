@@ -80,6 +80,33 @@
     return self;
 }
 
+- (void) getCurrentDataState
+{
+    
+    if(_rgsProxyObj)
+    {
+        IMP_BLOCK_SELF(AudioEMixProxy);
+        [[RegulusSDK sharedRegulusSDK] GetProxyCurState:_rgsProxyObj.m_id completion:^(BOOL result, NSDictionary *state, NSError *error) {
+            if (result) {
+                if ([state count])
+                {
+                    [block_self parseStateInitsValues:state];
+                }
+            }
+        }];
+        
+    }
+}
+
+- (void) parseStateInitsValues:(NSDictionary*)state{
+    
+    id val = [state objectForKey:@"VOL"];
+    self._deviceVol = [val intValue];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_PROXY_CUR_STATE_GOT_LB
+                                                        object:@{@"proxy":@(_rgsProxyObj.m_id)}];
+}
+
 - (NSDictionary *)getScenarioSliceLocatedShadow{
     
     return _RgsSceneDeviceOperationShadow;

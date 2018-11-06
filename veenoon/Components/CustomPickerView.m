@@ -169,17 +169,21 @@
     
     [_myPickerView reloadComponent:0];
     
-    NSDictionary *section = [_pickerDataArray objectAtIndex:component];
-    NSArray *values = [section objectForKey:@"values"];
+    if([_pickerDataArray count] > component)
+    {
     
-    [_values setObject:[values objectAtIndex:row]
-                forKey:[NSNumber numberWithInteger:component]];
-    
-    [_values setObject:[NSNumber numberWithInteger:row]
-                forKey:@"row"];
-    
-    
-    [_myPickerView selectRow:row inComponent:component animated:YES];
+        NSDictionary *section = [_pickerDataArray objectAtIndex:component];
+        NSArray *values = [section objectForKey:@"values"];
+        
+        [_values setObject:[values objectAtIndex:row]
+                    forKey:[NSNumber numberWithInteger:component]];
+        
+        [_values setObject:[NSNumber numberWithInteger:row]
+                    forKey:@"row"];
+        
+        
+        [_myPickerView selectRow:row inComponent:component animated:YES];
+    }
 }
 
 - (NSDictionary*) resultOfCurrentValue{

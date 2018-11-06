@@ -177,6 +177,16 @@
     
     [self checkArea];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(endImportProjectRefresh:)
+                                                 name:@"Notify_Reload_Projects_After_Import_Action"
+                                               object:nil];
+    
+}
+
+- (void) endImportProjectRefresh:(id)sender{
+    
+    [KVNProgress showSuccessWithStatus:@"已导入"];
 }
 
 #pragma mark -- import Project --
@@ -759,6 +769,11 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 /*

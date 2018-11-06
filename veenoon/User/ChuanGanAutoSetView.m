@@ -52,6 +52,8 @@
     NSMutableArray *_pmArray;
     
     int _currentSensorType;
+    
+    int _req_count;
 }
 @property (nonatomic, strong) NSMutableArray *_scripts;
 @property (nonatomic, strong) NSMutableArray *_weaks;
@@ -506,20 +508,19 @@
             
             NSString *autoName = [NSString stringWithFormat:@"%@;高于 %@%@ 打开;%@",name,val1,unit,scenario1.name];
             
+            _req_count = 0;
+            
+            IMP_BLOCK_SELF(ChuanGanAutoSetView);
+            
+            [KVNProgress show];
             [[RegulusSDK sharedRegulusSDK] CreateAutomation:autoName
                                                         img:@"noimage"
                                                      iftype:RGS_COND_IF_TYPE_OR
                                                      ifthis:@[if1]
                                                    thenthat:opts1 completion:^(BOOL result, RgsAutomationObj *auto_obj, NSError *error) {
-                                                       if(result)
-                                                       {
-                                                           NSLog(@"%@",auto_obj);
-                                                           [[NSNotificationCenter defaultCenter] postNotificationName:@"Notify_Refresh_Items"
-                                                                                                               object:nil];
-                                                       }
-                                                       else{
-                                                           NSLog(@"%@",[error localizedDescription]);
-                                                       }
+                                                       
+                                                       [block_self checkDone:result];
+                                                       
                                                    }];
             
             
@@ -543,19 +544,29 @@
                                                      iftype:RGS_COND_IF_TYPE_OR
                                                      ifthis:@[if2]
                                                    thenthat:opts2 completion:^(BOOL result, RgsAutomationObj *auto_obj, NSError *error) {
-                                                       if(result)
-                                                       {
-                                                           NSLog(@"%@",auto_obj);
-                                                           [[NSNotificationCenter defaultCenter] postNotificationName:@"Notify_Refresh_Items"
-                                                                                                               object:nil];
-                                                       }
-                                                       else{
-                                                           NSLog(@"%@",[error localizedDescription]);
-                                                       }
+                                                       
+                                                       [block_self checkDone:result];
+                                                       
                                                    }];
         }
         
     }
+}
+
+- (void) checkDone:(BOOL)result{
+    
+    _req_count++;
+    
+    if(_req_count>=2)
+    {
+        [KVNProgress dismiss];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"Notify_Refresh_Items"
+                                                            object:nil];
+        
+        [self hidden];
+    }
+    
 }
 
 - (void) handleTapGesture:(id)sender{

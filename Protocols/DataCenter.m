@@ -171,6 +171,10 @@ static DataCenter *_globalDataInstanse;
     
     for(NSDictionary *dr in [_mapDrivers allValues])
     {
+        if([dr objectForKey:@"IR"])
+        {
+            continue;
+        }
         NSString *tpe = [dr objectForKey:@"type"];
         if([tpe isEqualToString:type])
         {

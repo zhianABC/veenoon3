@@ -36,6 +36,7 @@
 @synthesize _hunyinSysArray;
 @synthesize _currentObj;
 @synthesize _currentProxy;
+@synthesize fromScenario;
 
 
 - (void)viewDidLoad {
@@ -130,6 +131,14 @@
         index++;
     }
     
+    if(!fromScenario)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(notifyProxyGotCurStateVals:)
+                                                     name:NOTIFY_PROXY_CUR_STATE_GOT_LB
+                                                   object:nil];
+    }
+    
     [self getCurrentDeviceDriverProxys];
 }
 
@@ -190,7 +199,29 @@
     }
     
     [_zengyiSlider setScaleValue:proxy._deviceVol];
+    
+    if(!fromScenario && _currentProxy)
+    {
+        [_currentProxy getCurrentDataState];
+    }
 
+}
+
+
+#pragma mark --Proxy Current State Got
+- (void) notifyProxyGotCurStateVals:(NSNotification*)notify{
+    
+    NSDictionary *obj = notify.object;
+    
+    if(obj && [obj objectForKey:@"proxy"])
+    {
+        id key = [obj objectForKey:@"proxy"];
+        
+        if([key intValue] == _currentProxy._rgsProxyObj.m_id)
+        {
+            [_zengyiSlider setScaleValue:_currentProxy._deviceVol];
+        }
+    }
 }
 
 - (void) handleTapGesture:(id)sender{
