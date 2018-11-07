@@ -58,7 +58,7 @@
 {
     if(self = [super init])
     {
-        _deviceVol = 20.0f;
+        _deviceVol = 0.0f;
         self._mixLowFilter = @"0";
         self._mixHighFilter = @"10";
         self._mixPEQ = @"4";

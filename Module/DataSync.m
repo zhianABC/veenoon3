@@ -65,8 +65,6 @@
 @synthesize _uploadQueue;
 @synthesize _syncQueue;
 
-@synthesize _sysIRDriversMap;
-
 static DataSync* dSyncInstance = nil;
 
 + (DataSync*)sharedDataSync{
@@ -84,14 +82,6 @@ static DataSync* dSyncInstance = nil;
     if(self = [super init])
     {
         _namecards = [[NSMutableArray alloc] init];
-        
-        NSDictionary *eventJson = [[NSUserDefaults standardUserDefaults] objectForKey:@"current_event_json"];
-        if(eventJson)
-        {
-            self._event = [[WSEvent alloc] initWithDictionary:eventJson];
-        }
-        
-        self._sysIRDriversMap = [NSMutableDictionary dictionary];
         
     }
     
@@ -319,7 +309,14 @@ static DataSync* dSyncInstance = nil;
 
 - (RgsDriverInfo *) driverInfoByUUID:(NSString*)uuid{
     
-    return [_mapDrivers objectForKey:uuid];
+    id dr = [_mapDrivers objectForKey:uuid];
+    
+    if(dr == nil)
+    {
+        dr = [[DataCenter defaultDataCenter] irDriverWithKey:uuid];
+    }
+    
+    return dr;
 }
 
 - (id) queryCurrentAreaDriverWithMID:(NSInteger)mid{
@@ -380,85 +377,6 @@ static DataSync* dSyncInstance = nil;
 
 }
 
-- (void) backupLocalDBToServer{
-    
-    NSArray *devices = [[DataCenter defaultDataCenter] userDrivers];
-    
-    self._uploadQueue = [NSMutableArray array];
-    for(NSDictionary *dr in devices)
-    {
-        DriverSync *sync = [[DriverSync alloc] initWithDict:dr];
-        sync.delegate = self;
-        [_uploadQueue addObject:sync];
-    }
-    
-    NSArray *roomList = [[DataBase sharedDatabaseInstance] getMeetingRooms];
-    for(MeetingRoom *room in roomList)
-    {
-        DriverSync *sync = [[DriverSync alloc] initWithDict:room];
-        sync.delegate = self;
-        [_uploadQueue addObject:sync];
-    }
-   
-    for(MeetingRoom *room in roomList)
-    {
-        
-        NSArray *scenarios = [[DataBase sharedDatabaseInstance] getSavedScenario:room.regulus_id];
-        
-        for(NSDictionary *sdic in scenarios)
-        {
-            Scenario *s = [[Scenario alloc] init];
-            [s prepareDataForUploadCloud:sdic];
-            
-            DriverSync *sync = [[DriverSync alloc] initWithDict:s];
-            sync.delegate = self;
-            [_uploadQueue addObject:sync];
-            
-        }
-        
-    }
-    
-    /*
-    NSArray *datas = [[DataBase sharedDatabaseInstance] getScenarioSchedules];
-    
-    for(NSDictionary *sdic in datas)
-    {
-        DriverSync *sync = [[DriverSync alloc] initWithDict:sdic];
-        sync.delegate = self;
-        [_uploadQueue addObject:sync];
-        
-    }
-    */
-    
-    _nextIdx = 0;
-    
-    if([_uploadQueue count])
-    {
-        [KVNProgress show];
-        
-        DriverSync *sync = [_uploadQueue objectAtIndex:_nextIdx];
-        [sync uploadData];
-    }
-}
-
-- (void) uploadDoneAndNext{
-    
-    _nextIdx++;
-    if(_nextIdx < [_uploadQueue count])
-    {
-        float p = (float)_nextIdx/[_uploadQueue count];
-        [KVNProgress showProgress:p];
-        
-        DriverSync *sync = [_uploadQueue objectAtIndex:_nextIdx];
-        [sync uploadData];
-    }
-    else
-    {
-        [KVNProgress showProgress:1];
-        [KVNProgress dismiss];
-    }
-}
-
 - (void) syncDataFromServerToLocalDB{
     
     [[DataCenter defaultDataCenter] syncDriversWithServer];
@@ -510,36 +428,5 @@ static DataSync* dSyncInstance = nil;
    
 }
 
-- (void) syncRegulusIRDrivers
-{
-    
-    [[RegulusSDK sharedRegulusSDK] RequestProxyDriverInfos:^(BOOL result, NSArray *driver_infos, NSError *error)
-     {
-         if (result)
-         {
-             for (RgsDriverInfo * info in driver_infos) {
-                 
-                 if ([info.system isEqualToString:@"IR Controller"])
-                 {
-                     [_sysIRDriversMap setObject:info forKey:info.name];
-                 }
-             }
-             
-         }
-         
-     }];
-    
-}
-
-- (void) saveIrDriverToCache:(RgsDriverInfo*)dInfo{
-    
-    [_sysIRDriversMap setObject:dInfo
-                         forKey:dInfo.name];
-}
-
-- (RgsDriverInfo *) testIrDriverInfoByName:(NSString*)name{
-    
-    return [_sysIRDriversMap objectForKey:name];
-}
 
 @end

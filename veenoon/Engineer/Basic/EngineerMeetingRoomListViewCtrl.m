@@ -219,10 +219,7 @@
 
 }
 
-- (void) backupAction:(id)sender{
-    
-    [[DataSync sharedDataSync] backupLocalDBToServer];
-}
+
 
 - (void) dataSyncAction:(id)sender{
     

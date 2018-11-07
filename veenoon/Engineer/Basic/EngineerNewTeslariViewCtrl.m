@@ -99,7 +99,8 @@
     //获取Regulus支持的插件
     [[DataSync sharedDataSync] syncRegulusDrivers];
     
-    [[DataSync sharedDataSync] syncRegulusIRDrivers];
+    //获取创建的IR DriverInfo
+    [[DataCenter defaultDataCenter] syncRegulusIRDrivers];
     
 #endif
     

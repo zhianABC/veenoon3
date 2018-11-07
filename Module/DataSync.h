@@ -26,7 +26,6 @@
 @property (nonatomic, strong) RgsAreaObj* _currentArea;
 @property (nonatomic, strong) NSMutableArray* _currentAreaDrivers;
 
-@property (nonatomic, strong) NSMutableDictionary *_sysIRDriversMap;
 
 + (DataSync*)sharedDataSync;
 
@@ -36,8 +35,6 @@
 - (void) loadingLocalDrivers;
 - (void) syncAreaHasDrivers;
 - (void) syncRegulusDrivers;
-
-- (void) syncRegulusIRDrivers;
 
 - (void) addDriver:(id)driverInfo key:(NSString*)key;
 
@@ -49,10 +46,7 @@
 - (void) reloginRegulus;
 - (void) logoutCurrentRegulus;
 
-- (void) backupLocalDBToServer;
 - (void) syncDataFromServerToLocalDB;
 
-- (RgsDriverInfo *) testIrDriverInfoByName:(NSString*)name;
-- (void) saveIrDriverToCache:(RgsDriverInfo*)dInfo;
 - (NSArray*) getCurrentDrivers;
 @end

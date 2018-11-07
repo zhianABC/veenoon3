@@ -165,8 +165,8 @@
     int rowGap = (SCREEN_WIDTH - left * 2)/6 - 10;
     int height = 200;
     
-    _dianyuanguanliBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left, height,80, 110)];
-    [_dianyuanguanliBtn buttonWithIcon:[UIImage imageNamed:@"engineer_dianyuanguanli_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_dianyuanguanli_s.png"] text:audio_power_sequencer normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
+    _dianyuanguanliBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left-10, height,100, 110)];
+    [_dianyuanguanliBtn buttonWithIcon:[UIImage imageNamed:@"engineer_dianyuanguanli_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_dianyuanguanli_s.png"] text:@"视频电源管理" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_dianyuanguanliBtn addTarget:self action:@selector(dianyuanguanliAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_dianyuanguanliBtn];
     
@@ -368,6 +368,8 @@
     NSString *ptype = [device objectForKey:@"ptype"];
     NSString* irname = [NSString stringWithFormat:@"%@-%@-%@", brand, name, ptype];
     
+    [device setObject:irname forKey:@"IR"];
+    
     IMP_BLOCK_SELF(EngineerVideoDevicePluginViewCtrl);
     
     [[RegulusSDK sharedRegulusSDK] MakeIrDriverWithIrModel:rgs
@@ -393,6 +395,8 @@
     
     [device setObject:driver_info.serial forKey:@"driver"];
     
+    
+    
     //Veenoon 插件Info库
     [[DataCenter defaultDataCenter] saveDriver:device];
     
@@ -401,7 +405,7 @@
                                      key:driver_info.serial];
     
     //红外Info库
-    [[DataSync sharedDataSync] saveIrDriverToCache:driver_info];
+    [[DataCenter defaultDataCenter] saveIrDriverToCache:driver_info];
     
     [self addDriverToCenter:device];
     
@@ -573,7 +577,7 @@
             NSString *ptype = [device objectForKey:@"ptype"];
             NSString* irname = [NSString stringWithFormat:@"%@-%@-%@", brand, name, ptype];
             
-            RgsDriverInfo *irInfo = [[DataSync sharedDataSync] testIrDriverInfoByName:irname];
+            RgsDriverInfo *irInfo = [[DataCenter defaultDataCenter] testIrDriverInfoByName:irname];
             if(irInfo == nil)
             {
                 if([name isEqualToString:@"DVD"])

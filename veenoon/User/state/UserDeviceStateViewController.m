@@ -162,6 +162,7 @@
     
     NSMutableArray *sensorArray = [NSMutableArray array];
     
+    IMP_BLOCK_SELF(UserDeviceStateViewController);
     
     [[RegulusSDK sharedRegulusSDK] GetDrivers:area_id
                                    completion:^(BOOL result,NSArray * drivers,NSError * error) {
@@ -171,7 +172,7 @@
                                                    [sensorArray addObject:driverObj];
                                                }
                                            }
-                                           IMP_BLOCK_SELF(UserDeviceStateViewController);
+                                           
                                            
                                            [block_self getDriverConnection:sensorArray];
                                        }

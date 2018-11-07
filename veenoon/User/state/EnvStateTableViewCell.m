@@ -61,6 +61,22 @@
 
 - (void) refreshData
 {
+    
+    IMP_BLOCK_SELF(EnvStateTableViewCell);
+    
+    [[RegulusSDK sharedRegulusSDK] GetDriverProxys:connection.driver_id completion:^(BOOL result, NSArray *proxys, NSError *error) {
+        
+        if([proxys count])
+        {
+            [block_self processReturnProxys:proxys];
+        }
+        
+    }];
+    
+}
+
+- (void) processReturnProxys:(NSArray*)proxys{
+    
     NSString *danwei = nil;
     if([connection.bound_connect_str count])
     {
@@ -85,27 +101,19 @@
         }
     }
     
+    RgsProxyObj *proxy = [proxys objectAtIndex:0];
+    self._proxyId = proxy.m_id;
+    
     IMP_BLOCK_SELF(EnvStateTableViewCell);
     
-    [[RegulusSDK sharedRegulusSDK] GetDriverProxys:connection.driver_id completion:^(BOOL result, NSArray *proxys, NSError *error) {
+    [[RegulusSDK sharedRegulusSDK] GetProxyCurState:proxy.m_id completion:^(BOOL result, NSDictionary *state, NSError *error) {
         
-        if([proxys count])
-        {
-            RgsProxyObj *proxy = [proxys objectAtIndex:0];
-            block_self._proxyId = proxy.m_id;
-            
-            [[RegulusSDK sharedRegulusSDK] GetProxyCurState:proxy.m_id completion:^(BOOL result, NSDictionary *state, NSError *error) {
-                
-                
-                if([state count]) {
-                    [block_self updateTxt:[[state objectForKey:@"value"] stringByAppendingString:danwei]];
-                }
-                
-            }];
+        
+        if([state count]) {
+            [block_self updateTxt:[[state objectForKey:@"value"] stringByAppendingString:danwei]];
         }
         
     }];
-    
 }
 
 - (void) updateTxt:(NSString*)txt{

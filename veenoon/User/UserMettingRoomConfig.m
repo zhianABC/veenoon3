@@ -98,7 +98,7 @@
     titleL.text = [NSString stringWithFormat:@"%@ - 场景应用",_currentRoom.room_name];
     
     UIButton *btnState = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnState.frame = CGRectMake(50, SCREEN_HEIGHT - 50, 120, 40);
+    btnState.frame = CGRectMake(50, SCREEN_HEIGHT - 50, 120, 50);
     [btnState setImage:[UIImage imageNamed:@"state_summary_white.png"]
               forState:UIControlStateNormal];
     [btnState setImage:[UIImage imageNamed:@"state_summary.png"]
@@ -136,7 +136,7 @@
     
     self._sceneDrivers = [NSMutableArray array];
     
-#if LOGIN_REGULUS
+//  LOGIN_REGULUS
     [KVNProgress show];
     
     
@@ -149,8 +149,7 @@
     {
         [self regCtrlDevice];
     }
-    
-#endif
+
     
     UIButton *btnSync = [UIButton buttonWithType:UIButtonTypeCustom];
     btnSync.frame = CGRectMake(SCREEN_WIDTH - 120, 42, 60, 50);

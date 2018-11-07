@@ -368,6 +368,8 @@
     NSString *ptype = [device objectForKey:@"ptype"];
     NSString* irname = [NSString stringWithFormat:@"%@-%@-%@", brand, name, ptype];
 
+    [device setObject:irname forKey:@"IR"];
+    
     IMP_BLOCK_SELF(EngineerEnvDevicePluginViewCtrl);
     
     [[RegulusSDK sharedRegulusSDK] MakeIrDriverWithIrModel:rgs
@@ -405,7 +407,7 @@
                                      key:driver_info.serial];
     
     //红外Info库
-    [[DataSync sharedDataSync] saveIrDriverToCache:driver_info];
+    [[DataCenter defaultDataCenter] saveIrDriverToCache:driver_info];
     
     [self addDriverToCenter:device];
 
@@ -684,7 +686,7 @@
             NSString *ptype = [device objectForKey:@"ptype"];
             NSString* irname = [NSString stringWithFormat:@"%@-%@-%@", brand, name, ptype];
             
-            RgsDriverInfo *irInfo = [[DataSync sharedDataSync] testIrDriverInfoByName:irname];
+            RgsDriverInfo *irInfo = [[DataCenter defaultDataCenter] testIrDriverInfoByName:irname];
             if(irInfo == nil)
             {
                 if([name isEqualToString:@"空调"])

@@ -155,8 +155,8 @@
     int rowGap = (SCREEN_WIDTH - left * 2)/6 - 10;
     int height = 200;
     
-    _electronicSysBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left, height,80, 110)];
-    [_electronicSysBtn  buttonWithIcon:[UIImage imageNamed:@"engineer_dianyuanguanli_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_dianyuanguanli_s.png"] text:@"电源管理" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
+    _electronicSysBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left-10, height,100, 110)];
+    [_electronicSysBtn  buttonWithIcon:[UIImage imageNamed:@"engineer_dianyuanguanli_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_dianyuanguanli_s.png"] text:@"音频电源管理" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_electronicSysBtn addTarget:self action:@selector(electronicSysAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_electronicSysBtn];
     

@@ -398,9 +398,9 @@
 
 - (void) checkArea{
     
-#ifdef OPEN_REG_LIB_DEF
-    
     IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
+    
+    [KVNProgress show];
     
     [[RegulusSDK sharedRegulusSDK] GetAreas:^(NSArray *RgsAreaObjs, NSError *error) {
         if (error) {
@@ -412,8 +412,6 @@
             [block_self checkSceneData:RgsAreaObjs];
         }
     }];
-    
-#endif
     
 }
 - (void) checkSceneData:(NSArray*)RgsAreaObjs{
@@ -445,7 +443,7 @@
                                                                 areaId:(int)areaObj.m_id];
         }
         
-        [KVNProgress show];
+        
         [[RegulusSDK sharedRegulusSDK] GetAreaScenes:areaObj.m_id
                                           completion:^(BOOL result, NSArray *scenes, NSError *error) {
             if (result) {
@@ -459,7 +457,7 @@
     }
     else
     {
-        //[[DataSync sharedDataSync] syncCurrentArea];
+        [KVNProgress dismiss];
     }
     
     
