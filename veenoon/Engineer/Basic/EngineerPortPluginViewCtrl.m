@@ -167,11 +167,12 @@
     [_hongwaizhuanhuanqiBtn addTarget:self action:@selector(hongwaiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_hongwaizhuanhuanqiBtn];
     
-    
+    /*
     _chumopingBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*2, height, 80, 110)];
     [_chumopingBtn buttonWithIcon:[UIImage imageNamed:@"chumoping_n.png"] selectedIcon:[UIImage imageNamed:@"chumoping_s.png"] text:@"触摸屏" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_chumopingBtn addTarget:self action:@selector(chumopingAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_chumopingBtn];
+     */
     
     int maxWidth = 120;
     float labelStartX = (SCREEN_WIDTH - maxWidth*2 - 60 - 15)/2.0;
@@ -211,6 +212,7 @@
     [_brandPicker removeArray];
     _brandPicker._selectColor = NEW_ER_BUTTON_SD_COLOR;
     _brandPicker._rowNormalColor = [UIColor whiteColor];
+    _brandPicker.delegate_ = self;
     [self.view addSubview:_brandPicker];
     
     
@@ -274,7 +276,8 @@
     for(NSDictionary *dr in types)
     {
         NSString *name = [dr objectForKey:@"name"];
-        [cate addObject:name];
+        if(![cate containsObject:name])
+            [cate addObject:name];
     }
     self._currentCategorys = cate;
     if([cate count])

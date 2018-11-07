@@ -82,6 +82,7 @@
 		04DE1ECA1AD6B33300D49E2F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04DE1EC91AD6B33300D49E2F /* AVFoundation.framework */; };
 		04DE1FE71AD6B52400D49E2F /* CMNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DE1FE61AD6B52400D49E2F /* CMNavigationController.m */; };
 		340C32BC21901F320057C2F5 /* SensorProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 340C32BB21901F320057C2F5 /* SensorProxy.m */; };
+		3412684421919A6D007F619C /* env_corner_dianyuanguanli@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3412684321919A6D007F619C /* env_corner_dianyuanguanli@2x.png */; };
 		34141699204BC3D5002E0B00 /* AudioMatrixView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34141698204BC3D5002E0B00 /* AudioMatrixView.m */; };
 		341651E41ED8067100B16E91 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 341651E31ED8067100B16E91 /* MessageUI.framework */; };
 		341671811FBA974C001D33D0 /* WellcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 341671801FBA974C001D33D0 /* WellcomeViewController.m */; };
@@ -1168,6 +1169,7 @@
 		04DE1FE61AD6B52400D49E2F /* CMNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMNavigationController.m; sourceTree = "<group>"; };
 		340C32BA21901F320057C2F5 /* SensorProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SensorProxy.h; sourceTree = "<group>"; };
 		340C32BB21901F320057C2F5 /* SensorProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SensorProxy.m; sourceTree = "<group>"; };
+		3412684321919A6D007F619C /* env_corner_dianyuanguanli@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "env_corner_dianyuanguanli@2x.png"; sourceTree = "<group>"; };
 		34141697204BC3D5002E0B00 /* AudioMatrixView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioMatrixView.h; sourceTree = "<group>"; };
 		34141698204BC3D5002E0B00 /* AudioMatrixView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioMatrixView.m; sourceTree = "<group>"; };
 		3415322C214663C800F378FF /* RgsUpdatePacketInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RgsUpdatePacketInfo.h; sourceTree = "<group>"; };
@@ -2780,6 +2782,7 @@
 		04DE1ECB1AD6B3BA00D49E2F /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
+				3412684321919A6D007F619C /* env_corner_dianyuanguanli@2x.png */,
 				341A292B214CD20E00569D93 /* a_processor_ico_mix_small@2x.png */,
 				345493071FE6585500793E2E /* add_brand_icon@2x.png */,
 				EBDF1C2A1FC5D5CD00A756EA /* add_wet_sys_n@2x.png */,
@@ -4745,6 +4748,7 @@
 				3456C19920A051AA001FAB61 /* senario_02_26_big@2x.png in Resources */,
 				34E73D4520FDD6C700C18C10 /* qr_code_icon@2x.png in Resources */,
 				EB3B73A11FE61F13001941CF /* audio_player_r_hold@2x.png in Resources */,
+				3412684421919A6D007F619C /* env_corner_dianyuanguanli@2x.png in Resources */,
 				34F27A5C205121EF0045D765 /* ce_l_08_big.png in Resources */,
 				EBF6A73B1FC851E500260FF0 /* audio_player_title_s@2x.png in Resources */,
 				EBDF1C0E1FC5C6C900A756EA /* envirement_light_n@2x.png in Resources */,

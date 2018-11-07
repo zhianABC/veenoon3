@@ -189,7 +189,7 @@
     [_diandongmadaBtn addTarget:self action:@selector(diandongmadaAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_diandongmadaBtn];
     
-    
+    /*
     _xinfengBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*3, height, 80, 110)];
     [_xinfengBtn buttonWithIcon:[UIImage imageNamed:@"engineer_env_xinfeng_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_env_xinfeng_s.png"] text:@"新风" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_xinfengBtn addTarget:self action:@selector(xinfengAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -200,24 +200,25 @@
     [_dinuanBtn buttonWithIcon:[UIImage imageNamed:@"engineer_env_dire_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_env_dire_s.png"] text:@"地暖" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_dinuanBtn addTarget:self action:@selector(dinuanAction:) forControlEvents:UIControlEventTouchUpInside];
 //    [self.view addSubview:_dinuanBtn];
+     */
     
-    _kongqijinghuaBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*4, height, 80, 110)];
+    _kongqijinghuaBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*3, height, 80, 110)];
     [_kongqijinghuaBtn buttonWithIcon:[UIImage imageNamed:@"engineer_env_kongqijignhua_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_env_kongqijignhua_s.png"] text:@"空气净化" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_kongqijinghuaBtn addTarget:self action:@selector(kongqijinghuaAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_kongqijinghuaBtn];
     
     
-    _jiashiqiBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*5, height, 80, 110)];
+    _jiashiqiBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*4, height, 80, 110)];
     [_jiashiqiBtn buttonWithIcon:[UIImage imageNamed:@"engineer_env_jiashi_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_env_jiashi_s.png"] text:@"加湿器" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_jiashiqiBtn addTarget:self action:@selector(jiashiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_jiashiqiBtn];
     
-    _jiankongBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*6, height, 80, 110)];
+    _jiankongBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*5, height, 80, 110)];
     [_jiankongBtn buttonWithIcon:[UIImage imageNamed:@"engineer_env_jiankong_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_env_jiankong_s.png"] text:@"监控" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_jiankongBtn addTarget:self action:@selector(jiankongAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_jiankongBtn];
     
-    _nenghaotongjiBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap, height+120, 80, 110)];
+    _nenghaotongjiBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*6, height, 80, 110)];
     [_nenghaotongjiBtn buttonWithIcon:[UIImage imageNamed:@"engineer_env_nenghao_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_env_nenghao_s.png"] text:@"能耗统计" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_nenghaotongjiBtn addTarget:self action:@selector(nenghaotongjiAction:) forControlEvents:UIControlEventTouchUpInside];
 //    [self.view addSubview:_nenghaotongjiBtn];
@@ -281,6 +282,7 @@
     [_brandPicker removeArray];
     _brandPicker._selectColor = NEW_ER_BUTTON_SD_COLOR;
     _brandPicker._rowNormalColor = [UIColor whiteColor];
+    _brandPicker.delegate_ = self;
     [self.view addSubview:_brandPicker];
     
     
@@ -437,6 +439,7 @@
     for(NSDictionary *dr in types)
     {
         NSString *name = [dr objectForKey:@"name"];
+        if(![cate containsObject:name])
         [cate addObject:name];
     }
     self._currentCategorys = cate;

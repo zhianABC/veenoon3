@@ -58,7 +58,10 @@
     _buttonChannelArray = [[NSMutableArray alloc] init];
     _buttonNumberArray = [[NSMutableArray alloc] init];
     
-    [self setTitleAndImage:@"env_corner_dianyuanguanli.png" withTitle:@"电源管理"];
+    
+    //TODO:缺图
+    [self setTitleAndImage:@"env_corner_dianyuanguanli.png"
+                 withTitle:@"电源管理"];
     
     if([_electronicSysArray count])
         self._currentObj = [_electronicSysArray objectAtIndex:0];
@@ -198,6 +201,8 @@
         
         APowerESetProxy *apxy = [_powerProxys objectAtIndex:i];
         btn.data = apxy;
+        
+        [btn turnOnOff:[apxy isOnOff]];
         
         if(!fromScenario)
         {

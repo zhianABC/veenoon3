@@ -23,6 +23,8 @@
 
 @property (nonatomic, assign) int _level;
 
+- (int) getOperationDur;
+
 - (void) getCurrentDataState;
 - (BOOL) isOnOff;
 

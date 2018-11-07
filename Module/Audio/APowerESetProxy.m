@@ -81,6 +81,17 @@
     }
 }
 
+- (int) getOperationDur{
+    
+    int dur = _breakDuration;
+    if([_relayStatus isEqualToString:@"Link"])
+    {
+        dur = self._linkDuration;
+    }
+    
+    return dur;
+}
+
 - (void) parseStateInitsValues:(NSDictionary*)state{
     
     id val = [state objectForKey:@"STATUS"];

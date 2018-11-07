@@ -41,6 +41,7 @@ static DataCenter *_globalDataInstanse;
 
 @synthesize _isLocalPrj;
 
+@synthesize _isExpotingToCloudPrj;
 
 + (DataCenter*)defaultDataCenter{
 	

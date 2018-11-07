@@ -19,6 +19,7 @@
 #import <UMCommon/UMCommon.h>
 #import <UMAnalytics/MobClick.h>
 #import "KVNProgress.h"
+#import "DataCenter.h"
 
 @interface AppDelegate () <RegulusSDKDelegate>
 {
@@ -218,8 +219,16 @@
     
     if(status == RGS_NOTIFY_STATUS_DONE)
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"Notify_Export_Done"
-                                                            object:nil];
+        if([DataCenter defaultDataCenter]._isExpotingToCloudPrj)
+        {
+            [DataCenter defaultDataCenter]._isExpotingToCloudPrj = NO;
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"Notify_Export_Done"
+                                                                object:nil];
+        }
+        else
+        {
+            [KVNProgress showSuccessWithStatus:@"导出成功!"];
+        }
     }
     else if(status != RGS_NOTIFY_STATUS_START)
     {

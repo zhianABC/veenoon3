@@ -206,6 +206,7 @@
     [_brandPicker removeArray];
     _brandPicker._selectColor = NEW_ER_BUTTON_SD_COLOR;
     _brandPicker._rowNormalColor = [UIColor whiteColor];
+    _brandPicker.delegate_ = self;
     [self.view addSubview:_brandPicker];
     
     
@@ -270,7 +271,8 @@
     for(NSDictionary *dr in types)
     {
         NSString *name = [dr objectForKey:@"name"];
-        [cate addObject:name];
+        if(![cate containsObject:name])
+            [cate addObject:name];
     }
     self._currentCategorys = cate;
     if([cate count])

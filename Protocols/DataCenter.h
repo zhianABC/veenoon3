@@ -32,6 +32,8 @@
 
 @property (nonatomic, assign) BOOL _isLocalPrj;
 
+@property (nonatomic, assign) BOOL _isExpotingToCloudPrj;
+
 + (DataCenter*)defaultDataCenter;
 
 - (void) syncDriversWithServer;
