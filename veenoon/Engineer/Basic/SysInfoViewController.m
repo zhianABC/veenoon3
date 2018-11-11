@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import "RegulusSDK.h"
 #import "KVNProgress.h"
+#import "SysInfoVersionView.h"
 
 @interface SysInfoViewController () <UITableViewDelegate, UITableViewDataSource, JCActionViewDelegate>{
     UITableView *_tableView;
@@ -707,6 +708,7 @@
     [app.window addSubview:jcAction];
     [jcAction animatedShow];
     
+
 }
 
 - (void) didJCActionButtonIndex:(int)index actionView:(UIView*)actionView{

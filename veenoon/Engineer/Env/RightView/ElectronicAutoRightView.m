@@ -111,7 +111,7 @@ CustomPickerViewDelegate> {
         
         
         
-        [self createFooter];
+//        [self createFooter];
         
         _picker = [[CustomPickerView alloc]
                    initWithFrame:CGRectMake(frame.size.width/2-100, 43, 200, 120) withGrayOrLight:@"picker_player.png"];
@@ -195,7 +195,7 @@ CustomPickerViewDelegate> {
                                                                 12,
                                                                 CGRectGetWidth(self.frame)-20, 20)];
     titleL.backgroundColor = [UIColor clearColor];
-    [headerView addSubview:titleL];
+//    [headerView addSubview:titleL];
     titleL.font = [UIFont systemFontOfSize:13];
     titleL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
     
@@ -211,7 +211,7 @@ CustomPickerViewDelegate> {
     UIImageView *icon = [[UIImageView alloc]
                          initWithFrame:CGRectMake(CGRectGetMaxX(valueL.frame)+5, 16, 10, 10)];
     icon.image = [UIImage imageNamed:@"remote_video_down.png"];
-    [headerView addSubview:icon];
+//    [headerView addSubview:icon];
     icon.alpha = 0.8;
     icon.layer.contentsGravity = kCAGravityResizeAspect;
     
@@ -223,7 +223,7 @@ CustomPickerViewDelegate> {
                                                               self.frame.size.width,
                                                               1)];
     line.backgroundColor =  M_GREEN_LINE;
-    [headerView addSubview:line];
+//    [headerView addSubview:line];
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = headerView.bounds;
@@ -336,35 +336,35 @@ CustomPickerViewDelegate> {
     cell.backgroundColor = [UIColor clearColor];
     
     
-    if(indexPath.section == 0)
-    {
-        
-        UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 43, self.frame.size.width, 1)];
-        line.backgroundColor =  TITLE_LINE_COLOR;
-        [cell.contentView addSubview:line];
-        
-        NSDictionary *dic = [_bianzuArrays objectAtIndex:indexPath.row];
-        
-        UITextField *f = [dic objectForKey:@"title"];
-        [cell.contentView addSubview:f];
-        
-        UILabel* valueL = [[UILabel alloc] initWithFrame:CGRectMake(10,
-                                                                    12,
-                                                                    CGRectGetWidth(self.frame)-35, 20)];
-        valueL.backgroundColor = [UIColor clearColor];
-        [cell.contentView addSubview:valueL];
-        valueL.font = [UIFont systemFontOfSize:13];
-        valueL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
-        valueL.textAlignment = NSTextAlignmentRight;
-        
-        valueL.text = [dic objectForKey:@"value"];
-        
-        if(_curIndex == indexPath.row)
-        {
-            cell.backgroundColor = RGBA(242, 148, 20, 0.5);
-        }
-        
-    }
+//    if(indexPath.section == 0)
+//    {
+//
+//        UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 43, self.frame.size.width, 1)];
+//        line.backgroundColor =  TITLE_LINE_COLOR;
+//        [cell.contentView addSubview:line];
+//
+//        NSDictionary *dic = [_bianzuArrays objectAtIndex:indexPath.row];
+//
+//        UITextField *f = [dic objectForKey:@"title"];
+//        [cell.contentView addSubview:f];
+//
+//        UILabel* valueL = [[UILabel alloc] initWithFrame:CGRectMake(10,
+//                                                                    12,
+//                                                                    CGRectGetWidth(self.frame)-35, 20)];
+//        valueL.backgroundColor = [UIColor clearColor];
+//        [cell.contentView addSubview:valueL];
+//        valueL.font = [UIFont systemFontOfSize:13];
+//        valueL.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+//        valueL.textAlignment = NSTextAlignmentRight;
+//
+//        valueL.text = [dic objectForKey:@"value"];
+//
+//        if(_curIndex == indexPath.row)
+//        {
+//            cell.backgroundColor = RGBA(242, 148, 20, 0.5);
+//        }
+//
+//    }
     
     return cell;
 }
@@ -460,7 +460,7 @@ CustomPickerViewDelegate> {
     
     UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, height-1, self.frame.size.width, 1)];
     line.backgroundColor =  TITLE_LINE_COLOR;
-    [header addSubview:line];
+//    [header addSubview:line];
     
     return header;
 }
