@@ -707,7 +707,6 @@
     AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     [app.window addSubview:jcAction];
     [jcAction animatedShow];
-    
 
 }
 
