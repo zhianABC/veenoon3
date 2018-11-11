@@ -151,7 +151,7 @@
         self._lvbojunhengGaotongType = @"Bessel";
         self._lvboGaotongArray = [NSArray array];
         
-        self._lvbojunhengDitongType = @"";
+        self._lvbojunhengDitongType = @"Bessel";
         self._lvboDitongArray = [NSArray array];
         
         self._lvboGaotongXielvArray = [NSArray array];
@@ -182,7 +182,7 @@
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
             [dic setObject:freq forKey:@"freq"];
             [dic setObject:@"0" forKey:@"gain"];
-            [dic setObject:@"0" forKey:@"q"];
+            [dic setObject:@"43" forKey:@"q"];
             [dic setObject:@"6.00" forKey:@"q_val"];
             [dic setObject:@"True" forKey:@"enable"];
             [dic setObject:@"0" forKey:@"is_set"];
@@ -1288,7 +1288,7 @@
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setObject:freq forKey:@"freq"];
         [dic setObject:@"0" forKey:@"gain"];
-        [dic setObject:@"0" forKey:@"q"];
+        [dic setObject:@"43" forKey:@"q"];
         [dic setObject:@"6.00" forKey:@"q_val"];
         [dic setObject:@"True" forKey:@"enable"];
         [dic setObject:@"1" forKey:@"is_set"];
