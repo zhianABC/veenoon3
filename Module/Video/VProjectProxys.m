@@ -44,7 +44,7 @@
 {
     if(self = [super init])
     {
-        self._power = @"ON";
+        self._power = @"OFF";
         self._input = @"HDMI";
         
         self._RgsSceneDeviceOperationShadow = [NSMutableDictionary dictionary];

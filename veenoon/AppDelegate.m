@@ -20,6 +20,7 @@
 #import <UMAnalytics/MobClick.h>
 #import "KVNProgress.h"
 #import "DataCenter.h"
+#import "Utilities.h"
 
 @interface AppDelegate () <RegulusSDKDelegate>
 {
@@ -248,6 +249,67 @@
     {
         [KVNProgress dismiss];
     }
+}
+
+-(void)onSystemWillReboot:(NSString *)reason
+{
+    [KVNProgress showSuccessWithStatus:reason];
+}
+
+
+-(void)onDownloadUpdatePacket:(RgsNotifyStatus)status persent:(CGFloat)persent error:(NSError *)error
+{
+    if (error) {
+        [KVNProgress showErrorWithStatus:[error description]];
+    }
+    else if(status == RGS_NOTIFY_STATUS_START)
+    {
+        NSLog(@"%f",persent);
+        [KVNProgress showProgress:persent status:@"正在下载"];
+    }
+    else if (status == RGS_NOTIFY_STATUS_DONE)
+    {
+        [KVNProgress showSuccessWithStatus:@"下载完成"];
+        //        [self presentViewController:[self RebootAlert] animated:YES completion:nil];
+    }
+}
+
+-(void)onDepressUpdatePacket:(RgsNotifyStatus)status persent:(CGFloat)persent error:(NSError *)error
+{
+    if(error)
+    {
+        [KVNProgress showErrorWithStatus:[error description]];
+    }
+    else if(status == RGS_NOTIFY_STATUS_START)
+    {
+        [KVNProgress showProgress:persent status:@"正在解压"];
+    }
+    else if (status == RGS_NOTIFY_STATUS_DONE)
+    {
+        [KVNProgress showSuccessWithStatus:@"解压完成"];
+        [self.window.rootViewController presentViewController:[self RebootAlert]
+                           animated:YES
+                         completion:nil];
+    }
+}
+
+
+-(UIAlertController *)RebootAlert
+{
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"是否重启"
+                                                                   message:@"重启完成升级"
+                                                            preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction * reboot = [UIAlertAction actionWithTitle:@"重启" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
+                              {
+                                  [[RegulusSDK sharedRegulusSDK] RebootSystem:nil];
+                              }];
+    
+    UIAlertAction* cancelAction =[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    [alert addAction:reboot];
+    [alert addAction:cancelAction];
+    return alert;
 }
 
 

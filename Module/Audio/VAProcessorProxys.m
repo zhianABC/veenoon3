@@ -136,22 +136,22 @@
         
         
         
-        _isyaxianStart = YES;
+        _isyaxianStart = NO;
         self._yaxianFazhi = @"0";
         self._yaxianXielv = @"2";
         self._yaxianStartTime = @"20";
         self._yaxianRecoveryTime = @"20";
         
-        self._zaoshengFazhi = @"0";
+        self._zaoshengFazhi = @"-65";
         self._zaoshengStartTime = @"20";
         self._zaoshengHuifuTime = @"20";
-        self._isZaoshengStarted = NO;
+        self._isZaoshengStarted = YES;
         
         
         self._lvbojunhengGaotongType = @"Bessel";
         self._lvboGaotongArray = [NSArray array];
         
-        self._lvbojunhengDitongType = @"";
+        self._lvbojunhengDitongType = @"Bessel";
         self._lvboDitongArray = [NSArray array];
         
         self._lvboGaotongXielvArray = [NSArray array];
@@ -182,7 +182,7 @@
             NSMutableDictionary *dic = [NSMutableDictionary dictionary];
             [dic setObject:freq forKey:@"freq"];
             [dic setObject:@"0" forKey:@"gain"];
-            [dic setObject:@"0" forKey:@"q"];
+            [dic setObject:@"43" forKey:@"q"];
             [dic setObject:@"6.00" forKey:@"q_val"];
             [dic setObject:@"True" forKey:@"enable"];
             [dic setObject:@"0" forKey:@"is_set"];
@@ -1288,7 +1288,7 @@
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         [dic setObject:freq forKey:@"freq"];
         [dic setObject:@"0" forKey:@"gain"];
-        [dic setObject:@"0" forKey:@"q"];
+        [dic setObject:@"43" forKey:@"q"];
         [dic setObject:@"6.00" forKey:@"q_val"];
         [dic setObject:@"True" forKey:@"enable"];
         [dic setObject:@"1" forKey:@"is_set"];

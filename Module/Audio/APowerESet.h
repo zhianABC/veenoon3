@@ -38,4 +38,6 @@
 
 - (id) generateEventOperation_power;
 
+- (BOOL) checkIsPowerOff;
+
 @end

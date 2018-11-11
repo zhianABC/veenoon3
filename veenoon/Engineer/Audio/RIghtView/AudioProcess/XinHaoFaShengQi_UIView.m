@@ -369,7 +369,7 @@
     NSString *freqStr = [NSString stringWithFormat:@"%d", freq];
     
     zhengxuanboL.text = freqStr;
-    [_currentSignalProxy controlXinhaofashengZengYi:freqStr];
+    [_currentSignalProxy controlXinhaofashengPinlv:freqStr];
     
 }
 

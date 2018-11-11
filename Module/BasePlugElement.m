@@ -46,6 +46,8 @@
 @synthesize _typeName;
 @synthesize config;
 
+@synthesize _tmpIsScenarioPlug;
+
 - (id) init
 {
     if(self = [super init])
@@ -61,6 +63,8 @@
         self._isSelected = NO;
         
         self._port = @"";
+        
+        self._tmpIsScenarioPlug = NO;
     }
     
     return self;
