@@ -7,9 +7,15 @@
 //
 
 #import "SysInfoViewController.h"
+#import "WSDatePickerView.h"
+#import "JCActionView.h"
+#import "AppDelegate.h"
 
-@interface SysInfoViewController () <UITableViewDelegate, UITableViewDataSource>{
+@interface SysInfoViewController () <UITableViewDelegate, UITableViewDataSource, JCActionViewDelegate>{
     UITableView *_tableView;
+    WSDatePickerView * timepicker;
+    
+    UIView *whiteView;
 }
 
 @end
@@ -49,6 +55,43 @@
     _tableView.backgroundColor = [UIColor clearColor];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableView];
+    
+    UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+    tapGesture.cancelsTouchesInView =  NO;
+    tapGesture.numberOfTapsRequired = 1;
+    [whiteView addGestureRecognizer:tapGesture];
+    
+    
+    whiteView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 390, SCREEN_WIDTH,
+                                                         390)];
+    [self.view addSubview:whiteView];
+    whiteView.backgroundColor = [UIColor whiteColor];
+    
+    CGRect rc2 = CGRectMake((SCREEN_WIDTH - 600)/2, 40, 600, 300);
+    timepicker = [[WSDatePickerView alloc]
+                  initWithDateStyle:DateStyleShowYearMonthDayHourMinute frame:rc2];
+    timepicker.dateLabelColor = [UIColor orangeColor];//年-月-日-时-分 颜色
+    timepicker.datePickerColor = [UIColor blackColor];//滚轮日期颜色
+    
+    [whiteView addSubview:timepicker];
+    
+     UIButton *saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    saveBtn.frame = CGRectMake((SCREEN_WIDTH - 600)/2, 310, 600, 50);
+    [whiteView addSubview:saveBtn];
+    [saveBtn setTitle:@"保存" forState:UIControlStateNormal];
+    [saveBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [saveBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
+    saveBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [saveBtn addTarget:self
+                action:@selector(saveAction:)
+      forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    whiteView.hidden = YES;
+}
+
+- (void) saveAction:(id)sender {
+    [self hidden];
 }
 #pragma mark -
 #pragma mark Table View DataSource
@@ -481,6 +524,107 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    
+    int selectedSection = (int)indexPath.section;
+    int selectedRow = (int)indexPath.row;
+    
+    if (selectedSection == 0 && selectedRow == 0) {
+        [self popupTimeView];
+    } else if (selectedSection == 2 && selectedRow == 0) {
+        [self popupIPView];
+    } else if (selectedSection == 3 && selectedRow == 0) {
+        [self popupVersionView];
+    }
+    
+    NSLog(@"sss");
+    
+}
+
+- (void) popupTimeView {
+    whiteView.hidden = NO;
+}
+
+- (void) popupIPView {
+    JCActionView *jcAction = [[JCActionView alloc] initWithTils:@[@"动态IP", @"静态IP"]
+                                                          frame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) title:@"请选择网络配置"];
+    jcAction.delegate_ = self;
+    jcAction.tag = 2017;
+    
+    AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    [app.window addSubview:jcAction];
+    [jcAction animatedShow];
+}
+
+- (void) handleTapGesture:(id)sender{
+    
+    [self hidden];
+}
+
+- (void) hidden{
+    
+    [UIView animateWithDuration:0.25
+                     animations:^{
+                         
+                         whiteView.hidden = YES;
+                         
+                     } completion:^(BOOL finished) {
+                         // refresh UI.
+                     }];
+}
+
+- (void) popupVersionView {
+    JCActionView *jcAction = [[JCActionView alloc] initWithTils:@[@"更新"]
+                                                          frame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) title:@"是否更新系统版本"];
+    jcAction.delegate_ = self;
+    jcAction.tag = 2018;
+    
+    AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    [app.window addSubview:jcAction];
+    [jcAction animatedShow];
+}
+
+- (void) didJCActionButtonIndex:(int)index actionView:(UIView*)actionView{
+    
+    int tag = (int) actionView.tag;
+    if (tag == 2017 && index == 1) {
+        UIAlertController *alertController = [UIAlertController
+                                              alertControllerWithTitle:@"网络参数"
+                                              message:@"请设置网格参数"
+                                              preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.placeholder = @"IP";
+        }];
+        
+        [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.placeholder = @"New Mask";
+        }];
+        
+        [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.placeholder = @"Gateway";
+        }];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+        
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            if([alertController.textFields count] == 2)
+            {
+                
+                
+                
+            }
+        }]];
+        
+        
+        [self presentViewController:alertController animated:true completion:nil];
+    }
+    
+}
 /*
 #pragma mark - Navigation
 
