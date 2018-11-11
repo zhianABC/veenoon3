@@ -91,6 +91,16 @@
     
     [self.view addSubview:titleL];
     
+    int width = 400;
+    
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectMake((SCREEN_WIDTH-400)/2 ,CGRectGetMaxY(signup.frame) + 20,width, 40)];
+    title.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:title];
+    title.font = [UIFont systemFontOfSize:13];
+    title.textAlignment = NSTextAlignmentCenter;
+    title.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+    title.text = @"*本软件需要登录账号，绑定设备后使用！";
+    
     
     /*
     ColumnsView *col = [[ColumnsView alloc] initWithFrame:CGRectZero];
