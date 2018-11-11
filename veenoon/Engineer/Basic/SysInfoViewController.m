@@ -577,18 +577,14 @@
 }
 
 - (void) popupVersionView {
-    SysInfoVersionView *view = [[SysInfoVersionView alloc] initWithFrame:CGRectMake(0, 0, 500, 320)];
-    view.center = CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
-    [self.view addSubview:view];
-    
-//    JCActionView *jcAction = [[JCActionView alloc] initWithTils:@[@"更新"]
-//                                                          frame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) title:@"是否更新系统版本"];
-//    jcAction.delegate_ = self;
-//    jcAction.tag = 2018;
-//
-//    AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-//    [app.window addSubview:jcAction];
-//    [jcAction animatedShow];
+    JCActionView *jcAction = [[JCActionView alloc] initWithTils:@[@"更新"]
+                                                          frame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) title:@"是否更新系统版本"];
+    jcAction.delegate_ = self;
+    jcAction.tag = 2018;
+
+    AppDelegate *app = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    [app.window addSubview:jcAction];
+    [jcAction animatedShow];
 }
 
 - (void) didJCActionButtonIndex:(int)index actionView:(UIView*)actionView{
