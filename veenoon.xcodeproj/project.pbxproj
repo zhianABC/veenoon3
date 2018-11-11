@@ -745,6 +745,7 @@
 		EB62DFF920DE85CE00144EE0 /* AudioEProcessorSignalProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = EB62DFF820DE85CE00144EE0 /* AudioEProcessorSignalProxy.m */; };
 		EB62DFFC20DE85E300144EE0 /* AudioEProcessorAutoMixProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = EB62DFFB20DE85E300144EE0 /* AudioEProcessorAutoMixProxy.m */; };
 		EB6FB21F2197D23700ECE791 /* SysInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB6FB21E2197D23700ECE791 /* SysInfoViewController.m */; };
+		EB6FB22221980E6100ECE791 /* SysInfoVersionView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB6FB22121980E6100ECE791 /* SysInfoVersionView.m */; };
 		EB7333F1204102DF00AE60B8 /* FloorWarmRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333F0204102DF00AE60B8 /* FloorWarmRightView.m */; };
 		EB7333F42041046400AE60B8 /* AirCleanRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333F32041046400AE60B8 /* AirCleanRightView.m */; };
 		EB7333FA204108B000AE60B8 /* AddWetRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333F9204108B000AE60B8 /* AddWetRightView.m */; };
@@ -2025,6 +2026,8 @@
 		EB62DFFB20DE85E300144EE0 /* AudioEProcessorAutoMixProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioEProcessorAutoMixProxy.m; sourceTree = "<group>"; };
 		EB6FB21D2197D23700ECE791 /* SysInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SysInfoViewController.h; sourceTree = "<group>"; };
 		EB6FB21E2197D23700ECE791 /* SysInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SysInfoViewController.m; sourceTree = "<group>"; };
+		EB6FB22021980E6100ECE791 /* SysInfoVersionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SysInfoVersionView.h; sourceTree = "<group>"; };
+		EB6FB22121980E6100ECE791 /* SysInfoVersionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SysInfoVersionView.m; sourceTree = "<group>"; };
 		EB7333EF204102DF00AE60B8 /* FloorWarmRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FloorWarmRightView.h; sourceTree = "<group>"; };
 		EB7333F0204102DF00AE60B8 /* FloorWarmRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FloorWarmRightView.m; sourceTree = "<group>"; };
 		EB7333F22041046400AE60B8 /* AirCleanRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirCleanRightView.h; sourceTree = "<group>"; };
@@ -3946,6 +3949,8 @@
 				EBAE5BBA1FE0070600C10C4D /* EngineerPresetScenarioViewCtrl.m */,
 				EB6FB21D2197D23700ECE791 /* SysInfoViewController.h */,
 				EB6FB21E2197D23700ECE791 /* SysInfoViewController.m */,
+				EB6FB22021980E6100ECE791 /* SysInfoVersionView.h */,
+				EB6FB22121980E6100ECE791 /* SysInfoVersionView.m */,
 			);
 			path = Basic;
 			sourceTree = "<group>";
@@ -5299,6 +5304,7 @@
 				EBBFD3B220EA5227002ADD3C /* AudioEMixProxy.m in Sources */,
 				EBF6A7481FC861D400260FF0 /* UserWuXianHuaTongViewCtrl.m in Sources */,
 				EB235016204D9BB2008F6CA2 /* wsDB.m in Sources */,
+				EB6FB22221980E6100ECE791 /* SysInfoVersionView.m in Sources */,
 				341671811FBA974C001D33D0 /* WellcomeViewController.m in Sources */,
 				34890CA520E4AC0C00C8505D /* AirConditionPlug.m in Sources */,
 				04DE1E911AD6AEE000D49E2F /* UILabel+ContentSize.m in Sources */,
