@@ -115,12 +115,12 @@
     portDNSLabel.textColor  = [UIColor whiteColor];
     portDNSLabel.text = @"请配置您的辅助管理系统";
     
-    portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, CGRectGetMaxY(portDNSLabel.frame)+20, SCREEN_WIDTH-80, 20)];
-    portDNSLabel.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont systemFontOfSize:16];
-    portDNSLabel.textColor  = [UIColor colorWithWhite:1.0 alpha:0.9];
-    portDNSLabel.text = @"选择您所需要设置的设备类型> 品牌 > 型号";
+    UILabel* portDNSLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, CGRectGetMaxY(portDNSLabel.frame)+20, SCREEN_WIDTH-80, 20)];
+    portDNSLabel1.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:portDNSLabel1];
+    portDNSLabel1.font = [UIFont systemFontOfSize:16];
+    portDNSLabel1.textColor  = [UIColor colorWithWhite:1.0 alpha:0.9];
+    portDNSLabel1.text = @"选择您所需要设置的设备类型> 品牌 > 型号";
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
@@ -156,22 +156,23 @@
     int rowGap = (SCREEN_WIDTH - left * 2)/6 -10;
     int height = 200;
     
-    _chuankoufuwuqiBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left, height, 120, 110)];
+    _chuankoufuwuqiBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left, height, 80, 110)];
     [_chuankoufuwuqiBtn buttonWithIcon:[UIImage imageNamed:@"chuankoushebei_n.png"] selectedIcon:[UIImage imageNamed:@"chuankoushebei_s.png"] text:@"串口服务器" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_chuankoufuwuqiBtn addTarget:self action:@selector(chuankouAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_chuankoufuwuqiBtn];
     
     
-    _hongwaizhuanhuanqiBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap, height, 120, 110)];
+    _hongwaizhuanhuanqiBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap, height, 80, 110)];
     [_hongwaizhuanhuanqiBtn buttonWithIcon:[UIImage imageNamed:@"hongwaishebei_n.png"] selectedIcon:[UIImage imageNamed:@"hongwaishebei_s.png"] text:@"红外转发器" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_hongwaizhuanhuanqiBtn addTarget:self action:@selector(hongwaiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_hongwaizhuanhuanqiBtn];
     
-    
-    _chumopingBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*2, height, 120, 110)];
+    /*
+    _chumopingBtn = [[IconCenterTextButton alloc] initWithFrame:CGRectMake(left+rowGap*2, height, 80, 110)];
     [_chumopingBtn buttonWithIcon:[UIImage imageNamed:@"chumoping_n.png"] selectedIcon:[UIImage imageNamed:@"chumoping_s.png"] text:@"触摸屏" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_chumopingBtn addTarget:self action:@selector(chumopingAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_chumopingBtn];
+     */
     
     int maxWidth = 120;
     float labelStartX = (SCREEN_WIDTH - maxWidth*2 - 60 - 15)/2.0;
@@ -211,6 +212,7 @@
     [_brandPicker removeArray];
     _brandPicker._selectColor = NEW_ER_BUTTON_SD_COLOR;
     _brandPicker._rowNormalColor = [UIColor whiteColor];
+    _brandPicker.delegate_ = self;
     [self.view addSubview:_brandPicker];
     
     
@@ -274,7 +276,8 @@
     for(NSDictionary *dr in types)
     {
         NSString *name = [dr objectForKey:@"name"];
-        [cate addObject:name];
+        if(![cate containsObject:name])
+            [cate addObject:name];
     }
     self._currentCategorys = cate;
     if([cate count])

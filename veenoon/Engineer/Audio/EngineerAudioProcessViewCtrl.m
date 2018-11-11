@@ -388,10 +388,9 @@
                 vap._rgsProxyObj = proxy;
                 [_inputProxys addObject:vap];
                 
-                if(![_curProcessor.config count])
-                    [vap getCurrentDataState];
-                
-                //[vap checkRgsProxyCommandLoad];
+//                if(![_curProcessor.config count])
+//                    [vap getCurrentDataState];
+            
             }
             else if([proxy.type isEqualToString:@"Audio Out"])
             {
@@ -399,10 +398,9 @@
                 vap._rgsProxyObj = proxy;
                 [_outputProxys addObject:vap];
                 
-                if(![_curProcessor.config count])
-                    [vap getCurrentDataState];
-                
-                //[vap checkRgsProxyCommandLoad];
+//                if(![_curProcessor.config count])
+//                    [vap getCurrentDataState];
+//
             }
             else if ([proxy.type isEqualToString:@"Audio Signal"])
             {

@@ -237,6 +237,12 @@
         _settingView = [[AirConditionRightView alloc]
                         initWithFrame:CGRectMake(SCREEN_WIDTH-300,
                                                  64, 300, SCREEN_HEIGHT-114)];
+        
+        AirConditionProxy *proxy = self._currentObj._proxyObj;
+        proxy.delegate = nil;
+        
+        _settingView._models = [proxy acModeSets];
+        _settingView._winds = [proxy acWindSets];
     }
     
     if([_settingView superview])

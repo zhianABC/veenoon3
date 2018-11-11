@@ -19,6 +19,8 @@
 #import "UserDefaultsKV.h"
 #import "Utilities.h"
 
+#define T10Days  (10*24*60*60)
+
 @interface EnginnerHomeViewController () <ReaderCodeDelegate> {
     UITextField *_userNameField;
     UITextField *_userPwdField;
@@ -169,6 +171,26 @@
     return YES;
 }
 
+- (BOOL) testOfflineLogin{
+    
+    User *u = [[DataBase sharedDatabaseInstance] queryUser:_userNameField.text];
+    
+    if (u)
+    {
+        if([_userNameField.text isEqualToString:u._cellphone] &&
+           [_userPwdField.text isEqualToString:u._password])
+        {
+            if(u.is_engineer)
+            {
+                [self successLogin];
+                return NO;
+            }
+        }
+    }
+    
+    return YES;
+}
+
 - (void) faildGetWifiConnect{
     
     User *u = [[DataBase sharedDatabaseInstance] queryUser:_userNameField.text];
@@ -207,6 +229,26 @@
         
         return;
     }
+    
+    
+    BOOL needConnect = YES;
+    id lastEngineerLoginTime = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastEngineerLoginTime"];
+    int nowTime = [[NSDate date] timeIntervalSince1970];
+    if(lastEngineerLoginTime)
+    {
+        int span = nowTime - [lastEngineerLoginTime intValue];
+        if(span < T10Days)
+        {
+            needConnect = [self testOfflineLogin];
+        }
+        
+    }
+    
+    if(!needConnect)
+    {
+        return;
+    }
+
     
     if([[NetworkChecker sharedNetworkChecker] networkStatus] == NotReachable) {
         //没有网络的情况下
@@ -301,6 +343,11 @@
     
     if(u.is_engineer)
     {
+        int nowTime = [[NSDate date] timeIntervalSince1970];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%d", nowTime]
+                                                  forKey:@"lastEngineerLoginTime"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
         [self successLogin];
     }
     

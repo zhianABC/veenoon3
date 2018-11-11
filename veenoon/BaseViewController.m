@@ -110,6 +110,11 @@
         
         NSString *showText = ipAddress;
         [_selectSysBtn setShowText:showText chooseEnabled:enabled];
+        
+        if(!enabled)
+        {
+            _selectSysBtn.hidden = YES;
+        }
     }
 }
 

@@ -13,7 +13,7 @@
 @interface CustomPickerView () {
     UIPickerView    *_myPickerView;
     
-    NSMutableDictionary *_values;
+    
     
     BOOL            _isShowing;
     
@@ -29,7 +29,7 @@
     
     int _cellWidth;
 }
-
+@property (nonatomic, strong) NSMutableDictionary *_values;
 @end
 
 @implementation CustomPickerView
@@ -40,6 +40,7 @@
 @synthesize _rowNormalColor;
 @synthesize fontSize;
 @synthesize _unitString;
+@synthesize _values;
 
 - (id)initWithFrame:(CGRect)frame withGrayOrLight:(NSString*)grayOrLight {
     if (self = [super initWithFrame:frame]) {
@@ -76,7 +77,7 @@
             }
         }
         
-          _values = [[NSMutableDictionary alloc] init];
+          self._values = [[NSMutableDictionary alloc] init];
         
 //        btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
 //        btnSave.frame = CGRectMake(frame.size.width-25, frame.size.height/2-13, 25, 25);
@@ -128,7 +129,7 @@
             }
         }
         
-        _values = [[NSMutableDictionary alloc] init];
+        self._values = [[NSMutableDictionary alloc] init];
         
         btnSave = [UIButton buttonWithType:UIButtonTypeCustom];
         btnSave.frame = CGRectMake(xx, frame.size.height-44, _cellWidth, 44);
@@ -168,17 +169,26 @@
     
     [_myPickerView reloadComponent:0];
     
-    NSDictionary *section = [_pickerDataArray objectAtIndex:component];
-    NSArray *values = [section objectForKey:@"values"];
+    if([_pickerDataArray count] > component)
+    {
     
-    [_values setObject:[values objectAtIndex:row]
-                forKey:[NSNumber numberWithInteger:component]];
+        NSDictionary *section = [_pickerDataArray objectAtIndex:component];
+        NSArray *values = [section objectForKey:@"values"];
+        
+        [_values setObject:[values objectAtIndex:row]
+                    forKey:[NSNumber numberWithInteger:component]];
+        
+        [_values setObject:[NSNumber numberWithInteger:row]
+                    forKey:@"row"];
+        
+        
+        [_myPickerView selectRow:row inComponent:component animated:YES];
+    }
+}
+
+- (NSDictionary*) resultOfCurrentValue{
     
-    [_values setObject:[NSNumber numberWithInteger:row]
-                forKey:@"row"];
-    
-    
-    [_myPickerView selectRow:row inComponent:component animated:YES];
+    return _values;
 }
 
 

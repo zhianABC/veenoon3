@@ -9,12 +9,14 @@
 #import <UIKit/UIKit.h>
 
 @class RgsSchedulerObj;
+@class UserSensorObj;
 
 @interface ChuanGanAutoSetView : UIView
 {
     
 }
 @property (nonatomic, strong) NSArray *_scenarios;
+@property (nonatomic, strong) UserSensorObj *_sensor;
 @property (nonatomic, weak) UIViewController *ctrl;
 
 @property (nonatomic, strong) RgsSchedulerObj *_schedule;

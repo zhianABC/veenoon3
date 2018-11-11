@@ -81,6 +81,8 @@
 		04DE1EC81AD6B22F00D49E2F /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DE1EC71AD6B22F00D49E2F /* BaseViewController.m */; };
 		04DE1ECA1AD6B33300D49E2F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04DE1EC91AD6B33300D49E2F /* AVFoundation.framework */; };
 		04DE1FE71AD6B52400D49E2F /* CMNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DE1FE61AD6B52400D49E2F /* CMNavigationController.m */; };
+		340C32BC21901F320057C2F5 /* SensorProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 340C32BB21901F320057C2F5 /* SensorProxy.m */; };
+		3412684421919A6D007F619C /* env_corner_dianyuanguanli@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3412684321919A6D007F619C /* env_corner_dianyuanguanli@2x.png */; };
 		34141699204BC3D5002E0B00 /* AudioMatrixView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34141698204BC3D5002E0B00 /* AudioMatrixView.m */; };
 		341651E41ED8067100B16E91 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 341651E31ED8067100B16E91 /* MessageUI.framework */; };
 		341671811FBA974C001D33D0 /* WellcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 341671801FBA974C001D33D0 /* WellcomeViewController.m */; };
@@ -233,6 +235,7 @@
 		342BA4822137E7B600DA138D /* screen_dirver_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 342BA4782137E7B600DA138D /* screen_dirver_icon@2x.png */; };
 		342BA4832137E7B600DA138D /* ir_driver_icon_sel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 342BA4792137E7B600DA138D /* ir_driver_icon_sel@2x.png */; };
 		342C015B21733A6800EE467A /* HttpFileGetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 342C015921733A6800EE467A /* HttpFileGetter.m */; };
+		34331FC8218EE262005CDA68 /* EnvStateTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 34331FC7218EE262005CDA68 /* EnvStateTableViewCell.m */; };
 		343733AE1FE402E80071C902 /* JHSlideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 343733AD1FE402E80071C902 /* JHSlideView.m */; };
 		3448C1FC214769F100194569 /* a_processor_ico_sd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3448C1F4214769DE00194569 /* a_processor_ico_sd@2x.png */; };
 		3448C1FD214769F100194569 /* a_processor_ico_lan@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3448C1F5214769E000194569 /* a_processor_ico_lan@2x.png */; };
@@ -1164,6 +1167,9 @@
 		04DE1EC91AD6B33300D49E2F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		04DE1FE51AD6B52400D49E2F /* CMNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMNavigationController.h; sourceTree = "<group>"; };
 		04DE1FE61AD6B52400D49E2F /* CMNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMNavigationController.m; sourceTree = "<group>"; };
+		340C32BA21901F320057C2F5 /* SensorProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SensorProxy.h; sourceTree = "<group>"; };
+		340C32BB21901F320057C2F5 /* SensorProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SensorProxy.m; sourceTree = "<group>"; };
+		3412684321919A6D007F619C /* env_corner_dianyuanguanli@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "env_corner_dianyuanguanli@2x.png"; sourceTree = "<group>"; };
 		34141697204BC3D5002E0B00 /* AudioMatrixView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioMatrixView.h; sourceTree = "<group>"; };
 		34141698204BC3D5002E0B00 /* AudioMatrixView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioMatrixView.m; sourceTree = "<group>"; };
 		3415322C214663C800F378FF /* RgsUpdatePacketInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RgsUpdatePacketInfo.h; sourceTree = "<group>"; };
@@ -1358,6 +1364,8 @@
 		342BA4792137E7B600DA138D /* ir_driver_icon_sel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ir_driver_icon_sel@2x.png"; sourceTree = "<group>"; };
 		342C015921733A6800EE467A /* HttpFileGetter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HttpFileGetter.m; sourceTree = "<group>"; };
 		342C015A21733A6800EE467A /* HttpFileGetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpFileGetter.h; sourceTree = "<group>"; };
+		34331FC6218EE262005CDA68 /* EnvStateTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EnvStateTableViewCell.h; sourceTree = "<group>"; };
+		34331FC7218EE262005CDA68 /* EnvStateTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EnvStateTableViewCell.m; sourceTree = "<group>"; };
 		343733AC1FE402E80071C902 /* JHSlideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHSlideView.h; sourceTree = "<group>"; };
 		343733AD1FE402E80071C902 /* JHSlideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHSlideView.m; sourceTree = "<group>"; };
 		3448C1F4214769DE00194569 /* a_processor_ico_sd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "a_processor_ico_sd@2x.png"; sourceTree = "<group>"; };
@@ -2642,8 +2650,6 @@
 				342C015921733A6800EE467A /* HttpFileGetter.m */,
 				341E652121045A41007EB685 /* NetWork */,
 				04DE1E371AD6AEE000D49E2F /* Configure.h */,
-				04DE1E381AD6AEE000D49E2F /* DataCenter.h */,
-				04DE1E391AD6AEE000D49E2F /* DataCenter.m */,
 				04DE1E3C1AD6AEE000D49E2F /* iHttpAdmin.h */,
 				04DE1E3D1AD6AEE000D49E2F /* iHttpAdmin.m */,
 				04DE1E3E1AD6AEE000D49E2F /* WebClient.h */,
@@ -2743,6 +2749,8 @@
 				EB18B7252067D4A6000BDEAB /* Video */,
 				04D719831DADE2D8002153D7 /* DataSync.h */,
 				04D719841DADE2D8002153D7 /* DataSync.m */,
+				04DE1E381AD6AEE000D49E2F /* DataCenter.h */,
+				04DE1E391AD6AEE000D49E2F /* DataCenter.m */,
 				34D68BA7210E03D600E90E1F /* DriverSync.h */,
 				34D68BA8210E03D600E90E1F /* DriverSync.m */,
 				04D719801DADE0A9002153D7 /* WSEvent.h */,
@@ -2774,6 +2782,7 @@
 		04DE1ECB1AD6B3BA00D49E2F /* ImageAssets */ = {
 			isa = PBXGroup;
 			children = (
+				3412684321919A6D007F619C /* env_corner_dianyuanguanli@2x.png */,
 				341A292B214CD20E00569D93 /* a_processor_ico_mix_small@2x.png */,
 				345493071FE6585500793E2E /* add_brand_icon@2x.png */,
 				EBDF1C2A1FC5D5CD00A756EA /* add_wet_sys_n@2x.png */,
@@ -3736,6 +3745,8 @@
 				3421B09D210B00D3001C4B22 /* AutoRunSetView.m */,
 				EB4131A62157585E00CCC6E1 /* ChuanGanAutoSetView.h */,
 				EB4131A72157585E00CCC6E1 /* ChuanGanAutoSetView.m */,
+				340C32BA21901F320057C2F5 /* SensorProxy.h */,
+				340C32BB21901F320057C2F5 /* SensorProxy.m */,
 				341DD3C221183DF0007CD30F /* AutoRunCell.h */,
 				341DD3C321183DF0007CD30F /* AutoRunCell.m */,
 				EBDF1C1A1FC5CCEF00A756EA /* UserScnarioConfigViewController.h */,
@@ -4015,6 +4026,8 @@
 				EB1E64BC21450F7500A44EAE /* UserDeviceStateView.m */,
 				EB1E64BE21450F8800A44EAE /* UserEnvStateView.h */,
 				EB1E64BF21450F8800A44EAE /* UserEnvStateView.m */,
+				34331FC6218EE262005CDA68 /* EnvStateTableViewCell.h */,
+				34331FC7218EE262005CDA68 /* EnvStateTableViewCell.m */,
 				EB1E64C121450FA200A44EAE /* UserMonitorStateView.h */,
 				EB1E64C221450FA200A44EAE /* UserMonitorStateView.m */,
 				EB41319B214E7D7C00CCC6E1 /* UserSensorObj.h */,
@@ -4735,6 +4748,7 @@
 				3456C19920A051AA001FAB61 /* senario_02_26_big@2x.png in Resources */,
 				34E73D4520FDD6C700C18C10 /* qr_code_icon@2x.png in Resources */,
 				EB3B73A11FE61F13001941CF /* audio_player_r_hold@2x.png in Resources */,
+				3412684421919A6D007F619C /* env_corner_dianyuanguanli@2x.png in Resources */,
 				34F27A5C205121EF0045D765 /* ce_l_08_big.png in Resources */,
 				EBF6A73B1FC851E500260FF0 /* audio_player_title_s@2x.png in Resources */,
 				EBDF1C0E1FC5C6C900A756EA /* envirement_light_n@2x.png in Resources */,
@@ -5074,6 +5088,7 @@
 				EBD009B9208CBD8100920849 /* VRemoteVideoSet.m in Sources */,
 				EB7333F1204102DF00AE60B8 /* FloorWarmRightView.m in Sources */,
 				EBCD01C62090C0AF00787D48 /* IPValidate.m in Sources */,
+				34331FC8218EE262005CDA68 /* EnvStateTableViewCell.m in Sources */,
 				04D719771DADD3A4002153D7 /* SSUser.m in Sources */,
 				04DE1FE71AD6B52400D49E2F /* CMNavigationController.m in Sources */,
 				04DE1DDB1AD68C5E00D49E2F /* AppDelegate.m in Sources */,
@@ -5286,6 +5301,7 @@
 				348FC8D3208B748B00F7DB3D /* DActionView.m in Sources */,
 				EB9986DF20B6EA30007E4770 /* EngineerPortPluginViewCtrl.m in Sources */,
 				345B3E3820A55A5900BFF0F0 /* DriverConnectionsView.m in Sources */,
+				340C32BC21901F320057C2F5 /* SensorProxy.m in Sources */,
 				04DE1E8E1AD6AEE000D49E2F /* UIButton+Color.m in Sources */,
 				EB795B5C2042E861005D1F47 /* YaXianQi_UIView.m in Sources */,
 				344F5F5620EBBA24007CAB97 /* AirConditionRightView.m in Sources */,

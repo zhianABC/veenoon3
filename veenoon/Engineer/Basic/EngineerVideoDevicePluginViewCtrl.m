@@ -124,12 +124,12 @@
     portDNSLabel.textColor  = [UIColor whiteColor];
     portDNSLabel.text = @"请配置您的视频管理系统";
     
-    portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, CGRectGetMaxY(portDNSLabel.frame)+20, SCREEN_WIDTH-80, 20)];
-    portDNSLabel.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont systemFontOfSize:16];
-    portDNSLabel.textColor  = [UIColor colorWithWhite:1.0 alpha:0.9];
-    portDNSLabel.text = @"选择您所需要设置的设备类型> 品牌 > 型号";
+    UILabel* portDNSLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, CGRectGetMaxY(portDNSLabel.frame)+20, SCREEN_WIDTH-80, 20)];
+    portDNSLabel1.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:portDNSLabel1];
+    portDNSLabel1.font = [UIFont systemFontOfSize:16];
+    portDNSLabel1.textColor  = [UIColor colorWithWhite:1.0 alpha:0.9];
+    portDNSLabel1.text = @"选择您所需要设置的设备类型> 品牌 > 型号";
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
@@ -165,8 +165,8 @@
     int rowGap = (SCREEN_WIDTH - left * 2)/6 - 10;
     int height = 200;
     
-    _dianyuanguanliBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left, height,80, 110)];
-    [_dianyuanguanliBtn buttonWithIcon:[UIImage imageNamed:@"engineer_dianyuanguanli_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_dianyuanguanli_s.png"] text:audio_power_sequencer normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
+    _dianyuanguanliBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left-10, height,100, 110)];
+    [_dianyuanguanliBtn buttonWithIcon:[UIImage imageNamed:@"engineer_dianyuanguanli_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_dianyuanguanli_s.png"] text:@"视频电源管理" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_dianyuanguanliBtn addTarget:self action:@selector(dianyuanguanliAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_dianyuanguanliBtn];
     
@@ -181,37 +181,39 @@
     [_shexiangjiBtn addTarget:self action:@selector(shexiangjiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_shexiangjiBtn];
     
+    /*先隐藏掉
     _xinxiheBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*3, height,80, 110)];
     [_xinxiheBtn buttonWithIcon:[UIImage imageNamed:@"engineer_video_xinxihe_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_video_xinxihe_s.png"] text:@"信息盒" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_xinxiheBtn addTarget:self action:@selector(xinxiheAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_xinxiheBtn];
+     */
     
-    _yuanchengshixunBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*4, height,80, 110)];
+    _yuanchengshixunBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*3, height,80, 110)];
     [_yuanchengshixunBtn buttonWithIcon:[UIImage imageNamed:@"engineer_video_yuanchengshixun_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_video_yuanchengshixun_s.png"] text:@"远程视讯" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_yuanchengshixunBtn addTarget:self action:@selector(yuanchengshixunAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_yuanchengshixunBtn];
     
-    _shipinchuliBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*5, height,80, 110)];
+    _shipinchuliBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*4, height,80, 110)];
     [_shipinchuliBtn buttonWithIcon:[UIImage imageNamed:@"engineer_video_shipinchuli_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_video_shipinchuli_s.png"] text:@"视频处理" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_shipinchuliBtn addTarget:self action:@selector(shipinchuliAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_shipinchuliBtn];
     
-    _pinjiepingBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*6, height,80, 110)];
+    _pinjiepingBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*5, height,80, 110)];
     [_pinjiepingBtn buttonWithIcon:[UIImage imageNamed:@"engineer_video_pinjieping_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_video_pinjieping_s.png"] text:@"拼接屏" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_pinjiepingBtn addTarget:self action:@selector(pinjiepingAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_pinjiepingBtn];
     
-    _yejingdianshiBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left, height+120,80, 110)];
+    _yejingdianshiBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*6, height,80, 110)];
     [_yejingdianshiBtn buttonWithIcon:[UIImage imageNamed:@"engineer_video_yejingdianshi_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_video_yejingdianshi_s.png"] text:@"液晶电视" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_yejingdianshiBtn addTarget:self action:@selector(yejingdianshiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_yejingdianshiBtn];
     
-    _lubojiBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*1, height+120,80, 110)];
+    _lubojiBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left, height+120,80, 110)];
     [_lubojiBtn buttonWithIcon:[UIImage imageNamed:@"engineer_video_luboji_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_video_luboji_s.png"] text:@"录播机" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_lubojiBtn addTarget:self action:@selector(lubojiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_lubojiBtn];
     
-    _touyingjiBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*2, height+120,80, 110)];
+    _touyingjiBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left+rowGap*1, height+120,80, 110)];
     [_touyingjiBtn buttonWithIcon:[UIImage imageNamed:@"engineer_video_touyingji_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_video_touyingji_s.png"] text:@"投影机" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_touyingjiBtn addTarget:self action:@selector(touyingjiAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_touyingjiBtn];
@@ -278,6 +280,7 @@
     [_brandPicker removeArray];
     _brandPicker._selectColor = NEW_ER_BUTTON_SD_COLOR;
     _brandPicker._rowNormalColor = [UIColor whiteColor];
+    _brandPicker.delegate_ = self;
     [self.view addSubview:_brandPicker];
     
     x1 = CGRectGetMaxX(titleL.frame)+5;
@@ -365,6 +368,8 @@
     NSString *ptype = [device objectForKey:@"ptype"];
     NSString* irname = [NSString stringWithFormat:@"%@-%@-%@", brand, name, ptype];
     
+    [device setObject:irname forKey:@"IR"];
+    
     IMP_BLOCK_SELF(EngineerVideoDevicePluginViewCtrl);
     
     [[RegulusSDK sharedRegulusSDK] MakeIrDriverWithIrModel:rgs
@@ -390,6 +395,8 @@
     
     [device setObject:driver_info.serial forKey:@"driver"];
     
+    
+    
     //Veenoon 插件Info库
     [[DataCenter defaultDataCenter] saveDriver:device];
     
@@ -398,7 +405,7 @@
                                      key:driver_info.serial];
     
     //红外Info库
-    [[DataSync sharedDataSync] saveIrDriverToCache:driver_info];
+    [[DataCenter defaultDataCenter] saveIrDriverToCache:driver_info];
     
     [self addDriverToCenter:device];
     
@@ -433,7 +440,8 @@
     for(NSDictionary *dr in types)
     {
         NSString *name = [dr objectForKey:@"name"];
-        [cate addObject:name];
+        if(![cate containsObject:name])
+            [cate addObject:name];
     }
     self._currentCategorys = cate;
     if([cate count])
@@ -569,7 +577,7 @@
             NSString *ptype = [device objectForKey:@"ptype"];
             NSString* irname = [NSString stringWithFormat:@"%@-%@-%@", brand, name, ptype];
             
-            RgsDriverInfo *irInfo = [[DataSync sharedDataSync] testIrDriverInfoByName:irname];
+            RgsDriverInfo *irInfo = [[DataCenter defaultDataCenter] testIrDriverInfoByName:irname];
             if(irInfo == nil)
             {
                 if([name isEqualToString:@"DVD"])
@@ -580,6 +588,8 @@
             else
             {
                 [mdic setObject:irInfo.serial forKey:@"driver"];
+                
+                [mdic setObject:irname forKey:@"IR"];
                 
                 //Veenoon插件Info库
                 [[DataCenter defaultDataCenter] saveDriver:mdic];

@@ -177,6 +177,16 @@
     
     [self checkArea];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(endImportProjectRefresh:)
+                                                 name:@"Notify_Reload_Projects_After_Import_Action"
+                                               object:nil];
+    
+}
+
+- (void) endImportProjectRefresh:(id)sender{
+    
+    [KVNProgress showSuccessWithStatus:@"已导入"];
 }
 
 #pragma mark -- import Project --
@@ -388,9 +398,9 @@
 
 - (void) checkArea{
     
-#ifdef OPEN_REG_LIB_DEF
-    
     IMP_BLOCK_SELF(EngineerSysSelectViewCtrl);
+    
+    [KVNProgress show];
     
     [[RegulusSDK sharedRegulusSDK] GetAreas:^(NSArray *RgsAreaObjs, NSError *error) {
         if (error) {
@@ -402,8 +412,6 @@
             [block_self checkSceneData:RgsAreaObjs];
         }
     }];
-    
-#endif
     
 }
 - (void) checkSceneData:(NSArray*)RgsAreaObjs{
@@ -435,7 +443,7 @@
                                                                 areaId:(int)areaObj.m_id];
         }
         
-        [KVNProgress show];
+        
         [[RegulusSDK sharedRegulusSDK] GetAreaScenes:areaObj.m_id
                                           completion:^(BOOL result, NSArray *scenes, NSError *error) {
             if (result) {
@@ -449,7 +457,7 @@
     }
     else
     {
-        //[[DataSync sharedDataSync] syncCurrentArea];
+        [KVNProgress dismiss];
     }
     
     
@@ -759,6 +767,11 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void) dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 /*

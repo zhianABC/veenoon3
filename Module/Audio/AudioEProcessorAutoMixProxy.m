@@ -47,6 +47,30 @@
     return self;
 }
 
+
+- (void) getCurrentDataState
+{
+    if(_rgsProxyObj)
+    {
+               IMP_BLOCK_SELF(AudioEProcessorAutoMixProxy);
+                [[RegulusSDK sharedRegulusSDK] GetProxyCurState:_rgsProxyObj.m_id completion:^(BOOL result, NSDictionary *state, NSError *error) {
+                    if (result) {
+                        if ([state count])
+                        {
+                            [block_self parseStateInitsValues:state];
+                        }
+                    }
+                }];
+        
+//        [[RegulusSDK sharedRegulusSDK] QueryProxyStateInCallBack:_rgsProxyObj.m_id completion:nil];
+//
+    }
+}
+
+- (void) parseStateInitsValues:(NSDictionary*)state{
+
+}
+
 - (void) checkRgsProxyCommandLoad{
     
     if(_rgsProxyObj == nil || _rgsCommands){

@@ -209,17 +209,17 @@
 {
     if(_rgsProxyObj)
     {
- //       IMP_BLOCK_SELF(VAProcessorProxys);
-//        [[RegulusSDK sharedRegulusSDK] GetProxyCurState:_rgsProxyObj.m_id completion:^(BOOL result, NSDictionary *state, NSError *error) {
-//            if (result) {
-//                if ([state count])
-//                {
-//                    [block_self parseStateInitsValues:state];
-//                }
-//            }
-//        }];
+        IMP_BLOCK_SELF(VAProcessorProxys);
+        [[RegulusSDK sharedRegulusSDK] GetProxyCurState:_rgsProxyObj.m_id completion:^(BOOL result, NSDictionary *state, NSError *error) {
+            if (result) {
+                if ([state count])
+                {
+                    [block_self parseStateInitsValues:state];
+                }
+            }
+        }];
         
-        [[RegulusSDK sharedRegulusSDK] QueryProxyStateInCallBack:_rgsProxyObj.m_id completion:nil];
+        //[[RegulusSDK sharedRegulusSDK] QueryProxyStateInCallBack:_rgsProxyObj.m_id completion:nil];
 
     }
 }

@@ -258,7 +258,10 @@
         
         NSString *serialStr = info.serial;
         NSDictionary *device = [[DataCenter defaultDataCenter] driverWithKey:serialStr];
-        
+        if(device == nil)
+        {
+            device = [[DataCenter defaultDataCenter] testIRDriverInfoWithName:info.name];
+        }
         if(device)
         {
             NSString *classname = [device objectForKey:@"driver_class"];

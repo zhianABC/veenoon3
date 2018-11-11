@@ -114,12 +114,12 @@
     portDNSLabel.textColor  = [UIColor whiteColor];
     portDNSLabel.text = @"请配置您的音频管理系统";
     
-    portDNSLabel = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, CGRectGetMaxY(portDNSLabel.frame)+20, SCREEN_WIDTH-80, 20)];
-    portDNSLabel.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:portDNSLabel];
-    portDNSLabel.font = [UIFont systemFontOfSize:16];
-    portDNSLabel.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
-    portDNSLabel.text = @"选择您所需要设置的设备类型 > 品牌 > 型号";
+    UILabel* portDNSLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, CGRectGetMaxY(portDNSLabel.frame)+20, SCREEN_WIDTH-80, 20)];
+    portDNSLabel1.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:portDNSLabel1];
+    portDNSLabel1.font = [UIFont systemFontOfSize:16];
+    portDNSLabel1.textColor  = [UIColor colorWithWhite:1.0 alpha:1];
+    portDNSLabel1.text = @"选择您所需要设置的设备类型 > 品牌 > 型号";
     
     UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
     [self.view addSubview:bottomBar];
@@ -155,8 +155,8 @@
     int rowGap = (SCREEN_WIDTH - left * 2)/6 - 10;
     int height = 200;
     
-    _electronicSysBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left, height,80, 110)];
-    [_electronicSysBtn  buttonWithIcon:[UIImage imageNamed:@"engineer_dianyuanguanli_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_dianyuanguanli_s.png"] text:@"电源管理" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
+    _electronicSysBtn = [[IconCenterTextButton alloc] initWithFrame: CGRectMake(left-10, height,100, 110)];
+    [_electronicSysBtn  buttonWithIcon:[UIImage imageNamed:@"engineer_dianyuanguanli_n.png"] selectedIcon:[UIImage imageNamed:@"engineer_dianyuanguanli_s.png"] text:@"音频电源管理" normalColor:[UIColor whiteColor] selColor:RGB(230, 151, 50)];
     [_electronicSysBtn addTarget:self action:@selector(electronicSysAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_electronicSysBtn];
     
@@ -231,6 +231,7 @@
     [_brandPicker  removeArray];
     _brandPicker._selectColor = NEW_ER_BUTTON_SD_COLOR;
     _brandPicker._rowNormalColor = [UIColor whiteColor];
+    _brandPicker.delegate_ = self;
     [self.view addSubview:_brandPicker];
     
     
@@ -345,7 +346,8 @@
     for(NSDictionary *dr in types)
     {
         NSString *name = [dr objectForKey:@"name"];
-        [cate addObject:name];
+        if(![cate containsObject:name])
+            [cate addObject:name];
     }
     self._currentCategorys = cate;
     if([cate count])
@@ -460,7 +462,7 @@
     [_floorWarmBtn setBtnHighlited:NO];
     [_wirelessHuiyiBtn setBtnHighlited:NO];
 
-    [self choosedDevice:@"音频处理器"];
+    [self choosedDevice:@"音频处理"];
 }
 
 - (void) wuxianhuatongAction:(id)sender{

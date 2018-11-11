@@ -220,6 +220,7 @@
     centerTitleL.textAlignment = NSTextAlignmentCenter;
     [topbar addSubview:centerTitleL];
     centerTitleL.text = @"设备调试";
+    centerTitleL.font = [UIFont boldSystemFontOfSize:18];
 
 
     _content = [[UIScrollView alloc] init];
@@ -726,6 +727,7 @@
         if ([class isEqualToString:@"AudioEMix"]) {
             EngineerHunYinSysViewController *ctrl = [[EngineerHunYinSysViewController alloc] init];
             ctrl._hunyinSysArray = @[plug];
+            ctrl.fromScenario = _isEditingScenario;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         

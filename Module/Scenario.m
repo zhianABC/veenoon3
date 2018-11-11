@@ -64,12 +64,15 @@
     WebClient *_client;
     
     RgsSceneOperation * optDelay;
+    
+    
 }
 @property (nonatomic, strong) RgsDriverObj *_rgsDriver;
 @property (nonatomic, strong) RgsSceneObj *_rgsScene;
 @property (nonatomic, strong) RgsEventObj *_rgsSceneEvent;
 
 @property (nonatomic, strong) NSMutableDictionary *_scenarioData;
+@property (nonatomic, strong) NSMutableArray *powerOpts;
 
 @end
 
@@ -94,6 +97,7 @@
 @synthesize _scenarioData;
 
 @synthesize delegate;
+@synthesize powerOpts;
 
 - (id)init
 {
@@ -109,6 +113,8 @@
         }
         
         [self initData];
+        
+        self.powerOpts = [NSMutableArray array];
        
     }
     
@@ -747,6 +753,8 @@
     [_scenarioData setObject:others forKey:@"others"];
     
     
+    [powerOpts removeAllObjects];
+    
     //音频处理
     if([self._audioDevices count])
     {
@@ -771,6 +779,23 @@
     if([self._otherDevices count])
     {
         [self createOthersScenario];
+    }
+    
+    //电源开关放在整个场景的前面
+    if([powerOpts count])
+    {
+        //开启后要等1分钟
+        RgsSceneOperation* opt60sDelay = [[RgsSceneOperation alloc] initCmdWithParam:1
+                                                                                 cmd:@"Sleep"
+                                                                               param:@{@"MS":@"60000"}];
+        
+        [_eventOperations insertObject:opt60sDelay atIndex:0];
+        
+        for(int i = (int)[powerOpts count] - 1; i>=0; i--)
+        {
+            [_eventOperations insertObject:[powerOpts objectAtIndex:i]
+                                   atIndex:0];
+        }
     }
     
 }
@@ -888,8 +913,6 @@
 
     NSMutableArray *audios = [_scenarioData objectForKey:@"audio"];
     
-    NSMutableArray *powerOpts = [NSMutableArray array];
-    
     for(BasePlugElement* ap in _audioDevices)
     {
         if(!ap._isSelected){
@@ -1003,20 +1026,25 @@
                         //[self addEventOperation:optDelay];
                         //[self addEventOperation:rsp];
                     }
-                    
-//                    rsp = [proxy generateEventOperation_breakDur];
-//                    if(rsp)
-//                    {
-//                        [self addEventOperation:rsp];
-//                    }
-//
-//                    rsp = [proxy generateEventOperation_linkDur];
-//                    if(rsp)
-//                    {
-//                        [self addEventOperation:rsp];
-//                    }
                 }
             }
+            
+            int dur = 0;
+            for(APowerESetProxy *proxy in proxys)
+            {
+                int tmp = [proxy getOperationDur];
+                dur+=tmp;
+            }
+            if(dur > 0)
+            {
+                long long v = dur*1000;
+                NSString *sv = [NSString stringWithFormat:@"%lld", v];
+                RgsSceneOperation* optDurDelay = [[RgsSceneOperation alloc] initCmdWithParam:1
+                                                                   cmd:@"Sleep"
+                                                                 param:@{@"MS":sv}];
+                [powerOpts addObject:optDurDelay];
+            }
+
             NSDictionary *data = [ap userData];
             [audios addObject:data];
         }
@@ -1075,23 +1103,6 @@
         }
     }
     
-    //电源开关放在整个场景的前面
-    if([powerOpts count])
-    {
-        //开启后要等1分钟
-        RgsSceneOperation* opt60sDelay = [[RgsSceneOperation alloc] initCmdWithParam:1
-                                                           cmd:@"Sleep"
-                                                         param:@{@"MS":@"60000"}];
-        
-        [_eventOperations insertObject:opt60sDelay atIndex:0];
-        
-        for(int i = (int)[powerOpts count] - 1; i>=0; i--)
-        {
-            [_eventOperations insertObject:[powerOpts objectAtIndex:i]
-                                   atIndex:0];
-        }
-    }
-    
     if([audios count] == 0)
         [_scenarioData removeObjectForKey:@"audio"];
 }
@@ -1100,7 +1111,7 @@
     
     
     NSMutableArray *videos = [_scenarioData objectForKey:@"video"];
-    
+
     for(BasePlugElement* dev in self._videoDevices)
     {
         if(!dev._isSelected){
@@ -1121,6 +1132,49 @@
                 {
                     [self addEventOperation:rsp];
                 }
+            }
+            
+            NSDictionary *data = [dev userData];
+            [videos addObject:data];
+        }
+        else if ([dev isKindOfClass:[APowerESet class]])
+        {
+            NSArray *proxys = ((APowerESet*)dev)._proxys;
+            
+            //全开/全关
+            RgsSceneOperation* rsp = [(APowerESet*)dev generateEventOperation_power];
+            if(rsp)
+            {
+                [powerOpts addObject:rsp];
+                //[self addEventOperation:rsp];
+            }
+            else
+            {
+                for(APowerESetProxy *proxy in proxys)
+                {
+                    RgsSceneOperation* rsp = [proxy generateEventOperation_status];
+                    if(rsp)
+                    {
+                        [powerOpts addObject:optDelay];
+                        [powerOpts addObject:rsp];
+                    }
+                }
+            }
+            
+            int dur = 0;
+            for(APowerESetProxy *proxy in proxys)
+            {
+                int tmp = [proxy getOperationDur];
+                dur+=tmp;
+            }
+            if(dur > 0)
+            {
+                long long v = dur*1000;
+                NSString *sv = [NSString stringWithFormat:@"%lld", v];
+                RgsSceneOperation* optDurDelay = [[RgsSceneOperation alloc] initCmdWithParam:1
+                                                                                         cmd:@"Sleep"
+                                                                                       param:@{@"MS":sv}];
+                [powerOpts addObject:optDurDelay];
             }
             
             NSDictionary *data = [dev userData];
@@ -1172,7 +1226,6 @@
             [videos addObject:data];
         }
     }
-    
     
     if([videos count] == 0)
         [_scenarioData removeObjectForKey:@"video"];
@@ -1230,6 +1283,7 @@
                         for(id rsp in rsps)
                         {
                             [self addEventOperation:rsp];
+                            [self addEventOperation:optDelay];
                         }
                     }
                 }

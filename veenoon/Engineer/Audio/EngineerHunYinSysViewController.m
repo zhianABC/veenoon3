@@ -26,9 +26,12 @@
     UIButton *okBtn;
     BOOL isSettings;
     MixVoiceSettingsView *_rightView;
+    
+    float minVolSet;
+    float maxVolSet;
 }
 @property (nonatomic, strong) AudioEMixProxy *_currentProxy;
-
+@property (nonatomic, strong) NSMutableArray *_btnCells;
 
 @end
 
@@ -36,6 +39,9 @@
 @synthesize _hunyinSysArray;
 @synthesize _currentObj;
 @synthesize _currentProxy;
+@synthesize fromScenario;
+
+@synthesize _btnCells;
 
 
 - (void)viewDidLoad {
@@ -79,6 +85,8 @@
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
     
+    minVolSet = 0;
+    maxVolSet = 31;
     
     _zengyiSlider = [[EngineerSliderView alloc]
                      initWithSliderBg:[UIImage imageNamed:@"engineer_yunyin_n.png"]
@@ -88,8 +96,8 @@
     [_zengyiSlider setIndicatorImage:[UIImage imageNamed:@"wireless_slide_s.png"]];
     _zengyiSlider.topEdge = 90;
     _zengyiSlider.bottomEdge = 55;
-    _zengyiSlider.maxValue = 31;
-    _zengyiSlider.minValue = 0;
+    _zengyiSlider.maxValue = maxVolSet;
+    _zengyiSlider.minValue = minVolSet;
     _zengyiSlider.delegate = self;
     [_zengyiSlider resetScale];
     _zengyiSlider.center = CGPointMake(TESLARIA_SLIDER_X, TESLARIA_SLIDER_Y);
@@ -100,9 +108,11 @@
     int leftRight = ENGINEER_VIEW_LEFT;
     
     int cellWidth = 92;
-    int cellHeight = 92;
+    int cellHeight = 130;
     int colNumber = ENGINEER_VIEW_COLUMN_N;
     int space = ENGINEER_VIEW_COLUMN_GAP;
+    
+    self._btnCells = [NSMutableArray array];
 
     for (int i = 0; i < 12; i++) {
         
@@ -112,22 +122,38 @@
         int startY = row*cellHeight+space*row+top;
         
         
-        UIImage *image = [UIImage imageNamed:@"slide_btn.png"];
+//        UIImage *image = [UIImage imageNamed:@"slide_btn.png"];
+//        
+//        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+//        imageView.backgroundColor = [UIColor clearColor];
+//        imageView.layer.cornerRadius = 10;
+//        imageView.layer.borderWidth = 0;
+//        imageView.layer.borderColor = DARK_BLUE_COLOR.CGColor;
+//        imageView.clipsToBounds = YES;
+//        
+//        imageView.frame = CGRectMake(startX, startY, 100, 100);
+//        imageView.tag = index;
+//        imageView.userInteractionEnabled=YES;
+//        imageView.layer.contentsGravity = kCAGravityCenter;
+//        [self.view addSubview:imageView];
         
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-        imageView.backgroundColor = [UIColor clearColor];
-        imageView.layer.cornerRadius = 10;
-        imageView.layer.borderWidth = 0;
-        imageView.layer.borderColor = DARK_BLUE_COLOR.CGColor;
-        imageView.clipsToBounds = YES;
+        CGRect rc = CGRectMake(startX, startY, cellWidth, cellHeight);
         
-        imageView.frame = CGRectMake(startX, startY, 100, 100);
-        imageView.tag = index;
-        imageView.userInteractionEnabled=YES;
-        imageView.layer.contentsGravity = kCAGravityCenter;
-        [self.view addSubview:imageView];
+        SlideButton *btn = [[SlideButton alloc] initWithOffsetFrame:rc offset:10];
+        [btn enableValueSet:NO];
+        [self.view addSubview:btn];
+        
+        [_btnCells addObject:btn];
         
         index++;
+    }
+    
+    if(!fromScenario)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(notifyProxyGotCurStateVals:)
+                                                     name:NOTIFY_PROXY_CUR_STATE_GOT_LB
+                                                   object:nil];
     }
     
     [self getCurrentDeviceDriverProxys];
@@ -189,8 +215,35 @@
         }
     }
     
+    if(proxy)
+    {
     [_zengyiSlider setScaleValue:proxy._deviceVol];
+    [self updateSliderButtonsCircle:proxy._deviceVol];
+    }
+    
+    if(!fromScenario && _currentProxy)
+    {
+        [_currentProxy getCurrentDataState];
+    }
 
+}
+
+
+#pragma mark --Proxy Current State Got
+- (void) notifyProxyGotCurStateVals:(NSNotification*)notify{
+    
+    NSDictionary *obj = notify.object;
+    
+    if(obj && [obj objectForKey:@"proxy"])
+    {
+        id key = [obj objectForKey:@"proxy"];
+        
+        if([key intValue] == _currentProxy._rgsProxyObj.m_id)
+        {
+            [_zengyiSlider setScaleValue:_currentProxy._deviceVol];
+            [self updateSliderButtonsCircle:_currentProxy._deviceVol];
+        }
+    }
 }
 
 - (void) handleTapGesture:(id)sender{
@@ -211,6 +264,20 @@
     [okBtn setTitle:@"设置" forState:UIControlStateNormal];
     isSettings = NO;
 }
+
+- (void) updateSliderButtonsCircle:(float)value{
+    
+    float max = maxVolSet - minVolSet;
+    if(max > 0)
+    {
+        float p = (value - minVolSet)/max;
+        for(SlideButton *btn in _btnCells)
+        {
+            [btn setCircleValue:p];
+        }
+    }
+}
+
 - (void) didSliderValueChanged:(float)value object:(id)object {
    
     float circleValue = value;
@@ -220,6 +287,9 @@
     {
         [_zengyiSlider setMuteVal:NO];
     }
+    
+    
+    [self updateSliderButtonsCircle:value];
 }
 
 - (void) didSliderEndChanged:(float)value object:(id)object{
@@ -242,6 +312,8 @@
         float circleValue = 0;
         [_zengyiSlider setScaleValue:circleValue];
         [_currentObj._proxyObj controlDeviceVol:circleValue force:YES];
+        
+        [self updateSliderButtonsCircle:circleValue];
     }
 }
 

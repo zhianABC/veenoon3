@@ -49,6 +49,8 @@
  //set_fb 反馈抑制(取消)
  */
 
+- (void) getCurrentDataState;
+
 - (NSDictionary *)getScenarioSliceLocatedShadow;
 - (NSMutableArray*)getCameraPol;
 - (NSMutableDictionary*)getPriorityMinMax;

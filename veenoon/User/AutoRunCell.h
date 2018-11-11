@@ -9,12 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @class RgsSchedulerObj;
+@class RgsAutomationObj;
 
 @protocol AutoRunCellDelegate <NSObject>
 
 @optional
 - (void) tappedAutoRunCell:(RgsSchedulerObj*)sch;
-- (void) deleteAutoRunCell:(RgsSchedulerObj*)sch view:(UIView*)cell;
+- (void) deleteAutoRunCell:(id)sch view:(UIView*)cell;
 
 @end
 
@@ -26,6 +27,7 @@
 @property (nonatomic, weak) id <AutoRunCellDelegate> delegate;
 
 - (void) showRgsSchedule:(RgsSchedulerObj *)sch;
+- (void) showRgsAutoRun:(RgsAutomationObj *)sch;
 
 - (void) setEditMode:(BOOL)isEdit;
 

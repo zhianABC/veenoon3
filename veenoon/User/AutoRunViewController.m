@@ -16,6 +16,9 @@
 #import "AutoRunCell.h"
 #import "KVNProgress.h"
 #import "ChuanGanAutoSetView.h"
+#import "DataSync.h"
+#import "UserSensorObj.h"
+#import "Utilities.h"
 
 @interface AutoRunViewController () <AutoRunCellDelegate>
 {
@@ -40,8 +43,11 @@
 
 @property (nonatomic, strong) NSMutableArray *_subscribeItems;
 @property (nonatomic, strong) NSMutableArray *_weekItems;
+@property (nonatomic, strong) NSMutableArray *_envItems;
 
 @property (nonatomic, strong) NSMutableArray *_autoRunCells;
+
+@property (nonatomic, strong) NSMutableArray *_sensors;
 
 @end
 
@@ -52,8 +58,11 @@
 
 @synthesize _subscribeItems;
 @synthesize _weekItems;
+@synthesize _envItems;
 
 @synthesize _autoRunCells;
+
+@synthesize _sensors;
 
 
 - (void)viewDidLoad {
@@ -152,8 +161,70 @@
                                                  name:@"Notify_Refresh_Items"
                                                object:nil];
     
-    [self getSchedules];
+    //[self getSchedules];
+    [self getEnvAutoSet];
     
+    self._sensors = [NSMutableArray array];
+    [self getSensorDrivers];
+    
+}
+
+- (void) getSensorDrivers {
+
+    RgsAreaObj *areaObj = [DataSync sharedDataSync]._currentArea;
+    NSInteger area_id = areaObj.m_id;
+    
+    NSMutableArray *sensorArray = [NSMutableArray array];
+    
+    
+    [[RegulusSDK sharedRegulusSDK] GetDrivers:area_id
+                                   completion:^(BOOL result,NSArray * drivers,NSError * error) {
+                                       if (result) {
+                                           for (RgsDriverObj *driverObj in drivers) {
+                                               if ([@"Sensor" isEqualToString:driverObj.info.system]) {
+                                                   [sensorArray addObject:driverObj];
+                                               }
+                                           }
+                                           IMP_BLOCK_SELF(AutoRunViewController);
+                                           
+                                           [block_self getDriverConnection:sensorArray];
+                                       }
+                                   }];
+}
+- (void) getDriverConnection:(NSMutableArray*)driverArray {
+    
+    for (RgsDriverObj *driverObj in driverArray) {
+        
+        UserSensorObj *userSensor = [[UserSensorObj alloc] init];
+        userSensor.rgsDriverObj = driverObj;
+        [_sensors addObject:userSensor];
+    }
+    
+}
+
+- (void) getEnvAutoSet{
+ 
+    IMP_BLOCK_SELF(AutoRunViewController);
+    
+    [KVNProgress show];
+    
+    [[RegulusSDK sharedRegulusSDK] GetAutomation:^(BOOL result, NSArray<RgsAutomationObj *> *auto_objs, NSError *error) {
+            [block_self layoutAutoEnvItems:auto_objs];
+        
+    }];
+}
+
+- (void) layoutAutoEnvItems:(NSArray*)auto_objs{
+    
+    [KVNProgress dismiss];
+    
+    self._envItems = [NSMutableArray array];
+    
+    if(auto_objs)
+    [self._envItems addObjectsFromArray:auto_objs];
+    [self._envItems addObject:@{@"name":@"+", @"type":@"1"}];
+    
+    [self layoutAutoCells];
 }
 
 - (void) autoPreAction:(id)sender{
@@ -166,7 +237,15 @@
     
     _auto_mode = 0;
     
-    [self layoutAutoCells];
+    if([_autoItems count] == 0)
+    {
+        [self getSchedules];
+    }
+    else
+    {
+        [self layoutAutoCells];
+    }
+    
     
     titleL.text = @"预约设置";
 }
@@ -190,7 +269,15 @@
     else
     {
         [editBtn setTitle:@"编辑" forState:UIControlStateNormal];
-        [self getSchedules];
+        if(_auto_mode < 2)
+        {
+            [self getSchedules];
+        }
+        else
+        {
+            [self getEnvAutoSet];
+        }
+    
     }
     
 }
@@ -220,7 +307,15 @@
     
     _auto_mode = 1;
     
-    [self layoutAutoCells];
+    if([_autoItems count] == 0)
+    {
+        [self getSchedules];
+    }
+    else
+    {
+        [self layoutAutoCells];
+    }
+    
     
     titleL.text = @"日程设置";
 }
@@ -276,12 +371,15 @@
     int x = left;
     int y = 0;
     
-    NSMutableArray  *items = _subscribeItems;
+    NSArray  *items = _subscribeItems;
     if(_auto_mode == 1)
     {
         items = _weekItems;
     }
-    
+    else if(_auto_mode == 2)
+    {
+        items = _envItems;
+    }
     for(int i = 0; i < [items count]; i++)
     {
         id sche = [items objectAtIndex:i];
@@ -303,6 +401,20 @@
             at.delegate = self;
             
             [at showRgsSchedule:sch];
+            
+            [_autoRunCells addObject:at];
+        }
+        else if([sche isKindOfClass:[RgsAutomationObj class]])
+        {
+            RgsAutomationObj *sch = sche;
+            
+            AutoRunCell *at = [[AutoRunCell alloc]
+                               initWithFrame:CGRectMake(x, y, cellWidth, cellWidth)];
+            [_content addSubview:at];
+            at.button.tag = i;
+            at.delegate = self;
+            
+            [at showRgsAutoRun:sch];
             
             [_autoRunCells addObject:at];
         }
@@ -342,30 +454,52 @@
 
 }
 
-- (void) deleteAutoRunCell:(RgsSchedulerObj*)sch view:(UIView*)cell{
+- (void) deleteAutoRunCell:(id)sch view:(UIView*)cell{
     
     //IMP_BLOCK_SELF(AutoRunViewController);
     if(sch)
     {
-        [KVNProgress show];
-        [[RegulusSDK sharedRegulusSDK] DelSchedulerByID:sch.m_id
-                                             completion:^(BOOL result, NSError *error) {
-                                                 
-                                                 if(result)
-                                                 {
-                                                     [cell removeFromSuperview];
-                                                 }
-                                                 
-                                                 [KVNProgress dismiss];
-                                                 
-                                                 //[block_self getSchedules];
-                                             }];
+        if(_auto_mode < 2)
+        {
+            RgsSchedulerObj *rgssch = sch;
+            [KVNProgress show];
+            [[RegulusSDK sharedRegulusSDK] DelSchedulerByID:rgssch.m_id
+                                                 completion:^(BOOL result, NSError *error) {
+                                                     
+                                                     if(result)
+                                                     {
+                                                         [cell removeFromSuperview];
+                                                     }
+                                                     
+                                                     [KVNProgress dismiss];
+                                                     
+                                                     //[block_self getSchedules];
+                                                 }];
+        }
+        else
+        {
+            RgsAutomationObj *rgsato = sch;
+            [KVNProgress show];
+            [[RegulusSDK sharedRegulusSDK] DelAutomation:rgsato.m_id completion:^(BOOL result, NSError *error) {
+                
+                if(result)
+                {
+                    [cell removeFromSuperview];
+                }
+                
+                [KVNProgress dismiss];
+                
+            }];
+        }
     }
 }
 
 - (void) notifyRefreshItems:(id)sender{
 
-    [self getSchedules];
+    if(_auto_mode < 2)
+        [self getSchedules];
+    else
+        [self getEnvAutoSet];
 }
 
 - (void) buttonAddAction:(UIButton*)sender{
@@ -410,16 +544,27 @@
         
         [autoView show];
     } else {
-        ChuanGanAutoSetView *autoView = [[ChuanGanAutoSetView alloc] initWithPicker:CGRectMake(0,
-                                                                                    0,
-                                                                                    SCREEN_WIDTH,
-                                                                                    SCREEN_HEIGHT) withScnearios:_scenarios];
-        [self.view addSubview:autoView];
-        autoView._scenarios = _scenarios;
-        autoView.ctrl = self;
-        autoView._schedule = sch;
         
-        [autoView show];
+        if([_sensors count])
+        {
+        
+            ChuanGanAutoSetView *autoView = [[ChuanGanAutoSetView alloc] initWithPicker:CGRectMake(0,
+                                                                                                   0,
+                                                                                                   SCREEN_WIDTH,
+                                                                                                   SCREEN_HEIGHT) withScnearios:_scenarios];
+            [self.view addSubview:autoView];
+            autoView._scenarios = _scenarios;
+            autoView.ctrl = self;
+            autoView._schedule = sch;
+            autoView._sensor = [_sensors objectAtIndex:0];
+            
+            [autoView show];
+        }
+        else
+        {
+            [Utilities showMessage:@"没有添加传感器设备"
+                              ctrl:self];
+        }
     }
 }
 

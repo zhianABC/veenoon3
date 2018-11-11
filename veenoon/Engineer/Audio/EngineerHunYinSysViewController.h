@@ -17,4 +17,5 @@
 }
 @property (nonatomic,strong) NSArray *_hunyinSysArray;
 @property (nonatomic,strong) AudioEMix *_currentObj;
+@property (nonatomic, assign) BOOL fromScenario;
 @end

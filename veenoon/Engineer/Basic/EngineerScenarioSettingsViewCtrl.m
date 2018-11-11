@@ -364,6 +364,7 @@
     
     if(index == 0)
     {
+        [DataCenter defaultDataCenter]._isExpotingToCloudPrj = YES;
         [self exportProjectToCloud];
     }
     else if(index == 1)

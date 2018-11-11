@@ -319,6 +319,7 @@
         UITextField *tField = [_fieldVals objectForKey:[row objectForKey:@"name"]];
         if(tField)
         {
+            NSLog(@"%@", tField.text);
             [RegulusSDK RgsWifiConfWithPassword:tField.text
                                       taskCount:3
                                     timeIntevel:10
@@ -332,7 +333,19 @@
                                        }];
         }
         
-        
+        if(2 < [ssidSettings count]){
+            
+            for(RgsPropertyObj *pro in _plugDriver._properties)
+            {
+                UITextField *tField = [_fieldVals objectForKey:pro.name];
+                if(tField)
+                {
+                    pro.value = tField.text?tField.text:@"";
+                }
+            }
+            
+            [_plugDriver uploadDriverProperty];
+        } 
     }
     else
     {
@@ -359,29 +372,7 @@
 
 - (void) refreshLabelToAirQuality {
     
-    if (_isAirQuality)
-    {
-        if(self.ssidSettings == nil)
-        {
-            self.ssidSettings = [NSMutableArray array];
-            
-            NSMutableDictionary *rowDic = [NSMutableDictionary dictionary];
-            [rowDic setObject:@"SSID" forKey:@"name"];
-            
-            NSString *ssidName = [RegulusSDK GetWifiSSID];
-            if(ssidName == nil)
-                ssidName = @"";
-            [rowDic setObject:ssidName forKey:@"value"];
-            
-            [ssidSettings addObject:rowDic];
-            
-            rowDic = [NSMutableDictionary dictionary];
-            [rowDic setObject:@"密码" forKey:@"name"];
-            [rowDic setObject:@"" forKey:@"value"];
-            
-            [ssidSettings addObject:rowDic];
-        }
-    }
+    [self checkIRAndAddWifiSettings];
 }
 
 - (void) recoverSetting {
@@ -418,17 +409,19 @@
         [self syncCurrentDriverComs];
     }
 
-    if(_isAirQuality)
-    {
-        
-        [self refreshLabelToAirQuality];
-        
-        [_tableView reloadData];
-        return;
-    }
+//    if(_isAirQuality)
+//    {
+//
+//        [self refreshLabelToAirQuality];
+//
+//        [_tableView reloadData];
+//        return;
+//    }
     
     if(_plugDriver._properties)
     {
+        [self checkIRAndAddWifiSettings];
+        
         [_tableView reloadData];
         return;
     }
@@ -454,12 +447,60 @@
     
 }
 
+- (void) checkIRAndAddWifiSettings{
+    
+    if (_isAirQuality)
+    {
+        if(self.ssidSettings == nil)
+        {
+            self.ssidSettings = [NSMutableArray array];
+            
+            NSMutableDictionary *rowDic = [NSMutableDictionary dictionary];
+            [rowDic setObject:@"SSID" forKey:@"name"];
+            
+            NSString *ssidName = [RegulusSDK GetWifiSSID];
+            if(ssidName == nil)
+                ssidName = @"";
+            [rowDic setObject:ssidName forKey:@"value"];
+            
+            [ssidSettings addObject:rowDic];
+            
+            rowDic = [NSMutableDictionary dictionary];
+            [rowDic setObject:@"密码" forKey:@"name"];
+            [rowDic setObject:@"" forKey:@"value"];
+            
+            [ssidSettings addObject:rowDic];
+            
+        }
+        
+        if([_plugDriver._properties count] && [ssidSettings count] <= 2)
+        {
+            RgsPropertyObj *obj = [_plugDriver._properties objectAtIndex:0];
+            
+            NSMutableDictionary *rowDic = [NSMutableDictionary dictionary];
+            [rowDic setObject:obj.name forKey:@"name"];
+            
+            if(obj.value)
+                [rowDic setObject:obj.value forKey:@"value"];
+            else
+                [rowDic setObject:@"" forKey:@"value"];
+            
+            [ssidSettings addObject:rowDic];
+        }
+    }
+    
+}
+
+
 - (void) updateDriverProperty:(NSArray*)properties{
     
     if([properties count])
     {
         _plugDriver._properties = properties;
     }
+    
+    [self checkIRAndAddWifiSettings];
+    
     [_tableView reloadData];
     
     [KVNProgress dismiss];

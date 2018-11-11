@@ -38,4 +38,7 @@ typedef void(^CustomPickerSelectionBlock)(NSDictionary* values);
 
 - (void)removeArray;
 
+- (NSDictionary*) resultOfCurrentValue;
+
+
 @end
