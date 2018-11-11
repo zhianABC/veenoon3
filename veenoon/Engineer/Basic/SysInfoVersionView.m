@@ -7,15 +7,19 @@
 //
 
 #import "SysInfoVersionView.h"
+#import "RegulusSDK.h"
+#import "KVNProgress.h"
 
 @interface SysInfoVersionView() <UITableViewDelegate, UITableViewDataSource>
 {
     UITableView *_tableView;
 }
+@property (nonatomic, strong) NSMutableArray *_datas;
 @end
 
 
 @implementation SysInfoVersionView
+@synthesize _datas;
 
 - (id) initWithFrame:(CGRect)frame
 {
@@ -40,9 +44,23 @@
                       action:@selector(cancelAction:)
             forControlEvents:UIControlEventTouchUpInside];
         
-        CGRect rc = CGRectMake(40, 40, self.frame.size.width-80, self.frame.size.height - 70);
+        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(0,
+                                                                    10,
+                                            CGRectGetWidth(frame), 40)];
+        titleL.backgroundColor = [UIColor clearColor];
+        titleL.font = [UIFont boldSystemFontOfSize:15];
+        titleL.textColor  = [UIColor blackColor];
+        titleL.textAlignment = NSTextAlignmentCenter;
+        titleL.text = @"选择升级包";
+        [self addSubview:titleL];
         
-        _tableView = [[UITableView alloc] initWithFrame:rc style:UITableViewStyleGrouped];
+        CGRect rc = CGRectMake(0, 50, self.frame.size.width,
+                               self.frame.size.height - 50);
+        
+        
+        self._datas = [NSMutableArray array];
+        
+        _tableView = [[UITableView alloc] initWithFrame:rc style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.backgroundColor = [UIColor clearColor];
@@ -72,11 +90,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return 1;
+    return [_datas count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 36;
+    return 44;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -93,7 +111,28 @@
     
     [[cell.contentView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
-    cell.backgroundColor = [UIColor clearColor];
+    UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(0,
+                                                                0,
+                                                                CGRectGetWidth(self.frame), 44)];
+    titleL.backgroundColor = [UIColor clearColor];
+    titleL.font = [UIFont systemFontOfSize:15];
+    titleL.textColor  = [UIColor blueColor];
+    titleL.textAlignment = NSTextAlignmentCenter;
+    titleL.text = [_datas objectAtIndex:indexPath.row];
+    [cell.contentView addSubview:titleL];
+    
+    if(indexPath.row == 0)
+    {
+        UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, CGRectGetWidth(self.frame)-20, 1)];
+        line.backgroundColor = LINE_COLOR;
+        [cell.contentView addSubview:line];
+    }
+    
+    UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(10, 43, CGRectGetWidth(self.frame)-20, 1)];
+    line.backgroundColor = LINE_COLOR;
+    [cell.contentView addSubview:line];
+    
+    
     
     return cell;
 }
@@ -103,7 +142,36 @@
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
     
+    NSString *packName = [_datas objectAtIndex:indexPath.row];
+    [[RegulusSDK sharedRegulusSDK] UpdateFromUdisc:packName completion:nil];
     
+    
+    [self cancelAction:nil];
+}
+
+- (void) loadUdiskData{
+    
+    IMP_BLOCK_SELF(SysInfoVersionView);
+    
+    [[RegulusSDK sharedRegulusSDK] GetUpdatePacketFromUdisc:^(BOOL result, NSArray *names, NSError *error)
+     {
+         
+         if (result) {
+             
+             [block_self updateTable:names];
+         }
+         else
+         {
+             [KVNProgress showErrorWithStatus:[error localizedDescription]];
+         }
+     }];
+}
+
+- (void) updateTable:(NSArray*)names{
+    
+    [self._datas addObjectsFromArray:names];
+    
+    [_tableView reloadData];
 }
 
 @end

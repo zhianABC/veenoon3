@@ -264,7 +264,7 @@
     }
     else if(status == RGS_NOTIFY_STATUS_START)
     {
-        NSLog(@"%f",persent);
+        //NSLog(@"%f",persent);
         [KVNProgress showProgress:persent status:@"正在下载"];
     }
     else if (status == RGS_NOTIFY_STATUS_DONE)
@@ -286,30 +286,27 @@
     }
     else if (status == RGS_NOTIFY_STATUS_DONE)
     {
-        [KVNProgress showSuccessWithStatus:@"解压完成"];
-        [self.window.rootViewController presentViewController:[self RebootAlert]
-                           animated:YES
-                         completion:nil];
+        //[KVNProgress showSuccessWithStatus:@"解压完成"];
+        
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"解压完成"
+                                                    message:@"重启完成升级，是否重启？"
+                                                   delegate:self
+                                          cancelButtonTitle:@"取消"
+                                          otherButtonTitles:@"重启", nil];
+        av.tag = 201901;
+        [av show];
     }
 }
 
-
--(UIAlertController *)RebootAlert
-{
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"是否重启"
-                                                                   message:@"重启完成升级"
-                                                            preferredStyle:UIAlertControllerStyleActionSheet];
-    UIAlertAction * reboot = [UIAlertAction actionWithTitle:@"重启" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
-                              {
-                                  [[RegulusSDK sharedRegulusSDK] RebootSystem:nil];
-                              }];
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     
-    UIAlertAction* cancelAction =[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    if (alertView.tag == 201901 && alertView.cancelButtonIndex != buttonIndex) {
         
-    }];
-    [alert addAction:reboot];
-    [alert addAction:cancelAction];
-    return alert;
+        [[RegulusSDK sharedRegulusSDK] RebootSystem:nil];
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"NotifyGoBackWhenReboot"
+                                                            object:nil];
+    }
 }
 
 

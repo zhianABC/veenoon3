@@ -4305,7 +4305,7 @@
 				TargetAttributes = {
 					04DE1DD11AD68C5E00D49E2F = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = ES8777A4V4;
+						DevelopmentTeam = CFZYU92SAK;
 						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
@@ -5455,7 +5455,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = ES8777A4V4;
+				DEVELOPMENT_TEAM = CFZYU92SAK;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5474,7 +5474,7 @@
 					"$(PROJECT_DIR)/RegSDK",
 				);
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sz1.veenoon;
+				PRODUCT_BUNDLE_IDENTIFIER = com.veenoon.teslaria;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "veenoon/Engineer/Audio/RIghtView/AudioProcess/veenoon-Bridging-Header.h";
@@ -5493,7 +5493,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = ES8777A4V4;
+				DEVELOPMENT_TEAM = CFZYU92SAK;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5512,7 +5512,7 @@
 					"$(PROJECT_DIR)/RegSDK",
 				);
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sz1.veenoon;
+				PRODUCT_BUNDLE_IDENTIFIER = com.veenoon.teslaria;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "veenoon/Engineer/Audio/RIghtView/AudioProcess/veenoon-Bridging-Header.h";

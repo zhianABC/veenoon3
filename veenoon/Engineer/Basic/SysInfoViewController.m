@@ -13,6 +13,7 @@
 #import "RegulusSDK.h"
 #import "KVNProgress.h"
 #import "SysInfoVersionView.h"
+#import "EngineerMeetingRoomListViewCtrl.h"
 
 @interface SysInfoViewController () <UITableViewDelegate, UITableViewDataSource, JCActionViewDelegate>{
     UITableView *_tableView;
@@ -98,6 +99,31 @@
     self._mapValue = [NSMutableDictionary dictionary];
     
     [self getSysInfo];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(goBack:)
+                                                 name:@"NotifyGoBackWhenReboot"
+                                               object:nil];
+    
+}
+
+- (void) goBack:(id)sender{
+    
+    UIViewController *roomsVC = nil;
+    for(UIViewController *vc in self.navigationController.viewControllers)
+    {
+        if([vc isKindOfClass:[EngineerMeetingRoomListViewCtrl class]])
+        {
+            roomsVC = vc;
+            break;
+        }
+    }
+    
+    if(roomsVC)
+    {
+        [self.navigationController popToViewController:roomsVC
+                                              animated:YES];
+    }
     
 }
 
@@ -623,11 +649,11 @@
         [self popupTimeView];
     } else if (selectedSection == 2 && selectedRow == 0) {
         [self popupIPView];
-    } else if (selectedSection == 3 && selectedRow == 0) {
+    } else if (selectedSection == 1 && selectedRow == 0) {
         [self popupVersionView];
     }
     
-    NSLog(@"sss");
+    //NSLog(@"sss");
     
 }
 
@@ -766,7 +792,7 @@
     }
     else if(actionView.tag == 201801)
     {
-        
+         [self gotoUdiskUpdate];
     }
     else if(actionView.tag == 201802)
     {
@@ -774,7 +800,20 @@
         {
             [[RegulusSDK sharedRegulusSDK] DownloadAndInstallUpdatePacket:_pack completion:nil];
         }
+        else if(index == 1)
+        {
+            [self gotoUdiskUpdate];
+        }
     }
+}
+
+- (void) gotoUdiskUpdate{
+ 
+    SysInfoVersionView *sv = [[SysInfoVersionView alloc] initWithFrame:CGRectMake(0, 0, 300, 400)];
+    [self.view addSubview:sv];
+    sv.center = CGPointMake(SCREEN_WIDTH/2, CGRectGetHeight(self.view.frame)/2);
+    
+    [sv loadUdiskData];
 }
 
 - (void) doSetRegulusIP:(NSArray*)vals{
@@ -783,6 +822,12 @@
                                           mask:[vals objectAtIndex:1]
                                        gateway:[vals objectAtIndex:2]
                                     completion:nil];
+}
+
+- (void) dealloc
+{
+ 
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 /*
