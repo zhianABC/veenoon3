@@ -333,6 +333,32 @@
     }
 }
 
+- (BOOL) checkIsPowerOff{
+    
+    //判断是否相同状态
+    NSString *val = nil;
+    for(int i = 0; i < [_lines count]; i++)
+    {
+        NSDictionary *dic = [_lines objectAtIndex:i];
+        NSString *status = [dic objectForKey:@"status"];
+        if(val == nil)
+            val = status;
+        
+        if(![val isEqualToString:status])
+        {
+            val = nil;
+            break;
+        }
+    }
+    
+    if(val && [val isEqualToString:@"OFF"])
+    {
+        return YES;
+    }
+    
+    return NO;
+}
+
 - (id) generateEventOperation_power{
     
     //判断是否相同状态

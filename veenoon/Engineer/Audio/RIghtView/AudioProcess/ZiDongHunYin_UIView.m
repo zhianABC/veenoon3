@@ -32,18 +32,19 @@
     int valueMin;
 }
 @property (nonatomic, strong) AudioEProcessorAutoMixProxy *_currentProxy;
-@property (nonatomic, strong) AudioEProcessor *_currentAodio;
+@property (nonatomic, strong) AudioEProcessor *_currentAudio;
 @end
 
 @implementation ZiDongHunYin_UIView
 @synthesize _currentProxy;
+@synthesize _currentAudio;
 
 - (id)initWithFrameProxy:(CGRect)frame withAudio:(AudioEProcessor*) audioProcessor withProxy:(AudioEProcessorAutoMixProxy*) proxy
 {
     if(self = [super initWithFrame:frame]) {
         
         self._currentProxy = proxy;
-        self._currentAodio = audioProcessor;
+        self._currentAudio = audioProcessor;
         
         inputChanels = [NSMutableArray array];
         outputChanels = [NSMutableArray array];
@@ -110,7 +111,7 @@
     
     labelL.text = @"输入";
     
-    int num = (int) [self._currentAodio._inAudioProxys count];
+    int num = (int) [self._currentAudio._inAudioProxys count];
     if (num <= 0) {
         return;
     }
@@ -236,7 +237,8 @@
     
     [_currentProxy controlZidongHunyinBtn:proxyName
                                  withType:0
-                                withState:isEnable];
+                                withState:isEnable
+                                     exec:YES];
 }
 
 - (void) createOutPutComps {
@@ -249,7 +251,7 @@
     
     labelL.text = @"输出";
     
-    int num = (int) [self._currentAodio._outAudioProxys count];
+    int num = (int) [self._currentAudio._outAudioProxys count];
     if (num <= 0) {
         return;
     }
@@ -303,9 +305,16 @@
         
         [outputChanels addObject:btn];
         
-        if([_currentProxy._outputMap objectForKey:valName])
+        if(self._currentAudio._tmpIsScenarioPlug)
         {
-            [self changeOutputButtonState:btn];
+            [self resetOutputChanelBtnAction:btn];
+        }
+        else
+        {
+            if([_currentProxy._outputMap objectForKey:valName])
+            {
+                [self changeOutputButtonState:btn];
+            }
         }
     }
 }
@@ -339,6 +348,18 @@
     return isEnable;
 }
 
+- (void) resetOutputChanelBtnAction:(UIButton*) sender {
+    
+    BOOL isEnable = [self changeOutputButtonState:sender];
+    
+    NSString *proxyName = sender.titleLabel.text;
+    
+    [_currentProxy controlZidongHunyinBtn:proxyName
+                                 withType:1
+                                withState:isEnable
+                                     exec:NO];
+}
+
 - (void) outputChanelBtnAction:(UIButton*) sender {
     
     BOOL isEnable = [self changeOutputButtonState:sender];
@@ -347,7 +368,8 @@
     
     [_currentProxy controlZidongHunyinBtn:proxyName
                                  withType:1
-                                withState:isEnable];
+                                withState:isEnable
+                                     exec:YES];
 }
 
 - (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn {

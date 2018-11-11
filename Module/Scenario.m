@@ -65,6 +65,7 @@
     
     RgsSceneOperation * optDelay;
     
+    int _isAllPowerOff;
     
 }
 @property (nonatomic, strong) RgsDriverObj *_rgsDriver;
@@ -754,6 +755,7 @@
     
     
     [powerOpts removeAllObjects];
+    _isAllPowerOff = YES;
     
     //音频处理
     if([self._audioDevices count])
@@ -784,12 +786,15 @@
     //电源开关放在整个场景的前面
     if([powerOpts count])
     {
-        //开启后要等1分钟
+        if(!_isAllPowerOff)
+        {
+        //开启后要等1分钟，如果是全部关闭，就不需要等1分钟
         RgsSceneOperation* opt60sDelay = [[RgsSceneOperation alloc] initCmdWithParam:1
                                                                                  cmd:@"Sleep"
                                                                                param:@{@"MS":@"60000"}];
         
         [_eventOperations insertObject:opt60sDelay atIndex:0];
+        }
         
         for(int i = (int)[powerOpts count] - 1; i>=0; i--)
         {
@@ -1007,6 +1012,11 @@
         {
             NSArray *proxys = ((APowerESet*)ap)._proxys;
             
+            if(![(APowerESet*)ap checkIsPowerOff])
+            {
+                _isAllPowerOff = NO;
+            }
+            
             //全开/全关
             RgsSceneOperation* rsp = [(APowerESet*)ap generateEventOperation_power];
             if(rsp)
@@ -1140,6 +1150,11 @@
         else if ([dev isKindOfClass:[APowerESet class]])
         {
             NSArray *proxys = ((APowerESet*)dev)._proxys;
+            
+            if(![(APowerESet*)dev checkIsPowerOff])
+            {
+                _isAllPowerOff = NO;
+            }
             
             //全开/全关
             RgsSceneOperation* rsp = [(APowerESet*)dev generateEventOperation_power];

@@ -35,7 +35,10 @@
 - (NSDictionary*)getAutoMixCmdSettings;
 - (NSString*) getZidonghuiyinZengYi;
 
-- (void) controlZidongHunyinBtn:(NSString*) proxyName withType:(int)type withState:(BOOL)state;
+- (void) controlZidongHunyinBtn:(NSString*) proxyName
+                       withType:(int)type
+                      withState:(BOOL)state
+                           exec:(BOOL)exec;
 - (void) controlZiDongHunYinZengYi:(NSString*) zengyiDB;
 
 - (NSArray*) generateEventOperation_inputs;

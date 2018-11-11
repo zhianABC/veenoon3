@@ -62,6 +62,9 @@
 
 @property (nonatomic, strong) NSMutableDictionary *config;
 
+//临时存储，是否是从场景来的
+@property (nonatomic, assign) BOOL _tmpIsScenarioPlug;
+
 - (int) getID;
 
 - (void) createDriver;

@@ -751,7 +751,7 @@
             EngineerAudioProcessViewCtrl *ctrl = [[EngineerAudioProcessViewCtrl alloc] init];
             ctrl._audioProcessArray = @[plug];
             ctrl._currentAudioDevices = _scenario._audioDevices;
-            
+            plug._tmpIsScenarioPlug = _isEditingScenario;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
         // wuxian array

@@ -136,16 +136,16 @@
         
         
         
-        _isyaxianStart = YES;
+        _isyaxianStart = NO;
         self._yaxianFazhi = @"0";
         self._yaxianXielv = @"2";
         self._yaxianStartTime = @"20";
         self._yaxianRecoveryTime = @"20";
         
-        self._zaoshengFazhi = @"0";
+        self._zaoshengFazhi = @"-65";
         self._zaoshengStartTime = @"20";
         self._zaoshengHuifuTime = @"20";
-        self._isZaoshengStarted = NO;
+        self._isZaoshengStarted = YES;
         
         
         self._lvbojunhengGaotongType = @"Bessel";

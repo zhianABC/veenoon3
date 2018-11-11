@@ -168,8 +168,10 @@
     return result;
 }
 
-- (void) controlZidongHunyinBtn:(NSString*) proxyName withType:(int)type withState:(BOOL)state {
-    
+- (void) controlZidongHunyinBtn:(NSString*) proxyName
+                       withType:(int)type
+                      withState:(BOOL)state
+                           exec:(BOOL)exec {
     if (type == 0) {
         if (state) {
             [_inputMap setObject:@1 forKey:proxyName];
@@ -184,7 +186,12 @@
         }
     }
     
-    [self controlAutoMixProxySelected:proxyName withType:type withState:state];
+    //是否执行命令
+    if(exec){
+        [self controlAutoMixProxySelected:proxyName
+                                 withType:type
+                                withState:state];
+    }
     
 }
 
