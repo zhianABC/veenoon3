@@ -748,6 +748,7 @@
 		EB62DF7720D7A04D00144EE0 /* TeslariaComboChooser.m in Sources */ = {isa = PBXBuildFile; fileRef = EB62DF7620D7A04D00144EE0 /* TeslariaComboChooser.m */; };
 		EB62DFF920DE85CE00144EE0 /* AudioEProcessorSignalProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = EB62DFF820DE85CE00144EE0 /* AudioEProcessorSignalProxy.m */; };
 		EB62DFFC20DE85E300144EE0 /* AudioEProcessorAutoMixProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = EB62DFFB20DE85E300144EE0 /* AudioEProcessorAutoMixProxy.m */; };
+		EB6FB21F2197D23700ECE791 /* SysInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB6FB21E2197D23700ECE791 /* SysInfoViewController.m */; };
 		EB7333F1204102DF00AE60B8 /* FloorWarmRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333F0204102DF00AE60B8 /* FloorWarmRightView.m */; };
 		EB7333F42041046400AE60B8 /* AirCleanRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333F32041046400AE60B8 /* AirCleanRightView.m */; };
 		EB7333FA204108B000AE60B8 /* AddWetRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333F9204108B000AE60B8 /* AddWetRightView.m */; };
@@ -2032,6 +2033,8 @@
 		EB62DFF820DE85CE00144EE0 /* AudioEProcessorSignalProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioEProcessorSignalProxy.m; sourceTree = "<group>"; };
 		EB62DFFA20DE85E300144EE0 /* AudioEProcessorAutoMixProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioEProcessorAutoMixProxy.h; sourceTree = "<group>"; };
 		EB62DFFB20DE85E300144EE0 /* AudioEProcessorAutoMixProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioEProcessorAutoMixProxy.m; sourceTree = "<group>"; };
+		EB6FB21D2197D23700ECE791 /* SysInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SysInfoViewController.h; sourceTree = "<group>"; };
+		EB6FB21E2197D23700ECE791 /* SysInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SysInfoViewController.m; sourceTree = "<group>"; };
 		EB7333EF204102DF00AE60B8 /* FloorWarmRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FloorWarmRightView.h; sourceTree = "<group>"; };
 		EB7333F0204102DF00AE60B8 /* FloorWarmRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FloorWarmRightView.m; sourceTree = "<group>"; };
 		EB7333F22041046400AE60B8 /* AirCleanRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirCleanRightView.h; sourceTree = "<group>"; };
@@ -3959,6 +3962,8 @@
 				3448C2092147AF4D00194569 /* ScenarioCellView.m */,
 				EBAE5BBC1FE0071C00C10C4D /* EngineerPresetScenarioViewCtrl.h */,
 				EBAE5BBA1FE0070600C10C4D /* EngineerPresetScenarioViewCtrl.m */,
+				EB6FB21D2197D23700ECE791 /* SysInfoViewController.h */,
+				EB6FB21E2197D23700ECE791 /* SysInfoViewController.m */,
 			);
 			path = Basic;
 			sourceTree = "<group>";
@@ -5252,6 +5257,7 @@
 				04DE1EBF1AD6AF7900D49E2F /* User.m in Sources */,
 				EB1717A01FF613EC00CBDB81 /* EngineerNewWindViewCtrl.m in Sources */,
 				34D34F3F20DF5BA800CC7897 /* VDVDPlayerProxy.m in Sources */,
+				EB6FB21F2197D23700ECE791 /* SysInfoViewController.m in Sources */,
 				EB4EC1221FE7FC3B000B3101 /* EngineerWirelessMeetingViewCtrl.m in Sources */,
 				EB4E39E320273F6100533575 /* HandtoHandSettingsView.m in Sources */,
 				3448D96C2073C5070055D48F /* TwoIconAndTitleView.m in Sources */,

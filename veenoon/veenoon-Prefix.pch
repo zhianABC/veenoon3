@@ -81,6 +81,7 @@
 #define DARK_GRAY_COLOR         RGB(31, 31, 31)
 #define BLACK_COLOR             RGB(0x3e, 0x3a, 0x37)
 #define TITLE_LINE_COLOR        RGB(65, 65, 65)
+#define SYS_INFO_SEC_COLOR        RGB(43, 43, 45)
 #define RIGHT_VIEW_CORNER_COLOR        RGB(71, 71, 71)
 #define RIGHT_VIEW_CORNER_BTN_COLOR        RGB(124, 124, 124)
 #define RIGHT_VIEW_CORNER_SD_COLOR        RGB(36, 37, 39)
