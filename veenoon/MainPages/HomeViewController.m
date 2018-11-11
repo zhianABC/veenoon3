@@ -211,7 +211,7 @@
     
     if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
     {
-        jcAction = [[JCActionView alloc] initWithTitles:@[@"直接拍照", @"从相册中选取"]
+        jcAction = [[JCActionView alloc] initWithTitles:@[@"直接拍照", @"从相册中选取", @"恢复默认背景"]
                                                                 frame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
         jcAction.delegate_ = self;
         jcAction.tag = 2017;
@@ -248,7 +248,10 @@
                              
                          }];
     }
-    
+    else if(index == 2)
+    {
+        imageView.image = [UIImage imageNamed:@"home_background.png"];
+    }
 }
 
 
