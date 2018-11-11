@@ -24,6 +24,7 @@
 #import "JCActionView.h"
 #import "AppDelegate.h"
 #import "HttpFileGetter.h"
+#import "SysInfoViewController.h"
 
 #ifdef OPEN_REG_LIB_DEF
 #import "RegulusSDK.h"
@@ -111,6 +112,18 @@
                action:@selector(linktoSysAction:)
      forControlEvents:UIControlEventTouchUpInside];
     
+    
+    UIButton *sysinfoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    sysinfoBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
+    [bottomBar addSubview:sysinfoBtn];
+    [sysinfoBtn setTitle:@"系统信息" forState:UIControlStateNormal];
+    [sysinfoBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [sysinfoBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
+    sysinfoBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    [sysinfoBtn addTarget:self
+              action:@selector(sysInforAction:)
+    forControlEvents:UIControlEventTouchUpInside];
+    
     BOOL isLocal = [DataCenter defaultDataCenter]._isLocalPrj;
     if(!isLocal)
     {
@@ -119,7 +132,7 @@
         newSysBtn.center = CGPointMake(newSysBtn.center.x, CGRectGetMidY(linkSysBtn.frame) - 80);
         
         UIButton *importSysBtn = [UIButton buttonWithColor:nil selColor:nil];
-        importSysBtn.frame = CGRectMake(SCREEN_WIDTH - 220, 40, 200, 44);
+        importSysBtn.frame = CGRectMake(SCREEN_WIDTH - 210, 40, 200, 44);
         [self.view addSubview:importSysBtn];
         [importSysBtn setTitle:@"载入离线配置" forState:UIControlStateNormal];
         [importSysBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -182,6 +195,12 @@
                                                  name:@"Notify_Reload_Projects_After_Import_Action"
                                                object:nil];
     
+}
+
+- (void) sysInforAction:(id)sender {
+    SysInfoViewController *ctrl = [[SysInfoViewController alloc] init];
+    
+    [self.navigationController  pushViewController:ctrl animated:YES];
 }
 
 - (void) endImportProjectRefresh:(id)sender{
