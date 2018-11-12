@@ -36,11 +36,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+   
+    [NSThread sleepForTimeInterval:1.0];
     
-//    AVAudioSession *session = [AVAudioSession sharedInstance];
-//    [session setActive:YES error:nil];
-//    [session setCategory:AVAudioSessionCategoryPlayback error:nil];
-//    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
     [RegulusSDK sharedRegulusSDK].delegate = self;
     
     User *u = [UserDefaultsKV getUser];
@@ -60,11 +60,6 @@
             _naviRoot = [[CMNavigationController alloc] initWithRootViewController:wellcome];
             _naviRoot.navigationBarHidden = YES;
             
-//            InvitationCodeViewCotroller *wellcome = [[InvitationCodeViewCotroller alloc] init];
-//            wellcome.showBack = NO;
-//            _naviRoot = [[CMNavigationController alloc] initWithRootViewController:wellcome];
-//            _naviRoot.navigationBarHidden = YES;
-            
         }
     }
     else
@@ -79,13 +74,9 @@
     
     self.window.rootViewController = _naviRoot;
     
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
-    
-    
-    //[self enterApp];
+
     
     _maskView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 768, 1024)];
     _maskView.backgroundColor = RGBA(0, 0, 0, 0.3);
@@ -93,10 +84,6 @@
     _wait.hidesWhenStopped = YES;
     [_maskView addSubview:_wait];
     _wait.center = CGPointMake(768/2, 1024/2);
-    
-//    [UMConfigure initWithAppkey:UMENG_KEY channel:nil];
-//    [MobClick setScenarioType:E_UM_NORMAL];
-//    [MobClick setCrashReportEnabled:YES];
     
     return YES;
 }
@@ -173,7 +160,7 @@
     }
 }
 
-- (void) enterApp {
+- (void) enterMainApp {
     
     HomeViewController *homeCtrl = [[HomeViewController alloc] init];
     _naviRoot = [[CMNavigationController alloc] initWithRootViewController:homeCtrl];

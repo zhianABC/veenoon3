@@ -19,7 +19,7 @@
 
 +(AppDelegate*)shareAppDelegate;
 
-- (void) enterApp;
+- (void) enterMainApp;
 
 - (void) showWait:(BOOL)show;
 

@@ -444,7 +444,7 @@
     else
     {
         [[DataCenter defaultDataCenter] syncDriversWithServer];
-        [[AppDelegate shareAppDelegate] enterApp];
+        [[AppDelegate shareAppDelegate] enterMainApp];
     }
 }
 

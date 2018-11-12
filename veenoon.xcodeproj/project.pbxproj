@@ -352,6 +352,7 @@
 		349DADE5206E8D02001593DE /* AudioEWirlessMeetingSys.m in Sources */ = {isa = PBXBuildFile; fileRef = 349DADDD206E8D02001593DE /* AudioEWirlessMeetingSys.m */; };
 		349DADE8206E8D5C001593DE /* APowerESet.m in Sources */ = {isa = PBXBuildFile; fileRef = 349DADE7206E8D5C001593DE /* APowerESet.m */; };
 		34A8965320443184007934E1 /* GradeLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A8965220443184007934E1 /* GradeLineView.m */; };
+		34C197A2219929F1008D6C07 /* LoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C197A0219929F0008D6C07 /* LoadingViewController.m */; };
 		34C73B60205FA268008DFACC /* ring@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34C73B5F205FA268008DFACC /* ring@2x.png */; };
 		34C73B68205FA4D4008DFACC /* s3_19@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34C73B61205FA4C8008DFACC /* s3_19@2x.png */; };
 		34C73B69205FA4D4008DFACC /* s3_16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34C73B62205FA4CA008DFACC /* s3_16@2x.png */; };
@@ -1537,6 +1538,8 @@
 		349DADE7206E8D5C001593DE /* APowerESet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APowerESet.m; sourceTree = "<group>"; };
 		34A8965120443184007934E1 /* GradeLineView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GradeLineView.h; sourceTree = "<group>"; };
 		34A8965220443184007934E1 /* GradeLineView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GradeLineView.m; sourceTree = "<group>"; };
+		34C197A0219929F0008D6C07 /* LoadingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingViewController.m; sourceTree = "<group>"; };
+		34C197A1219929F0008D6C07 /* LoadingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingViewController.h; sourceTree = "<group>"; };
 		34C73B5F205FA268008DFACC /* ring@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ring@2x.png"; sourceTree = "<group>"; };
 		34C73B61205FA4C8008DFACC /* s3_19@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "s3_19@2x.png"; sourceTree = "<group>"; };
 		34C73B62205FA4CA008DFACC /* s3_16@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "s3_16@2x.png"; sourceTree = "<group>"; };
@@ -2533,6 +2536,8 @@
 				04D27A291AF8470100305E39 /* SelDataViewController.m */,
 				0469CF3A1B033162006B901E /* CustomImagePickerCtrlor.h */,
 				0469CF3B1B033162006B901E /* CustomImagePickerCtrlor.m */,
+				34C197A1219929F0008D6C07 /* LoadingViewController.h */,
+				34C197A0219929F0008D6C07 /* LoadingViewController.m */,
 				34928A981EC1BD330089F429 /* ReaderCodeViewController.h */,
 				34928A991EC1BD330089F429 /* ReaderCodeViewController.m */,
 				04DE1EBC1AD6AF7900D49E2F /* Module */,
@@ -4305,7 +4310,7 @@
 				TargetAttributes = {
 					04DE1DD11AD68C5E00D49E2F = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = CFZYU92SAK;
+						DevelopmentTeam = 97DZFR5FX8;
 						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
@@ -5158,6 +5163,7 @@
 				34686C9E1ED025CB001749A1 /* ConverUtil.m in Sources */,
 				EB1E64C021450F8800A44EAE /* UserEnvStateView.m in Sources */,
 				EBD009BF2090613C00920849 /* VVideoProcessSet.m in Sources */,
+				34C197A2219929F1008D6C07 /* LoadingViewController.m in Sources */,
 				EBD009B6208CB88300920849 /* VRemoteSettingsSet.m in Sources */,
 				EB235011204D9648008F6CA2 /* XDPickView.m in Sources */,
 				EB795B482042DD6F005D1F47 /* AudioOutputSettingViewCtrl.m in Sources */,
@@ -5455,7 +5461,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = CFZYU92SAK;
+				DEVELOPMENT_TEAM = 97DZFR5FX8;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5474,12 +5480,13 @@
 					"$(PROJECT_DIR)/RegSDK",
 				);
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.veenoon.teslaria;
+				PRODUCT_BUNDLE_IDENTIFIER = com.veeno.teslaria;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "veenoon/Engineer/Audio/RIghtView/AudioProcess/veenoon-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 2;
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
@@ -5493,7 +5500,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = CFZYU92SAK;
+				DEVELOPMENT_TEAM = 97DZFR5FX8;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5512,11 +5519,12 @@
 					"$(PROJECT_DIR)/RegSDK",
 				);
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.veenoon.teslaria;
+				PRODUCT_BUNDLE_IDENTIFIER = com.veeno.teslaria;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "veenoon/Engineer/Audio/RIghtView/AudioProcess/veenoon-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 2;
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;

@@ -237,14 +237,14 @@
     if([u isActive])
     {
         [[DataCenter defaultDataCenter] syncDriversWithServer];
-        [[AppDelegate shareAppDelegate] enterApp];
+        [[AppDelegate shareAppDelegate] enterMainApp];
     }
 }
 
 
 - (void) didLogin {
     
-    [[AppDelegate shareAppDelegate] enterApp];
+    [[AppDelegate shareAppDelegate] enterMainApp];
     
 }
 
