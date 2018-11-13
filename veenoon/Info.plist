@@ -8,11 +8,6 @@
 	<string>TESLARIA</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
-	<key>CFBundleIconFiles</key>
-	<array>
-		<string>Icon.png</string>
-		<string>Icon@2x.png</string>
-	</array>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -38,8 +33,6 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>打开您的摄像头，拍摄照片或者扫描二维码。</string>
-	<key>NSMainNibFile~ipad</key>
-	<string>Main</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>使用您的麦克</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
@@ -52,6 +45,10 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIRequiresFullScreen</key>
+	<true/>
+	<key>UIStatusBarHidden~ipad</key>
+	<false/>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationLandscapeLeft</string>

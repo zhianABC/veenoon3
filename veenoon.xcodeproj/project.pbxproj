@@ -40,7 +40,6 @@
 		04DE1DDB1AD68C5E00D49E2F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DE1DDA1AD68C5E00D49E2F /* AppDelegate.m */; };
 		04DE1DE11AD68C5E00D49E2F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04DE1DDF1AD68C5E00D49E2F /* Main.storyboard */; };
 		04DE1DE31AD68C5E00D49E2F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04DE1DE21AD68C5E00D49E2F /* Images.xcassets */; };
-		04DE1DE61AD68C5E00D49E2F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04DE1DE41AD68C5E00D49E2F /* LaunchScreen.xib */; };
 		04DE1DF21AD68C5E00D49E2F /* ExasForiPadTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DE1DF11AD68C5E00D49E2F /* ExasForiPadTests.m */; };
 		04DE1E831AD6AEE000D49E2F /* ClassFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DE1DFF1AD6AEE000D49E2F /* ClassFactory.m */; };
 		04DE1E861AD6AEE000D49E2F /* ConfigureSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DE1E051AD6AEE000D49E2F /* ConfigureSetting.m */; };
@@ -353,6 +352,7 @@
 		349DADE8206E8D5C001593DE /* APowerESet.m in Sources */ = {isa = PBXBuildFile; fileRef = 349DADE7206E8D5C001593DE /* APowerESet.m */; };
 		34A8965320443184007934E1 /* GradeLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A8965220443184007934E1 /* GradeLineView.m */; };
 		34C197A2219929F1008D6C07 /* LoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C197A0219929F0008D6C07 /* LoadingViewController.m */; };
+		34C197E3219935BB008D6C07 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34C197E1219935BA008D6C07 /* LaunchScreen.storyboard */; };
 		34C73B60205FA268008DFACC /* ring@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34C73B5F205FA268008DFACC /* ring@2x.png */; };
 		34C73B68205FA4D4008DFACC /* s3_19@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34C73B61205FA4C8008DFACC /* s3_19@2x.png */; };
 		34C73B69205FA4D4008DFACC /* s3_16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34C73B62205FA4CA008DFACC /* s3_16@2x.png */; };
@@ -1079,7 +1079,6 @@
 		04DE1DDA1AD68C5E00D49E2F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; tabWidth = 3; };
 		04DE1DE01AD68C5E00D49E2F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		04DE1DE21AD68C5E00D49E2F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		04DE1DE51AD68C5E00D49E2F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		04DE1DEB1AD68C5E00D49E2F /* veenoonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = veenoonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04DE1DF01AD68C5E00D49E2F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04DE1DF11AD68C5E00D49E2F /* ExasForiPadTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExasForiPadTests.m; sourceTree = "<group>"; };
@@ -1540,6 +1539,7 @@
 		34A8965220443184007934E1 /* GradeLineView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GradeLineView.m; sourceTree = "<group>"; };
 		34C197A0219929F0008D6C07 /* LoadingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingViewController.m; sourceTree = "<group>"; };
 		34C197A1219929F0008D6C07 /* LoadingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingViewController.h; sourceTree = "<group>"; };
+		34C197E2219935BA008D6C07 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		34C73B5F205FA268008DFACC /* ring@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ring@2x.png"; sourceTree = "<group>"; };
 		34C73B61205FA4C8008DFACC /* s3_19@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "s3_19@2x.png"; sourceTree = "<group>"; };
 		34C73B62205FA4CA008DFACC /* s3_16@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "s3_16@2x.png"; sourceTree = "<group>"; };
@@ -2555,8 +2555,8 @@
 				04D719861DADE7D4002153D7 /* ActivityViewController.h */,
 				04D719871DADE7D4002153D7 /* ActivityViewController.m */,
 				04DE1DDF1AD68C5E00D49E2F /* Main.storyboard */,
+				34C197E1219935BA008D6C07 /* LaunchScreen.storyboard */,
 				04DE1DE21AD68C5E00D49E2F /* Images.xcassets */,
-				04DE1DE41AD68C5E00D49E2F /* LaunchScreen.xib */,
 				04DE1DD51AD68C5E00D49E2F /* Supporting Files */,
 			);
 			path = veenoon;
@@ -4310,7 +4310,7 @@
 				TargetAttributes = {
 					04DE1DD11AD68C5E00D49E2F = {
 						CreatedOnToolsVersion = 6.1.1;
-						DevelopmentTeam = 97DZFR5FX8;
+						DevelopmentTeam = ES8777A4V4;
 						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
 					};
@@ -4481,7 +4481,6 @@
 				EBDF1C4B1FC5D5CF00A756EA /* air_clean_sys_s@2x.png in Resources */,
 				04DE1DE11AD68C5E00D49E2F /* Main.storyboard in Resources */,
 				EB23AEA71FD1917E00D1570F /* remote_video_ssss@2x.png in Resources */,
-				04DE1DE61AD68C5E00D49E2F /* LaunchScreen.xib in Resources */,
 				3456C18F20A034D9001FAB61 /* senario_02_20@2x.png in Resources */,
 				EB9986E620B6EEC1007E4770 /* kongqichuangan_s@2x.png in Resources */,
 				341DD3CB211891C1007CD30F /* auto_run_pre@2x.png in Resources */,
@@ -4503,6 +4502,7 @@
 				3448D9422073AB800055D48F /* red_del_icon@2x.png in Resources */,
 				EBF831F31FD04C2B0096E6EC /* user_video_play_next@2x.png in Resources */,
 				EBDF1C111FC5C6C900A756EA /* meeting_discuss_s@2x.png in Resources */,
+				34C197E3219935BB008D6C07 /* LaunchScreen.storyboard in Resources */,
 				EB23AE9C1FD18AD600D1570F /* remote_video_dialphone@2x.png in Resources */,
 				342188192145228700DBAA4D /* i_btn_white@2x.png in Resources */,
 				34190F16205D537E009A519C /* a_icon_8_sel@2x.png in Resources */,
@@ -5361,12 +5361,12 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		04DE1DE41AD68C5E00D49E2F /* LaunchScreen.xib */ = {
+		34C197E1219935BA008D6C07 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				04DE1DE51AD68C5E00D49E2F /* Base */,
+				34C197E2219935BA008D6C07 /* Base */,
 			);
-			name = LaunchScreen.xib;
+			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -5461,7 +5461,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 97DZFR5FX8;
+				DEVELOPMENT_TEAM = ES8777A4V4;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5480,7 +5480,7 @@
 					"$(PROJECT_DIR)/RegSDK",
 				);
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.veeno.teslaria;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sz1.veenoon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "veenoon/Engineer/Audio/RIghtView/AudioProcess/veenoon-Bridging-Header.h";
@@ -5500,7 +5500,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 97DZFR5FX8;
+				DEVELOPMENT_TEAM = ES8777A4V4;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5519,7 +5519,7 @@
 					"$(PROJECT_DIR)/RegSDK",
 				);
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.veeno.teslaria;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sz1.veenoon;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "veenoon/Engineer/Audio/RIghtView/AudioProcess/veenoon-Bridging-Header.h";
