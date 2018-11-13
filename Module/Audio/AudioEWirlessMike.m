@@ -7,30 +7,24 @@
 //
 
 #import "AudioEWirlessMike.h"
+#import "AudioEWirlessMikeProxy.h"
 #import "RegulusSDK.h"
+#import "DataSync.h"
+#import "KVNProgress.h"
 
 @interface AudioEWirlessMike ()
 {
     
 }
-@property (nonatomic, strong) NSMutableArray *_channels;
+
 
 @end
 
 
 @implementation AudioEWirlessMike
-@synthesize _channels;
-@synthesize _freqVal;//频率
-@synthesize _freqops;
-
-@synthesize _groups;//组-通道
-@synthesize _groupVal;
-
-@synthesize _dbs;//增益
-@synthesize _dbVal;
-
-@synthesize _sq;
-@synthesize _sqVal;
+@synthesize _proxys;
+@synthesize _proxyObj;
+@synthesize _localSavedCommands;
 
 - (id) init
 {
@@ -38,7 +32,10 @@
     {
         
         self._ipaddress = @"192.168.1.100";
-        self._channels = [NSMutableArray array];
+        
+        self._show_icon_name = @"a_wx_2.png";
+        self._show_icon_sel_name = @"a_wx_2_sel.png";
+        
     }
     
     return self;
@@ -46,9 +43,9 @@
 
 - (void) initChannels:(int)num{
     
-    if([_channels count])
-        [_channels removeAllObjects];
-    
+//    if([_channels count])
+//        [_channels removeAllObjects];
+//
     
     for(int i = 0; i < num; i++)
     {
@@ -73,13 +70,14 @@
         if(self._deviceno)
             [dic setObject:self._deviceno forKey:@"device"];
         
-        [_channels addObject:dic];
+       // [_channels addObject:dic];
     }
     
 }
 
 - (void) fillDataFromCtrlCenter
 {
+    /*
     NSMutableArray *groupValues = [NSMutableArray array];
     [groupValues addObject:@{@"name":@"A", @"subs":@[@{@"name":@"01"},@{@"name":@"02"},@{@"name":@"03"}]}];
     [groupValues addObject:@{@"name":@"B", @"subs":@[@{@"name":@"04"},@{@"name":@"05"},@{@"name":@"06"}]}];
@@ -117,153 +115,114 @@
     NSDictionary *g1 = [[g0 objectForKey:@"subs"] objectAtIndex:0];
     self._groupVal = @{@0:@{@"index":@0, @"value":g0}
                        ,@1:@{@"index":@0,@"value":g1}};
+     */
 }
 
-- (NSArray*)channles{
+
+
+- (NSString*) deviceName{
     
-    return _channels;
+    if(self._name)
+        return self._name;
+    
+    return @"无线话筒";
 }
 
-- (int) channelsCount{
+- (void) createDriver{
     
-    return (int)[_channels count];
+    RgsAreaObj *area = [DataSync sharedDataSync]._currentArea;
+    if(area && _driverInfo && !_driver)
+    {
+        RgsDriverInfo *info = _driverInfo;
+        
+        IMP_BLOCK_SELF(AudioEWirlessMike);
+        
+        [KVNProgress show];
+        [[RegulusSDK sharedRegulusSDK] CreateDriver:area.m_id
+                                             serial:info.serial
+                                         completion:^(BOOL result, RgsDriverObj *driver, NSError *error) {
+                                             if (result) {
+                                                 
+                                                 block_self._driver = driver;
+                                                 block_self._name = driver.name;
+                                                 
+                                                 [[NSNotificationCenter defaultCenter] postNotificationName:@"NotifyRefreshTableWithCom" object:nil];
+                                             }
+                                             [KVNProgress showSuccess];
+                                         }];
+    }
 }
 
-- (NSMutableDictionary *)channelAtIndex:(int)index{
+- (void) removeDriver{
     
-    if(index < [_channels count])
-        return [_channels objectAtIndex:index];
-    
-    return nil;
+    if(_driver)
+    {
+        RgsDriverObj *dr = _driver;
+        [[RegulusSDK sharedRegulusSDK] DeleteDriver:dr.m_id
+                                         completion:^(BOOL result, NSError *error) {
+                                             
+                                         }];
+    }
 }
 
-- (NSString *)objectToJsonString{
+- (void) prepareAllCmds
+{
     
-    NSMutableDictionary *allData = [NSMutableDictionary dictionary];
-    
-    if (self._name) {
-        [allData setObject:self._name forKey:@"name"];
+    if([_proxys count])
+    {
+        NSMutableArray *proxyids = [NSMutableArray array];
+        //只读取一个，因为所有的Channel的commands相同
+        AudioEWirlessMikeProxy *vap = [_proxys objectAtIndex:0];
+        [proxyids addObject:[NSNumber numberWithInt:(int)vap._rgsProxyObj.m_id]];
+        
+        IMP_BLOCK_SELF(AudioEWirlessMike);
+        
+        [[RegulusSDK sharedRegulusSDK] GetProxyCommandDict:proxyids
+                                                completion:^(BOOL result, NSDictionary *commd_dict, NSError *error) {
+                                                    
+                                                    [block_self loadCommands:commd_dict];
+                                                    
+                                                }];
     }
     
-    if(self._brand)
-        [allData setObject:self._brand forKey:@"brand"];
-    
-    if(self._type)
-        [allData setObject:self._type forKey:@"type"];
-    
-    if(self._deviceno)
-        [allData setObject:self._deviceno forKey:@"deviceno"];
-    
-    if(self._ipaddress)
-        [allData setObject:self._ipaddress forKey:@"ipaddress"];
-    
-    if(self._deviceid)
-        [allData setObject:self._deviceid forKey:@"deviceid"];
-    
-    if(self._comIdx)
-        [allData setObject:[NSString stringWithFormat:@"%d",self._comIdx] forKey:@"com"];
-    
-    [allData setObject:[NSString stringWithFormat:@"%d",self._index] forKey:@"index"];
-    
-    
-    if(self._channels)
-        [allData setObject:self._channels forKey:@"channels"];
-    
-    if(self._freqVal)
-        [allData setObject:self._freqVal forKey:@"freqVal"];
-    
-    if(self._freqops)
-        [allData setObject:self._freqops forKey:@"freqops"];
-    
-    if(self._groups)
-        [allData setObject:self._groups forKey:@"groups"];
-    
-    if(self._groupVal)
-        [allData setObject:self._groupVal forKey:@"groupVal"];
-    
-    if(self._sq)
-        [allData setObject:self._sq forKey:@"sq"];
-    if(self._sqVal)
-        [allData setObject:self._sqVal forKey:@"sqVal"];
-    
-    if(self._dbs)
-        [allData setObject:self._dbs forKey:@"dbs"];
-    if(self._dbVal)
-        [allData setObject:self._dbVal forKey:@"dbVal"];
-    
-    NSError *error = nil;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:allData
-                                                       options:NSJSONWritingPrettyPrinted
-                                                         error: &error];
-    
-    NSString *jsonresult = [[NSString alloc] initWithData:jsonData
-                                            encoding:NSUTF8StringEncoding];
-    
-    
-    return jsonresult;
 }
 
-- (void) jsonStringToObject:(NSString*)json{
+- (void) loadCommands:(NSDictionary*)commd_dict{
     
-    NSData *data = [NSData dataWithBytes:[json UTF8String] length:[json length]];
+    NSMutableArray *audio_channels = _proxys;
     
-    NSDictionary *allData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-    
-    if([allData objectForKey:@"name"])
-        self._name = [allData objectForKey:@"name"];
-    
-    if([allData objectForKey:@"brand"])
-        self._brand = [allData objectForKey:@"brand"];
-    if([allData objectForKey:@"type"])
-        self._type = [allData objectForKey:@"type"];
-    
-    if([allData objectForKey:@"deviceno"])
-        self._deviceno = [allData objectForKey:@"deviceno"];
-    
-    if([allData objectForKey:@"ipaddress"])
-        self._ipaddress = [allData objectForKey:@"ipaddress"];
-  
-    if([allData objectForKey:@"deviceid"])
-        self._deviceid = [allData objectForKey:@"deviceid"];
-
-//    if([allData objectForKey:@"com"])
-//        self._com = [allData objectForKey:@"com"];
-    
-    self._index = [[allData objectForKey:@"index"] intValue];
-    
-    if([allData objectForKey:@"channels"])
-        self._channels = [allData objectForKey:@"channels"];
-    
-    if([allData objectForKey:@"freqVal"])
-        self._freqVal = [allData objectForKey:@"freqVal"];
-    
-    if([allData objectForKey:@"freqops"])
-        self._freqops = [allData objectForKey:@"freqops"];
-    
-    if([allData objectForKey:@"groups"])
-        self._groups = [allData objectForKey:@"groups"];
-    
-    if([allData objectForKey:@"groupVal"])
-        self._groupVal = [allData objectForKey:@"groupVal"];
-    
-
-    if([allData objectForKey:@"sq"])
-        self._sq = [allData objectForKey:@"sq"];
-    
-    if([allData objectForKey:@"sqVal"])
-        self._sqVal = [allData objectForKey:@"sqVal"];
-    
-    if([allData objectForKey:@"dbs"])
-        self._dbs = [allData objectForKey:@"dbs"];
-    
-    if([allData objectForKey:@"dbVal"])
-        self._dbVal = [allData objectForKey:@"dbVal"];
+    if([[commd_dict allValues] count])
+    {
+        NSArray *cmds = [[commd_dict allValues] objectAtIndex:0];
+        
+        for(AudioEWirlessMikeProxy *vap in audio_channels)
+        {
+            [vap checkRgsProxyCommandLoad:cmds];
+        }
+    }
     
 }
+
+
+
+- (NSDictionary *)objectToJson{
+    
+    NSMutableDictionary *allData = [NSMutableDictionary dictionary];
+    [allData setValue:[NSString stringWithFormat:@"%@", [self class]] forKey:@"class"];
+    
+    return allData;
+}
+
+
+- (void) jsonToObject:(NSDictionary*)json{
+    
+    
+}
+
 
 - (NSDictionary *)userData{
     
-    NSMutableDictionary *config = [NSMutableDictionary dictionary];
+    self.config = [NSMutableDictionary dictionary];
     [self.config setValue:[NSString stringWithFormat:@"%@", [self class]] forKey:@"class"];
     if(_driver)
     {
@@ -276,6 +235,75 @@
 
 - (void) createByUserData:(NSDictionary*)userdata withMap:(NSDictionary*)valMap{
     
+    self.config = [NSMutableDictionary dictionaryWithDictionary:userdata];
+    [self.config setObject:valMap forKey:@"opt_value_map"];
+    
+    int driver_id = [[self.config objectForKey:@"driver_id"] intValue];
+    self._isSelected = [[self.config objectForKey:@"s"] boolValue];
+    
+    IMP_BLOCK_SELF(AudioEWirlessMike);
+    [[RegulusSDK sharedRegulusSDK] GetRgsObjectByID:driver_id
+                                         completion:^(BOOL result, id RgsObject, NSError *error) {
+                                             
+                                             if(result)
+                                             {
+                                                 [block_self successGotDriver:RgsObject];
+                                             }
+                                         }];
 }
+
+
+- (void) successGotDriver:(RgsDriverObj*)rgsd{
+    
+    self._driver = rgsd;
+    self._driverInfo = rgsd.info;
+    
+    self._name = rgsd.name;
+    
+    IMP_BLOCK_SELF(AudioEWirlessMike);
+    
+    [[RegulusSDK sharedRegulusSDK] GetDriverProxys:rgsd.m_id
+                                        completion:^(BOOL result, NSArray *proxys, NSError *error) {
+                                            if (result) {
+                                                if ([proxys count]) {
+                                                    
+                                                    NSMutableArray *proxysArray = [NSMutableArray array];
+                                                    for (RgsProxyObj *proxyObj in proxys) {
+                                                        if ([proxyObj.type isEqualToString:@"Wireless Mic"]) {
+                                                            [proxysArray addObject:proxyObj];
+                                                        }
+                                                    }
+                                                    [block_self prepareChannels:proxysArray];
+                                                }
+                                            }
+                                        }];
+}
+
+
+- (void) prepareChannels:(NSArray*)proxys{
+    
+    self._proxys = [NSMutableArray array];
+    
+    NSDictionary *map = [self.config objectForKey:@"opt_value_map"];
+    
+    for(int i = 0; i < [proxys count]; i++)
+    {
+        RgsProxyObj *proxy = [proxys objectAtIndex:i];
+        
+        id key = [NSString stringWithFormat:@"%d", (int)proxy.m_id];
+        
+        AudioEWirlessMikeProxy *apxy = [[AudioEWirlessMikeProxy alloc] init];
+        apxy._rgsProxyObj = proxy;
+        
+        NSArray *vals = [map objectForKey:key];
+        [apxy recoverWithDictionary:vals];
+        
+        [_proxys addObject:apxy];
+    }
+    
+}
+
+
+
 
 @end

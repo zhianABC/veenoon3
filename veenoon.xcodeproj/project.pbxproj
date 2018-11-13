@@ -361,6 +361,8 @@
 		34C73B6C205FA4D4008DFACC /* s3_13@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34C73B65205FA4D0008DFACC /* s3_13@2x.png */; };
 		34C73B6D205FA4D4008DFACC /* s3_10@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34C73B66205FA4D2008DFACC /* s3_10@2x.png */; };
 		34C73B6E205FA4D4008DFACC /* s3_05@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34C73B67205FA4D4008DFACC /* s3_05@2x.png */; };
+		34C7C0FA219A847E00CCAA60 /* AudioEWirlessMikeProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C7C0F9219A847E00CCAA60 /* AudioEWirlessMikeProxy.m */; };
+		34C7C0FD219A93D300CCAA60 /* E2MicView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C7C0FC219A93D300CCAA60 /* E2MicView.m */; };
 		34CC7855209AE0D10057A2C1 /* UIImage+KVNImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 34CC784E209AE0D10057A2C1 /* UIImage+KVNImageEffects.m */; };
 		34CC7856209AE0D10057A2C1 /* KVNProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 34CC7850209AE0D10057A2C1 /* KVNProgress.m */; };
 		34CC7857209AE0D10057A2C1 /* KVNProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34CC7851209AE0D10057A2C1 /* KVNProgressView.xib */; };
@@ -373,6 +375,7 @@
 		34DE8E9620663E840061B48D /* MeetingRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DE8E9520663E840061B48D /* MeetingRoom.m */; };
 		34DE8E992066408C0061B48D /* Scenario.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DE8E982066408C0061B48D /* Scenario.m */; };
 		34E105E9209AD73200C7F337 /* libRegulusSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34E105D7209AD73100C7F337 /* libRegulusSDK.a */; };
+		34E5081F219AB2A20053D5C2 /* DriverCmdSync.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E5081E219AB2A20053D5C2 /* DriverCmdSync.m */; };
 		34E73D4520FDD6C700C18C10 /* qr_code_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34E73D4420FDD6C700C18C10 /* qr_code_icon@2x.png */; };
 		34E73D4720FDD95500C18C10 /* room_add_pg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34E73D4620FDD95400C18C10 /* room_add_pg@2x.png */; };
 		34E73D4920FDE61600C18C10 /* qrcode_scan_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34E73D4820FDE61500C18C10 /* qrcode_scan_line@2x.png */; };
@@ -1548,6 +1551,10 @@
 		34C73B65205FA4D0008DFACC /* s3_13@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "s3_13@2x.png"; sourceTree = "<group>"; };
 		34C73B66205FA4D2008DFACC /* s3_10@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "s3_10@2x.png"; sourceTree = "<group>"; };
 		34C73B67205FA4D4008DFACC /* s3_05@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "s3_05@2x.png"; sourceTree = "<group>"; };
+		34C7C0F8219A847E00CCAA60 /* AudioEWirlessMikeProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioEWirlessMikeProxy.h; sourceTree = "<group>"; };
+		34C7C0F9219A847E00CCAA60 /* AudioEWirlessMikeProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioEWirlessMikeProxy.m; sourceTree = "<group>"; };
+		34C7C0FB219A93D300CCAA60 /* E2MicView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = E2MicView.h; sourceTree = "<group>"; };
+		34C7C0FC219A93D300CCAA60 /* E2MicView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = E2MicView.m; sourceTree = "<group>"; };
 		34CC784E209AE0D10057A2C1 /* UIImage+KVNImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+KVNImageEffects.m"; sourceTree = "<group>"; };
 		34CC784F209AE0D10057A2C1 /* UIImage+KVNEmpty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+KVNEmpty.h"; sourceTree = "<group>"; };
 		34CC7850209AE0D10057A2C1 /* KVNProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KVNProgress.m; sourceTree = "<group>"; };
@@ -1570,6 +1577,8 @@
 		34DE8E972066408C0061B48D /* Scenario.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Scenario.h; sourceTree = "<group>"; };
 		34DE8E982066408C0061B48D /* Scenario.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Scenario.m; sourceTree = "<group>"; };
 		34E105D7209AD73100C7F337 /* libRegulusSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libRegulusSDK.a; sourceTree = "<group>"; };
+		34E5081D219AB2A20053D5C2 /* DriverCmdSync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DriverCmdSync.h; sourceTree = "<group>"; };
+		34E5081E219AB2A20053D5C2 /* DriverCmdSync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DriverCmdSync.m; sourceTree = "<group>"; };
 		34E73D4420FDD6C700C18C10 /* qr_code_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qr_code_icon@2x.png"; sourceTree = "<group>"; };
 		34E73D4620FDD95400C18C10 /* room_add_pg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "room_add_pg@2x.png"; sourceTree = "<group>"; };
 		34E73D4820FDE61500C18C10 /* qrcode_scan_line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qrcode_scan_line@2x.png"; sourceTree = SOURCE_ROOT; };
@@ -2748,6 +2757,8 @@
 				EB18B7252067D4A6000BDEAB /* Video */,
 				04D719831DADE2D8002153D7 /* DataSync.h */,
 				04D719841DADE2D8002153D7 /* DataSync.m */,
+				34E5081D219AB2A20053D5C2 /* DriverCmdSync.h */,
+				34E5081E219AB2A20053D5C2 /* DriverCmdSync.m */,
 				04DE1E381AD6AEE000D49E2F /* DataCenter.h */,
 				04DE1E391AD6AEE000D49E2F /* DataCenter.m */,
 				34D68BA7210E03D600E90E1F /* DriverSync.h */,
@@ -3614,6 +3625,8 @@
 			children = (
 				349DADD8206E8D02001593DE /* AudioEWirlessMike.h */,
 				349DADD3206E8D02001593DE /* AudioEWirlessMike.m */,
+				34C7C0F8219A847E00CCAA60 /* AudioEWirlessMikeProxy.h */,
+				34C7C0F9219A847E00CCAA60 /* AudioEWirlessMikeProxy.m */,
 				349DADD6206E8D02001593DE /* AudioEMinMax.h */,
 				349DADDC206E8D02001593DE /* AudioEMinMax.m */,
 				349DADDE206E8D02001593DE /* AudioEMix.h */,
@@ -3970,6 +3983,8 @@
 				EB3B73991FE61B18001941CF /* EngineerPlayerSettingsViewCtrl.m */,
 				EB3B73B01FE63822001941CF /* EngineerWirlessYaoBaoViewCtrl.h */,
 				EB3B73B11FE6382F001941CF /* EngineerWirlessYaoBaoViewCtrl.m */,
+				34C7C0FB219A93D300CCAA60 /* E2MicView.h */,
+				34C7C0FC219A93D300CCAA60 /* E2MicView.m */,
 				EB4EC11A1FE7F164000B3101 /* EngineerHunYinSysViewController.h */,
 				EB4EC11B1FE7F164000B3101 /* EngineerHunYinSysViewController.m */,
 				EB4EC11D1FE7F94B000B3101 /* EngineerHandtoHandViewCtrl.h */,
@@ -5091,11 +5106,13 @@
 				EBD009B3208CB12900920849 /* VCameraSettingSet.m in Sources */,
 				04DE1EA71AD6AEE000D49E2F /* SBJson4StreamWriter.m in Sources */,
 				EB217FBE1FD423B8003F5A8F /* UserAirCleanViewCtrl.m in Sources */,
+				34C7C0FA219A847E00CCAA60 /* AudioEWirlessMikeProxy.m in Sources */,
 				EB17179D1FF60C6900CBDB81 /* EngineerElectronicAutoViewCtrl.m in Sources */,
 				342389B32026F48700885405 /* Groups2PickerView.m in Sources */,
 				3425E9891FE5687C003559F7 /* CheckButton.m in Sources */,
 				341C60C91FDCFD7D003A5490 /* EPlusLayerView.m in Sources */,
 				EB4E39E62027423D00533575 /* HandtoHandLineCheckView.m in Sources */,
+				34E5081F219AB2A20053D5C2 /* DriverCmdSync.m in Sources */,
 				EB0968BF1FE2B4C900CF422F /* EngineerElectronicSysConfigViewCtrl.m in Sources */,
 				04DE1EB11AD6AEE000D49E2F /* SDWebImageManager.m in Sources */,
 				3425E98F1FE575A4003559F7 /* PlayerSettingsPannel.m in Sources */,
@@ -5124,6 +5141,7 @@
 				EB948A49204EE3550018C80A /* JLightSliderView.m in Sources */,
 				EBAA7DE521759A200045FF70 /* M80AttributedLabelAttachment.m in Sources */,
 				EB1717A31FF6141A00CBDB81 /* EngineerFloorWarmViewCtrl.m in Sources */,
+				34C7C0FD219A93D300CCAA60 /* E2MicView.m in Sources */,
 				EBF831E31FD03A110096E6EC /* UserVideoDVDDiskViewCtrl.m in Sources */,
 				EB795B652042E8A1005D1F47 /* ZiDongHunYin_UIView.m in Sources */,
 				EB09C4A21FD3A00200776540 /* UserAirConditionViewCtrl.m in Sources */,

@@ -16,6 +16,7 @@
 #import "WirlessYaoBaoViewSettingsView.h"
 #import "AudioEWirlessMike.h"
 #import "PlugsCtrlTitleHeader.h"
+#import "E2MicView.h"
 
 @interface EngineerWirlessYaoBaoViewCtrl () <CustomPickerViewDelegate, EngineerSliderViewDelegate, SlideButtonDelegate> {
 
@@ -50,7 +51,7 @@
 
 @implementation EngineerWirlessYaoBaoViewCtrl
 @synthesize _wirelessYaoBaoSysArray;
-@synthesize _number;
+@synthesize _curSelPlug;
 @synthesize _curMike;
 @synthesize _channels;
 
@@ -72,73 +73,112 @@
     
     self._channels = [NSMutableArray array];
     
-    if([_wirelessYaoBaoSysArray count]){
-        self._curMike = [_wirelessYaoBaoSysArray objectAtIndex:0];
-        
-        //把所有设备的Channel放入数组
-        for(AudioEWirlessMike *mike in _wirelessYaoBaoSysArray)
-        {
-            [_channels addObjectsFromArray:[mike channles]];
-        }
-    }
+    self._curMike = (AudioEWirlessMike*)_curSelPlug;
     
     [super setTitleAndImage:@"audio_corner_huatong.png" withTitle:@"无线麦"];
     
-    UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
-    [self.view addSubview:bottomBar];
     
-    //缺切图，把切图贴上即可。
-    bottomBar.backgroundColor = [UIColor grayColor];
-    bottomBar.userInteractionEnabled = YES;
-    bottomBar.image = [UIImage imageNamed:@"botomo_icon_black.png"];
-    
-    UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    cancelBtn.frame = CGRectMake(0, 0,160, 50);
-    [bottomBar addSubview:cancelBtn];
-    [cancelBtn setTitle:@"返回" forState:UIControlStateNormal];
-    [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [cancelBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
-    cancelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-    [cancelBtn addTarget:self
-                  action:@selector(cancelAction:)
+    if([_wirelessYaoBaoSysArray count]){
+        
+       
+        
+        UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
+        [self.view addSubview:bottomBar];
+        
+        //缺切图，把切图贴上即可。
+        bottomBar.backgroundColor = [UIColor grayColor];
+        bottomBar.userInteractionEnabled = YES;
+        bottomBar.image = [UIImage imageNamed:@"botomo_icon_black.png"];
+        
+        UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        cancelBtn.frame = CGRectMake(0, 0,160, 50);
+        [bottomBar addSubview:cancelBtn];
+        [cancelBtn setTitle:@"返回" forState:UIControlStateNormal];
+        [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [cancelBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
+        cancelBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+        [cancelBtn addTarget:self
+                      action:@selector(cancelAction:)
+            forControlEvents:UIControlEventTouchUpInside];
+        
+        okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
+        [bottomBar addSubview:okBtn];
+        [okBtn setTitle:@"设置" forState:UIControlStateNormal];
+        [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [okBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
+        okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
+        [okBtn addTarget:self
+                  action:@selector(settingAction:)
         forControlEvents:UIControlEventTouchUpInside];
+        
+        _zengyiSlider = [[EngineerSliderView alloc]
+                         initWithSliderBg:[UIImage imageNamed:@"engineer_zengyi_n.png"]
+                         frame:CGRectZero];
+        [self.view addSubview:_zengyiSlider];
+        [_zengyiSlider setRoadImage:[UIImage imageNamed:@"e_v_slider_road.png"]];
+        [_zengyiSlider setIndicatorImage:[UIImage imageNamed:@"wireless_slide_s.png"]];
+        _zengyiSlider.topEdge = 90;
+        _zengyiSlider.bottomEdge = 79;
+        _zengyiSlider.maxValue = 20;
+        _zengyiSlider.minValue = -20;
+        _zengyiSlider.delegate = self;
+        [_zengyiSlider resetScale];
+        _zengyiSlider.center = CGPointMake(TESLARIA_SLIDER_X, TESLARIA_SLIDER_Y);
+        
+    }
     
-    okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
-    [bottomBar addSubview:okBtn];
-    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
-    [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [okBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
-    okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-    [okBtn addTarget:self
-              action:@selector(settingAction:)
-    forControlEvents:UIControlEventTouchUpInside];
     
-    _zengyiSlider = [[EngineerSliderView alloc]
-                       initWithSliderBg:[UIImage imageNamed:@"engineer_zengyi_n.png"]
-                       frame:CGRectZero];
-    [self.view addSubview:_zengyiSlider];
-    [_zengyiSlider setRoadImage:[UIImage imageNamed:@"e_v_slider_road.png"]];
-    [_zengyiSlider setIndicatorImage:[UIImage imageNamed:@"wireless_slide_s.png"]];
-    _zengyiSlider.topEdge = 90;
-    _zengyiSlider.bottomEdge = 79;
-    _zengyiSlider.maxValue = 20;
-    _zengyiSlider.minValue = -20;
-    _zengyiSlider.delegate = self;
-    [_zengyiSlider resetScale];
-    _zengyiSlider.center = CGPointMake(SCREEN_WIDTH - 150, SCREEN_HEIGHT/2);
+    int height = 150;
     
-    int index = 0;
-    int top = ENGINEER_VIEW_COMPONENT_TOP;
+    _proxysView = [[UIView alloc] initWithFrame:CGRectMake(0,
+                                                           height-5,
+                                                           SCREEN_WIDTH,
+                                                           SCREEN_HEIGHT-height-60)];
+    [self.view addSubview:_proxysView];
+    
+    
+//    UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+//    tapGesture.cancelsTouchesInView =  NO;
+//    tapGesture.numberOfTapsRequired = 1;
+//    [_proxysView addGestureRecognizer:tapGesture];
+    
+    if([_wirelessYaoBaoSysArray count])
+    {
+        [self showUIs];
+    }
+}
+
+- (void) showUIs{
+    
+    int top = 0;
     
     int leftRight = ENGINEER_VIEW_LEFT;
     
-    int cellWidth = 120;
+    int cellWidth = 184+10;
     int cellHeight = 240;
-    int colNumber = ENGINEER_VIEW_COLUMN_N-2;
+    int colNumber = 4;
     int space = ENGINEER_VIEW_COLUMN_GAP;
     
+    for(int i = 0; i < [_wirelessYaoBaoSysArray count]; i++)
+    {
+        AudioEWirlessMike *mic = [_wirelessYaoBaoSysArray objectAtIndex:i];
+        
+        int row = i/colNumber;
+        int col = i%colNumber;
+        int startX = col*cellWidth+col*space+leftRight;
+        int startY = row*cellHeight+space*row+top;
+        
+        
+        E2MicView *mics = [[E2MicView alloc] initWithFrame:CGRectMake(startX, startY, cellWidth, 240)];
+        mics.userInteractionEnabled = YES;
+        mics.backgroundColor = [UIColor clearColor];
+        [_proxysView addSubview:mics];
+        
+        [mics fillMicObj:mic];
+    }
     
+    /*
     if([_channels count])
     {
         int max = (int)[_channels count];
@@ -247,19 +287,11 @@
             index++;
         }
     }
-    int height = 150;
+     */
     
-    _proxysView = [[UIView alloc] initWithFrame:CGRectMake(0,
-                                                           height-5,
-                                                           SCREEN_WIDTH,
-                                                           SCREEN_HEIGHT-height-60)];
-    [self.view addSubview:_proxysView];
-    
-    UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
-    tapGesture.cancelsTouchesInView =  NO;
-    tapGesture.numberOfTapsRequired = 1;
-    [_proxysView addGestureRecognizer:tapGesture];
 }
+
+
 - (void) handleTapGesture:(id)sender{
     
     if ([_rightSetView superview]) {

@@ -58,6 +58,9 @@
 #import "BlindPlugin.h"
 #import "AirQualityPlug.h"
 
+#import "AudioEWirlessMike.h"
+#import "AudioEWirlessMikeProxy.h"
+
 
 @interface Scenario ()
 {
@@ -1107,6 +1110,13 @@
             {
                 [self addEventOperation:rsp];
             }
+            
+            NSDictionary *data = [ap userData];
+            [audios addObject:data];
+        }
+        else if ([ap isKindOfClass:[AudioEWirlessMike class]])
+        {
+            NSArray *proxys = ((AudioEWirlessMike*)ap)._proxys;
             
             NSDictionary *data = [ap userData];
             [audios addObject:data];
