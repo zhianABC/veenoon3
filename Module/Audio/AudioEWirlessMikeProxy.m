@@ -116,8 +116,8 @@
         
         _isSetOK = YES;
         
-        [[DriverCmdSync sharedCMDSync] setValue:commands
-                                         forKey:@"AudioEWirlessMikeProxy"];
+        [[DriverCmdSync sharedCMDSync] syncCmdMap:commands
+                                           andKey:@"AudioEWirlessMikeProxy"];
     }
 }
 
