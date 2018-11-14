@@ -21,6 +21,7 @@
 #import "KVNProgress.h"
 #import "DataCenter.h"
 #import "Utilities.h"
+#import "JDStatusBarNotification.h"
 
 @interface AppDelegate () <RegulusSDKDelegate>
 {
@@ -39,6 +40,7 @@
    
     [NSThread sleepForTimeInterval:1.0];
     
+    [UIApplication sharedApplication].idleTimerDisabled = YES;
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     [RegulusSDK sharedRegulusSDK].delegate = self;
@@ -112,10 +114,15 @@
         }
         
         _endingImportState = NO;
+        
+        [JDStatusBarNotification dismissAnimated:YES];
     }
     else{
-        
+     
+        [JDStatusBarNotification showWithStatus:@"断开链接"
+                                      styleName:JDStatusBarStyleError];
     }
+
 }
 
 -(void)onRecvDeviceNotify:(RgsDeviceNoteObj *)notify

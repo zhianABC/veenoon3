@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void) fillMicObj:( AudioEWirlessMike* )micObj;
 
+- (void) changeVolValue:(int)vol;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -177,6 +177,23 @@
 
 
 - (void) saveAction:(id)sender {
+    
+    NSDate *sysDate = [timepicker getSelectedDate];
+    [[RegulusSDK sharedRegulusSDK] SetDate:sysDate
+                                completion:nil];
+    
+    //用于格式化NSDate对象
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    //设置格式：zzz表示时区
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss zzz"];
+    //NSDate转NSString
+    NSString *currentDateString = [dateFormatter stringFromDate:sysDate];
+    
+    [_mapValue setObject:currentDateString forKey:@"sys_date"];
+    
+    [_tableView reloadData];
+    
+    
     [self hidden];
 }
 #pragma mark -
@@ -246,13 +263,14 @@
     valueL.textAlignment = NSTextAlignmentRight;
     valueL.text = @"";
 
+    UIColor *lineColor = USER_GRAY_COLOR;
     
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             UIView *cellV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH-100, 45)];
             cellV.backgroundColor = SYS_INFO_SEC_COLOR;
             cellV.layer.cornerRadius = 5;
-            cellV.layer.borderColor = LINE_COLOR.CGColor;
+            cellV.layer.borderColor = lineColor.CGColor;
             cellV.layer.borderWidth = 1;
             
             [cell.contentView addSubview:cellV];
@@ -264,7 +282,7 @@
             
             UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 35,
                                                                       SCREEN_WIDTH-100, 1)];
-            line.backgroundColor =  LINE_COLOR;
+            line.backgroundColor =  lineColor;
             [cellV addSubview:line];
             
         } else if (indexPath.row == 1) {
@@ -282,17 +300,17 @@
             
             UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 35,
                                                                       SCREEN_WIDTH-100, 1)];
-            line.backgroundColor =  LINE_COLOR;
+            line.backgroundColor =  lineColor;
             [cellV addSubview:line];
             
             UILabel *line2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,
                                                                       1, 36)];
-            line2.backgroundColor =  LINE_COLOR;
+            line2.backgroundColor =  lineColor;
             [cellV addSubview:line2];
             
             UILabel *line3 = [[UILabel alloc] initWithFrame:CGRectMake(cellV.frame.size.width-1, 0,
                                                                        1, 36)];
-            line3.backgroundColor =  LINE_COLOR;
+            line3.backgroundColor =  lineColor;
             [cellV addSubview:line3];
             
             valueL.text = [_mapValue objectForKey:@"sys_date"];
@@ -312,17 +330,17 @@
             
             UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 35,
                                                                       SCREEN_WIDTH-100, 1)];
-            line.backgroundColor =  LINE_COLOR;
+            line.backgroundColor =  lineColor;
             [cellV addSubview:line];
             
             UILabel *line2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,
                                                                        1, 35)];
-            line2.backgroundColor =  LINE_COLOR;
+            line2.backgroundColor =  lineColor;
             [cellV addSubview:line2];
             
             UILabel *line3 = [[UILabel alloc] initWithFrame:CGRectMake(cellV.frame.size.width-1, 0,
                                                                        1, 35)];
-            line3.backgroundColor =  LINE_COLOR;
+            line3.backgroundColor =  lineColor;
             [cellV addSubview:line3];
             
             valueL.text = [_mapValue objectForKey:@"local_zone"];
@@ -332,7 +350,7 @@
             UIView *cellV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH-100, 45)];
             cellV.backgroundColor = SYS_INFO_SEC_COLOR;
             cellV.layer.cornerRadius = 5;
-            cellV.layer.borderColor = LINE_COLOR.CGColor;
+            cellV.layer.borderColor = lineColor.CGColor;
             cellV.layer.borderWidth = 1;
             
             [cell.contentView addSubview:cellV];
@@ -344,7 +362,7 @@
             
             UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 35,
                                                                       SCREEN_WIDTH-100, 1)];
-            line.backgroundColor =  LINE_COLOR;
+            line.backgroundColor =  lineColor;
             [cellV addSubview:line];
         } else if (indexPath.row == 1) {
             
@@ -361,17 +379,17 @@
             
             UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 35,
                                                                       SCREEN_WIDTH-100, 1)];
-            line.backgroundColor =  LINE_COLOR;
+            line.backgroundColor =  lineColor;
             [cellV addSubview:line];
             
             UILabel *line2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,
                                                                        1, 36)];
-            line2.backgroundColor =  LINE_COLOR;
+            line2.backgroundColor =  lineColor;
             [cellV addSubview:line2];
             
             UILabel *line3 = [[UILabel alloc] initWithFrame:CGRectMake(cellV.frame.size.width-1, 0,
                                                                        1, 36)];
-            line3.backgroundColor =  LINE_COLOR;
+            line3.backgroundColor =  lineColor;
             [cellV addSubview:line3];
             
             valueL.text = [_mapValue objectForKey:@"hardware"];
@@ -391,17 +409,17 @@
             
             UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 35,
                                                                       SCREEN_WIDTH-100, 1)];
-            line.backgroundColor =  LINE_COLOR;
+            line.backgroundColor =  lineColor;
             [cellV addSubview:line];
             
             UILabel *line2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,
                                                                        1, 36)];
-            line2.backgroundColor =  LINE_COLOR;
+            line2.backgroundColor =  lineColor;
             [cellV addSubview:line2];
             
             UILabel *line3 = [[UILabel alloc] initWithFrame:CGRectMake(cellV.frame.size.width-1, 0,
                                                                        1, 36)];
-            line3.backgroundColor =  LINE_COLOR;
+            line3.backgroundColor =  lineColor;
             [cellV addSubview:line3];
             
             valueL.text = [_mapValue objectForKey:@"software_version"];
@@ -411,7 +429,7 @@
             UIView *cellV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH-100, 45)];
             cellV.backgroundColor = SYS_INFO_SEC_COLOR;
             cellV.layer.cornerRadius = 5;
-            cellV.layer.borderColor = LINE_COLOR.CGColor;
+            cellV.layer.borderColor = lineColor.CGColor;
             cellV.layer.borderWidth = 1;
             
             [cell.contentView addSubview:cellV];
@@ -423,7 +441,7 @@
             
             UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 35,
                                                                       SCREEN_WIDTH-100, 1)];
-            line.backgroundColor =  LINE_COLOR;
+            line.backgroundColor =  lineColor;
             [cellV addSubview:line];
         } else if (indexPath.row == 1) {
             
@@ -440,17 +458,17 @@
             
             UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 35,
                                                                       SCREEN_WIDTH-100, 1)];
-            line.backgroundColor =  LINE_COLOR;
+            line.backgroundColor =  lineColor;
             [cellV addSubview:line];
             
             UILabel *line2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,
                                                                        1, 36)];
-            line2.backgroundColor =  LINE_COLOR;
+            line2.backgroundColor =  lineColor;
             [cellV addSubview:line2];
             
             UILabel *line3 = [[UILabel alloc] initWithFrame:CGRectMake(cellV.frame.size.width-1, 0,
                                                                        1, 36)];
-            line3.backgroundColor =  LINE_COLOR;
+            line3.backgroundColor =  lineColor;
             [cellV addSubview:line3];
             
             valueL.text = [_mapValue objectForKey:@"autoIp"];
@@ -470,17 +488,17 @@
             
             UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 35,
                                                                       SCREEN_WIDTH-100, 1)];
-            line.backgroundColor =  LINE_COLOR;
+            line.backgroundColor =  lineColor;
             [cellV addSubview:line];
             
             UILabel *line2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,
                                                                        1, 36)];
-            line2.backgroundColor =  LINE_COLOR;
+            line2.backgroundColor =  lineColor;
             [cellV addSubview:line2];
             
             UILabel *line3 = [[UILabel alloc] initWithFrame:CGRectMake(cellV.frame.size.width-1, 0,
                                                                        1, 36)];
-            line3.backgroundColor =  LINE_COLOR;
+            line3.backgroundColor =  lineColor;
             [cellV addSubview:line3];
             
             valueL.text = [_mapValue objectForKey:@"ip"];
@@ -499,17 +517,17 @@
             
             UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 35,
                                                                       SCREEN_WIDTH-100, 1)];
-            line.backgroundColor =  LINE_COLOR;
+            line.backgroundColor =  lineColor;
             [cellV addSubview:line];
             
             UILabel *line2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,
                                                                        1, 36)];
-            line2.backgroundColor =  LINE_COLOR;
+            line2.backgroundColor =  lineColor;
             [cellV addSubview:line2];
             
             UILabel *line3 = [[UILabel alloc] initWithFrame:CGRectMake(cellV.frame.size.width-1, 0,
                                                                        1, 36)];
-            line3.backgroundColor =  LINE_COLOR;
+            line3.backgroundColor =  lineColor;
             [cellV addSubview:line3];
             
             valueL.text = [_mapValue objectForKey:@"mask"];
@@ -528,17 +546,17 @@
             
             UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 35,
                                                                       SCREEN_WIDTH-100, 1)];
-            line.backgroundColor =  LINE_COLOR;
+            line.backgroundColor =  lineColor;
             [cellV addSubview:line];
             
             UILabel *line2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,
                                                                        1, 36)];
-            line2.backgroundColor =  LINE_COLOR;
+            line2.backgroundColor =  lineColor;
             [cellV addSubview:line2];
             
             UILabel *line3 = [[UILabel alloc] initWithFrame:CGRectMake(cellV.frame.size.width-1, 0,
                                                                        1, 36)];
-            line3.backgroundColor =  LINE_COLOR;
+            line3.backgroundColor =  lineColor;
             [cellV addSubview:line3];
             
             valueL.text = [_mapValue objectForKey:@"gateway"];
@@ -549,7 +567,7 @@
             UIView *cellV = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH-100, 45)];
             cellV.backgroundColor = SYS_INFO_SEC_COLOR;
             cellV.layer.cornerRadius = 5;
-            cellV.layer.borderColor = LINE_COLOR.CGColor;
+            cellV.layer.borderColor = lineColor.CGColor;
             cellV.layer.borderWidth = 1;
             
             [cell.contentView addSubview:cellV];
@@ -561,7 +579,7 @@
             
             UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 35,
                                                                       SCREEN_WIDTH-100, 1)];
-            line.backgroundColor =  LINE_COLOR;
+            line.backgroundColor =  lineColor;
             [cellV addSubview:line];
         } else if (indexPath.row == 1) {
             
@@ -578,17 +596,17 @@
             
             UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 35,
                                                                       SCREEN_WIDTH-100, 1)];
-            line.backgroundColor =  LINE_COLOR;
+            line.backgroundColor =  lineColor;
             [cellV addSubview:line];
             
             UILabel *line2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,
                                                                        1, 36)];
-            line2.backgroundColor =  LINE_COLOR;
+            line2.backgroundColor =  lineColor;
             [cellV addSubview:line2];
             
             UILabel *line3 = [[UILabel alloc] initWithFrame:CGRectMake(cellV.frame.size.width-1, 0,
                                                                        1, 36)];
-            line3.backgroundColor =  LINE_COLOR;
+            line3.backgroundColor =  lineColor;
             [cellV addSubview:line3];
             
             valueL.text = [_mapValue objectForKey:@"app_version"];
@@ -608,17 +626,17 @@
             
             UILabel *line = [[UILabel alloc] initWithFrame:CGRectMake(0, 35,
                                                                       SCREEN_WIDTH-100, 1)];
-            line.backgroundColor =  LINE_COLOR;
+            line.backgroundColor =  lineColor;
             [cellV addSubview:line];
             
             UILabel *line2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,
                                                                        1, 36)];
-            line2.backgroundColor =  LINE_COLOR;
+            line2.backgroundColor =  lineColor;
             [cellV addSubview:line2];
             
             UILabel *line3 = [[UILabel alloc] initWithFrame:CGRectMake(cellV.frame.size.width-1, 0,
                                                                        1, 36)];
-            line3.backgroundColor =  LINE_COLOR;
+            line3.backgroundColor =  lineColor;
             [cellV addSubview:line3];
         }
     }

@@ -58,24 +58,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    
-    _imageViewArray = [[NSMutableArray alloc] init];
-    _buttonArray = [[NSMutableArray alloc] init];
-    _buttonSeideArray = [[NSMutableArray alloc] init];
-    _buttonChannelArray = [[NSMutableArray alloc] init];
-    _buttonNumberArray = [[NSMutableArray alloc] init];
-    _selectedBtnArray = [[NSMutableArray alloc] init];
-    signalArray = [[NSMutableArray alloc] init];
-    _signalLabelArray = [[NSMutableArray alloc] init];
-    _signalViewArray = [[NSMutableArray alloc] init];
-    _dianchiArray = [[NSMutableArray alloc] init];
-    _huatongArray = [[NSMutableArray alloc] init];
-    
     self._channels = [NSMutableArray array];
     
     self._curMike = (AudioEWirlessMike*)_curSelPlug;
     
     [super setTitleAndImage:@"audio_corner_huatong.png" withTitle:@"无线麦"];
+    
+    int height = 150;
+    
+    _proxysView = [[UIView alloc] initWithFrame:CGRectMake(0,
+                                                           height-5,
+                                                           SCREEN_WIDTH,
+                                                           SCREEN_HEIGHT-height-60)];
+    [self.view addSubview:_proxysView];
+    
     
     
     if([_wirelessYaoBaoSysArray count]){
@@ -129,14 +125,6 @@
     }
     
     
-    int height = 150;
-    
-    _proxysView = [[UIView alloc] initWithFrame:CGRectMake(0,
-                                                           height-5,
-                                                           SCREEN_WIDTH,
-                                                           SCREEN_HEIGHT-height-60)];
-    [self.view addSubview:_proxysView];
-    
     
 //    UITapGestureRecognizer* tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
 //    tapGesture.cancelsTouchesInView =  NO;
@@ -176,6 +164,8 @@
         [_proxysView addSubview:mics];
         
         [mics fillMicObj:mic];
+        
+        [_channels addObject:mics];
     }
     
     /*
@@ -310,34 +300,15 @@
     [okBtn setTitle:@"设置" forState:UIControlStateNormal];
     
 }
-- (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
-    
-    int circleValue = value * 40.0f - 20;
-    
-    int idx = (int)slbtn.tag;
-    NSMutableDictionary *dataDic = [_channels objectAtIndex:idx];
-    if(dataDic)
-    {
-        [dataDic setObject:[NSNumber numberWithInt:circleValue]
-                    forKey:@"db"];
-    }
-    
-}
+
 - (void) didSliderValueChanged:(float)value object:(id)object {
     
-    float circleValue = (value +20.0f)/40.0f;
-    for (SlideButton *button in _selectedBtnArray) {
-        [button setCircleValue:circleValue];
-        
-        int idx = (int)button.tag;
-        NSMutableDictionary *dataDic = [_channels objectAtIndex:idx];
-        if(dataDic)
-        {
-            [dataDic setObject:[NSNumber numberWithInt:value]
-                        forKey:@"db"];
-        }
-        
+   
+    for(E2MicView *mics in _channels)
+    {
+        [mics changeVolValue:value];
     }
+    
 }
 
 - (void) testCurrentMike:(NSString*)deviceno{

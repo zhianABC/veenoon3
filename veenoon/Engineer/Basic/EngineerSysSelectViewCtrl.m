@@ -198,9 +198,11 @@
 }
 
 - (void) sysInforAction:(id)sender {
-    SysInfoViewController *ctrl = [[SysInfoViewController alloc] init];
     
-    [self.navigationController  pushViewController:ctrl animated:YES];
+    SysInfoViewController *ctrl = [[SysInfoViewController alloc] init];
+    [self.navigationController
+     pushViewController:ctrl
+     animated:YES];
 }
 
 - (void) endImportProjectRefresh:(id)sender{

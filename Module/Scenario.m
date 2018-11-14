@@ -68,7 +68,8 @@
     
     RgsSceneOperation * optDelay;
     
-    int _isAllPowerOff;
+    BOOL _isAudioPowerOff;
+    BOOL _isVideoPowerOff;
     
 }
 @property (nonatomic, strong) RgsDriverObj *_rgsDriver;
@@ -76,7 +77,9 @@
 @property (nonatomic, strong) RgsEventObj *_rgsSceneEvent;
 
 @property (nonatomic, strong) NSMutableDictionary *_scenarioData;
-@property (nonatomic, strong) NSMutableArray *powerOpts;
+
+@property (nonatomic, strong) NSMutableArray *audioPowerOpts;
+@property (nonatomic, strong) NSMutableArray *videoPowerOpts;
 
 @end
 
@@ -101,7 +104,9 @@
 @synthesize _scenarioData;
 
 @synthesize delegate;
-@synthesize powerOpts;
+
+@synthesize audioPowerOpts;
+@synthesize videoPowerOpts;
 
 - (id)init
 {
@@ -118,7 +123,8 @@
         
         [self initData];
         
-        self.powerOpts = [NSMutableArray array];
+        self.audioPowerOpts = [NSMutableArray array];
+        self.videoPowerOpts = [NSMutableArray array];
        
     }
     
@@ -757,24 +763,75 @@
     [_scenarioData setObject:others forKey:@"others"];
     
     
-    [powerOpts removeAllObjects];
-    _isAllPowerOff = YES;
+    [audioPowerOpts removeAllObjects];
+    [videoPowerOpts removeAllObjects];
+    _isAudioPowerOff = YES;
+    _isVideoPowerOff = YES;
     
-    //音频处理
-    if([self._audioDevices count])
-    {
-        [self createAudioScenario];
-    }
-    //摄像机
-    if([self._videoDevices count])
-    {
-        [self createVideoScenario];
-    }
-    //环境
+    //环境插件处理
     if([self._envDevices count])
     {
         [self createEvnScenario];
     }
+    
+    int videoStartIdx = [_eventOperations count];
+    
+    //视频插件处理
+    if([self._videoDevices count])
+    {
+        [self createVideoScenario];
+    }
+    
+    //电源开关放在所有视频设备前面
+    if([videoPowerOpts count])
+    {
+        if(!_isVideoPowerOff)
+        {
+            //开启后要等1分钟，如果是全部关闭，就不需要等1分钟
+            RgsSceneOperation* opt60sDelay = [[RgsSceneOperation alloc] initCmdWithParam:1
+                                                                                     cmd:@"Sleep"
+                                                                                   param:@{@"MS":@"60000"}];
+            
+            [_eventOperations insertObject:opt60sDelay atIndex:videoStartIdx];
+        }
+        
+        for(int i = (int)[videoPowerOpts count] - 1; i>=0; i--)
+        {
+            [_eventOperations insertObject:[videoPowerOpts objectAtIndex:i]
+                                   atIndex:videoStartIdx];
+        }
+    }
+    
+    int audioStartIdx = [_eventOperations count];
+    
+    //音频插件处理
+    if([self._audioDevices count])
+    {
+        [self createAudioScenario];
+    }
+    
+    //电源开关放在所有音频设备前面
+    if([audioPowerOpts count])
+    {
+        if(!_isAudioPowerOff)
+        {
+            //开启后要等1分钟，如果是全部关闭，就不需要等1分钟
+            RgsSceneOperation* opt60sDelay = [[RgsSceneOperation alloc] initCmdWithParam:1
+                                                                                     cmd:@"Sleep"
+                                                                                   param:@{@"MS":@"60000"}];
+            
+            [_eventOperations insertObject:opt60sDelay atIndex:audioStartIdx];
+        }
+        
+        for(int i = (int)[audioPowerOpts count] - 1; i>=0; i--)
+        {
+            [_eventOperations insertObject:[audioPowerOpts objectAtIndex:i]
+                                   atIndex:audioStartIdx];
+        }
+    }
+    
+    
+    
     //Coms
     if([self._comDevices count])
     {
@@ -786,25 +843,7 @@
         [self createOthersScenario];
     }
     
-    //电源开关放在整个场景的前面
-    if([powerOpts count])
-    {
-        if(!_isAllPowerOff)
-        {
-        //开启后要等1分钟，如果是全部关闭，就不需要等1分钟
-        RgsSceneOperation* opt60sDelay = [[RgsSceneOperation alloc] initCmdWithParam:1
-                                                                                 cmd:@"Sleep"
-                                                                               param:@{@"MS":@"60000"}];
-        
-        [_eventOperations insertObject:opt60sDelay atIndex:0];
-        }
-        
-        for(int i = (int)[powerOpts count] - 1; i>=0; i--)
-        {
-            [_eventOperations insertObject:[powerOpts objectAtIndex:i]
-                                   atIndex:0];
-        }
-    }
+    
     
 }
 
@@ -1017,14 +1056,14 @@
             
             if(![(APowerESet*)ap checkIsPowerOff])
             {
-                _isAllPowerOff = NO;
+                _isAudioPowerOff = NO;
             }
             
             //全开/全关
             RgsSceneOperation* rsp = [(APowerESet*)ap generateEventOperation_power];
             if(rsp)
             {
-                [powerOpts addObject:rsp];
+                [audioPowerOpts addObject:rsp];
                 //[self addEventOperation:rsp];
             }
             else
@@ -1034,8 +1073,8 @@
                     RgsSceneOperation* rsp = [proxy generateEventOperation_status];
                     if(rsp)
                     {
-                        [powerOpts addObject:optDelay];
-                        [powerOpts addObject:rsp];
+                        [audioPowerOpts addObject:optDelay];
+                        [audioPowerOpts addObject:rsp];
                         //[self addEventOperation:optDelay];
                         //[self addEventOperation:rsp];
                     }
@@ -1055,7 +1094,7 @@
                 RgsSceneOperation* optDurDelay = [[RgsSceneOperation alloc] initCmdWithParam:1
                                                                    cmd:@"Sleep"
                                                                  param:@{@"MS":sv}];
-                [powerOpts addObject:optDurDelay];
+                [audioPowerOpts addObject:optDurDelay];
             }
 
             NSDictionary *data = [ap userData];
@@ -1163,14 +1202,14 @@
             
             if(![(APowerESet*)dev checkIsPowerOff])
             {
-                _isAllPowerOff = NO;
+                _isVideoPowerOff = NO;
             }
             
             //全开/全关
             RgsSceneOperation* rsp = [(APowerESet*)dev generateEventOperation_power];
             if(rsp)
             {
-                [powerOpts addObject:rsp];
+                [videoPowerOpts addObject:rsp];
                 //[self addEventOperation:rsp];
             }
             else
@@ -1180,8 +1219,8 @@
                     RgsSceneOperation* rsp = [proxy generateEventOperation_status];
                     if(rsp)
                     {
-                        [powerOpts addObject:optDelay];
-                        [powerOpts addObject:rsp];
+                        [videoPowerOpts addObject:optDelay];
+                        [videoPowerOpts addObject:rsp];
                     }
                 }
             }
@@ -1199,7 +1238,7 @@
                 RgsSceneOperation* optDurDelay = [[RgsSceneOperation alloc] initCmdWithParam:1
                                                                                          cmd:@"Sleep"
                                                                                        param:@{@"MS":sv}];
-                [powerOpts addObject:optDurDelay];
+                [videoPowerOpts addObject:optDurDelay];
             }
             
             NSDictionary *data = [dev userData];

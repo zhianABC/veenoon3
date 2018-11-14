@@ -367,6 +367,9 @@
 		34CC7856209AE0D10057A2C1 /* KVNProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 34CC7850209AE0D10057A2C1 /* KVNProgress.m */; };
 		34CC7857209AE0D10057A2C1 /* KVNProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34CC7851209AE0D10057A2C1 /* KVNProgressView.xib */; };
 		34CC7858209AE0D10057A2C1 /* UIImage+KVNEmpty.m in Sources */ = {isa = PBXBuildFile; fileRef = 34CC7852209AE0D10057A2C1 /* UIImage+KVNEmpty.m */; };
+		34CC7CB1219C28C2002462E3 /* JDStatusBarNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 34CC7CAB219C28C2002462E3 /* JDStatusBarNotification.m */; };
+		34CC7CB2219C28C2002462E3 /* JDStatusBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34CC7CAD219C28C2002462E3 /* JDStatusBarView.m */; };
+		34CC7CB3219C28C2002462E3 /* JDStatusBarStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 34CC7CB0219C28C2002462E3 /* JDStatusBarStyle.m */; };
 		34D34F3C20DF510800CC7897 /* IRDirver.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D34F3B20DF510800CC7897 /* IRDirver.m */; };
 		34D34F3F20DF5BA800CC7897 /* VDVDPlayerProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D34F3E20DF5BA800CC7897 /* VDVDPlayerProxy.m */; };
 		34D68BA9210E03D600E90E1F /* DriverSync.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D68BA8210E03D600E90E1F /* DriverSync.m */; };
@@ -1562,6 +1565,12 @@
 		34CC7852209AE0D10057A2C1 /* UIImage+KVNEmpty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+KVNEmpty.m"; sourceTree = "<group>"; };
 		34CC7853209AE0D10057A2C1 /* UIImage+KVNImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+KVNImageEffects.h"; sourceTree = "<group>"; };
 		34CC7854209AE0D10057A2C1 /* KVNProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVNProgress.h; sourceTree = "<group>"; };
+		34CC7CAB219C28C2002462E3 /* JDStatusBarNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JDStatusBarNotification.m; sourceTree = "<group>"; };
+		34CC7CAC219C28C2002462E3 /* JDStatusBarStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JDStatusBarStyle.h; sourceTree = "<group>"; };
+		34CC7CAD219C28C2002462E3 /* JDStatusBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JDStatusBarView.m; sourceTree = "<group>"; };
+		34CC7CAE219C28C2002462E3 /* JDStatusBarNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JDStatusBarNotification.h; sourceTree = "<group>"; };
+		34CC7CAF219C28C2002462E3 /* JDStatusBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JDStatusBarView.h; sourceTree = "<group>"; };
+		34CC7CB0219C28C2002462E3 /* JDStatusBarStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JDStatusBarStyle.m; sourceTree = "<group>"; };
 		34D34F3A20DF510800CC7897 /* IRDirver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRDirver.h; sourceTree = "<group>"; };
 		34D34F3B20DF510800CC7897 /* IRDirver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IRDirver.m; sourceTree = "<group>"; };
 		34D34F3D20DF5BA800CC7897 /* VDVDPlayerProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VDVDPlayerProxy.h; sourceTree = "<group>"; };
@@ -2669,6 +2678,7 @@
 		04DE1E401AD6AEE000D49E2F /* SupportAddons */ = {
 			isa = PBXGroup;
 			children = (
+				34CC7CAA219C28C2002462E3 /* JDStatusBarNotification */,
 				3462912B217C701200128B79 /* WSDaePickerView */,
 				EB50A4A5217C384700AB2D3D /* FQ_CustomAlert */,
 				EBAA7DDB21759A1F0045FF70 /* M80AttributedLabel */,
@@ -3667,6 +3677,19 @@
 				34CC7854209AE0D10057A2C1 /* KVNProgress.h */,
 			);
 			path = KVNProgress;
+			sourceTree = "<group>";
+		};
+		34CC7CAA219C28C2002462E3 /* JDStatusBarNotification */ = {
+			isa = PBXGroup;
+			children = (
+				34CC7CAB219C28C2002462E3 /* JDStatusBarNotification.m */,
+				34CC7CAC219C28C2002462E3 /* JDStatusBarStyle.h */,
+				34CC7CAD219C28C2002462E3 /* JDStatusBarView.m */,
+				34CC7CAE219C28C2002462E3 /* JDStatusBarNotification.h */,
+				34CC7CAF219C28C2002462E3 /* JDStatusBarView.h */,
+				34CC7CB0219C28C2002462E3 /* JDStatusBarStyle.m */,
+			);
+			path = JDStatusBarNotification;
 			sourceTree = "<group>";
 		};
 		34E105D6209AD73100C7F337 /* RegSDK */ = {
@@ -5087,6 +5110,7 @@
 				EB217FB81FD42188003F5A8F /* UserFloorWarmViewCtrl.m in Sources */,
 				0477DC531DA9F3CC0077FA52 /* SHA1.m in Sources */,
 				EBD009CE2090A9D200920849 /* VTouyingjiSet.m in Sources */,
+				34CC7CB2219C28C2002462E3 /* JDStatusBarView.m in Sources */,
 				04DE1EB31AD6AEE000D49E2F /* UIButton+WebCache.m in Sources */,
 				EB479001206145C000EDCD64 /* UserDVDSettingsViewController.m in Sources */,
 				EBAA7DE621759A200045FF70 /* M80AttributedLabel.m in Sources */,
@@ -5265,6 +5289,7 @@
 				EB6FB21F2197D23700ECE791 /* SysInfoViewController.m in Sources */,
 				EB4EC1221FE7FC3B000B3101 /* EngineerWirelessMeetingViewCtrl.m in Sources */,
 				EB4E39E320273F6100533575 /* HandtoHandSettingsView.m in Sources */,
+				34CC7CB3219C28C2002462E3 /* JDStatusBarStyle.m in Sources */,
 				3448D96C2073C5070055D48F /* TwoIconAndTitleView.m in Sources */,
 				04DE1EA01AD6AEE000D49E2F /* WebClient.m in Sources */,
 				34DE8E9620663E840061B48D /* MeetingRoom.m in Sources */,
@@ -5339,6 +5364,7 @@
 				EB5CF03F1FD3DC92007958C9 /* UserNewWindViewCtrl.m in Sources */,
 				34629126217C394B00128B79 /* USenceBlockView.m in Sources */,
 				EB7333F42041046400AE60B8 /* AirCleanRightView.m in Sources */,
+				34CC7CB1219C28C2002462E3 /* JDStatusBarNotification.m in Sources */,
 				EB62DF7720D7A04D00144EE0 /* TeslariaComboChooser.m in Sources */,
 				34A8965320443184007934E1 /* GradeLineView.m in Sources */,
 				34629134217C701200128B79 /* WSDatePickerView.m in Sources */,

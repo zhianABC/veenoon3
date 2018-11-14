@@ -35,8 +35,8 @@
     int lw;
     UILabel *line;
     
-    int _minVal;
-    int _maxVal;
+    float _minVal;
+    float _maxVal;
     
     UIView *signalView1;
     UIView *signalView2;
@@ -63,8 +63,8 @@
     {
         lw = 8;
         
-        _minVal = -20;
-        _maxVal = 20;
+        _minVal = -20.0;
+        _maxVal = 20.0;
         
         int cellWidth = (frame.size.width-8)/2;
         proxyBtn1 = [[SlideButton alloc] initWithFrame:CGRectMake(0, 0, cellWidth, 120)];
@@ -95,7 +95,7 @@
         [self addSubview:titleL];
         titleL.font = [UIFont boldSystemFontOfSize:11];
         titleL.textColor  = [UIColor whiteColor];
-        titleL.text = @"标题";
+        titleL.text = @"";
      
         
         volValueL1 = [[UILabel alloc] initWithFrame:CGRectMake(0,
@@ -309,7 +309,6 @@
         if([proxyBtn1 stateEnabled] || [proxyBtn2 stateEnabled])
         {
             line.alpha = 1.0;
-            
         }
         else
         {
@@ -319,7 +318,6 @@
         if([proxyBtn1 stateEnabled])
         {
             signalView1.alpha = 1.0;
-            
         }
         else
         {
@@ -344,12 +342,22 @@
     //如果有，就不需要重新请求了
     if([_curMic._proxys count])
     {
+        if(0 < [_curMic._proxys count])
+        {
+            proxyBtn1.data = [_curMic._proxys objectAtIndex:0];
+        }
+        if(1 < [_curMic._proxys count])
+        {
+            proxyBtn2.data = [_curMic._proxys objectAtIndex:1];
+        }
         return;
     }
     
     if(micObj._driver)
     {
         RgsDriverObj *dr = micObj._driver;
+        
+        titleL.text = dr.name;
         
         IMP_BLOCK_SELF(E2MicView);
         
@@ -394,6 +402,24 @@
     {
         proxyBtn2.data = [proObjs objectAtIndex:1];
     }
+}
+
+- (void) changeVolValue:(int)vol{
+    
+    if([proxyBtn1 stateEnabled])
+    {
+        float circleValue = (vol - _minVal)/(_maxVal - _minVal);
+        [proxyBtn1 setCircleValue:circleValue];
+        volValueL1.text = [NSString stringWithFormat:@"%d", vol];
+    }
+    
+    if([proxyBtn2 stateEnabled])
+    {
+        float circleValue = (vol - _minVal)/(_maxVal - _minVal);
+        [proxyBtn2 setCircleValue:circleValue];
+        volValueL2.text = [NSString stringWithFormat:@"%d", vol];
+    }
+    
 }
 
 @end
