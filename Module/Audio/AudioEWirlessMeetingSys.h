@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "BasePlugElement.h"
 
+//无线会议
 @interface AudioEWirlessMeetingSys : BasePlugElement
 {
     

@@ -681,7 +681,7 @@
             NSMutableDictionary *mdic = [NSMutableDictionary dictionaryWithDictionary:device];
             
             NSString *name = [device objectForKey:@"name"];
-            
+            NSString *subtype = [device objectForKey:@"subtype"];
             NSString *brand = [device objectForKey:@"brand"];
             NSString *ptype = [device objectForKey:@"ptype"];
             NSString* irname = [NSString stringWithFormat:@"%@-%@-%@", brand, name, ptype];
@@ -689,7 +689,7 @@
             RgsDriverInfo *irInfo = [[DataCenter defaultDataCenter] testIrDriverInfoByName:irname];
             if(irInfo == nil)
             {
-                if([name isEqualToString:@"空调"])
+                if([subtype isEqualToString:@"空调"])
                     [self chooseIRType:mdic idx:0];
                 else
                 {

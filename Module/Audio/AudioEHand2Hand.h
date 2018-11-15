@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "BasePlugElement.h"
 
+//手拉手
 @interface AudioEHand2Hand : BasePlugElement
 {
     
