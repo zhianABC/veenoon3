@@ -170,7 +170,7 @@
 
 - (void) endImportProjectRefresh:(NSNotification*)notify{
     
-    [KVNProgress showWithStatus:@"加载中..."];
+    [KVNProgress showWithStatus:@"重启中，请稍侯..."];
     
     [NSTimer scheduledTimerWithTimeInterval:10
                                      target:self

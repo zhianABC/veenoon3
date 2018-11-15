@@ -247,7 +247,7 @@
 
 -(void)onSystemWillReboot:(NSString *)reason
 {
-    [KVNProgress showSuccessWithStatus:reason];
+    //[KVNProgress showSuccessWithStatus:reason];
 }
 
 
