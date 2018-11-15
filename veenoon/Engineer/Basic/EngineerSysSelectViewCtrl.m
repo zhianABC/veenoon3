@@ -228,8 +228,10 @@
 #pragma mark -- import Project --
 - (void) importSysAction:(id)sender{
     
-    JCActionView *jcAction = [[JCActionView alloc] initWithTitles:@[@"云账户", @"U盘",@"本地账户"]
-                                                            frame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    JCActionView *jcAction = [[JCActionView alloc] initWithTitles:@[@"云账户", @"U盘", @"本地账户"]
+                                                            frame:CGRectMake(0, 0,
+                                                                             SCREEN_WIDTH,
+                                                                             SCREEN_HEIGHT)];
     jcAction.delegate_ = self;
     jcAction.tag = 2017;
     
@@ -237,7 +239,6 @@
     [app.window addSubview:jcAction];
     [jcAction animatedShow];
     
-
 }
 
 - (void) didJCActionButtonIndex:(int)index actionView:(UIView*)actionView{
