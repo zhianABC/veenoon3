@@ -140,11 +140,21 @@
     id key = [NSNumber numberWithInt:(int)_tpicker.tag];
     [_map setObject:value forKey:key];
     
-    NSLog(@"ssssss");
+    NSDictionary *firstDic = [value objectForKey:[NSNumber numberWithInt:0]];
+    NSDictionary *secondDic = [value objectForKey:[NSNumber numberWithInt:1] ];
+    
+    NSDictionary *firstValueDic = [firstDic objectForKey:@"value"];
+    NSDictionary *secValueDic = [secondDic objectForKey:@"value"];
+    
+    NSString *firstValue = [firstValueDic objectForKey:@"name"];
+    NSString *secValue = [secValueDic objectForKey:@"name"];
+    
+    int row = [firstValue intValue];
+    int column = [secValue intValue];
     
     if(delegate_ && [delegate_ respondsToSelector:@selector(didEndEditCell:withColumn:)])
     {
-        [delegate_ didEndEditCell:3 withColumn:5];
+        [delegate_ didEndEditCell:row withColumn:column];
     }
 }
 #pragma mark -
