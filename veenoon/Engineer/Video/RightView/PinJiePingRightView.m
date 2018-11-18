@@ -11,8 +11,9 @@
 #import "CenterCustomerPickerView.h"
 #import "Groups2PickerView.h"
 #import "VPinJieSet.h"
+#import "EngineerVideoPinJieViewCtrl.h"
 
-@interface PinJiePingRightView () <UITableViewDelegate, UITableViewDataSource, CenterCustomerPickerViewDelegate, UITextFieldDelegate, Groups2PickerViewDelegate> {
+@interface PinJiePingRightView () <UITableViewDelegate, UITableViewDataSource, CenterCustomerPickerViewDelegate, UITextFieldDelegate, Groups2PickerViewDelegate, EngineerVideoPinJieViewDelegate> {
     
     UITableView *_tableView;
     
@@ -27,6 +28,7 @@
 @property (nonatomic, strong) NSMutableDictionary *_map;
 @property (nonatomic, strong) NSMutableDictionary *_mapv;
 @property (nonatomic, strong) NSMutableArray *_groupValues;
+
 @end
 
 @implementation PinJiePingRightView
@@ -39,6 +41,7 @@
 @synthesize _numOfDevice;
 @synthesize _callback;
 @synthesize _curentDeviceIndex;
+@synthesize delegate_;
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.
@@ -104,9 +107,25 @@
     }
     
     self._groupValues = [NSMutableArray array];
-    [_groupValues addObject:@{@"name":@"4", @"subs":@[@{@"name":@"01"},@{@"name":@"02"},@{@"name":@"03"}]}];
-    [_groupValues addObject:@{@"name":@"8", @"subs":@[@{@"name":@"04"},@{@"name":@"05"},@{@"name":@"06"}]}];
-    [_groupValues addObject:@{@"name":@"16", @"subs":@[@{@"name":@"10"},@{@"name":@"20"},@{@"name":@"30"}]}];
+
+    
+    [_groupValues addObject:@{@"name":@"01", @"subs":@[@{@"name":@"01"},@{@"name":@"02"},@{@"name":@"03"},@{@"name":@"04"},@{@"name":@"05"},@{@"name":@"06"},@{@"name":@"07"},@{@"name":@"08"},@{@"name":@"09"},@{@"name":@"10"},@{@"name":@"11"},@{@"name":@"12"},@{@"name":@"13"},@{@"name":@"14"},@{@"name":@"15"},@{@"name":@"16"}]}];
+    [_groupValues addObject:@{@"name":@"02", @"subs":@[@{@"name":@"01"},@{@"name":@"02"},@{@"name":@"03"},@{@"name":@"04"},@{@"name":@"05"},@{@"name":@"06"},@{@"name":@"07"},@{@"name":@"08"},@{@"name":@"09"},@{@"name":@"10"},@{@"name":@"11"},@{@"name":@"12"},@{@"name":@"13"},@{@"name":@"14"},@{@"name":@"15"},@{@"name":@"16"}]}];
+    [_groupValues addObject:@{@"name":@"03", @"subs":@[@{@"name":@"01"},@{@"name":@"02"},@{@"name":@"03"},@{@"name":@"04"},@{@"name":@"05"},@{@"name":@"06"},@{@"name":@"07"},@{@"name":@"08"},@{@"name":@"09"},@{@"name":@"10"},@{@"name":@"11"},@{@"name":@"12"},@{@"name":@"13"},@{@"name":@"14"},@{@"name":@"15"},@{@"name":@"16"}]}];
+    [_groupValues addObject:@{@"name":@"04", @"subs":@[@{@"name":@"01"},@{@"name":@"02"},@{@"name":@"03"},@{@"name":@"04"},@{@"name":@"05"},@{@"name":@"06"},@{@"name":@"07"},@{@"name":@"08"},@{@"name":@"09"},@{@"name":@"10"},@{@"name":@"11"},@{@"name":@"12"},@{@"name":@"13"},@{@"name":@"14"},@{@"name":@"15"},@{@"name":@"16"}]}];
+    [_groupValues addObject:@{@"name":@"05", @"subs":@[@{@"name":@"01"},@{@"name":@"02"},@{@"name":@"03"},@{@"name":@"04"},@{@"name":@"05"},@{@"name":@"06"},@{@"name":@"07"},@{@"name":@"08"},@{@"name":@"09"},@{@"name":@"10"},@{@"name":@"11"},@{@"name":@"12"},@{@"name":@"13"},@{@"name":@"14"},@{@"name":@"15"},@{@"name":@"16"}]}];
+    [_groupValues addObject:@{@"name":@"06", @"subs":@[@{@"name":@"01"},@{@"name":@"02"},@{@"name":@"03"},@{@"name":@"04"},@{@"name":@"05"},@{@"name":@"06"},@{@"name":@"07"},@{@"name":@"08"},@{@"name":@"09"},@{@"name":@"10"},@{@"name":@"11"},@{@"name":@"12"},@{@"name":@"13"},@{@"name":@"14"},@{@"name":@"15"},@{@"name":@"16"}]}];
+    [_groupValues addObject:@{@"name":@"07", @"subs":@[@{@"name":@"01"},@{@"name":@"02"},@{@"name":@"03"},@{@"name":@"04"},@{@"name":@"05"},@{@"name":@"06"},@{@"name":@"07"},@{@"name":@"08"},@{@"name":@"09"},@{@"name":@"10"},@{@"name":@"11"},@{@"name":@"12"},@{@"name":@"13"},@{@"name":@"14"},@{@"name":@"15"},@{@"name":@"16"}]}];
+    [_groupValues addObject:@{@"name":@"08", @"subs":@[@{@"name":@"01"},@{@"name":@"02"},@{@"name":@"03"},@{@"name":@"04"},@{@"name":@"05"},@{@"name":@"06"},@{@"name":@"07"},@{@"name":@"08"},@{@"name":@"09"},@{@"name":@"10"},@{@"name":@"11"},@{@"name":@"12"},@{@"name":@"13"},@{@"name":@"14"},@{@"name":@"15"},@{@"name":@"16"}]}];
+    [_groupValues addObject:@{@"name":@"09", @"subs":@[@{@"name":@"01"},@{@"name":@"02"},@{@"name":@"03"},@{@"name":@"04"},@{@"name":@"05"},@{@"name":@"06"},@{@"name":@"07"},@{@"name":@"08"},@{@"name":@"09"},@{@"name":@"10"},@{@"name":@"11"},@{@"name":@"12"},@{@"name":@"13"},@{@"name":@"14"},@{@"name":@"15"},@{@"name":@"16"}]}];
+    [_groupValues addObject:@{@"name":@"10", @"subs":@[@{@"name":@"01"},@{@"name":@"02"},@{@"name":@"03"},@{@"name":@"04"},@{@"name":@"05"},@{@"name":@"06"},@{@"name":@"07"},@{@"name":@"08"},@{@"name":@"09"},@{@"name":@"10"},@{@"name":@"11"},@{@"name":@"12"},@{@"name":@"13"},@{@"name":@"14"},@{@"name":@"15"},@{@"name":@"16"}]}];
+    [_groupValues addObject:@{@"name":@"11", @"subs":@[@{@"name":@"01"},@{@"name":@"02"},@{@"name":@"03"},@{@"name":@"04"},@{@"name":@"05"},@{@"name":@"06"},@{@"name":@"07"},@{@"name":@"08"},@{@"name":@"09"},@{@"name":@"10"},@{@"name":@"11"},@{@"name":@"12"},@{@"name":@"13"},@{@"name":@"14"},@{@"name":@"15"},@{@"name":@"16"}]}];
+    [_groupValues addObject:@{@"name":@"12", @"subs":@[@{@"name":@"01"},@{@"name":@"02"},@{@"name":@"03"},@{@"name":@"04"},@{@"name":@"05"},@{@"name":@"06"},@{@"name":@"07"},@{@"name":@"08"},@{@"name":@"09"},@{@"name":@"10"},@{@"name":@"11"},@{@"name":@"12"},@{@"name":@"13"},@{@"name":@"14"},@{@"name":@"15"},@{@"name":@"16"}]}];
+    [_groupValues addObject:@{@"name":@"13", @"subs":@[@{@"name":@"01"},@{@"name":@"02"},@{@"name":@"03"},@{@"name":@"04"},@{@"name":@"05"},@{@"name":@"06"},@{@"name":@"07"},@{@"name":@"08"},@{@"name":@"09"},@{@"name":@"10"},@{@"name":@"11"},@{@"name":@"12"},@{@"name":@"13"},@{@"name":@"14"},@{@"name":@"15"},@{@"name":@"16"}]}];
+    [_groupValues addObject:@{@"name":@"14", @"subs":@[@{@"name":@"01"},@{@"name":@"02"},@{@"name":@"03"},@{@"name":@"04"},@{@"name":@"05"},@{@"name":@"06"},@{@"name":@"07"},@{@"name":@"08"},@{@"name":@"09"},@{@"name":@"10"},@{@"name":@"11"},@{@"name":@"12"},@{@"name":@"13"},@{@"name":@"14"},@{@"name":@"15"},@{@"name":@"16"}]}];
+    [_groupValues addObject:@{@"name":@"15", @"subs":@[@{@"name":@"01"},@{@"name":@"02"},@{@"name":@"03"},@{@"name":@"04"},@{@"name":@"05"},@{@"name":@"06"},@{@"name":@"07"},@{@"name":@"08"},@{@"name":@"09"},@{@"name":@"10"},@{@"name":@"11"},@{@"name":@"12"},@{@"name":@"13"},@{@"name":@"14"},@{@"name":@"15"},@{@"name":@"16"}]}];
+    [_groupValues addObject:@{@"name":@"16", @"subs":@[@{@"name":@"01"},@{@"name":@"02"},@{@"name":@"03"},@{@"name":@"04"},@{@"name":@"05"},@{@"name":@"06"},@{@"name":@"07"},@{@"name":@"08"},@{@"name":@"09"},@{@"name":@"10"},@{@"name":@"11"},@{@"name":@"12"},@{@"name":@"13"},@{@"name":@"14"},@{@"name":@"15"},@{@"name":@"16"}]}];
+    
     
     [_rows addObject:@{@"title":@"分频模式",@"values":_groupValues}];
     [_rows addObject:@{@"title":@"调用场景",@"values":@[@"场景一",@"场景二",@"场景三"]}];
@@ -129,6 +148,7 @@
     NSDictionary *dic = [value objectForKey:@0];
     [_map setObject:dic forKey:key];
     
+    NSLog(@"dddddd");
 }
 
 - (void) didValueChangedWithGroups2Picker:(NSDictionary*)value{
@@ -136,6 +156,22 @@
     id key = [NSNumber numberWithInt:(int)_tpicker.tag];
     [_map setObject:value forKey:key];
     
+    NSDictionary *firstDic = [value objectForKey:[NSNumber numberWithInt:0]];
+    NSDictionary *secondDic = [value objectForKey:[NSNumber numberWithInt:1] ];
+    
+    NSDictionary *firstValueDic = [firstDic objectForKey:@"value"];
+    NSDictionary *secValueDic = [secondDic objectForKey:@"value"];
+    
+    NSString *firstValue = [firstValueDic objectForKey:@"name"];
+    NSString *secValue = [secValueDic objectForKey:@"name"];
+    
+    int row = [firstValue intValue];
+    int column = [secValue intValue];
+    
+    if(delegate_ && [delegate_ respondsToSelector:@selector(didEndEditCell:withColumn:)])
+    {
+        [delegate_ didEndEditCell:row withColumn:column];
+    }
 }
 #pragma mark -
 #pragma mark Table View DataSource
@@ -305,7 +341,6 @@
         _curIndex = targetIndx;
     
     [_tableView reloadData];
-    
 }
 
 

@@ -10,6 +10,13 @@
 #import "BaseViewController.h"
 #import "VPinJieSet.h"
 
+@protocol EngineerVideoPinJieViewDelegate <NSObject>
+
+@optional
+- (void) didEndEditCell:(int)row withColumn:(int)column;
+
+@end
+
 @interface EngineerVideoPinJieViewCtrl : BaseViewController {
     NSMutableArray *_pinjieSysArray;
     int _rowNumber;

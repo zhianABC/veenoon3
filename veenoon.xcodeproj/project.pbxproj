@@ -755,6 +755,8 @@
 		EB62DFFC20DE85E300144EE0 /* AudioEProcessorAutoMixProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = EB62DFFB20DE85E300144EE0 /* AudioEProcessorAutoMixProxy.m */; };
 		EB6FB21F2197D23700ECE791 /* SysInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB6FB21E2197D23700ECE791 /* SysInfoViewController.m */; };
 		EB6FB22221980E6100ECE791 /* SysInfoVersionView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB6FB22121980E6100ECE791 /* SysInfoVersionView.m */; };
+		EB6FB22721A1429900ECE791 /* a_youxian@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB6FB22521A1429800ECE791 /* a_youxian@2x.png */; };
+		EB6FB22821A1429900ECE791 /* a_youxian_sel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EB6FB22621A1429800ECE791 /* a_youxian_sel@2x.png */; };
 		EB7333F1204102DF00AE60B8 /* FloorWarmRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333F0204102DF00AE60B8 /* FloorWarmRightView.m */; };
 		EB7333F42041046400AE60B8 /* AirCleanRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333F32041046400AE60B8 /* AirCleanRightView.m */; };
 		EB7333FA204108B000AE60B8 /* AddWetRightView.m in Sources */ = {isa = PBXBuildFile; fileRef = EB7333F9204108B000AE60B8 /* AddWetRightView.m */; };
@@ -2055,6 +2057,8 @@
 		EB6FB21E2197D23700ECE791 /* SysInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SysInfoViewController.m; sourceTree = "<group>"; };
 		EB6FB22021980E6100ECE791 /* SysInfoVersionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SysInfoVersionView.h; sourceTree = "<group>"; };
 		EB6FB22121980E6100ECE791 /* SysInfoVersionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SysInfoVersionView.m; sourceTree = "<group>"; };
+		EB6FB22521A1429800ECE791 /* a_youxian@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "a_youxian@2x.png"; sourceTree = "<group>"; };
+		EB6FB22621A1429800ECE791 /* a_youxian_sel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "a_youxian_sel@2x.png"; sourceTree = "<group>"; };
 		EB7333EF204102DF00AE60B8 /* FloorWarmRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FloorWarmRightView.h; sourceTree = "<group>"; };
 		EB7333F0204102DF00AE60B8 /* FloorWarmRightView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FloorWarmRightView.m; sourceTree = "<group>"; };
 		EB7333F22041046400AE60B8 /* AirCleanRightView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AirCleanRightView.h; sourceTree = "<group>"; };
@@ -3412,6 +3416,8 @@
 		341C60E51FDD0DBF003A5490 /* audio */ = {
 			isa = PBXGroup;
 			children = (
+				EB6FB22621A1429800ECE791 /* a_youxian_sel@2x.png */,
+				EB6FB22521A1429800ECE791 /* a_youxian@2x.png */,
 				34190F0B205D537D009A519C /* a_icon_6_sel@2x.png */,
 				34190F11205D537D009A519C /* a_icon_7_sel@2x.png */,
 				34190F0E205D537D009A519C /* a_icon_8_sel@2x.png */,
@@ -4541,6 +4547,7 @@
 				EB03F52D1FBDC83100865541 /* home_background@2x.png in Resources */,
 				3451A53B2052DCC600AE02B4 /* slide_btn_light@2x.png in Resources */,
 				341CE49E20A3F000009DBC01 /* buy_food@2x.png in Resources */,
+				EB6FB22821A1429900ECE791 /* a_youxian_sel@2x.png in Resources */,
 				3448D95E2073B9590055D48F /* videop_remotevideo_w@2x.png in Resources */,
 				EBAE5B631FDD046A00C10C4D /* engineer_confirm_bt_n@2x.png in Resources */,
 				EBAE5B851FDD07BE00C10C4D /* engineer_video_touyingji_s@2x.png in Resources */,
@@ -4688,6 +4695,7 @@
 				3448D9582073B9590055D48F /* videop_usb_y@2x.png in Resources */,
 				EB1A55ED1FEF594B000B18E6 /* engineer_left_s@2x.png in Resources */,
 				3421B34D2150CAC9008773F0 /* project_icon@2x.png in Resources */,
+				EB6FB22721A1429900ECE791 /* a_youxian@2x.png in Resources */,
 				341C60F91FDD0DBF003A5490 /* hj_icon_11@2x.png in Resources */,
 				34190F03205D5375009A519C /* hj_icon_12_sel@2x.png in Resources */,
 				EBDF1C361FC5D5CF00A756EA /* door_access_s@2x.png in Resources */,
