@@ -11,9 +11,7 @@
 #import "EngineerSliderView.h"
 
 @interface EngineerPVExpendViewCtrl<EngineerSliderViewDelegate> : BaseViewController {
-    NSMutableArray *_pvExpendArray;
-    int _number;
+   
 }
-@property (nonatomic,strong) NSMutableArray *_pvExpendArray;
-@property (nonatomic,assign) int _number;
+@property (nonatomic,strong) NSArray *_pvExpendArray;
 @end

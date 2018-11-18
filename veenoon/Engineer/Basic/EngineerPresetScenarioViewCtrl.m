@@ -668,8 +668,7 @@
         // wuxian array
         if ([class isEqualToString:@"AudioEMinMax"]) {
             EngineerPVExpendViewCtrl *ctrl = [[EngineerPVExpendViewCtrl alloc] init];
-            ctrl._pvExpendArray = nil;// [NSMutableArray arrayWithObject:data];
-            ctrl._number=16;
+            ctrl._pvExpendArray = @[plug];
             [self.navigationController pushViewController:ctrl animated:YES];
         }
     }

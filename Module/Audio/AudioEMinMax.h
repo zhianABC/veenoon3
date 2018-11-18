@@ -11,5 +11,10 @@
 
 //功放
 @interface AudioEMinMax : BasePlugElement
+{
+    
+}
+//<AudioEMinMaxProxy>
+@property (nonatomic, strong) NSMutableArray *_proxys;
 
 @end
