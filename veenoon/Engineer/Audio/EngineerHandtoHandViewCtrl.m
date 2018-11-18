@@ -244,12 +244,14 @@
     _rightSetView.delegate_ = self;
 }
 - (void) refreshView:(int)number {
+    
     int index = 0;
-    int top = 74;
+    int top = ENGINEER_VIEW_COMPONENT_TOP-64;
+    
+    int leftRight = ENGINEER_VIEW_LEFT;
     
     int cellWidth = 92;
     int cellHeight = 92;
-    int colNumber = ENGINEER_VIEW_COLUMN_N;
     int space = ENGINEER_VIEW_COLUMN_GAP;
     
     if (_botomView) {
@@ -259,28 +261,27 @@
             }
         }
     } else {
-        _botomView = [[UIScrollView alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, top, SCREEN_WIDTH- ENGINEER_VIEW_LEFT*2, SCREEN_HEIGHT - top-50)];
+        _botomView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,
+                                                                    64,
+                                                                    SCREEN_WIDTH,
+                                                                    SCREEN_HEIGHT-64-50)];
         [self.view addSubview:_botomView];
         _botomView.backgroundColor = [UIColor clearColor];
     }
     
     int rowN = number / ENGINEER_VIEW_COLUMN_N;
-    int ySpace = 15;
-    int height = rowN * 120 + (rowN -1) * 10;
+    int height = rowN * 92 + (rowN -1) * space;
     
-    _botomView.contentSize =  CGSizeMake(SCREEN_WIDTH-ENGINEER_VIEW_LEFT*2, height);
+    _botomView.contentSize =  CGSizeMake(SCREEN_WIDTH, height);
     _botomView.scrollEnabled=YES;
     _botomView.backgroundColor = [UIColor clearColor];
     
     for (int i = 0; i < number; i++) {
         
-        int row = index/colNumber;
-        int col = index%colNumber;
-        int startX = col*cellWidth+col*space;
-        int startY = row*cellHeight+ySpace*row+20;
-        if (row>=1) {
-            startY-=20;
-        }
+        int row = index/ENGINEER_VIEW_COLUMN_N;
+        int col = index%ENGINEER_VIEW_COLUMN_N;
+        int startX = col*cellWidth+col*space+leftRight;
+        int startY = row*cellHeight+space*row;
         
         
         LightSliderButton *btn = [[LightSliderButton alloc] initWithFrame:CGRectMake(startX, startY, 120, 120)];
