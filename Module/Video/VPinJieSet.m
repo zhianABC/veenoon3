@@ -14,6 +14,22 @@
 
 @implementation VPinJieSet
 
+- (id) init
+{
+    if(self = [super init])
+    {
+        
+        //不需要ip
+        self._ipaddress = @"192.168.1.1";
+        self._show_icon_name = @"v_icon_6.png";
+        self._show_icon_sel_name = @"v_icon_6_sel.png";
+        
+        self._typeName = video_process_name;
+    }
+    
+    return self;
+}
+
 - (void) createDriver{
     
     RgsAreaObj *area = [DataSync sharedDataSync]._currentArea;

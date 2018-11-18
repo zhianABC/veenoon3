@@ -221,6 +221,12 @@
                                        64, 300, SCREEN_HEIGHT-114);
         [UIView commitAnimations];
     }
+    
+    _rightView.delegate_ = self;
+}
+
+- (void) didEndEditCell:(int)row withColumn:(int)column {
+    [self refreshScrollView:row withColumn:column];
 }
 
 - (void) cancelAction:(id)sender{

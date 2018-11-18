@@ -11,8 +11,9 @@
 #import "CenterCustomerPickerView.h"
 #import "Groups2PickerView.h"
 #import "VPinJieSet.h"
+#import "EngineerVideoPinJieViewCtrl.h"
 
-@interface PinJiePingRightView () <UITableViewDelegate, UITableViewDataSource, CenterCustomerPickerViewDelegate, UITextFieldDelegate, Groups2PickerViewDelegate> {
+@interface PinJiePingRightView () <UITableViewDelegate, UITableViewDataSource, CenterCustomerPickerViewDelegate, UITextFieldDelegate, Groups2PickerViewDelegate, EngineerVideoPinJieViewDelegate> {
     
     UITableView *_tableView;
     
@@ -27,6 +28,7 @@
 @property (nonatomic, strong) NSMutableDictionary *_map;
 @property (nonatomic, strong) NSMutableDictionary *_mapv;
 @property (nonatomic, strong) NSMutableArray *_groupValues;
+
 @end
 
 @implementation PinJiePingRightView
@@ -39,6 +41,7 @@
 @synthesize _numOfDevice;
 @synthesize _callback;
 @synthesize _curentDeviceIndex;
+@synthesize delegate_;
 /*
  // Only override drawRect: if you perform custom drawing.
  // An empty implementation adversely affects performance during animation.
@@ -129,6 +132,7 @@
     NSDictionary *dic = [value objectForKey:@0];
     [_map setObject:dic forKey:key];
     
+    NSLog(@"dddddd");
 }
 
 - (void) didValueChangedWithGroups2Picker:(NSDictionary*)value{
@@ -136,6 +140,12 @@
     id key = [NSNumber numberWithInt:(int)_tpicker.tag];
     [_map setObject:value forKey:key];
     
+    NSLog(@"ssssss");
+    
+    if(delegate_ && [delegate_ respondsToSelector:@selector(didEndEditCell:withColumn:)])
+    {
+        [delegate_ didEndEditCell:3 withColumn:5];
+    }
 }
 #pragma mark -
 #pragma mark Table View DataSource
@@ -305,7 +315,6 @@
         _curIndex = targetIndx;
     
     [_tableView reloadData];
-    
 }
 
 

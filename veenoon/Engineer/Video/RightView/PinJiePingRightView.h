@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "VPinJieSet.h"
 
-@interface PinJiePingRightView : UIView {
+#import "EngineerVideoPinJieViewCtrl.h"
+
+@interface PinJiePingRightView : UIView<EngineerVideoPinJieViewDelegate> {
     VPinJieSet *_currentObj;
     
     RightSetViewCallbackBlock _callback;
@@ -18,6 +20,7 @@
 @property(nonatomic, assign) int _numOfDevice;
 @property (nonatomic, copy) RightSetViewCallbackBlock _callback;
 @property (nonatomic, assign) int _curentDeviceIndex;
+@property (nonatomic, assign) id<EngineerVideoPinJieViewDelegate> delegate_;
 
 -(void) refreshView:(VPinJieSet*) dvdPlayerSet;
 
