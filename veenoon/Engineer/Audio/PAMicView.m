@@ -10,6 +10,7 @@
 #import "SlideButton.h"
 #import "AudioEMinMaxProxy.h"
 #import "RegulusSDK.h"
+#import "Utilities.h"
 
 @interface PAMicView () <SlideButtonDelegate>
 {
@@ -29,6 +30,7 @@
 
 @implementation PAMicView
 @synthesize _curMic;
+@synthesize delegate;
 
 - (id) initWithFrame:(CGRect)frame{
     
@@ -221,6 +223,11 @@
     {
         panView.alpha = 0.6;
     }
+    
+    if(delegate && [delegate respondsToSelector:@selector(didTappedButtonWithVol:)])
+    {
+        [delegate didTappedButtonWithVol:[_curMic getVol]];
+    }
 }
 
 - (id) testChangeVolValueWhenSelected:(float)vol
@@ -295,7 +302,8 @@
             }
         }]];
         
-        //[self presentViewController:alertController animated:true completion:nil];
+        UIViewController *vc = [Utilities findCurrentViewController];
+        [vc presentViewController:alertController animated:true completion:nil];
     }
 }
 

@@ -17,7 +17,7 @@
 #import "RegulusSDK.h"
 
 
-@interface EngineerPVExpendViewCtrl () <EngineerSliderViewDelegate, SlideButtonDelegate, CustomPickerViewDelegate>{
+@interface EngineerPVExpendViewCtrl () <EngineerSliderViewDelegate, SlideButtonDelegate, CustomPickerViewDelegate, PAMicViewDelegate>{
     
     EngineerSliderView *_zengyiSlider;
     
@@ -179,7 +179,7 @@
         CGRect rc = CGRectMake(startX, startY, 120, 230);
         PAMicView *pv = [[PAMicView alloc] initWithFrame:rc];
         [_proxysView addSubview:pv];
-        
+        pv.delegate = self;
         [_cells addObject:pv];
     
         AudioEMinMaxProxy *proxy = [self._proxys objectAtIndex:i];
@@ -287,6 +287,12 @@
     if([opts count])
         [[RegulusSDK sharedRegulusSDK] ControlDeviceByOperation:opts
                                                      completion:nil];
+}
+
+- (void) didTappedButtonWithVol:(int)vol{
+    
+    [_zengyiSlider setScaleValue:vol];
+    
 }
 
 

@@ -83,6 +83,7 @@
         _titleLabel.font = [UIFont boldSystemFontOfSize:11];
         _titleLabel.textColor  = [UIColor whiteColor];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
+        _titleLabel.alpha = 0.5;
         
         _valueLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth(frame)/2-30,
                                                                 CGRectGetHeight(frame)-25,
@@ -92,7 +93,7 @@
         _valueLabel.font = [UIFont boldSystemFontOfSize:11];
         _valueLabel.textColor  = [UIColor whiteColor];
         _valueLabel.textAlignment = NSTextAlignmentCenter;
-        
+        _valueLabel.alpha = 0.5;
         
         self._grayBackgroundImage = [UIImage imageNamed:@"slide_btn_gray.png"];
         self._lightBackgroundImage = [UIImage imageNamed:@"slide_btn_light.png"];

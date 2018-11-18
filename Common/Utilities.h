@@ -24,4 +24,6 @@
 + (BOOL) validateEmail:(NSString*)emailStr;
 + (BOOL) IsValidMobeilTel:(const char*)pszTel;
 + (void) showMessage:(NSString*)message ctrl:(UIViewController*)ctrl;
+
++ (UIViewController *)findCurrentViewController;
 @end
