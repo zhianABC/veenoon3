@@ -245,14 +245,17 @@
 }
 - (void) refreshView:(int)number {
     
-    int index = 0;
-    int top = ENGINEER_VIEW_COMPONENT_TOP-64;
+    [_buttonLabelArray removeAllObjects];
     
     int leftRight = ENGINEER_VIEW_LEFT;
     
     int cellWidth = 92;
     int cellHeight = 92;
+    int colNumber = ENGINEER_VIEW_COLUMN_N;
     int space = ENGINEER_VIEW_COLUMN_GAP;
+    
+    int index = 0;
+    int top = 0;
     
     if (_botomView) {
         for (UIView *view in [_botomView subviews]) {
@@ -261,16 +264,17 @@
             }
         }
     } else {
+        int height = 150;
         _botomView = [[UIScrollView alloc] initWithFrame:CGRectMake(0,
-                                                                    64,
-                                                                    SCREEN_WIDTH,
-                                                                    SCREEN_HEIGHT-64-50)];
+                                                               height-5,
+                                                               SCREEN_WIDTH,
+                                                               SCREEN_HEIGHT-height-60)];
         [self.view addSubview:_botomView];
         _botomView.backgroundColor = [UIColor clearColor];
     }
     
     int rowN = number / ENGINEER_VIEW_COLUMN_N;
-    int height = rowN * 92 + (rowN -1) * space;
+    int height = (rowN+1) * 92 + rowN * space + top;
     
     _botomView.contentSize =  CGSizeMake(SCREEN_WIDTH, height);
     _botomView.scrollEnabled=YES;
@@ -278,10 +282,10 @@
     
     for (int i = 0; i < number; i++) {
         
-        int row = index/ENGINEER_VIEW_COLUMN_N;
-        int col = index%ENGINEER_VIEW_COLUMN_N;
+        int row = index/colNumber;
+        int col = index%colNumber;
         int startX = col*cellWidth+col*space+leftRight;
-        int startY = row*cellHeight+space*row;
+        int startY = row*cellHeight+space*row+top;
         
         
         LightSliderButton *btn = [[LightSliderButton alloc] initWithFrame:CGRectMake(startX, startY, 120, 120)];
