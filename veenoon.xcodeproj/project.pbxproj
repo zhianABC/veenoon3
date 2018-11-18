@@ -382,6 +382,8 @@
 		34E73D4520FDD6C700C18C10 /* qr_code_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34E73D4420FDD6C700C18C10 /* qr_code_icon@2x.png */; };
 		34E73D4720FDD95500C18C10 /* room_add_pg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34E73D4620FDD95400C18C10 /* room_add_pg@2x.png */; };
 		34E73D4920FDE61600C18C10 /* qrcode_scan_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34E73D4820FDE61500C18C10 /* qrcode_scan_line@2x.png */; };
+		34E8BCE621A134440026F930 /* AudioEMinMaxProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E8BCE521A134440026F930 /* AudioEMinMaxProxy.m */; };
+		34E8BCE921A138300026F930 /* PAMicView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E8BCE821A138300026F930 /* PAMicView.m */; };
 		34F2660020EFA6720070D91D /* EDimmerSwitchLight.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F265FC20EFA6710070D91D /* EDimmerSwitchLight.m */; };
 		34F2660120EFA6720070D91D /* EDimmerSwitchLightProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 34F265FF20EFA6720070D91D /* EDimmerSwitchLightProxy.m */; };
 		34F27A51205121EF0045D765 /* ce_l_06_big.png in Resources */ = {isa = PBXBuildFile; fileRef = 34F27A3D205121EF0045D765 /* ce_l_06_big.png */; };
@@ -1591,6 +1593,10 @@
 		34E73D4420FDD6C700C18C10 /* qr_code_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qr_code_icon@2x.png"; sourceTree = "<group>"; };
 		34E73D4620FDD95400C18C10 /* room_add_pg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "room_add_pg@2x.png"; sourceTree = "<group>"; };
 		34E73D4820FDE61500C18C10 /* qrcode_scan_line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qrcode_scan_line@2x.png"; sourceTree = SOURCE_ROOT; };
+		34E8BCE421A134440026F930 /* AudioEMinMaxProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioEMinMaxProxy.h; sourceTree = "<group>"; };
+		34E8BCE521A134440026F930 /* AudioEMinMaxProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioEMinMaxProxy.m; sourceTree = "<group>"; };
+		34E8BCE721A138300026F930 /* PAMicView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PAMicView.h; sourceTree = "<group>"; };
+		34E8BCE821A138300026F930 /* PAMicView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PAMicView.m; sourceTree = "<group>"; };
 		34F265FC20EFA6710070D91D /* EDimmerSwitchLight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EDimmerSwitchLight.m; sourceTree = "<group>"; };
 		34F265FD20EFA6710070D91D /* EDimmerSwitchLightProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDimmerSwitchLightProxy.h; sourceTree = "<group>"; };
 		34F265FE20EFA6720070D91D /* EDimmerSwitchLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EDimmerSwitchLight.h; sourceTree = "<group>"; };
@@ -3639,6 +3645,8 @@
 				34C7C0F9219A847E00CCAA60 /* AudioEWirlessMikeProxy.m */,
 				349DADD6206E8D02001593DE /* AudioEMinMax.h */,
 				349DADDC206E8D02001593DE /* AudioEMinMax.m */,
+				34E8BCE421A134440026F930 /* AudioEMinMaxProxy.h */,
+				34E8BCE521A134440026F930 /* AudioEMinMaxProxy.m */,
 				349DADDE206E8D02001593DE /* AudioEMix.h */,
 				349DADD7206E8D02001593DE /* AudioEMix.m */,
 				EBBFD3B020EA5227002ADD3C /* AudioEMixProxy.h */,
@@ -4020,6 +4028,8 @@
 				EB1A55C11FE93CD4000B18E6 /* EngineerAudioProcessViewCtrl.m */,
 				EB1A55C51FEA919C000B18E6 /* EngineerPVExpendViewCtrl.h */,
 				EB1A55C61FEA919C000B18E6 /* EngineerPVExpendViewCtrl.m */,
+				34E8BCE721A138300026F930 /* PAMicView.h */,
+				34E8BCE821A138300026F930 /* PAMicView.m */,
 			);
 			path = Audio;
 			sourceTree = "<group>";
@@ -5081,6 +5091,7 @@
 				04DE1E831AD6AEE000D49E2F /* ClassFactory.m in Sources */,
 				EB4EC11F1FE7F94B000B3101 /* EngineerHandtoHandViewCtrl.m in Sources */,
 				34D68BA9210E03D600E90E1F /* DriverSync.m in Sources */,
+				34E8BCE621A134440026F930 /* AudioEMinMaxProxy.m in Sources */,
 				EB1A55BB1FE801CF000B18E6 /* EngineerWIrelessMeetingPlayViewCtrl.m in Sources */,
 				04DE1E921AD6AEE000D49E2F /* UserDefaultsKV.m in Sources */,
 				3456C17B209EEDCC001FAB61 /* DevicePlugButton.m in Sources */,
@@ -5221,6 +5232,7 @@
 				049BA6661AF7B82700F17584 /* ChooseCountryViewController.m in Sources */,
 				04DE1E9D1AD6AEE000D49E2F /* DataCenter.m in Sources */,
 				347D4EB2214229370088F989 /* DimmerLightSwitchView.m in Sources */,
+				34E8BCE921A138300026F930 /* PAMicView.m in Sources */,
 				04DE1EA51AD6AEE000D49E2F /* SBJson4StreamParserState.m in Sources */,
 				341C60C41FDCF1EA003A5490 /* ECPlusSelectView.m in Sources */,
 				34890CA820E4AC2A00C8505D /* AirConditionProxy.m in Sources */,

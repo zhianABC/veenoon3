@@ -61,6 +61,9 @@
 #import "AudioEWirlessMike.h"
 #import "AudioEWirlessMikeProxy.h"
 
+#import "AudioEMinMax.h"
+#import "AudioEMinMaxProxy.h"
+
 
 @interface Scenario ()
 {
@@ -1156,6 +1159,27 @@
         else if ([ap isKindOfClass:[AudioEWirlessMike class]])
         {
             NSArray *proxys = ((AudioEWirlessMike*)ap)._proxys;
+            
+            NSDictionary *data = [ap userData];
+            [audios addObject:data];
+        }
+        else if ([ap isKindOfClass:[AudioEMinMax class]])
+        {
+            NSArray *proxys = ((AudioEMinMax*)ap)._proxys;
+            
+            for(AudioEMinMaxProxy *proxy in proxys)
+            {
+                RgsSceneOperation* rsp = [proxy generateEventOperation_Mute];
+                if(rsp)
+                {
+                    [self addEventOperation:rsp];
+                }
+                rsp = [proxy generateEventOperation_Vol];
+                if(rsp)
+                {
+                    [self addEventOperation:rsp];
+                }
+            }
             
             NSDictionary *data = [ap userData];
             [audios addObject:data];

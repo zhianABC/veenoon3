@@ -10,39 +10,48 @@
 #import "CustomPickerView.h"
 #import "EngineerSliderView.h"
 #import "SlideButton.h"
+#import "PAMicView.h"
+#import "AudioEMinMax.h"
+#import "AudioEMinMaxProxy.h"
+#import "KVNProgress.h"
+#import "RegulusSDK.h"
 
 
 @interface EngineerPVExpendViewCtrl () <EngineerSliderViewDelegate, SlideButtonDelegate, CustomPickerViewDelegate>{
     
     EngineerSliderView *_zengyiSlider;
     
-    NSMutableArray *_buttonArray;
-    
-    NSMutableArray *_selectedBtnArray;
-    
-    NSMutableArray *_imageViewArray;
     BOOL isSettings;
     UIButton *okBtn;
+    
+    UIView *_proxysView;
 }
+@property (nonatomic, strong) AudioEMinMax *_curProcessor;
+@property (nonatomic, strong) NSMutableArray *_cells;
+@property (nonatomic, strong) NSArray *_proxys;
 
 @end
 
 @implementation EngineerPVExpendViewCtrl
-@synthesize _number;
 @synthesize _pvExpendArray;
+@synthesize _curProcessor;
+@synthesize _cells;
+@synthesize _proxys;
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+   
     isSettings = NO;
     
-    _buttonArray = [[NSMutableArray alloc] init];
+    self._cells = [NSMutableArray array];
+
+    [super setTitleAndImage:@"audio_corner_gongfang.png" withTitle:@"功放"];
     
-    _selectedBtnArray = [[NSMutableArray alloc] init];
-    _imageViewArray = [[NSMutableArray alloc] init];
-    
-    [super setTitleAndImage:@"audio_corner_gongfang.png" withTitle:@"功率"];
-    
-    UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-50, SCREEN_WIDTH, 50)];
+    UIImageView *bottomBar = [[UIImageView alloc] initWithFrame:CGRectMake(0,
+                                                                           SCREEN_HEIGHT-50,
+                                                                           SCREEN_WIDTH,
+                                                                           50)];
     [self.view addSubview:bottomBar];
     
     //缺切图，把切图贴上即可。
@@ -61,16 +70,12 @@
                   action:@selector(cancelAction:)
         forControlEvents:UIControlEventTouchUpInside];
     
-    okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    okBtn.frame = CGRectMake(SCREEN_WIDTH-10-160, 0,160, 50);
-    [bottomBar addSubview:okBtn];
-    [okBtn setTitle:@"设置" forState:UIControlStateNormal];
-    [okBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [okBtn setTitleColor:NEW_ER_BUTTON_SD_COLOR forState:UIControlStateHighlighted];
-    okBtn.titleLabel.font = [UIFont boldSystemFontOfSize:18];
-    [okBtn addTarget:self
-              action:@selector(okAction:)
-    forControlEvents:UIControlEventTouchUpInside];
+    int height = 150;
+    _proxysView = [[UIView alloc] initWithFrame:CGRectMake(0,
+                                                           height-5,
+                                                           SCREEN_WIDTH,
+                                                           SCREEN_HEIGHT-height-60)];
+    [self.view addSubview:_proxysView];
     
     _zengyiSlider = [[EngineerSliderView alloc]
                      initWithSliderBg:[UIImage imageNamed:@"engineer_zengyi3.png"]
@@ -81,152 +86,203 @@
     _zengyiSlider.topEdge = 90;
     _zengyiSlider.bottomEdge = 79;
     _zengyiSlider.maxValue = 0;
-    _zengyiSlider.minValue = -70;
+    _zengyiSlider.minValue = -32;
     _zengyiSlider.delegate = self;
     [_zengyiSlider resetScale];
-    _zengyiSlider.center = CGPointMake(SCREEN_WIDTH - 120, SCREEN_HEIGHT/2);
+    _zengyiSlider.center = CGPointMake(TESLARIA_SLIDER_X, TESLARIA_SLIDER_Y);
+    
+    
+    if([_pvExpendArray count])
+        self._curProcessor = [_pvExpendArray objectAtIndex:0];
+    
+    if(_curProcessor)
+    {
+        [self getCurrentDeviceDriverProxys];
+    }
+
+}
+
+
+- (void) getCurrentDeviceDriverProxys{
+    
+    if(_curProcessor == nil)
+        return;
+    
+    //如果有，就不需要重新请求了
+    if([_curProcessor._proxys count])
+    {
+        self._proxys = _curProcessor._proxys;
+        [self initChannels];
+        
+        return;
+    }
+    
+    IMP_BLOCK_SELF(EngineerPVExpendViewCtrl);
+    
+    RgsDriverObj *driver = _curProcessor._driver;
+    if([driver isKindOfClass:[RgsDriverObj class]])
+    {
+        [[RegulusSDK sharedRegulusSDK] GetDriverProxys:driver.m_id completion:^(BOOL result, NSArray *proxys, NSError *error) {
+            if (result) {
+                if ([proxys count]) {
+                    
+                    [block_self prepareProxys:proxys];
+                }
+            }
+            else{
+                [KVNProgress showErrorWithStatus:[error description]];
+            }
+        }];
+    }
+
+}
+
+- (void) prepareProxys:(NSArray*)array{
+    
+    NSMutableArray *tmp = [NSMutableArray array];
+    _curProcessor._proxys = tmp;
+    self._proxys = tmp;
+    
+    for(RgsProxyObj *pro in array)
+    {
+        AudioEMinMaxProxy *ap = [[AudioEMinMaxProxy alloc] init];
+        ap._rgsProxyObj = pro;
+        [tmp addObject:ap];
+    }
+
+    [self initChannels];
+    
+}
+
+- (void) initChannels{
+    
+    [[_proxysView subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
     int leftRight = ENGINEER_VIEW_LEFT;
     
     int cellWidth = 92;
-    int cellHeight = 240;
+    int cellHeight = 250;
     int colNumber = ENGINEER_VIEW_COLUMN_N;
     int space = ENGINEER_VIEW_COLUMN_GAP;
     
     int index = 0;
-    int top = ENGINEER_VIEW_COMPONENT_TOP;
+    int top = 0;
     
-    for (int i = 0; i < _number; i++) {
-        NSMutableDictionary *dataDic;
-        if (_pvExpendArray && [_pvExpendArray count] > 0) {
-            dataDic = [_pvExpendArray objectAtIndex:i];
-        }
+    for (int i = 0; i < [self._proxys count]; i++) {
         
         int row = index/colNumber;
         int col = index%colNumber;
         int startX = col*cellWidth+col*space+leftRight;
         int startY = row*cellHeight+space*row+top;
         
-        UIView *conmponentView = [[UIView alloc] init];
-        conmponentView.userInteractionEnabled = YES;
-        conmponentView.frame = CGRectMake(startX, startY, 120, 200);
-        [self.view addSubview:conmponentView];
+        CGRect rc = CGRectMake(startX, startY, 120, 230);
+        PAMicView *pv = [[PAMicView alloc] initWithFrame:rc];
+        [_proxysView addSubview:pv];
         
+        [_cells addObject:pv];
+    
+        AudioEMinMaxProxy *proxy = [self._proxys objectAtIndex:i];
         
-        SlideButton *btn = [[SlideButton alloc] initWithFrame:CGRectMake(startX, startY, 92, 120)];
-        btn.delegate = self;
-        btn.tag = i;
-        [self.view addSubview:btn];
-        
-        btn._titleLabel.text = [NSString stringWithFormat:@"Channel %02d",i+1];
-        
-            
-        UIView *titleView = [[UIView alloc] init];
-        titleView.frame = CGRectMake(0, 120, 120, 100);
-        titleView.alpha = 0.8;
-        titleView.userInteractionEnabled = YES;
-        [conmponentView addSubview:titleView];
-        
-        
-        UILabel *titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 -40, btn.frame.size.height - 110, 80, 20)];
-        titleL.backgroundColor = [UIColor clearColor];
-        [titleView addSubview:titleL];
-        titleL.font = [UIFont boldSystemFontOfSize:14];
-        titleL.textColor  = YELLOW_COLOR;
-        titleL.textAlignment = NSTextAlignmentCenter;
-        NSString *temp = @"38C";
-        if (dataDic != nil) {
-            temp = [dataDic objectForKey:@"temp"];
-        }
-        titleL.text = [@"温度： " stringByAppendingString:temp];
-        
-        titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 -40, btn.frame.size.height-80, 80, 20)];
-        titleL.backgroundColor = [UIColor clearColor];
-        [titleView addSubview:titleL];
-        titleL.font = [UIFont boldSystemFontOfSize:14];
-        titleL.textColor  = YELLOW_COLOR;
-        titleL.textAlignment = NSTextAlignmentCenter;
-        NSString *dianya = @"36V";
-        if (dataDic != nil) {
-            dianya = [dataDic objectForKey:@"dianya"];
-        }
-        titleL.text = [@"电压： " stringByAppendingString:dianya];
-        
-        titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2 -40, btn.frame.size.height -50, 80, 20)];
-        titleL.backgroundColor = [UIColor clearColor];
-        [titleView addSubview:titleL];
-        titleL.font = [UIFont boldSystemFontOfSize:14];
-        titleL.textColor  = YELLOW_COLOR;
-        titleL.textAlignment = NSTextAlignmentCenter;
-        NSString *dianliu = @"36A";
-        if (dataDic != nil) {
-            dianliu = [dataDic objectForKey:@"dianliu"];
-        }
-        titleL.text = [@"电流： " stringByAppendingString:dianliu];
-        
-        [_imageViewArray addObject:titleView];
-        [_buttonArray addObject:btn];
+        [pv fillMicObj:proxy];
         
         index++;
     }
-}
-- (void) didSliderValueChanged:(float)value object:(id)object {
-    float circleValue = value;
-    for (SlideButton *button in _selectedBtnArray) {
-        
-        button._valueLabel.text = [NSString stringWithFormat:@"%0.1f db", circleValue];
-        [button setCircleValue:fabs((value+70)/82.0)];
-    }
-}
-//value = 0....1
-- (void) didSlideButtonValueChanged:(float)value slbtn:(SlideButton*)slbtn{
     
-    float circleValue = -70 + (value * 82);
-    slbtn._valueLabel.text = [NSString stringWithFormat:@"%0.1f db", circleValue];
-}
-
-
-- (void) didTappedMSelf:(SlideButton*)slbtn{
-    
-    int tag = (int)slbtn.tag;
-    
-    SlideButton *btn = nil;
-    for (SlideButton *button in _selectedBtnArray) {
-        if (button.tag == tag) {
-            btn = button;
-            break;
+    if([_proxys count])
+    {
+        AudioEMinMaxProxy *proxy = [self._proxys objectAtIndex:0];
+        if(![proxy haveProxyCommandLoaded])
+        {
+            IMP_BLOCK_SELF(EngineerPVExpendViewCtrl);
+            
+            [[RegulusSDK sharedRegulusSDK] GetProxyCommands:proxy._rgsProxyObj.m_id completion:^(BOOL result, NSArray *commands, NSError *error) {
+                if (result)
+                {
+                    [block_self saveProxyCmds:commands];
+                }
+                else
+                {
+                    NSString *errorMsg = [NSString stringWithFormat:@"%@ - proxyid:%d",
+                                          [error description], (int)proxy._rgsProxyObj.m_id];
+                    
+                    [KVNProgress showErrorWithStatus:errorMsg];
+                }
+                
+            }];
         }
     }
+}
+
+
+- (void) saveProxyCmds:(NSArray*)commands{
     
-    UIView *titleView = [_imageViewArray objectAtIndex:tag];
-    // want to choose it
-    if (btn == nil) {
-        SlideButton *button = [_buttonArray objectAtIndex:tag];
-        [_selectedBtnArray addObject:button];
+    if ([commands count]) {
         
-        [button enableValueSet:YES];
+        for(AudioEMinMaxProxy *proxy in _proxys)
+        {
+            [proxy checkRgsProxyCommandLoad:commands];
+        }
         
-         titleView.alpha = 1.0;
-        
-    } else {
-        // remove it
-        [_selectedBtnArray removeObject:btn];
-        
-        [btn enableValueSet:NO];
-        
-        titleView.alpha = 0.8;
+        if([_proxys count])
+        {
+        AudioEMinMaxProxy *proxy  = [_proxys objectAtIndex:0];
+        _zengyiSlider.maxValue = [proxy getMaxVolRange];
+        _zengyiSlider.minValue = [proxy getMinVolRange];
+        }
     }
 }
 
+- (void) doVolChanged:(float)value{
+    
+    //批量执行
+    NSMutableArray *opts = [NSMutableArray array];
+    
+    for (PAMicView *cell in _cells) {
+        
+        id opt = [cell testChangeVolValueWhenSelected:value];
+        
+        if(opt)
+            [opts addObject:opt];
+    }
+    
+    if([opts count])
+        [[RegulusSDK sharedRegulusSDK] ControlDeviceByOperation:opts
+                                                     completion:nil];
+}
 
-- (void) scenarioAction:(id)sender{
+- (void) didSliderValueChanged:(float)value object:(id)object {
+    
+    [self doVolChanged:value];
     
 }
 
-
-- (void) okAction:(id)sender{
+- (void) didSliderEndChanged:(float)value object:(id)object{
     
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(200.0 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
+        
+        [self doVolChanged:value];
+    });
 }
+
+
+- (void) didSliderMuteChanged:(BOOL)mute object:(id)object{
+    
+    //批量执行
+    NSMutableArray *opts = [NSMutableArray array];
+    
+    for (PAMicView *cell in _cells) {
+        
+        id opt = [cell testChangeMuteWhenSelected:mute];
+        
+        if(opt)
+            [opts addObject:opt];
+    }
+    
+    if([opts count])
+        [[RegulusSDK sharedRegulusSDK] ControlDeviceByOperation:opts
+                                                     completion:nil];
+}
+
 
 - (void) cancelAction:(id)sender{
     [self.navigationController popViewControllerAnimated:YES];
