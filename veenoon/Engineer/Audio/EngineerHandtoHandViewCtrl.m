@@ -99,24 +99,7 @@
     [okBtn addTarget:self
               action:@selector(okAction:)
     forControlEvents:UIControlEventTouchUpInside];
-    
 
-    _zengyiSlider = [[EngineerSliderView alloc]
-                     initWithSliderBg:[UIImage imageNamed:@"engineer_zengyi_n.png"]
-                     frame:CGRectZero];
-    
-    [_zengyiSlider setRoadImage:[UIImage imageNamed:@"e_v_slider_road.png"]];
-    [_zengyiSlider setIndicatorImage:[UIImage imageNamed:@"wireless_slide_s.png"]];
-    _zengyiSlider.topEdge = 90;
-    _zengyiSlider.bottomEdge = 79;
-    _zengyiSlider.maxValue = 20;
-    _zengyiSlider.minValue = -20;
-    _zengyiSlider.delegate = self;
-    [_zengyiSlider resetScale];
-    _zengyiSlider.center = CGPointMake(TESLARIA_SLIDER_X, TESLARIA_SLIDER_Y);
-    [_zengyiSlider setScaleValue:_curH2H._dbVal];
-    
-    [self.view addSubview:_zengyiSlider];
     
     
     int niumber = [_curH2H channelsCount];
@@ -133,6 +116,23 @@
     tapGesture.cancelsTouchesInView =  NO;
     tapGesture.numberOfTapsRequired = 1;
     [_proxysView addGestureRecognizer:tapGesture];
+    
+    _zengyiSlider = [[EngineerSliderView alloc]
+                     initWithSliderBg:[UIImage imageNamed:@"engineer_zengyi_n.png"]
+                     frame:CGRectZero];
+    
+    [_zengyiSlider setRoadImage:[UIImage imageNamed:@"e_v_slider_road.png"]];
+    [_zengyiSlider setIndicatorImage:[UIImage imageNamed:@"wireless_slide_s.png"]];
+    _zengyiSlider.topEdge = 90;
+    _zengyiSlider.bottomEdge = 79;
+    _zengyiSlider.maxValue = 20;
+    _zengyiSlider.minValue = -20;
+    _zengyiSlider.delegate = self;
+    [_zengyiSlider resetScale];
+    _zengyiSlider.center = CGPointMake(TESLARIA_SLIDER_X, TESLARIA_SLIDER_Y);
+    [_zengyiSlider setScaleValue:_curH2H._dbVal];
+    
+    [self.view addSubview:_zengyiSlider];
     
     [self refreshView:niumber];
 }
@@ -269,7 +269,7 @@
                                                                height-5,
                                                                SCREEN_WIDTH,
                                                                SCREEN_HEIGHT-height-60)];
-        [self.view addSubview:_botomView];
+        [self.view insertSubview:_botomView belowSubview:_zengyiSlider];
         _botomView.backgroundColor = [UIColor clearColor];
     }
     

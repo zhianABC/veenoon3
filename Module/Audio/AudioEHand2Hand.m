@@ -34,8 +34,8 @@
         
         
         
-        self._show_icon_name = @"a_wx_2.png";
-        self._show_icon_sel_name = @"a_wx_2_sel.png";
+        self._show_icon_name = @"a_yx_3.png";
+        self._show_icon_sel_name = @"a_yx_3_sel.png";
     }
     
     return self;
