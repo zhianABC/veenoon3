@@ -9,9 +9,9 @@
 #import "CustomPickerView.h"
 #import "UIButton+Color.h"
 #import "HandtoHandLineCheckView.h"
+#import "EngineerHandtoHandViewCtrl.h"
 
-
-@interface HandtoHandSettingsView () <UITableViewDelegate, UITableViewDataSource, CustomPickerViewDelegate, UITextFieldDelegate>
+@interface HandtoHandSettingsView () <UITableViewDelegate, UITableViewDataSource, CustomPickerViewDelegate, UITextFieldDelegate, EngineerHandtoHandViewDelegate>
 {
     UITableView *_tableView;
     int _curIndex;
@@ -31,6 +31,7 @@
 @synthesize _map;
 @synthesize _btns;
 @synthesize _numOfChannel;
+@synthesize delegate_;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -57,7 +58,7 @@
         _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,
                                                                    60,
                                                                    frame.size.width,
-                                                                   frame.size.height-60-160)];
+                                                                   frame.size.height-60-100)];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.backgroundColor = [UIColor clearColor];
@@ -85,8 +86,7 @@
     [_rows addObject:@{@"title":@"摄像机ID",@"values":@[@"1",@"2"]}];
     [_rows addObject:@{@"title":@"摄像机协议",@"values":@[@"VISCA",@"VISCB",@"VISCC"]}];
     [_rows addObject:@{@"title":@"波特率",@"values":@[@"115200",@"2400",@"4800"]}];
-    
-    
+    [_rows addObject:@{@"title":@"话筒数量",@"values":@[@"115200",@"2400",@"4800"]}];
     [_tableView reloadData];
 }
 
@@ -199,7 +199,7 @@
     line.backgroundColor =  TITLE_LINE_COLOR;
     [cell.contentView addSubview:line];
     
-    if(_curIndex == indexPath.row) {
+    if(_curIndex == indexPath.row && _curIndex == indexPath.row != 8) {
         line.frame = CGRectMake(0, 163, self.frame.size.width, 1);
         
         _picker.tag = _curIndex;
@@ -232,6 +232,10 @@
         [self toHandtoHandCheckView];
         return;
     }
+    if (targetIndx == 8) {
+        [self showHuatongNumber];
+        return;
+    }
     if (_curIndex == targetIndx) {
         _curIndex = -1;
     } else {
@@ -239,6 +243,60 @@
     }
     
     [_tableView reloadData];
+}
+- (void)showHuatongNumber {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"请输入话筒数量" preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"数量从1-255";
+    }];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UITextField *envirnmentNameTextField = alertController.textFields.firstObject;
+        NSString *nameTxt = envirnmentNameTextField.text;
+        if (nameTxt && [nameTxt length] > 0) {
+            
+            int number = [nameTxt intValue];
+            
+            if(delegate_ && [delegate_ respondsToSelector:@selector(didEndEditCell:)])
+            {
+                [delegate_ didEndEditCell:number];
+            }
+        }
+    }]];
+    
+    UIViewController *currentCtrl = [self findCurrentViewController];
+    
+    [currentCtrl presentViewController:alertController animated:true completion:nil];
+}
+
+- (UIViewController *)findCurrentViewController
+{
+    UIWindow *window = [[UIApplication sharedApplication].delegate window];
+    UIViewController *topViewController = [window rootViewController];
+    
+    while (true) {
+        
+        if (topViewController.presentedViewController) {
+            
+            topViewController = topViewController.presentedViewController;
+            
+        } else if ([topViewController isKindOfClass:[UINavigationController class]] && [(UINavigationController*)topViewController topViewController]) {
+            
+            topViewController = [(UINavigationController *)topViewController topViewController];
+            
+        } else if ([topViewController isKindOfClass:[UITabBarController class]]) {
+            
+            UITabBarController *tab = (UITabBarController *)topViewController;
+            topViewController = tab.selectedViewController;
+            
+        } else {
+            break;
+        }
+    }
+    return topViewController;
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{

@@ -10,6 +10,13 @@
 #import "BaseViewController.h"
 #import "EngineerSliderView.h"
 
+@protocol EngineerHandtoHandViewDelegate <NSObject>
+
+@optional
+- (void) didEndEditCell:(int)number;
+
+@end
+
 @interface EngineerHandtoHandViewCtrl< EngineerSliderViewDelegate> : BaseViewController {
     NSMutableArray *_handToHandSysArray;
     

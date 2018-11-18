@@ -6,12 +6,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EngineerHandtoHandViewCtrl.h"
 
 @interface HandtoHandSettingsView : UIView
 {
     
 }
 @property (nonatomic, assign) int _numOfChannel;
+@property (nonatomic, assign) id<EngineerHandtoHandViewDelegate> delegate_;
 
 @end
 
