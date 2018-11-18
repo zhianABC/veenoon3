@@ -294,7 +294,7 @@
         [btn enableValueSet:NO];
         
         
-        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2-40, 0, 80, 20)];
+        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2-40, 5, 80, 15)];
         titleL.backgroundColor = [UIColor clearColor];
         titleL.textAlignment = NSTextAlignmentCenter;
         [btn addSubview:titleL];
