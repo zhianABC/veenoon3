@@ -10,11 +10,13 @@
 #import "BaseViewController.h"
 #import "EngineerSliderView.h"
 
+@class BasePlugElement;
+
 @interface EngineerWirlessYaoBaoViewCtrl< EngineerSliderViewDelegate> : BaseViewController {
+   
     NSMutableArray *_wirelessYaoBaoSysArray;
-    
-    int _number;
 }
 @property (nonatomic,strong) NSArray *_wirelessYaoBaoSysArray;
-@property (nonatomic,assign) int _number;
+@property (nonatomic,strong) BasePlugElement* _curSelPlug;
+
 @end

@@ -187,6 +187,12 @@
     }
 }
 
+- (BOOL) stateEnabled{
+    
+    return _enabledTouchMove;
+}
+
+
 - (void) changToIcon:(UIImage*)iconImg{
     
     if(iconImg == nil)
@@ -276,7 +282,7 @@
 
 -(void) touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event {
     
-    NSLog(@"------began");
+    //NSLog(@"------began");
     
     _isMoved = NO;
     

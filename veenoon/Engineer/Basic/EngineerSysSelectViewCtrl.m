@@ -25,6 +25,7 @@
 #import "AppDelegate.h"
 #import "HttpFileGetter.h"
 #import "SysInfoViewController.h"
+#import "Utilities.h"
 
 #ifdef OPEN_REG_LIB_DEF
 #import "RegulusSDK.h"
@@ -198,21 +199,39 @@
 }
 
 - (void) sysInforAction:(id)sender {
-    SysInfoViewController *ctrl = [[SysInfoViewController alloc] init];
     
-    [self.navigationController  pushViewController:ctrl animated:YES];
+    SysInfoViewController *ctrl = [[SysInfoViewController alloc] init];
+    [self.navigationController
+     pushViewController:ctrl
+     animated:YES];
 }
 
 - (void) endImportProjectRefresh:(id)sender{
     
-    [KVNProgress showSuccessWithStatus:@"已导入"];
+    [KVNProgress showWithStatus:@"重启中，请稍侯..."];
+    
+    [NSTimer scheduledTimerWithTimeInterval:10
+                                     target:self
+                                   selector:@selector(relunchUI:)
+                                   userInfo:nil
+                                    repeats:NO];
+}
+
+- (void) relunchUI:(id)sender{
+    
+    //[KVNProgress showSuccessWithStatus:@"导入完成"];
+    [self performSelectorOnMainThread:@selector(checkArea)
+                           withObject:nil
+                        waitUntilDone:NO];
 }
 
 #pragma mark -- import Project --
 - (void) importSysAction:(id)sender{
     
-    JCActionView *jcAction = [[JCActionView alloc] initWithTitles:@[@"本地账户", @"云账户", @"U盘"]
-                                                            frame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    JCActionView *jcAction = [[JCActionView alloc] initWithTitles:@[@"云账户", @"U盘", @"本地账户"]
+                                                            frame:CGRectMake(0, 0,
+                                                                             SCREEN_WIDTH,
+                                                                             SCREEN_HEIGHT)];
     jcAction.delegate_ = self;
     jcAction.tag = 2017;
     
@@ -220,20 +239,19 @@
     [app.window addSubview:jcAction];
     [jcAction animatedShow];
     
-
 }
 
 - (void) didJCActionButtonIndex:(int)index actionView:(UIView*)actionView{
     
-    if(index == 0)
+    if(index == 2)
     {
         [self importFromLocal];
     }
-    else if(index == 1)
+    else if(index == 0)
     {
          [self importFromCloud];
     }
-    else if(index == 2)
+    else if(index == 1)
     {
          [self importFromUSB];
     }
@@ -266,7 +284,7 @@
         
         _downloader.fileSavedPath = filePath;
         
-        [KVNProgress show];
+        [KVNProgress showWithStatus:@"下载中..."];
         [_downloader startLoading:url];
         
     }
@@ -277,10 +295,10 @@
 
 - (void) didEndLoadingFile:(id)object success:(BOOL)success{
     
-    [KVNProgress dismiss];
+    
     if(success)
     {
-        [KVNProgress showSuccess];
+       // [KVNProgress showSuccess];
         MeetingRoom *room = [DataCenter defaultDataCenter]._currentRoom;
         NSString *filename = [NSString stringWithFormat:@"%@",room.regulus_id];
         
@@ -291,6 +309,11 @@
                                                        //[KVNProgress showSuccessWithStatus:@"已导入"];
                                                        
                                                    }];
+    }
+    else
+    {
+        [KVNProgress dismiss];
+        [Utilities showMessage:@"没有找到备份文件" ctrl:self];
     }
 }
 

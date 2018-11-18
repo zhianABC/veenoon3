@@ -10,4 +10,6 @@
 
 @interface SysInfoVersionView : UIView
 
+- (void) loadUdiskData;
+
 @end

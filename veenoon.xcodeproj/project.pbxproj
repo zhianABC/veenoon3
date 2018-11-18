@@ -40,7 +40,6 @@
 		04DE1DDB1AD68C5E00D49E2F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DE1DDA1AD68C5E00D49E2F /* AppDelegate.m */; };
 		04DE1DE11AD68C5E00D49E2F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04DE1DDF1AD68C5E00D49E2F /* Main.storyboard */; };
 		04DE1DE31AD68C5E00D49E2F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04DE1DE21AD68C5E00D49E2F /* Images.xcassets */; };
-		04DE1DE61AD68C5E00D49E2F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04DE1DE41AD68C5E00D49E2F /* LaunchScreen.xib */; };
 		04DE1DF21AD68C5E00D49E2F /* ExasForiPadTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DE1DF11AD68C5E00D49E2F /* ExasForiPadTests.m */; };
 		04DE1E831AD6AEE000D49E2F /* ClassFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DE1DFF1AD6AEE000D49E2F /* ClassFactory.m */; };
 		04DE1E861AD6AEE000D49E2F /* ConfigureSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DE1E051AD6AEE000D49E2F /* ConfigureSetting.m */; };
@@ -352,6 +351,8 @@
 		349DADE5206E8D02001593DE /* AudioEWirlessMeetingSys.m in Sources */ = {isa = PBXBuildFile; fileRef = 349DADDD206E8D02001593DE /* AudioEWirlessMeetingSys.m */; };
 		349DADE8206E8D5C001593DE /* APowerESet.m in Sources */ = {isa = PBXBuildFile; fileRef = 349DADE7206E8D5C001593DE /* APowerESet.m */; };
 		34A8965320443184007934E1 /* GradeLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A8965220443184007934E1 /* GradeLineView.m */; };
+		34C197A2219929F1008D6C07 /* LoadingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C197A0219929F0008D6C07 /* LoadingViewController.m */; };
+		34C197E3219935BB008D6C07 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34C197E1219935BA008D6C07 /* LaunchScreen.storyboard */; };
 		34C73B60205FA268008DFACC /* ring@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34C73B5F205FA268008DFACC /* ring@2x.png */; };
 		34C73B68205FA4D4008DFACC /* s3_19@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34C73B61205FA4C8008DFACC /* s3_19@2x.png */; };
 		34C73B69205FA4D4008DFACC /* s3_16@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34C73B62205FA4CA008DFACC /* s3_16@2x.png */; };
@@ -360,10 +361,15 @@
 		34C73B6C205FA4D4008DFACC /* s3_13@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34C73B65205FA4D0008DFACC /* s3_13@2x.png */; };
 		34C73B6D205FA4D4008DFACC /* s3_10@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34C73B66205FA4D2008DFACC /* s3_10@2x.png */; };
 		34C73B6E205FA4D4008DFACC /* s3_05@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34C73B67205FA4D4008DFACC /* s3_05@2x.png */; };
+		34C7C0FA219A847E00CCAA60 /* AudioEWirlessMikeProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C7C0F9219A847E00CCAA60 /* AudioEWirlessMikeProxy.m */; };
+		34C7C0FD219A93D300CCAA60 /* E2MicView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34C7C0FC219A93D300CCAA60 /* E2MicView.m */; };
 		34CC7855209AE0D10057A2C1 /* UIImage+KVNImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 34CC784E209AE0D10057A2C1 /* UIImage+KVNImageEffects.m */; };
 		34CC7856209AE0D10057A2C1 /* KVNProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 34CC7850209AE0D10057A2C1 /* KVNProgress.m */; };
 		34CC7857209AE0D10057A2C1 /* KVNProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34CC7851209AE0D10057A2C1 /* KVNProgressView.xib */; };
 		34CC7858209AE0D10057A2C1 /* UIImage+KVNEmpty.m in Sources */ = {isa = PBXBuildFile; fileRef = 34CC7852209AE0D10057A2C1 /* UIImage+KVNEmpty.m */; };
+		34CC7CB1219C28C2002462E3 /* JDStatusBarNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 34CC7CAB219C28C2002462E3 /* JDStatusBarNotification.m */; };
+		34CC7CB2219C28C2002462E3 /* JDStatusBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 34CC7CAD219C28C2002462E3 /* JDStatusBarView.m */; };
+		34CC7CB3219C28C2002462E3 /* JDStatusBarStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 34CC7CB0219C28C2002462E3 /* JDStatusBarStyle.m */; };
 		34D34F3C20DF510800CC7897 /* IRDirver.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D34F3B20DF510800CC7897 /* IRDirver.m */; };
 		34D34F3F20DF5BA800CC7897 /* VDVDPlayerProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D34F3E20DF5BA800CC7897 /* VDVDPlayerProxy.m */; };
 		34D68BA9210E03D600E90E1F /* DriverSync.m in Sources */ = {isa = PBXBuildFile; fileRef = 34D68BA8210E03D600E90E1F /* DriverSync.m */; };
@@ -372,6 +378,7 @@
 		34DE8E9620663E840061B48D /* MeetingRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DE8E9520663E840061B48D /* MeetingRoom.m */; };
 		34DE8E992066408C0061B48D /* Scenario.m in Sources */ = {isa = PBXBuildFile; fileRef = 34DE8E982066408C0061B48D /* Scenario.m */; };
 		34E105E9209AD73200C7F337 /* libRegulusSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34E105D7209AD73100C7F337 /* libRegulusSDK.a */; };
+		34E5081F219AB2A20053D5C2 /* DriverCmdSync.m in Sources */ = {isa = PBXBuildFile; fileRef = 34E5081E219AB2A20053D5C2 /* DriverCmdSync.m */; };
 		34E73D4520FDD6C700C18C10 /* qr_code_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34E73D4420FDD6C700C18C10 /* qr_code_icon@2x.png */; };
 		34E73D4720FDD95500C18C10 /* room_add_pg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34E73D4620FDD95400C18C10 /* room_add_pg@2x.png */; };
 		34E73D4920FDE61600C18C10 /* qrcode_scan_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 34E73D4820FDE61500C18C10 /* qrcode_scan_line@2x.png */; };
@@ -1078,7 +1085,6 @@
 		04DE1DDA1AD68C5E00D49E2F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; tabWidth = 3; };
 		04DE1DE01AD68C5E00D49E2F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		04DE1DE21AD68C5E00D49E2F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		04DE1DE51AD68C5E00D49E2F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		04DE1DEB1AD68C5E00D49E2F /* veenoonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = veenoonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04DE1DF01AD68C5E00D49E2F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04DE1DF11AD68C5E00D49E2F /* ExasForiPadTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ExasForiPadTests.m; sourceTree = "<group>"; };
@@ -1537,6 +1543,9 @@
 		349DADE7206E8D5C001593DE /* APowerESet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = APowerESet.m; sourceTree = "<group>"; };
 		34A8965120443184007934E1 /* GradeLineView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GradeLineView.h; sourceTree = "<group>"; };
 		34A8965220443184007934E1 /* GradeLineView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GradeLineView.m; sourceTree = "<group>"; };
+		34C197A0219929F0008D6C07 /* LoadingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoadingViewController.m; sourceTree = "<group>"; };
+		34C197A1219929F0008D6C07 /* LoadingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingViewController.h; sourceTree = "<group>"; };
+		34C197E2219935BA008D6C07 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		34C73B5F205FA268008DFACC /* ring@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ring@2x.png"; sourceTree = "<group>"; };
 		34C73B61205FA4C8008DFACC /* s3_19@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "s3_19@2x.png"; sourceTree = "<group>"; };
 		34C73B62205FA4CA008DFACC /* s3_16@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "s3_16@2x.png"; sourceTree = "<group>"; };
@@ -1545,6 +1554,10 @@
 		34C73B65205FA4D0008DFACC /* s3_13@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "s3_13@2x.png"; sourceTree = "<group>"; };
 		34C73B66205FA4D2008DFACC /* s3_10@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "s3_10@2x.png"; sourceTree = "<group>"; };
 		34C73B67205FA4D4008DFACC /* s3_05@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "s3_05@2x.png"; sourceTree = "<group>"; };
+		34C7C0F8219A847E00CCAA60 /* AudioEWirlessMikeProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AudioEWirlessMikeProxy.h; sourceTree = "<group>"; };
+		34C7C0F9219A847E00CCAA60 /* AudioEWirlessMikeProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioEWirlessMikeProxy.m; sourceTree = "<group>"; };
+		34C7C0FB219A93D300CCAA60 /* E2MicView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = E2MicView.h; sourceTree = "<group>"; };
+		34C7C0FC219A93D300CCAA60 /* E2MicView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = E2MicView.m; sourceTree = "<group>"; };
 		34CC784E209AE0D10057A2C1 /* UIImage+KVNImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+KVNImageEffects.m"; sourceTree = "<group>"; };
 		34CC784F209AE0D10057A2C1 /* UIImage+KVNEmpty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+KVNEmpty.h"; sourceTree = "<group>"; };
 		34CC7850209AE0D10057A2C1 /* KVNProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KVNProgress.m; sourceTree = "<group>"; };
@@ -1552,6 +1565,12 @@
 		34CC7852209AE0D10057A2C1 /* UIImage+KVNEmpty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+KVNEmpty.m"; sourceTree = "<group>"; };
 		34CC7853209AE0D10057A2C1 /* UIImage+KVNImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+KVNImageEffects.h"; sourceTree = "<group>"; };
 		34CC7854209AE0D10057A2C1 /* KVNProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KVNProgress.h; sourceTree = "<group>"; };
+		34CC7CAB219C28C2002462E3 /* JDStatusBarNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JDStatusBarNotification.m; sourceTree = "<group>"; };
+		34CC7CAC219C28C2002462E3 /* JDStatusBarStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JDStatusBarStyle.h; sourceTree = "<group>"; };
+		34CC7CAD219C28C2002462E3 /* JDStatusBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JDStatusBarView.m; sourceTree = "<group>"; };
+		34CC7CAE219C28C2002462E3 /* JDStatusBarNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JDStatusBarNotification.h; sourceTree = "<group>"; };
+		34CC7CAF219C28C2002462E3 /* JDStatusBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JDStatusBarView.h; sourceTree = "<group>"; };
+		34CC7CB0219C28C2002462E3 /* JDStatusBarStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JDStatusBarStyle.m; sourceTree = "<group>"; };
 		34D34F3A20DF510800CC7897 /* IRDirver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IRDirver.h; sourceTree = "<group>"; };
 		34D34F3B20DF510800CC7897 /* IRDirver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IRDirver.m; sourceTree = "<group>"; };
 		34D34F3D20DF5BA800CC7897 /* VDVDPlayerProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VDVDPlayerProxy.h; sourceTree = "<group>"; };
@@ -1567,6 +1586,8 @@
 		34DE8E972066408C0061B48D /* Scenario.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Scenario.h; sourceTree = "<group>"; };
 		34DE8E982066408C0061B48D /* Scenario.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Scenario.m; sourceTree = "<group>"; };
 		34E105D7209AD73100C7F337 /* libRegulusSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libRegulusSDK.a; sourceTree = "<group>"; };
+		34E5081D219AB2A20053D5C2 /* DriverCmdSync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DriverCmdSync.h; sourceTree = "<group>"; };
+		34E5081E219AB2A20053D5C2 /* DriverCmdSync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DriverCmdSync.m; sourceTree = "<group>"; };
 		34E73D4420FDD6C700C18C10 /* qr_code_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qr_code_icon@2x.png"; sourceTree = "<group>"; };
 		34E73D4620FDD95400C18C10 /* room_add_pg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "room_add_pg@2x.png"; sourceTree = "<group>"; };
 		34E73D4820FDE61500C18C10 /* qrcode_scan_line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qrcode_scan_line@2x.png"; sourceTree = SOURCE_ROOT; };
@@ -2533,6 +2554,8 @@
 				04D27A291AF8470100305E39 /* SelDataViewController.m */,
 				0469CF3A1B033162006B901E /* CustomImagePickerCtrlor.h */,
 				0469CF3B1B033162006B901E /* CustomImagePickerCtrlor.m */,
+				34C197A1219929F0008D6C07 /* LoadingViewController.h */,
+				34C197A0219929F0008D6C07 /* LoadingViewController.m */,
 				34928A981EC1BD330089F429 /* ReaderCodeViewController.h */,
 				34928A991EC1BD330089F429 /* ReaderCodeViewController.m */,
 				04DE1EBC1AD6AF7900D49E2F /* Module */,
@@ -2550,8 +2573,8 @@
 				04D719861DADE7D4002153D7 /* ActivityViewController.h */,
 				04D719871DADE7D4002153D7 /* ActivityViewController.m */,
 				04DE1DDF1AD68C5E00D49E2F /* Main.storyboard */,
+				34C197E1219935BA008D6C07 /* LaunchScreen.storyboard */,
 				04DE1DE21AD68C5E00D49E2F /* Images.xcassets */,
-				04DE1DE41AD68C5E00D49E2F /* LaunchScreen.xib */,
 				04DE1DD51AD68C5E00D49E2F /* Supporting Files */,
 			);
 			path = veenoon;
@@ -2655,6 +2678,7 @@
 		04DE1E401AD6AEE000D49E2F /* SupportAddons */ = {
 			isa = PBXGroup;
 			children = (
+				34CC7CAA219C28C2002462E3 /* JDStatusBarNotification */,
 				3462912B217C701200128B79 /* WSDaePickerView */,
 				EB50A4A5217C384700AB2D3D /* FQ_CustomAlert */,
 				EBAA7DDB21759A1F0045FF70 /* M80AttributedLabel */,
@@ -2743,6 +2767,8 @@
 				EB18B7252067D4A6000BDEAB /* Video */,
 				04D719831DADE2D8002153D7 /* DataSync.h */,
 				04D719841DADE2D8002153D7 /* DataSync.m */,
+				34E5081D219AB2A20053D5C2 /* DriverCmdSync.h */,
+				34E5081E219AB2A20053D5C2 /* DriverCmdSync.m */,
 				04DE1E381AD6AEE000D49E2F /* DataCenter.h */,
 				04DE1E391AD6AEE000D49E2F /* DataCenter.m */,
 				34D68BA7210E03D600E90E1F /* DriverSync.h */,
@@ -3609,6 +3635,8 @@
 			children = (
 				349DADD8206E8D02001593DE /* AudioEWirlessMike.h */,
 				349DADD3206E8D02001593DE /* AudioEWirlessMike.m */,
+				34C7C0F8219A847E00CCAA60 /* AudioEWirlessMikeProxy.h */,
+				34C7C0F9219A847E00CCAA60 /* AudioEWirlessMikeProxy.m */,
 				349DADD6206E8D02001593DE /* AudioEMinMax.h */,
 				349DADDC206E8D02001593DE /* AudioEMinMax.m */,
 				349DADDE206E8D02001593DE /* AudioEMix.h */,
@@ -3649,6 +3677,19 @@
 				34CC7854209AE0D10057A2C1 /* KVNProgress.h */,
 			);
 			path = KVNProgress;
+			sourceTree = "<group>";
+		};
+		34CC7CAA219C28C2002462E3 /* JDStatusBarNotification */ = {
+			isa = PBXGroup;
+			children = (
+				34CC7CAB219C28C2002462E3 /* JDStatusBarNotification.m */,
+				34CC7CAC219C28C2002462E3 /* JDStatusBarStyle.h */,
+				34CC7CAD219C28C2002462E3 /* JDStatusBarView.m */,
+				34CC7CAE219C28C2002462E3 /* JDStatusBarNotification.h */,
+				34CC7CAF219C28C2002462E3 /* JDStatusBarView.h */,
+				34CC7CB0219C28C2002462E3 /* JDStatusBarStyle.m */,
+			);
+			path = JDStatusBarNotification;
 			sourceTree = "<group>";
 		};
 		34E105D6209AD73100C7F337 /* RegSDK */ = {
@@ -3965,6 +4006,8 @@
 				EB3B73991FE61B18001941CF /* EngineerPlayerSettingsViewCtrl.m */,
 				EB3B73B01FE63822001941CF /* EngineerWirlessYaoBaoViewCtrl.h */,
 				EB3B73B11FE6382F001941CF /* EngineerWirlessYaoBaoViewCtrl.m */,
+				34C7C0FB219A93D300CCAA60 /* E2MicView.h */,
+				34C7C0FC219A93D300CCAA60 /* E2MicView.m */,
 				EB4EC11A1FE7F164000B3101 /* EngineerHunYinSysViewController.h */,
 				EB4EC11B1FE7F164000B3101 /* EngineerHunYinSysViewController.m */,
 				EB4EC11D1FE7F94B000B3101 /* EngineerHandtoHandViewCtrl.h */,
@@ -4476,7 +4519,6 @@
 				EBDF1C4B1FC5D5CF00A756EA /* air_clean_sys_s@2x.png in Resources */,
 				04DE1DE11AD68C5E00D49E2F /* Main.storyboard in Resources */,
 				EB23AEA71FD1917E00D1570F /* remote_video_ssss@2x.png in Resources */,
-				04DE1DE61AD68C5E00D49E2F /* LaunchScreen.xib in Resources */,
 				3456C18F20A034D9001FAB61 /* senario_02_20@2x.png in Resources */,
 				EB9986E620B6EEC1007E4770 /* kongqichuangan_s@2x.png in Resources */,
 				341DD3CB211891C1007CD30F /* auto_run_pre@2x.png in Resources */,
@@ -4498,6 +4540,7 @@
 				3448D9422073AB800055D48F /* red_del_icon@2x.png in Resources */,
 				EBF831F31FD04C2B0096E6EC /* user_video_play_next@2x.png in Resources */,
 				EBDF1C111FC5C6C900A756EA /* meeting_discuss_s@2x.png in Resources */,
+				34C197E3219935BB008D6C07 /* LaunchScreen.storyboard in Resources */,
 				EB23AE9C1FD18AD600D1570F /* remote_video_dialphone@2x.png in Resources */,
 				342188192145228700DBAA4D /* i_btn_white@2x.png in Resources */,
 				34190F16205D537E009A519C /* a_icon_8_sel@2x.png in Resources */,
@@ -5067,6 +5110,7 @@
 				EB217FB81FD42188003F5A8F /* UserFloorWarmViewCtrl.m in Sources */,
 				0477DC531DA9F3CC0077FA52 /* SHA1.m in Sources */,
 				EBD009CE2090A9D200920849 /* VTouyingjiSet.m in Sources */,
+				34CC7CB2219C28C2002462E3 /* JDStatusBarView.m in Sources */,
 				04DE1EB31AD6AEE000D49E2F /* UIButton+WebCache.m in Sources */,
 				EB479001206145C000EDCD64 /* UserDVDSettingsViewController.m in Sources */,
 				EBAA7DE621759A200045FF70 /* M80AttributedLabel.m in Sources */,
@@ -5086,11 +5130,13 @@
 				EBD009B3208CB12900920849 /* VCameraSettingSet.m in Sources */,
 				04DE1EA71AD6AEE000D49E2F /* SBJson4StreamWriter.m in Sources */,
 				EB217FBE1FD423B8003F5A8F /* UserAirCleanViewCtrl.m in Sources */,
+				34C7C0FA219A847E00CCAA60 /* AudioEWirlessMikeProxy.m in Sources */,
 				EB17179D1FF60C6900CBDB81 /* EngineerElectronicAutoViewCtrl.m in Sources */,
 				342389B32026F48700885405 /* Groups2PickerView.m in Sources */,
 				3425E9891FE5687C003559F7 /* CheckButton.m in Sources */,
 				341C60C91FDCFD7D003A5490 /* EPlusLayerView.m in Sources */,
 				EB4E39E62027423D00533575 /* HandtoHandLineCheckView.m in Sources */,
+				34E5081F219AB2A20053D5C2 /* DriverCmdSync.m in Sources */,
 				EB0968BF1FE2B4C900CF422F /* EngineerElectronicSysConfigViewCtrl.m in Sources */,
 				04DE1EB11AD6AEE000D49E2F /* SDWebImageManager.m in Sources */,
 				3425E98F1FE575A4003559F7 /* PlayerSettingsPannel.m in Sources */,
@@ -5119,6 +5165,7 @@
 				EB948A49204EE3550018C80A /* JLightSliderView.m in Sources */,
 				EBAA7DE521759A200045FF70 /* M80AttributedLabelAttachment.m in Sources */,
 				EB1717A31FF6141A00CBDB81 /* EngineerFloorWarmViewCtrl.m in Sources */,
+				34C7C0FD219A93D300CCAA60 /* E2MicView.m in Sources */,
 				EBF831E31FD03A110096E6EC /* UserVideoDVDDiskViewCtrl.m in Sources */,
 				EB795B652042E8A1005D1F47 /* ZiDongHunYin_UIView.m in Sources */,
 				EB09C4A21FD3A00200776540 /* UserAirConditionViewCtrl.m in Sources */,
@@ -5158,6 +5205,7 @@
 				34686C9E1ED025CB001749A1 /* ConverUtil.m in Sources */,
 				EB1E64C021450F8800A44EAE /* UserEnvStateView.m in Sources */,
 				EBD009BF2090613C00920849 /* VVideoProcessSet.m in Sources */,
+				34C197A2219929F1008D6C07 /* LoadingViewController.m in Sources */,
 				EBD009B6208CB88300920849 /* VRemoteSettingsSet.m in Sources */,
 				EB235011204D9648008F6CA2 /* XDPickView.m in Sources */,
 				EB795B482042DD6F005D1F47 /* AudioOutputSettingViewCtrl.m in Sources */,
@@ -5241,6 +5289,7 @@
 				EB6FB21F2197D23700ECE791 /* SysInfoViewController.m in Sources */,
 				EB4EC1221FE7FC3B000B3101 /* EngineerWirelessMeetingViewCtrl.m in Sources */,
 				EB4E39E320273F6100533575 /* HandtoHandSettingsView.m in Sources */,
+				34CC7CB3219C28C2002462E3 /* JDStatusBarStyle.m in Sources */,
 				3448D96C2073C5070055D48F /* TwoIconAndTitleView.m in Sources */,
 				04DE1EA01AD6AEE000D49E2F /* WebClient.m in Sources */,
 				34DE8E9620663E840061B48D /* MeetingRoom.m in Sources */,
@@ -5315,6 +5364,7 @@
 				EB5CF03F1FD3DC92007958C9 /* UserNewWindViewCtrl.m in Sources */,
 				34629126217C394B00128B79 /* USenceBlockView.m in Sources */,
 				EB7333F42041046400AE60B8 /* AirCleanRightView.m in Sources */,
+				34CC7CB1219C28C2002462E3 /* JDStatusBarNotification.m in Sources */,
 				EB62DF7720D7A04D00144EE0 /* TeslariaComboChooser.m in Sources */,
 				34A8965320443184007934E1 /* GradeLineView.m in Sources */,
 				34629134217C701200128B79 /* WSDatePickerView.m in Sources */,
@@ -5355,12 +5405,12 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		04DE1DE41AD68C5E00D49E2F /* LaunchScreen.xib */ = {
+		34C197E1219935BA008D6C07 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				04DE1DE51AD68C5E00D49E2F /* Base */,
+				34C197E2219935BA008D6C07 /* Base */,
 			);
-			name = LaunchScreen.xib;
+			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -5480,6 +5530,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "veenoon/Engineer/Audio/RIghtView/AudioProcess/veenoon-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 2;
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
@@ -5517,6 +5568,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "veenoon/Engineer/Audio/RIghtView/AudioProcess/veenoon-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 2;
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Release;

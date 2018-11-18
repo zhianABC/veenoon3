@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "BasePlugElement.h"
 
+//拼接屏
 @interface VPinJieSet : BasePlugElement
 
 @end

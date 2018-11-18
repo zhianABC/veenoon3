@@ -42,6 +42,7 @@
 - (void) changToIcon:(UIImage*)iconImg;
 
 - (void) enableValueSet:(BOOL)enabled;
+- (BOOL) stateEnabled;
 
 -(void) setTitle:(NSString*)title;
 -(void) setvalueTitle:(NSString*)title;

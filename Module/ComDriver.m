@@ -65,7 +65,7 @@
                                                  
                                                  [[NSNotificationCenter defaultCenter] postNotificationName:@"NotifyRefreshTableWithCom" object:nil];
                                              }
-                                             [KVNProgress dismiss];
+                                             [KVNProgress showSuccess];
                                          }];
     }
     

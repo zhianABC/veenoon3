@@ -90,14 +90,15 @@
     [_rows addObject:@{@"title":@"设备名称", @"value":_audioMike._brand}];
     [_rows addObject:@{@"title":@"型号规格", @"value":_audioMike._type}];
     [_rows addObject:@{@"title":@"自动对频",@"value":@"扫描"}];
-    [_rows addObject:@{@"title":@"频率",@"values":_audioMike._freqops}];
-    [_rows addObject:@{@"title":@"组-通道",@"values":_audioMike._groups}];
-    [_rows addObject:@{@"title":@"增益",@"values":_audioMike._dbs}];
-    [_rows addObject:@{@"title":@"SQ",@"values":_audioMike._sq}];
-    
+//    [_rows addObject:@{@"title":@"频率",@"values":_audioMike._freqops}];
+//    [_rows addObject:@{@"title":@"组-通道",@"values":_audioMike._groups}];
+//    [_rows addObject:@{@"title":@"增益",@"values":_audioMike._dbs}];
+//    [_rows addObject:@{@"title":@"SQ",@"values":_audioMike._sq}];
+//
     
     [_map setObject:@"扫描" forKey:@2];
 
+    /*
     //恢复UI数据
     for(int i = 0; i < [_audioMike._freqops count]; i++)
     {
@@ -135,12 +136,13 @@
     [_map setObject:_audioMike._groupVal forKey:@4];
     
     self._curentDeviceIndex = _audioMike._index;
-    
+    */
     [_tableView reloadData];
 }
 
 - (void) saveCurrentSetting{
     
+    /*
     NSDictionary *dic = [_map objectForKey:@3];
     if(dic)
     {
@@ -164,6 +166,7 @@
        _audioMike._groupVal = dic;
         
     }
+     */
 }
 
 

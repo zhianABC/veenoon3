@@ -439,9 +439,9 @@
     if(lastPowerTime)
     {
         int span = nowTime - [lastPowerTime intValue];
-        if(span < 300)
+        if(span < 180)
         {
-            [Utilities showMessage:@"投影机保护中，请5分钟后尝试！" ctrl:self];
+            [Utilities showMessage:@"投影机保护中，请3分钟后尝试！" ctrl:self];
             
             return;
         }

@@ -21,6 +21,7 @@
 #import "KVNProgress.h"
 #import "DataCenter.h"
 #import "Utilities.h"
+#import "JDStatusBarNotification.h"
 
 @interface AppDelegate () <RegulusSDKDelegate>
 {
@@ -36,11 +37,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+   
+    [NSThread sleepForTimeInterval:1.0];
     
-//    AVAudioSession *session = [AVAudioSession sharedInstance];
-//    [session setActive:YES error:nil];
-//    [session setCategory:AVAudioSessionCategoryPlayback error:nil];
-//    
+    [UIApplication sharedApplication].idleTimerDisabled = YES;
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
     [RegulusSDK sharedRegulusSDK].delegate = self;
     
     User *u = [UserDefaultsKV getUser];
@@ -60,11 +62,6 @@
             _naviRoot = [[CMNavigationController alloc] initWithRootViewController:wellcome];
             _naviRoot.navigationBarHidden = YES;
             
-//            InvitationCodeViewCotroller *wellcome = [[InvitationCodeViewCotroller alloc] init];
-//            wellcome.showBack = NO;
-//            _naviRoot = [[CMNavigationController alloc] initWithRootViewController:wellcome];
-//            _naviRoot.navigationBarHidden = YES;
-            
         }
     }
     else
@@ -79,13 +76,9 @@
     
     self.window.rootViewController = _naviRoot;
     
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
-    
-    
-    //[self enterApp];
+
     
     _maskView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 768, 1024)];
     _maskView.backgroundColor = RGBA(0, 0, 0, 0.3);
@@ -93,10 +86,6 @@
     _wait.hidesWhenStopped = YES;
     [_maskView addSubview:_wait];
     _wait.center = CGPointMake(768/2, 1024/2);
-    
-//    [UMConfigure initWithAppkey:UMENG_KEY channel:nil];
-//    [MobClick setScenarioType:E_UM_NORMAL];
-//    [MobClick setCrashReportEnabled:YES];
     
     return YES;
 }
@@ -125,10 +114,15 @@
         }
         
         _endingImportState = NO;
+        
+        [JDStatusBarNotification dismissAnimated:YES];
     }
     else{
-        
+     
+        [JDStatusBarNotification showWithStatus:@"断开链接"
+                                      styleName:JDStatusBarStyleError];
     }
+
 }
 
 -(void)onRecvDeviceNotify:(RgsDeviceNoteObj *)notify
@@ -173,7 +167,7 @@
     }
 }
 
-- (void) enterApp {
+- (void) enterMainApp {
     
     HomeViewController *homeCtrl = [[HomeViewController alloc] init];
     _naviRoot = [[CMNavigationController alloc] initWithRootViewController:homeCtrl];
@@ -253,7 +247,7 @@
 
 -(void)onSystemWillReboot:(NSString *)reason
 {
-    [KVNProgress showSuccessWithStatus:reason];
+    //[KVNProgress showSuccessWithStatus:reason];
 }
 
 
@@ -264,7 +258,7 @@
     }
     else if(status == RGS_NOTIFY_STATUS_START)
     {
-        NSLog(@"%f",persent);
+        //NSLog(@"%f",persent);
         [KVNProgress showProgress:persent status:@"正在下载"];
     }
     else if (status == RGS_NOTIFY_STATUS_DONE)
@@ -286,30 +280,27 @@
     }
     else if (status == RGS_NOTIFY_STATUS_DONE)
     {
-        [KVNProgress showSuccessWithStatus:@"解压完成"];
-        [self.window.rootViewController presentViewController:[self RebootAlert]
-                           animated:YES
-                         completion:nil];
+        //[KVNProgress showSuccessWithStatus:@"解压完成"];
+        
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"解压完成"
+                                                    message:@"重启完成升级，是否重启？"
+                                                   delegate:self
+                                          cancelButtonTitle:@"取消"
+                                          otherButtonTitles:@"重启", nil];
+        av.tag = 201901;
+        [av show];
     }
 }
 
-
--(UIAlertController *)RebootAlert
-{
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"是否重启"
-                                                                   message:@"重启完成升级"
-                                                            preferredStyle:UIAlertControllerStyleActionSheet];
-    UIAlertAction * reboot = [UIAlertAction actionWithTitle:@"重启" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
-                              {
-                                  [[RegulusSDK sharedRegulusSDK] RebootSystem:nil];
-                              }];
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     
-    UIAlertAction* cancelAction =[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    if (alertView.tag == 201901 && alertView.cancelButtonIndex != buttonIndex) {
         
-    }];
-    [alert addAction:reboot];
-    [alert addAction:cancelAction];
-    return alert;
+        [[RegulusSDK sharedRegulusSDK] RebootSystem:nil];
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"NotifyGoBackWhenReboot"
+                                                            object:nil];
+    }
 }
 
 

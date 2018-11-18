@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "BasePlugElement.h"
 
+//功放
 @interface AudioEMinMax : BasePlugElement
 
 @end

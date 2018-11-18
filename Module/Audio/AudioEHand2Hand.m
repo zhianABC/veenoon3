@@ -7,6 +7,9 @@
 //
 
 #import "AudioEHand2Hand.h"
+#import "RegulusSDK.h"
+#import "DataSync.h"
+#import "KVNProgress.h"
 
 @interface AudioEHand2Hand ()
 {
@@ -63,5 +66,32 @@
     
     return nil;
 }
+
+
+- (void) createDriver{
+    
+    RgsAreaObj *area = [DataSync sharedDataSync]._currentArea;
+    if(area && _driverInfo && !_driver)
+    {
+        RgsDriverInfo *info = _driverInfo;
+        
+        IMP_BLOCK_SELF(AudioEHand2Hand);
+        
+        [KVNProgress show];
+        [[RegulusSDK sharedRegulusSDK] CreateDriver:area.m_id
+                                             serial:info.serial
+                                         completion:^(BOOL result, RgsDriverObj *driver, NSError *error) {
+                                             if (result) {
+                                                 
+                                                 block_self._driver = driver;
+                                                 block_self._name = driver.name;
+                                                 
+                                                 [[NSNotificationCenter defaultCenter] postNotificationName:@"NotifyRefreshTableWithCom" object:nil];
+                                             }
+                                             [KVNProgress showSuccess];
+                                         }];
+    }
+}
+
 
 @end
