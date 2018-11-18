@@ -13,8 +13,9 @@
 #import "HandtoHandSettingsView.h"
 #import "AudioEHand2Hand.h"
 #import "PlugsCtrlTitleHeader.h"
+#import "LightSliderButton.h"
 
-@interface EngineerHandtoHandViewCtrl () <CustomPickerViewDelegate, EngineerSliderViewDelegate> {
+@interface EngineerHandtoHandViewCtrl () <CustomPickerViewDelegate, EngineerSliderViewDelegate, LightSliderButtonDelegate> {
     
     EngineerSliderView *_zengyiSlider;
     
@@ -28,10 +29,12 @@
     
     HandtoHandSettingsView *_rightSetView;
     
+    NSMutableArray *_buttonLabelArray;
+    
     BOOL isSettings;
     UIButton *okBtn;
     
-    UIView *_channelView;
+    UIScrollView *_botomView;
     
     UIView *_proxysView;
 }
@@ -52,6 +55,8 @@
     [super viewDidLoad];
     
     isSettings = NO;
+    
+    _buttonLabelArray = [NSMutableArray array];
     
     _imageViewArray = [[NSMutableArray alloc] init];
     _buttonArray = [[NSMutableArray alloc] init];
@@ -108,72 +113,13 @@
     _zengyiSlider.minValue = -20;
     _zengyiSlider.delegate = self;
     [_zengyiSlider resetScale];
-    _zengyiSlider.center = CGPointMake(SCREEN_WIDTH - 150, SCREEN_HEIGHT/2);
-    
+    _zengyiSlider.center = CGPointMake(TESLARIA_SLIDER_X, TESLARIA_SLIDER_Y);
     [_zengyiSlider setScaleValue:_curH2H._dbVal];
-    
-    int index = 0;
-    int top = 200;
-    
-    int leftRight = ENGINEER_VIEW_LEFT;
-    
-    int cellWidth = 92;
-    int cellHeight = 92;
-    int colNumber = ENGINEER_VIEW_COLUMN_N;
-    int space = ENGINEER_VIEW_COLUMN_GAP;
-    
-    _channelView = [[UIView alloc] initWithFrame:CGRectMake(0, top, SCREEN_WIDTH, 500)];
-    [self.view addSubview:_channelView];
-    _channelView.backgroundColor = [UIColor clearColor];
-    
-    
-    self._number = [_curH2H channelsCount];
     
     [self.view addSubview:_zengyiSlider];
     
-    for (int i = 0; i < self._number; i++) {
-        
-        NSMutableDictionary *channel = nil;
-        if (self._curH2H && [self._curH2H channelsCount] > i) {
-            channel = [self._curH2H channelAtIndex:i];
-        }
-        
-        int row = index / colNumber;
-        int col = index % colNumber;
-        int startX = col * cellWidth + col * space + leftRight;
-        int startY = row * cellHeight + space * row + 10;
-        
-        UIButton *scenarioBtn = [UIButton buttonWithColor:nil selColor:RGB(0, 89, 118)];
-        scenarioBtn.frame = CGRectMake(startX, startY, cellWidth, cellHeight);
-        scenarioBtn.clipsToBounds = YES;
-        scenarioBtn.layer.cornerRadius = 5;
-        scenarioBtn.layer.borderWidth = 2;
-        scenarioBtn.layer.borderColor = [UIColor clearColor].CGColor;
-        NSString *status = nil;
-        if (channel) {
-            status = [channel objectForKey:@"status"];
-        }
-        [_buttonArray addObject:scenarioBtn];
-        
-        [scenarioBtn setImage:[UIImage imageNamed:@"dianyuanshishiqi_n.png"] forState:UIControlStateNormal];
-        [scenarioBtn setImage:[UIImage imageNamed:@"dianyuanshishiqi_s.png"] forState:UIControlStateHighlighted];
-        
-        if ([status isEqualToString:@"ON"]) {
-            [scenarioBtn setImage:[UIImage imageNamed:@"dianyuanshishiqi_s.png"] forState:UIControlStateNormal];
-        }
-        scenarioBtn.tag = index;
-        [_channelView addSubview:scenarioBtn];
-        
-        [scenarioBtn addTarget:self
-                        action:@selector(scenarioAction:)
-              forControlEvents:UIControlEventTouchUpInside];
-        if (channel) {
-            [self createBtnLabel:scenarioBtn
-                         dataDic:channel];
-        }
-        
-        index++;
-    }
+    
+    int niumber = [_curH2H channelsCount];
     
     int height = 150;
     
@@ -187,6 +133,8 @@
     tapGesture.cancelsTouchesInView =  NO;
     tapGesture.numberOfTapsRequired = 1;
     [_proxysView addGestureRecognizer:tapGesture];
+    
+    [self refreshView:niumber];
 }
 
 - (void) handleTapGesture:(id)sender{
@@ -208,7 +156,7 @@
     isSettings = NO;
 }
 
-- (void) createBtnLabel:(UIButton*)sender dataDic:(NSMutableDictionary*) dataDic{
+- (void) createBtnLabel:(UIButton*)sender name:(NSString*) name{
    
     UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, sender.frame.size.width, 20)];
     titleL.textAlignment = NSTextAlignmentCenter;
@@ -217,9 +165,7 @@
     titleL.font = [UIFont boldSystemFontOfSize:11];
     titleL.textColor  = [UIColor whiteColor];
     
-    NSString *nameStr = [dataDic objectForKey:@"name"];
-    
-    titleL.text = nameStr;
+    titleL.text = name;
     
     [_buttonChannelArray addObject:titleL];
 }
@@ -294,6 +240,95 @@
         [okBtn setTitle:@"设置" forState:UIControlStateNormal];
         isSettings = NO;
     }
+    
+    _rightSetView.delegate_ = self;
+}
+- (void) refreshView:(int)number {
+    int index = 0;
+    int top = 74;
+    
+    int cellWidth = 92;
+    int cellHeight = 92;
+    int colNumber = ENGINEER_VIEW_COLUMN_N;
+    int space = ENGINEER_VIEW_COLUMN_GAP;
+    
+    if (_botomView) {
+        for (UIView *view in [_botomView subviews]) {
+            if (view) {
+                [view removeFromSuperview];
+            }
+        }
+    } else {
+        _botomView = [[UIScrollView alloc] initWithFrame:CGRectMake(ENGINEER_VIEW_LEFT, top, SCREEN_WIDTH- ENGINEER_VIEW_LEFT*2, SCREEN_HEIGHT - top-50)];
+        [self.view addSubview:_botomView];
+        _botomView.backgroundColor = [UIColor clearColor];
+    }
+    
+    int rowN = number / ENGINEER_VIEW_COLUMN_N;
+    int ySpace = 15;
+    int height = rowN * 120 + (rowN -1) * 10;
+    
+    _botomView.contentSize =  CGSizeMake(SCREEN_WIDTH-ENGINEER_VIEW_LEFT*2, height);
+    _botomView.scrollEnabled=YES;
+    _botomView.backgroundColor = [UIColor clearColor];
+    
+    for (int i = 0; i < number; i++) {
+        
+        int row = index/colNumber;
+        int col = index%colNumber;
+        int startX = col*cellWidth+col*space;
+        int startY = row*cellHeight+ySpace*row+20;
+        if (row>=1) {
+            startY-=20;
+        }
+        
+        
+        LightSliderButton *btn = [[LightSliderButton alloc] initWithFrame:CGRectMake(startX, startY, 120, 120)];
+        btn.tag = i;
+        btn.delegate = self;
+        [_botomView addSubview:btn];
+        btn._grayBackgroundImage = [UIImage imageNamed:@"dianyuanshishiqi_n.png"];
+        btn._lightBackgroundImage = [UIImage imageNamed:@"dianyuanshishiqi_s.png"];
+        [btn hiddenProgress];
+        [btn turnOnOff:NO];
+        [btn enableValueSet:NO];
+        
+        
+        UILabel* titleL = [[UILabel alloc] initWithFrame:CGRectMake(btn.frame.size.width/2-40, 0, 80, 20)];
+        titleL.backgroundColor = [UIColor clearColor];
+        titleL.textAlignment = NSTextAlignmentCenter;
+        [btn addSubview:titleL];
+        titleL.font = [UIFont boldSystemFontOfSize:11];
+        titleL.textColor  = [UIColor whiteColor];
+        titleL.text = [@"CH " stringByAppendingString:[NSString stringWithFormat:@"0%d",i+1]];
+        [_buttonLabelArray addObject:titleL];
+        
+        [_buttonArray addObject:btn];
+        
+        
+        index++;
+    }
+}
+
+
+- (void) didTappedMSelf:(LightSliderButton*)slbtn{
+    
+    BOOL offOn = slbtn._isEnabel;
+    if (offOn) {
+        UILabel *numberL = [_buttonLabelArray objectAtIndex:slbtn.tag];
+        numberL.textColor = [UIColor whiteColor];;
+        
+        [slbtn enableValueSet:NO];
+    } else {
+        UILabel *numberL = [_buttonLabelArray objectAtIndex:slbtn.tag];
+        numberL.textColor = YELLOW_COLOR;
+        
+        [slbtn enableValueSet:YES];
+    }
+}
+
+- (void) didEndEditCell:(int)number {
+    [self refreshView:number];
 }
 
 - (void) cancelAction:(id)sender{
