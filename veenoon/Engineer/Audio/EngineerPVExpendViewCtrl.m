@@ -37,6 +37,7 @@
 @synthesize _curProcessor;
 @synthesize _cells;
 @synthesize _proxys;
+@synthesize fromScenario;
 
 
 - (void)viewDidLoad {
@@ -184,6 +185,11 @@
         AudioEMinMaxProxy *proxy = [self._proxys objectAtIndex:i];
         
         [pv fillMicObj:proxy];
+        
+        if(!fromScenario)
+        {
+            [proxy getCurrentDataState];
+        }
         
         index++;
     }

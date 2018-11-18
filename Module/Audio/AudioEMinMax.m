@@ -128,7 +128,7 @@
                                                     
                                                     NSMutableArray *proxysArray = [NSMutableArray array];
                                                     for (RgsProxyObj *proxyObj in proxys) {
-                                                        if ([proxyObj.type isEqualToString:@"Relay"]) {
+                                                        if ([proxyObj.type isEqualToString:@"Speaker"]) {
                                                             [proxysArray addObject:proxyObj];
                                                         }
                                                     }
@@ -150,17 +150,13 @@
         
         id key = [NSString stringWithFormat:@"%d", (int)proxy.m_id];
         
-        if([proxy.type isEqualToString:@"Speaker"])
-        {
-            AudioEMinMaxProxy *vap = [[AudioEMinMaxProxy alloc] init];
-            vap._rgsProxyObj = proxy;
-            
-            NSArray *vals = [map objectForKey:key];
-            [vap recoverWithDictionary:vals];
-            
-            [_proxys addObject:vap];
-            
-        }
+        AudioEMinMaxProxy *vap = [[AudioEMinMaxProxy alloc] init];
+        vap._rgsProxyObj = proxy;
+        
+        NSArray *vals = [map objectForKey:key];
+        [vap recoverWithDictionary:vals];
+        
+        [_proxys addObject:vap];
     }
 }
 

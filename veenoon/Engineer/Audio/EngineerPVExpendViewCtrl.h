@@ -14,4 +14,5 @@
    
 }
 @property (nonatomic,strong) NSArray *_pvExpendArray;
+@property (nonatomic,assign) BOOL fromScenario;
 @end

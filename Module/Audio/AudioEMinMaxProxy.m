@@ -49,12 +49,61 @@
     return self;
 }
 
+- (BOOL)getMute{
+    
+    return _isMute;
+}
+
+- (int)getVol{
+    
+    return _volume;
+}
 - (int)getMinVolRange{
     return minVol;
 }
 - (int)getMaxVolRange{
     return maxVol;
 }
+
+
+- (void) getCurrentDataState
+{
+    if(_rgsProxyObj)
+    {
+        IMP_BLOCK_SELF(AudioEMinMaxProxy);
+        [[RegulusSDK sharedRegulusSDK] GetProxyCurState:_rgsProxyObj.m_id completion:^(BOOL result, NSDictionary *state, NSError *error) {
+            if (result) {
+                if ([state count])
+                {
+                    [block_self parseStateInitsValues:state];
+                }
+            }
+        }];
+        
+    }
+}
+
+
+- (void) parseStateInitsValues:(NSDictionary*)state{
+    
+    _isMute = NO;
+    
+    NSString *val = [state objectForKey:@"MUTE"];
+    if([val isKindOfClass:[NSString class]])
+    {
+        if([[val lowercaseString] isEqualToString:@"true"])
+        {
+            _isMute = YES;
+        }
+    }
+    
+    val = [state objectForKey:@"VOLUME"];
+    _volume = [val intValue];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIFY_PROXY_CUR_STATE_GOT_LB
+                                                        object:@{@"proxy":@(_rgsProxyObj.m_id)}];
+}
+
 
 - (void) syncDeviceDataRealtime{
     
@@ -65,19 +114,9 @@
 
 - (void) updateRealtimeData:(NSDictionary*)data{
     
-    _isMute = NO;
+    /*
     
-    NSString *val = [data objectForKey:@"MUTE"];
-    if([val isKindOfClass:[NSString class]])
-    {
-        if([[val lowercaseString] isEqualToString:@"true"])
-        {
-            _isMute = YES;
-        }
-    }
-    
-    val = [data objectForKey:@"VOLUME"];
-    _volume = [val intValue];
+     */
 }
 
 - (BOOL) haveProxyCommandLoaded{
