@@ -669,6 +669,7 @@
         if ([class isEqualToString:@"AudioEMinMax"]) {
             EngineerPVExpendViewCtrl *ctrl = [[EngineerPVExpendViewCtrl alloc] init];
             ctrl._pvExpendArray = @[plug];
+            ctrl.fromScenario = _isEditingScenario;
             [self.navigationController pushViewController:ctrl animated:YES];
         }
     }

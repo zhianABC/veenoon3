@@ -10,6 +10,7 @@
 #import "SlideButton.h"
 #import "AudioEMinMaxProxy.h"
 #import "RegulusSDK.h"
+#import "Utilities.h"
 
 @interface PAMicView () <SlideButtonDelegate>
 {
@@ -29,6 +30,7 @@
 
 @implementation PAMicView
 @synthesize _curMic;
+@synthesize delegate;
 
 - (id) initWithFrame:(CGRect)frame{
     
@@ -38,6 +40,7 @@
         proxyBtn = [[SlideButton alloc] initWithFrame:CGRectMake(startX, 0, 92, 120)];
         proxyBtn.delegate = self;
         [self addSubview:proxyBtn];
+        proxyBtn.longPressEnabled = YES;
         
         self.backgroundColor = [UIColor clearColor];
         
@@ -87,9 +90,31 @@
          name:@"RgsDeviceNotify"
          object:nil];
         
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(notifyProxyGotCurStateVals:)
+                                                     name:NOTIFY_PROXY_CUR_STATE_GOT_LB
+                                                   object:nil];
+        
     }
     
     return self;
+}
+
+#pragma mark --Proxy Current State Got
+- (void) notifyProxyGotCurStateVals:(NSNotification*)notify{
+    
+    NSDictionary *obj = notify.object;
+    
+    if(obj && [obj objectForKey:@"proxy"])
+    {
+        id proxyid = [obj objectForKey:@"proxy"];
+        
+        if([proxyid integerValue] == _curMic._rgsProxyObj.m_id)
+        {
+            [self refreshUI];
+        }
+        
+    }
 }
 
 -(void)onStateChange:(NSNotification *)notify
@@ -135,7 +160,25 @@
     eL.text     = @"电流： ";
     mL.text     = @"模式： ";
     
-    [micObj syncDeviceDataRealtime];
+    [self refreshUI];
+    
+    [_curMic syncDeviceDataRealtime];
+
+}
+
+- (void) refreshUI{
+    
+    int min = [_curMic getMinVolRange];
+    int max = [_curMic getMaxVolRange];
+    if(max - min)
+    {
+        float p = fabs((float)([_curMic getVol] - min)/(max-min));
+        [proxyBtn setCircleValue:p];
+    }
+    
+    BOOL isMute = [_curMic getMute];
+    [proxyBtn muteSlider:isMute];
+    
 }
 
 //value = 0....1
@@ -180,6 +223,11 @@
     {
         panView.alpha = 0.6;
     }
+    
+    if(delegate && [delegate respondsToSelector:@selector(didTappedButtonWithVol:)])
+    {
+        [delegate didTappedButtonWithVol:[_curMic getVol]];
+    }
 }
 
 - (id) testChangeVolValueWhenSelected:(float)vol
@@ -223,6 +271,51 @@
     }
     
     return nil;
+}
+
+- (void) didLongPressSlideButton:(SlideButton*)slbtn{
+
+    if(_curMic)
+    {
+        NSString *alert = @"修改通道名称";
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                                 message:alert preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+            textField.placeholder = @"通道名称";
+            textField.text = _curMic._rgsProxyObj.name;
+            //textField.keyboardType = UIKeyboardTypeDecimalPad;
+        }];
+        
+        
+        IMP_BLOCK_SELF(PAMicView);
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil]];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            
+            UITextField *alValTxt = alertController.textFields.firstObject;
+            NSString *val = alValTxt.text;
+            if (val && [val length] > 0) {
+                
+                [block_self resetProxyName:val];
+            }
+        }]];
+        
+        UIViewController *vc = [Utilities findCurrentViewController];
+        [vc presentViewController:alertController animated:true completion:nil];
+    }
+}
+
+- (void) resetProxyName:(NSString*)name{
+    
+    proxyBtn._titleLabel.text = name;
+    _curMic._rgsProxyObj.name = name;
+    
+    [[RegulusSDK sharedRegulusSDK] RenameProxy:_curMic._rgsProxyObj.m_id
+                                          name:name
+                                    completion:nil];
+    
 }
 
 - (void) dealloc

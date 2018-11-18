@@ -8,12 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
+
 @class AudioEMinMaxProxy;
+
+@protocol PAMicViewDelegate <NSObject>
+
+@optional
+- (void) didTappedButtonWithVol:(int)vol;
+
+@end
 
 @interface PAMicView : UIView
 {
     
 }
+@property (nonatomic, weak) id <PAMicViewDelegate> delegate;
 
 - (void) fillMicObj:( AudioEMinMaxProxy* )micObj;
 - (id) testChangeVolValueWhenSelected:(float)vol;

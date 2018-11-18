@@ -18,6 +18,11 @@
 
 - (int)getMinVolRange;
 - (int)getMaxVolRange;
+- (int)getVol;
+- (BOOL)getMute;
+
+- (void) getCurrentDataState;
+
 - (BOOL) haveProxyCommandLoaded;
 - (void) checkRgsProxyCommandLoad:(NSArray*)cmds;
 - (void) recoverWithDictionary:(NSArray*)datas;
@@ -30,5 +35,6 @@
 
 - (void) controlDeviceVol:(int)vol exec:(BOOL)exec;
 - (id) generateEventOperation_Vol;
+
 
 @end
