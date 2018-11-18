@@ -32,8 +32,10 @@
         self._ipaddress = @"192.168.1.100";
         self._channels = [NSMutableArray array];
         
-        self._show_icon_name = @"a_youxian.png";
-        self._show_icon_sel_name = @"a_youxian_sel.png";
+        
+        
+        self._show_icon_name = @"a_wx_2.png";
+        self._show_icon_sel_name = @"a_wx_2_sel.png";
     }
     
     return self;
